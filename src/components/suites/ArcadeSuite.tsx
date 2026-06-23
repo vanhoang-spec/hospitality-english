@@ -42,7 +42,9 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
     if (!playing) return;
     const tick = setInterval(() => setTime((t) => Math.max(0, t - 1)), 1000);
     const spawn = setInterval(() => {
-      const p = BAD_PHRASES[Math.floor(Math.random() * BAD_PHRASES.length)];
+      const content = dep && week ? getWeekContent(dep, week) : null;
+      const pool = content ? content.lessons.flatMap((l) => l.arcade) : BAD_PHRASES;
+      const p = pool[Math.floor(Math.random() * pool.length)];
       setBubbles((b) => [
         ...b,
         { id: ++idRef.current, phrase: p.bad, good: p.good, y: 15 + Math.random() * 65, speed: 9 + Math.random() * 5 },
