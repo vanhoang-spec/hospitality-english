@@ -154,6 +154,9 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
             <span className="text-foreground/80">{scenario.target}</span>
           )}
         </div>
+        {scenario.tip && (
+          <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">💡 {scenario.tip}</p>
+        )}
       </motion.div>
 
       <motion.div
