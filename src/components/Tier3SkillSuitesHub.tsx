@@ -44,6 +44,35 @@ const SUITE_DOORS = [
 ] as const;
 
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
+  const fallback = findWeek(department.code, week);
+  const fallbackLessons = fallback?.lessons.map((vi, i) => ({
+    id: `local-${department.code}-${week}-${i + 1}`,
+    lesson_order: i + 1,
+    title_vi: vi,
+  })) ?? [];
+  const [lessons, setLessons] = useState<
+    { id: string; lesson_order: number; title_vi: string }[]
+  >(fallbackLessons);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data: scen } = await supabase
+        .from("scenarios")
+        .select("id")
+        .eq("department_id", department.code)
+        .eq("week_number", parseInt(week, 10))
+        .maybeSingle();
+      if (!scen || cancelled) return;
+      const { data: rows } = await supabase
+        .from("lessons")
+        .select("id, lesson_order, title_vi")
+        .eq("scenario_id", scen.id)
+        .order("lesson_order");
+      if (!cancelled && rows && rows.length > 0) setLessons(rows);
+    })();
+    return () => { cancelled = true; };
+  }, [department.code, week]);
   return (
     <main className="relative min-h-[calc(100vh-72px)] bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-6 py-12 md:px-10">
