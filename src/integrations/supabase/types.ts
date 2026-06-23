@@ -49,6 +49,47 @@ export type Database = {
           },
         ]
       }
+      performance_metrics: {
+        Row: {
+          courtesy_score: number
+          created_at: string
+          crisis_handling_score: number
+          fluency_score: number
+          id: string
+          profile_id: string
+          reflex_speed: number
+          updated_at: string
+        }
+        Insert: {
+          courtesy_score?: number
+          created_at?: string
+          crisis_handling_score?: number
+          fluency_score?: number
+          id?: string
+          profile_id: string
+          reflex_speed?: number
+          updated_at?: string
+        }
+        Update: {
+          courtesy_score?: number
+          created_at?: string
+          crisis_handling_score?: number
+          fluency_score?: number
+          id?: string
+          profile_id?: string
+          reflex_speed?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "performance_metrics_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
