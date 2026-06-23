@@ -187,7 +187,7 @@ function AppraisalPage() {
               </div>
               <div className="mt-8 grid grid-cols-2 gap-6">
                 {meters.map((meter, i) => (
-                  <RadialMeter key={meter.key} {...meter} delay={0.2 + i * 0.08} />
+                  <RadialMeter key={meter.key} label={meter.label} value={meter.value} suffix={meter.suffix} delay={0.2 + i * 0.08} />
                 ))}
               </div>
             </div>
