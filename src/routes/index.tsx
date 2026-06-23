@@ -1,29 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { DEPARTMENTS } from "@/lib/departments";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Maison Lumière — Hospitality Academy" },
-      {
-        name: "description",
-        content:
-          "An immersive five-star training academy crafting the next generation of hospitality leaders.",
-      },
-      { property: "og:title", content: "Maison Lumière — Hospitality Academy" },
-      {
-        property: "og:description",
-        content:
-          "An immersive five-star training academy crafting the next generation of hospitality leaders.",
-      },
+      { title: "Departments Lounge — Hospitality English Academy" },
+      { name: "description", content: "Choose your training department in the Embassy Language Academy lounge." },
     ],
   }),
-  component: Index,
+  component: Lounge,
 });
 
-function Index() {
+function Lounge() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
+    <main className="relative min-h-[calc(100vh-72px)] overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-60"
@@ -32,97 +24,83 @@ function Index() {
             "radial-gradient(ellipse at top, color-mix(in oklab, var(--gold) 14%, transparent), transparent 60%)",
         }}
       />
-
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-8 py-10">
-        <header className="flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex items-center gap-3"
-          >
-            <span className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">
-              Maison Lumière
-            </span>
-          </motion.div>
-          <nav className="hidden gap-10 text-sm text-foreground/80 md:flex">
-            {["Curriculum", "Faculty", "Residency", "Admissions"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="border-b border-transparent pb-1 transition-colors hover:border-primary hover:text-foreground"
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-        </header>
-
-        <section className="flex flex-1 flex-col items-start justify-center py-24">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="text-xs uppercase tracking-[0.4em] text-primary"
-          >
-            Est. 1924 — Paris · Tokyo · New York
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="font-display mt-6 max-w-4xl text-6xl leading-[1.05] md:text-7xl"
-          >
-            The quiet art of
-            <span className="block italic text-primary">extraordinary service.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.35 }}
-            className="mt-8 max-w-xl text-base leading-relaxed text-foreground/80"
-          >
-            An invitation-only academy training the world's most discerning hoteliers,
-            sommeliers, and concierges. Where heritage meets precision, and every gesture
-            becomes a signature.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="mt-12 flex flex-wrap items-center gap-4"
-          >
-            <button className="rounded-sm bg-primary px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground shadow-xl transition-transform hover:-translate-y-0.5">
-              Request Prospectus
-            </button>
-            <button className="rounded-sm border border-primary/30 px-8 py-3 text-sm font-medium uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary">
-              Explore Programmes
-            </button>
-          </motion.div>
-        </section>
-
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
+      <div className="relative mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
-          className="grid gap-px border border-primary/30 bg-primary/20 md:grid-cols-3"
+          transition={{ duration: 0.7 }}
         >
-          {[
-            { k: "98%", v: "Placement at Forbes Five-Star properties" },
-            { k: "1:6", v: "Mentor to apprentice ratio" },
-            { k: "32", v: "Master instructors across three continents" },
-          ].map((stat) => (
-            <div key={stat.k} className="bg-background p-8 shadow-xl">
-              <div className="font-display text-4xl text-primary">{stat.k}</div>
-              <p className="mt-3 text-sm text-foreground/70">{stat.v}</p>
-            </div>
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10 bg-primary" />
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">Tier I — Departments Lounge</span>
+          </div>
+          <h1 className="font-display mt-4 text-5xl leading-tight md:text-6xl">
+            Choose your <span className="italic text-primary">atelier</span>.
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm text-foreground/70">
+            Six departments. Twenty weeks each. A quiet path to five-star fluency. Select a card to enter the workplace shift timeline.
+          </p>
+        </motion.div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {DEPARTMENTS.map((d, i) => (
+            <FlipCard key={d.code} index={i} dep={d} />
           ))}
-        </motion.section>
+        </div>
       </div>
     </main>
+  );
+}
+
+function FlipCard({ dep, index }: { dep: (typeof DEPARTMENTS)[number]; index: number }) {
+  const [flipped, setFlipped] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 + index * 0.06 }}
+      style={{ perspective: 1200 }}
+      className="group h-64"
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onClick={() => setFlipped((v) => !v)}
+    >
+      <motion.div
+        className="relative h-full w-full"
+        style={{ transformStyle: "preserve-3d" }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Front */}
+        <div
+          className="absolute inset-0 flex flex-col justify-between border border-primary/30 bg-card p-7 shadow-xl"
+          style={{ backfaceVisibility: "hidden" }}
+        >
+          <div className="flex items-start justify-between">
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">{dep.code}</span>
+            <span className="font-display text-3xl text-primary/70">{dep.motif}</span>
+          </div>
+          <div>
+            <h3 className="font-display text-3xl text-foreground">{dep.name_en}</h3>
+            <p className="mt-1 text-sm italic text-foreground/60">{dep.name_vi}</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">{dep.tagline}</p>
+          </div>
+        </div>
+
+        {/* Back */}
+        <Link
+          to="/department/$dep"
+          params={{ dep: dep.code }}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-primary bg-card p-7 text-center shadow-xl"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+        >
+          <span className="text-xs uppercase tracking-[0.3em] text-primary">Enter</span>
+          <h3 className="font-display text-2xl text-foreground">{dep.name_en}</h3>
+          <span className="border border-primary/40 px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary">
+            20-week shift timeline →
+          </span>
+        </Link>
+      </motion.div>
+    </motion.div>
   );
 }
