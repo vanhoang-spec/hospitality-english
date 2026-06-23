@@ -15,7 +15,7 @@ const TITLES: Record<string, { en: string; tag: string }> = {
   arcade: { en: "VIP Rush Arcade", tag: "Reflex" },
 };
 
-export const Route = createFileRoute("/department/$dep/week/$week/suite/$suite")({
+export const Route = createFileRoute("/learn/$dep/$week/$suite")({
   head: ({ params }) => ({ meta: [{ title: `${TITLES[params.suite]?.en ?? "Suite"} · Week ${params.week}` }] }),
   component: SuitePage,
 });
