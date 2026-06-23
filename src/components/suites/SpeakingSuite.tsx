@@ -40,10 +40,18 @@ function compareWords(spoken: string, target: string) {
   return { correctIdx, accuracy, words: b };
 }
 
-export function SpeakingSuite() {
+export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  const scenarios = content
+    ? content.lessons.map((l) => ({
+        complaint: l.speaking.guestPrompt,
+        target: l.speaking.targetResponse,
+        tip: l.speaking.helpTip,
+      }))
+    : SCENARIOS.map((s) => ({ ...s, tip: undefined as string | undefined }));
   const [idx, setIdx] = useState(0);
-  const scenario = SCENARIOS[idx];
+  const scenario = scenarios[idx];
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [result, setResult] = useState<ReturnType<typeof compareWords> | null>(null);
