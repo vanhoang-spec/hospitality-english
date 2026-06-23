@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Tier3SkillSuitesHub } from "@/components/Tier3SkillSuitesHub";
 import { getDepartment } from "@/lib/departments";
 
-export const Route = createFileRoute("/department/$dep/week/$week")({
+export const Route = createFileRoute("/department_/$dep/week/$week")({
   head: ({ params }) => ({
     meta: [{ title: `Week ${params.week} — Skill Suites` }],
   }),
