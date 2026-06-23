@@ -2,19 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
+import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
 
 const SCENARIOS = [
   {
     complaint: "I've been waiting 25 minutes for my room key. This is unacceptable.",
     target: "I sincerely apologise for the wait. May I offer you a welcome refreshment while I expedite your key personally.",
-  },
-  {
-    complaint: "The air conditioning in my suite is much too cold.",
-    target: "Please accept my apologies. I will arrange engineering to adjust the climate to your preference immediately.",
-  },
-  {
-    complaint: "There is no hot water in the bathroom.",
-    target: "I am very sorry for the inconvenience. May I move you to an upgraded suite while we resolve this for you.",
   },
 ];
 
@@ -55,14 +48,16 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [result, setResult] = useState<ReturnType<typeof compareWords> | null>(null);
-  const [confetti, setConfetti] = useState(false);
+  const [fireworks, setFireworks] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const recogRef = useRef<any>(null);
+  const finalRef = useRef<string>("");
 
   function start() {
     setError(null);
     setTranscript("");
     setResult(null);
+    finalRef.current = "";
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) {
       setError("Speech recognition isn't supported in this browser. Try Chrome.");
@@ -72,40 +67,55 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
     r.lang = "en-US";
     r.continuous = true;
     r.interimResults = true;
-    let final = "";
     r.onresult = (e: any) => {
+      let interim = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
-        if (e.results[i].isFinal) final += " " + t;
-        setTranscript((final + " " + t).trim());
+        if (e.results[i].isFinal) finalRef.current += " " + t;
+        else interim += " " + t;
       }
+      setTranscript(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
     r.onerror = (e: any) => setError(`Mic error: ${e.error}`);
     r.onend = () => {
       setRecording(false);
-      const cmp = compareWords(final, scenario.target);
+      const cleaned = dedupeTranscript(finalRef.current.trim());
+      setTranscript(cleaned);
+      const cmp = compareWords(cleaned, scenario.target);
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      if (acc > 80) {
+      if (acc >= 80) {
         awardStars(5);
-        setConfetti(true);
-        setTimeout(() => setConfetti(false), 2200);
+        setFireworks(true);
+        playApplause(1800);
+        setTimeout(() => setFireworks(false), 2400);
       }
     };
-    r.start();
-    recogRef.current = r;
-    setRecording(true);
+    try {
+      r.start();
+      recogRef.current = r;
+      setRecording(true);
+    } catch (err: any) {
+      setError(`Could not start mic: ${err?.message ?? err}`);
+    }
   }
 
   function stop() {
-    recogRef.current?.stop();
+    try {
+      recogRef.current?.stop();
+    } catch {
+      /* */
+    }
   }
 
-  function speak() {
-    const u = new SpeechSynthesisUtterance(scenario.complaint);
-    u.rate = 0.95;
-    window.speechSynthesis.speak(u);
+  function toggle() {
+    if (recording) stop();
+    else start();
+  }
+
+  function speakComplaint() {
+    speakEN(scenario.complaint, 0.9);
   }
 
   return (
@@ -115,10 +125,13 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
         animate={{ opacity: 1, y: 0 }}
         className="border border-primary/30 bg-card p-6 shadow-xl"
       >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Guest Complaint</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-primary">Guest Prompt</div>
         <p className="mt-4 font-display text-2xl leading-snug">"{scenario.complaint}"</p>
-        <div className="mt-5 flex gap-3">
-          <button onClick={speak} className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary">
+        <div className="mt-5 flex flex-wrap gap-3">
+          <button
+            onClick={speakComplaint}
+            className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
+          >
             ▶ Play audio
           </button>
           <button
@@ -168,22 +181,24 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Your Response</div>
         <div className="mt-6 flex flex-col items-center">
           <button
-            onMouseDown={start}
-            onMouseUp={stop}
-            onTouchStart={start}
-            onTouchEnd={stop}
-            className={`relative flex h-28 w-28 items-center justify-center rounded-full border-2 border-primary text-3xl shadow-xl transition-transform ${
-              recording ? "scale-110 bg-primary text-primary-foreground" : "bg-card text-primary hover:scale-105"
+            onClick={toggle}
+            className={`relative flex h-28 w-28 items-center justify-center rounded-full border-2 text-3xl shadow-xl transition-all ${
+              recording
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-primary bg-card text-primary hover:scale-105"
             }`}
-            aria-label="Hold to record"
+            style={
+              recording
+                ? { boxShadow: "0 0 32px 8px rgba(212,175,55,0.55)", animation: "pulseGold 1.2s ease-in-out infinite" }
+                : undefined
+            }
+            aria-label={recording ? "Stop recording" : "Start recording"}
           >
             🎙
-            {recording && (
-              <span className="absolute inset-0 animate-ping rounded-full border-2 border-primary/60" />
-            )}
           </button>
+          <style>{`@keyframes pulseGold { 0%,100% { box-shadow: 0 0 24px 6px rgba(212,175,55,0.45);} 50% { box-shadow: 0 0 44px 14px rgba(212,175,55,0.75);} }`}</style>
           <p className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground/60">
-            {recording ? "Listening…" : "Hold to speak"}
+            {recording ? "Listening… click to stop" : "Click to start recording"}
           </p>
         </div>
 
@@ -197,7 +212,7 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
               <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Accuracy</div>
               <div className="font-display text-3xl text-primary">{Math.round(result.accuracy * 100)}%</div>
             </div>
-            {result.accuracy > 0.8 && (
+            {result.accuracy >= 0.8 && (
               <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ awarded</div>
             )}
           </div>
@@ -205,34 +220,61 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
         {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
       </motion.div>
 
-      {confetti && <Confetti />}
+      {fireworks && <FireworksCanvas />}
     </div>
   );
 }
 
-function Confetti() {
-  const pieces = Array.from({ length: 60 });
-  return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
-      {pieces.map((_, i) => {
-        const left = Math.random() * 100;
-        const delay = Math.random() * 0.3;
-        const dur = 1.4 + Math.random();
-        const rot = Math.random() * 360;
-        return (
-          <span
-            key={i}
-            className="absolute top-0 block h-2 w-2"
-            style={{
-              left: `${left}%`,
-              background: i % 3 === 0 ? "#D4AF37" : i % 3 === 1 ? "#F9F6EE" : "#0F5132",
-              animation: `confetti ${dur}s linear ${delay}s forwards`,
-              transform: `rotate(${rot}deg)`,
-            }}
-          />
-        );
-      })}
-      <style>{`@keyframes confetti { to { transform: translateY(110vh) rotate(720deg); opacity: 0.2; } }`}</style>
-    </div>
-  );
+function FireworksCanvas() {
+  const ref = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const colors = ["#D4AF37", "#F9F6EE", "#FF5577", "#55D6FF", "#7FE3A3", "#FFB347"];
+    type P = { x: number; y: number; vx: number; vy: number; life: number; color: string };
+    const particles: P[] = [];
+    function burst(x: number, y: number) {
+      const n = 60;
+      for (let i = 0; i < n; i++) {
+        const a = (Math.PI * 2 * i) / n;
+        const v = 2 + Math.random() * 4;
+        particles.push({
+          x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+          life: 1, color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+    }
+    let frame = 0;
+    let rafId = 0;
+    function loop() {
+      frame++;
+      if (frame % 18 === 0 && frame < 110) burst(Math.random() * W, H * 0.25 + Math.random() * H * 0.4);
+      ctx!.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.life -= 0.012;
+        ctx!.globalAlpha = Math.max(0, p.life);
+        ctx!.fillStyle = p.color;
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+      ctx!.globalAlpha = 1;
+      for (let i = particles.length - 1; i >= 0; i--) if (particles[i].life <= 0) particles.splice(i, 1);
+      rafId = requestAnimationFrame(loop);
+    }
+    rafId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+  return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-50" style={{ width: "100vw", height: "100vh" }} />;
 }
