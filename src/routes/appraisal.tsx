@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { useAcademy } from "@/lib/academy-store";
+
 
 export const Route = createFileRoute("/appraisal")({
   head: () => ({
@@ -52,72 +54,21 @@ const DEMO_PROFILE: Profile = {
 };
 
 function AppraisalPage() {
-  const [metrics, setMetrics] = useState<Metrics | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const { state, jobRank } = useAcademy();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    let channel: ReturnType<typeof supabase.channel> | null = null;
-
-    async function load() {
-      const { data: auth } = await supabase.auth.getUser();
-      const user = auth.user;
-      if (!user) {
-        setMetrics(DEMO_METRICS);
-        setProfile(DEMO_PROFILE);
-        setLoaded(true);
-        return;
-      }
-
-      const [{ data: prof }, { data: m }] = await Promise.all([
-        supabase
-          .from("profiles")
-          .select("full_name, job_rank, service_stars, daily_streak")
-          .eq("id", user.id)
-          .maybeSingle(),
-        supabase
-          .from("performance_metrics")
-          .select(
-            "fluency_score, courtesy_score, reflex_speed, crisis_handling_score",
-          )
-          .eq("profile_id", user.id)
-          .order("updated_at", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-      ]);
-
-      setProfile(prof ?? DEMO_PROFILE);
-      setMetrics(m ?? DEMO_METRICS);
-      setLoaded(true);
-
-      channel = supabase
-        .channel("appraisal-metrics")
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "performance_metrics",
-            filter: `profile_id=eq.${user.id}`,
-          },
-          (payload) => {
-            const next = payload.new as Partial<Metrics> | null;
-            if (next && "fluency_score" in next) {
-              setMetrics((prev) => ({ ...(prev ?? DEMO_METRICS), ...next } as Metrics));
-            }
-          },
-        )
-        .subscribe();
-    }
-
-    load();
-    return () => {
-      if (channel) supabase.removeChannel(channel);
-    };
+    setLoaded(true);
   }, []);
 
-  const m = metrics ?? DEMO_METRICS;
-  const p = profile ?? DEMO_PROFILE;
+  const m: Metrics = state.metrics;
+  const p: Profile = {
+    full_name: state.full_name,
+    job_rank: jobRank,
+    service_stars: state.service_stars,
+    daily_streak: state.daily_streak,
+  };
+
 
   const meters = useMemo(
     () => [

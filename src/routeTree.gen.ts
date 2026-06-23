@@ -10,11 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppraisalRouteImport } from './routes/appraisal'
+import { Route as AdminLoungeRouteImport } from './routes/admin-lounge'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SuiteSuiteRouteImport } from './routes/suite.$suite'
+import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
+import { Route as DepartmentDepWeekWeekRouteImport } from './routes/department.$dep.week.$week'
 
 const AppraisalRoute = AppraisalRouteImport.update({
   id: '/appraisal',
   path: '/appraisal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoungeRoute = AdminLoungeRouteImport.update({
+  id: '/admin-lounge',
+  path: '/admin-lounge',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,31 +31,80 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SuiteSuiteRoute = SuiteSuiteRouteImport.update({
+  id: '/suite/$suite',
+  path: '/suite/$suite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepartmentDepRoute = DepartmentDepRouteImport.update({
+  id: '/department/$dep',
+  path: '/department/$dep',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepartmentDepWeekWeekRoute = DepartmentDepWeekWeekRouteImport.update({
+  id: '/week/$week',
+  path: '/week/$week',
+  getParentRoute: () => DepartmentDepRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
+  '/department/$dep': typeof DepartmentDepRouteWithChildren
+  '/suite/$suite': typeof SuiteSuiteRoute
+  '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
+  '/department/$dep': typeof DepartmentDepRouteWithChildren
+  '/suite/$suite': typeof SuiteSuiteRoute
+  '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
+  '/department/$dep': typeof DepartmentDepRouteWithChildren
+  '/suite/$suite': typeof SuiteSuiteRoute
+  '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/appraisal'
+  fullPaths:
+    | '/'
+    | '/admin-lounge'
+    | '/appraisal'
+    | '/department/$dep'
+    | '/suite/$suite'
+    | '/department/$dep/week/$week'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/appraisal'
-  id: '__root__' | '/' | '/appraisal'
+  to:
+    | '/'
+    | '/admin-lounge'
+    | '/appraisal'
+    | '/department/$dep'
+    | '/suite/$suite'
+    | '/department/$dep/week/$week'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-lounge'
+    | '/appraisal'
+    | '/department/$dep'
+    | '/suite/$suite'
+    | '/department/$dep/week/$week'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminLoungeRoute: typeof AdminLoungeRoute
   AppraisalRoute: typeof AppraisalRoute
+  DepartmentDepRoute: typeof DepartmentDepRouteWithChildren
+  SuiteSuiteRoute: typeof SuiteSuiteRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +116,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppraisalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-lounge': {
+      id: '/admin-lounge'
+      path: '/admin-lounge'
+      fullPath: '/admin-lounge'
+      preLoaderRoute: typeof AdminLoungeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,12 +130,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/suite/$suite': {
+      id: '/suite/$suite'
+      path: '/suite/$suite'
+      fullPath: '/suite/$suite'
+      preLoaderRoute: typeof SuiteSuiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/department/$dep': {
+      id: '/department/$dep'
+      path: '/department/$dep'
+      fullPath: '/department/$dep'
+      preLoaderRoute: typeof DepartmentDepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/department/$dep/week/$week': {
+      id: '/department/$dep/week/$week'
+      path: '/week/$week'
+      fullPath: '/department/$dep/week/$week'
+      preLoaderRoute: typeof DepartmentDepWeekWeekRouteImport
+      parentRoute: typeof DepartmentDepRoute
+    }
   }
 }
 
+interface DepartmentDepRouteChildren {
+  DepartmentDepWeekWeekRoute: typeof DepartmentDepWeekWeekRoute
+}
+
+const DepartmentDepRouteChildren: DepartmentDepRouteChildren = {
+  DepartmentDepWeekWeekRoute: DepartmentDepWeekWeekRoute,
+}
+
+const DepartmentDepRouteWithChildren = DepartmentDepRoute._addFileChildren(
+  DepartmentDepRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminLoungeRoute: AdminLoungeRoute,
   AppraisalRoute: AppraisalRoute,
+  DepartmentDepRoute: DepartmentDepRouteWithChildren,
+  SuiteSuiteRoute: SuiteSuiteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
