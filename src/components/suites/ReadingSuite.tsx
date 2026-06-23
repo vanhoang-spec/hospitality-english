@@ -43,7 +43,7 @@ export function ReadingSuite() {
   const [picks, setPicks] = useState<(number | null)[]>([null, null, null]);
   const [submitted, setSubmitted] = useState(false);
 
-  const score = picks.reduce((s, p, i) => (p === QUIZ[i].correct ? s + 1 : s), 0);
+  const score = picks.reduce<number>((s, p, i) => (p === QUIZ[i].correct ? s + 1 : s), 0);
 
   function submit() {
     setSubmitted(true);
