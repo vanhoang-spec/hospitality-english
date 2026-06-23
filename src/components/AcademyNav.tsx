@@ -49,7 +49,7 @@ export function AcademyNav() {
 
           <div className="hidden flex-1 items-center justify-center md:flex">
             <div className="rounded-sm border border-primary/30 px-4 py-1.5 text-center shadow-xl">
-              <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Job Rank</div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Your Career Growth</div>
               <div className="font-display text-lg text-primary">{jobRank}</div>
             </div>
           </div>

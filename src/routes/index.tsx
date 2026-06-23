@@ -32,13 +32,16 @@ function Lounge() {
         >
           <div className="flex items-center gap-3">
             <span className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">Tier I — Departments Lounge</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">Departments Lounge</span>
           </div>
           <h1 className="font-display mt-4 text-5xl leading-tight md:text-6xl">
             Choose your <span className="italic text-primary">atelier</span>.
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
             Six departments. Twenty weeks each. A quiet path to five-star fluency. Select a card to enter the workplace shift timeline.
+          </p>
+          <p className="mt-2 max-w-2xl text-sm italic text-foreground/50">
+            Sáu bộ phận. Hai mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
           </p>
         </motion.div>
 
