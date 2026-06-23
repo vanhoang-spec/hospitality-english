@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
+import { getWeekContent } from "@/lib/content/week-content";
 
 const BAD_PHRASES: Array<{ bad: string; good: string }> = [
   { bad: "Wait a minute", good: "Please allow me a brief moment" },
@@ -15,7 +16,7 @@ const BAD_PHRASES: Array<{ bad: string; good: string }> = [
 
 type Bubble = { id: number; phrase: string; good: string; y: number; speed: number; smashed?: boolean };
 
-export function ArcadeSuite() {
+export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(60);
@@ -41,7 +42,9 @@ export function ArcadeSuite() {
     if (!playing) return;
     const tick = setInterval(() => setTime((t) => Math.max(0, t - 1)), 1000);
     const spawn = setInterval(() => {
-      const p = BAD_PHRASES[Math.floor(Math.random() * BAD_PHRASES.length)];
+      const content = dep && week ? getWeekContent(dep, week) : null;
+      const pool = content ? content.lessons.flatMap((l) => l.arcade) : BAD_PHRASES;
+      const p = pool[Math.floor(Math.random() * pool.length)];
       setBubbles((b) => [
         ...b,
         { id: ++idRef.current, phrase: p.bad, good: p.good, y: 15 + Math.random() * 65, speed: 9 + Math.random() * 5 },

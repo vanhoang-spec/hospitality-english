@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
+import { getWeekContent } from "@/lib/content/week-content";
 
 const SCENARIOS = [
   {
@@ -39,10 +40,18 @@ function compareWords(spoken: string, target: string) {
   return { correctIdx, accuracy, words: b };
 }
 
-export function SpeakingSuite() {
+export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  const scenarios = content
+    ? content.lessons.map((l) => ({
+        complaint: l.speaking.guestPrompt,
+        target: l.speaking.targetResponse,
+        tip: l.speaking.helpTip,
+      }))
+    : SCENARIOS.map((s) => ({ ...s, tip: undefined as string | undefined }));
   const [idx, setIdx] = useState(0);
-  const scenario = SCENARIOS[idx];
+  const scenario = scenarios[idx];
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [result, setResult] = useState<ReturnType<typeof compareWords> | null>(null);
@@ -114,7 +123,7 @@ export function SpeakingSuite() {
           </button>
           <button
             onClick={() => {
-              setIdx((i) => (i + 1) % SCENARIOS.length);
+              setIdx((i) => (i + 1) % scenarios.length);
               setTranscript("");
               setResult(null);
             }}
@@ -145,6 +154,9 @@ export function SpeakingSuite() {
             <span className="text-foreground/80">{scenario.target}</span>
           )}
         </div>
+        {scenario.tip && (
+          <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">💡 {scenario.tip}</p>
+        )}
       </motion.div>
 
       <motion.div

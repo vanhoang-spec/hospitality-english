@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
+import { getWeekContent } from "@/lib/content/week-content";
 
 type Puzzle = { bad: string; target: string; chips: string[] };
 
@@ -31,10 +32,20 @@ function shuffle<T>(a: T[]): T[] {
   return c;
 }
 
-export function GrammarSuite() {
+export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  const puzzles: Puzzle[] = content
+    ? content.lessons.flatMap((l) =>
+        l.grammar.map((g) => ({
+          bad: g.rude,
+          target: g.polite,
+          chips: g.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
+        })),
+      )
+    : PUZZLES;
   const [round, setRound] = useState(0);
-  const puzzle = PUZZLES[round % PUZZLES.length];
+  const puzzle = puzzles[round % puzzles.length];
   const pool = useMemo(() => shuffle(puzzle.chips), [round]);
   const [bank, setBank] = useState<string[]>(pool);
   const [tray, setTray] = useState<string[]>([]);

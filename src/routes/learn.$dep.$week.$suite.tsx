@@ -51,11 +51,11 @@ function SuitePage() {
         </div>
 
         <div className="mt-10">
-          {suite === "vocab" && <VocabSuite dep={department.code} />}
-          {suite === "grammar" && <GrammarSuite />}
-          {suite === "speaking" && <SpeakingSuite />}
-          {suite === "reading" && <ReadingSuite />}
-          {suite === "arcade" && <ArcadeSuite />}
+          {suite === "vocab" && <VocabSuite dep={department.code} week={week} />}
+          {suite === "grammar" && <GrammarSuite dep={department.code} week={week} />}
+          {suite === "speaking" && <SpeakingSuite dep={department.code} week={week} />}
+          {suite === "reading" && <ReadingSuite dep={department.code} week={week} />}
+          {suite === "arcade" && <ArcadeSuite dep={department.code} week={week} />}
         </div>
       </motion.div>
     </main>

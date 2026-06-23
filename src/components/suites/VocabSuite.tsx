@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
+import { getWeekContent } from "@/lib/content/week-content";
 
 type Term = { en: string; ipa: string; vi: string; usage: string };
 
@@ -38,9 +39,14 @@ const LIBRARY: Record<string, Term[]> = {
   ],
 };
 
-export function VocabSuite({ dep }: { dep: string }) {
+export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars } = useAcademy();
-  const terms = LIBRARY[dep.toUpperCase()] ?? LIBRARY.FO;
+  const content = week ? getWeekContent(dep, week) : null;
+  const terms: Term[] = content
+    ? content.lessons.flatMap((l) =>
+        l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context })),
+      )
+    : LIBRARY[dep.toUpperCase()] ?? LIBRARY.FO;
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
 
   function flip(i: number) {
