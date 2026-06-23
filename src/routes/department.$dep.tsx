@@ -56,9 +56,31 @@ function DeptPage() {
 
         <div className="mt-12 relative">
           <div className="absolute left-4 top-0 bottom-0 w-px bg-primary/30 md:left-6" aria-hidden />
-          <ol className="space-y-4">
-            {(scenarios ?? Array.from({ length: 6 }, (_, i) => ({ id: String(i), week_number: i + 1, title_en: "Loading…", title_vi: "" }))).map(
-              (s, i) => (
+          {scenarios === null ? (
+            <ol className="space-y-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <li key={i} className="relative pl-12 md:pl-16">
+                  <span className="absolute left-0 top-3 h-9 w-9 border border-primary/20 bg-card md:left-1.5 md:h-10 md:w-10" />
+                  <div className="h-20 animate-pulse border border-primary/20 bg-card/60 shadow-xl" />
+                </li>
+              ))}
+            </ol>
+          ) : scenarios.length === 0 ? (
+            <div className="ml-12 border border-primary/30 bg-card p-8 text-center shadow-xl md:ml-16">
+              <p className="font-display text-2xl text-primary">Awaiting Standardization</p>
+              <p className="mt-3 text-sm text-foreground/70">
+                This department's operational shift timeline is currently being standardized by HR.
+              </p>
+              <Link
+                to="/admin-lounge"
+                className="mt-5 inline-block border border-primary px-5 py-2 text-xs uppercase tracking-[0.25em] text-primary hover:bg-primary/10"
+              >
+                Visit Admin Lounge →
+              </Link>
+            </div>
+          ) : (
+            <ol className="space-y-4">
+              {scenarios.map((s, i) => (
                 <motion.li
                   key={s.id}
                   initial={{ opacity: 0, x: -20 }}
@@ -82,9 +104,9 @@ function DeptPage() {
                     <div className="mt-3 text-xs uppercase tracking-[0.25em] text-primary">Open shift →</div>
                   </Link>
                 </motion.li>
-              ),
-            )}
-          </ol>
+              ))}
+            </ol>
+          )}
         </div>
       </div>
     </main>
