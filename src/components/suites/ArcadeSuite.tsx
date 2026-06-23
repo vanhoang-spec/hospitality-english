@@ -16,7 +16,7 @@ const BAD_PHRASES: Array<{ bad: string; good: string }> = [
 
 type Bubble = { id: number; phrase: string; good: string; y: number; speed: number; smashed?: boolean };
 
-export function ArcadeSuite() {
+export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(60);
