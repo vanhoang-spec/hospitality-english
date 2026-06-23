@@ -14,7 +14,101 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lessons: {
+        Row: {
+          created_at: string
+          id: string
+          lesson_order: number
+          scenario_id: string
+          title_en: string
+          title_vi: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lesson_order: number
+          scenario_id: string
+          title_en: string
+          title_vi: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lesson_order?: number
+          scenario_id?: string
+          title_en?: string
+          title_vi?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lessons_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          daily_streak: number
+          full_name: string | null
+          id: string
+          job_rank: string
+          last_active_date: string
+          service_stars: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          daily_streak?: number
+          full_name?: string | null
+          id: string
+          job_rank?: string
+          last_active_date?: string
+          service_stars?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          daily_streak?: number
+          full_name?: string | null
+          id?: string
+          job_rank?: string
+          last_active_date?: string
+          service_stars?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      scenarios: {
+        Row: {
+          created_at: string
+          department_id: string
+          id: string
+          title_en: string
+          title_vi: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          department_id: string
+          id?: string
+          title_en: string
+          title_vi: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          department_id?: string
+          id?: string
+          title_en?: string
+          title_vi?: string
+          week_number?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
