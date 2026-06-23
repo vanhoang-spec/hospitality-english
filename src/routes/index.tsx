@@ -66,44 +66,49 @@ function FlipCard({ dep, index }: { dep: (typeof DEPARTMENTS)[number]; index: nu
       className="group h-64"
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
-      onClick={() => setFlipped((v) => !v)}
     >
-      <motion.div
-        className="relative h-full w-full"
-        style={{ transformStyle: "preserve-3d" }}
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      <Link
+        to="/department/$dep"
+        params={{ dep: dep.code }}
+        className="block h-full w-full"
+        aria-label={`Open ${dep.name_en} shift timeline`}
+        onClick={() => setFlipped(true)}
       >
-        {/* Front */}
-        <div
-          className="absolute inset-0 flex flex-col justify-between border border-primary/30 bg-card p-7 shadow-xl"
-          style={{ backfaceVisibility: "hidden" }}
+        <motion.div
+          className="relative h-full w-full"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateY: flipped ? 180 : 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="flex items-start justify-between">
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">{dep.code}</span>
-            <span className="font-display text-3xl text-primary/70">{dep.motif}</span>
+          {/* Front */}
+          <div
+            className="absolute inset-0 flex flex-col justify-between border border-primary/30 bg-card p-7 shadow-xl"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            <div className="flex items-start justify-between">
+              <span className="text-xs uppercase tracking-[0.3em] text-primary">{dep.code}</span>
+              <span className="font-display text-3xl text-primary/70">{dep.motif}</span>
+            </div>
+            <div>
+              <h3 className="font-display text-3xl text-foreground">{dep.name_en}</h3>
+              <p className="mt-1 text-sm italic text-foreground/60">{dep.name_vi}</p>
+              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">{dep.tagline}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-display text-3xl text-foreground">{dep.name_en}</h3>
-            <p className="mt-1 text-sm italic text-foreground/60">{dep.name_vi}</p>
-            <p className="mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">{dep.tagline}</p>
-          </div>
-        </div>
 
-        {/* Back */}
-        <Link
-          to="/department/$dep"
-          params={{ dep: dep.code }}
-          className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-primary bg-card p-7 text-center shadow-xl"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <span className="text-xs uppercase tracking-[0.3em] text-primary">Enter</span>
-          <h3 className="font-display text-2xl text-foreground">{dep.name_en}</h3>
-          <span className="border border-primary/40 px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary">
-            20-week shift timeline →
-          </span>
-        </Link>
-      </motion.div>
+          {/* Back */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-primary bg-card p-7 text-center shadow-xl"
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          >
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">Enter</span>
+            <h3 className="font-display text-2xl text-foreground">{dep.name_en}</h3>
+            <span className="border border-primary/40 px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary">
+              20-week shift timeline →
+            </span>
+          </div>
+        </motion.div>
+      </Link>
     </motion.div>
   );
 }
