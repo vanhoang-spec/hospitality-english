@@ -1,7 +1,8 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useParams } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Tier3SkillSuitesHub } from "@/components/Tier3SkillSuitesHub";
 import { getDepartment } from "@/lib/departments";
 
 export const Route = createFileRoute("/department/$dep")({
@@ -20,21 +21,28 @@ export const Route = createFileRoute("/department/$dep")({
 type Scenario = { id: string; week_number: number; title_en: string; title_vi: string };
 
 function DeptPage() {
-  const { dep } = Route.useParams();
+  const routeParams = Route.useParams();
+  const allParams = useParams({ strict: false }) as { dep?: string; week?: string };
+  const dep = allParams.dep ?? routeParams.dep;
+  const weekNumber = allParams.week;
   const department = getDepartment(dep);
   const [scenarios, setScenarios] = useState<Scenario[] | null>(null);
 
   useEffect(() => {
-    if (!department) return;
+    if (!department || weekNumber) return;
     supabase
       .from("scenarios")
       .select("id, week_number, title_en, title_vi")
       .eq("department_id", department.code)
       .order("week_number")
       .then(({ data }) => setScenarios((data as Scenario[]) ?? []));
-  }, [department?.code]);
+  }, [department?.code, weekNumber]);
 
   if (!department) throw notFound();
+
+  if (weekNumber) {
+    return <Tier3SkillSuitesHub department={department} week={weekNumber} />;
+  }
 
   return (
     <main className="relative min-h-[calc(100vh-72px)]">
