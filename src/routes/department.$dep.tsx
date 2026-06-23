@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tier3SkillSuitesHub } from "@/components/Tier3SkillSuitesHub";
 import { getDepartment } from "@/lib/departments";
+import { weeksForDepartment } from "@/lib/curriculum";
 
 export const Route = createFileRoute("/department/$dep")({
   head: ({ params }) => {
@@ -30,12 +31,30 @@ function DeptPage() {
 
   useEffect(() => {
     if (!department || weekNumber) return;
+    let cancelled = false;
     supabase
       .from("scenarios")
       .select("id, week_number, title_en, title_vi")
       .eq("department_id", department.code)
       .order("week_number")
-      .then(({ data }) => setScenarios((data as Scenario[]) ?? []));
+      .then(({ data }) => {
+        if (cancelled) return;
+        const rows = (data as Scenario[]) ?? [];
+        if (rows.length > 0) {
+          setScenarios(rows);
+        } else {
+          // Local fallback so the timeline still mounts with zero missing nodes.
+          setScenarios(
+            weeksForDepartment(department.code).map((w) => ({
+              id: `local-${w.department_id}-${w.week_number}`,
+              week_number: w.week_number,
+              title_en: w.title_en,
+              title_vi: w.title_vi,
+            })),
+          );
+        }
+      });
+    return () => { cancelled = true; };
   }, [department?.code, weekNumber]);
 
   if (!department) throw notFound();
