@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
+import { getWeekContent } from "@/lib/content/week-content";
 
 type Term = { en: string; ipa: string; vi: string; usage: string };
 
