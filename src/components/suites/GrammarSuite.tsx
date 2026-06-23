@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
+import { speakEN } from "@/lib/speech";
 
 type Puzzle = { bad: string; target: string; chips: string[] };
 
@@ -10,11 +11,6 @@ const PUZZLES: Puzzle[] = [
     bad: "Give me passport",
     target: "Could you please kindly provide your passport for our local registration",
     chips: ["Could", "you", "please", "kindly", "provide", "your", "passport", "for", "our", "local", "registration"],
-  },
-  {
-    bad: "Wait, room not ready",
-    target: "May I kindly invite you to our lounge while we finalise your suite",
-    chips: ["May", "I", "kindly", "invite", "you", "to", "our", "lounge", "while", "we", "finalise", "your", "suite"],
   },
   {
     bad: "What you want eat",
@@ -46,26 +42,47 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     : PUZZLES;
   const [round, setRound] = useState(0);
   const puzzle = puzzles[round % puzzles.length];
-  const pool = useMemo(() => shuffle(puzzle.chips), [round]);
-  const [bank, setBank] = useState<string[]>(pool);
+  const [bank, setBank] = useState<string[]>(() => shuffle(puzzle.chips));
   const [tray, setTray] = useState<string[]>([]);
   const [checked, setChecked] = useState<null | boolean>(null);
+  const [selectedTray, setSelectedTray] = useState<number | null>(null);
 
   // re-init when round changes
   useMemo(() => {
     setBank(shuffle(puzzle.chips));
     setTray([]);
     setChecked(null);
+    setSelectedTray(null);
   }, [round]);
 
-  function moveToTray(word: string, idx: number) {
-    setBank((b) => b.filter((_, i) => i !== idx));
+  function appendToTray(word: string, bankIdx: number) {
+    setBank((b) => b.filter((_, i) => i !== bankIdx));
     setTray((t) => [...t, word]);
     setChecked(null);
   }
-  function moveToBank(word: string, idx: number) {
-    setTray((t) => t.filter((_, i) => i !== idx));
+  function removeFromTray(i: number) {
+    const word = tray[i];
+    setTray((t) => t.filter((_, j) => j !== i));
     setBank((b) => [...b, word]);
+    setChecked(null);
+    setSelectedTray(null);
+  }
+  function clickTray(i: number) {
+    if (selectedTray === null) {
+      setSelectedTray(i);
+      return;
+    }
+    if (selectedTray === i) {
+      setSelectedTray(null);
+      return;
+    }
+    // swap positions
+    setTray((t) => {
+      const c = [...t];
+      [c[selectedTray], c[i]] = [c[i], c[selectedTray]];
+      return c;
+    });
+    setSelectedTray(null);
     setChecked(null);
   }
 
@@ -84,66 +101,66 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     setRound((r) => r + 1);
   }
 
-  // HTML5 drag handlers
-  const onDragStart = (e: React.DragEvent, word: string, from: "bank" | "tray", idx: number) => {
-    e.dataTransfer.setData("text/plain", JSON.stringify({ word, from, idx }));
-  };
-  const onDropTray = (e: React.DragEvent) => {
-    e.preventDefault();
-    const { word, from, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
-    if (from === "bank") moveToTray(word, idx);
-  };
-  const onDropBank = (e: React.DragEvent) => {
-    e.preventDefault();
-    const { word, from, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
-    if (from === "tray") moveToBank(word, idx);
-  };
-
   return (
     <div className="space-y-6">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-destructive/40 bg-card p-5 shadow-xl">
-        <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">Cộc lốc phrasing</div>
+        <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">Lỗi thường gặp</div>
         <p className="mt-2 font-display text-xl line-through decoration-destructive/60">"{puzzle.bad}"</p>
-        <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-primary">Assemble the 5-star equivalent</div>
+        <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-primary">
+          Assemble the 5-star equivalent · Tap two chips to swap their position
+        </div>
       </motion.div>
 
-      <div
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={onDropTray}
-        className="min-h-[110px] border border-primary bg-card p-4 shadow-xl"
-      >
-        <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Your refined sentence</div>
+      <div className="min-h-[110px] border border-primary bg-card p-4 shadow-xl">
+        <div className="flex items-center justify-between">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Your refined sentence</div>
+          {checked === true && (
+            <button
+              onClick={() => speakEN(puzzle.target, 0.9)}
+              className="border border-primary/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+            >
+              🔊 Speak sentence
+            </button>
+          )}
+        </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {tray.length === 0 && (
-            <span className="text-xs italic text-foreground/40">Drag chips here in the correct order…</span>
+            <span className="text-xs italic text-foreground/40">Click chips below in correct order. Tap two placed chips to swap.</span>
           )}
-          {tray.map((w, i) => (
-            <button
-              key={`${w}-${i}`}
-              draggable
-              onDragStart={(e) => onDragStart(e, w, "tray", i)}
-              onClick={() => moveToBank(w, i)}
-              className="border border-primary bg-primary/15 px-3 py-1.5 font-display text-sm text-foreground"
-            >
-              {w}
-            </button>
-          ))}
+          {tray.map((w, i) => {
+            const selected = selectedTray === i;
+            return (
+              <span key={`${w}-${i}`} className="inline-flex items-center">
+                <button
+                  onClick={() => clickTray(i)}
+                  className={`border px-3 py-1.5 font-display text-sm transition-all ${
+                    selected
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-primary bg-primary/15 text-foreground hover:bg-primary/25"
+                  }`}
+                >
+                  {w}
+                </button>
+                <button
+                  onClick={() => removeFromTray(i)}
+                  className="ml-0.5 border border-primary/30 px-1.5 py-1.5 text-xs text-foreground/60 hover:border-destructive hover:text-destructive"
+                  aria-label="Remove"
+                >
+                  ×
+                </button>
+              </span>
+            );
+          })}
         </div>
       </div>
 
-      <div
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={onDropBank}
-        className="border border-primary/30 bg-card p-4 shadow-xl"
-      >
+      <div className="border border-primary/30 bg-card p-4 shadow-xl">
         <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Word bank</div>
         <div className="mt-3 flex flex-wrap gap-2">
           {bank.map((w, i) => (
             <button
               key={`${w}-${i}`}
-              draggable
-              onDragStart={(e) => onDragStart(e, w, "bank", i)}
-              onClick={() => moveToTray(w, i)}
+              onClick={() => appendToTray(w, i)}
               className="border border-primary/40 bg-background/60 px-3 py-1.5 font-display text-sm text-foreground/85 hover:border-primary"
             >
               {w}
@@ -152,7 +169,7 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <button onClick={check} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
           Verify Courtesy
         </button>

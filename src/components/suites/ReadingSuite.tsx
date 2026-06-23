@@ -13,13 +13,12 @@ type Passage = {
 
 const DEFAULT_PASSAGE: Passage = {
   source: "TripAdvisor · Verified Stay",
-  meta: "Margaret H. · London, UK · ★★☆☆☆",
+  meta: "Margaret H. · ★★☆☆☆",
   title: "Beautiful property, disappointing check-in",
-  body: `The lobby is breathtaking and the suite truly exceptional. However, our arrival was marred by a 40-minute wait at reception with no acknowledgement, no offer of a seat, and no welcome refreshment. When we finally checked in, the agent did not look up from the screen and asked for "passport" with a single word. For a property of this calibre, the first impression fell short of the room itself.`,
+  body: `The lobby is breathtaking and the suite truly exceptional. However, our arrival was marred by a 40-minute wait at reception with no acknowledgement.`,
   questions: [
-    { q: "Per LQA standard, what is the maximum acceptable time before a guest is acknowledged at reception?", options: ["30 seconds", "10 seconds", "2 minutes", "When the agent is free"], correct: 1 },
-    { q: "Which recovery gesture best matches Forbes 5-Star service standards for a 40-minute wait?", options: ["Apologise verbally and proceed with check-in", "Apologise, seat the guest, offer a welcome refreshment, and assign an upgrade or amenity", "Offer a discount on the next stay", "Explain why the wait occurred in detail"], correct: 1 },
-    { q: 'The agent said only "passport". What is the correct LQA phrasing?', options: ["Passport please.", "Give me passport.", "Could you please kindly provide your passport for our local registration?", "ID please."], correct: 2 },
+    { q: "Per LQA standard, what is the maximum acceptable time before a guest is acknowledged?", options: ["30 seconds", "10 seconds", "2 minutes"], correct: 1 },
+    { q: "Which recovery gesture best matches Forbes 5-Star service?", options: ["Apologise verbally only", "Apologise, seat the guest, offer a refreshment, assign an upgrade", "Offer a discount on next stay"], correct: 1 },
   ],
 };
 
@@ -34,7 +33,7 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
       meta: l.titleEn,
       title: l.titleVi,
       body: l.reading.text,
-      questions: [{ q: l.reading.question, options: l.reading.options, correct: l.reading.correctAnswer }],
+      questions: l.reading.questions,
     }));
   }, [content]);
 
@@ -43,7 +42,6 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
   const [picks, setPicks] = useState<(number | null)[]>(() => passage.questions.map(() => null));
   const [submitted, setSubmitted] = useState(false);
 
-  // reset state on passage change
   useMemo(() => {
     setPicks(passage.questions.map(() => null));
     setSubmitted(false);
@@ -62,7 +60,7 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
     <div className="space-y-6">
       {passages.length > 1 && (
         <div className="flex flex-wrap gap-2">
-          {passages.map((p, i) => (
+          {passages.map((_, i) => (
             <button
               key={i}
               onClick={() => setPIdx(i)}
@@ -100,7 +98,7 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
         >
           {passage.questions.map((q, i) => (
             <div key={i} className="border border-primary/30 bg-card p-5 shadow-xl">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Question {i + 1}</div>
+              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Question {i + 1} of {total}</div>
               <p className="mt-2 text-sm">{q.q}</p>
               <div className="mt-3 space-y-2">
                 {q.options.map((opt, j) => {

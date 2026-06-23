@@ -1,153 +1,234 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, type GameRound } from "@/lib/content/week-content";
 
-const BAD_PHRASES: Array<{ bad: string; good: string }> = [
-  { bad: "Wait a minute", good: "Please allow me a brief moment" },
-  { bad: "Ok", good: "Certainly, my pleasure" },
-  { bad: "Give me passport", good: "May I see your passport, please" },
-  { bad: "No room", good: "Regrettably, we are fully committed this evening" },
-  { bad: "What you want?", good: "How may I be of service?" },
-  { bad: "Hurry up", good: "Whenever you are ready, sir/madam" },
-  { bad: "Not my job", good: "Allow me to find the right colleague for you" },
-  { bad: "Sit there", good: "Please, follow me to your table" },
+type Bubble = { id: number; text: string; correct: boolean; y: number; speed: number; popped?: boolean };
+
+const FALLBACK_ROUNDS: GameRound[] = [
+  {
+    prompt: "Hello, I'd like to check in.",
+    options: [
+      { text: "May I have your name, please?", correct: true },
+      { text: "Give me your name.", correct: false },
+      { text: "Who are you?", correct: false },
+    ],
+  },
 ];
 
-type Bubble = { id: number; phrase: string; good: string; y: number; speed: number; smashed?: boolean };
+type Stage = "rules" | "playing" | "done";
 
 export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics } = useAcademy();
-  const [playing, setPlaying] = useState(false);
-  const [time, setTime] = useState(60);
-  const [patience, setPatience] = useState(100);
-  const [bubbles, setBubbles] = useState<Bubble[]>([]);
-  const [smashedCount, setSmashedCount] = useState(0);
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  const rounds: GameRound[] = content ? content.lessons.map((l) => l.game) : FALLBACK_ROUNDS;
+
+  const [stage, setStage] = useState<Stage>("rules");
+  const [time, setTime] = useState(75);
   const [score, setScore] = useState(0);
-  const [popup, setPopup] = useState<{ id: number; text: string } | null>(null);
+  const [roundIdx, setRoundIdx] = useState(0);
+  const [bubbles, setBubbles] = useState<Bubble[]>([]);
+  const [feedback, setFeedback] = useState<null | { ok: boolean; text: string }>(null);
+  const [spawnedKey, setSpawnedKey] = useState(0); // forces re-spawn per round
   const idRef = useRef(0);
   const startedRef = useRef<number>(0);
 
-  function start() {
-    setPlaying(true);
-    setTime(60);
-    setPatience(100);
-    setBubbles([]);
-    setSmashedCount(0);
+  function startGame() {
+    setStage("playing");
+    setTime(75);
     setScore(0);
+    setRoundIdx(0);
+    setBubbles([]);
+    setFeedback(null);
+    setSpawnedKey((k) => k + 1);
     startedRef.current = Date.now();
   }
 
+  // Countdown
   useEffect(() => {
-    if (!playing) return;
+    if (stage !== "playing") return;
     const tick = setInterval(() => setTime((t) => Math.max(0, t - 1)), 1000);
-    const spawn = setInterval(() => {
-      const content = dep && week ? getWeekContent(dep, week) : null;
-      const pool = content ? content.lessons.flatMap((l) => l.arcade) : BAD_PHRASES;
-      const p = pool[Math.floor(Math.random() * pool.length)];
-      setBubbles((b) => [
-        ...b,
-        { id: ++idRef.current, phrase: p.bad, good: p.good, y: 15 + Math.random() * 65, speed: 9 + Math.random() * 5 },
-      ]);
-    }, 1100);
-    return () => {
-      clearInterval(tick);
-      clearInterval(spawn);
-    };
-  }, [playing]);
+    return () => clearInterval(tick);
+  }, [stage]);
 
+  // End on time-out
   useEffect(() => {
-    if (time === 0 && playing) {
-      setPlaying(false);
+    if (time === 0 && stage === "playing") {
+      setStage("done");
       const elapsed = (Date.now() - startedRef.current) / 1000;
-      const avgPerSmash = smashedCount > 0 ? elapsed / smashedCount : 5;
-      patchMetrics({ reflex_speed: Math.min(100, Math.max(20, Math.round(100 - avgPerSmash * 8))) });
+      patchMetrics({ reflex_speed: Math.min(100, Math.max(20, Math.round(score * 6 + (75 - elapsed) * 0.5))) });
     }
-  }, [time, playing, smashedCount, patchMetrics]);
+  }, [time, stage, score, patchMetrics]);
 
-  function smash(b: Bubble) {
-    if (b.smashed) return;
-    setBubbles((bs) => bs.map((x) => (x.id === b.id ? { ...x, smashed: true } : x)));
-    setSmashedCount((c) => c + 1);
-    setScore((s) => s + 2);
-    awardStars(2);
-    setPopup({ id: b.id, text: b.good });
-    setTimeout(() => setPopup((p) => (p?.id === b.id ? null : p)), 1400);
-    setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 600);
+  // Spawn bubbles for the current round (staggered, one option per ~1.4s)
+  useEffect(() => {
+    if (stage !== "playing") return;
+    const round = rounds[roundIdx % rounds.length];
+    const shuffled = [...round.options].sort(() => Math.random() - 0.5);
+    const timers: number[] = [];
+    shuffled.forEach((opt, i) => {
+      const t = window.setTimeout(() => {
+        setBubbles((prev) => [
+          ...prev,
+          {
+            id: ++idRef.current,
+            text: opt.text,
+            correct: opt.correct,
+            y: 20 + Math.random() * 50,
+            speed: 14 + Math.random() * 4, // slow: 14-18s across the screen
+          },
+        ]);
+      }, i * 1400);
+      timers.push(t);
+    });
+    return () => timers.forEach((t) => clearTimeout(t));
+  }, [stage, roundIdx, spawnedKey, rounds]);
+
+  function tapBubble(b: Bubble) {
+    if (b.popped) return;
+    setBubbles((bs) => bs.map((x) => (x.id === b.id ? { ...x, popped: true } : x)));
+    if (b.correct) {
+      setScore((s) => s + 2);
+      awardStars(2);
+      setFeedback({ ok: true, text: "+2 ⭐ Perfect!" });
+      setTimeout(() => {
+        setFeedback(null);
+        setBubbles([]);
+        setRoundIdx((r) => r + 1);
+        setSpawnedKey((k) => k + 1);
+      }, 900);
+    } else {
+      setFeedback({ ok: false, text: "Try again — too direct." });
+      setTimeout(() => setFeedback(null), 1000);
+      setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
+    }
   }
 
-  function onEscape(b: Bubble) {
-    if (b.smashed) return;
-    setPatience((p) => Math.max(0, p - 8));
+  function expireBubble(b: Bubble) {
+    if (b.popped) return;
     setBubbles((bs) => bs.filter((x) => x.id !== b.id));
   }
 
-  useEffect(() => {
-    if (patience === 0 && playing) setPlaying(false);
-  }, [patience, playing]);
+  const currentRound = rounds[roundIdx % rounds.length];
 
   return (
     <div className="space-y-4">
+      {/* HUD */}
       <div className="flex flex-wrap items-center justify-between gap-4 border border-primary/30 bg-card p-4 shadow-xl">
         <div className="flex items-center gap-6">
           <div>
             <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Time</div>
             <div className="font-display text-2xl text-primary">{time}s</div>
           </div>
-          <div className="w-48">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Guest Patience</div>
-            <div className="mt-1 h-2 w-full overflow-hidden bg-background">
-              <div className="h-full transition-all" style={{ width: `${patience}%`, background: patience > 40 ? "var(--gold)" : "#ff5a5a" }} />
-            </div>
-          </div>
           <div>
             <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Stars</div>
             <div className="font-display text-2xl text-primary">+{score}</div>
           </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Round</div>
+            <div className="font-display text-2xl text-primary">{Math.min(roundIdx + 1, rounds.length)}/{rounds.length}</div>
+          </div>
         </div>
         <button
-          onClick={start}
-          disabled={playing}
-          className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-50"
+          onClick={startGame}
+          className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
         >
-          {playing ? "In service" : "Start Rush"}
+          {stage === "playing" ? "Restart" : "Start Rush"}
         </button>
       </div>
 
-      <div className="relative h-[420px] overflow-hidden border border-primary/30 bg-card shadow-xl">
+      <div className="relative h-[460px] overflow-hidden border border-primary/30 bg-card shadow-xl">
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(212,175,55,0.05), transparent 60%)" }} />
-        {!playing && time === 60 && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-            <div className="text-xs uppercase tracking-[0.3em] text-primary">VIP Rush Hour</div>
-            <h3 className="font-display mt-3 text-3xl">Smash the unprofessional phrases.</h3>
-            <p className="mt-2 max-w-md text-sm text-foreground/70">Tap each phrase before it escapes. Each smash repairs it into a 5-star equivalent and awards +2 ⭐.</p>
+
+        {/* RULES SCREEN */}
+        {stage === "rules" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+            <div className="text-xs uppercase tracking-[0.3em] text-primary">VIP Rush Arcade</div>
+            <h3 className="font-display mt-3 text-3xl">How to Play / Luật chơi</h3>
+            <div className="mt-5 max-w-2xl space-y-4 text-sm leading-relaxed">
+              <p className="text-foreground/85">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary">RULES · </span>
+                Read the Guest's request anchored at the top. Floating options will cross the screen.
+                Tap the bubble containing the correct 5-star staff response that solves the Guest's request before time runs out!
+              </p>
+              <p className="italic text-foreground/70">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary not-italic">LUẬT CHƠI · </span>
+                Đọc kỹ yêu cầu của Khách ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay ngang qua màn hình.
+                Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5 sao phù hợp với yêu cầu của Khách trước khi hết giờ!
+              </p>
+            </div>
+            <button
+              onClick={startGame}
+              className="mt-7 bg-primary px-8 py-3 text-xs uppercase tracking-[0.3em] text-primary-foreground shadow-xl"
+            >
+              Begin Shift →
+            </button>
           </div>
         )}
-        {!playing && time === 0 && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-            <h3 className="font-display text-4xl text-primary">Shift complete</h3>
-            <p className="mt-2 text-sm text-foreground/70">Smashed {smashedCount} phrases · earned {score} ⭐</p>
-          </div>
-        )}
-        {bubbles.map((b) => (
-          <motion.button
-            key={b.id}
-            initial={{ x: "110%" }}
-            animate={{ x: b.smashed ? undefined : "-30vw" }}
-            transition={{ duration: b.speed, ease: "linear" }}
-            onAnimationComplete={() => onEscape(b)}
-            onClick={() => smash(b)}
-            className={`absolute select-none whitespace-nowrap px-4 py-2 font-display text-base shadow-xl ${
-              b.smashed ? "border border-primary bg-primary text-primary-foreground" : "border border-destructive/60 bg-destructive/20 text-foreground"
-            }`}
-            style={{ top: `${b.y}%`, borderRadius: 999 }}
+
+        {/* GUEST PROMPT ANCHOR */}
+        {stage === "playing" && currentRound && (
+          <motion.div
+            key={roundIdx}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute left-1/2 top-3 z-10 w-[92%] -translate-x-1/2 border border-primary/60 bg-background/80 p-3 text-center shadow-xl backdrop-blur"
           >
-            {b.smashed ? "✓ " + b.good : "✕ " + b.phrase}
-          </motion.button>
-        ))}
-        {popup && (
-          <div className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 border border-primary bg-card px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary shadow-xl">
-            +2 ⭐ · {popup.text}
+            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Guest says</div>
+            <p className="mt-1 font-display text-lg text-foreground">"{currentRound.prompt}"</p>
+          </motion.div>
+        )}
+
+        {/* BUBBLES */}
+        {stage === "playing" &&
+          bubbles.map((b) => (
+            <motion.button
+              key={b.id}
+              initial={{ x: "110vw" }}
+              animate={{ x: b.popped ? undefined : "-40vw" }}
+              transition={{ duration: b.speed, ease: "linear" }}
+              onAnimationComplete={() => expireBubble(b)}
+              onClick={() => tapBubble(b)}
+              className={`absolute max-w-[60%] select-none whitespace-normal px-4 py-2 text-left font-display text-sm shadow-xl ${
+                b.popped
+                  ? b.correct
+                    ? "border-2 border-primary bg-primary text-primary-foreground"
+                    : "border-2 border-destructive bg-destructive/30 text-foreground"
+                  : "border border-primary/50 bg-background/70 text-foreground hover:border-primary"
+              }`}
+              style={{ top: `${b.y + 18}%`, borderRadius: 24 }}
+            >
+              {b.text}
+            </motion.button>
+          ))}
+
+        {/* FEEDBACK */}
+        <AnimatePresence>
+          {feedback && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border px-5 py-2 text-xs uppercase tracking-[0.25em] shadow-xl ${
+                feedback.ok ? "border-primary bg-primary text-primary-foreground" : "border-destructive bg-destructive/30 text-foreground"
+              }`}
+            >
+              {feedback.text}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* DONE SCREEN */}
+        {stage === "done" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+            <h3 className="font-display text-4xl text-primary">Shift complete</h3>
+            <p className="mt-2 text-sm text-foreground/70">Earned {score} ⭐ across {Math.min(roundIdx, rounds.length)} rounds</p>
+            <button
+              onClick={startGame}
+              className="mt-5 border border-primary px-6 py-2 text-xs uppercase tracking-[0.25em] text-primary hover:bg-primary/10"
+            >
+              Play again
+            </button>
           </div>
         )}
       </div>
