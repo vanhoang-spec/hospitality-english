@@ -96,7 +96,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
           </p>
         </motion.div>
 
-        </motion.div>
+
 
         {lessons.length > 0 && (
           <section
