@@ -54,13 +54,13 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
           </Link>
           <div className="mt-5 flex items-center gap-3">
             <span className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">Tier III — Skill Suites Hub</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">Skill Suites Hub</span>
           </div>
           <h1 className="font-display mt-3 text-4xl text-foreground md:text-5xl">
             Week {week} <span className="italic text-primary">Golden Service Suites</span>
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-foreground/70">
-            {department.name_en}{department.name_vi ? ` · ${department.name_vi}` : ""}. Select one suite door to begin this shift module.
+            {department.name_en}{department.name_vi ? ` · ${department.name_vi}` : ""}. Select one suite door to begin this shift module. <span className="italic text-foreground/60">Hãy chọn một cánh cửa suite để bắt đầu module ca làm việc này.</span>
           </p>
         </motion.div>
 

@@ -53,13 +53,13 @@ function DeptPage() {
           </Link>
           <div className="mt-4 flex items-center gap-3">
             <span className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">Tier II — Shift Timeline</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">Shift Timeline</span>
           </div>
           <h1 className="font-display mt-3 text-5xl">
             {department.name_en}{" "}
             <span className="italic text-primary">— 20 Weeks</span>
           </h1>
-          <p className="mt-2 text-sm text-foreground/70">{department.tagline}. Each week is a 4-hour shift, partitioned into 4 micro-lessons.</p>
+          <p className="mt-2 text-sm text-foreground/70">{department.tagline}. Each week is a 4-hour shift, partitioned into 4 micro-lessons. <span className="italic text-foreground/60">Mỗi tuần là một ca làm 4 giờ, được chia thành 4 bài học nhỏ.</span></p>
         </motion.div>
 
         <div className="mt-12 relative">
