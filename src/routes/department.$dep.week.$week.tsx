@@ -92,7 +92,7 @@ function WeekPage() {
               transition={{ duration: 0.55, delay: 0.1 + i * 0.06 }}
             >
               <Link
-                to="/department/$dep/week/$week/suite/$suite"
+                to="/learn/$dep/$week/$suite"
                 params={{ dep: department.code, week, suite: s.slug }}
                 className="group relative block h-56 overflow-hidden border border-primary/40 bg-card p-6 shadow-xl transition-all hover:border-primary hover:-translate-y-1"
               >
