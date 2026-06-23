@@ -123,7 +123,7 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
           </button>
           <button
             onClick={() => {
-              setIdx((i) => (i + 1) % SCENARIOS.length);
+              setIdx((i) => (i + 1) % scenarios.length);
               setTranscript("");
               setResult(null);
             }}
