@@ -16,6 +16,14 @@ dist-ssr
 .nitro
 *.local
 
+# Env — không commit secret. Dùng .env.example làm mẫu.
+.env
+.env.*
+!.env.example
+
+# Netlify
+.netlify/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
@@ -24,6 +32,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.claude/
 .DS_Store
 *.suo
 *.ntvs*

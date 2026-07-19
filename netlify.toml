@@ -1,0 +1,22 @@
+# Netlify config cho TanStack Start (SSR) build bằng Nitro preset "netlify".
+#
+# Cơ chế: `bun run build` tạo
+#   - dist/                        -> static client (publish dir)
+#   - .netlify/functions-internal/ -> SSR server function
+# Netlify tự phát hiện thư mục functions-internal và tự nối routing "/*" từ
+# in-source config trong server.mjs (Functions API v2, preferStatic=true).
+# Vì vậy KHÔNG cần khai báo redirect ở đây.
+
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  # Vite 8 yêu cầu Node >= 20.19 / 22.12. Pin cho ổn định.
+  NODE_VERSION = "22"
+
+# Nhắc: khai báo biến môi trường Supabase trong Netlify UI
+# (Site settings -> Environment variables), KHÔNG commit .env:
+#   VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, VITE_SUPABASE_PROJECT_ID,
+#   SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_PROJECT_ID,
+#   SUPABASE_SERVICE_ROLE_KEY (secret — chỉ dùng phía server)

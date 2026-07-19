@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Outside the Lovable sandbox the deploy plugin is skipped unless `nitro` is set
+  // explicitly, and its default target is Cloudflare. Force-enable it and target
+  // Netlify so `npm run build` emits a Netlify-compatible SSR server + static client.
+  nitro: { preset: "netlify" },
 });
