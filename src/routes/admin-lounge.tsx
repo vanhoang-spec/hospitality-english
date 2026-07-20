@@ -3,14 +3,37 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { DEPARTMENTS } from "@/lib/departments";
+import { useSession, useProfile } from "@/lib/auth";
 
 export const Route = createFileRoute("/admin-lounge")({
   head: () => ({ meta: [{ title: "Admin Lounge — Embassy Language" }] }),
-  component: AdminLounge,
+  component: AdminLoungeGate,
 });
 
 type Scenario = { id: string; department_id: string; week_number: number; title_en: string; title_vi: string };
 type Lesson = { id: string; scenario_id: string; lesson_order: number; title_en: string; title_vi: string };
+
+function AdminLoungeGate() {
+  const { session, loading: sessionLoading } = useSession();
+  const userId = session?.user.id;
+  const { data: profile, isLoading: profileLoading } = useProfile(userId);
+
+  if (sessionLoading || profileLoading) {
+    return (
+      <main className="mx-auto max-w-3xl px-6 py-24 text-center">
+        <p className="text-sm text-foreground/70">Đang tải…</p>
+      </main>
+    );
+  }
+  if (profile?.role !== "super_admin") {
+    return (
+      <main className="mx-auto max-w-3xl px-6 py-24 text-center">
+        <p className="text-sm text-foreground/70">Trang này chỉ dành cho quản trị hệ thống.</p>
+      </main>
+    );
+  }
+  return <AdminLounge />;
+}
 
 function AdminLounge() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
