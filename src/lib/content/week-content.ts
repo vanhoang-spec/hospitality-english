@@ -2085,3 +2085,7 @@ export function getWeekContent(dep: string, week: string | number): WeekContent 
   const wk = typeof week === "string" ? parseInt(week, 10) : week;
   return REGISTRY[`${dep.toUpperCase()}-${wk}`] ?? null;
 }
+
+export const AVAILABLE_WEEKS = Array.from(
+  new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
+).sort((a, b) => a - b);
