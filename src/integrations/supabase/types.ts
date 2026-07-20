@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      lesson_progress: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          department_id: string
+          id: string
+          stars: number
+          suite: string
+          updated_at: string
+          user_id: string
+          week_number: number
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          department_id: string
+          id?: string
+          stars?: number
+          suite: string
+          updated_at?: string
+          user_id: string
+          week_number: number
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          department_id?: string
+          id?: string
+          stars?: number
+          suite?: string
+          updated_at?: string
+          user_id?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lessons: {
         Row: {
           created_at: string
@@ -48,6 +92,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          seat_limit: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          seat_limit?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          seat_limit?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       performance_metrics: {
         Row: {
@@ -98,6 +166,10 @@ export type Database = {
           id: string
           job_rank: string
           last_active_date: string
+          must_change_password: boolean
+          org_id: string | null
+          phone: string | null
+          role: string
           service_stars: number
           updated_at: string
         }
@@ -108,6 +180,10 @@ export type Database = {
           id: string
           job_rank?: string
           last_active_date?: string
+          must_change_password?: boolean
+          org_id?: string | null
+          phone?: string | null
+          role?: string
           service_stars?: number
           updated_at?: string
         }
@@ -118,10 +194,22 @@ export type Database = {
           id?: string
           job_rank?: string
           last_active_date?: string
+          must_change_password?: boolean
+          org_id?: string | null
+          phone?: string | null
+          role?: string
           service_stars?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       scenarios: {
         Row: {
@@ -155,7 +243,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      award_stars: {
+        Args: { delta: number }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

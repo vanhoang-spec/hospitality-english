@@ -1,17 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import logoAsset from "@/assets/embassy-logo.png.asset.json";
 import { useAcademy } from "@/lib/academy-store";
+import { useSession, useProfile, signOut } from "@/lib/auth";
 
 export function AcademyNav() {
-  const { state, update, jobRank } = useAcademy();
-  const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(state.full_name);
+  const location = useLocation();
+  const { state, jobRank } = useAcademy();
+  const { session } = useSession();
+  const { data: profile } = useProfile(session?.user.id);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [shimmer, setShimmer] = useState(false);
   const prevStars = useRef(state.service_stars);
-
-  useEffect(() => setName(state.full_name), [state.full_name, editing]);
 
   useEffect(() => {
     if (state.service_stars !== prevStars.current) {
@@ -22,10 +23,11 @@ export function AcademyNav() {
     }
   }, [state.service_stars]);
 
-  function save() {
-    update({ full_name: name.trim() || "Esteemed Apprentice" });
-    setEditing(false);
-  }
+  if (location.pathname === "/login") return null;
+
+  const displayName = profile?.full_name || "Esteemed Apprentice";
+  const orgName = profile?.organizations?.name;
+  const isOrgAdmin = profile?.role === "org_admin";
 
   return (
     <>
@@ -40,11 +42,13 @@ export function AcademyNav() {
           </Link>
 
           <button
-            onClick={() => setEditing(true)}
+            onClick={() => setMenuOpen(true)}
             className="hidden truncate rounded-sm border border-primary/30 px-3 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary hover:text-primary md:block"
           >
-            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/50">Apprentice</span>
-            <span className="ml-2 font-display text-base">{state.full_name}</span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+              {orgName ?? "Apprentice"}
+            </span>
+            <span className="ml-2 font-display text-base">{displayName}</span>
           </button>
 
           <div className="hidden flex-1 items-center justify-center md:flex">
@@ -55,6 +59,14 @@ export function AcademyNav() {
           </div>
 
           <div className="flex items-center gap-2">
+            {isOrgAdmin && (
+              <Link
+                to="/org-admin"
+                className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
+              >
+                Team
+              </Link>
+            )}
             <Link
               to="/appraisal"
               className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
@@ -68,53 +80,72 @@ export function AcademyNav() {
               shimmer={shimmer}
             />
             <Shield icon="🔥" value={state.daily_streak} label="Streak" pulse />
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="rounded-sm border border-primary/30 px-2.5 py-1.5 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:hidden"
+              aria-label="Account menu"
+            >
+              👤
+            </button>
           </div>
         </div>
       </header>
 
       <AnimatePresence>
-        {editing && (
+        {menuOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setEditing(false)}
+            onClick={() => setMenuOpen(false)}
           >
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.96 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full max-w-md border border-primary/40 bg-card p-8 shadow-xl"
+              className="w-full max-w-sm border border-primary/40 bg-card p-8 shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-xs uppercase tracking-[0.3em] text-primary">Personal Dossier</div>
-              <h2 className="font-display mt-3 text-3xl">Edit your name</h2>
-              <p className="mt-2 text-sm text-foreground/70">
-                As it shall appear on your guest register and promotion review.
-              </p>
-              <input
-                autoFocus
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && save()}
-                className="mt-6 w-full border border-primary/30 bg-background px-4 py-3 font-display text-xl text-foreground outline-none focus:border-primary"
-              />
-              <div className="mt-6 flex justify-end gap-3">
-                <button
-                  onClick={() => setEditing(false)}
-                  className="px-5 py-2 text-xs uppercase tracking-[0.2em] text-foreground/70 hover:text-foreground"
+              <h2 className="font-display mt-3 text-2xl">{displayName}</h2>
+              {orgName && <p className="mt-1 text-sm text-foreground/60">{orgName}</p>}
+
+              <div className="mt-6 flex flex-col gap-2">
+                {isOrgAdmin && (
+                  <Link
+                    to="/org-admin"
+                    onClick={() => setMenuOpen(false)}
+                    className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
+                  >
+                    Team
+                  </Link>
+                )}
+                <Link
+                  to="/change-password"
+                  onClick={() => setMenuOpen(false)}
+                  className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
                 >
-                  Cancel
-                </button>
+                  Đổi mật khẩu
+                </Link>
                 <button
-                  onClick={save}
-                  className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl hover:-translate-y-0.5 transition-transform"
+                  onClick={async () => {
+                    setMenuOpen(false);
+                    await signOut();
+                  }}
+                  className="bg-primary px-4 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl hover:-translate-y-0.5 transition-transform"
                 >
-                  Save
+                  Đăng xuất
                 </button>
               </div>
+
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="mt-6 w-full text-center text-xs uppercase tracking-[0.2em] text-foreground/50 hover:text-foreground"
+              >
+                Đóng
+              </button>
             </motion.div>
           </motion.div>
         )}
