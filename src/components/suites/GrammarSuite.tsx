@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
@@ -29,7 +29,9 @@ function shuffle<T>(a: T[]): T[] {
 }
 
 export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
-  const { awardStars, patchMetrics } = useAcademy();
+  const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const earned = useRef(0);
+  const awardedRoundRef = useRef(-1);
   const content = dep && week ? getWeekContent(dep, week) : null;
   const puzzles: Puzzle[] = content
     ? content.lessons.flatMap((l) =>
@@ -91,9 +93,12 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     const target = puzzle.target.toLowerCase().replace(/[^\w'\s]/g, "").trim();
     const ok = assembled === target;
     setChecked(ok);
-    if (ok) {
+    if (ok && awardedRoundRef.current !== round) {
+      awardedRoundRef.current = round;
       awardStars(4);
       patchMetrics({ courtesy_score: Math.min(100, 70 + (round + 1) * 8) });
+      earned.current += 4;
+      if (dep && week) recordSuiteResult(dep, week, "grammar", earned.current);
     }
   }
 

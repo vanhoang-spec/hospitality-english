@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
@@ -23,7 +23,9 @@ const DEFAULT_PASSAGE: Passage = {
 };
 
 export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
-  const { awardStars, patchMetrics } = useAcademy();
+  const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const earned = useRef(0);
+  const awardedPassageRef = useRef(-1);
   const content = dep && week ? getWeekContent(dep, week) : null;
 
   const passages: Passage[] = useMemo(() => {
@@ -52,7 +54,13 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
 
   function submit() {
     setSubmitted(true);
-    if (score >= Math.ceil(total / 2)) awardStars(score * 2);
+    if (score >= Math.ceil(total / 2) && awardedPassageRef.current !== pIdx) {
+      awardedPassageRef.current = pIdx;
+      const gained = score * 2;
+      awardStars(gained);
+      earned.current += gained;
+      if (dep && week) recordSuiteResult(dep, week, "reading", earned.current);
+    }
     patchMetrics({ crisis_handling_score: Math.min(100, 60 + score * 13) });
   }
 

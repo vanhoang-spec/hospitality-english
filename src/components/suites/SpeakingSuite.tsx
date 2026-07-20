@@ -35,7 +35,9 @@ function compareWords(spoken: string, target: string) {
 }
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
-  const { awardStars, patchMetrics } = useAcademy();
+  const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const earned = useRef(0);
+  const awardedAttemptRef = useRef(false);
   const content = dep && week ? getWeekContent(dep, week) : null;
   const scenarios = content
     ? content.lessons.map((l) => ({
@@ -59,6 +61,7 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
     setTranscript("");
     setResult(null);
     finalRef.current = "";
+    awardedAttemptRef.current = false;
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) {
       setError("Speech recognition isn't supported in this browser. Try Chrome.");
@@ -86,8 +89,11 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      if (acc >= 80) {
+      if (acc >= 80 && !awardedAttemptRef.current) {
+        awardedAttemptRef.current = true;
         awardStars(5);
+        earned.current += 5;
+        if (dep && week) recordSuiteResult(dep, week, "speaking", earned.current);
         setFireworks(true);
         playApplause(1800);
         setTimeout(() => setFireworks(false), 2400);

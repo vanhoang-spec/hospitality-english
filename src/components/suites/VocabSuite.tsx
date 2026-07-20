@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
@@ -21,7 +21,9 @@ const LIBRARY: Record<string, Term[]> = {
 };
 
 export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
-  const { awardStars } = useAcademy();
+  const { awardStars, recordSuiteResult } = useAcademy();
+  const earned = useRef(0);
+  const awardedRef = useRef<Set<number>>(new Set());
   const content = week ? getWeekContent(dep, week) : null;
   const terms: Term[] = content
     ? content.lessons.flatMap((l) =>
@@ -34,12 +36,15 @@ export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
     setFlipped((s) => {
       const n = new Set(s);
       if (n.has(i)) n.delete(i);
-      else {
-        n.add(i);
-        awardStars(1);
-      }
+      else n.add(i);
       return n;
     });
+    if (!awardedRef.current.has(i)) {
+      awardedRef.current.add(i);
+      awardStars(1);
+      earned.current += 1;
+      if (week) recordSuiteResult(dep, week, "vocab", earned.current);
+    }
   }
 
   return (

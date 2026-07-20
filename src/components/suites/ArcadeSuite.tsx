@@ -19,7 +19,9 @@ const FALLBACK_ROUNDS: GameRound[] = [
 type Stage = "rules" | "playing" | "done";
 
 export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
-  const { awardStars, patchMetrics } = useAcademy();
+  const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const earned = useRef(0);
+  const poppedRef = useRef<Set<number>>(new Set());
   const content = dep && week ? getWeekContent(dep, week) : null;
   const rounds: GameRound[] = content ? content.lessons.map((l) => l.game) : FALLBACK_ROUNDS;
 
@@ -85,11 +87,14 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   }, [stage, roundIdx, spawnedKey, rounds]);
 
   function tapBubble(b: Bubble) {
-    if (b.popped) return;
+    if (b.popped || poppedRef.current.has(b.id)) return;
+    poppedRef.current.add(b.id);
     setBubbles((bs) => bs.map((x) => (x.id === b.id ? { ...x, popped: true } : x)));
     if (b.correct) {
       setScore((s) => s + 2);
       awardStars(2);
+      earned.current += 2;
+      if (dep && week) recordSuiteResult(dep, week, "arcade", earned.current);
       setFeedback({ ok: true, text: "+2 ⭐ Perfect!" });
       setTimeout(() => {
         setFeedback(null);
