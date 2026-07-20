@@ -24,6 +24,9 @@ dist-ssr
 # Netlify
 .netlify/
 
+# Supabase CLI local cache
+supabase/.temp/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
