@@ -49,6 +49,7 @@ export const createMember = createServerFn({ method: "POST" })
       fullName: z.string().min(1),
       password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
       role: z.enum(["member", "org_admin"]).default("member"),
+      department: z.string().trim().max(100).optional(),
     }),
   )
   .handler(async ({ data, context }) => {
@@ -93,12 +94,17 @@ export const createMember = createServerFn({ method: "POST" })
       phone,
       password: data.password,
       phone_confirm: true,
-      user_metadata: { full_name: data.fullName, org_id: orgId, role: data.role },
+      user_metadata: { full_name: data.fullName, org_id: orgId, role: data.role, department: data.department },
     });
 
     if (error || !created.user) {
       throw new Error(friendlyAuthError(error?.message ?? "Tạo tài khoản thất bại."));
     }
+
+    // Admin set this password (typed or auto-generated) on the member's
+    // behalf — always require them to set their own on first login, same
+    // as resetMemberPassword below.
+    await supabaseAdmin.from("profiles").update({ must_change_password: true }).eq("id", created.user.id);
 
     return { userId: created.user.id };
   });

@@ -162,6 +162,7 @@ export type Database = {
         Row: {
           created_at: string
           daily_streak: number
+          department: string | null
           full_name: string | null
           id: string
           job_rank: string
@@ -176,6 +177,7 @@ export type Database = {
         Insert: {
           created_at?: string
           daily_streak?: number
+          department?: string | null
           full_name?: string | null
           id: string
           job_rank?: string
@@ -190,6 +192,7 @@ export type Database = {
         Update: {
           created_at?: string
           daily_streak?: number
+          department?: string | null
           full_name?: string | null
           id?: string
           job_rank?: string

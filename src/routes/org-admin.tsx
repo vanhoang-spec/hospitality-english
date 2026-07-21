@@ -7,6 +7,7 @@ import { createMember, deleteMember, resetMemberPassword, updateMemberRole } fro
 import { formatPhoneDisplay } from "@/lib/phone";
 import { DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS } from "@/lib/content/week-content";
+import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
 
 export const Route = createFileRoute("/org-admin")({
   head: () => ({ meta: [{ title: "Team — Embassy Language" }] }),
@@ -20,6 +21,7 @@ type Member = {
   role: "member" | "org_admin" | "super_admin";
   service_stars: number;
   daily_streak: number;
+  department: string | null;
 };
 
 type Org = { id: string; name: string; seat_limit: number };
@@ -59,6 +61,8 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
   const queryClient = useQueryClient();
   const [drawerUserId, setDrawerUserId] = useState<string | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [departmentFilter, setDepartmentFilter] = useState<string>("ALL");
   const [credentialNotice, setCredentialNotice] = useState<{ title: string; lines: string[] } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [confirmState, setConfirmState] = useState<{ message: string; danger?: boolean; onConfirm: () => void } | null>(null);
@@ -81,7 +85,7 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
     queryFn: async (): Promise<Member[]> => {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, full_name, phone, role, service_stars, daily_streak")
+        .select("id, full_name, phone, role, service_stars, daily_streak, department")
         .eq("org_id", orgId)
         .order("role", { ascending: false })
         .order("full_name", { ascending: true });
@@ -109,6 +113,12 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
   const members = membersQuery.data ?? [];
   const seatLimit = orgQuery.data?.seat_limit ?? 0;
   const orgName = orgQuery.data?.name ?? "";
+
+  const departmentOptions = Array.from(new Set(members.map((m) => m.department).filter((d): d is string => !!d))).sort();
+  // Guard against a stale filter value (e.g. the last member with that
+  // department was just deleted) silently hiding the whole table.
+  const activeDepartmentFilter = departmentOptions.includes(departmentFilter) ? departmentFilter : "ALL";
+  const filteredMembers = activeDepartmentFilter === "ALL" ? members : members.filter((m) => m.department === activeDepartmentFilter);
 
   function handleReset(m: Member) {
     setConfirmState({
@@ -154,13 +164,42 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
             {members.length}/{seatLimit} thành viên
           </p>
         </div>
-        <button
-          onClick={() => setAddOpen(true)}
-          className="bg-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
-        >
-          + Thêm thành viên
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setImportOpen(true)}
+            className="border border-primary/40 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+          >
+            Nhập từ CSV
+          </button>
+          <button
+            onClick={() => setAddOpen(true)}
+            className="bg-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+          >
+            + Thêm thành viên
+          </button>
+        </div>
       </div>
+
+      {departmentOptions.length > 0 && (
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+          <span className="uppercase tracking-[0.2em] text-foreground/50">Phòng ban:</span>
+          <button
+            onClick={() => setDepartmentFilter("ALL")}
+            className={`px-3 py-1 uppercase tracking-[0.15em] ${activeDepartmentFilter === "ALL" ? "bg-primary text-primary-foreground" : "border border-primary/30 text-foreground/70 hover:border-primary"}`}
+          >
+            Tất cả
+          </button>
+          {departmentOptions.map((dep) => (
+            <button
+              key={dep}
+              onClick={() => setDepartmentFilter(dep)}
+              className={`px-3 py-1 uppercase tracking-[0.15em] ${activeDepartmentFilter === dep ? "bg-primary text-primary-foreground" : "border border-primary/30 text-foreground/70 hover:border-primary"}`}
+            >
+              {dep}
+            </button>
+          ))}
+        </div>
+      )}
 
       {errorMsg && (
         <div className="mt-4 flex items-start justify-between gap-4 border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -177,6 +216,7 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
             <tr className="border-b border-primary/20 text-left text-[10px] uppercase tracking-[0.2em] text-foreground/60">
               <th className="px-4 py-3">Tên</th>
               <th className="px-4 py-3">SĐT</th>
+              <th className="px-4 py-3">Phòng ban</th>
               <th className="px-4 py-3">Vai trò</th>
               <th className="px-4 py-3">Sao</th>
               <th className="px-4 py-3">Streak</th>
@@ -186,19 +226,19 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
           <tbody>
             {membersQuery.isLoading && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-foreground/50">
+                <td colSpan={7} className="px-4 py-6 text-center text-foreground/50">
                   Đang tải…
                 </td>
               </tr>
             )}
-            {!membersQuery.isLoading && members.length === 0 && (
+            {!membersQuery.isLoading && filteredMembers.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-foreground/50">
+                <td colSpan={7} className="px-4 py-6 text-center text-foreground/50">
                   Chưa có thành viên nào.
                 </td>
               </tr>
             )}
-            {members.map((m) => (
+            {filteredMembers.map((m) => (
               <tr key={m.id} className="border-b border-primary/10 last:border-0">
                 <td className="px-4 py-3">
                   <button
@@ -209,6 +249,7 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
                   </button>
                 </td>
                 <td className="px-4 py-3 text-foreground/70">{formatPhoneDisplay(m.phone)}</td>
+                <td className="px-4 py-3 text-foreground/70">{m.department || "—"}</td>
                 <td className="px-4 py-3">
                   <span className={m.role === "org_admin" ? "text-primary" : "text-foreground/60"}>
                     {m.role === "org_admin" ? "Admin" : "Thành viên"}
@@ -259,6 +300,14 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
         />
       )}
 
+      {importOpen && (
+        <ImportCsvDialog
+          seatsRemaining={Math.max(0, seatLimit - members.length)}
+          onClose={() => setImportOpen(false)}
+          onDone={invalidateMembers}
+        />
+      )}
+
       {credentialNotice && <CredentialNotice info={credentialNotice} onClose={() => setCredentialNotice(null)} />}
 
       {confirmState && (
@@ -306,10 +355,14 @@ function AddMemberDialog({
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(generateTempPassword());
   const [role, setRole] = useState<"member" | "org_admin">("member");
+  const [departmentChoice, setDepartmentChoice] = useState<string>(DEPARTMENTS[0].code);
+  const [departmentCustom, setDepartmentCustom] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const department = departmentChoice === "OTHER" ? departmentCustom.trim() : departmentChoice;
+
   const createMut = useMutation({
-    mutationFn: () => createMember({ data: { fullName, phone, password, role } }),
+    mutationFn: () => createMember({ data: { fullName, phone, password, role, department: department || undefined } }),
   });
 
   async function submit(e: React.FormEvent) {
@@ -378,6 +431,28 @@ function AddMemberDialog({
               <option value="org_admin">Admin</option>
             </select>
           </Field>
+          <Field label="Phòng ban">
+            <select
+              value={departmentChoice}
+              onChange={(e) => setDepartmentChoice(e.target.value)}
+              className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
+            >
+              {DEPARTMENTS.map((d) => (
+                <option key={d.code} value={d.code}>
+                  {d.code} — {d.name_vi}
+                </option>
+              ))}
+              <option value="OTHER">Khác…</option>
+            </select>
+            {departmentChoice === "OTHER" && (
+              <input
+                placeholder="Tên phòng ban"
+                value={departmentCustom}
+                onChange={(e) => setDepartmentCustom(e.target.value)}
+                className="mt-2 w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
+              />
+            )}
+          </Field>
         </div>
         <div className="mt-6 flex justify-end gap-3">
           <button type="button" onClick={onClose} className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground">
@@ -392,6 +467,245 @@ function AddMemberDialog({
           </button>
         </div>
       </form>
+    </div>
+  );
+}
+
+type CsvRow = {
+  index: number;
+  name: string;
+  phone: string;
+  password: string;
+  department: string;
+  preError?: string;
+};
+
+type RowResult = CsvRow & { status: "pending" | "ok" | "error"; message?: string };
+
+const CSV_TEMPLATE = toCsv([
+  ["Tên", "Số điện thoại", "Mật khẩu", "Phòng ban"],
+  ["Nguyễn Văn A", "0912345678", "", "FO"],
+]);
+
+function downloadTextFile(filename: string, content: string, mime: string) {
+  // UTF-8 BOM so Excel opens Vietnamese text correctly.
+  const blob = new Blob(["﻿" + content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function ImportCsvDialog({
+  seatsRemaining,
+  onClose,
+  onDone,
+}: {
+  seatsRemaining: number;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const [rows, setRows] = useState<CsvRow[]>([]);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [results, setResults] = useState<RowResult[] | null>(null);
+  const [processing, setProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  function handleFile(file: File) {
+    setFileError(null);
+    setResults(null);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = String(reader.result ?? "");
+      const table = parseCsv(text);
+      if (table.length < 2) {
+        setFileError("File CSV không có dữ liệu (cần dòng tiêu đề + ít nhất 1 dòng).");
+        setRows([]);
+        return;
+      }
+      const [header, ...dataRows] = table;
+      const map = mapCsvHeaders(header);
+      if (map.name === -1 || map.phone === -1) {
+        setFileError('Không tìm thấy cột "Tên" và/hoặc "Số điện thoại" trong dòng tiêu đề.');
+        setRows([]);
+        return;
+      }
+      const parsed: CsvRow[] = dataRows.map((r, i) => {
+        const name = (r[map.name] ?? "").trim();
+        const phone = (r[map.phone] ?? "").trim();
+        const password = map.password >= 0 ? (r[map.password] ?? "").trim() : "";
+        const department = map.department >= 0 ? (r[map.department] ?? "").trim() : "";
+        const preError = !name || !phone ? "Thiếu tên hoặc số điện thoại" : undefined;
+        return { index: i + 1, name, phone, password, department, preError };
+      });
+      setRows(parsed);
+    };
+    reader.onerror = () => setFileError("Không đọc được file.");
+    reader.readAsText(file, "utf-8");
+  }
+
+  async function startImport() {
+    setProcessing(true);
+    setProgress(0);
+    const working: RowResult[] = rows.map((r) => ({ ...r, status: r.preError ? "error" : "pending", message: r.preError }));
+    setResults(working);
+
+    for (let i = 0; i < working.length; i++) {
+      if (working[i].status === "error") {
+        setProgress(i + 1);
+        continue;
+      }
+      const row = working[i];
+      const password = row.password || generateTempPassword();
+      try {
+        await createMember({
+          data: {
+            fullName: row.name,
+            phone: row.phone,
+            password,
+            role: "member",
+            department: row.department || undefined,
+          },
+        });
+        working[i] = { ...row, password, status: "ok" };
+      } catch (e) {
+        working[i] = { ...row, status: "error", message: e instanceof Error ? e.message : "Tạo tài khoản thất bại." };
+      }
+      setResults([...working]);
+      setProgress(i + 1);
+    }
+    setProcessing(false);
+    onDone();
+  }
+
+  function downloadResults() {
+    if (!results) return;
+    const ok = results.filter((r) => r.status === "ok");
+    const csv = toCsv([
+      ["Tên", "Số điện thoại", "Mật khẩu"],
+      ...ok.map((r) => [r.name, r.phone, r.password]),
+    ]);
+    downloadTextFile("ket-qua-nhap-thanh-vien.csv", csv, "text/csv;charset=utf-8");
+  }
+
+  const validCount = rows.filter((r) => !r.preError).length;
+  const okCount = results?.filter((r) => r.status === "ok").length ?? 0;
+  const errorCount = results?.filter((r) => r.status === "error").length ?? 0;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm">
+      <div className="max-h-[85vh] w-full max-w-2xl overflow-y-auto border border-primary/40 bg-card p-6 shadow-2xl">
+        <h2 className="font-display text-2xl text-foreground">Nhập thành viên từ CSV</h2>
+        <p className="mt-2 text-xs text-foreground/60">
+          Cột cần có: Tên, Số điện thoại. Tùy chọn: Mật khẩu (để trống sẽ tự sinh), Phòng ban.
+        </p>
+
+        <div className="mt-4 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => downloadTextFile("mau-nhap-thanh-vien.csv", CSV_TEMPLATE, "text/csv;charset=utf-8")}
+            className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.15em] text-primary hover:bg-primary/10"
+          >
+            Tải file mẫu CSV
+          </button>
+          <label className="cursor-pointer border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.15em] text-foreground/80 hover:border-primary">
+            Chọn file CSV…
+            <input
+              type="file"
+              accept=".csv,text/csv"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) handleFile(f);
+                e.target.value = "";
+              }}
+            />
+          </label>
+        </div>
+
+        {fileError && <p className="mt-3 text-sm text-destructive">{fileError}</p>}
+
+        {rows.length > 0 && !results && (
+          <div className="mt-4 border border-primary/20 bg-background/40 p-4 text-sm">
+            <p>
+              Đã đọc {rows.length} dòng — <span className="text-primary">{validCount} hợp lệ</span>
+              {rows.length - validCount > 0 && <span className="text-destructive"> · {rows.length - validCount} thiếu tên/SĐT</span>}.
+            </p>
+            {validCount > seatsRemaining && (
+              <p className="mt-1 text-destructive">
+                Nhóm chỉ còn {seatsRemaining} ghế trống — các dòng vượt hạn mức sẽ báo lỗi khi nhập.
+              </p>
+            )}
+          </div>
+        )}
+
+        {rows.length > 0 && !results && (
+          <button
+            onClick={startImport}
+            disabled={processing || validCount === 0}
+            className="mt-4 bg-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-50"
+          >
+            Bắt đầu nhập ({validCount} dòng)
+          </button>
+        )}
+
+        {processing && (
+          <p className="mt-3 text-sm text-foreground/70">
+            Đang xử lý dòng {progress}/{rows.length}…
+          </p>
+        )}
+
+        {results && (
+          <div className="mt-5">
+            <p className="text-sm">
+              Hoàn tất: <span className="text-primary">{okCount} thành công</span>
+              {errorCount > 0 && <span className="text-destructive"> · {errorCount} lỗi</span>}
+            </p>
+            <div className="mt-3 max-h-64 overflow-y-auto border border-primary/20">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-primary/20 text-left uppercase tracking-[0.15em] text-foreground/60">
+                    <th className="px-3 py-2">Tên</th>
+                    <th className="px-3 py-2">SĐT</th>
+                    <th className="px-3 py-2">Kết quả</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((r) => (
+                    <tr key={r.index} className="border-b border-primary/10 last:border-0">
+                      <td className="px-3 py-2">{r.name || "—"}</td>
+                      <td className="px-3 py-2">{r.phone || "—"}</td>
+                      <td className={`px-3 py-2 ${r.status === "ok" ? "text-primary" : r.status === "error" ? "text-destructive" : "text-foreground/50"}`}>
+                        {r.status === "ok" ? `✓ Mật khẩu: ${r.password}` : r.status === "error" ? `✕ ${r.message}` : "…"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {okCount > 0 && (
+              <button
+                onClick={downloadResults}
+                className="mt-4 border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.15em] text-primary hover:bg-primary/10"
+              >
+                Tải kết quả CSV (tên, SĐT, mật khẩu)
+              </button>
+            )}
+          </div>
+        )}
+
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={onClose}
+            disabled={processing}
+            className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground disabled:opacity-40"
+          >
+            {results ? "Đóng" : "Hủy"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
