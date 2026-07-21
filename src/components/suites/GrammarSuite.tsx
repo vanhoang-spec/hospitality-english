@@ -1,23 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
-
-const PUZZLES: Puzzle[] = [
-  {
-    bad: "Give me passport",
-    target: "Could you please kindly provide your passport for our local registration",
-    chips: ["Could", "you", "please", "kindly", "provide", "your", "passport", "for", "our", "local", "registration"],
-  },
-  {
-    bad: "What you want eat",
-    target: "How may I assist you with this evening's dining selection",
-    chips: ["How", "may", "I", "assist", "you", "with", "this", "evening's", "dining", "selection"],
-  },
-];
 
 function shuffle<T>(a: T[]): T[] {
   const c = [...a];
@@ -37,6 +25,12 @@ function normalizeSentence(s: string): string {
 }
 
 export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  if (!content) return <SuiteComingSoon />;
+  return <GrammarSuiteInner dep={dep!} week={week!} content={content} />;
+}
+
+function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedRoundRef = useRef(-1);
@@ -45,17 +39,14 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   // learner solved it without revealing the answer first. State (not a
   // ref) so the "Đạt chuẩn: X/N" header re-renders the instant it changes.
   const [outcomes, setOutcomes] = useState<Map<number, "correct" | "revealed">>(new Map());
-  const content = dep && week ? getWeekContent(dep, week) : null;
-  const puzzles: Puzzle[] = content
-    ? content.lessons.flatMap((l) =>
-        l.grammar.map((g) => ({
-          bad: g.rude,
-          target: g.polite,
-          chips: g.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
-          rule: g.rule,
-        })),
-      )
-    : PUZZLES;
+  const puzzles: Puzzle[] = content.lessons.flatMap((l) =>
+    l.grammar.map((g) => ({
+      bad: g.rude,
+      target: g.polite,
+      chips: g.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
+      rule: g.rule,
+    })),
+  );
   const [round, setRound] = useState(0);
   const puzzleIdx = round % puzzles.length;
   const puzzle = puzzles[puzzleIdx];

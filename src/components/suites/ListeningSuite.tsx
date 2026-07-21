@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 const MASTERY_PCT = 80;
 const MAX_LISTENS = 3;
@@ -105,7 +106,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const ttsAvailable = typeof window !== "undefined" && "speechSynthesis" in window;
 
   if (!week || tasks.length === 0) {
-    return <p className="text-sm text-foreground/70">Chưa có nội dung luyện nghe cho tuần này.</p>;
+    return <SuiteComingSoon />;
   }
   if (!ttsAvailable) {
     return <p className="text-sm text-foreground/70">Trình duyệt của bạn không hỗ trợ đọc audio (speech synthesis). Hãy dùng Chrome hoặc Edge.</p>;

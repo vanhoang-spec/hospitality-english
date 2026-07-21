@@ -76,7 +76,7 @@ function DeptPage() {
           </div>
           <h1 className="font-display mt-3 text-5xl">
             {department.name_en}{" "}
-            <span className="italic text-primary">— 20 Weeks</span>
+            <span className="italic text-primary">— 40 Weeks</span>
           </h1>
           <p className="mt-2 text-sm text-foreground/70">{department.tagline}. Each week is a 4-hour shift, partitioned into 4 micro-lessons. <span className="italic text-foreground/60">Mỗi tuần là một ca làm 4 giờ, được chia thành 4 bài học nhỏ.</span></p>
         </motion.div>

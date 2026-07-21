@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Passage = {
   source: string;
@@ -11,28 +12,21 @@ type Passage = {
   questions: { q: string; options: string[]; correct: number; explanation?: string }[];
 };
 
-const DEFAULT_PASSAGE: Passage = {
-  source: "TripAdvisor · Verified Stay",
-  meta: "Margaret H. · ★★☆☆☆",
-  title: "Beautiful property, disappointing check-in",
-  body: `The lobby is breathtaking and the suite truly exceptional. However, our arrival was marred by a 40-minute wait at reception with no acknowledgement.`,
-  questions: [
-    { q: "Per LQA standard, what is the maximum acceptable time before a guest is acknowledged?", options: ["30 seconds", "10 seconds", "2 minutes"], correct: 1 },
-    { q: "Which recovery gesture best matches Forbes 5-Star service?", options: ["Apologise verbally only", "Apologise, seat the guest, offer a refreshment, assign an upgrade", "Offer a discount on next stay"], correct: 1 },
-  ],
-};
-
 export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  if (!content) return <SuiteComingSoon />;
+  return <ReadingSuiteInner dep={dep!} week={week!} content={content} />;
+}
+
+function ReadingSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedPassageRef = useRef(-1);
   // Best percentage per passage — suite mastery requires >= 80% on every
   // passage, and the recorded suite score is the average across all.
   const bestPctRef = useRef<Map<number, number>>(new Map());
-  const content = dep && week ? getWeekContent(dep, week) : null;
 
   const passages: Passage[] = useMemo(() => {
-    if (!content) return [DEFAULT_PASSAGE];
     return content.lessons.map((l) => ({
       source: `${content.departmentId} · Lesson ${l.lessonOrder}`,
       meta: l.titleEn,

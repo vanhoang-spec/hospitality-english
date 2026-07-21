@@ -1,6 +1,14 @@
-// Classic Luxury curriculum fallback — mirrors the cloud seed map.
-// Used when Lovable Cloud reads return empty so the Tier 2 timeline and
-// Tier 3 lesson step indicators always render with zero missing nodes.
+// Local fallback for the 40-week frame (docs/curriculum-level-matrix.md).
+// Used when Supabase reads return empty so the Tier 2 timeline and Tier 3
+// lesson step indicators always render with zero missing nodes.
+//
+// Weeks 1-14 share one spine across all departments (Phase 0-1 of the
+// matrix); authored weeks pull their real titles from week-content.ts;
+// everything else renders a generic placeholder.
+
+import { getWeekContent } from "@/lib/content/week-content";
+
+export const TOTAL_WEEKS = 40;
 
 export type CurriculumWeek = {
   department_id: string;
@@ -10,7 +18,69 @@ export type CurriculumWeek = {
   lessons: string[]; // 4 Vietnamese sub-lesson titles, ordered 1..4
 };
 
-export const CURRICULUM: CurriculumWeek[] = [
+// Shared Phase 0-1 spine + checkpoint weeks — mirrors the scenario
+// titles seeded by migration 20260721150000_forty_week_frame.sql.
+const SPINE_TITLES: Record<number, { en: string; vi: string }> = {
+  1: { en: "Alphabet, Names & Greetings", vi: "Bảng chữ cái, Đánh vần tên & Chào hỏi" },
+  2: { en: "Numbers, Rooms & Floors", vi: "Số đếm, Số phòng & Số tầng" },
+  3: { en: "Times, Dates & Opening Hours", vi: "Giờ, Ngày & Giờ mở cửa dịch vụ" },
+  4: { en: "Prices, Money & Quantities", vi: "Giá cả, Tiền tệ & Số lượng" },
+  5: { en: "Core Courtesy Phrases", vi: "Cụm câu lịch sự cốt lõi" },
+  6: { en: "Checkpoint — Survival Foundation", vi: "Kiểm tra tổng hợp — Nền tảng sống còn" },
+  7: { en: "People & Jobs in the Hotel", vi: "Con người & Công việc trong khách sạn" },
+  8: { en: "Places & Directions", vi: "Vị trí & Chỉ đường trong khuôn viên" },
+  9: { en: "Simple Guest Requests", vi: "Yêu cầu đơn giản của khách" },
+  10: { en: "Describing Things & States", vi: "Mô tả đồ vật & Trạng thái" },
+  11: { en: "Schedules & Shift Routines", vi: "Lịch trình & Thói quen ca làm" },
+  12: { en: "Answering the Phone", vi: "Nghe điện thoại cơ bản" },
+  13: { en: "Simple Problems & Apologies", vi: "Sự cố đơn giản & Xin lỗi" },
+  14: { en: "Checkpoint — First Sentences", vi: "Kiểm tra tổng hợp — Giao tiếp câu đơn" },
+  22: { en: "Checkpoint — Core SOP Service", vi: "Kiểm tra tổng hợp — Nghiệp vụ chuẩn" },
+  30: { en: "Checkpoint — Proactive Service", vi: "Kiểm tra tổng hợp — Dịch vụ chủ động" },
+  40: { en: "Final Assessment — B1.1 Hospitality", vi: "Đánh giá cuối khóa — B1.1 nghiệp vụ" },
+};
+
+const GENERIC_LESSONS_VI = ["Chào đón khách", "Quy trình phục vụ", "Xử lý yêu cầu", "Tiễn khách & khắc phục"];
+
+function buildWeek(code: string, week: number): CurriculumWeek {
+  const dep = code.toUpperCase();
+  const authored = getWeekContent(dep, week);
+  if (authored) {
+    return {
+      department_id: dep,
+      week_number: week,
+      title_en: authored.weekTitleEn,
+      title_vi: authored.weekTitleVi,
+      lessons: authored.lessons.map((l) => l.titleVi),
+    };
+  }
+  const spine = SPINE_TITLES[week];
+  return {
+    department_id: dep,
+    week_number: week,
+    title_en: spine?.en ?? `Week ${week}`,
+    title_vi: spine?.vi ?? `Tuần ${week}`,
+    lessons: GENERIC_LESSONS_VI.map((t) => `${t} (Tuần ${week})`),
+  };
+}
+
+export function weeksForDepartment(code: string): CurriculumWeek[] {
+  return Array.from({ length: TOTAL_WEEKS }, (_, i) => buildWeek(code, i + 1));
+}
+
+export function findWeek(code: string, week: number | string): CurriculumWeek | undefined {
+  const wn = typeof week === "string" ? parseInt(week, 10) : week;
+  if (!Number.isFinite(wn) || wn < 1 || wn > TOTAL_WEEKS) return undefined;
+  return buildWeek(code, wn);
+}
+
+// ------------------------------------------------------------------
+// TOPIC SEEDS — the original "Classic Luxury" outline, kept ONLY as
+// source material for authoring future week content (P2-P4 slots).
+// ⚠️ Its week numbering follows the RETIRED model (20 weeks split
+// across departments) and must NOT be used for week lookup.
+// ------------------------------------------------------------------
+export const TOPIC_SEEDS: CurriculumWeek[] = [
   { department_id: "FO", week_number: 1, title_en: "Standard Check-in & OTA Booking Verification", title_vi: "Quy trình Đón tiếp & Check-in Khách Lẻ (OTA/Direct)", lessons: [
     "Chào đón tại cửa/sảnh, khảo sát danh tính và kiểm tra thông tin đặt phòng trên hệ thống PMS (Agoda, Booking.com...)",
     "Quy trình mượn Hộ chiếu/CCCD, giải thích thủ tục đăng ký lưu trú với công an bản địa theo luật Việt Nam",
@@ -132,16 +202,3 @@ export const CURRICULUM: CurriculumWeek[] = [
     "Điều phối giao tiếp giải quyết xung đột vận hành liên phòng ban (FO khiếu nại HK dọn phòng chậm làm ảnh hưởng chỉ số check-in)",
   ]},
 ];
-
-export function weeksForDepartment(code: string) {
-  return CURRICULUM.filter((w) => w.department_id === code.toUpperCase()).sort(
-    (a, b) => a.week_number - b.week_number,
-  );
-}
-
-export function findWeek(code: string, week: number | string) {
-  const wn = typeof week === "string" ? parseInt(week, 10) : week;
-  return CURRICULUM.find(
-    (w) => w.department_id === code.toUpperCase() && w.week_number === wn,
-  );
-}

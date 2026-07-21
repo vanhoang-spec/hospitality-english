@@ -1,24 +1,13 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Term = { en: string; ipa: string; vi: string; usage: string; icon?: string };
 
 const FALLBACK_ICON = "✨";
-
-const LIBRARY: Record<string, Term[]> = {
-  FO: [
-    { en: "Pre-authorization", ipa: "/priːˌɔː.θər.aɪˈzeɪ.ʃən/", vi: "Tạm giữ hạn mức trên thẻ", usage: "May I take a pre-authorization for incidentals?", icon: "💳" },
-    { en: "Late check-out", ipa: "/leɪt ˈtʃek.aʊt/", vi: "Trả phòng muộn", usage: "I'd be delighted to grant a complimentary late check-out.", icon: "🕐" },
-  ],
-  FB: [{ en: "Allergen", ipa: "/ˈæl.ə.dʒen/", vi: "Chất gây dị ứng", usage: "May I confirm any allergens before placing your order?", icon: "🥜" }],
-  HK: [{ en: "Turndown", ipa: "/ˈtɜːrn.daʊn/", vi: "Dọn giường buổi tối", usage: "Turndown will be presented at your preferred hour.", icon: "🛏️" }],
-  SW: [{ en: "Aromatherapy", ipa: "/əˌroʊ.məˈθer.ə.pi/", vi: "Liệu pháp tinh dầu", usage: "Would you prefer a calming aromatherapy blend?", icon: "🌿" }],
-  GR: [{ en: "Bespoke", ipa: "/bɪˈspoʊk/", vi: "Riêng biệt theo yêu cầu", usage: "Allow us to prepare a bespoke welcome amenity.", icon: "🎁" }],
-  BO: [{ en: "RevPAR", ipa: "/ˈrev.pɑːr/", vi: "Doanh thu trên phòng sẵn có", usage: "RevPAR rose seven percent year-on-year.", icon: "📈" }],
-};
 
 function shuffle<T>(a: T[]): T[] {
   const c = [...a];
@@ -58,13 +47,18 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
 }
 
 export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
-  const { awardStars, recordSuiteResult } = useAcademy();
   const content = week ? getWeekContent(dep, week) : null;
-  const terms: Term[] = content
-    ? content.lessons.flatMap((l) =>
-        l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context, icon: v.icon })),
-      )
-    : LIBRARY[dep.toUpperCase()] ?? LIBRARY.FO;
+  // Guard component keeps all hooks in the inner component so the
+  // null-content branch never changes hook order.
+  if (!content) return <SuiteComingSoon />;
+  return <VocabSuiteInner dep={dep} week={week!} content={content} />;
+}
+
+function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
+  const { awardStars, recordSuiteResult } = useAcademy();
+  const terms: Term[] = content.lessons.flatMap((l) =>
+    l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context, icon: v.icon })),
+  );
 
   const [stage, setStage] = useState<"study" | "quiz" | "done">("study");
   const [flipped, setFlipped] = useState<Set<number>>(new Set());

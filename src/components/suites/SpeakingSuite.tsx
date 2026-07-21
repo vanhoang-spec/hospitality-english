@@ -2,15 +2,9 @@ import { useEffect, useRef, useState } from "react";
 // useEffect used inside FireworksCanvas below
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
-
-const SCENARIOS = [
-  {
-    complaint: "I've been waiting 25 minutes for my room key. This is unacceptable.",
-    target: "I sincerely apologise for the wait. May I offer you a welcome refreshment while I expedite your key personally.",
-  },
-];
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 function normalize(s: string) {
   return s.toLowerCase().replace(/[^\w\s']/g, " ").split(/\s+/).filter(Boolean);
@@ -56,6 +50,12 @@ const PASS_ACCURACY = 80;
 const PASS_ORDER_RATIO = 0.6;
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  if (!content) return <SuiteComingSoon />;
+  return <SpeakingSuiteInner dep={dep!} week={week!} content={content} />;
+}
+
+function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   // Per-scenario pass state — mirrors ReadingSuite's bestPctRef pattern.
@@ -63,16 +63,13 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   // only ever awarded once per scenario (not once per suite).
   const passedRef = useRef<Set<number>>(new Set());
   const bestPctRef = useRef<Map<number, number>>(new Map());
-  const content = dep && week ? getWeekContent(dep, week) : null;
-  const scenarios = content
-    ? content.lessons.flatMap((l) =>
-        l.speaking.map((s) => ({
-          complaint: s.guestPrompt,
-          target: s.targetResponse,
-          tip: s.helpTip,
-        })),
-      )
-    : SCENARIOS.map((s) => ({ ...s, tip: undefined as string | undefined }));
+  const scenarios = content.lessons.flatMap((l) =>
+    l.speaking.map((s) => ({
+      complaint: s.guestPrompt,
+      target: s.targetResponse,
+      tip: s.helpTip,
+    })),
+  );
   const [idx, setIdx] = useState(0);
   const scenario = scenarios[idx];
   const [recording, setRecording] = useState(false);

@@ -6,7 +6,7 @@ import { useSession, useProfile } from "@/lib/auth";
 import { createMember, deleteMember, resetMemberPassword, updateMemberRole } from "@/lib/org-admin-actions";
 import { formatPhoneDisplay } from "@/lib/phone";
 import { DEPARTMENTS } from "@/lib/departments";
-import { AVAILABLE_WEEKS } from "@/lib/content/week-content";
+import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
 
 export const Route = createFileRoute("/org-admin")({
@@ -869,9 +869,20 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                   {DEPARTMENTS.map((d) => (
                     <tr key={d.code} className="border-t border-primary/10">
                       <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">{d.code}</td>
-                      {AVAILABLE_WEEKS.map((w) =>
-                        SUITES.map((s) => {
+                      {AVAILABLE_WEEKS.map((w) => {
+                        // After the 40-week relocation, authored weeks differ
+                        // per department — mark non-existent dep/week combos
+                        // as N/A instead of "not studied yet".
+                        const hasContent = getWeekContent(d.code, w) !== null;
+                        return SUITES.map((s) => {
                           const key = `${d.code}-${w}-${s}`;
+                          if (!hasContent) {
+                            return (
+                              <td key={key} className="border-l border-primary/5 px-1 py-1.5 text-center" title="Tuần này không thuộc bộ phận này">
+                                <span className="text-foreground/10">—</span>
+                              </td>
+                            );
+                          }
                           const mastered = masteredKey.has(key);
                           const participated = participatedKey.has(key);
                           return (
@@ -881,8 +892,8 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                               </span>
                             </td>
                           );
-                        }),
-                      )}
+                        });
+                      })}
                     </tr>
                   ))}
                 </tbody>
@@ -917,7 +928,11 @@ type OrgMetricsRow = {
 };
 type OrgProgressRow = { user_id: string; stars: number; mastered: boolean };
 
-const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.length * AVAILABLE_WEEKS.length * SUITES.length;
+// Only dep/week combos that actually have authored content count as
+// completable slots (weeks differ per department after the 40-week frame).
+const TOTAL_SLOTS_PER_MEMBER =
+  DEPARTMENTS.reduce((sum, d) => sum + AVAILABLE_WEEKS.filter((w) => getWeekContent(d.code, w) !== null).length, 0) *
+  SUITES.length;
 
 function departmentLabel(dep: string): string {
   const match = DEPARTMENTS.find((d) => d.code.toLowerCase() === dep.toLowerCase());

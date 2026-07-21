@@ -1,29 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, type GameRound } from "@/lib/content/week-content";
+import { getWeekContent, type GameRound, type WeekContent } from "@/lib/content/week-content";
+import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Bubble = { id: number; text: string; correct: boolean; y: number; speed: number; popped?: boolean };
-
-const FALLBACK_ROUNDS: GameRound[] = [
-  {
-    prompt: "Hello, I'd like to check in.",
-    options: [
-      { text: "May I have your name, please?", correct: true },
-      { text: "Give me your name.", correct: false },
-      { text: "Who are you?", correct: false },
-    ],
-  },
-];
 
 type Stage = "rules" | "playing" | "done";
 
 export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
+  const content = dep && week ? getWeekContent(dep, week) : null;
+  if (!content) return <SuiteComingSoon />;
+  return <ArcadeSuiteInner dep={dep!} week={week!} content={content} />;
+}
+
+function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const poppedRef = useRef<Set<number>>(new Set());
-  const content = dep && week ? getWeekContent(dep, week) : null;
-  const rounds: GameRound[] = content ? content.lessons.flatMap((l) => l.game) : FALLBACK_ROUNDS;
+  const rounds: GameRound[] = content.lessons.flatMap((l) => l.game);
 
   const [stage, setStage] = useState<Stage>("rules");
   const [won, setWon] = useState(false);

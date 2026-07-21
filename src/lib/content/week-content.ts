@@ -40,14 +40,14 @@ export type WeekContent = {
   reviewWords?: string[];
 };
 
-export const FO_WEEK_1: WeekContent = {
+export const FO_WEEK_17: WeekContent = {
   departmentId: "FO",
-  weekNumber: 1,
+  weekNumber: 17,
   weekTitleEn: "Standard Check-in & OTA Booking Verification",
   weekTitleVi: "Quy trình Đón tiếp & Check-in Khách Lẻ",
   lessons: [
     {
-      lessonId: "FO_1_1",
+      lessonId: "FO_17_1",
       lessonOrder: 1,
       titleEn: "Greeting & PMS Verification",
       titleVi: "Chào đón & Kiểm tra hệ thống",
@@ -87,7 +87,7 @@ export const FO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_1_2",
+      lessonId: "FO_17_2",
       lessonOrder: 2,
       titleEn: "Passport & Registration SOP",
       titleVi: "Mượn hộ chiếu & Đăng ký lưu trú",
@@ -127,7 +127,7 @@ export const FO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_1_3",
+      lessonId: "FO_17_3",
       lessonOrder: 3,
       titleEn: "Pre-authorization Process",
       titleVi: "Quy trình quẹt thẻ đặt cọc",
@@ -167,7 +167,7 @@ export const FO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_1_4",
+      lessonId: "FO_17_4",
       lessonOrder: 4,
       titleEn: "Amenities & Key Delivery",
       titleVi: "Giao chìa khóa & Giới thiệu tiện ích",
@@ -209,14 +209,14 @@ export const FO_WEEK_1: WeekContent = {
   ],
 };
 
-export const FB_WEEK_1: WeekContent = {
+export const FB_WEEK_15: WeekContent = {
   departmentId: "FB",
-  weekNumber: 1,
+  weekNumber: 15,
   weekTitleEn: "Breakfast Buffet Welcoming & Station Mapping",
   weekTitleVi: "Điều Phối & Đón Tiếp Tại Nhà Hàng Buffet Sáng",
   lessons: [
     {
-      lessonId: "FB_1_1",
+      lessonId: "FB_15_1",
       lessonOrder: 1,
       titleEn: "Greeting & Breakfast Voucher Verification",
       titleVi: "Chào đón & Kiểm tra Phiếu ăn sáng",
@@ -256,7 +256,7 @@ export const FB_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_1_2",
+      lessonId: "FB_15_2",
       lessonOrder: 2,
       titleEn: "Queue Management at Peak Hours",
       titleVi: "Quản lý Hàng đợi Giờ cao điểm",
@@ -296,7 +296,7 @@ export const FB_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_1_3",
+      lessonId: "FB_15_3",
       lessonOrder: 3,
       titleEn: "Escorting Guests & Station Mapping",
       titleVi: "Dẫn khách & Giới thiệu Sơ đồ Buffet",
@@ -336,7 +336,7 @@ export const FB_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_1_4",
+      lessonId: "FB_15_4",
       lessonOrder: 4,
       titleEn: "Table Clearing & Satisfaction Check",
       titleVi: "Dọn bàn & Hỏi thăm Mức độ hài lòng",
@@ -378,14 +378,14 @@ export const FB_WEEK_1: WeekContent = {
   ],
 };
 
-export const HK_WEEK_1: WeekContent = {
+export const HK_WEEK_15: WeekContent = {
   departmentId: "HK",
-  weekNumber: 1,
+  weekNumber: 15,
   weekTitleEn: "Room Service Requests & Extra Amenities",
   weekTitleVi: "Quy Trình Giao Tiếp Phòng Khách & Phục Vụ Tiện Ích",
   lessons: [
     {
-      lessonId: "HK_1_1",
+      lessonId: "HK_15_1",
       lessonOrder: 1,
       titleEn: "Knock & Announce SOP",
       titleVi: "Quy trình Gõ cửa & Thông báo",
@@ -425,7 +425,7 @@ export const HK_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_1_2",
+      lessonId: "HK_15_2",
       lessonOrder: 2,
       titleEn: "Amenities Requests",
       titleVi: "Xử lý Yêu cầu Tiện ích",
@@ -465,7 +465,7 @@ export const HK_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_1_3",
+      lessonId: "HK_15_3",
       lessonOrder: 3,
       titleEn: "Rollaway Beds & Equipment Loans",
       titleVi: "Giường phụ & Cho mượn Thiết bị",
@@ -505,7 +505,7 @@ export const HK_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_1_4",
+      lessonId: "HK_15_4",
       lessonOrder: 4,
       titleEn: "Handling Do Not Disturb Rooms",
       titleVi: "Xử lý Phòng treo biển DND",
@@ -547,14 +547,14 @@ export const HK_WEEK_1: WeekContent = {
   ],
 };
 
-export const SW_WEEK_1: WeekContent = {
+export const SW_WEEK_23: WeekContent = {
   departmentId: "SW",
-  weekNumber: 1,
+  weekNumber: 23,
   weekTitleEn: "Spa Treatment Consultation & Package Upselling",
   weekTitleVi: "Tư Vấn Liệu Trình Spa & Kỹ Thuật Upselling Gói Trị Liệu",
   lessons: [
     {
-      lessonId: "SW_1_1",
+      lessonId: "SW_23_1",
       lessonOrder: 1,
       titleEn: "Welcoming Guests & Health Consultation Form",
       titleVi: "Chào đón Khách & Phiếu Khảo sát Sức khỏe",
@@ -594,7 +594,7 @@ export const SW_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_1_2",
+      lessonId: "SW_23_2",
       lessonOrder: 2,
       titleEn: "Explaining Treatment Types",
       titleVi: "Giải thích các Liệu pháp Trị liệu",
@@ -634,7 +634,7 @@ export const SW_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_1_3",
+      lessonId: "SW_23_3",
       lessonOrder: 3,
       titleEn: "Upselling to Combo & Family Packages",
       titleVi: "Kỹ thuật Upselling Gói Combo & Gia đình",
@@ -674,7 +674,7 @@ export const SW_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_1_4",
+      lessonId: "SW_23_4",
       lessonOrder: 4,
       titleEn: "Post-Treatment Feedback & Product Recommendation",
       titleVi: "Thu thập Phản hồi & Tư vấn Sản phẩm Mang về",
@@ -716,14 +716,14 @@ export const SW_WEEK_1: WeekContent = {
   ],
 };
 
-export const GR_WEEK_1: WeekContent = {
+export const GR_WEEK_27: WeekContent = {
   departmentId: "GR",
-  weekNumber: 1,
+  weekNumber: 27,
   weekTitleEn: "VIP & Executive Club Benefits Management",
   weekTitleVi: "Chăm Sóc Khách Hàng Thượng Lưu (HNWI) Tại Executive Lounge",
   lessons: [
     {
-      lessonId: "GR_1_1",
+      lessonId: "GR_27_1",
       lessonOrder: 1,
       titleEn: "Welcoming VIP Guests & Introducing Club Privileges",
       titleVi: "Đón tiếp Khách VIP & Giới thiệu Đặc quyền Club",
@@ -763,7 +763,7 @@ export const GR_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_1_2",
+      lessonId: "GR_27_2",
       lessonOrder: 2,
       titleEn: "Afternoon Tea & Evening Cocktail Hour Service",
       titleVi: "Phục vụ Trà Chiều & Giờ Cocktail Buổi Tối",
@@ -803,7 +803,7 @@ export const GR_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_1_3",
+      lessonId: "GR_27_3",
       lessonOrder: 3,
       titleEn: "Executive Assistance: Meeting Rooms & Urgent Printing",
       titleVi: "Hỗ trợ Thư ký Hành chính: Đặt Phòng Họp & In ấn Khẩn cấp",
@@ -843,7 +843,7 @@ export const GR_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_1_4",
+      lessonId: "GR_27_4",
       lessonOrder: 4,
       titleEn: "Managing Guest History Profiles & Preferences",
       titleVi: "Quản trị Hồ sơ Lịch sử Khách hàng & Ghi nhận Sở thích",
@@ -885,14 +885,14 @@ export const GR_WEEK_1: WeekContent = {
   ],
 };
 
-export const BO_WEEK_1: WeekContent = {
+export const BO_WEEK_37: WeekContent = {
   departmentId: "BO",
-  weekNumber: 1,
+  weekNumber: 37,
   weekTitleEn: "B2B Account Sales & Contract Negotiations",
   weekTitleVi: "Đàm Phán Hợp Đồng Đại Lý Lữ Hành & Doanh Nghiệp (B2B Account Sales)",
   lessons: [
     {
-      lessonId: "BO_1_1",
+      lessonId: "BO_37_1",
       lessonOrder: 1,
       titleEn: "Pitching Corporate Rates & Closing the Contract",
       titleVi: "Chào giá Doanh nghiệp & Chốt Hợp đồng",
@@ -932,7 +932,7 @@ export const BO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_1_2",
+      lessonId: "BO_37_2",
       lessonOrder: 2,
       titleEn: "Allotment & Release Period",
       titleVi: "Thỏa thuận Phân bổ Phòng & Thời hạn Hoàn phòng",
@@ -972,7 +972,7 @@ export const BO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_1_3",
+      lessonId: "BO_37_3",
       lessonOrder: 3,
       titleEn: "Blackout Dates & Cancellation Policy",
       titleVi: "Ngày Hạn chế Cao điểm & Chính sách Hủy phòng",
@@ -1012,7 +1012,7 @@ export const BO_WEEK_1: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_1_4",
+      lessonId: "BO_37_4",
       lessonOrder: 4,
       titleEn: "Handling Rate Pressure & Commission Disputes",
       titleVi: "Xử lý Ép giá & Tranh chấp Hoa hồng",
@@ -1054,14 +1054,14 @@ export const BO_WEEK_1: WeekContent = {
   ],
 };
 
-export const FO_WEEK_2: WeekContent = {
+export const FO_WEEK_26: WeekContent = {
   departmentId: "FO",
-  weekNumber: 2,
+  weekNumber: 26,
   weekTitleEn: "Group & MICE Check-in Management",
   weekTitleVi: "Quản lý Đoàn Khách Tour & Phái Đoàn Doanh Nghiệp (MICE Groups)",
   lessons: [
     {
-      lessonId: "FO_2_1",
+      lessonId: "FO_26_1",
       lessonOrder: 1,
       titleEn: "Rooming List Verification with the Tour Leader",
       titleVi: "Đối chiếu Danh sách phòng cùng Trưởng đoàn",
@@ -1101,7 +1101,7 @@ export const FO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_2_2",
+      lessonId: "FO_26_2",
       lessonOrder: 2,
       titleEn: "Express Check-in & Bellman Coordination",
       titleVi: "Phát phòng nhanh & Phối hợp cùng Bellman",
@@ -1141,7 +1141,7 @@ export const FO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_2_3",
+      lessonId: "FO_26_3",
       lessonOrder: 3,
       titleEn: "Handling Room Swaps & Split Billing",
       titleVi: "Xử lý Đổi phòng chéo & Tách hóa đơn",
@@ -1181,7 +1181,7 @@ export const FO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FO_2_4",
+      lessonId: "FO_26_4",
       lessonOrder: 4,
       titleEn: "Group Announcements: Breakfast & Shuttle Bus",
       titleVi: "Thông báo đoàn: Giờ ăn sáng & Lịch xe đưa đón",
@@ -1223,14 +1223,14 @@ export const FO_WEEK_2: WeekContent = {
   ],
 };
 
-export const FB_WEEK_2: WeekContent = {
+export const FB_WEEK_31: WeekContent = {
   departmentId: "FB",
-  weekNumber: 2,
+  weekNumber: 31,
   weekTitleEn: "Presenting Local Cuisine & Coffee Culture",
   weekTitleVi: "Quảng Bá Văn Hóa Ẩm Thực Bản Địa (Culinary Storytelling)",
   lessons: [
     {
-      lessonId: "FB_2_1",
+      lessonId: "FB_31_1",
       lessonOrder: 1,
       titleEn: "Explaining Heritage Dishes to Foreign Guests",
       titleVi: "Giới thiệu Món ăn Di sản cho Khách nước ngoài",
@@ -1270,7 +1270,7 @@ export const FB_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_2_2",
+      lessonId: "FB_31_2",
       lessonOrder: 2,
       titleEn: "Guiding Guests Through Vietnamese Coffee Culture",
       titleVi: "Hướng dẫn Trải nghiệm Văn hóa Cà phê Việt Nam",
@@ -1310,7 +1310,7 @@ export const FB_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_2_3",
+      lessonId: "FB_31_3",
       lessonOrder: 3,
       titleEn: "Gathering Allergy & Dietary Information",
       titleVi: "Khai thác Thông tin Dị ứng & Chế độ Ăn kiêng",
@@ -1350,7 +1350,7 @@ export const FB_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "FB_2_4",
+      lessonId: "FB_31_4",
       lessonOrder: 4,
       titleEn: "Recommending Signature Dishes",
       titleVi: "Đề xuất Món ăn Đặc sản Signature",
@@ -1392,14 +1392,14 @@ export const FB_WEEK_2: WeekContent = {
   ],
 };
 
-export const HK_WEEK_2: WeekContent = {
+export const HK_WEEK_33: WeekContent = {
   departmentId: "HK",
-  weekNumber: 2,
+  weekNumber: 33,
   weekTitleEn: "Express Laundry Service & Damage Disputes",
   weekTitleVi: "Dịch Vụ Giặt Là Cao Cấp & Tranh Chấp Đồ Vải",
   lessons: [
     {
-      lessonId: "HK_2_1",
+      lessonId: "HK_33_1",
       lessonOrder: 1,
       titleEn: "Laundry Pick-up & Item Inspection",
       titleVi: "Nhận đồ giặt & Kiểm tra tình trạng",
@@ -1439,7 +1439,7 @@ export const HK_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_2_2",
+      lessonId: "HK_33_2",
       lessonOrder: 2,
       titleEn: "Laundry Service Tiers & Pricing",
       titleVi: "Phân hệ dịch vụ giặt là & Biểu phí",
@@ -1479,7 +1479,7 @@ export const HK_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_2_3",
+      lessonId: "HK_33_3",
       lessonOrder: 3,
       titleEn: "Handling Damage Complaints",
       titleVi: "Xử lý khiếu nại đồ giặt bị hư hỏng",
@@ -1519,7 +1519,7 @@ export const HK_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "HK_2_4",
+      lessonId: "HK_33_4",
       lessonOrder: 4,
       titleEn: "Negotiating Compensation per SOP",
       titleVi: "Thương lượng đền bù theo quy định SOP",
@@ -1561,14 +1561,14 @@ export const HK_WEEK_2: WeekContent = {
   ],
 };
 
-export const SW_WEEK_2: WeekContent = {
+export const SW_WEEK_19: WeekContent = {
   departmentId: "SW",
-  weekNumber: 2,
+  weekNumber: 19,
   weekTitleEn: "Pool & Private Cabana Elite Service",
   weekTitleVi: "Điều Phối Khu Vực Hồ Bơi/Bãi Biển & Cảnh Báo An Toàn",
   lessons: [
     {
-      lessonId: "SW_2_1",
+      lessonId: "SW_19_1",
       lessonOrder: 1,
       titleEn: "Towel Station Service & Cabana Directions",
       titleVi: "Phục vụ tại Quầy Khăn & Hướng dẫn Cabana",
@@ -1608,7 +1608,7 @@ export const SW_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_2_2",
+      lessonId: "SW_19_2",
       lessonOrder: 2,
       titleEn: "Pool Safety Rules: Children & Swimwear",
       titleVi: "Nội quy An toàn Hồ bơi: Trẻ em & Trang phục",
@@ -1648,7 +1648,7 @@ export const SW_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_2_3",
+      lessonId: "SW_19_3",
       lessonOrder: 3,
       titleEn: "Severe Weather & Red Flag Warnings",
       titleVi: "Cảnh báo Thời tiết Nguy hiểm & Cờ đỏ",
@@ -1688,7 +1688,7 @@ export const SW_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "SW_2_4",
+      lessonId: "SW_19_4",
       lessonOrder: 4,
       titleEn: "Basic Beach First Aid: Cramps & Heat Exhaustion",
       titleVi: "Sơ cứu Cơ bản tại Bãi biển: Chuột rút & Say nắng",
@@ -1730,14 +1730,14 @@ export const SW_WEEK_2: WeekContent = {
   ],
 };
 
-export const GR_WEEK_2: WeekContent = {
+export const GR_WEEK_34: WeekContent = {
   departmentId: "GR",
-  weekNumber: 2,
+  weekNumber: 34,
   weekTitleEn: "Milestone Surprise Execution",
   weekTitleVi: "Thiết Kế Trải Nghiệm Bất Ngờ (Milestone Moments)",
   lessons: [
     {
-      lessonId: "GR_2_1",
+      lessonId: "GR_34_1",
       lessonOrder: 1,
       titleEn: "Discovering Special Occasions",
       titleVi: "Khai thác thông tin để phát hiện dịp đặc biệt",
@@ -1777,7 +1777,7 @@ export const GR_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_2_2",
+      lessonId: "GR_34_2",
       lessonOrder: 2,
       titleEn: "Coordinating with Kitchen & Housekeeping",
       titleVi: "Phối hợp nội bộ với Bếp và Housekeeping",
@@ -1817,7 +1817,7 @@ export const GR_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_2_3",
+      lessonId: "GR_34_3",
       lessonOrder: 3,
       titleEn: "Presenting the Gift with Elegant Words",
       titleVi: "Trao quà và lời chúc mừng nghệ thuật, quý phái",
@@ -1857,7 +1857,7 @@ export const GR_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "GR_2_4",
+      lessonId: "GR_34_4",
       lessonOrder: 4,
       titleEn: "Recovering from a Surprise Set-up Error",
       titleVi: "Xử lý khi set-up bất ngờ bị lỗi",
@@ -1899,14 +1899,14 @@ export const GR_WEEK_2: WeekContent = {
   ],
 };
 
-export const BO_WEEK_2: WeekContent = {
+export const BO_WEEK_38: WeekContent = {
   departmentId: "BO",
-  weekNumber: 2,
+  weekNumber: 38,
   weekTitleEn: "MICE & Event Proposal Pitching (BEO)",
   weekTitleVi: "Đấu Thầu Sự Kiện MICE & Ký Kết Văn Bản BEO",
   lessons: [
     {
-      lessonId: "BO_2_1",
+      lessonId: "BO_38_1",
       lessonOrder: 1,
       titleEn: "Receiving the RFP & Building a Cost Estimate",
       titleVi: "Tiếp nhận RFP & Xây dựng bảng dự toán",
@@ -1946,7 +1946,7 @@ export const BO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_2_2",
+      lessonId: "BO_38_2",
       lessonOrder: 2,
       titleEn: "Site Inspection & Seating Layouts",
       titleVi: "Khảo sát mặt bằng & Sơ đồ setup bàn ghế",
@@ -1986,7 +1986,7 @@ export const BO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_2_3",
+      lessonId: "BO_38_3",
       lessonOrder: 3,
       titleEn: "Negotiating Menu, Beverage & Technical Terms",
       titleVi: "Đàm phán thực đơn, đồ uống & điều khoản kỹ thuật",
@@ -2026,7 +2026,7 @@ export const BO_WEEK_2: WeekContent = {
       }],
     },
     {
-      lessonId: "BO_2_4",
+      lessonId: "BO_38_4",
       lessonOrder: 4,
       titleEn: "Finalizing the BEO for Sign-off",
       titleVi: "Hoàn thiện Lệnh tổ chức sự kiện (BEO) để ký kết",
@@ -2070,18 +2070,18 @@ export const BO_WEEK_2: WeekContent = {
 
 // Registry — keyed by `${DEP}-${week}`.
 const REGISTRY: Record<string, WeekContent> = {
-  "FO-1": FO_WEEK_1,
-  "FB-1": FB_WEEK_1,
-  "HK-1": HK_WEEK_1,
-  "SW-1": SW_WEEK_1,
-  "GR-1": GR_WEEK_1,
-  "BO-1": BO_WEEK_1,
-  "FO-2": FO_WEEK_2,
-  "FB-2": FB_WEEK_2,
-  "HK-2": HK_WEEK_2,
-  "SW-2": SW_WEEK_2,
-  "GR-2": GR_WEEK_2,
-  "BO-2": BO_WEEK_2,
+  "FO-17": FO_WEEK_17,
+  "FB-15": FB_WEEK_15,
+  "HK-15": HK_WEEK_15,
+  "SW-23": SW_WEEK_23,
+  "GR-27": GR_WEEK_27,
+  "BO-37": BO_WEEK_37,
+  "FO-26": FO_WEEK_26,
+  "FB-31": FB_WEEK_31,
+  "HK-33": HK_WEEK_33,
+  "SW-19": SW_WEEK_19,
+  "GR-34": GR_WEEK_34,
+  "BO-38": BO_WEEK_38,
 };
 
 export function getWeekContent(dep: string, week: string | number): WeekContent | null {
