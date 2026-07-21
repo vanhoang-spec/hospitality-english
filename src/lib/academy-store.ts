@@ -1,9 +1,11 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
+import { seedReviewItems } from "@/lib/review";
 
 const LEGACY_KEY = "academy.state.v1";
 const PENDING_STARS_PREFIX = "academy.pendingStars.v1.";
+const LAST_LEARNED_PREFIX = "academy.lastLearned.v1.";
 const METRICS_DEBOUNCE_MS = 600;
 
 export type Metrics = {
@@ -117,6 +119,20 @@ async function migrateLegacyLocalState(userId: string): Promise<AcademyState | n
   }
 }
 
+function readLastLearned(userId: string): string | null {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(LAST_LEARNED_PREFIX + userId);
+}
+
+function writeLastLearned(userId: string, date: string) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LAST_LEARNED_PREFIX + userId, date);
+}
+
+function yesterdayStr(): string {
+  return new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+}
+
 function readPendingStars(userId: string): number {
   if (typeof window === "undefined") return 0;
   const raw = window.localStorage.getItem(PENDING_STARS_PREFIX + userId);
@@ -152,19 +168,16 @@ export function useAcademy() {
   useEffect(() => {
     const initial = read(userId);
     const today = new Date().toISOString().slice(0, 10);
+    // last_active_date only tracks presence now — the streak is earned
+    // by actual learning (markLearnedToday), not by opening the app.
     if (initial.last_active_date !== today) {
-      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-      const next = {
-        ...initial,
-        daily_streak: initial.last_active_date === yesterday ? initial.daily_streak + 1 : 1,
-        last_active_date: today,
-      };
+      const next = { ...initial, last_active_date: today };
       write(userId, next);
       setState(next);
       if (userId) {
         supabase
           .from("profiles")
-          .update({ daily_streak: next.daily_streak, last_active_date: next.last_active_date })
+          .update({ last_active_date: next.last_active_date })
           .eq("id", userId)
           .then(() => {});
       }
@@ -199,10 +212,24 @@ export function useAcademy() {
 
       if (cancelled || (!profile && !migrated)) return;
 
+      // Learning streak maintenance. Grandfather users from the
+      // open-app-streak era by treating their last active day as their
+      // last learned day, then break the streak if they've skipped a day.
+      let lastLearned = readLastLearned(userId);
+      if (!lastLearned) {
+        lastLearned = profile?.last_active_date ?? yesterdayStr();
+        writeLastLearned(userId, lastLearned);
+      }
+      let effectiveStreak = profile?.daily_streak ?? migrated?.daily_streak ?? 1;
+      if (lastLearned < yesterdayStr() && effectiveStreak !== 0) {
+        effectiveStreak = 0;
+        supabase.from("profiles").update({ daily_streak: 0 }).eq("id", userId).then(() => {});
+      }
+
       const next: AcademyState = {
         full_name: profile?.full_name || migrated?.full_name || DEFAULT_STATE.full_name,
         service_stars: profile?.service_stars ?? migrated?.service_stars ?? 0,
-        daily_streak: profile?.daily_streak ?? migrated?.daily_streak ?? 1,
+        daily_streak: effectiveStreak,
         last_active_date: profile?.last_active_date ?? migrated?.last_active_date ?? DEFAULT_STATE.last_active_date,
         metrics: {
           fluency_score: metrics?.fluency_score ?? migrated?.metrics.fluency_score ?? DEFAULT_STATE.metrics.fluency_score,
@@ -265,6 +292,23 @@ export function useAcademy() {
     [userId],
   );
 
+  // Marks today as a learning day and advances (or restarts) the streak.
+  // Idempotent within a day. Called on suite mastery and on completing a
+  // Daily Review session — never on merely opening the app.
+  const markLearnedToday = useCallback(() => {
+    if (!userId) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const lastLearned = readLastLearned(userId);
+    if (lastLearned === today) return;
+    const current = read(userId);
+    const nextStreak = lastLearned === yesterdayStr() ? current.daily_streak + 1 : 1;
+    writeLastLearned(userId, today);
+    const next = { ...current, daily_streak: nextStreak };
+    write(userId, next);
+    setState(next);
+    supabase.from("profiles").update({ daily_streak: nextStreak }).eq("id", userId).then(() => {});
+  }, [userId]);
+
   const recordSuiteResult = useCallback(
     (
       departmentId: string,
@@ -293,9 +337,27 @@ export function useAcademy() {
         .from("lesson_progress")
         .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" })
         .then(() => {});
+
+      if (opts?.mastered) {
+        markLearnedToday();
+        // Mastering vocab/grammar/speaking enrolls that content into
+        // spaced review (idempotent — existing schedules are kept).
+        if (suite === "vocab" || suite === "grammar" || suite === "speaking") {
+          seedReviewItems(userId, departmentId, weekNumber, suite).catch(() => {});
+        }
+      }
     },
-    [userId],
+    [userId, markLearnedToday],
   );
 
-  return { state, ready, update, awardStars, patchMetrics, recordSuiteResult, jobRank: jobRankFor(state.service_stars) };
+  return {
+    state,
+    ready,
+    update,
+    awardStars,
+    patchMetrics,
+    recordSuiteResult,
+    markLearnedToday,
+    jobRank: jobRankFor(state.service_stars),
+  };
 }

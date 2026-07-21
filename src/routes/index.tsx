@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { DEPARTMENTS } from "@/lib/departments";
+import { useSession } from "@/lib/auth";
+import { fetchDueCount } from "@/lib/review";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -12,6 +15,35 @@ export const Route = createFileRoute("/")({
   }),
   component: Lounge,
 });
+
+function ReviewBanner() {
+  const { session } = useSession();
+  const userId = session?.user.id;
+  const dueQuery = useQuery({
+    queryKey: ["review-due-count", userId],
+    queryFn: () => fetchDueCount(userId as string),
+    enabled: !!userId,
+    refetchOnWindowFocus: false,
+  });
+  const due = dueQuery.data ?? 0;
+  if (due === 0) return null;
+  return (
+    <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mt-8">
+      <Link
+        to="/review"
+        className="flex flex-wrap items-center justify-between gap-3 border border-primary bg-primary/10 px-5 py-4 shadow-xl transition-colors hover:bg-primary/15"
+      >
+        <div>
+          <span className="font-display text-lg text-foreground">🔁 Ôn tập hôm nay — {due} mục đến hạn</span>
+          <p className="mt-0.5 text-xs text-foreground/65">
+            Vài phút ôn đúng thời điểm giúp từ vựng ở lại trí nhớ lâu dài. Hoàn thành để giữ chuỗi ngày học 🔥
+          </p>
+        </div>
+        <span className="text-xs uppercase tracking-[0.25em] text-primary">Bắt đầu →</span>
+      </Link>
+    </motion.div>
+  );
+}
 
 function Lounge() {
   return (
@@ -44,6 +76,8 @@ function Lounge() {
             Sáu bộ phận. Hai mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
           </p>
         </motion.div>
+
+        <ReviewBanner />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {DEPARTMENTS.map((d, i) => (

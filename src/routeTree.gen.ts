@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReviewRouteImport } from './routes/review'
 import { Route as OrgAdminRouteImport } from './routes/org-admin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ChangePasswordRouteImport } from './routes/change-password'
@@ -19,6 +20,11 @@ import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
 import { Route as DepartmentDepWeekWeekRouteImport } from './routes/department_.$dep.week.$week'
 
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrgAdminRoute = OrgAdminRouteImport.update({
   id: '/org-admin',
   path: '/org-admin',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
   '/org-admin': typeof OrgAdminRoute
+  '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
   '/org-admin': typeof OrgAdminRoute
+  '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
   '/org-admin': typeof OrgAdminRoute
+  '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/department_/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/change-password'
     | '/login'
     | '/org-admin'
+    | '/review'
     | '/department/$dep'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/change-password'
     | '/login'
     | '/org-admin'
+    | '/review'
     | '/department/$dep'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/change-password'
     | '/login'
     | '/org-admin'
+    | '/review'
     | '/department/$dep'
     | '/department_/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   ChangePasswordRoute: typeof ChangePasswordRoute
   LoginRoute: typeof LoginRoute
   OrgAdminRoute: typeof OrgAdminRoute
+  ReviewRoute: typeof ReviewRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   DepartmentDepWeekWeekRoute: typeof DepartmentDepWeekWeekRoute
   LearnDepWeekSuiteRoute: typeof LearnDepWeekSuiteRoute
@@ -149,6 +162,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/org-admin': {
       id: '/org-admin'
       path: '/org-admin'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChangePasswordRoute: ChangePasswordRoute,
   LoginRoute: LoginRoute,
   OrgAdminRoute: OrgAdminRoute,
+  ReviewRoute: ReviewRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   DepartmentDepWeekWeekRoute: DepartmentDepWeekWeekRoute,
   LearnDepWeekSuiteRoute: LearnDepWeekSuiteRoute,
