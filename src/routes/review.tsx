@@ -8,7 +8,7 @@ import { applyReviewResult, fetchDueItems, resolveReviewItem, type ResolvedRevie
 import { speakEN } from "@/lib/speech";
 
 export const Route = createFileRoute("/review")({
-  head: () => ({ meta: [{ title: "Ôn tập hằng ngày — Embassy Language" }] }),
+  head: () => ({ meta: [{ title: "Ôn tập hằng ngày — Embassy Hospitality" }] }),
   component: ReviewPage,
 });
 

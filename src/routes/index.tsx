@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Departments Lounge — Hospitality English Academy" },
-      { name: "description", content: "Choose your training department in the Embassy Language Academy lounge." },
+      { name: "description", content: "Choose your training department in the Embassy Hospitality Academy lounge." },
     ],
   }),
   component: Lounge,

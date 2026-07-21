@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { usePatchProfileCache } from "@/lib/auth";
 
 export const Route = createFileRoute("/change-password")({
-  head: () => ({ meta: [{ title: "Đổi mật khẩu — Embassy Language" }] }),
+  head: () => ({ meta: [{ title: "Đổi mật khẩu — Embassy Hospitality" }] }),
   component: ChangePasswordPage,
 });
 

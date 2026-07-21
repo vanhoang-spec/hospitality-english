@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import logoAsset from "@/assets/embassy-logo.png.asset.json";
+import logoSrc from "@/assets/Logo_EmbassyHospitality_filetrong.png";
 import { useAcademy } from "@/lib/academy-store";
 import { useSession, useProfile, signOut } from "@/lib/auth";
 
@@ -36,9 +36,9 @@ export function AcademyNav() {
           <Link
             to="/"
             className="flex items-center gap-3 rounded-sm p-1 ring-1 ring-primary/30 transition-shadow hover:shadow-[0_0_24px_-4px_var(--gold)]"
-            aria-label="Embassy Language home"
+            aria-label="Embassy Hospitality home"
           >
-            <img src={logoAsset.url} alt="Embassy Language Academy" style={{ height: 40 }} className="block" />
+            <img src={logoSrc} alt="Embassy Hospitality" style={{ height: 40 }} className="block" />
           </Link>
 
           <button

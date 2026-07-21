@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Đăng nhập — Embassy Language" }] }),
+  head: () => ({ meta: [{ title: "Đăng nhập — Embassy Hospitality" }] }),
   component: LoginPage,
 });
 
@@ -55,7 +55,7 @@ function LoginPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-sm border border-primary/30 bg-card p-8 shadow-xl"
       >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Embassy Language</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-primary">Embassy Hospitality</div>
         <h1 className="font-display mt-2 text-3xl text-foreground">Đăng nhập</h1>
         <p className="mt-2 text-sm text-foreground/70">
           Nhập số điện thoại và mật khẩu do quản trị viên nhóm của bạn cấp.

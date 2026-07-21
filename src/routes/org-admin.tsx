@@ -10,7 +10,7 @@ import { AVAILABLE_WEEKS } from "@/lib/content/week-content";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
 
 export const Route = createFileRoute("/org-admin")({
-  head: () => ({ meta: [{ title: "Team — Embassy Language" }] }),
+  head: () => ({ meta: [{ title: "Team — Embassy Hospitality" }] }),
   component: OrgAdminPage,
 });
 

@@ -6,7 +6,7 @@ import { DEPARTMENTS } from "@/lib/departments";
 import { useSession, useProfile } from "@/lib/auth";
 
 export const Route = createFileRoute("/admin-lounge")({
-  head: () => ({ meta: [{ title: "Admin Lounge — Embassy Language" }] }),
+  head: () => ({ meta: [{ title: "Admin Lounge — Embassy Hospitality" }] }),
   component: AdminLoungeGate,
 });
 
