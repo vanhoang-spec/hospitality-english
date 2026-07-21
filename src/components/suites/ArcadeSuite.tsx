@@ -23,7 +23,7 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const earned = useRef(0);
   const poppedRef = useRef<Set<number>>(new Set());
   const content = dep && week ? getWeekContent(dep, week) : null;
-  const rounds: GameRound[] = content ? content.lessons.map((l) => l.game) : FALLBACK_ROUNDS;
+  const rounds: GameRound[] = content ? content.lessons.flatMap((l) => l.game) : FALLBACK_ROUNDS;
 
   const [stage, setStage] = useState<Stage>("rules");
   const [time, setTime] = useState(75);

@@ -1,5 +1,5 @@
-// Late-A1 CEFR content payload for Week 1 / Front Office.
-// Concrete, courteous, modal-verb-led phrases tailored to 4-5★ hotels in Vietnam.
+// A2-B1 CEFR content payload — concrete, courteous, modal-verb-led
+// phrases tailored to 4-5★ hotels in Vietnam.
 
 export type VocabItem = {
   word: string;
@@ -10,7 +10,7 @@ export type VocabItem = {
 };
 export type GrammarItem = { rude: string; polite: string; rule: string };
 export type SpeakingItem = { guestPrompt: string; targetResponse: string; helpTip: string };
-export type ReadingQuestion = { q: string; options: string[]; correct: number };
+export type ReadingQuestion = { q: string; options: string[]; correct: number; explanation?: string };
 export type ReadingItem = { text: string; questions: ReadingQuestion[] };
 export type ArcadeItem = { bad: string; good: string };
 export type GameOption = { text: string; correct: boolean };
@@ -23,10 +23,10 @@ export type LessonContent = {
   titleVi: string;
   vocabulary: VocabItem[];
   grammar: GrammarItem[];
-  speaking: SpeakingItem;
+  speaking: SpeakingItem[];
   reading: ReadingItem;
   arcade: ArcadeItem[];
-  game: GameRound;
+  game: GameRound[];
 };
 
 export type WeekContent = {
@@ -35,6 +35,9 @@ export type WeekContent = {
   weekTitleEn: string;
   weekTitleVi: string;
   lessons: LessonContent[];
+  /** Vocabulary headwords from earlier weeks to interleave into this
+   *  week's quizzes/cloze for spaced recycling (P5 content standard). */
+  reviewWords?: string[];
 };
 
 export const FO_WEEK_1: WeekContent = {
@@ -58,11 +61,11 @@ export const FO_WEEK_1: WeekContent = {
         { rude: "Give me your name.", polite: "May I have your name, please?", rule: "Use 'May I have...' to ask for information politely." },
         { rude: "What is your booking number?", polite: "Could you please share your booking reference?", rule: "Use 'Could you please...' for professional questions." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Hello, I have a booking under the name of David Green.",
         targetResponse: "Good morning, sir. Welcome to our hotel. Let me check our system for your name, please.",
         helpTip: "Remember to pronounce the ending sound in 'good morning' and 'welcome'.",
-      },
+      }],
       reading: {
         text: "AGODA CONFIRMATION VOUCHER\nGuest Name: David Green\nRoom Type: Deluxe Ocean View\nStay: 2 Nights\nStatus: Confirmed / Paid Online",
         questions: [
@@ -74,14 +77,14 @@ export const FO_WEEK_1: WeekContent = {
         { bad: "Tell me your booking code.", good: "Could you provide your booking reference, please?" },
         { bad: "Sit there.", good: "Please take a seat in the lobby." },
       ],
-      game: {
+      game: [{
         prompt: "Hello, I have a booking under the name of David Green.",
         options: [
           { text: "May I have your name, please?", correct: true },
           { text: "Give me your name.", correct: false },
           { text: "Who are you?", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_1_2",
@@ -98,11 +101,11 @@ export const FO_WEEK_1: WeekContent = {
         { rude: "Give passport.", polite: "Could you please kindly provide your passport?", rule: "Add 'kindly' to make requests softer." },
         { rude: "I take this.", polite: "May I hold your passport for a moment?", rule: "Use 'May I hold...' to ask for temporary permission." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Sure, here is my passport. Do you need to keep it?",
         targetResponse: "Thank you, sir. I just need to keep it briefly for our local registration process.",
         helpTip: "Focus on the linked sound in 'keep it briefly'.",
-      },
+      }],
       reading: {
         text: "HOTEL SOP - LOCAL REGISTRATION:\nAll international guests must show their original passport at check-in. The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM.",
         questions: [
@@ -114,14 +117,14 @@ export const FO_WEEK_1: WeekContent = {
         { bad: "Give passport now.", good: "May I have your passport for registration, please?" },
         { bad: "Sign name here.", good: "Could you please sign your name here?" },
       ],
-      game: {
+      game: [{
         prompt: "Sure, here is my passport. Do you need to keep it?",
         options: [
           { text: "I just need to keep it briefly for local registration, sir.", correct: true },
           { text: "Give passport now.", correct: false },
           { text: "Yes, I take this.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_1_3",
@@ -138,11 +141,11 @@ export const FO_WEEK_1: WeekContent = {
         { rude: "Give me your credit card.", polite: "May I secure a pre-authorization on your credit card?", rule: "Use 'May I secure...' instead of demanding a card." },
         { rude: "You must pay for minibar.", polite: "This deposit is for incidental charges like the minibar.", rule: "Explain rules gently using 'This is for...'" },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Why do you need my credit card if the room is already paid?",
         targetResponse: "I understand, ma'am. This is just a temporary deposit for any incidental charges during your stay.",
         helpTip: "Pronounce 'incidental charges' clearly by breaking it down: in-ci-den-tal.",
-      },
+      }],
       reading: {
         text: "INCIDENTAL POLICY:\nA security deposit of 1,000,000 VND per night is required at check-in. This amount will be released automatically at check-out if there are no mini-bar or laundry uses.",
         questions: [
@@ -154,14 +157,14 @@ export const FO_WEEK_1: WeekContent = {
         { bad: "Give me card for money.", good: "May I have your credit card for the deposit, please?" },
         { bad: "Minibar is not free.", good: "The deposit covers incidental charges like the minibar." },
       ],
-      game: {
+      game: [{
         prompt: "Why do you need my credit card if the room is already paid?",
         options: [
           { text: "This is just a temporary deposit for incidental charges, ma'am.", correct: true },
           { text: "Minibar is not free.", correct: false },
           { text: "Give me card for money.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_1_4",
@@ -178,11 +181,11 @@ export const FO_WEEK_1: WeekContent = {
         { rude: "Go to first floor for food.", polite: "Breakfast is served at the main restaurant on the first floor.", rule: "Use passive structures like 'Breakfast is served...' to sound professional." },
         { rude: "Pool closes at 9.", polite: "The swimming pool is open until 9:00 PM.", rule: "State facility hours using 'is open until...'." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Thank you. What time is breakfast served tomorrow morning?",
         targetResponse: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
         helpTip: "Ensure a clear 't' sound at the end of 'breakfast' and 's' sound in 'served'.",
-      },
+      }],
       reading: {
         text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.",
         questions: [
@@ -194,14 +197,14 @@ export const FO_WEEK_1: WeekContent = {
         { bad: "Eat breakfast from 6 to 10.", good: "Breakfast is available from 6:30 AM until 10:00 AM." },
         { bad: "Take key and go.", good: "Here is your keycard, your room is on the fifth floor." },
       ],
-      game: {
+      game: [{
         prompt: "Thank you. What time is breakfast served tomorrow morning?",
         options: [
           { text: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.", correct: true },
           { text: "Go to first floor and eat from 6 to 10.", correct: false },
           { text: "Restaurant is over there, go eat.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -227,11 +230,11 @@ export const FB_WEEK_1: WeekContent = {
         { rude: "What's your room number?", polite: "May I ask for your room number, please?", rule: "Use 'May I ask for...' to request information softly with a modal verb." },
         { rude: "You're not on the list.", polite: "I'm sorry, I can't find your name on the list just yet. Could you give me a moment?", rule: "Open with an apology and a hedge ('just yet') before delivering a problem." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Good morning. We're staying in room 512, is breakfast included?",
         targetResponse: "Good morning, and welcome. Yes, of course. May I just check your room number on our list, please?",
         helpTip: "Link 'check your' smoothly so it sounds like one word: 'che-kyer'.",
-      },
+      }],
       reading: {
         text: "IN-HOUSE GUEST LIST - BREAKFAST\nRoom 512 - Mr. David Green - 2 Adults - B&B Included\nRoom 608 - Ms. Lisa Tran - 1 Adult - Room Only (No Breakfast)\nRestaurant Hours: 06:30 - 10:00",
         questions: [
@@ -243,14 +246,14 @@ export const FB_WEEK_1: WeekContent = {
         { bad: "Room number?", good: "May I have your room number, please?" },
         { bad: "You're not on my list.", good: "I'm sorry, I can't find your name yet — could you give me one moment?" },
       ],
-      game: {
+      game: [{
         prompt: "Good morning. We're staying in room 512, is breakfast included?",
         options: [
           { text: "Good morning, and welcome. May I just check your room number on our list, please?", correct: true },
           { text: "Room number?", correct: false },
           { text: "Yes, go sit down.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_1_2",
@@ -267,11 +270,11 @@ export const FB_WEEK_1: WeekContent = {
         { rude: "Wait there.", polite: "Would you mind waiting here for just a moment, sir?", rule: "Use 'Would you mind...?' to turn a command into an indirect, polite request." },
         { rude: "Table's not ready.", polite: "Your table is being prepared right now, it will only take a few minutes.", rule: "Use the passive voice ('is being prepared') to sound professional and avoid blame." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "There are no tables free right now. How long do we have to wait?",
         targetResponse: "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes? A table will be free very soon.",
         helpTip: "Say 'sorry' gently and keep your tone calm and unhurried, not apologetic in a worried way.",
-      },
+      }],
       reading: {
         text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.",
         questions: [
@@ -283,14 +286,14 @@ export const FB_WEEK_1: WeekContent = {
         { bad: "No table. Wait.", good: "I'm sorry, all tables are full right now. Would you mind waiting a few minutes?" },
         { bad: "Stand there.", good: "Please wait in this area, a table will be ready shortly." },
       ],
-      game: {
+      game: [{
         prompt: "There are no tables free right now. How long do we have to wait?",
         options: [
           { text: "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes?", correct: true },
           { text: "No table. Wait.", correct: false },
           { text: "I don't know, just stand there.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_1_3",
@@ -307,11 +310,11 @@ export const FB_WEEK_1: WeekContent = {
         { rude: "Go get food there.", polite: "Let me show you where the hot food station is.", rule: "Use 'Let me...' to offer help instead of giving a direct order." },
         { rude: "Coffee's over there.", polite: "You'll find the coffee and juice station just next to the bakery corner.", rule: "Use 'You'll find...' to guide guests gently instead of pointing or commanding." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "This is our first time here — where can we find something hot to eat?",
         targetResponse: "Let me show you. Our live station over there serves hot Phở and eggs, and the bakery corner is right next to it.",
         helpTip: "Practice linking 'show' and 'you' so they blend smoothly into 'show-you'.",
-      },
+      }],
       reading: {
         text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)",
         questions: [
@@ -323,14 +326,14 @@ export const FB_WEEK_1: WeekContent = {
         { bad: "Food is over there.", good: "Let me show you where the hot food station is." },
         { bad: "Coffee, that way.", good: "You'll find the coffee and juice area just next to the bakery corner." },
       ],
-      game: {
+      game: [{
         prompt: "This is our first time here — where can we find something hot to eat?",
         options: [
           { text: "Let me show you. Our live station serves hot Phở and eggs, and the bakery corner is right next to it.", correct: true },
           { text: "Food is over there.", correct: false },
           { text: "I don't know, look around.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_1_4",
@@ -347,11 +350,11 @@ export const FB_WEEK_1: WeekContent = {
         { rude: "Give me your plate.", polite: "Would you like me to clear your plate for you?", rule: "Use 'Would you like me to...?' to offer service without sounding intrusive." },
         { rude: "Is food ok?", polite: "I hope you're enjoying your breakfast so far, is everything to your liking?", rule: "Use 'I hope...' plus a warm tag question to check satisfaction naturally." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We're all finished, thank you. The food was lovely.",
         targetResponse: "I'm so glad to hear that. Would you like me to clear your plates for you?",
         helpTip: "Smile while saying 'glad to hear that' — it naturally lifts your pitch and sounds sincere.",
-      },
+      }],
       reading: {
         text: "TABLE SERVICE SOP - CLEARING\nAlways ask for permission before clearing any plate.\nNever clear a plate while a guest is still using cutlery on it.\nAsk 'Is everything to your liking?' at least once during the meal.",
         questions: [
@@ -363,14 +366,14 @@ export const FB_WEEK_1: WeekContent = {
         { bad: "Finished? Give plate.", good: "Would you like me to clear your plate for you?" },
         { bad: "Food good?", good: "I hope you're enjoying your breakfast, is everything to your liking?" },
       ],
-      game: {
+      game: [{
         prompt: "We're all finished, thank you. The food was lovely.",
         options: [
           { text: "I'm so glad to hear that. Would you like me to clear your plates for you?", correct: true },
           { text: "Finished? Give plate.", correct: false },
           { text: "Okay, bye.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -396,11 +399,11 @@ export const HK_WEEK_1: WeekContent = {
         { rude: "Housekeeping, open the door.", polite: "Housekeeping! May I come in to service the room?", rule: "Use 'May I come in...' as a modal verb to ask permission, not a command." },
         { rude: "I'm coming in now.", polite: "Would it be convenient for me to clean the room now?", rule: "Use 'Would it be convenient...' to check timing politely." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Oh, sorry, I'm still in the room. Can you come back later?",
         targetResponse: "Of course, ma'am. I'm sorry to disturb you. I will come back later. Thank you.",
         helpTip: "Link the words smoothly in 'sorry to disturb' — soften the 't' sound into the next word.",
-      },
+      }],
       reading: {
         text: "HOUSEKEEPING SOP - KNOCK AND ANNOUNCE:\n1. Knock on the door twice and say 'Housekeeping' in a clear voice.\n2. Wait at least 10 seconds for a response.\n3. If there is no answer, knock and announce a second time before entering.\n4. If a guest answers, greet them and politely ask permission to clean the room.",
         questions: [
@@ -412,14 +415,14 @@ export const HK_WEEK_1: WeekContent = {
         { bad: "Housekeeping, open up.", good: "Housekeeping! May I come in to clean your room?" },
         { bad: "I'm coming in.", good: "Excuse me, is now a good time to service the room?" },
       ],
-      game: {
+      game: [{
         prompt: "Oh, sorry, I'm still in the room. Can you come back later?",
         options: [
           { text: "Of course, ma'am. I'm sorry to disturb you. I will come back later.", correct: true },
           { text: "No problem, I will just clean quickly now.", correct: false },
           { text: "You should have put the DND sign up.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_1_2",
@@ -430,17 +433,17 @@ export const HK_WEEK_1: WeekContent = {
         { word: "Amenities", phonetic: "/əˈmiːnətiz/", definition: "Vật dụng tiện nghi", context: "We are happy to provide extra amenities.", icon: "🧴" },
         { word: "Bath towel", phonetic: "/bɑːθ ˈtaʊəl/", definition: "Khăn tắm", context: "Could I get an extra bath towel, please?", icon: "🛁" },
         { word: "Razor", phonetic: "/ˈreɪzər/", definition: "Dao cạo râu", context: "I can bring a disposable razor to your room shortly.", icon: "🪒" },
-        { word: "Complimentary", phonetic: "/kəmˈplɪmentəri/", definition: "Miễn phí (dịch vụ đi kèm)", context: "Bottled water is complimentary in every room.", icon: "💧" },
+        { word: "Complimentary", phonetic: "/ˌkɒmplɪˈmɛntəri/", definition: "Miễn phí (dịch vụ đi kèm)", context: "Bottled water is complimentary in every room.", icon: "💧" },
       ],
       grammar: [
         { rude: "What do you want?", polite: "How may I assist you today?", rule: "Use the open, polite question 'How may I...' instead of a blunt one." },
         { rude: "Wait there.", polite: "I will bring that up to your room right away.", rule: "Use 'will' with a specific time reference to reassure the guest instead of giving a command." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
         targetResponse: "Certainly, sir. I will send two extra towels and a razor to room 812 right away.",
         helpTip: "Practice linking 'send up' smoothly — connect the 'd' straight into the 'u' sound.",
-      },
+      }],
       reading: {
         text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.",
         questions: [
@@ -452,14 +455,14 @@ export const HK_WEEK_1: WeekContent = {
         { bad: "What do you want?", good: "How may I assist you today?" },
         { bad: "Wait there, I'm busy.", good: "I will bring that to your room right away." },
       ],
-      game: {
+      game: [{
         prompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
         options: [
           { text: "Certainly, sir. I will send two extra towels and a razor to room 812 right away.", correct: true },
           { text: "What do you want them for?", correct: false },
           { text: "Wait there, I'm busy right now.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_1_3",
@@ -476,11 +479,11 @@ export const HK_WEEK_1: WeekContent = {
         { rude: "You want a bed or not?", polite: "Would you like us to set up a rollaway bed for you?", rule: "Use 'Would you like us to...' to offer a service politely." },
         { rude: "That costs more money.", polite: "Please note there is a small extra charge for this service.", rule: "Soften unwelcome news with 'Please note...' instead of stating it bluntly." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "My son is joining us tonight. Do you have an extra bed we could use?",
         targetResponse: "Certainly, sir. We can set up a rollaway bed in your room. Please note there is a small extra charge per night.",
         helpTip: "Stress the word 'certainly' at the start of your reply to sound warm and confident.",
-      },
+      }],
       reading: {
         text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes",
         questions: [
@@ -492,14 +495,14 @@ export const HK_WEEK_1: WeekContent = {
         { bad: "You want a bed or not?", good: "Would you like us to set up a rollaway bed for you?" },
         { bad: "That costs more money.", good: "Please note there is a small extra charge for this service." },
       ],
-      game: {
+      game: [{
         prompt: "My son is joining us tonight. Do you have an extra bed we could use?",
         options: [
           { text: "Certainly, sir. We can set up a rollaway bed in your room, with a small extra charge per night.", correct: true },
           { text: "You want a bed or not?", correct: false },
           { text: "We don't have extra beds.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_1_4",
@@ -516,11 +519,11 @@ export const HK_WEEK_1: WeekContent = {
         { rude: "Wake up, we need to clean.", polite: "I'm sorry to disturb you, but could I check if you need housekeeping later?", rule: "Apologize first with 'I'm sorry to disturb you, but...' before making a request." },
         { rude: "You have to open the door now.", polite: "Whenever it's convenient, could you please let us know when we may service the room?", rule: "Use 'Whenever it's convenient...' to give the guest control over timing." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
         targetResponse: "No problem at all, sir. Would now be a good time for us to clean the room, or shall we come back later?",
         helpTip: "Let your tone rise gently on 'later' so it sounds like a genuine question, not a command.",
-      },
+      }],
       reading: {
         text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- Never remove the DND sign or enter without guest confirmation.",
         questions: [
@@ -532,14 +535,14 @@ export const HK_WEEK_1: WeekContent = {
         { bad: "Wake up, we need to clean.", good: "I'm sorry to disturb you, but could I check when housekeeping may visit?" },
         { bad: "You have to open the door now.", good: "Whenever it's convenient, could you let us know when we may service the room?" },
       ],
-      game: {
+      game: [{
         prompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
         options: [
           { text: "No problem at all, sir. Would now be a good time for us to clean the room, or shall we come back later?", correct: true },
           { text: "You have to open the door now.", correct: false },
           { text: "You should not have that sign up.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -565,11 +568,11 @@ export const SW_WEEK_1: WeekContent = {
         { rude: "Fill this out.", polite: "Could you please fill out this health form for us?", rule: "Use 'Could you please...' + verb to turn a command into a polite request." },
         { rude: "Do you have allergies?", polite: "Would you mind telling us if you have any allergies?", rule: "'Would you mind + verb-ing' softens a direct question about personal or health information." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "This is my first time here. What do I need to do?",
         targetResponse: "Welcome to our spa! Before your treatment, please take a seat and fill out this short health consultation form for us.",
         helpTip: "Link 'fill out' smoothly — the 't' connects to the next vowel, sounding like 'fi-lout'.",
-      },
+      }],
       reading: {
         text: "SPA HEALTH CONSULTATION FORM\nGuest Name: Ms. Lan Pham\nAny allergies: Peanut oil\nSkin condition: Sensitive skin\nPregnant: No\nPreferred pressure: Medium\nAreas to avoid: Lower back (recent injury)",
         questions: [
@@ -581,14 +584,14 @@ export const SW_WEEK_1: WeekContent = {
         { bad: "Sign here.", good: "Could you please sign here for us?" },
         { bad: "You have to wait.", good: "Would you mind waiting just a moment, please?" },
       ],
-      game: {
+      game: [{
         prompt: "This is my first time here. What do I need to do?",
         options: [
           { text: "Welcome to our spa! Before your treatment, please take a seat and fill out this short health consultation form for us.", correct: true },
           { text: "Sit down and fill this form.", correct: false },
           { text: "We don't know, ask someone else.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_1_2",
@@ -605,11 +608,11 @@ export const SW_WEEK_1: WeekContent = {
         { rude: "This one is better than that one.", polite: "I'd recommend our hot stone massage, as it works especially well for muscle tension.", rule: "Use 'I'd recommend...' + reason with 'as/because' to suggest, instead of a blunt comparison." },
         { rude: "That treatment is old-fashioned.", polite: "Our traditional massage is a wonderful choice if you prefer gentle, relaxing techniques.", rule: "Use 'is a wonderful choice if...' to frame an option positively rather than criticize another." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I'm not sure which massage to choose. What's the difference?",
         targetResponse: "Of course! Our traditional Vietnamese massage focuses on stretching, while the hot stone massage uses heated stones for deeper muscle relief. Which sounds better for you?",
         helpTip: "Stress the contrast words 'traditional' and 'hot stone' a little louder so the guest hears the comparison clearly.",
-      },
+      }],
       reading: {
         text: "SERENITY SPA - TREATMENT MENU\nTraditional Vietnamese Massage - 60 min - Gentle stretching, eases fatigue\nHot Stone Massage - 75 min - Heated basalt stones, deep muscle relief\nHerbal Steam Therapy - 30 min - Local herbs, clears sinuses, softens skin",
         questions: [
@@ -621,14 +624,14 @@ export const SW_WEEK_1: WeekContent = {
         { bad: "That one is boring.", good: "That treatment is more relaxing and gentle." },
         { bad: "I don't know, just pick one.", good: "Let me explain the difference so you can choose the best option." },
       ],
-      game: {
+      game: [{
         prompt: "I'm not sure which massage to choose. What's the difference?",
         options: [
           { text: "Of course! Our traditional Vietnamese massage focuses on stretching, while the hot stone massage uses heated stones for deeper muscle relief. Which sounds better for you?", correct: true },
           { text: "They are all the same, just pick one.", correct: false },
           { text: "The hot stone one is the only good one.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_1_3",
@@ -645,11 +648,11 @@ export const SW_WEEK_1: WeekContent = {
         { rude: "You should buy the bigger package.", polite: "Have you considered our couple's combo? It's a lovely way to relax together.", rule: "Use 'Have you considered...?' to suggest an upgrade without pressuring the guest." },
         { rude: "It's cheaper if you buy more.", polite: "If you'd like, we could offer you our family package at a special rate.", rule: "Use a conditional 'If you'd like, we could...' to offer an upgrade gently." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I just want a single massage for myself today.",
         targetResponse: "That sounds lovely. If you'd like, we also have a couple's combo package this week — would you like to bring your partner next time?",
         helpTip: "Raise your intonation at the end of 'next time?' to keep the offer friendly, not pushy.",
-      },
+      }],
       reading: {
         text: "SERENITY SPA - THIS MONTH'S OFFER\nCouple's Combo: 2 x 90-min Massage + Herbal Tea for Two - 20% off\nFamily Care Package: 4 Sessions (Valid 3 Months) - Save 1,200,000 VND\nBook 2 or more sessions to receive a complimentary foot scrub.",
         questions: [
@@ -661,14 +664,14 @@ export const SW_WEEK_1: WeekContent = {
         { bad: "Buy the bigger package, it's better.", good: "Our combo package might be a nice option if you'd like extra relaxation." },
         { bad: "Just get the membership, everyone does.", good: "May I tell you a little about our membership benefits?" },
       ],
-      game: {
+      game: [{
         prompt: "I just want a single massage for myself today.",
         options: [
           { text: "That sounds lovely. If you'd like, we also have a couple's combo package this week — would you like to bring your partner next time?", correct: true },
           { text: "No, we only sell single sessions.", correct: false },
           { text: "You should really buy the family package instead.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_1_4",
@@ -685,11 +688,11 @@ export const SW_WEEK_1: WeekContent = {
         { rude: "How was it?", polite: "May I ask how you found your treatment today?", rule: "Use 'May I ask...' to open a feedback question more formally." },
         { rude: "You should buy this cream.", polite: "This moisturizing cream will be recommended for your skin type, if you're interested.", rule: "Use passive voice ('will be recommended') to suggest a product gently, without sounding pushy." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "That massage was wonderful, thank you.",
         targetResponse: "I'm so glad to hear that! May I recommend this lavender essential oil to help you relax at home too?",
         helpTip: "Smile while you speak — it naturally warms your tone on 'I'm so glad to hear that'.",
-      },
+      }],
       reading: {
         text: "SERENITY SPA - TAKE-HOME PRODUCTS\nLavender Essential Oil - Relaxation & sleep support - 350,000 VND\nGinger Body Scrub - Improves circulation - 280,000 VND\nAloe Vera Moisturizer - For sensitive, sun-exposed skin - 320,000 VND\nAsk your therapist which product suits your skin type.",
         questions: [
@@ -701,14 +704,14 @@ export const SW_WEEK_1: WeekContent = {
         { bad: "Did you like it?", good: "May I ask how you found your treatment today?" },
         { bad: "You need this cream.", good: "This cream might be perfect for your skin type — would you like to try it?" },
       ],
-      game: {
+      game: [{
         prompt: "That massage was wonderful, thank you.",
         options: [
           { text: "I'm so glad to hear that! May I recommend this lavender essential oil to help you relax at home too?", correct: true },
           { text: "Okay, thanks. Goodbye.", correct: false },
           { text: "You should have told us earlier.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -734,11 +737,11 @@ export const GR_WEEK_1: WeekContent = {
         { rude: "You get free breakfast and evening drinks.", polite: "You will be entitled to complimentary breakfast and evening cocktails.", rule: "Use 'will be entitled to' instead of 'get' to sound more formal and precise about guest privileges." },
         { rude: "I need to explain the rules to you.", polite: "Allow me to walk you through your Club privileges.", rule: "Use 'Allow me to...' as a polite softener when offering to explain or assist." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "This is my first time staying in a Club Room. What do I actually get?",
         targetResponse: "Welcome, Mr. Tran. As a Club Room guest, you're entitled to Executive Lounge access, complimentary breakfast, all-day refreshments, and evening cocktails. Allow me to explain each privilege in detail.",
         helpTip: "Link 'entitled to' smoothly — pronounce it as one flowing phrase, /ɪnˈtaɪtəld tə/, not word by word.",
-      },
+      }],
       reading: {
         text: "EXECUTIVE CLUB PRIVILEGES\nGuest: Mr. Minh Tran | Room: Club Suite 1802\n- Executive Lounge access (7:00 AM - 10:00 PM)\n- Complimentary breakfast & all-day refreshments\n- Evening Cocktail Hour (6:00 PM - 8:00 PM)\n- Late check-out until 2:00 PM (subject to availability)\n- Complimentary pressing of two garments per stay",
         questions: [
@@ -750,14 +753,14 @@ export const GR_WEEK_1: WeekContent = {
         { bad: "You get free stuff here.", good: "You are entitled to a range of complimentary privileges during your stay." },
         { bad: "I'll tell you the rules now.", good: "Allow me to walk you through your Club benefits." },
       ],
-      game: {
+      game: [{
         prompt: "This is my first time staying in a Club Room. What do I actually get?",
         options: [
           { text: "Welcome, Mr. Tran. As a Club Room guest, you're entitled to Executive Lounge access, complimentary breakfast, all-day refreshments, and evening cocktails.", correct: true },
           { text: "You just get free breakfast, that's it.", correct: false },
           { text: "I don't know, please ask someone else.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_1_2",
@@ -774,11 +777,11 @@ export const GR_WEEK_1: WeekContent = {
         { rude: "Do you want tea or coffee?", polite: "Would you prefer tea or coffee this afternoon?", rule: "Use 'Would you prefer...' instead of 'Do you want...' for a softer, more refined offer." },
         { rude: "The drinks are over there, help yourself.", polite: "Our Cocktail Hour selection is displayed on the counter — please feel free to help yourself.", rule: "Add a polite lead-in phrase before an instruction to soften a direct command." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Is there a set time for the afternoon tea, or can I come anytime?",
         targetResponse: "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window, and I'll be happy to prepare a fresh selection for you.",
         helpTip: "Practice the linking sound between 'set' and 'time' — /sɛt‿taɪm/ — so it flows naturally instead of sounding choppy.",
-      },
+      }],
       reading: {
         text: "EXECUTIVE LOUNGE DAILY SCHEDULE\n7:00 - 10:30 AM: Breakfast\n10:30 AM - 3:00 PM: All-day Refreshments\n3:00 - 5:00 PM: Afternoon Tea\n6:00 - 8:00 PM: Evening Cocktail Hour (canapés & selected beverages)\nNote: Children under 12 are welcome before 6:00 PM only.",
         questions: [
@@ -790,14 +793,14 @@ export const GR_WEEK_1: WeekContent = {
         { bad: "Tea is from 3 to 5, that's it.", good: "Afternoon Tea is served daily from 3:00 to 5:00 PM — please join us anytime within that window." },
         { bad: "Kids can't come after 6.", good: "For a relaxed atmosphere, we welcome children in the lounge until 6:00 PM." },
       ],
-      game: {
+      game: [{
         prompt: "Is there a set time for the afternoon tea, or can I come anytime?",
         options: [
           { text: "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window.", correct: true },
           { text: "Anytime, we don't have a schedule.", correct: false },
           { text: "Tea time is only in the morning.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_1_3",
@@ -814,11 +817,11 @@ export const GR_WEEK_1: WeekContent = {
         { rude: "You can't use the meeting room now, it's busy.", polite: "I'm afraid the meeting room is currently occupied — may I reserve it for you at 2:00 PM instead?", rule: "Use 'I'm afraid...' to soften bad news, then immediately offer an alternative." },
         { rude: "Send me the file and I'll print it.", polite: "If you could send me the file, I would be glad to have it printed for you right away.", rule: "Use conditional 'If you could...' with 'I would be glad to...' to make a request-and-offer sound courteous." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I need a private room for a confidential call in 30 minutes, and I also have a document that must be printed urgently.",
         targetResponse: "Certainly, sir. I'll reserve our private meeting room for you right away, and if you could send me the document, I would be glad to have it printed immediately.",
         helpTip: "Stress the key words 'right away' and 'immediately' with a slightly rising then falling tone to sound efficient and reassuring.",
-      },
+      }],
       reading: {
         text: "BUSINESS CENTER REQUEST FORM\nGuest: Ms. Lan Pham | Suite 2105\nService Requested: Private Meeting Room (30 mins)\nPrinting: 1 document, Confidential, 5 copies\nRequested Time: 2:30 PM\nStatus: Confirmed - Room B, Urgent Print Queue",
         questions: [
@@ -830,14 +833,14 @@ export const GR_WEEK_1: WeekContent = {
         { bad: "The room is busy, come back later.", good: "I'm afraid the room is currently occupied — may I reserve it for you at a later time?" },
         { bad: "Just email it, I'll print it whenever.", good: "If you could send me the file now, I would be glad to have it printed right away." },
       ],
-      game: {
+      game: [{
         prompt: "I need a private room for a confidential call in 30 minutes, and I also have a document that must be printed urgently.",
         options: [
           { text: "Certainly, sir. I'll reserve our private meeting room for you right away, and if you could send me the document, I would be glad to have it printed immediately.", correct: true },
           { text: "Sorry, we don't have a printer here.", correct: false },
           { text: "You should have booked earlier.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_1_4",
@@ -854,11 +857,11 @@ export const GR_WEEK_1: WeekContent = {
         { rude: "Write down what he likes.", polite: "Let's make sure to record his preferences in the guest profile.", rule: "Use 'Let's make sure to...' to turn a blunt instruction into a collaborative, professional suggestion." },
         { rude: "He wants a firm pillow, note it.", polite: "It has been noted that the guest prefers a firm pillow for future stays.", rule: "Use the passive voice ('It has been noted that...') to record information formally and objectively." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "By the way, I noticed you remembered I like my coffee black with no sugar. That was really thoughtful.",
         targetResponse: "Thank you, sir. It has been noted in your profile, so we can make sure every detail is just right for your future stays with us as well.",
         helpTip: "Soften the ending with a falling intonation on 'future stays with us' to sound sincere rather than robotic.",
-      },
+      }],
       reading: {
         text: "GUEST HISTORY PROFILE\nGuest: Mr. James Carter | Loyalty Tier: Diamond\nPreferences:\n- Coffee: Black, no sugar\n- Pillow: Firm, 2 extra\n- Room: High floor, away from elevator\n- Special Note: Wedding anniversary on Aug 15 - arrange small cake\nAllergy: None reported",
         questions: [
@@ -870,14 +873,14 @@ export const GR_WEEK_1: WeekContent = {
         { bad: "Just remember he likes black coffee, don't bother writing it down.", good: "Let's make sure to record his coffee preference in the guest profile for future visits." },
         { bad: "He wants a firm pillow, whatever.", good: "It has been noted that the guest prefers a firm pillow for future stays." },
       ],
-      game: {
+      game: [{
         prompt: "By the way, I noticed you remembered I like my coffee black with no sugar. That was really thoughtful.",
         options: [
           { text: "Thank you, sir. It has been noted in your profile, so we can make sure every detail is just right for your future stays with us.", correct: true },
           { text: "Oh, I don't really remember guest preferences.", correct: false },
           { text: "That's just a coincidence, sir.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -903,11 +906,11 @@ export const BO_WEEK_1: WeekContent = {
         { rude: "You should sign now.", polite: "Would you be interested in signing the agreement today?", rule: "Use 'Would you be interested in...' to introduce an offer softly instead of pushing directly." },
         { rude: "This is the best price, take it.", polite: "I would strongly recommend this package, as it offers the best value for your volume.", rule: "Use 'I would strongly recommend...' to give advice diplomatically instead of a command." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Your rates look good, but what can you offer for 200 room-nights a month?",
         targetResponse: "For that volume, we can offer you our best corporate rate, along with a complimentary upgrade for your VIP clients.",
         helpTip: "Link 'complimentary upgrade' smoothly — don't pause between the two words.",
-      },
+      }],
       reading: {
         text: "GRAND HOTEL - CORPORATE RATE PROPOSAL\nPartner: Viet Travel Co., Ltd.\nRoom Type: Deluxe Room\nCorporate Rate: 1,800,000 VND/night (net)\nMinimum Volume: 150 room-nights/month\nContract Term: 12 months",
         questions: [
@@ -919,14 +922,14 @@ export const BO_WEEK_1: WeekContent = {
         { bad: "Buy more rooms, cheaper price.", good: "The more rooms you commit to, the more competitive our rate becomes." },
         { bad: "Sign here now.", good: "Shall we go ahead and finalize the agreement today?" },
       ],
-      game: {
+      game: [{
         prompt: "Your rates look good, but what can you offer for 200 room-nights a month?",
         options: [
           { text: "For that volume, we can offer you our best corporate rate, along with a complimentary upgrade.", correct: true },
           { text: "This is the best price, take it.", correct: false },
           { text: "We don't discuss volume, just book normally.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_1_2",
@@ -943,11 +946,11 @@ export const BO_WEEK_1: WeekContent = {
         { rude: "Give back rooms you don't sell.", polite: "If you cannot sell the rooms, we would ask that you release them by the deadline.", rule: "Use a conditional 'If... we would ask that...' to state a policy collaboratively." },
         { rude: "We will cancel rooms automatically.", polite: "Any unsold rooms will be automatically released after the deadline.", rule: "Use passive voice ('will be released') to state a policy neutrally, without sounding like blame." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "How many rooms can you hold for us, and until when?",
         targetResponse: "We can allot 10 rooms per night, with a release period of 7 days before arrival.",
         helpTip: "Stress the number and the noun together: 'TEN rooms', 'SEVEN days' — this avoids confusion on the phone.",
-      },
+      }],
       reading: {
         text: "CONTRACT CLAUSE 4 - ROOM ALLOTMENT:\nThe Hotel shall allot ten (10) rooms per night to the Partner.\nAny rooms not confirmed by the Partner within the Release Period (7 days prior to arrival) shall be automatically released back to general inventory.",
         questions: [
@@ -959,14 +962,14 @@ export const BO_WEEK_1: WeekContent = {
         { bad: "You lose rooms if you're late.", good: "Unconfirmed rooms will be released back to inventory after the deadline." },
         { bad: "Tell us fast if you want rooms.", good: "Please confirm your room requirement before the release period ends." },
       ],
-      game: {
+      game: [{
         prompt: "How many rooms can you hold for us, and until when?",
         options: [
           { text: "We can allot 10 rooms per night, with a release period of 7 days before arrival.", correct: true },
           { text: "You lose rooms if you're late.", correct: false },
           { text: "We don't hold rooms for anyone.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_1_3",
@@ -983,11 +986,11 @@ export const BO_WEEK_1: WeekContent = {
         { rude: "You can't book on those dates.", polite: "We kindly request that you avoid booking during the listed blackout dates.", rule: "Use 'We kindly request that...' to make a formal restriction sound polite." },
         { rude: "You pay a fine if you cancel late.", polite: "I'm afraid a penalty fee will apply for cancellations made after the deadline.", rule: "Use 'I'm afraid...' to soften a negative or restrictive statement." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "What if our client needs to cancel a group booking close to Tet holiday?",
         targetResponse: "I'm afraid Tet falls within our blackout dates, and a penalty fee will apply for late cancellations.",
         helpTip: "Practice the soft, apologetic tone on 'I'm afraid' — drop your pitch slightly to sound sincere, not harsh.",
-      },
+      }],
       reading: {
         text: "CONTRACT CLAUSE 6 - BLACKOUT DATES & CANCELLATION:\nThe Contract Rate excludes the following Blackout Dates: 15 Jan - 05 Feb (Tet Holiday), 30 Apr - 03 May.\nCancellations made less than 14 days before arrival are subject to a penalty fee of one (1) night's rate.",
         questions: [
@@ -999,14 +1002,14 @@ export const BO_WEEK_1: WeekContent = {
         { bad: "No booking on those days, sorry.", good: "We kindly request that bookings avoid the blackout dates listed in the contract." },
         { bad: "Too late, you pay fine.", good: "I'm afraid a penalty fee applies for cancellations made after the 14-day deadline." },
       ],
-      game: {
+      game: [{
         prompt: "What if our client needs to cancel a group booking close to Tet holiday?",
         options: [
           { text: "I'm afraid Tet falls within our blackout dates, and a penalty fee will apply for late cancellations.", correct: true },
           { text: "No booking on those days, sorry.", correct: false },
           { text: "That's not my problem, check the contract yourself.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_1_4",
@@ -1023,11 +1026,11 @@ export const BO_WEEK_1: WeekContent = {
         { rude: "No, we won't raise your commission.", polite: "I understand your concern, however, our current commission rate is already very competitive.", rule: "Use 'I understand your concern, however...' to acknowledge the partner's point before disagreeing." },
         { rude: "Take it or leave it.", polite: "What if we offered a slightly higher commission in exchange for a longer contract term?", rule: "Use 'What if we...' to propose a counter-offer instead of flatly rejecting a request." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Another hotel is offering us 15% commission. Can you match that, or we'll move our business there?",
         targetResponse: "I understand your concern, however, what if we offered 12% commission in exchange for a longer, exclusive contract?",
         helpTip: "Keep your intonation calm and steady on 'however' — a rising, defensive tone can sound like an argument.",
-      },
+      }],
       reading: {
         text: "EMAIL FROM TRAVEL AGENT PARTNER:\nSubject: Commission Review Request\nHi team, we've received a better offer from a competitor hotel at 15% commission. We currently receive 10% with you. Please advise if you can match this, or we may need to shift our allocation next quarter.",
         questions: [
@@ -1039,14 +1042,14 @@ export const BO_WEEK_1: WeekContent = {
         { bad: "No, we won't raise your commission.", good: "I understand your concern, however, our rate already reflects strong added value." },
         { bad: "Go to the other hotel then.", good: "Let's discuss how we can strengthen this long-term partnership together." },
       ],
-      game: {
+      game: [{
         prompt: "Another hotel is offering us 15% commission. Can you match that, or we'll move our business there?",
         options: [
           { text: "I understand your concern, however, what if we offered 12% commission in exchange for a longer, exclusive contract?", correct: true },
           { text: "No, we won't raise your commission.", correct: false },
           { text: "Go to the other hotel then, we don't care.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1072,11 +1075,11 @@ export const FO_WEEK_2: WeekContent = {
         { rude: "This list is wrong.", polite: "I've noticed a small discrepancy on the list — could we double-check it together?", rule: "Use 'I've noticed...' plus a question to raise an issue without blaming the guest." },
         { rude: "Give me the final numbers.", polite: "Would you be able to confirm the final numbers for us?", rule: "Use 'Would you be able to...' as a softer modal for requesting confirmation." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Here's our group's rooming list. We have 25 rooms booked under Sunrise Travel.",
         targetResponse: "Thank you. Let's go through the list together to confirm each guest name and room type before we start check-in.",
         helpTip: "Link the words smoothly in 'check-in' — /ˈtʃɛk ɪn/ — so it does not sound like two separate words.",
-      },
+      }],
       reading: {
         text: "ROOMING LIST - SUNRISE TRAVEL GROUP\nGroup Size: 25 Rooms / 50 Pax\nArrival Date: 20 JUL 2026\nRoom Type: 20 Twin Rooms, 5 Triple Rooms (extra bed)\nSpecial Note: 2 guests require rooms on a low floor",
         questions: [
@@ -1088,14 +1091,14 @@ export const FO_WEEK_2: WeekContent = {
         { bad: "Your list is wrong.", good: "I think there might be a small discrepancy — shall we check it together?" },
         { bad: "Tell me the numbers now.", good: "Could you confirm the final headcount for us, please?" },
       ],
-      game: {
+      game: [{
         prompt: "Here's our group's rooming list. We have 25 rooms booked under Sunrise Travel.",
         options: [
           { text: "Thank you. Let's go through the list together to confirm each guest name and room type.", correct: true },
           { text: "This list is wrong.", correct: false },
           { text: "Give me the final numbers.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_2_2",
@@ -1112,11 +1115,11 @@ export const FO_WEEK_2: WeekContent = {
         { rude: "Wait for your bags.", polite: "Let me coordinate with our bellman team so your luggage arrives directly at your room.", rule: "Use 'Let me + verb' to offer help proactively." },
         { rude: "Bags come later.", polite: "Your luggage will be delivered to your room shortly by our bellman.", rule: "Use passive voice ('will be delivered') to describe a process professionally." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We're in a hurry — our group has a meeting in twenty minutes. Can we skip the long check-in?",
         targetResponse: "Of course. We've prepared an express check-in with key packets ready for each guest, so you can go straight to your rooms.",
         helpTip: "Stress the first syllable in 'express' and link 'go straight to' smoothly without pausing between words.",
-      },
+      }],
       reading: {
         text: "EXPRESS GROUP CHECK-IN - SOP\nStep 1: Pre-assign rooms & key packets before arrival.\nStep 2: Hand out key packets in the lobby (max 5 minutes).\nStep 3: Bellman team collects luggage tags and delivers bags directly to rooms.",
         questions: [
@@ -1128,14 +1131,14 @@ export const FO_WEEK_2: WeekContent = {
         { bad: "You wait here for check-in.", good: "We've prepared an express check-in, so this will only take a few minutes." },
         { bad: "Leave your bags there.", good: "You may leave your luggage here — our bellman will bring it up shortly." },
       ],
-      game: {
+      game: [{
         prompt: "We're in a hurry — our group has a meeting in twenty minutes. Can we skip the long check-in?",
         options: [
           { text: "Of course. We've prepared an express check-in, so you can go straight to your rooms.", correct: true },
           { text: "You wait here for check-in.", correct: false },
           { text: "Bags come later.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_2_3",
@@ -1152,11 +1155,11 @@ export const FO_WEEK_2: WeekContent = {
         { rude: "You can't change rooms now.", polite: "I'm afraid room changes need a quick update in our system, but I can arrange that for you now.", rule: "Use 'I'm afraid...' to soften a limitation before offering a solution." },
         { rude: "I can't split it.", polite: "If you would like, I can set up two separate folios for individual billing.", rule: "Use a conditional 'If you would like, I can...' to offer options politely." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Actually, my colleague and I would like to swap our rooms, and could you split our bill into two separate ones?",
         targetResponse: "No problem at all. I'm afraid I'll just need a moment to update it in our system, and then I can set up two separate folios for you.",
         helpTip: "Use a warm, falling intonation on 'No problem at all' so it sounds reassuring rather than routine.",
-      },
+      }],
       reading: {
         text: "FRONT DESK NOTE - ROOM ADJUSTMENT\nRoom 812 (Mr. Tran) and Room 815 (Mr. Le) requested to swap rooms.\nBoth guests also requested separate folios for individual billing.\nAction: Update PMS room assignment and issue two new keycards.",
         questions: [
@@ -1168,14 +1171,14 @@ export const FO_WEEK_2: WeekContent = {
         { bad: "You can't swap rooms.", good: "I'm afraid I'll need a moment to update this, but I can arrange the room swap for you." },
         { bad: "One bill only.", good: "If you would like, I can split this into two separate bills." },
       ],
-      game: {
+      game: [{
         prompt: "Actually, my colleague and I would like to swap our rooms, and could you split our bill into two separate ones?",
         options: [
           { text: "No problem at all. I'll update it and set up two separate folios for you.", correct: true },
           { text: "You can't change rooms now.", correct: false },
           { text: "I can't split it.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FO_2_4",
@@ -1192,11 +1195,11 @@ export const FO_WEEK_2: WeekContent = {
         { rude: "Listen up, breakfast is at 7.", polite: "Please note that group breakfast will be served at 7:00 AM in the private hall.", rule: "Use 'Please note that...' to introduce formal group announcements." },
         { rude: "Don't be late for the bus.", polite: "Would you mind reminding your group to be at the lobby five minutes before departure?", rule: "Use 'Would you mind + gerund' to make a polite request or reminder." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Could you let our group know about tomorrow's schedule before we head up to our rooms?",
         targetResponse: "Of course. Please note that group breakfast will be served at 7:00 AM, and the shuttle bus departs the lobby at 8:00 AM sharp.",
         helpTip: "Enunciate 'seven' and 'eight' clearly and pause briefly between the two times so the group does not confuse them.",
-      },
+      }],
       reading: {
         text: "GROUP NOTICE BOARD - SUNRISE TRAVEL\nGroup Breakfast: 07:00 - 08:00, Lotus Private Hall\nShuttle Bus Departure: 08:00 AM sharp, Main Lobby\nPlease be seated five minutes before departure.",
         questions: [
@@ -1208,14 +1211,14 @@ export const FO_WEEK_2: WeekContent = {
         { bad: "Breakfast 7, bus 8, don't be late.", good: "Please note that breakfast is at 7:00 AM and the shuttle departs at 8:00 AM." },
         { bad: "Hurry up for the bus.", good: "Would you mind reminding your group to be ready five minutes early?" },
       ],
-      game: {
+      game: [{
         prompt: "Could you let our group know about tomorrow's schedule before we head up to our rooms?",
         options: [
           { text: "Please note that breakfast is at 7:00 AM, and the shuttle departs the lobby at 8:00 AM sharp.", correct: true },
           { text: "Listen up, breakfast is at 7.", correct: false },
           { text: "Don't be late for the bus.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1241,11 +1244,11 @@ export const FB_WEEK_2: WeekContent = {
         { rude: "Eat it like this.", polite: "You might like to try it this way, if you'd enjoy the full flavor.", rule: "Use 'You might like to...' to suggest rather than instruct the guest." },
         { rude: "This has meat in it.", polite: "I should mention this dish contains beef, in case that's helpful to know.", rule: "Use 'I should mention...' to volunteer useful information smoothly and politely." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "This smells wonderful. What exactly is in this Phở?",
         targetResponse: "Thank you! It's a beef broth simmered for hours with warm spices, served with rice noodles, fresh herbs, and lime.",
         helpTip: "Link 'simmered for' smoothly so the 'd' flows straight into 'for': 'simmer-dfor'.",
-      },
+      }],
       reading: {
         text: "MENU NOTE - BEEF PHỞ (PHỞ BÒ)\nBroth: Beef bones simmered 8 hours with star anise & cinnamon\nNoodles: Fresh flat rice noodles\nServed with: Fresh herbs, bean sprouts, lime, chili\nChef's Tip: Add herbs just before eating for the best aroma.",
         questions: [
@@ -1257,14 +1260,14 @@ export const FB_WEEK_2: WeekContent = {
         { bad: "Eat it like this.", good: "You might like to try it this way, if you'd enjoy the full flavor." },
         { bad: "It has beef.", good: "I should mention this dish contains beef, in case that's helpful to know." },
       ],
-      game: {
+      game: [{
         prompt: "This smells wonderful. What exactly is in this Phở?",
         options: [
           { text: "Thank you! It's a beef broth simmered for hours with warm spices, served with rice noodles, fresh herbs, and lime.", correct: true },
           { text: "Just noodles and meat, eat it.", correct: false },
           { text: "I don't know, ask the chef.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_2_2",
@@ -1281,11 +1284,11 @@ export const FB_WEEK_2: WeekContent = {
         { rude: "Drink it slow, it's hot.", polite: "You'll find it's best enjoyed slowly, as it's served quite hot.", rule: "Use 'You'll find it's best...' to frame advice as a helpful discovery, not a warning." },
         { rude: "Wait, the coffee is dripping.", polite: "While the coffee is dripping, please feel free to relax and take in the aroma.", rule: "Use 'While...' to turn a waiting moment into a positive, guided experience." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I've heard about egg coffee — is that really made with real egg?",
         targetResponse: "Yes, it is! The egg yolk is whisked with condensed milk until light and creamy, then poured over hot coffee.",
         helpTip: "Stress 'whisked' and 'creamy' to sound enthusiastic and make the description more inviting.",
-      },
+      }],
       reading: {
         text: "VIETNAMESE COFFEE MENU\nCà Phê Sữa Đá: Robusta coffee, condensed milk, served over ice\nCà Phê Trứng: Whisked egg yolk & condensed milk over hot coffee\nBạc Sỉu: Coffee with a higher ratio of condensed milk, less bitter\nBrewing Method: Traditional metal drip filter (phin), 4-5 minutes",
         questions: [
@@ -1297,14 +1300,14 @@ export const FB_WEEK_2: WeekContent = {
         { bad: "Drink it slow, it's hot.", good: "You'll find it's best enjoyed slowly, as it's served quite hot." },
         { bad: "Wait, it's still dripping.", good: "While the coffee is dripping, please feel free to relax and enjoy the aroma." },
       ],
-      game: {
+      game: [{
         prompt: "I've heard about egg coffee — is that really made with real egg?",
         options: [
           { text: "Yes, it is! The egg yolk is whisked with condensed milk until light and creamy, then poured over hot coffee.", correct: true },
           { text: "Yes, just drink it, it's fine.", correct: false },
           { text: "I'm not sure, it's a strange drink.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_2_3",
@@ -1321,11 +1324,11 @@ export const FB_WEEK_2: WeekContent = {
         { rude: "Are you allergic to anything?", polite: "Before I take your order, may I check if there's anything you're allergic to?", rule: "Frame the question with 'Before I..., may I check...' to sound thorough and caring, not interrogative." },
         { rude: "We can't guarantee that.", polite: "I'm not able to guarantee that completely, but I'll let the kitchen know right away.", rule: "Soften a limitation by pairing it with an immediate, reassuring action." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I should mention I have a peanut allergy, and my husband doesn't eat gluten.",
         targetResponse: "Thank you so much for letting me know. I'll note both of those and speak with the kitchen to make sure your dishes are safe.",
         helpTip: "Keep your pitch calm and steady on 'thank you so much' — it reassures nervous guests.",
-      },
+      }],
       reading: {
         text: "GUEST DIETARY NOTE\nTable 14 - Mr. & Mrs. Carter\nMrs. Carter: Peanut allergy (severe)\nMr. Carter: Gluten-free diet\nKitchen Note: Use separate pan, avoid peanut oil, confirm all sauces before serving.",
         questions: [
@@ -1337,14 +1340,14 @@ export const FB_WEEK_2: WeekContent = {
         { bad: "Are you allergic to anything?", good: "Before I take your order, may I check if there's anything you're allergic to?" },
         { bad: "We can't guarantee that.", good: "I'm not able to guarantee that completely, but I'll let the kitchen know right away." },
       ],
-      game: {
+      game: [{
         prompt: "I should mention I have a peanut allergy, and my husband doesn't eat gluten.",
         options: [
           { text: "Thank you so much for letting me know. I'll note both of those and speak with the kitchen right away.", correct: true },
           { text: "Are you allergic to anything?", correct: false },
           { text: "Okay, just don't eat the peanuts then.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "FB_2_4",
@@ -1361,11 +1364,11 @@ export const FB_WEEK_2: WeekContent = {
         { rude: "You should get this.", polite: "Based on what you've enjoyed so far, I'd suggest our signature lemongrass beef.", rule: "Use 'Based on..., I'd suggest...' to personalize a recommendation instead of pushing it." },
         { rude: "Everyone likes this one.", polite: "This is one of our most loved dishes, and it might suit your taste perfectly.", rule: "Use a hedge like 'might suit' to recommend confidently without sounding pushy." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We love spicy food and fresh seafood — what would you recommend for us?",
         targetResponse: "In that case, I'd suggest our signature grilled squid with chili lime sauce — it's spicy, fresh, and a real guest favorite.",
         helpTip: "Stress 'signature' and 'favorite' to sound genuinely proud of the recommendation.",
-      },
+      }],
       reading: {
         text: "CHEF'S SIGNATURE RECOMMENDATIONS\nFor Spice Lovers: Grilled Squid with Chili Lime Sauce\nFor Vegetarian Guests: Stir-Fried Morning Glory with Tofu\nFor Special Occasions: Grilled Lemongrass Beef, pairs well with red wine\nNote: Ask about the guest's preferences before recommending a dish.",
         questions: [
@@ -1377,14 +1380,14 @@ export const FB_WEEK_2: WeekContent = {
         { bad: "You should get this.", good: "Based on what you've enjoyed so far, I'd suggest our signature lemongrass beef." },
         { bad: "Everyone likes this one.", good: "This is one of our most loved dishes, and it might suit your taste perfectly." },
       ],
-      game: {
+      game: [{
         prompt: "We love spicy food and fresh seafood — what would you recommend for us?",
         options: [
           { text: "In that case, I'd suggest our signature grilled squid with chili lime sauce — it's spicy, fresh, and a real favorite.", correct: true },
           { text: "You should get this, everyone likes it.", correct: false },
           { text: "I don't know, pick anything from the menu.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1410,11 +1413,11 @@ export const HK_WEEK_2: WeekContent = {
         { rude: "Count your clothes.", polite: "Shall we count the items together, sir?", rule: "Use 'Shall we...?' to politely invite the guest to join an action." },
         { rude: "You have a stain here.", polite: "I've noticed a small mark here — would you like me to point it out?", rule: "Soften observations with 'I've noticed...' instead of direct statements." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Here are my clothes for laundry. Can you check them now?",
         targetResponse: "Of course, sir. Let's go through each item together and note down the count and condition before I take them.",
         helpTip: "Link 'go through' smoothly — /ɡoʊ θruː/ — don't pause between the two words.",
-      },
+      }],
       reading: {
         text: "LAUNDRY PICK-UP RECORD\nRoom: 812\nGuest: Mr. Tanaka\nItems Collected: 3 Shirts, 2 Trousers, 1 Jacket\nCondition Noted: Small stain on 1 shirt collar\nCollected by: Housekeeping Attendant - Linh\nTime: 9:15 AM",
         questions: [
@@ -1426,14 +1429,14 @@ export const HK_WEEK_2: WeekContent = {
         { bad: "Give me your clothes.", good: "May I collect your laundry items now, sir?" },
         { bad: "You didn't count this.", good: "I don't think this item was included in the count — shall we check again?" },
       ],
-      game: {
+      game: [{
         prompt: "Here are my clothes for laundry. Can you check them now?",
         options: [
           { text: "Let's go through each item together and note down the count and condition before I take them.", correct: true },
           { text: "Just give me everything, I'll count later.", correct: false },
           { text: "Why do you have so many clothes?", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_2_2",
@@ -1450,11 +1453,11 @@ export const HK_WEEK_2: WeekContent = {
         { rude: "Express costs more.", polite: "Express service comes with an additional surcharge of 50%, if that works for you.", rule: "Present extra costs positively with 'comes with' instead of a blunt statement of cost." },
         { rude: "You must choose a service.", polite: "Which service would you prefer — regular, express, or dry cleaning?", rule: "Offer choices with 'would you prefer' instead of issuing a command." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I need this suit back by tonight. What are my options?",
         targetResponse: "For same-day delivery, I'd recommend our express service. It carries a 50% surcharge, but your suit will be ready by 6 PM.",
         helpTip: "Stress the key numbers clearly — 'fifty percent' and 'six PM' — so the guest doesn't mishear the price or time.",
-      },
+      }],
       reading: {
         text: "HOTEL LAUNDRY SERVICE MENU\nRegular Wash: Ready in 24 hours - Standard Rate\nDry Cleaning: Ready in 24 hours - +30% of Standard Rate\nExpress Service: Ready in 4 hours - +50% of Standard Rate\nNote: Express orders placed after 6 PM will be delivered the next morning.",
         questions: [
@@ -1466,14 +1469,14 @@ export const HK_WEEK_2: WeekContent = {
         { bad: "Dry cleaning is expensive.", good: "Dry cleaning includes a 30% additional charge for the special care process." },
         { bad: "You can't get it back today.", good: "For today's return, express service would be the best option, though it carries a surcharge." },
       ],
-      game: {
+      game: [{
         prompt: "I need this suit back by tonight. What are my options?",
         options: [
           { text: "For same-day delivery, I'd recommend our express service. It carries a 50% surcharge, but your suit will be ready by 6 PM.", correct: true },
           { text: "You should have asked earlier.", correct: false },
           { text: "We only do regular wash, sorry.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_2_3",
@@ -1490,11 +1493,11 @@ export const HK_WEEK_2: WeekContent = {
         { rude: "It's not our fault.", polite: "Let me look into what may have caused this, and I sincerely apologize for the inconvenience.", rule: "Use indirect framing ('look into what may have caused') to avoid assigning blame while taking responsibility for resolving the issue." },
         { rude: "This always happens.", polite: "This isn't something we expect to happen, and I'd like to make it right for you.", rule: "Use 'I'd like to...' to express willingness to resolve an issue, sounding proactive rather than dismissive." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "My white shirt came back with a stain and one button is missing! This is unacceptable.",
         targetResponse: "I'm very sorry to hear that, sir. Let me take a look right away, and I'll personally make sure this is resolved for you.",
         helpTip: "Use a calm, falling intonation on 'I'm very sorry' to sound sincere, not rushed or defensive.",
-      },
+      }],
       reading: {
         text: "LAUNDRY DAMAGE INCIDENT REPORT\nRoom: 1204\nGuest: Ms. Delacroix\nItem: White cotton blouse\nIssue Reported: Faded color, missing button\nReported On: Return of laundry, 5:40 PM\nAction: Escalated to Housekeeping Supervisor for review",
         questions: [
@@ -1506,14 +1509,14 @@ export const HK_WEEK_2: WeekContent = {
         { bad: "It's not our fault the shirt shrank.", good: "I understand your concern — let me check what may have happened with this item." },
         { bad: "Things like this happen sometimes.", good: "I'm sorry this happened. Let me report it right away and find a solution for you." },
       ],
-      game: {
+      game: [{
         prompt: "My white shirt came back with a stain and one button is missing! This is unacceptable.",
         options: [
           { text: "I'm very sorry to hear that, sir. Let me take a look right away, and I'll personally make sure this is resolved for you.", correct: true },
           { text: "That's strange, it wasn't like that when we sent it.", correct: false },
           { text: "These things happen with old shirts.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "HK_2_4",
@@ -1530,11 +1533,11 @@ export const HK_WEEK_2: WeekContent = {
         { rude: "We can only give you this much.", polite: "According to our policy, we're able to offer up to this amount — may I get my supervisor to confirm the details?", rule: "Use 'we're able to...' (modal of ability) plus an offer to escalate, softening a limit into a solution-oriented statement." },
         { rude: "That's the maximum, take it or leave it.", polite: "I understand this may not fully cover the item's value, but this is the maximum our policy allows — I hope this helps.", rule: "Acknowledge the guest's feelings first ('I understand...') before stating a policy limit, using an empathy-plus-explanation structure." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "This shirt cost me $80. Your $20 compensation isn't enough.",
         targetResponse: "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee, which comes to $20. Let me check with my supervisor if we can review this further for you.",
         helpTip: "Practice the phrase 'ten times the laundry fee' — stress 'ten times' clearly so the guest understands how the amount was calculated.",
-      },
+      }],
       reading: {
         text: "HOUSEKEEPING SOP - LAUNDRY COMPENSATION GUIDE\nMinor Damage (stain, small mark): Free re-cleaning\nMajor Damage (shrinkage, fading, tearing): Up to 10x the laundry service fee\nLost Item: Up to 10x the laundry service fee or replacement value, whichever is lower, pending Manager approval\nAll compensation above $50 requires Duty Manager sign-off.",
         questions: [
@@ -1546,14 +1549,14 @@ export const HK_WEEK_2: WeekContent = {
         { bad: "Twenty dollars, that's it.", good: "Our policy allows up to $20 in this case — let me see if my supervisor can review it further." },
         { bad: "You can't get more than that.", good: "I hear your concern, sir. Let me escalate this to my supervisor to see what more we can do." },
       ],
-      game: {
+      game: [{
         prompt: "This shirt cost me $80. Your $20 compensation isn't enough.",
         options: [
           { text: "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee, which comes to $20. Let me check with my supervisor if we can review this further for you.", correct: true },
           { text: "Twenty dollars is our final offer, no exceptions.", correct: false },
           { text: "You should have checked the price before buying such an expensive shirt.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1579,11 +1582,11 @@ export const SW_WEEK_2: WeekContent = {
         { rude: "Towels are over there.", polite: "Could you please help yourself to fresh towels at the station just past the pool bar?", rule: "Use 'Could you please...' to turn a plain direction into a polite invitation." },
         { rude: "Use your key for the locker.", polite: "Your room key card will open the locker for you.", rule: "Use passive/future statements ('will open') to give directions in a neutral, informative tone." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Where can I get a towel, and do you have private cabanas?",
         targetResponse: "Of course! You'll find fresh towels at the towel station right over there, and I'd be happy to show you to a private cabana.",
         helpTip: "Link 'towel station' smoothly as one phrase — don't pause between the two words.",
-      },
+      }],
       reading: {
         text: "POOL AREA GUEST GUIDE\nTowel Station: Located at the pool entrance, open 7:00 AM - 7:00 PM\nLockers: Complimentary, use your room key card\nPrivate Cabanas: Reserve at least 2 hours in advance at the Pool Bar\nLost your key card? Please inform any pool attendant immediately.",
         questions: [
@@ -1595,14 +1598,14 @@ export const SW_WEEK_2: WeekContent = {
         { bad: "Towels are over there.", good: "You'll find fresh towels at the towel station just past the pool bar." },
         { bad: "Use your key for the locker.", good: "Your room key card will open the locker for you." },
       ],
-      game: {
+      game: [{
         prompt: "Where can I get a towel, and do you have private cabanas?",
         options: [
           { text: "Of course! You'll find fresh towels at the towel station right over there, and I'd be happy to show you to a private cabana.", correct: true },
           { text: "Towels are over there, and cabanas are full today.", correct: false },
           { text: "I'm not sure, please ask another staff member.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_2_2",
@@ -1619,11 +1622,11 @@ export const SW_WEEK_2: WeekContent = {
         { rude: "Your kid needs an adult with him.", polite: "I'm afraid children under 12 must be accompanied by an adult in the pool area.", rule: "Use 'I'm afraid...' to soften the delivery of a mandatory rule." },
         { rude: "You can't wear that in the pool.", polite: "Would you mind changing into proper swimwear before entering the pool, please?", rule: "Use 'Would you mind + verb-ing...?' to politely request a change in behavior." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "My son is 8. Can he swim by himself while I relax here?",
         targetResponse: "I'm afraid children under 12 must be accompanied by an adult in the water, sir. Our lifeguard is also on duty to help.",
         helpTip: "Stress the words 'under 12' clearly so the guest understands the exact age policy.",
-      },
+      }],
       reading: {
         text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.",
         questions: [
@@ -1635,14 +1638,14 @@ export const SW_WEEK_2: WeekContent = {
         { bad: "No jeans allowed.", good: "I'm afraid jeans aren't considered proper swimwear for the pool." },
         { bad: "Watch your kid.", good: "Could you please keep a close eye on your child while he's in the water?" },
       ],
-      game: {
+      game: [{
         prompt: "My son is 8. Can he swim by himself while I relax here?",
         options: [
           { text: "I'm afraid children under 12 must be accompanied by an adult in the water, sir. Our lifeguard is also on duty to help.", correct: true },
           { text: "Sure, no problem, just relax.", correct: false },
           { text: "Kids can't swim here at all.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_2_3",
@@ -1659,11 +1662,11 @@ export const SW_WEEK_2: WeekContent = {
         { rude: "The sea is too dangerous today.", polite: "For your safety, swimming is not recommended today due to rough sea conditions.", rule: "Use 'For your safety, ...' to open a warning in a caring, non-alarming tone." },
         { rude: "You can't swim, the flag is red.", polite: "I'm sorry, sir, but guests are not permitted to enter the water while the red flag is displayed.", rule: "Use passive voice ('are not permitted') instead of 'can't' to state a rule formally." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "The weather looks fine to me. Why can't I go swimming?",
         targetResponse: "I understand, sir. For your safety, the sea is too rough today, and the red flag is up, so guests are not permitted to swim.",
         helpTip: "Keep your pitch gentle and falling on 'I understand, sir' so the warning sounds caring, not commanding.",
-      },
+      }],
       reading: {
         text: "RESORT SAFETY BULLETIN\nStatus: RED FLAG - Tropical Storm Approaching\nSea Condition: Strong currents and rough waves expected until 6:00 PM\nSwimming: Prohibited in the ocean; pool remains open\nGuests are advised to stay on the beach deck and avoid the shoreline.",
         questions: [
@@ -1675,14 +1678,14 @@ export const SW_WEEK_2: WeekContent = {
         { bad: "No swimming, the sea's bad.", good: "For your safety, we ask all guests to avoid swimming until the sea calms down." },
         { bad: "Stay out, red flag's up.", good: "I'm sorry, but the red flag means guests are not permitted to swim right now." },
       ],
-      game: {
+      game: [{
         prompt: "The weather looks fine to me. Why can't I go swimming?",
         options: [
           { text: "I understand, sir. For your safety, the sea is too rough today, and the red flag is up, so guests are not permitted to swim.", correct: true },
           { text: "Rules are rules, no swimming today.", correct: false },
           { text: "The weather is fine, you can swim if you want.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "SW_2_4",
@@ -1699,11 +1702,11 @@ export const SW_WEEK_2: WeekContent = {
         { rude: "Sit down, you're sick.", polite: "Let's get you into the shade and have a seat right away, sir.", rule: "Use 'Let's...' to join the guest in taking action, sounding caring rather than commanding." },
         { rude: "Drink water, you're dehydrated.", polite: "Please try to drink some water slowly — I'll bring you a cool towel as well.", rule: "Use 'Please try to...' plus a reassuring follow-up to guide a guest gently during an emergency." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "I feel really dizzy and my leg is cramping.",
         targetResponse: "Let's get you into the shade right away, sir. Please try to sit down slowly — I'll bring water and call our first-aid team now.",
         helpTip: "Speak slowly and lower your pitch slightly — a calm voice reassures a guest who feels unwell.",
-      },
+      }],
       reading: {
         text: "BEACH FIRST AID - QUICK GUIDE\nHeat Exhaustion Signs: Dizziness, heavy sweating, weakness\nAction: Move guest to shade, offer water, loosen tight clothing\nMuscle Cramps: Gently stretch the affected muscle, apply light massage\nAlways call the on-duty nurse for serious cases: Ext. 115",
         questions: [
@@ -1715,14 +1718,14 @@ export const SW_WEEK_2: WeekContent = {
         { bad: "Sit down, you're sick.", good: "Let's get you into the shade and have a seat right away, sir." },
         { bad: "Drink water, you're dehydrated.", good: "Please try to drink some water slowly — I'll bring you a cool towel as well." },
       ],
-      game: {
+      game: [{
         prompt: "I feel really dizzy and my leg is cramping.",
         options: [
           { text: "Let's get you into the shade right away, sir. Please try to sit down slowly — I'll bring water and call our first-aid team now.", correct: true },
           { text: "You'll be fine, just keep walking.", correct: false },
           { text: "Please wait here, I'll be back later.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1748,11 +1751,11 @@ export const GR_WEEK_2: WeekContent = {
         { rude: "Why are you here?", polite: "May I ask if you're celebrating anything special during your stay?", rule: "Use an indirect question with 'if' to soften a personal question and make it sound caring, not intrusive." },
         { rude: "Is this your honeymoon?", polite: "I couldn't help but notice the lovely bouquet — are you newlyweds, perhaps?", rule: "Add 'perhaps' as a softening adverb to turn a direct guess into a gentle, respectful observation." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Actually, we just got married last week! This is our honeymoon.",
         targetResponse: "Congratulations to you both! It would be our pleasure to make your stay extra special. May I ask if there's anything specific you'd love us to prepare?",
         helpTip: "Link 'Congratulations to' smoothly — the /s/ sound flows straight into 'to' without a pause, keeping the phrase warm and natural.",
-      },
+      }],
       reading: {
         text: "GUEST PROFILE NOTE – GR OBSERVATION LOG\nRoom: 812\nGuest: Mr. & Mrs. Tran\nObservation: Guest mentioned \"first anniversary trip\" during check-in small talk.\nGuests wearing matching rings, asked concierge about rose petal options.\nAction: Flag profile as 'Anniversary – Day 2 of stay'. Notify GR Manager for surprise planning.",
         questions: [
@@ -1764,14 +1767,14 @@ export const GR_WEEK_2: WeekContent = {
         { bad: "Why are you two here together?", good: "Are you celebrating something special with us this trip?" },
         { bad: "Is that your wife?", good: "May I ask, are you two celebrating an anniversary or something special?" },
       ],
-      game: {
+      game: [{
         prompt: "Actually, we just got married last week! This is our honeymoon.",
         options: [
           { text: "Congratulations to you both! It would be our pleasure to make your stay extra special. May I ask if there's anything specific you'd love us to prepare?", correct: true },
           { text: "Oh really? Congrats. Anyway, here's your key.", correct: false },
           { text: "That's nice. Next guest, please.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_2_2",
@@ -1788,11 +1791,11 @@ export const GR_WEEK_2: WeekContent = {
         { rude: "Send a cake to room 812.", polite: "Could you please arrange for a cake to be sent to Room 812 by 6 PM?", rule: "Use the passive voice ('to be sent') to make an internal request sound professional and collaborative rather than like an order." },
         { rude: "I need towels for the bed now.", polite: "Would it be possible to have the towel decoration set up before the guests return?", rule: "Use 'Would it be possible to...' as a highly polite, indirect way to make a request among colleagues." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Housekeeping here. We only have white towels left, no red ones for the heart shape. What should we do?",
         targetResponse: "That's fine, please use the white towels for now and add extra rose petals for color. Thank you for letting me know.",
         helpTip: "Practice the linking sound in 'letting me know' — the /ŋ/ blends softly into 'me', so avoid pronouncing a hard 'g' at the end of 'letting'.",
-      },
+      }],
       reading: {
         text: "INTERNAL COORDINATION SLIP – SPECIAL SET-UP\nRoom: 1205\nOccasion: Wedding Anniversary\nRequested by: GR Team\nKitchen: 1 heart-shaped chocolate cake, \"Happy Anniversary\" in red icing, deliver 6:45 PM\nHousekeeping: Rose petal bed decoration + 2 candles, complete by 6:30 PM\nGR: Confirm room access with guest before 6:15 PM",
         questions: [
@@ -1804,14 +1807,14 @@ export const GR_WEEK_2: WeekContent = {
         { bad: "Just bring the cake whenever.", good: "Could you please deliver the cake by 6:45 PM sharp?" },
         { bad: "Housekeeping, do the flowers now.", good: "Housekeeping, would you be able to complete the flower set-up by 6:30 PM?" },
       ],
-      game: {
+      game: [{
         prompt: "Housekeeping here. We only have white towels left, no red ones for the heart shape. What should we do?",
         options: [
           { text: "That's fine, please use the white towels for now and add extra rose petals for color. Thank you for letting me know.", correct: true },
           { text: "I don't know, figure it out yourselves.", correct: false },
           { text: "Cancel the whole set-up then.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_2_3",
@@ -1828,11 +1831,11 @@ export const GR_WEEK_2: WeekContent = {
         { rude: "Here's your cake.", polite: "On behalf of our entire team, we are delighted to present this cake to celebrate your special day.", rule: "Use 'On behalf of...' with 'delighted to' to elevate a simple presentation into a formal, heartfelt gesture." },
         { rude: "Happy anniversary. Enjoy.", polite: "May your love continue to grow, and may this anniversary be the first of many more to celebrate together.", rule: "Open a well-wish with 'May...' to create a poetic, formal blessing rather than a plain statement." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Oh my goodness, you didn't have to do all this! This is beautiful, thank you so much!",
         targetResponse: "It is truly our honor, madam. On behalf of the entire team, we wish you both a lifetime of happiness. Congratulations once again.",
         helpTip: "Stress the words 'truly' and 'honor' with a slight rise in pitch — this rising intonation adds sincerity and warmth to the compliment.",
-      },
+      }],
       reading: {
         text: "MILESTONE MOMENT – PRESENTATION CHECKLIST\n1. Confirm guest is in the room before entering\n2. Knock, announce \"Guest Relations\" politely\n3. Present cake/gift with both hands\n4. Deliver congratulatory speech (use guest's name)\n5. Offer photo assistance if guest wishes\n6. Exit graciously, wish them a wonderful evening",
         questions: [
@@ -1844,14 +1847,14 @@ export const GR_WEEK_2: WeekContent = {
         { bad: "Congrats. Bye.", good: "Congratulations once again — please enjoy this special evening together." },
         { bad: "Here, take this.", good: "Please allow me to present this small gift to celebrate your milestone." },
       ],
-      game: {
+      game: [{
         prompt: "Oh my goodness, you didn't have to do all this! This is beautiful, thank you so much!",
         options: [
           { text: "It is truly our honor, madam. On behalf of the entire team, we wish you both a lifetime of happiness. Congratulations once again.", correct: true },
           { text: "No problem, it's part of my job.", correct: false },
           { text: "You're welcome. I have other rooms to attend to.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "GR_2_4",
@@ -1868,11 +1871,11 @@ export const GR_WEEK_2: WeekContent = {
         { rude: "We made a mistake with your cake.", polite: "I am so sorry — it seems there has been a mix-up with your cake, and we are correcting it right away.", rule: "Use the indirect passive phrase 'it seems there has been...' to soften the admission of a staff error." },
         { rude: "We spelled your name wrong. Sorry.", polite: "I do apologize for the error on your card; may we prepare a corrected one for you immediately?", rule: "Follow the apology with 'may we...' to politely offer an immediate solution, keeping the focus on fixing the issue." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Um, this isn't the cake we ordered, and my wife's name is spelled wrong on the card too.",
         targetResponse: "I sincerely apologize for this mix-up, sir. Please allow us five minutes to bring the correct cake with a new card, prepared exactly as you requested.",
         helpTip: "Link 'sincerely apologize' smoothly, letting the final /i/ of 'sincerely' flow straight into 'apologize' without a pause, to sound calm and genuine.",
-      },
+      }],
       reading: {
         text: "GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name \"Nguyen\" printed as \"Nguyan\" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered\nFollow-up: Manager to review order-confirmation process with Kitchen team",
         questions: [
@@ -1884,14 +1887,14 @@ export const GR_WEEK_2: WeekContent = {
         { bad: "That's what the kitchen sent us, not our fault.", good: "I am so sorry for this error — let me fix it for you right away." },
         { bad: "Oh well, we'll try to fix the name next time.", good: "May we prepare a corrected card for you immediately, free of charge?" },
       ],
-      game: {
+      game: [{
         prompt: "Um, this isn't the cake we ordered, and my wife's name is spelled wrong on the card too.",
         options: [
           { text: "I sincerely apologize for this mix-up, sir. Please allow us five minutes to bring the correct cake with a new card, prepared exactly as you requested.", correct: true },
           { text: "That's strange, the kitchen must have made a mistake.", correct: false },
           { text: "We can fix it tomorrow.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };
@@ -1917,11 +1920,11 @@ export const BO_WEEK_2: WeekContent = {
         { rude: "How much money do you have?", polite: "Could you share your estimated budget for this event?", rule: "Use 'Could you share...' to ask about sensitive information indirectly (hedging language)." },
         { rude: "Send me the RFP now.", polite: "Would you be able to send us the RFP at your earliest convenience?", rule: "Use 'Would you be able to...' to soften a request with a modal verb." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We are planning a 3-day conference for 200 delegates. Can you send us a proposal?",
         targetResponse: "Certainly. I will prepare a detailed cost estimate based on your requirements and send it to you within 24 hours.",
         helpTip: "Link the words in 'send it to you' smoothly — it sounds like 'sen-di-tuh-you'.",
-      },
+      }],
       reading: {
         text: "REQUEST FOR PROPOSAL\nCompany: Saigon Tech Corporation\nEvent: Annual Sales Conference\nDelegates: 200 pax\nDates: 15-17 October\nBudget Range: $15,000 - $20,000\nDeadline for Proposal: 25 July",
         questions: [
@@ -1933,14 +1936,14 @@ export const BO_WEEK_2: WeekContent = {
         { bad: "Give me your budget.", good: "Could you share your estimated budget with us?" },
         { bad: "We don't know the price yet.", good: "We will confirm the final price once we finalize the details." },
       ],
-      game: {
+      game: [{
         prompt: "We are planning a 3-day conference for 200 delegates. Can you send us a proposal?",
         options: [
           { text: "Certainly. I will prepare a detailed cost estimate based on your requirements and send it to you within 24 hours.", correct: true },
           { text: "We don't have that information right now.", correct: false },
           { text: "That's too many people for us to handle.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_2_2",
@@ -1957,11 +1960,11 @@ export const BO_WEEK_2: WeekContent = {
         { rude: "Follow me.", polite: "Please follow me this way, and I'll show you the ballroom.", rule: "Use 'Please' plus a full sentence to turn an instruction into a friendly invitation (softener)." },
         { rude: "This room fits 300 people.", polite: "This room can comfortably accommodate up to 300 guests.", rule: "Use 'can' with the adverb 'comfortably' to add a positive, reassuring tone." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We need a room that can hold 150 people in a classroom setup. Can you show us one?",
         targetResponse: "Of course. Please follow me this way. Our Ballroom B can comfortably accommodate 150 guests in classroom style.",
         helpTip: "Stress the word 'comfortably' to sound confident and reassuring.",
-      },
+      }],
       reading: {
         text: "VENUE FLOOR PLAN NOTE\nBallroom B\nTheater Style: 250 pax\nClassroom Style: 150 pax\nBanquet Style: 180 pax\nCeiling Height: 4.5m\nNatural Light: Yes (with blackout curtains)",
         questions: [
@@ -1973,14 +1976,14 @@ export const BO_WEEK_2: WeekContent = {
         { bad: "This room is big enough.", good: "This room can comfortably accommodate your group size." },
         { bad: "Come here.", good: "Please come this way, and I will show you around." },
       ],
-      game: {
+      game: [{
         prompt: "We need a room that can hold 150 people in a classroom setup. Can you show us one?",
         options: [
           { text: "Of course. Please follow me this way. Our Ballroom B can comfortably accommodate 150 guests in classroom style.", correct: true },
           { text: "This room is too small for your group.", correct: false },
           { text: "I don't know the capacity of this room.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_2_3",
@@ -1997,11 +2000,11 @@ export const BO_WEEK_2: WeekContent = {
         { rude: "You must pay extra for the LED screen.", polite: "There will be an additional charge for the LED screen.", rule: "Use the impersonal structure 'There will be...' instead of 'you must' to state a cost neutrally (passive/impersonal voice)." },
         { rude: "That menu is too expensive for you.", polite: "This menu is a bit above your current budget, but we can suggest a similar option.", rule: "Use 'a bit' plus an alternative solution to soften negative news (hedging language)." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "We'd like to include a live band and a large LED screen for our gala dinner. What are our options?",
         targetResponse: "That sounds exciting. There will be an additional charge for the LED screen, and I can also recommend our in-house sound and lighting package for the band.",
         helpTip: "Practice linking 'sound and lighting' smoothly, like one word: 'sound-n-lighting'.",
-      },
+      }],
       reading: {
         text: "AV & TECHNICAL PROPOSAL - ADDENDUM\nSound System: Wireless mic x4, Speaker set\nLighting: Stage wash + spotlight\nLED Screen: 4m x 3m, additional $300\nSetup Time Required: 3 hours before event",
         questions: [
@@ -2013,14 +2016,14 @@ export const BO_WEEK_2: WeekContent = {
         { bad: "You have to pay more for that.", good: "There will be an additional charge for that service." },
         { bad: "That's not included.", good: "That item is not part of the standard package, but we can add it for an extra fee." },
       ],
-      game: {
+      game: [{
         prompt: "We'd like to include a live band and a large LED screen for our gala dinner. What are our options?",
         options: [
           { text: "That sounds exciting. There will be an additional charge for the LED screen, and I can also recommend our in-house sound and lighting package for the band.", correct: true },
           { text: "We don't have any sound equipment here.", correct: false },
           { text: "That's not possible in this venue.", correct: false },
         ],
-      },
+      }],
     },
     {
       lessonId: "BO_2_4",
@@ -2037,11 +2040,11 @@ export const BO_WEEK_2: WeekContent = {
         { rude: "Sign this now.", polite: "Could you please review and sign the BEO at your earliest convenience?", rule: "Use 'Could you please...' with 'at your earliest convenience' to request action politely without pressure (indirect request)." },
         { rude: "You need to tell us the final number of guests.", polite: "We would appreciate it if you could confirm your final headcount by Wednesday.", rule: "Use the conditional 'We would appreciate it if you could...' to make a request sound courteous." },
       ],
-      speaking: {
+      speaking: [{
         guestPrompt: "Everything looks good. What do we need to do to confirm the booking?",
         targetResponse: "Wonderful. Could you please review and sign the BEO, and we would appreciate a 50% deposit to confirm your reservation.",
         helpTip: "Keep a rising, friendly tone on 'Wonderful' to sound warm and professional.",
-      },
+      }],
       reading: {
         text: "BANQUET EVENT ORDER (DRAFT)\nClient: Saigon Tech Corporation\nEvent Date: 15 October\nRoom: Grand Ballroom\nFinal Headcount: Due 3 days before event\nDeposit Required: 50% upon signing\nStatus: Pending Client Sign-off",
         questions: [
@@ -2053,14 +2056,14 @@ export const BO_WEEK_2: WeekContent = {
         { bad: "Sign here now.", good: "Could you please review and sign the BEO when convenient?" },
         { bad: "Tell us the number of guests.", good: "We would appreciate it if you could confirm your final headcount." },
       ],
-      game: {
+      game: [{
         prompt: "Everything looks good. What do we need to do to confirm the booking?",
         options: [
           { text: "Wonderful. Could you please review and sign the BEO, and we would appreciate a 50% deposit to confirm your reservation.", correct: true },
           { text: "Just pay us and we'll figure out the rest later.", correct: false },
           { text: "We can't confirm anything without a signature right now.", correct: false },
         ],
-      },
+      }],
     },
   ],
 };

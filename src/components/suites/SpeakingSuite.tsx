@@ -40,11 +40,13 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const awardedAttemptRef = useRef(false);
   const content = dep && week ? getWeekContent(dep, week) : null;
   const scenarios = content
-    ? content.lessons.map((l) => ({
-        complaint: l.speaking.guestPrompt,
-        target: l.speaking.targetResponse,
-        tip: l.speaking.helpTip,
-      }))
+    ? content.lessons.flatMap((l) =>
+        l.speaking.map((s) => ({
+          complaint: s.guestPrompt,
+          target: s.targetResponse,
+          tip: s.helpTip,
+        })),
+      )
     : SCENARIOS.map((s) => ({ ...s, tip: undefined as string | undefined }));
   const [idx, setIdx] = useState(0);
   const scenario = scenarios[idx];

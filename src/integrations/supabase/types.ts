@@ -20,6 +20,8 @@ export type Database = {
           created_at: string
           department_id: string
           id: string
+          mastered: boolean
+          score_pct: number | null
           stars: number
           suite: string
           updated_at: string
@@ -31,6 +33,8 @@ export type Database = {
           created_at?: string
           department_id: string
           id?: string
+          mastered?: boolean
+          score_pct?: number | null
           stars?: number
           suite: string
           updated_at?: string
@@ -42,6 +46,8 @@ export type Database = {
           created_at?: string
           department_id?: string
           id?: string
+          mastered?: boolean
+          score_pct?: number | null
           stars?: number
           suite?: string
           updated_at?: string
@@ -210,6 +216,59 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_items: {
+        Row: {
+          created_at: string
+          department_id: string
+          due_at: string
+          id: string
+          interval_days: number
+          item_key: string
+          item_type: string
+          last_result: boolean | null
+          streak: number
+          updated_at: string
+          user_id: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          department_id: string
+          due_at?: string
+          id?: string
+          interval_days?: number
+          item_key: string
+          item_type: string
+          last_result?: boolean | null
+          streak?: number
+          updated_at?: string
+          user_id: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          department_id?: string
+          due_at?: string
+          id?: string
+          interval_days?: number
+          item_key?: string
+          item_type?: string
+          last_result?: boolean | null
+          streak?: number
+          updated_at?: string
+          user_id?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_items_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
