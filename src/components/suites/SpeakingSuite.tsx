@@ -58,9 +58,11 @@ const PASS_ORDER_RATIO = 0.6;
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
-  const awardedAttemptRef = useRef(false);
-  const maxScoreRef = useRef(0);
-  const masteredRef = useRef(false);
+  // Per-scenario pass state — mirrors ReadingSuite's bestPctRef pattern.
+  // Mastery requires passing every scenario in the week, and stars are
+  // only ever awarded once per scenario (not once per suite).
+  const passedRef = useRef<Set<number>>(new Set());
+  const bestPctRef = useRef<Map<number, number>>(new Map());
   const content = dep && week ? getWeekContent(dep, week) : null;
   const scenarios = content
     ? content.lessons.flatMap((l) =>
@@ -86,7 +88,6 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
     setTranscript("");
     setResult(null);
     finalRef.current = "";
-    awardedAttemptRef.current = false;
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) {
       setError("Speech recognition isn't supported in this browser. Try Chrome.");
@@ -115,10 +116,9 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
       const passed = acc >= PASS_ACCURACY && cmp.orderRatio >= PASS_ORDER_RATIO;
-      maxScoreRef.current = Math.max(maxScoreRef.current, acc);
-      if (passed) masteredRef.current = true;
-      if (passed && !awardedAttemptRef.current) {
-        awardedAttemptRef.current = true;
+      bestPctRef.current.set(idx, Math.max(bestPctRef.current.get(idx) ?? 0, acc));
+      if (passed && !passedRef.current.has(idx)) {
+        passedRef.current.add(idx);
         awardStars(5);
         earned.current += 5;
         setFireworks(true);
@@ -126,9 +126,11 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
         setTimeout(() => setFireworks(false), 2400);
       }
       if (dep && week) {
+        const sumPct = scenarios.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
+        const avgPct = Math.round(sumPct / scenarios.length);
         recordSuiteResult(dep, week, "speaking", earned.current, {
-          scorePct: maxScoreRef.current,
-          mastered: masteredRef.current,
+          scorePct: avgPct,
+          mastered: passedRef.current.size === scenarios.length,
         });
       }
     };
@@ -159,8 +161,15 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-      <motion.div
+    <div className="space-y-4">
+      {scenarios.length > 1 && (
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+          <span>Tình huống {idx + 1}/{scenarios.length}</span>
+          <span className="text-primary">Đạt chuẩn: {passedRef.current.size}/{scenarios.length}</span>
+        </div>
+      )}
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+        <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         className="border border-primary/30 bg-card p-6 shadow-xl"
@@ -272,6 +281,7 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
       </motion.div>
 
       {fireworks && <FireworksCanvas />}
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ ALTER TABLE public.lesson_progress
   ADD COLUMN score_pct INTEGER CHECK (score_pct >= 0 AND score_pct <= 100),
   ADD COLUMN mastered BOOLEAN NOT NULL DEFAULT false;
 
-ALTER TABLE public.lesson_progress DROP CONSTRAINT lesson_progress_suite_check;
+ALTER TABLE public.lesson_progress DROP CONSTRAINT IF EXISTS lesson_progress_suite_check;
 ALTER TABLE public.lesson_progress
   ADD CONSTRAINT lesson_progress_suite_check
   CHECK (suite IN ('vocab', 'grammar', 'speaking', 'reading', 'arcade', 'listening', 'weektest'));

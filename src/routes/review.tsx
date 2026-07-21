@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth";
 import { useAcademy } from "@/lib/academy-store";
 import { applyReviewResult, fetchDueItems, resolveReviewItem, type ResolvedReviewItem } from "@/lib/review";
@@ -40,7 +40,9 @@ function ReviewPage() {
       return rows.map(resolveReviewItem).filter((r): r is ResolvedReviewItem => r !== null);
     },
     enabled: !!userId,
-    staleTime: Infinity,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always",
     refetchOnWindowFocus: false,
   });
 
@@ -71,18 +73,23 @@ function ReviewPage() {
     );
   }
 
-  return <ReviewSession items={items} />;
+  return <ReviewSession items={items} userId={userId} />;
 }
 
-function ReviewSession({ items }: { items: ResolvedReviewItem[] }) {
+function ReviewSession({ items, userId }: { items: ResolvedReviewItem[]; userId: string | undefined }) {
+  const queryClient = useQueryClient();
   const { awardStars, markLearnedToday } = useAcademy();
+  // Pinned for the whole session — a background refetch of the due-items
+  // query (e.g. on reconnect) must not swap items out from under an
+  // in-progress session.
+  const [sessionItems] = useState(items);
   const [idx, setIdx] = useState(0);
   const [answered, setAnswered] = useState<null | boolean>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [done, setDone] = useState(false);
   const finishedRef = useRef(false);
 
-  const item = items[idx];
+  const item = sessionItems[idx];
 
   function handleResult(correct: boolean) {
     setAnswered(correct);
@@ -94,10 +101,11 @@ function ReviewSession({ items }: { items: ResolvedReviewItem[] }) {
   }
 
   function next() {
-    if (idx + 1 >= items.length) {
+    if (idx + 1 >= sessionItems.length) {
       if (!finishedRef.current) {
         finishedRef.current = true;
         markLearnedToday();
+        queryClient.invalidateQueries({ queryKey: ["review-due-count", userId] });
       }
       setDone(true);
       return;
@@ -112,7 +120,7 @@ function ReviewSession({ items }: { items: ResolvedReviewItem[] }) {
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 shadow-xl">
           <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Phiên ôn tập hoàn tất</div>
           <div className="font-display mt-3 text-5xl text-primary">
-            {correctCount}/{items.length}
+            {correctCount}/{sessionItems.length}
           </div>
           <p className="mt-3 text-sm text-foreground/75">
             🔥 Chuỗi ngày học của bạn đã được cộng. Mục trả lời đúng sẽ quay lại sau quãng dài hơn; mục sai sẽ xuất hiện lại ngày mai.
@@ -136,12 +144,12 @@ function ReviewSession({ items }: { items: ResolvedReviewItem[] }) {
       </div>
       <div className="mt-4 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
         <span>
-          Mục {idx + 1}/{items.length} · {item.row.department_id} tuần {item.row.week_number}
+          Mục {idx + 1}/{sessionItems.length} · {item.row.department_id} tuần {item.row.week_number}
         </span>
         <span className="text-primary">{correctCount} đúng</span>
       </div>
       <div className="mt-2 h-1 w-full bg-primary/15">
-        <div className="h-1 bg-primary transition-all" style={{ width: `${(idx / items.length) * 100}%` }} />
+        <div className="h-1 bg-primary transition-all" style={{ width: `${(idx / sessionItems.length) * 100}%` }} />
       </div>
 
       <motion.div key={item.row.item_key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
@@ -156,7 +164,7 @@ function ReviewSession({ items }: { items: ResolvedReviewItem[] }) {
             {answered ? "Chính xác! +1 ⭐" : "Chưa đúng — sẽ ôn lại vào ngày mai"}
           </span>
           <button onClick={next} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
-            {idx + 1 >= items.length ? "Kết thúc phiên" : "Mục tiếp →"}
+            {idx + 1 >= sessionItems.length ? "Kết thúc phiên" : "Mục tiếp →"}
           </button>
         </div>
       )}

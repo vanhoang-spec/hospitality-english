@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
 import { seedReviewItems } from "@/lib/review";
+import { localDateStr, yesterdayStr } from "@/lib/date";
 
 const LEGACY_KEY = "academy.state.v1";
 const PENDING_STARS_PREFIX = "academy.pendingStars.v1.";
@@ -29,7 +30,7 @@ const DEFAULT_STATE: AcademyState = {
   full_name: "Esteemed Apprentice",
   service_stars: 0,
   daily_streak: 1,
-  last_active_date: new Date().toISOString().slice(0, 10),
+  last_active_date: localDateStr(),
   metrics: {
     fluency_score: 70,
     courtesy_score: 70,
@@ -129,10 +130,6 @@ function writeLastLearned(userId: string, date: string) {
   window.localStorage.setItem(LAST_LEARNED_PREFIX + userId, date);
 }
 
-function yesterdayStr(): string {
-  return new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-}
-
 function readPendingStars(userId: string): number {
   if (typeof window === "undefined") return 0;
   const raw = window.localStorage.getItem(PENDING_STARS_PREFIX + userId);
@@ -167,7 +164,7 @@ export function useAcademy() {
   // for render, DB is authoritative for persistence.
   useEffect(() => {
     const initial = read(userId);
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localDateStr();
     // last_active_date only tracks presence now — the streak is earned
     // by actual learning (markLearnedToday), not by opening the app.
     if (initial.last_active_date !== today) {
@@ -297,7 +294,7 @@ export function useAcademy() {
   // Daily Review session — never on merely opening the app.
   const markLearnedToday = useCallback(() => {
     if (!userId) return;
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localDateStr();
     const lastLearned = readLastLearned(userId);
     if (lastLearned === today) return;
     const current = read(userId);

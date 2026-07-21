@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
@@ -42,8 +42,9 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   const awardedRoundRef = useRef(-1);
   const memoryAwardedRef = useRef<Set<number>>(new Set());
   // Distinct-puzzle outcomes for mastery: "correct" only counts when the
-  // learner solved it without revealing the answer first.
-  const outcomesRef = useRef<Map<number, "correct" | "revealed">>(new Map());
+  // learner solved it without revealing the answer first. State (not a
+  // ref) so the "Đạt chuẩn: X/N" header re-renders the instant it changes.
+  const [outcomes, setOutcomes] = useState<Map<number, "correct" | "revealed">>(new Map());
   const content = dep && week ? getWeekContent(dep, week) : null;
   const puzzles: Puzzle[] = content
     ? content.lessons.flatMap((l) =>
@@ -67,7 +68,7 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   const [memoryResult, setMemoryResult] = useState<null | boolean>(null);
 
   // re-init when round changes
-  useMemo(() => {
+  useEffect(() => {
     setBank(shuffle(puzzle.chips));
     setTray([]);
     setChecked(null);
@@ -75,11 +76,12 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     setRevealed(false);
     setMemoryTyped("");
     setMemoryResult(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round]);
 
-  function syncProgress() {
+  function syncProgress(nextOutcomes: Map<number, "correct" | "revealed">) {
     if (!dep || !week) return;
-    const correctCount = Array.from(outcomesRef.current.values()).filter((o) => o === "correct").length;
+    const correctCount = Array.from(nextOutcomes.values()).filter((o) => o === "correct").length;
     const pct = Math.round((correctCount / puzzles.length) * 100);
     recordSuiteResult(dep, week, "grammar", earned.current, {
       scorePct: pct,
@@ -126,19 +128,21 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
       awardStars(4);
       patchMetrics({ courtesy_score: Math.min(100, 70 + (round + 1) * 8) });
       earned.current += 4;
-      if (!outcomesRef.current.has(puzzleIdx) || outcomesRef.current.get(puzzleIdx) !== "correct") {
-        outcomesRef.current.set(puzzleIdx, "correct");
+      if (outcomes.get(puzzleIdx) !== "correct") {
+        const next = new Map(outcomes).set(puzzleIdx, "correct" as const);
+        setOutcomes(next);
+        syncProgress(next);
       }
-      syncProgress();
     }
   }
 
   function reveal() {
     setRevealed(true);
     setChecked(null);
-    if (outcomesRef.current.get(puzzleIdx) !== "correct") {
-      outcomesRef.current.set(puzzleIdx, "revealed");
-      syncProgress();
+    if (outcomes.get(puzzleIdx) !== "correct") {
+      const next = new Map(outcomes).set(puzzleIdx, "revealed" as const);
+      setOutcomes(next);
+      syncProgress(next);
     }
   }
 
@@ -149,7 +153,7 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
       memoryAwardedRef.current.add(puzzleIdx);
       awardStars(2);
       earned.current += 2;
-      syncProgress();
+      syncProgress(outcomes);
     }
   }
 
@@ -164,7 +168,7 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
         <span>Câu {puzzleIdx + 1}/{puzzles.length}</span>
         <span className="text-primary">
-          Đạt chuẩn: {Array.from(outcomesRef.current.values()).filter((o) => o === "correct").length}/{puzzles.length}
+          Đạt chuẩn: {Array.from(outcomes.values()).filter((o) => o === "correct").length}/{puzzles.length}
         </span>
       </div>
 

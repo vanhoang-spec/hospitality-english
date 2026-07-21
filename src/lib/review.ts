@@ -1,14 +1,18 @@
 // SM-2-lite spaced repetition over review_items.
 //
 // Item keys are stable references into week content:
-//   "vocab:FO:1:Welcome"  — vocabulary headword (unique within a week)
-//   "grammar:FO:1:0"      — flat index over lessons.flatMap(l => l.grammar)
-//   "speaking:FO:1:2"     — flat index over lessons.flatMap(l => l.speaking)
+//   "vocab:FO:1:Welcome"              — vocabulary headword (unique within a week)
+//   "grammar:FO:1:no-can-do"          — slug of the puzzle's rude line
+//   "speaking:FO:1:wheres-my-luggage" — slug of the guest prompt
+// Slugs (not array indices) survive content edits — reordering or
+// inserting a puzzle in week-content.ts must not silently repoint an
+// existing learner's review schedule at different content.
 // Seeding happens when a learner first masters the matching suite for a
 // week; scheduling state then lives entirely in the review_items table.
 
 import { supabase } from "@/integrations/supabase/client";
 import { getWeekContent, type GrammarItem, type SpeakingItem, type VocabItem } from "@/lib/content/week-content";
+import { addDays, localDateStr } from "@/lib/date";
 
 export type ReviewItemRow = {
   id: string;
@@ -26,14 +30,12 @@ export type ReviewItemRow = {
 const INTERVAL_GROWTH = 2.2;
 const INTERVAL_CAP_DAYS = 60;
 
-function todayStr(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function addDays(dateStr: string, days: number): string {
-  const d = new Date(dateStr + "T00:00:00Z");
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
 }
 
 /** Seeds review items for a week's vocab/grammar/speaking content the
@@ -53,9 +55,9 @@ export async function seedReviewItems(
   if (itemType === "vocab") {
     keys = content.lessons.flatMap((l) => l.vocabulary.map((v) => `vocab:${dep}:${weekNumber}:${v.word}`));
   } else if (itemType === "grammar") {
-    keys = content.lessons.flatMap((l) => l.grammar).map((_, i) => `grammar:${dep}:${weekNumber}:${i}`);
+    keys = content.lessons.flatMap((l) => l.grammar).map((g) => `grammar:${dep}:${weekNumber}:${slugify(g.rude)}`);
   } else {
-    keys = content.lessons.flatMap((l) => l.speaking).map((_, i) => `speaking:${dep}:${weekNumber}:${i}`);
+    keys = content.lessons.flatMap((l) => l.speaking).map((s) => `speaking:${dep}:${weekNumber}:${slugify(s.guestPrompt)}`);
   }
 
   const rows = keys.map((item_key) => ({
@@ -64,7 +66,7 @@ export async function seedReviewItems(
     item_type: itemType,
     department_id: dep,
     week_number: weekNumber,
-    due_at: addDays(todayStr(), 1),
+    due_at: addDays(localDateStr(), 1),
   }));
 
   await supabase.from("review_items").upsert(rows, { onConflict: "user_id,item_key", ignoreDuplicates: true });
@@ -75,7 +77,7 @@ export async function fetchDueItems(userId: string, limit = 20): Promise<ReviewI
     .from("review_items")
     .select("*")
     .eq("user_id", userId)
-    .lte("due_at", todayStr())
+    .lte("due_at", localDateStr())
     .order("due_at", { ascending: true })
     .limit(limit);
   if (error) throw error;
@@ -87,7 +89,7 @@ export async function fetchDueCount(userId: string): Promise<number> {
     .from("review_items")
     .select("id", { count: "exact", head: true })
     .eq("user_id", userId)
-    .lte("due_at", todayStr());
+    .lte("due_at", localDateStr());
   if (error) throw error;
   return count ?? 0;
 }
@@ -96,7 +98,7 @@ export async function fetchDueCount(userId: string): Promise<number> {
  * 1 day on failure. Returns the next due date. */
 export async function applyReviewResult(item: ReviewItemRow, correct: boolean): Promise<string> {
   const nextInterval = correct ? Math.min(INTERVAL_CAP_DAYS, Math.ceil(item.interval_days * INTERVAL_GROWTH)) : 1;
-  const dueAt = addDays(todayStr(), nextInterval);
+  const dueAt = addDays(localDateStr(), nextInterval);
   await supabase
     .from("review_items")
     .update({
@@ -133,13 +135,13 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
 
   if (row.item_type === "grammar") {
     const flat = content.lessons.flatMap((l) => l.grammar);
-    const grammar = flat[Number(ref)];
+    const grammar = flat.find((g) => slugify(g.rude) === ref);
     if (!grammar) return null;
     return { kind: "grammar", row, grammar };
   }
 
   const flatSpeaking = content.lessons.flatMap((l) => l.speaking);
-  const speaking = flatSpeaking[Number(ref)];
+  const speaking = flatSpeaking.find((s) => slugify(s.guestPrompt) === ref);
   if (!speaking) return null;
   // Prefer the game round authored for this prompt (its wrong options
   // are purpose-built rude distractors); otherwise fall back to other
