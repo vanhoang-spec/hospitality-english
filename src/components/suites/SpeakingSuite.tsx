@@ -6,8 +6,33 @@ import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
+// Speech recognition transcribes spoken numbers as digits ("two-oh-five"
+// → "205", "twenty-five" → "25"), while pre-A1 targets are authored as
+// number WORDS. Expand digit tokens so learners aren't failed for
+// pronouncing a number correctly.
+const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+const TEENS = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+function digitToWords(tok: string): string[] {
+  const n = parseInt(tok, 10);
+  if (tok.length <= 2 && n < 10) return [ONES[n]];
+  if (tok.length === 2) {
+    if (n < 20) return [TEENS[n - 10]];
+    const t = TENS[Math.floor(n / 10)];
+    return n % 10 === 0 ? [t] : [t, ONES[n % 10]];
+  }
+  // 3+ digits: hotel room-number convention — digit by digit, 0 = "oh".
+  return [...tok].map((d) => (d === "0" ? "oh" : ONES[Number(d)]));
+}
+
 function normalize(s: string) {
-  return s.toLowerCase().replace(/[^\w\s']/g, " ").split(/\s+/).filter(Boolean);
+  return s
+    .toLowerCase()
+    .replace(/[^\w\s']/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .flatMap((tok) => (/^\d+$/.test(tok) ? digitToWords(tok) : [tok]));
 }
 
 function compareWords(spoken: string, target: string) {

@@ -1,5 +1,9 @@
-// A2-B1 CEFR content payload — concrete, courteous, modal-verb-led
-// phrases tailored to 4-5★ hotels in Vietnam.
+// Authored week content, keyed by department + week per the 40-week
+// matrix (docs/curriculum-level-matrix.md). Phase 0 (weeks 1-6, pre-A1)
+// is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
+// concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
+
+import { PHASE0_WEEKS } from "./phase0";
 
 export type VocabItem = {
   word: string;
@@ -25,7 +29,9 @@ export type LessonContent = {
   grammar: GrammarItem[];
   speaking: SpeakingItem[];
   reading: ReadingItem;
-  arcade: ArcadeItem[];
+  /** Legacy field — no suite reads it (ArcadeSuite runs on `game`).
+   *  Kept optional so existing weeks still typecheck; do not author new ones. */
+  arcade?: ArcadeItem[];
   game: GameRound[];
 };
 
@@ -2070,6 +2076,7 @@ export const BO_WEEK_38: WeekContent = {
 
 // Registry — keyed by `${DEP}-${week}`.
 const REGISTRY: Record<string, WeekContent> = {
+  ...PHASE0_WEEKS,
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,
@@ -2092,3 +2099,27 @@ export function getWeekContent(dep: string, week: string | number): WeekContent 
 export const AVAILABLE_WEEKS = Array.from(
   new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
 ).sort((a, b) => a - b);
+
+/** Resolves review headwords (a week's `reviewWords`) back to their full
+ *  VocabItems by searching all registered weeks of the same department.
+ *  Unknown words are dropped silently — a typo in reviewWords must never
+ *  crash a quiz. */
+export function resolveReviewVocab(dep: string, words: string[]): VocabItem[] {
+  const depPrefix = `${dep.toUpperCase()}-`;
+  const wanted = new Set(words.map((w) => w.toLowerCase()));
+  const found: VocabItem[] = [];
+  const seen = new Set<string>();
+  for (const [key, week] of Object.entries(REGISTRY)) {
+    if (!key.startsWith(depPrefix)) continue;
+    for (const lessonContent of week.lessons) {
+      for (const item of lessonContent.vocabulary) {
+        const lower = item.word.toLowerCase();
+        if (wanted.has(lower) && !seen.has(lower)) {
+          seen.add(lower);
+          found.push(item);
+        }
+      }
+    }
+  }
+  return found;
+}

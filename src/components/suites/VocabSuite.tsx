@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
+import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -59,6 +59,18 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
   const terms: Term[] = content.lessons.flatMap((l) =>
     l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context, icon: v.icon })),
   );
+  // Spaced recycling (matrix P5 standard): earlier weeks' headwords are
+  // mixed into the retrieval quiz — but not into the flashcards, whose
+  // flip-gate should only cover this week's new material.
+  const reviewTerms: Term[] = content.reviewWords
+    ? resolveReviewVocab(dep, content.reviewWords).map((v) => ({
+        en: v.word,
+        ipa: v.phonetic,
+        vi: v.definition,
+        usage: v.context,
+        icon: v.icon,
+      }))
+    : [];
 
   const [stage, setStage] = useState<"study" | "quiz" | "done">("study");
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
@@ -83,7 +95,7 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms));
+    setQuiz(buildQuiz(terms, reviewTerms));
     setQIdx(0);
     setPicked(null);
     setTyped("");
