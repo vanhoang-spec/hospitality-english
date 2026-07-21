@@ -20,17 +20,64 @@ const LIBRARY: Record<string, Term[]> = {
   BO: [{ en: "RevPAR", ipa: "/ˈrev.pɑːr/", vi: "Doanh thu trên phòng sẵn có", usage: "RevPAR rose seven percent year-on-year.", icon: "📈" }],
 };
 
+function shuffle<T>(a: T[]): T[] {
+  const c = [...a];
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]];
+  }
+  return c;
+}
+
+type QuizQuestion =
+  | { kind: "mcq"; key: string; prompt: string; speak?: string; options: string[]; correctIdx: number }
+  | { kind: "dictation"; key: string; word: string };
+
+const MAX_MCQ = 12;
+const MAX_DICTATION = 3;
+const MASTERY_PCT = 80;
+
+// Retrieval quiz built from the studied terms: alternating EN→VI and
+// VI→EN multiple choice, then a few listen-and-type dictation items.
+// Distractors are drawn from the same term set so they stay plausible.
+function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
+  const pool = [...terms, ...reviewWords];
+  const mcqTerms = shuffle(pool).slice(0, MAX_MCQ);
+  const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
+    const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
+    if (i % 2 === 0) {
+      const options = shuffle([t.vi, ...distractors.map((d) => d.vi)]);
+      return { kind: "mcq", key: `envi:${t.en}`, prompt: `Nghĩa của "${t.en}" là gì?`, speak: t.en, options, correctIdx: options.indexOf(t.vi) };
+    }
+    const options = shuffle([t.en, ...distractors.map((d) => d.en)]);
+    return { kind: "mcq", key: `vien:${t.en}`, prompt: `Từ tiếng Anh nào có nghĩa: "${t.vi}"?`, options, correctIdx: options.indexOf(t.en) };
+  });
+  const dictationTerms = shuffle(pool.filter((t) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en))).slice(0, MAX_DICTATION);
+  const dictations: QuizQuestion[] = dictationTerms.map((t) => ({ kind: "dictation", key: `dict:${t.en}`, word: t.en }));
+  return [...mcqs, ...dictations];
+}
+
 export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
-  const earned = useRef(0);
-  const awardedRef = useRef<Set<number>>(new Set());
   const content = week ? getWeekContent(dep, week) : null;
   const terms: Term[] = content
     ? content.lessons.flatMap((l) =>
         l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context, icon: v.icon })),
       )
     : LIBRARY[dep.toUpperCase()] ?? LIBRARY.FO;
+
+  const [stage, setStage] = useState<"study" | "quiz" | "done">("study");
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
+
+  const [quiz, setQuiz] = useState<QuizQuestion[]>([]);
+  const [qIdx, setQIdx] = useState(0);
+  const [picked, setPicked] = useState<number | null>(null);
+  const [typed, setTyped] = useState("");
+  const [answered, setAnswered] = useState<null | boolean>(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const awardedRef = useRef<Set<string>>(new Set());
+  const earnedRef = useRef(0);
+  const [lastScorePct, setLastScorePct] = useState(0);
 
   function flip(i: number) {
     setFlipped((s) => {
@@ -39,19 +86,210 @@ export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
       else n.add(i);
       return n;
     });
-    if (!awardedRef.current.has(i)) {
-      awardedRef.current.add(i);
-      awardStars(1);
-      earned.current += 1;
-      if (week) recordSuiteResult(dep, week, "vocab", earned.current);
+  }
+
+  function startQuiz() {
+    setQuiz(buildQuiz(terms));
+    setQIdx(0);
+    setPicked(null);
+    setTyped("");
+    setAnswered(null);
+    setCorrectCount(0);
+    setStage("quiz");
+  }
+
+  function creditIfFirst(key: string, n: number) {
+    if (awardedRef.current.has(key)) return;
+    awardedRef.current.add(key);
+    awardStars(n);
+    earnedRef.current += n;
+  }
+
+  function submitAnswer(q: QuizQuestion) {
+    let ok: boolean;
+    if (q.kind === "mcq") {
+      if (picked === null) return;
+      ok = picked === q.correctIdx;
+    } else {
+      ok = typed.trim().toLowerCase() === q.word.toLowerCase();
+    }
+    setAnswered(ok);
+    if (ok) {
+      setCorrectCount((c) => c + 1);
+      creditIfFirst(q.key, 1);
     }
   }
 
+  function next() {
+    const finalCorrect = correctCount;
+    if (qIdx + 1 >= quiz.length) {
+      const pct = Math.round((finalCorrect / quiz.length) * 100);
+      setLastScorePct(pct);
+      if (week) recordSuiteResult(dep, week, "vocab", earnedRef.current, { scorePct: pct, mastered: pct >= MASTERY_PCT });
+      setStage("done");
+      return;
+    }
+    setQIdx((i) => i + 1);
+    setPicked(null);
+    setTyped("");
+    setAnswered(null);
+  }
+
+  if (stage === "quiz") {
+    const q = quiz[qIdx];
+    return (
+      <div className="mx-auto max-w-2xl">
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+          <span>Kiểm tra ghi nhớ · Câu {qIdx + 1}/{quiz.length}</span>
+          <span className="text-primary">{correctCount} đúng</span>
+        </div>
+        <div className="mt-2 h-1 w-full bg-primary/15">
+          <div className="h-1 bg-primary transition-all" style={{ width: `${(qIdx / quiz.length) * 100}%` }} />
+        </div>
+
+        <motion.div key={q.key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6 border border-primary/30 bg-card p-6 shadow-xl">
+          {q.kind === "mcq" ? (
+            <>
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-display text-xl text-foreground">{q.prompt}</p>
+                {q.speak && (
+                  <button
+                    onClick={() => speakEN(q.speak!, 0.85)}
+                    className="shrink-0 border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
+                  >
+                    🔊
+                  </button>
+                )}
+              </div>
+              <div className="mt-4 space-y-2">
+                {q.options.map((opt, i) => {
+                  const isPicked = picked === i;
+                  const showCorrect = answered !== null && i === q.correctIdx;
+                  const showWrong = answered !== null && isPicked && i !== q.correctIdx;
+                  return (
+                    <button
+                      key={i}
+                      disabled={answered !== null}
+                      onClick={() => setPicked(i)}
+                      className={`block w-full border px-4 py-2.5 text-left text-sm transition-all ${
+                        showCorrect
+                          ? "border-primary bg-primary/15"
+                          : showWrong
+                            ? "border-destructive bg-destructive/15"
+                            : isPicked
+                              ? "border-primary"
+                              : "border-primary/20 hover:border-primary/60"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="font-display text-xl text-foreground">Nghe và gõ lại từ vựng:</p>
+              <div className="mt-4 flex items-center gap-3">
+                <button
+                  onClick={() => speakEN(q.word, 0.8)}
+                  className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+                >
+                  🔊 Nghe
+                </button>
+                <input
+                  value={typed}
+                  disabled={answered !== null}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && answered === null) submitAnswer(q);
+                  }}
+                  placeholder="Gõ từ bạn nghe được…"
+                  className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
+                />
+              </div>
+              {answered !== null && (
+                <p className={`mt-3 text-sm ${answered ? "text-primary" : "text-destructive"}`}>
+                  {answered ? "Chính xác!" : `Đáp án đúng: ${q.word}`}
+                </p>
+              )}
+            </>
+          )}
+
+          <div className="mt-5 flex justify-end gap-3">
+            {answered === null ? (
+              <button
+                onClick={() => submitAnswer(q)}
+                disabled={q.kind === "mcq" ? picked === null : typed.trim() === ""}
+                className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-40"
+              >
+                Trả lời
+              </button>
+            ) : (
+              <button onClick={next} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+                {qIdx + 1 >= quiz.length ? "Xem kết quả" : "Câu tiếp →"}
+              </button>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (stage === "done") {
+    const passed = lastScorePct >= MASTERY_PCT;
+    return (
+      <div className="mx-auto max-w-xl text-center">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 shadow-xl">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Kết quả kiểm tra</div>
+          <div className="font-display mt-3 text-5xl text-primary">{lastScorePct}%</div>
+          <p className="mt-3 text-sm text-foreground/75">
+            {passed
+              ? "✦ Đạt chuẩn! Bạn đã thành thạo bộ từ vựng tuần này."
+              : `Cần ≥ ${MASTERY_PCT}% để đạt chuẩn. Xem lại thẻ từ rồi thử lại nhé.`}
+          </p>
+          <div className="mt-6 flex justify-center gap-3">
+            <button
+              onClick={() => setStage("study")}
+              className="border border-primary/40 px-5 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary"
+            >
+              Xem lại thẻ từ
+            </button>
+            <button onClick={startQuiz} className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+              Làm lại kiểm tra
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  const allFlipped = flipped.size >= terms.length;
+
   return (
     <div>
-      <p className="max-w-2xl text-sm text-foreground/75">
-        Tap each card to reveal phonetic spelling, premium service context, and the Vietnamese rendering. Each new card mastered earns +1 ⭐.
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <p className="max-w-2xl text-sm text-foreground/75">
+          Chạm từng thẻ để học phát âm, ngữ cảnh sử dụng và nghĩa tiếng Việt. Lật đủ {terms.length} thẻ để mở phần kiểm tra ghi nhớ — sao ⭐ chỉ được trao khi bạn trả lời đúng.
+        </p>
+        <div className="text-right">
+          <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Đã xem</div>
+          <div className="font-display text-2xl text-primary">
+            {flipped.size}/{terms.length}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <button
+          onClick={startQuiz}
+          disabled={!allFlipped}
+          className="bg-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {allFlipped ? "Vào phần kiểm tra →" : `Lật đủ thẻ để mở kiểm tra (${flipped.size}/${terms.length})`}
+        </button>
+      </div>
+
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" style={{ perspective: 1400 }}>
         {terms.map((t, i) => {
           const isFlipped = flipped.has(i);

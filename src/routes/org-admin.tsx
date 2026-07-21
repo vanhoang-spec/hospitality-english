@@ -777,7 +777,7 @@ function ConfirmDialog({
   );
 }
 
-type ProgressRow = { department_id: string; week_number: number; suite: string; stars: number };
+type ProgressRow = { department_id: string; week_number: number; suite: string; stars: number; mastered: boolean };
 type Metrics = { fluency_score: number; courtesy_score: number; reflex_speed: number; crisis_handling_score: number };
 
 function MemberDrawer({ userId, member, onClose }: { userId: string; member: Member | null; onClose: () => void }) {
@@ -786,7 +786,7 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
     queryFn: async (): Promise<ProgressRow[]> => {
       const { data, error } = await supabase
         .from("lesson_progress")
-        .select("department_id, week_number, suite, stars")
+        .select("department_id, week_number, suite, stars, mastered")
         .eq("user_id", userId);
       if (error) throw error;
       return data as ProgressRow[];
@@ -807,7 +807,8 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
   });
 
   const rows = progressQuery.data ?? [];
-  const doneKey = new Set(rows.filter((r) => r.stars > 0).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`));
+  const masteredKey = new Set(rows.filter((r) => r.mastered).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`));
+  const participatedKey = new Set(rows.filter((r) => r.stars > 0).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`));
   const m = metricsQuery.data;
 
   return (
@@ -834,7 +835,7 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
 
         <div className="mt-8">
           <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-            Ma trận hoàn thành · {AVAILABLE_WEEKS.length} tuần hiện có
+            Ma trận hoàn thành · {AVAILABLE_WEEKS.length} tuần hiện có · ● đạt chuẩn · ◐ đã học chưa đạt · ○ chưa học
           </div>
           {progressQuery.isLoading ? (
             <p className="mt-4 text-sm text-foreground/50">Đang tải…</p>
@@ -869,10 +870,14 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                       <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">{d.code}</td>
                       {AVAILABLE_WEEKS.map((w) =>
                         SUITES.map((s) => {
-                          const done = doneKey.has(`${d.code}-${w}-${s}`);
+                          const key = `${d.code}-${w}-${s}`;
+                          const mastered = masteredKey.has(key);
+                          const participated = participatedKey.has(key);
                           return (
-                            <td key={`${d.code}-${w}-${s}`} className="border-l border-primary/5 px-1 py-1.5 text-center">
-                              <span className={done ? "text-primary" : "text-foreground/15"}>{done ? "●" : "○"}</span>
+                            <td key={key} className="border-l border-primary/5 px-1 py-1.5 text-center" title={mastered ? "Đạt chuẩn" : participated ? "Đã học, chưa đạt" : "Chưa học"}>
+                              <span className={mastered ? "text-primary" : participated ? "text-primary/50" : "text-foreground/15"}>
+                                {mastered ? "●" : participated ? "◐" : "○"}
+                              </span>
                             </td>
                           );
                         }),
@@ -909,7 +914,7 @@ type OrgMetricsRow = {
   reflex_speed: number;
   crisis_handling_score: number;
 };
-type OrgProgressRow = { user_id: string; stars: number };
+type OrgProgressRow = { user_id: string; stars: number; mastered: boolean };
 
 const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.length * AVAILABLE_WEEKS.length * SUITES.length;
 
@@ -951,9 +956,8 @@ function OrgOverview({ members }: { members: Member[] }) {
       if (memberIds.length === 0) return [];
       const { data, error } = await supabase
         .from("lesson_progress")
-        .select("user_id, stars")
-        .in("user_id", memberIds)
-        .gt("stars", 0);
+        .select("user_id, stars, mastered")
+        .in("user_id", memberIds);
       if (error) throw error;
       return data as OrgProgressRow[];
     },
@@ -965,8 +969,11 @@ function OrgOverview({ members }: { members: Member[] }) {
   const metricsByMember = new Map<string, OrgMetricsRow>();
   (metricsQuery.data ?? []).forEach((r) => metricsByMember.set(r.profile_id, r));
 
+  // "Completed" now means mastered (met the pass threshold) — mere
+  // participation no longer counts toward the org completion rate.
   const completedCountByMember = new Map<string, number>();
   (progressQuery.data ?? []).forEach((r) => {
+    if (!r.mastered) return;
     completedCountByMember.set(r.user_id, (completedCountByMember.get(r.user_id) ?? 0) + 1);
   });
 
@@ -1000,7 +1007,12 @@ function OrgOverview({ members }: { members: Member[] }) {
   return (
     <div className="mt-8 border border-primary/30 bg-card p-5 shadow-xl md:p-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-xl text-foreground">Tổng quan nhóm</h2>
+        <div>
+          <h2 className="font-display text-xl text-foreground">Tổng quan nhóm</h2>
+          <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-foreground/50">
+            Hoàn thành = đạt chuẩn bài học (không tính chỉ tham gia)
+          </p>
+        </div>
         {loading && <span className="text-xs text-foreground/50">Đang tải…</span>}
       </div>
 

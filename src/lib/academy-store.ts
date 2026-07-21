@@ -21,7 +21,7 @@ export type AcademyState = {
   metrics: Metrics;
 };
 
-export type Suite = "vocab" | "grammar" | "speaking" | "reading" | "arcade";
+export type Suite = "vocab" | "grammar" | "speaking" | "reading" | "arcade" | "listening" | "weektest";
 
 const DEFAULT_STATE: AcademyState = {
   full_name: "Esteemed Apprentice",
@@ -266,23 +266,32 @@ export function useAcademy() {
   );
 
   const recordSuiteResult = useCallback(
-    (departmentId: string, week: string | number, suite: Suite, stars: number) => {
+    (
+      departmentId: string,
+      week: string | number,
+      suite: Suite,
+      stars: number,
+      opts?: { scorePct?: number; mastered?: boolean },
+    ) => {
       if (!userId) return;
       const weekNumber = typeof week === "string" ? parseInt(week, 10) : week;
       if (!Number.isFinite(weekNumber)) return;
+      const row: Record<string, unknown> = {
+        user_id: userId,
+        department_id: departmentId.toUpperCase(),
+        week_number: weekNumber,
+        suite,
+        stars,
+        completed_at: new Date().toISOString(),
+      };
+      if (opts?.scorePct !== undefined) row.score_pct = Math.max(0, Math.min(100, Math.round(opts.scorePct)));
+      // Sticky mastery: only ever write `true` — omitting the column on
+      // conflict leaves an earlier pass intact, so a weaker retake can
+      // never demote a learner back to un-mastered.
+      if (opts?.mastered) row.mastered = true;
       supabase
         .from("lesson_progress")
-        .upsert(
-          {
-            user_id: userId,
-            department_id: departmentId.toUpperCase(),
-            week_number: weekNumber,
-            suite,
-            stars,
-            completed_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id,department_id,week_number,suite" },
-        )
+        .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" })
         .then(() => {});
     },
     [userId],

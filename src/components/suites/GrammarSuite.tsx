@@ -4,7 +4,7 @@ import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 
-type Puzzle = { bad: string; target: string; chips: string[] };
+type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
 
 const PUZZLES: Puzzle[] = [
   {
@@ -28,10 +28,22 @@ function shuffle<T>(a: T[]): T[] {
   return c;
 }
 
+function normalizeSentence(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^\w'\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedRoundRef = useRef(-1);
+  const memoryAwardedRef = useRef<Set<number>>(new Set());
+  // Distinct-puzzle outcomes for mastery: "correct" only counts when the
+  // learner solved it without revealing the answer first.
+  const outcomesRef = useRef<Map<number, "correct" | "revealed">>(new Map());
   const content = dep && week ? getWeekContent(dep, week) : null;
   const puzzles: Puzzle[] = content
     ? content.lessons.flatMap((l) =>
@@ -39,15 +51,20 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
           bad: g.rude,
           target: g.polite,
           chips: g.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
+          rule: g.rule,
         })),
       )
     : PUZZLES;
   const [round, setRound] = useState(0);
-  const puzzle = puzzles[round % puzzles.length];
+  const puzzleIdx = round % puzzles.length;
+  const puzzle = puzzles[puzzleIdx];
   const [bank, setBank] = useState<string[]>(() => shuffle(puzzle.chips));
   const [tray, setTray] = useState<string[]>([]);
   const [checked, setChecked] = useState<null | boolean>(null);
   const [selectedTray, setSelectedTray] = useState<number | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  const [memoryTyped, setMemoryTyped] = useState("");
+  const [memoryResult, setMemoryResult] = useState<null | boolean>(null);
 
   // re-init when round changes
   useMemo(() => {
@@ -55,7 +72,20 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     setTray([]);
     setChecked(null);
     setSelectedTray(null);
+    setRevealed(false);
+    setMemoryTyped("");
+    setMemoryResult(null);
   }, [round]);
+
+  function syncProgress() {
+    if (!dep || !week) return;
+    const correctCount = Array.from(outcomesRef.current.values()).filter((o) => o === "correct").length;
+    const pct = Math.round((correctCount / puzzles.length) * 100);
+    recordSuiteResult(dep, week, "grammar", earned.current, {
+      scorePct: pct,
+      mastered: correctCount === puzzles.length,
+    });
+  }
 
   function appendToTray(word: string, bankIdx: number) {
     setBank((b) => b.filter((_, i) => i !== bankIdx));
@@ -89,16 +119,37 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   }
 
   function check() {
-    const assembled = tray.join(" ").toLowerCase().replace(/[^\w'\s]/g, "").trim();
-    const target = puzzle.target.toLowerCase().replace(/[^\w'\s]/g, "").trim();
-    const ok = assembled === target;
+    const ok = normalizeSentence(tray.join(" ")) === normalizeSentence(puzzle.target);
     setChecked(ok);
-    if (ok && awardedRoundRef.current !== round) {
+    if (ok && awardedRoundRef.current !== round && !revealed) {
       awardedRoundRef.current = round;
       awardStars(4);
       patchMetrics({ courtesy_score: Math.min(100, 70 + (round + 1) * 8) });
       earned.current += 4;
-      if (dep && week) recordSuiteResult(dep, week, "grammar", earned.current);
+      if (!outcomesRef.current.has(puzzleIdx) || outcomesRef.current.get(puzzleIdx) !== "correct") {
+        outcomesRef.current.set(puzzleIdx, "correct");
+      }
+      syncProgress();
+    }
+  }
+
+  function reveal() {
+    setRevealed(true);
+    setChecked(null);
+    if (outcomesRef.current.get(puzzleIdx) !== "correct") {
+      outcomesRef.current.set(puzzleIdx, "revealed");
+      syncProgress();
+    }
+  }
+
+  function checkMemory() {
+    const ok = normalizeSentence(memoryTyped) === normalizeSentence(puzzle.target);
+    setMemoryResult(ok);
+    if (ok && !memoryAwardedRef.current.has(puzzleIdx)) {
+      memoryAwardedRef.current.add(puzzleIdx);
+      awardStars(2);
+      earned.current += 2;
+      syncProgress();
     }
   }
 
@@ -106,8 +157,17 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
     setRound((r) => r + 1);
   }
 
+  const solvedCleanly = checked === true && !revealed;
+
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+        <span>Câu {puzzleIdx + 1}/{puzzles.length}</span>
+        <span className="text-primary">
+          Đạt chuẩn: {Array.from(outcomesRef.current.values()).filter((o) => o === "correct").length}/{puzzles.length}
+        </span>
+      </div>
+
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-destructive/40 bg-card p-5 shadow-xl">
         <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">Lỗi thường gặp</div>
         <p className="mt-2 font-display text-xl line-through decoration-destructive/60">"{puzzle.bad}"</p>
@@ -178,12 +238,65 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
         <button onClick={check} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
           Verify Courtesy
         </button>
+        <button
+          onClick={reveal}
+          disabled={revealed || checked === true}
+          className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] text-foreground/70 hover:border-primary disabled:opacity-40"
+        >
+          Xem đáp án
+        </button>
         <button onClick={next} className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary">
           Next puzzle →
         </button>
-        {checked === true && <span className="text-xs uppercase tracking-[0.25em] text-primary">Impeccable. +4 ⭐</span>}
+        {solvedCleanly && <span className="text-xs uppercase tracking-[0.25em] text-primary">Impeccable. +4 ⭐</span>}
+        {checked === true && revealed && <span className="text-xs uppercase tracking-[0.25em] text-foreground/60">Đúng — nhưng đã xem đáp án nên không tính sao.</span>}
         {checked === false && <span className="text-xs uppercase tracking-[0.25em] text-destructive">Almost — refine the order.</span>}
       </div>
+
+      {/* Rule explanation: shown after any verify attempt or reveal */}
+      {(checked !== null || revealed) && puzzle.rule && (
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="border-l-2 border-primary/60 bg-card p-4 text-sm shadow-xl">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-primary">Quy tắc · </span>
+          <span className="text-foreground/85">{puzzle.rule}</span>
+        </motion.div>
+      )}
+
+      {/* Revealed answer */}
+      {revealed && (
+        <div className="border border-primary/40 bg-card p-4 shadow-xl">
+          <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Đáp án</div>
+          <p className="mt-1 font-display text-lg text-primary">"{puzzle.target}"</p>
+        </div>
+      )}
+
+      {/* Memory bonus round after a clean solve */}
+      {solvedCleanly && (
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="border border-primary bg-card p-5 shadow-xl">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Thử thách trí nhớ · +2 ⭐</div>
+          <p className="mt-2 text-sm text-foreground/75">Không nhìn các chip phía trên — gõ lại toàn bộ câu lịch sự từ trí nhớ:</p>
+          <div className="mt-3 flex gap-2">
+            <input
+              value={memoryTyped}
+              disabled={memoryResult === true}
+              onChange={(e) => setMemoryTyped(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && memoryResult !== true) checkMemory();
+              }}
+              placeholder="Gõ lại câu hoàn chỉnh…"
+              className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
+            />
+            <button
+              onClick={checkMemory}
+              disabled={memoryResult === true || memoryTyped.trim() === ""}
+              className="shrink-0 bg-primary px-4 py-2 text-xs uppercase tracking-[0.15em] text-primary-foreground shadow-xl disabled:opacity-40"
+            >
+              Kiểm tra
+            </button>
+          </div>
+          {memoryResult === true && <p className="mt-2 text-xs uppercase tracking-[0.2em] text-primary">Xuất sắc! +2 ⭐</p>}
+          {memoryResult === false && <p className="mt-2 text-xs text-destructive">Chưa khớp — thử lại hoặc bấm Next puzzle.</p>}
+        </motion.div>
+      )}
     </div>
   );
 }

@@ -31,13 +31,36 @@ function compareWords(spoken: string, target: string) {
     }
   }
   const accuracy = b.length === 0 ? 0 : correctIdx.size / b.length;
-  return { correctIdx, accuracy, words: b };
+  // Order-aware check: longest common subsequence of the two word
+  // streams, as a fraction of the target length. Bag-matching alone can
+  // be gamed by reciting the right words in any order — real speech has
+  // to follow the sentence's word order too.
+  const orderRatio = b.length === 0 ? 0 : lcsLength(a, b) / b.length;
+  return { correctIdx, accuracy, orderRatio, words: b };
 }
+
+function lcsLength(a: string[], b: string[]): number {
+  const dp: number[] = new Array(b.length + 1).fill(0);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = 0;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = dp[j];
+      dp[j] = a[i - 1] === b[j - 1] ? prev + 1 : Math.max(dp[j], dp[j - 1]);
+      prev = tmp;
+    }
+  }
+  return dp[b.length];
+}
+
+const PASS_ACCURACY = 80;
+const PASS_ORDER_RATIO = 0.6;
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedAttemptRef = useRef(false);
+  const maxScoreRef = useRef(0);
+  const masteredRef = useRef(false);
   const content = dep && week ? getWeekContent(dep, week) : null;
   const scenarios = content
     ? content.lessons.flatMap((l) =>
@@ -91,14 +114,22 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      if (acc >= 80 && !awardedAttemptRef.current) {
+      const passed = acc >= PASS_ACCURACY && cmp.orderRatio >= PASS_ORDER_RATIO;
+      maxScoreRef.current = Math.max(maxScoreRef.current, acc);
+      if (passed) masteredRef.current = true;
+      if (passed && !awardedAttemptRef.current) {
         awardedAttemptRef.current = true;
         awardStars(5);
         earned.current += 5;
-        if (dep && week) recordSuiteResult(dep, week, "speaking", earned.current);
         setFireworks(true);
         playApplause(1800);
         setTimeout(() => setFireworks(false), 2400);
+      }
+      if (dep && week) {
+        recordSuiteResult(dep, week, "speaking", earned.current, {
+          scorePct: maxScoreRef.current,
+          mastered: masteredRef.current,
+        });
       }
     };
     try {
@@ -142,6 +173,12 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
           >
             ▶ Play audio
+          </button>
+          <button
+            onClick={() => speakEN(scenario.target, 0.9)}
+            className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+          >
+            🔊 Nghe câu mẫu
           </button>
           <button
             onClick={() => {
@@ -221,8 +258,13 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
               <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Accuracy</div>
               <div className="font-display text-3xl text-primary">{Math.round(result.accuracy * 100)}%</div>
             </div>
-            {result.accuracy >= 0.8 && (
+            {result.accuracy >= 0.8 && result.orderRatio >= PASS_ORDER_RATIO && (
               <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ awarded</div>
+            )}
+            {result.accuracy >= 0.8 && result.orderRatio < PASS_ORDER_RATIO && (
+              <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
+              </div>
             )}
           </div>
         )}

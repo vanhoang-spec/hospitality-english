@@ -26,6 +26,7 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const rounds: GameRound[] = content ? content.lessons.flatMap((l) => l.game) : FALLBACK_ROUNDS;
 
   const [stage, setStage] = useState<Stage>("rules");
+  const [won, setWon] = useState(false);
   const [time, setTime] = useState(75);
   const [score, setScore] = useState(0);
   const [roundIdx, setRoundIdx] = useState(0);
@@ -37,6 +38,7 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
 
   function startGame() {
     setStage("playing");
+    setWon(false);
     setTime(75);
     setScore(0);
     setRoundIdx(0);
@@ -44,6 +46,17 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
     setFeedback(null);
     setSpawnedKey((k) => k + 1);
     startedRef.current = Date.now();
+  }
+
+  function finishGame(finalScore: number, cleared: boolean) {
+    setWon(cleared);
+    setStage("done");
+    const elapsed = (Date.now() - startedRef.current) / 1000;
+    patchMetrics({ reflex_speed: Math.min(100, Math.max(20, Math.round(finalScore * 6 + (75 - elapsed) * 0.5))) });
+    if (dep && week) {
+      const pct = Math.round((finalScore / (rounds.length * 2)) * 100);
+      recordSuiteResult(dep, week, "arcade", earned.current, { scorePct: pct, mastered: cleared });
+    }
   }
 
   // Countdown
@@ -56,11 +69,10 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   // End on time-out
   useEffect(() => {
     if (time === 0 && stage === "playing") {
-      setStage("done");
-      const elapsed = (Date.now() - startedRef.current) / 1000;
-      patchMetrics({ reflex_speed: Math.min(100, Math.max(20, Math.round(score * 6 + (75 - elapsed) * 0.5))) });
+      finishGame(score, false);
     }
-  }, [time, stage, score, patchMetrics]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time, stage, score]);
 
   // Spawn bubbles for the current round (staggered, one option per ~1.4s)
   useEffect(() => {
@@ -91,16 +103,21 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
     poppedRef.current.add(b.id);
     setBubbles((bs) => bs.map((x) => (x.id === b.id ? { ...x, popped: true } : x)));
     if (b.correct) {
-      setScore((s) => s + 2);
+      const newScore = score + 2;
+      setScore(newScore);
       awardStars(2);
       earned.current += 2;
-      if (dep && week) recordSuiteResult(dep, week, "arcade", earned.current);
       setFeedback({ ok: true, text: "+2 ⭐ Perfect!" });
+      const isLastRound = roundIdx + 1 >= rounds.length;
       setTimeout(() => {
         setFeedback(null);
         setBubbles([]);
-        setRoundIdx((r) => r + 1);
-        setSpawnedKey((k) => k + 1);
+        if (isLastRound) {
+          finishGame(newScore, true);
+        } else {
+          setRoundIdx((r) => r + 1);
+          setSpawnedKey((k) => k + 1);
+        }
       }, 900);
     } else {
       setFeedback({ ok: false, text: "Try again — too direct." });
@@ -226,8 +243,12 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
         {/* DONE SCREEN */}
         {stage === "done" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-            <h3 className="font-display text-4xl text-primary">Shift complete</h3>
-            <p className="mt-2 text-sm text-foreground/70">Earned {score} ⭐ across {Math.min(roundIdx, rounds.length)} rounds</p>
+            <h3 className="font-display text-4xl text-primary">{won ? "Ca trực hoàn hảo! ✦" : "Shift complete"}</h3>
+            <p className="mt-2 text-sm text-foreground/70">
+              {won
+                ? `Đạt chuẩn — xử lý đúng cả ${rounds.length} tình huống với ${score} ⭐`
+                : `Earned ${score} ⭐ across ${Math.min(roundIdx, rounds.length)} rounds — xử lý đúng cả ${rounds.length} tình huống trong 75s để đạt chuẩn`}
+            </p>
             <button
               onClick={startGame}
               className="mt-5 border border-primary px-6 py-2 text-xs uppercase tracking-[0.25em] text-primary hover:bg-primary/10"

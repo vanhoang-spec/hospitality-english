@@ -8,7 +8,7 @@ type Passage = {
   meta?: string;
   title: string;
   body: string;
-  questions: { q: string; options: string[]; correct: number }[];
+  questions: { q: string; options: string[]; correct: number; explanation?: string }[];
 };
 
 const DEFAULT_PASSAGE: Passage = {
@@ -26,6 +26,9 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedPassageRef = useRef(-1);
+  // Best percentage per passage — suite mastery requires >= 80% on every
+  // passage, and the recorded suite score is the average across all.
+  const bestPctRef = useRef<Map<number, number>>(new Map());
   const content = dep && week ? getWeekContent(dep, week) : null;
 
   const passages: Passage[] = useMemo(() => {
@@ -59,7 +62,14 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
       const gained = score * 2;
       awardStars(gained);
       earned.current += gained;
-      if (dep && week) recordSuiteResult(dep, week, "reading", earned.current);
+    }
+    const pct = Math.round((score / total) * 100);
+    bestPctRef.current.set(pIdx, Math.max(bestPctRef.current.get(pIdx) ?? 0, pct));
+    if (dep && week) {
+      const sumPct = passages.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
+      const avgPct = Math.round(sumPct / passages.length);
+      const allMastered = passages.every((_, i) => (bestPctRef.current.get(i) ?? 0) >= 80);
+      recordSuiteResult(dep, week, "reading", earned.current, { scorePct: avgPct, mastered: allMastered });
     }
     patchMetrics({ crisis_handling_score: Math.min(100, 60 + score * 13) });
   }
@@ -108,6 +118,9 @@ export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
             <div key={i} className="border border-primary/30 bg-card p-5 shadow-xl">
               <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Question {i + 1} of {total}</div>
               <p className="mt-2 text-sm">{q.q}</p>
+              {submitted && q.explanation && (
+                <p className="mt-2 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">💡 {q.explanation}</p>
+              )}
               <div className="mt-3 space-y-2">
                 {q.options.map((opt, j) => {
                   const isPicked = picks[i] === j;
