@@ -180,6 +180,8 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
         </div>
       </div>
 
+      <OrgOverview members={members} />
+
       {departmentOptions.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
           <span className="uppercase tracking-[0.2em] text-foreground/50">Phòng ban:</span>
@@ -896,6 +898,154 @@ function MetricBar({ label, value }: { label: string; value: number }) {
       <div className="mt-2 h-1 w-full bg-primary/15">
         <div className="h-1 bg-primary" style={{ width: `${clamped}%` }} />
       </div>
+    </div>
+  );
+}
+
+type OrgMetricsRow = {
+  profile_id: string;
+  fluency_score: number;
+  courtesy_score: number;
+  reflex_speed: number;
+  crisis_handling_score: number;
+};
+type OrgProgressRow = { user_id: string; stars: number };
+
+const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.length * AVAILABLE_WEEKS.length * SUITES.length;
+
+function departmentLabel(dep: string): string {
+  const match = DEPARTMENTS.find((d) => d.code.toLowerCase() === dep.toLowerCase());
+  return match ? `${match.code} — ${match.name_vi}` : dep;
+}
+
+function avg(nums: number[]): number {
+  if (nums.length === 0) return 0;
+  return nums.reduce((s, n) => s + n, 0) / nums.length;
+}
+
+/** Org-wide "big picture" for the admin: average performance + lesson
+ * completion rate, overall and broken down by each member's real-world
+ * department (profiles.department — distinct from the learning-content
+ * department codes lesson_progress.department_id refers to). */
+function OrgOverview({ members }: { members: Member[] }) {
+  const memberIds = members.map((m) => m.id);
+  const idsKey = memberIds.slice().sort().join(",");
+
+  const metricsQuery = useQuery({
+    queryKey: ["org-overview-metrics", idsKey],
+    queryFn: async (): Promise<OrgMetricsRow[]> => {
+      if (memberIds.length === 0) return [];
+      const { data, error } = await supabase
+        .from("performance_metrics")
+        .select("profile_id, fluency_score, courtesy_score, reflex_speed, crisis_handling_score")
+        .in("profile_id", memberIds);
+      if (error) throw error;
+      return data as OrgMetricsRow[];
+    },
+    enabled: memberIds.length > 0,
+  });
+
+  const progressQuery = useQuery({
+    queryKey: ["org-overview-progress", idsKey],
+    queryFn: async (): Promise<OrgProgressRow[]> => {
+      if (memberIds.length === 0) return [];
+      const { data, error } = await supabase
+        .from("lesson_progress")
+        .select("user_id, stars")
+        .in("user_id", memberIds)
+        .gt("stars", 0);
+      if (error) throw error;
+      return data as OrgProgressRow[];
+    },
+    enabled: memberIds.length > 0,
+  });
+
+  if (members.length === 0) return null;
+
+  const metricsByMember = new Map<string, OrgMetricsRow>();
+  (metricsQuery.data ?? []).forEach((r) => metricsByMember.set(r.profile_id, r));
+
+  const completedCountByMember = new Map<string, number>();
+  (progressQuery.data ?? []).forEach((r) => {
+    completedCountByMember.set(r.user_id, (completedCountByMember.get(r.user_id) ?? 0) + 1);
+  });
+
+  const groupsMap = new Map<string, Member[]>();
+  members.forEach((m) => {
+    const key = m.department?.trim() || "Chưa gán";
+    if (!groupsMap.has(key)) groupsMap.set(key, []);
+    groupsMap.get(key)!.push(m);
+  });
+  const groups = Array.from(groupsMap.entries())
+    .map(([key, mem]) => ({ key, members: mem }))
+    .sort((a, b) => a.key.localeCompare(b.key));
+
+  function groupStats(groupMembers: Member[]) {
+    const ids = groupMembers.map((m) => m.id);
+    const metricsRows = ids.map((id) => metricsByMember.get(id)).filter((r): r is OrgMetricsRow => !!r);
+    const completionPct =
+      (ids.reduce((s, id) => s + (completedCountByMember.get(id) ?? 0), 0) / (ids.length * TOTAL_SLOTS_PER_MEMBER)) * 100;
+    return {
+      fluency: avg(metricsRows.map((r) => r.fluency_score)),
+      courtesy: avg(metricsRows.map((r) => r.courtesy_score)),
+      reflex: avg(metricsRows.map((r) => r.reflex_speed)),
+      crisis: avg(metricsRows.map((r) => r.crisis_handling_score)),
+      completionPct: Math.min(100, completionPct),
+    };
+  }
+
+  const overall = groupStats(members);
+  const loading = metricsQuery.isLoading || progressQuery.isLoading;
+
+  return (
+    <div className="mt-8 border border-primary/30 bg-card p-5 shadow-xl md:p-6">
+      <div className="flex items-center justify-between">
+        <h2 className="font-display text-xl text-foreground">Tổng quan nhóm</h2>
+        {loading && <span className="text-xs text-foreground/50">Đang tải…</span>}
+      </div>
+
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
+        <MetricBar label="Hoàn thành TB" value={Math.round(overall.completionPct)} />
+        <MetricBar label="Fluency" value={Math.round(overall.fluency)} />
+        <MetricBar label="Courtesy" value={Math.round(overall.courtesy)} />
+        <MetricBar label="Reflex" value={Math.round(overall.reflex)} />
+        <MetricBar label="Crisis" value={Math.round(overall.crisis)} />
+      </div>
+
+      {groups.length > 1 && (
+        <div className="mt-6 overflow-x-auto">
+          <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Theo phòng ban</div>
+          <table className="mt-3 w-full min-w-[560px] text-xs">
+            <thead>
+              <tr className="border-b border-primary/20 text-left uppercase tracking-[0.15em] text-foreground/60">
+                <th className="py-2 pr-3">Phòng ban</th>
+                <th className="py-2 pr-3">Số người</th>
+                <th className="py-2 pr-3">Hoàn thành</th>
+                <th className="py-2 pr-3">Fluency</th>
+                <th className="py-2 pr-3">Courtesy</th>
+                <th className="py-2 pr-3">Reflex</th>
+                <th className="py-2 pr-3">Crisis</th>
+              </tr>
+            </thead>
+            <tbody>
+              {groups.map((g) => {
+                const s = groupStats(g.members);
+                return (
+                  <tr key={g.key} className="border-b border-primary/10 last:border-0">
+                    <td className="py-2 pr-3 font-display text-foreground">{departmentLabel(g.key)}</td>
+                    <td className="py-2 pr-3">{g.members.length}</td>
+                    <td className="py-2 pr-3 text-primary">{Math.round(s.completionPct)}%</td>
+                    <td className="py-2 pr-3">{Math.round(s.fluency)}%</td>
+                    <td className="py-2 pr-3">{Math.round(s.courtesy)}%</td>
+                    <td className="py-2 pr-3">{Math.round(s.reflex)}%</td>
+                    <td className="py-2 pr-3">{Math.round(s.crisis)}%</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
