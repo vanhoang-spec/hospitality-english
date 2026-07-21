@@ -5,12 +5,14 @@ import { ArcadeSuite } from "@/components/suites/ArcadeSuite";
 import { VocabSuite } from "@/components/suites/VocabSuite";
 import { GrammarSuite } from "@/components/suites/GrammarSuite";
 import { ReadingSuite } from "@/components/suites/ReadingSuite";
+import { ListeningSuite } from "@/components/suites/ListeningSuite";
 import { getDepartment } from "@/lib/departments";
 
 const TITLES: Record<string, { en: string; tag: string }> = {
   vocab: { en: "Premium Vocabulary", tag: "Lexicon" },
   grammar: { en: "Courteous Grammar", tag: "Etiquette" },
   speaking: { en: "Elite AI Speaking", tag: "Voice" },
+  listening: { en: "Golden Ear Listening", tag: "Attention" },
   reading: { en: "Executive Reading", tag: "Comprehension" },
   arcade: { en: "VIP Rush Arcade", tag: "Reflex" },
 };
@@ -54,6 +56,7 @@ function SuitePage() {
           {suite === "vocab" && <VocabSuite dep={department.code} week={week} />}
           {suite === "grammar" && <GrammarSuite dep={department.code} week={week} />}
           {suite === "speaking" && <SpeakingSuite dep={department.code} week={week} />}
+          {suite === "listening" && <ListeningSuite dep={department.code} week={week} />}
           {suite === "reading" && <ReadingSuite dep={department.code} week={week} />}
           {suite === "arcade" && <ArcadeSuite dep={department.code} week={week} />}
         </div>

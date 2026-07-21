@@ -26,11 +26,12 @@ type Member = {
 
 type Org = { id: string; name: string; seat_limit: number };
 
-const SUITES = ["vocab", "grammar", "speaking", "reading", "arcade"] as const;
+const SUITES = ["vocab", "grammar", "speaking", "listening", "reading", "arcade"] as const;
 const SUITE_LABELS: Record<(typeof SUITES)[number], string> = {
   vocab: "Vocab",
   grammar: "Grammar",
   speaking: "Speaking",
+  listening: "Listening",
   reading: "Reading",
   arcade: "Arcade",
 };

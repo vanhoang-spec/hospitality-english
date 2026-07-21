@@ -30,6 +30,12 @@ const SUITE_DOORS = [
     detail: "Practice concierge-grade responses with guided scoring.",
   },
   {
+    slug: "listening",
+    title: "Golden Ear Listening",
+    tag: "Attention",
+    detail: "Catch guest requests by ear across changing voices and speeds.",
+  },
+  {
     slug: "reading",
     title: "Executive Reading",
     tag: "Insight",
@@ -128,7 +134,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
           </section>
         )}
 
-        <section className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5" aria-label="Golden Service Suite doors">
+        <section className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Golden Service Suite doors">
           {SUITE_DOORS.map((suite, index) => (
             <motion.div
               key={suite.slug}
