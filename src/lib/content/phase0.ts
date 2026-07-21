@@ -42,7 +42,7 @@ const RESORT = "Lotus Bay";
 // ------------------------------------------------------------
 type P0Item = { word: string; phonetic: string; definition: string; icon: string };
 
-type P0Lexicon = {
+export type P0Lexicon = {
   code: string;
   deptEn: string;
   deptPhonetic: string;
@@ -59,7 +59,7 @@ type P0Lexicon = {
   floor: { ordinal: string; vi: string };
 };
 
-const LEXICONS: Record<string, P0Lexicon> = {
+export const LEXICONS: Record<string, P0Lexicon> = {
   FO: {
     code: "FO",
     deptEn: "Front Office",
@@ -148,7 +148,10 @@ const LEXICONS: Record<string, P0Lexicon> = {
     staff: "Trang",
     station: "the lounge door",
     items: [
-      { word: "Card", phonetic: "/kɑːd/", definition: "Thẻ hội viên", icon: "💳" },
+      // "Lounge card", not "Card" — the shared week-4 payment vocabulary
+      // already teaches "Card", and one department must not meet the same
+      // headword twice with two different meanings.
+      { word: "Lounge card", phonetic: "/laʊndʒ kɑːd/", definition: "Thẻ ra vào phòng chờ", icon: "💳" },
       { word: "Gift", phonetic: "/ɡɪft/", definition: "Quà tặng", icon: "🎁" },
       { word: "Flower", phonetic: "/ˈflaʊə/", definition: "Hoa", icon: "💐" },
       { word: "Letter", phonetic: "/ˈletə/", definition: "Thư", icon: "✉️" },
@@ -185,19 +188,19 @@ const LEXICONS: Record<string, P0Lexicon> = {
 // ------------------------------------------------------------
 // Small authoring helpers.
 // ------------------------------------------------------------
-function v(word: string, phonetic: string, definition: string, context: string, icon: string): VocabItem {
+export function v(word: string, phonetic: string, definition: string, context: string, icon: string): VocabItem {
   return { word, phonetic, definition, context, icon };
 }
-function g(rude: string, polite: string, rule: string): GrammarItem {
+export function g(rude: string, polite: string, rule: string): GrammarItem {
   return { rude, polite, rule };
 }
-function sp(guestPrompt: string, targetResponse: string, helpTip: string): SpeakingItem {
+export function sp(guestPrompt: string, targetResponse: string, helpTip: string): SpeakingItem {
   return { guestPrompt, targetResponse, helpTip };
 }
-function read(text: string, questions: ReadingItem["questions"]): ReadingItem {
+export function read(text: string, questions: ReadingItem["questions"]): ReadingItem {
   return { text, questions };
 }
-function game(prompt: string, correct: string, wrongA: string, wrongB: string): GameRound {
+export function game(prompt: string, correct: string, wrongA: string, wrongB: string): GameRound {
   return {
     prompt,
     options: [
@@ -1140,4 +1143,13 @@ export const PHASE0_WEEKS: Record<string, WeekContent> = Object.fromEntries(
   Object.values(LEXICONS).flatMap((lx) =>
     [1, 2, 3, 4, 5, 6].map((w) => [`${lx.code}-${w}`, buildWeek(lx, w)] as const),
   ),
+);
+
+/** Every Phase 0 headword a department met, in teaching order — the
+ *  long-spacing pool Phase 1 recycles from. */
+export const PHASE0_WORDS_BY_DEP: Record<string, string[]> = Object.fromEntries(
+  Object.values(LEXICONS).map((lx) => [
+    lx.code,
+    [1, 2, 3, 4, 5, 6].flatMap((w) => WEEK_META[w].build(lx).flatMap((l) => l.vocabulary.map((i) => i.word))),
+  ]),
 );

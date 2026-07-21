@@ -109,6 +109,18 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
           <p className="mt-3 max-w-2xl text-sm leading-6 text-foreground/70">
             {department.name_en}{department.name_vi ? ` · ${department.name_vi}` : ""}. Select one suite door to begin this shift module. <span className="italic text-foreground/60">Hãy chọn một cánh cửa suite để bắt đầu module ca làm việc này.</span>
           </p>
+
+          {/* Self-study entry point: the printable pattern + vocabulary sheet
+              for practising this week away from the app. */}
+          {authored && (
+            <Link
+              to="/handbook/$dep/$week"
+              params={{ dep: department.code, week }}
+              className="mt-5 inline-flex items-center gap-2 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary transition-colors hover:bg-primary/10"
+            >
+              📖 Sổ tay tuần — tự luyện tại nhà
+            </Link>
+          )}
         </motion.div>
 
 

@@ -71,6 +71,46 @@ FO dùng key/passport/luggage; SW dùng robe/locker; GR dùng lounge/card; BO d�
 
 ## Phase 1 — A1 (tuần 7–14): Giao tiếp câu đơn
 
+### Nguyên lý: khung câu dùng chung + ngân hàng từ riêng (70/30)
+
+Pre-A1 chia sẻ được ~90% ngôn ngữ vì số đếm, giờ giấc, bảng chữ cái là phổ quát. Từ A1 điều
+đó không còn đúng: nhân viên buồng phòng và nhân viên kinh doanh xin những thứ khác nhau, làm
+việc ở những nơi khác nhau, và hỏng những thiết bị khác nhau. Nên Phase 1 chạy ở tỷ lệ
+**~70% riêng từng bộ phận / 30% dùng chung**, theo cơ chế:
+
+> **MẪU CÂU DÙNG CHUNG + NGÂN HÀNG TỪ RIÊNG**
+
+Cả 6 bộ phận drill cùng 2–3 mẫu câu mỗi tuần, nhưng thay từ vựng riêng của mình vào. Đây là
+*substitution drill* — cơ chế biến mẫu câu thành phản xạ ở trình độ A1, đồng thời là thứ **tự
+luyện ở nhà được** (chỉ cần thay từ vào khung đã thuộc). Các mẫu câu được hiển thị cho học viên
+ở trang **Sổ tay tuần** (`/handbook/$dep/$week`, in ra giấy được).
+
+Ngân hàng từ đặt tại `src/lib/content/phase1-lexicon.ts` — 7 chủ đề × 8 từ + 7 từ closing =
+**60 headword riêng mỗi bộ phận**. Xương sống 32 giáo án ở `src/lib/content/phase1.ts`.
+
+| Tuần | Mẫu câu lõi (chung 6 bộ phận) | Ngân hàng từ riêng |
+|---|---|---|
+| 7 | `This is {tên}. He/She is our {chức danh}.` · `I work in {bộ phận}.` | chức danh |
+| 8 | `The {nơi} is on the {vị trí}.` · `There is a {nơi} near the {nơi}.` | địa điểm |
+| 9 | `Can I have {đồ}?` → `Of course. I will bring {đồ}.` | đồ khách hay xin |
+| 10 | `The {đồ} is {tính từ}.` · `It is too {tính từ}.` | tính từ mô tả |
+| 11 | `I {động từ} the {đồ} every day.` · `We {động từ} at {giờ}.` | việc hằng ngày |
+| 12 | `Hello, {bộ phận}. {Tên} speaking.` · `Hold on, please.` | tình huống điện thoại |
+| 13 | `The {đồ} is {hỏng}.` → `I am sorry. I will {sửa} it now.` | sự cố thường gặp |
+| 14 | Checkpoint — nối chuỗi mẫu câu tuần 7–13 | từ closing |
+
+### Lịch ôn xoáy vòng phân bậc
+
+Phase 0 chỉ lấy 6 từ gần nhất — cách đó mãi mãi chỉ ôn lại tuần liền trước. Phase 1 dùng
+**giãn cách mở rộng** (đúng nguyên lý spacing effect), mỗi tuần rút từ ba khoảng cách:
+
+- 1 tuần trước (củng cố) · 3 tuần trước (giãn trung bình) · và một lát cắt **quét lần lượt
+  toàn bộ Phase 0** qua các tuần 7–13, để mọi từ pre-A1 đều được truy hồi ít nhất một lần.
+
+`bun run verify:content` đo và báo cáo phân bố tần suất này, không chỉ tin vào thiết kế.
+
+### Bảng can-do
+
 | Tuần | Chủ đề chung | Can-do | Ngôn ngữ lõi |
 |---|---|---|---|
 | 7 | Con người & công việc trong khách sạn | Giới thiệu đồng nghiệp, bộ phận | to be; jobs; This is… |
@@ -155,7 +195,11 @@ Dàn ý tiếng Việt trong `src/lib/curriculum.ts` (concierge, check-out/VAT, 
 1. **Arcade ≠ Grammar**: 2 cặp arcade phải là ngữ liệu MỚI cùng chủ đề, không copy cặp grammar cùng bài.
 2. **Game ≠ Speaking**: game round phải là TÌNH HUỐNG BIẾN THỂ (khách khác, biến số khác), không copy guestPrompt/targetResponse.
 3. **`reviewWords` bắt buộc** theo quota phase (bảng thông số) — lấy từ các tuần trước của chính bộ phận đó, ưu tiên từ sắp đến hạn quên.
-4. Mỗi tuần tối đa 1 headword trùng với bộ phận khác; công thức lịch sự dùng chung phải được *dạy chính thức* ở tuần quy định trong xương sống (W5, W9, W16…), các tuần sau chỉ tái sử dụng.
+4. **Khác biệt hoá theo phase, không phải quy tắc phẳng.** P0 dùng chung gần hết (đúng cho
+   pre-A1). Từ P1 trở đi mỗi tuần phải đạt **≥60% headword riêng** cho từng bộ phận (mục tiêu
+   70%) — `verify:content` đo tỷ lệ này theo tuần và chặn nếu tụt dưới sàn. Công thức lịch sự
+   dùng chung phải được *dạy chính thức* ở tuần quy định trong xương sống (W5, W9, W16…), các
+   tuần sau chỉ tái sử dụng.
 5. Nhân vật/props trong reading phải thay đổi (không tái dùng David Green/Room 512 xuyên bộ phận).
 
 ## Việc kỹ thuật phải làm khi triển khai (ngoài phạm vi tài liệu này)

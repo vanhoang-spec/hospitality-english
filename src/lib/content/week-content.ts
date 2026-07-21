@@ -3,7 +3,8 @@
 // is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
-import { PHASE0_WEEKS } from "./phase0";
+import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
+import { buildPhase1 } from "./phase1";
 
 export type VocabItem = {
   word: string;
@@ -2077,6 +2078,7 @@ export const BO_WEEK_38: WeekContent = {
 // Registry — keyed by `${DEP}-${week}`.
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
+  ...buildPhase1(PHASE0_WORDS_BY_DEP),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,
@@ -2090,6 +2092,11 @@ const REGISTRY: Record<string, WeekContent> = {
   "GR-34": GR_WEEK_34,
   "BO-38": BO_WEEK_38,
 };
+
+/** Every registered dep-week, keyed `${DEP}-${week}`. Exposed for the
+ *  content QA gate (scripts/verify-content.ts); app code should use
+ *  getWeekContent() instead of reaching into the registry. */
+export const ALL_WEEKS: Readonly<Record<string, WeekContent>> = REGISTRY;
 
 export function getWeekContent(dep: string, week: string | number): WeekContent | null {
   const wk = typeof week === "string" ? parseInt(week, 10) : week;
