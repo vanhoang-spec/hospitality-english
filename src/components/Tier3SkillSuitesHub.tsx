@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { findWeek } from "@/lib/curriculum";
+import { getWeekContent } from "@/lib/content/week-content";
 
 type DepartmentMeta = {
   code: string;
@@ -50,17 +51,25 @@ const SUITE_DOORS = [
 ] as const;
 
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
+  // week-content.ts is the source of truth for any week that has authored
+  // lessons — the DB `lessons` rows are placeholders that only describe
+  // weeks still awaiting content. Letting the DB win here is what made
+  // relocated weeks show the wrong step titles (FO week 1 rendering the
+  // generic "(Tuần 17)" steps that travelled with the swapped scenario).
+  const authored = getWeekContent(department.code, week);
   const fallback = findWeek(department.code, week);
-  const fallbackLessons = fallback?.lessons.map((vi, i) => ({
-    id: `local-${department.code}-${week}-${i + 1}`,
-    lesson_order: i + 1,
-    title_vi: vi,
-  })) ?? [];
+  const localLessons =
+    fallback?.lessons.map((vi, i) => ({
+      id: `local-${department.code}-${week}-${i + 1}`,
+      lesson_order: i + 1,
+      title_vi: vi,
+    })) ?? [];
   const [lessons, setLessons] = useState<
     { id: string; lesson_order: number; title_vi: string }[]
-  >(fallbackLessons);
+  >(localLessons);
 
   useEffect(() => {
+    if (authored) return; // authored titles already rendered; never let the DB override them
     let cancelled = false;
     (async () => {
       const { data: scen } = await supabase
@@ -78,7 +87,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
       if (!cancelled && rows && rows.length > 0) setLessons(rows);
     })();
     return () => { cancelled = true; };
-  }, [department.code, week]);
+  }, [department.code, week, authored]);
   return (
     <main className="relative min-h-[calc(100vh-72px)] bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-6 py-12 md:px-10">
