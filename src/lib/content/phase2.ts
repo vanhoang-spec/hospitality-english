@@ -403,11 +403,11 @@ function week17(lx: Ctx): LessonContent[] {
         v("Accurate", "/ˈækjərət/", "Chuẩn xác", "The information must be accurate.", "🎯"),
         v("Clearly", "/ˈklɪəli/", "Rõ ràng", "Please say it clearly.", "🔊"),
         bw(d1, `Could I have your ${lo(d1)}?`),
-        bw(d2, `May I ask your ${lo(d2)}?`),
+        bw(d2, `May I ask about your ${lo(d2)}?`),
       ],
       grammar: [
         g(`Give me your ${lo(d1)}.`, `Could I have your ${lo(d1)}, please?`, "Xin thông tin của khách luôn dùng 'Could I have…, please?'."),
-        g(`What your ${lo(d2)}?`, `May I ask your ${lo(d2)}, madam?`, "Câu hỏi cần trợ động từ. 'May I ask…' mềm hơn hỏi trống không."),
+        g(`What your ${lo(d2)}?`, `May I ask about your ${lo(d2)}, madam?`, "Câu hỏi cần trợ động từ. 'May I ask…' mềm hơn hỏi trống không."),
       ],
       speaking: [
         sp("Sure, what do you need from me?", `Could I have your ${lo(d1)}, please?`, "Khung vàng tuần này. Thay bất kỳ thông tin nào bộ phận bạn cần hỏi."),
@@ -442,17 +442,17 @@ function week17(lx: Ctx): LessonContent[] {
 
     lesson(lx, 17, 2, "Reading Information Back", "Đọc lại thông tin để xác nhận", {
       vocabulary: [
-        bw(d6, `${d6.word}, sir?`),
-        bw(d7, `Please ${lo(d7)} if I am wrong.`),
-        bw(d9, `${d9.word} as you said.`),
+        bw(d6, `May I check your ${lo(d6)}, sir?`),
+        bw(d7, `Let me check the ${lo(d7)}.`),
+        bw(d9, `The ${lo(d9)} is confirmed.`),
       ],
       grammar: [
         g(`Correct or no?`, `So that is correct, madam?`, "Câu xác nhận chuẩn: 'So that is …, correct?' — không hỏi cụt 'Correct or no?'."),
-        g(`I say wrong you tell me.`, `Please ${lo(d7)} if I am wrong.`, "Câu điều kiện hai mệnh đề, đúng tầm A2: mệnh lệnh lịch sự + 'if'."),
+        g(`I say wrong you tell me.`, `Please correct me if I am wrong.`, "Câu điều kiện hai mệnh đề, đúng tầm A2: mệnh lệnh lịch sự + 'if'."),
       ],
       speaking: [
         sp("Yes, that is what I said.", `Thank you. Let me read that back to you.`, "Đọc lại thông tin là bước bắt buộc — sai một chữ có thể hỏng cả đơn."),
-        sp("Actually, the second part is wrong.", `I am sorry. Please ${lo(d7)} for me.`, "Sai thì xin lỗi ngắn và mời khách sửa, đừng thanh minh."),
+        sp("Actually, the second part is wrong.", `I am sorry. Please correct me.`, "Sai thì xin lỗi ngắn và mời khách sửa, đừng thanh minh."),
       ],
       reading: read(
         `${lx.staff} repeats the information carefully. "Let me read that back to you. Please ${lo(d7)} if I am wrong." The guest confirms everything is ${lo(d9)}.`,
@@ -484,15 +484,15 @@ function week17(lx: Ctx): LessonContent[] {
     lesson(lx, 17, 3, "Spelling & Precision", "Đánh vần & độ chính xác", {
       vocabulary: [
         bw(d3, `Could I have your ${lo(d3)}?`),
-        bw(d5, `${d5.word}, please?`),
-        bw(d8, `Let me ${lo(d8)} that.`),
+        bw(d5, `And your ${lo(d5)}, please?`),
+        bw(d8, `The ${lo(d8)} is important.`),
       ],
       grammar: [
         g(`Spell please slow.`, `Could you spell that slowly, please?`, "Trạng từ 'slowly' đứng sau động từ; câu đề nghị vẫn cần 'Could you … please?'."),
-        g(`I check two time.`, `Let me ${lo(d8)} that for you.`, "'Let me double-check' là cách nói chuyên nghiệp khi cần kiểm tra lại."),
+        g(`I check two time.`, `Let me double-check that for you.`, "'Let me double-check' là cách nói chuyên nghiệp khi cần kiểm tra lại."),
       ],
       speaking: [
-        sp("It is spelled N-G-U-Y-E-N.", `Thank you. Let me ${lo(d8)} that for you.`, "Nghe xong luôn kiểm tra lại — tên riêng là chỗ dễ sai nhất."),
+        sp("It is spelled N-G-U-Y-E-N.", `Thank you. Let me double-check that for you.`, "Nghe xong luôn kiểm tra lại — tên riêng là chỗ dễ sai nhất."),
         sp("Could you repeat that back?", `Certainly. Could you spell it slowly, please?`, "Nhờ khách đánh vần chậm không hề bất lịch sự — sai tên mới bất lịch sự."),
       ],
       reading: read(
@@ -524,8 +524,8 @@ function week17(lx: Ctx): LessonContent[] {
 
     lesson(lx, 17, 4, "Recording the Details", "Ghi lại thông tin", {
       vocabulary: [
-        bw(d4, `Could I have a ${lo(d4)}?`),
-        bw(d10, `I will ${lo(d10)} for you.`),
+        bw(d4, `Could I have your ${lo(d4)}?`),
+        bw(d10, `I will note the ${lo(d10)} for you.`),
       ],
       grammar: [
         g(`I write your ${lo(d4)} now.`, `I am writing your ${lo(d4)} down now.`, "Việc đang làm ngay lúc nói dùng hiện tại tiếp diễn: I AM WRITING."),
@@ -923,15 +923,15 @@ function week20(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Prefer", "/prɪˈfɜː/", "Thích hơn", "Would you prefer tea or coffee?", "❤️"),
         v("Choice", "/tʃɔɪs/", "Sự lựa chọn", "Both are good choices.", "🔀"),
-        bw(c1, `Would you prefer ${lo(c1)}?`),
-        bw(c2, `Or perhaps ${lo(c2)}?`),
+        bw(c1, `Would you prefer the ${lo(c1)}?`),
+        bw(c2, `Or perhaps the ${lo(c2)}?`),
       ],
       grammar: [
-        g(`You like ${lo(c1)} or ${lo(c2)}?`, `Would you prefer ${lo(c1)} or ${lo(c2)}?`, "Mẫu chuẩn để đưa hai lựa chọn: 'Would you prefer A or B?'"),
+        g(`You like ${lo(c1)} or ${lo(c2)} more?`, `Would you prefer the ${lo(c1)} or the ${lo(c2)}?`, "Mẫu chuẩn để đưa hai lựa chọn: 'Would you prefer A or B?'"),
         g(`Two is good same.`, `Both are excellent choices, madam.`, "'Both are…' dùng cho hai thứ; động từ chia số nhiều 'are'."),
       ],
       speaking: [
-        sp("I am not sure what to pick.", `Would you prefer ${lo(c1)} or ${lo(c2)}?`, "Khung vàng tuần này. Cho khách đúng HAI lựa chọn — nhiều hơn sẽ rối."),
+        sp("I am not sure what to pick.", `Would you prefer the ${lo(c1)} or the ${lo(c2)}?`, "Khung vàng tuần này. Cho khách đúng HAI lựa chọn — nhiều hơn sẽ rối."),
         sp("They both sound fine to me.", `Both are excellent choices, sir.`, "Khẳng định cả hai đều tốt để khách không sợ chọn sai."),
       ],
       reading: read(
@@ -954,8 +954,8 @@ function week20(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Which one should I take?",
-          `Would you prefer ${lo(c1)} or ${lo(c2)}?`,
-          `You like ${lo(c1)} or ${lo(c2)}?`,
+          `Would you prefer the ${lo(c1)} or the ${lo(c2)}?`,
+          `You like ${lo(c1)} or ${lo(c2)} more?`,
           "Any one is same.",
         ),
       ],
@@ -963,17 +963,17 @@ function week20(lx: Ctx): LessonContent[] {
 
     lesson(lx, 20, 2, "Making a Recommendation", "Đưa ra lời khuyên", {
       vocabulary: [
-        bw(c10, `${c10.word} is very popular.`),
-        bw(c8, `It would ${lo(c8)} nicely.`),
-        bw(c9, `That ${lo(c9)} the weather.`),
+        bw(c10, `The ${lo(c10)} is very popular.`),
+        bw(c8, `The ${lo(c8)} is a good match.`),
+        bw(c9, `The ${lo(c9)} depends on the weather.`),
       ],
       grammar: [
         g(`I think good this one.`, `I would suggest this one, sir.`, "'I would suggest…' là mẫu khuyên chuẩn mực, nhã nhặn hơn 'I think good'."),
         g(`Because is popular.`, `Because it is very popular with our guests.`, "Mệnh đề 'because' cần chủ ngữ: because IT IS popular."),
       ],
       speaking: [
-        sp("What would you recommend?", `I would suggest ${lo(c10)}, because it is popular.`, "Khuyên phải kèm lý do — lời khuyên không lý do nghe như bán hàng."),
-        sp("Why do you say that?", `It would ${lo(c8)} very nicely, madam.`, "Giải thích lợi ích cụ thể cho riêng vị khách đó."),
+        sp("What would you recommend?", `I would suggest the ${lo(c10)}, because it is popular.`, "Khuyên phải kèm lý do — lời khuyên không lý do nghe như bán hàng."),
+        sp("Why do you say that?", `It would suit you very nicely, madam.`, "Giải thích lợi ích cụ thể cho riêng vị khách đó."),
       ],
       reading: read(
         `The guest wants advice. ${lx.staff} says: "I would suggest ${lo(c10)}, because it is very popular with our guests. It would ${lo(c8)} nicely."`,
@@ -995,7 +995,7 @@ function week20(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Which do most people choose?",
-          `Most guests choose ${lo(c10)}, madam.`,
+          `Most guests choose the ${lo(c10)}, madam.`,
           "I think good this one.",
           "I do not know really.",
         ),
@@ -1004,17 +1004,17 @@ function week20(lx: Ctx): LessonContent[] {
 
     lesson(lx, 20, 3, "Respecting the Guest's Choice", "Tôn trọng quyết định của khách", {
       vocabulary: [
-        bw(c3, `${c3.word} is available too.`),
-        bw(c4, `We also have ${lo(c4)}.`),
-        bw(c7, `${c7.word} is fine, sir.`),
+        bw(c3, `The ${lo(c3)} is available too.`),
+        bw(c4, `We also have the ${lo(c4)}.`),
+        bw(c7, `The ${lo(c7)} is fine, sir.`),
       ],
       grammar: [
         g(`No, that not good choice.`, `Of course, that is a good choice too.`, "Không bao giờ chê lựa chọn của khách. Khẳng định rồi mới bổ sung thông tin."),
-        g(`Up to you all same.`, `${c7.word}, sir. Whichever you prefer.`, "'Whichever you prefer' là cách nói 'tùy anh/chị' lịch sự và trang trọng."),
+        g(`Up to you all same.`, `Either one, sir. Whichever you prefer.`, "'Whichever you prefer' là cách nói 'tùy anh/chị' lịch sự và trang trọng."),
       ],
       speaking: [
         sp("Actually I will take the other one.", `Of course, that is a good choice too.`, "Khách đổi ý thì ủng hộ ngay — đừng bảo vệ lời khuyên của mình."),
-        sp("Are you sure that is okay?", `${c7.word}, madam. Whichever you prefer.`, "Trấn an để khách thoải mái với quyết định của họ."),
+        sp("Are you sure that is okay?", `Either one, madam. Whichever you prefer.`, "Trấn an để khách thoải mái với quyết định của họ."),
       ],
       reading: read(
         `The guest chooses differently. ${lx.staff} answers warmly: "Of course, that is a good choice too, sir. Whichever you prefer." The guest feels comfortable.`,
@@ -1045,15 +1045,15 @@ function week20(lx: Ctx): LessonContent[] {
 
     lesson(lx, 20, 4, "Confirming the Decision", "Chốt lại lựa chọn", {
       vocabulary: [
-        bw(c5, `So you would like ${lo(c5)}?`),
-        bw(c6, `We will use ${lo(c6)} then.`),
+        bw(c5, `So you would like the ${lo(c5)}?`),
+        bw(c6, `We will arrange the ${lo(c6)} then.`),
       ],
       grammar: [
-        g(`So you take this one right?`, `So you would like ${lo(c5)}, correct?`, "Câu chốt trang trọng dùng 'would like' và kết bằng 'correct?'."),
+        g(`So you take this one right?`, `So you would like the ${lo(c5)}, correct?`, "Câu chốt trang trọng dùng 'would like' và kết bằng 'correct?'."),
         g(`Ok I do now.`, `Very good. I will arrange that now.`, "'Very good' + cam kết hành động là cách chốt chuyên nghiệp."),
       ],
       speaking: [
-        sp("Yes, let us go with that one.", `So you would like ${lo(c5)}, correct?`, "Chốt lại một lần trước khi thực hiện — tránh làm sai rồi phải làm lại."),
+        sp("Yes, let us go with that one.", `So you would like the ${lo(c5)}, correct?`, "Chốt lại một lần trước khi thực hiện — tránh làm sai rồi phải làm lại."),
         sp("That is right, thank you.", `Very good. I will arrange that now.`, "Xác nhận xong là hành động ngay, đừng để khách phải nhắc."),
       ],
       reading: read(
@@ -1450,8 +1450,13 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
   22: { en: "Checkpoint — Core SOP Service", vi: "Kiểm tra tổng hợp — Nghiệp vụ chuẩn", build: week22 },
 };
 
-function headwordsOf(lx: Ctx, week: number): string[] {
-  return WEEK_META[week].build(lx).flatMap((l) => l.vocabulary.map((item) => item.word));
+/** Headwords a department ACTUALLY meets in a week. Four slots in this
+ *  range are served by hand-authored payloads instead of the spine, so
+ *  recycling must read those, or it schedules words never taught. */
+function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
+  const override = overrides[`${lx.code}-${week}`];
+  const lessons = override ? override.lessons : WEEK_META[week].build(lx);
+  return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
 /**
@@ -1460,20 +1465,25 @@ function headwordsOf(lx: Ctx, week: number): string[] {
  * across weeks 15-21 so nothing from the first fourteen weeks is left
  * unretrieved. Week 22 sweeps Phase 2 itself.
  */
-function reviewWordsFor(lx: Ctx, week: number, priorWords: string[]): string[] {
+function reviewWordsFor(
+  lx: Ctx,
+  week: number,
+  priorWords: string[],
+  overrides: Record<string, WeekContent>,
+): string[] {
   if (week === 22) {
     const all: string[] = [];
-    for (let w = 15; w <= 21; w++) all.push(...headwordsOf(lx, w));
+    for (let w = 15; w <= 21; w++) all.push(...headwordsOf(lx, w, overrides));
     return Array.from(new Set(all));
   }
 
   const out: string[] = [];
 
   const oneBack = week - 1;
-  if (oneBack >= 15) out.push(...headwordsOf(lx, oneBack).slice(0, 4));
+  if (oneBack >= 15) out.push(...headwordsOf(lx, oneBack, overrides).slice(0, 4));
 
   const threeBack = week - 3;
-  if (threeBack >= 15) out.push(...headwordsOf(lx, threeBack).slice(0, 3));
+  if (threeBack >= 15) out.push(...headwordsOf(lx, threeBack, overrides).slice(0, 3));
 
   const slots = 7; // weeks 15..21
   const size = Math.ceil(priorWords.length / slots);
@@ -1483,7 +1493,12 @@ function reviewWordsFor(lx: Ctx, week: number, priorWords: string[]): string[] {
   return Array.from(new Set(out));
 }
 
-function buildWeek(lx: Ctx, week: number, priorWords: string[]): WeekContent {
+function buildWeek(
+  lx: Ctx,
+  week: number,
+  priorWords: string[],
+  overrides: Record<string, WeekContent>,
+): WeekContent {
   const meta = WEEK_META[week];
   return {
     departmentId: lx.code,
@@ -1491,7 +1506,7 @@ function buildWeek(lx: Ctx, week: number, priorWords: string[]): WeekContent {
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
     lessons: meta.build(lx),
-    reviewWords: reviewWordsFor(lx, week, priorWords),
+    reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
   };
 }
 
@@ -1500,12 +1515,16 @@ function buildWeek(lx: Ctx, week: number, priorWords: string[]): WeekContent {
  * overridden downstream by the hand-authored FB-15, HK-15, FO-17 and
  * SW-19 payloads — see the note at the top of this file.
  */
-export function buildPhase2(priorWordsByDep: Record<string, string[]>): Record<string, WeekContent> {
+export function buildPhase2(
+  priorWordsByDep: Record<string, string[]>,
+  /** The hand-authored weeks that replace spine slots in this range. */
+  overrides: Record<string, WeekContent> = {},
+): Record<string, WeekContent> {
   const out: Record<string, WeekContent> = {};
   for (const [code, base] of Object.entries(LEXICONS)) {
     const lx: Ctx = { ...base, bank: P2_BANKS[code] };
     const prior = priorWordsByDep[code] ?? [];
-    for (let w = 15; w <= 22; w++) out[`${code}-${w}`] = buildWeek(lx, w, prior);
+    for (let w = 15; w <= 22; w++) out[`${code}-${w}`] = buildWeek(lx, w, prior, overrides);
   }
   return out;
 }

@@ -135,7 +135,10 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Oil", phonetic: "/ɔɪl/", definition: "Tinh dầu", icon: "🫗" },
       { word: "Candle", phonetic: "/ˈkændl/", definition: "Nến thơm", icon: "🕯️" },
     ],
-    service: { en: "the spa", vi: "giờ mở cửa spa", open: "nine", close: "nine" },
+    // Open and close must differ — the week-3 reading questions offer both
+    // as answer options, so identical values give the learner two identical
+    // choices and no correct answer to pick.
+    service: { en: "the spa", vi: "giờ mở cửa spa", open: "ten", close: "eight" },
     priced: { en: "foot massage", vi: "massage chân", usd: 30, usdWord: "thirty" },
     roomNo: { digits: "104", spoken: "one-oh-four" },
     floor: { ordinal: "first", vi: "tầng một" },

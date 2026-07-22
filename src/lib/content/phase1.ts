@@ -116,7 +116,7 @@ function week7(lx: Ctx): LessonContent[] {
         bw(r5, `He is the ${lower(r5)} tonight.`),
       ],
       grammar: [
-        g(`Today ${lower(r3)} not here.`, `The ${lower(r3)} is not here today.`, "Phủ định cần 'is not': The ${...} IS NOT here. Không nói 'not here' trống không."),
+        g(`Today ${lower(r3)} not here.`, `The ${lower(r3)} is not here today.`, "Phủ định cần 'is not': THE + chức danh + IS NOT + here. Không nói 'not here' trống không."),
         g(`Who ${lower(r4)}?`, `Who is the ${lower(r4)}?`, "Câu hỏi với 'Who' cũng cần 'is': WHO IS the …?"),
       ],
       speaking: [
@@ -409,26 +409,26 @@ function week9(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 9, 1, "Can I Have…?", "Khách xin đồ: Can I have…?", {
       vocabulary: [
-        v("Need", "/niːd/", "Cần", `I need a ${lower(q1)}.`, "🙋"),
-        v("Another", "/əˈnʌðə/", "Thêm một cái nữa", `Another ${lower(q2)}, please.`, "➕"),
-        bw(q1, `Can I have a ${lower(q1)}?`),
+        v("Need", "/niːd/", "Cần", `I need the ${lower(q1)}.`, "🙋"),
+        v("Another", "/əˈnʌðə/", "Thêm một cái nữa", "Another one, please.", "➕"),
+        bw(q1, `Can I have the ${lower(q1)}?`),
         bw(q2, `Here is your ${lower(q2)}.`),
       ],
       grammar: [
-        g(`I want ${lower(q1)}.`, `Can I have a ${lower(q1)}?`, "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng."),
+        g(`I want ${lower(q1)}.`, `Can I have the ${lower(q1)}?`, "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng."),
         g(`I bring ${lower(q1)}.`, `Of course. I will bring one.`, "Nhận lời dùng 'Of course' + hứa hành động với 'will'."),
       ],
       speaking: [
-        sp(`Can I have a ${lower(q1)}, please?`, `Of course. I will bring one.`, "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin."),
+        sp(`Can I have the ${lower(q1)}, please?`, `Of course. I will bring one.`, "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin."),
       ],
       reading: read(
-        `A guest needs something. He asks: "Can I have a ${lower(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
+        `A guest needs something. He asks: "Can I have the ${lower(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
         [
           {
             q: "Khách xin cái gì?",
             options: [q1.definition, q2.definition, "Không xin gì"],
             correct: 0,
-            explanation: `Khách nói "Can I have a ${lower(q1)}?"`,
+            explanation: `Khách nói "Can I have the ${lower(q1)}?"`,
           },
           {
             q: "Câu đáp nào đúng chuẩn dịch vụ?",
@@ -440,9 +440,9 @@ function week9(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          `Could I get another ${lower(q2)}?`,
+          "Could I get another one, please?",
           `Certainly, madam. One moment.`,
-          `Yes, another ${lower(q2)} you.`,
+          "Yes, another you.",
           "No more today.",
         ),
       ],
@@ -450,18 +450,18 @@ function week9(lx: Ctx): LessonContent[] {
 
     lesson(lx, 9, 2, "How Many Do You Need?", "Hỏi khách cần bao nhiêu", {
       vocabulary: [
-        bw(q3, `Two ${lower(q3)}s, please.`),
-        bw(q4, `Do you need a ${lower(q4)}?`),
+        bw(q3, `Some ${lower(q3)}, please.`),
+        bw(q4, `Do you need the ${lower(q4)}?`),
       ],
       grammar: [
-        g(`How many ${lower(q3)}?`, `How many ${lower(q3)}s do you need?`, "Câu hỏi đầy đủ cần 'do you need'. Và danh từ số nhiều thêm -s."),
-        g(`You need ${lower(q4)}?`, `Do you need a ${lower(q4)}, sir?`, "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu."),
+        g("How many?", "How many do you need, sir?", "Câu hỏi đầy đủ cần 'do you need'. Hỏi cụt 'How many?' nghe thiếu tôn trọng."),
+        g(`You need ${lower(q4)}?`, `Do you need the ${lower(q4)}, sir?`, "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu."),
       ],
       speaking: [
-        sp(`I need some ${lower(q3)}s.`, `How many do you need, madam?`, "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần."),
+        sp(`I need some ${lower(q3)}.`, `How many do you need, madam?`, "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần."),
       ],
       reading: read(
-        `The guest asks for ${lower(q3)}s. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
+        `The guest asks for ${lower(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
         [
           {
             q: "Khách cần mấy cái?",
@@ -479,7 +479,7 @@ function week9(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          `Do you have a ${lower(q4)}?`,
+          `Do you have the ${lower(q4)}?`,
           `Yes, sir. I will bring it now.`,
           `Yes, have ${lower(q4)}.`,
           `${q4.word} no here.`,
@@ -529,17 +529,17 @@ function week9(lx: Ctx): LessonContent[] {
     lesson(lx, 9, 4, "Sorry, We Do Not Have It", "Khi không có thứ khách cần", {
       vocabulary: [
         bw(q7, `We have no ${lower(q7)} today.`),
-        bw(q8, `Would you like a ${lower(q8)}?`),
+        bw(q8, `Would you like the ${lower(q8)}?`),
       ],
       grammar: [
         g(`No have.`, `I am sorry, we do not have it.`, "Phủ định lịch sự: xin lỗi trước, rồi 'we do not have it'. Không nói cụt 'No have'."),
-        g(`You want ${lower(q8)}?`, `Would you like a ${lower(q8)}?`, "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'."),
+        g(`You want ${lower(q8)}?`, `Would you like the ${lower(q8)}?`, "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'."),
       ],
       speaking: [
-        sp(`Do you have a ${lower(q7)}?`, `I am sorry. Would you like a ${lower(q8)}?`, "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'."),
+        sp(`Do you have the ${lower(q7)}?`, `I am sorry. Would you like the ${lower(q8)}?`, "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'."),
       ],
       reading: read(
-        `The ${lower(q7)} is finished today. ${lx.staff} says: "I am sorry, sir. Would you like a ${lower(q8)}?" The guest says: "Yes, please."`,
+        `The ${lower(q7)} is finished today. ${lx.staff} says: "I am sorry, sir. Would you like the ${lower(q8)}?" The guest says: "Yes, please."`,
         [
           {
             q: "Khi hết đồ khách cần, nên làm gì?",
@@ -557,7 +557,7 @@ function week9(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          `I would like a ${lower(q7)}.`,
+          `I would like the ${lower(q7)}.`,
           `I am sorry, madam. We have none today.`,
           `No ${lower(q7)} have.`,
           "You take other one.",
@@ -580,7 +580,7 @@ function week10(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Very", "/ˈveri/", "Rất", `It is very ${lower(s1)}.`, "⬆️"),
         bw(s1, `The room is ${lower(s1)}.`),
-        bw(s2, `The ${i1.word.toLowerCase()} is ${lower(s2)}.`),
+        bw(s2, `It is quite ${lower(s2)}.`),
         bw(s3, `It is ${lower(s3)} today.`),
       ],
       grammar: [
@@ -591,7 +591,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp("How is the room today?", `It is very ${lower(s1)}, madam.`, "Khung câu vàng: 'It is very + tính từ'. Thay tính từ khác để tự luyện."),
       ],
       reading: read(
-        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. The ${i1.word.toLowerCase()} is ${lower(s2)} too."`,
+        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. It is quite ${lower(s2)} too."`,
         [
           {
             q: "Phòng được mô tả thế nào?",
@@ -620,7 +620,7 @@ function week10(lx: Ctx): LessonContent[] {
     lesson(lx, 10, 2, "Too Much: Using 'Too'", "Diễn đạt 'quá' với 'too'", {
       vocabulary: [
         v("Too", "/tuː/", "Quá (mức, mang nghĩa tiêu cực)", `It is too ${lower(s4)}.`, "⚠️"),
-        bw(s4, `The water is too ${lower(s4)}.`),
+        bw(s4, `It is too ${lower(s4)} now.`),
         bw(s5, `It is a little ${lower(s5)}.`),
       ],
       grammar: [
@@ -660,7 +660,7 @@ function week10(lx: Ctx): LessonContent[] {
     lesson(lx, 10, 3, "Comparing Two Things", "So sánh hai thứ", {
       vocabulary: [
         bw(s6, `This one is more ${lower(s6)}.`),
-        bw(s7, `The new ${i2.word.toLowerCase()} is ${lower(s7)}.`),
+        bw(s7, `This one is ${lower(s7)}.`),
       ],
       grammar: [
         g(`This good, that no good.`, `This one is better, sir.`, "So sánh dùng 'better' (tốt hơn). Không ghép 'good/no good' theo lối tiếng Việt."),
@@ -756,7 +756,7 @@ function week11(lx: Ctx): LessonContent[] {
         g(`He ${lower(t1)} every day.`, `He ${lower(t1)}s the room every day.`, "Ngôi thứ ba số ít thêm -s vào động từ ở thì hiện tại đơn."),
       ],
       speaking: [
-        sp("What do you do every day?", `I ${lower(t1)} the rooms every day.`, "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày."),
+        sp("What do you do every day?", `I ${lower(t1)} every day.`, "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày."),
       ],
       reading: read(
         `${lx.staff} explains the daily work: "I ${lower(t1)} every morning. We ${lower(t2)} after breakfast, sir."`,
@@ -1087,7 +1087,7 @@ function week13(lx: Ctx): LessonContent[] {
         v("Problem", "/ˈprɒbləm/", "Vấn đề, sự cố", "There is a problem, sir.", "⚠️"),
         v("Fix", "/fɪks/", "Sửa", "I will fix it now.", "🔧"),
         bw(b1, `The ${i1.word.toLowerCase()} is ${lower(b1)}.`),
-        bw(b2, `The light is ${lower(b2)}.`),
+        bw(b2, `It is ${lower(b2)}, sir.`),
       ],
       grammar: [
         g(`${i1.word} ${lower(b1)}.`, `The ${i1.word.toLowerCase()} is ${lower(b1)}.`, "Mẫu câu lõi tuần này: THE + đồ vật + IS + tình trạng hỏng."),
@@ -1301,11 +1301,11 @@ function week14(lx: Ctx): LessonContent[] {
         bw(c6, `The ${lower(c6)} is ready, sir.`),
       ],
       grammar: [
-        g(`You want ${lower(q1)}?`, `Would you like a ${lower(q1)}?`, "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'"),
+        g(`You want ${lower(q1)}?`, `Would you like the ${lower(q1)}?`, "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'"),
         g("How many you need?", "How many do you need, sir?", "Ôn tuần 9: câu hỏi cần 'do you'."),
       ],
       speaking: [
-        sp(`Can I have a ${lower(q1)}?`, "Of course. I will bring one.", "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca."),
+        sp(`Can I have the ${lower(q1)}?`, "Of course. I will bring one.", "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca."),
       ],
       reading: read(
         `The guest asks for something. ${lx.staff} answers: "Of course, sir. How many do you need? I will bring them now."`,

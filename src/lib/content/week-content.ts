@@ -2100,7 +2100,12 @@ export const BO_WEEK_38: WeekContent = {
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
-  ...buildPhase2(PRIOR_WORDS_BY_DEP),
+  ...buildPhase2(PRIOR_WORDS_BY_DEP, {
+    "FB-15": FB_WEEK_15,
+    "HK-15": HK_WEEK_15,
+    "FO-17": FO_WEEK_17,
+    "SW-19": SW_WEEK_19,
+  }),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,

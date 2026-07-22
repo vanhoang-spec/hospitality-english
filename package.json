@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "verify:content": "bun scripts/verify-content.ts",
+    "qa:full": "bun scripts/qa-full.ts",
     "format": "prettier --write ."
   },
   "dependencies": {
