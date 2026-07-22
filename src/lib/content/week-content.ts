@@ -5,7 +5,8 @@
 
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
-import { buildPhase2 } from "./phase2";
+import { buildPhase2, phase2WordsByDep } from "./phase2";
+import { buildPhase3 } from "./phase3";
 
 /** Everything a department met in Phases 0-1, in teaching order — the
  *  long-spacing recycling pool Phase 2 draws on. */
@@ -576,6 +577,9 @@ export const SW_WEEK_23: WeekContent = {
   weekNumber: 23,
   weekTitleEn: "Spa Treatment Consultation & Package Upselling",
   weekTitleVi: "Tư Vấn Liệu Trình Spa & Kỹ Thuật Upselling Gói Trị Liệu",
+  // Pulled forward from Phases 0-2 so this week joins the spaced-recycling
+  // system instead of standing outside it.
+  reviewWords: ["Therapist", "Appointment", "Relaxing", "Massage", "Health condition", "Add on", "Popular choice", "Skin type"],
   lessons: [
     {
       lessonId: "SW_23_1",
@@ -609,11 +613,11 @@ export const SW_WEEK_23: WeekContent = {
         { bad: "You have to wait.", good: "Would you mind waiting just a moment, please?" },
       ],
       game: [{
-        prompt: "This is my first time here. What do I need to do?",
+        prompt: "I came here last year, but my doctor has given me new medication since then.",
         options: [
-          { text: "Welcome to our spa! Before your treatment, please take a seat and fill out this short health consultation form for us.", correct: true },
-          { text: "Sit down and fill this form.", correct: false },
-          { text: "We don't know, ask someone else.", correct: false },
+          { text: "Thank you for telling us, madam. Would you mind filling out a new health consultation form?", correct: true },
+          { text: "Your old form is still here, so don't worry about it.", correct: false },
+          { text: "Just tell the therapist inside when you go in.", correct: false },
         ],
       }],
     },
@@ -634,7 +638,7 @@ export const SW_WEEK_23: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "I'm not sure which massage to choose. What's the difference?",
-        targetResponse: "Of course! Our traditional Vietnamese massage focuses on stretching, while the hot stone massage uses heated stones for deeper muscle relief. Which sounds better for you?",
+        targetResponse: "Of course! Our traditional Vietnamese massage focuses on stretching. The hot stone massage uses heated stones for deeper muscle relief. Which sounds better for you?",
         helpTip: "Stress the contrast words 'traditional' and 'hot stone' a little louder so the guest hears the comparison clearly.",
       }],
       reading: {
@@ -649,11 +653,11 @@ export const SW_WEEK_23: WeekContent = {
         { bad: "I don't know, just pick one.", good: "Let me explain the difference so you can choose the best option." },
       ],
       game: [{
-        prompt: "I'm not sure which massage to choose. What's the difference?",
+        prompt: "My shoulders are very tense today. Is the herbal steam enough for that?",
         options: [
-          { text: "Of course! Our traditional Vietnamese massage focuses on stretching, while the hot stone massage uses heated stones for deeper muscle relief. Which sounds better for you?", correct: true },
-          { text: "They are all the same, just pick one.", correct: false },
-          { text: "The hot stone one is the only good one.", correct: false },
+          { text: "Herbal steam is lovely for relaxing, madam. For deep muscle tension, I'd recommend our hot stone massage.", correct: true },
+          { text: "Yes, the steam is fine. Every treatment does the same thing.", correct: false },
+          { text: "I'm not a doctor, so I really can't say.", correct: false },
         ],
       }],
     },
@@ -674,7 +678,7 @@ export const SW_WEEK_23: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "I just want a single massage for myself today.",
-        targetResponse: "That sounds lovely. If you'd like, we also have a couple's combo package this week — would you like to bring your partner next time?",
+        targetResponse: "That sounds lovely. If you'd like, we also have a couple's combo package this week. Would you like to bring your partner next time?",
         helpTip: "Raise your intonation at the end of 'next time?' to keep the offer friendly, not pushy.",
       }],
       reading: {
@@ -689,11 +693,11 @@ export const SW_WEEK_23: WeekContent = {
         { bad: "Just get the membership, everyone does.", good: "May I tell you a little about our membership benefits?" },
       ],
       game: [{
-        prompt: "I just want a single massage for myself today.",
+        prompt: "We're staying two weeks, so I'd like a massage every few days.",
         options: [
-          { text: "That sounds lovely. If you'd like, we also have a couple's combo package this week — would you like to bring your partner next time?", correct: true },
-          { text: "No, we only sell single sessions.", correct: false },
-          { text: "You should really buy the family package instead.", correct: false },
+          { text: "Have you considered our family care package? Four sessions stay valid for three months.", correct: true },
+          { text: "Then just come back and pay the full price each time.", correct: false },
+          { text: "You have to book every session separately at the desk.", correct: false },
         ],
       }],
     },
@@ -729,11 +733,11 @@ export const SW_WEEK_23: WeekContent = {
         { bad: "You need this cream.", good: "This cream might be perfect for your skin type — would you like to try it?" },
       ],
       game: [{
-        prompt: "That massage was wonderful, thank you.",
+        prompt: "My skin feels a little dry after the herbal steam.",
         options: [
-          { text: "I'm so glad to hear that! May I recommend this lavender essential oil to help you relax at home too?", correct: true },
-          { text: "Okay, thanks. Goodbye.", correct: false },
-          { text: "You should have told us earlier.", correct: false },
+          { text: "Thank you for sharing that, madam. May I recommend our aloe vera moisturizer for sensitive skin?", correct: true },
+          { text: "That always happens after steam, so it is normal.", correct: false },
+          { text: "You can buy some cream in a shop outside.", correct: false },
         ],
       }],
     },
@@ -745,6 +749,9 @@ export const GR_WEEK_27: WeekContent = {
   weekNumber: 27,
   weekTitleEn: "VIP & Executive Club Benefits Management",
   weekTitleVi: "Chăm Sóc Khách Hàng Thượng Lưu (HNWI) Tại Executive Lounge",
+  // Pulled forward from Phases 0-3 so this week joins the spaced-recycling
+  // system instead of standing outside it.
+  reviewWords: ["Lounge access", "Afternoon tea", "Evening cocktail hour", "Meeting room", "Coffee preference", "Pillow type", "Guest history", "Late check-out"],
   lessons: [
     {
       lessonId: "GR_27_1",
@@ -763,7 +770,7 @@ export const GR_WEEK_27: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "This is my first time staying in a Club Room. What do I actually get?",
-        targetResponse: "Welcome, Mr. Tran. As a Club Room guest, you're entitled to Executive Lounge access, complimentary breakfast, all-day refreshments, and evening cocktails. Allow me to explain each privilege in detail.",
+        targetResponse: "Welcome, Mr. Tran. As a Club Room guest, you're entitled to Executive Lounge access and complimentary breakfast. You also receive all-day refreshments and evening cocktails. Allow me to explain each privilege in detail.",
         helpTip: "Link 'entitled to' smoothly — pronounce it as one flowing phrase, /ɪnˈtaɪtəld tə/, not word by word.",
       }],
       reading: {
@@ -778,11 +785,11 @@ export const GR_WEEK_27: WeekContent = {
         { bad: "I'll tell you the rules now.", good: "Allow me to walk you through your Club benefits." },
       ],
       game: [{
-        prompt: "This is my first time staying in a Club Room. What do I actually get?",
+        prompt: "May my wife join me in the Executive Lounge tomorrow morning?",
         options: [
-          { text: "Welcome, Mr. Tran. As a Club Room guest, you're entitled to Executive Lounge access, complimentary breakfast, all-day refreshments, and evening cocktails.", correct: true },
-          { text: "You just get free breakfast, that's it.", correct: false },
-          { text: "I don't know, please ask someone else.", correct: false },
+          { text: "Of course, sir. Your Club Room privileges include lounge access for two guests.", correct: true },
+          { text: "No, the lounge is only for the person who booked.", correct: false },
+          { text: "I have no idea, please ask at the front desk.", correct: false },
         ],
       }],
     },
@@ -803,7 +810,7 @@ export const GR_WEEK_27: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Is there a set time for the afternoon tea, or can I come anytime?",
-        targetResponse: "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window, and I'll be happy to prepare a fresh selection for you.",
+        targetResponse: "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window. I'll be happy to prepare a fresh selection for you.",
         helpTip: "Practice the linking sound between 'set' and 'time' — /sɛt‿taɪm/ — so it flows naturally instead of sounding choppy.",
       }],
       reading: {
@@ -818,11 +825,11 @@ export const GR_WEEK_27: WeekContent = {
         { bad: "Kids can't come after 6.", good: "For a relaxed atmosphere, we welcome children in the lounge until 6:00 PM." },
       ],
       game: [{
-        prompt: "Is there a set time for the afternoon tea, or can I come anytime?",
+        prompt: "The canapé tray at the Cocktail Hour counter is almost empty.",
         options: [
-          { text: "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window.", correct: true },
-          { text: "Anytime, we don't have a schedule.", correct: false },
-          { text: "Tea time is only in the morning.", correct: false },
+          { text: "Thank you for letting me know, sir. I will replenish the tray right away.", correct: true },
+          { text: "Cocktail Hour finishes soon, so we do not refill it.", correct: false },
+          { text: "The kitchen is closed, so there is nothing I can do.", correct: false },
         ],
       }],
     },
@@ -838,12 +845,12 @@ export const GR_WEEK_27: WeekContent = {
         { word: "Assistance", phonetic: "/əˈsɪstəns/", definition: "Sự hỗ trợ, giúp đỡ", context: "Our Guest Relations team is happy to provide assistance with your documents.", icon: "🤝" },
       ],
       grammar: [
-        { rude: "You can't use the meeting room now, it's busy.", polite: "I'm afraid the meeting room is currently occupied — may I reserve it for you at 2:00 PM instead?", rule: "Use 'I'm afraid...' to soften bad news, then immediately offer an alternative." },
-        { rude: "Send me the file and I'll print it.", polite: "If you could send me the file, I would be glad to have it printed for you right away.", rule: "Use conditional 'If you could...' with 'I would be glad to...' to make a request-and-offer sound courteous." },
+        { rude: "You can't use the meeting room now, it's busy.", polite: "I'm afraid the meeting room is currently occupied. May I reserve it for you at 2:00 PM instead?", rule: "Use 'I'm afraid...' to soften bad news, then immediately offer an alternative." },
+        { rude: "Send me the file and I'll print it.", polite: "If you could send me the file, I would be glad to help. I'll have it printed for you right away.", rule: "Use conditional 'If you could...' with 'I would be glad to...' to make a request-and-offer sound courteous." },
       ],
       speaking: [{
         guestPrompt: "I need a private room for a confidential call in 30 minutes, and I also have a document that must be printed urgently.",
-        targetResponse: "Certainly, sir. I'll reserve our private meeting room for you right away, and if you could send me the document, I would be glad to have it printed immediately.",
+        targetResponse: "Certainly, sir. I'll reserve our private meeting room for you right away. If you could send me the document, I would be glad to help. It will be printed immediately.",
         helpTip: "Stress the key words 'right away' and 'immediately' with a slightly rising then falling tone to sound efficient and reassuring.",
       }],
       reading: {
@@ -858,11 +865,11 @@ export const GR_WEEK_27: WeekContent = {
         { bad: "Just email it, I'll print it whenever.", good: "If you could send me the file now, I would be glad to have it printed right away." },
       ],
       game: [{
-        prompt: "I need a private room for a confidential call in 30 minutes, and I also have a document that must be printed urgently.",
+        prompt: "Could I use the small meeting room right now for a private interview?",
         options: [
-          { text: "Certainly, sir. I'll reserve our private meeting room for you right away, and if you could send me the document, I would be glad to have it printed immediately.", correct: true },
-          { text: "Sorry, we don't have a printer here.", correct: false },
-          { text: "You should have booked earlier.", correct: false },
+          { text: "I'm afraid the room is currently occupied. May I reserve it for you at 2:00 PM instead?", correct: true },
+          { text: "It's busy, so come back later and check again yourself.", correct: false },
+          { text: "You can just use a table in the lobby.", correct: false },
         ],
       }],
     },
@@ -883,7 +890,7 @@ export const GR_WEEK_27: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "By the way, I noticed you remembered I like my coffee black with no sugar. That was really thoughtful.",
-        targetResponse: "Thank you, sir. It has been noted in your profile, so we can make sure every detail is just right for your future stays with us as well.",
+        targetResponse: "Thank you, sir. It has been noted in your profile. We can make sure every detail is just right. Your future stays with us will be the same.",
         helpTip: "Soften the ending with a falling intonation on 'future stays with us' to sound sincere rather than robotic.",
       }],
       reading: {
@@ -898,11 +905,11 @@ export const GR_WEEK_27: WeekContent = {
         { bad: "He wants a firm pillow, whatever.", good: "It has been noted that the guest prefers a firm pillow for future stays." },
       ],
       game: [{
-        prompt: "By the way, I noticed you remembered I like my coffee black with no sugar. That was really thoughtful.",
+        prompt: "We'll be back in October for our wedding anniversary.",
         options: [
-          { text: "Thank you, sir. It has been noted in your profile, so we can make sure every detail is just right for your future stays with us.", correct: true },
-          { text: "Oh, I don't really remember guest preferences.", correct: false },
-          { text: "That's just a coincidence, sir.", correct: false },
+          { text: "How wonderful, madam. It has been noted in your profile for your next stay.", correct: true },
+          { text: "Please remind us again when you arrive in October.", correct: false },
+          { text: "We don't keep records of personal dates here.", correct: false },
         ],
       }],
     },
@@ -1083,6 +1090,9 @@ export const FO_WEEK_26: WeekContent = {
   weekNumber: 26,
   weekTitleEn: "Group & MICE Check-in Management",
   weekTitleVi: "Quản lý Đoàn Khách Tour & Phái Đoàn Doanh Nghiệp (MICE Groups)",
+  // Pulled forward from Phases 0-2 so this week joins the spaced-recycling
+  // system instead of standing outside it.
+  reviewWords: ["Check in", "Bellman", "Luggage", "Lobby", "Confirm the details", "Room key", "Settle the bill", "Breakfast buffet"],
   lessons: [
     {
       lessonId: "FO_26_1",
@@ -1101,7 +1111,7 @@ export const FO_WEEK_26: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Here's our group's rooming list. We have 25 rooms booked under Sunrise Travel.",
-        targetResponse: "Thank you. Let's go through the list together to confirm each guest name and room type before we start check-in.",
+        targetResponse: "Thank you. Let's go through the list together. We'll confirm each guest name and room type before we start check-in.",
         helpTip: "Link the words smoothly in 'check-in' — /ˈtʃɛk ɪn/ — so it does not sound like two separate words.",
       }],
       reading: {
@@ -1116,11 +1126,11 @@ export const FO_WEEK_26: WeekContent = {
         { bad: "Tell me the numbers now.", good: "Could you confirm the final headcount for us, please?" },
       ],
       game: [{
-        prompt: "Here's our group's rooming list. We have 25 rooms booked under Sunrise Travel.",
+        prompt: "Our booking says 30 rooms, but your screen shows only 28.",
         options: [
-          { text: "Thank you. Let's go through the list together to confirm each guest name and room type.", correct: true },
-          { text: "This list is wrong.", correct: false },
-          { text: "Give me the final numbers.", correct: false },
+          { text: "I've noticed a small discrepancy, sir. Could we double-check the list together?", correct: true },
+          { text: "Our system is never wrong, so 28 is the correct number.", correct: false },
+          { text: "You'll have to call your travel agent about that.", correct: false },
         ],
       }],
     },
@@ -1141,7 +1151,7 @@ export const FO_WEEK_26: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "We're in a hurry — our group has a meeting in twenty minutes. Can we skip the long check-in?",
-        targetResponse: "Of course. We've prepared an express check-in with key packets ready for each guest, so you can go straight to your rooms.",
+        targetResponse: "Of course. We've prepared an express check-in for your group. Key packets are ready for each guest. You can go straight to your rooms.",
         helpTip: "Stress the first syllable in 'express' and link 'go straight to' smoothly without pausing between words.",
       }],
       reading: {
@@ -1156,11 +1166,11 @@ export const FO_WEEK_26: WeekContent = {
         { bad: "Leave your bags there.", good: "You may leave your luggage here — our bellman will bring it up shortly." },
       ],
       game: [{
-        prompt: "We're in a hurry — our group has a meeting in twenty minutes. Can we skip the long check-in?",
+        prompt: "Our coach has just arrived. Who will take fifty suitcases up to the rooms?",
         options: [
-          { text: "Of course. We've prepared an express check-in, so you can go straight to your rooms.", correct: true },
-          { text: "You wait here for check-in.", correct: false },
-          { text: "Bags come later.", correct: false },
+          { text: "Let me coordinate with our bellman team. Your luggage will be delivered to each room shortly.", correct: true },
+          { text: "Each guest carries their own bags to the lift.", correct: false },
+          { text: "Leave them in the lobby and check on them later.", correct: false },
         ],
       }],
     },
@@ -1176,12 +1186,12 @@ export const FO_WEEK_26: WeekContent = {
         { word: "Adjust", phonetic: "/əˈdʒʌst/", definition: "Điều chỉnh", context: "I will adjust the folio for you right away.", icon: "🛠️" },
       ],
       grammar: [
-        { rude: "You can't change rooms now.", polite: "I'm afraid room changes need a quick update in our system, but I can arrange that for you now.", rule: "Use 'I'm afraid...' to soften a limitation before offering a solution." },
+        { rude: "You can't change rooms now.", polite: "I'm afraid room changes need a quick update in our system. I can arrange that for you now.", rule: "Use 'I'm afraid...' to soften a limitation before offering a solution." },
         { rude: "I can't split it.", polite: "If you would like, I can set up two separate folios for individual billing.", rule: "Use a conditional 'If you would like, I can...' to offer options politely." },
       ],
       speaking: [{
         guestPrompt: "Actually, my colleague and I would like to swap our rooms, and could you split our bill into two separate ones?",
-        targetResponse: "No problem at all. I'm afraid I'll just need a moment to update it in our system, and then I can set up two separate folios for you.",
+        targetResponse: "No problem at all. I'm afraid I'll just need a moment to update it in our system. Then I can set up two separate folios for you.",
         helpTip: "Use a warm, falling intonation on 'No problem at all' so it sounds reassuring rather than routine.",
       }],
       reading: {
@@ -1196,11 +1206,11 @@ export const FO_WEEK_26: WeekContent = {
         { bad: "One bill only.", good: "If you would like, I can split this into two separate bills." },
       ],
       game: [{
-        prompt: "Actually, my colleague and I would like to swap our rooms, and could you split our bill into two separate ones?",
+        prompt: "Our company covers the room only. Can my minibar go on a separate bill?",
         options: [
-          { text: "No problem at all. I'll update it and set up two separate folios for you.", correct: true },
-          { text: "You can't change rooms now.", correct: false },
-          { text: "I can't split it.", correct: false },
+          { text: "If you would like, I can set up two separate folios for individual billing.", correct: true },
+          { text: "No, everything stays on one bill for the company.", correct: false },
+          { text: "Sort that out with your company after check-out.", correct: false },
         ],
       }],
     },
@@ -1221,7 +1231,7 @@ export const FO_WEEK_26: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Could you let our group know about tomorrow's schedule before we head up to our rooms?",
-        targetResponse: "Of course. Please note that group breakfast will be served at 7:00 AM, and the shuttle bus departs the lobby at 8:00 AM sharp.",
+        targetResponse: "Of course. Please note that group breakfast will be served at 7:00 AM. The shuttle bus departs the lobby at 8:00 AM sharp.",
         helpTip: "Enunciate 'seven' and 'eight' clearly and pause briefly between the two times so the group does not confuse them.",
       }],
       reading: {
@@ -1236,11 +1246,11 @@ export const FO_WEEK_26: WeekContent = {
         { bad: "Hurry up for the bus.", good: "Would you mind reminding your group to be ready five minutes early?" },
       ],
       game: [{
-        prompt: "Could you let our group know about tomorrow's schedule before we head up to our rooms?",
+        prompt: "Some of my group are always late. Can you help me with the bus?",
         options: [
-          { text: "Please note that breakfast is at 7:00 AM, and the shuttle departs the lobby at 8:00 AM sharp.", correct: true },
-          { text: "Listen up, breakfast is at 7.", correct: false },
-          { text: "Don't be late for the bus.", correct: false },
+          { text: "Would you mind reminding your group to be at the lobby five minutes before departure?", correct: true },
+          { text: "That's your job as the tour leader, not ours.", correct: false },
+          { text: "The bus will simply leave without them.", correct: false },
         ],
       }],
     },
@@ -2093,18 +2103,40 @@ export const BO_WEEK_38: WeekContent = {
   ],
 };
 
+/** The Phase 2 overrides, named once so the recycling pool below and the
+ *  registry itself cannot drift apart. */
+const P2_OVERRIDES: Record<string, WeekContent> = {
+  "FB-15": FB_WEEK_15,
+  "HK-15": HK_WEEK_15,
+  "FO-17": FO_WEEK_17,
+  "SW-19": SW_WEEK_19,
+};
+
+/** Everything a department met in Phases 0-2 — the pool Phase 3 walks
+ *  across weeks 23-29. Declared here, not at the top of the file, because
+ *  it reads the hand-authored week constants above. */
+const PRIOR_WORDS_THROUGH_P2_BY_DEP: Record<string, string[]> = (() => {
+  const p2 = phase2WordsByDep(P2_OVERRIDES);
+  const out: Record<string, string[]> = {};
+  for (const code of Object.keys(PRIOR_WORDS_BY_DEP)) {
+    out[code] = [...PRIOR_WORDS_BY_DEP[code], ...(p2[code] ?? [])];
+  }
+  return out;
+})();
+
 // Registry — keyed by `${DEP}-${week}`.
 // Order matters: the hand-authored weeks are spread LAST so they win
 // over the Phase 2 spine for the four slots they occupy (FB-15, HK-15,
-// FO-17, SW-19) — see the note at the top of phase2.ts.
+// FO-17, SW-19) and the three in Phase 3 (SW-23, FO-26, GR-27) — see the
+// notes at the top of phase2.ts and phase3.ts.
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
-  ...buildPhase2(PRIOR_WORDS_BY_DEP, {
-    "FB-15": FB_WEEK_15,
-    "HK-15": HK_WEEK_15,
-    "FO-17": FO_WEEK_17,
-    "SW-19": SW_WEEK_19,
+  ...buildPhase2(PRIOR_WORDS_BY_DEP, P2_OVERRIDES),
+  ...buildPhase3(PRIOR_WORDS_THROUGH_P2_BY_DEP, {
+    "SW-23": SW_WEEK_23,
+    "FO-26": FO_WEEK_26,
+    "GR-27": GR_WEEK_27,
   }),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,

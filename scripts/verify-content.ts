@@ -42,6 +42,10 @@ const PHASES: Phase[] = [
   // The floor sits below the ~77% the spine actually delivers because
   // week 22 is a checkpoint and leans harder on shared evaluative words.
   { name: "P2 A2.1", from: 15, to: 22, wordCap: 12, vocabMin: 12, vocabMax: 16, reviewPct: 0.3, deptSpecificMin: 0.65 },
+  // A2+ — the department now acts on its own initiative. Sentence cap
+  // rises to 16 words so a two-clause conditional offer fits, and the
+  // recycling quota rises to 35%.
+  { name: "P3 A2+", from: 23, to: 30, wordCap: 16, vocabMin: 14, vocabMax: 16, reviewPct: 0.35, deptSpecificMin: 0.65 },
 ];
 
 /** Weeks 15+ are the hand-authored A2-B1 payloads; they predate the matrix
