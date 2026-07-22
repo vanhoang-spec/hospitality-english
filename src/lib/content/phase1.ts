@@ -1296,7 +1296,7 @@ function week14(lx: Ctx): LessonContent[] {
 
     lesson(lx, 14, 2, "Take the Request", "Tiếp nhận yêu cầu", {
       vocabulary: [
-        v("Right away", "/raɪt əˈweɪ/", "Ngay lập tức", "I will do it right away.", "⚡"),
+        v("Quickly", "/ˈkwɪkli/", "Nhanh chóng", "I will do it quickly.", "⚡"),
         bw(c2, `Please leave the ${lower(c2)} here.`),
         bw(c6, `The ${lower(c6)} is ready, sir.`),
       ],
@@ -1491,6 +1491,18 @@ export function buildPhase1(phase0WordsByDep: Record<string, string[]>): Record<
     const lx: Ctx = { ...base, bank: P1_BANKS[code] };
     const p0 = phase0WordsByDep[code] ?? [];
     for (let w = 7; w <= 14; w++) out[`${code}-${w}`] = buildWeek(lx, w, p0);
+  }
+  return out;
+}
+
+/** Every Phase 1 headword a department met, in teaching order — the
+ *  medium-spacing pool Phase 2 recycles from. */
+export function phase1WordsByDep(): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const [code, base] of Object.entries(LEXICONS)) {
+    const lx: Ctx = { ...base, bank: P1_BANKS[code] };
+    out[code] = [];
+    for (let w = 7; w <= 14; w++) out[code].push(...headwordsOf(lx, w));
   }
   return out;
 }

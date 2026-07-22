@@ -263,7 +263,10 @@ const HK_BANK: P1Bank = {
     { word: "Vacuum", phonetic: "/ˈvækjuːm/", definition: "Hút bụi", icon: "🧹" },
     { word: "Mop", phonetic: "/mɒp/", definition: "Lau sàn", icon: "🧽" },
     { word: "Dust", phonetic: "/dʌst/", definition: "Lau bụi", icon: "🪶" },
-    { word: "Change", phonetic: "/tʃeɪndʒ/", definition: "Thay (đồ vải)", icon: "🔄" },
+    // "Change the linen", not bare "Change" — week 4 already teaches
+    // "Change" meaning money given back, and one headword must not carry
+    // two unrelated meanings for the same learner.
+    { word: "Change the linen", phonetic: "/tʃeɪndʒ ðə ˈlɪnɪn/", definition: "Thay đồ vải", icon: "🔄" },
     { word: "Refill", phonetic: "/ˌriːˈfɪl/", definition: "Bổ sung đầy lại", icon: "🧴" },
     { word: "Collect", phonetic: "/kəˈlekt/", definition: "Thu gom", icon: "🗑️" },
     { word: "Check the room", phonetic: "/tʃek ðə ruːm/", definition: "Kiểm tra phòng", icon: "🔍" },
@@ -512,7 +515,8 @@ const BO_BANK: P1Bank = {
   states: [
     { word: "Correct", phonetic: "/kəˈrekt/", definition: "Chính xác", icon: "✔️" },
     { word: "Urgent", phonetic: "/ˈɜːdʒənt/", definition: "Gấp", icon: "🚨" },
-    { word: "Ready", phonetic: "/ˈredi/", definition: "Đã sẵn sàng", icon: "✅" },
+    // "Ready" is already taught in the week-6 checkpoint for every team.
+    { word: "Finalised", phonetic: "/ˈfaɪnəlaɪzd/", definition: "Đã chốt xong", icon: "✅" },
     { word: "Unpaid", phonetic: "/ˌʌnˈpeɪd/", definition: "Chưa thanh toán", icon: "💸" },
     { word: "Cheap", phonetic: "/tʃiːp/", definition: "Rẻ", icon: "🪙" },
     { word: "Expensive", phonetic: "/ɪkˈspensɪv/", definition: "Đắt", icon: "💎" },

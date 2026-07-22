@@ -124,7 +124,29 @@ Phase 0 chỉ lấy 6 từ gần nhất — cách đó mãi mãi chỉ ôn lại
 
 ## Phase 2 — A2.1 (tuần 15–22): Nghiệp vụ chuẩn (Core SOP)
 
-Từ phase này, chủ đề tách hẳn theo bộ phận (cột "Slot chủ đề" bên dưới). Xương sống chung:
+### Khác biệt hoá ~77% — chỉ còn chức năng ngôn ngữ là chung
+
+P1 chạy 70/30. P2 đẩy lên **~77% riêng** (đo được 76–87%/tuần): chủ đề và mọi từ nội dung
+thuộc về bộ phận, chỉ **chức năng ngôn ngữ** còn dùng chung (một quy trình, một lời mời, một
+nội quy, một báo cáo quá khứ). Ngân hàng từ ở `src/lib/content/phase2-lexicon.ts` —
+8 chủ đề × 10 từ + 10 từ wrapUp = **78 headword riêng mỗi bộ phận**.
+
+Bước tiến ngôn ngữ so với A1: câu được phép **2 mệnh đề** (trần 12 từ, A1 là 8 từ/1 mệnh đề);
+speaking thành **hội thoại 2 lượt**; **quá khứ đơn** xuất hiện ở tuần 21 — lần đầu học viên
+báo cáo việc đã làm, đúng thứ một ca bàn giao thực sự cần.
+
+### Bốn tuần viết tay nằm sẵn trong khoảng này
+
+FB-15, HK-15, FO-17, SW-19 là nội dung viết tay có trước ma trận. Chúng **khớp đúng chức năng
+của slot** đang đứng (tuần 15 = quy trình từng bước → SOP buffet và room service; tuần 19 =
+nội quy an toàn → an toàn hồ bơi), nên được **giữ lại và ghi đè spine**: `week-content.ts`
+spread `buildPhase2()` TRƯỚC các hằng số viết tay.
+
+Khi nhập chúng vào chuẩn P2 đã phải: tách 15 câu vượt trần 12 từ thành câu ngắn (giữ nguyên
+nội dung), thêm `reviewWords` (trước đó bằng 0 — chúng đứng ngoài hệ thống ôn xoáy vòng), và
+viết lại 16 game round vốn sao chép nguyên văn câu speaking.
+
+### Xương sống chung
 
 | Tuần | Chức năng ngôn ngữ chung | Ngữ pháp mới |
 |---|---|---|

@@ -4,7 +4,19 @@
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
-import { buildPhase1 } from "./phase1";
+import { buildPhase1, phase1WordsByDep } from "./phase1";
+import { buildPhase2 } from "./phase2";
+
+/** Everything a department met in Phases 0-1, in teaching order — the
+ *  long-spacing recycling pool Phase 2 draws on. */
+const PRIOR_WORDS_BY_DEP: Record<string, string[]> = (() => {
+  const p1 = phase1WordsByDep();
+  const out: Record<string, string[]> = {};
+  for (const code of Object.keys(PHASE0_WORDS_BY_DEP)) {
+    out[code] = [...PHASE0_WORDS_BY_DEP[code], ...(p1[code] ?? [])];
+  }
+  return out;
+})();
 
 export type VocabItem = {
   word: string;
@@ -52,6 +64,9 @@ export const FO_WEEK_17: WeekContent = {
   weekNumber: 17,
   weekTitleEn: "Standard Check-in & OTA Booking Verification",
   weekTitleVi: "Quy trình Đón tiếp & Check-in Khách Lẻ",
+  // Pulled forward from Phases 0-1 so this week joins the spaced-recycling
+  // system instead of standing outside it.
+  reviewWords: ["Passport", "Form", "Room", "Signature", "Check in", "Receipt", "Register", "Luggage"],
   lessons: [
     {
       lessonId: "FO_17_1",
@@ -85,7 +100,7 @@ export const FO_WEEK_17: WeekContent = {
         { bad: "Sit there.", good: "Please take a seat in the lobby." },
       ],
       game: [{
-        prompt: "Hello, I have a booking under the name of David Green.",
+        prompt: "Good evening. I have a reservation for tonight.",
         options: [
           { text: "May I have your name, please?", correct: true },
           { text: "Give me your name.", correct: false },
@@ -125,7 +140,7 @@ export const FO_WEEK_17: WeekContent = {
         { bad: "Sign name here.", good: "Could you please sign your name here?" },
       ],
       game: [{
-        prompt: "Sure, here is my passport. Do you need to keep it?",
+        prompt: "Will you be holding on to my passport for long?",
         options: [
           { text: "I just need to keep it briefly for local registration, sir.", correct: true },
           { text: "Give passport now.", correct: false },
@@ -165,7 +180,7 @@ export const FO_WEEK_17: WeekContent = {
         { bad: "Minibar is not free.", good: "The deposit covers incidental charges like the minibar." },
       ],
       game: [{
-        prompt: "Why do you need my credit card if the room is already paid?",
+        prompt: "What is this extra hold on my card for?",
         options: [
           { text: "This is just a temporary deposit for incidental charges, ma'am.", correct: true },
           { text: "Minibar is not free.", correct: false },
@@ -205,7 +220,7 @@ export const FO_WEEK_17: WeekContent = {
         { bad: "Take key and go.", good: "Here is your keycard, your room is on the fifth floor." },
       ],
       game: [{
-        prompt: "Thank you. What time is breakfast served tomorrow morning?",
+        prompt: "We have an early flight. When does breakfast open?",
         options: [
           { text: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.", correct: true },
           { text: "Go to first floor and eat from 6 to 10.", correct: false },
@@ -221,6 +236,7 @@ export const FB_WEEK_15: WeekContent = {
   weekNumber: 15,
   weekTitleEn: "Breakfast Buffet Welcoming & Station Mapping",
   weekTitleVi: "Điều Phối & Đón Tiếp Tại Nhà Hàng Buffet Sáng",
+  reviewWords: ["Menu", "Table", "Serve", "Plate", "Fresh", "Booking", "Dining room", "Glass"],
   lessons: [
     {
       lessonId: "FB_15_1",
@@ -254,7 +270,7 @@ export const FB_WEEK_15: WeekContent = {
         { bad: "You're not on my list.", good: "I'm sorry, I can't find your name yet — could you give me one moment?" },
       ],
       game: [{
-        prompt: "Good morning. We're staying in room 512, is breakfast included?",
+        prompt: "Hi, we would like breakfast. We are in room 306.",
         options: [
           { text: "Good morning, and welcome. May I just check your room number on our list, please?", correct: true },
           { text: "Room number?", correct: false },
@@ -275,7 +291,7 @@ export const FB_WEEK_15: WeekContent = {
       ],
       grammar: [
         { rude: "Wait there.", polite: "Would you mind waiting here for just a moment, sir?", rule: "Use 'Would you mind...?' to turn a command into an indirect, polite request." },
-        { rude: "Table's not ready.", polite: "Your table is being prepared right now, it will only take a few minutes.", rule: "Use the passive voice ('is being prepared') to sound professional and avoid blame." },
+        { rude: "Table's not ready.", polite: "Your table is being prepared now. It will take a few minutes.", rule: "Use the passive voice ('is being prepared') to sound professional and avoid blame." },
       ],
       speaking: [{
         guestPrompt: "There are no tables free right now. How long do we have to wait?",
@@ -294,7 +310,7 @@ export const FB_WEEK_15: WeekContent = {
         { bad: "Stand there.", good: "Please wait in this area, a table will be ready shortly." },
       ],
       game: [{
-        prompt: "There are no tables free right now. How long do we have to wait?",
+        prompt: "Everything looks full. Should we come back later?",
         options: [
           { text: "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes?", correct: true },
           { text: "No table. Wait.", correct: false },
@@ -319,7 +335,7 @@ export const FB_WEEK_15: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "This is our first time here — where can we find something hot to eat?",
-        targetResponse: "Let me show you. Our live station over there serves hot Phở and eggs, and the bakery corner is right next to it.",
+        targetResponse: "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
         helpTip: "Practice linking 'show' and 'you' so they blend smoothly into 'show-you'.",
       }],
       reading: {
@@ -334,9 +350,9 @@ export const FB_WEEK_15: WeekContent = {
         { bad: "Coffee, that way.", good: "You'll find the coffee and juice area just next to the bakery corner." },
       ],
       game: [{
-        prompt: "This is our first time here — where can we find something hot to eat?",
+        prompt: "We cannot find the hot food. Could you point us there?",
         options: [
-          { text: "Let me show you. Our live station serves hot Phở and eggs, and the bakery corner is right next to it.", correct: true },
+          { text: "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.", correct: true },
           { text: "Food is over there.", correct: false },
           { text: "I don't know, look around.", correct: false },
         ],
@@ -374,7 +390,7 @@ export const FB_WEEK_15: WeekContent = {
         { bad: "Food good?", good: "I hope you're enjoying your breakfast, is everything to your liking?" },
       ],
       game: [{
-        prompt: "We're all finished, thank you. The food was lovely.",
+        prompt: "That was delicious, thank you. We are done now.",
         options: [
           { text: "I'm so glad to hear that. Would you like me to clear your plates for you?", correct: true },
           { text: "Finished? Give plate.", correct: false },
@@ -390,6 +406,7 @@ export const HK_WEEK_15: WeekContent = {
   weekNumber: 15,
   weekTitleEn: "Room Service Requests & Extra Amenities",
   weekTitleVi: "Quy Trình Giao Tiếp Phòng Khách & Phục Vụ Tiện Ích",
+  reviewWords: ["Towel", "Soap", "Pillow", "Clean", "Guest room", "Request", "Right away", "Make the bed"],
   lessons: [
     {
       lessonId: "HK_15_1",
@@ -423,7 +440,7 @@ export const HK_WEEK_15: WeekContent = {
         { bad: "I'm coming in.", good: "Excuse me, is now a good time to service the room?" },
       ],
       game: [{
-        prompt: "Oh, sorry, I'm still in the room. Can you come back later?",
+        prompt: "Hello? I am just getting dressed. Could you wait?",
         options: [
           { text: "Of course, ma'am. I'm sorry to disturb you. I will come back later.", correct: true },
           { text: "No problem, I will just clean quickly now.", correct: false },
@@ -448,7 +465,7 @@ export const HK_WEEK_15: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
-        targetResponse: "Certainly, sir. I will send two extra towels and a razor to room 812 right away.",
+        targetResponse: "Certainly, sir. I will send two extra towels and a razor. They will arrive right away.",
         helpTip: "Practice linking 'send up' smoothly — connect the 'd' straight into the 'u' sound.",
       }],
       reading: {
@@ -463,9 +480,9 @@ export const HK_WEEK_15: WeekContent = {
         { bad: "Wait there, I'm busy.", good: "I will bring that to your room right away." },
       ],
       game: [{
-        prompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
+        prompt: "Could you send up some towels and a razor, please?",
         options: [
-          { text: "Certainly, sir. I will send two extra towels and a razor to room 812 right away.", correct: true },
+          { text: "Certainly, sir. I will send two extra towels and a razor. They will arrive right away.", correct: true },
           { text: "What do you want them for?", correct: false },
           { text: "Wait there, I'm busy right now.", correct: false },
         ],
@@ -503,7 +520,7 @@ export const HK_WEEK_15: WeekContent = {
         { bad: "That costs more money.", good: "Please note there is a small extra charge for this service." },
       ],
       game: [{
-        prompt: "My son is joining us tonight. Do you have an extra bed we could use?",
+        prompt: "My nephew arrives tonight. Can we add another bed?",
         options: [
           { text: "Certainly, sir. We can set up a rollaway bed in your room, with a small extra charge per night.", correct: true },
           { text: "You want a bed or not?", correct: false },
@@ -523,12 +540,12 @@ export const HK_WEEK_15: WeekContent = {
         { word: "Slip under the door", phonetic: "/slɪp ˈʌndər ðə dɔːr/", definition: "Nhét đồ/giấy qua khe cửa", context: "I will slip a note under the door instead.", icon: "✉️" },
       ],
       grammar: [
-        { rude: "Wake up, we need to clean.", polite: "I'm sorry to disturb you, but could I check if you need housekeeping later?", rule: "Apologize first with 'I'm sorry to disturb you, but...' before making a request." },
-        { rude: "You have to open the door now.", polite: "Whenever it's convenient, could you please let us know when we may service the room?", rule: "Use 'Whenever it's convenient...' to give the guest control over timing." },
+        { rude: "Wake up, we need to clean.", polite: "I'm sorry to disturb you. Could I check if you need housekeeping later?", rule: "Apologize first with 'I'm sorry to disturb you, but...' before making a request." },
+        { rude: "You have to open the door now.", polite: "Whenever it's convenient, please let us know. When may we service the room?", rule: "Use 'Whenever it's convenient...' to give the guest control over timing." },
       ],
       speaking: [{
         guestPrompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
-        targetResponse: "No problem at all, sir. Would now be a good time for us to clean the room, or shall we come back later?",
+        targetResponse: "No problem at all, sir. Would now be a good time to clean? Or shall we come back later?",
         helpTip: "Let your tone rise gently on 'later' so it sounds like a genuine question, not a command.",
       }],
       reading: {
@@ -543,9 +560,9 @@ export const HK_WEEK_15: WeekContent = {
         { bad: "You have to open the door now.", good: "Whenever it's convenient, could you let us know when we may service the room?" },
       ],
       game: [{
-        prompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
+        prompt: "Sorry, the sign has been up since yesterday by mistake.",
         options: [
-          { text: "No problem at all, sir. Would now be a good time for us to clean the room, or shall we come back later?", correct: true },
+          { text: "No problem at all, sir. Would now be a good time to clean? Or shall we come back later?", correct: true },
           { text: "You have to open the door now.", correct: false },
           { text: "You should not have that sign up.", correct: false },
         ],
@@ -1573,6 +1590,7 @@ export const SW_WEEK_19: WeekContent = {
   weekNumber: 19,
   weekTitleEn: "Pool & Private Cabana Elite Service",
   weekTitleVi: "Điều Phối Khu Vực Hồ Bơi/Bãi Biển & Cảnh Báo An Toàn",
+  reviewWords: ["Locker", "Robe", "Swimming pool", "Bath towel", "Slippery", "Pool attendant", "Shower", "Appointment"],
   lessons: [
     {
       lessonId: "SW_19_1",
@@ -1586,12 +1604,12 @@ export const SW_WEEK_19: WeekContent = {
         { word: "Key card", phonetic: "/kiː kɑːrd/", definition: "Thẻ chìa khóa", context: "This key card opens both your locker and the private cabana.", icon: "🗝️" },
       ],
       grammar: [
-        { rude: "Towels are over there.", polite: "Could you please help yourself to fresh towels at the station just past the pool bar?", rule: "Use 'Could you please...' to turn a plain direction into a polite invitation." },
+        { rude: "Towels are over there.", polite: "Fresh towels are at the station past the pool bar. Please help yourself.", rule: "Use 'Could you please...' to turn a plain direction into a polite invitation." },
         { rude: "Use your key for the locker.", polite: "Your room key card will open the locker for you.", rule: "Use passive/future statements ('will open') to give directions in a neutral, informative tone." },
       ],
       speaking: [{
         guestPrompt: "Where can I get a towel, and do you have private cabanas?",
-        targetResponse: "Of course! You'll find fresh towels at the towel station right over there, and I'd be happy to show you to a private cabana.",
+        targetResponse: "Of course! Fresh towels are at the station over there. I would be happy to show you a private cabana.",
         helpTip: "Link 'towel station' smoothly as one phrase — don't pause between the two words.",
       }],
       reading: {
@@ -1606,9 +1624,9 @@ export const SW_WEEK_19: WeekContent = {
         { bad: "Use your key for the locker.", good: "Your room key card will open the locker for you." },
       ],
       game: [{
-        prompt: "Where can I get a towel, and do you have private cabanas?",
+        prompt: "Is there somewhere to get towels and a shaded seat?",
         options: [
-          { text: "Of course! You'll find fresh towels at the towel station right over there, and I'd be happy to show you to a private cabana.", correct: true },
+          { text: "Of course! Fresh towels are at the station over there. I would be happy to show you a private cabana.", correct: true },
           { text: "Towels are over there, and cabanas are full today.", correct: false },
           { text: "I'm not sure, please ask another staff member.", correct: false },
         ],
@@ -1626,12 +1644,12 @@ export const SW_WEEK_19: WeekContent = {
         { word: "Lifeguard", phonetic: "/ˈlaɪfɡɑːrd/", definition: "Nhân viên cứu hộ", context: "Our lifeguard is on duty from 7 a.m. to 7 p.m.", icon: "🛟" },
       ],
       grammar: [
-        { rude: "Your kid needs an adult with him.", polite: "I'm afraid children under 12 must be accompanied by an adult in the pool area.", rule: "Use 'I'm afraid...' to soften the delivery of a mandatory rule." },
+        { rude: "Your kid needs an adult with him.", polite: "I'm afraid children under 12 must be with an adult. That applies in the pool area.", rule: "Use 'I'm afraid...' to soften the delivery of a mandatory rule." },
         { rude: "You can't wear that in the pool.", polite: "Would you mind changing into proper swimwear before entering the pool, please?", rule: "Use 'Would you mind + verb-ing...?' to politely request a change in behavior." },
       ],
       speaking: [{
         guestPrompt: "My son is 8. Can he swim by himself while I relax here?",
-        targetResponse: "I'm afraid children under 12 must be accompanied by an adult in the water, sir. Our lifeguard is also on duty to help.",
+        targetResponse: "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
         helpTip: "Stress the words 'under 12' clearly so the guest understands the exact age policy.",
       }],
       reading: {
@@ -1646,9 +1664,9 @@ export const SW_WEEK_19: WeekContent = {
         { bad: "Watch your kid.", good: "Could you please keep a close eye on your child while he's in the water?" },
       ],
       game: [{
-        prompt: "My son is 8. Can he swim by himself while I relax here?",
+        prompt: "My daughter is 9. May she go in the water alone?",
         options: [
-          { text: "I'm afraid children under 12 must be accompanied by an adult in the water, sir. Our lifeguard is also on duty to help.", correct: true },
+          { text: "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.", correct: true },
           { text: "Sure, no problem, just relax.", correct: false },
           { text: "Kids can't swim here at all.", correct: false },
         ],
@@ -1667,11 +1685,11 @@ export const SW_WEEK_19: WeekContent = {
       ],
       grammar: [
         { rude: "The sea is too dangerous today.", polite: "For your safety, swimming is not recommended today due to rough sea conditions.", rule: "Use 'For your safety, ...' to open a warning in a caring, non-alarming tone." },
-        { rude: "You can't swim, the flag is red.", polite: "I'm sorry, sir, but guests are not permitted to enter the water while the red flag is displayed.", rule: "Use passive voice ('are not permitted') instead of 'can't' to state a rule formally." },
+        { rude: "You can't swim, the flag is red.", polite: "I'm sorry, sir. Guests may not enter the water now. The red flag is displayed.", rule: "Use passive voice ('are not permitted') instead of 'can't' to state a rule formally." },
       ],
       speaking: [{
         guestPrompt: "The weather looks fine to me. Why can't I go swimming?",
-        targetResponse: "I understand, sir. For your safety, the sea is too rough today, and the red flag is up, so guests are not permitted to swim.",
+        targetResponse: "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
         helpTip: "Keep your pitch gentle and falling on 'I understand, sir' so the warning sounds caring, not commanding.",
       }],
       reading: {
@@ -1686,9 +1704,9 @@ export const SW_WEEK_19: WeekContent = {
         { bad: "Stay out, red flag's up.", good: "I'm sorry, but the red flag means guests are not permitted to swim right now." },
       ],
       game: [{
-        prompt: "The weather looks fine to me. Why can't I go swimming?",
+        prompt: "Other guests are in the water. Why can't we swim?",
         options: [
-          { text: "I understand, sir. For your safety, the sea is too rough today, and the red flag is up, so guests are not permitted to swim.", correct: true },
+          { text: "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.", correct: true },
           { text: "Rules are rules, no swimming today.", correct: false },
           { text: "The weather is fine, you can swim if you want.", correct: false },
         ],
@@ -1707,11 +1725,11 @@ export const SW_WEEK_19: WeekContent = {
       ],
       grammar: [
         { rude: "Sit down, you're sick.", polite: "Let's get you into the shade and have a seat right away, sir.", rule: "Use 'Let's...' to join the guest in taking action, sounding caring rather than commanding." },
-        { rude: "Drink water, you're dehydrated.", polite: "Please try to drink some water slowly — I'll bring you a cool towel as well.", rule: "Use 'Please try to...' plus a reassuring follow-up to guide a guest gently during an emergency." },
+        { rude: "Drink water, you're dehydrated.", polite: "Please try to drink some water slowly. I will bring you a cool towel.", rule: "Use 'Please try to...' plus a reassuring follow-up to guide a guest gently during an emergency." },
       ],
       speaking: [{
         guestPrompt: "I feel really dizzy and my leg is cramping.",
-        targetResponse: "Let's get you into the shade right away, sir. Please try to sit down slowly — I'll bring water and call our first-aid team now.",
+        targetResponse: "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
         helpTip: "Speak slowly and lower your pitch slightly — a calm voice reassures a guest who feels unwell.",
       }],
       reading: {
@@ -1723,12 +1741,12 @@ export const SW_WEEK_19: WeekContent = {
       },
       arcade: [
         { bad: "Sit down, you're sick.", good: "Let's get you into the shade and have a seat right away, sir." },
-        { bad: "Drink water, you're dehydrated.", good: "Please try to drink some water slowly — I'll bring you a cool towel as well." },
+        { bad: "Drink water, you're dehydrated.", good: "Please try to drink some water slowly. I will bring you a cool towel." },
       ],
       game: [{
-        prompt: "I feel really dizzy and my leg is cramping.",
+        prompt: "I feel very hot and a bit faint right now.",
         options: [
-          { text: "Let's get you into the shade right away, sir. Please try to sit down slowly — I'll bring water and call our first-aid team now.", correct: true },
+          { text: "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.", correct: true },
           { text: "You'll be fine, just keep walking.", correct: false },
           { text: "Please wait here, I'll be back later.", correct: false },
         ],
@@ -2076,9 +2094,13 @@ export const BO_WEEK_38: WeekContent = {
 };
 
 // Registry — keyed by `${DEP}-${week}`.
+// Order matters: the hand-authored weeks are spread LAST so they win
+// over the Phase 2 spine for the four slots they occupy (FB-15, HK-15,
+// FO-17, SW-19) — see the note at the top of phase2.ts.
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
+  ...buildPhase2(PRIOR_WORDS_BY_DEP),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,

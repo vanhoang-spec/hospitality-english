@@ -38,6 +38,10 @@ const PHASES: Phase[] = [
   { name: "P0 pre-A1", from: 1, to: 6, wordCap: 5, vocabMin: 8, vocabMax: 10, reviewPct: 0, deptSpecificMin: 0 },
   // A1 switches to shared frames + department word banks (70/30).
   { name: "P1 A1", from: 7, to: 14, wordCap: 8, vocabMin: 10, vocabMax: 12, reviewPct: 0.3, deptSpecificMin: 0.6 },
+  // A2.1 — only the language function stays shared; topics separate.
+  // The floor sits below the ~77% the spine actually delivers because
+  // week 22 is a checkpoint and leans harder on shared evaluative words.
+  { name: "P2 A2.1", from: 15, to: 22, wordCap: 12, vocabMin: 12, vocabMax: 16, reviewPct: 0.3, deptSpecificMin: 0.65 },
 ];
 
 /** Weeks 15+ are the hand-authored A2-B1 payloads; they predate the matrix
@@ -183,6 +187,37 @@ for (const phase of PHASES) {
 }
 
 // ============================================================
+// GATE 1b — a department must never teach the same headword twice
+// inside the matrix-governed phases. A vocabulary slot spent on a word
+// the learner already has is a slot not spent on new language, and the
+// review scheduler keys on the headword, so the second card also
+// silently overwrites the first one's schedule.
+// ============================================================
+// The four hand-authored weeks that sit inside the Phase 2 range. When a
+// duplicate involves one of them it is normally legitimate spiral work —
+// a survival word from pre-A1 ("Welcome", "Passport") returning in its
+// professional sense — so it is reported rather than blocked.
+const HAND_AUTHORED = new Set(["FB-15", "HK-15", "FO-17", "SW-19"]);
+const spiralIntoLegacy: string[] = [];
+
+for (const dep of DEPS) {
+  const firstSeen = new Map<string, number>();
+  for (let w = 1; w <= 22; w++) {
+    for (const h of headwords(dep, w)) {
+      const key = h.toLowerCase();
+      const earlier = firstSeen.get(key);
+      if (earlier === undefined) {
+        firstSeen.set(key, w);
+      } else if (earlier !== w) {
+        const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
+        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`)) spiralIntoLegacy.push(msg);
+        else errors.push(msg);
+      }
+    }
+  }
+}
+
+// ============================================================
 // GATE 2 — vocabulary that reappears at A2-B1
 // A word taught at pre-A1/A1 and taught AGAIN in that department's
 // A2-B1 weeks is usually fine — spiral revisiting is good practice, and
@@ -195,7 +230,9 @@ const spiralRepeats: string[] = [];
 for (const dep of DEPS) {
   const laterWeeks = new Map<string, number>(); // word -> first A2-B1 week
   for (const [key, wk] of Object.entries(ALL_WEEKS)) {
-    if (!key.startsWith(`${dep}-`) || wk.weekNumber < 15) continue;
+    // Weeks 15-22 are already covered pairwise by gate 1b; this gate
+    // reaches further, into the P3/P4 payloads it does not span.
+    if (!key.startsWith(`${dep}-`) || wk.weekNumber < 23) continue;
     for (const l of wk.lessons)
       for (const item of l.vocabulary) {
         const lower = item.word.toLowerCase();
@@ -256,6 +293,11 @@ for (const n of [...freqBuckets.keys()].sort((a, b) => a - b))
   console.log(`  ${String(n).padStart(2)}x — ${freqBuckets.get(n)} headwords`);
 if (neverRecycled)
   console.log(`  never recycled: ${neverRecycled} (e.g. ${neverRecycledSample.join(", ")})`);
+
+if (spiralIntoLegacy.length) {
+  console.log(`\nSurvival words returning in the hand-authored weeks (${spiralIntoLegacy.length}) — spiral, allowed:`);
+  for (const s of spiralIntoLegacy) console.log("  ~ " + s);
+}
 
 if (spiralRepeats.length) {
   console.log(`\nVocabulary revisited at A2-B1 (${spiralRepeats.length}) — spiral repeats, review if intentional:`);
