@@ -23,7 +23,7 @@ import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
 
 const DEPS = DEPARTMENTS.map((d) => d.code);
-const AUTHORED_MAX = 30;
+const AUTHORED_MAX = 40;
 
 const fails: string[] = [];
 const warns: string[] = [];
@@ -141,6 +141,8 @@ const slugify = (t: string) =>
     P0: { from: 1, to: 6, cap: 5 },
     P1: { from: 7, to: 14, cap: 8 },
     P2: { from: 15, to: 22, cap: 12 },
+    P3: { from: 23, to: 30, cap: 16 },
+    P4: { from: 31, to: 40, cap: 22 },
   };
   const perWeek = new Map<number, number[]>();
 
@@ -165,9 +167,12 @@ const slugify = (t: string) =>
     for (let w = from; w <= to; w++) all.push(...(perWeek.get(w) ?? []));
     return all.reduce((a, b) => a + b, 0) / Math.max(1, all.length);
   };
-  const a0 = phaseAvg(1, 6), a1 = phaseAvg(7, 14), a2 = phaseAvg(15, 22);
-  console.log(`T3 ladder — avg longest sentence: P0 ${a0.toFixed(1)} → P1 ${a1.toFixed(1)} → P2 ${a2.toFixed(1)} words`);
-  if (!(a0 < a1 && a1 < a2)) fail("T3", `difficulty does not rise monotonically: ${a0.toFixed(1)}/${a1.toFixed(1)}/${a2.toFixed(1)}`);
+  const a0 = phaseAvg(1, 6), a1 = phaseAvg(7, 14), a2 = phaseAvg(15, 22), a3 = phaseAvg(23, 30), a4 = phaseAvg(31, 40);
+  const aSeq = [a0, a1, a2, a3, a4];
+  console.log(`T3 ladder — avg longest sentence: ${aSeq.map((a) => a.toFixed(1)).join(" → ")} words (P0→P4)`);
+  for (let i = 1; i < aSeq.length; i++)
+    if (!(aSeq[i - 1] < aSeq[i]))
+      fail("T3", `sentence length regresses from P${i - 1} to P${i}: ${aSeq[i - 1].toFixed(1)} → ${aSeq[i].toFixed(1)}`);
 
   // Vocabulary load should also rise across phases.
   const vocabAvg = (from: number, to: number) => {
@@ -176,8 +181,9 @@ const slugify = (t: string) =>
       if (wk.weekNumber >= from && wk.weekNumber <= to) { sum += wk.lessons.flatMap((l) => l.vocabulary).length; n++; }
     return sum / Math.max(1, n);
   };
-  const v0 = vocabAvg(1, 6), v1 = vocabAvg(7, 14), v2 = vocabAvg(15, 22);
-  console.log(`T3 ladder — avg new vocabulary: P0 ${v0.toFixed(1)} → P1 ${v1.toFixed(1)} → P2 ${v2.toFixed(1)} words/week`);
+  const v0 = vocabAvg(1, 6), v1 = vocabAvg(7, 14), v2 = vocabAvg(15, 22), v3 = vocabAvg(23, 30), v4 = vocabAvg(31, 40);
+  const vSeq = [v0, v1, v2, v3, v4];
+  console.log(`T3 ladder — avg new vocabulary: ${vSeq.map((v) => v.toFixed(1)).join(" → ")} words/week (P0→P4)`);
   if (!(v0 <= v1 && v1 <= v2)) fail("T3", `vocabulary load does not rise: ${v0.toFixed(1)}/${v1.toFixed(1)}/${v2.toFixed(1)}`);
 }
 

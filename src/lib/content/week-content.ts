@@ -6,7 +6,8 @@
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
-import { buildPhase3 } from "./phase3";
+import { buildPhase3, phase3WordsByDep } from "./phase3";
+import { buildPhase4 } from "./phase4";
 
 /** Everything a department met in Phases 0-1, in teaching order — the
  *  long-spacing recycling pool Phase 2 draws on. */
@@ -921,6 +922,9 @@ export const BO_WEEK_37: WeekContent = {
   weekNumber: 37,
   weekTitleEn: "B2B Account Sales & Contract Negotiations",
   weekTitleVi: "Đàm Phán Hợp Đồng Đại Lý Lữ Hành & Doanh Nghiệp (B2B Account Sales)",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["Policy", "Company", "Contact", "Quotation", "Deadline", "Agreed", "Volume discount", "Deposit policy"],
   lessons: [
     {
       lessonId: "BO_37_1",
@@ -954,11 +958,11 @@ export const BO_WEEK_37: WeekContent = {
         { bad: "Sign here now.", good: "Shall we go ahead and finalize the agreement today?" },
       ],
       game: [{
-        prompt: "Your rates look good, but what can you offer for 200 room-nights a month?",
+        prompt: "If we commit to 300 room-nights a month, what more can you do for us?",
         options: [
-          { text: "For that volume, we can offer you our best corporate rate, along with a complimentary upgrade.", correct: true },
+          { text: "At that volume, we could offer an even more competitive rate, plus complimentary breakfast for all your guests.", correct: true },
           { text: "This is the best price, take it.", correct: false },
-          { text: "We don't discuss volume, just book normally.", correct: false },
+          { text: "We don't offer better rates for larger volumes.", correct: false },
         ],
       }],
     },
@@ -994,11 +998,11 @@ export const BO_WEEK_37: WeekContent = {
         { bad: "Tell us fast if you want rooms.", good: "Please confirm your room requirement before the release period ends." },
       ],
       game: [{
-        prompt: "How many rooms can you hold for us, and until when?",
+        prompt: "What happens if we need to confirm rooms after the release period has already passed?",
         options: [
-          { text: "We can allot 10 rooms per night, with a release period of 7 days before arrival.", correct: true },
-          { text: "You lose rooms if you're late.", correct: false },
-          { text: "We don't hold rooms for anyone.", correct: false },
+          { text: "Once the release period ends, we can no longer guarantee the allotment, though I'm happy to check current availability for you.", correct: true },
+          { text: "It doesn't matter, we'll always hold the rooms for you.", correct: false },
+          { text: "You should have confirmed earlier, nothing we can do now.", correct: false },
         ],
       }],
     },
@@ -1034,11 +1038,11 @@ export const BO_WEEK_37: WeekContent = {
         { bad: "Too late, you pay fine.", good: "I'm afraid a penalty fee applies for cancellations made after the 14-day deadline." },
       ],
       game: [{
-        prompt: "What if our client needs to cancel a group booking close to Tet holiday?",
+        prompt: "What about a booking around National Day — does the contract rate still apply then?",
         options: [
-          { text: "I'm afraid Tet falls within our blackout dates, and a penalty fee will apply for late cancellations.", correct: true },
-          { text: "No booking on those days, sorry.", correct: false },
-          { text: "That's not my problem, check the contract yourself.", correct: false },
+          { text: "I'm afraid National Day also falls within our blackout dates, so the standard rate would apply instead of the contract rate.", correct: true },
+          { text: "No, blackout dates are only for Tet.", correct: false },
+          { text: "Don't worry about it, we'll sort it out later.", correct: false },
         ],
       }],
     },
@@ -1074,11 +1078,11 @@ export const BO_WEEK_37: WeekContent = {
         { bad: "Go to the other hotel then.", good: "Let's discuss how we can strengthen this long-term partnership together." },
       ],
       game: [{
-        prompt: "Another hotel is offering us 15% commission. Can you match that, or we'll move our business there?",
+        prompt: "A competitor is offering us a signing bonus too. Can you offer something similar?",
         options: [
-          { text: "I understand your concern, however, what if we offered 12% commission in exchange for a longer, exclusive contract?", correct: true },
-          { text: "No, we won't raise your commission.", correct: false },
-          { text: "Go to the other hotel then, we don't care.", correct: false },
+          { text: "I understand your concern, however, what if we offered a small volume bonus in exchange for extending our long-term partnership?", correct: true },
+          { text: "No, we don't do bonuses.", correct: false },
+          { text: "Go ahead and sign with them then.", correct: false },
         ],
       }],
     },
@@ -1262,6 +1266,9 @@ export const FB_WEEK_31: WeekContent = {
   weekNumber: 31,
   weekTitleEn: "Presenting Local Cuisine & Coffee Culture",
   weekTitleVi: "Quảng Bá Văn Hóa Ẩm Thực Bản Địa (Culinary Storytelling)",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["Menu", "Delicious", "Kitchen", "Chef", "Tasting menu", "Enjoy", "Sweet", "Guest"],
   lessons: [
     {
       lessonId: "FB_31_1",
@@ -1295,11 +1302,11 @@ export const FB_WEEK_31: WeekContent = {
         { bad: "It has beef.", good: "I should mention this dish contains beef, in case that's helpful to know." },
       ],
       game: [{
-        prompt: "This smells wonderful. What exactly is in this Phở?",
+        prompt: "This looks delicious. What's actually in these spring rolls?",
         options: [
-          { text: "Thank you! It's a beef broth simmered for hours with warm spices, served with rice noodles, fresh herbs, and lime.", correct: true },
-          { text: "Just noodles and meat, eat it.", correct: false },
-          { text: "I don't know, ask the chef.", correct: false },
+          { text: "They're filled with pork and vegetables, wrapped in rice paper, and served with a sweet and sour dipping sauce.", correct: true },
+          { text: "Just some meat, try it and see.", correct: false },
+          { text: "I'm not sure, it's a house recipe.", correct: false },
         ],
       }],
     },
@@ -1335,11 +1342,11 @@ export const FB_WEEK_31: WeekContent = {
         { bad: "Wait, it's still dripping.", good: "While the coffee is dripping, please feel free to relax and enjoy the aroma." },
       ],
       game: [{
-        prompt: "I've heard about egg coffee — is that really made with real egg?",
+        prompt: "How long does it actually take to brew coffee with that little metal filter?",
         options: [
-          { text: "Yes, it is! The egg yolk is whisked with condensed milk until light and creamy, then poured over hot coffee.", correct: true },
-          { text: "Yes, just drink it, it's fine.", correct: false },
-          { text: "I'm not sure, it's a strange drink.", correct: false },
+          { text: "The drip filter usually takes four to five minutes, so please feel free to relax while it slowly drips.", correct: true },
+          { text: "It's quick, just wait a second.", correct: false },
+          { text: "I don't really know, I never make it myself.", correct: false },
         ],
       }],
     },
@@ -1375,11 +1382,11 @@ export const FB_WEEK_31: WeekContent = {
         { bad: "We can't guarantee that.", good: "I'm not able to guarantee that completely, but I'll let the kitchen know right away." },
       ],
       game: [{
-        prompt: "I should mention I have a peanut allergy, and my husband doesn't eat gluten.",
+        prompt: "Just so you know, I'm allergic to shellfish, and my daughter is vegetarian.",
         options: [
-          { text: "Thank you so much for letting me know. I'll note both of those and speak with the kitchen right away.", correct: true },
-          { text: "Are you allergic to anything?", correct: false },
-          { text: "Okay, just don't eat the peanuts then.", correct: false },
+          { text: "Thank you for telling me. I'll make a note of both and check with the kitchen to keep your dishes completely safe.", correct: true },
+          { text: "Okay, just avoid the seafood dishes yourselves.", correct: false },
+          { text: "That's fine, don't worry about it.", correct: false },
         ],
       }],
     },
@@ -1415,11 +1422,11 @@ export const FB_WEEK_31: WeekContent = {
         { bad: "Everyone likes this one.", good: "This is one of our most loved dishes, and it might suit your taste perfectly." },
       ],
       game: [{
-        prompt: "We love spicy food and fresh seafood — what would you recommend for us?",
+        prompt: "We're vegetarian, but we'd still love something special tonight. Any ideas?",
         options: [
-          { text: "In that case, I'd suggest our signature grilled squid with chili lime sauce — it's spicy, fresh, and a real favorite.", correct: true },
-          { text: "You should get this, everyone likes it.", correct: false },
-          { text: "I don't know, pick anything from the menu.", correct: false },
+          { text: "For a memorable vegetarian dish, I'd recommend our stir-fried morning glory with tofu — it's fresh, flavorful, and a real favorite.", correct: true },
+          { text: "We don't have much for vegetarians, sorry.", correct: false },
+          { text: "Just get the salad, it's fine.", correct: false },
         ],
       }],
     },
@@ -1431,6 +1438,9 @@ export const HK_WEEK_33: WeekContent = {
   weekNumber: 33,
   weekTitleEn: "Express Laundry Service & Damage Disputes",
   weekTitleVi: "Dịch Vụ Giặt Là Cao Cấp & Tranh Chấp Đồ Vải",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["Torn", "Damaged", "Disappointed", "Concern", "Charge", "Check", "Complimentary", "Extra charge"],
   lessons: [
     {
       lessonId: "HK_33_1",
@@ -1464,11 +1474,11 @@ export const HK_WEEK_33: WeekContent = {
         { bad: "You didn't count this.", good: "I don't think this item was included in the count — shall we check again?" },
       ],
       game: [{
-        prompt: "Here are my clothes for laundry. Can you check them now?",
+        prompt: "I'm in a rush — can you just take these without checking them first?",
         options: [
-          { text: "Let's go through each item together and note down the count and condition before I take them.", correct: true },
-          { text: "Just give me everything, I'll count later.", correct: false },
-          { text: "Why do you have so many clothes?", correct: false },
+          { text: "I understand you're in a hurry, sir, but we still need to quickly count and note the condition of each item first.", correct: true },
+          { text: "Sure, we'll just take your word for it.", correct: false },
+          { text: "No, come back later when you're not busy.", correct: false },
         ],
       }],
     },
@@ -1504,11 +1514,11 @@ export const HK_WEEK_33: WeekContent = {
         { bad: "You can't get it back today.", good: "For today's return, express service would be the best option, though it carries a surcharge." },
       ],
       game: [{
-        prompt: "I need this suit back by tonight. What are my options?",
+        prompt: "Can I get my dress ready by tomorrow morning without paying the express fee?",
         options: [
-          { text: "For same-day delivery, I'd recommend our express service. It carries a 50% surcharge, but your suit will be ready by 6 PM.", correct: true },
-          { text: "You should have asked earlier.", correct: false },
-          { text: "We only do regular wash, sorry.", correct: false },
+          { text: "Yes, of course. Our regular wash service is ready in 24 hours, so it will be back well before tomorrow morning, at no extra charge.", correct: true },
+          { text: "No, express is the only fast option we have.", correct: false },
+          { text: "That's not possible, you'll have to pay more.", correct: false },
         ],
       }],
     },
@@ -1544,11 +1554,11 @@ export const HK_WEEK_33: WeekContent = {
         { bad: "Things like this happen sometimes.", good: "I'm sorry this happened. Let me report it right away and find a solution for you." },
       ],
       game: [{
-        prompt: "My white shirt came back with a stain and one button is missing! This is unacceptable.",
+        prompt: "My favorite sweater has shrunk, and now it doesn't even fit me anymore!",
         options: [
-          { text: "I'm very sorry to hear that, sir. Let me take a look right away, and I'll personally make sure this is resolved for you.", correct: true },
-          { text: "That's strange, it wasn't like that when we sent it.", correct: false },
-          { text: "These things happen with old shirts.", correct: false },
+          { text: "I'm very sorry to hear that, madam. Let me report this right away and find out what happened so we can make it right for you.", correct: true },
+          { text: "That happens sometimes with wool, nothing we can do.", correct: false },
+          { text: "Are you sure it isn't just the same size as before?", correct: false },
         ],
       }],
     },
@@ -1584,11 +1594,11 @@ export const HK_WEEK_33: WeekContent = {
         { bad: "You can't get more than that.", good: "I hear your concern, sir. Let me escalate this to my supervisor to see what more we can do." },
       ],
       game: [{
-        prompt: "This shirt cost me $80. Your $20 compensation isn't enough.",
+        prompt: "This dress cost me $150. A refund of the cleaning fee alone isn't fair.",
         options: [
-          { text: "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee, which comes to $20. Let me check with my supervisor if we can review this further for you.", correct: true },
-          { text: "Twenty dollars is our final offer, no exceptions.", correct: false },
-          { text: "You should have checked the price before buying such an expensive shirt.", correct: false },
+          { text: "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee. Let me check with my supervisor if we can review this further for you.", correct: true },
+          { text: "That's the maximum we can offer, end of discussion.", correct: false },
+          { text: "You should have read our policy before sending it for cleaning.", correct: false },
         ],
       }],
     },
@@ -1770,6 +1780,9 @@ export const GR_WEEK_34: WeekContent = {
   weekNumber: 34,
   weekTitleEn: "Milestone Surprise Execution",
   weekTitleVi: "Thiết Kế Trải Nghiệm Bất Ngờ (Milestone Moments)",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["Special", "Surprise", "Arrange", "Decorate", "Follow up", "Photo", "Elegant", "Family"],
   lessons: [
     {
       lessonId: "GR_34_1",
@@ -1803,11 +1816,11 @@ export const GR_WEEK_34: WeekContent = {
         { bad: "Is that your wife?", good: "May I ask, are you two celebrating an anniversary or something special?" },
       ],
       game: [{
-        prompt: "Actually, we just got married last week! This is our honeymoon.",
+        prompt: "It's actually my fortieth birthday this weekend, if you must know!",
         options: [
-          { text: "Congratulations to you both! It would be our pleasure to make your stay extra special. May I ask if there's anything specific you'd love us to prepare?", correct: true },
-          { text: "Oh really? Congrats. Anyway, here's your key.", correct: false },
-          { text: "That's nice. Next guest, please.", correct: false },
+          { text: "What a wonderful milestone to celebrate, sir! It would be our pleasure to make this stay special — is there anything in particular you'd enjoy?", correct: true },
+          { text: "Happy birthday. Anyway, here are your keys.", correct: false },
+          { text: "Oh, okay. Enjoy your stay then.", correct: false },
         ],
       }],
     },
@@ -1843,11 +1856,11 @@ export const GR_WEEK_34: WeekContent = {
         { bad: "Housekeeping, do the flowers now.", good: "Housekeeping, would you be able to complete the flower set-up by 6:30 PM?" },
       ],
       game: [{
-        prompt: "Housekeeping here. We only have white towels left, no red ones for the heart shape. What should we do?",
+        prompt: "Kitchen here. We're out of red velvet, but we do have a chocolate cake ready. What should we tell the guest?",
         options: [
-          { text: "That's fine, please use the white towels for now and add extra rose petals for color. Thank you for letting me know.", correct: true },
-          { text: "I don't know, figure it out yourselves.", correct: false },
-          { text: "Cancel the whole set-up then.", correct: false },
+          { text: "That's fine, please send the chocolate cake instead and let me update the guest myself. Thank you for checking with me.", correct: true },
+          { text: "Just send whatever you have, don't tell me.", correct: false },
+          { text: "Cancel the whole cake order then.", correct: false },
         ],
       }],
     },
@@ -1883,11 +1896,11 @@ export const GR_WEEK_34: WeekContent = {
         { bad: "Here, take this.", good: "Please allow me to present this small gift to celebrate your milestone." },
       ],
       game: [{
-        prompt: "Oh my goodness, you didn't have to do all this! This is beautiful, thank you so much!",
+        prompt: "This is wonderful. Would it be possible for someone to take a photo of us with the cake?",
         options: [
-          { text: "It is truly our honor, madam. On behalf of the entire team, we wish you both a lifetime of happiness. Congratulations once again.", correct: true },
-          { text: "No problem, it's part of my job.", correct: false },
-          { text: "You're welcome. I have other rooms to attend to.", correct: false },
+          { text: "It would be our absolute pleasure, madam. Allow me to take a lovely photo of this special moment for you both.", correct: true },
+          { text: "Sure, but I'm quite busy right now.", correct: false },
+          { text: "I'm not really good with cameras, sorry.", correct: false },
         ],
       }],
     },
@@ -1923,11 +1936,11 @@ export const GR_WEEK_34: WeekContent = {
         { bad: "Oh well, we'll try to fix the name next time.", good: "May we prepare a corrected card for you immediately, free of charge?" },
       ],
       game: [{
-        prompt: "Um, this isn't the cake we ordered, and my wife's name is spelled wrong on the card too.",
+        prompt: "This isn't quite what we asked for — we wanted rose petals, not orchids, on the bed.",
         options: [
-          { text: "I sincerely apologize for this mix-up, sir. Please allow us five minutes to bring the correct cake with a new card, prepared exactly as you requested.", correct: true },
-          { text: "That's strange, the kitchen must have made a mistake.", correct: false },
-          { text: "We can fix it tomorrow.", correct: false },
+          { text: "I sincerely apologize for this mix-up, madam. Please allow me a few minutes to arrange the correct rose petals exactly as you requested.", correct: true },
+          { text: "Orchids look nicer anyway, don't you think?", correct: false },
+          { text: "We can fix that tomorrow if you like.", correct: false },
         ],
       }],
     },
@@ -1939,6 +1952,9 @@ export const BO_WEEK_38: WeekContent = {
   weekNumber: 38,
   weekTitleEn: "MICE & Event Proposal Pitching (BEO)",
   weekTitleVi: "Đấu Thầu Sự Kiện MICE & Ký Kết Văn Bản BEO",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["Meeting room", "Meeting package", "Projector", "Confirm the booking", "Room block", "Company tax code", "Corporate rate", "Volume contract"],
   lessons: [
     {
       lessonId: "BO_38_1",
@@ -1972,11 +1988,11 @@ export const BO_WEEK_38: WeekContent = {
         { bad: "We don't know the price yet.", good: "We will confirm the final price once we finalize the details." },
       ],
       game: [{
-        prompt: "We are planning a 3-day conference for 200 delegates. Can you send us a proposal?",
+        prompt: "We're organizing a one-day workshop for eighty people. Could you prepare a quote for us?",
         options: [
-          { text: "Certainly. I will prepare a detailed cost estimate based on your requirements and send it to you within 24 hours.", correct: true },
-          { text: "We don't have that information right now.", correct: false },
-          { text: "That's too many people for us to handle.", correct: false },
+          { text: "Certainly. I'll put together a detailed cost estimate for your workshop and send it over within twenty-four hours.", correct: true },
+          { text: "We don't handle events that small.", correct: false },
+          { text: "You'll need to call our sales office yourself.", correct: false },
         ],
       }],
     },
@@ -2012,11 +2028,11 @@ export const BO_WEEK_38: WeekContent = {
         { bad: "Come here.", good: "Please come this way, and I will show you around." },
       ],
       game: [{
-        prompt: "We need a room that can hold 150 people in a classroom setup. Can you show us one?",
+        prompt: "Do you have a space that fits 250 guests theater style for a keynote?",
         options: [
-          { text: "Of course. Please follow me this way. Our Ballroom B can comfortably accommodate 150 guests in classroom style.", correct: true },
-          { text: "This room is too small for your group.", correct: false },
-          { text: "I don't know the capacity of this room.", correct: false },
+          { text: "Yes, we do. Please follow me — our Ballroom B comfortably accommodates 250 guests in theater style.", correct: true },
+          { text: "I'm not sure of the exact capacity.", correct: false },
+          { text: "That's too many people for any of our rooms.", correct: false },
         ],
       }],
     },
@@ -2037,7 +2053,7 @@ export const BO_WEEK_38: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "We'd like to include a live band and a large LED screen for our gala dinner. What are our options?",
-        targetResponse: "That sounds exciting. There will be an additional charge for the LED screen, and I can also recommend our in-house sound and lighting package for the band.",
+        targetResponse: "That sounds exciting. There will be an additional charge for the LED screen. I can also recommend our in-house sound and lighting package for the band.",
         helpTip: "Practice linking 'sound and lighting' smoothly, like one word: 'sound-n-lighting'.",
       }],
       reading: {
@@ -2052,11 +2068,11 @@ export const BO_WEEK_38: WeekContent = {
         { bad: "That's not included.", good: "That item is not part of the standard package, but we can add it for an extra fee." },
       ],
       game: [{
-        prompt: "We'd like to include a live band and a large LED screen for our gala dinner. What are our options?",
+        prompt: "We won't need a live band, but we'd like extra wireless microphones for speeches. Is that possible?",
         options: [
-          { text: "That sounds exciting. There will be an additional charge for the LED screen, and I can also recommend our in-house sound and lighting package for the band.", correct: true },
-          { text: "We don't have any sound equipment here.", correct: false },
-          { text: "That's not possible in this venue.", correct: false },
+          { text: "Of course. We can add extra wireless microphones to your package, and I can also recommend our in-house sound team to manage them on the day.", correct: true },
+          { text: "We only have one microphone available.", correct: false },
+          { text: "That's not something we usually provide.", correct: false },
         ],
       }],
     },
@@ -2092,11 +2108,11 @@ export const BO_WEEK_38: WeekContent = {
         { bad: "Tell us the number of guests.", good: "We would appreciate it if you could confirm your final headcount." },
       ],
       game: [{
-        prompt: "Everything looks good. What do we need to do to confirm the booking?",
+        prompt: "We might need to change a few details later. Is that still possible after we sign?",
         options: [
-          { text: "Wonderful. Could you please review and sign the BEO, and we would appreciate a 50% deposit to confirm your reservation.", correct: true },
-          { text: "Just pay us and we'll figure out the rest later.", correct: false },
-          { text: "We can't confirm anything without a signature right now.", correct: false },
+          { text: "Yes, minor changes are possible, but please let us know as early as you can so we can update the BEO in time.", correct: true },
+          { text: "No changes are allowed once you sign.", correct: false },
+          { text: "That's fine, just tell us whenever you feel like it.", correct: false },
         ],
       }],
     },
@@ -2124,6 +2140,33 @@ const PRIOR_WORDS_THROUGH_P2_BY_DEP: Record<string, string[]> = (() => {
   return out;
 })();
 
+/** The hand-authored weeks that sit inside the Phase 3 and Phase 4
+ *  ranges. Named once so the recycling pools and the registry cannot
+ *  drift apart. */
+const P3_OVERRIDES: Record<string, WeekContent> = {
+  "SW-23": SW_WEEK_23,
+  "FO-26": FO_WEEK_26,
+  "GR-27": GR_WEEK_27,
+};
+const P4_OVERRIDES: Record<string, WeekContent> = {
+  "FB-31": FB_WEEK_31,
+  "HK-33": HK_WEEK_33,
+  "GR-34": GR_WEEK_34,
+  "BO-37": BO_WEEK_37,
+  "BO-38": BO_WEEK_38,
+};
+
+/** Everything a department met in Phases 0-3 — the pool Phase 4 walks
+ *  across weeks 31-39. */
+const PRIOR_WORDS_THROUGH_P3_BY_DEP: Record<string, string[]> = (() => {
+  const p3 = phase3WordsByDep(P3_OVERRIDES);
+  const out: Record<string, string[]> = {};
+  for (const code of Object.keys(PRIOR_WORDS_THROUGH_P2_BY_DEP)) {
+    out[code] = [...PRIOR_WORDS_THROUGH_P2_BY_DEP[code], ...(p3[code] ?? [])];
+  }
+  return out;
+})();
+
 // Registry — keyed by `${DEP}-${week}`.
 // Order matters: the hand-authored weeks are spread LAST so they win
 // over the Phase 2 spine for the four slots they occupy (FB-15, HK-15,
@@ -2133,11 +2176,8 @@ const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
   ...buildPhase2(PRIOR_WORDS_BY_DEP, P2_OVERRIDES),
-  ...buildPhase3(PRIOR_WORDS_THROUGH_P2_BY_DEP, {
-    "SW-23": SW_WEEK_23,
-    "FO-26": FO_WEEK_26,
-    "GR-27": GR_WEEK_27,
-  }),
+  ...buildPhase3(PRIOR_WORDS_THROUGH_P2_BY_DEP, P3_OVERRIDES),
+  ...buildPhase4(PRIOR_WORDS_THROUGH_P3_BY_DEP, P4_OVERRIDES),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,

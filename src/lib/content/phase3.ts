@@ -1534,6 +1534,20 @@ function buildWeek(
  * overridden downstream by the hand-authored SW-23, FO-26 and GR-27
  * payloads — see the note at the top of this file.
  */
+/** Every headword Phase 3 teaches, in order, per department — the
+ *  recycling pool Phase 4 draws its long-spacing slice from. Reads
+ *  through the same overrides as the builder, so it reports what the
+ *  learner actually met, not what the spine would have taught. */
+export function phase3WordsByDep(overrides: Record<string, WeekContent> = {}): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const [code, base] of Object.entries(LEXICONS)) {
+    const lx: Ctx = { ...base, bank: P3_BANKS[code] };
+    out[code] = [];
+    for (let w = 23; w <= 30; w++) out[code].push(...headwordsOf(lx, w, overrides));
+  }
+  return out;
+}
+
 export function buildPhase3(
   priorWordsByDep: Record<string, string[]>,
   /** The hand-authored weeks that replace spine slots in this range. */

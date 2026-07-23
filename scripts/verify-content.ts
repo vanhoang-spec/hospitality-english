@@ -46,6 +46,9 @@ const PHASES: Phase[] = [
   // rises to 16 words so a two-clause conditional offer fits, and the
   // recycling quota rises to 35%.
   { name: "P3 A2+", from: 23, to: 30, wordCap: 16, vocabMin: 14, vocabMax: 16, reviewPct: 0.35, deptSpecificMin: 0.65 },
+  // B1.1 — the top of the ladder. Three clauses are allowed, so the cap
+  // rises to 22 words; recycling peaks at 40%.
+  { name: "P4 B1.1", from: 31, to: 40, wordCap: 22, vocabMin: 14, vocabMax: 18, reviewPct: 0.4, deptSpecificMin: 0.65 },
 ];
 
 /** Weeks 15+ are the hand-authored A2-B1 payloads; they predate the matrix
