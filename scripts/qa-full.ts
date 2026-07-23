@@ -23,7 +23,7 @@ import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
 
 const DEPS = DEPARTMENTS.map((d) => d.code);
-const AUTHORED_MAX = 22;
+const AUTHORED_MAX = 30;
 
 const fails: string[] = [];
 const warns: string[] = [];
@@ -328,6 +328,50 @@ const slugify = (t: string) =>
   const pct = Math.round((longestBias / Math.max(1, rounds)) * 100);
   console.log(`T6 answerability — ${rounds} game rounds; ${pct}% have a markedly longest correct option`);
   if (pct > 60) warn("T6", `${pct}% of rounds let a learner win by always picking the longest option`);
+}
+
+// ============================================================
+// T6b — Game prompts must be UTTERANCES, not task descriptions.
+// ArcadeSuite renders game.prompt under a "Guest says" label and both
+// ListeningSuite and WeekTestSuite SPEAK it aloud as the guest's line.
+// A prompt written as an instruction ("A guest asks X. What do you
+// say?") is therefore read back to the learner as though the guest said
+// it, and the exercise stops making sense. Same for the options, which
+// are rendered as the staff member's spoken replies.
+// ============================================================
+{
+  // Third-person framing of the learner or the guest — the tell-tale of
+  // a task description rather than a line of dialogue.
+  // Deliberately narrow: only third-person narration of the scene and
+  // direct instructions to the learner. Blunt in-character lines like
+  // "You want upgrade?" or "You need to sign here" are legitimate
+  // dialogue (often the rude distractor) and must not trip this.
+  const META = new RegExp(
+    [
+      "what do you say\\b",
+      "what is the best reply\\b",
+      "which reply is best\\b",
+      "what do you (?:do|offer|add|promise|tell)\\b",
+      "\\b(?:the|a) guest (?:says|asks|doubts|wants|demands|mentions|is |politely)",
+      "\\byour (?:colleague|manager|supervisor) (?:arrives|asks)\\b",
+      "\\byou (?:cannot|have just|are going to|still have|want to offer|need details)\\b",
+    ].join("|"),
+    "i",
+  );
+  let checked = 0;
+  for (const [key, wk] of Object.entries(ALL_WEEKS)) {
+    if (wk.weekNumber > AUTHORED_MAX) continue;
+    for (const l of wk.lessons) {
+      for (const r of l.game) {
+        checked++;
+        if (META.test(r.prompt)) fail("T6b", `${key} game prompt is a task description, not something a guest says: "${r.prompt}"`);
+        for (const o of r.options) {
+          if (META.test(o.text)) fail("T6b", `${key} game option is a task description, not a spoken reply: "${o.text}"`);
+        }
+      }
+    }
+  }
+  console.log(`T6b dialogue framing — ${checked} game rounds checked for task-description prompts`);
 }
 
 // ============================================================

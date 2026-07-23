@@ -51,7 +51,7 @@ const FO_BANK: P3Bank = {
     { word: "Deluxe room", phonetic: "/dəˈlʌks ruːm/", definition: "Phòng cao cấp rộng hơn", icon: "✨" },
     { word: "Junior suite", phonetic: "/ˈdʒuːniə swiːt/", definition: "Phòng rộng có góc tiếp khách", icon: "🛋️" },
     { word: "Club floor room", phonetic: "/klʌb flɔː ruːm/", definition: "Phòng ở tầng có phòng chờ riêng", icon: "🎩" },
-    { word: "Family room", phonetic: "/ˈfæməli ruːm/", definition: "Phòng dành cho gia đình", icon: "👨‍👩‍👧" },
+    { word: "Family room", phonetic: "/ˈfæməli ruːm/", definition: "Phòng dành cho gia đình", icon: "👪" },
     { word: "Poolside room", phonetic: "/ˈpuːlsaɪd ruːm/", definition: "Phòng cạnh hồ bơi", icon: "🏊" },
     { word: "Top-floor room", phonetic: "/tɒp flɔː ruːm/", definition: "Phòng ở tầng trên cùng", icon: "🏙️" },
     { word: "Balcony room", phonetic: "/ˈbælkəni ruːm/", definition: "Phòng có ban công", icon: "🪴" },

@@ -6,6 +6,7 @@ import { VocabSuite } from "@/components/suites/VocabSuite";
 import { GrammarSuite } from "@/components/suites/GrammarSuite";
 import { ReadingSuite } from "@/components/suites/ReadingSuite";
 import { ListeningSuite } from "@/components/suites/ListeningSuite";
+import { WeekTestSuite } from "@/components/suites/WeekTestSuite";
 import { getDepartment } from "@/lib/departments";
 
 const TITLES: Record<string, { en: string; tag: string }> = {
@@ -15,6 +16,7 @@ const TITLES: Record<string, { en: string; tag: string }> = {
   listening: { en: "Golden Ear Listening", tag: "Attention" },
   reading: { en: "Executive Reading", tag: "Comprehension" },
   arcade: { en: "VIP Rush Arcade", tag: "Reflex" },
+  weektest: { en: "Phase Checkpoint Test", tag: "Assessment" },
 };
 
 export const Route = createFileRoute("/learn/$dep/$week/$suite")({
@@ -59,6 +61,7 @@ function SuitePage() {
           {suite === "listening" && <ListeningSuite dep={department.code} week={week} />}
           {suite === "reading" && <ReadingSuite dep={department.code} week={week} />}
           {suite === "arcade" && <ArcadeSuite dep={department.code} week={week} />}
+          {suite === "weektest" && <WeekTestSuite dep={department.code} week={week} />}
         </div>
       </motion.div>
     </main>

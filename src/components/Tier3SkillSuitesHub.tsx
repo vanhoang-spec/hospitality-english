@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { findWeek } from "@/lib/curriculum";
 import { getWeekContent } from "@/lib/content/week-content";
+import { isCheckpointWeek } from "@/components/suites/WeekTestSuite";
 
 type DepartmentMeta = {
   code: string;
@@ -50,6 +51,14 @@ const SUITE_DOORS = [
   },
 ] as const;
 
+/** Only checkpoint weeks (6, 14, 22, 30, 40) carry the phase test. */
+const WEEKTEST_DOOR = {
+  slug: "weektest",
+  title: "Phase Checkpoint Test",
+  tag: "Assessment",
+  detail: "Ten mixed questions across the whole phase. Score 70% to pass.",
+} as const;
+
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
   // week-content.ts is the source of truth for any week that has authored
   // lessons — the DB `lessons` rows are placeholders that only describe
@@ -57,6 +66,9 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
   // relocated weeks show the wrong step titles (FO week 1 rendering the
   // generic "(Tuần 17)" steps that travelled with the swapped scenario).
   const authored = getWeekContent(department.code, week);
+  // The checkpoint test only exists where there is authored content to
+  // build a paper from — an empty week must not offer an exam.
+  const doors = authored && isCheckpointWeek(week) ? [...SUITE_DOORS, WEEKTEST_DOOR] : SUITE_DOORS;
   const fallback = findWeek(department.code, week);
   const localLessons =
     fallback?.lessons.map((vi, i) => ({
@@ -156,7 +168,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
         )}
 
         <section className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Golden Service Suite doors">
-          {SUITE_DOORS.map((suite, index) => (
+          {doors.map((suite, index) => (
             <motion.div
               key={suite.slug}
               initial={{ opacity: 0, y: 26 }}

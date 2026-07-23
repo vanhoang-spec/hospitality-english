@@ -92,7 +92,7 @@ function week23(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest asks which option you would choose. What do you say?",
+          "If you were me, which one would you choose?",
           `I recommend the ${lo(u3)}, madam.`,
           `You must take the ${lo(u3)}.`,
           `${u3.word} is the one.`,
@@ -134,7 +134,7 @@ function week23(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest says the upgrade sounds expensive. What is the best reply?",
+          "That sounds quite expensive for just one night.",
           `It costs a little more, but it is much quieter.`,
           `Yes, it is expensive.`,
           `Money is not a problem here.`,
@@ -174,7 +174,7 @@ function week23(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest mentions they are staying for two weeks. What do you offer?",
+          "We will be staying here for two weeks.",
           `For a long stay, I recommend the ${lo(u8)}.`,
           `Two weeks is a very long time.`,
           `We have many things here.`,
@@ -214,7 +214,7 @@ function week23(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest politely refuses your suggestion. What do you say?",
+          "Thank you, but we will keep the standard one.",
           `Of course, sir. The standard one is also excellent.`,
           `Are you sure? It is really better.`,
           `Okay. Next guest, please.`,
@@ -267,7 +267,7 @@ function week24(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest asks whether an extra service is free. What do you say?",
+          "Is that included, or do I pay extra?",
           `There is a small ${lo(p2)} for that, madam.`,
           `Of course you must pay.`,
           `I think maybe free, not sure.`,
@@ -309,7 +309,7 @@ function week24(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest asks why the charge exists. Which reply is best?",
+          "Why am I being charged for this?",
           `We have to apply it because it is hotel policy.`,
           `Because I say so, sir.`,
           `I do not know the reason.`,
@@ -349,7 +349,7 @@ function week24(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You cannot waive the fee yourself. What do you tell the guest?",
+          "Please just take that fee off my bill.",
           `I am afraid I cannot, but my manager can review it.`,
           `No. That is final.`,
           `Try asking someone else.`,
@@ -389,7 +389,7 @@ function week24(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You have just explained a charge. How do you close the conversation?",
+          "I am not sure I followed all of that.",
           `Shall I repeat the ${lo(p10)} for you?`,
           `Do you understand me?`,
           `That is all. Goodbye.`,
@@ -442,7 +442,7 @@ function week25(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest asks how long they must wait. What is the best reply?",
+          "How long will I have to wait for this?",
           `I will ${lo(c3)} within ten minutes, sir.`,
           `Soon, maybe not long.`,
           `I cannot say how long.`,
@@ -484,7 +484,7 @@ function week25(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest wants it done today. What do you promise?",
+          "I really need this finished today, please.",
           `We are going to ${lo(c6)} before three o'clock.`,
           `Maybe today, maybe tomorrow.`,
           `Today is very busy for us.`,
@@ -524,7 +524,7 @@ function week25(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You still have no answer for the guest. What do you say?",
+          "Do you have any news for me yet?",
           `I will ${lo(c8)} and let you know within the hour.`,
           `Nothing yet. Please wait.`,
           `Ask me again tomorrow.`,
@@ -564,10 +564,10 @@ function week25(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You are going to miss the time you promised. What do you do?",
+          "Is it ready? You said only ten minutes.",
           `I am sorry. I will ${lo(c12)} immediately instead.`,
-          `Say nothing and hope the guest forgets.`,
-          `Tell the guest they must be patient.`,
+          `It is not ready. I do not know when.`,
+          `Please be patient, sir. We are very busy.`,
         ),
       ],
     }),
@@ -617,7 +617,7 @@ function week26(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The request belongs to another department. What do you say?",
+          "Could you take care of this for me?",
           `Let me check with the ${lo(t2)} for you.`,
           `That is not my department.`,
           `Please go to the other desk.`,
@@ -659,7 +659,7 @@ function week26(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You need another team to come and help. What do you tell the guest?",
+          "Is there anyone who can come and help?",
           `I will ask the ${lo(t5)} to help you right away.`,
           `Someone will come, I think.`,
           `They are busy, so please wait.`,
@@ -699,7 +699,7 @@ function week26(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest doubts the request was passed on. What is the best reply?",
+          "Is anybody actually working on my request?",
           `I passed it to the ${lo(t9)} and the ${lo(t8)} confirmed it.`,
           `Someone is doing it, probably.`,
           `I already told you once, sir.`,
@@ -739,7 +739,7 @@ function week26(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The work is done. How do you close the request with the guest?",
+          "Can you tell me if it is all done?",
           `The ${lo(t10)} finished, and I checked before calling you.`,
           `It is done. Anything else?`,
           `They said it is finished, I hope so.`,
@@ -792,10 +792,10 @@ function week27(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest is angry and still speaking. What do you do first?",
-          `Listen to the end, then say you are sorry.`,
-          `Explain why it is not your fault.`,
-          `Tell the guest to calm down.`,
+          "I have been waiting all morning and nobody helped me!",
+          `I am very sorry, sir. Please tell me what happened.`,
+          `That is not our fault, sir.`,
+          `Please calm down first, sir.`,
         ),
       ],
     }),
@@ -834,7 +834,7 @@ function week27(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The mistake was made by your colleague. What do you tell the guest?",
+          "Which one of your staff made this mistake?",
           `It was our mistake, sir, and I apologise.`,
           `My colleague did it, not me.`,
           `The other shift is always careless.`,
@@ -874,7 +874,7 @@ function week27(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You need details about the problem. How do you ask?",
+          "I want to report a problem with my room.",
           `Could you tell me when the ${lo(k7)} started?`,
           `When? Tell me now.`,
           `I do not need details.`,
@@ -914,10 +914,10 @@ function week27(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest is shouting in the lobby. What do you do?",
-          `Lower your voice and say you will stay until it is solved.`,
-          `Shout back so the guest can hear you.`,
-          `Walk away and let someone else deal with it.`,
+          "This is unacceptable! I want to speak to someone now!",
+          `I understand, sir. I will stay with you until it is solved.`,
+          `There is no need to shout, sir.`,
+          `You must wait like everyone else.`,
         ),
       ],
     }),
@@ -967,7 +967,7 @@ function week28(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest asks how you will fix the problem. What do you say?",
+          "So what are you going to do about it?",
           `If you like, I can ${lo(s3)} for you today.`,
           `I do not know what to do.`,
           `You should decide, not me.`,
@@ -1009,7 +1009,7 @@ function week28(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You want to offer the guest an alternative. What do you say?",
+          "Is there another way to solve this?",
           `If you prefer, we will ${lo(s5)} instead.`,
           `There is only one way, sorry.`,
           `You choose, I have no idea.`,
@@ -1049,7 +1049,7 @@ function week28(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "You have just solved the problem. What do you add?",
+          "Thank you, that seems to be working now.",
           `I will check again later to be sure.`,
           `It is fixed. Goodbye.`,
           `Please do not call me again.`,
@@ -1089,7 +1089,7 @@ function week28(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest demands something you cannot approve. What do you say?",
+          "I want a full refund for the whole stay.",
           `I cannot do that myself, but my manager can review it.`,
           `Yes, no problem, I will do it.`,
           `That is impossible. Goodbye.`,
@@ -1143,7 +1143,7 @@ function week29(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Your colleague arrives for the next shift. What do you say first?",
+          "I have just arrived. Anything I should know?",
           `I updated the ${lo(h1)} this morning.`,
           `Nothing happened. Good luck.`,
           `Ask someone else, I am leaving.`,
@@ -1185,7 +1185,7 @@ function week29(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Your manager asks what you were doing when the incident happened.",
+          "What were you doing when the guest called?",
           `I was checking the ${lo(h4)} when the guest called.`,
           `I check the list and guest call me.`,
           `I do not remember anything.`,
@@ -1225,10 +1225,10 @@ function week29(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "One task is unfinished at the end of your shift. What do you do?",
-          `Tell your colleague clearly and leave a note.`,
-          `Say nothing and go home.`,
-          `Mark it as finished to look good.`,
+          "Is everything finished before you go home?",
+          `No, one task is open. I left a note about it.`,
+          `Yes, everything is completely finished.`,
+          `I am not sure. Please check it yourself.`,
         ),
       ],
     }),
@@ -1265,7 +1265,7 @@ function week29(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The manager asks where today's events are written. What do you say?",
+          "Where do you keep the record of today?",
           `Everything is recorded in the ${lo(h12)}, sir.`,
           `I remember most of it.`,
           `Nobody writes anything here.`,
@@ -1321,7 +1321,7 @@ function week30(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "A guest wants advice and wants it done quickly. What do you say?",
+          "What do you suggest, and how soon can it be done?",
           `I recommend the ${lo(u1)}, and I will arrange it within ten minutes.`,
           `I recommend something, wait please.`,
           `Choose yourself and tell me later.`,
@@ -1361,7 +1361,7 @@ function week30(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest asks why the rule exists and who will act on it.",
+          "Who takes care of this, and why is it required?",
           `We apply this because it is policy, and I will check with the team.`,
           `It is the rule. Ask someone else who does it.`,
           `I do not know why, and I do not know who.`,
@@ -1401,7 +1401,7 @@ function week30(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "The guest says the problem happened twice. What is the best reply?",
+          "This is the second time this has happened.",
           `I am very sorry, and if you like, I can ${lo(s1)}.`,
           `Yes, it happens sometimes here.`,
           `I told you already it is fixed.`,
@@ -1441,7 +1441,7 @@ function week30(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Your supervisor asks if you are ready for a busier shift.",
+          "Do you feel ready to handle the evening shift?",
           `Yes. I checked everything today, and I am ready.`,
           `I think maybe not ready.`,
           `Ready for what, sir?`,

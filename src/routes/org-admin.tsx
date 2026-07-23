@@ -7,6 +7,7 @@ import { createMember, deleteMember, resetMemberPassword, updateMemberRole } fro
 import { formatPhoneDisplay } from "@/lib/phone";
 import { DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
+import { isCheckpointWeek } from "@/components/suites/WeekTestSuite";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
 
 export const Route = createFileRoute("/org-admin")({
@@ -27,14 +28,25 @@ type Member = {
 type Org = { id: string; name: string; seat_limit: number };
 
 const SUITES = ["vocab", "grammar", "speaking", "listening", "reading", "arcade"] as const;
-const SUITE_LABELS: Record<(typeof SUITES)[number], string> = {
+/** The checkpoint test exists only on weeks 6/14/22/30/40, so the matrix
+ *  and the completion denominator must both vary per week — counting a
+ *  weektest slot on every week would understate everyone's progress. */
+function suitesForWeek(week: number): readonly string[] {
+  return isCheckpointWeek(week) ? [...SUITES, "weektest"] : SUITES;
+}
+const SUITE_LABELS: Record<string, string> = {
   vocab: "Vocab",
   grammar: "Grammar",
   speaking: "Speaking",
   listening: "Listening",
   reading: "Reading",
   arcade: "Arcade",
+  weektest: "Sát hạch",
 };
+/** Column letter for the matrix header. "Sát hạch" would collide with
+ *  Speaking on its first letter, so the test gets an explicit T. */
+const SUITE_INITIALS: Record<string, string> = { weektest: "T" };
+const initialOf = (s: string) => SUITE_INITIALS[s] ?? SUITE_LABELS[s][0];
 
 function OrgAdminPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -849,7 +861,7 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                       Phòng ban
                     </th>
                     {AVAILABLE_WEEKS.map((w) => (
-                      <th key={w} colSpan={SUITES.length} className="border-l border-primary/10 px-1 py-1.5 text-center uppercase tracking-[0.1em] text-foreground/60">
+                      <th key={w} colSpan={suitesForWeek(w).length} className="border-l border-primary/10 px-1 py-1.5 text-center uppercase tracking-[0.1em] text-foreground/60">
                         Tuần {w}
                       </th>
                     ))}
@@ -857,9 +869,13 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                   <tr>
                     <th className="sticky left-0 bg-card px-2 py-1"></th>
                     {AVAILABLE_WEEKS.map((w) =>
-                      SUITES.map((s) => (
-                        <th key={`${w}-${s}`} className="border-l border-primary/5 px-1 py-1 text-center font-normal text-foreground/40" title={SUITE_LABELS[s]}>
-                          {SUITE_LABELS[s][0]}
+                      suitesForWeek(w).map((s) => (
+                        <th
+                          key={`${w}-${s}`}
+                          className={`border-l border-primary/5 px-1 py-1 text-center font-normal ${s === "weektest" ? "text-primary/70" : "text-foreground/40"}`}
+                          title={SUITE_LABELS[s]}
+                        >
+                          {initialOf(s)}
                         </th>
                       )),
                     )}
@@ -874,7 +890,7 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                         // per department — mark non-existent dep/week combos
                         // as N/A instead of "not studied yet".
                         const hasContent = getWeekContent(d.code, w) !== null;
-                        return SUITES.map((s) => {
+                        return suitesForWeek(w).map((s) => {
                           const key = `${d.code}-${w}-${s}`;
                           if (!hasContent) {
                             return (
@@ -926,13 +942,27 @@ type OrgMetricsRow = {
   reflex_speed: number;
   crisis_handling_score: number;
 };
-type OrgProgressRow = { user_id: string; stars: number; mastered: boolean };
+type OrgProgressRow = { user_id: string; stars: number; mastered: boolean; suite: string };
 
 // Only dep/week combos that actually have authored content count as
-// completable slots (weeks differ per department after the 40-week frame).
-const TOTAL_SLOTS_PER_MEMBER =
-  DEPARTMENTS.reduce((sum, d) => sum + AVAILABLE_WEEKS.filter((w) => getWeekContent(d.code, w) !== null).length, 0) *
-  SUITES.length;
+// completable slots (weeks differ per department after the 40-week frame),
+// and checkpoint weeks carry one extra slot for the phase test.
+const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
+  (sum, d) =>
+    sum +
+    AVAILABLE_WEEKS.filter((w) => getWeekContent(d.code, w) !== null).reduce(
+      (weekSum, w) => weekSum + suitesForWeek(w).length,
+      0,
+    ),
+  0,
+);
+
+/** Every authored checkpoint slot across all departments — the
+ *  denominator for the org's phase-test pass rate. */
+const TOTAL_CHECKPOINTS_PER_MEMBER = DEPARTMENTS.reduce(
+  (sum, d) => sum + AVAILABLE_WEEKS.filter((w) => isCheckpointWeek(w) && getWeekContent(d.code, w) !== null).length,
+  0,
+);
 
 function departmentLabel(dep: string): string {
   const match = DEPARTMENTS.find((d) => d.code.toLowerCase() === dep.toLowerCase());
@@ -972,7 +1002,7 @@ function OrgOverview({ members }: { members: Member[] }) {
       if (memberIds.length === 0) return [];
       const { data, error } = await supabase
         .from("lesson_progress")
-        .select("user_id, stars, mastered")
+        .select("user_id, stars, mastered, suite")
         .in("user_id", memberIds);
       if (error) throw error;
       return data as OrgProgressRow[];
@@ -988,9 +1018,13 @@ function OrgOverview({ members }: { members: Member[] }) {
   // "Completed" now means mastered (met the pass threshold) — mere
   // participation no longer counts toward the org completion rate.
   const completedCountByMember = new Map<string, number>();
+  const checkpointsPassedByMember = new Map<string, number>();
   (progressQuery.data ?? []).forEach((r) => {
     if (!r.mastered) return;
     completedCountByMember.set(r.user_id, (completedCountByMember.get(r.user_id) ?? 0) + 1);
+    if (r.suite === "weektest") {
+      checkpointsPassedByMember.set(r.user_id, (checkpointsPassedByMember.get(r.user_id) ?? 0) + 1);
+    }
   });
 
   const groupsMap = new Map<string, Member[]>();
@@ -1008,12 +1042,19 @@ function OrgOverview({ members }: { members: Member[] }) {
     const metricsRows = ids.map((id) => metricsByMember.get(id)).filter((r): r is OrgMetricsRow => !!r);
     const completionPct =
       (ids.reduce((s, id) => s + (completedCountByMember.get(id) ?? 0), 0) / (ids.length * TOTAL_SLOTS_PER_MEMBER)) * 100;
+    const checkpointPct =
+      TOTAL_CHECKPOINTS_PER_MEMBER === 0
+        ? 0
+        : (ids.reduce((s, id) => s + (checkpointsPassedByMember.get(id) ?? 0), 0) /
+            (ids.length * TOTAL_CHECKPOINTS_PER_MEMBER)) *
+          100;
     return {
       fluency: avg(metricsRows.map((r) => r.fluency_score)),
       courtesy: avg(metricsRows.map((r) => r.courtesy_score)),
       reflex: avg(metricsRows.map((r) => r.reflex_speed)),
       crisis: avg(metricsRows.map((r) => r.crisis_handling_score)),
       completionPct: Math.min(100, completionPct),
+      checkpointPct: Math.min(100, checkpointPct),
     };
   }
 
@@ -1032,8 +1073,9 @@ function OrgOverview({ members }: { members: Member[] }) {
         {loading && <span className="text-xs text-foreground/50">Đang tải…</span>}
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <MetricBar label="Hoàn thành TB" value={Math.round(overall.completionPct)} />
+        <MetricBar label="Đạt sát hạch" value={Math.round(overall.checkpointPct)} />
         <MetricBar label="Fluency" value={Math.round(overall.fluency)} />
         <MetricBar label="Courtesy" value={Math.round(overall.courtesy)} />
         <MetricBar label="Reflex" value={Math.round(overall.reflex)} />
@@ -1049,6 +1091,7 @@ function OrgOverview({ members }: { members: Member[] }) {
                 <th className="py-2 pr-3">Phòng ban</th>
                 <th className="py-2 pr-3">Số người</th>
                 <th className="py-2 pr-3">Hoàn thành</th>
+                <th className="py-2 pr-3">Sát hạch</th>
                 <th className="py-2 pr-3">Fluency</th>
                 <th className="py-2 pr-3">Courtesy</th>
                 <th className="py-2 pr-3">Reflex</th>
@@ -1063,6 +1106,7 @@ function OrgOverview({ members }: { members: Member[] }) {
                     <td className="py-2 pr-3 font-display text-foreground">{departmentLabel(g.key)}</td>
                     <td className="py-2 pr-3">{g.members.length}</td>
                     <td className="py-2 pr-3 text-primary">{Math.round(s.completionPct)}%</td>
+                    <td className="py-2 pr-3 text-primary">{Math.round(s.checkpointPct)}%</td>
                     <td className="py-2 pr-3">{Math.round(s.fluency)}%</td>
                     <td className="py-2 pr-3">{Math.round(s.courtesy)}%</td>
                     <td className="py-2 pr-3">{Math.round(s.reflex)}%</td>
