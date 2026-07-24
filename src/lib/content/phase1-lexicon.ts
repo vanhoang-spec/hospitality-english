@@ -256,7 +256,10 @@ const HK_BANK: P1Bank = {
     { word: "Dusty", phonetic: "/ˈdʌsti/", definition: "Bụi bặm", icon: "🌫️" },
     { word: "Bright", phonetic: "/braɪt/", definition: "Sáng sủa", icon: "🍃" },
     { word: "Soft", phonetic: "/sɒft/", definition: "Mềm", icon: "☁️" },
-    { word: "Heavy", phonetic: "/ˈhevi/", definition: "Nặng", icon: "⚠️" },
+    // "Heavy" doesn't fit the week-10 "Careful, the floor is ___" warning
+    // frame (a floor cannot itself be heavy) — "Uneven" is the real
+    // hazard housekeeping actually warns guests about.
+    { word: "Uneven", phonetic: "/ʌnˈiːvn/", definition: "Gập ghềnh, không bằng phẳng", icon: "⚠️" },
   ],
   routines: [
     { word: "Make the bed", phonetic: "/meɪk ðə bed/", definition: "Dọn giường", icon: "🛏️" },
@@ -310,7 +313,7 @@ const HK_BANK: P1Bank = {
 const SW_BANK: P1Bank = {
   roles: [
     { word: "Therapist", phonetic: "/ˈθerəpɪst/", definition: "Kỹ thuật viên trị liệu", icon: "💆" },
-    { word: "Masseuse", phonetic: "/mæˈsɜːz/", definition: "Nhân viên massage (nữ)", icon: "🤲" },
+    { word: "Massage therapist", phonetic: "/ˈmæsɑːʒ ˈθerəpɪst/", definition: "Kỹ thuật viên massage", icon: "🤲" },
     { word: "Spa receptionist", phonetic: "/spɑː rɪˈsepʃənɪst/", definition: "Lễ tân spa", icon: "🧾" },
     { word: "Trainer", phonetic: "/ˈtreɪnə/", definition: "Huấn luyện viên", icon: "🏋️" },
     { word: "Pool attendant", phonetic: "/puːl əˈtendənt/", definition: "Nhân viên hồ bơi", icon: "🏊" },
@@ -429,7 +432,10 @@ const GR_BANK: P1Bank = {
     { word: "Elegant", phonetic: "/ˈelɪɡənt/", definition: "Trang nhã", icon: "🌸" },
     { word: "Special", phonetic: "/ˈspeʃl/", definition: "Đặc biệt", icon: "⭐" },
     { word: "Beautiful", phonetic: "/ˈbjuːtɪfl/", definition: "Đẹp", icon: "🌺" },
-    { word: "Surprised", phonetic: "/səˈpraɪzd/", definition: "Bất ngờ", icon: "😲" },
+    // "Surprised" doesn't work in the week-10 "It is too ___" frame (an
+    // emotion can't describe "it"); "Formal" is a real GR ambiance word
+    // that still fits the same slot.
+    { word: "Formal", phonetic: "/ˈfɔːrml/", definition: "Trang trọng", icon: "🎩" },
     { word: "Upset", phonetic: "/ʌpˈset/", definition: "Buồn bực", icon: "😞" },
     { word: "Important", phonetic: "/ɪmˈpɔːtnt/", definition: "Quan trọng", icon: "❗" },
     { word: "Lovely", phonetic: "/ˈlʌvli/", definition: "Đáng yêu, dễ chịu", icon: "💐" },
@@ -499,8 +505,12 @@ const BO_BANK: P1Bank = {
     { word: "Staff canteen", phonetic: "/stɑːf kænˈtiːn/", definition: "Căng tin nhân viên", icon: "🍱" },
     { word: "Locker room", phonetic: "/ˈlɒkə ruːm/", definition: "Phòng tủ đồ nhân viên", icon: "🔐" },
     { word: "Loading area", phonetic: "/ˈləʊdɪŋ ˈeəriə/", definition: "Khu nhận hàng", icon: "🚚" },
-    { word: "Server room", phonetic: "/ˈsɜːvə ruːm/", definition: "Phòng máy chủ", icon: "🖥️" },
-    { word: "Staff entrance", phonetic: "/stɑːf ˈentrəns/", definition: "Cửa dành cho nhân viên", icon: "🚪" },
+    // Week 8's "lost guest" scenario escorts someone to slots 7-8 — a
+    // restricted server room / staff-only entrance is not somewhere
+    // any staff member would ever lead a visitor. A sales/BO coordinator
+    // showing a client around uses guest-accessible spaces instead.
+    { word: "Business centre", phonetic: "/ˈbɪznəs ˈsentə/", definition: "Trung tâm thương vụ", icon: "💼" },
+    { word: "Elevator", phonetic: "/ˈelɪveɪtə/", definition: "Thang máy", icon: "🛗" },
   ],
   requests: [
     { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
@@ -516,12 +526,18 @@ const BO_BANK: P1Bank = {
     { word: "Detailed", phonetic: "/ˈdiːteɪld/", definition: "Chi tiết", icon: "✔️" },
     { word: "Urgent", phonetic: "/ˈɜːdʒənt/", definition: "Gấp", icon: "🚨" },
     // "Ready" is already taught in the week-6 checkpoint for every team.
-    { word: "Finalised", phonetic: "/ˈfaɪnəlaɪzd/", definition: "Đã chốt xong", icon: "✅" },
-    { word: "Unpaid", phonetic: "/ˌʌnˈpeɪd/", definition: "Chưa thanh toán", icon: "💸" },
+    // "Finalised" doesn't fit the week-10 weather frame ("It is very
+    // ___ today") — "Cloudy" does. "Unpaid" doesn't fit "It is too ___
+    // now" (an office document can't be "too unpaid"); "Complicated"
+    // does and stays on-theme for back office. "Fragile" doesn't fit
+    // "Careful, the floor is ___"; "Sticky" is a real office-floor
+    // warning (spilled coffee in the pantry).
+    { word: "Cloudy", phonetic: "/ˈklaʊdi/", definition: "Nhiều mây", icon: "☁️" },
+    { word: "Complicated", phonetic: "/ˈkɒmplɪkeɪtɪd/", definition: "Phức tạp", icon: "🧩" },
     { word: "Cheap", phonetic: "/tʃiːp/", definition: "Rẻ", icon: "🪙" },
     { word: "Expensive", phonetic: "/ɪkˈspensɪv/", definition: "Đắt", icon: "💎" },
     { word: "Confidential", phonetic: "/ˌkɒnfɪˈdenʃl/", definition: "Bảo mật", icon: "🔐" },
-    { word: "Fragile", phonetic: "/ˈfrædʒaɪl/", definition: "Dễ vỡ", icon: "⚠️" },
+    { word: "Sticky", phonetic: "/ˈstɪki/", definition: "Dính", icon: "⚠️" },
   ],
   routines: [
     { word: "Send an email", phonetic: "/send ən ˈiːmeɪl/", definition: "Gửi thư điện tử", icon: "📧" },

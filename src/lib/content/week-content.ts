@@ -122,7 +122,7 @@ export const FO_WEEK_17: WeekContent = {
         { word: "Keep briefly", phonetic: "/kiːp ˈbriːfli/", definition: "Giữ lại trong thời gian ngắn", context: "I will keep your passport briefly to scan it.", icon: "⏱️" },
       ],
       grammar: [
-        { rude: "Give passport.", polite: "Could you please kindly provide your passport?", rule: "Add 'kindly' to make requests softer." },
+        { rude: "Give passport.", polite: "Could you provide your passport, please?", rule: "Use 'Could you ..., please?' to soften a request — one softener is enough; 'please kindly' sounds unnatural." },
         { rude: "I take this.", polite: "May I hold your passport for a moment?", rule: "Use 'May I hold...' to ask for temporary permission." },
       ],
       speaking: [{
@@ -167,7 +167,7 @@ export const FO_WEEK_17: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Why do you need my credit card if the room is already paid?",
-        targetResponse: "I understand, ma'am. This is just a temporary deposit for any incidental charges during your stay.",
+        targetResponse: "I understand, madam. This is just a temporary deposit for any incidental charges during your stay.",
         helpTip: "Pronounce 'incidental charges' clearly by breaking it down: in-ci-den-tal.",
       }],
       reading: {
@@ -184,7 +184,7 @@ export const FO_WEEK_17: WeekContent = {
       game: [{
         prompt: "What is this extra hold on my card for?",
         options: [
-          { text: "This is just a temporary deposit for incidental charges, ma'am.", correct: true },
+          { text: "This is just a temporary deposit for incidental charges, madam.", correct: true },
           { text: "Minibar is not free.", correct: false },
           { text: "Give me card for money.", correct: false },
         ],
@@ -366,7 +366,7 @@ export const FB_WEEK_15: WeekContent = {
       titleEn: "Table Clearing & Satisfaction Check",
       titleVi: "Dọn bàn & Hỏi thăm Mức độ hài lòng",
       vocabulary: [
-        { word: "Clear", phonetic: "/klɪr/", definition: "Dọn (đĩa, bàn)", context: "May I clear this plate for you, ma'am?", icon: "🍽️" },
+        { word: "Clear", phonetic: "/klɪr/", definition: "Dọn (đĩa, bàn)", context: "May I clear this plate for you, madam?", icon: "🍽️" },
         { word: "Empty plate", phonetic: "/ˈɛmpti pleɪt/", definition: "Đĩa đã dùng xong, trống", context: "I can see an empty plate, shall I take it away?", icon: "🍴" },
         { word: "Enjoy", phonetic: "/ɪnˈdʒɔɪ/", definition: "Thưởng thức, hài lòng", context: "I hope you are enjoying your breakfast.", icon: "😊" },
         { word: "Satisfied", phonetic: "/ˈsætɪsfaɪd/", definition: "Hài lòng", context: "We always want our guests to feel fully satisfied.", icon: "👍" },
@@ -427,7 +427,7 @@ export const HK_WEEK_15: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Oh, sorry, I'm still in the room. Can you come back later?",
-        targetResponse: "Of course, ma'am. I'm sorry to disturb you. I will come back later. Thank you.",
+        targetResponse: "Of course, madam. I'm sorry to disturb you. I will come back later. Thank you.",
         helpTip: "Link the words smoothly in 'sorry to disturb' — soften the 't' sound into the next word.",
       }],
       reading: {
@@ -444,7 +444,7 @@ export const HK_WEEK_15: WeekContent = {
       game: [{
         prompt: "Hello? I am just getting dressed. Could you wait?",
         options: [
-          { text: "Of course, ma'am. I'm sorry to disturb you. I will come back later.", correct: true },
+          { text: "Of course, madam. I'm sorry to disturb you. I will come back later.", correct: true },
           { text: "No problem, I will just clean quickly now.", correct: false },
           { text: "You should have put the DND sign up.", correct: false },
         ],
@@ -547,7 +547,7 @@ export const HK_WEEK_15: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
-        targetResponse: "No problem at all, sir. Would now be a good time to clean? Or shall we come back later?",
+        targetResponse: "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
         helpTip: "Let your tone rise gently on 'later' so it sounds like a genuine question, not a command.",
       }],
       reading: {
@@ -564,7 +564,7 @@ export const HK_WEEK_15: WeekContent = {
       game: [{
         prompt: "Sorry, the sign has been up since yesterday by mistake.",
         options: [
-          { text: "No problem at all, sir. Would now be a good time to clean? Or shall we come back later?", correct: true },
+          { text: "Not at all, sir. Would now be a good time to clean? Or shall we come back later?", correct: true },
           { text: "You have to open the door now.", correct: false },
           { text: "You should not have that sign up.", correct: false },
         ],
@@ -715,7 +715,7 @@ export const SW_WEEK_23: WeekContent = {
       ],
       grammar: [
         { rude: "How was it?", polite: "May I ask how you found your treatment today?", rule: "Use 'May I ask...' to open a feedback question more formally." },
-        { rude: "You should buy this cream.", polite: "This moisturizing cream will be recommended for your skin type, if you're interested.", rule: "Use passive voice ('will be recommended') to suggest a product gently, without sounding pushy." },
+        { rude: "You should buy this cream.", polite: "If you're interested, I could recommend this moisturizing cream for your skin type.", rule: "Use 'If you're interested, I could...' to suggest a product gently, without sounding pushy." },
       ],
       speaking: [{
         guestPrompt: "That massage was wonderful, thank you.",
@@ -891,8 +891,8 @@ export const GR_WEEK_27: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "By the way, I noticed you remembered I like my coffee black with no sugar. That was really thoughtful.",
-        targetResponse: "Thank you, sir. It has been noted in your profile. We can make sure every detail is just right. Your future stays with us will be the same.",
-        helpTip: "Soften the ending with a falling intonation on 'future stays with us' to sound sincere rather than robotic.",
+        targetResponse: "My pleasure, sir. It has been noted in your profile. We will make sure every future stay feels just as personal.",
+        helpTip: "Soften the ending with a falling intonation on 'just as personal' to sound sincere rather than robotic.",
       }],
       reading: {
         text: "GUEST HISTORY PROFILE\nGuest: Mr. James Carter | Loyalty Tier: Diamond\nPreferences:\n- Coffee: Black, no sugar\n- Pillow: Firm, 2 extra\n- Room: High floor, away from elevator\n- Special Note: Wedding anniversary on Aug 15 - arrange small cake\nAllergy: None reported",
@@ -1195,8 +1195,8 @@ export const FO_WEEK_26: WeekContent = {
       ],
       speaking: [{
         guestPrompt: "Actually, my colleague and I would like to swap our rooms, and could you split our bill into two separate ones?",
-        targetResponse: "No problem at all. I'm afraid I'll just need a moment to update it in our system. Then I can set up two separate folios for you.",
-        helpTip: "Use a warm, falling intonation on 'No problem at all' so it sounds reassuring rather than routine.",
+        targetResponse: "Certainly, sir. I'll just need a moment to update it in our system. Then I can set up two separate folios for you.",
+        helpTip: "Use a warm, falling intonation on 'Certainly, sir' so it sounds reassuring rather than routine.",
       }],
       reading: {
         text: "FRONT DESK NOTE - ROOM ADJUSTMENT\nRoom 812 (Mr. Tran) and Room 815 (Mr. Le) requested to swap rooms.\nBoth guests also requested separate folios for individual billing.\nAction: Update PMS room assignment and issue two new keycards.",
@@ -1624,7 +1624,7 @@ export const SW_WEEK_19: WeekContent = {
         { word: "Key card", phonetic: "/kiː kɑːrd/", definition: "Thẻ chìa khóa", context: "This key card opens both your locker and the private cabana.", icon: "🗝️" },
       ],
       grammar: [
-        { rude: "Towels are over there.", polite: "Fresh towels are at the station past the pool bar. Please help yourself.", rule: "Use 'Could you please...' to turn a plain direction into a polite invitation." },
+        { rude: "Towels are over there.", polite: "Fresh towels are at the station past the pool bar. Please help yourself.", rule: "State where things are, then add 'Please help yourself' to turn a plain direction into a warm invitation." },
         { rude: "Use your key for the locker.", polite: "Your room key card will open the locker for you.", rule: "Use passive/future statements ('will open') to give directions in a neutral, informative tone." },
       ],
       speaking: [{

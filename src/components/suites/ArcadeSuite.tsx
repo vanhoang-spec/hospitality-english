@@ -115,7 +115,7 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
         }
       }, 900);
     } else {
-      setFeedback({ ok: false, text: "Try again — too direct." });
+      setFeedback({ ok: false, text: "Chưa đúng — thử bong bóng khác nhé." });
       setTimeout(() => setFeedback(null), 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
     }
@@ -134,15 +134,15 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
       <div className="flex flex-wrap items-center justify-between gap-4 border border-primary/30 bg-card p-4 shadow-xl">
         <div className="flex items-center gap-6">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Time</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Thời gian</div>
             <div className="font-display text-2xl text-primary">{time}s</div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Stars</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Sao</div>
             <div className="font-display text-2xl text-primary">+{score}</div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Round</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Vòng</div>
             <div className="font-display text-2xl text-primary">{Math.min(roundIdx + 1, rounds.length)}/{rounds.length}</div>
           </div>
         </div>
@@ -150,7 +150,7 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
           onClick={startGame}
           className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
         >
-          {stage === "playing" ? "Restart" : "Start Rush"}
+          {stage === "playing" ? "Chơi lại" : "Bắt đầu"}
         </button>
       </div>
 
@@ -178,7 +178,7 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
               onClick={startGame}
               className="mt-7 bg-primary px-8 py-3 text-xs uppercase tracking-[0.3em] text-primary-foreground shadow-xl"
             >
-              Begin Shift →
+              Bắt đầu ca làm →
             </button>
           </div>
         )}
@@ -191,7 +191,7 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
             animate={{ opacity: 1, y: 0 }}
             className="absolute left-1/2 top-3 z-10 w-[92%] -translate-x-1/2 border border-primary/60 bg-background/80 p-3 text-center shadow-xl backdrop-blur"
           >
-            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Guest says</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Khách nói</div>
             <p className="mt-1 font-display text-lg text-foreground">"{currentRound.prompt}"</p>
           </motion.div>
         )}
@@ -238,17 +238,17 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
         {/* DONE SCREEN */}
         {stage === "done" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-            <h3 className="font-display text-4xl text-primary">{won ? "Ca trực hoàn hảo! ✦" : "Shift complete"}</h3>
+            <h3 className="font-display text-4xl text-primary">{won ? "Ca trực hoàn hảo! ✦" : "Hết ca làm"}</h3>
             <p className="mt-2 text-sm text-foreground/70">
               {won
                 ? `Đạt chuẩn — xử lý đúng cả ${rounds.length} tình huống với ${score} ⭐`
-                : `Earned ${score} ⭐ across ${Math.min(roundIdx, rounds.length)} rounds — xử lý đúng cả ${rounds.length} tình huống trong 75s để đạt chuẩn`}
+                : `Được ${score} ⭐ qua ${Math.min(roundIdx, rounds.length)} vòng — cần xử lý đúng cả ${rounds.length} tình huống trong 75s để đạt chuẩn`}
             </p>
             <button
               onClick={startGame}
               className="mt-5 border border-primary px-6 py-2 text-xs uppercase tracking-[0.25em] text-primary hover:bg-primary/10"
             >
-              Play again
+              Chơi lại
             </button>
           </div>
         )}

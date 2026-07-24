@@ -774,7 +774,7 @@ function week35(lx: Ctx): LessonContent[] {
         bw(t1, `What if we ${lo(t1)} instead?`),
         bw(t2, `I could ${lo(t2)} if that helps.`),
         bw(t3, `We might be able to ${lo(t3)} for you.`),
-        bw(t4, `Would it help if we ${lo(t4)}?`),
+        bw(t4, `Would it help if we were to ${lo(t4)}?`),
       ],
       grammar: [
         g(`No. Other way only.`, `What if we ${lo(t1)} instead, sir?`, "Ngữ pháp trọng tâm tuần 35: 'What if we…?' mở ra thương lượng thay vì đóng cửa."),
@@ -782,7 +782,7 @@ function week35(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp("Your price is simply too high for us.", `I understand. What if we ${lo(t1)} instead?`, "Khung vàng tuần này. Không hạ giá ngay — đổi cấu trúc đề nghị trước."),
-        sp("That is a little better, but still not enough.", `Would it help if we ${lo(t4)} as well?`, "Nhượng bộ từng bước nhỏ, mỗi bước một lần. Nhượng hết một lúc là mất hết dư địa."),
+        sp("That is a little better, but still not enough.", `Would it help if we were to ${lo(t4)} as well?`, "Nhượng bộ từng bước nhỏ, mỗi bước một lần. Nhượng hết một lúc là mất hết dư địa."),
       ],
       reading: read(
         `The client pushes back on price. ${lx.staff} does not simply discount: "What if we ${lo(t1)} instead? We might be able to ${lo(t3)} for you." The value changes shape without the price collapsing.`,
@@ -940,7 +940,7 @@ function week35(lx: Ctx): LessonContent[] {
 
 // ============================================================
 // WEEK 36 — Handling a Crisis
-// FRAMES · "There is a {emergency} on the third floor."
+// FRAMES · "There is a {emergency} at the property."
 //        · "Please stay calm — we are handling the {emergency}."
 // ============================================================
 function week36(lx: Ctx): LessonContent[] {
@@ -950,21 +950,21 @@ function week36(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Immediately", "/ɪˈmiːdiətli/", "Ngay lập tức", "Please come immediately.", "🚨"),
         v("Situation", "/ˌsɪtʃuˈeɪʃn/", "Tình huống", "The situation is under control.", "📍"),
-        bw(e1, `There is a ${lo(e1)} on the third floor.`),
-        bw(e2, `We have a ${lo(e2)} near the main entrance.`),
+        bw(e1, `There is a ${lo(e1)} at the property.`),
+        bw(e2, `We have identified a ${lo(e2)} and are responding now.`),
         bw(e3, `The ${lo(e3)} started about five minutes ago.`),
         bw(e4, `Nobody has been hurt by the ${lo(e4)}.`),
       ],
       grammar: [
-        g(`Problem! Come quick!`, `There is a ${lo(e1)} on the third floor. Please come immediately.`, "Báo sự cố phải có: chuyện gì, ở đâu, cần gì. Kêu 'problem' không giúp ai cả."),
+        g(`Problem! Come quick!`, `There is a ${lo(e1)} at the property. Please come immediately.`, "Báo sự cố phải có: chuyện gì, ở đâu, cần gì. Kêu 'problem' không giúp ai cả."),
         g(`Long time before start.`, `The ${lo(e3)} started about five minutes ago.`, "Mốc thời gian giúp người ứng cứu đánh giá mức độ nghiêm trọng."),
       ],
       speaking: [
-        sp("Control room. What is the situation?", `There is a ${lo(e1)} on the third floor. It started about five minutes ago.`, "Khung vàng tuần này. Ba thông tin trong hai câu ngắn: gì, ở đâu, từ bao giờ."),
+        sp("Control room. What is the situation?", `There is a ${lo(e1)} at the property. It started about five minutes ago.`, "Khung vàng tuần này. Ba thông tin trong hai câu ngắn: gì, ở đâu, từ bao giờ."),
         sp("Is anyone injured?", `No. Nobody has been hurt by the ${lo(e4)}.`, "Câu hỏi về người bị thương phải được trả lời trước tiên và dứt khoát."),
       ],
       reading: read(
-        `${lx.staff} calls it in without panic: "There is a ${lo(e1)} on the third floor. The ${lo(e3)} started about five minutes ago. Nobody has been hurt by the ${lo(e4)}." The response team knows exactly what to bring.`,
+        `${lx.staff} calls it in without panic: "There is a ${lo(e1)} at the property. The ${lo(e3)} started about five minutes ago. Nobody has been hurt by the ${lo(e4)}." The response team knows exactly what to bring.`,
         [
           {
             q: "Vì sao đội ứng cứu biết cần mang gì?",
@@ -983,7 +983,7 @@ function week36(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Reception, this is security. What exactly is happening?",
-          `We have a ${lo(e2)} near the main entrance, and it started five minutes ago.`,
+          `We have identified a ${lo(e2)}, and it started five minutes ago.`,
           `Something bad is happening here.`,
           `I am not sure what it is.`,
         ),
@@ -1036,19 +1036,19 @@ function week36(lx: Ctx): LessonContent[] {
     lesson(lx, 36, 3, "Giving Clear Instructions", "Hướng dẫn dứt khoát", {
       vocabulary: [
         bw(e9, `Because of the ${lo(e9)}, please use the stairs.`),
-        bw(e10, `Do not return to your room until the ${lo(e10)} is cleared.`),
-        bw(e11, `Follow me to the assembly point, away from the ${lo(e11)}.`),
-        bw(e12, `Leave your belongings — the ${lo(e12)} comes first.`),
+        bw(e10, `Do not proceed until the ${lo(e10)} is cleared.`),
+        bw(e11, `The ${lo(e11)} is already being handled by the response team.`),
+        bw(e12, `We are already responding to the ${lo(e12)}.`),
       ],
       grammar: [
         g(`Stairs, go, quick!`, `Because of the ${lo(e9)}, please use the stairs, not the lift.`, "Trong khủng hoảng, mệnh lệnh vẫn cần 'please' và cần nêu lý do ngắn gọn."),
-        g(`No come back room.`, `Do not return to your room until the ${lo(e10)} is cleared.`, "Cấm đoán phải kèm điều kiện gỡ bỏ ('until…'), nếu không khách sẽ tự ý quay lại."),
+        g(`No come back room.`, `Do not proceed until the ${lo(e10)} is cleared.`, "Cấm đoán phải kèm điều kiện gỡ bỏ ('until…'), nếu không khách sẽ tự ý quay lại."),
       ],
       speaking: [
         sp("Can I just run up and get my laptop?", `I am sorry, no. Leave your belongings — safety comes first, sir.`, "Từ chối dứt khoát khi liên quan tới an toàn. Đây là lúc duy nhất không thương lượng."),
       ],
       reading: read(
-        `${lx.staff} gives instructions that leave no room for doubt: "Because of the ${lo(e9)}, please use the stairs. Do not return to your room until the ${lo(e10)} is cleared. Follow me to the assembly point." Everyone moves together.`,
+        `${lx.staff} gives instructions that leave no room for doubt: "Because of the ${lo(e9)}, please use the stairs. Do not proceed until the ${lo(e10)} is cleared. Follow me to the assembly point." Everyone moves together.`,
         [
           {
             q: "Vì sao hướng dẫn nêu cả lý do?",
@@ -1080,14 +1080,14 @@ function week36(lx: Ctx): LessonContent[] {
         bw(e14, `I have written a full report on the ${lo(e14)}.`),
       ],
       grammar: [
-        g(`Finish already, all okay.`, `The ${lo(e13)} has been fully resolved, and you may return to your rooms.`, "Thông báo kết thúc sự cố phải rõ ràng và kèm hành động khách được phép làm."),
+        g(`Finish already, all okay.`, `The ${lo(e13)} has been fully resolved, and normal service has resumed.`, "Thông báo kết thúc sự cố phải rõ ràng và kèm hành động khách được phép làm."),
         g(`I write paper about it.`, `I have written a full report on the ${lo(e14)}.`, "Hiện tại hoàn thành cho việc vừa hoàn tất và còn giá trị hiện tại."),
       ],
       speaking: [
-        sp("Is it finally over? Can we go back up?", `Yes, sir. The ${lo(e13)} has been fully resolved, and you may return to your rooms.`, "Câu thông báo kết thúc nên được nói với cùng sự bình tĩnh như lúc bắt đầu."),
+        sp("Is it finally over? Can we go back up?", `Yes, sir. The ${lo(e13)} has been fully resolved, and normal service has resumed.`, "Câu thông báo kết thúc nên được nói với cùng sự bình tĩnh như lúc bắt đầu."),
       ],
       reading: read(
-        `An hour later ${lx.staff} announces: "The ${lo(e13)} has been fully resolved. You may return to your rooms." Afterwards he adds to his colleague: "I have written a full report on the ${lo(e14)}." The next shift starts fully informed.`,
+        `An hour later ${lx.staff} announces: "The ${lo(e13)} has been fully resolved. Normal service has resumed." Afterwards he adds to his colleague: "I have written a full report on the ${lo(e14)}." The next shift starts fully informed.`,
         [
           {
             q: "Nhân viên làm gì sau khi sự cố kết thúc?",
@@ -1586,11 +1586,11 @@ function week39(lx: Ctx): LessonContent[] {
         bw(o2, `The ${lo(o2)} can wait a few minutes if needed.`),
       ],
       grammar: [
-        g(`Problem everywhere, help!`, `There is a ${lo(e1)} on the third floor. Please come immediately.`, "Dưới áp lực, câu càng phải ngắn và rõ. Đây là khung câu của tuần 36."),
+        g(`Problem everywhere, help!`, `There is a ${lo(e1)} at the property. Please come immediately.`, "Dưới áp lực, câu càng phải ngắn và rõ. Đây là khung câu của tuần 36."),
         g(`Guest angry, party broken, I stop.`, `Please stay calm — we are handling it, and the ${lo(o1)} will still go ahead.`, "Xử lý hai việc cùng lúc: trấn an sự cố và giữ lời hứa về dịp đặc biệt."),
       ],
       speaking: [
-        sp("There is smoke in the corridor and our guests are panicking!", `There is a ${lo(e1)} on the third floor. Please stay calm and follow me.`, "Bài kiểm tra khó nhất: báo cáo và trấn an trong cùng một hơi thở."),
+        sp("There is smoke in the corridor and our guests are panicking!", `There is a ${lo(e1)} at the property. Please stay calm and follow me.`, "Bài kiểm tra khó nhất: báo cáo và trấn an trong cùng một hơi thở."),
       ],
       reading: read(
         `The trainer stacks two crises at once. ${lx.staff} reports the ${lo(e1)} first, then reassures the guests, then confirms the ${lo(o1)} will still go ahead. Order under pressure is what the exercise tests.`,
@@ -1612,7 +1612,7 @@ function week39(lx: Ctx): LessonContent[] {
       game: [
         game(
           "There is smoke in the corridor and everyone is shouting!",
-          `There is a ${lo(e1)} on the third floor. Please follow me now.`,
+          `There is a ${lo(e1)} at the property. Please follow me now.`,
           `Do not worry, it is nothing at all.`,
           `Let me find someone who knows.`,
         ),

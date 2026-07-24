@@ -103,7 +103,7 @@ function week23(lx: Ctx): LessonContent[] {
     lesson(lx, 23, 2, "Comparing Two Options", "So sánh hai lựa chọn", {
       vocabulary: [
         v("Quieter", "/ˈkwaɪətə/", "Yên tĩnh hơn", "The corner room is quieter.", "🤫"),
-        bw(u4, `The ${lo(u4)} is larger than the standard one.`),
+        bw(u4, `The ${lo(u4)} is better than the standard one.`),
         bw(u5, `The ${lo(u5)} costs a little more.`),
         bw(u6, `Our guests enjoy the ${lo(u6)}.`),
       ],
@@ -112,17 +112,17 @@ function week23(lx: Ctx): LessonContent[] {
         g(`Price more but nice.`, `The ${lo(u5)} costs a little more, but it is worth it.`, "Câu hai mệnh đề nối bằng 'but'. 'A little more' làm mức giá nghe nhẹ đi."),
       ],
       speaking: [
-        sp("What is the difference between them?", `The ${lo(u4)} is larger than the standard one.`, "So sánh một điểm khác biệt rõ ràng, đừng liệt kê năm điểm cùng lúc."),
+        sp("What is the difference between them?", `The ${lo(u4)} is better than the standard one.`, "So sánh một điểm khác biệt rõ ràng, đừng liệt kê năm điểm cùng lúc."),
         sp("Hmm, is it much more expensive?", `It costs a little more, but our guests really enjoy it.`, "Khách lo về giá — thừa nhận rồi chuyển ngay sang giá trị nhận được."),
       ],
       reading: read(
-        `Mrs. Petrova is choosing between two options. ${lx.staff} explains: "The ${lo(u4)} is larger than the standard one. The ${lo(u5)} costs a little more, but our guests really enjoy the ${lo(u6)}."`,
+        `Mrs. Petrova is choosing between two options. ${lx.staff} explains: "The ${lo(u4)} is better than the standard one. The ${lo(u5)} costs a little more, but our guests really enjoy the ${lo(u6)}."`,
         [
           {
             q: "Điểm khác biệt được nêu ra là gì?",
-            options: ["Rộng hơn loại tiêu chuẩn", "Rẻ hơn loại tiêu chuẩn", "Gần thang máy hơn"],
+            options: ["Tốt hơn loại tiêu chuẩn", "Rẻ hơn loại tiêu chuẩn", "Gần thang máy hơn"],
             correct: 0,
-            explanation: `"is larger than the standard one" — rộng hơn.`,
+            explanation: `"is better than the standard one" — tốt hơn.`,
           },
           {
             q: "Nhân viên xử lý vấn đề giá cả thế nào?",
@@ -146,7 +146,7 @@ function week23(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(u7, `The ${lo(u7)} suits a family very well.`),
         bw(u8, `For a long stay, I suggest the ${lo(u8)}.`),
-        bw(u9, `The ${lo(u9)} is our quietest choice.`),
+        bw(u9, `The ${lo(u9)} is our top recommendation.`),
       ],
       grammar: [
         g(`Family? Take this.`, `For a family, I recommend the ${lo(u7)}.`, "Mở đầu bằng 'For a family,' cho thấy bạn gợi ý theo đúng nhu cầu của khách."),

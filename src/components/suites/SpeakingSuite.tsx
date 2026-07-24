@@ -112,7 +112,7 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
     finalRef.current = "";
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) {
-      setError("Speech recognition isn't supported in this browser. Try Chrome.");
+      setError("Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy thử dùng Chrome.");
       return;
     }
     const r = new SR();
@@ -128,7 +128,7 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
       }
       setTranscript(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
-    r.onerror = (e: any) => setError(`Mic error: ${e.error}`);
+    r.onerror = (e: any) => setError(`Lỗi micro: ${e.error}`);
     r.onend = () => {
       setRecording(false);
       const cleaned = dedupeTranscript(finalRef.current.trim());
@@ -161,7 +161,7 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
       recogRef.current = r;
       setRecording(true);
     } catch (err: any) {
-      setError(`Could not start mic: ${err?.message ?? err}`);
+      setError(`Không mở được micro: ${err?.message ?? err}`);
     }
   }
 
@@ -196,14 +196,14 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
         animate={{ opacity: 1, y: 0 }}
         className="border border-primary/30 bg-card p-6 shadow-xl"
       >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Guest Prompt</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-primary">Lời khách nói</div>
         <p className="mt-4 font-display text-2xl leading-snug">"{scenario.complaint}"</p>
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             onClick={speakComplaint}
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
           >
-            ▶ Play audio
+            ▶ Nghe lời khách
           </button>
           <button
             onClick={() => speakEN(scenario.target, 0.9)}
@@ -219,11 +219,11 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
             }}
             className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
           >
-            Next scenario →
+            Tình huống tiếp theo →
           </button>
         </div>
 
-        <div className="mt-8 text-xs uppercase tracking-[0.3em] text-primary">Target Polite Phrase</div>
+        <div className="mt-8 text-xs uppercase tracking-[0.3em] text-primary">Câu trả lời chuẩn</div>
         <div className="mt-3 leading-relaxed">
           {result ? (
             result.words.map((w, i) => (
@@ -255,7 +255,7 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
         transition={{ delay: 0.1 }}
         className="border border-primary/30 bg-card p-6 shadow-xl"
       >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Your Response</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-primary">Câu trả lời của bạn</div>
         <div className="mt-6 flex flex-col items-center">
           <button
             onClick={toggle}
@@ -275,22 +275,22 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
           </button>
           <style>{`@keyframes pulseGold { 0%,100% { box-shadow: 0 0 24px 6px rgba(212,175,55,0.45);} 50% { box-shadow: 0 0 44px 14px rgba(212,175,55,0.75);} }`}</style>
           <p className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground/60">
-            {recording ? "Listening… click to stop" : "Click to start recording"}
+            {recording ? "Đang nghe… bấm để dừng" : "Bấm để bắt đầu ghi âm"}
           </p>
         </div>
 
         <div className="mt-6 min-h-[80px] border border-primary/20 bg-background/40 p-4 text-sm text-foreground/80">
-          {transcript || <span className="text-foreground/40">Your spoken words will appear here.</span>}
+          {transcript || <span className="text-foreground/40">Lời bạn nói sẽ hiện ở đây.</span>}
         </div>
 
         {result && (
           <div className="mt-5 flex items-center justify-between">
             <div>
-              <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Accuracy</div>
+              <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Độ chính xác</div>
               <div className="font-display text-3xl text-primary">{Math.round(result.accuracy * 100)}%</div>
             </div>
             {result.accuracy >= 0.8 && result.orderRatio >= PASS_ORDER_RATIO && (
-              <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ awarded</div>
+              <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ đạt chuẩn</div>
             )}
             {result.accuracy >= 0.8 && result.orderRatio < PASS_ORDER_RATIO && (
               <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">

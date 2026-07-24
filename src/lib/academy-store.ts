@@ -337,11 +337,13 @@ export function useAcademy() {
 
       if (opts?.mastered) {
         markLearnedToday();
-        // Mastering vocab/grammar/speaking enrolls that content into
-        // spaced review (idempotent — existing schedules are kept).
-        if (suite === "vocab" || suite === "grammar" || suite === "speaking") {
-          seedReviewItems(userId, departmentId, weekNumber, suite).catch(() => {});
-        }
+      }
+      // Seed spaced review on the first COMPLETION of a suite, not only
+      // on mastery — a learner who scores below the mastery bar is the
+      // one who forgets fastest and needs the review queue most. Idempotent
+      // (existing schedules are kept), so re-attempting is harmless.
+      if (suite === "vocab" || suite === "grammar" || suite === "speaking") {
+        seedReviewItems(userId, departmentId, weekNumber, suite).catch(() => {});
       }
     },
     [userId, markLearnedToday],

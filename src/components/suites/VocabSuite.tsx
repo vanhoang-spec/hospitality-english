@@ -321,7 +321,7 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                   style={{ backfaceVisibility: "hidden" }}
                 >
                   <div className="flex w-full items-center justify-between">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Term {i + 1}</div>
+                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Từ {i + 1}</div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -330,7 +330,7 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play audio for ${t.en}`}
                     >
-                      🔊 Audio
+                      🔊 Nghe
                     </button>
                   </div>
                   <div className="flex h-20 w-20 items-center justify-center rounded-full border border-primary/40 bg-background/40 text-4xl">
@@ -357,7 +357,7 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play example for ${t.en}`}
                     >
-                      🔊 Audio
+                      🔊 Nghe
                     </button>
                   </div>
                   <div className="mt-2 flex items-center gap-3">

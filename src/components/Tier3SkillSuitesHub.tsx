@@ -17,37 +17,37 @@ const SUITE_DOORS = [
     slug: "vocab",
     title: "Premium Vocabulary",
     tag: "Lexicon",
-    detail: "Five-star terms, IPA pronunciation, and Vietnamese meaning.",
+    detail: "Học từ vựng 5 sao kèm phát âm IPA và nghĩa tiếng Việt.",
   },
   {
     slug: "grammar",
     title: "Courteous Grammar",
     tag: "Etiquette",
-    detail: "Transform blunt phrases into polished luxury service language.",
+    detail: "Biến câu nói cộc lốc thành câu phục vụ lịch sự, chuẩn 5 sao.",
   },
   {
     slug: "speaking",
     title: "Elite AI Speaking",
     tag: "Voice",
-    detail: "Practice concierge-grade responses with guided scoring.",
+    detail: "Luyện nói phản hồi khách chuẩn concierge, có chấm điểm tự động.",
   },
   {
     slug: "listening",
     title: "Golden Ear Listening",
     tag: "Attention",
-    detail: "Catch guest requests by ear across changing voices and speeds.",
+    detail: "Luyện tai nghe yêu cầu của khách qua nhiều giọng đọc và tốc độ khác nhau.",
   },
   {
     slug: "reading",
     title: "Executive Reading",
     tag: "Insight",
-    detail: "Decode guest reviews and identify LQA compliance signals.",
+    detail: "Đọc hiểu tình huống thực tế và nhận diện chuẩn dịch vụ 5 sao.",
   },
   {
     slug: "arcade",
     title: "VIP Rush Arcade",
     tag: "Reflex",
-    detail: "Smash peak-hour tasks and sharpen operational response speed.",
+    detail: "Xử lý nhanh các tình huống giờ cao điểm, luyện phản xạ.",
   },
 ] as const;
 
@@ -56,7 +56,7 @@ const WEEKTEST_DOOR = {
   slug: "weektest",
   title: "Phase Checkpoint Test",
   tag: "Assessment",
-  detail: "Ten mixed questions across the whole phase. Score 70% to pass.",
+  detail: "Mười câu hỏi tổng hợp cả giai đoạn. Đạt 70% để qua bài kiểm tra.",
 } as const;
 
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
@@ -153,7 +153,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
             <div className="flex items-center gap-3">
               <span className="h-px w-8 bg-primary" />
               <span className="text-xs uppercase tracking-[0.3em] text-primary">
-                Shift Sub-Lessons · 4 Steps
+                Các bước trong ca · 4 bước
               </span>
             </div>
             <ol className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -194,7 +194,7 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
                 <span className="font-display mt-5 block text-2xl leading-tight text-foreground">{suite.title}</span>
                 <span className="mt-4 block text-sm leading-6 text-foreground/62">{suite.detail}</span>
                 <span className="mt-auto flex items-center justify-between pt-8 text-xs uppercase tracking-[0.22em] text-primary">
-                  Enter Suite
+                  Vào học
                   <span className="font-display text-2xl transition-transform group-hover:translate-x-1">→</span>
                 </span>
               </Link>

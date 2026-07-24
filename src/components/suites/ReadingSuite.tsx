@@ -80,7 +80,7 @@ function ReadingSuiteInner({ dep, week, content }: { dep: string; week: string; 
                 i === pIdx ? "border-primary bg-primary/10 text-primary" : "border-primary/30 text-foreground/70 hover:border-primary/60"
               }`}
             >
-              Lesson {i + 1}
+              Bài {i + 1}
             </button>
           ))}
         </div>
@@ -110,7 +110,7 @@ function ReadingSuiteInner({ dep, week, content }: { dep: string; week: string; 
         >
           {passage.questions.map((q, i) => (
             <div key={i} className="border border-primary/30 bg-card p-5 shadow-xl">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Question {i + 1} of {total}</div>
+              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Câu {i + 1}/{total}</div>
               <p className="mt-2 text-sm">{q.q}</p>
               {submitted && q.explanation && (
                 <p className="mt-2 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">💡 {q.explanation}</p>
@@ -149,13 +149,13 @@ function ReadingSuiteInner({ dep, week, content }: { dep: string; week: string; 
               disabled={picks.some((p) => p === null)}
               className="w-full bg-primary py-3 text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl disabled:opacity-40"
             >
-              Submit Comprehension
+              Nộp bài
             </button>
           ) : (
             <div className="border border-primary bg-card p-5 text-center shadow-xl">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Result</div>
+              <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Kết quả</div>
               <div className="font-display mt-2 text-4xl text-primary">{score}/{total}</div>
-              {score >= Math.ceil(total / 2) && <div className="mt-1 text-xs uppercase tracking-[0.25em]">+{score * 2} ⭐ awarded</div>}
+              {score >= Math.ceil(total / 2) && <div className="mt-1 text-xs uppercase tracking-[0.25em]">+{score * 2} ⭐ đạt chuẩn</div>}
             </div>
           )}
         </motion.section>

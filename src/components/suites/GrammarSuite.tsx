@@ -167,25 +167,25 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
         <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">Lỗi thường gặp</div>
         <p className="mt-2 font-display text-xl line-through decoration-destructive/60">"{puzzle.bad}"</p>
         <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-primary">
-          Assemble the 5-star equivalent · Tap two chips to swap their position
+          Ghép câu lịch sự 5 sao · Chạm hai chip để đổi vị trí
         </div>
       </motion.div>
 
       <div className="min-h-[110px] border border-primary bg-card p-4 shadow-xl">
         <div className="flex items-center justify-between">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Your refined sentence</div>
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Câu của bạn</div>
           {checked === true && (
             <button
               onClick={() => speakEN(puzzle.target, 0.9)}
               className="border border-primary/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
-              🔊 Speak sentence
+              🔊 Đọc câu
             </button>
           )}
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {tray.length === 0 && (
-            <span className="text-xs italic text-foreground/40">Click chips below in correct order. Tap two placed chips to swap.</span>
+            <span className="text-xs italic text-foreground/40">Bấm các chip bên dưới theo đúng thứ tự. Chạm hai chip đã đặt để đổi chỗ.</span>
           )}
           {tray.map((w, i) => {
             const selected = selectedTray === i;
@@ -215,7 +215,7 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
       </div>
 
       <div className="border border-primary/30 bg-card p-4 shadow-xl">
-        <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Word bank</div>
+        <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Kho từ</div>
         <div className="mt-3 flex flex-wrap gap-2">
           {bank.map((w, i) => (
             <button
@@ -231,7 +231,7 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
 
       <div className="flex flex-wrap items-center gap-4">
         <button onClick={check} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
-          Verify Courtesy
+          Kiểm tra câu
         </button>
         <button
           onClick={reveal}
@@ -241,11 +241,11 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
           Xem đáp án
         </button>
         <button onClick={next} className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary">
-          Next puzzle →
+          Câu tiếp theo →
         </button>
-        {solvedCleanly && <span className="text-xs uppercase tracking-[0.25em] text-primary">Impeccable. +4 ⭐</span>}
+        {solvedCleanly && <span className="text-xs uppercase tracking-[0.25em] text-primary">Hoàn hảo. +4 ⭐</span>}
         {checked === true && revealed && <span className="text-xs uppercase tracking-[0.25em] text-foreground/60">Đúng — nhưng đã xem đáp án nên không tính sao.</span>}
-        {checked === false && <span className="text-xs uppercase tracking-[0.25em] text-destructive">Almost — refine the order.</span>}
+        {checked === false && <span className="text-xs uppercase tracking-[0.25em] text-destructive">Gần đúng rồi — sắp lại thứ tự nhé.</span>}
       </div>
 
       {/* Rule explanation: shown after any verify attempt or reveal */}
