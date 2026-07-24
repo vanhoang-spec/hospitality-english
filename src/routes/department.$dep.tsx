@@ -1,10 +1,8 @@
 import { createFileRoute, Link, notFound, useParams } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Tier3SkillSuitesHub } from "@/components/Tier3SkillSuitesHub";
 import { getDepartment } from "@/lib/departments";
-import { weeksForDepartment } from "@/lib/curriculum";
+import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
 
 export const Route = createFileRoute("/department/$dep")({
   head: ({ params }) => {
@@ -27,35 +25,24 @@ function DeptPage() {
   const dep = allParams.dep ?? routeParams.dep;
   const weekNumber = allParams.week;
   const department = getDepartment(dep);
-  const [scenarios, setScenarios] = useState<Scenario[] | null>(null);
 
-  useEffect(() => {
-    if (!department || weekNumber) return;
-    let cancelled = false;
-    supabase
-      .from("scenarios")
-      .select("id, week_number, title_en, title_vi")
-      .eq("department_id", department.code)
-      .order("week_number")
-      .then(({ data }) => {
-        if (cancelled) return;
-        const rows = (data as Scenario[]) ?? [];
-        if (rows.length > 0) {
-          setScenarios(rows);
-        } else {
-          // Local fallback so the timeline still mounts with zero missing nodes.
-          setScenarios(
-            weeksForDepartment(department.code).map((w) => ({
-              id: `local-${w.department_id}-${w.week_number}`,
-              week_number: w.week_number,
-              title_en: w.title_en,
-              title_vi: w.title_vi,
-            })),
-          );
-        }
-      });
-    return () => { cancelled = true; };
-  }, [department?.code, weekNumber]);
+  // The timeline titles come straight from the authored content
+  // (week-content.ts), the same source of truth the week hub uses. The
+  // DB `scenarios` table is legacy CMS scaffolding whose titles drifted
+  // out of sync with the authored weeks — reading it here is what showed
+  // placeholder "Front Office — Week 31" names instead of real titles.
+  const scenarios: Scenario[] | null = department
+    ? AVAILABLE_WEEKS.flatMap((w) => {
+        const content = getWeekContent(department.code, w);
+        if (!content) return [];
+        return [{
+          id: `${department.code}-${w}`,
+          week_number: w,
+          title_en: content.weekTitleEn,
+          title_vi: content.weekTitleVi,
+        }];
+      })
+    : null;
 
   if (!department) throw notFound();
 

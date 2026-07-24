@@ -70,12 +70,20 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
   // build a paper from — an empty week must not offer an exam.
   const doors = authored && isCheckpointWeek(week) ? [...SUITE_DOORS, WEEKTEST_DOOR] : SUITE_DOORS;
   const fallback = findWeek(department.code, week);
-  const localLessons =
-    fallback?.lessons.map((vi, i) => ({
-      id: `local-${department.code}-${week}-${i + 1}`,
-      lesson_order: i + 1,
-      title_vi: vi,
-    })) ?? [];
+  // Sub-lesson titles come from the authored lessons when the week has
+  // them; the curriculum.ts descriptions are only a fallback for weeks
+  // still awaiting content (and must never override authored titles).
+  const localLessons = authored
+    ? authored.lessons.map((l) => ({
+        id: `authored-${department.code}-${week}-${l.lessonOrder}`,
+        lesson_order: l.lessonOrder,
+        title_vi: l.titleVi,
+      }))
+    : fallback?.lessons.map((vi, i) => ({
+        id: `local-${department.code}-${week}-${i + 1}`,
+        lesson_order: i + 1,
+        title_vi: vi,
+      })) ?? [];
   const [lessons, setLessons] = useState<
     { id: string; lesson_order: number; title_vi: string }[]
   >(localLessons);
