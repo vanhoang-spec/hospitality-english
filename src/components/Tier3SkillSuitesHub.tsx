@@ -59,6 +59,21 @@ const WEEKTEST_DOOR = {
   detail: "20 câu hỏi tổng hợp cả giai đoạn. Đạt 70% để qua bài kiểm tra.",
 } as const;
 
+/** Only the one week per phase that carries a WritingTask/MediationTask
+ *  (phase3.ts week 26 / phase4.ts week 33) shows these doors. */
+const WRITING_DOOR = {
+  slug: "writing",
+  title: "Guest Review Reply",
+  tag: "Writing",
+  detail: "Viết phản hồi chuẩn 5 sao cho đánh giá của khách.",
+} as const;
+const MEDIATION_DOOR = {
+  slug: "mediation",
+  title: "Bridge the Language Gap",
+  tag: "Mediation",
+  detail: "Truyền đạt lại cho khách bằng tiếng Anh những gì đồng nghiệp vừa báo.",
+} as const;
+
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
   // week-content.ts is the source of truth for any week that has authored
   // lessons — the DB `lessons` rows are placeholders that only describe
@@ -67,8 +82,15 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
   // generic "(Tuần 17)" steps that travelled with the swapped scenario).
   const authored = getWeekContent(department.code, week);
   // The checkpoint test only exists where there is authored content to
-  // build a paper from — an empty week must not offer an exam.
-  const doors = authored && isCheckpointWeek(week) ? [...SUITE_DOORS, WEEKTEST_DOOR] : SUITE_DOORS;
+  // build a paper from — an empty week must not offer an exam. Writing
+  // and mediation doors only appear on the specific week that carries
+  // that content (most weeks have neither).
+  const doors = [
+    ...SUITE_DOORS,
+    ...(authored && isCheckpointWeek(week) ? [WEEKTEST_DOOR] : []),
+    ...(authored?.writing ? [WRITING_DOOR] : []),
+    ...(authored?.mediation ? [MEDIATION_DOOR] : []),
+  ];
   const fallback = findWeek(department.code, week);
   // Sub-lesson titles come from the authored lessons when the week has
   // them; the curriculum.ts descriptions are only a fallback for weeks

@@ -24,7 +24,7 @@ export type AcademyState = {
   metrics: Metrics;
 };
 
-export type Suite = "vocab" | "grammar" | "speaking" | "reading" | "arcade" | "listening" | "weektest";
+export type Suite = "vocab" | "grammar" | "speaking" | "reading" | "arcade" | "listening" | "weektest" | "writing" | "mediation";
 
 const DEFAULT_STATE: AcademyState = {
   full_name: "Esteemed Apprentice",

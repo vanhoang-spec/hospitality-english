@@ -25,7 +25,7 @@
 // learner never saw.
 // ============================================================
 
-import type { LessonContent, WeekContent } from "./week-content";
+import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 
@@ -1531,6 +1531,83 @@ function reviewWordsFor(
   return Array.from(new Set(out));
 }
 
+// P2: one mediation task per department, all sitting on week 26
+// (Working With Other Teams — the natural home for "relay what a
+// colleague just told you to a guest who doesn't speak Vietnamese").
+// Exported so week-content.ts can attach the FO entry to the
+// hand-authored FO_WEEK_26 override, which replaces this file's spine
+// output for that one key. Direction is Vietnamese-in / English-out —
+// the audit named this exact skill (mediating between a guest and a
+// Vietnamese-speaking colleague) as the most common real B1 task in a
+// VN hotel and absent from all 40 weeks.
+export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
+  FO: {
+    colleagueNoteVi:
+      "Phòng 512 chưa dọn xong vì tổ buồng phòng đang thiếu người, phải đợi thêm khoảng 20 phút nữa mới vào ở được.",
+    promptVi:
+      "Khách đang đứng chờ nhận phòng 512. Hãy nói lại bằng tiếng Anh cho khách biết: phòng chưa xong, cần đợi thêm khoảng 20 phút, và bạn xin lỗi vì sự chậm trễ.",
+    mustMention: ["sorry", "ready", "20 minutes"],
+    modelAnswer:
+      "I'm sorry, sir, your room is not quite ready yet — housekeeping needs about 20 more minutes to finish. May I offer you a seat in the lounge while you wait?",
+    explanationVi:
+      "Khi truyền đạt tin xấu, luôn xin lỗi trước, nêu mốc thời gian cụ thể, và đề nghị một giải pháp tạm trong lúc chờ — không chỉ dịch nguyên văn lời đồng nghiệp.",
+  },
+  FB: {
+    colleagueNoteVi: "Món cá hồi nướng hôm nay bếp hết nguyên liệu rồi, chỉ còn cá tuyết thay thế thôi.",
+    promptVi:
+      "Khách vừa gọi món cá hồi nướng. Hãy nói lại bằng tiếng Anh: món đó đã hết, gợi ý món cá tuyết thay thế, và hỏi khách có đồng ý không.",
+    mustMention: ["sorry", "salmon", "cod"],
+    modelAnswer:
+      "I'm sorry, sir, the grilled salmon is no longer available today. The kitchen can offer grilled cod instead, which is just as fresh — would that work for you?",
+    explanationVi:
+      "Không chỉ nói 'hết món' — phải xin lỗi, gợi ý ngay phương án thay thế, và hỏi ý kiến khách để khách vẫn cảm thấy được chủ động lựa chọn.",
+  },
+  HK: {
+    colleagueNoteVi:
+      "Điều hòa phòng 208 đang hỏng, kỹ thuật cần khoảng 1 tiếng để sửa, có thể chuyển khách sang phòng 210 tạm thời.",
+    promptVi:
+      "Khách phòng 208 đang phàn nàn phòng nóng. Hãy nói lại bằng tiếng Anh: điều hòa đang hỏng, kỹ thuật cần khoảng 1 giờ để sửa, và đề nghị chuyển khách sang phòng 210 trong lúc chờ.",
+    mustMention: ["sorry", "air conditioning", "hour"],
+    modelAnswer:
+      "I'm very sorry, madam, the air conditioning in your room is being repaired — our engineering team needs about an hour. Would you like to move to room 210 in the meantime so you can stay comfortable?",
+    explanationVi:
+      "Câu trả lời cần đủ ba phần: xin lỗi, lý do kỹ thuật cụ thể kèm khung giờ, và một giải pháp tạm thời chủ động đề xuất, không chờ khách phải hỏi.",
+  },
+  SW: {
+    colleagueNoteVi:
+      "Kỹ thuật viên phụ trách khách hẹn 3 giờ chiều đang bị ốm, phải đổi sang kỹ thuật viên khác hoặc dời giờ hẹn.",
+    promptVi:
+      "Khách đã đặt massage lúc 3 giờ chiều. Hãy nói lại bằng tiếng Anh: kỹ thuật viên phụ trách bị ốm, đề nghị đổi sang kỹ thuật viên khác hoặc dời giờ hẹn, và xin lỗi vì sự bất tiện.",
+    mustMention: ["sorry", "therapist", "reschedule"],
+    modelAnswer:
+      "I'm sorry, madam, your therapist for the 3 o'clock appointment is unwell today. We can offer you another qualified therapist at the same time, or reschedule to a time that suits you better — which would you prefer?",
+    explanationVi:
+      "Đưa ra hai lựa chọn cụ thể (đổi kỹ thuật viên khác HOẶC đổi giờ) thay vì chỉ báo tin xấu — giúp khách cảm thấy vẫn được chủ động quyết định.",
+  },
+  GR: {
+    colleagueNoteVi:
+      "Suite dành cho khách VIP tối nay chưa dọn xong vì có sự cố rò nước, phải chuyển khách sang Suite khác cùng hạng.",
+    promptVi:
+      "Khách VIP tối nay đặt phòng Suite. Hãy nói lại bằng tiếng Anh: phòng gặp sự cố rò nước, đề nghị chuyển sang Suite khác cùng hạng, và xin lỗi vì sự bất tiện.",
+    mustMention: ["sorry", "suite", "same"],
+    modelAnswer:
+      "I'm very sorry, sir, there has been a water leak in your Suite, so it will not be ready tonight. We would like to move you to another Suite of the same category, at no extra cost — I hope that will still make your stay special.",
+    explanationVi:
+      "Với khách VIP, phải khẳng định rõ 'cùng hạng phòng, không phát sinh chi phí' để khách yên tâm — không chỉ báo tin đổi phòng suông.",
+  },
+  BO: {
+    colleagueNoteVi:
+      "Đoàn khách MICE tuần sau bị giảm từ 80 xuống 60 người, cần báo lại cho đối tác lữ hành để họ điều chỉnh hợp đồng.",
+    promptVi:
+      "Bạn cần báo cho đối tác lữ hành nói tiếng Anh. Hãy nói lại bằng tiếng Anh: số lượng khách MICE giảm từ 80 xuống 60 người, và đề nghị điều chỉnh lại hợp đồng.",
+    mustMention: ["group", "60", "contract"],
+    modelAnswer:
+      "I'm calling to let you know that the MICE group size has changed from 80 to 60 guests for next week. We will need to adjust the contract accordingly — could you confirm the updated numbers work on your side?",
+    explanationVi:
+      "Với đối tác B2B, cần nêu rõ số liệu chính xác và chủ động đề cập tới việc điều chỉnh hợp đồng — không chỉ báo tin thay đổi mà bỏ ngỏ bước tiếp theo.",
+  },
+};
+
 function buildWeek(
   lx: Ctx,
   week: number,
@@ -1545,6 +1622,7 @@ function buildWeek(
     weekTitleVi: meta.vi,
     lessons: meta.build(lx),
     reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
+    mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
   };
 }
 

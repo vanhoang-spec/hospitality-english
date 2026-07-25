@@ -27,7 +27,7 @@
 // spine taught but the learner never saw.
 // ============================================================
 
-import type { LessonContent, WeekContent } from "./week-content";
+import type { LessonContent, WeekContent, WritingTask } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon } from "./phase0";
 import { P4_BANKS, type P4Bank, type P4Word } from "./phase4-lexicon";
 
@@ -433,6 +433,20 @@ function week33(lx: Ctx): LessonContent[] {
       speaking: [
         sp("This has ruined our entire trip.", `I am very sorry about the ${lo(d1)}, madam. The ${lo(d4)} should never have happened.`, "Khung vàng tuần này. Thừa nhận chuẩn mực đã bị vi phạm, đừng giảm nhẹ mức độ."),
         sp("So what happens now?", `I will record the ${lo(d3)} exactly as you say it, then bring it to my supervisor.`, "Nói rõ hai bước tiếp theo — khách cần thấy quy trình, không chỉ lời xin lỗi."),
+        // FO-only: "walking" a guest (relocating them because the hotel
+        // cannot honour a confirmed reservation) is the single hardest
+        // conversation a front desk agent has, and 40 weeks never covered
+        // it. It belongs here, not in the shared frame, because no other
+        // department ever has to deliver this specific news.
+        ...(lx.code === "FO"
+          ? [
+              sp(
+                "We have a confirmed reservation. Why can't we check in?",
+                "I am very sorry, sir. We are fully booked tonight due to an unexpected issue. We would like to arrange a room at a partner hotel nearby, with transport included and no extra cost to you.",
+                "Đây là tình huống 'walk the guest' — khó nhất của lễ tân. Luôn xin lỗi trước, nêu lý do ngắn gọn, rồi đưa giải pháp cụ thể (khách sạn đối tác, có xe đưa đón, không phát sinh chi phí) trong cùng một lượt nói.",
+              ),
+            ]
+          : []),
       ],
       reading: read(
         `Mr. Halvorsen makes a serious claim. ${lx.staff} does not argue: "I am very sorry about the ${lo(d1)}. Could you describe the ${lo(d2)} in detail? I will record it exactly as you say it." He writes down the guest's own words.`,
@@ -1905,6 +1919,90 @@ function reviewWordsFor(
   return Array.from(new Set(out));
 }
 
+// P2: one written-recovery task per department, all sitting on week 33
+// (Disputes & Compensation — the natural home for "the guest already
+// complained, now put the recovery in writing"). Exported so
+// week-content.ts can attach the HK entry to the hand-authored HK_WEEK_33
+// override, which replaces this file's spine output for that one key.
+// BO's audience is a corporate travel partner, not a walk-in guest, so
+// its task is framed as a B2B email reply rather than a public review —
+// the same mismatch the P0 audit flagged when guest-facing frames were
+// dropped onto Back Office without adjusting the scenario.
+export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
+  FO: {
+    reviewMeta: "★★☆☆☆ · Google Reviews · 2 ngày trước",
+    reviewText:
+      "I was charged twice for the same night and nobody has explained why. I've emailed three times with no reply. Disappointing for a hotel that calls itself five-star.",
+    promptVi:
+      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì khoản phí bị tính trùng (charge), (2) cam kết hoàn lại tiền (refund) trong vài ngày tới, (3) mời khách liên hệ (contact) trực tiếp để xử lý nhanh hơn.",
+    mustMention: ["sorry", "charge", "refund", "contact"],
+    modelReply:
+      "Dear guest, we are very sorry for the double charge on your bill and for the delay in replying to your emails. We have identified the error and will process a full refund within three business days. Please contact our Front Office Manager directly so we can resolve this personally and welcome you back with the experience you deserve.",
+    explanationVi:
+      "Phản hồi tốt luôn có đủ 4 phần: xin lỗi cụ thể (không chung chung), nêu hành động khắc phục kèm mốc thời gian, cho một kênh liên hệ trực tiếp, và khép lại bằng lời mời quay lại.",
+  },
+  FB: {
+    reviewMeta: "★★☆☆☆ · TripAdvisor · 4 ngày trước",
+    reviewText:
+      "The chicken in our main course was undercooked and we felt sick afterwards. We told the waiter but nobody from management ever followed up. Won't be dining here again.",
+    promptVi:
+      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì món ăn chưa chín kỹ, (2) khẳng định đã làm việc với bếp (kitchen) để rà soát quy trình, (3) mời khách quay lại dùng bữa miễn phí (complimentary).",
+    mustMention: ["sorry", "kitchen", "complimentary"],
+    modelReply:
+      "We are truly sorry to hear about the undercooked chicken and that you felt unwell — this does not meet our standards. We have already spoken with our kitchen team to review food safety procedures. We would be honoured to welcome you back for a complimentary dinner so we can show you the experience we intended to give you the first time.",
+    explanationVi:
+      "'Undercooked chicken' là lỗi an toàn thực phẩm nghiêm trọng — phản hồi phải nêu hành động cụ thể với bếp, không chỉ xin lỗi suông, và đề nghị bù đắp rõ ràng.",
+  },
+  HK: {
+    reviewMeta: "★★☆☆☆ · Booking.com · 3 ngày trước",
+    reviewText:
+      "The laundry service ruined my silk dress — it came back with a bleach mark and the hotel only offered a small credit. Very disappointing for the price we paid.",
+    promptVi:
+      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì váy lụa bị hư hại, (2) nói rõ khoản bồi thường (compensation) sẽ được xem xét lại thỏa đáng hơn, (3) mời khách liên hệ (contact) bộ phận buồng phòng trực tiếp.",
+    mustMention: ["sorry", "compensation", "contact"],
+    modelReply:
+      "We are very sorry that your silk dress was damaged in our laundry service — this is not the outcome we want for any guest. We would like to review the compensation offered, as a small credit does not reflect the value of your dress. Please contact our Housekeeping Manager directly so we can offer a fair resolution and regain your trust.",
+    explanationVi:
+      "Khi khách đã nói mức đền bù ban đầu chưa thỏa đáng, phản hồi tốt phải THỪA NHẬN điều đó và cam kết xem lại — lặp lại đề nghị cũ sẽ khiến khách càng bực.",
+  },
+  SW: {
+    reviewMeta: "★★☆☆☆ · Google Reviews · 1 tuần trước",
+    reviewText:
+      "I had a skin reaction after my facial and the therapist didn't seem to know what products were used. Nobody has followed up since I left.",
+    promptVi:
+      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì phản ứng trên da, (2) nhấn mạnh sự an toàn (safety) của khách là ưu tiên, (3) mời khách liên hệ (contact) để được hỗ trợ.",
+    mustMention: ["sorry", "safety", "contact"],
+    modelReply:
+      "We are very sorry to hear about the skin reaction after your facial — your safety is always our top priority, and we should have followed up with you immediately. Please contact our Spa Manager directly so we can review exactly which products were used and support you with any follow-up you may need.",
+    explanationVi:
+      "Phản ứng da là vấn đề sức khỏe, không chỉ trải nghiệm dịch vụ — phản hồi phải nêu rõ ưu tiên an toàn và mời khách liên hệ ngay.",
+  },
+  GR: {
+    reviewMeta: "★★☆☆☆ · TripAdvisor · 5 ngày trước",
+    reviewText:
+      "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
+    promptVi:
+      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì cam kết (promise) không được thực hiện, (2) khẳng định sẽ ghi vào hồ sơ khách (profile) cho lần sau, (3) mời khách liên hệ (contact) để sắp xếp bù đắp.",
+    mustMention: ["sorry", "promise", "profile", "contact"],
+    modelReply:
+      "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. We have noted this in your guest profile so it never happens again. Please contact our Guest Relations team directly so we can arrange a benefit to make up for what you missed.",
+    explanationVi:
+      "Khách hạng cao kỳ vọng được ghi nhớ — phản hồi phải nhắc tới việc lưu hồ sơ (profile) để chứng minh khách sạn thực sự cải thiện, không chỉ xin lỗi cho qua.",
+  },
+  BO: {
+    reviewMeta: "✉️ Email khiếu nại từ đối tác lữ hành · ABC Travel",
+    reviewText:
+      "We were invoiced twice for the same group booking last month, and our finance team still hasn't received a credit note. This is affecting our trust in continuing to work with your hotel.",
+    promptVi:
+      "Hãy viết email phản hồi chuyên nghiệp: (1) xin lỗi (sorry) vì hóa đơn bị lặp (duplicate), (2) cam kết gửi giấy báo có (credit note) trong thời hạn cụ thể, (3) khẳng định coi trọng mối quan hệ hợp tác (partnership) lâu dài.",
+    mustMention: ["sorry", "duplicate", "credit note", "partnership"],
+    modelReply:
+      "Dear ABC Travel team, we are very sorry for the duplicate invoice on your group booking and for the delay in resolving it. Our finance department will issue the credit note within five business days. We value this partnership highly and are taking steps to make sure this billing error does not happen again.",
+    explanationVi:
+      "Với đối tác B2B, phản hồi cần nêu rõ bộ phận xử lý, mốc thời gian cụ thể, và khẳng định giá trị hợp tác (partnership) — đây là quan hệ kinh doanh dài hạn, không phải một lượt lưu trú.",
+  },
+};
+
 function buildWeek(
   lx: Ctx,
   week: number,
@@ -1919,6 +2017,7 @@ function buildWeek(
     weekTitleVi: meta.vi,
     lessons: meta.build(lx),
     reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
+    writing: week === 33 ? WEEK33_WRITING_TASKS[lx.code] : undefined,
   };
 }
 

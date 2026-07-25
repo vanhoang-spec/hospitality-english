@@ -7,6 +7,8 @@ import { GrammarSuite } from "@/components/suites/GrammarSuite";
 import { ReadingSuite } from "@/components/suites/ReadingSuite";
 import { ListeningSuite } from "@/components/suites/ListeningSuite";
 import { WeekTestSuite } from "@/components/suites/WeekTestSuite";
+import { WritingSuite } from "@/components/suites/WritingSuite";
+import { MediationSuite } from "@/components/suites/MediationSuite";
 import { getDepartment } from "@/lib/departments";
 
 const TITLES: Record<string, { en: string; tag: string }> = {
@@ -17,6 +19,8 @@ const TITLES: Record<string, { en: string; tag: string }> = {
   reading: { en: "Executive Reading", tag: "Comprehension" },
   arcade: { en: "VIP Rush Arcade", tag: "Reflex" },
   weektest: { en: "Phase Checkpoint Test", tag: "Assessment" },
+  writing: { en: "Guest Review Reply", tag: "Writing" },
+  mediation: { en: "Bridge the Language Gap", tag: "Mediation" },
 };
 
 export const Route = createFileRoute("/learn/$dep/$week/$suite")({
@@ -62,6 +66,8 @@ function SuitePage() {
           {suite === "reading" && <ReadingSuite dep={department.code} week={week} />}
           {suite === "arcade" && <ArcadeSuite dep={department.code} week={week} />}
           {suite === "weektest" && <WeekTestSuite dep={department.code} week={week} />}
+          {suite === "writing" && <WritingSuite dep={department.code} week={week} />}
+          {suite === "mediation" && <MediationSuite dep={department.code} week={week} />}
         </div>
       </motion.div>
     </main>

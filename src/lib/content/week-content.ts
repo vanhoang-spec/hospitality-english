@@ -6,8 +6,8 @@
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
-import { buildPhase3, phase3WordsByDep } from "./phase3";
-import { buildPhase4 } from "./phase4";
+import { buildPhase3, phase3WordsByDep, WEEK26_MEDIATION_TASKS } from "./phase3";
+import { buildPhase4, WEEK33_WRITING_TASKS } from "./phase4";
 
 /** Everything a department met in Phases 0-1, in teaching order — the
  *  long-spacing recycling pool Phase 2 draws on. */
@@ -50,6 +50,34 @@ export type LessonContent = {
   game: GameRound[];
 };
 
+/** A guest's online review + the model 5-star written reply — the
+ *  writing production skill the app had none of before P2. `mustMention`
+ *  are case-insensitive substrings the learner's own reply is checked
+ *  against (coverage-scored, not exact-match — this is a formative
+ *  self-study tool, not a strict grader). */
+export type WritingTask = {
+  reviewMeta: string;
+  reviewText: string;
+  promptVi: string;
+  mustMention: string[];
+  modelReply: string;
+  explanationVi: string;
+};
+
+/** A Vietnamese colleague's note that the learner must relay to an
+ *  English-speaking guest — the mediation skill (interpreting between
+ *  a guest and a Vietnamese-speaking colleague) named by the audit as
+ *  the most common real B1 task in a VN hotel and absent from all 40
+ *  weeks. `mustMention` scores the learner's typed English relay the
+ *  same coverage-based way as WritingTask. */
+export type MediationTask = {
+  colleagueNoteVi: string;
+  promptVi: string;
+  mustMention: string[];
+  modelAnswer: string;
+  explanationVi: string;
+};
+
 export type WeekContent = {
   departmentId: string;
   weekNumber: number;
@@ -59,6 +87,10 @@ export type WeekContent = {
   /** Vocabulary headwords from earlier weeks to interleave into this
    *  week's quizzes/cloze for spaced recycling (P5 content standard). */
   reviewWords?: string[];
+  /** Present only on the one week per phase that carries it (P2 content
+   *  standard) — see phase3.ts week 26 / phase4.ts week 33. */
+  writing?: WritingTask;
+  mediation?: MediationTask;
 };
 
 export const FO_WEEK_17: WeekContent = {
@@ -79,7 +111,7 @@ export const FO_WEEK_17: WeekContent = {
         { word: "Welcome", phonetic: "/ˈwɛlkəm/", definition: "Chào đón", context: "Welcome to our hotel, sir.", icon: "🙏" },
         { word: "Reservation", phonetic: "/ˌrɛzərˈveɪʃən/", definition: "Sự đặt phòng trước", context: "Do you have a reservation with us?", icon: "📅" },
         { word: "Booking reference", phonetic: "/ˈbʊkɪŋ ˈrɛfərəns/", definition: "Mã số đặt phòng", context: "May I have your booking reference number?", icon: "🔖" },
-        { word: "System", phonetic: "/ˈsɪstəm/", definition: "Hệ thống máy tính", context: "Let me check our system for your name.", icon: "💻" },
+        { word: "Registration card", phonetic: "/ˌrɛdʒɪˈstreɪʃən kɑːrd/", definition: "Phiếu đăng ký lưu trú", context: "Could you please sign the registration card for me?", icon: "📝" },
       ],
       grammar: [
         { rude: "Give me your name.", polite: "May I have your name, please?", rule: "Use 'May I have...' to ask for information politely." },
@@ -199,7 +231,7 @@ export const FO_WEEK_17: WeekContent = {
         { word: "Room key", phonetic: "/ruːm kiː/", definition: "Chìa khóa phòng", context: "Here is your electronic room keycard.", icon: "🔑" },
         { word: "Elevator", phonetic: "/ˈɛlɪveɪtər/", definition: "Thang máy", context: "The elevators are just behind you on the left.", icon: "🛗" },
         { word: "Breakfast buffet", phonetic: "/ˈbrɛkfəst ˈbʊfeɪ/", definition: "Buffet ăn sáng", context: "Our breakfast buffet is on the first floor.", icon: "🍽️" },
-        { word: "Opening hours", phonetic: "/ˈoʊpənɪŋ ˈaʊərz/", definition: "Giờ mở cửa", context: "The swimming pool opening hours are from 6 AM to 9 PM.", icon: "🕐" },
+        { word: "ETA", phonetic: "/iː tiː eɪ/", definition: "Giờ dự kiến đến (estimated time of arrival)", context: "Could you tell me your ETA so we can prepare your room?", icon: "🕐" },
       ],
       grammar: [
         { rude: "Go to first floor for food.", polite: "Breakfast is served at the main restaurant on the first floor.", rule: "Use passive structures like 'Breakfast is served...' to sound professional." },
@@ -628,7 +660,7 @@ export const SW_WEEK_23: WeekContent = {
       titleEn: "Explaining Treatment Types",
       titleVi: "Giải thích các Liệu pháp Trị liệu",
       vocabulary: [
-        { word: "Traditional", phonetic: "/trəˈdɪʃənəl/", definition: "Truyền thống", context: "Our traditional Vietnamese massage uses gentle stretching techniques.", icon: "🇻🇳" },
+        { word: "Contraindication check", phonetic: "/ˌkɒntrəˌɪndɪˈkeɪʃn tʃek/", definition: "Kiểm tra chống chỉ định trước liệu trình", context: "We always do a contraindication check before any treatment.", icon: "⚠️" },
         { word: "Hot stone", phonetic: "/hɒt stoʊn/", definition: "Đá nóng", context: "The hot stone massage uses heated basalt stones to relax your muscles.", icon: "🪨" },
         { word: "Herbal steam", phonetic: "/ˈhɜːrbəl stiːm/", definition: "Xông hơi thảo dược", context: "Herbal steam opens your pores and clears your sinuses.", icon: "🌿" },
         { word: "Circulation", phonetic: "/ˌsɜːrkjəˈleɪʃən/", definition: "Sự tuần hoàn (máu)", context: "This treatment improves blood circulation throughout your body.", icon: "💓" },
@@ -671,7 +703,7 @@ export const SW_WEEK_23: WeekContent = {
         { word: "Package", phonetic: "/ˈpækɪdʒ/", definition: "Gói dịch vụ", context: "We have a special couple's package this week.", icon: "🎁" },
         { word: "Combo", phonetic: "/ˈkɒmboʊ/", definition: "Gói kết hợp", context: "The combo includes a massage and a facial treatment.", icon: "🧖" },
         { word: "Complimentary", phonetic: "/ˌkɒmplɪˈmɛntəri/", definition: "Miễn phí (đi kèm)", context: "The family package includes a complimentary herbal tea.", icon: "🍵" },
-        { word: "Membership", phonetic: "/ˈmɛmbərʃɪp/", definition: "Thẻ hội viên", context: "Would you like to hear about our long-term membership plans?", icon: "💳" },
+        { word: "Draping technique", phonetic: "/ˈdreɪpɪŋ tekˈniːk/", definition: "Kỹ thuật phủ khăn giữ kín đáo cho khách", context: "Our therapists always use proper draping technique for your comfort.", icon: "🩹" },
       ],
       grammar: [
         { rude: "You should buy the bigger package.", polite: "Have you considered our couple's combo? It's a lovely way to relax together.", rule: "Use 'Have you considered...?' to suggest an upgrade without pressuring the guest." },
@@ -801,7 +833,7 @@ export const GR_WEEK_27: WeekContent = {
       titleVi: "Phục vụ Trà Chiều & Giờ Cocktail Buổi Tối",
       vocabulary: [
         { word: "Refreshments", phonetic: "/rɪˈfrɛʃmənts/", definition: "Đồ ăn nhẹ, thức uống giải khát", context: "Refreshments are served in the lounge throughout the day.", icon: "🍰" },
-        { word: "Selection", phonetic: "/sɪˈlɛkʃən/", definition: "Sự lựa chọn (đa dạng món)", context: "We offer a selection of teas, pastries, and finger sandwiches.", icon: "🍵" },
+        { word: "Guest satisfaction score", phonetic: "/ɡest ˌsætɪsˈfækʃn skɔːr/", definition: "Điểm hài lòng của khách", context: "Your feedback directly affects our guest satisfaction score.", icon: "📊" },
         { word: "Canapés", phonetic: "/ˈkænəpeɪz/", definition: "Món khai vị nhỏ", context: "Our chef prepares fresh canapés for Cocktail Hour every evening.", icon: "🍢" },
         { word: "Replenish", phonetic: "/rɪˈplɛnɪʃ/", definition: "Bổ sung thêm (đồ ăn/uống)", context: "I will replenish the pastry tray for you right away.", icon: "🔄" },
       ],
@@ -883,7 +915,7 @@ export const GR_WEEK_27: WeekContent = {
         { word: "Preference", phonetic: "/ˈprɛfərəns/", definition: "Sở thích, sự ưu tiên", context: "Please note the guest's preference for a high floor room.", icon: "📝" },
         { word: "Anniversary", phonetic: "/ˌænɪˈvɜːrsəri/", definition: "Ngày kỷ niệm", context: "Mr. and Mrs. Lee are celebrating their wedding anniversary during this stay.", icon: "💍" },
         { word: "Allergy", phonetic: "/ˈælərdʒi/", definition: "Dị ứng", context: "The guest has a shellfish allergy, so please inform the kitchen.", icon: "⚠️" },
-        { word: "Recurring", phonetic: "/rɪˈkɜːrɪŋ/", definition: "Lặp lại, thường xuyên", context: "This is a recurring request from our loyal guest — he always asks for extra pillows.", icon: "🔁" },
+        { word: "Post-stay follow-up", phonetic: "/pəʊst steɪ ˈfɒləʊ ʌp/", definition: "Liên hệ hỏi thăm sau khi khách rời khách sạn", context: "We will send a post-stay follow-up to thank you for your visit.", icon: "✉️" },
       ],
       grammar: [
         { rude: "Write down what he likes.", polite: "Let's make sure to record his preferences in the guest profile.", rule: "Use 'Let's make sure to...' to turn a blunt instruction into a collaborative, professional suggestion." },
@@ -934,7 +966,7 @@ export const BO_WEEK_37: WeekContent = {
       vocabulary: [
         { word: "Corporate rate", phonetic: "/ˈkɔːrpərət reɪt/", definition: "Giá phòng dành cho doanh nghiệp", context: "We can offer you a special corporate rate for your company.", icon: "🏢" },
         { word: "Volume contract", phonetic: "/ˈvɒljuːm ˈkɒntrækt/", definition: "Hợp đồng theo số lượng lớn", context: "This volume contract guarantees you the best price all year.", icon: "📄" },
-        { word: "Competitive", phonetic: "/kəmˈpɛtɪtɪv/", definition: "Có tính cạnh tranh", context: "Our rates are very competitive compared to nearby hotels.", icon: "💪" },
+        { word: "Occupancy rate", phonetic: "/ˈɒkjʊpənsi reɪt/", definition: "Tỷ lệ lấp đầy phòng", context: "Our occupancy rate this month allows some flexibility on price.", icon: "📈" },
         { word: "Sign (a contract)", phonetic: "/saɪn/", definition: "Ký (hợp đồng)", context: "We would be delighted if you could sign the agreement today.", icon: "✍️" },
       ],
       grammar: [
@@ -1053,7 +1085,7 @@ export const BO_WEEK_37: WeekContent = {
       titleVi: "Xử lý Ép giá & Tranh chấp Hoa hồng",
       vocabulary: [
         { word: "Commission rate", phonetic: "/kəˈmɪʃən reɪt/", definition: "Tỷ lệ hoa hồng", context: "Our standard commission rate for travel agents is 10 percent.", icon: "💵" },
-        { word: "Undercut", phonetic: "/ˌʌndərˈkʌt/", definition: "Phá giá, chào giá thấp hơn", context: "Another hotel is trying to undercut our rate.", icon: "📉" },
+        { word: "ADR", phonetic: "/eɪ diː ɑːr/", definition: "Giá phòng bình quân (Average Daily Rate)", context: "We calculate ADR before agreeing to any group discount.", icon: "💰" },
         { word: "Renegotiate", phonetic: "/ˌriːnɪˈɡoʊʃieɪt/", definition: "Đàm phán lại", context: "We are open to renegotiate the terms next quarter.", icon: "🔄" },
         { word: "Long-term partnership", phonetic: "/lɔːŋ tɜːrm ˈpɑːrtnərʃɪp/", definition: "Quan hệ đối tác lâu dài", context: "We value this as a long-term partnership, not a one-time deal.", icon: "🤝" },
       ],
@@ -1097,6 +1129,7 @@ export const FO_WEEK_26: WeekContent = {
   // Pulled forward from Phases 0-2 so this week joins the spaced-recycling
   // system instead of standing outside it.
   reviewWords: ["Check in", "Bellman", "Luggage", "Lobby", "Confirm the details", "Room key", "Settle the bill", "Breakfast buffet"],
+  mediation: WEEK26_MEDIATION_TASKS.FO,
   lessons: [
     {
       lessonId: "FO_26_1",
@@ -1318,8 +1351,8 @@ export const FB_WEEK_31: WeekContent = {
       vocabulary: [
         { word: "Robusta bean", phonetic: "/roʊˈbʌstə biːn/", definition: "Hạt cà phê Robusta", context: "Vietnamese coffee is famous for its strong Robusta beans.", icon: "☕" },
         { word: "Condensed milk", phonetic: "/kənˈdɛnst mɪlk/", definition: "Sữa đặc", context: "Cà phê sữa đá is coffee mixed with sweet condensed milk.", icon: "🥛" },
-        { word: "Drip filter", phonetic: "/drɪp ˈfɪltər/", definition: "Phin cà phê", context: "The coffee slowly drips through a small metal drip filter.", icon: "⏳" },
-        { word: "Whisk", phonetic: "/wɪsk/", definition: "Đánh bông (kem trứng)", context: "For egg coffee, the egg yolk is whisked until light and fluffy.", icon: "🥄" },
+        { word: "Wine by the glass", phonetic: "/waɪn baɪ ðə ɡlɑːs/", definition: "Rượu vang bán theo ly", context: "We also offer this wine by the glass if you would like to try it first.", icon: "🍷" },
+        { word: "Steak doneness", phonetic: "/steɪk ˈdʌnnəs/", definition: "Độ chín của bò bít tết", context: "How would you like your steak doneness — rare, medium, or well done?", icon: "🥩" },
       ],
       grammar: [
         { rude: "Drink it slow, it's hot.", polite: "You'll find it's best enjoyed slowly, as it's served quite hot.", rule: "Use 'You'll find it's best...' to frame advice as a helpful discovery, not a warning." },
@@ -1441,6 +1474,7 @@ export const HK_WEEK_33: WeekContent = {
   // Pulled forward from Phases 0-3 so this hand-authored week joins the
   // spaced-recycling system instead of standing outside it.
   reviewWords: ["Torn", "Damaged", "Disappointed", "Concern", "Charge", "Check", "Complimentary", "Extra charge"],
+  writing: WEEK33_WRITING_TASKS.HK,
   lessons: [
     {
       lessonId: "HK_33_1",
@@ -1488,7 +1522,7 @@ export const HK_WEEK_33: WeekContent = {
       titleEn: "Laundry Service Tiers & Pricing",
       titleVi: "Phân hệ dịch vụ giặt là & Biểu phí",
       vocabulary: [
-        { word: "Regular wash", phonetic: "/ˈrɛɡjələr wɒʃ/", definition: "Giặt thường", context: "Regular wash service takes 24 hours.", icon: "🧺" },
+        { word: "Lost & Found", phonetic: "/lɒst ænd faʊnd/", definition: "Bộ phận quản lý đồ thất lạc", context: "I will send this item to Lost & Found for you.", icon: "🔍" },
         { word: "Dry cleaning", phonetic: "/draɪ ˈkliːnɪŋ/", definition: "Giặt khô", context: "This silk dress requires dry cleaning, not regular wash.", icon: "🧥" },
         { word: "Express service", phonetic: "/ɪkˈsprɛs ˈsɜːvɪs/", definition: "Dịch vụ hỏa tốc", context: "Express service returns your laundry within 4 hours.", icon: "⚡" },
         { word: "Surcharge", phonetic: "/ˈsɜːrtʃɑːrdʒ/", definition: "Phụ phí", context: "A 50% surcharge applies for express service.", icon: "💰" },
@@ -1571,7 +1605,7 @@ export const HK_WEEK_33: WeekContent = {
         { word: "Compensation", phonetic: "/ˌkɒmpənˈseɪʃən/", definition: "Sự bồi thường", context: "We would like to offer compensation for the damaged item.", icon: "💵" },
         { word: "Policy", phonetic: "/ˈpɒləsi/", definition: "Chính sách", context: "Our compensation policy covers up to 10 times the laundry fee.", icon: "📋" },
         { word: "Reimburse", phonetic: "/ˌriːɪmˈbɜːrs/", definition: "Hoàn tiền", context: "We can reimburse you according to hotel policy.", icon: "🔄" },
-        { word: "Approval", phonetic: "/əˈpruːvəl/", definition: "Sự phê duyệt", context: "This compensation requires approval from my supervisor.", icon: "✅" },
+        { word: "Par stock", phonetic: "/pɑːr stɒk/", definition: "Định mức đồ vải/vật tư tiêu chuẩn cho mỗi phòng", context: "Each room keeps a par stock of two towel sets.", icon: "📦" },
       ],
       grammar: [
         { rude: "We can only give you this much.", polite: "According to our policy, we're able to offer up to this amount — may I get my supervisor to confirm the details?", rule: "Use 'we're able to...' (modal of ability) plus an offer to escalate, softening a limit into a solution-oriented statement." },
