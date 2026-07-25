@@ -265,36 +265,43 @@ function week1(lx: P0Lexicon): LessonContent[] {
       game: [game("Good evening.", "Good evening, madam.", "Good morning.", "Bye bye.")],
     }),
 
-    lesson(lx, 1, 2, "My Name, Your Name", "Tên tôi, tên khách", {
+    lesson(lx, 1, 2, "Spelling a Name", "Đánh vần tên khách", {
+      // The week is titled "Alphabet" but the old lesson only taught the
+      // QUESTION "How do you spell that?" — never the letters themselves.
+      // Taking a spelled name down correctly by phone/at the desk is a
+      // day-one job skill (and week 17 already assumes it), so this
+      // lesson now drills the actual letter-by-letter exchange.
       vocabulary: [
         v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
         v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
+        v("Alphabet", "/ˈælfəbet/", "Bảng chữ cái", "Please say the alphabet slowly.", "🔤"),
       ],
       grammar: [
         g("What your name?", "May I have your name?", "Tiếng Anh cần động từ. Câu hỏi tên lịch sự là 'May I have your name?' — không nói 'What your name?'."),
         g("Spell please.", "How do you spell that?", "Muốn khách đánh vần, hỏi trọn câu 'How do you spell that?'."),
+        g("Say it again.", "Could you spell that, please?", "Tên khó nghe hoặc có chữ cái dễ nhầm (như E và I), hãy nhờ khách đánh vần từng chữ."),
       ],
       speaking: [
-        sp("I am David Green.", "Thank you, Mister Green.", "Nhắc lại họ của khách để xác nhận — khách thấy mình được lắng nghe."),
+        sp("My name is Ivy. I-V-Y.", "Thank you. I-V-Y is correct.", "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm."),
       ],
       reading: read(
-        `A guest says: "My name is Anna Smith." ${lx.staff} writes the name. ${lx.staff} asks: "How do you spell that, madam?"`,
+        `A guest says: "My name is Anna Smith. A-N-N-A, S-M-I-T-H." ${lx.staff} writes each letter and says: "Thank you. A-N-N-A, S-M-I-T-H."`,
         [
           {
-            q: "Khách tên là gì?",
-            options: ["Anna Smith", "Anna Green", "David Smith"],
+            q: "Khách đánh vần tên bằng cách nào?",
+            options: ["Nói từng chữ cái một", "Nói cả tên một lần", "Viết ra giấy"],
             correct: 0,
-            explanation: "Khách nói 'My name is Anna Smith.'",
+            explanation: "'A-N-N-A, S-M-I-T-H' — đọc từng chữ cái, đây là cách đánh vần tên chuẩn.",
           },
           {
-            q: `Vì sao ${lx.staff} hỏi "How do you spell that?"`,
-            options: ["Để viết đúng tên khách", "Để hỏi số phòng", "Để hỏi giờ"],
+            q: `Vì sao ${lx.staff} nhắc lại từng chữ cái?`,
+            options: ["Để xác nhận không nghe nhầm", "Để khách chờ lâu", "Vì không hiểu tên khách"],
             correct: 0,
-            explanation: "Hỏi đánh vần giúp ghi đúng tên vào hệ thống — sai tên là lỗi dịch vụ.",
+            explanation: "Nhắc lại từng chữ cái là cách xác nhận chính xác nhất khi ghi tên khách.",
           },
         ],
       ),
-      game: [game("My name is Anna Smith.", "How do you spell that, madam?", "What?", "Spell it now.")],
+      game: [game("It is spelled J-A-N-E.", "J-A-N-E. Thank you.", "Jane, okay.", "J-A-M-E.")],
     }),
 
     lesson(lx, 1, 3, "I Work Here", "Tôi làm ở bộ phận nào", {
@@ -373,21 +380,28 @@ function week1(lx: P0Lexicon): LessonContent[] {
 function week2(lx: P0Lexicon): LessonContent[] {
   const [i1, i2, i3, i4] = lx.items;
   return [
-    lesson(lx, 2, 1, "Numbers Zero to Twenty", "Số đếm 0 đến 20", {
+    lesson(lx, 2, 1, "Numbers Zero to One Hundred", "Số đếm 0 đến 100", {
+      // The matrix promises 0-100, but the old lesson stopped at twenty —
+      // prices in week 4 already need "twenty-five dollars" and "five
+      // hundred thousand dong" with no lesson ever teaching the tens
+      // pattern that builds them. This lesson adds it.
       vocabulary: [
         v("Number", "/ˈnʌmbə/", "Con số", "What is your room number?", "🔢"),
         v("Zero", "/ˈzɪərəʊ/", "Số 0 (đọc là 'oh' trong số phòng)", "Room two-oh-five.", "0️⃣"),
         v("Room", "/ruːm/", "Phòng", `Room ${lx.roomNo.spoken}, sir.`, "🚪"),
+        v("Hundred", "/ˈhʌndrəd/", "Trăm", "One hundred dollars.", "💯"),
       ],
       grammar: [
         g(`Room ${lx.roomNo.digits} hundred.`, `Room ${lx.roomNo.spoken}, sir.`, `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}. Số 0 đọc là 'oh'.`),
         g("Room number what?", "What is your room number?", "Câu hỏi cần 'is' và trật tự: What IS your room number?"),
+        g("Two ten, right?", "It is twenty, sir.", "Hàng chục: TWENTY (20), THIRTY (30), FORTY (40) … NINETY (90). Ghép thêm số cuối để có số lớn hơn: 20 + 5 = twenty-five."),
       ],
       speaking: [
         sp("What is my room number?", `Your room is ${lx.roomNo.spoken}.`, `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}".`),
+        sp("What is the total, please?", "It is forty-five dollars, sir.", "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'."),
       ],
       reading: read(
-        `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your key."`,
+        `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your key. The total today is forty-five dollars."`,
         [
           {
             q: `Số phòng ${lx.roomNo.digits} đọc thế nào?`,
@@ -403,7 +417,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Is my room three-oh-five?", "Yes, room three-oh-five, sir.", "Yes, room 305 hundred.", "Room what?")],
+      game: [
+        game("Is my room three-oh-five?", "Yes, room three-oh-five, sir.", "Yes, room 305 hundred.", "Room what?"),
+        game("Is the total thirty dollars?", "No, sir. It is forty dollars.", "Thirty yes, sir.", "Dollar forty is."),
+      ],
     }),
 
     lesson(lx, 2, 2, "Floors & the Lift", "Tầng lầu & thang máy", {

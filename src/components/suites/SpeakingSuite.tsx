@@ -71,8 +71,16 @@ function lcsLength(a: string[], b: string[]): number {
   return dp[b.length];
 }
 
-const PASS_ACCURACY = 80;
-const PASS_ORDER_RATIO = 0.6;
+// Pass thresholds vary by week. A zero-beginner should not have to nail
+// 80% of a four-word utterance to earn a star, and the open role-play
+// weeks (39-40) reward a valid improvised answer that hits the key ideas
+// rather than reciting one fixed reference sentence in order.
+function passThresholds(week: string): { accPct: number; orderRatio: number } {
+  const n = parseInt(week, 10);
+  if (n >= 39) return { accPct: 50, orderRatio: 0 }; // open role-play: idea coverage, any order
+  if (n <= 14) return { accPct: 60, orderRatio: 0.4 }; // Phase 0-1: gentle floor for beginners
+  return { accPct: 80, orderRatio: 0.6 }; // A2+ default
+}
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   const content = dep && week ? getWeekContent(dep, week) : null;
@@ -82,6 +90,7 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
 
 function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const th = passThresholds(week);
   const earned = useRef(0);
   // Per-scenario pass state — mirrors ReadingSuite's bestPctRef pattern.
   // Mastery requires passing every scenario in the week, and stars are
@@ -137,7 +146,7 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      const passed = acc >= PASS_ACCURACY && cmp.orderRatio >= PASS_ORDER_RATIO;
+      const passed = acc >= th.accPct && cmp.orderRatio >= th.orderRatio;
       bestPctRef.current.set(idx, Math.max(bestPctRef.current.get(idx) ?? 0, acc));
       if (passed && !passedRef.current.has(idx)) {
         passedRef.current.add(idx);
@@ -289,10 +298,10 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
               <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Độ chính xác</div>
               <div className="font-display text-3xl text-primary">{Math.round(result.accuracy * 100)}%</div>
             </div>
-            {result.accuracy >= 0.8 && result.orderRatio >= PASS_ORDER_RATIO && (
+            {result.accuracy * 100 >= th.accPct && result.orderRatio >= th.orderRatio && (
               <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ đạt chuẩn</div>
             )}
-            {result.accuracy >= 0.8 && result.orderRatio < PASS_ORDER_RATIO && (
+            {result.accuracy * 100 >= th.accPct && result.orderRatio < th.orderRatio && (
               <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
                 Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
               </div>

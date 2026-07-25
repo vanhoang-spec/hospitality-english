@@ -94,8 +94,8 @@ function week23(lx: Ctx): LessonContent[] {
         game(
           "If you were me, which one would you choose?",
           `I recommend the ${lo(u3)}, madam.`,
-          `You must take the ${lo(u3)}.`,
-          `${u3.word} is the one.`,
+          `Every option here is equally good, madam.`,
+          `I really could not say, madam.`,
         ),
       ],
     }),
@@ -136,8 +136,8 @@ function week23(lx: Ctx): LessonContent[] {
         game(
           "That sounds quite expensive for just one night.",
           `It costs a little more, but it is much quieter.`,
-          `Yes, it is expensive.`,
-          `Money is not a problem here.`,
+          `It costs a little more, but that is normal.`,
+          `Most guests do not mind the extra cost.`,
         ),
       ],
     }),
@@ -176,8 +176,8 @@ function week23(lx: Ctx): LessonContent[] {
         game(
           "We will be staying here for two weeks.",
           `For a long stay, I recommend the ${lo(u8)}.`,
-          `Two weeks is a very long time.`,
-          `We have many things here.`,
+          `Two weeks is enough time to decide later.`,
+          `We have several rooms available for two weeks.`,
         ),
       ],
     }),
@@ -216,8 +216,8 @@ function week23(lx: Ctx): LessonContent[] {
         game(
           "Thank you, but we will keep the standard one.",
           `Of course, sir. The standard one is also excellent.`,
-          `Are you sure? It is really better.`,
-          `Okay. Next guest, please.`,
+          `Are you sure, sir? The upgrade really is much better.`,
+          `Very well, sir. I will note that you refused.`,
         ),
       ],
     }),
@@ -269,8 +269,8 @@ function week24(lx: Ctx): LessonContent[] {
         game(
           "Is that included, or do I pay extra?",
           `There is a small ${lo(p2)} for that, madam.`,
-          `Of course you must pay.`,
-          `I think maybe free, not sure.`,
+          `I am not sure if that costs extra, madam.`,
+          `That depends on which package you booked, madam.`,
         ),
       ],
     }),
@@ -311,8 +311,8 @@ function week24(lx: Ctx): LessonContent[] {
         game(
           "Why am I being charged for this?",
           `We have to apply it because it is hotel policy.`,
-          `Because I say so, sir.`,
-          `I do not know the reason.`,
+          `This charge does not apply to your room type, sir.`,
+          `I can remove that charge for you right away.`,
         ),
       ],
     }),
@@ -351,8 +351,8 @@ function week24(lx: Ctx): LessonContent[] {
         game(
           "Please just take that fee off my bill.",
           `I am afraid I cannot, but my manager can review it.`,
-          `No. That is final.`,
-          `Try asking someone else.`,
+          `I am afraid that fee is completely non-negotiable, sir.`,
+          `I will remove it for you immediately, sir.`,
         ),
       ],
     }),
@@ -391,8 +391,8 @@ function week24(lx: Ctx): LessonContent[] {
         game(
           "I am not sure I followed all of that.",
           `Shall I repeat the ${lo(p10)} for you?`,
-          `Do you understand me?`,
-          `That is all. Goodbye.`,
+          `You can read it again yourself, sir.`,
+          `It is not really that complicated, sir.`,
         ),
       ],
     }),
@@ -444,8 +444,8 @@ function week25(lx: Ctx): LessonContent[] {
         game(
           "How long will I have to wait for this?",
           `I will ${lo(c3)} within ten minutes, sir.`,
-          `Soon, maybe not long.`,
-          `I cannot say how long.`,
+          `It should not take very long, sir.`,
+          `I will try to hurry for you, sir.`,
         ),
       ],
     }),
@@ -486,8 +486,8 @@ function week25(lx: Ctx): LessonContent[] {
         game(
           "I really need this finished today, please.",
           `We are going to ${lo(c6)} before three o'clock.`,
-          `Maybe today, maybe tomorrow.`,
-          `Today is very busy for us.`,
+          `We will try to finish it sometime today, sir.`,
+          `I will ask someone to look at it today.`,
         ),
       ],
     }),
@@ -526,8 +526,8 @@ function week25(lx: Ctx): LessonContent[] {
         game(
           "Do you have any news for me yet?",
           `I will ${lo(c8)} and let you know within the hour.`,
-          `Nothing yet. Please wait.`,
-          `Ask me again tomorrow.`,
+          `I will check again sometime and let you know.`,
+          `Someone will contact you when there is news.`,
         ),
       ],
     }),
@@ -566,8 +566,8 @@ function week25(lx: Ctx): LessonContent[] {
         game(
           "Is it ready? You said only ten minutes.",
           `I am sorry. I will ${lo(c12)} immediately instead.`,
-          `It is not ready. I do not know when.`,
-          `Please be patient, sir. We are very busy.`,
+          `I am sorry, sir. It is taking longer than expected.`,
+          `I am sorry. I will check on it again.`,
         ),
       ],
     }),
@@ -619,8 +619,8 @@ function week26(lx: Ctx): LessonContent[] {
         game(
           "Could you take care of this for me?",
           `Let me check with the ${lo(t2)} for you.`,
-          `That is not my department.`,
-          `Please go to the other desk.`,
+          `I am sure someone can take care of it.`,
+          `You may need to ask at the other desk.`,
         ),
       ],
     }),
@@ -661,8 +661,8 @@ function week26(lx: Ctx): LessonContent[] {
         game(
           "Is there anyone who can come and help?",
           `I will ask the ${lo(t5)} to help you right away.`,
-          `Someone will come, I think.`,
-          `They are busy, so please wait.`,
+          `Someone should be able to come and help you.`,
+          `I will mention it to the team later.`,
         ),
       ],
     }),
@@ -701,8 +701,8 @@ function week26(lx: Ctx): LessonContent[] {
         game(
           "Is anybody actually working on my request?",
           `I passed it to the ${lo(t9)} and the ${lo(t8)} confirmed it.`,
-          `Someone is doing it, probably.`,
-          `I already told you once, sir.`,
+          `I believe someone is working on it now.`,
+          `It should be finished soon, I hope, sir.`,
         ),
       ],
     }),
@@ -741,8 +741,8 @@ function week26(lx: Ctx): LessonContent[] {
         game(
           "Can you tell me if it is all done?",
           `The ${lo(t10)} finished, and I checked before calling you.`,
-          `It is done. Anything else?`,
-          `They said it is finished, I hope so.`,
+          `I believe it is finished now, sir.`,
+          `The team said it should be ready, sir.`,
         ),
       ],
     }),
@@ -794,8 +794,8 @@ function week27(lx: Ctx): LessonContent[] {
         game(
           "I have been waiting all morning and nobody helped me!",
           `I am very sorry, sir. Please tell me what happened.`,
-          `That is not our fault, sir.`,
-          `Please calm down first, sir.`,
+          `I am very sorry, sir. It was likely a misunderstanding.`,
+          `I am sorry, sir. Many guests wait this morning.`,
         ),
       ],
     }),
@@ -803,7 +803,11 @@ function week27(lx: Ctx): LessonContent[] {
     lesson(lx, 27, 2, "A Real Apology", "Lời xin lỗi thật lòng", {
       vocabulary: [
         v("Disappointed", "/ˌdɪsəˈpɔɪntɪd/", "Thất vọng", "I am sorry you are disappointed.", "😞"),
-        bw(k4, `The ${lo(k4)} should not have happened.`),
+        // "should not happen" (simple modal) instead of the perfect modal
+        // "should not have happened" — the past-judgment form is a B2
+        // structure with no rule note anywhere in the syllabus; this
+        // keeps the same apology function at the phase's real A2+ level.
+        bw(k4, `The ${lo(k4)} should not happen at our resort.`),
         bw(k5, `I am sorry you experienced the ${lo(k5)}.`),
         bw(k6, `The ${lo(k6)} was our mistake.`),
       ],
@@ -813,10 +817,10 @@ function week27(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp("I paid a lot of money for this.", `I am sorry you experienced the ${lo(k5)}, madam. It was our mistake.`, "Nhận lỗi thẳng thắn. Vòng vo làm khách giận thêm."),
-        sp("So what are you going to do about it?", `The ${lo(k4)} should not have happened. Let me fix it for you now.`, "Lượt hai: thừa nhận chuẩn mực bị vi phạm rồi chuyển sang hành động."),
+        sp("So what are you going to do about it?", `The ${lo(k4)} should not happen here. Let me fix it for you now.`, "Lượt hai: thừa nhận chuẩn mực bị vi phạm rồi chuyển sang hành động."),
       ],
       reading: read(
-        `${lx.staff} does not blame anyone else. He says: "The ${lo(k6)} was our mistake, and I apologise. The ${lo(k4)} should not have happened." Ms. Weber notices he did not blame a colleague, and her anger fades.`,
+        `${lx.staff} does not blame anyone else. He says: "The ${lo(k6)} was our mistake, and I apologise. The ${lo(k4)} should not happen here." Ms. Weber notices he did not blame a colleague, and her anger fades.`,
         [
           {
             q: "Nhân viên nhận lỗi thế nào?",
@@ -836,8 +840,8 @@ function week27(lx: Ctx): LessonContent[] {
         game(
           "Which one of your staff made this mistake?",
           `It was our mistake, sir, and I apologise.`,
-          `My colleague did it, not me.`,
-          `The other shift is always careless.`,
+          `It may have been a simple misunderstanding, sir.`,
+          `I will need to look into that, sir.`,
         ),
       ],
     }),
@@ -876,8 +880,8 @@ function week27(lx: Ctx): LessonContent[] {
         game(
           "I want to report a problem with my room.",
           `Could you tell me when the ${lo(k7)} started?`,
-          `When? Tell me now.`,
-          `I do not need details.`,
+          `I am sure it is a small problem, sir.`,
+          `Someone will come to look at your room.`,
         ),
       ],
     }),
@@ -916,8 +920,8 @@ function week27(lx: Ctx): LessonContent[] {
         game(
           "This is unacceptable! I want to speak to someone now!",
           `I understand, sir. I will stay with you until it is solved.`,
-          `There is no need to shout, sir.`,
-          `You must wait like everyone else.`,
+          `I understand, sir. Let me find someone who can help.`,
+          `I understand, sir. This will be sorted out soon.`,
         ),
       ],
     }),
@@ -969,8 +973,8 @@ function week28(lx: Ctx): LessonContent[] {
         game(
           "So what are you going to do about it?",
           `If you like, I can ${lo(s3)} for you today.`,
-          `I do not know what to do.`,
-          `You should decide, not me.`,
+          `I will see what can be done, sir.`,
+          `There are a few things we could consider, sir.`,
         ),
       ],
     }),
@@ -1011,8 +1015,8 @@ function week28(lx: Ctx): LessonContent[] {
         game(
           "Is there another way to solve this?",
           `If you prefer, we will ${lo(s5)} instead.`,
-          `There is only one way, sorry.`,
-          `You choose, I have no idea.`,
+          `There might be another way, let me think.`,
+          `We could possibly look at other options, sir.`,
         ),
       ],
     }),
@@ -1051,8 +1055,8 @@ function week28(lx: Ctx): LessonContent[] {
         game(
           "Thank you, that seems to be working now.",
           `I will check again later to be sure.`,
-          `It is fixed. Goodbye.`,
-          `Please do not call me again.`,
+          `I am glad to hear that, sir.`,
+          `That is good news for both of us.`,
         ),
       ],
     }),
@@ -1091,8 +1095,8 @@ function week28(lx: Ctx): LessonContent[] {
         game(
           "I want a full refund for the whole stay.",
           `I cannot do that myself, but my manager can review it.`,
-          `Yes, no problem, I will do it.`,
-          `That is impossible. Goodbye.`,
+          `That amount is more than we usually approve, sir.`,
+          `I will see if that is possible, sir.`,
         ),
       ],
     }),
@@ -1101,9 +1105,18 @@ function week28(lx: Ctx): LessonContent[] {
 
 // ============================================================
 // WEEK 29 — Shift Handover
-// FRAMES · "I updated the {handover} this morning."
-//        · "The {handover} is ready for the next shift."
+// FRAMES · "I updated the {handover} this morning." (past simple — done,
+//           with a stated time)
 //        · "I was checking the {handover} when the guest called."
+//           (past continuous interrupted by past simple)
+//        · "The {handover} has not been finished yet." / "Everything has
+//           been recorded in the {handover}." (present perfect / present
+//           perfect passive — done, with NO stated time, which is exactly
+//           the handover's real question: not WHEN something happened,
+//           but whether it is done NOW for the next shift. This is the
+//           tense used constantly in hotel work — "Your room has been
+//           cleaned", "Has the invoice been sent?" — and the syllabus
+//           never taught it explicitly before this week.)
 // ============================================================
 function week29(lx: Ctx): LessonContent[] {
   const [h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12] = lx.bank.handover;
@@ -1145,8 +1158,8 @@ function week29(lx: Ctx): LessonContent[] {
         game(
           "I have just arrived. Anything I should know?",
           `I updated the ${lo(h1)} this morning.`,
-          `Nothing happened. Good luck.`,
-          `Ask someone else, I am leaving.`,
+          `I think everything is fine today.`,
+          `Not much happened during my shift.`,
         ),
       ],
     }),
@@ -1187,48 +1200,50 @@ function week29(lx: Ctx): LessonContent[] {
         game(
           "What were you doing when the guest called?",
           `I was checking the ${lo(h4)} when the guest called.`,
-          `I check the list and guest call me.`,
-          `I do not remember anything.`,
+          `I think I was helping another guest at reception.`,
+          `I do not recall what I was doing exactly.`,
         ),
       ],
     }),
 
     lesson(lx, 29, 3, "Open Items", "Việc còn dang dở", {
       vocabulary: [
-        bw(h7, `The ${lo(h7)} is still not finished.`),
-        bw(h8, `Please follow up on the ${lo(h8)} tonight.`),
-        bw(h9, `I left a note about the ${lo(h9)}.`),
+        v("Yet", "/jet/", "Chưa (dùng cuối câu phủ định/nghi vấn với hiện tại hoàn thành)", "It has not been finished yet.", "⏳"),
+        bw(h7, `The ${lo(h7)} has not been finished yet.`),
+        bw(h8, `Have you followed up on the ${lo(h8)} yet?`),
+        bw(h9, `I have left a note about the ${lo(h9)}.`),
       ],
       grammar: [
-        g(`Not finish yet that one.`, `The ${lo(h7)} is still not finished.`, "'Still not finished' nói rõ trạng thái dang dở, giúp ca sau biết phải tiếp tục."),
+        g(`Not finish yet that one.`, `The ${lo(h7)} has not been finished yet.`, "Hiện tại hoàn thành phủ định: HAS/HAVE NOT + động từ phân từ 2 (+ YET). Dùng khi thời điểm chưa xong không quan trọng — chỉ cần biết TỚI GIỜ vẫn chưa xong."),
         g(`You do this tonight.`, `Please follow up on the ${lo(h8)} tonight.`, "Giao việc cho đồng nghiệp vẫn dùng 'Please' — bàn giao không phải ra lệnh."),
+        g(`I write note already.`, `I have left a note about the ${lo(h9)}.`, "'I have left' (hiện tại hoàn thành) khác 'I updated it this morning' (quá khứ đơn, tuần 29.1) — ở đây thời điểm để lại ghi chú không quan trọng, chỉ cần biết ghi chú ĐANG TỒN TẠI ngay bây giờ."),
       ],
       speaking: [
-        sp("Is there anything still open?", `Yes. The ${lo(h7)} is still not finished. Please follow up tonight.`, "Nói thẳng việc chưa xong. Giấu việc dang dở là cách nhanh nhất làm mất lòng tin đồng nghiệp."),
+        sp("Is there anything still open?", `Yes. The ${lo(h7)} has not been finished yet. I have left a note about it.`, "Nói thẳng việc chưa xong. Giấu việc dang dở là cách nhanh nhất làm mất lòng tin đồng nghiệp."),
       ],
       reading: read(
-        `${lx.staff} is honest about what is unfinished: "The ${lo(h7)} is still not finished. Please follow up on the ${lo(h8)} tonight. I left a note about the ${lo(h9)}." His colleague thanks him for being clear.`,
+        `${lx.staff} is honest about what is unfinished: "The ${lo(h7)} has not been finished yet. Have you followed up on the ${lo(h8)} yet? I have left a note about the ${lo(h9)}." His colleague thanks him for being clear.`,
         [
           {
             q: "Nhân viên có giấu việc chưa xong không?",
             options: ["Không, nói rõ ra", "Có, để ca sau tự phát hiện", "Không nhắc tới"],
             correct: 0,
-            explanation: "'is honest about what is unfinished' — trung thực khi bàn giao là điều kiện để cả đội tin nhau.",
+            explanation: "'has not been finished yet' — trung thực khi bàn giao là điều kiện để cả đội tin nhau.",
           },
           {
-            q: "Nhân viên để lại gì cho ca sau?",
-            options: ["Một ghi chú", "Một món quà", "Không gì cả"],
+            q: "'Has not been finished YET' nhấn mạnh điều gì?",
+            options: ["Tới thời điểm hiện tại vẫn chưa xong", "Sẽ không bao giờ xong", "Đã xong từ lâu"],
             correct: 0,
-            explanation: "'I left a note' — ghi chú viết ra giấy không bị quên như lời nói.",
+            explanation: "Hiện tại hoàn thành + 'yet' = nhìn từ quá khứ tới NGAY BÂY GIỜ, không nêu mốc thời gian cụ thể.",
           },
         ],
       ),
       game: [
         game(
           "Is everything finished before you go home?",
-          `No, one task is open. I left a note about it.`,
-          `Yes, everything is completely finished.`,
-          `I am not sure. Please check it yourself.`,
+          `No, one task has not been finished yet. I have left a note about it.`,
+          `No, but I am sure everything will be fine by morning.`,
+          `Most things are finished, I believe, but I am not fully certain.`,
         ),
       ],
     }),
@@ -1237,38 +1252,42 @@ function week29(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(h10, `I wrote the ${lo(h10)} in the book.`),
         bw(h11, `The ${lo(h11)} shows what happened today.`),
-        bw(h12, `Everything is recorded in the ${lo(h12)}.`),
+        bw(h12, `Everything has been recorded in the ${lo(h12)}.`),
       ],
       grammar: [
         g(`Book I write.`, `I wrote the ${lo(h10)} in the book, sir.`, "Trật tự chuẩn: chủ ngữ + động từ + tân ngữ + nơi chốn."),
-        g(`All inside there.`, `Everything is recorded in the ${lo(h12)}.`, "Câu bị động đơn giản 'is recorded' phù hợp khi báo cáo hệ thống ghi nhận."),
+        g(`All inside there.`, `Everything has been recorded in the ${lo(h12)}.`, "Bị động hiện tại hoàn thành: HAS BEEN + động từ phân từ 2. Mẫu câu dùng nhiều nhất trong khách sạn — 'Your room has been cleaned', 'The invoice has been sent' — nhấn mạnh KẾT QUẢ đã xong, không cần nói ai làm hay khi nào."),
       ],
       speaking: [
-        sp("Where can I see what happened today?", `Everything is recorded in the ${lo(h12)}, sir.`, "Chỉ đúng chỗ tra cứu — quản lý không phải hỏi lại ai nữa."),
+        sp("Where can I see what happened today?", `Everything has been recorded in the ${lo(h12)}, sir.`, "Chỉ đúng chỗ tra cứu — quản lý không phải hỏi lại ai nữa."),
       ],
       reading: read(
-        `The duty manager asks for the day's record. ${lx.staff} replies: "I wrote the ${lo(h10)} in the book. The ${lo(h11)} shows what happened today. Everything is recorded in the ${lo(h12)}." Nothing has to be reconstructed from memory.`,
+        `The duty manager asks for the day's record. ${lx.staff} replies: "I wrote the ${lo(h10)} in the book. The ${lo(h11)} shows what happened today. Everything has been recorded in the ${lo(h12)}." Nothing has to be reconstructed from memory.`,
         [
           {
             q: "Vì sao không phải nhớ lại bằng trí nhớ?",
             options: ["Vì mọi việc đã được ghi lại", "Vì không có việc gì xảy ra", "Vì quản lý không hỏi"],
             correct: 0,
-            explanation: "'Everything is recorded' — ghi lại ngay trong ca là cách duy nhất để thông tin không bị sai lệch.",
+            explanation: "'has been recorded' — ghi lại ngay trong ca là cách duy nhất để thông tin không bị sai lệch.",
           },
           {
-            q: "'Is recorded' là dạng câu gì?",
-            options: ["Bị động", "Câu hỏi", "Mệnh lệnh"],
+            q: "'Has been recorded' là thì gì, và vì sao dùng ở đây?",
+            options: [
+              "Hiện tại hoàn thành bị động — nhấn mạnh việc đã xong, không cần nói khi nào",
+              "Tương lai đơn — việc sẽ được ghi sau",
+              "Quá khứ tiếp diễn — việc đang được ghi",
+            ],
             correct: 0,
-            explanation: "Bị động đơn giản dùng khi điều quan trọng là việc được ghi, không phải ai ghi.",
+            explanation: "HAS BEEN + phân từ 2 = hiện tại hoàn thành bị động. Người bàn giao chỉ cần biết việc ĐÃ XONG, không cần biết ai ghi hay ghi lúc mấy giờ.",
           },
         ],
       ),
       game: [
         game(
           "Where do you keep the record of today?",
-          `Everything is recorded in the ${lo(h12)}, sir.`,
-          `I remember most of it.`,
-          `Nobody writes anything here.`,
+          `Everything has been recorded in the ${lo(h12)}, sir.`,
+          `I keep most of it in my memory, sir.`,
+          `Some of it is written, some is not, sir.`,
         ),
       ],
     }),
@@ -1323,8 +1342,8 @@ function week30(lx: Ctx): LessonContent[] {
         game(
           "What do you suggest, and how soon can it be done?",
           `I recommend the ${lo(u1)}, and I will arrange it within ten minutes.`,
-          `I recommend something, wait please.`,
-          `Choose yourself and tell me later.`,
+          `I recommend the ${lo(u1)}, but I am not sure how soon.`,
+          `I will arrange something for you within ten minutes.`,
         ),
       ],
     }),
@@ -1363,8 +1382,8 @@ function week30(lx: Ctx): LessonContent[] {
         game(
           "Who takes care of this, and why is it required?",
           `We apply this because it is policy, and I will check with the team.`,
-          `It is the rule. Ask someone else who does it.`,
-          `I do not know why, and I do not know who.`,
+          `We apply this because it is policy, but I am not sure who handles it.`,
+          `I will check with the team about who handles this.`,
         ),
       ],
     }),
@@ -1403,8 +1422,8 @@ function week30(lx: Ctx): LessonContent[] {
         game(
           "This is the second time this has happened.",
           `I am very sorry, and if you like, I can ${lo(s1)}.`,
-          `Yes, it happens sometimes here.`,
-          `I told you already it is fixed.`,
+          `I am very sorry, and I understand your frustration completely.`,
+          `I am very sorry. Let me see what can be done.`,
         ),
       ],
     }),
@@ -1443,8 +1462,8 @@ function week30(lx: Ctx): LessonContent[] {
         game(
           "Do you feel ready to handle the evening shift?",
           `Yes. I checked everything today, and I am ready.`,
-          `I think maybe not ready.`,
-          `Ready for what, sir?`,
+          `Yes, I think so, and I hope it goes well.`,
+          `I checked most things, so it should be fine.`,
         ),
       ],
     }),

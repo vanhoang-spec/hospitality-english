@@ -39,10 +39,20 @@ const DEFAULT_STATE: AcademyState = {
   },
 };
 
+// Rank ladder re-sloped to span the whole 40-week journey. A fully
+// mastered week yields ~100 stars, so the old top rank (700) was reached
+// around week 7 and the ladder went dead for the remaining 33 weeks.
+// These thresholds keep a next goal visible from Trainee through to
+// General Manager near the end of the programme. Display-only.
 export function jobRankFor(stars: number): string {
-  if (stars >= 700) return "General Manager";
-  if (stars >= 300) return "Manager";
-  if (stars >= 100) return "Supervisor";
+  if (stars >= 3600) return "General Manager";
+  if (stars >= 2900) return "Manager";
+  if (stars >= 2200) return "Assistant Manager";
+  if (stars >= 1600) return "Supervisor";
+  if (stars >= 1150) return "Team Leader";
+  if (stars >= 750) return "Senior Staff";
+  if (stars >= 400) return "Staff";
+  if (stars >= 150) return "Junior Staff";
   return "Trainee";
 }
 
@@ -335,9 +345,12 @@ export function useAcademy() {
         .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" })
         .then(() => {});
 
-      if (opts?.mastered) {
-        markLearnedToday();
-      }
+      // Streak = the learner showed up and finished a suite today, not
+      // that they cleared the 80% mastery bar. Punishing an effortful
+      // sub-mastery day with a streak reset churns exactly the weak,
+      // low-confidence learners the streak is meant to keep. Mastery
+      // stays the quality gate for stars and the review queue.
+      markLearnedToday();
       // Seed spaced review on the first COMPLETION of a suite, not only
       // on mastery — a learner who scores below the mastery bar is the
       // one who forgets fastest and needs the review queue most. Idempotent

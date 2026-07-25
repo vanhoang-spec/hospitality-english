@@ -56,7 +56,7 @@ const WEEKTEST_DOOR = {
   slug: "weektest",
   title: "Phase Checkpoint Test",
   tag: "Assessment",
-  detail: "Mười câu hỏi tổng hợp cả giai đoạn. Đạt 70% để qua bài kiểm tra.",
+  detail: "20 câu hỏi tổng hợp cả giai đoạn. Đạt 70% để qua bài kiểm tra.",
 } as const;
 
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {

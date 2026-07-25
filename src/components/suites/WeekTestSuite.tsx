@@ -5,7 +5,10 @@ import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/conten
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 const PASS_PCT = 70;
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 20;
+// Fixed per-construct counts so the paper always samples every skill and
+// the 70% cut means the same thing on every retake.
+const MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
 
 // The checkpoint weeks named in docs/curriculum-level-matrix.md. Only
 // these carry a Week Test; every other week returns null from
@@ -15,6 +18,24 @@ export const CHECKPOINT_WEEKS = [6, 14, 22, 30, 40] as const;
 export function isCheckpointWeek(week: string | number): boolean {
   const n = typeof week === "string" ? parseInt(week, 10) : week;
   return (CHECKPOINT_WEEKS as readonly number[]).includes(n);
+}
+
+// Mirrors the PHASES ranges in scripts/verify-content.ts — the paper
+// pulls grammar/listening/reading from every week in the checkpoint's
+// own phase, not just the checkpoint week itself.
+const PHASE_RANGES: Record<number, [number, number]> = {
+  6: [1, 6],
+  14: [7, 14],
+  22: [15, 22],
+  30: [23, 30],
+  40: [31, 40],
+};
+
+function phaseWeeksFor(checkpointWeek: number): number[] {
+  const [from, to] = PHASE_RANGES[checkpointWeek] ?? [checkpointWeek, checkpointWeek];
+  const weeks: number[] = [];
+  for (let w = from; w <= to; w++) weeks.push(w);
+  return weeks;
 }
 
 type Question =
@@ -44,29 +65,35 @@ function speakVaried(text: string) {
 }
 
 /**
- * Builds a 10-question mixed paper from the checkpoint week's own content
- * PLUS everything it recycles (`reviewWords`), which for a checkpoint is
- * the whole phase. That is the point of the test: it is the only place a
- * learner is asked about the phase as a whole rather than one week at a
- * time.
+ * Builds a 20-question mixed paper drawn from EVERY week in the
+ * checkpoint's phase (see phaseWeeksFor), not just the checkpoint week
+ * itself — the point of the test is to assess the phase as a whole.
+ * Vocabulary additionally pulls the checkpoint week's `reviewWords`
+ * recycling pool, same as before.
  *
- * Target mix: 4 vocabulary, 2 grammar, 2 listening, 2 reading.
+ * Fixed mix (MIX): 8 vocabulary, 4 grammar, 4 listening, 4 reading.
  */
 function buildPaper(dep: string, week: string): Question[] {
   const content = getWeekContent(dep, week);
   if (!content) return [];
 
-  const weekVocab = content.lessons.flatMap((l) => l.vocabulary);
+  const phaseWeeks = phaseWeeksFor(parseInt(week, 10));
+  const phaseContent = phaseWeeks
+    .map((w) => getWeekContent(dep, String(w)))
+    .filter((c): c is NonNullable<typeof c> => c !== null);
+  const phaseLessons = phaseContent.flatMap((c) => c.lessons);
+
+  const weekVocab = phaseLessons.flatMap((l) => l.vocabulary);
   const reviewVocab = resolveReviewVocab(dep, content.reviewWords ?? []);
   // Prefer the recycled phase vocabulary — a checkpoint should look back,
   // not merely re-test the week it sits in.
   const pool: VocabItem[] = [...reviewVocab, ...weekVocab];
   const byWord = new Map(pool.map((v) => [v.word, v]));
   const unique = [...byWord.values()];
-  if (unique.length < 4) return [];
+  if (unique.length < MIX.vocab) return [];
 
   const vocabQs: Question[] = shuffle(unique)
-    .slice(0, 4)
+    .slice(0, MIX.vocab)
     .map((v, i) => {
       const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
       if (i % 2 === 0) {
@@ -91,8 +118,8 @@ function buildPaper(dep: string, week: string): Question[] {
       };
     });
 
-  const grammarPool = shuffle(content.lessons.flatMap((l) => l.grammar));
-  const grammarQs: Question[] = grammarPool.slice(0, 2).map((g) => {
+  const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
+  const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
     const others = shuffle(grammarPool.filter((o) => o.polite !== g.polite)).slice(0, 2);
     const options = shuffle([g.polite, g.rude, ...others.map((o) => o.rude)].slice(0, 3));
     return {
@@ -105,8 +132,8 @@ function buildPaper(dep: string, week: string): Question[] {
     };
   });
 
-  const gamePool = shuffle(content.lessons.flatMap((l) => l.game));
-  const listeningQs: Question[] = gamePool.slice(0, 2).map((round) => {
+  const gamePool = shuffle(phaseLessons.flatMap((l) => l.game));
+  const listeningQs: Question[] = gamePool.slice(0, MIX.listening).map((round) => {
     const options = shuffle(round.options.map((o) => ({ ...o })));
     return {
       kind: "listening" as const,
@@ -119,9 +146,9 @@ function buildPaper(dep: string, week: string): Question[] {
   });
 
   const readingPool = shuffle(
-    content.lessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
+    phaseLessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
   );
-  const readingQs: Question[] = readingPool.slice(0, 2).map(({ q, text }) => ({
+  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => ({
     kind: "reading" as const,
     key: `r:${q.q}`,
     passage: text,
