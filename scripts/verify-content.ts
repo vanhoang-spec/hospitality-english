@@ -78,6 +78,48 @@ const longWords = (s: string) =>
     .filter((w) => w.length >= 4);
 
 // ============================================================
+// Regression gate: frame×bank collisions that once shipped.
+// Each entry is a nonsense (or brand-violating) string the P0 content
+// audit found in GENERATED sentences. The POS-only bank contract cannot
+// catch these semantically, so the exact strings are pinned here — if
+// any reappears in any text field of any week, the build fails.
+// ============================================================
+const KNOWN_BAD_STRINGS = [
+  // P1 W10 states slotted into scenery frames they can't describe
+  "too surprised for me",
+  "too unpaid",
+  "the room is too painful",
+  "it is very finalised",
+  "the floor is heavy",
+  "the floor is sharp",
+  "the floor is fragile",
+  "the floor is crowded",
+  // P1 W8 escort destinations no staff member would show a visitor
+  "let me show you the server room",
+  "let me show you the wardrobe",
+  "the trolley is over there",
+  "the staff entrance is over there",
+  // P3 W23 comparison frames that broke for abstract B2B upgrades
+  "is our quietest choice",
+  "allotment is larger than the standard one",
+  "allotment suits a family very well",
+  // P4 W36 crisis frames that assumed a physical, floor-bound emergency
+  "system outage on the third floor",
+  "outage comes first",
+  "booking comes first",
+  "failure comes first",
+  // Register / terminology the LQA pass retired
+  "please kindly provide",
+  "masseuse",
+];
+
+function collectStrings(obj: unknown, out: string[]): void {
+  if (typeof obj === "string") out.push(obj);
+  else if (Array.isArray(obj)) obj.forEach((v) => collectStrings(v, out));
+  else if (obj && typeof obj === "object") Object.values(obj).forEach((v) => collectStrings(v, out));
+}
+
+// ============================================================
 // Per-week checks
 // ============================================================
 for (const [key, week] of Object.entries(ALL_WEEKS)) {
@@ -147,6 +189,19 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
     const got = week.reviewWords?.length ?? 0;
     if (got < need)
       errors.push(`${key}: reviewWords has ${got}, needs >=${need} (${Math.round(phase.reviewPct * 100)}% of ${vocabCount})`);
+  }
+}
+
+// ============================================================
+// GATE 0 — regression scan for known-bad generated strings
+// ============================================================
+for (const [key, week] of Object.entries(ALL_WEEKS)) {
+  const texts: string[] = [];
+  collectStrings(week, texts);
+  const haystack = texts.join("\n").toLowerCase();
+  for (const bad of KNOWN_BAD_STRINGS) {
+    if (haystack.includes(bad))
+      errors.push(`${key}: known-bad string regressed: "${bad}"`);
   }
 }
 

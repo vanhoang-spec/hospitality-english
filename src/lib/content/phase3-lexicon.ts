@@ -627,12 +627,16 @@ const BO_BANK: P3Bank = {
     { word: "Flexible release date", phonetic: "/ˈfleksəbl rɪˈliːs deɪt/", definition: "Ngày trả phòng linh hoạt", icon: "📅" },
     { word: "Volume discount", phonetic: "/ˈvɒljuːm ˈdɪskaʊnt/", definition: "Chiết khấu theo số lượng", icon: "📉" },
     { word: "Free airport transfer", phonetic: "/friː ˈeəpɔːt ˈtrænsfɜː/", definition: "Đưa đón sân bay miễn phí", icon: "🚐" },
-    { word: "Bigger allotment", phonetic: "/ˈbɪɡə əˈlɒtmənt/", definition: "Số phòng giữ chỗ nhiều hơn", icon: "🛏️" },
+    // Slot 7 feeds the "suits a family very well" frame — a room upgrade
+    // suits a family; a B2B allotment does not. The allotment moved to
+    // slot 12 ("is ready whenever you wish"), which reads naturally for
+    // inventory held on standby for the partner.
+    { word: "Free room upgrade", phonetic: "/friː ruːm ˈʌpɡreɪd/", definition: "Nâng hạng phòng miễn phí", icon: "⬆️" },
     { word: "Priority confirmation", phonetic: "/praɪˈɒrəti ˌkɒnfəˈmeɪʃn/", definition: "Ưu tiên xác nhận", icon: "⚡" },
     { word: "Dedicated account manager", phonetic: "/ˈdedɪkeɪtɪd əˈkaʊnt ˈmænɪdʒə/", definition: "Nhân viên phụ trách riêng", icon: "🧑‍💼" },
     { word: "Free late check-out", phonetic: "/friː leɪt ˈtʃek aʊt/", definition: "Trả phòng muộn miễn phí", icon: "🕛" },
     { word: "Bonus loyalty points", phonetic: "/ˈbəʊnəs ˈlɔɪəlti pɔɪnts/", definition: "Điểm thưởng khách hàng thân thiết", icon: "⭐" },
-    { word: "Free room upgrade", phonetic: "/friː ruːm ˈʌpɡreɪd/", definition: "Nâng hạng phòng miễn phí", icon: "⬆️" },
+    { word: "Bigger allotment", phonetic: "/ˈbɪɡə əˈlɒtmənt/", definition: "Số phòng giữ chỗ nhiều hơn", icon: "🛏️" },
   ],
   policies: [
     { word: "Deposit policy", phonetic: "/dɪˈpɒzɪt ˈpɒləsi/", definition: "Chính sách đặt cọc", icon: "💰" },

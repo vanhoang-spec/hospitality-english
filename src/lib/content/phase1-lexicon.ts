@@ -84,7 +84,9 @@ const FO_BANK: P1Bank = {
     { word: "Safe", phonetic: "/seɪf/", definition: "An toàn", icon: "🛡️" },
     { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜" },
     { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
-    { word: "Crowded", phonetic: "/ˈkraʊdɪd/", definition: "Đông đúc, chen chúc", icon: "⚠️" },
+    // Slot 8 feeds "Careful, the floor is ___" — a floor cannot be
+    // "crowded"; a marble lobby floor after rain genuinely is slippery.
+    { word: "Slippery", phonetic: "/ˈslɪpəri/", definition: "Trơn trượt", icon: "⚠️" },
   ],
   routines: [
     { word: "Check in", phonetic: "/tʃek ɪn/", definition: "Làm thủ tục nhận phòng", icon: "📥" },
@@ -169,7 +171,9 @@ const FB_BANK: P1Bank = {
     { word: "Salty", phonetic: "/ˈsɔːlti/", definition: "Mặn", icon: "🧂" },
     { word: "Sour", phonetic: "/ˈsaʊə/", definition: "Chua", icon: "🍋" },
     { word: "Delicious", phonetic: "/dɪˈlɪʃəs/", definition: "Ngon", icon: "😋" },
-    { word: "Sharp", phonetic: "/ʃɑːp/", definition: "Sắc, bén (dao)", icon: "⚠️" },
+    // Slot 8 feeds "Careful, the floor is ___" — a floor isn't "sharp";
+    // a dining/kitchen floor with spilled food genuinely is greasy.
+    { word: "Greasy", phonetic: "/ˈɡriːsi/", definition: "Trơn dầu mỡ", icon: "⚠️" },
   ],
   routines: [
     { word: "Serve", phonetic: "/sɜːv/", definition: "Phục vụ", icon: "🍽️" },
@@ -229,14 +233,19 @@ const HK_BANK: P1Bank = {
     { word: "Morning shift", phonetic: "/ˈmɔːnɪŋ ʃɪft/", definition: "Ca sáng", icon: "🌅" },
   ],
   places: [
-    { word: "Guest room", phonetic: "/ɡest ruːm/", definition: "Phòng khách nghỉ", icon: "🛏️" },
+    // Slot order follows the week-8 frames: slots 1-2 sit in the
+    // left/right in-room orientation, 3-4 in the "near the lift"
+    // service-floor talk, 7-8 in the "lost guest" escort — which must
+    // end at somewhere a guest is actually taken (their room, the
+    // balcony), never at the wardrobe or a housekeeping trolley.
+    { word: "Wardrobe", phonetic: "/ˈwɔːdrəʊb/", definition: "Tủ quần áo", icon: "🚪" },
     { word: "Bathroom", phonetic: "/ˈbɑːθruːm/", definition: "Phòng tắm", icon: "🚿" },
-    { word: "Balcony", phonetic: "/ˈbælkəni/", definition: "Ban công", icon: "🌇" },
     { word: "Linen room", phonetic: "/ˈlɪnɪn ruːm/", definition: "Kho đồ vải", icon: "🧺" },
+    { word: "Trolley", phonetic: "/ˈtrɒli/", definition: "Xe đẩy dọn phòng", icon: "🛒" },
     { word: "Store room", phonetic: "/stɔː ruːm/", definition: "Kho chứa đồ", icon: "📦" },
     { word: "Staircase", phonetic: "/ˈsteəkeɪs/", definition: "Cầu thang bộ", icon: "🪜" },
-    { word: "Wardrobe", phonetic: "/ˈwɔːdrəʊb/", definition: "Tủ quần áo", icon: "🚪" },
-    { word: "Trolley", phonetic: "/ˈtrɒli/", definition: "Xe đẩy dọn phòng", icon: "🛒" },
+    { word: "Guest room", phonetic: "/ɡest ruːm/", definition: "Phòng khách nghỉ", icon: "🛏️" },
+    { word: "Balcony", phonetic: "/ˈbælkəni/", definition: "Ban công", icon: "🌇" },
   ],
   requests: [
     { word: "Extra bed", phonetic: "/ˈekstrə bed/", definition: "Giường phụ", icon: "🛏️" },
@@ -345,7 +354,11 @@ const SW_BANK: P1Bank = {
     { word: "Relaxing", phonetic: "/rɪˈlæksɪŋ/", definition: "Thư giãn", icon: "😌" },
     { word: "Gentle", phonetic: "/ˈdʒentl/", definition: "Nhẹ nhàng", icon: "🕊️" },
     { word: "Strong", phonetic: "/strɒŋ/", definition: "Mạnh", icon: "💪" },
-    { word: "Painful", phonetic: "/ˈpeɪnfl/", definition: "Đau", icon: "😣" },
+    // Slot 4 feeds "It is too ___ now" / "The room is too ___ for me" —
+    // a room can be too stuffy, never "too painful" (pain describes the
+    // massage pressure, not the space). "Stuffy" is the real spa
+    // complaint word for a warm treatment/sauna room.
+    { word: "Stuffy", phonetic: "/ˈstʌfi/", definition: "Ngột ngạt, bí hơi", icon: "😖" },
     { word: "Calm", phonetic: "/kɑːm/", definition: "Yên bình", icon: "🧘" },
     { word: "Tired", phonetic: "/ˈtaɪəd/", definition: "Mệt", icon: "😴" },
     { word: "Deep", phonetic: "/diːp/", definition: "Sâu", icon: "🌊" },
@@ -513,10 +526,13 @@ const BO_BANK: P1Bank = {
     { word: "Elevator", phonetic: "/ˈelɪveɪtə/", definition: "Thang máy", icon: "🛗" },
   ],
   requests: [
-    { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
+    // Slot 1 is the week-9 "guest asks for it" frame — a resort guest
+    // plausibly asks Back Office for an envelope, never for a stapler
+    // (which stays in slot 4, the staff-to-staff "Do you need…?" frame).
+    { word: "Envelope", phonetic: "/ˈenvələʊp/", definition: "Phong bì", icon: "✉️" },
     { word: "Notebook", phonetic: "/ˈnəʊtbʊk/", definition: "Sổ tay", icon: "📓" },
     { word: "Paper", phonetic: "/ˈpeɪpə/", definition: "Giấy", icon: "📄" },
-    { word: "Envelope", phonetic: "/ˈenvələʊp/", definition: "Phong bì", icon: "✉️" },
+    { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
     { word: "Calculator", phonetic: "/ˈkælkjuleɪtə/", definition: "Máy tính bỏ túi", icon: "🧮" },
     { word: "Charger", phonetic: "/ˈtʃɑːdʒə/", definition: "Bộ sạc", icon: "🔌" },
     { word: "Name tag", phonetic: "/neɪm tæɡ/", definition: "Bảng tên", icon: "🏷️" },

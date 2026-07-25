@@ -39,8 +39,9 @@ function slugify(text: string): string {
 }
 
 /** Seeds review items for a week's vocab/grammar/speaking content the
- * first time that suite is mastered. Idempotent — existing rows (and
- * their scheduling state) are left untouched. */
+ * first time that suite is COMPLETED (not gated on mastery — the learner
+ * who scores below the bar needs spaced review most). Idempotent —
+ * existing rows (and their scheduling state) are left untouched. */
 export async function seedReviewItems(
   userId: string,
   departmentId: string,
