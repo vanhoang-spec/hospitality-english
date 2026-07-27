@@ -1035,7 +1035,7 @@ function week12(lx: Ctx): LessonContent[] {
     lesson(lx, 12, 4, "Ending the Call", "Kết thúc cuộc gọi", {
       vocabulary: [
         bw(f7, `I will ${lower(f7)} soon.`),
-        bw(f8, `${f8.word}, sir.`),
+        bw(f8, `Please ${lower(f8)} any time, sir.`),
       ],
       grammar: [
         g("Finish, bye.", "Thank you for calling. Goodbye.", "Kết thúc cuộc gọi chuẩn: cảm ơn đã gọi rồi mới chào tạm biệt."),
@@ -1376,7 +1376,7 @@ function week14(lx: Ctx): LessonContent[] {
     lesson(lx, 14, 4, "Close the Conversation", "Kết thúc cuộc trò chuyện", {
       vocabulary: [
         v("My pleasure", "/maɪ ˈpleʒə/", "Hân hạnh được phục vụ", "My pleasure, madam.", "🌟"),
-        bw(c4, `${c4.word}, madam.`),
+        bw(c4, `Have a good ${lower(c4)}, madam.`),
       ],
       grammar: [
         g("Finish? Bye.", "Is there anything else, sir?", "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ."),

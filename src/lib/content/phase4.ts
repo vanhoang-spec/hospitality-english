@@ -1934,8 +1934,13 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "I was charged twice for the same night and nobody has explained why. I've emailed three times with no reply. Disappointing for a hotel that calls itself five-star.",
     promptVi:
-      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì khoản phí bị tính trùng (charge), (2) cam kết hoàn lại tiền (refund) trong vài ngày tới, (3) mời khách liên hệ (contact) trực tiếp để xử lý nhanh hơn.",
-    mustMention: ["sorry", "charge", "refund", "contact"],
+      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Thừa nhận khoản phí bị tính trùng", any: ["double charge", "charged twice", "duplicate charge", "billing error", "the charge"] },
+      { labelVi: "Cam kết hoàn tiền kèm mốc thời gian", any: ["refund", "reimburse", "return the amount", "credit back"] },
+      { labelVi: "Mời khách liên hệ trực tiếp", any: ["contact", "get in touch", "reach out", "call us", "email us"] },
+    ],
     modelReply:
       "Dear guest, we are very sorry for the double charge on your bill and for the delay in replying to your emails. We have identified the error and will process a full refund within three business days. Please contact our Front Office Manager directly so we can resolve this personally and welcome you back with the experience you deserve.",
     explanationVi:
@@ -1946,8 +1951,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "The chicken in our main course was undercooked and we felt sick afterwards. We told the waiter but nobody from management ever followed up. Won't be dining here again.",
     promptVi:
-      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì món ăn chưa chín kỹ, (2) khẳng định đã làm việc với bếp (kitchen) để rà soát quy trình, (3) mời khách quay lại dùng bữa miễn phí (complimentary).",
-    mustMention: ["sorry", "kitchen", "complimentary"],
+      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Đã làm việc với bếp để rà soát quy trình", any: ["kitchen", "chef", "food safety", "our team", "procedures"] },
+      { labelVi: "Mời khách quay lại, chi phí do khách sạn chịu", any: ["complimentary", "free of charge", "on us", "at no cost", "our guest"] },
+    ],
     modelReply:
       "We are truly sorry to hear about the undercooked chicken and that you felt unwell — this does not meet our standards. We have already spoken with our kitchen team to review food safety procedures. We would be honoured to welcome you back for a complimentary dinner so we can show you the experience we intended to give you the first time.",
     explanationVi:
@@ -1958,8 +1967,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "The laundry service ruined my silk dress — it came back with a bleach mark and the hotel only offered a small credit. Very disappointing for the price we paid.",
     promptVi:
-      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì váy lụa bị hư hại, (2) nói rõ khoản bồi thường (compensation) sẽ được xem xét lại thỏa đáng hơn, (3) mời khách liên hệ (contact) bộ phận buồng phòng trực tiếp.",
-    mustMention: ["sorry", "compensation", "contact"],
+      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi vì món đồ bị hư hại", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Sẽ xem lại mức đền bù cho thoả đáng", any: ["compensation", "reimburse", "cover the cost", "make it right", "review the offer"] },
+      { labelVi: "Mời khách liên hệ trực tiếp", any: ["contact", "get in touch", "reach out", "call us", "email us"] },
+    ],
     modelReply:
       "We are very sorry that your silk dress was damaged in our laundry service — this is not the outcome we want for any guest. We would like to review the compensation offered, as a small credit does not reflect the value of your dress. Please contact our Housekeeping Manager directly so we can offer a fair resolution and regain your trust.",
     explanationVi:
@@ -1970,8 +1983,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "I had a skin reaction after my facial and the therapist didn't seem to know what products were used. Nobody has followed up since I left.",
     promptVi:
-      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì phản ứng trên da, (2) nhấn mạnh sự an toàn (safety) của khách là ưu tiên, (3) mời khách liên hệ (contact) để được hỗ trợ.",
-    mustMention: ["sorry", "safety", "contact"],
+      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi vì phản ứng trên da", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Khẳng định an toàn của khách là ưu tiên", any: ["safety", "well-being", "wellbeing", "health", "comfort and care"] },
+      { labelVi: "Mời khách liên hệ để được hỗ trợ", any: ["contact", "get in touch", "reach out", "call us", "email us"] },
+    ],
     modelReply:
       "We are very sorry to hear about the skin reaction after your facial — your safety is always our top priority, and we should have followed up with you immediately. Please contact our Spa Manager directly so we can review exactly which products were used and support you with any follow-up you may need.",
     explanationVi:
@@ -1982,8 +1999,13 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
     promptVi:
-      "Hãy viết phản hồi 5 sao: (1) xin lỗi (sorry) vì cam kết (promise) không được thực hiện, (2) khẳng định sẽ ghi vào hồ sơ khách (profile) cho lần sau, (3) mời khách liên hệ (contact) để sắp xếp bù đắp.",
-    mustMention: ["sorry", "promise", "profile", "contact"],
+      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Thừa nhận quyền lợi đã hứa không được thực hiện", any: ["promised", "promise", "guaranteed", "assured", "should have been"] },
+      { labelVi: "Sẽ ghi vào hồ sơ khách cho lần sau", any: ["profile", "record", "account", "guest history", "noted"] },
+      { labelVi: "Mời khách liên hệ để sắp xếp bù đắp", any: ["contact", "get in touch", "reach out", "call us", "email us"] },
+    ],
     modelReply:
       "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. We have noted this in your guest profile so it never happens again. Please contact our Guest Relations team directly so we can arrange a benefit to make up for what you missed.",
     explanationVi:
@@ -1994,8 +2016,13 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "We were invoiced twice for the same group booking last month, and our finance team still hasn't received a credit note. This is affecting our trust in continuing to work with your hotel.",
     promptVi:
-      "Hãy viết email phản hồi chuyên nghiệp: (1) xin lỗi (sorry) vì hóa đơn bị lặp (duplicate), (2) cam kết gửi giấy báo có (credit note) trong thời hạn cụ thể, (3) khẳng định coi trọng mối quan hệ hợp tác (partnership) lâu dài.",
-    mustMention: ["sorry", "duplicate", "credit note", "partnership"],
+      "Hãy viết email phản hồi chuyên nghiệp cho đối tác (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+    mustConvey: [
+      { labelVi: "Xin lỗi đối tác", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
+      { labelVi: "Thừa nhận hoá đơn bị lặp", any: ["duplicate", "invoiced twice", "billed twice", "double invoice", "billing error"] },
+      { labelVi: "Cam kết gửi giấy báo có kèm thời hạn", any: ["credit note", "credit memo", "refund", "issue a credit"] },
+      { labelVi: "Khẳng định coi trọng hợp tác lâu dài", any: ["partnership", "relationship", "working together", "value your business"] },
+    ],
     modelReply:
       "Dear ABC Travel team, we are very sorry for the duplicate invoice on your group booking and for the delay in resolving it. Our finance department will issue the credit note within five business days. We value this partnership highly and are taking steps to make sure this billing error does not happen again.",
     explanationVi:

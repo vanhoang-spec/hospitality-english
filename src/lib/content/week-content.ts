@@ -50,30 +50,39 @@ export type LessonContent = {
   game: GameRound[];
 };
 
-/** A guest's online review + the model 5-star written reply — the
- *  writing production skill the app had none of before P2. `mustMention`
- *  are case-insensitive substrings the learner's own reply is checked
- *  against (coverage-scored, not exact-match — this is a formative
- *  self-study tool, not a strict grader). */
+/** One idea the learner's answer has to get across. Scoring accepts ANY of
+ *  the listed English expressions (word-boundary, case-insensitive), so a
+ *  learner who writes "we sincerely apologise" scores the same as one who
+ *  writes "sorry" — paraphrase is the skill, not keyword recall.
+ *
+ *  `labelVi` is what the learner sees in the checklist. It is deliberately
+ *  Vietnamese and deliberately does NOT contain the English target words:
+ *  the first version of this feature printed the required keywords inside
+ *  the task instructions, which turned the exercise into copy-the-answer. */
+export type RequiredIdea = {
+  labelVi: string;
+  any: string[];
+};
+
+/** A guest's online review + the model 5-star written reply — the writing
+ *  production skill the app had none of before P2. */
 export type WritingTask = {
   reviewMeta: string;
   reviewText: string;
   promptVi: string;
-  mustMention: string[];
+  mustConvey: RequiredIdea[];
   modelReply: string;
   explanationVi: string;
 };
 
 /** A Vietnamese colleague's note that the learner must relay to an
- *  English-speaking guest — the mediation skill (interpreting between
- *  a guest and a Vietnamese-speaking colleague) named by the audit as
- *  the most common real B1 task in a VN hotel and absent from all 40
- *  weeks. `mustMention` scores the learner's typed English relay the
- *  same coverage-based way as WritingTask. */
+ *  English-speaking guest — the mediation skill (interpreting between a
+ *  guest and a Vietnamese-speaking colleague) named by the audit as the
+ *  most common real B1 task in a VN hotel and absent from all 40 weeks. */
 export type MediationTask = {
   colleagueNoteVi: string;
   promptVi: string;
-  mustMention: string[];
+  mustConvey: RequiredIdea[];
   modelAnswer: string;
   explanationVi: string;
 };
@@ -440,7 +449,7 @@ export const HK_WEEK_15: WeekContent = {
   weekNumber: 15,
   weekTitleEn: "Room Service Requests & Extra Amenities",
   weekTitleVi: "Quy Trình Giao Tiếp Phòng Khách & Phục Vụ Tiện Ích",
-  reviewWords: ["Towel", "Soap", "Pillow", "Clean", "Guest room", "Request", "Right away", "Make the bed"],
+  reviewWords: ["Towel", "Soap", "Pillow", "Clean", "Guest room", "Request", "In five minutes", "Make the bed"],
   lessons: [
     {
       lessonId: "HK_15_1",
@@ -612,7 +621,7 @@ export const SW_WEEK_23: WeekContent = {
   weekTitleVi: "Tư Vấn Liệu Trình Spa & Kỹ Thuật Upselling Gói Trị Liệu",
   // Pulled forward from Phases 0-2 so this week joins the spaced-recycling
   // system instead of standing outside it.
-  reviewWords: ["Therapist", "Appointment", "Relaxing", "Massage", "Health condition", "Add on", "Popular choice", "Skin type"],
+  reviewWords: ["Therapist", "Appointment", "Relaxing", "Massage", "Health condition", "Included", "Popular choice", "Skin type"],
   lessons: [
     {
       lessonId: "SW_23_1",
@@ -956,7 +965,7 @@ export const BO_WEEK_37: WeekContent = {
   weekTitleVi: "Đàm Phán Hợp Đồng Đại Lý Lữ Hành & Doanh Nghiệp (B2B Account Sales)",
   // Pulled forward from Phases 0-3 so this hand-authored week joins the
   // spaced-recycling system instead of standing outside it.
-  reviewWords: ["Policy", "Company", "Contact", "Quotation", "Deadline", "Agreed", "Volume discount", "Deposit policy"],
+  reviewWords: ["Policy", "Company name", "Reply by email", "Check the order", "Deadline", "Agreed", "Volume discount", "Deposit policy"],
   lessons: [
     {
       lessonId: "BO_37_1",
@@ -1816,7 +1825,7 @@ export const GR_WEEK_34: WeekContent = {
   weekTitleVi: "Thiết Kế Trải Nghiệm Bất Ngờ (Milestone Moments)",
   // Pulled forward from Phases 0-3 so this hand-authored week joins the
   // spaced-recycling system instead of standing outside it.
-  reviewWords: ["Special", "Surprise", "Arrange", "Decorate", "Follow up", "Photo", "Elegant", "Family"],
+  reviewWords: ["Special", "Ask the manager", "Arrange", "Decorate", "Follow up", "Photo", "Elegant", "Before dinner"],
   lessons: [
     {
       lessonId: "GR_34_1",

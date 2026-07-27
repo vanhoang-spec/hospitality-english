@@ -879,7 +879,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp("Can I have my key, please?", "One moment, please, sir.", "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp."),
       ],
       reading: read(
-        `The guest asks for a ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes.`,
+        `The guest asks for the ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes.`,
         [
           {
             q: "Câu nào dùng khi cần khách chờ?",

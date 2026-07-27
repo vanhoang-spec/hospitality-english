@@ -42,6 +42,22 @@ function bw(w: P2Word, context: string) {
 }
 const lo = (w: P2Word) => w.word.toLowerCase();
 
+/** The headword with the determiner its slot requires — "an upgrade",
+ *  "a higher floor", "turndown service". Frames that place a bank word in a
+ *  countable noun position MUST use this, never bare `lo()`: dropping the
+ *  article there teaches Vietnamese learners the exact L1 error they most
+ *  need to unlearn. See the `art` note in phase2-lexicon.ts. */
+const wa = (w: P2Word) => {
+  const bare = lo(w);
+  const art = w.art ?? (/^[aeiou]/i.test(bare) ? "an" : "a");
+  return art === "" ? bare : `${art} ${bare}`;
+};
+
+/** The headword behind a definite article — except where the headword
+ *  already opens with its own determiner ("today's special"), which would
+ *  otherwise generate "the today's special". */
+const wt = (w: P2Word) => (/^(today's|tonight's|tomorrow's)\b/i.test(w.word) ? lo(w) : `the ${lo(w)}`);
+
 // ============================================================
 // WEEK 15 — Standard Service Sequence
 // FRAMES · "First I {step}, then I {step}."
@@ -228,25 +244,25 @@ function week16(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Offer", "/ˈɒfə/", "Đề nghị, mời", "May I offer you a drink?", "🎁"),
         v("Extra", "/ˈekstrə/", "Thêm, phụ trội", "Would you like an extra one?", "➕"),
-        bw(o1, `Would you like ${lo(o1)}?`),
-        bw(o2, `We also have ${lo(o2)}.`),
+        bw(o1, `Would you like ${wa(o1)}?`),
+        bw(o2, `We also have ${wa(o2)}.`),
       ],
       grammar: [
-        g(`You want ${lo(o1)}?`, `Would you like ${lo(o1)}, sir?`, "'Would you like…?' là mẫu mời chuẩn mực. 'You want…?' nghe như tra hỏi."),
-        g(`I give you ${lo(o2)}.`, `May I offer you ${lo(o2)}?`, "Xin phép mời dùng 'May I offer you…?' — lịch sự hơn 'I give you'."),
+        g(`You want ${lo(o1)}?`, `Would you like ${wa(o1)}, sir?`, "'Would you like…?' là mẫu mời chuẩn mực. 'You want…?' nghe như tra hỏi. Lưu ý mạo từ A/AN trước danh từ đếm được — tiếng Việt không có mạo từ nên rất dễ quên."),
+        g(`I give you ${lo(o2)}.`, `May I offer you ${wa(o2)}?`, "Xin phép mời dùng 'May I offer you…?' — lịch sự hơn 'I give you'. Danh từ đếm được vẫn cần A/AN đứng trước."),
       ],
       speaking: [
-        sp("What do you have available?", `Would you like ${lo(o1)}, madam?`, "Khung vàng tuần này — thay bất kỳ dịch vụ nào của bộ phận bạn vào."),
+        sp("What do you have available?", `Would you like ${wa(o1)}, madam?`, "Khung vàng tuần này — thay bất kỳ dịch vụ nào của bộ phận bạn vào, nhớ giữ mạo từ."),
         sp("That sounds good, yes please.", `Certainly. I will arrange it right away.`, "Nhận lời rồi cam kết hành động ngay."),
       ],
       reading: read(
-        `${lx.staff} sees a chance to help. "Would you like ${lo(o1)}, madam? We also have ${lo(o2)}." The guest smiles and says: "Yes, please."`,
+        `${lx.staff} sees a chance to help. "Would you like ${wa(o1)}, madam? We also have ${wa(o2)}." The guest smiles and says: "Yes, please."`,
         [
           {
             q: "Nhân viên mời khách dùng gì trước?",
             options: [o1.definition, o2.definition, "Không mời gì"],
             correct: 0,
-            explanation: `"Would you like ${lo(o1)}?" là lời mời đầu tiên.`,
+            explanation: `"Would you like ${wa(o1)}?" là lời mời đầu tiên.`,
           },
           {
             q: "Mẫu câu nào lịch sự nhất khi mời?",
@@ -259,7 +275,7 @@ function week16(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Is there anything you recommend?",
-          `Would you like ${lo(o1)}, sir?`,
+          `Would you like ${wa(o1)}, sir?`,
           `You want ${lo(o1)}?`,
           `I give ${lo(o1)} you.`,
         ),
@@ -268,26 +284,26 @@ function week16(lx: Ctx): LessonContent[] {
 
     lesson(lx, 16, 2, "Explaining What Is Included", "Giải thích những gì đã bao gồm", {
       vocabulary: [
-        bw(o3, `${o3.word} is very popular.`),
-        bw(o8, `It is ${lo(o8)} for our guests.`),
-        bw(o10, `The price ${lo(o10)}s breakfast.`),
+        bw(o3, `${wt(o3)} is very popular.`),
+        bw(o8, `${wt(o8)} is free for our guests.`),
+        bw(o10, `The price includes ${lo(o10)}.`),
       ],
       grammar: [
-        g(`This no money.`, `It is ${lo(o8)} for you, madam.`, "Nói miễn phí cần câu đủ: IT IS free of charge. Không nói 'no money'."),
+        g(`This no money.`, `${wt(o8)} is free for you, madam.`, "Nói miễn phí cần câu đủ: THE + danh từ + IS FREE. Không nói 'no money'."),
         g(`Price include breakfast.`, `The price includes breakfast, sir.`, "Chủ ngữ số ít 'the price' đi với 'includes' có -s."),
       ],
       speaking: [
-        sp("Is there an extra charge for that?", `No, madam. It is ${lo(o8)} for our guests.`, "Trả lời rõ ràng về phí ngay từ đầu — tránh hiểu lầm khi thanh toán."),
-        sp("What exactly does it include?", `The price includes ${lo(o3)} and service.`, "Liệt kê tối đa hai thứ trong một câu; nhiều hơn thì tách câu."),
+        sp("Is there an extra charge for that?", `No, madam. ${wt(o8)} is free for our guests.`, "Trả lời rõ ràng về phí ngay từ đầu — tránh hiểu lầm khi thanh toán."),
+        sp("What exactly does it include?", `The price includes ${lo(o10)} and service.`, "Liệt kê tối đa hai thứ trong một câu; nhiều hơn thì tách câu."),
       ],
       reading: read(
-        `A guest worries about the cost. ${lx.staff} explains: "It is ${lo(o8)} for our guests, sir. The price also includes ${lo(o3)}." The guest is pleased.`,
+        `A guest worries about the cost. ${lx.staff} explains: "${wt(o8)} is free for our guests, sir. The price also includes ${lo(o10)}." The guest is pleased.`,
         [
           {
             q: "Khách có phải trả thêm tiền không?",
             options: ["Không, đã miễn phí", "Có, trả thêm", "Chưa rõ"],
             correct: 0,
-            explanation: `"It is ${lo(o8)} for our guests" — miễn phí.`,
+            explanation: `"${wt(o8)} is free for our guests" — miễn phí.`,
           },
           {
             q: "Vì sao nên nói rõ về phí ngay từ đầu?",
@@ -300,7 +316,7 @@ function week16(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Will this cost me anything extra?",
-          `Not at all, sir. It is ${lo(o8)}.`,
+          `Not at all, sir. ${wt(o8)} is free.`,
           "This no money for you.",
           "Maybe some money yes.",
         ),
@@ -309,20 +325,20 @@ function week16(lx: Ctx): LessonContent[] {
 
     lesson(lx, 16, 3, "Offering an Alternative", "Đề xuất phương án thay thế", {
       vocabulary: [
-        bw(o4, `We could arrange ${lo(o4)} instead.`),
-        bw(o5, `${o5.word} is also possible.`),
+        bw(o4, `We could arrange ${wa(o4)} instead.`),
+        bw(o5, `We can also offer ${wa(o5)}.`),
         bw(o9, `That part is ${lo(o9)}.`),
       ],
       grammar: [
-        g(`No have. Other thing?`, `We do not have that, but we could offer ${lo(o4)}.`, "Câu hai mệnh đề nối bằng 'but' — báo tin xấu rồi mở ngay lối khác."),
-        g(`Maybe you take ${lo(o5)}.`, `Perhaps you would prefer ${lo(o5)}?`, "'Perhaps you would prefer…?' là cách gợi ý nhã nhặn, không áp đặt."),
+        g(`No have. Other thing?`, `We do not have that, but we could offer ${wa(o4)}.`, "Câu hai mệnh đề nối bằng 'but' — báo tin xấu rồi mở ngay lối khác."),
+        g(`Maybe you take ${lo(o5)}.`, `Perhaps you would prefer ${wa(o5)}?`, "'Perhaps you would prefer…?' là cách gợi ý nhã nhặn, không áp đặt. Giữ mạo từ A/AN trước danh từ đếm được."),
       ],
       speaking: [
-        sp("Do you have that available today?", `Not today, but we could offer ${lo(o4)}.`, "Không có thì đừng dừng ở lời từ chối — luôn kèm một lựa chọn khác."),
-        sp("Hmm, what else could work?", `Perhaps you would prefer ${lo(o5)}, madam?`, "Dùng 'Perhaps' để gợi ý mà vẫn để khách toàn quyền quyết định."),
+        sp("Do you have that available today?", `Not today, but we could offer ${wa(o4)}.`, "Không có thì đừng dừng ở lời từ chối — luôn kèm một lựa chọn khác."),
+        sp("Hmm, what else could work?", `Perhaps you would prefer ${wa(o5)}, madam?`, "Dùng 'Perhaps' để gợi ý mà vẫn để khách toàn quyền quyết định."),
       ],
       reading: read(
-        `The first choice is not available. ${lx.staff} says: "We do not have that today, but we could offer ${lo(o4)}. Perhaps you would prefer ${lo(o5)}?"`,
+        `The first choice is not available. ${lx.staff} says: "We do not have that today, but we could offer ${wa(o4)}. Perhaps you would prefer ${wa(o5)}?"`,
         [
           {
             q: "Khi thứ khách muốn không có, nên làm gì?",
@@ -341,7 +357,7 @@ function week16(lx: Ctx): LessonContent[] {
       game: [
         game(
           "So there is nothing you can do?",
-          `We could offer ${lo(o4)} instead, sir.`,
+          `We could offer ${wa(o4)} instead, sir.`,
           `No have. Other thing?`,
           "Nothing possible today.",
         ),
@@ -350,19 +366,19 @@ function week16(lx: Ctx): LessonContent[] {
 
     lesson(lx, 16, 4, "Closing the Offer", "Chốt lời mời", {
       vocabulary: [
-        bw(o6, `Shall I arrange ${lo(o6)}?`),
-        bw(o7, `${o7.word} is ready for you.`),
+        bw(o6, `Shall I arrange ${wa(o6)}?`),
+        bw(o7, `${wt(o7)} is ready for you.`),
       ],
       grammar: [
         g(`I do it now ok?`, `Shall I arrange that for you now?`, "'Shall I…?' là mẫu xin phép hành động, rất hay dùng khi chốt dịch vụ."),
         g(`You happy this?`, `Would that be suitable for you?`, "Câu hỏi xác nhận trang trọng: 'Would that be suitable?'"),
       ],
       speaking: [
-        sp("Yes, I think that would be nice.", `Shall I arrange ${lo(o6)} for you now?`, "Chốt bằng câu xin phép — khách chỉ cần gật đầu là xong."),
-        sp("Perfect, please go ahead.", `Certainly. ${o7.word} will be ready shortly.`, "Xác nhận lại kèm mốc thời gian để khách yên tâm."),
+        sp("Yes, I think that would be nice.", `Shall I arrange ${wa(o6)} for you now?`, "Chốt bằng câu xin phép — khách chỉ cần gật đầu là xong."),
+        sp("Perfect, please go ahead.", `Certainly. ${wt(o7)} will be ready shortly.`, "Xác nhận lại kèm mốc thời gian để khách yên tâm."),
       ],
       reading: read(
-        `The guest agrees. ${lx.staff} confirms: "Shall I arrange ${lo(o6)} for you now?" The guest nods. "Certainly. ${o7.word} will be ready shortly, madam."`,
+        `The guest agrees. ${lx.staff} confirms: "Shall I arrange ${wa(o6)} for you now?" The guest nods. "Certainly. ${wt(o7)} will be ready shortly, madam."`,
         [
           {
             q: "Câu 'Shall I…?' dùng để làm gì?",
@@ -496,7 +512,7 @@ function week17(lx: Ctx): LessonContent[] {
         sp("Could you repeat that back?", `Certainly. Could you spell it slowly, please?`, "Nhờ khách đánh vần chậm không hề bất lịch sự — sai tên mới bất lịch sự."),
       ],
       reading: read(
-        `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me ${lo(d8)} that for you." Nothing is wrong.`,
+        `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me read the ${lo(d8)} back to you." Nothing is wrong.`,
         [
           {
             q: "Khi tên khách khó nghe, nên làm gì?",
@@ -791,15 +807,15 @@ function week19(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(r4, `The ${lo(r4)} is over there.`),
         bw(r5, `Do not touch the ${lo(r5)}.`),
-        bw(r9, `May I ${lo(r9)} you of something?`),
+        bw(r9, `May I remind you of the ${lo(r9)}?`),
       ],
       grammar: [
         g(`Careful! Danger there!`, `Please be careful. That area is not safe.`, "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do, giọng bình tĩnh."),
-        g(`I remind you the rule.`, `May I ${lo(r9)} you of the rule?`, "Sau 'remind' cần giới từ 'of': remind you OF the rule."),
+        g(`I remind you the rule.`, `May I remind you of the ${lo(r9)}?`, "Sau 'remind' cần giới từ 'of': remind you OF the rule."),
       ],
       speaking: [
         sp("What is that alarm for?", `That is the ${lo(r4)}, madam. Please do not touch it.`, "Chỉ rõ vị trí thiết bị an toàn cho khách — nhiều khách không để ý."),
-        sp("I did not know about that.", `May I ${lo(r9)} you of the safety rule?`, "Nhắc quy định bằng câu xin phép, không bằng giọng dạy dỗ."),
+        sp("I did not know about that.", `May I remind you of the ${lo(r9)}, madam?`, "Nhắc quy định bằng câu xin phép, không bằng giọng dạy dỗ."),
       ],
       reading: read(
         `${lx.staff} points to the equipment. "That is the ${lo(r4)}, sir. Please do not touch the ${lo(r5)}." The guest thanks ${lx.staff} for the warning.`,
@@ -1276,15 +1292,15 @@ function week22(lx: Ctx): LessonContent[] {
         bw(w2, `Everything finished ${lo(w2)}.`),
       ],
       grammar: [
-        g(`I ${lo(a1)}, after you want ${lo(o1)}?`, `First I ${lo(a1)}. Would you like ${lo(o1)}?`, "Ôn tuần 15 và 16: tách thành hai câu ngắn thay vì gộp lộn xộn."),
+        g(`I ${lo(a1)}, after you want ${lo(o1)}?`, `First I ${lo(a1)}. Would you like ${wa(o1)}?`, "Ôn tuần 15 và 16: tách thành hai câu ngắn thay vì gộp lộn xộn."),
         g(`Service today good.`, `The service was ${lo(w1)} today.`, "Câu quá khứ đủ chủ ngữ và động từ 'was'."),
       ],
       speaking: [
-        sp("What happens first here?", `First I ${lo(a1)}. Would you like ${lo(o1)}?`, "Ghép quy trình (tuần 15) với lời mời (tuần 16) — nhịp phục vụ thật là như vậy."),
+        sp("What happens first here?", `First I ${lo(a1)}. Would you like ${wa(o1)}?`, "Ghép quy trình (tuần 15) với lời mời (tuần 16) — nhịp phục vụ thật là như vậy."),
         sp("Yes please, that sounds good.", `Certainly. Everything will be ready ${lo(w2)}.`, "Nhận lời kèm cam kết thời gian."),
       ],
       reading: read(
-        `${lx.staff} combines the steps naturally. "First I ${lo(a1)}. Would you like ${lo(o1)}, madam? Everything will be ready ${lo(w2)}."`,
+        `${lx.staff} combines the steps naturally. "First I ${lo(a1)}. Would you like ${wa(o1)}, madam? Everything will be ready ${lo(w2)}."`,
         [
           {
             q: "Nhân viên ghép hai kỹ năng nào?",

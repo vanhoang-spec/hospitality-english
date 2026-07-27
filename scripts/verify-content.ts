@@ -78,11 +78,19 @@ const longWords = (s: string) =>
     .filter((w) => w.length >= 4);
 
 // ============================================================
-// Regression gate: frame×bank collisions that once shipped.
-// Each entry is a nonsense (or brand-violating) string the P0 content
-// audit found in GENERATED sentences. The POS-only bank contract cannot
-// catch these semantically, so the exact strings are pinned here — if
-// any reappears in any text field of any week, the build fails.
+// Regression gate — NARROW BY DESIGN.
+//
+// This list only pins defects that are about WORD CHOICE rather than
+// structure: brand terminology the LQA pass retired, and a handful of
+// frame×bank collisions kept as canaries.
+//
+// It is deliberately NOT the main defence any more. A blocklist of exact
+// strings cannot catch a synonym, a sibling slot or a reworded frame —
+// it reported "all authored content passes" while ~129 broken sentences
+// shipped. Structural checking now lives in scripts/lint-content.ts,
+// which runs from the same `verify:content` script and checks invariants
+// (slot part-of-speech contracts, cross-department slot agreement, and
+// English structure over every generated sentence).
 // ============================================================
 const KNOWN_BAD_STRINGS = [
   // P1 W10 states slotted into scenery frames they can't describe

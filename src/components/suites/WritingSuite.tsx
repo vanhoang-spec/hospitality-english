@@ -2,10 +2,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WritingTask } from "@/lib/content/week-content";
+import { PASS_PCT, scoreFreeText } from "@/lib/writing-score";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-const PASS_PCT = 70;
-const MIN_WORDS = 15;
+// A public review reply is a short paragraph, not a sentence.
+const MIN_WORDS = 25;
+const MIN_SENTENCES = 2;
 
 export function WritingSuite({ dep, week }: { dep?: string; week?: string }) {
   const content = dep && week ? getWeekContent(dep, week) : null;
@@ -20,29 +22,33 @@ function WritingSuiteInner({ dep, week, task }: { dep: string; week: string; tas
   const [submitted, setSubmitted] = useState(false);
   const [hits, setHits] = useState<boolean[]>([]);
   const [scorePct, setScorePct] = useState(0);
+  const [blockedVi, setBlockedVi] = useState<string | null>(null);
   const [awarded, setAwarded] = useState(false);
 
   function submit() {
-    const wordCount = draft.trim().split(/\s+/).filter(Boolean).length;
-    const lower = draft.toLowerCase();
-    const matched = task.mustMention.map((kw) => lower.includes(kw.toLowerCase()));
-    const coveragePct = Math.round((matched.filter(Boolean).length / task.mustMention.length) * 100);
-    const pct = wordCount >= MIN_WORDS ? coveragePct : Math.min(coveragePct, 40);
-    const passed = pct >= PASS_PCT && wordCount >= MIN_WORDS;
+    const r = scoreFreeText({
+      draft,
+      ideas: task.mustConvey,
+      minWords: MIN_WORDS,
+      minSentences: MIN_SENTENCES,
+    });
 
-    setHits(matched);
-    setScorePct(pct);
+    setHits(r.hits);
+    setScorePct(r.scorePct);
+    setBlockedVi(r.blockedByVi);
     setSubmitted(true);
-    if (passed && !awarded) {
+    if (r.passed && !awarded) {
       setAwarded(true);
       awardStars(8);
     }
-    recordSuiteResult(dep, week, "writing", passed ? 8 : 0, { scorePct: pct, mastered: passed });
+    recordSuiteResult(dep, week, "writing", r.passed ? 8 : 0, { scorePct: r.scorePct, mastered: r.passed });
   }
 
+  /** Keep the draft. Revising your own text against a model answer is the
+   *  single most productive step in writing practice; wiping it (the first
+   *  version did) leaves copying the model as the only way forward. */
   function retry() {
     setSubmitted(false);
-    setDraft("");
   }
 
   return (
@@ -88,7 +94,7 @@ function WritingSuiteInner({ dep, week, task }: { dep: string; week: string; tas
                   <div className="mt-1 text-xs uppercase tracking-[0.2em]">+8 ⭐ đạt chuẩn</div>
                 ) : (
                   <div className="mt-1 text-[11px] text-foreground/60">
-                    Cần ≥ {PASS_PCT}% và tối thiểu {MIN_WORDS} từ. Xem gợi ý bên dưới rồi thử lại.
+                    {blockedVi ?? `Cần ≥ ${PASS_PCT}% số ý. Xem gợi ý bên dưới rồi sửa lại bài của bạn.`}
                   </div>
                 )}
               </div>
@@ -96,9 +102,9 @@ function WritingSuiteInner({ dep, week, task }: { dep: string; week: string; tas
               <div>
                 <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Ý cần có trong phản hồi</div>
                 <ul className="mt-2 space-y-1">
-                  {task.mustMention.map((kw, i) => (
-                    <li key={kw} className={`text-xs ${hits[i] ? "text-primary" : "text-destructive"}`}>
-                      {hits[i] ? "✓" : "✗"} {kw}
+                  {task.mustConvey.map((idea, i) => (
+                    <li key={idea.labelVi} className={`text-xs ${hits[i] ? "text-primary" : "text-destructive"}`}>
+                      {hits[i] ? "✓" : "✗"} {idea.labelVi}
                     </li>
                   ))}
                 </ul>
@@ -116,7 +122,7 @@ function WritingSuiteInner({ dep, week, task }: { dep: string; week: string; tas
                 onClick={retry}
                 className="w-full border border-primary px-4 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
               >
-                Viết lại
+                Sửa lại bài của bạn
               </button>
             </div>
           )}

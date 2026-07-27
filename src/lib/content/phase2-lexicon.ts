@@ -16,12 +16,35 @@
 //  · Sentences built from these words stay within the 12-word A2.1 cap.
 // ============================================================
 
-export type P2Word = { word: string; phonetic: string; definition: string; icon: string };
+export type P2Word = {
+  word: string;
+  phonetic: string;
+  definition: string;
+  icon: string;
+  /** Determiner this headword needs when a frame drops it into a countable
+   *  noun slot. Omit for ordinary singular countables (the frame computes
+   *  "a"/"an"); set "" for mass and plural nouns and for headwords that
+   *  already begin with a determiner ("today's special").
+   *
+   *  This field exists because Vietnamese has no article system, so article
+   *  omission is the canonical L1 error — and week 16 was drilling it as the
+   *  CORRECT form ("Would you like upgrade, sir?") across all six banks. */
+  art?: string;
+};
 
 export type P2Bank = {
   /** W15 — the named steps of this department's core service sequence. */
   steps: P2Word[];
-  /** W16 — what this department offers guests. */
+  /** W16 — what this department offers guests. SLOT CONTRACT:
+   *   1-7  countable noun phrase; the frames supply "a"/"an" via `wa()`,
+   *        so set `art: ""` on mass/plural headwords and on any headword
+   *        that already starts with a determiner.
+   *   8    countable noun — reads as "The {8} is free for our guests."
+   *   9    ADJECTIVE — reads as "That part is {9}."
+   *   10   mass or plural noun — reads as "The price includes {10}."
+   *  Slots 8-10 used to hold whatever each department fancied, which is why
+   *  week 16 shipped "It is bath robe for our guests.", "That part is
+   *  provide." and "The price we can provides breakfast." */
   offers: P2Word[];
   /** W17 — guest details this department asks for and confirms. */
   details: P2Word[];
@@ -56,11 +79,14 @@ const FO_BANK: P2Bank = {
     { word: "Sea view", phonetic: "/siː vjuː/", definition: "Hướng nhìn ra biển", icon: "🌊" },
     { word: "Connecting room", phonetic: "/kəˈnektɪŋ ruːm/", definition: "Phòng thông nhau", icon: "🚪" },
     { word: "Airport pick-up", phonetic: "/ˈeəpɔːt ˈpɪk ʌp/", definition: "Đón sân bay", icon: "🚐" },
-    { word: "Baggage storage", phonetic: "/ˈbæɡɪdʒ ˈstɔːrɪdʒ/", definition: "Gửi hành lý", icon: "🧳" },
-    { word: "Newspaper delivery", phonetic: "/ˈnjuːzpeɪpə dɪˈlɪvəri/", definition: "Giao báo tận phòng", icon: "📰" },
-    { word: "Free of charge", phonetic: "/friː əv tʃɑːdʒ/", definition: "Miễn phí", icon: "🆓" },
+    { word: "Baggage storage", phonetic: "/ˈbæɡɪdʒ ˈstɔːrɪdʒ/", definition: "Gửi hành lý", icon: "🧳", art: "" },
+    { word: "Newspaper delivery", phonetic: "/ˈnjuːzpeɪpə dɪˈlɪvəri/", definition: "Giao báo tận phòng", icon: "📰", art: "" },
+    // 8 = countable noun ("The welcome drink is free for our guests.")
+    { word: "Welcome drink", phonetic: "/ˈwelkəm drɪŋk/", definition: "Nước chào mừng", icon: "🥤" },
+    // 9 = adjective ("That part is optional.")
     { word: "Optional", phonetic: "/ˈɒpʃənl/", definition: "Tùy chọn, không bắt buộc", icon: "🔘" },
-    { word: "Include", phonetic: "/ɪnˈkluːd/", definition: "Bao gồm", icon: "➕" },
+    // 10 = mass/plural noun ("The price includes all taxes.")
+    { word: "All taxes", phonetic: "/ɔːl ˈtæksɪz/", definition: "Toàn bộ thuế phí", icon: "🧾" },
   ],
   details: [
     { word: "Full name", phonetic: "/fʊl neɪm/", definition: "Họ tên đầy đủ", icon: "🪪" },
@@ -83,7 +109,7 @@ const FO_BANK: P2Bank = {
     { word: "Currency", phonetic: "/ˈkʌrənsi/", definition: "Loại tiền tệ", icon: "💱" },
     { word: "Exchange rate", phonetic: "/ɪksˈtʃeɪndʒ reɪt/", definition: "Tỷ giá", icon: "📈" },
     { word: "Settle the bill", phonetic: "/ˈsetl ðə bɪl/", definition: "Thanh toán hóa đơn", icon: "✅" },
-    { word: "Processing", phonetic: "/ˈprəʊsesɪŋ/", definition: "Đang xử lý", icon: "⏳" },
+    { word: "In order", phonetic: "/ɪn ˈɔːdə/", definition: "Đúng thủ tục, hợp lệ", icon: "👌" },
     { word: "Copy", phonetic: "/ˈkɒpi/", definition: "Bản sao", icon: "🖨️" },
   ],
   rules: [
@@ -95,7 +121,7 @@ const FO_BANK: P2Bank = {
     { word: "Valuables", phonetic: "/ˈvæljuəblz/", definition: "Đồ có giá trị", icon: "💎" },
     { word: "Safety box", phonetic: "/ˈseɪfti bɒks/", definition: "Két an toàn", icon: "🔐" },
     { word: "Not allowed", phonetic: "/nɒt əˈlaʊd/", definition: "Không được phép", icon: "🚫" },
-    { word: "Remind", phonetic: "/rɪˈmaɪnd/", definition: "Nhắc nhở", icon: "📢" },
+    { word: "Registration rule", phonetic: "/ˌredʒɪˈstreɪʃn ruːl/", definition: "Quy định khai báo lưu trú", icon: "📋" },
     { word: "Regulation", phonetic: "/ˌreɡjuˈleɪʃn/", definition: "Quy định", icon: "📜" },
   ],
   choices: [
@@ -111,26 +137,26 @@ const FO_BANK: P2Bank = {
     { word: "Option", phonetic: "/ˈɒpʃn/", definition: "Lựa chọn", icon: "🔀" },
   ],
   reports: [
-    { word: "Arrived", phonetic: "/əˈraɪvd/", definition: "Đã đến", icon: "🛬" },
+    { word: "Confirmed", phonetic: "/kənˈfɜːmd/", definition: "Đã xác nhận", icon: "✅" },
     { word: "Checked in", phonetic: "/tʃekt ɪn/", definition: "Đã nhận phòng", icon: "📥" },
     { word: "Called", phonetic: "/kɔːld/", definition: "Đã gọi", icon: "📞" },
     { word: "Informed", phonetic: "/ɪnˈfɔːmd/", definition: "Đã báo cho biết", icon: "📢" },
-    { word: "Yesterday", phonetic: "/ˈjestədeɪ/", definition: "Hôm qua", icon: "📅" },
-    { word: "Last night", phonetic: "/lɑːst naɪt/", definition: "Đêm qua", icon: "🌙" },
-    { word: "Shift report", phonetic: "/ʃɪft rɪˈpɔːt/", definition: "Báo cáo ca", icon: "📄" },
-    { word: "Solved", phonetic: "/sɒlvd/", definition: "Đã giải quyết", icon: "✅" },
-    { word: "Passed on", phonetic: "/pɑːst ɒn/", definition: "Đã chuyển tiếp", icon: "➡️" },
+    { word: "The front desk", phonetic: "/ðə frʌnt desk/", definition: "Quầy lễ tân", icon: "🛎️" },
+    { word: "Arrivals", phonetic: "/əˈraɪvlz/", definition: "Lượt khách đến", icon: "🛬" },
+    { word: "Started later", phonetic: "/ˈstɑːtɪd ˈleɪtə/", definition: "Bắt đầu muộn hơn", icon: "⏰" },
+    { word: "Changed", phonetic: "/tʃeɪndʒd/", definition: "Đã đổi cái khác", icon: "🔧" },
+    { word: "Calm", phonetic: "/kɑːm/", definition: "Yên ắng, không sự cố", icon: "😌" },
     { word: "Noted", phonetic: "/ˈnəʊtɪd/", definition: "Đã ghi nhận", icon: "🗒️" },
   ],
   wrapUp: [
     { word: "Smooth", phonetic: "/smuːð/", definition: "Trôi chảy, suôn sẻ", icon: "🌊" },
     { word: "On time", phonetic: "/ɒn taɪm/", definition: "Đúng giờ", icon: "⏰" },
     { word: "Service level", phonetic: "/ˈsɜːvɪs ˈlevl/", definition: "Mức độ phục vụ", icon: "📏" },
-    { word: "Improve", phonetic: "/ɪmˈpruːv/", definition: "Cải thiện", icon: "📈" },
+    { word: "Do better", phonetic: "/duː ˈbetə/", definition: "Làm tốt hơn", icon: "📈" },
     { word: "Guest comment", phonetic: "/ɡest ˈkɒment/", definition: "Nhận xét của khách", icon: "💬" },
     { word: "Well handled", phonetic: "/wel ˈhændld/", definition: "Xử lý tốt", icon: "👏" },
     { word: "Next shift", phonetic: "/nekst ʃɪft/", definition: "Ca kế tiếp", icon: "🔁" },
-    { word: "Recap", phonetic: "/ˈriːkæp/", definition: "Tóm tắt lại", icon: "📋" },
+    { word: "Review", phonetic: "/rɪˈvjuː/", definition: "Điểm lại, xem lại", icon: "📋" },
     { word: "Log book", phonetic: "/lɒɡ bʊk/", definition: "Sổ nhật ký ca", icon: "📓" },
     { word: "Guest satisfied", phonetic: "/ɡest ˈsætɪsfaɪd/", definition: "Khách hài lòng", icon: "😊" },
   ],
@@ -156,10 +182,14 @@ const FB_BANK: P2Bank = {
     { word: "Soft drink", phonetic: "/sɒft drɪŋk/", definition: "Nước ngọt", icon: "🥤" },
     { word: "Fresh juice", phonetic: "/freʃ dʒuːs/", definition: "Nước ép tươi", icon: "🍊" },
     { word: "Set lunch", phonetic: "/set lʌntʃ/", definition: "Suất trưa cố định", icon: "🍱" },
-    { word: "Today's special", phonetic: "/təˈdeɪz ˈspeʃl/", definition: "Món đặc biệt hôm nay", icon: "⭐" },
+    // already carries its own determiner ("today's")
+    { word: "Today's special", phonetic: "/təˈdeɪz ˈspeʃl/", definition: "Món đặc biệt hôm nay", icon: "⭐", art: "" },
+    // 8 = countable noun
     { word: "Second helping", phonetic: "/ˈsekənd ˈhelpɪŋ/", definition: "Phần thứ hai", icon: "➕" },
-    { word: "Complimentary bread", phonetic: "/ˌkɒmplɪˈmentri bred/", definition: "Bánh mì tặng kèm", icon: "🍞" },
-    { word: "Try", phonetic: "/traɪ/", definition: "Thử", icon: "😋" },
+    // 9 = adjective
+    { word: "Unlimited", phonetic: "/ʌnˈlɪmɪtɪd/", definition: "Không giới hạn", icon: "♾️" },
+    // 10 = mass/plural noun
+    { word: "Table service", phonetic: "/ˈteɪbl ˈsɜːvɪs/", definition: "Phục vụ tại bàn", icon: "🍴" },
   ],
   details: [
     { word: "Table number", phonetic: "/ˈteɪbl ˈnʌmbə/", definition: "Số bàn", icon: "🔢" },
@@ -175,14 +205,14 @@ const FB_BANK: P2Bank = {
   ],
   paperwork: [
     { word: "Order slip", phonetic: "/ˈɔːdə slɪp/", definition: "Phiếu gọi món", icon: "🧾" },
-    { word: "Split the bill", phonetic: "/splɪt ðə bɪl/", definition: "Tách hóa đơn", icon: "✂️" },
+    { word: "Signature", phonetic: "/ˈsɪɡnətʃə/", definition: "Chữ ký", icon: "✒️" },
     { word: "Charge to room", phonetic: "/tʃɑːdʒ tə ruːm/", definition: "Tính vào phòng", icon: "🏨" },
     { word: "Sign here", phonetic: "/saɪn hɪə/", definition: "Ký vào đây", icon: "✍️" },
     { word: "VAT", phonetic: "/ˌviː eɪ ˈtiː/", definition: "Thuế giá trị gia tăng", icon: "🧮" },
     { word: "Discount", phonetic: "/ˈdɪskaʊnt/", definition: "Giảm giá", icon: "🏷️" },
     { word: "Member card", phonetic: "/ˈmembə kɑːd/", definition: "Thẻ thành viên", icon: "💳" },
-    { word: "Voucher", phonetic: "/ˈvaʊtʃə/", definition: "Phiếu ưu đãi", icon: "🎟️" },
-    { word: "Amount", phonetic: "/əˈmaʊnt/", definition: "Số tiền", icon: "💰" },
+    { word: "Pay by card", phonetic: "/peɪ baɪ kɑːd/", definition: "Thanh toán bằng thẻ", icon: "🏧" },
+    { word: "On hold", phonetic: "/ɒn həʊld/", definition: "Đang tạm giữ, chờ xử lý", icon: "⏸️" },
     { word: "Print the bill", phonetic: "/prɪnt ðə bɪl/", definition: "In hóa đơn", icon: "🖨️" },
   ],
   rules: [
@@ -191,11 +221,11 @@ const FB_BANK: P2Bank = {
     { word: "Wet floor", phonetic: "/wet flɔː/", definition: "Sàn ướt", icon: "⚠️" },
     { word: "Raw food", phonetic: "/rɔː fuːd/", definition: "Thức ăn sống", icon: "🍣" },
     { word: "Food safety", phonetic: "/fuːd ˈseɪfti/", definition: "An toàn thực phẩm", icon: "🛡️" },
-    { word: "Wash hands", phonetic: "/wɒʃ hændz/", definition: "Rửa tay", icon: "🧼" },
+    { word: "Handbag", phonetic: "/ˈhændbæɡ/", definition: "Túi xách của khách", icon: "👜" },
     { word: "Buffet rule", phonetic: "/ˈbʊfeɪ ruːl/", definition: "Nội quy buffet", icon: "📜" },
     { word: "Take away food", phonetic: "/teɪk əˈweɪ fuːd/", definition: "Mang thức ăn ra ngoài", icon: "🥡" },
-    { word: "Careful", phonetic: "/ˈkeəfl/", definition: "Cẩn thận", icon: "❗" },
-    { word: "Allowed", phonetic: "/əˈlaʊd/", definition: "Được phép", icon: "✔️" },
+    { word: "Last order time", phonetic: "/lɑːst ˈɔːdə taɪm/", definition: "Giờ nhận gọi món cuối", icon: "🕙" },
+    { word: "Hygiene rule", phonetic: "/ˈhaɪdʒiːn ruːl/", definition: "Quy định vệ sinh", icon: "📏" },
   ],
   choices: [
     { word: "Chicken or beef", phonetic: "/ˈtʃɪkɪn ɔː biːf/", definition: "Gà hay bò", icon: "🍗" },
@@ -213,23 +243,23 @@ const FB_BANK: P2Bank = {
     { word: "Served", phonetic: "/sɜːvd/", definition: "Đã phục vụ", icon: "🍽️" },
     { word: "Ordered", phonetic: "/ˈɔːdəd/", definition: "Đã gọi món", icon: "📝" },
     { word: "Prepared", phonetic: "/prɪˈpeəd/", definition: "Đã chuẩn bị", icon: "⚙️" },
-    { word: "Ran out", phonetic: "/ræn aʊt/", definition: "Đã hết", icon: "📭" },
-    { word: "Last night", phonetic: "/lɑːst naɪt/", definition: "Tối qua", icon: "🌙" },
-    { word: "Busy period", phonetic: "/ˈbɪzi ˈpɪəriəd/", definition: "Giờ cao điểm", icon: "🏃" },
+    { word: "Told", phonetic: "/təʊld/", definition: "Đã báo cho biết", icon: "🗣️" },
+    { word: "The restaurant", phonetic: "/ðə ˈrestrɒnt/", definition: "Nhà hàng", icon: "🍽️" },
     { word: "Covers", phonetic: "/ˈkʌvəz/", definition: "Lượt khách phục vụ", icon: "🔢" },
+    { word: "Finished later", phonetic: "/ˈfɪnɪʃt ˈleɪtə/", definition: "Kết thúc muộn hơn", icon: "⏰" },
     { word: "Returned", phonetic: "/rɪˈtɜːnd/", definition: "Đã trả lại", icon: "↩️" },
-    { word: "Replaced", phonetic: "/rɪˈpleɪst/", definition: "Đã đổi cái khác", icon: "🔄" },
-    { word: "Closed the shift", phonetic: "/kləʊzd ðə ʃɪft/", definition: "Đã đóng ca", icon: "🔒" },
+    { word: "Correct", phonetic: "/kəˈrekt/", definition: "Chính xác, đúng", icon: "✔️" },
+    { word: "Wrote", phonetic: "/rəʊt/", definition: "Đã ghi chép lại", icon: "✍️" },
   ],
   wrapUp: [
-    { word: "Full house", phonetic: "/fʊl haʊs/", definition: "Kín bàn", icon: "🈵" },
-    { word: "Teamwork", phonetic: "/ˈtiːmwɜːk/", definition: "Làm việc nhóm", icon: "🤝" },
+    { word: "Excellent", phonetic: "/ˈeksələnt/", definition: "Xuất sắc", icon: "🌟" },
+    { word: "Without delay", phonetic: "/wɪˈðaʊt dɪˈleɪ/", definition: "Không chậm trễ", icon: "🤝" },
     { word: "Praise", phonetic: "/preɪz/", definition: "Lời khen ngợi", icon: "👏" },
-    { word: "Smooth service", phonetic: "/smuːð ˈsɜːvɪs/", definition: "Phục vụ trôi chảy", icon: "🌊" },
+    { word: "Serve faster", phonetic: "/sɜːv ˈfɑːstə/", definition: "Phục vụ nhanh hơn", icon: "⚡" },
     { word: "Stock", phonetic: "/stɒk/", definition: "Hàng tồn", icon: "📦" },
-    { word: "Set up again", phonetic: "/set ʌp əˈɡen/", definition: "Bày lại", icon: "🔁" },
+    { word: "Well managed", phonetic: "/wel ˈmænɪdʒd/", definition: "Được điều phối tốt", icon: "🔄" },
     { word: "Menu update", phonetic: "/ˈmenjuː ʌpˈdeɪt/", definition: "Cập nhật thực đơn", icon: "📋" },
-    { word: "Guest count", phonetic: "/ɡest kaʊnt/", definition: "Số khách", icon: "🔢" },
+    { word: "Review", phonetic: "/rɪˈvjuː/", definition: "Rà soát lại", icon: "🔢" },
     { word: "Clean station", phonetic: "/kliːn ˈsteɪʃn/", definition: "Quầy đã dọn sạch", icon: "✨" },
     { word: "Shift end", phonetic: "/ʃɪft end/", definition: "Kết thúc ca", icon: "🏁" },
   ],
@@ -249,16 +279,19 @@ const HK_BANK: P2Bank = {
     { word: "Priority", phonetic: "/praɪˈɒrəti/", definition: "Ưu tiên", icon: "❗" },
   ],
   offers: [
-    { word: "Turndown service", phonetic: "/ˈtɜːndaʊn ˈsɜːvɪs/", definition: "Dịch vụ chỉnh giường buổi tối", icon: "🌙" },
+    { word: "Turndown service", phonetic: "/ˈtɜːndaʊn ˈsɜːvɪs/", definition: "Dịch vụ chỉnh giường buổi tối", icon: "🌙", art: "" },
     { word: "Baby cot", phonetic: "/ˈbeɪbi kɒt/", definition: "Nôi em bé", icon: "🍼" },
     { word: "Extra hanger", phonetic: "/ˈekstrə ˈhæŋə/", definition: "Móc treo thêm", icon: "🧥" },
-    { word: "Shoe polish", phonetic: "/ʃuː ˈpɒlɪʃ/", definition: "Xi đánh giày", icon: "👞" },
+    { word: "Shoe polish", phonetic: "/ʃuː ˈpɒlɪʃ/", definition: "Xi đánh giày", icon: "👞", art: "" },
     { word: "Sewing kit", phonetic: "/ˈsəʊɪŋ kɪt/", definition: "Bộ kim chỉ", icon: "🧵" },
     { word: "Pillow menu", phonetic: "/ˈpɪləʊ ˈmenjuː/", definition: "Danh mục gối", icon: "🛌" },
     { word: "Air freshener", phonetic: "/eə ˈfreʃnə/", definition: "Xịt thơm phòng", icon: "🌸" },
+    // 8 = countable noun
     { word: "Bath robe", phonetic: "/bɑːθ rəʊb/", definition: "Áo choàng tắm", icon: "🥼" },
-    { word: "Provide", phonetic: "/prəˈvaɪd/", definition: "Cung cấp", icon: "🎁" },
-    { word: "At no cost", phonetic: "/ət nəʊ kɒst/", definition: "Không mất phí", icon: "🆓" },
+    // 9 = adjective
+    { word: "On request", phonetic: "/ɒn rɪˈkwest/", definition: "Có khi khách yêu cầu", icon: "🔔" },
+    // 10 = mass/plural noun
+    { word: "Daily housekeeping", phonetic: "/ˈdeɪli ˈhaʊskiːpɪŋ/", definition: "Dọn phòng hằng ngày", icon: "🧹" },
   ],
   details: [
     { word: "Cleaning time", phonetic: "/ˈkliːnɪŋ taɪm/", definition: "Giờ dọn phòng", icon: "🕐" },
@@ -277,24 +310,24 @@ const HK_BANK: P2Bank = {
     { word: "Cleaning record", phonetic: "/ˈkliːnɪŋ ˈrekɔːd/", definition: "Sổ ghi dọn phòng", icon: "📒" },
     { word: "Minibar list", phonetic: "/ˈmɪnibɑː lɪst/", definition: "Bảng kê minibar", icon: "🍫" },
     { word: "Consumed", phonetic: "/kənˈsjuːmd/", definition: "Đã sử dụng", icon: "🍹" },
-    { word: "Post the charge", phonetic: "/pəʊst ðə tʃɑːdʒ/", definition: "Ghi phí vào phòng", icon: "💸" },
+    { word: "Cleaning charge", phonetic: "/ˈkliːnɪŋ tʃɑːdʒ/", definition: "Phí vệ sinh", icon: "💸" },
     { word: "Maintenance form", phonetic: "/ˈmeɪntənəns fɔːm/", definition: "Phiếu báo sửa chữa", icon: "🔧" },
     { word: "Lost property", phonetic: "/lɒst ˈprɒpəti/", definition: "Đồ khách bỏ quên", icon: "🎒" },
     { word: "Hand in", phonetic: "/hænd ɪn/", definition: "Nộp lại", icon: "🤲" },
-    { word: "Record the time", phonetic: "/rɪˈkɔːd ðə taɪm/", definition: "Ghi lại giờ", icon: "🕓" },
+    { word: "In progress", phonetic: "/ɪn ˈprəʊɡres/", definition: "Đang xử lý", icon: "🕓" },
     { word: "Sign the sheet", phonetic: "/saɪn ðə ʃiːt/", definition: "Ký vào bảng", icon: "✍️" },
   ],
   rules: [
     { word: "Chemical", phonetic: "/ˈkemɪkl/", definition: "Hóa chất tẩy rửa", icon: "🧪" },
-    { word: "Gloves", phonetic: "/ɡlʌvz/", definition: "Găng tay", icon: "🧤" },
+    { word: "Glove policy", phonetic: "/ɡlʌv ˈpɒləsi/", definition: "Quy định dùng găng tay", icon: "🧤" },
     { word: "Wet floor sign", phonetic: "/wet flɔː saɪn/", definition: "Biển báo sàn ướt", icon: "⚠️" },
     { word: "Do not mix", phonetic: "/duː nɒt mɪks/", definition: "Không được pha trộn", icon: "🚫" },
     { word: "Heavy item", phonetic: "/ˈhevi ˈaɪtəm/", definition: "Vật nặng", icon: "🏋️" },
-    { word: "Lift safely", phonetic: "/lɪft ˈseɪfli/", definition: "Nâng đúng cách", icon: "💪" },
+    { word: "Jewellery", phonetic: "/ˈdʒuːəlri/", definition: "Đồ trang sức", icon: "💍" },
     { word: "Guest privacy", phonetic: "/ɡest ˈprɪvəsi/", definition: "Riêng tư của khách", icon: "🔐" },
     { word: "Never touch", phonetic: "/ˈnevə tʌtʃ/", definition: "Tuyệt đối không chạm", icon: "✋" },
-    { word: "Report at once", phonetic: "/rɪˈpɔːt ət wʌns/", definition: "Báo ngay lập tức", icon: "📢" },
-    { word: "Compulsory", phonetic: "/kəmˈpʌlsəri/", definition: "Bắt buộc", icon: "❗" },
+    { word: "Reporting rule", phonetic: "/rɪˈpɔːtɪŋ ruːl/", definition: "Quy định báo cáo sự cố", icon: "📢" },
+    { word: "Requirement", phonetic: "/rɪˈkwaɪəmənt/", definition: "Yêu cầu bắt buộc", icon: "❗" },
   ],
   choices: [
     { word: "Cleaning time slot", phonetic: "/ˈkliːnɪŋ taɪm slɒt/", definition: "Khung giờ dọn phòng", icon: "🕐" },
@@ -317,20 +350,20 @@ const HK_BANK: P2Bank = {
     { word: "Rooms done", phonetic: "/ruːmz dʌn/", definition: "Số phòng đã xong", icon: "🔢" },
     { word: "Took longer", phonetic: "/tʊk ˈlɒŋɡə/", definition: "Mất nhiều thời gian hơn", icon: "⏳" },
     { word: "Replaced", phonetic: "/rɪˈpleɪst/", definition: "Đã thay mới", icon: "🔄" },
-    { word: "Checked out", phonetic: "/tʃekt aʊt/", definition: "Khách đã trả phòng", icon: "📤" },
-    { word: "Left behind", phonetic: "/left bɪˈhaɪnd/", definition: "Bỏ quên lại", icon: "🎒" },
+    { word: "Settled", phonetic: "/ˈsetld/", definition: "Đã xong xuôi", icon: "📤" },
+    { word: "Noted", phonetic: "/ˈnəʊtɪd/", definition: "Đã ghi lại", icon: "🎒" },
   ],
   wrapUp: [
-    { word: "All rooms ready", phonetic: "/ɔːl ruːmz ˈredi/", definition: "Toàn bộ phòng sẵn sàng", icon: "✅" },
-    { word: "Inspection", phonetic: "/ɪnˈspekʃn/", definition: "Đợt kiểm tra", icon: "🔎" },
+    { word: "Thorough", phonetic: "/ˈθʌrə/", definition: "Kỹ lưỡng", icon: "🔍" },
+    { word: "Before six", phonetic: "/bɪˈfɔː sɪks/", definition: "Trước sáu giờ", icon: "🔎" },
     { word: "Supplies", phonetic: "/səˈplaɪz/", definition: "Vật tư tiêu hao", icon: "📦" },
-    { word: "Restocked", phonetic: "/ˌriːˈstɒkt/", definition: "Đã bổ sung", icon: "🧴" },
-    { word: "Handed over", phonetic: "/ˈhændɪd ˈəʊvə/", definition: "Đã bàn giao", icon: "🤝" },
-    { word: "No complaints", phonetic: "/nəʊ kəmˈpleɪnts/", definition: "Không có phàn nàn", icon: "😊" },
+    { word: "Restock", phonetic: "/ˌriːˈstɒk/", definition: "Bổ sung vật tư", icon: "🧴" },
+    { word: "Room check", phonetic: "/ruːm tʃek/", definition: "Lượt kiểm tra phòng", icon: "🔑" },
+    { word: "Well done", phonetic: "/wel dʌn/", definition: "Làm tốt", icon: "👍" },
     { word: "Trolley clean", phonetic: "/ˈtrɒli kliːn/", definition: "Xe đẩy đã sạch", icon: "🛒" },
-    { word: "Ready for tomorrow", phonetic: "/ˈredi fə təˈmɒrəʊ/", definition: "Sẵn sàng cho ngày mai", icon: "📅" },
+    { word: "Wrap up", phonetic: "/ræp ʌp/", definition: "Khép lại công việc", icon: "✅" },
     { word: "Room count", phonetic: "/ruːm kaʊnt/", definition: "Số phòng đã làm", icon: "🔢" },
-    { word: "Well organised", phonetic: "/wel ˈɔːɡənaɪzd/", definition: "Được sắp xếp gọn gàng", icon: "📐" },
+    { word: "Final check", phonetic: "/ˈfaɪnl tʃek/", definition: "Lượt kiểm tra cuối", icon: "📋" },
   ],
 };
 
@@ -351,13 +384,16 @@ const SW_BANK: P2Bank = {
     { word: "Body scrub", phonetic: "/ˈbɒdi skrʌb/", definition: "Tẩy tế bào chết", icon: "🧴" },
     { word: "Facial", phonetic: "/ˈfeɪʃl/", definition: "Chăm sóc da mặt", icon: "💆" },
     { word: "Hot towel", phonetic: "/hɒt ˈtaʊəl/", definition: "Khăn nóng", icon: "♨️" },
-    { word: "Aroma oil", phonetic: "/əˈrəʊmə ɔɪl/", definition: "Tinh dầu thơm", icon: "🫗" },
-    { word: "Extra thirty minutes", phonetic: "/ˈekstrə ˈθɜːti ˈmɪnɪts/", definition: "Thêm ba mươi phút", icon: "⏱️" },
+    { word: "Aroma oil", phonetic: "/əˈrəʊmə ɔɪl/", definition: "Tinh dầu thơm", icon: "🫗", art: "" },
+    { word: "Extra thirty minutes", phonetic: "/ˈekstrə ˈθɜːti ˈmɪnɪts/", definition: "Thêm ba mươi phút", icon: "⏱️", art: "" },
     { word: "Couple room", phonetic: "/ˈkʌpl ruːm/", definition: "Phòng đôi", icon: "💑" },
     { word: "Day pass", phonetic: "/deɪ pɑːs/", definition: "Vé sử dụng trong ngày", icon: "🎫" },
+    // 8 = countable noun
     { word: "Fitness class", phonetic: "/ˈfɪtnəs klɑːs/", definition: "Lớp tập thể dục", icon: "🏋️" },
-    { word: "Add on", phonetic: "/æd ɒn/", definition: "Thêm dịch vụ", icon: "➕" },
-    { word: "Enhance", phonetic: "/ɪnˈhɑːns/", definition: "Nâng cao trải nghiệm", icon: "⬆️" },
+    // 9 = adjective
+    { word: "Included", phonetic: "/ɪnˈkluːdɪd/", definition: "Đã bao gồm sẵn", icon: "✅" },
+    // 10 = mass/plural noun
+    { word: "Locker access", phonetic: "/ˈlɒkə ˈækses/", definition: "Quyền dùng tủ đồ", icon: "🔐" },
   ],
   details: [
     { word: "Health condition", phonetic: "/helθ kənˈdɪʃn/", definition: "Tình trạng sức khỏe", icon: "❤️" },
@@ -379,8 +415,8 @@ const SW_BANK: P2Bank = {
     { word: "Duration", phonetic: "/djuˈreɪʃn/", definition: "Thời lượng", icon: "⏳" },
     { word: "Total price", phonetic: "/ˈtəʊtl praɪs/", definition: "Tổng giá", icon: "💰" },
     { word: "Room charge", phonetic: "/ruːm tʃɑːdʒ/", definition: "Tính vào phòng", icon: "🏨" },
-    { word: "Cancellation", phonetic: "/ˌkænsəˈleɪʃn/", definition: "Việc hủy hẹn", icon: "🚫" },
-    { word: "Two hours before", phonetic: "/tuː ˈaʊəz bɪˈfɔː/", definition: "Trước hai tiếng", icon: "🕑" },
+    { word: "Book online", phonetic: "/bʊk ˌɒnˈlaɪn/", definition: "Đặt lịch trực tuyến", icon: "💻" },
+    { word: "Confirmed", phonetic: "/kənˈfɜːmd/", definition: "Đã xác nhận", icon: "🕑" },
     { word: "Fill in", phonetic: "/fɪl ɪn/", definition: "Điền vào", icon: "✏️" },
   ],
   rules: [
@@ -389,11 +425,11 @@ const SW_BANK: P2Bank = {
     { word: "No diving", phonetic: "/nəʊ ˈdaɪvɪŋ/", definition: "Không nhảy cắm đầu", icon: "🏊" },
     { word: "Silence please", phonetic: "/ˈsaɪləns pliːz/", definition: "Xin giữ im lặng", icon: "🤫" },
     { word: "Mobile phone off", phonetic: "/ˈməʊbaɪl fəʊn ɒf/", definition: "Tắt điện thoại", icon: "📵" },
-    { word: "Age limit", phonetic: "/eɪdʒ ˈlɪmɪt/", definition: "Giới hạn độ tuổi", icon: "🔞" },
+    { word: "Watch", phonetic: "/wɒtʃ/", definition: "Đồng hồ đeo tay", icon: "⌚" },
     { word: "Hot surface", phonetic: "/hɒt ˈsɜːfɪs/", definition: "Bề mặt nóng", icon: "♨️" },
     { word: "Time limit", phonetic: "/taɪm ˈlɪmɪt/", definition: "Giới hạn thời gian", icon: "⏲️" },
-    { word: "For your safety", phonetic: "/fə jɔː ˈseɪfti/", definition: "Vì sự an toàn của quý khách", icon: "🛡️" },
-    { word: "Must not", phonetic: "/mʌst nɒt/", definition: "Không được phép", icon: "⛔" },
+    { word: "Safety rule", phonetic: "/ˈseɪfti ruːl/", definition: "Quy định an toàn", icon: "🛡️" },
+    { word: "Policy", phonetic: "/ˈpɒləsi/", definition: "Chính sách", icon: "📜" },
   ],
   choices: [
     { word: "Light or strong", phonetic: "/laɪt ɔː strɒŋ/", definition: "Nhẹ hay mạnh", icon: "💪" },
@@ -413,21 +449,21 @@ const SW_BANK: P2Bank = {
     { word: "Cancelled", phonetic: "/ˈkænsld/", definition: "Đã hủy", icon: "🚫" },
     { word: "Rescheduled", phonetic: "/ˌriːˈʃedjuːld/", definition: "Đã dời lịch", icon: "🔄" },
     { word: "Last week", phonetic: "/lɑːst wiːk/", definition: "Tuần trước", icon: "📅" },
-    { word: "Treatments today", phonetic: "/ˈtriːtmənts təˈdeɪ/", definition: "Số liệu trình hôm nay", icon: "🔢" },
+    { word: "Treatments", phonetic: "/ˈtriːtmənts/", definition: "Các liệu trình", icon: "🔢" },
     { word: "Felt better", phonetic: "/felt ˈbetə/", definition: "Cảm thấy khá hơn", icon: "😌" },
     { word: "Cleaned the pool", phonetic: "/kliːnd ðə puːl/", definition: "Đã vệ sinh hồ", icon: "🏊" },
-    { word: "Checked the water", phonetic: "/tʃekt ðə ˈwɔːtə/", definition: "Đã kiểm tra nước", icon: "💧" },
-    { word: "No incident", phonetic: "/nəʊ ˈɪnsɪdənt/", definition: "Không có sự cố", icon: "👍" },
+    { word: "Peaceful", phonetic: "/ˈpiːsfl/", definition: "Yên ả", icon: "💧" },
+    { word: "Listed", phonetic: "/ˈlɪstɪd/", definition: "Đã liệt kê", icon: "👍" },
   ],
   wrapUp: [
-    { word: "Fully booked day", phonetic: "/ˈfʊli bʊkt deɪ/", definition: "Ngày kín lịch", icon: "🈵" },
-    { word: "Guest returned", phonetic: "/ɡest rɪˈtɜːnd/", definition: "Khách quay lại", icon: "🔁" },
+    { word: "Unhurried", phonetic: "/ʌnˈhʌrid/", definition: "Thong thả, không vội", icon: "🧘" },
+    { word: "Ahead of time", phonetic: "/əˈhed əv taɪm/", definition: "Sớm hơn dự kiến", icon: "🔁" },
     { word: "Linen washed", phonetic: "/ˈlɪnɪn wɒʃt/", definition: "Đồ vải đã giặt", icon: "🧺" },
-    { word: "Oil stock", phonetic: "/ɔɪl stɒk/", definition: "Lượng tinh dầu còn", icon: "🫗" },
+    { word: "Relax the guest", phonetic: "/rɪˈlæks ðə ɡest/", definition: "Giúp khách thư giãn", icon: "🕯️" },
     { word: "Calm shift", phonetic: "/kɑːm ʃɪft/", definition: "Ca làm êm ả", icon: "🧘" },
-    { word: "Thanked us", phonetic: "/θæŋkt ʌs/", definition: "Đã cảm ơn chúng tôi", icon: "🙏" },
+    { word: "Well received", phonetic: "/wel rɪˈsiːvd/", definition: "Được đón nhận tốt", icon: "🙏" },
     { word: "Prepared for tomorrow", phonetic: "/prɪˈpeəd fə təˈmɒrəʊ/", definition: "Đã chuẩn bị cho mai", icon: "📅" },
-    { word: "Well rested", phonetic: "/wel ˈrestɪd/", definition: "Được nghỉ ngơi tốt", icon: "😴" },
+    { word: "End", phonetic: "/end/", definition: "Kết thúc", icon: "🌙" },
     { word: "Peaceful day", phonetic: "/ˈpiːsfl deɪ/", definition: "Ngày yên bình", icon: "🕊️" },
     { word: "Soft music", phonetic: "/sɒft ˈmjuːzɪk/", definition: "Nhạc nhẹ", icon: "🎵" },
   ],
@@ -448,15 +484,18 @@ const GR_BANK: P2Bank = {
   ],
   offers: [
     { word: "Late check-out", phonetic: "/leɪt ˈtʃekaʊt/", definition: "Trả phòng muộn", icon: "🕐" },
-    { word: "Afternoon tea", phonetic: "/ˌɑːftəˈnuːn tiː/", definition: "Trà chiều", icon: "🍰" },
-    { word: "Happy hour", phonetic: "/ˈhæpi ˈaʊə/", definition: "Giờ vàng đồ uống", icon: "🍹" },
+    { word: "Afternoon tea", phonetic: "/ˌɑːftəˈnuːn tiː/", definition: "Trà chiều", icon: "🍰", art: "" },
+    { word: "Happy hour", phonetic: "/ˈhæpi ˈaʊə/", definition: "Giờ vàng đồ uống", icon: "🍹", art: "" },
     { word: "City tour", phonetic: "/ˈsɪti tʊə/", definition: "Tour tham quan thành phố", icon: "🚌" },
     { word: "Table reservation", phonetic: "/ˈteɪbl ˌrezəˈveɪʃn/", definition: "Đặt bàn giúp khách", icon: "🍽️" },
     { word: "Airport lounge", phonetic: "/ˈeəpɔːt laʊndʒ/", definition: "Phòng chờ sân bay", icon: "✈️" },
-    { word: "Room decoration", phonetic: "/ruːm ˌdekəˈreɪʃn/", definition: "Trang trí phòng", icon: "🎊" },
-    { word: "Welcome fruit", phonetic: "/ˈwelkəm fruːt/", definition: "Trái cây chào đón", icon: "🍇" },
-    { word: "Arrange for you", phonetic: "/əˈreɪndʒ fə juː/", definition: "Sắp xếp giúp quý khách", icon: "🤝" },
-    { word: "With pleasure", phonetic: "/wɪð ˈpleʒə/", definition: "Rất hân hạnh", icon: "😊" },
+    { word: "Room decoration", phonetic: "/ruːm ˌdekəˈreɪʃn/", definition: "Trang trí phòng", icon: "🎊", art: "" },
+    // 8 = countable noun
+    { word: "Welcome fruit basket", phonetic: "/ˈwelkəm fruːt ˈbɑːskɪt/", definition: "Giỏ trái cây chào đón", icon: "🍇" },
+    // 9 = adjective
+    { word: "Complimentary", phonetic: "/ˌkɒmplɪˈmentri/", definition: "Miễn phí, tặng kèm", icon: "🎁" },
+    // 10 = mass/plural noun
+    { word: "Priority booking", phonetic: "/praɪˈɒrəti ˈbʊkɪŋ/", definition: "Ưu tiên đặt chỗ", icon: "⭐" },
   ],
   details: [
     { word: "Coffee preference", phonetic: "/ˈkɒfi ˈprefrəns/", definition: "Sở thích cà phê", icon: "☕" },
@@ -478,8 +517,8 @@ const GR_BANK: P2Bank = {
     { word: "Membership number", phonetic: "/ˈmembəʃɪp ˈnʌmbə/", definition: "Số hội viên", icon: "🔢" },
     { word: "Points", phonetic: "/pɔɪnts/", definition: "Điểm tích lũy", icon: "⭐" },
     { word: "Add to the account", phonetic: "/æd tə ði əˈkaʊnt/", definition: "Cộng vào tài khoản", icon: "➕" },
-    { word: "Request slip", phonetic: "/rɪˈkwest slɪp/", definition: "Phiếu yêu cầu", icon: "🎫" },
-    { word: "Pass to the team", phonetic: "/pɑːs tə ðə tiːm/", definition: "Chuyển cho bộ phận", icon: "➡️" },
+    { word: "Check the details", phonetic: "/tʃek ðə ˈdiːteɪlz/", definition: "Kiểm tra thông tin", icon: "🎫" },
+    { word: "With the team", phonetic: "/wɪð ðə tiːm/", definition: "Đang ở chỗ bộ phận phụ trách", icon: "➡️" },
     { word: "Update the record", phonetic: "/ʌpˈdeɪt ðə ˈrekɔːd/", definition: "Cập nhật hồ sơ", icon: "🔄" },
   ],
   rules: [
@@ -488,10 +527,10 @@ const GR_BANK: P2Bank = {
     { word: "Children policy", phonetic: "/ˈtʃɪldrən ˈpɒləsi/", definition: "Quy định trẻ em", icon: "🧒" },
     { word: "Photo permission", phonetic: "/ˈfəʊtəʊ pəˈmɪʃn/", definition: "Xin phép chụp ảnh", icon: "📷" },
     { word: "Private information", phonetic: "/ˈpraɪvət ˌɪnfəˈmeɪʃn/", definition: "Thông tin riêng tư", icon: "🔐" },
-    { word: "Do not share", phonetic: "/duː nɒt ʃeə/", definition: "Không được tiết lộ", icon: "🤐" },
+    { word: "Travel documents", phonetic: "/ˈtrævl ˈdɒkjumənts/", definition: "Giấy tờ đi lại", icon: "📄" },
     { word: "Dress smart", phonetic: "/dres smɑːt/", definition: "Trang phục lịch sự", icon: "👔" },
     { word: "Closing time", phonetic: "/ˈkləʊzɪŋ taɪm/", definition: "Giờ đóng cửa", icon: "🕙" },
-    { word: "Kindly note", phonetic: "/ˈkaɪndli nəʊt/", definition: "Kính mong quý khách lưu ý", icon: "📌" },
+    { word: "Lounge rule", phonetic: "/laʊndʒ ruːl/", definition: "Quy định phòng chờ", icon: "🛋️" },
     { word: "House rule", phonetic: "/haʊs ruːl/", definition: "Nội quy khách sạn", icon: "📜" },
   ],
   choices: [
@@ -516,17 +555,17 @@ const GR_BANK: P2Bank = {
     { word: "Wrote a note", phonetic: "/rəʊt ə nəʊt/", definition: "Đã viết thiệp", icon: "✉️" },
     { word: "Remembered", phonetic: "/rɪˈmembəd/", definition: "Đã nhớ được", icon: "🧠" },
     { word: "Very pleased", phonetic: "/ˈveri pliːzd/", definition: "Rất hài lòng", icon: "😊" },
-    { word: "Passed the message", phonetic: "/pɑːst ðə ˈmesɪdʒ/", definition: "Đã chuyển lời nhắn", icon: "➡️" },
+    { word: "Jotted", phonetic: "/ˈdʒɒtɪd/", definition: "Đã ghi nhanh", icon: "✍️" },
   ],
   wrapUp: [
-    { word: "Loyal guest", phonetic: "/ˈlɔɪəl ɡest/", definition: "Khách trung thành", icon: "💛" },
-    { word: "Good review", phonetic: "/ɡʊd rɪˈvjuː/", definition: "Đánh giá tốt", icon: "⭐" },
+    { word: "Warm", phonetic: "/wɔːm/", definition: "Ân cần, nồng hậu", icon: "🤗" },
+    { word: "On time", phonetic: "/ɒn taɪm/", definition: "Đúng giờ", icon: "⭐" },
     { word: "Special moment", phonetic: "/ˈspeʃl ˈməʊmənt/", definition: "Khoảnh khắc đặc biệt", icon: "✨" },
-    { word: "Small detail", phonetic: "/smɔːl ˈdiːteɪl/", definition: "Chi tiết nhỏ", icon: "🔍" },
-    { word: "Made the difference", phonetic: "/meɪd ðə ˈdɪfrəns/", definition: "Tạo nên khác biệt", icon: "🌟" },
+    { word: "Do more", phonetic: "/duː mɔː/", definition: "Làm nhiều hơn nữa", icon: "✨" },
+    { word: "Guest comment", phonetic: "/ɡest ˈkɒment/", definition: "Nhận xét của khách", icon: "💬" },
     { word: "Thoughtful", phonetic: "/ˈθɔːtfl/", definition: "Chu đáo", icon: "💭" },
     { word: "Next arrival", phonetic: "/nekst əˈraɪvl/", definition: "Lượt khách kế tiếp", icon: "🔜" },
-    { word: "Team briefing", phonetic: "/tiːm ˈbriːfɪŋ/", definition: "Họp giao ban", icon: "👥" },
+    { word: "Summarise", phonetic: "/ˈsʌməraɪz/", definition: "Tóm tắt lại", icon: "🗣️" },
     { word: "Warm welcome", phonetic: "/wɔːm ˈwelkəm/", definition: "Sự đón tiếp nồng hậu", icon: "🤗" },
     { word: "Guest delighted", phonetic: "/ɡest dɪˈlaɪtɪd/", definition: "Khách rất vui", icon: "😍" },
   ],
@@ -551,11 +590,14 @@ const BO_BANK: P2Bank = {
     { word: "Coffee break", phonetic: "/ˈkɒfi breɪk/", definition: "Giải lao cà phê", icon: "☕" },
     { word: "Projector", phonetic: "/prəˈdʒektə/", definition: "Máy chiếu", icon: "📽️" },
     { word: "Microphone", phonetic: "/ˈmaɪkrəfəʊn/", definition: "Micro", icon: "🎤" },
-    { word: "Free parking", phonetic: "/friː ˈpɑːkɪŋ/", definition: "Đỗ xe miễn phí", icon: "🅿️" },
-    { word: "Extra chairs", phonetic: "/ˈekstrə tʃeəz/", definition: "Ghế bổ sung", icon: "🪑" },
+    { word: "Free parking", phonetic: "/friː ˈpɑːkɪŋ/", definition: "Đỗ xe miễn phí", icon: "🅿️", art: "" },
+    { word: "Extra chairs", phonetic: "/ˈekstrə tʃeəz/", definition: "Ghế bổ sung", icon: "🪑", art: "" },
+    // 8 = countable noun
     { word: "Flip chart", phonetic: "/flɪp tʃɑːt/", definition: "Bảng giấy lật", icon: "📊" },
-    { word: "At a special rate", phonetic: "/ət ə ˈspeʃl reɪt/", definition: "Với giá ưu đãi", icon: "🏷️" },
-    { word: "We can provide", phonetic: "/wiː kən prəˈvaɪd/", definition: "Chúng tôi có thể cung cấp", icon: "🤝" },
+    // 9 = adjective
+    { word: "Negotiable", phonetic: "/nɪˈɡəʊʃiəbl/", definition: "Có thể thương lượng", icon: "🤝" },
+    // 10 = mass/plural noun
+    { word: "Basic equipment", phonetic: "/ˈbeɪsɪk ɪˈkwɪpmənt/", definition: "Thiết bị cơ bản", icon: "🧰" },
   ],
   details: [
     { word: "Event date", phonetic: "/ɪˈvent deɪt/", definition: "Ngày tổ chức", icon: "📅" },
@@ -578,8 +620,8 @@ const BO_BANK: P2Bank = {
     { word: "Bank transfer", phonetic: "/bæŋk ˈtrænsfɜː/", definition: "Chuyển khoản ngân hàng", icon: "🏦" },
     { word: "Stamp", phonetic: "/stæmp/", definition: "Con dấu", icon: "🔖" },
     { word: "Attach", phonetic: "/əˈtætʃ/", definition: "Đính kèm", icon: "📎" },
-    { word: "Approve", phonetic: "/əˈpruːv/", definition: "Phê duyệt", icon: "✅" },
-    { word: "Reference number", phonetic: "/ˈrefrəns ˈnʌmbə/", definition: "Số tham chiếu", icon: "🔢" },
+    { word: "Approved", phonetic: "/əˈpruːvd/", definition: "Đã được duyệt", icon: "✅" },
+    { word: "Write the reference", phonetic: "/raɪt ðə ˈrefrəns/", definition: "Ghi số tham chiếu", icon: "🔢" },
   ],
   rules: [
     { word: "Staff entrance only", phonetic: "/stɑːf ˈentrəns ˈəʊnli/", definition: "Chỉ dành cho nhân viên", icon: "🚪" },
@@ -587,11 +629,11 @@ const BO_BANK: P2Bank = {
     { word: "Clock in", phonetic: "/klɒk ɪn/", definition: "Chấm công vào ca", icon: "⏱️" },
     { word: "Confidential file", phonetic: "/ˌkɒnfɪˈdenʃl faɪl/", definition: "Hồ sơ mật", icon: "🔐" },
     { word: "Password", phonetic: "/ˈpɑːswɜːd/", definition: "Mật khẩu", icon: "🔑" },
-    { word: "Lock the office", phonetic: "/lɒk ði ˈɒfɪs/", definition: "Khóa văn phòng", icon: "🔒" },
+    { word: "Cash box", phonetic: "/kæʃ bɒks/", definition: "Hộp đựng tiền mặt", icon: "💰" },
     { word: "No personal use", phonetic: "/nəʊ ˈpɜːsənl juːs/", definition: "Không dùng việc riêng", icon: "🚫" },
     { word: "Company policy", phonetic: "/ˈkʌmpəni ˈpɒləsi/", definition: "Chính sách công ty", icon: "📜" },
     { word: "Health and safety", phonetic: "/helθ ənd ˈseɪfti/", definition: "An toàn lao động", icon: "🦺" },
-    { word: "Required", phonetic: "/rɪˈkwaɪəd/", definition: "Bắt buộc", icon: "❗" },
+    { word: "Office rule", phonetic: "/ˈɒfɪs ruːl/", definition: "Nội quy văn phòng", icon: "📋" },
   ],
   choices: [
     { word: "Supplier A or B", phonetic: "/səˈplaɪə eɪ ɔː biː/", definition: "Nhà cung cấp A hay B", icon: "🏭" },
@@ -611,21 +653,21 @@ const BO_BANK: P2Bank = {
     { word: "Paid", phonetic: "/peɪd/", definition: "Đã thanh toán", icon: "💳" },
     { word: "Signed", phonetic: "/saɪnd/", definition: "Đã ký", icon: "✍️" },
     { word: "Last month", phonetic: "/lɑːst mʌnθ/", definition: "Tháng trước", icon: "📅" },
-    { word: "Delivered late", phonetic: "/dɪˈlɪvəd leɪt/", definition: "Giao trễ hạn", icon: "⏰" },
+    { word: "Invoices", phonetic: "/ˈɪnvɔɪsɪz/", definition: "Các hoá đơn", icon: "🧾" },
     { word: "Checked the figures", phonetic: "/tʃekt ðə ˈfɪɡəz/", definition: "Đã kiểm tra số liệu", icon: "🔢" },
     { word: "Followed up", phonetic: "/ˈfɒləʊd ʌp/", definition: "Đã theo dõi tiếp", icon: "🔍" },
     { word: "Agreed", phonetic: "/əˈɡriːd/", definition: "Đã thống nhất", icon: "🤝" },
-    { word: "Reported to", phonetic: "/rɪˈpɔːtɪd tuː/", definition: "Đã báo cáo lên", icon: "📢" },
+    { word: "Typed", phonetic: "/taɪpt/", definition: "Đã nhập máy", icon: "⌨️" },
   ],
   wrapUp: [
-    { word: "On budget", phonetic: "/ɒn ˈbʌdʒɪt/", definition: "Đúng ngân sách", icon: "💰" },
-    { word: "Target", phonetic: "/ˈtɑːɡɪt/", definition: "Chỉ tiêu", icon: "🎯" },
+    { word: "Efficient", phonetic: "/ɪˈfɪʃnt/", definition: "Hiệu quả", icon: "📊" },
+    { word: "On schedule", phonetic: "/ɒn ˈʃedjuːl/", definition: "Đúng tiến độ", icon: "🎯" },
     { word: "Monthly report", phonetic: "/ˈmʌnθli rɪˈpɔːt/", definition: "Báo cáo tháng", icon: "📄" },
-    { word: "Saved cost", phonetic: "/seɪvd kɒst/", definition: "Đã tiết kiệm chi phí", icon: "📉" },
+    { word: "Do better", phonetic: "/duː ˈbetə/", definition: "Làm tốt hơn", icon: "💡" },
     { word: "Good result", phonetic: "/ɡʊd rɪˈzʌlt/", definition: "Kết quả tốt", icon: "📈" },
     { word: "Filed properly", phonetic: "/faɪld ˈprɒpəli/", definition: "Đã lưu đúng cách", icon: "🗄️" },
     { word: "Next quarter", phonetic: "/nekst ˈkwɔːtə/", definition: "Quý tới", icon: "📆" },
-    { word: "All up to date", phonetic: "/ɔːl ʌp tə deɪt/", definition: "Mọi thứ đã cập nhật", icon: "✅" },
+    { word: "Sign off", phonetic: "/saɪn ɒf/", definition: "Ký duyệt kết thúc", icon: "📁" },
     { word: "Cost control", phonetic: "/kɒst kənˈtrəʊl/", definition: "Kiểm soát chi phí", icon: "📉" },
     { word: "Files closed", phonetic: "/faɪlz kləʊzd/", definition: "Hồ sơ đã đóng", icon: "🗄️" },
   ],

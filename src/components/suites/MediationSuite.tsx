@@ -2,10 +2,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type MediationTask } from "@/lib/content/week-content";
+import { PASS_PCT, scoreFreeText } from "@/lib/writing-score";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-const PASS_PCT = 70;
-const MIN_WORDS = 6;
+// A relay to a guest is one or two full sentences, not a word list.
+const MIN_WORDS = 12;
+const MIN_SENTENCES = 1;
 
 export function MediationSuite({ dep, week }: { dep?: string; week?: string }) {
   const content = dep && week ? getWeekContent(dep, week) : null;
@@ -20,29 +22,31 @@ function MediationSuiteInner({ dep, week, task }: { dep: string; week: string; t
   const [submitted, setSubmitted] = useState(false);
   const [hits, setHits] = useState<boolean[]>([]);
   const [scorePct, setScorePct] = useState(0);
+  const [blockedVi, setBlockedVi] = useState<string | null>(null);
   const [awarded, setAwarded] = useState(false);
 
   function submit() {
-    const wordCount = draft.trim().split(/\s+/).filter(Boolean).length;
-    const lower = draft.toLowerCase();
-    const matched = task.mustMention.map((kw) => lower.includes(kw.toLowerCase()));
-    const coveragePct = Math.round((matched.filter(Boolean).length / task.mustMention.length) * 100);
-    const pct = wordCount >= MIN_WORDS ? coveragePct : Math.min(coveragePct, 40);
-    const passed = pct >= PASS_PCT && wordCount >= MIN_WORDS;
+    const r = scoreFreeText({
+      draft,
+      ideas: task.mustConvey,
+      minWords: MIN_WORDS,
+      minSentences: MIN_SENTENCES,
+    });
 
-    setHits(matched);
-    setScorePct(pct);
+    setHits(r.hits);
+    setScorePct(r.scorePct);
+    setBlockedVi(r.blockedByVi);
     setSubmitted(true);
-    if (passed && !awarded) {
+    if (r.passed && !awarded) {
       setAwarded(true);
       awardStars(8);
     }
-    recordSuiteResult(dep, week, "mediation", passed ? 8 : 0, { scorePct: pct, mastered: passed });
+    recordSuiteResult(dep, week, "mediation", r.passed ? 8 : 0, { scorePct: r.scorePct, mastered: r.passed });
   }
 
+  /** Keep the draft so the learner can revise it against the model. */
   function retry() {
     setSubmitted(false);
-    setDraft("");
   }
 
   return (
@@ -87,7 +91,7 @@ function MediationSuiteInner({ dep, week, task }: { dep: string; week: string; t
                   <div className="mt-1 text-xs uppercase tracking-[0.2em]">+8 ⭐ đạt chuẩn</div>
                 ) : (
                   <div className="mt-1 text-[11px] text-foreground/60">
-                    Cần ≥ {PASS_PCT}% và tối thiểu {MIN_WORDS} từ. Xem gợi ý bên dưới rồi thử lại.
+                    {blockedVi ?? `Cần ≥ ${PASS_PCT}% số ý. Xem gợi ý bên dưới rồi sửa lại câu của bạn.`}
                   </div>
                 )}
               </div>
@@ -95,9 +99,9 @@ function MediationSuiteInner({ dep, week, task }: { dep: string; week: string; t
               <div>
                 <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Ý cần truyền đạt cho khách</div>
                 <ul className="mt-2 space-y-1">
-                  {task.mustMention.map((kw, i) => (
-                    <li key={kw} className={`text-xs ${hits[i] ? "text-primary" : "text-destructive"}`}>
-                      {hits[i] ? "✓" : "✗"} {kw}
+                  {task.mustConvey.map((idea, i) => (
+                    <li key={idea.labelVi} className={`text-xs ${hits[i] ? "text-primary" : "text-destructive"}`}>
+                      {hits[i] ? "✓" : "✗"} {idea.labelVi}
                     </li>
                   ))}
                 </ul>
