@@ -1,0 +1,15 @@
+# Line endings: LF in the repository AND in the working tree, on every OS.
+#
+# This repo is cloned on Windows with core.autocrlf=true, which wrote CRLF
+# into the working tree while the index kept LF. Prettier defaults to
+# endOfLine "lf", so every line of every CRLF file counted as a violation:
+# `bun run lint` reported ~68,000 problems, of which ~67,000 were the
+# carriage return alone. Real findings were unreadable underneath them.
+#
+# `eol=lf` overrides core.autocrlf for these paths, so no one has to change
+# their local git config for the lint script to mean something.
+* text=auto eol=lf
+
+# The sole binary asset. `text=auto` already detects it, but saying so
+# explicitly means the rule above can never mangle it.
+*.png binary
