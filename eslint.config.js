@@ -6,7 +6,26 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  // Build output and generated files. These must mirror .prettierignore and
+  // the build-artifact entries of .gitignore, because eslint-plugin-prettier
+  // enforces prettier's opinion on every file eslint reaches: any path prettier
+  // skips but eslint lints turns into thousands of unfixable "errors". That is
+  // exactly what .netlify did — its bundled vendor libs (0.6 MB of react-router
+  // in one .mjs) accounted for 56,708 of the 56,716 problems `bun run lint`
+  // reported, while `prettier --check .` called the repo clean. Prettier skips
+  // dot-directories by default; eslint does not.
+  {
+    ignores: [
+      "dist",
+      "dist-ssr",
+      ".output",
+      ".vinxi",
+      ".netlify",
+      ".tanstack",
+      ".lovable",
+      "src/routeTree.gen.ts",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

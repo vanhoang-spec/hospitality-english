@@ -17,7 +17,7 @@ export function speakEN(text: string, rate = 0.85) {
 // Synthetic applause via WebAudio (no asset needed).
 export function playApplause(durationMs = 1800) {
   if (typeof window === "undefined") return;
-  const AC = (window as any).AudioContext || (window as any).webkitAudioContext;
+  const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) return;
   try {
     const ctx = new AC();

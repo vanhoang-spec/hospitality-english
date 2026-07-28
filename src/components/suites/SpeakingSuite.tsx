@@ -130,7 +130,7 @@ function SpeakingSuiteInner({
   const [result, setResult] = useState<ReturnType<typeof compareWords> | null>(null);
   const [fireworks, setFireworks] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const recogRef = useRef<any>(null);
+  const recogRef = useRef<SpeechRecognition | null>(null);
   const finalRef = useRef<string>("");
 
   function start() {
@@ -138,7 +138,7 @@ function SpeakingSuiteInner({
     setTranscript("");
     setResult(null);
     finalRef.current = "";
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
       setError("Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy thử dùng Chrome.");
       return;
@@ -147,7 +147,7 @@ function SpeakingSuiteInner({
     r.lang = "en-US";
     r.continuous = true;
     r.interimResults = true;
-    r.onresult = (e: any) => {
+    r.onresult = (e: SpeechRecognitionEvent) => {
       let interim = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
@@ -156,7 +156,7 @@ function SpeakingSuiteInner({
       }
       setTranscript(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
-    r.onerror = (e: any) => setError(`Lỗi micro: ${e.error}`);
+    r.onerror = (e: SpeechRecognitionErrorEvent) => setError(`Lỗi micro: ${e.error}`);
     r.onend = () => {
       setRecording(false);
       const cleaned = dedupeTranscript(finalRef.current.trim());
@@ -188,8 +188,8 @@ function SpeakingSuiteInner({
       r.start();
       recogRef.current = r;
       setRecording(true);
-    } catch (err: any) {
-      setError(`Không mở được micro: ${err?.message ?? err}`);
+    } catch (err) {
+      setError(`Không mở được micro: ${err instanceof Error ? err.message : String(err)}`);
     }
   }
 
