@@ -58,12 +58,15 @@ function ChangePasswordPage() {
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Bảo mật tài khoản</div>
         <h1 className="font-display mt-2 text-3xl text-foreground">Đặt mật khẩu mới</h1>
         <p className="mt-2 text-sm text-foreground/70">
-          Mật khẩu của bạn vừa được quản trị viên cấp lại. Vui lòng đặt mật khẩu mới trước khi tiếp tục.
+          Mật khẩu của bạn vừa được quản trị viên cấp lại. Vui lòng đặt mật khẩu mới trước khi tiếp
+          tục.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <label className="block">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Mật khẩu mới</span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+              Mật khẩu mới
+            </span>
             <input
               type="password"
               autoComplete="new-password"
@@ -75,7 +78,9 @@ function ChangePasswordPage() {
             />
           </label>
           <label className="block">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Nhập lại mật khẩu</span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+              Nhập lại mật khẩu
+            </span>
             <input
               type="password"
               autoComplete="new-password"

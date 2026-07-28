@@ -19,7 +19,14 @@ function shuffle<T>(a: T[]): T[] {
 }
 
 type QuizQuestion =
-  | { kind: "mcq"; key: string; prompt: string; speak?: string; options: string[]; correctIdx: number }
+  | {
+      kind: "mcq";
+      key: string;
+      prompt: string;
+      speak?: string;
+      options: string[];
+      correctIdx: number;
+    }
   | { kind: "dictation"; key: string; word: string };
 
 const MAX_MCQ = 12;
@@ -36,13 +43,33 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
     const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
     if (i % 2 === 0) {
       const options = shuffle([t.vi, ...distractors.map((d) => d.vi)]);
-      return { kind: "mcq", key: `envi:${t.en}`, prompt: `Nghĩa của "${t.en}" là gì?`, speak: t.en, options, correctIdx: options.indexOf(t.vi) };
+      return {
+        kind: "mcq",
+        key: `envi:${t.en}`,
+        prompt: `Nghĩa của "${t.en}" là gì?`,
+        speak: t.en,
+        options,
+        correctIdx: options.indexOf(t.vi),
+      };
     }
     const options = shuffle([t.en, ...distractors.map((d) => d.en)]);
-    return { kind: "mcq", key: `vien:${t.en}`, prompt: `Từ tiếng Anh nào có nghĩa: "${t.vi}"?`, options, correctIdx: options.indexOf(t.en) };
+    return {
+      kind: "mcq",
+      key: `vien:${t.en}`,
+      prompt: `Từ tiếng Anh nào có nghĩa: "${t.vi}"?`,
+      options,
+      correctIdx: options.indexOf(t.en),
+    };
   });
-  const dictationTerms = shuffle(pool.filter((t) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en))).slice(0, MAX_DICTATION);
-  const dictations: QuizQuestion[] = dictationTerms.map((t) => ({ kind: "dictation", key: `dict:${t.en}`, word: t.en }));
+  const dictationTerms = shuffle(pool.filter((t) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en))).slice(
+    0,
+    MAX_DICTATION,
+  );
+  const dictations: QuizQuestion[] = dictationTerms.map((t) => ({
+    kind: "dictation",
+    key: `dict:${t.en}`,
+    word: t.en,
+  }));
   return [...mcqs, ...dictations];
 }
 
@@ -54,10 +81,24 @@ export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
   return <VocabSuiteInner dep={dep} week={week!} content={content} />;
 }
 
-function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
+function VocabSuiteInner({
+  dep,
+  week,
+  content,
+}: {
+  dep: string;
+  week: string;
+  content: WeekContent;
+}) {
   const { awardStars, recordSuiteResult } = useAcademy();
   const terms: Term[] = content.lessons.flatMap((l) =>
-    l.vocabulary.map((v) => ({ en: v.word, ipa: v.phonetic, vi: v.definition, usage: v.context, icon: v.icon })),
+    l.vocabulary.map((v) => ({
+      en: v.word,
+      ipa: v.phonetic,
+      vi: v.definition,
+      usage: v.context,
+      icon: v.icon,
+    })),
   );
   // Spaced recycling (matrix P5 standard): earlier weeks' headwords are
   // mixed into the retrieval quiz — but not into the flashcards, whose
@@ -131,7 +172,11 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
     if (qIdx + 1 >= quiz.length) {
       const pct = Math.round((finalCorrect / quiz.length) * 100);
       setLastScorePct(pct);
-      if (week) recordSuiteResult(dep, week, "vocab", earnedRef.current, { scorePct: pct, mastered: pct >= MASTERY_PCT });
+      if (week)
+        recordSuiteResult(dep, week, "vocab", earnedRef.current, {
+          scorePct: pct,
+          mastered: pct >= MASTERY_PCT,
+        });
       setStage("done");
       return;
     }
@@ -146,14 +191,24 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
     return (
       <div className="mx-auto max-w-2xl">
         <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-          <span>Kiểm tra ghi nhớ · Câu {qIdx + 1}/{quiz.length}</span>
+          <span>
+            Kiểm tra ghi nhớ · Câu {qIdx + 1}/{quiz.length}
+          </span>
           <span className="text-primary">{correctCount} đúng</span>
         </div>
         <div className="mt-2 h-1 w-full bg-primary/15">
-          <div className="h-1 bg-primary transition-all" style={{ width: `${(qIdx / quiz.length) * 100}%` }} />
+          <div
+            className="h-1 bg-primary transition-all"
+            style={{ width: `${(qIdx / quiz.length) * 100}%` }}
+          />
         </div>
 
-        <motion.div key={q.key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6 border border-primary/30 bg-card p-6 shadow-xl">
+        <motion.div
+          key={q.key}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-6 border border-primary/30 bg-card p-6 shadow-xl"
+        >
           {q.kind === "mcq" ? (
             <>
               <div className="flex items-center justify-between gap-3">
@@ -232,7 +287,10 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                 Trả lời
               </button>
             ) : (
-              <button onClick={next} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+              <button
+                onClick={next}
+                className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+              >
                 {qIdx + 1 >= quiz.length ? "Xem kết quả" : "Câu tiếp →"}
               </button>
             )}
@@ -246,8 +304,14 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
     const passed = lastScorePct >= MASTERY_PCT;
     return (
       <div className="mx-auto max-w-xl text-center">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Kết quả kiểm tra</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="border border-primary bg-card p-8 shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Kết quả kiểm tra
+          </div>
           <div className="font-display mt-3 text-5xl text-primary">{lastScorePct}%</div>
           <p className="mt-3 text-sm text-foreground/75">
             {passed
@@ -261,7 +325,10 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
             >
               Xem lại thẻ từ
             </button>
-            <button onClick={startQuiz} className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+            <button
+              onClick={startQuiz}
+              className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+            >
               Làm lại kiểm tra
             </button>
           </div>
@@ -276,7 +343,8 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-sm text-foreground/75">
-          Chạm từng thẻ để học phát âm, ngữ cảnh sử dụng và nghĩa tiếng Việt. Lật đủ {terms.length} thẻ để mở phần kiểm tra ghi nhớ — sao ⭐ chỉ được trao khi bạn trả lời đúng.
+          Chạm từng thẻ để học phát âm, ngữ cảnh sử dụng và nghĩa tiếng Việt. Lật đủ {terms.length}{" "}
+          thẻ để mở phần kiểm tra ghi nhớ — sao ⭐ chỉ được trao khi bạn trả lời đúng.
         </p>
         <div className="text-right">
           <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Đã xem</div>
@@ -292,7 +360,9 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
           disabled={!allFlipped}
           className="bg-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {allFlipped ? "Vào phần kiểm tra →" : `Lật đủ thẻ để mở kiểm tra (${flipped.size}/${terms.length})`}
+          {allFlipped
+            ? "Vào phần kiểm tra →"
+            : `Lật đủ thẻ để mở kiểm tra (${flipped.size}/${terms.length})`}
         </button>
       </div>
 
@@ -321,7 +391,9 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                   style={{ backfaceVisibility: "hidden" }}
                 >
                   <div className="flex w-full items-center justify-between">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Từ {i + 1}</div>
+                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+                      Từ {i + 1}
+                    </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -348,7 +420,9 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">{t.ipa}</div>
+                    <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+                      {t.ipa}
+                    </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -368,7 +442,9 @@ function VocabSuiteInner({ dep, week, content }: { dep: string; week: string; co
                   </div>
                   <p className="mt-3 text-xs italic text-foreground/85">"{t.usage}"</p>
                   <div className="mt-auto border-t border-primary/20 pt-2 text-xs text-foreground/75">
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/50">VI · </span>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+                      VI ·{" "}
+                    </span>
                     {t.vi}
                   </div>
                   <div className="mt-2 text-center text-[10px] uppercase tracking-[0.2em] text-foreground/40">

@@ -3,7 +3,12 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
-import { createMember, deleteMember, resetMemberPassword, updateMemberRole } from "@/lib/org-admin-actions";
+import {
+  createMember,
+  deleteMember,
+  resetMemberPassword,
+  updateMemberRole,
+} from "@/lib/org-admin-actions";
 import { formatPhoneDisplay } from "@/lib/phone";
 import { DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
@@ -99,9 +104,16 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
   const [addOpen, setAddOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [departmentFilter, setDepartmentFilter] = useState<string>("ALL");
-  const [credentialNotice, setCredentialNotice] = useState<{ title: string; lines: string[] } | null>(null);
+  const [credentialNotice, setCredentialNotice] = useState<{
+    title: string;
+    lines: string[];
+  } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [confirmState, setConfirmState] = useState<{ message: string; danger?: boolean; onConfirm: () => void } | null>(null);
+  const [confirmState, setConfirmState] = useState<{
+    message: string;
+    danger?: boolean;
+    onConfirm: () => void;
+  } | null>(null);
 
   const orgQuery = useQuery({
     queryKey: ["org", orgId],
@@ -141,7 +153,8 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
   });
 
   const roleMut = useMutation({
-    mutationFn: (vars: { userId: string; role: "member" | "org_admin" }) => updateMemberRole({ data: vars }),
+    mutationFn: (vars: { userId: string; role: "member" | "org_admin" }) =>
+      updateMemberRole({ data: vars }),
     onSuccess: invalidateMembers,
     onError: (e: Error) => setErrorMsg(e.message),
   });
@@ -150,11 +163,18 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
   const seatLimit = orgQuery.data?.seat_limit ?? 0;
   const orgName = orgQuery.data?.name ?? "";
 
-  const departmentOptions = Array.from(new Set(members.map((m) => m.department).filter((d): d is string => !!d))).sort();
+  const departmentOptions = Array.from(
+    new Set(members.map((m) => m.department).filter((d): d is string => !!d)),
+  ).sort();
   // Guard against a stale filter value (e.g. the last member with that
   // department was just deleted) silently hiding the whole table.
-  const activeDepartmentFilter = departmentOptions.includes(departmentFilter) ? departmentFilter : "ALL";
-  const filteredMembers = activeDepartmentFilter === "ALL" ? members : members.filter((m) => m.department === activeDepartmentFilter);
+  const activeDepartmentFilter = departmentOptions.includes(departmentFilter)
+    ? departmentFilter
+    : "ALL";
+  const filteredMembers =
+    activeDepartmentFilter === "ALL"
+      ? members
+      : members.filter((m) => m.department === activeDepartmentFilter);
 
   function handleReset(m: Member) {
     setConfirmState({
@@ -164,7 +184,11 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
           const res = await resetMemberPassword({ data: { userId: m.id } });
           setCredentialNotice({
             title: `Mật khẩu tạm cho ${m.full_name ?? ""}`,
-            lines: [`SĐT đăng nhập: ${formatPhoneDisplay(m.phone)}`, `Mật khẩu tạm: ${res.tempPassword}`, "Thành viên sẽ được yêu cầu đổi mật khẩu ở lần đăng nhập tới."],
+            lines: [
+              `SĐT đăng nhập: ${formatPhoneDisplay(m.phone)}`,
+              `Mật khẩu tạm: ${res.tempPassword}`,
+              "Thành viên sẽ được yêu cầu đổi mật khẩu ở lần đăng nhập tới.",
+            ],
           });
         } catch (e) {
           setErrorMsg(e instanceof Error ? e.message : "Cấp lại mật khẩu thất bại.");
@@ -195,7 +219,9 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Team</div>
-          <h1 className="font-display mt-2 text-4xl text-foreground">{orgName || "Nhóm của bạn"}</h1>
+          <h1 className="font-display mt-2 text-4xl text-foreground">
+            {orgName || "Nhóm của bạn"}
+          </h1>
           <p className="mt-1 text-sm text-foreground/60">
             {members.length}/{seatLimit} thành viên
           </p>
@@ -304,7 +330,10 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
                     >
                       {m.role === "org_admin" ? "Hạ quyền" : "Thăng Admin"}
                     </button>
-                    <button className="text-foreground/60 hover:text-primary" onClick={() => handleReset(m)}>
+                    <button
+                      className="text-foreground/60 hover:text-primary"
+                      onClick={() => handleReset(m)}
+                    >
                       Reset MK
                     </button>
                     <button
@@ -346,7 +375,9 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
         />
       )}
 
-      {credentialNotice && <CredentialNotice info={credentialNotice} onClose={() => setCredentialNotice(null)} />}
+      {credentialNotice && (
+        <CredentialNotice info={credentialNotice} onClose={() => setCredentialNotice(null)} />
+      )}
 
       {confirmState && (
         <ConfirmDialog
@@ -400,7 +431,10 @@ function AddMemberDialog({
   const department = departmentChoice === "OTHER" ? departmentCustom.trim() : departmentChoice;
 
   const createMut = useMutation({
-    mutationFn: () => createMember({ data: { fullName, phone, password, role, department: department || undefined } }),
+    mutationFn: () =>
+      createMember({
+        data: { fullName, phone, password, role, department: department || undefined },
+      }),
   });
 
   async function submit(e: React.FormEvent) {
@@ -493,7 +527,11 @@ function AddMemberDialog({
           </Field>
         </div>
         <div className="mt-6 flex justify-end gap-3">
-          <button type="button" onClick={onClose} className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+          >
             Hủy
           </button>
           <button
@@ -587,7 +625,11 @@ function ImportCsvDialog({
   async function startImport() {
     setProcessing(true);
     setProgress(0);
-    const working: RowResult[] = rows.map((r) => ({ ...r, status: r.preError ? "error" : "pending", message: r.preError }));
+    const working: RowResult[] = rows.map((r) => ({
+      ...r,
+      status: r.preError ? "error" : "pending",
+      message: r.preError,
+    }));
     setResults(working);
 
     for (let i = 0; i < working.length; i++) {
@@ -609,7 +651,11 @@ function ImportCsvDialog({
         });
         working[i] = { ...row, password, status: "ok" };
       } catch (e) {
-        working[i] = { ...row, status: "error", message: e instanceof Error ? e.message : "Tạo tài khoản thất bại." };
+        working[i] = {
+          ...row,
+          status: "error",
+          message: e instanceof Error ? e.message : "Tạo tài khoản thất bại.",
+        };
       }
       setResults([...working]);
       setProgress(i + 1);
@@ -643,7 +689,9 @@ function ImportCsvDialog({
         <div className="mt-4 flex flex-wrap gap-3">
           <button
             type="button"
-            onClick={() => downloadTextFile("mau-nhap-thanh-vien.csv", CSV_TEMPLATE, "text/csv;charset=utf-8")}
+            onClick={() =>
+              downloadTextFile("mau-nhap-thanh-vien.csv", CSV_TEMPLATE, "text/csv;charset=utf-8")
+            }
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.15em] text-primary hover:bg-primary/10"
           >
             Tải file mẫu CSV
@@ -669,7 +717,13 @@ function ImportCsvDialog({
           <div className="mt-4 border border-primary/20 bg-background/40 p-4 text-sm">
             <p>
               Đã đọc {rows.length} dòng — <span className="text-primary">{validCount} hợp lệ</span>
-              {rows.length - validCount > 0 && <span className="text-destructive"> · {rows.length - validCount} thiếu tên/SĐT</span>}.
+              {rows.length - validCount > 0 && (
+                <span className="text-destructive">
+                  {" "}
+                  · {rows.length - validCount} thiếu tên/SĐT
+                </span>
+              )}
+              .
             </p>
             {validCount > seatsRemaining && (
               <p className="mt-1 text-destructive">
@@ -715,8 +769,14 @@ function ImportCsvDialog({
                     <tr key={r.index} className="border-b border-primary/10 last:border-0">
                       <td className="px-3 py-2">{r.name || "—"}</td>
                       <td className="px-3 py-2">{r.phone || "—"}</td>
-                      <td className={`px-3 py-2 ${r.status === "ok" ? "text-primary" : r.status === "error" ? "text-destructive" : "text-foreground/50"}`}>
-                        {r.status === "ok" ? `✓ Mật khẩu: ${r.password}` : r.status === "error" ? `✕ ${r.message}` : "…"}
+                      <td
+                        className={`px-3 py-2 ${r.status === "ok" ? "text-primary" : r.status === "error" ? "text-destructive" : "text-foreground/50"}`}
+                      >
+                        {r.status === "ok"
+                          ? `✓ Mật khẩu: ${r.password}`
+                          : r.status === "error"
+                            ? `✕ ${r.message}`
+                            : "…"}
                       </td>
                     </tr>
                   ))}
@@ -751,13 +811,21 @@ function ImportCsvDialog({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-[10px] uppercase tracking-[0.2em] text-foreground/60">{label}</span>
+      <span className="block text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+        {label}
+      </span>
       <div className="mt-1.5">{children}</div>
     </label>
   );
 }
 
-function CredentialNotice({ info, onClose }: { info: { title: string; lines: string[] }; onClose: () => void }) {
+function CredentialNotice({
+  info,
+  onClose,
+}: {
+  info: { title: string; lines: string[] };
+  onClose: () => void;
+}) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm">
       <div className="w-full max-w-md border border-primary bg-card p-6 shadow-2xl">
@@ -767,9 +835,14 @@ function CredentialNotice({ info, onClose }: { info: { title: string; lines: str
             <div key={i}>{line}</div>
           ))}
         </div>
-        <p className="mt-3 text-xs text-foreground/60">Ghi lại thông tin này ngay — sẽ không hiển thị lại.</p>
+        <p className="mt-3 text-xs text-foreground/60">
+          Ghi lại thông tin này ngay — sẽ không hiển thị lại.
+        </p>
         <div className="mt-5 flex justify-end">
-          <button onClick={onClose} className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+          <button
+            onClick={onClose}
+            className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+          >
             Đã ghi lại
           </button>
         </div>
@@ -794,7 +867,10 @@ function ConfirmDialog({
       <div className="w-full max-w-sm border border-primary/40 bg-card p-6 shadow-2xl">
         <p className="text-sm text-foreground">{message}</p>
         <div className="mt-6 flex justify-end gap-3">
-          <button onClick={onCancel} className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+          >
             Hủy
           </button>
           <button
@@ -813,10 +889,29 @@ function ConfirmDialog({
   );
 }
 
-type ProgressRow = { department_id: string; week_number: number; suite: string; stars: number; mastered: boolean };
-type Metrics = { fluency_score: number; courtesy_score: number; reflex_speed: number; crisis_handling_score: number };
+type ProgressRow = {
+  department_id: string;
+  week_number: number;
+  suite: string;
+  stars: number;
+  mastered: boolean;
+};
+type Metrics = {
+  fluency_score: number;
+  courtesy_score: number;
+  reflex_speed: number;
+  crisis_handling_score: number;
+};
 
-function MemberDrawer({ userId, member, onClose }: { userId: string; member: Member | null; onClose: () => void }) {
+function MemberDrawer({
+  userId,
+  member,
+  onClose,
+}: {
+  userId: string;
+  member: Member | null;
+  onClose: () => void;
+}) {
   const progressQuery = useQuery({
     queryKey: ["member-progress", userId],
     queryFn: async (): Promise<ProgressRow[]> => {
@@ -843,8 +938,12 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
   });
 
   const rows = progressQuery.data ?? [];
-  const masteredKey = new Set(rows.filter((r) => r.mastered).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`));
-  const participatedKey = new Set(rows.filter((r) => r.stars > 0).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`));
+  const masteredKey = new Set(
+    rows.filter((r) => r.mastered).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`),
+  );
+  const participatedKey = new Set(
+    rows.filter((r) => r.stars > 0).map((r) => `${r.department_id}-${r.week_number}-${r.suite}`),
+  );
   const m = metricsQuery.data;
 
   return (
@@ -853,9 +952,14 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
         <div className="flex items-start justify-between">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary">Tiến độ học</div>
-            <h2 className="font-display mt-2 text-3xl text-foreground">{member?.full_name || "Thành viên"}</h2>
+            <h2 className="font-display mt-2 text-3xl text-foreground">
+              {member?.full_name || "Thành viên"}
+            </h2>
           </div>
-          <button onClick={onClose} className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground">
+          <button
+            onClick={onClose}
+            className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+          >
             Đóng ✕
           </button>
         </div>
@@ -871,7 +975,8 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
 
         <div className="mt-8">
           <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-            Ma trận hoàn thành · {AVAILABLE_WEEKS.length} tuần hiện có · ● đạt chuẩn · ◐ đã học chưa đạt · ○ chưa học
+            Ma trận hoàn thành · {AVAILABLE_WEEKS.length} tuần hiện có · ● đạt chuẩn · ◐ đã học chưa
+            đạt · ○ chưa học
           </div>
           {progressQuery.isLoading ? (
             <p className="mt-4 text-sm text-foreground/50">Đang tải…</p>
@@ -884,7 +989,11 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                       Phòng ban
                     </th>
                     {AVAILABLE_WEEKS.map((w) => (
-                      <th key={w} colSpan={suitesForWeek(w).length} className="border-l border-primary/10 px-1 py-1.5 text-center uppercase tracking-[0.1em] text-foreground/60">
+                      <th
+                        key={w}
+                        colSpan={suitesForWeek(w).length}
+                        className="border-l border-primary/10 px-1 py-1.5 text-center uppercase tracking-[0.1em] text-foreground/60"
+                      >
                         Tuần {w}
                       </th>
                     ))}
@@ -907,7 +1016,9 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                 <tbody>
                   {DEPARTMENTS.map((d) => (
                     <tr key={d.code} className="border-t border-primary/10">
-                      <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">{d.code}</td>
+                      <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">
+                        {d.code}
+                      </td>
                       {AVAILABLE_WEEKS.map((w) => {
                         // After the 40-week relocation, authored weeks differ
                         // per department — mark non-existent dep/week combos
@@ -917,7 +1028,11 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                           const key = `${d.code}-${w}-${s}`;
                           if (!hasContent) {
                             return (
-                              <td key={key} className="border-l border-primary/5 px-1 py-1.5 text-center" title="Tuần này không thuộc bộ phận này">
+                              <td
+                                key={key}
+                                className="border-l border-primary/5 px-1 py-1.5 text-center"
+                                title="Tuần này không thuộc bộ phận này"
+                              >
                                 <span className="text-foreground/10">—</span>
                               </td>
                             );
@@ -925,8 +1040,26 @@ function MemberDrawer({ userId, member, onClose }: { userId: string; member: Mem
                           const mastered = masteredKey.has(key);
                           const participated = participatedKey.has(key);
                           return (
-                            <td key={key} className="border-l border-primary/5 px-1 py-1.5 text-center" title={mastered ? "Đạt chuẩn" : participated ? "Đã học, chưa đạt" : "Chưa học"}>
-                              <span className={mastered ? "text-primary" : participated ? "text-primary/50" : "text-foreground/15"}>
+                            <td
+                              key={key}
+                              className="border-l border-primary/5 px-1 py-1.5 text-center"
+                              title={
+                                mastered
+                                  ? "Đạt chuẩn"
+                                  : participated
+                                    ? "Đã học, chưa đạt"
+                                    : "Chưa học"
+                              }
+                            >
+                              <span
+                                className={
+                                  mastered
+                                    ? "text-primary"
+                                    : participated
+                                      ? "text-primary/50"
+                                      : "text-foreground/15"
+                                }
+                              >
                                 {mastered ? "●" : participated ? "◐" : "○"}
                               </span>
                             </td>
@@ -983,7 +1116,9 @@ const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
 /** Every authored checkpoint slot across all departments — the
  *  denominator for the org's phase-test pass rate. */
 const TOTAL_CHECKPOINTS_PER_MEMBER = DEPARTMENTS.reduce(
-  (sum, d) => sum + AVAILABLE_WEEKS.filter((w) => isCheckpointWeek(w) && getWeekContent(d.code, w) !== null).length,
+  (sum, d) =>
+    sum +
+    AVAILABLE_WEEKS.filter((w) => isCheckpointWeek(w) && getWeekContent(d.code, w) !== null).length,
   0,
 );
 
@@ -1062,9 +1197,13 @@ function OrgOverview({ members }: { members: Member[] }) {
 
   function groupStats(groupMembers: Member[]) {
     const ids = groupMembers.map((m) => m.id);
-    const metricsRows = ids.map((id) => metricsByMember.get(id)).filter((r): r is OrgMetricsRow => !!r);
+    const metricsRows = ids
+      .map((id) => metricsByMember.get(id))
+      .filter((r): r is OrgMetricsRow => !!r);
     const completionPct =
-      (ids.reduce((s, id) => s + (completedCountByMember.get(id) ?? 0), 0) / (ids.length * TOTAL_SLOTS_PER_MEMBER)) * 100;
+      (ids.reduce((s, id) => s + (completedCountByMember.get(id) ?? 0), 0) /
+        (ids.length * TOTAL_SLOTS_PER_MEMBER)) *
+      100;
     const checkpointPct =
       TOTAL_CHECKPOINTS_PER_MEMBER === 0
         ? 0
@@ -1107,7 +1246,9 @@ function OrgOverview({ members }: { members: Member[] }) {
 
       {groups.length > 1 && (
         <div className="mt-6 overflow-x-auto">
-          <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Theo phòng ban</div>
+          <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+            Theo phòng ban
+          </div>
           <table className="mt-3 w-full min-w-[560px] text-xs">
             <thead>
               <tr className="border-b border-primary/20 text-left uppercase tracking-[0.15em] text-foreground/60">
@@ -1126,7 +1267,9 @@ function OrgOverview({ members }: { members: Member[] }) {
                 const s = groupStats(g.members);
                 return (
                   <tr key={g.key} className="border-b border-primary/10 last:border-0">
-                    <td className="py-2 pr-3 font-display text-foreground">{departmentLabel(g.key)}</td>
+                    <td className="py-2 pr-3 font-display text-foreground">
+                      {departmentLabel(g.key)}
+                    </td>
                     <td className="py-2 pr-3">{g.members.length}</td>
                     <td className="py-2 pr-3 text-primary">{Math.round(s.completionPct)}%</td>
                     <td className="py-2 pr-3 text-primary">{Math.round(s.checkpointPct)}%</td>

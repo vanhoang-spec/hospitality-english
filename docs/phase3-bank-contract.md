@@ -4,16 +4,16 @@ Each department bank has 8 slots × 12 words. The spine builds sentences by
 dropping bank words into fixed frames, so **each slot has a required part of
 speech**. A word that does not fit its frame produces ungrammatical output.
 
-| Slot | Week | Part of speech required | Frames it must fit |
-|---|---|---|---|
-| `upgrades` | 23 | **noun phrase** (usable after "the") | `I recommend the {w}.` · `The {w} is quieter than the standard one.` |
-| `policies` | 24 | **noun phrase** naming a fee/rule | `There is a {w} for that.` · `We have to apply the {w} because it is hotel policy.` |
-| `commitments` | 25 | **bare verb phrase** (after "will"/"can") | `I will {w} within ten minutes.` · `We are going to {w} before three o'clock.` |
-| `partners` | 26 | **noun phrase** naming a team/role | `Let me check with {w}.` · `I will ask {w} to help you.` |
-| `complaints` | 27 | **noun phrase** naming a problem | `I am very sorry about the {w}.` · `I understand your concern about the {w}.` |
-| `solutions` | 28 | **bare verb phrase** (after "I can") | `If you like, I can {w}.` · `If you prefer, we will {w} instead.` |
-| `handover` | 29 | **noun phrase** naming a shift-report item | `I updated the {w} this morning.` · `The {w} is ready for the next shift.` |
-| `wrapUp` | 30 | **noun phrase**, mixed review | `Let me confirm the {w}.` |
+| Slot          | Week | Part of speech required                    | Frames it must fit                                                                  |
+| ------------- | ---- | ------------------------------------------ | ----------------------------------------------------------------------------------- |
+| `upgrades`    | 23   | **noun phrase** (usable after "the")       | `I recommend the {w}.` · `The {w} is quieter than the standard one.`                |
+| `policies`    | 24   | **noun phrase** naming a fee/rule          | `There is a {w} for that.` · `We have to apply the {w} because it is hotel policy.` |
+| `commitments` | 25   | **bare verb phrase** (after "will"/"can")  | `I will {w} within ten minutes.` · `We are going to {w} before three o'clock.`      |
+| `partners`    | 26   | **noun phrase** naming a team/role         | `Let me check with {w}.` · `I will ask {w} to help you.`                            |
+| `complaints`  | 27   | **noun phrase** naming a problem           | `I am very sorry about the {w}.` · `I understand your concern about the {w}.`       |
+| `solutions`   | 28   | **bare verb phrase** (after "I can")       | `If you like, I can {w}.` · `If you prefer, we will {w} instead.`                   |
+| `handover`    | 29   | **noun phrase** naming a shift-report item | `I updated the {w} this morning.` · `The {w} is ready for the next shift.`          |
+| `wrapUp`      | 30   | **noun phrase**, mixed review              | `Let me confirm the {w}.`                                                           |
 
 ## Hard rules
 

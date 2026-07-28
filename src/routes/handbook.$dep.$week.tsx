@@ -95,9 +95,12 @@ function HandbookPage() {
           <span className="text-xs uppercase tracking-[0.3em] text-primary">Sổ tay tự luyện</span>
         </div>
         <h1 className="font-display hb-ink mt-3 text-4xl text-foreground">
-          Tuần {week} · <span className="italic text-primary">{department.name_vi ?? department.name_en}</span>
+          Tuần {week} ·{" "}
+          <span className="italic text-primary">{department.name_vi ?? department.name_en}</span>
         </h1>
-        {content && <p className="hb-muted mt-2 text-sm text-foreground/70">{content.weekTitleVi}</p>}
+        {content && (
+          <p className="hb-muted mt-2 text-sm text-foreground/70">{content.weekTitleVi}</p>
+        )}
       </motion.div>
 
       {!content ? (
@@ -120,11 +123,15 @@ function HandbookPage() {
           <section className="hb-section mt-8">
             <h2 className="font-display hb-ink text-2xl text-foreground">1 · Mẫu câu cần thuộc</h2>
             <p className="hb-muted mt-1 text-sm text-foreground/70">
-              Đọc to từng câu, rồi thay từ vựng ở mục 2 vào cùng khung câu — đó là cách luyện nhanh nhất.
+              Đọc to từng câu, rồi thay từ vựng ở mục 2 vào cùng khung câu — đó là cách luyện nhanh
+              nhất.
             </p>
             <ol className="mt-4 space-y-2">
               {patterns.map((p) => (
-                <li key={p} className="hb-card flex items-start justify-between gap-3 border border-primary/25 bg-card p-3">
+                <li
+                  key={p}
+                  className="hb-card flex items-start justify-between gap-3 border border-primary/25 bg-card p-3"
+                >
                   <span className="hb-ink font-display text-base text-foreground">{p}</span>
                   <Speak text={p} />
                 </li>
@@ -154,9 +161,13 @@ function HandbookPage() {
                       <td className="hb-ink py-2 pr-3 font-display text-foreground">
                         {item.icon} {item.word}
                       </td>
-                      <td className="hb-muted py-2 pr-3 text-xs text-foreground/60">{item.phonetic}</td>
+                      <td className="hb-muted py-2 pr-3 text-xs text-foreground/60">
+                        {item.phonetic}
+                      </td>
                       <td className="hb-ink py-2 pr-3">{item.definition}</td>
-                      <td className="hb-muted py-2 pr-3 text-xs italic text-foreground/70">{item.context}</td>
+                      <td className="hb-muted py-2 pr-3 text-xs italic text-foreground/70">
+                        {item.context}
+                      </td>
                       <td className="print-hide py-2">
                         <Speak text={item.word} rate={0.7} />
                       </td>
@@ -179,15 +190,21 @@ function HandbookPage() {
                   <div key={s.guestPrompt} className="hb-card border border-primary/25 bg-card p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Khách nói</div>
+                        <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
+                          Khách nói
+                        </div>
                         <p className="hb-ink mt-1 text-sm text-foreground">"{s.guestPrompt}"</p>
                       </div>
                       <Speak text={s.guestPrompt} rate={0.8} />
                     </div>
                     <div className="mt-3 flex items-start justify-between gap-3 border-t border-primary/15 pt-3">
                       <div>
-                        <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Bạn trả lời</div>
-                        <p className="hb-ink mt-1 font-display text-base text-foreground">{s.targetResponse}</p>
+                        <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
+                          Bạn trả lời
+                        </div>
+                        <p className="hb-ink mt-1 font-display text-base text-foreground">
+                          {s.targetResponse}
+                        </p>
                       </div>
                       <Speak text={s.targetResponse} />
                     </div>
@@ -202,13 +219,19 @@ function HandbookPage() {
 
           {/* GRAMMAR CONTRASTS */}
           <section className="hb-section mt-10">
-            <h2 className="font-display hb-ink text-2xl text-foreground">4 · Lỗi thường gặp cần tránh</h2>
+            <h2 className="font-display hb-ink text-2xl text-foreground">
+              4 · Lỗi thường gặp cần tránh
+            </h2>
             <div className="mt-4 space-y-2">
               {content.lessons.flatMap((l) =>
                 l.grammar.map((gr) => (
                   <div key={gr.polite} className="hb-card border border-primary/25 bg-card p-3">
-                    <p className="text-sm text-destructive line-through decoration-destructive/60">{gr.rude}</p>
-                    <p className="hb-ink font-display mt-1 text-base text-foreground">{gr.polite}</p>
+                    <p className="text-sm text-destructive line-through decoration-destructive/60">
+                      {gr.rude}
+                    </p>
+                    <p className="hb-ink font-display mt-1 text-base text-foreground">
+                      {gr.polite}
+                    </p>
                     <p className="hb-muted mt-1 text-xs italic text-foreground/70">{gr.rule}</p>
                   </div>
                 )),

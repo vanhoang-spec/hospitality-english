@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth";
 import { useAcademy } from "@/lib/academy-store";
-import { applyReviewResult, fetchDueItems, resolveReviewItem, type ResolvedReviewItem } from "@/lib/review";
+import {
+  applyReviewResult,
+  fetchDueItems,
+  resolveReviewItem,
+  type ResolvedReviewItem,
+} from "@/lib/review";
 import { speakEN } from "@/lib/speech";
 
 export const Route = createFileRoute("/review")({
@@ -61,7 +66,8 @@ function ReviewPage() {
         <div className="text-4xl">🌤️</div>
         <h1 className="font-display mt-4 text-3xl text-foreground">Không có mục nào đến hạn ôn</h1>
         <p className="mt-2 text-sm text-foreground/70">
-          Hoàn thành thêm bài học mới để hệ thống lên lịch ôn tập cho bạn — các mục đã học sẽ tự quay lại đây đúng thời điểm dễ quên nhất.
+          Hoàn thành thêm bài học mới để hệ thống lên lịch ôn tập cho bạn — các mục đã học sẽ tự
+          quay lại đây đúng thời điểm dễ quên nhất.
         </p>
         <Link
           to="/"
@@ -76,7 +82,13 @@ function ReviewPage() {
   return <ReviewSession items={items} userId={userId} />;
 }
 
-function ReviewSession({ items, userId }: { items: ResolvedReviewItem[]; userId: string | undefined }) {
+function ReviewSession({
+  items,
+  userId,
+}: {
+  items: ResolvedReviewItem[];
+  userId: string | undefined;
+}) {
   const queryClient = useQueryClient();
   const { awardStars, markLearnedToday } = useAcademy();
   // Pinned for the whole session — a background refetch of the due-items
@@ -117,13 +129,20 @@ function ReviewSession({ items, userId }: { items: ResolvedReviewItem[]; userId:
   if (done) {
     return (
       <main className="mx-auto max-w-xl px-6 py-24 text-center">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Phiên ôn tập hoàn tất</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="border border-primary bg-card p-8 shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Phiên ôn tập hoàn tất
+          </div>
           <div className="font-display mt-3 text-5xl text-primary">
             {correctCount}/{sessionItems.length}
           </div>
           <p className="mt-3 text-sm text-foreground/75">
-            🔥 Chuỗi ngày học của bạn đã được cộng. Mục trả lời đúng sẽ quay lại sau quãng dài hơn; mục sai sẽ xuất hiện lại ngày mai.
+            🔥 Chuỗi ngày học của bạn đã được cộng. Mục trả lời đúng sẽ quay lại sau quãng dài hơn;
+            mục sai sẽ xuất hiện lại ngày mai.
           </p>
           <Link
             to="/"
@@ -149,21 +168,40 @@ function ReviewSession({ items, userId }: { items: ResolvedReviewItem[]; userId:
         <span className="text-primary">{correctCount} đúng</span>
       </div>
       <div className="mt-2 h-1 w-full bg-primary/15">
-        <div className="h-1 bg-primary transition-all" style={{ width: `${(idx / sessionItems.length) * 100}%` }} />
+        <div
+          className="h-1 bg-primary transition-all"
+          style={{ width: `${(idx / sessionItems.length) * 100}%` }}
+        />
       </div>
 
-      <motion.div key={item.row.item_key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
-        {item.kind === "vocab" && <VocabReview item={item} answered={answered} onResult={handleResult} />}
-        {item.kind === "grammar" && <GrammarReview item={item} answered={answered} onResult={handleResult} />}
-        {item.kind === "speaking" && <SpeakingReview item={item} answered={answered} onResult={handleResult} />}
+      <motion.div
+        key={item.row.item_key}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mt-6"
+      >
+        {item.kind === "vocab" && (
+          <VocabReview item={item} answered={answered} onResult={handleResult} />
+        )}
+        {item.kind === "grammar" && (
+          <GrammarReview item={item} answered={answered} onResult={handleResult} />
+        )}
+        {item.kind === "speaking" && (
+          <SpeakingReview item={item} answered={answered} onResult={handleResult} />
+        )}
       </motion.div>
 
       {answered !== null && (
         <div className="mt-5 flex items-center justify-between">
-          <span className={`text-xs uppercase tracking-[0.2em] ${answered ? "text-primary" : "text-destructive"}`}>
+          <span
+            className={`text-xs uppercase tracking-[0.2em] ${answered ? "text-primary" : "text-destructive"}`}
+          >
             {answered ? "Chính xác! +1 ⭐" : "Chưa đúng — sẽ ôn lại vào ngày mai"}
           </span>
-          <button onClick={next} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+          <button
+            onClick={next}
+            className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+          >
             {idx + 1 >= sessionItems.length ? "Kết thúc phiên" : "Mục tiếp →"}
           </button>
         </div>
@@ -184,10 +222,19 @@ function VocabReview({ item, answered, onResult }: ReviewCardProps<"vocab">) {
     const distractors = shuffle(weekVocab.filter((v) => v.word !== vocab.word)).slice(0, 3);
     if (Math.random() < 0.5) {
       const options = shuffle([vocab.definition, ...distractors.map((d) => d.definition)]);
-      return { prompt: `Nghĩa của "${vocab.word}" là gì?`, speak: vocab.word, options, correct: vocab.definition };
+      return {
+        prompt: `Nghĩa của "${vocab.word}" là gì?`,
+        speak: vocab.word,
+        options,
+        correct: vocab.definition,
+      };
     }
     const options = shuffle([vocab.word, ...distractors.map((d) => d.word)]);
-    return { prompt: `Từ tiếng Anh nào có nghĩa: "${vocab.definition}"?`, options, correct: vocab.word };
+    return {
+      prompt: `Từ tiếng Anh nào có nghĩa: "${vocab.definition}"?`,
+      options,
+      correct: vocab.word,
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.row.item_key]);
   const [picked, setPicked] = useState<string | null>(null);
@@ -253,7 +300,11 @@ function VocabReview({ item, answered, onResult }: ReviewCardProps<"vocab">) {
 function GrammarReview({ item, answered, onResult }: ReviewCardProps<"grammar">) {
   const { grammar } = item;
   const chips = useMemo(
-    () => grammar.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
+    () =>
+      grammar.polite
+        .replace(/[.!?,]/g, "")
+        .split(/\s+/)
+        .filter(Boolean),
     [grammar.polite],
   );
   const [bank, setBank] = useState<string[]>(() => shuffle(chips));
@@ -271,10 +322,16 @@ function GrammarReview({ item, answered, onResult }: ReviewCardProps<"grammar">)
   return (
     <div className="border border-primary/30 bg-card p-6 shadow-xl">
       <p className="text-sm text-foreground/70">Ghép lại câu lịch sự thay cho câu cộc lốc:</p>
-      <p className="mt-2 font-display text-xl line-through decoration-destructive/60">"{grammar.rude}"</p>
+      <p className="mt-2 font-display text-xl line-through decoration-destructive/60">
+        "{grammar.rude}"
+      </p>
       <div className="mt-4 min-h-[52px] border border-primary/40 bg-background/40 p-3">
         <div className="flex flex-wrap gap-2">
-          {tray.length === 0 && <span className="text-xs italic text-foreground/40">Bấm các từ bên dưới theo đúng thứ tự…</span>}
+          {tray.length === 0 && (
+            <span className="text-xs italic text-foreground/40">
+              Bấm các từ bên dưới theo đúng thứ tự…
+            </span>
+          )}
           {tray.map((w, i) => (
             <button
               key={`${w}-${i}`}
@@ -302,7 +359,9 @@ function GrammarReview({ item, answered, onResult }: ReviewCardProps<"grammar">)
       {answered === null && (
         <div className="mt-5 flex justify-end">
           <button
-            onClick={() => onResult(normalizeSentence(tray.join(" ")) === normalizeSentence(grammar.polite))}
+            onClick={() =>
+              onResult(normalizeSentence(tray.join(" ")) === normalizeSentence(grammar.polite))
+            }
             disabled={bank.length > 0}
             className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-40"
           >
@@ -372,7 +431,9 @@ function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking"
         </div>
       )}
       {answered !== null && (
-        <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">💡 {speaking.helpTip}</p>
+        <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">
+          💡 {speaking.helpTip}
+        </p>
       )}
     </div>
   );

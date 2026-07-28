@@ -42,31 +42,48 @@ export const PASS_PCT = 70;
 const MIN_DISTINCT_RATIO = 0.5;
 
 function words(s: string): string[] {
-  return s.toLowerCase().replace(/[^\p{L}\p{N}\s'-]/gu, " ").split(/\s+/).filter(Boolean);
+  return s
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s'-]/gu, " ")
+    .split(/\s+/)
+    .filter(Boolean);
 }
 
 /** Word-boundary containment, so "charge" does not fire on "charger" and
  *  "60" does not fire on "160". Multi-word expressions are matched as a
  *  phrase with the same boundary rule at each end. */
 function containsExpression(haystack: string, expression: string): boolean {
-  const escaped = expression.trim().toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
-  return new RegExp(`(^|[^\\p{L}\\p{N}])${escaped}($|[^\\p{L}\\p{N}])`, "iu").test(haystack.toLowerCase());
+  const escaped = expression
+    .trim()
+    .toLowerCase()
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\s+/g, "\\s+");
+  return new RegExp(`(^|[^\\p{L}\\p{N}])${escaped}($|[^\\p{L}\\p{N}])`, "iu").test(
+    haystack.toLowerCase(),
+  );
 }
 
 export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInput): ScoreResult {
   const tokens = words(draft);
   const wordCount = tokens.length;
-  const sentenceCount = draft.split(/[.!?]+/).map((s) => s.trim()).filter((s) => s.length > 0).length;
+  const sentenceCount = draft
+    .split(/[.!?]+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0).length;
   const distinctRatio = wordCount === 0 ? 0 : new Set(tokens).size / wordCount;
 
   const hits = ideas.map((idea) => idea.any.some((expr) => containsExpression(draft, expr)));
-  const coveragePct = ideas.length === 0 ? 0 : Math.round((hits.filter(Boolean).length / ideas.length) * 100);
+  const coveragePct =
+    ideas.length === 0 ? 0 : Math.round((hits.filter(Boolean).length / ideas.length) * 100);
 
   let blockedByVi: string | null = null;
-  if (wordCount < minWords) blockedByVi = `Bài viết cần ít nhất ${minWords} từ (hiện có ${wordCount}).`;
-  else if (sentenceCount < minSentences) blockedByVi = `Cần viết thành ít nhất ${minSentences} câu hoàn chỉnh.`;
+  if (wordCount < minWords)
+    blockedByVi = `Bài viết cần ít nhất ${minWords} từ (hiện có ${wordCount}).`;
+  else if (sentenceCount < minSentences)
+    blockedByVi = `Cần viết thành ít nhất ${minSentences} câu hoàn chỉnh.`;
   else if (distinctRatio < MIN_DISTINCT_RATIO)
-    blockedByVi = "Bài viết lặp lại quá nhiều từ giống nhau — hãy viết thành câu tự nhiên, đừng liệt kê từ khoá.";
+    blockedByVi =
+      "Bài viết lặp lại quá nhiều từ giống nhau — hãy viết thành câu tự nhiên, đừng liệt kê từ khoá.";
 
   // A blocked answer still shows its coverage so the learner can see which
   // ideas landed, but it is capped below the pass mark.

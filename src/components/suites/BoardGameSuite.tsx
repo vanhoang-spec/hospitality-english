@@ -12,14 +12,20 @@ const ROUNDS: Round[] = [
     complaint: "I expected my suite to be ready at 1pm sharp. It is now 2:30.",
     options: [
       { text: "Sorry sir, the room is not ready yet. Please wait.", quality: "ok" },
-      { text: "My sincerest apologies for the delay. Please enjoy a glass of champagne in the lounge while I personally ensure your suite is prepared within the next fifteen minutes.", quality: "lqa" },
+      {
+        text: "My sincerest apologies for the delay. Please enjoy a glass of champagne in the lounge while I personally ensure your suite is prepared within the next fifteen minutes.",
+        quality: "lqa",
+      },
       { text: "Check-in is at 3pm, you're early.", quality: "bad" },
     ],
   },
   {
     complaint: "The Wi-Fi in my room keeps dropping. I have a board meeting in twenty minutes.",
     options: [
-      { text: "We can offer the business centre. May I escort you there now and have engineering attend your suite during the meeting?", quality: "lqa" },
+      {
+        text: "We can offer the business centre. May I escort you there now and have engineering attend your suite during the meeting?",
+        quality: "lqa",
+      },
       { text: "I'll send IT, please hold.", quality: "ok" },
       { text: "Try restarting your laptop, it usually works.", quality: "bad" },
     ],
@@ -27,7 +33,10 @@ const ROUNDS: Round[] = [
   {
     complaint: "There's a hair in my soup.",
     options: [
-      { text: "Please accept my deepest apologies. I will remove this immediately, prepare a fresh course from the chef, and the evening's tasting will of course be our gift.", quality: "lqa" },
+      {
+        text: "Please accept my deepest apologies. I will remove this immediately, prepare a fresh course from the chef, and the evening's tasting will of course be our gift.",
+        quality: "lqa",
+      },
       { text: "I'm so sorry, let me bring you a new one.", quality: "ok" },
       { text: "It's just one hair, no big deal.", quality: "bad" },
     ],
@@ -62,7 +71,11 @@ export function BoardGameSuite() {
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-primary/30 bg-card p-6 shadow-xl">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="border border-primary/30 bg-card p-6 shadow-xl"
+      >
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Promotion Board</div>
         <div className="mt-4 flex gap-1">
           {Array.from({ length: 11 }).map((_, i) => (
@@ -89,8 +102,15 @@ export function BoardGameSuite() {
         </div>
       </motion.div>
 
-      <motion.div key={round} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} className="border border-destructive/40 bg-card p-6 shadow-xl">
-        <div className="text-xs uppercase tracking-[0.3em] text-destructive">Bot AI · Hotel Inspector</div>
+      <motion.div
+        key={round}
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="border border-destructive/40 bg-card p-6 shadow-xl"
+      >
+        <div className="text-xs uppercase tracking-[0.3em] text-destructive">
+          Bot AI · Hotel Inspector
+        </div>
         <p className="mt-4 font-display text-xl leading-snug">"{r.complaint}"</p>
       </motion.div>
 
@@ -112,7 +132,9 @@ export function BoardGameSuite() {
                 : "border-primary/30 bg-card hover:border-primary"
             }`}
           >
-            <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Response Card {i + 1}</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
+              Response Card {i + 1}
+            </div>
             <p className="mt-3 text-sm leading-relaxed text-foreground/90">{opt.text}</p>
             {picked === i && (
               <div className="mt-3 text-xs uppercase tracking-[0.2em] text-primary">

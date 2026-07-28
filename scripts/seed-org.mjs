@@ -26,7 +26,10 @@ function loadEnv() {
     if (!line.includes("=") || line.trim().startsWith("#")) continue;
     const idx = line.indexOf("=");
     const key = line.slice(0, idx).trim();
-    const value = line.slice(idx + 1).trim().replace(/^"|"$/g, "");
+    const value = line
+      .slice(idx + 1)
+      .trim()
+      .replace(/^"|"$/g, "");
     if (!(key in env)) env[key] = value;
   }
   return env;
@@ -40,7 +43,9 @@ function normalizeVNPhone(raw) {
   else if (digits.startsWith("0")) national = digits.slice(1);
   else national = digits;
   if (!/^\d{9}$/.test(national)) {
-    throw new Error(`Số điện thoại không hợp lệ: "${raw}" (cần đúng 9 chữ số sau đầu số quốc gia).`);
+    throw new Error(
+      `Số điện thoại không hợp lệ: "${raw}" (cần đúng 9 chữ số sau đầu số quốc gia).`,
+    );
   }
   return `+84${national}`;
 }
@@ -109,7 +114,9 @@ async function main() {
   const user = await userRes.json();
   if (!userRes.ok) {
     console.error("Tạo tài khoản admin thất bại:", user);
-    console.error(`Tổ chức "${orgName}" (${org.id}) đã được tạo — xóa thủ công nếu muốn thử lại từ đầu.`);
+    console.error(
+      `Tổ chức "${orgName}" (${org.id}) đã được tạo — xóa thủ công nếu muốn thử lại từ đầu.`,
+    );
     process.exit(1);
   }
 

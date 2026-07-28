@@ -63,7 +63,9 @@ function LoginPage() {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <label className="block">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Số điện thoại</span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+              Số điện thoại
+            </span>
             <input
               type="tel"
               autoComplete="tel"
@@ -75,7 +77,9 @@ function LoginPage() {
             />
           </label>
           <label className="block">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Mật khẩu</span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+              Mật khẩu
+            </span>
             <input
               type="password"
               autoComplete="current-password"

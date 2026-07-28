@@ -58,9 +58,9 @@
   --radius: 0.5rem;
 
   /* Brand tokens */
-  --navy: oklch(0.19 0.05 260);            /* #0A192F deep navy */
-  --ivory: oklch(0.97 0.013 95);           /* #F9F6EE ivory white */
-  --gold: oklch(0.78 0.13 85);             /* #D4AF37 champagne gold */
+  --navy: oklch(0.19 0.05 260); /* #0A192F deep navy */
+  --ivory: oklch(0.97 0.013 95); /* #F9F6EE ivory white */
+  --gold: oklch(0.78 0.13 85); /* #D4AF37 champagne gold */
 
   --background: var(--navy);
   --foreground: var(--ivory);
@@ -109,7 +109,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, .font-display {
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }

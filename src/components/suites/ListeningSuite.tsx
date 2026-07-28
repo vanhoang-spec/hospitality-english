@@ -36,7 +36,9 @@ function speakVaried(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis.getVoices().filter((v) => v.lang.toLowerCase().startsWith("en"));
+  const voices = window.speechSynthesis
+    .getVoices()
+    .filter((v) => v.lang.toLowerCase().startsWith("en"));
   if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
   u.lang = u.voice?.lang ?? "en-US";
   u.rate = 0.8 + Math.random() * 0.2;
@@ -63,25 +65,29 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
     }),
   );
 
-  const clozes: ListeningTask[] = content.lessons.flatMap((l) =>
-    l.speaking.map((s, si) => {
-      const words = s.targetResponse.split(/\s+/);
-      const candidateIdx = words
-        .map((w, i) => ({ w: stripWord(w), i }))
-        .filter(({ w }) => w.length >= 4);
-      // Prefer blanking this week's vocabulary; fall back to any long word.
-      const preferred = candidateIdx.filter(({ w }) => vocabWords.has(w));
-      const rest = candidateIdx.filter(({ w }) => !vocabWords.has(w));
-      const blanks = new Set([...shuffle(preferred), ...shuffle(rest)].slice(0, 3).map(({ i }) => i));
-      if (blanks.size < 2) return null;
-      return {
-        kind: "cloze" as const,
-        key: `cloze:${l.lessonId}:${si}`,
-        audio: s.targetResponse,
-        tokens: words.map((text, i) => ({ text, blank: blanks.has(i) })),
-      };
-    }),
-  ).filter((t): t is Extract<ListeningTask, { kind: "cloze" }> => t !== null);
+  const clozes: ListeningTask[] = content.lessons
+    .flatMap((l) =>
+      l.speaking.map((s, si) => {
+        const words = s.targetResponse.split(/\s+/);
+        const candidateIdx = words
+          .map((w, i) => ({ w: stripWord(w), i }))
+          .filter(({ w }) => w.length >= 4);
+        // Prefer blanking this week's vocabulary; fall back to any long word.
+        const preferred = candidateIdx.filter(({ w }) => vocabWords.has(w));
+        const rest = candidateIdx.filter(({ w }) => !vocabWords.has(w));
+        const blanks = new Set(
+          [...shuffle(preferred), ...shuffle(rest)].slice(0, 3).map(({ i }) => i),
+        );
+        if (blanks.size < 2) return null;
+        return {
+          kind: "cloze" as const,
+          key: `cloze:${l.lessonId}:${si}`,
+          audio: s.targetResponse,
+          tokens: words.map((text, i) => ({ text, blank: blanks.has(i) })),
+        };
+      }),
+    )
+    .filter((t): t is Extract<ListeningTask, { kind: "cloze" }> => t !== null);
 
   return [...shuffle(chooses), ...shuffle(clozes)];
 }
@@ -109,7 +115,11 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
     return <SuiteComingSoon />;
   }
   if (!ttsAvailable) {
-    return <p className="text-sm text-foreground/70">Trình duyệt của bạn không hỗ trợ đọc audio (speech synthesis). Hãy dùng Chrome hoặc Edge.</p>;
+    return (
+      <p className="text-sm text-foreground/70">
+        Trình duyệt của bạn không hỗ trợ đọc audio (speech synthesis). Hãy dùng Chrome hoặc Edge.
+      </p>
+    );
   }
 
   const task = tasks[idx];
@@ -126,7 +136,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       if (picked === null) return;
       ok = picked === task.correctIdx;
     } else {
-      ok = task.tokens.every((t, i) => !t.blank || stripWord(blankValues[i] ?? "") === stripWord(t.text));
+      ok = task.tokens.every(
+        (t, i) => !t.blank || stripWord(blankValues[i] ?? "") === stripWord(t.text),
+      );
     }
     setAnswered(ok);
     if (ok) {
@@ -143,7 +155,11 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
     if (idx + 1 >= tasks.length) {
       const pct = Math.round((correctCount / tasks.length) * 100);
       setLastScorePct(pct);
-      if (week) recordSuiteResult(dep, week, "listening", earnedRef.current, { scorePct: pct, mastered: pct >= MASTERY_PCT });
+      if (week)
+        recordSuiteResult(dep, week, "listening", earnedRef.current, {
+          scorePct: pct,
+          mastered: pct >= MASTERY_PCT,
+        });
       setStage("done");
       return;
     }
@@ -169,8 +185,14 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
     const passed = lastScorePct >= MASTERY_PCT;
     return (
       <div className="mx-auto max-w-xl text-center">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Kết quả luyện nghe</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="border border-primary bg-card p-8 shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Kết quả luyện nghe
+          </div>
           <div className="font-display mt-3 text-5xl text-primary">{lastScorePct}%</div>
           <p className="mt-3 text-sm text-foreground/75">
             {passed
@@ -178,7 +200,10 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
               : `Cần ≥ ${MASTERY_PCT}% để đạt chuẩn. Nghe lại lần nữa nhé — mỗi lần giọng đọc sẽ khác một chút.`}
           </p>
           <div className="mt-6 flex justify-center">
-            <button onClick={retry} className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+            <button
+              onClick={retry}
+              className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+            >
               Luyện lại
             </button>
           </div>
@@ -190,17 +215,29 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-        <span>Luyện nghe · Câu {idx + 1}/{tasks.length}</span>
+        <span>
+          Luyện nghe · Câu {idx + 1}/{tasks.length}
+        </span>
         <span className="text-primary">{correctCount} đúng</span>
       </div>
       <div className="mt-2 h-1 w-full bg-primary/15">
-        <div className="h-1 bg-primary transition-all" style={{ width: `${(idx / tasks.length) * 100}%` }} />
+        <div
+          className="h-1 bg-primary transition-all"
+          style={{ width: `${(idx / tasks.length) * 100}%` }}
+        />
       </div>
 
-      <motion.div key={task.key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6 border border-primary/30 bg-card p-6 shadow-xl">
+      <motion.div
+        key={task.key}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mt-6 border border-primary/30 bg-card p-6 shadow-xl"
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-display text-xl text-foreground">
-            {task.kind === "choose" ? "Nghe lời khách nói và chọn câu trả lời chuẩn 5 sao:" : "Nghe câu mẫu và điền các từ còn thiếu:"}
+            {task.kind === "choose"
+              ? "Nghe lời khách nói và chọn câu trả lời chuẩn 5 sao:"
+              : "Nghe câu mẫu và điền các từ còn thiếu:"}
           </p>
         </div>
 
@@ -212,7 +249,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           >
             🔊 Nghe {listens > 0 ? `(còn ${MAX_LISTENS - listens} lần)` : ""}
           </button>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-foreground/50">Giọng đọc thay đổi mỗi lần nghe</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-foreground/50">
+            Giọng đọc thay đổi mỗi lần nghe
+          </span>
         </div>
 
         {task.kind === "choose" ? (
@@ -269,7 +308,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           <p className="mt-3 text-sm text-destructive">Câu đầy đủ: "{task.audio}"</p>
         )}
         {answered !== null && (
-          <p className={`mt-3 text-xs uppercase tracking-[0.2em] ${answered ? "text-primary" : "text-destructive"}`}>
+          <p
+            className={`mt-3 text-xs uppercase tracking-[0.2em] ${answered ? "text-primary" : "text-destructive"}`}
+          >
             {answered ? "Chính xác! +1 ⭐" : "Chưa đúng"}
           </p>
         )}
@@ -278,13 +319,20 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           {answered === null ? (
             <button
               onClick={submit}
-              disabled={task.kind === "choose" ? picked === null : !task.tokens.some((t, i) => t.blank && (blankValues[i] ?? "").trim() !== "")}
+              disabled={
+                task.kind === "choose"
+                  ? picked === null
+                  : !task.tokens.some((t, i) => t.blank && (blankValues[i] ?? "").trim() !== "")
+              }
               className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-40"
             >
               Trả lời
             </button>
           ) : (
-            <button onClick={next} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+            <button
+              onClick={next}
+              className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+            >
               {idx + 1 >= tasks.length ? "Xem kết quả" : "Câu tiếp →"}
             </button>
           )}

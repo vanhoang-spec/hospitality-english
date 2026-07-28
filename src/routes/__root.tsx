@@ -78,7 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Hospitality English Academy" },
-      { name: "description", content: "Embassy Hospitality — a 5-star hospitality English training academy." },
+      {
+        name: "description",
+        content: "Embassy Hospitality — a 5-star hospitality English training academy.",
+      },
       { name: "author", content: "Embassy Hospitality" },
       { property: "og:title", content: "Hospitality English Academy" },
       { property: "og:description", content: "A 5-star hospitality English training academy." },

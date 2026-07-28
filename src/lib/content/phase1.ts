@@ -51,7 +51,13 @@ function lesson(
   titleVi: string,
   parts: Omit<LessonContent, "lessonId" | "lessonOrder" | "titleEn" | "titleVi">,
 ): LessonContent {
-  return { lessonId: `${lx.code}_${week}_${order}`, lessonOrder: order, titleEn, titleVi, ...parts };
+  return {
+    lessonId: `${lx.code}_${week}_${order}`,
+    lessonOrder: order,
+    titleEn,
+    titleVi,
+    ...parts,
+  };
 }
 
 /** Turns a bank word into a vocabulary card with a frame-shaped example. */
@@ -76,11 +82,23 @@ function week7(lx: Ctx): LessonContent[] {
         bw(r2, `He is our ${lower(r2)}.`),
       ],
       grammar: [
-        g("This my colleague.", "This is my colleague, Mai.", "Tiếng Anh cần động từ 'is': THIS IS my colleague. Tiếng Việt bỏ được 'là', tiếng Anh thì không."),
-        g(`She our ${lower(r1)}.`, `She is our ${lower(r1)}.`, "Chủ ngữ + IS + chức danh. Nhớ mạo từ sở hữu 'our' trước tên chức danh."),
+        g(
+          "This my colleague.",
+          "This is my colleague, Mai.",
+          "Tiếng Anh cần động từ 'is': THIS IS my colleague. Tiếng Việt bỏ được 'là', tiếng Anh thì không.",
+        ),
+        g(
+          `She our ${lower(r1)}.`,
+          `She is our ${lower(r1)}.`,
+          "Chủ ngữ + IS + chức danh. Nhớ mạo từ sở hữu 'our' trước tên chức danh.",
+        ),
       ],
       speaking: [
-        sp("Who is this, please?", `This is our ${lower(r1)}, sir.`, `Công thức: "This is our + chức danh". Thay ${lower(r1)} bằng chức danh bất kỳ để tự luyện ở nhà.`),
+        sp(
+          "Who is this, please?",
+          `This is our ${lower(r1)}, sir.`,
+          `Công thức: "This is our + chức danh". Thay ${lower(r1)} bằng chức danh bất kỳ để tự luyện ở nhà.`,
+        ),
       ],
       reading: read(
         `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. He is our ${lower(r2)}."`,
@@ -116,11 +134,23 @@ function week7(lx: Ctx): LessonContent[] {
         bw(r5, `He is the ${lower(r5)} tonight.`),
       ],
       grammar: [
-        g(`Today ${lower(r3)} not here.`, `The ${lower(r3)} is not here today.`, "Phủ định cần 'is not': THE + chức danh + IS NOT + here. Không nói 'not here' trống không."),
-        g(`Who ${lower(r4)}?`, `Who is the ${lower(r4)}?`, "Câu hỏi với 'Who' cũng cần 'is': WHO IS the …?"),
+        g(
+          `Today ${lower(r3)} not here.`,
+          `The ${lower(r3)} is not here today.`,
+          "Phủ định cần 'is not': THE + chức danh + IS NOT + here. Không nói 'not here' trống không.",
+        ),
+        g(
+          `Who ${lower(r4)}?`,
+          `Who is the ${lower(r4)}?`,
+          "Câu hỏi với 'Who' cũng cần 'is': WHO IS the …?",
+        ),
       ],
       speaking: [
-        sp("Who is on duty now?", `Our ${lower(r3)} is on duty, madam.`, "Mẫu 'Our + chức danh + is on duty' dùng được cho mọi ca trực."),
+        sp(
+          "Who is on duty now?",
+          `Our ${lower(r3)} is on duty, madam.`,
+          "Mẫu 'Our + chức danh + is on duty' dùng được cho mọi ca trực.",
+        ),
       ],
       reading: read(
         `It is Monday. The ${lower(r4)} begins work early. ${lx.staff} says: "Our ${lower(r3)} is on duty today, madam."`,
@@ -155,11 +185,23 @@ function week7(lx: Ctx): LessonContent[] {
         bw(r6, `Our ${lower(r6)} works here too.`),
       ],
       grammar: [
-        g(`I work ${lx.deptEn}.`, `I work in ${lx.deptEn}.`, "Cần giới từ 'in' trước tên bộ phận: I work IN Housekeeping."),
-        g("He work here.", "He works here every day.", "Ngôi thứ ba số ít (he/she) thì động từ thêm -s: he WORKS."),
+        g(
+          `I work ${lx.deptEn}.`,
+          `I work in ${lx.deptEn}.`,
+          "Cần giới từ 'in' trước tên bộ phận: I work IN Housekeeping.",
+        ),
+        g(
+          "He work here.",
+          "He works here every day.",
+          "Ngôi thứ ba số ít (he/she) thì động từ thêm -s: he WORKS.",
+        ),
       ],
       speaking: [
-        sp("Which department are you in?", `I work in ${lx.deptEn}, sir.`, "Câu này dùng hằng ngày khi khách hỏi. Học thuộc như một khối."),
+        sp(
+          "Which department are you in?",
+          `I work in ${lx.deptEn}, sir.`,
+          "Câu này dùng hằng ngày khi khách hỏi. Học thuộc như một khối.",
+        ),
       ],
       reading: read(
         `A new guest asks about the team. ${lx.staff} answers: "I work in ${lx.deptEn}. Our ${lower(r6)} works here too."`,
@@ -194,11 +236,23 @@ function week7(lx: Ctx): LessonContent[] {
         bw(r8, `The ${lower(r8)} finishes at ten.`),
       ],
       grammar: [
-        g(`You ask ${lower(r7)}.`, `Please ask our ${lower(r7)}.`, "Thêm 'Please' để câu thành lời nhờ, không thành mệnh lệnh."),
-        g("I no know.", "I am not sure, sir.", "Không nói 'I no know'. Câu lịch sự khi chưa rõ là 'I am not sure' rồi hứa đi hỏi."),
+        g(
+          `You ask ${lower(r7)}.`,
+          `Please ask our ${lower(r7)}.`,
+          "Thêm 'Please' để câu thành lời nhờ, không thành mệnh lệnh.",
+        ),
+        g(
+          "I no know.",
+          "I am not sure, sir.",
+          "Không nói 'I no know'. Câu lịch sự khi chưa rõ là 'I am not sure' rồi hứa đi hỏi.",
+        ),
       ],
       speaking: [
-        sp("Can you help me with this?", `I am not sure. I will ask our ${lower(r7)}.`, "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách."),
+        sp(
+          "Can you help me with this?",
+          `I am not sure. I will ask our ${lower(r7)}.`,
+          "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách.",
+        ),
       ],
       reading: read(
         `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you."`,
@@ -207,7 +261,8 @@ function week7(lx: Ctx): LessonContent[] {
             q: "Khi chưa biết câu trả lời, nên làm gì?",
             options: ["Nói chưa chắc và đi hỏi người phụ trách", "Đoán bừa", "Im lặng bỏ đi"],
             correct: 0,
-            explanation: "Nói thật và hứa hành động giữ được uy tín; đoán bừa gây sai thông tin cho khách.",
+            explanation:
+              "Nói thật và hứa hành động giữ được uy tín; đoán bừa gây sai thông tin cho khách.",
           },
           {
             q: "Câu nào lịch sự hơn?",
@@ -245,11 +300,23 @@ function week8(lx: Ctx): LessonContent[] {
         bw(p2, `The ${lower(p2)} is on the right.`),
       ],
       grammar: [
-        g(`${p1.word} left.`, `The ${lower(p1)} is on the left.`, "Đủ ba phần: THE + nơi chốn + IS ON THE + hướng. Thiếu 'the' hoặc 'is' là câu sai."),
-        g("Go straight there.", "Please go straight ahead.", "Chỉ đường đi thẳng nói 'go straight ahead', thêm 'Please' cho lịch sự."),
+        g(
+          `${p1.word} left.`,
+          `The ${lower(p1)} is on the left.`,
+          "Đủ ba phần: THE + nơi chốn + IS ON THE + hướng. Thiếu 'the' hoặc 'is' là câu sai.",
+        ),
+        g(
+          "Go straight there.",
+          "Please go straight ahead.",
+          "Chỉ đường đi thẳng nói 'go straight ahead', thêm 'Please' cho lịch sự.",
+        ),
       ],
       speaking: [
-        sp(`Excuse me, where is the ${lower(p1)}?`, `The ${lower(p1)} is on the left, sir.`, "Khung câu vàng của tuần này. Thay tên nơi chốn để tự luyện tại nhà."),
+        sp(
+          `Excuse me, where is the ${lower(p1)}?`,
+          `The ${lower(p1)} is on the left, sir.`,
+          "Khung câu vàng của tuần này. Thay tên nơi chốn để tự luyện tại nhà.",
+        ),
       ],
       reading: read(
         `A guest looks for the ${lower(p1)}. ${lx.staff} points and says: "The ${lower(p1)} is on the left, madam. Please go straight ahead."`,
@@ -285,11 +352,23 @@ function week8(lx: Ctx): LessonContent[] {
         bw(p4, `The ${lower(p4)} is next to it.`),
       ],
       grammar: [
-        g(`${p3.word} near lift.`, `The ${lower(p3)} is near the lift.`, "Giới từ chỉ vị trí luôn đi với 'the': near THE lift, next to THE door."),
-        g(`Have a ${lower(p4)} here.`, `There is a ${lower(p4)} here.`, "Nói 'có một cái gì đó' dùng 'There is', không dùng 'Have'."),
+        g(
+          `${p3.word} near lift.`,
+          `The ${lower(p3)} is near the lift.`,
+          "Giới từ chỉ vị trí luôn đi với 'the': near THE lift, next to THE door.",
+        ),
+        g(
+          `Have a ${lower(p4)} here.`,
+          `There is a ${lower(p4)} here.`,
+          "Nói 'có một cái gì đó' dùng 'There is', không dùng 'Have'.",
+        ),
       ],
       speaking: [
-        sp(`Is there a ${lower(p4)} here?`, `Yes, there is one near the lift.`, "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này."),
+        sp(
+          `Is there a ${lower(p4)} here?`,
+          `Yes, there is one near the lift.`,
+          "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này.",
+        ),
       ],
       reading: read(
         `${lx.staff} explains the area: "There is a ${lower(p4)} near the lift, sir. The ${lower(p3)} is next to it."`,
@@ -325,11 +404,23 @@ function week8(lx: Ctx): LessonContent[] {
         bw(p6, `The ${lower(p6)} is downstairs.`),
       ],
       grammar: [
-        g(`${p5.word} up floor.`, `The ${lower(p5)} is upstairs.`, "'Upstairs' và 'downstairs' đã đủ nghĩa, không cần thêm 'floor' phía sau."),
-        g(`Where ${lower(p6)}?`, `Where is the ${lower(p6)}?`, "Câu hỏi 'Where' cần 'is' và 'the': WHERE IS THE …?"),
+        g(
+          `${p5.word} up floor.`,
+          `The ${lower(p5)} is upstairs.`,
+          "'Upstairs' và 'downstairs' đã đủ nghĩa, không cần thêm 'floor' phía sau.",
+        ),
+        g(
+          `Where ${lower(p6)}?`,
+          `Where is the ${lower(p6)}?`,
+          "Câu hỏi 'Where' cần 'is' và 'the': WHERE IS THE …?",
+        ),
       ],
       speaking: [
-        sp(`Where is the ${lower(p6)}?`, `It is downstairs, near the lobby.`, "Trả lời hai lớp thông tin: tầng nào + gần cái gì. Khách dễ hình dung hơn."),
+        sp(
+          `Where is the ${lower(p6)}?`,
+          `It is downstairs, near the lobby.`,
+          "Trả lời hai lớp thông tin: tầng nào + gần cái gì. Khách dễ hình dung hơn.",
+        ),
       ],
       reading: read(
         `A guest cannot find the ${lower(p5)}. ${lx.staff} says: "It is upstairs, madam. The ${lower(p6)} is downstairs."`,
@@ -364,11 +455,23 @@ function week8(lx: Ctx): LessonContent[] {
         bw(p8, `The ${lower(p8)} is over there.`),
       ],
       grammar: [
-        g(`I bring you ${lower(p7)}.`, `Let me show you the ${lower(p7)}.`, "Dẫn khách đi dùng 'Let me show you' — lịch sự và chuẩn mực hơn 'I bring you'."),
-        g(`${p8.word} there.`, `The ${lower(p8)} is over there.`, "'Over there' = đằng kia. Vẫn cần 'The … is' ở đầu câu."),
+        g(
+          `I bring you ${lower(p7)}.`,
+          `Let me show you the ${lower(p7)}.`,
+          "Dẫn khách đi dùng 'Let me show you' — lịch sự và chuẩn mực hơn 'I bring you'.",
+        ),
+        g(
+          `${p8.word} there.`,
+          `The ${lower(p8)} is over there.`,
+          "'Over there' = đằng kia. Vẫn cần 'The … is' ở đầu câu.",
+        ),
       ],
       speaking: [
-        sp(`Could you take me there?`, `Of course. Let me show you.`, "Khách nhờ dẫn đường thì đi cùng, đừng chỉ tay rồi thôi."),
+        sp(
+          `Could you take me there?`,
+          `Of course. Let me show you.`,
+          "Khách nhờ dẫn đường thì đi cùng, đừng chỉ tay rồi thôi.",
+        ),
       ],
       reading: read(
         `The guest cannot find the way. ${lx.staff} smiles: "Let me show you, sir. The ${lower(p8)} is over there." They walk together.`,
@@ -415,11 +518,23 @@ function week9(lx: Ctx): LessonContent[] {
         bw(q2, `Here is your ${lower(q2)}.`),
       ],
       grammar: [
-        g(`I want ${lower(q1)}.`, `Can I have the ${lower(q1)}?`, "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng."),
-        g(`I bring ${lower(q1)}.`, `Of course. I will bring one.`, "Nhận lời dùng 'Of course' + hứa hành động với 'will'."),
+        g(
+          `I want ${lower(q1)}.`,
+          `Can I have the ${lower(q1)}?`,
+          "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng.",
+        ),
+        g(
+          `I bring ${lower(q1)}.`,
+          `Of course. I will bring one.`,
+          "Nhận lời dùng 'Of course' + hứa hành động với 'will'.",
+        ),
       ],
       speaking: [
-        sp(`Can I have the ${lower(q1)}, please?`, `Of course. I will bring one.`, "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin."),
+        sp(
+          `Can I have the ${lower(q1)}, please?`,
+          `Of course. I will bring one.`,
+          "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin.",
+        ),
       ],
       reading: read(
         `A guest needs something. He asks: "Can I have the ${lower(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
@@ -449,16 +564,25 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 2, "How Many Do You Need?", "Hỏi khách cần bao nhiêu", {
-      vocabulary: [
-        bw(q3, `Some ${lower(q3)}, please.`),
-        bw(q4, `Do you need the ${lower(q4)}?`),
-      ],
+      vocabulary: [bw(q3, `Some ${lower(q3)}, please.`), bw(q4, `Do you need the ${lower(q4)}?`)],
       grammar: [
-        g("How many?", "How many do you need, sir?", "Câu hỏi đầy đủ cần 'do you need'. Hỏi cụt 'How many?' nghe thiếu tôn trọng."),
-        g(`You need ${lower(q4)}?`, `Do you need the ${lower(q4)}, sir?`, "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu."),
+        g(
+          "How many?",
+          "How many do you need, sir?",
+          "Câu hỏi đầy đủ cần 'do you need'. Hỏi cụt 'How many?' nghe thiếu tôn trọng.",
+        ),
+        g(
+          `You need ${lower(q4)}?`,
+          `Do you need the ${lower(q4)}, sir?`,
+          "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu.",
+        ),
       ],
       speaking: [
-        sp(`I need some ${lower(q3)}.`, `How many do you need, madam?`, "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần."),
+        sp(
+          `I need some ${lower(q3)}.`,
+          `How many do you need, madam?`,
+          "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần.",
+        ),
       ],
       reading: read(
         `The guest asks for ${lower(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
@@ -493,11 +617,23 @@ function week9(lx: Ctx): LessonContent[] {
         bw(q6, `I will bring the ${lower(q6)}.`),
       ],
       grammar: [
-        g(`Five minute.`, `In five minutes, sir.`, "Cần 'In' trước khoảng thời gian và -s ở 'minutes': IN five minuteS."),
-        g(`It come now.`, `It is coming now, madam.`, "Việc đang xảy ra dùng 'is coming' (hiện tại tiếp diễn)."),
+        g(
+          `Five minute.`,
+          `In five minutes, sir.`,
+          "Cần 'In' trước khoảng thời gian và -s ở 'minutes': IN five minuteS.",
+        ),
+        g(
+          `It come now.`,
+          `It is coming now, madam.`,
+          "Việc đang xảy ra dùng 'is coming' (hiện tại tiếp diễn).",
+        ),
       ],
       speaking: [
-        sp(`How long will it take?`, `In five minutes, madam.`, "Luôn cho khách một mốc thời gian cụ thể, đừng nói 'soon' chung chung."),
+        sp(
+          `How long will it take?`,
+          `In five minutes, madam.`,
+          "Luôn cho khách một mốc thời gian cụ thể, đừng nói 'soon' chung chung.",
+        ),
       ],
       reading: read(
         `A guest wants a ${lower(q5)}. ${lx.staff} says: "Of course, madam. In five minutes." The ${lower(q5)} arrives on time.`,
@@ -532,11 +668,23 @@ function week9(lx: Ctx): LessonContent[] {
         bw(q8, `Would you like the ${lower(q8)}?`),
       ],
       grammar: [
-        g(`No have.`, `I am sorry, we do not have it.`, "Phủ định lịch sự: xin lỗi trước, rồi 'we do not have it'. Không nói cụt 'No have'."),
-        g(`You want ${lower(q8)}?`, `Would you like the ${lower(q8)}?`, "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'."),
+        g(
+          `No have.`,
+          `I am sorry, we do not have it.`,
+          "Phủ định lịch sự: xin lỗi trước, rồi 'we do not have it'. Không nói cụt 'No have'.",
+        ),
+        g(
+          `You want ${lower(q8)}?`,
+          `Would you like the ${lower(q8)}?`,
+          "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'.",
+        ),
       ],
       speaking: [
-        sp(`Do you have the ${lower(q7)}?`, `I am sorry. Would you like the ${lower(q8)}?`, "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'."),
+        sp(
+          `Do you have the ${lower(q7)}?`,
+          `I am sorry. Would you like the ${lower(q8)}?`,
+          "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'.",
+        ),
       ],
       reading: read(
         `The ${lower(q7)} is finished today. ${lx.staff} says: "I am sorry, sir. Would you like the ${lower(q8)}?" The guest says: "Yes, please."`,
@@ -584,11 +732,23 @@ function week10(lx: Ctx): LessonContent[] {
         bw(s3, `It is ${lower(s3)} today.`),
       ],
       grammar: [
-        g(`Room ${lower(s1)}.`, `The room is ${lower(s1)}.`, "Cần 'The' và 'is': THE room IS + tính từ. Đây là mẫu câu lõi của tuần."),
-        g(`Very much ${lower(s1)}.`, `It is very ${lower(s1)}.`, "'Very' đứng ngay trước tính từ: very clean, very busy. Không nói 'very much + tính từ'."),
+        g(
+          `Room ${lower(s1)}.`,
+          `The room is ${lower(s1)}.`,
+          "Cần 'The' và 'is': THE room IS + tính từ. Đây là mẫu câu lõi của tuần.",
+        ),
+        g(
+          `Very much ${lower(s1)}.`,
+          `It is very ${lower(s1)}.`,
+          "'Very' đứng ngay trước tính từ: very clean, very busy. Không nói 'very much + tính từ'.",
+        ),
       ],
       speaking: [
-        sp("How is the room today?", `It is very ${lower(s1)}, madam.`, "Khung câu vàng: 'It is very + tính từ'. Thay tính từ khác để tự luyện."),
+        sp(
+          "How is the room today?",
+          `It is very ${lower(s1)}, madam.`,
+          "Khung câu vàng: 'It is very + tính từ'. Thay tính từ khác để tự luyện.",
+        ),
       ],
       reading: read(
         `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. It is quite ${lower(s2)} too."`,
@@ -624,18 +784,34 @@ function week10(lx: Ctx): LessonContent[] {
         bw(s5, `It is a little ${lower(s5)}.`),
       ],
       grammar: [
-        g(`Very very ${lower(s4)}.`, `It is too ${lower(s4)}, sir.`, "'Too' mang nghĩa quá mức gây khó chịu; 'very' chỉ là nhấn mạnh. Khách phàn nàn thường dùng 'too'."),
-        g(`Little bit ${lower(s5)}.`, `It is a little ${lower(s5)}.`, "Đúng cụm là 'a little' + tính từ."),
+        g(
+          `Very very ${lower(s4)}.`,
+          `It is too ${lower(s4)}, sir.`,
+          "'Too' mang nghĩa quá mức gây khó chịu; 'very' chỉ là nhấn mạnh. Khách phàn nàn thường dùng 'too'.",
+        ),
+        g(
+          `Little bit ${lower(s5)}.`,
+          `It is a little ${lower(s5)}.`,
+          "Đúng cụm là 'a little' + tính từ.",
+        ),
       ],
       speaking: [
-        sp(`This is too ${lower(s4)}.`, `I am sorry. I will change it.`, "Nghe 'too + tính từ' là khách đang phàn nàn — phải xin lỗi và hành động ngay."),
+        sp(
+          `This is too ${lower(s4)}.`,
+          `I am sorry. I will change it.`,
+          "Nghe 'too + tính từ' là khách đang phàn nàn — phải xin lỗi và hành động ngay.",
+        ),
       ],
       reading: read(
         `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will change it now."`,
         [
           {
             q: "'Too' khác 'very' ở điểm nào?",
-            options: ["'Too' mang nghĩa quá mức, gây khó chịu", "Hai từ giống hệt nhau", "'Too' nghĩa là rất tốt"],
+            options: [
+              "'Too' mang nghĩa quá mức, gây khó chịu",
+              "Hai từ giống hệt nhau",
+              "'Too' nghĩa là rất tốt",
+            ],
             correct: 0,
             explanation: "very hot = rất nóng (bình thường); too hot = nóng quá (có vấn đề).",
           },
@@ -658,16 +834,25 @@ function week10(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 10, 3, "Comparing Two Things", "So sánh hai thứ", {
-      vocabulary: [
-        bw(s6, `This one is more ${lower(s6)}.`),
-        bw(s7, `This one is ${lower(s7)}.`),
-      ],
+      vocabulary: [bw(s6, `This one is more ${lower(s6)}.`), bw(s7, `This one is ${lower(s7)}.`)],
       grammar: [
-        g(`This good, that no good.`, `This one is better, sir.`, "So sánh dùng 'better' (tốt hơn). Không ghép 'good/no good' theo lối tiếng Việt."),
-        g(`Same same.`, `They are the same, madam.`, "'Same same' không phải tiếng Anh. Câu đúng là 'They are the same'."),
+        g(
+          `This good, that no good.`,
+          `This one is better, sir.`,
+          "So sánh dùng 'better' (tốt hơn). Không ghép 'good/no good' theo lối tiếng Việt.",
+        ),
+        g(
+          `Same same.`,
+          `They are the same, madam.`,
+          "'Same same' không phải tiếng Anh. Câu đúng là 'They are the same'.",
+        ),
       ],
       speaking: [
-        sp("Which one is better?", `This one is better, madam.`, "Trả lời dứt khoát rồi mới giải thích — khách cần lời khuyên, không cần vòng vo."),
+        sp(
+          "Which one is better?",
+          `This one is better, madam.`,
+          "Trả lời dứt khoát rồi mới giải thích — khách cần lời khuyên, không cần vòng vo.",
+        ),
       ],
       reading: read(
         `A guest compares two things. ${lx.staff} says: "This one is better, madam. It is more ${lower(s6)}." The guest chooses it.`,
@@ -680,7 +865,11 @@ function week10(lx: Ctx): LessonContent[] {
           },
           {
             q: "'Same same' có đúng tiếng Anh không?",
-            options: ["Không, phải nói 'They are the same'", "Có, dùng bình thường", "Chỉ dùng với khách quen"],
+            options: [
+              "Không, phải nói 'They are the same'",
+              "Có, dùng bình thường",
+              "Chỉ dùng với khách quen",
+            ],
             correct: 0,
             explanation: "'Same same' là lỗi lặp từ phổ biến của người Việt.",
           },
@@ -697,15 +886,21 @@ function week10(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 10, 4, "Describing a Problem", "Mô tả tình trạng có vấn đề", {
-      vocabulary: [
-        bw(s8, `Careful, the floor is ${lower(s8)}.`),
-      ],
+      vocabulary: [bw(s8, `Careful, the floor is ${lower(s8)}.`)],
       grammar: [
-        g(`Careful ${lower(s8)}!`, `Please be careful. It is ${lower(s8)}.`, "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do."),
+        g(
+          `Careful ${lower(s8)}!`,
+          `Please be careful. It is ${lower(s8)}.`,
+          "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do.",
+        ),
         g("Not good this.", "This is not good, sir.", "Trật tự đúng: chủ ngữ + is not + tính từ."),
       ],
       speaking: [
-        sp("Is it safe here?", `Please be careful. It is ${lower(s8)}.`, "Cảnh báo an toàn phải nói trước, giải thích sau — an toàn khách là ưu tiên số một."),
+        sp(
+          "Is it safe here?",
+          `Please be careful. It is ${lower(s8)}.`,
+          "Cảnh báo an toàn phải nói trước, giải thích sau — an toàn khách là ưu tiên số một.",
+        ),
       ],
       reading: read(
         `${lx.staff} sees a risk and warns the guest: "Please be careful, madam. It is ${lower(s8)}." The guest walks slowly.`,
@@ -718,7 +913,11 @@ function week10(lx: Ctx): LessonContent[] {
           },
           {
             q: "Thứ tự đúng khi cảnh báo là gì?",
-            options: ["Cảnh báo trước, giải thích sau", "Giải thích dài rồi mới cảnh báo", "Không cần cảnh báo"],
+            options: [
+              "Cảnh báo trước, giải thích sau",
+              "Giải thích dài rồi mới cảnh báo",
+              "Không cần cảnh báo",
+            ],
             correct: 0,
             explanation: "An toàn là ưu tiên: nói 'Please be careful' ngay lập tức.",
           },
@@ -752,11 +951,23 @@ function week11(lx: Ctx): LessonContent[] {
         bw(t2, `We ${lower(t2)} after breakfast.`),
       ],
       grammar: [
-        g(`Every day I ${lower(t1)} it.`, `I ${lower(t1)} it every day.`, "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … it EVERY DAY."),
-        g(`He ${lower(t1)} every day.`, `He ${lower(t1)}s the room every day.`, "Ngôi thứ ba số ít thêm -s vào động từ ở thì hiện tại đơn."),
+        g(
+          `Every day I ${lower(t1)} it.`,
+          `I ${lower(t1)} it every day.`,
+          "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … it EVERY DAY.",
+        ),
+        g(
+          `He ${lower(t1)} every day.`,
+          `He ${lower(t1)}s the room every day.`,
+          "Ngôi thứ ba số ít thêm -s vào động từ ở thì hiện tại đơn.",
+        ),
       ],
       speaking: [
-        sp("What do you do every day?", `I ${lower(t1)} every day.`, "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày."),
+        sp(
+          "What do you do every day?",
+          `I ${lower(t1)} every day.`,
+          "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày.",
+        ),
       ],
       reading: read(
         `${lx.staff} explains the daily work: "I ${lower(t1)} every morning. We ${lower(t2)} after breakfast, sir."`,
@@ -791,11 +1002,23 @@ function week11(lx: Ctx): LessonContent[] {
         bw(t4, `I ${lower(t4)} before lunch.`),
       ],
       grammar: [
-        g(`We ${lower(t3)} ${lx.service.open}.`, `We ${lower(t3)} at ${lx.service.open}.`, "Nhớ 'at' trước giờ — ôn lại quy tắc từ tuần 3."),
-        g(`Work start eight.`, `Our shift starts at eight.`, "Chủ ngữ đầy đủ + động từ chia đúng: our shift STARTS at eight."),
+        g(
+          `We ${lower(t3)} ${lx.service.open}.`,
+          `We ${lower(t3)} at ${lx.service.open}.`,
+          "Nhớ 'at' trước giờ — ôn lại quy tắc từ tuần 3.",
+        ),
+        g(
+          `Work start eight.`,
+          `Our shift starts at eight.`,
+          "Chủ ngữ đầy đủ + động từ chia đúng: our shift STARTS at eight.",
+        ),
       ],
       speaking: [
-        sp("What time do you start?", `We ${lower(t3)} at ${lx.service.open}, madam.`, `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới.`),
+        sp(
+          "What time do you start?",
+          `We ${lower(t3)} at ${lx.service.open}, madam.`,
+          `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới.`,
+        ),
       ],
       reading: read(
         `A guest asks about the schedule. ${lx.staff} answers: "We ${lower(t3)} at ${lx.service.open}, sir. I ${lower(t4)} before lunch."`,
@@ -831,11 +1054,23 @@ function week11(lx: Ctx): LessonContent[] {
         bw(t6, `We sometimes ${lower(t6)} twice.`),
       ],
       grammar: [
-        g(`I ${lower(t5)} usually.`, `I usually ${lower(t5)} first.`, "Trạng từ tần suất (usually, always, sometimes) đứng TRƯỚC động từ chính."),
-        g(`Sometime we ${lower(t6)}.`, `We sometimes ${lower(t6)} twice.`, "Đúng chính tả là 'sometimes' có -s ở cuối."),
+        g(
+          `I ${lower(t5)} usually.`,
+          `I usually ${lower(t5)} first.`,
+          "Trạng từ tần suất (usually, always, sometimes) đứng TRƯỚC động từ chính.",
+        ),
+        g(
+          `Sometime we ${lower(t6)}.`,
+          `We sometimes ${lower(t6)} twice.`,
+          "Đúng chính tả là 'sometimes' có -s ở cuối.",
+        ),
       ],
       speaking: [
-        sp("Do you always do that?", `I usually ${lower(t5)} first, sir.`, "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai."),
+        sp(
+          "Do you always do that?",
+          `I usually ${lower(t5)} first, sir.`,
+          "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai.",
+        ),
       ],
       reading: read(
         `${lx.staff} describes the routine: "I usually ${lower(t5)} first. We sometimes ${lower(t6)} twice a day, madam."`,
@@ -870,11 +1105,23 @@ function week11(lx: Ctx): LessonContent[] {
         bw(t8, `Please ${lower(t8)} before you go.`),
       ],
       grammar: [
-        g(`Finish work I go home.`, `I go home after my shift.`, "Dùng 'after' để nối hai việc: I go home AFTER my shift."),
-        g(`You ${lower(t8)} first.`, `Please ${lower(t8)} before you go.`, "Thêm 'Please' và mốc thời gian 'before you go' cho câu dặn dò lịch sự."),
+        g(
+          `Finish work I go home.`,
+          `I go home after my shift.`,
+          "Dùng 'after' để nối hai việc: I go home AFTER my shift.",
+        ),
+        g(
+          `You ${lower(t8)} first.`,
+          `Please ${lower(t8)} before you go.`,
+          "Thêm 'Please' và mốc thời gian 'before you go' cho câu dặn dò lịch sự.",
+        ),
       ],
       speaking: [
-        sp("What do you do at the end?", `I ${lower(t7)} and go home.`, "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc."),
+        sp(
+          "What do you do at the end?",
+          `I ${lower(t7)} and go home.`,
+          "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc.",
+        ),
       ],
       reading: read(
         `The shift is over. ${lx.staff} says: "I ${lower(t7)} at the end, then I go home." The supervisor says: "Well done."`,
@@ -915,17 +1162,35 @@ function week12(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 12, 1, "Answering a Call", "Bắt máy đúng chuẩn", {
       vocabulary: [
-        v("Speaking", "/ˈspiːkɪŋ/", "Tôi đang nghe (khi nghe điện thoại)", `${lx.staff} speaking.`, "📞"),
+        v(
+          "Speaking",
+          "/ˈspiːkɪŋ/",
+          "Tôi đang nghe (khi nghe điện thoại)",
+          `${lx.staff} speaking.`,
+          "📞",
+        ),
         v("Hold on", "/həʊld ɒn/", "Xin giữ máy", "Hold on, please.", "⏸️"),
         bw(f1, `Hello, ${lower(f1)}.`),
         bw(f2, `May I take your ${lower(f2)}?`),
       ],
       grammar: [
-        g("Hello? Who?", `Hello, ${lx.deptEn}. ${lx.staff} speaking.`, "Bắt máy phải xưng bộ phận và tên: 'Hello, + bộ phận. + Tên + speaking.'"),
-        g("Wait wait.", "Hold on, please.", "Bảo khách chờ trên điện thoại nói 'Hold on, please' — không nói 'Wait'."),
+        g(
+          "Hello? Who?",
+          `Hello, ${lx.deptEn}. ${lx.staff} speaking.`,
+          "Bắt máy phải xưng bộ phận và tên: 'Hello, + bộ phận. + Tên + speaking.'",
+        ),
+        g(
+          "Wait wait.",
+          "Hold on, please.",
+          "Bảo khách chờ trên điện thoại nói 'Hold on, please' — không nói 'Wait'.",
+        ),
       ],
       speaking: [
-        sp("Hello, is this the front desk?", `Hello, ${lx.deptEn}. ${lx.staff} speaking.`, "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi."),
+        sp(
+          "Hello, is this the front desk?",
+          `Hello, ${lx.deptEn}. ${lx.staff} speaking.`,
+          "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi.",
+        ),
       ],
       reading: read(
         `The phone rings. ${lx.staff} answers: "Hello, ${lx.deptEn}. ${lx.staff} speaking. How may I help you?"`,
@@ -955,16 +1220,25 @@ function week12(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 12, 2, "Taking a Message", "Ghi lại lời nhắn", {
-      vocabulary: [
-        bw(f3, `I will send it ${lower(f3)}.`),
-        bw(f4, `Let me ${lower(f4)} for you.`),
-      ],
+      vocabulary: [bw(f3, `I will send it ${lower(f3)}.`), bw(f4, `Let me ${lower(f4)} for you.`)],
       grammar: [
-        g("I write your say.", "May I take a message?", "Xin ghi lời nhắn nói 'May I take a message?' — mẫu cố định."),
-        g(`I ${lower(f4)} you.`, `Let me ${lower(f4)} for you.`, "'Let me + động từ' là cách đề nghị giúp đỡ lịch sự trên điện thoại."),
+        g(
+          "I write your say.",
+          "May I take a message?",
+          "Xin ghi lời nhắn nói 'May I take a message?' — mẫu cố định.",
+        ),
+        g(
+          `I ${lower(f4)} you.`,
+          `Let me ${lower(f4)} for you.`,
+          "'Let me + động từ' là cách đề nghị giúp đỡ lịch sự trên điện thoại.",
+        ),
       ],
       speaking: [
-        sp("Could you tell him I called?", "Of course. May I take a message?", "Chủ động xin ghi lời nhắn thay vì để khách phải yêu cầu."),
+        sp(
+          "Could you tell him I called?",
+          "Of course. May I take a message?",
+          "Chủ động xin ghi lời nhắn thay vì để khách phải yêu cầu.",
+        ),
       ],
       reading: read(
         `The guest wants to leave a message. ${lx.staff} says: "Of course, sir. May I take a message? I will send it ${lower(f3)}."`,
@@ -994,16 +1268,25 @@ function week12(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 12, 3, "Transferring a Call", "Chuyển máy", {
-      vocabulary: [
-        bw(f5, `The ${lower(f5)} is ready.`),
-        bw(f6, `Please ${lower(f6)}, sir.`),
-      ],
+      vocabulary: [bw(f5, `The ${lower(f5)} is ready.`), bw(f6, `Please ${lower(f6)}, sir.`)],
       grammar: [
-        g("I give you other people.", "I will transfer your call.", "Chuyển máy nói 'I will transfer your call', không dịch từng chữ từ tiếng Việt."),
-        g("Wrong number you.", "I am sorry, wrong number.", "Báo nhầm số cần xin lỗi trước: 'I am sorry, wrong number.'"),
+        g(
+          "I give you other people.",
+          "I will transfer your call.",
+          "Chuyển máy nói 'I will transfer your call', không dịch từng chữ từ tiếng Việt.",
+        ),
+        g(
+          "Wrong number you.",
+          "I am sorry, wrong number.",
+          "Báo nhầm số cần xin lỗi trước: 'I am sorry, wrong number.'",
+        ),
       ],
       speaking: [
-        sp("Can I speak to the manager?", "One moment. I will transfer you.", "Báo trước rồi mới chuyển máy — đừng chuyển im lặng khiến khách tưởng bị cắt."),
+        sp(
+          "Can I speak to the manager?",
+          "One moment. I will transfer you.",
+          "Báo trước rồi mới chuyển máy — đừng chuyển im lặng khiến khách tưởng bị cắt.",
+        ),
       ],
       reading: read(
         `A guest asks for another department. ${lx.staff} says: "One moment, sir. I will transfer your call." The line connects.`,
@@ -1038,11 +1321,23 @@ function week12(lx: Ctx): LessonContent[] {
         bw(f8, `Please ${lower(f8)} any time, sir.`),
       ],
       grammar: [
-        g("Finish, bye.", "Thank you for calling. Goodbye.", "Kết thúc cuộc gọi chuẩn: cảm ơn đã gọi rồi mới chào tạm biệt."),
-        g("Something more?", "Is there anything else, madam?", "Câu hỏi đầy đủ: 'Is there anything else?' — ôn lại 'Anything else' từ tuần 6."),
+        g(
+          "Finish, bye.",
+          "Thank you for calling. Goodbye.",
+          "Kết thúc cuộc gọi chuẩn: cảm ơn đã gọi rồi mới chào tạm biệt.",
+        ),
+        g(
+          "Something more?",
+          "Is there anything else, madam?",
+          "Câu hỏi đầy đủ: 'Is there anything else?' — ôn lại 'Anything else' từ tuần 6.",
+        ),
       ],
       speaking: [
-        sp("That is all, thank you.", "Thank you for calling. Goodbye.", "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại."),
+        sp(
+          "That is all, thank you.",
+          "Thank you for calling. Goodbye.",
+          "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại.",
+        ),
       ],
       reading: read(
         `The call is finished. ${lx.staff} says: "Is there anything else, sir? Thank you for calling. Goodbye." The guest hangs up first.`,
@@ -1090,11 +1385,23 @@ function week13(lx: Ctx): LessonContent[] {
         bw(b2, `It is ${lower(b2)}, sir.`),
       ],
       grammar: [
-        g(`${i1.word} ${lower(b1)}.`, `The ${i1.word.toLowerCase()} is ${lower(b1)}.`, "Mẫu câu lõi tuần này: THE + đồ vật + IS + tình trạng hỏng."),
-        g("I fix now you wait.", "I will fix it now, sir.", "Hứa hành động dùng 'will': I WILL fix it now."),
+        g(
+          `${i1.word} ${lower(b1)}.`,
+          `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
+          "Mẫu câu lõi tuần này: THE + đồ vật + IS + tình trạng hỏng.",
+        ),
+        g(
+          "I fix now you wait.",
+          "I will fix it now, sir.",
+          "Hứa hành động dùng 'will': I WILL fix it now.",
+        ),
       ],
       speaking: [
-        sp(`The ${i1.word.toLowerCase()} is ${lower(b1)}.`, "I am sorry. I will fix it now.", "Công thức vàng khi khách báo sự cố: xin lỗi + hứa hành động ngay."),
+        sp(
+          `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
+          "I am sorry. I will fix it now.",
+          "Công thức vàng khi khách báo sự cố: xin lỗi + hứa hành động ngay.",
+        ),
       ],
       reading: read(
         `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I will fix it now."`,
@@ -1129,11 +1436,23 @@ function week13(lx: Ctx): LessonContent[] {
         bw(b4, `The room is a little ${lower(b4)}.`),
       ],
       grammar: [
-        g("Sorry you.", "I am very sorry, sir.", "Câu xin lỗi đủ là 'I am very sorry' — ôn lại từ tuần 5, giờ ghép với sự cố cụ thể."),
-        g("Not my problem.", "I will help you now.", "Tuyệt đối không nói 'Not my problem'. Luôn nhận trách nhiệm giúp khách."),
+        g(
+          "Sorry you.",
+          "I am very sorry, sir.",
+          "Câu xin lỗi đủ là 'I am very sorry' — ôn lại từ tuần 5, giờ ghép với sự cố cụ thể.",
+        ),
+        g(
+          "Not my problem.",
+          "I will help you now.",
+          "Tuyệt đối không nói 'Not my problem'. Luôn nhận trách nhiệm giúp khách.",
+        ),
       ],
       speaking: [
-        sp("This is really not acceptable.", "I am very sorry. I will help now.", "Khách bức xúc thì xin lỗi ngắn gọn rồi hành động — đừng biện minh."),
+        sp(
+          "This is really not acceptable.",
+          "I am very sorry. I will help now.",
+          "Khách bức xúc thì xin lỗi ngắn gọn rồi hành động — đừng biện minh.",
+        ),
       ],
       reading: read(
         `The guest is unhappy. ${lx.staff} does not argue. ${lx.staff} says: "I am very sorry, sir. I will help you now."`,
@@ -1169,11 +1488,23 @@ function week13(lx: Ctx): LessonContent[] {
         bw(b6, `It is ${lower(b6)} today.`),
       ],
       grammar: [
-        g("I check come back.", "I will check and come back.", "Nối hai việc bằng 'and': I will check AND come back."),
-        g("Five minute I come.", "I will come back in five minutes.", "Cần 'in' trước khoảng thời gian và -s ở 'minutes'."),
+        g(
+          "I check come back.",
+          "I will check and come back.",
+          "Nối hai việc bằng 'and': I will check AND come back.",
+        ),
+        g(
+          "Five minute I come.",
+          "I will come back in five minutes.",
+          "Cần 'in' trước khoảng thời gian và -s ở 'minutes'.",
+        ),
       ],
       speaking: [
-        sp("Can you do something about it?", "I will check and come back.", "Hứa cụ thể và PHẢI quay lại đúng hẹn — lời hứa không giữ còn tệ hơn không hứa."),
+        sp(
+          "Can you do something about it?",
+          "I will check and come back.",
+          "Hứa cụ thể và PHẢI quay lại đúng hẹn — lời hứa không giữ còn tệ hơn không hứa.",
+        ),
       ],
       reading: read(
         `${lx.staff} cannot fix it alone. ${lx.staff} says: "I will check and come back in five minutes, sir." ${lx.staff} returns on time.`,
@@ -1186,7 +1517,11 @@ function week13(lx: Ctx): LessonContent[] {
           },
           {
             q: "Vì sao phải quay lại đúng hẹn?",
-            options: ["Vì lời hứa không giữ còn tệ hơn không hứa", "Vì khách sẽ quên", "Vì quản lý yêu cầu"],
+            options: [
+              "Vì lời hứa không giữ còn tệ hơn không hứa",
+              "Vì khách sẽ quên",
+              "Vì quản lý yêu cầu",
+            ],
             correct: 0,
             explanation: "Giữ đúng cam kết thời gian là nền tảng của lòng tin trong dịch vụ.",
           },
@@ -1203,16 +1538,25 @@ function week13(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 13, 4, "Making It Right", "Khắc phục cho khách hài lòng", {
-      vocabulary: [
-        bw(b7, `The item is ${lower(b7)}.`),
-        bw(b8, `The service is ${lower(b8)}.`),
-      ],
+      vocabulary: [bw(b7, `The item is ${lower(b7)}.`), bw(b8, `The service is ${lower(b8)}.`)],
       grammar: [
-        g("I change new one you.", "I will bring a new one.", "Câu đúng: I will bring A NEW ONE. Không xếp tân ngữ lộn xộn."),
-        g("Problem finish now?", "Is everything all right now?", "Hỏi lại sau khi xử lý: 'Is everything all right now?'"),
+        g(
+          "I change new one you.",
+          "I will bring a new one.",
+          "Câu đúng: I will bring A NEW ONE. Không xếp tân ngữ lộn xộn.",
+        ),
+        g(
+          "Problem finish now?",
+          "Is everything all right now?",
+          "Hỏi lại sau khi xử lý: 'Is everything all right now?'",
+        ),
       ],
       speaking: [
-        sp("Is it fixed now?", "Yes. Is everything all right now?", "Xử lý xong phải hỏi lại khách — bước này quyết định khách có hài lòng thật không."),
+        sp(
+          "Is it fixed now?",
+          "Yes. Is everything all right now?",
+          "Xử lý xong phải hỏi lại khách — bước này quyết định khách có hài lòng thật không.",
+        ),
       ],
       reading: read(
         `${lx.staff} brings a new one and asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much."`,
@@ -1256,16 +1600,30 @@ function week14(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 14, 1, "Greet & Introduce", "Chào đón & giới thiệu", {
       vocabulary: [
-        v("How may I help", "/haʊ meɪ aɪ help/", "Tôi có thể giúp gì ạ", "How may I help you?", "🤝"),
+        v(
+          "How may I help",
+          "/haʊ meɪ aɪ help/",
+          "Tôi có thể giúp gì ạ",
+          "How may I help you?",
+          "🤝",
+        ),
         bw(c1, `Here is your ${lower(c1)}.`),
         bw(c5, `Please take the ${lower(c5)}.`),
       ],
       grammar: [
-        g("Hello, what you want?", "Good morning. How may I help you?", "Nối tuần 7: chào đúng buổi rồi mời giúp bằng câu chuẩn."),
+        g(
+          "Hello, what you want?",
+          "Good morning. How may I help you?",
+          "Nối tuần 7: chào đúng buổi rồi mời giúp bằng câu chuẩn.",
+        ),
         g(`I ${lx.deptEn} work.`, `I work in ${lx.deptEn}.`, "Ôn tuần 7: 'work IN + bộ phận'."),
       ],
       speaking: [
-        sp("Good morning. Are you free?", "Good morning, sir. How may I help you?", "Chuỗi hai bước: chào theo buổi + mời giúp. Đây là mở đầu mọi ca làm."),
+        sp(
+          "Good morning. Are you free?",
+          "Good morning, sir. How may I help you?",
+          "Chuỗi hai bước: chào theo buổi + mời giúp. Đây là mở đầu mọi ca làm.",
+        ),
       ],
       reading: read(
         `A guest arrives at ${lx.station}. ${lx.staff} greets him: "Good morning, sir. I work in ${lx.deptEn}. How may I help you?"`,
@@ -1301,11 +1659,19 @@ function week14(lx: Ctx): LessonContent[] {
         bw(c6, `The ${lower(c6)} is ready, sir.`),
       ],
       grammar: [
-        g(`You want ${lower(q1)}?`, `Would you like the ${lower(q1)}?`, "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'"),
+        g(
+          `You want ${lower(q1)}?`,
+          `Would you like the ${lower(q1)}?`,
+          "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'",
+        ),
         g("How many you need?", "How many do you need, sir?", "Ôn tuần 9: câu hỏi cần 'do you'."),
       ],
       speaking: [
-        sp(`Can I have the ${lower(q1)}?`, "Of course. I will bring one.", "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca."),
+        sp(
+          `Can I have the ${lower(q1)}?`,
+          "Of course. I will bring one.",
+          "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca.",
+        ),
       ],
       reading: read(
         `The guest asks for something. ${lx.staff} answers: "Of course, sir. How many do you need? I will bring them now."`,
@@ -1335,16 +1701,25 @@ function week14(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 14, 3, "Handle a Small Problem", "Xử lý sự cố nhỏ", {
-      vocabulary: [
-        bw(c3, `The work is ${lower(c3)}.`),
-        bw(c7, `I will check the ${lower(c7)}.`),
-      ],
+      vocabulary: [bw(c3, `The work is ${lower(c3)}.`), bw(c7, `I will check the ${lower(c7)}.`)],
       grammar: [
-        g("Sorry, I check.", "I am sorry. I will check now.", "Ôn tuần 13: xin lỗi đủ câu + hứa hành động bằng 'will'."),
-        g(`Room ${lower(s1)} no.`, `The room is not ${lower(s1)}.`, "Ôn tuần 10: phủ định là 'is not + tính từ'."),
+        g(
+          "Sorry, I check.",
+          "I am sorry. I will check now.",
+          "Ôn tuần 13: xin lỗi đủ câu + hứa hành động bằng 'will'.",
+        ),
+        g(
+          `Room ${lower(s1)} no.`,
+          `The room is not ${lower(s1)}.`,
+          "Ôn tuần 10: phủ định là 'is not + tính từ'.",
+        ),
       ],
       speaking: [
-        sp("There is a problem in my room.", "I am sorry. I will check now.", "Ôn khung tuần 13 — xin lỗi rồi hành động, không biện minh."),
+        sp(
+          "There is a problem in my room.",
+          "I am sorry. I will check now.",
+          "Ôn khung tuần 13 — xin lỗi rồi hành động, không biện minh.",
+        ),
       ],
       reading: read(
         `A guest reports a problem. ${lx.staff} says: "I am very sorry, madam. I will check now." Ten minutes later the work is ${lower(c3)}.`,
@@ -1379,11 +1754,23 @@ function week14(lx: Ctx): LessonContent[] {
         bw(c4, `Have a good ${lower(c4)}, madam.`),
       ],
       grammar: [
-        g("Finish? Bye.", "Is there anything else, sir?", "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ."),
-        g("You go good.", "Enjoy your stay, madam.", "Ôn tuần 6: câu chúc chuẩn khi tiễn khách còn lưu trú."),
+        g(
+          "Finish? Bye.",
+          "Is there anything else, sir?",
+          "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ.",
+        ),
+        g(
+          "You go good.",
+          "Enjoy your stay, madam.",
+          "Ôn tuần 6: câu chúc chuẩn khi tiễn khách còn lưu trú.",
+        ),
       ],
       speaking: [
-        sp("No, that is all. Thank you.", "Thank you, sir. Enjoy your stay.", "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối."),
+        sp(
+          "No, that is all. Thank you.",
+          "Thank you, sir. Enjoy your stay.",
+          "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối.",
+        ),
       ],
       reading: read(
         `Everything is finished. ${lx.staff} asks: "Is there anything else, madam?" She says: "No, thank you." ${lx.staff} smiles: "Enjoy your stay."`,
@@ -1418,14 +1805,22 @@ function week14(lx: Ctx): LessonContent[] {
 // Week assembly + graduated spaced recycling.
 // ------------------------------------------------------------
 const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => LessonContent[] }> = {
-  7: { en: "People & Jobs in the Hotel", vi: "Con người & Công việc trong khách sạn", build: week7 },
+  7: {
+    en: "People & Jobs in the Hotel",
+    vi: "Con người & Công việc trong khách sạn",
+    build: week7,
+  },
   8: { en: "Places & Directions", vi: "Vị trí & Chỉ đường trong khuôn viên", build: week8 },
   9: { en: "Simple Guest Requests", vi: "Yêu cầu đơn giản của khách", build: week9 },
   10: { en: "Describing Things & States", vi: "Mô tả đồ vật & Trạng thái", build: week10 },
   11: { en: "Schedules & Shift Routines", vi: "Lịch trình & Thói quen ca làm", build: week11 },
   12: { en: "Answering the Phone", vi: "Nghe điện thoại cơ bản", build: week12 },
   13: { en: "Simple Problems & Apologies", vi: "Sự cố đơn giản & Xin lỗi", build: week13 },
-  14: { en: "Checkpoint — First Sentences", vi: "Kiểm tra tổng hợp — Giao tiếp câu đơn", build: week14 },
+  14: {
+    en: "Checkpoint — First Sentences",
+    vi: "Kiểm tra tổng hợp — Giao tiếp câu đơn",
+    build: week14,
+  },
 };
 
 /** Headwords taught in a given Phase 1 week, for recycling lookups. */
@@ -1485,7 +1880,9 @@ function buildWeek(lx: Ctx, week: number, phase0Words: string[]): WeekContent {
 }
 
 /** All 48 Phase 1 weeks (6 departments × weeks 7-14), keyed `${DEP}-${week}`. */
-export function buildPhase1(phase0WordsByDep: Record<string, string[]>): Record<string, WeekContent> {
+export function buildPhase1(
+  phase0WordsByDep: Record<string, string[]>,
+): Record<string, WeekContent> {
   const out: Record<string, WeekContent> = {};
   for (const [code, base] of Object.entries(LEXICONS)) {
     const lx: Ctx = { ...base, bank: P1_BANKS[code] };

@@ -59,36 +59,266 @@ const warnings: string[] = [];
 // fall through to NOUN, which is the right default for these banks.
 // ------------------------------------------------------------
 const VERBS = new Set([
-  "greet", "check", "allocate", "offer", "escort", "show", "follow", "serve", "clear", "pour",
-  "cook", "book", "welcome", "warm", "fold", "light", "rest", "clean", "make", "vacuum", "mop",
-  "dust", "change", "refill", "send", "file", "count", "order", "attend", "pay", "confirm",
-  "save", "transfer", "cancel", "note", "report", "spell", "help", "include", "provide", "try",
-  "enhance", "arrange", "prepare", "wash", "set", "take", "print", "sign", "invite", "decorate",
-  "remember", "meet", "write", "deliver", "collect", "inspect", "replace", "repair", "reset",
-  "waive", "upgrade", "refund", "extend", "reissue", "escalate", "apologise", "apologize",
-  "explain", "record", "update", "review", "reschedule", "restock", "brief", "handover",
-  "verify", "process", "issue", "settle", "charge", "quote", "negotiate", "match", "approve",
-  "seat", "enter", "present", "open", "strip", "introduce", "repeat", "wipe", "get", "start",
-  "place", "track", "close", "walk", "say", "hand", "call", "ask", "tell", "bring", "give",
-  "keep", "hold", "move", "turn", "put", "let", "run", "lead", "guide", "seek", "log",
-  "acknowledge", "apologise", "compensate", "reassure", "confirm", "double-check", "notify",
-  "inform", "remind", "assist", "accompany", "present", "recommend", "suggest", "propose",
-  "receive", "service", "heat", "speed", "chill", "reserve", "reply", "empty", "speak",
-  "return", "email", "reprogram", "top", "lay", "release", "re-clean", "resend", "rebook",
-  "swap", "waive", "deduct", "credit", "comp", "expedite", "prioritise", "prioritize",
-  "cool", "reheat", "refresh", "replenish", "escort", "page", "dispatch", "allocate",
-  "settle", "post", "void", "split", "itemise", "itemize", "stamp", "scan", "copy",
-  "add", "apply", "attach", "correct", "freeze", "reduce", "revise", "widen", "lower",
-  "remove", "round", "wrap", "block", "store", "double", "grant", "reprint", "restore",
-  "air", "cover", "deep", "re-press", "rewash", "use", "pass", "arrange", "adjust",
-  "upgrade", "comp", "honour", "honor", "rebate", "reallocate", "reconfirm", "redo",
-  "absorb", "guarantee", "share", "drop", "assign", "host", "discount", "fill",
-  "fix", "sort", "look", "find", "make", "do", "handle", "solve", "chase",
-  "finish", "complete", "welcome", "remember", "arrange", "upgrade", "restock", "replace",
-  "agree", "please", "manage", "receive", "organise", "organize", "list", "relax",
-  "end", "summarise", "summarize", "recap", "wrap-up", "jot", "type",
+  "greet",
+  "check",
+  "allocate",
+  "offer",
+  "escort",
+  "show",
+  "follow",
+  "serve",
+  "clear",
+  "pour",
+  "cook",
+  "book",
+  "welcome",
+  "warm",
+  "fold",
+  "light",
+  "rest",
+  "clean",
+  "make",
+  "vacuum",
+  "mop",
+  "dust",
+  "change",
+  "refill",
+  "send",
+  "file",
+  "count",
+  "order",
+  "attend",
+  "pay",
+  "confirm",
+  "save",
+  "transfer",
+  "cancel",
+  "note",
+  "report",
+  "spell",
+  "help",
+  "include",
+  "provide",
+  "try",
+  "enhance",
+  "arrange",
+  "prepare",
+  "wash",
+  "set",
+  "take",
+  "print",
+  "sign",
+  "invite",
+  "decorate",
+  "remember",
+  "meet",
+  "write",
+  "deliver",
+  "collect",
+  "inspect",
+  "replace",
+  "repair",
+  "reset",
+  "waive",
+  "upgrade",
+  "refund",
+  "extend",
+  "reissue",
+  "escalate",
+  "apologise",
+  "apologize",
+  "explain",
+  "record",
+  "update",
+  "review",
+  "reschedule",
+  "restock",
+  "brief",
+  "handover",
+  "verify",
+  "process",
+  "issue",
+  "settle",
+  "charge",
+  "quote",
+  "negotiate",
+  "match",
+  "approve",
+  "seat",
+  "enter",
+  "present",
+  "open",
+  "strip",
+  "introduce",
+  "repeat",
+  "wipe",
+  "get",
+  "start",
+  "place",
+  "track",
+  "close",
+  "walk",
+  "say",
+  "hand",
+  "call",
+  "ask",
+  "tell",
+  "bring",
+  "give",
+  "keep",
+  "hold",
+  "move",
+  "turn",
+  "put",
+  "let",
+  "run",
+  "lead",
+  "guide",
+  "seek",
+  "log",
+  "acknowledge",
+  "apologise",
+  "compensate",
+  "reassure",
+  "confirm",
+  "double-check",
+  "notify",
+  "inform",
+  "remind",
+  "assist",
+  "accompany",
+  "present",
+  "recommend",
+  "suggest",
+  "propose",
+  "receive",
+  "service",
+  "heat",
+  "speed",
+  "chill",
+  "reserve",
+  "reply",
+  "empty",
+  "speak",
+  "return",
+  "email",
+  "reprogram",
+  "top",
+  "lay",
+  "release",
+  "re-clean",
+  "resend",
+  "rebook",
+  "swap",
+  "waive",
+  "deduct",
+  "credit",
+  "comp",
+  "expedite",
+  "prioritise",
+  "prioritize",
+  "cool",
+  "reheat",
+  "refresh",
+  "replenish",
+  "escort",
+  "page",
+  "dispatch",
+  "allocate",
+  "settle",
+  "post",
+  "void",
+  "split",
+  "itemise",
+  "itemize",
+  "stamp",
+  "scan",
+  "copy",
+  "add",
+  "apply",
+  "attach",
+  "correct",
+  "freeze",
+  "reduce",
+  "revise",
+  "widen",
+  "lower",
+  "remove",
+  "round",
+  "wrap",
+  "block",
+  "store",
+  "double",
+  "grant",
+  "reprint",
+  "restore",
+  "air",
+  "cover",
+  "deep",
+  "re-press",
+  "rewash",
+  "use",
+  "pass",
+  "arrange",
+  "adjust",
+  "upgrade",
+  "comp",
+  "honour",
+  "honor",
+  "rebate",
+  "reallocate",
+  "reconfirm",
+  "redo",
+  "absorb",
+  "guarantee",
+  "share",
+  "drop",
+  "assign",
+  "host",
+  "discount",
+  "fill",
+  "fix",
+  "sort",
+  "look",
+  "find",
+  "make",
+  "do",
+  "handle",
+  "solve",
+  "chase",
+  "finish",
+  "complete",
+  "welcome",
+  "remember",
+  "arrange",
+  "upgrade",
+  "restock",
+  "replace",
+  "agree",
+  "please",
+  "manage",
+  "receive",
+  "organise",
+  "organize",
+  "list",
+  "relax",
+  "end",
+  "summarise",
+  "summarize",
+  "recap",
+  "wrap-up",
+  "jot",
+  "type",
   // base form == past form; seeing one proves nothing about tense
-  "read", "cost", "cut", "hit", "shut", "spread", "hurt", "bet", "quit",
+  "read",
+  "cost",
+  "cut",
+  "hit",
+  "shut",
+  "spread",
+  "hurt",
+  "bet",
+  "quit",
 ]);
 
 // Narrow on purpose. A broad suffix rule mis-tags ordinary nouns
@@ -102,57 +332,234 @@ const ADJ_SUFFIX = /(ous|ful|able|ible|less|ish)$/i;
  *  by these banks is declared here rather than guessed. */
 const POS_OVERRIDES: Record<string, Pos> = {
   // nouns that look like verbs
-  "rest room": "NOUN", "massage": "VERB", "register": "VERB", "line": "NOUN",
-  "surprise": "NOUN", "quotation": "NOUN", "caller": "NOUN", "message": "NOUN",
-  "request": "NOUN", "company": "NOUN", "delivery": "NOUN", "contact": "NOUN",
-  "ring": "NOUN", "operator": "NOUN", "repeat": "NOUN", "dial": "VERB",
-  "transfer": "NOUN", "party size": "NOUN", "window seat": "NOUN",
+  "rest room": "NOUN",
+  massage: "VERB",
+  register: "VERB",
+  line: "NOUN",
+  surprise: "NOUN",
+  quotation: "NOUN",
+  caller: "NOUN",
+  message: "NOUN",
+  request: "NOUN",
+  company: "NOUN",
+  delivery: "NOUN",
+  contact: "NOUN",
+  ring: "NOUN",
+  operator: "NOUN",
+  repeat: "NOUN",
+  dial: "VERB",
+  transfer: "NOUN",
+  "party size": "NOUN",
+  "window seat": "NOUN",
   // adjectives the list did not carry
-  "clean": "ADJ", "stained": "ADJ", "forgotten": "ADJ", "overdue": "ADJ",
-  "lost": "ADJ", "leaking": "ADJ", "misspelled": "ADJ", "incorrect": "ADJ",
-  "wrong": "ADJ", "overcooked": "ADJ", "blocked": "ADJ", "not ready": "ADJ",
-  "unavailable": "ADJ", "delayed": "ADJ", "undercooked": "ADJ", "smelly": "ADJ",
-  "disappointed": "ADJ", "offline": "ADJ", "faulty": "ADJ", "unhappy": "ADJ",
-  "not working": "ADJ", "unheated": "ADJ", "melted": "ADJ", "frozen": "ADJ",
-  "stuck": "ADJ", "cracked": "ADJ", "burnt out": "ADJ", "double-booked": "ADJ",
-  "rainy": "ADJ", "overcharged": "ADJ", "locked": "ADJ", "sold out": "ADJ",
-  "cancelled": "ADJ", "unanswered": "ADJ", "too hot": "ADJ", "too cold": "ADJ",
-  "uncomfortable": "ADJ", "cloudy": "ADJ", "noisy": "ADJ", "damaged": "ADJ",
-  "torn": "ADJ", "broken": "ADJ", "dirty": "ADJ", "sticky": "ADJ", "missing": "ADJ",
-  "slow": "ADJ", "mistimed": "ADJ", "deleted": "ADJ", "out of order": "ADJ",
-  "called": "ADJ", "prepared": "ADJ", "found": "ADJ", "delivered": "ADJ", "paid": "ADJ",
-  "spotless": "ADJ", "comfortable": "ADJ", "well handled": "ADJ", "filed properly": "ADJ",
-  "no complaints": "NOUN", "thanked us": "VERB",
+  clean: "ADJ",
+  stained: "ADJ",
+  forgotten: "ADJ",
+  overdue: "ADJ",
+  lost: "ADJ",
+  leaking: "ADJ",
+  misspelled: "ADJ",
+  incorrect: "ADJ",
+  wrong: "ADJ",
+  overcooked: "ADJ",
+  blocked: "ADJ",
+  "not ready": "ADJ",
+  unavailable: "ADJ",
+  delayed: "ADJ",
+  undercooked: "ADJ",
+  smelly: "ADJ",
+  disappointed: "ADJ",
+  offline: "ADJ",
+  faulty: "ADJ",
+  unhappy: "ADJ",
+  "not working": "ADJ",
+  unheated: "ADJ",
+  melted: "ADJ",
+  frozen: "ADJ",
+  stuck: "ADJ",
+  cracked: "ADJ",
+  "burnt out": "ADJ",
+  "double-booked": "ADJ",
+  rainy: "ADJ",
+  overcharged: "ADJ",
+  locked: "ADJ",
+  "sold out": "ADJ",
+  cancelled: "ADJ",
+  unanswered: "ADJ",
+  "too hot": "ADJ",
+  "too cold": "ADJ",
+  uncomfortable: "ADJ",
+  cloudy: "ADJ",
+  noisy: "ADJ",
+  damaged: "ADJ",
+  torn: "ADJ",
+  broken: "ADJ",
+  dirty: "ADJ",
+  sticky: "ADJ",
+  missing: "ADJ",
+  slow: "ADJ",
+  mistimed: "ADJ",
+  deleted: "ADJ",
+  "out of order": "ADJ",
+  called: "ADJ",
+  prepared: "ADJ",
+  found: "ADJ",
+  delivered: "ADJ",
+  paid: "ADJ",
+  spotless: "ADJ",
+  comfortable: "ADJ",
+  "well handled": "ADJ",
+  "filed properly": "ADJ",
+  "no complaints": "NOUN",
+  "thanked us": "VERB",
   // -able/-ible suffix false friends
-  "table": "NOUN", "vegetable": "NOUN", "cable": "NOUN", "bible": "NOUN",
+  table: "NOUN",
+  vegetable: "NOUN",
+  cable: "NOUN",
+  bible: "NOUN",
   // "well + participle" is a predicate adjective, not a verb phrase
-  "well rested": "ADJ", "well handled": "ADJ", "well organised": "ADJ", "well prepared": "ADJ",
-  "well managed": "ADJ", "well received": "ADJ", "well done": "ADJ",
+  "well rested": "ADJ",
+  "well handled": "ADJ",
+  "well organised": "ADJ",
+  "well prepared": "ADJ",
+  "well managed": "ADJ",
+  "well received": "ADJ",
+  "well done": "ADJ",
   // intensifier + participle is a predicate adjective
-  "very pleased": "ADJ", "very busy": "ADJ", "very good": "ADJ",
+  "very pleased": "ADJ",
+  "very busy": "ADJ",
+  "very good": "ADJ",
 };
 const ADJS = new Set([
-  "smooth", "clean", "tidy", "wet", "dry", "dusty", "bright", "soft", "heavy", "uneven",
-  "busy", "full", "quiet", "noisy", "safe", "empty", "late", "slippery", "greasy", "hot",
-  "cold", "fresh", "sweet", "salty", "sour", "delicious", "sharp", "relaxing", "gentle",
-  "strong", "stuffy", "calm", "tired", "deep", "elegant", "special", "beautiful", "formal",
-  "upset", "important", "lovely", "dark", "detailed", "urgent", "finalised", "unpaid",
-  "cheap", "expensive", "confidential", "fragile", "cloudy", "complicated", "optional",
-  "unlimited", "included", "complimentary", "negotiable", "mandatory", "compulsory",
-  "available", "ready", "free", "open", "closed", "correct", "damaged", "torn", "broken",
-  "efficient", "excellent", "thorough", "unhurried", "warm", "complete", "positive",
-  "polite", "friendly", "professional", "accurate", "punctual", "attentive",
+  "smooth",
+  "clean",
+  "tidy",
+  "wet",
+  "dry",
+  "dusty",
+  "bright",
+  "soft",
+  "heavy",
+  "uneven",
+  "busy",
+  "full",
+  "quiet",
+  "noisy",
+  "safe",
+  "empty",
+  "late",
+  "slippery",
+  "greasy",
+  "hot",
+  "cold",
+  "fresh",
+  "sweet",
+  "salty",
+  "sour",
+  "delicious",
+  "sharp",
+  "relaxing",
+  "gentle",
+  "strong",
+  "stuffy",
+  "calm",
+  "tired",
+  "deep",
+  "elegant",
+  "special",
+  "beautiful",
+  "formal",
+  "upset",
+  "important",
+  "lovely",
+  "dark",
+  "detailed",
+  "urgent",
+  "finalised",
+  "unpaid",
+  "cheap",
+  "expensive",
+  "confidential",
+  "fragile",
+  "cloudy",
+  "complicated",
+  "optional",
+  "unlimited",
+  "included",
+  "complimentary",
+  "negotiable",
+  "mandatory",
+  "compulsory",
+  "available",
+  "ready",
+  "free",
+  "open",
+  "closed",
+  "correct",
+  "damaged",
+  "torn",
+  "broken",
+  "efficient",
+  "excellent",
+  "thorough",
+  "unhurried",
+  "warm",
+  "complete",
+  "positive",
+  "polite",
+  "friendly",
+  "professional",
+  "accurate",
+  "punctual",
+  "attentive",
 ]);
 
 // Word-boundary matters: without it "over" would swallow "Overbooking".
-const ADVERBIAL_HEAD = /^(on|at|in|by|with|without|under|over|for|from|during|after|before|ahead)\b/i;
+const ADVERBIAL_HEAD =
+  /^(on|at|in|by|with|without|under|over|for|from|during|after|before|ahead)\b/i;
 
 /** Irregular past forms the -ed rule cannot derive. */
 const IRREGULAR_PAST = new Set([
-  "wrote", "told", "sent", "took", "left", "made", "said", "gave", "kept", "held",
-  "put", "ran", "led", "found", "did", "went", "came", "brought", "thought", "read",
-  "spoke", "met", "paid", "sold", "built", "began", "chose", "dealt", "felt", "got",
-  "heard", "lost", "meant", "rang", "saw", "set", "showed", "spent", "stood", "understood",
+  "wrote",
+  "told",
+  "sent",
+  "took",
+  "left",
+  "made",
+  "said",
+  "gave",
+  "kept",
+  "held",
+  "put",
+  "ran",
+  "led",
+  "found",
+  "did",
+  "went",
+  "came",
+  "brought",
+  "thought",
+  "read",
+  "spoke",
+  "met",
+  "paid",
+  "sold",
+  "built",
+  "began",
+  "chose",
+  "dealt",
+  "felt",
+  "got",
+  "heard",
+  "lost",
+  "meant",
+  "rang",
+  "saw",
+  "set",
+  "showed",
+  "spent",
+  "stood",
+  "understood",
 ]);
 
 /** True when `w` is a past-tense or past-participle form of a verb the
@@ -169,7 +576,17 @@ function isPastOfKnownVerb(w: string): boolean {
 }
 
 /** Singular nouns that end in -s and correctly take a singular verb. */
-const UNCOUNTABLE_S = new Set(["news", "series", "species", "campus", "bonus", "status", "focus", "analysis", "basis"]);
+const UNCOUNTABLE_S = new Set([
+  "news",
+  "series",
+  "species",
+  "campus",
+  "bonus",
+  "status",
+  "focus",
+  "analysis",
+  "basis",
+]);
 
 /** English is riddled with noun/verb pairs ("upgrade", "welcome",
  *  "report"), so the tagger returns every reading a headword plausibly
@@ -195,11 +612,16 @@ function posOf(word: string): Set<Pos> {
     if (parts.length === 1) return new Set<Pos>(["VERB", "ADJ"]);
     // With a determiner or particle after it, the phrase is verbal:
     // "checked in", "made the difference", "set up again".
-    const governs = /^(the|a|an|your|our|my|his|her|their|it|them|up|down|out|in|back|again|to|off|over)$/.test(parts[1]);
+    const governs =
+      /^(the|a|an|your|our|my|his|her|their|it|them|up|down|out|in|back|again|to|off|over)$/.test(
+        parts[1],
+      );
     if (governs) return new Set<Pos>(["VERB"]);
     // A past verb followed by a comparative or time adverb is still verbal:
     // "took longer", "felt better", "started later".
-    if (/^(longer|better|worse|later|earlier|faster|sooner|well|badly|quickly|slowly)$/.test(parts[1]))
+    if (
+      /^(longer|better|worse|later|earlier|faster|sooner|well|badly|quickly|slowly)$/.test(parts[1])
+    )
       return new Set<Pos>(["VERB"]);
     // Otherwise it is a participle modifying a noun — "lost booking",
     // "cancelled reservation", "chilled champagne" — i.e. a noun phrase.
@@ -212,7 +634,9 @@ function posOf(word: string): Set<Pos> {
     // "sign the sheet" / "send up" govern an object or particle, so they
     // are verbal only. "welcome drink" / "dust allergy" are compounds and
     // read as nouns too.
-    const governsObject = parts.length > 1 && /^(the|a|an|your|our|my|his|her|their|it|up|down|out|in|back|again)$/.test(parts[1]);
+    const governsObject =
+      parts.length > 1 &&
+      /^(the|a|an|your|our|my|his|her|their|it|up|down|out|in|back|again)$/.test(parts[1]);
     if (!governsObject) out.add("NOUN");
     return out;
   }
@@ -252,7 +676,14 @@ const SLOT_CONTRACTS: Record<string, Record<string, SlotSpec>> = {
     // W12 · "Hello, {0}." · "May I take your {1}?" · "I will send it {2}."
     //       "Let me {3} for you." · "The {4} is ready." · "Please {5}, sir."
     //       "I will {6} soon." · "Please {7} any time, sir."
-    phone: { "0-1": "NOUN", "2-2": "ADVERBIAL", "3-3": "VERB", "4-4": "NOUN", "5-6": "VERB", "7-7": "VERB" },
+    phone: {
+      "0-1": "NOUN",
+      "2-2": "ADVERBIAL",
+      "3-3": "VERB",
+      "4-4": "NOUN",
+      "5-6": "VERB",
+      "7-7": "VERB",
+    },
     // W14 · "Here is your {0}." · "Please leave the {1} here." · "The work is {2}."
     //       "Have a good {3}, madam." · "Please take the {4}." · "The {5} is ready, sir."
     //       "I will check the {6}."
@@ -276,12 +707,33 @@ const SLOT_CONTRACTS: Record<string, Record<string, SlotSpec>> = {
     //       "We had twelve {5} today." · "The guest {1} at noon." · "I {9} everything down."
     //       "One booking was {2}." · "It {6} than usual." · "I {7} the broken one."
     //       "I {3} the supervisor." · "Everything was {8}."
-    reports: { "0-0": "VERB", "1-1": "VERB", "2-2": "ADJ", "3-3": "VERB", "4-4": "NOUN", "5-5": "NOUN", "6-6": "VERB", "7-7": "VERB", "8-8": "ADJ", "9-9": "VERB" },
+    reports: {
+      "0-0": "VERB",
+      "1-1": "VERB",
+      "2-2": "ADJ",
+      "3-3": "VERB",
+      "4-4": "NOUN",
+      "5-5": "NOUN",
+      "6-6": "VERB",
+      "7-7": "VERB",
+      "8-8": "ADJ",
+      "9-9": "VERB",
+    },
     // W22 · "The service was {0} today." · "Everything finished {1}."
     //       "We follow the hotel {2}." · "We can always {3}." · "The {4} was positive."
     //       "That was {5} by the team." · "The {6} starts at two." · "Let me {7} the day."
     //       "{8} was noted today." · "{9} at the end of the day."
-    wrapUp: { "0-0": "ADJ", "1-1": "ADVERBIAL", "2-2": "NOUN", "3-3": "VERB", "4-4": "NOUN", "5-5": "ADJ", "6-6": "NOUN", "7-7": "VERB", "8-9": "NOUN" },
+    wrapUp: {
+      "0-0": "ADJ",
+      "1-1": "ADVERBIAL",
+      "2-2": "NOUN",
+      "3-3": "VERB",
+      "4-4": "NOUN",
+      "5-5": "ADJ",
+      "6-6": "NOUN",
+      "7-7": "VERB",
+      "8-9": "NOUN",
+    },
   },
   P3: {
     upgrades: "NOUN",
@@ -348,11 +800,14 @@ function lintBanks(phase: string, banks: BankSet) {
       // share one reading; otherwise the frame cannot fit all of them.
       let shared: Set<Pos> | null = null;
       for (const s of seen) {
-        shared = shared === null ? new Set(s.pos) : new Set([...shared].filter((p) => s.pos.has(p)));
+        shared =
+          shared === null ? new Set(s.pos) : new Set([...shared].filter((p) => s.pos.has(p)));
       }
       if (shared && shared.size === 0) {
         const detail = seen.map((s) => `${s.dep}:${posLabel(s.pos)} "${s.word}"`).join(", ");
-        errors.push(`[A slot-consistency] ${phase}.${slot}[${i}] no part of speech fits every department — ${detail}`);
+        errors.push(
+          `[A slot-consistency] ${phase}.${slot}[${i}] no part of speech fits every department — ${detail}`,
+        );
       }
     }
   }
@@ -395,7 +850,8 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
   },
   {
     name: "repeated-bigram",
-    test: (s) => s.split(/[.!?]+/).some((part) => /\b(\w+\s+\w+)\s+\1\b/i.test(part.replace(/,/g, ""))),
+    test: (s) =>
+      s.split(/[.!?]+/).some((part) => /\b(\w+\s+\w+)\s+\1\b/i.test(part.replace(/,/g, ""))),
     why: "a two-word phrase repeats immediately",
   },
   {
@@ -417,7 +873,8 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
         // "supplier a or b" — a and b are labels, not articles.
         if (/^(or|and|to|of|b|c)$/i.test(next)) continue;
         const startsVowelLetter = /^[aeiou]/i.test(next);
-        const soundsVowel = (startsVowelLetter && !CONSONANT_SOUND.test(next)) || VOWEL_SOUND.test(next);
+        const soundsVowel =
+          (startsVowelLetter && !CONSONANT_SOUND.test(next)) || VOWEL_SOUND.test(next);
         if (art.toLowerCase() === "a" && soundsVowel) return true;
         if (art.toLowerCase() === "an" && !soundsVowel) return true;
       }
@@ -449,8 +906,9 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     // need a concrete object or an event, not a point in time.
     name: "time-expression-as-object",
     test: (s) =>
-      /\bthe (tonight|today|tomorrow|this (evening|morning|afternoon)|next (week|month|day)|(one|two|five|ten|twenty|thirty|sixty|\d+) (minutes?|hours?|days?)) (is|was)\b/i.test(s) ||
-      /\bhave a good (next|last|this) /i.test(s),
+      /\bthe (tonight|today|tomorrow|this (evening|morning|afternoon)|next (week|month|day)|(one|two|five|ten|twenty|thirty|sixty|\d+) (minutes?|hours?|days?)) (is|was)\b/i.test(
+        s,
+      ) || /\bhave a good (next|last|this) /i.test(s),
     why: "a time expression cannot be the subject here — the frame needs a concrete thing",
   },
   {
@@ -469,7 +927,9 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     // past form is always wrong — "We can always restocked."
     name: "modal-got-past-verb",
     test: (s) => {
-      for (const m of s.matchAll(/\b(can|could|will|would|shall|may|must|let me|please)\s+(?:always\s+|never\s+)?([a-z]+)\b/gi)) {
+      for (const m of s.matchAll(
+        /\b(can|could|will|would|shall|may|must|let me|please)\s+(?:always\s+|never\s+)?([a-z]+)\b/gi,
+      )) {
         const w = m[2].toLowerCase();
         // "read", "put", "set", "cost" — base form and past form are the
         // same word, so seeing one here proves nothing.
@@ -528,7 +988,17 @@ function collectSentences(node: unknown, where: string, out: { where: string; te
     for (const [k, v] of Object.entries(node)) {
       if (k === "rude") continue;
       if (typeof v === "string") {
-        if (["polite", "targetResponse", "context", "text", "guestPrompt", "modelReply", "modelAnswer"].includes(k))
+        if (
+          [
+            "polite",
+            "targetResponse",
+            "context",
+            "text",
+            "guestPrompt",
+            "modelReply",
+            "modelAnswer",
+          ].includes(k)
+        )
           out.push({ where: `${where}/${k}`, text: v });
         continue;
       }
@@ -579,7 +1049,9 @@ if (errors.length) {
     byLayer.set(tag, (byLayer.get(tag) ?? 0) + 1);
   }
   console.log(`\nFAILED — ${errors.length} structural violation(s):`);
-  [...byLayer.entries()].sort((a, b) => b[1] - a[1]).forEach(([t, n]) => console.log(`  ${t}: ${n}`));
+  [...byLayer.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([t, n]) => console.log(`  ${t}: ${n}`));
   console.log("");
   errors.slice(0, 400).forEach((e) => console.log(`  x ${e}`));
   if (errors.length > 400) console.log(`  … and ${errors.length - 60} more`);

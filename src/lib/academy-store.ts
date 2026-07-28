@@ -24,7 +24,16 @@ export type AcademyState = {
   metrics: Metrics;
 };
 
-export type Suite = "vocab" | "grammar" | "speaking" | "reading" | "arcade" | "listening" | "weektest" | "writing" | "mediation";
+export type Suite =
+  | "vocab"
+  | "grammar"
+  | "speaking"
+  | "reading"
+  | "arcade"
+  | "listening"
+  | "weektest"
+  | "writing"
+  | "mediation";
 
 const DEFAULT_STATE: AcademyState = {
   full_name: "Esteemed Apprentice",
@@ -66,7 +75,11 @@ function read(userId: string | undefined): AcademyState {
     const raw = window.localStorage.getItem(storageKey(userId));
     if (!raw) return DEFAULT_STATE;
     const parsed = JSON.parse(raw);
-    return { ...DEFAULT_STATE, ...parsed, metrics: { ...DEFAULT_STATE.metrics, ...(parsed.metrics ?? {}) } };
+    return {
+      ...DEFAULT_STATE,
+      ...parsed,
+      metrics: { ...DEFAULT_STATE.metrics, ...(parsed.metrics ?? {}) },
+    };
   } catch {
     return DEFAULT_STATE;
   }
@@ -230,20 +243,36 @@ export function useAcademy() {
       let effectiveStreak = profile?.daily_streak ?? migrated?.daily_streak ?? 1;
       if (lastLearned < yesterdayStr() && effectiveStreak !== 0) {
         effectiveStreak = 0;
-        supabase.from("profiles").update({ daily_streak: 0 }).eq("id", userId).then(() => {});
+        supabase
+          .from("profiles")
+          .update({ daily_streak: 0 })
+          .eq("id", userId)
+          .then(() => {});
       }
 
       const next: AcademyState = {
         full_name: profile?.full_name || migrated?.full_name || DEFAULT_STATE.full_name,
         service_stars: profile?.service_stars ?? migrated?.service_stars ?? 0,
         daily_streak: effectiveStreak,
-        last_active_date: profile?.last_active_date ?? migrated?.last_active_date ?? DEFAULT_STATE.last_active_date,
+        last_active_date:
+          profile?.last_active_date ?? migrated?.last_active_date ?? DEFAULT_STATE.last_active_date,
         metrics: {
-          fluency_score: metrics?.fluency_score ?? migrated?.metrics.fluency_score ?? DEFAULT_STATE.metrics.fluency_score,
-          courtesy_score: metrics?.courtesy_score ?? migrated?.metrics.courtesy_score ?? DEFAULT_STATE.metrics.courtesy_score,
-          reflex_speed: metrics?.reflex_speed ?? migrated?.metrics.reflex_speed ?? DEFAULT_STATE.metrics.reflex_speed,
+          fluency_score:
+            metrics?.fluency_score ??
+            migrated?.metrics.fluency_score ??
+            DEFAULT_STATE.metrics.fluency_score,
+          courtesy_score:
+            metrics?.courtesy_score ??
+            migrated?.metrics.courtesy_score ??
+            DEFAULT_STATE.metrics.courtesy_score,
+          reflex_speed:
+            metrics?.reflex_speed ??
+            migrated?.metrics.reflex_speed ??
+            DEFAULT_STATE.metrics.reflex_speed,
           crisis_handling_score:
-            metrics?.crisis_handling_score ?? migrated?.metrics.crisis_handling_score ?? DEFAULT_STATE.metrics.crisis_handling_score,
+            metrics?.crisis_handling_score ??
+            migrated?.metrics.crisis_handling_score ??
+            DEFAULT_STATE.metrics.crisis_handling_score,
         },
       };
       write(userId, next);
@@ -313,7 +342,11 @@ export function useAcademy() {
     const next = { ...current, daily_streak: nextStreak };
     write(userId, next);
     setState(next);
-    supabase.from("profiles").update({ daily_streak: nextStreak }).eq("id", userId).then(() => {});
+    supabase
+      .from("profiles")
+      .update({ daily_streak: nextStreak })
+      .eq("id", userId)
+      .then(() => {});
   }, [userId]);
 
   const recordSuiteResult = useCallback(
@@ -335,7 +368,8 @@ export function useAcademy() {
         stars,
         completed_at: new Date().toISOString(),
       };
-      if (opts?.scorePct !== undefined) row.score_pct = Math.max(0, Math.min(100, Math.round(opts.scorePct)));
+      if (opts?.scorePct !== undefined)
+        row.score_pct = Math.max(0, Math.min(100, Math.round(opts.scorePct)));
       // Sticky mastery: only ever write `true` — omitting the column on
       // conflict leaves an earlier pass intact, so a weaker retake can
       // never demote a learner back to un-mastered.

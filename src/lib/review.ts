@@ -11,7 +11,12 @@
 // week; scheduling state then lives entirely in the review_items table.
 
 import { supabase } from "@/integrations/supabase/client";
-import { getWeekContent, type GrammarItem, type SpeakingItem, type VocabItem } from "@/lib/content/week-content";
+import {
+  getWeekContent,
+  type GrammarItem,
+  type SpeakingItem,
+  type VocabItem,
+} from "@/lib/content/week-content";
 import { addDays, localDateStr } from "@/lib/date";
 
 export type ReviewItemRow = {
@@ -54,11 +59,17 @@ export async function seedReviewItems(
 
   let keys: string[] = [];
   if (itemType === "vocab") {
-    keys = content.lessons.flatMap((l) => l.vocabulary.map((v) => `vocab:${dep}:${weekNumber}:${v.word}`));
+    keys = content.lessons.flatMap((l) =>
+      l.vocabulary.map((v) => `vocab:${dep}:${weekNumber}:${v.word}`),
+    );
   } else if (itemType === "grammar") {
-    keys = content.lessons.flatMap((l) => l.grammar).map((g) => `grammar:${dep}:${weekNumber}:${slugify(g.rude)}`);
+    keys = content.lessons
+      .flatMap((l) => l.grammar)
+      .map((g) => `grammar:${dep}:${weekNumber}:${slugify(g.rude)}`);
   } else {
-    keys = content.lessons.flatMap((l) => l.speaking).map((s) => `speaking:${dep}:${weekNumber}:${slugify(s.guestPrompt)}`);
+    keys = content.lessons
+      .flatMap((l) => l.speaking)
+      .map((s) => `speaking:${dep}:${weekNumber}:${slugify(s.guestPrompt)}`);
   }
 
   const rows = keys.map((item_key) => ({
@@ -70,7 +81,9 @@ export async function seedReviewItems(
     due_at: addDays(localDateStr(), 1),
   }));
 
-  await supabase.from("review_items").upsert(rows, { onConflict: "user_id,item_key", ignoreDuplicates: true });
+  await supabase
+    .from("review_items")
+    .upsert(rows, { onConflict: "user_id,item_key", ignoreDuplicates: true });
 }
 
 export async function fetchDueItems(userId: string, limit = 20): Promise<ReviewItemRow[]> {
@@ -98,7 +111,9 @@ export async function fetchDueCount(userId: string): Promise<number> {
 /** Applies a review outcome: growing interval on success, reset to
  * 1 day on failure. Returns the next due date. */
 export async function applyReviewResult(item: ReviewItemRow, correct: boolean): Promise<string> {
-  const nextInterval = correct ? Math.min(INTERVAL_CAP_DAYS, Math.ceil(item.interval_days * INTERVAL_GROWTH)) : 1;
+  const nextInterval = correct
+    ? Math.min(INTERVAL_CAP_DAYS, Math.ceil(item.interval_days * INTERVAL_GROWTH))
+    : 1;
   const dueAt = addDays(localDateStr(), nextInterval);
   await supabase
     .from("review_items")
@@ -119,7 +134,12 @@ export async function applyReviewResult(item: ReviewItemRow, correct: boolean): 
 export type ResolvedReviewItem =
   | { kind: "vocab"; row: ReviewItemRow; vocab: VocabItem; weekVocab: VocabItem[] }
   | { kind: "grammar"; row: ReviewItemRow; grammar: GrammarItem }
-  | { kind: "speaking"; row: ReviewItemRow; speaking: SpeakingItem; options: { text: string; correct: boolean }[] };
+  | {
+      kind: "speaking";
+      row: ReviewItemRow;
+      speaking: SpeakingItem;
+      options: { text: string; correct: boolean }[];
+    };
 
 export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null {
   const content = getWeekContent(row.department_id, row.week_number);
@@ -147,7 +167,9 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
   // Prefer the game round authored for this prompt (its wrong options
   // are purpose-built rude distractors); otherwise fall back to other
   // target responses from the same week.
-  const matchingRound = content.lessons.flatMap((l) => l.game).find((g) => g.prompt === speaking.guestPrompt);
+  const matchingRound = content.lessons
+    .flatMap((l) => l.game)
+    .find((g) => g.prompt === speaking.guestPrompt);
   let options: { text: string; correct: boolean }[];
   if (matchingRound) {
     options = matchingRound.options.map((o) => ({ text: o.text, correct: o.correct }));

@@ -53,7 +53,9 @@ export function AcademyNav() {
 
           <div className="hidden flex-1 items-center justify-center md:flex">
             <div className="rounded-sm border border-primary/30 px-4 py-1.5 text-center shadow-xl">
-              <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">Your Career Growth</div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">
+                Your Career Growth
+              </div>
               <div className="font-display text-lg text-primary">{jobRank}</div>
             </div>
           </div>
@@ -73,12 +75,7 @@ export function AcademyNav() {
             >
               Appraisal
             </Link>
-            <Shield
-              icon="⭐"
-              value={state.service_stars}
-              label="Stars"
-              shimmer={shimmer}
-            />
+            <Shield icon="⭐" value={state.service_stars} label="Stars" shimmer={shimmer} />
             <Shield icon="🔥" value={state.daily_streak} label="Streak" pulse />
             <button
               onClick={() => setMenuOpen(true)}
@@ -108,7 +105,9 @@ export function AcademyNav() {
               className="w-full max-w-sm border border-primary/40 bg-card p-8 shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="text-xs uppercase tracking-[0.3em] text-primary">Personal Dossier</div>
+              <div className="text-xs uppercase tracking-[0.3em] text-primary">
+                Personal Dossier
+              </div>
               <h2 className="font-display mt-3 text-2xl">{displayName}</h2>
               {orgName && <p className="mt-1 text-sm text-foreground/60">{orgName}</p>}
 

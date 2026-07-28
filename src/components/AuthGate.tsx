@@ -26,7 +26,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
       navigate({ to: "/" });
       return;
     }
-    if (session && !profileLoading && profile?.must_change_password && pathname !== "/change-password") {
+    if (
+      session &&
+      !profileLoading &&
+      profile?.must_change_password &&
+      pathname !== "/change-password"
+    ) {
       navigate({ to: "/change-password" });
     }
   }, [sessionLoading, session, isPublicPath, profileLoading, profile, pathname, navigate]);

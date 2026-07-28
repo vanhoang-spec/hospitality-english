@@ -33,7 +33,15 @@
 // the useful contrast is broken-English vs. correct-English.
 // ============================================================
 
-import type { GameRound, GrammarItem, LessonContent, ReadingItem, SpeakingItem, VocabItem, WeekContent } from "./week-content";
+import type {
+  GameRound,
+  GrammarItem,
+  LessonContent,
+  ReadingItem,
+  SpeakingItem,
+  VocabItem,
+  WeekContent,
+} from "./week-content";
 
 const RESORT = "Lotus Bay";
 
@@ -154,7 +162,12 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       // "Lounge card", not "Card" — the shared week-4 payment vocabulary
       // already teaches "Card", and one department must not meet the same
       // headword twice with two different meanings.
-      { word: "Lounge card", phonetic: "/laʊndʒ kɑːd/", definition: "Thẻ ra vào phòng chờ", icon: "💳" },
+      {
+        word: "Lounge card",
+        phonetic: "/laʊndʒ kɑːd/",
+        definition: "Thẻ ra vào phòng chờ",
+        icon: "💳",
+      },
       { word: "Gift", phonetic: "/ɡɪft/", definition: "Quà tặng", icon: "🎁" },
       { word: "Flower", phonetic: "/ˈflaʊə/", definition: "Hoa", icon: "💐" },
       { word: "Letter", phonetic: "/ˈletə/", definition: "Thư", icon: "✉️" },
@@ -191,7 +204,13 @@ export const LEXICONS: Record<string, P0Lexicon> = {
 // ------------------------------------------------------------
 // Small authoring helpers.
 // ------------------------------------------------------------
-export function v(word: string, phonetic: string, definition: string, context: string, icon: string): VocabItem {
+export function v(
+  word: string,
+  phonetic: string,
+  definition: string,
+  context: string,
+  icon: string,
+): VocabItem {
   return { word, phonetic, definition, context, icon };
 }
 export function g(rude: string, polite: string, rule: string): GrammarItem {
@@ -219,9 +238,21 @@ function lesson(
   order: number,
   titleEn: string,
   titleVi: string,
-  parts: { vocabulary: VocabItem[]; grammar: GrammarItem[]; speaking: SpeakingItem[]; reading: ReadingItem; game: GameRound[] },
+  parts: {
+    vocabulary: VocabItem[];
+    grammar: GrammarItem[];
+    speaking: SpeakingItem[];
+    reading: ReadingItem;
+    game: GameRound[];
+  },
 ): LessonContent {
-  return { lessonId: `${lx.code}_${week}_${order}`, lessonOrder: order, titleEn, titleVi, ...parts };
+  return {
+    lessonId: `${lx.code}_${week}_${order}`,
+    lessonOrder: order,
+    titleEn,
+    titleVi,
+    ...parts,
+  };
 }
 
 // ============================================================
@@ -234,16 +265,40 @@ function week1(lx: P0Lexicon): LessonContent[] {
   return [
     lesson(lx, 1, 1, "Greeting by Time of Day", "Chào khách theo buổi trong ngày", {
       vocabulary: [
-        v("Good morning", "/ɡʊd ˈmɔːnɪŋ/", "Chào buổi sáng (trước 12h)", "Good morning, sir.", "🌅"),
-        v("Good afternoon", "/ɡʊd ˌɑːftəˈnuːn/", "Chào buổi chiều (12h–18h)", "Good afternoon, madam.", "☀️"),
+        v(
+          "Good morning",
+          "/ɡʊd ˈmɔːnɪŋ/",
+          "Chào buổi sáng (trước 12h)",
+          "Good morning, sir.",
+          "🌅",
+        ),
+        v(
+          "Good afternoon",
+          "/ɡʊd ˌɑːftəˈnuːn/",
+          "Chào buổi chiều (12h–18h)",
+          "Good afternoon, madam.",
+          "☀️",
+        ),
         v("Welcome", "/ˈwelkəm/", "Chào mừng, đón chào", `Welcome to ${RESORT}.`, "🙏"),
       ],
       grammar: [
-        g("Morning.", "Good morning, sir.", "Không nói cụt 'Morning'. Với khách luôn nói đủ 'Good morning' và thêm 'sir' (nam) hoặc 'madam' (nữ)."),
-        g("Hey, come in.", `Welcome to ${RESORT}.`, "Không dùng 'Hey' với khách. Câu đón chuẩn là 'Welcome to' + tên khách sạn."),
+        g(
+          "Morning.",
+          "Good morning, sir.",
+          "Không nói cụt 'Morning'. Với khách luôn nói đủ 'Good morning' và thêm 'sir' (nam) hoặc 'madam' (nữ).",
+        ),
+        g(
+          "Hey, come in.",
+          `Welcome to ${RESORT}.`,
+          "Không dùng 'Hey' với khách. Câu đón chuẩn là 'Welcome to' + tên khách sạn.",
+        ),
       ],
       speaking: [
-        sp("Hello!", "Good morning, sir. Welcome.", "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h)."),
+        sp(
+          "Hello!",
+          "Good morning, sir. Welcome.",
+          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h).",
+        ),
       ],
       reading: read(
         `It is 9 AM. A guest is at ${lx.station}. ${lx.staff} says: "Good morning, sir. Welcome to ${RESORT}."`,
@@ -277,12 +332,28 @@ function week1(lx: P0Lexicon): LessonContent[] {
         v("Alphabet", "/ˈælfəbet/", "Bảng chữ cái", "Please say the alphabet slowly.", "🔤"),
       ],
       grammar: [
-        g("What your name?", "May I have your name?", "Tiếng Anh cần động từ. Câu hỏi tên lịch sự là 'May I have your name?' — không nói 'What your name?'."),
-        g("Spell please.", "How do you spell that?", "Muốn khách đánh vần, hỏi trọn câu 'How do you spell that?'."),
-        g("Say it again.", "Could you spell that, please?", "Tên khó nghe hoặc có chữ cái dễ nhầm (như E và I), hãy nhờ khách đánh vần từng chữ."),
+        g(
+          "What your name?",
+          "May I have your name?",
+          "Tiếng Anh cần động từ. Câu hỏi tên lịch sự là 'May I have your name?' — không nói 'What your name?'.",
+        ),
+        g(
+          "Spell please.",
+          "How do you spell that?",
+          "Muốn khách đánh vần, hỏi trọn câu 'How do you spell that?'.",
+        ),
+        g(
+          "Say it again.",
+          "Could you spell that, please?",
+          "Tên khó nghe hoặc có chữ cái dễ nhầm (như E và I), hãy nhờ khách đánh vần từng chữ.",
+        ),
       ],
       speaking: [
-        sp("My name is Ivy. I-V-Y.", "Thank you. I-V-Y is correct.", "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm."),
+        sp(
+          "My name is Ivy. I-V-Y.",
+          "Thank you. I-V-Y is correct.",
+          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm.",
+        ),
       ],
       reading: read(
         `A guest says: "My name is Anna Smith. A-N-N-A, S-M-I-T-H." ${lx.staff} writes each letter and says: "Thank you. A-N-N-A, S-M-I-T-H."`,
@@ -310,11 +381,23 @@ function week1(lx: P0Lexicon): LessonContent[] {
         v("Help", "/help/", "Giúp đỡ", "May I help you?", "🤝"),
       ],
       grammar: [
-        g(`I ${lx.deptEn}.`, `I am from ${lx.deptEn}.`, "Tiếng Việt bỏ được động từ 'là', tiếng Anh thì không. Luôn có 'am/is/are': I AM from…"),
-        g("You are from where?", "Where are you from?", "Từ để hỏi đứng đầu câu trong tiếng Anh: 'Where are you from?' — không đặt cuối như tiếng Việt."),
+        g(
+          `I ${lx.deptEn}.`,
+          `I am from ${lx.deptEn}.`,
+          "Tiếng Việt bỏ được động từ 'là', tiếng Anh thì không. Luôn có 'am/is/are': I AM from…",
+        ),
+        g(
+          "You are from where?",
+          "Where are you from?",
+          "Từ để hỏi đứng đầu câu trong tiếng Anh: 'Where are you from?' — không đặt cuối như tiếng Việt.",
+        ),
       ],
       speaking: [
-        sp("Excuse me, who are you?", `I am from ${lx.deptEn}.`, "Giới thiệu bộ phận giúp khách biết bạn giúp được việc gì."),
+        sp(
+          "Excuse me, who are you?",
+          `I am from ${lx.deptEn}.`,
+          "Giới thiệu bộ phận giúp khách biết bạn giúp được việc gì.",
+        ),
       ],
       reading: read(
         `${lx.staff} works at ${lx.station}. ${lx.staff} says: "Good afternoon, madam. I am from ${lx.deptEn}. May I help you?"`,
@@ -333,7 +416,14 @@ function week1(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Are you the manager?", `No, madam. I am from ${lx.deptEn}.`, "Yes yes.", "I no manager.")],
+      game: [
+        game(
+          "Are you the manager?",
+          `No, madam. I am from ${lx.deptEn}.`,
+          "Yes yes.",
+          "I no manager.",
+        ),
+      ],
     }),
 
     lesson(lx, 1, 4, "Goodbye & Thank You", "Cảm ơn & tạm biệt", {
@@ -342,11 +432,23 @@ function week1(lx: P0Lexicon): LessonContent[] {
         v("Goodbye", "/ˌɡʊdˈbaɪ/", "Tạm biệt", "Goodbye, sir.", "👋"),
       ],
       grammar: [
-        g("Thank.", "Thank you very much.", "Phải có 'you': THANK YOU. Muốn nhấn mạnh thì thêm 'very much'."),
-        g("Bye.", "Goodbye, sir. Good night.", "'Bye' quá thân mật với khách. Dùng 'Goodbye' kèm 'sir/madam'."),
+        g(
+          "Thank.",
+          "Thank you very much.",
+          "Phải có 'you': THANK YOU. Muốn nhấn mạnh thì thêm 'very much'.",
+        ),
+        g(
+          "Bye.",
+          "Goodbye, sir. Good night.",
+          "'Bye' quá thân mật với khách. Dùng 'Goodbye' kèm 'sir/madam'.",
+        ),
       ],
       speaking: [
-        sp("Thank you for your help!", "You are welcome, madam.", "Khi khách cảm ơn, đáp 'You are welcome' — không im lặng hoặc chỉ gật đầu."),
+        sp(
+          "Thank you for your help!",
+          "You are welcome, madam.",
+          "Khi khách cảm ơn, đáp 'You are welcome' — không im lặng hoặc chỉ gật đầu.",
+        ),
       ],
       reading: read(
         `The guest leaves ${lx.station}. ${lx.staff} smiles and says: "Thank you, sir. Goodbye. Have a nice day."`,
@@ -361,7 +463,8 @@ function week1(lx: P0Lexicon): LessonContent[] {
             q: "Câu chúc nào phù hợp khi tiễn khách ban ngày?",
             options: ["Have a nice day.", "Good night.", "Welcome."],
             correct: 0,
-            explanation: "'Have a nice day' dùng ban ngày; 'Good night' chỉ dùng buổi tối khi khách đi ngủ.",
+            explanation:
+              "'Have a nice day' dùng ban ngày; 'Good night' chỉ dùng buổi tối khi khách đi ngủ.",
           },
         ],
       ),
@@ -392,13 +495,33 @@ function week2(lx: P0Lexicon): LessonContent[] {
         v("Hundred", "/ˈhʌndrəd/", "Trăm", "One hundred dollars.", "💯"),
       ],
       grammar: [
-        g(`Room ${lx.roomNo.digits} hundred.`, `Room ${lx.roomNo.spoken}, sir.`, `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}. Số 0 đọc là 'oh'.`),
-        g("Room number what?", "What is your room number?", "Câu hỏi cần 'is' và trật tự: What IS your room number?"),
-        g("Two ten, right?", "It is twenty, sir.", "Hàng chục: TWENTY (20), THIRTY (30), FORTY (40) … NINETY (90). Ghép thêm số cuối để có số lớn hơn: 20 + 5 = twenty-five."),
+        g(
+          `Room ${lx.roomNo.digits} hundred.`,
+          `Room ${lx.roomNo.spoken}, sir.`,
+          `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}. Số 0 đọc là 'oh'.`,
+        ),
+        g(
+          "Room number what?",
+          "What is your room number?",
+          "Câu hỏi cần 'is' và trật tự: What IS your room number?",
+        ),
+        g(
+          "Two ten, right?",
+          "It is twenty, sir.",
+          "Hàng chục: TWENTY (20), THIRTY (30), FORTY (40) … NINETY (90). Ghép thêm số cuối để có số lớn hơn: 20 + 5 = twenty-five.",
+        ),
       ],
       speaking: [
-        sp("What is my room number?", `Your room is ${lx.roomNo.spoken}.`, `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}".`),
-        sp("What is the total, please?", "It is forty-five dollars, sir.", "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'."),
+        sp(
+          "What is my room number?",
+          `Your room is ${lx.roomNo.spoken}.`,
+          `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}".`,
+        ),
+        sp(
+          "What is the total, please?",
+          "It is forty-five dollars, sir.",
+          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'.",
+        ),
       ],
       reading: read(
         `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your key. The total today is forty-five dollars."`,
@@ -413,13 +536,24 @@ function week2(lx: P0Lexicon): LessonContent[] {
             q: "Số 0 trong số phòng đọc là gì?",
             options: ["oh", "zero", "nothing"],
             correct: 0,
-            explanation: "Khi đọc số phòng, người Anh–Mỹ đọc số 0 là 'oh' (ví dụ 205 = two-oh-five).",
+            explanation:
+              "Khi đọc số phòng, người Anh–Mỹ đọc số 0 là 'oh' (ví dụ 205 = two-oh-five).",
           },
         ],
       ),
       game: [
-        game("Is my room three-oh-five?", "Yes, room three-oh-five, sir.", "Yes, room 305 hundred.", "Room what?"),
-        game("Is the total thirty dollars?", "No, sir. It is forty dollars.", "Thirty yes, sir.", "Dollar forty is."),
+        game(
+          "Is my room three-oh-five?",
+          "Yes, room three-oh-five, sir.",
+          "Yes, room 305 hundred.",
+          "Room what?",
+        ),
+        game(
+          "Is the total thirty dollars?",
+          "No, sir. It is forty dollars.",
+          "Thirty yes, sir.",
+          "Dollar forty is.",
+        ),
       ],
     }),
 
@@ -429,11 +563,23 @@ function week2(lx: P0Lexicon): LessonContent[] {
         v("Lift", "/lɪft/", "Thang máy (Anh–Anh; Mỹ: elevator)", "The lift is over there.", "🛗"),
       ],
       grammar: [
-        g(`Go floor ${lx.floor.ordinal}.`, `Go to the ${lx.floor.ordinal} floor.`, "Cần 'to the' trước tên tầng: go TO THE second floor."),
-        g("Which floor my room?", "Which floor is my room on?", "Câu hỏi cần động từ 'is'. Đây là câu khách hay hỏi — nghe hiểu được là đủ."),
+        g(
+          `Go floor ${lx.floor.ordinal}.`,
+          `Go to the ${lx.floor.ordinal} floor.`,
+          "Cần 'to the' trước tên tầng: go TO THE second floor.",
+        ),
+        g(
+          "Which floor my room?",
+          "Which floor is my room on?",
+          "Câu hỏi cần động từ 'is'. Đây là câu khách hay hỏi — nghe hiểu được là đủ.",
+        ),
       ],
       speaking: [
-        sp("Which floor, please?", `The ${lx.floor.ordinal} floor, madam.`, "Trả lời ngắn gọn: 'The + số thứ tự + floor'. Không cần cả câu dài."),
+        sp(
+          "Which floor, please?",
+          `The ${lx.floor.ordinal} floor, madam.`,
+          "Trả lời ngắn gọn: 'The + số thứ tự + floor'. Không cần cả câu dài.",
+        ),
       ],
       reading: read(
         `The guest asks: "Which floor is my room on?" ${lx.staff} points to the lift and says: "The ${lx.floor.ordinal} floor, madam."`,
@@ -452,7 +598,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Where is the lift?", "The lift is over there, sir.", "Lift there.", "I don't know.")],
+      game: [
+        game("Where is the lift?", "The lift is over there, sir.", "Lift there.", "I don't know."),
+      ],
     }),
 
     lesson(lx, 2, 3, "Counting Items", "Đếm đồ vật", {
@@ -461,11 +609,23 @@ function week2(lx: P0Lexicon): LessonContent[] {
         v(i2.word, i2.phonetic, i2.definition, `Here is your ${i2.word.toLowerCase()}.`, i2.icon),
       ],
       grammar: [
-        g(`Two ${i1.word.toLowerCase()}.`, `Two ${i1.word.toLowerCase()}s, please.`, `Từ hai trở lên phải thêm -s: one ${i1.word.toLowerCase()} → two ${i1.word.toLowerCase()}s. Tiếng Việt không đổi từ, tiếng Anh thì có.`),
-        g(`I bring you ${i1.word.toLowerCase()}.`, `I will bring two ${i1.word.toLowerCase()}s.`, "Việc sắp làm dùng 'will': I WILL bring. Và nhớ mạo từ hoặc số trước danh từ."),
+        g(
+          `Two ${i1.word.toLowerCase()}.`,
+          `Two ${i1.word.toLowerCase()}s, please.`,
+          `Từ hai trở lên phải thêm -s: one ${i1.word.toLowerCase()} → two ${i1.word.toLowerCase()}s. Tiếng Việt không đổi từ, tiếng Anh thì có.`,
+        ),
+        g(
+          `I bring you ${i1.word.toLowerCase()}.`,
+          `I will bring two ${i1.word.toLowerCase()}s.`,
+          "Việc sắp làm dùng 'will': I WILL bring. Và nhớ mạo từ hoặc số trước danh từ.",
+        ),
       ],
       speaking: [
-        sp(`Two ${i1.word.toLowerCase()}s, please.`, `Yes, two ${i1.word.toLowerCase()}s. One moment.`, "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai."),
+        sp(
+          `Two ${i1.word.toLowerCase()}s, please.`,
+          `Yes, two ${i1.word.toLowerCase()}s. One moment.`,
+          "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai.",
+        ),
       ],
       reading: read(
         `A guest wants two ${i1.word.toLowerCase()}s. ${lx.staff} says: "Yes, madam. Two ${i1.word.toLowerCase()}s. One moment, please."`,
@@ -500,11 +660,23 @@ function week2(lx: P0Lexicon): LessonContent[] {
         v(i4.word, i4.phonetic, i4.definition, `Here is the ${i4.word.toLowerCase()}.`, i4.icon),
       ],
       grammar: [
-        g(`How much ${i3.word.toLowerCase()}s?`, `How many ${i3.word.toLowerCase()}s, sir?`, "Đếm được thì dùng 'How many' (how many towels); không đếm được mới dùng 'How much' (how much water)."),
-        g("Give me three.", `Three ${i3.word.toLowerCase()}s, please.`, "'Give me' nghe ra lệnh. Nói số lượng + tên đồ + 'please'."),
+        g(
+          `How much ${i3.word.toLowerCase()}s?`,
+          `How many ${i3.word.toLowerCase()}s, sir?`,
+          "Đếm được thì dùng 'How many' (how many towels); không đếm được mới dùng 'How much' (how much water).",
+        ),
+        g(
+          "Give me three.",
+          `Three ${i3.word.toLowerCase()}s, please.`,
+          "'Give me' nghe ra lệnh. Nói số lượng + tên đồ + 'please'.",
+        ),
       ],
       speaking: [
-        sp(`I need three ${i3.word.toLowerCase()}s.`, `Three ${i3.word.toLowerCase()}s. Yes, madam.`, "Xác nhận lại rồi mới đi lấy. Đừng chỉ gật đầu."),
+        sp(
+          `I need three ${i3.word.toLowerCase()}s.`,
+          `Three ${i3.word.toLowerCase()}s. Yes, madam.`,
+          "Xác nhận lại rồi mới đi lấy. Đừng chỉ gật đầu.",
+        ),
       ],
       reading: read(
         `${lx.staff} asks: "How many ${i3.word.toLowerCase()}s, sir?" The guest says: "Three, please." ${lx.staff} says: "Three ${i3.word.toLowerCase()}s. One moment."`,
@@ -513,7 +685,8 @@ function week2(lx: P0Lexicon): LessonContent[] {
             q: `Vì sao dùng "How many" chứ không phải "How much"?`,
             options: [`Vì ${i3.word.toLowerCase()} đếm được`, "Vì hỏi giá tiền", "Vì khách là nam"],
             correct: 0,
-            explanation: "'How many' dùng cho danh từ đếm được; 'How much' dùng cho tiền hoặc thứ không đếm được.",
+            explanation:
+              "'How many' dùng cho danh từ đếm được; 'How much' dùng cho tiền hoặc thứ không đếm được.",
           },
           {
             q: "Khách cần mấy cái?",
@@ -546,14 +719,32 @@ function week3(lx: P0Lexicon): LessonContent[] {
       vocabulary: [
         v("Time", "/taɪm/", "Thời gian, giờ", "What time is it?", "⏰"),
         v("O'clock", "/əˈklɒk/", "Giờ đúng (7:00 = seven o'clock)", "It is seven o'clock.", "🕖"),
-        v("Half past", "/hɑːf pɑːst/", "Rưỡi (7:30 = half past seven)", "It is half past seven.", "🕢"),
+        v(
+          "Half past",
+          "/hɑːf pɑːst/",
+          "Rưỡi (7:30 = half past seven)",
+          "It is half past seven.",
+          "🕢",
+        ),
       ],
       grammar: [
-        g("Now seven.", "It is seven o'clock.", "Câu tiếng Anh cần chủ ngữ 'It' và động từ 'is': IT IS seven o'clock."),
-        g("What time now?", "What time is it?", "Câu hỏi giờ chuẩn là 'What time is it?' — có động từ 'is'."),
+        g(
+          "Now seven.",
+          "It is seven o'clock.",
+          "Câu tiếng Anh cần chủ ngữ 'It' và động từ 'is': IT IS seven o'clock.",
+        ),
+        g(
+          "What time now?",
+          "What time is it?",
+          "Câu hỏi giờ chuẩn là 'What time is it?' — có động từ 'is'.",
+        ),
       ],
       speaking: [
-        sp("Excuse me, what time is it?", "It is seven o'clock, sir.", "Giờ đúng thì thêm 'o'clock'. 7:30 nói 'half past seven'."),
+        sp(
+          "Excuse me, what time is it?",
+          "It is seven o'clock, sir.",
+          "Giờ đúng thì thêm 'o'clock'. 7:30 nói 'half past seven'.",
+        ),
       ],
       reading: read(
         `A guest asks ${lx.staff} the time. ${lx.staff} looks at the clock and says: "It is half past seven, sir."`,
@@ -572,7 +763,14 @@ function week3(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Is it eight o'clock now?", "No, sir. It is half past seven.", "Yes, now eight.", "Time eight.")],
+      game: [
+        game(
+          "Is it eight o'clock now?",
+          "No, sir. It is half past seven.",
+          "Yes, now eight.",
+          "Time eight.",
+        ),
+      ],
     }),
 
     lesson(lx, 3, 2, "Days of the Week", "Các ngày trong tuần", {
@@ -581,11 +779,23 @@ function week3(lx: P0Lexicon): LessonContent[] {
         v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", "Your tour is tomorrow.", "📆"),
       ],
       grammar: [
-        g("Today Monday.", "Today is Monday.", "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS."),
-        g("Tomorrow I clean.", "I will clean tomorrow.", "Việc tương lai dùng 'will' + động từ: I WILL clean."),
+        g(
+          "Today Monday.",
+          "Today is Monday.",
+          "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS.",
+        ),
+        g(
+          "Tomorrow I clean.",
+          "I will clean tomorrow.",
+          "Việc tương lai dùng 'will' + động từ: I WILL clean.",
+        ),
       ],
       speaking: [
-        sp("When is my city tour?", "Your tour is tomorrow, madam.", "Nói rõ 'today' hay 'tomorrow' để khách không nhầm lịch."),
+        sp(
+          "When is my city tour?",
+          "Your tour is tomorrow, madam.",
+          "Nói rõ 'today' hay 'tomorrow' để khách không nhầm lịch.",
+        ),
       ],
       reading: read(
         `Today is Monday. A guest asks about the city tour. ${lx.staff} checks and says: "Your tour is tomorrow, madam. Tuesday."`,
@@ -604,7 +814,14 @@ function week3(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Is the tour today?", "No, madam. It is tomorrow.", "Yes, today tour.", "Tour Monday no.")],
+      game: [
+        game(
+          "Is the tour today?",
+          "No, madam. It is tomorrow.",
+          "Yes, today tour.",
+          "Tour Monday no.",
+        ),
+      ],
     }),
 
     lesson(lx, 3, 3, "Opening & Closing Hours", "Giờ mở cửa & đóng cửa", {
@@ -613,11 +830,23 @@ function week3(lx: P0Lexicon): LessonContent[] {
         v("Close", "/kləʊz/", "Đóng cửa", `We close at ${lx.service.close}.`, "🔒"),
       ],
       grammar: [
-        g(`Open ${lx.service.open}.`, `We open at ${lx.service.open}.`, "Cần chủ ngữ 'We' và giới từ 'at' trước giờ: we open AT six."),
-        g(`${lx.service.en} close ${lx.service.close}.`, `We close at ${lx.service.close}, sir.`, "Động từ phải chia và có 'at' trước giờ. Nói ngắn gọn với chủ ngữ 'We'."),
+        g(
+          `Open ${lx.service.open}.`,
+          `We open at ${lx.service.open}.`,
+          "Cần chủ ngữ 'We' và giới từ 'at' trước giờ: we open AT six.",
+        ),
+        g(
+          `${lx.service.en} close ${lx.service.close}.`,
+          `We close at ${lx.service.close}, sir.`,
+          "Động từ phải chia và có 'at' trước giờ. Nói ngắn gọn với chủ ngữ 'We'.",
+        ),
       ],
       speaking: [
-        sp("What time do you open?", `We open at ${lx.service.open}, madam.`, "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'."),
+        sp(
+          "What time do you open?",
+          `We open at ${lx.service.open}, madam.`,
+          "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'.",
+        ),
       ],
       reading: read(
         `A guest asks about ${lx.service.en}. ${lx.staff} says: "We open at ${lx.service.open} and close at ${lx.service.close}, sir."`,
@@ -652,11 +881,23 @@ function week3(lx: P0Lexicon): LessonContent[] {
         v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", `It finishes at ${lx.service.close}.`, "⏹️"),
       ],
       grammar: [
-        g(`What time ${lx.service.en}?`, `What time is ${lx.service.en}?`, "Câu hỏi cần 'is': What time IS breakfast?"),
-        g(`${lx.service.en} finish ${lx.service.close}.`, `It finishes at ${lx.service.close}.`, "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ."),
+        g(
+          `What time ${lx.service.en}?`,
+          `What time is ${lx.service.en}?`,
+          "Câu hỏi cần 'is': What time IS breakfast?",
+        ),
+        g(
+          `${lx.service.en} finish ${lx.service.close}.`,
+          `It finishes at ${lx.service.close}.`,
+          "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ.",
+        ),
       ],
       speaking: [
-        sp(`What time is ${lx.service.en}?`, `It starts at ${lx.service.open} o'clock.`, "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc."),
+        sp(
+          `What time is ${lx.service.en}?`,
+          `It starts at ${lx.service.open} o'clock.`,
+          "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc.",
+        ),
       ],
       reading: read(
         `A guest asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam."`,
@@ -701,11 +942,23 @@ function week4(lx: P0Lexicon): LessonContent[] {
         v("Free", "/friː/", "Miễn phí", "The water is free, sir.", "🆓"),
       ],
       grammar: [
-        g(`Twenty dollar.`, `It is twenty dollars.`, "Từ 2 đô trở lên phải có -s: twenty dollarS. Và cần 'It is' ở đầu."),
-        g("Price what?", "How much is it?", "Hỏi giá chuẩn là 'How much is it?' — không hỏi 'Price what?'."),
+        g(
+          `Twenty dollar.`,
+          `It is twenty dollars.`,
+          "Từ 2 đô trở lên phải có -s: twenty dollarS. Và cần 'It is' ở đầu.",
+        ),
+        g(
+          "Price what?",
+          "How much is it?",
+          "Hỏi giá chuẩn là 'How much is it?' — không hỏi 'Price what?'.",
+        ),
       ],
       speaking: [
-        sp("How much is it?", `It is ${lx.priced.usdWord} dollars, sir.`, "Công thức: 'It is + số + dollars'. Nhớ -s khi từ 2 trở lên."),
+        sp(
+          "How much is it?",
+          `It is ${lx.priced.usdWord} dollars, sir.`,
+          "Công thức: 'It is + số + dollars'. Nhớ -s khi từ 2 trở lên.",
+        ),
       ],
       reading: read(
         `A guest asks about the ${lx.priced.en}. ${lx.staff} says: "It is ${lx.priced.usd} dollars, sir." The guest says: "That is fine."`,
@@ -724,7 +977,9 @@ function week4(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Is the water free?", "Yes, madam. It is free.", "No, water dollar.", "Free no.")],
+      game: [
+        game("Is the water free?", "Yes, madam. It is free.", "No, water dollar.", "Free no."),
+      ],
     }),
 
     lesson(lx, 4, 2, "Cash or Card?", "Tiền mặt hay thẻ", {
@@ -733,11 +988,23 @@ function week4(lx: P0Lexicon): LessonContent[] {
         v("Card", "/kɑːd/", "Thẻ ngân hàng", "You can pay by card.", "💳"),
       ],
       grammar: [
-        g("You pay money how?", "Cash or card, sir?", "Câu hỏi ngắn, lịch sự: 'Cash or card?' — dễ hiểu hơn câu dịch từng chữ từ tiếng Việt."),
-        g("I no take card.", "We take cards, madam.", "Phủ định/khẳng định cần đúng động từ: WE TAKE cards. Không nói 'I no take'."),
+        g(
+          "You pay money how?",
+          "Cash or card, sir?",
+          "Câu hỏi ngắn, lịch sự: 'Cash or card?' — dễ hiểu hơn câu dịch từng chữ từ tiếng Việt.",
+        ),
+        g(
+          "I no take card.",
+          "We take cards, madam.",
+          "Phủ định/khẳng định cần đúng động từ: WE TAKE cards. Không nói 'I no take'.",
+        ),
       ],
       speaking: [
-        sp("Can I pay by card?", "Yes, card is fine, sir.", "Đáp ngắn và rõ. Nếu chỉ nhận tiền mặt: 'Cash only, please.'"),
+        sp(
+          "Can I pay by card?",
+          "Yes, card is fine, sir.",
+          "Đáp ngắn và rõ. Nếu chỉ nhận tiền mặt: 'Cash only, please.'",
+        ),
       ],
       reading: read(
         `${lx.staff} asks: "Cash or card, sir?" The guest gives a card. ${lx.staff} says: "Thank you. Card is fine."`,
@@ -756,7 +1023,9 @@ function week4(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Do you take Visa?", "Yes, sir. We take cards.", "Visa I no know.", "Cash only yes.")],
+      game: [
+        game("Do you take Visa?", "Yes, sir. We take cards.", "Visa I no know.", "Cash only yes."),
+      ],
     }),
 
     lesson(lx, 4, 3, "Vietnamese Dong", "Tiền đồng Việt Nam", {
@@ -765,11 +1034,23 @@ function week4(lx: P0Lexicon): LessonContent[] {
         v("Change", "/tʃeɪndʒ/", "Tiền thối lại", "Here is your change.", "🪙"),
       ],
       grammar: [
-        g("Dong five hundred thousand.", "Five hundred thousand dong.", "Tiếng Anh nói số trước, đơn vị tiền sau: five hundred thousand DONG."),
-        g("Money back here.", "Here is your change.", "Tiền thối gọi là 'change'. Đưa cho khách nói 'Here is your change.'"),
+        g(
+          "Dong five hundred thousand.",
+          "Five hundred thousand dong.",
+          "Tiếng Anh nói số trước, đơn vị tiền sau: five hundred thousand DONG.",
+        ),
+        g(
+          "Money back here.",
+          "Here is your change.",
+          "Tiền thối gọi là 'change'. Đưa cho khách nói 'Here is your change.'",
+        ),
       ],
       speaking: [
-        sp("Do you take dong?", "Yes, we take dong, madam.", "Nhắc lại đơn vị tiền khách hỏi để xác nhận rõ ràng."),
+        sp(
+          "Do you take dong?",
+          "Yes, we take dong, madam.",
+          "Nhắc lại đơn vị tiền khách hỏi để xác nhận rõ ràng.",
+        ),
       ],
       reading: read(
         `The guest pays with dong. ${lx.staff} counts the money and says: "Thank you, madam. Here is your change."`,
@@ -788,7 +1069,14 @@ function week4(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Can I pay in dong?", "Of course, madam. We take dong.", "Dong no good.", "Yes, dong five hundred.")],
+      game: [
+        game(
+          "Can I pay in dong?",
+          "Of course, madam. We take dong.",
+          "Dong no good.",
+          "Yes, dong five hundred.",
+        ),
+      ],
     }),
 
     lesson(lx, 4, 4, "Confirming the Total", "Xác nhận tổng tiền", {
@@ -797,11 +1085,23 @@ function week4(lx: P0Lexicon): LessonContent[] {
         v("Bill", "/bɪl/", "Hóa đơn", "Here is your bill, sir.", "🧾"),
       ],
       grammar: [
-        g("Total thirty.", "The total is thirty dollars.", "Cần mạo từ 'The', động từ 'is' và đơn vị tiền: THE total IS thirty DOLLARS."),
-        g("You want how many?", "How many would you like?", "Hỏi lịch sự dùng 'would you like' thay vì 'you want'."),
+        g(
+          "Total thirty.",
+          "The total is thirty dollars.",
+          "Cần mạo từ 'The', động từ 'is' và đơn vị tiền: THE total IS thirty DOLLARS.",
+        ),
+        g(
+          "You want how many?",
+          "How many would you like?",
+          "Hỏi lịch sự dùng 'would you like' thay vì 'you want'.",
+        ),
       ],
       speaking: [
-        sp("Two coffees, please.", "Two coffees. Eight dollars, please.", "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn."),
+        sp(
+          "Two coffees, please.",
+          "Two coffees. Eight dollars, please.",
+          "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn.",
+        ),
       ],
       reading: read(
         `The guest orders two coffees. ${lx.staff} says: "Two coffees. The total is eight dollars, sir. Here is your bill."`,
@@ -820,7 +1120,14 @@ function week4(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Here is fifty dollars.", "Thank you, sir. Your change, please.", "Fifty dollar OK.", "Total fifty yes.")],
+      game: [
+        game(
+          "Here is fifty dollars.",
+          "Thank you, sir. Your change, please.",
+          "Fifty dollar OK.",
+          "Total fifty yes.",
+        ),
+      ],
     }),
   ];
 }
@@ -840,11 +1147,23 @@ function week5(lx: P0Lexicon): LessonContent[] {
         v("Certainly", "/ˈsɜːtnli/", "Chắc chắn rồi (trang trọng)", "Certainly, sir.", "👍"),
       ],
       grammar: [
-        g("Give me your bag.", "May I take your bag?", "Câu xin phép dùng 'May I…?'. 'Give me' nghe như ra lệnh."),
-        g("Sit.", "Please have a seat.", "Mời khách ngồi nói 'Please have a seat' — chỉ nói 'Sit' là bất lịch sự."),
+        g(
+          "Give me your bag.",
+          "May I take your bag?",
+          "Câu xin phép dùng 'May I…?'. 'Give me' nghe như ra lệnh.",
+        ),
+        g(
+          "Sit.",
+          "Please have a seat.",
+          "Mời khách ngồi nói 'Please have a seat' — chỉ nói 'Sit' là bất lịch sự.",
+        ),
       ],
       speaking: [
-        sp("Could you help me, please?", "Of course, madam. Certainly.", "'Of course' và 'Certainly' là hai cách nhận lời lịch sự nhất."),
+        sp(
+          "Could you help me, please?",
+          "Of course, madam. Certainly.",
+          "'Of course' và 'Certainly' là hai cách nhận lời lịch sự nhất.",
+        ),
       ],
       reading: read(
         `A guest needs help at ${lx.station}. ${lx.staff} smiles and says: "Of course, madam. Please have a seat."`,
@@ -863,7 +1182,9 @@ function week5(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("May I sit here?", "Of course, sir. Please have a seat.", "Yes sit.", "Here no sit.")],
+      game: [
+        game("May I sit here?", "Of course, sir. Please have a seat.", "Yes sit.", "Here no sit."),
+      ],
     }),
 
     lesson(lx, 5, 2, "One Moment, Please", "Xin chờ một lát", {
@@ -872,11 +1193,23 @@ function week5(lx: P0Lexicon): LessonContent[] {
         v("Wait", "/weɪt/", "Chờ, đợi", "Please wait here, madam.", "⏸️"),
       ],
       grammar: [
-        g("Wait.", "One moment, please, sir.", "Bảo khách 'Wait' rất thô. Câu chuẩn là 'One moment, please'."),
-        g("You wait here.", "Please wait here, madam.", "Thêm 'Please' ở đầu và 'madam/sir' ở cuối để câu thành lời mời, không thành mệnh lệnh."),
+        g(
+          "Wait.",
+          "One moment, please, sir.",
+          "Bảo khách 'Wait' rất thô. Câu chuẩn là 'One moment, please'.",
+        ),
+        g(
+          "You wait here.",
+          "Please wait here, madam.",
+          "Thêm 'Please' ở đầu và 'madam/sir' ở cuối để câu thành lời mời, không thành mệnh lệnh.",
+        ),
       ],
       speaking: [
-        sp("Can I have my key, please?", "One moment, please, sir.", "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp."),
+        sp(
+          "Can I have my key, please?",
+          "One moment, please, sir.",
+          "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp.",
+        ),
       ],
       reading: read(
         `The guest asks for the ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes.`,
@@ -895,20 +1228,45 @@ function week5(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Is my table ready?", "One moment, please. I will check.", "Wait there.", "Table no ready.")],
+      game: [
+        game(
+          "Is my table ready?",
+          "One moment, please. I will check.",
+          "Wait there.",
+          "Table no ready.",
+        ),
+      ],
     }),
 
     lesson(lx, 5, 3, "Here You Are", "Đây ạ, mời anh/chị", {
       vocabulary: [
-        v("Here you are", "/hɪə juː ɑː/", "Đây ạ (khi đưa đồ cho khách)", "Here you are, sir.", "🤲"),
+        v(
+          "Here you are",
+          "/hɪə juː ɑː/",
+          "Đây ạ (khi đưa đồ cho khách)",
+          "Here you are, sir.",
+          "🤲",
+        ),
         v("This way", "/ðɪs weɪ/", "Mời đi lối này", "This way, please.", "➡️"),
       ],
       grammar: [
-        g("Take it.", "Here you are, sir.", "Khi đưa đồ cho khách, nói 'Here you are' — không nói 'Take it'."),
-        g("Go there.", "This way, please, madam.", "Dẫn khách nói 'This way, please' kèm cử chỉ tay mở, không chỉ trỏ ngón tay."),
+        g(
+          "Take it.",
+          "Here you are, sir.",
+          "Khi đưa đồ cho khách, nói 'Here you are' — không nói 'Take it'.",
+        ),
+        g(
+          "Go there.",
+          "This way, please, madam.",
+          "Dẫn khách nói 'This way, please' kèm cử chỉ tay mở, không chỉ trỏ ngón tay.",
+        ),
       ],
       speaking: [
-        sp("Here is my passport.", "Thank you. Here you are.", "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'."),
+        sp(
+          "Here is my passport.",
+          "Thank you. Here you are.",
+          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'.",
+        ),
       ],
       reading: read(
         `${lx.staff} gives the ${i5.word.toLowerCase()} to the guest and says: "Here you are, madam." Then ${lx.staff} says: "This way, please."`,
@@ -932,15 +1290,33 @@ function week5(lx: P0Lexicon): LessonContent[] {
 
     lesson(lx, 5, 4, "Excuse Me & I Am Sorry", "Xin lỗi & Xin thứ lỗi", {
       vocabulary: [
-        v("Excuse me", "/ɪkˈskjuːz miː/", "Xin phép, xin lỗi (khi làm phiền)", "Excuse me, sir.", "🙇"),
+        v(
+          "Excuse me",
+          "/ɪkˈskjuːz miː/",
+          "Xin phép, xin lỗi (khi làm phiền)",
+          "Excuse me, sir.",
+          "🙇",
+        ),
         v("Sorry", "/ˈsɒri/", "Xin lỗi (khi có lỗi)", "I am very sorry, madam.", "😔"),
       ],
       grammar: [
-        g("Sorry sorry.", "I am very sorry, sir.", "Nói trọn câu 'I am very sorry' — lặp 'sorry sorry' nghe luống cuống, thiếu chuyên nghiệp."),
-        g("Move please.", "Excuse me, please.", "Khi cần đi qua hoặc ngắt lời, dùng 'Excuse me' — không nói 'Move'."),
+        g(
+          "Sorry sorry.",
+          "I am very sorry, sir.",
+          "Nói trọn câu 'I am very sorry' — lặp 'sorry sorry' nghe luống cuống, thiếu chuyên nghiệp.",
+        ),
+        g(
+          "Move please.",
+          "Excuse me, please.",
+          "Khi cần đi qua hoặc ngắt lời, dùng 'Excuse me' — không nói 'Move'.",
+        ),
       ],
       speaking: [
-        sp("This is the wrong key.", "I am very sorry, madam.", "Xin lỗi trước, sửa sau. 'Excuse me' dùng khi làm phiền; 'Sorry' dùng khi mình sai."),
+        sp(
+          "This is the wrong key.",
+          "I am very sorry, madam.",
+          "Xin lỗi trước, sửa sau. 'Excuse me' dùng khi làm phiền; 'Sorry' dùng khi mình sai.",
+        ),
       ],
       reading: read(
         `${lx.staff} gives the wrong ${i1.word.toLowerCase()}. The guest says: "This is wrong." ${lx.staff} says: "I am very sorry, madam. One moment."`,
@@ -949,17 +1325,26 @@ function week5(lx: P0Lexicon): LessonContent[] {
             q: "Khi mình làm sai thì nói gì?",
             options: ["I am very sorry.", "Excuse me.", "Of course."],
             correct: 0,
-            explanation: "'Sorry' dùng khi mình có lỗi; 'Excuse me' dùng khi làm phiền hoặc xin phép.",
+            explanation:
+              "'Sorry' dùng khi mình có lỗi; 'Excuse me' dùng khi làm phiền hoặc xin phép.",
           },
           {
             q: `Sau khi xin lỗi, ${lx.staff} làm gì?`,
             options: ["Nói 'One moment' rồi đi sửa", "Bỏ đi", "Cãi lại khách"],
             correct: 0,
-            explanation: "Xin lỗi phải đi kèm hành động sửa lỗi ngay — đó là bước đầu của quy trình khắc phục dịch vụ.",
+            explanation:
+              "Xin lỗi phải đi kèm hành động sửa lỗi ngay — đó là bước đầu của quy trình khắc phục dịch vụ.",
           },
         ],
       ),
-      game: [game("You gave me the wrong bill.", "I am very sorry, sir.", "No, bill correct.", "Sorry sorry.")],
+      game: [
+        game(
+          "You gave me the wrong bill.",
+          "I am very sorry, sir.",
+          "No, bill correct.",
+          "Sorry sorry.",
+        ),
+      ],
     }),
   ];
 }
@@ -979,11 +1364,23 @@ function week6(lx: P0Lexicon): LessonContent[] {
         v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Good morning, sir.", "🎩"),
       ],
       grammar: [
-        g("Morning. Name what?", "Good morning. May I have your name?", "Nối hai kỹ năng tuần 1: chào đủ câu, rồi hỏi tên bằng 'May I have…?'."),
-        g("You from where?", "Where are you from, sir?", "Từ hỏi đứng đầu, động từ theo sau: WHERE ARE you from?"),
+        g(
+          "Morning. Name what?",
+          "Good morning. May I have your name?",
+          "Nối hai kỹ năng tuần 1: chào đủ câu, rồi hỏi tên bằng 'May I have…?'.",
+        ),
+        g(
+          "You from where?",
+          "Where are you from, sir?",
+          "Từ hỏi đứng đầu, động từ theo sau: WHERE ARE you from?",
+        ),
       ],
       speaking: [
-        sp("Good morning. I am Anna Smith.", "Good morning, madam. Welcome.", "Chào lại đúng buổi, xưng hô đúng giới tính, rồi mới sang bước tiếp."),
+        sp(
+          "Good morning. I am Anna Smith.",
+          "Good morning, madam. Welcome.",
+          "Chào lại đúng buổi, xưng hô đúng giới tính, rồi mới sang bước tiếp.",
+        ),
       ],
       reading: read(
         `It is 8 AM. A guest arrives at ${lx.station}. ${lx.staff} says: "Good morning, madam. Welcome to ${RESORT}. May I have your name?"`,
@@ -992,7 +1389,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
             q: "Nhân viên làm mấy việc trong lời chào?",
             options: ["Ba: chào, đón, hỏi tên", "Một: chào", "Hai: chào và tạm biệt"],
             correct: 0,
-            explanation: "Good morning (chào) + Welcome to (đón) + May I have your name? (hỏi tên) — chuỗi ba bước chuẩn.",
+            explanation:
+              "Good morning (chào) + Welcome to (đón) + May I have your name? (hỏi tên) — chuỗi ba bước chuẩn.",
           },
           {
             q: "Gọi khách nữ bằng từ nào?",
@@ -1002,7 +1400,14 @@ function week6(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Good afternoon.", "Good afternoon, sir. Welcome.", "Good morning, sir.", "Afternoon.")],
+      game: [
+        game(
+          "Good afternoon.",
+          "Good afternoon, sir. Welcome.",
+          "Good morning, sir.",
+          "Afternoon.",
+        ),
+      ],
     }),
 
     lesson(lx, 6, 2, "Room, Floor & Items", "Phòng, tầng & đồ dùng", {
@@ -1011,11 +1416,23 @@ function week6(lx: P0Lexicon): LessonContent[] {
         v("Bring", "/brɪŋ/", "Mang tới", `I will bring two ${i1.word.toLowerCase()}s.`, "🛎️"),
       ],
       grammar: [
-        g(`Room ${lx.roomNo.digits} hundred, floor ${lx.floor.ordinal}.`, `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`, "Ôn tuần 2: số phòng đọc từng chữ số, tầng dùng số thứ tự."),
-        g(`I bring two ${i1.word.toLowerCase()}.`, `I will bring two ${i1.word.toLowerCase()}s.`, "Ôn hai lỗi cùng lúc: thiếu 'will' cho việc sắp làm, và thiếu -s số nhiều."),
+        g(
+          `Room ${lx.roomNo.digits} hundred, floor ${lx.floor.ordinal}.`,
+          `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
+          "Ôn tuần 2: số phòng đọc từng chữ số, tầng dùng số thứ tự.",
+        ),
+        g(
+          `I bring two ${i1.word.toLowerCase()}.`,
+          `I will bring two ${i1.word.toLowerCase()}s.`,
+          "Ôn hai lỗi cùng lúc: thiếu 'will' cho việc sắp làm, và thiếu -s số nhiều.",
+        ),
       ],
       speaking: [
-        sp("Which room and floor?", `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`, "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng."),
+        sp(
+          "Which room and floor?",
+          `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
+          "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng.",
+        ),
       ],
       reading: read(
         `${lx.staff} says: "Your room is ready, sir. Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor. I will bring two ${i1.word.toLowerCase()}s."`,
@@ -1050,11 +1467,23 @@ function week6(lx: P0Lexicon): LessonContent[] {
         v("Understand", "/ˌʌndəˈstænd/", "Hiểu", "I understand, madam.", "💡"),
       ],
       grammar: [
-        g(`${lx.service.en} open ${lx.service.open}, price ${lx.priced.usdWord} dollar.`, `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`, "Ôn tuần 3 và 4: 'at' trước giờ, 'It is' trước giá, và -s ở 'dollars'."),
-        g("I no understand.", "Sorry, I do not understand.", "Phủ định cần trợ động từ: I DO NOT understand. Xin lỗi trước rồi nhờ khách nhắc lại."),
+        g(
+          `${lx.service.en} open ${lx.service.open}, price ${lx.priced.usdWord} dollar.`,
+          `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`,
+          "Ôn tuần 3 và 4: 'at' trước giờ, 'It is' trước giá, và -s ở 'dollars'.",
+        ),
+        g(
+          "I no understand.",
+          "Sorry, I do not understand.",
+          "Phủ định cần trợ động từ: I DO NOT understand. Xin lỗi trước rồi nhờ khách nhắc lại.",
+        ),
       ],
       speaking: [
-        sp("Sorry, what time and how much?", `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`, "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài."),
+        sp(
+          "Sorry, what time and how much?",
+          `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`,
+          "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài.",
+        ),
       ],
       reading: read(
         `A guest asks about ${lx.service.en} and the ${lx.priced.en}. ${lx.staff} says: "We open at ${lx.service.open}, madam. The ${lx.priced.en} is ${lx.priced.usd} dollars."`,
@@ -1069,7 +1498,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
             q: "Cách trả lời hai câu hỏi cùng lúc tốt nhất là gì?",
             options: ["Tách thành hai câu ngắn", "Gộp thành một câu dài", "Chỉ trả lời một ý"],
             correct: 0,
-            explanation: "Ở trình độ này, hai câu ngắn rõ ràng hơn một câu dài — khách cũng dễ nghe hơn.",
+            explanation:
+              "Ở trình độ này, hai câu ngắn rõ ràng hơn một câu dài — khách cũng dễ nghe hơn.",
           },
         ],
       ),
@@ -1089,11 +1519,23 @@ function week6(lx: P0Lexicon): LessonContent[] {
         v("Anything else", "/ˈeniθɪŋ els/", "Còn gì nữa không ạ", "Anything else, madam?", "➕"),
       ],
       grammar: [
-        g("You want more?", "Anything else, madam?", "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, dùng được mọi bộ phận."),
-        g("Go enjoy.", "Enjoy your stay, sir.", "Câu chúc khi tiễn khách: 'Enjoy your stay' (khách đang lưu trú) hoặc 'Have a nice day'."),
+        g(
+          "You want more?",
+          "Anything else, madam?",
+          "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, dùng được mọi bộ phận.",
+        ),
+        g(
+          "Go enjoy.",
+          "Enjoy your stay, sir.",
+          "Câu chúc khi tiễn khách: 'Enjoy your stay' (khách đang lưu trú) hoặc 'Have a nice day'.",
+        ),
       ],
       speaking: [
-        sp(`Thank you. That is all.`, `Thank you, madam. Enjoy your stay.`, "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách."),
+        sp(
+          `Thank you. That is all.`,
+          `Thank you, madam. Enjoy your stay.`,
+          "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách.",
+        ),
       ],
       reading: read(
         `${lx.staff} brings the ${i2.word.toLowerCase()} and asks: "Anything else, madam?" The guest says: "No, thank you." ${lx.staff} says: "Enjoy your stay."`,
@@ -1108,11 +1550,19 @@ function week6(lx: P0Lexicon): LessonContent[] {
             q: "Câu chúc nào dùng với khách đang lưu trú?",
             options: ["Enjoy your stay.", "Goodbye forever.", "Good night now."],
             correct: 0,
-            explanation: "'Enjoy your stay' dành cho khách còn ở lại; 'Have a nice day' dùng khi khách ra ngoài.",
+            explanation:
+              "'Enjoy your stay' dành cho khách còn ở lại; 'Have a nice day' dùng khi khách ra ngoài.",
           },
         ],
       ),
-      game: [game("No, that is all. Thank you.", "Thank you, sir. Enjoy your stay.", "OK finish.", "Nothing more no.")],
+      game: [
+        game(
+          "No, that is all. Thank you.",
+          "Thank you, sir. Enjoy your stay.",
+          "OK finish.",
+          "Nothing more no.",
+        ),
+      ],
     }),
   ];
 }
@@ -1120,13 +1570,24 @@ function week6(lx: P0Lexicon): LessonContent[] {
 // ------------------------------------------------------------
 // Week assembly + spaced-recycling word lists.
 // ------------------------------------------------------------
-const WEEK_META: Record<number, { en: string; vi: string; build: (lx: P0Lexicon) => LessonContent[] }> = {
-  1: { en: "Alphabet, Names & Greetings", vi: "Bảng chữ cái, Đánh vần tên & Chào hỏi", build: week1 },
+const WEEK_META: Record<
+  number,
+  { en: string; vi: string; build: (lx: P0Lexicon) => LessonContent[] }
+> = {
+  1: {
+    en: "Alphabet, Names & Greetings",
+    vi: "Bảng chữ cái, Đánh vần tên & Chào hỏi",
+    build: week1,
+  },
   2: { en: "Numbers, Rooms & Floors", vi: "Số đếm, Số phòng & Số tầng", build: week2 },
   3: { en: "Times, Dates & Opening Hours", vi: "Giờ, Ngày & Giờ mở cửa dịch vụ", build: week3 },
   4: { en: "Prices, Money & Quantities", vi: "Giá cả, Tiền tệ & Số lượng", build: week4 },
   5: { en: "Core Courtesy Phrases", vi: "Cụm câu lịch sự cốt lõi", build: week5 },
-  6: { en: "Checkpoint — Survival Foundation", vi: "Kiểm tra tổng hợp — Nền tảng sống còn", build: week6 },
+  6: {
+    en: "Checkpoint — Survival Foundation",
+    vi: "Kiểm tra tổng hợp — Nền tảng sống còn",
+    build: week6,
+  },
 };
 
 /** Headwords recycled into a week's quizzes, drawn from earlier weeks of
@@ -1170,6 +1631,8 @@ export const PHASE0_WEEKS: Record<string, WeekContent> = Object.fromEntries(
 export const PHASE0_WORDS_BY_DEP: Record<string, string[]> = Object.fromEntries(
   Object.values(LEXICONS).map((lx) => [
     lx.code,
-    [1, 2, 3, 4, 5, 6].flatMap((w) => WEEK_META[w].build(lx).flatMap((l) => l.vocabulary.map((i) => i.word))),
+    [1, 2, 3, 4, 5, 6].flatMap((w) =>
+      WEEK_META[w].build(lx).flatMap((l) => l.vocabulary.map((i) => i.word)),
+    ),
   ]),
 );

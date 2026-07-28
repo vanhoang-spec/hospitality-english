@@ -35,20 +35,65 @@ const PHASES: Phase[] = [
   // Pre-A1 deliberately shares almost everything: digits, clock times and
   // the alphabet are identical work for every team, so no differentiation
   // floor applies.
-  { name: "P0 pre-A1", from: 1, to: 6, wordCap: 5, vocabMin: 8, vocabMax: 10, reviewPct: 0, deptSpecificMin: 0 },
+  {
+    name: "P0 pre-A1",
+    from: 1,
+    to: 6,
+    wordCap: 5,
+    vocabMin: 8,
+    vocabMax: 10,
+    reviewPct: 0,
+    deptSpecificMin: 0,
+  },
   // A1 switches to shared frames + department word banks (70/30).
-  { name: "P1 A1", from: 7, to: 14, wordCap: 8, vocabMin: 10, vocabMax: 12, reviewPct: 0.3, deptSpecificMin: 0.6 },
+  {
+    name: "P1 A1",
+    from: 7,
+    to: 14,
+    wordCap: 8,
+    vocabMin: 10,
+    vocabMax: 12,
+    reviewPct: 0.3,
+    deptSpecificMin: 0.6,
+  },
   // A2.1 — only the language function stays shared; topics separate.
   // The floor sits below the ~77% the spine actually delivers because
   // week 22 is a checkpoint and leans harder on shared evaluative words.
-  { name: "P2 A2.1", from: 15, to: 22, wordCap: 12, vocabMin: 12, vocabMax: 16, reviewPct: 0.3, deptSpecificMin: 0.65 },
+  {
+    name: "P2 A2.1",
+    from: 15,
+    to: 22,
+    wordCap: 12,
+    vocabMin: 12,
+    vocabMax: 16,
+    reviewPct: 0.3,
+    deptSpecificMin: 0.65,
+  },
   // A2+ — the department now acts on its own initiative. Sentence cap
   // rises to 16 words so a two-clause conditional offer fits, and the
   // recycling quota rises to 35%.
-  { name: "P3 A2+", from: 23, to: 30, wordCap: 16, vocabMin: 14, vocabMax: 16, reviewPct: 0.35, deptSpecificMin: 0.65 },
+  {
+    name: "P3 A2+",
+    from: 23,
+    to: 30,
+    wordCap: 16,
+    vocabMin: 14,
+    vocabMax: 16,
+    reviewPct: 0.35,
+    deptSpecificMin: 0.65,
+  },
   // B1.1 — the top of the ladder. Three clauses are allowed, so the cap
   // rises to 22 words; recycling peaks at 40%.
-  { name: "P4 B1.1", from: 31, to: 40, wordCap: 22, vocabMin: 14, vocabMax: 18, reviewPct: 0.4, deptSpecificMin: 0.65 },
+  {
+    name: "P4 B1.1",
+    from: 31,
+    to: 40,
+    wordCap: 22,
+    vocabMin: 14,
+    vocabMax: 18,
+    reviewPct: 0.4,
+    deptSpecificMin: 0.65,
+  },
 ];
 
 /** Weeks 15+ are the hand-authored A2-B1 payloads; they predate the matrix
@@ -124,7 +169,8 @@ const KNOWN_BAD_STRINGS = [
 function collectStrings(obj: unknown, out: string[]): void {
   if (typeof obj === "string") out.push(obj);
   else if (Array.isArray(obj)) obj.forEach((v) => collectStrings(v, out));
-  else if (obj && typeof obj === "object") Object.values(obj).forEach((v) => collectStrings(v, out));
+  else if (obj && typeof obj === "object")
+    Object.values(obj).forEach((v) => collectStrings(v, out));
 }
 
 // ============================================================
@@ -148,7 +194,9 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
       if (phase) {
         const n = maxSentenceLen(gr.polite);
         if (n > phase.wordCap + 1)
-          errors.push(`${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`);
+          errors.push(
+            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+          );
       }
     }
 
@@ -156,12 +204,16 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
       if (phase) {
         const n = maxSentenceLen(s.targetResponse);
         if (n > phase.wordCap + 1)
-          errors.push(`${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`);
+          errors.push(
+            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+          );
       }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.
       const lw = longWords(s.targetResponse);
       if (lw.length < 2)
-        errors.push(`${where}: target "${s.targetResponse}" has ${lw.length} word(s) >=4 letters — cloze silently dropped`);
+        errors.push(
+          `${where}: target "${s.targetResponse}" has ${lw.length} word(s) >=4 letters — cloze silently dropped`,
+        );
     }
 
     const guestPrompts = new Set(lesson.speaking.map((s) => s.guestPrompt));
@@ -176,7 +228,8 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
         else legacyGameDupes.push(msg);
       }
       const correct = gm.options.filter((o) => o.correct).length;
-      if (correct !== 1) errors.push(`${where}: game "${gm.prompt}" has ${correct} correct options`);
+      if (correct !== 1)
+        errors.push(`${where}: game "${gm.prompt}" has ${correct} correct options`);
       if (new Set(gm.options.map((o) => o.text)).size !== gm.options.length)
         errors.push(`${where}: game "${gm.prompt}" has duplicate options`);
     }
@@ -191,12 +244,16 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
 
   if (phase) {
     if (vocabCount < phase.vocabMin || vocabCount > phase.vocabMax)
-      errors.push(`${key}: ${vocabCount} vocab items (${phase.name} allows ${phase.vocabMin}-${phase.vocabMax})`);
+      errors.push(
+        `${key}: ${vocabCount} vocab items (${phase.name} allows ${phase.vocabMin}-${phase.vocabMax})`,
+      );
 
     const need = Math.ceil(vocabCount * phase.reviewPct);
     const got = week.reviewWords?.length ?? 0;
     if (got < need)
-      errors.push(`${key}: reviewWords has ${got}, needs >=${need} (${Math.round(phase.reviewPct * 100)}% of ${vocabCount})`);
+      errors.push(
+        `${key}: reviewWords has ${got}, needs >=${need} (${Math.round(phase.reviewPct * 100)}% of ${vocabCount})`,
+      );
   }
 }
 
@@ -208,8 +265,7 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
   collectStrings(week, texts);
   const haystack = texts.join("\n").toLowerCase();
   for (const bad of KNOWN_BAD_STRINGS) {
-    if (haystack.includes(bad))
-      errors.push(`${key}: known-bad string regressed: "${bad}"`);
+    if (haystack.includes(bad)) errors.push(`${key}: known-bad string regressed: "${bad}"`);
   }
 }
 
@@ -237,7 +293,8 @@ for (const phase of PHASES) {
 
     // A headword is "shared" when more than one department teaches it this week.
     const seen = new Map<string, number>();
-    for (const hw of perDep.values()) for (const h of new Set(hw)) seen.set(h, (seen.get(h) ?? 0) + 1);
+    for (const hw of perDep.values())
+      for (const h of new Set(hw)) seen.set(h, (seen.get(h) ?? 0) + 1);
 
     let specific = 0;
     let total = 0;
@@ -248,7 +305,9 @@ for (const phase of PHASES) {
       }
     }
     const pct = total ? specific / total : 0;
-    ratioReport.push(`  week ${String(w).padStart(2)} — ${Math.round(pct * 100)}% department-specific`);
+    ratioReport.push(
+      `  week ${String(w).padStart(2)} — ${Math.round(pct * 100)}% department-specific`,
+    );
     if (pct < phase.deptSpecificMin)
       errors.push(
         `week ${w}: only ${Math.round(pct * 100)}% of headwords are department-specific (${phase.name} floor ${Math.round(phase.deptSpecificMin * 100)}%)`,
@@ -280,7 +339,8 @@ for (const dep of DEPS) {
         firstSeen.set(key, w);
       } else if (earlier !== w) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
-        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`)) spiralIntoLegacy.push(msg);
+        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
+          spiralIntoLegacy.push(msg);
         else errors.push(msg);
       }
     }
@@ -312,7 +372,8 @@ for (const dep of DEPS) {
   for (let w = 1; w <= 14; w++) {
     for (const h of headwords(dep, w)) {
       const later = laterWeeks.get(h.toLowerCase());
-      if (later !== undefined) spiralRepeats.push(`${dep}: "${h}" taught at week ${w} and again at week ${later}`);
+      if (later !== undefined)
+        spiralRepeats.push(`${dep}: "${h}" taught at week ${w} and again at week ${later}`);
     }
   }
 }
@@ -330,9 +391,11 @@ let neverRecycledSample: string[] = [];
 for (const dep of DEPS) {
   const encounters = new Map<string, number>();
   for (let w = 1; w <= 14; w++) {
-    for (const h of headwords(dep, w)) encounters.set(h.toLowerCase(), (encounters.get(h.toLowerCase()) ?? 0) + 1);
+    for (const h of headwords(dep, w))
+      encounters.set(h.toLowerCase(), (encounters.get(h.toLowerCase()) ?? 0) + 1);
     const wk = ALL_WEEKS[`${dep}-${w}`];
-    for (const r of wk?.reviewWords ?? []) encounters.set(r.toLowerCase(), (encounters.get(r.toLowerCase()) ?? 0) + 1);
+    for (const r of wk?.reviewWords ?? [])
+      encounters.set(r.toLowerCase(), (encounters.get(r.toLowerCase()) ?? 0) + 1);
   }
   for (const [word, n] of encounters) {
     freqBuckets.set(n, (freqBuckets.get(n) ?? 0) + 1);
@@ -353,7 +416,9 @@ if (recycledPct < 0.5)
 // ============================================================
 // Report
 // ============================================================
-console.log(`Checked ${Object.keys(ALL_WEEKS).length} dep-weeks across ${DEPS.length} departments.\n`);
+console.log(
+  `Checked ${Object.keys(ALL_WEEKS).length} dep-weeks across ${DEPS.length} departments.\n`,
+);
 
 console.log("Department differentiation:");
 for (const line of ratioReport) console.log(line);
@@ -365,12 +430,16 @@ if (neverRecycled)
   console.log(`  never recycled: ${neverRecycled} (e.g. ${neverRecycledSample.join(", ")})`);
 
 if (spiralIntoLegacy.length) {
-  console.log(`\nSurvival words returning in the hand-authored weeks (${spiralIntoLegacy.length}) — spiral, allowed:`);
+  console.log(
+    `\nSurvival words returning in the hand-authored weeks (${spiralIntoLegacy.length}) — spiral, allowed:`,
+  );
   for (const s of spiralIntoLegacy) console.log("  ~ " + s);
 }
 
 if (spiralRepeats.length) {
-  console.log(`\nVocabulary revisited at A2-B1 (${spiralRepeats.length}) — spiral repeats, review if intentional:`);
+  console.log(
+    `\nVocabulary revisited at A2-B1 (${spiralRepeats.length}) — spiral repeats, review if intentional:`,
+  );
   for (const s of spiralRepeats) console.log("  ~ " + s);
 }
 

@@ -11,7 +11,18 @@ import { SuiteComingSoon } from "./SuiteComingSoon";
 // number WORDS. Expand digit tokens so learners aren't failed for
 // pronouncing a number correctly.
 const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-const TEENS = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+const TEENS = [
+  "ten",
+  "eleven",
+  "twelve",
+  "thirteen",
+  "fourteen",
+  "fifteen",
+  "sixteen",
+  "seventeen",
+  "eighteen",
+  "nineteen",
+];
 const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
 
 function digitToWords(tok: string): string[] {
@@ -88,7 +99,15 @@ export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
   return <SpeakingSuiteInner dep={dep!} week={week!} content={content} />;
 }
 
-function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
+function SpeakingSuiteInner({
+  dep,
+  week,
+  content,
+}: {
+  dep: string;
+  week: string;
+  content: WeekContent;
+}) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const th = passThresholds(week);
   const earned = useRef(0);
@@ -195,123 +214,142 @@ function SpeakingSuiteInner({ dep, week, content }: { dep: string; week: string;
     <div className="space-y-4">
       {scenarios.length > 1 && (
         <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-          <span>Tình huống {idx + 1}/{scenarios.length}</span>
-          <span className="text-primary">Đạt chuẩn: {passedRef.current.size}/{scenarios.length}</span>
+          <span>
+            Tình huống {idx + 1}/{scenarios.length}
+          </span>
+          <span className="text-primary">
+            Đạt chuẩn: {passedRef.current.size}/{scenarios.length}
+          </span>
         </div>
       )}
       <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="border border-primary/30 bg-card p-6 shadow-xl"
-      >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Lời khách nói</div>
-        <p className="mt-4 font-display text-2xl leading-snug">"{scenario.complaint}"</p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <button
-            onClick={speakComplaint}
-            className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
-          >
-            ▶ Nghe lời khách
-          </button>
-          <button
-            onClick={() => speakEN(scenario.target, 0.9)}
-            className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
-          >
-            🔊 Nghe câu mẫu
-          </button>
-          <button
-            onClick={() => {
-              setIdx((i) => (i + 1) % scenarios.length);
-              setTranscript("");
-              setResult(null);
-            }}
-            className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
-          >
-            Tình huống tiếp theo →
-          </button>
-        </div>
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border border-primary/30 bg-card p-6 shadow-xl"
+        >
+          <div className="text-xs uppercase tracking-[0.3em] text-primary">Lời khách nói</div>
+          <p className="mt-4 font-display text-2xl leading-snug">"{scenario.complaint}"</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <button
+              onClick={speakComplaint}
+              className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
+            >
+              ▶ Nghe lời khách
+            </button>
+            <button
+              onClick={() => speakEN(scenario.target, 0.9)}
+              className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+            >
+              🔊 Nghe câu mẫu
+            </button>
+            <button
+              onClick={() => {
+                setIdx((i) => (i + 1) % scenarios.length);
+                setTranscript("");
+                setResult(null);
+              }}
+              className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+            >
+              Tình huống tiếp theo →
+            </button>
+          </div>
 
-        <div className="mt-8 text-xs uppercase tracking-[0.3em] text-primary">Câu trả lời chuẩn</div>
-        <div className="mt-3 leading-relaxed">
-          {result ? (
-            result.words.map((w, i) => (
-              <span
-                key={i}
-                style={{
-                  color: result.correctIdx.has(i) ? "#7fe3a3" : "#ff8a94",
-                  background: result.correctIdx.has(i) ? "rgba(15,81,50,0.4)" : "rgba(132,32,41,0.35)",
-                  padding: "2px 4px",
-                  marginRight: 4,
-                  borderRadius: 3,
-                }}
-              >
-                {w}
-              </span>
-            ))
-          ) : (
-            <span className="text-foreground/80">{scenario.target}</span>
-          )}
-        </div>
-        {scenario.tip && (
-          <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">💡 {scenario.tip}</p>
-        )}
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="border border-primary/30 bg-card p-6 shadow-xl"
-      >
-        <div className="text-xs uppercase tracking-[0.3em] text-primary">Câu trả lời của bạn</div>
-        <div className="mt-6 flex flex-col items-center">
-          <button
-            onClick={toggle}
-            className={`relative flex h-28 w-28 items-center justify-center rounded-full border-2 text-3xl shadow-xl transition-all ${
-              recording
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-primary bg-card text-primary hover:scale-105"
-            }`}
-            style={
-              recording
-                ? { boxShadow: "0 0 32px 8px rgba(212,175,55,0.55)", animation: "pulseGold 1.2s ease-in-out infinite" }
-                : undefined
-            }
-            aria-label={recording ? "Stop recording" : "Start recording"}
-          >
-            🎙
-          </button>
-          <style>{`@keyframes pulseGold { 0%,100% { box-shadow: 0 0 24px 6px rgba(212,175,55,0.45);} 50% { box-shadow: 0 0 44px 14px rgba(212,175,55,0.75);} }`}</style>
-          <p className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground/60">
-            {recording ? "Đang nghe… bấm để dừng" : "Bấm để bắt đầu ghi âm"}
-          </p>
-        </div>
-
-        <div className="mt-6 min-h-[80px] border border-primary/20 bg-background/40 p-4 text-sm text-foreground/80">
-          {transcript || <span className="text-foreground/40">Lời bạn nói sẽ hiện ở đây.</span>}
-        </div>
-
-        {result && (
-          <div className="mt-5 flex items-center justify-between">
-            <div>
-              <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">Độ chính xác</div>
-              <div className="font-display text-3xl text-primary">{Math.round(result.accuracy * 100)}%</div>
-            </div>
-            {result.accuracy * 100 >= th.accPct && result.orderRatio >= th.orderRatio && (
-              <div className="text-xs uppercase tracking-[0.25em] text-primary">+5 ⭐ đạt chuẩn</div>
-            )}
-            {result.accuracy * 100 >= th.accPct && result.orderRatio < th.orderRatio && (
-              <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
-              </div>
+          <div className="mt-8 text-xs uppercase tracking-[0.3em] text-primary">
+            Câu trả lời chuẩn
+          </div>
+          <div className="mt-3 leading-relaxed">
+            {result ? (
+              result.words.map((w, i) => (
+                <span
+                  key={i}
+                  style={{
+                    color: result.correctIdx.has(i) ? "#7fe3a3" : "#ff8a94",
+                    background: result.correctIdx.has(i)
+                      ? "rgba(15,81,50,0.4)"
+                      : "rgba(132,32,41,0.35)",
+                    padding: "2px 4px",
+                    marginRight: 4,
+                    borderRadius: 3,
+                  }}
+                >
+                  {w}
+                </span>
+              ))
+            ) : (
+              <span className="text-foreground/80">{scenario.target}</span>
             )}
           </div>
-        )}
-        {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
-      </motion.div>
+          {scenario.tip && (
+            <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
+              💡 {scenario.tip}
+            </p>
+          )}
+        </motion.div>
 
-      {fireworks && <FireworksCanvas />}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="border border-primary/30 bg-card p-6 shadow-xl"
+        >
+          <div className="text-xs uppercase tracking-[0.3em] text-primary">Câu trả lời của bạn</div>
+          <div className="mt-6 flex flex-col items-center">
+            <button
+              onClick={toggle}
+              className={`relative flex h-28 w-28 items-center justify-center rounded-full border-2 text-3xl shadow-xl transition-all ${
+                recording
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary bg-card text-primary hover:scale-105"
+              }`}
+              style={
+                recording
+                  ? {
+                      boxShadow: "0 0 32px 8px rgba(212,175,55,0.55)",
+                      animation: "pulseGold 1.2s ease-in-out infinite",
+                    }
+                  : undefined
+              }
+              aria-label={recording ? "Stop recording" : "Start recording"}
+            >
+              🎙
+            </button>
+            <style>{`@keyframes pulseGold { 0%,100% { box-shadow: 0 0 24px 6px rgba(212,175,55,0.45);} 50% { box-shadow: 0 0 44px 14px rgba(212,175,55,0.75);} }`}</style>
+            <p className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground/60">
+              {recording ? "Đang nghe… bấm để dừng" : "Bấm để bắt đầu ghi âm"}
+            </p>
+          </div>
+
+          <div className="mt-6 min-h-[80px] border border-primary/20 bg-background/40 p-4 text-sm text-foreground/80">
+            {transcript || <span className="text-foreground/40">Lời bạn nói sẽ hiện ở đây.</span>}
+          </div>
+
+          {result && (
+            <div className="mt-5 flex items-center justify-between">
+              <div>
+                <div className="text-xs uppercase tracking-[0.25em] text-foreground/60">
+                  Độ chính xác
+                </div>
+                <div className="font-display text-3xl text-primary">
+                  {Math.round(result.accuracy * 100)}%
+                </div>
+              </div>
+              {result.accuracy * 100 >= th.accPct && result.orderRatio >= th.orderRatio && (
+                <div className="text-xs uppercase tracking-[0.25em] text-primary">
+                  +5 ⭐ đạt chuẩn
+                </div>
+              )}
+              {result.accuracy * 100 >= th.accPct && result.orderRatio < th.orderRatio && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
+                </div>
+              )}
+            </div>
+          )}
+          {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
+        </motion.div>
+
+        {fireworks && <FireworksCanvas />}
       </div>
     </div>
   );
@@ -339,8 +377,12 @@ function FireworksCanvas() {
         const a = (Math.PI * 2 * i) / n;
         const v = 2 + Math.random() * 4;
         particles.push({
-          x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
-          life: 1, color: colors[Math.floor(Math.random() * colors.length)],
+          x,
+          y,
+          vx: Math.cos(a) * v,
+          vy: Math.sin(a) * v,
+          life: 1,
+          color: colors[Math.floor(Math.random() * colors.length)],
         });
       }
     }
@@ -348,7 +390,8 @@ function FireworksCanvas() {
     let rafId = 0;
     function loop() {
       frame++;
-      if (frame % 18 === 0 && frame < 110) burst(Math.random() * W, H * 0.25 + Math.random() * H * 0.4);
+      if (frame % 18 === 0 && frame < 110)
+        burst(Math.random() * W, H * 0.25 + Math.random() * H * 0.4);
       ctx!.clearRect(0, 0, W, H);
       for (const p of particles) {
         p.x += p.vx;
@@ -362,11 +405,18 @@ function FireworksCanvas() {
         ctx!.fill();
       }
       ctx!.globalAlpha = 1;
-      for (let i = particles.length - 1; i >= 0; i--) if (particles[i].life <= 0) particles.splice(i, 1);
+      for (let i = particles.length - 1; i >= 0; i--)
+        if (particles[i].life <= 0) particles.splice(i, 1);
       rafId = requestAnimationFrame(loop);
     }
     rafId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafId);
   }, []);
-  return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-50" style={{ width: "100vw", height: "100vh" }} />;
+  return (
+    <canvas
+      ref={ref}
+      className="pointer-events-none fixed inset-0 z-50"
+      style={{ width: "100vw", height: "100vh" }}
+    />
+  );
 }

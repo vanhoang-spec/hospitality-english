@@ -30,7 +30,15 @@ export function GrammarSuite({ dep, week }: { dep?: string; week?: string }) {
   return <GrammarSuiteInner dep={dep!} week={week!} content={content} />;
 }
 
-function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
+function GrammarSuiteInner({
+  dep,
+  week,
+  content,
+}: {
+  dep: string;
+  week: string;
+  content: WeekContent;
+}) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const awardedRoundRef = useRef(-1);
@@ -43,7 +51,10 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
     l.grammar.map((g) => ({
       bad: g.rude,
       target: g.polite,
-      chips: g.polite.replace(/[.!?,]/g, "").split(/\s+/).filter(Boolean),
+      chips: g.polite
+        .replace(/[.!?,]/g, "")
+        .split(/\s+/)
+        .filter(Boolean),
       rule: g.rule,
     })),
   );
@@ -157,15 +168,26 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-        <span>Câu {puzzleIdx + 1}/{puzzles.length}</span>
+        <span>
+          Câu {puzzleIdx + 1}/{puzzles.length}
+        </span>
         <span className="text-primary">
-          Đạt chuẩn: {Array.from(outcomes.values()).filter((o) => o === "correct").length}/{puzzles.length}
+          Đạt chuẩn: {Array.from(outcomes.values()).filter((o) => o === "correct").length}/
+          {puzzles.length}
         </span>
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-destructive/40 bg-card p-5 shadow-xl">
-        <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">Lỗi thường gặp</div>
-        <p className="mt-2 font-display text-xl line-through decoration-destructive/60">"{puzzle.bad}"</p>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="border border-destructive/40 bg-card p-5 shadow-xl"
+      >
+        <div className="text-[10px] uppercase tracking-[0.3em] text-destructive">
+          Lỗi thường gặp
+        </div>
+        <p className="mt-2 font-display text-xl line-through decoration-destructive/60">
+          "{puzzle.bad}"
+        </p>
         <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-primary">
           Ghép câu lịch sự 5 sao · Chạm hai chip để đổi vị trí
         </div>
@@ -185,7 +207,9 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {tray.length === 0 && (
-            <span className="text-xs italic text-foreground/40">Bấm các chip bên dưới theo đúng thứ tự. Chạm hai chip đã đặt để đổi chỗ.</span>
+            <span className="text-xs italic text-foreground/40">
+              Bấm các chip bên dưới theo đúng thứ tự. Chạm hai chip đã đặt để đổi chỗ.
+            </span>
           )}
           {tray.map((w, i) => {
             const selected = selectedTray === i;
@@ -230,7 +254,10 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button onClick={check} className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
+        <button
+          onClick={check}
+          className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+        >
           Kiểm tra câu
         </button>
         <button
@@ -240,17 +267,34 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
         >
           Xem đáp án
         </button>
-        <button onClick={next} className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary">
+        <button
+          onClick={next}
+          className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
+        >
           Câu tiếp theo →
         </button>
-        {solvedCleanly && <span className="text-xs uppercase tracking-[0.25em] text-primary">Hoàn hảo. +4 ⭐</span>}
-        {checked === true && revealed && <span className="text-xs uppercase tracking-[0.25em] text-foreground/60">Đúng — nhưng đã xem đáp án nên không tính sao.</span>}
-        {checked === false && <span className="text-xs uppercase tracking-[0.25em] text-destructive">Gần đúng rồi — sắp lại thứ tự nhé.</span>}
+        {solvedCleanly && (
+          <span className="text-xs uppercase tracking-[0.25em] text-primary">Hoàn hảo. +4 ⭐</span>
+        )}
+        {checked === true && revealed && (
+          <span className="text-xs uppercase tracking-[0.25em] text-foreground/60">
+            Đúng — nhưng đã xem đáp án nên không tính sao.
+          </span>
+        )}
+        {checked === false && (
+          <span className="text-xs uppercase tracking-[0.25em] text-destructive">
+            Gần đúng rồi — sắp lại thứ tự nhé.
+          </span>
+        )}
       </div>
 
       {/* Rule explanation: shown after any verify attempt or reveal */}
       {(checked !== null || revealed) && puzzle.rule && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="border-l-2 border-primary/60 bg-card p-4 text-sm shadow-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-l-2 border-primary/60 bg-card p-4 text-sm shadow-xl"
+        >
           <span className="text-[10px] uppercase tracking-[0.25em] text-primary">Quy tắc · </span>
           <span className="text-foreground/85">{puzzle.rule}</span>
         </motion.div>
@@ -266,9 +310,17 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
 
       {/* Memory bonus round after a clean solve */}
       {solvedCleanly && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="border border-primary bg-card p-5 shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Thử thách trí nhớ · +2 ⭐</div>
-          <p className="mt-2 text-sm text-foreground/75">Không nhìn các chip phía trên — gõ lại toàn bộ câu lịch sự từ trí nhớ:</p>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border border-primary bg-card p-5 shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Thử thách trí nhớ · +2 ⭐
+          </div>
+          <p className="mt-2 text-sm text-foreground/75">
+            Không nhìn các chip phía trên — gõ lại toàn bộ câu lịch sự từ trí nhớ:
+          </p>
           <div className="mt-3 flex gap-2">
             <input
               value={memoryTyped}
@@ -288,8 +340,14 @@ function GrammarSuiteInner({ dep, week, content }: { dep: string; week: string; 
               Kiểm tra
             </button>
           </div>
-          {memoryResult === true && <p className="mt-2 text-xs uppercase tracking-[0.2em] text-primary">Xuất sắc! +2 ⭐</p>}
-          {memoryResult === false && <p className="mt-2 text-xs text-destructive">Chưa khớp — thử lại hoặc bấm Next puzzle.</p>}
+          {memoryResult === true && (
+            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-primary">Xuất sắc! +2 ⭐</p>
+          )}
+          {memoryResult === false && (
+            <p className="mt-2 text-xs text-destructive">
+              Chưa khớp — thử lại hoặc bấm Next puzzle.
+            </p>
+          )}
         </motion.div>
       )}
     </div>

@@ -5,17 +5,17 @@ dropping bank words into fixed frames, so **each slot has a required part of
 speech**. A word that does not fit its frame produces ungrammatical output —
 this is the single most common defect in this codebase's content history.
 
-| Slot | Week | Part of speech required | Frames it must fit |
-|---|---|---|---|
-| `story` | 31 | **noun phrase** | `The {w} is what makes this place special.` · `Let me tell you about the {w}.` |
-| `preferences` | 32 | **noun phrase** naming a taste/need | `Based on your {w}, I would suggest the quiet wing.` · `May I note your {w} in the system?` |
-| `disputes` | 33 | **noun phrase** naming a claim/loss | `I am very sorry about the {w}.` · `Our policy allows compensation for the {w}.` |
-| `occasions` | 34 | **noun phrase** naming an event element | `We have prepared the {w} for you.` · `The {w} will be ready before you return.` |
-| `tradeoffs` | 35 | **bare verb phrase** (after "we"/"I can") | `What if we {w} instead?` · `I can {w} in exchange for a longer stay.` |
-| `emergencies` | 36 | **noun phrase** naming an incident | `There is a {w} on the third floor.` · `Please stay calm — we are handling the {w}.` |
-| `terms` | 37 | **noun phrase** naming a contract term | `The {w} is valid for twelve months.` · `Could we review the {w} together?` |
-| `proposal` | 38 | **noun phrase** naming a proposal element | `The {w} is included in this offer.` · `I have attached the {w} for your review.` |
-| `wrapUp` | 40 | **noun phrase**, mixed review | `Let me confirm the {w} with you.` |
+| Slot          | Week | Part of speech required                   | Frames it must fit                                                                          |
+| ------------- | ---- | ----------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `story`       | 31   | **noun phrase**                           | `The {w} is what makes this place special.` · `Let me tell you about the {w}.`              |
+| `preferences` | 32   | **noun phrase** naming a taste/need       | `Based on your {w}, I would suggest the quiet wing.` · `May I note your {w} in the system?` |
+| `disputes`    | 33   | **noun phrase** naming a claim/loss       | `I am very sorry about the {w}.` · `Our policy allows compensation for the {w}.`            |
+| `occasions`   | 34   | **noun phrase** naming an event element   | `We have prepared the {w} for you.` · `The {w} will be ready before you return.`            |
+| `tradeoffs`   | 35   | **bare verb phrase** (after "we"/"I can") | `What if we {w} instead?` · `I can {w} in exchange for a longer stay.`                      |
+| `emergencies` | 36   | **noun phrase** naming an incident        | `There is a {w} on the third floor.` · `Please stay calm — we are handling the {w}.`        |
+| `terms`       | 37   | **noun phrase** naming a contract term    | `The {w} is valid for twelve months.` · `Could we review the {w} together?`                 |
+| `proposal`    | 38   | **noun phrase** naming a proposal element | `The {w} is included in this offer.` · `I have attached the {w} for your review.`           |
+| `wrapUp`      | 40   | **noun phrase**, mixed review             | `Let me confirm the {w} with you.`                                                          |
 
 ## Hard rules
 

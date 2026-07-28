@@ -10,7 +10,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Departments Lounge — Hospitality English Academy" },
-      { name: "description", content: "Choose your training department in the Embassy Hospitality Academy lounge." },
+      {
+        name: "description",
+        content: "Choose your training department in the Embassy Hospitality Academy lounge.",
+      },
     ],
   }),
   component: Lounge,
@@ -34,9 +37,12 @@ function ReviewBanner() {
         className="flex flex-wrap items-center justify-between gap-3 border border-primary bg-primary/10 px-5 py-4 shadow-xl transition-colors hover:bg-primary/15"
       >
         <div>
-          <span className="font-display text-lg text-foreground">🔁 Ôn tập hôm nay — {due} mục đến hạn</span>
+          <span className="font-display text-lg text-foreground">
+            🔁 Ôn tập hôm nay — {due} mục đến hạn
+          </span>
           <p className="mt-0.5 text-xs text-foreground/65">
-            Vài phút ôn đúng thời điểm giúp từ vựng ở lại trí nhớ lâu dài. Hoàn thành để giữ chuỗi ngày học 🔥
+            Vài phút ôn đúng thời điểm giúp từ vựng ở lại trí nhớ lâu dài. Hoàn thành để giữ chuỗi
+            ngày học 🔥
           </p>
         </div>
         <span className="text-xs uppercase tracking-[0.25em] text-primary">Bắt đầu →</span>
@@ -64,16 +70,20 @@ function Lounge() {
         >
           <div className="flex items-center gap-3">
             <span className="h-px w-10 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary">Departments Lounge</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-primary">
+              Departments Lounge
+            </span>
           </div>
           <h1 className="font-display mt-4 text-5xl leading-tight md:text-6xl">
             Choose your <span className="italic text-primary">atelier</span>.
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
-            Six departments. Forty weeks each. A quiet path to five-star fluency. Select a card to enter the workplace shift timeline.
+            Six departments. Forty weeks each. A quiet path to five-star fluency. Select a card to
+            enter the workplace shift timeline.
           </p>
           <p className="mt-2 max-w-2xl text-sm italic text-foreground/50">
-            Sáu bộ phận. Bốn mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
+            Sáu bộ phận. Bốn mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn
+            5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
           </p>
         </motion.div>
 
@@ -126,7 +136,9 @@ function FlipCard({ dep, index }: { dep: (typeof DEPARTMENTS)[number]; index: nu
             <div>
               <h3 className="font-display text-3xl text-foreground">{dep.name_en}</h3>
               <p className="mt-1 text-sm italic text-foreground/60">{dep.name_vi}</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">{dep.tagline}</p>
+              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-foreground/50">
+                {dep.tagline}
+              </p>
             </div>
           </div>
 

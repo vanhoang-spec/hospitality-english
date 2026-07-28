@@ -64,7 +64,8 @@ export function useProfile(userId: string | undefined) {
 
 export function useInvalidateProfile() {
   const queryClient = useQueryClient();
-  return (userId: string | undefined) => queryClient.invalidateQueries({ queryKey: profileQueryKey(userId) });
+  return (userId: string | undefined) =>
+    queryClient.invalidateQueries({ queryKey: profileQueryKey(userId) });
 }
 
 // Patches the cached profile synchronously (no network round-trip) so a

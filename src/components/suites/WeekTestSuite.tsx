@@ -13,10 +13,39 @@ const TOTAL_QUESTIONS = 20;
 const MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
 
 type Question =
-  | { kind: "vocab"; key: string; prompt: string; options: string[]; correctIdx: number; note: string }
-  | { kind: "grammar"; key: string; prompt: string; options: string[]; correctIdx: number; note: string }
-  | { kind: "listening"; key: string; audio: string; options: string[]; correctIdx: number; note: string }
-  | { kind: "reading"; key: string; passage: string; prompt: string; options: string[]; correctIdx: number; note: string };
+  | {
+      kind: "vocab";
+      key: string;
+      prompt: string;
+      options: string[];
+      correctIdx: number;
+      note: string;
+    }
+  | {
+      kind: "grammar";
+      key: string;
+      prompt: string;
+      options: string[];
+      correctIdx: number;
+      note: string;
+    }
+  | {
+      kind: "listening";
+      key: string;
+      audio: string;
+      options: string[];
+      correctIdx: number;
+      note: string;
+    }
+  | {
+      kind: "reading";
+      key: string;
+      passage: string;
+      prompt: string;
+      options: string[];
+      correctIdx: number;
+      note: string;
+    };
 
 function shuffle<T>(a: T[]): T[] {
   const c = [...a];
@@ -31,7 +60,9 @@ function speakVaried(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis.getVoices().filter((v) => v.lang.toLowerCase().startsWith("en"));
+  const voices = window.speechSynthesis
+    .getVoices()
+    .filter((v) => v.lang.toLowerCase().startsWith("en"));
   if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
   u.lang = u.voice?.lang ?? "en-US";
   u.rate = 0.85;
@@ -132,7 +163,10 @@ function buildPaper(dep: string, week: string): Question[] {
     note: q.explanation ?? "",
   }));
 
-  return shuffle([...vocabQs, ...grammarQs, ...listeningQs, ...readingQs]).slice(0, TOTAL_QUESTIONS);
+  return shuffle([...vocabQs, ...grammarQs, ...listeningQs, ...readingQs]).slice(
+    0,
+    TOTAL_QUESTIONS,
+  );
 }
 
 export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
@@ -169,7 +203,10 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     setAnswers(next);
 
     if (idx + 1 >= paper.length) {
-      const correct = paper.reduce((n, question, i) => n + (next[i] === question.correctIdx ? 1 : 0), 0);
+      const correct = paper.reduce(
+        (n, question, i) => n + (next[i] === question.correctIdx ? 1 : 0),
+        0,
+      );
       const pct = Math.round((correct / paper.length) * 100);
       setScorePct(pct);
       const passed = pct >= CHECKPOINT_PASS_PCT;
@@ -177,7 +214,10 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         awardedRef.current = true;
         awardStars(correct);
       }
-      recordSuiteResult(dep, week!, "weektest", passed ? correct : 0, { scorePct: pct, mastered: passed });
+      recordSuiteResult(dep, week!, "weektest", passed ? correct : 0, {
+        scorePct: pct,
+        mastered: passed,
+      });
       // Open the next phase for this session immediately; the upsert above
       // is fire-and-forget, so waiting for it to be readable would leave
       // the learner staring at a lock they just cleared.
@@ -198,18 +238,29 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   if (stage === "intro") {
     return (
       <div className="mx-auto max-w-2xl">
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="border border-primary bg-card p-7 shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Sát hạch cuối giai đoạn</div>
-          <h2 className="font-display mt-3 text-3xl text-foreground">Bài kiểm tra tổng hợp tuần {week}</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border border-primary bg-card p-7 shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Sát hạch cuối giai đoạn
+          </div>
+          <h2 className="font-display mt-3 text-3xl text-foreground">
+            Bài kiểm tra tổng hợp tuần {week}
+          </h2>
           <div className="mt-5 space-y-3 text-sm leading-relaxed text-foreground/80">
             <p>
-              {TOTAL_QUESTIONS} câu hỏi trộn từ toàn bộ giai đoạn: từ vựng, ngữ pháp lịch sự, nghe hiểu và đọc hiểu — không chỉ riêng tuần này.
+              {TOTAL_QUESTIONS} câu hỏi trộn từ toàn bộ giai đoạn: từ vựng, ngữ pháp lịch sự, nghe
+              hiểu và đọc hiểu — không chỉ riêng tuần này.
             </p>
             <p>
-              Bài thi <strong>không hiện đáp án giữa chừng</strong>. Bạn trả lời hết {TOTAL_QUESTIONS} câu, sau đó mới xem kết quả và giải thích từng câu sai.
+              Bài thi <strong>không hiện đáp án giữa chừng</strong>. Bạn trả lời hết{" "}
+              {TOTAL_QUESTIONS} câu, sau đó mới xem kết quả và giải thích từng câu sai.
             </p>
             <p>
-              Cần đạt <strong>≥ {CHECKPOINT_PASS_PCT}%</strong> để qua giai đoạn và mở các tuần tiếp theo. Thi lại không giới hạn số lần — mỗi lần đề sẽ được trộn lại.
+              Cần đạt <strong>≥ {CHECKPOINT_PASS_PCT}%</strong> để qua giai đoạn và mở các tuần tiếp
+              theo. Thi lại không giới hạn số lần — mỗi lần đề sẽ được trộn lại.
             </p>
           </div>
           <button
@@ -226,11 +277,19 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   if (stage === "done") {
     const passed = scorePct >= CHECKPOINT_PASS_PCT;
     const nextPhase = PHASES.find((p) => p.index === (phaseOfWeek(week!)?.index ?? -1) + 1) ?? null;
-    const wrong = paper.map((question, i) => ({ question, given: answers[i] })).filter((r) => r.given !== r.question.correctIdx);
+    const wrong = paper
+      .map((question, i) => ({ question, given: answers[i] }))
+      .filter((r) => r.given !== r.question.correctIdx);
     return (
       <div className="mx-auto max-w-2xl">
-        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="border border-primary bg-card p-8 text-center shadow-xl">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Kết quả sát hạch</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="border border-primary bg-card p-8 text-center shadow-xl"
+        >
+          <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+            Kết quả sát hạch
+          </div>
           <div className="font-display mt-3 text-6xl text-primary">{scorePct}%</div>
           <p className="mt-3 text-sm text-foreground/80">
             {passed
@@ -265,16 +324,25 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             </div>
             <div className="mt-4 space-y-4">
               {wrong.map(({ question, given }) => (
-                <div key={question.key} className="border border-destructive/40 bg-card p-5 shadow-xl">
+                <div
+                  key={question.key}
+                  className="border border-destructive/40 bg-card p-5 shadow-xl"
+                >
                   <p className="text-sm text-foreground">
                     {question.kind === "listening" ? `Nghe: "${question.audio}"` : question.prompt}
                   </p>
                   {given !== null && (
-                    <p className="mt-2 text-xs text-destructive">Bạn chọn: {question.options[given]}</p>
+                    <p className="mt-2 text-xs text-destructive">
+                      Bạn chọn: {question.options[given]}
+                    </p>
                   )}
-                  <p className="mt-1 text-xs text-primary">Đáp án đúng: {question.options[question.correctIdx]}</p>
+                  <p className="mt-1 text-xs text-primary">
+                    Đáp án đúng: {question.options[question.correctIdx]}
+                  </p>
                   {question.note && (
-                    <p className="mt-2 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">💡 {question.note}</p>
+                    <p className="mt-2 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">
+                      💡 {question.note}
+                    </p>
                   )}
                 </div>
               ))}
@@ -288,14 +356,24 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-        <span>Sát hạch · Câu {idx + 1}/{paper.length}</span>
+        <span>
+          Sát hạch · Câu {idx + 1}/{paper.length}
+        </span>
         <span className="text-primary">Không hiện đáp án giữa chừng</span>
       </div>
       <div className="mt-2 h-1 w-full bg-primary/15">
-        <div className="h-1 bg-primary transition-all" style={{ width: `${(idx / paper.length) * 100}%` }} />
+        <div
+          className="h-1 bg-primary transition-all"
+          style={{ width: `${(idx / paper.length) * 100}%` }}
+        />
       </div>
 
-      <motion.div key={q.key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-6 border border-primary/30 bg-card p-6 shadow-xl">
+      <motion.div
+        key={q.key}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mt-6 border border-primary/30 bg-card p-6 shadow-xl"
+      >
         {q.kind === "reading" && (
           <pre className="font-sans mb-4 whitespace-pre-wrap border-l-2 border-primary/40 pl-3 text-xs leading-relaxed text-foreground/75">
             {q.passage}
@@ -304,7 +382,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
 
         {q.kind === "listening" ? (
           <>
-            <p className="font-display text-xl text-foreground">Nghe lời khách và chọn câu trả lời chuẩn 5 sao:</p>
+            <p className="font-display text-xl text-foreground">
+              Nghe lời khách và chọn câu trả lời chuẩn 5 sao:
+            </p>
             <button
               onClick={() => speakVaried(q.audio)}
               className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
@@ -322,7 +402,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               key={i}
               onClick={() => setPicked(i)}
               className={`block w-full border px-4 py-2.5 text-left text-sm transition-all ${
-                picked === i ? "border-primary bg-primary/10" : "border-primary/20 hover:border-primary/60"
+                picked === i
+                  ? "border-primary bg-primary/10"
+                  : "border-primary/20 hover:border-primary/60"
               }`}
             >
               {opt}

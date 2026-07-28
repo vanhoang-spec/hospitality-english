@@ -4,7 +4,14 @@ import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type GameRound, type WeekContent } from "@/lib/content/week-content";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-type Bubble = { id: number; text: string; correct: boolean; y: number; speed: number; popped?: boolean };
+type Bubble = {
+  id: number;
+  text: string;
+  correct: boolean;
+  y: number;
+  speed: number;
+  popped?: boolean;
+};
 
 type Stage = "rules" | "playing" | "done";
 
@@ -14,7 +21,15 @@ export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   return <ArcadeSuiteInner dep={dep!} week={week!} content={content} />;
 }
 
-function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; content: WeekContent }) {
+function ArcadeSuiteInner({
+  dep,
+  week,
+  content,
+}: {
+  dep: string;
+  week: string;
+  content: WeekContent;
+}) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const poppedRef = useRef<Set<number>>(new Set());
@@ -47,7 +62,9 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
     setWon(cleared);
     setStage("done");
     const elapsed = (Date.now() - startedRef.current) / 1000;
-    patchMetrics({ reflex_speed: Math.min(100, Math.max(20, Math.round(finalScore * 6 + (75 - elapsed) * 0.5))) });
+    patchMetrics({
+      reflex_speed: Math.min(100, Math.max(20, Math.round(finalScore * 6 + (75 - elapsed) * 0.5))),
+    });
     if (dep && week) {
       const pct = Math.round((finalScore / (rounds.length * 2)) * 100);
       recordSuiteResult(dep, week, "arcade", earned.current, { scorePct: pct, mastered: cleared });
@@ -134,7 +151,9 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
       <div className="flex flex-wrap items-center justify-between gap-4 border border-primary/30 bg-card p-4 shadow-xl">
         <div className="flex items-center gap-6">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Thời gian</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+              Thời gian
+            </div>
             <div className="font-display text-2xl text-primary">{time}s</div>
           </div>
           <div>
@@ -143,7 +162,9 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
           </div>
           <div>
             <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Vòng</div>
-            <div className="font-display text-2xl text-primary">{Math.min(roundIdx + 1, rounds.length)}/{rounds.length}</div>
+            <div className="font-display text-2xl text-primary">
+              {Math.min(roundIdx + 1, rounds.length)}/{rounds.length}
+            </div>
           </div>
         </div>
         <button
@@ -155,7 +176,10 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
       </div>
 
       <div className="relative h-[460px] overflow-hidden border border-primary/30 bg-card shadow-xl">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(212,175,55,0.05), transparent 60%)" }} />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(212,175,55,0.05), transparent 60%)" }}
+        />
 
         {/* RULES SCREEN */}
         {stage === "rules" && (
@@ -164,14 +188,20 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
             <h3 className="font-display mt-3 text-3xl">How to Play / Luật chơi</h3>
             <div className="mt-5 max-w-2xl space-y-4 text-sm leading-relaxed">
               <p className="text-foreground/85">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary">RULES · </span>
-                Read the Guest's request anchored at the top. Floating options will cross the screen.
-                Tap the bubble containing the correct 5-star staff response that solves the Guest's request before time runs out!
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary">
+                  RULES ·{" "}
+                </span>
+                Read the Guest's request anchored at the top. Floating options will cross the
+                screen. Tap the bubble containing the correct 5-star staff response that solves the
+                Guest's request before time runs out!
               </p>
               <p className="italic text-foreground/70">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary not-italic">LUẬT CHƠI · </span>
-                Đọc kỹ yêu cầu của Khách ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay ngang qua màn hình.
-                Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5 sao phù hợp với yêu cầu của Khách trước khi hết giờ!
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary not-italic">
+                  LUẬT CHƠI ·{" "}
+                </span>
+                Đọc kỹ yêu cầu của Khách ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay
+                ngang qua màn hình. Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5
+                sao phù hợp với yêu cầu của Khách trước khi hết giờ!
               </p>
             </div>
             <button
@@ -227,7 +257,9 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border px-5 py-2 text-xs uppercase tracking-[0.25em] shadow-xl ${
-                feedback.ok ? "border-primary bg-primary text-primary-foreground" : "border-destructive bg-destructive/30 text-foreground"
+                feedback.ok
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-destructive bg-destructive/30 text-foreground"
               }`}
             >
               {feedback.text}
@@ -238,7 +270,9 @@ function ArcadeSuiteInner({ dep, week, content }: { dep: string; week: string; c
         {/* DONE SCREEN */}
         {stage === "done" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-            <h3 className="font-display text-4xl text-primary">{won ? "Ca trực hoàn hảo! ✦" : "Hết ca làm"}</h3>
+            <h3 className="font-display text-4xl text-primary">
+              {won ? "Ca trực hoàn hảo! ✦" : "Hết ca làm"}
+            </h3>
             <p className="mt-2 text-sm text-foreground/70">
               {won
                 ? `Đạt chuẩn — xử lý đúng cả ${rounds.length} tình huống với ${score} ⭐`

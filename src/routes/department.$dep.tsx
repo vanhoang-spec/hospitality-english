@@ -38,12 +38,14 @@ function DeptPage() {
     ? AVAILABLE_WEEKS.flatMap((w) => {
         const content = getWeekContent(department.code, w);
         if (!content) return [];
-        return [{
-          id: `${department.code}-${w}`,
-          week_number: w,
-          title_en: content.weekTitleEn,
-          title_vi: content.weekTitleVi,
-        }];
+        return [
+          {
+            id: `${department.code}-${w}`,
+            week_number: w,
+            title_en: content.weekTitleEn,
+            title_vi: content.weekTitleVi,
+          },
+        ];
       })
     : null;
 
@@ -56,7 +58,11 @@ function DeptPage() {
   return (
     <main className="relative min-h-[calc(100vh-72px)]">
       <div className="mx-auto max-w-5xl px-6 py-12 md:px-10">
-        <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <Link to="/" className="text-xs uppercase tracking-[0.3em] text-primary hover:opacity-80">
             ← Departments Lounge
           </Link>
@@ -65,16 +71,22 @@ function DeptPage() {
             <span className="text-xs uppercase tracking-[0.3em] text-primary">Shift Timeline</span>
           </div>
           <h1 className="font-display mt-3 text-5xl">
-            {department.name_en}{" "}
-            <span className="italic text-primary">— 40 Weeks</span>
+            {department.name_en} <span className="italic text-primary">— 40 Weeks</span>
           </h1>
-          <p className="mt-2 text-sm text-foreground/70">{department.tagline}. Each week is a 4-hour shift, partitioned into 4 micro-lessons. <span className="italic text-foreground/60">Mỗi tuần là một ca làm 4 giờ, được chia thành 4 bài học nhỏ.</span></p>
+          <p className="mt-2 text-sm text-foreground/70">
+            {department.tagline}. Each week is a 4-hour shift, partitioned into 4 micro-lessons.{" "}
+            <span className="italic text-foreground/60">
+              Mỗi tuần là một ca làm 4 giờ, được chia thành 4 bài học nhỏ.
+            </span>
+          </p>
 
           {/* Where the learner stands in the five-phase frame, and the one
               test that opens the next stretch of weeks. */}
           {access.ready && access.next && (
             <div className="mt-5 border border-primary/30 bg-card/70 p-4 text-sm shadow-xl">
-              <span className="text-xs uppercase tracking-[0.25em] text-primary">Lộ trình của bạn</span>
+              <span className="text-xs uppercase tracking-[0.25em] text-primary">
+                Lộ trình của bạn
+              </span>
               <p className="mt-2 text-foreground/80">
                 Đang mở đến hết tuần <strong>{access.next.to}</strong> — giai đoạn{" "}
                 <strong>{access.next.nameVi}</strong> ({access.next.band}). Qua bài sát hạch tuần{" "}
@@ -85,7 +97,10 @@ function DeptPage() {
         </motion.div>
 
         <div className="mt-12 relative">
-          <div className="absolute left-4 top-0 bottom-0 w-px bg-primary/30 md:left-6" aria-hidden />
+          <div
+            className="absolute left-4 top-0 bottom-0 w-px bg-primary/30 md:left-6"
+            aria-hidden
+          />
           {scenarios === null ? (
             <ol className="space-y-4">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -117,56 +132,66 @@ function DeptPage() {
                 const locked = access.ready && !access.isUnlocked(s.week_number);
                 const checkpoint = isCheckpointWeek(s.week_number);
                 return (
-                <motion.li
-                  key={s.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.45, delay: 0.05 * i }}
-                  className="relative pl-12 md:pl-16"
-                >
-                  <span
-                    className={`absolute left-0 top-3 flex h-9 w-9 items-center justify-center border bg-card font-display text-sm shadow-xl md:left-1.5 md:h-10 md:w-10 ${
-                      locked ? "border-foreground/20 text-foreground/40" : "border-primary/40 text-primary"
-                    }`}
+                  <motion.li
+                    key={s.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.45, delay: 0.05 * i }}
+                    className="relative pl-12 md:pl-16"
                   >
-                    {locked ? "🔒" : s.week_number}
-                  </span>
-                  {locked ? (
-                    <div
-                      aria-disabled="true"
-                      className="block border border-foreground/15 bg-card/50 p-5 shadow-xl"
+                    <span
+                      className={`absolute left-0 top-3 flex h-9 w-9 items-center justify-center border bg-card font-display text-sm shadow-xl md:left-1.5 md:h-10 md:w-10 ${
+                        locked
+                          ? "border-foreground/20 text-foreground/40"
+                          : "border-primary/40 text-primary"
+                      }`}
                     >
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h3 className="font-display text-xl text-foreground/45">{s.title_en}</h3>
-                        <span className="text-xs uppercase tracking-[0.2em] text-foreground/35">Week {s.week_number} · 4h</span>
-                      </div>
-                      {s.title_vi && <p className="mt-1 text-sm italic text-foreground/35">{s.title_vi}</p>}
-                      <div className="mt-3 text-xs uppercase tracking-[0.22em] text-foreground/45">
-                        🔒 Mở sau khi qua sát hạch tuần {access.next?.checkpointWeek}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      to="/department/$dep/week/$week"
-                      params={{ dep: department.code, week: String(s.week_number) }}
-                      className="block border border-primary/30 bg-card p-5 shadow-xl transition-colors hover:border-primary"
-                    >
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h3 className="font-display text-xl text-foreground">{s.title_en}</h3>
-                        <span className="text-xs uppercase tracking-[0.2em] text-foreground/50">Week {s.week_number} · 4h</span>
-                      </div>
-                      {s.title_vi && <p className="mt-1 text-sm italic text-foreground/60">{s.title_vi}</p>}
-                      <div className="mt-3 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-primary">
-                        <span>Open shift →</span>
-                        {checkpoint && (
-                          <span className="border border-primary/40 px-2 py-0.5 tracking-[0.18em] text-primary/90">
-                            Sát hạch · mở giai đoạn sau
+                      {locked ? "🔒" : s.week_number}
+                    </span>
+                    {locked ? (
+                      <div
+                        aria-disabled="true"
+                        className="block border border-foreground/15 bg-card/50 p-5 shadow-xl"
+                      >
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <h3 className="font-display text-xl text-foreground/45">{s.title_en}</h3>
+                          <span className="text-xs uppercase tracking-[0.2em] text-foreground/35">
+                            Week {s.week_number} · 4h
                           </span>
+                        </div>
+                        {s.title_vi && (
+                          <p className="mt-1 text-sm italic text-foreground/35">{s.title_vi}</p>
                         )}
+                        <div className="mt-3 text-xs uppercase tracking-[0.22em] text-foreground/45">
+                          🔒 Mở sau khi qua sát hạch tuần {access.next?.checkpointWeek}
+                        </div>
                       </div>
-                    </Link>
-                  )}
-                </motion.li>
+                    ) : (
+                      <Link
+                        to="/department/$dep/week/$week"
+                        params={{ dep: department.code, week: String(s.week_number) }}
+                        className="block border border-primary/30 bg-card p-5 shadow-xl transition-colors hover:border-primary"
+                      >
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <h3 className="font-display text-xl text-foreground">{s.title_en}</h3>
+                          <span className="text-xs uppercase tracking-[0.2em] text-foreground/50">
+                            Week {s.week_number} · 4h
+                          </span>
+                        </div>
+                        {s.title_vi && (
+                          <p className="mt-1 text-sm italic text-foreground/60">{s.title_vi}</p>
+                        )}
+                        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-primary">
+                          <span>Open shift →</span>
+                          {checkpoint && (
+                            <span className="border border-primary/40 px-2 py-0.5 tracking-[0.18em] text-primary/90">
+                              Sát hạch · mở giai đoạn sau
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                    )}
+                  </motion.li>
                 );
               })}
             </ol>

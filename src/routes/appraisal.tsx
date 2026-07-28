@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAcademy } from "@/lib/academy-store";
 
-
 export const Route = createFileRoute("/appraisal")({
   head: () => ({
     meta: [
@@ -69,7 +68,6 @@ function AppraisalPage() {
     daily_streak: state.daily_streak,
   };
 
-
   const meters = useMemo(
     () => [
       { key: "fluency", label: "Fluency Index", value: m.fluency_score, suffix: "%" },
@@ -111,7 +109,8 @@ function AppraisalPage() {
               My Career <span className="italic text-primary">Appraisal</span>
             </h1>
             <p className="mt-3 max-w-xl text-sm text-foreground/70">
-              A quarterly reflection of your craft — measured with the precision of a maître d'hôtel.
+              A quarterly reflection of your craft — measured with the precision of a maître
+              d'hôtel.
             </p>
           </div>
           <div className="text-right">
@@ -138,7 +137,13 @@ function AppraisalPage() {
               </div>
               <div className="mt-8 grid grid-cols-2 gap-6">
                 {meters.map((meter, i) => (
-                  <RadialMeter key={meter.key} label={meter.label} value={meter.value} suffix={meter.suffix} delay={0.2 + i * 0.08} />
+                  <RadialMeter
+                    key={meter.key}
+                    label={meter.label}
+                    value={meter.value}
+                    suffix={meter.suffix}
+                    delay={0.2 + i * 0.08}
+                  />
                 ))}
               </div>
             </div>
@@ -176,13 +181,9 @@ function AppraisalPage() {
         >
           <div className="flex items-center gap-3">
             <span className="h-px w-10 bg-primary" />
-            <h2 className="text-xs uppercase tracking-[0.3em] text-primary">
-              HR Recommendation
-            </h2>
+            <h2 className="text-xs uppercase tracking-[0.3em] text-primary">HR Recommendation</h2>
           </div>
-          <h3 className="font-display mt-3 text-3xl md:text-4xl">
-            A curated path forward.
-          </h3>
+          <h3 className="font-display mt-3 text-3xl md:text-4xl">A curated path forward.</h3>
 
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {recommendations.map((rec, i) => (
@@ -271,9 +272,7 @@ function RadialMeter({
         />
       </svg>
       <div>
-        <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-          {label}
-        </div>
+        <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">{label}</div>
         <div className="font-display mt-1 text-2xl text-foreground">
           {clamped}
           <span className="ml-0.5 text-base text-primary">{suffix}</span>
@@ -341,14 +340,7 @@ function RadarChart({ points, labels }: { points: number[]; labels: string[] }) 
         {points.map((_, i) => {
           const [x, y] = toXY(points[i], i);
           return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r="3"
-              fill="currentColor"
-              className="text-primary"
-            />
+            <circle key={i} cx={x} cy={y} r="3" fill="currentColor" className="text-primary" />
           );
         })}
         {labels.map((label, i) => {
@@ -389,8 +381,7 @@ function buildRecommendations(m: Metrics): Recommendation[] {
       tag: "Priority Training",
       tone: "gold",
       title: "Enrol in the VIP Rush Arcade",
-      body:
-        "Your rush-hour reflexes suggest peak-hour shifts may overwhelm. A fortnight in the VIP Rush Arcade will sharpen your tempo and composure under pressure.",
+      body: "Your rush-hour reflexes suggest peak-hour shifts may overwhelm. A fortnight in the VIP Rush Arcade will sharpen your tempo and composure under pressure.",
     });
   }
 
@@ -399,8 +390,7 @@ function buildRecommendations(m: Metrics): Recommendation[] {
       tag: "Mentorship",
       tone: "gold",
       title: "Shadow the Duty Manager",
-      body:
-        "Guest complaints currently land harder than they should. A week of crisis mentorship with the duty manager will transform escalations into recoveries.",
+      body: "Guest complaints currently land harder than they should. A week of crisis mentorship with the duty manager will transform escalations into recoveries.",
     });
   }
 
@@ -409,8 +399,7 @@ function buildRecommendations(m: Metrics): Recommendation[] {
       tag: "Language Atelier",
       tone: "muted",
       title: "Refine Pronunciation in the Salon",
-      body:
-        "Schedule three sessions in the Language Atelier to elevate diction — the difference between courteous and unforgettable.",
+      body: "Schedule three sessions in the Language Atelier to elevate diction — the difference between courteous and unforgettable.",
     });
   }
 
@@ -419,8 +408,7 @@ function buildRecommendations(m: Metrics): Recommendation[] {
       tag: "Etiquette Studio",
       tone: "muted",
       title: "Review Polite Grammar Modules",
-      body:
-        "Revisit the Etiquette Studio's polite-form lessons. Small grammatical graces compound into a guest's lasting impression.",
+      body: "Revisit the Etiquette Studio's polite-form lessons. Small grammatical graces compound into a guest's lasting impression.",
     });
   }
 
@@ -429,8 +417,7 @@ function buildRecommendations(m: Metrics): Recommendation[] {
       tag: "Distinction",
       tone: "gold",
       title: "Candidate for Promotion Review",
-      body:
-        "All competencies sit well above the maison's benchmark. Your dossier has been queued for the next promotion review with the Director of Guest Services.",
+      body: "All competencies sit well above the maison's benchmark. Your dossier has been queued for the next promotion review with the Director of Guest Services.",
     });
   }
 

@@ -10,8 +10,20 @@ export const Route = createFileRoute("/admin-lounge")({
   component: AdminLoungeGate,
 });
 
-type Scenario = { id: string; department_id: string; week_number: number; title_en: string; title_vi: string };
-type Lesson = { id: string; scenario_id: string; lesson_order: number; title_en: string; title_vi: string };
+type Scenario = {
+  id: string;
+  department_id: string;
+  week_number: number;
+  title_en: string;
+  title_vi: string;
+};
+type Lesson = {
+  id: string;
+  scenario_id: string;
+  lesson_order: number;
+  title_en: string;
+  title_vi: string;
+};
 
 function AdminLoungeGate() {
   const { session, loading: sessionLoading } = useSession();
@@ -105,7 +117,13 @@ function AdminLounge() {
     setSubmitting(false);
     setToast("✦ New Scenario Successfully Standardized!");
     setTimeout(() => setToast(null), 3000);
-    setForm({ ...form, title_en: "", title_vi: "", week_number: Number(form.week_number) + 1, lessons: form.lessons.map(() => ({ title_en: "", title_vi: "" })) });
+    setForm({
+      ...form,
+      title_en: "",
+      title_vi: "",
+      week_number: Number(form.week_number) + 1,
+      lessons: form.lessons.map(() => ({ title_en: "", title_vi: "" })),
+    });
   }
 
   return (
@@ -113,9 +131,13 @@ function AdminLounge() {
       <div className="mx-auto max-w-7xl px-6 py-10 md:px-10">
         <div className="flex items-center gap-3">
           <span className="h-px w-10 bg-primary" />
-          <span className="text-xs uppercase tracking-[0.3em] text-primary">Hidden Portal · Admin</span>
+          <span className="text-xs uppercase tracking-[0.3em] text-primary">
+            Hidden Portal · Admin
+          </span>
         </div>
-        <h1 className="font-display mt-3 text-5xl">Admin <span className="italic text-primary">Lounge</span></h1>
+        <h1 className="font-display mt-3 text-5xl">
+          Admin <span className="italic text-primary">Lounge</span>
+        </h1>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <section className="border border-primary/30 bg-card p-5 shadow-xl">
@@ -127,7 +149,9 @@ function AdminLounge() {
                     key={c}
                     onClick={() => setFilter(c)}
                     className={`px-3 py-1 text-[10px] uppercase tracking-[0.25em] ${
-                      filter === c ? "bg-primary text-primary-foreground" : "border border-primary/30 text-foreground/70 hover:border-primary"
+                      filter === c
+                        ? "bg-primary text-primary-foreground"
+                        : "border border-primary/30 text-foreground/70 hover:border-primary"
                     }`}
                   >
                     {c}
@@ -172,19 +196,25 @@ function AdminLounge() {
             <form onSubmit={submit} className="mt-5 space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <label className="block">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Department</span>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+                    Department
+                  </span>
                   <select
                     value={form.department_id}
                     onChange={(e) => setForm({ ...form, department_id: e.target.value })}
                     className="mt-1 w-full border border-primary/30 bg-background px-3 py-2 text-sm"
                   >
                     {DEPARTMENTS.map((d) => (
-                      <option key={d.code} value={d.code}>{d.code} · {d.name_en}</option>
+                      <option key={d.code} value={d.code}>
+                        {d.code} · {d.name_en}
+                      </option>
                     ))}
                   </select>
                 </label>
                 <label className="block">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">Week</span>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+                    Week
+                  </span>
                   <input
                     type="number"
                     value={form.week_number}
@@ -193,11 +223,23 @@ function AdminLounge() {
                   />
                 </label>
               </div>
-              <Input label="Title (EN)" value={form.title_en} onChange={(v) => setForm({ ...form, title_en: v })} required />
-              <Input label="Tiêu đề (VI)" value={form.title_vi} onChange={(v) => setForm({ ...form, title_vi: v })} required />
+              <Input
+                label="Title (EN)"
+                value={form.title_en}
+                onChange={(v) => setForm({ ...form, title_en: v })}
+                required
+              />
+              <Input
+                label="Tiêu đề (VI)"
+                value={form.title_vi}
+                onChange={(v) => setForm({ ...form, title_vi: v })}
+                required
+              />
 
               <div className="space-y-2 border-t border-primary/20 pt-4">
-                <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Micro-Lessons</div>
+                <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
+                  Micro-Lessons
+                </div>
                 {form.lessons.map((l, i) => (
                   <div key={i} className="grid grid-cols-2 gap-2">
                     <input
@@ -231,8 +273,13 @@ function AdminLounge() {
                 {submitting ? (
                   <>
                     <span className="relative z-10">Standardising…</span>
-                    <span className="absolute inset-0 animate-[shimmer2_1.4s_linear_infinite]"
-                      style={{ background: "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%)" }} />
+                    <span
+                      className="absolute inset-0 animate-[shimmer2_1.4s_linear_infinite]"
+                      style={{
+                        background:
+                          "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%)",
+                      }}
+                    />
                     <style>{`@keyframes shimmer2 { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }`}</style>
                   </>
                 ) : (
@@ -260,7 +307,17 @@ function AdminLounge() {
   );
 }
 
-function Input({ label, value, onChange, required }: { label: string; value: string; onChange: (v: string) => void; required?: boolean }) {
+function Input({
+  label,
+  value,
+  onChange,
+  required,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+}) {
   return (
     <label className="block">
       <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">{label}</span>
