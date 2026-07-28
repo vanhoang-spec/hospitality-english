@@ -386,7 +386,7 @@ for (const dep of DEPS) {
 // ============================================================
 const freqBuckets = new Map<number, number>();
 let neverRecycled = 0;
-let neverRecycledSample: string[] = [];
+const neverRecycledSample: string[] = [];
 
 for (const dep of DEPS) {
   const encounters = new Map<string, number>();
