@@ -7,7 +7,7 @@ import { createMember, deleteMember, resetMemberPassword, updateMemberRole } fro
 import { formatPhoneDisplay } from "@/lib/phone";
 import { DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
-import { isCheckpointWeek } from "@/components/suites/WeekTestSuite";
+import { isCheckpointWeek } from "@/lib/phases";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
 
 export const Route = createFileRoute("/org-admin")({

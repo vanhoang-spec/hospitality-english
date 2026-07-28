@@ -70,10 +70,10 @@ function Lounge() {
             Choose your <span className="italic text-primary">atelier</span>.
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
-            Six departments. Twenty weeks each. A quiet path to five-star fluency. Select a card to enter the workplace shift timeline.
+            Six departments. Forty weeks each. A quiet path to five-star fluency. Select a card to enter the workplace shift timeline.
           </p>
           <p className="mt-2 max-w-2xl text-sm italic text-foreground/50">
-            Sáu bộ phận. Hai mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
+            Sáu bộ phận. Bốn mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
           </p>
         </motion.div>
 
@@ -138,7 +138,7 @@ function FlipCard({ dep, index }: { dep: (typeof DEPARTMENTS)[number]; index: nu
             <span className="text-xs uppercase tracking-[0.3em] text-primary">Enter</span>
             <h3 className="font-display text-2xl text-foreground">{dep.name_en}</h3>
             <span className="border border-primary/40 px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary">
-              20-week shift timeline →
+              40-week shift timeline →
             </span>
           </div>
         </motion.div>

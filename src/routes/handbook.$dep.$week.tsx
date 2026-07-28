@@ -4,6 +4,8 @@ import { getDepartment } from "@/lib/departments";
 import { getWeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 import { SuiteComingSoon } from "@/components/suites/SuiteComingSoon";
+import { useWeekAccess } from "@/lib/week-access";
+import { WeekLocked } from "@/components/WeekLocked";
 
 export const Route = createFileRoute("/handbook/$dep/$week")({
   head: ({ params }) => ({ meta: [{ title: `Sổ tay tuần ${params.week} — Embassy Hospitality` }] }),
@@ -25,8 +27,19 @@ function Speak({ text, rate = 0.75 }: { text: string; rate?: number }) {
 
 function HandbookPage() {
   const { dep, week } = Route.useParams();
+  const access = useWeekAccess(dep);
   const department = getDepartment(dep);
   if (!department) throw notFound();
+
+  // The handbook is this week's content on paper, so it follows the same
+  // gate as the suites — otherwise printing it would route around them.
+  if (access.ready && !access.isUnlocked(week)) {
+    return (
+      <main className="px-6 py-16 md:px-10">
+        <WeekLocked dep={department.code} week={week} next={access.next} />
+      </main>
+    );
+  }
 
   const content = getWeekContent(dep, week);
 

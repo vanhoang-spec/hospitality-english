@@ -1,42 +1,16 @@
 import { useMemo, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
+import { CHECKPOINT_PASS_PCT, PHASES, phaseOfWeek, weeksInPhase } from "@/lib/phases";
+import { useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-const PASS_PCT = 70;
 const TOTAL_QUESTIONS = 20;
 // Fixed per-construct counts so the paper always samples every skill and
-// the 70% cut means the same thing on every retake.
+// the pass mark means the same thing on every retake.
 const MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
-
-// The checkpoint weeks named in docs/curriculum-level-matrix.md. Only
-// these carry a Week Test; every other week returns null from
-// weekTestAvailable() and the hub hides the door.
-export const CHECKPOINT_WEEKS = [6, 14, 22, 30, 40] as const;
-
-export function isCheckpointWeek(week: string | number): boolean {
-  const n = typeof week === "string" ? parseInt(week, 10) : week;
-  return (CHECKPOINT_WEEKS as readonly number[]).includes(n);
-}
-
-// Mirrors the PHASES ranges in scripts/verify-content.ts — the paper
-// pulls grammar/listening/reading from every week in the checkpoint's
-// own phase, not just the checkpoint week itself.
-const PHASE_RANGES: Record<number, [number, number]> = {
-  6: [1, 6],
-  14: [7, 14],
-  22: [15, 22],
-  30: [23, 30],
-  40: [31, 40],
-};
-
-function phaseWeeksFor(checkpointWeek: number): number[] {
-  const [from, to] = PHASE_RANGES[checkpointWeek] ?? [checkpointWeek, checkpointWeek];
-  const weeks: number[] = [];
-  for (let w = from; w <= to; w++) weeks.push(w);
-  return weeks;
-}
 
 type Question =
   | { kind: "vocab"; key: string; prompt: string; options: string[]; correctIdx: number; note: string }
@@ -66,7 +40,7 @@ function speakVaried(text: string) {
 
 /**
  * Builds a 20-question mixed paper drawn from EVERY week in the
- * checkpoint's phase (see phaseWeeksFor), not just the checkpoint week
+ * checkpoint's phase (see weeksInPhase), not just the checkpoint week
  * itself — the point of the test is to assess the phase as a whole.
  * Vocabulary additionally pulls the checkpoint week's `reviewWords`
  * recycling pool, same as before.
@@ -77,7 +51,7 @@ function buildPaper(dep: string, week: string): Question[] {
   const content = getWeekContent(dep, week);
   if (!content) return [];
 
-  const phaseWeeks = phaseWeeksFor(parseInt(week, 10));
+  const phaseWeeks = weeksInPhase(week);
   const phaseContent = phaseWeeks
     .map((w) => getWeekContent(dep, String(w)))
     .filter((c): c is NonNullable<typeof c> => c !== null);
@@ -163,6 +137,7 @@ function buildPaper(dep: string, week: string): Question[] {
 
 export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const { recordSuiteResult, awardStars } = useAcademy();
+  const markCheckpointPassed = useMarkCheckpointPassed();
   const [attempt, setAttempt] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const paper = useMemo(() => (week ? buildPaper(dep, week) : []), [dep, week, attempt]);
@@ -197,12 +172,16 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
       const correct = paper.reduce((n, question, i) => n + (next[i] === question.correctIdx ? 1 : 0), 0);
       const pct = Math.round((correct / paper.length) * 100);
       setScorePct(pct);
-      const passed = pct >= PASS_PCT;
+      const passed = pct >= CHECKPOINT_PASS_PCT;
       if (passed && !awardedRef.current) {
         awardedRef.current = true;
         awardStars(correct);
       }
       recordSuiteResult(dep, week!, "weektest", passed ? correct : 0, { scorePct: pct, mastered: passed });
+      // Open the next phase for this session immediately; the upsert above
+      // is fire-and-forget, so waiting for it to be readable would leave
+      // the learner staring at a lock they just cleared.
+      if (passed) markCheckpointPassed(dep, week!);
       setStage("done");
       return;
     }
@@ -230,7 +209,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               Bài thi <strong>không hiện đáp án giữa chừng</strong>. Bạn trả lời hết {TOTAL_QUESTIONS} câu, sau đó mới xem kết quả và giải thích từng câu sai.
             </p>
             <p>
-              Cần đạt <strong>≥ {PASS_PCT}%</strong> để qua giai đoạn. Thi lại không giới hạn số lần — mỗi lần đề sẽ được trộn lại.
+              Cần đạt <strong>≥ {CHECKPOINT_PASS_PCT}%</strong> để qua giai đoạn và mở các tuần tiếp theo. Thi lại không giới hạn số lần — mỗi lần đề sẽ được trộn lại.
             </p>
           </div>
           <button
@@ -245,7 +224,8 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   }
 
   if (stage === "done") {
-    const passed = scorePct >= PASS_PCT;
+    const passed = scorePct >= CHECKPOINT_PASS_PCT;
+    const nextPhase = PHASES.find((p) => p.index === (phaseOfWeek(week!)?.index ?? -1) + 1) ?? null;
     const wrong = paper.map((question, i) => ({ question, given: answers[i] })).filter((r) => r.given !== r.question.correctIdx);
     return (
       <div className="mx-auto max-w-2xl">
@@ -254,12 +234,28 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
           <div className="font-display mt-3 text-6xl text-primary">{scorePct}%</div>
           <p className="mt-3 text-sm text-foreground/80">
             {passed
-              ? `✦ Chúc mừng! Bạn đã qua giai đoạn này và sẵn sàng cho phần tiếp theo.`
-              : `Cần ≥ ${PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
+              ? nextPhase
+                ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
+                : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
+              : `Cần ≥ ${CHECKPOINT_PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
           </p>
-          <button onClick={retake} className="mt-6 bg-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl">
-            Thi lại
-          </button>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            {passed && nextPhase && (
+              <Link
+                to="/department/$dep/week/$week"
+                params={{ dep, week: String(nextPhase.from) }}
+                className="bg-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl"
+              >
+                Vào tuần {nextPhase.from} →
+              </Link>
+            )}
+            <button
+              onClick={retake}
+              className="border border-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+            >
+              Thi lại
+            </button>
+          </div>
         </motion.div>
 
         {wrong.length > 0 && (

@@ -30,8 +30,29 @@
 | 4 | 31–40 | B1.1 | 160h | Xử lý & thuyết phục (Recovery & Persuasion) |
 
 **Tuần checkpoint (weektest):** 6, 14, 22, 30, 40 — tuần củng cố: ≥50% ngữ liệu tái sử dụng
-+ bài kiểm tra tổng hợp phase (suite `weektest` đã có sẵn trong schema). Qua checkpoint
-(≥80%) mới nên mở phase kế tiếp (khi bật week-gating).
++ bài kiểm tra tổng hợp phase (suite `weektest`). Qua checkpoint mới mở phase kế tiếp —
+**week-gating đã bật** (xem mục "Week-gating" bên dưới).
+
+### Week-gating (đã triển khai)
+
+- Ngưỡng đạt: **`CHECKPOINT_PASS_PCT` = 70%**, khai báo một chỗ duy nhất ở
+  `src/lib/phases.ts`. Cùng một con số quyết định ba việc — màn hình thi có chúc mừng hay
+  không, bản ghi `lesson_progress` có `mastered = true` hay không, và phase sau có mở hay
+  không. Nếu muốn nâng lên 80% (con số bản thảo đầu của tài liệu này), sửa hằng số đó là đủ,
+  nhưng đó là **quyết định học vụ**: học viên đã đạt 70–79% trước đó vẫn giữ quyền học tiếp
+  vì gate đọc cờ `mastered` đã ghi, còn người thi lại sẽ chịu ngưỡng mới.
+- Phạm vi: **theo từng bộ phận**. Qua checkpoint FO không mở phase cho HK — `lesson_progress`
+  cũng key theo bộ phận vì lý do đó.
+- Quy tắc mở: qua checkpoint của phase *i* thì mở phase *i+1*. Mốc mở lấy theo checkpoint
+  **xa nhất** đã đạt, không đòi chuỗi liên tục từ phase 0 — học viên đã học tới tuần 22 từ
+  thời chưa có gate không bị khóa lại phần đã học. Vẫn không thể nhảy cóc: mỗi phase chỉ tới
+  được bằng bài thi ngay trước nó.
+- Chặn ở: timeline bộ phận, hub tuần, URL suite (`/learn/...`) và Sổ tay tuần — bốn đường vào
+  content của một tuần.
+- Miễn gate: `org_admin` / `super_admin` (cần đọc mọi tuần để rà content và kèm học viên).
+- Bản chất là **điều tiết nhịp học, không phải kiểm soát truy cập**: content không phải bí
+  mật và học viên vốn đã tự ghi được `lesson_progress` (mọi suite đều ghi qua client), nên
+  gate đặt ở UI và cố ý không nhân bản vào RLS.
 
 ---
 
@@ -226,7 +247,7 @@ Dàn ý tiếng Việt trong `src/lib/curriculum.ts` (concierge, check-out/VAT, 
 
 ## Việc kỹ thuật phải làm khi triển khai (ngoài phạm vi tài liệu này)
 
-- Migration nới `CHECK (week_number BETWEEN 1 AND 20)` → `1 AND 40` ở `lesson_progress` và `review_items`; seed `scenarios` tuần 21–40.
-- Sửa chữ cứng "— 20 Weeks"; sửa fallback 5 suite → "Coming soon" thay vì bài mẫu giả.
-- Bật week-gating theo checkpoint khi content đủ dày.
+- ~~Migration nới `CHECK (week_number BETWEEN 1 AND 20)` → `1 AND 40` ở `lesson_progress` và `review_items`; seed `scenarios` tuần 21–40.~~ (xong — `20260721150000_forty_week_frame.sql`)
+- ~~Sửa chữ cứng "— 20 Weeks"; sửa fallback 5 suite → "Coming soon" thay vì bài mẫu giả.~~ (xong)
+- ~~Bật week-gating theo checkpoint khi content đủ dày.~~ (xong — `src/lib/week-access.ts`)
 - Re-key nội dung khi di dời tuần (item_key chứa số tuần — cần migration dữ liệu review nếu đã có học viên thật).

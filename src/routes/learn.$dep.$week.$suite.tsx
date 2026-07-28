@@ -10,6 +10,8 @@ import { WeekTestSuite } from "@/components/suites/WeekTestSuite";
 import { WritingSuite } from "@/components/suites/WritingSuite";
 import { MediationSuite } from "@/components/suites/MediationSuite";
 import { getDepartment } from "@/lib/departments";
+import { useWeekAccess } from "@/lib/week-access";
+import { WeekLocked } from "@/components/WeekLocked";
 
 const TITLES: Record<string, { en: string; tag: string }> = {
   vocab: { en: "Premium Vocabulary", tag: "Lexicon" },
@@ -30,9 +32,22 @@ export const Route = createFileRoute("/learn/$dep/$week/$suite")({
 
 function SuitePage() {
   const { dep, week, suite } = Route.useParams();
+  // Called before the notFound() throw so the hook order never depends on
+  // whether the route params resolve.
+  const access = useWeekAccess(dep);
   const department = getDepartment(dep);
   const meta = TITLES[suite];
   if (!department || !meta) throw notFound();
+
+  // A suite URL is the other way into a week's content, so the gate has to
+  // hold here too — not just on the timeline and the week hub.
+  if (access.ready && !access.isUnlocked(week)) {
+    return (
+      <main className="relative min-h-[calc(100vh-72px)] px-6 py-16 md:px-10">
+        <WeekLocked dep={department.code} week={week} next={access.next} />
+      </main>
+    );
+  }
 
   return (
     <main className="relative min-h-[calc(100vh-72px)]">

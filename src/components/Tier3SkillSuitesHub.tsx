@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { findWeek } from "@/lib/curriculum";
 import { getWeekContent } from "@/lib/content/week-content";
-import { isCheckpointWeek } from "@/components/suites/WeekTestSuite";
+import { isCheckpointWeek } from "@/lib/phases";
+import { useWeekAccess } from "@/lib/week-access";
+import { WeekLocked } from "@/components/WeekLocked";
 
 type DepartmentMeta = {
   code: string;
@@ -75,6 +77,10 @@ const MEDIATION_DOOR = {
 } as const;
 
 export function Tier3SkillSuitesHub({ department, week }: { department: DepartmentMeta; week: string }) {
+  // Week gating: the phase this week belongs to must have been opened by
+  // the previous checkpoint. Checked here as well as on the timeline
+  // because this page is reachable by URL.
+  const access = useWeekAccess(department.code);
   // week-content.ts is the source of truth for any week that has authored
   // lessons — the DB `lessons` rows are placeholders that only describe
   // weeks still awaiting content. Letting the DB win here is what made
@@ -130,6 +136,26 @@ export function Tier3SkillSuitesHub({ department, week }: { department: Departme
     })();
     return () => { cancelled = true; };
   }, [department.code, week, authored]);
+
+  if (access.ready && !access.isUnlocked(week)) {
+    return (
+      <main className="relative min-h-[calc(100vh-72px)] bg-background text-foreground">
+        <div className="mx-auto max-w-6xl px-6 py-12 md:px-10">
+          <Link
+            to="/department/$dep"
+            params={{ dep: department.code }}
+            className="text-xs uppercase tracking-[0.3em] text-primary hover:opacity-80"
+          >
+            ← {department.name_en} Timeline
+          </Link>
+          <div className="mt-10">
+            <WeekLocked dep={department.code} week={week} next={access.next} />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="relative min-h-[calc(100vh-72px)] bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-6 py-12 md:px-10">
