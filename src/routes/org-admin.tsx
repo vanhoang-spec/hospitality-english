@@ -28,11 +28,31 @@ type Member = {
 type Org = { id: string; name: string; seat_limit: number };
 
 const SUITES = ["vocab", "grammar", "speaking", "listening", "reading", "arcade"] as const;
-/** The checkpoint test exists only on weeks 6/14/22/30/40, so the matrix
- *  and the completion denominator must both vary per week — counting a
- *  weektest slot on every week would understate everyone's progress. */
+
+/** Weeks that carry a written-production task. Derived from the content
+ *  rather than hard-coded, so authoring a second writing week automatically
+ *  shows up here. Every department carries these on the same weeks, which
+ *  is what lets the matrix keep a uniform column count per week. */
+const WRITING_WEEKS = new Set(
+  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.writing)),
+);
+const MEDIATION_WEEKS = new Set(
+  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.mediation)),
+);
+
+/** Suites that exist on a given week. Most weeks carry the six core ones;
+ *  checkpoint weeks add the phase test, and the two production weeks add
+ *  writing / mediation. The denominator for "completed" has to vary the
+ *  same way — counting every suite on every week would understate progress,
+ *  and omitting writing/mediation (as this did before) let their mastered
+ *  rows inflate the numerator against a denominator that never counted them. */
 function suitesForWeek(week: number): readonly string[] {
-  return isCheckpointWeek(week) ? [...SUITES, "weektest"] : SUITES;
+  return [
+    ...SUITES,
+    ...(isCheckpointWeek(week) ? ["weektest"] : []),
+    ...(WRITING_WEEKS.has(week) ? ["writing"] : []),
+    ...(MEDIATION_WEEKS.has(week) ? ["mediation"] : []),
+  ];
 }
 const SUITE_LABELS: Record<string, string> = {
   vocab: "Vocab",
@@ -42,10 +62,13 @@ const SUITE_LABELS: Record<string, string> = {
   reading: "Reading",
   arcade: "Arcade",
   weektest: "Sát hạch",
+  writing: "Viết",
+  mediation: "Phiên dịch",
 };
 /** Column letter for the matrix header. "Sát hạch" would collide with
- *  Speaking on its first letter, so the test gets an explicit T. */
-const SUITE_INITIALS: Record<string, string> = { weektest: "T" };
+ *  Speaking on its first letter, so the test gets an explicit T; writing
+ *  and mediation get W and P for the same reason. */
+const SUITE_INITIALS: Record<string, string> = { weektest: "T", writing: "W", mediation: "P" };
 const initialOf = (s: string) => SUITE_INITIALS[s] ?? SUITE_LABELS[s][0];
 
 function OrgAdminPage() {
