@@ -35,12 +35,15 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 
 ### Week-gating (đã triển khai)
 
-- Ngưỡng đạt: **`CHECKPOINT_PASS_PCT` = 70%**, khai báo một chỗ duy nhất ở
-  `src/lib/phases.ts`. Cùng một con số quyết định ba việc — màn hình thi có chúc mừng hay
-  không, bản ghi `lesson_progress` có `mastered = true` hay không, và phase sau có mở hay
-  không. Nếu muốn nâng lên 80% (con số bản thảo đầu của tài liệu này), sửa hằng số đó là đủ,
-  nhưng đó là **quyết định học vụ**: học viên đã đạt 70–79% trước đó vẫn giữ quyền học tiếp
-  vì gate đọc cờ `mastered` đã ghi, còn người thi lại sẽ chịu ngưỡng mới.
+- Ngưỡng đạt: **`CHECKPOINT_PASS_PCT` = 70%** — đã chốt ngày 2026-07-28, thay cho con số 80%
+  ở bản thảo đầu của tài liệu này. Lý do giữ 70%: đó là ngưỡng bài thi vẫn hiển thị và chấm
+  từ trước tới nay, nên nâng lên sẽ hồi tố những học viên đã qua ở 70–79%.
+  Hằng số khai báo một chỗ duy nhất ở `src/lib/phases.ts` và quyết định cả ba việc — màn hình
+  thi có chúc mừng hay không, bản ghi `lesson_progress` có `mastered = true` hay không, và
+  phase sau có mở hay không. Mọi chỗ hiển thị ngưỡng cho học viên đều đọc từ hằng số này,
+  không chép lại con số.
+  Nếu sau này muốn đổi: sửa đúng hằng số đó là đủ về mặt kỹ thuật, nhưng lưu ý người đã đạt
+  vẫn giữ quyền học tiếp (gate đọc cờ `mastered` đã ghi), còn người thi lại sẽ chịu ngưỡng mới.
 - Phạm vi: **theo từng bộ phận**. Qua checkpoint FO không mở phase cho HK — `lesson_progress`
   cũng key theo bộ phận vì lý do đó.
 - Quy tắc mở: qua checkpoint của phase _i_ thì mở phase _i+1_. Mốc mở lấy theo checkpoint
