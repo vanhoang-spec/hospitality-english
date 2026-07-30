@@ -155,11 +155,32 @@ const slugify = (t: string) =>
         if (v.definition.toLowerCase() === v.word.toLowerCase())
           fail("T2", `${key} "${v.word}" definition merely repeats the headword`);
         // The example sentence should actually contain the headword.
-        const head = v.word
-          .toLowerCase()
+        //
+        // Both sides must be folded the same way or the check reports noise
+        // instead of defects. It used to strip punctuation and diacritics from
+        // the headword only, so "O'clock" became "oclock" and was then hunted
+        // in a context that still read "o'clock" — 76 of its 82 warnings were
+        // artefacts of that asymmetry, which is enough noise to bury the real
+        // ones. Three tolerances, each for a form that is correct English:
+        //   · fold — "wake-up call" / "Canapés" vs "wake up call" / "canapes"
+        //   · stem — a headword may legitimately appear inflected
+        //            ("Celebrate" taught by "Are you celebrating something?")
+        //   · acronym — "Banquet Event Order (BEO)" is shown by using "BEO"
+        const fold = (s: string) =>
+          s
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .replace(/[’'‘\-–—]/g, "");
+        const head = fold(v.word)
           .split(/\s+/)[0]
           .replace(/[^a-z]/g, "");
-        if (head.length > 2 && !v.context.toLowerCase().includes(head))
+        const ctx = fold(v.context);
+        const stem = head.length >= 6 ? head.slice(0, -1) : head;
+        const acronym = v.word.match(/\(([A-Z]{2,})\)/)?.[1];
+        const shown =
+          ctx.includes(head) || ctx.includes(stem) || (!!acronym && v.context.includes(acronym));
+        if (head.length > 2 && !shown)
           warn("T2", `${key} "${v.word}" context does not contain the headword: "${v.context}"`);
       }
   }

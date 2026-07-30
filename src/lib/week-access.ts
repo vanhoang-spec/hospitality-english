@@ -83,7 +83,7 @@ export function useWeekAccess(dep: string): WeekAccess {
   const { session, loading: sessionLoading } = useSession();
   const userId = session?.user.id;
   const { data: profile, isPending: profilePending } = useProfile(userId);
-  const { data: passed, isPending } = useQuery({
+  const { data: passed, isSuccess } = useQuery({
     queryKey: weekAccessQueryKey(userId, dep),
     queryFn: () => fetchPassedCheckpoints(userId!, dep),
     enabled: !!userId,
@@ -100,7 +100,13 @@ export function useWeekAccess(dep: string): WeekAccess {
   // gate applies to members only.
   const bypass = !!profile && profile.role !== "member";
   const known = passed ?? [];
-  const ready = !sessionLoading && !!userId && !profilePending && !isPending;
+  // Gate only once the history is actually KNOWN. Keying this off "the query
+  // is no longer pending" made a failed read indistinguishable from an empty
+  // history, so one dropped request locked a week-33 learner back to week 6
+  // and told them the week had not opened yet. This is pacing, not access
+  // control (see the header), so an unreadable history must fail open: no
+  // gate, all weeks shown, rather than a lock the learner cannot explain.
+  const ready = !sessionLoading && !!userId && !profilePending && isSuccess;
 
   return {
     ready,
