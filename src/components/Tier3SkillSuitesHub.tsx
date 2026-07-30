@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { findWeek } from "@/lib/curriculum";
 import { getWeekContent } from "@/lib/content/week-content";
-import { CHECKPOINT_PASS_PCT, isCheckpointWeek } from "@/lib/phases";
+import {
+  CHECKPOINT_ORAL_ITEMS,
+  CHECKPOINT_ORAL_PASS_MIN,
+  CHECKPOINT_PASS_PCT,
+  CHECKPOINT_TOTAL_QUESTIONS,
+  isCheckpointWeek,
+} from "@/lib/phases";
 import { useWeekAccess } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
 
@@ -58,7 +64,7 @@ const WEEKTEST_DOOR = {
   slug: "weektest",
   title: "Phase Checkpoint Test",
   tag: "Assessment",
-  detail: `20 câu hỏi tổng hợp cả giai đoạn. Đạt ${CHECKPOINT_PASS_PCT}% để qua bài kiểm tra.`,
+  detail: `${CHECKPOINT_TOTAL_QUESTIONS} câu trắc nghiệm cả giai đoạn (cần ${CHECKPOINT_PASS_PCT}% và nửa mỗi kỹ năng) + ${CHECKPOINT_ORAL_ITEMS} câu nói, đạt ${CHECKPOINT_ORAL_PASS_MIN}.`,
 } as const;
 
 /** Only the one week per phase that carries a WritingTask/MediationTask

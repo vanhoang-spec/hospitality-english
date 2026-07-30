@@ -16,6 +16,7 @@
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
 import { DEPARTMENTS } from "../src/lib/departments";
+import { CHECKPOINT_ORAL_ITEMS } from "../src/lib/phases";
 
 type Phase = {
   name: string;
@@ -447,6 +448,32 @@ if (legacyGameDupes.length) {
   console.log(
     `\nKnown legacy debt: ${legacyGameDupes.length} game rounds in the hand-authored A2-B1 weeks` +
       ` copy their lesson's speaking prompt verbatim (pre-matrix content; logged by the content audit).`,
+  );
+}
+
+// ============================================================
+// GATE 4 — every checkpoint must be able to build its ORAL half
+//
+// The checkpoint's spoken section draws CHECKPOINT_ORAL_ITEMS sentences from
+// across its phase. If a phase ever ran short for a department, the suite
+// would fall back to written-only rather than lock the learner out — correct
+// behaviour, but silent: the course would quietly stop assessing speaking
+// for that department. This makes the pool a checked invariant instead.
+// ============================================================
+{
+  for (const phase of PHASES) {
+    for (const dep of DEPARTMENTS.map((d) => d.code)) {
+      let n = 0;
+      for (let w = phase.from; w <= phase.to; w++)
+        n += (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? []).reduce((s, l) => s + l.speaking.length, 0);
+      if (n < CHECKPOINT_ORAL_ITEMS)
+        errors.push(
+          `${dep} ${phase.name} (weeks ${phase.from}-${phase.to}) has only ${n} speaking items — the checkpoint needs ${CHECKPOINT_ORAL_ITEMS}`,
+        );
+    }
+  }
+  console.log(
+    `Checkpoint oral pools — 5 phases × ${DEPARTMENTS.length} departments each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items`,
   );
 }
 

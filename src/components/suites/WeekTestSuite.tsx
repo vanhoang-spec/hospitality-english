@@ -3,8 +3,12 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
+import { speakEN, dedupeTranscript } from "@/lib/speech";
+import { utterancePassed } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
+  CHECKPOINT_ORAL_ITEMS,
+  CHECKPOINT_ORAL_PASS_MIN,
   CHECKPOINT_PASS_PCT,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
@@ -186,6 +190,218 @@ function buildPaper(dep: string, week: string): Question[] {
   );
 }
 
+type OralItem = {
+  key: string;
+  guestPrompt: string;
+  target: string;
+  tip: string;
+  /** The week the sentence was authored for — graded at THAT week's
+   *  threshold, not the checkpoint's. */
+  sourceWeek: number;
+};
+
+/** Five spoken items drawn from across the phase, same pool the written
+ *  paper samples. Tagged with their source week, which is why this walks
+ *  the week records rather than the flattened lesson list. */
+function buildOral(dep: string, week: string): OralItem[] {
+  const items = weeksInPhase(week).flatMap((w) => {
+    const c = getWeekContent(dep, String(w));
+    if (!c) return [];
+    return c.lessons.flatMap((l) =>
+      l.speaking.map((s) => ({
+        key: `s:${w}:${s.guestPrompt}`,
+        guestPrompt: s.guestPrompt,
+        target: s.targetResponse,
+        tip: s.helpTip,
+        sourceWeek: c.weekNumber,
+      })),
+    );
+  });
+  return shuffle(items).slice(0, CHECKPOINT_ORAL_ITEMS);
+}
+
+/** The oral half. Deliberately does NOT show the target sentence: an earlier
+ *  version of the writing task printed its required keywords in the
+ *  instructions and turned the exercise into copy-the-answer (see
+ *  RequiredIdea.labelVi in week-content.ts). Targets are revealed on the
+ *  results screen instead, and each item allows two attempts — enough to
+ *  absorb a misheard word, not enough to hunt for the wording.
+ *
+ *  Fails OPEN on any recognition error: a hotel PC whose network cannot
+ *  reach Chrome's speech service reports `network`, a locked-down handset
+ *  reports `not-allowed`, and Firefox has no SpeechRecognition at all.
+ *  None of those learners may be stopped by their device, so the typed
+ *  route is always one click away and is switched on automatically. */
+function OralStage({
+  items,
+  onFinish,
+}: {
+  items: OralItem[];
+  onFinish: (results: { item: OralItem; passed: boolean; said: string }[]) => void;
+}) {
+  const [idx, setIdx] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [recording, setRecording] = useState(false);
+  const [said, setSaid] = useState("");
+  const [typed, setTyped] = useState("");
+  const [typedMode, setTypedMode] = useState(
+    typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
+  );
+  const [note, setNote] = useState<string | null>(null);
+  const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string }[]>([]);
+  const recogRef = useRef<SpeechRecognition | null>(null);
+  const finalRef = useRef("");
+  const item = items[idx];
+
+  function commit(spoken: string) {
+    const verdict = utterancePassed(spoken, item.target, item.sourceWeek);
+    resultsRef.current = [
+      ...resultsRef.current,
+      { item, passed: verdict.passed, said: spoken.trim() },
+    ];
+    if (idx + 1 >= items.length) {
+      onFinish(resultsRef.current);
+      return;
+    }
+    setIdx((i) => i + 1);
+    setAttempts(0);
+    setSaid("");
+    setTyped("");
+    setNote(null);
+  }
+
+  function listen() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      setTypedMode(true);
+      return;
+    }
+    finalRef.current = "";
+    setSaid("");
+    const r = new SR();
+    r.lang = "en-US";
+    r.continuous = true;
+    r.interimResults = true;
+    r.onresult = (e: SpeechRecognitionEvent) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript;
+        if (e.results[i].isFinal) finalRef.current += " " + t;
+        else interim += " " + t;
+      }
+      setSaid(dedupeTranscript((finalRef.current + " " + interim).trim()));
+    };
+    // Any error at all, not a curated list of codes: `network` on a
+    // firewalled property looks nothing like `not-allowed` on a locked
+    // handset, and neither learner should be graded zero for it.
+    r.onerror = () => {
+      setTypedMode(true);
+      setNote("Micro hoặc mạng không dùng được — hãy gõ câu trả lời bằng tiếng Anh.");
+    };
+    r.onend = () => {
+      setRecording(false);
+      const cleaned = dedupeTranscript(finalRef.current.trim());
+      setSaid(cleaned);
+      const next = attempts + 1;
+      setAttempts(next);
+      if (cleaned === "") {
+        setNote(
+          next >= 2
+            ? "Vẫn chưa nghe được. Hãy gõ câu trả lời để tính điểm phần nói."
+            : "Chưa nghe được gì — thử lại lần nữa.",
+        );
+        if (next >= 2) setTypedMode(true);
+        return;
+      }
+      if (utterancePassed(cleaned, item.target, item.sourceWeek).passed || next >= 2) {
+        commit(cleaned);
+        return;
+      }
+      setNote("Chưa đạt. Bạn còn một lượt nói nữa cho câu này.");
+    };
+    try {
+      r.start();
+      recogRef.current = r;
+      setRecording(true);
+      setNote(null);
+    } catch {
+      setTypedMode(true);
+      setNote("Không mở được micro — hãy gõ câu trả lời bằng tiếng Anh.");
+    }
+  }
+
+  return (
+    <div className="mx-auto max-w-2xl">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="border border-primary bg-card p-7 shadow-xl"
+      >
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-primary">
+          <span>
+            Phần nói · câu {idx + 1}/{items.length}
+          </span>
+          <span className="text-foreground/50">Cần đạt {CHECKPOINT_ORAL_PASS_MIN} câu</span>
+        </div>
+        <p className="font-display mt-4 text-2xl leading-snug">"{item.guestPrompt}"</p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <button
+            onClick={() => speakEN(item.guestPrompt, 0.9)}
+            className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
+          >
+            ▶ Nghe lời khách
+          </button>
+          {!typedMode && (
+            <button
+              onClick={listen}
+              disabled={recording}
+              className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground disabled:opacity-50"
+            >
+              {recording ? "● Đang thu…" : attempts === 0 ? "🎤 Trả lời" : "🎤 Nói lại"}
+            </button>
+          )}
+          {!typedMode && (
+            <button
+              onClick={() => setTypedMode(true)}
+              className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+            >
+              Gõ thay vì nói
+            </button>
+          )}
+        </div>
+        {item.tip && (
+          <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
+            💡 {item.tip}
+          </p>
+        )}
+        {said && <p className="mt-4 text-sm text-foreground/75">Bạn nói: "{said}"</p>}
+        {note && <p className="mt-3 text-xs text-primary">{note}</p>}
+        {typedMode && (
+          <div className="mt-5">
+            <textarea
+              value={typed}
+              onChange={(e) => setTyped(e.target.value)}
+              rows={2}
+              placeholder="Gõ câu trả lời bằng tiếng Anh…"
+              className="w-full border border-primary/30 bg-background p-3 text-sm outline-none focus:border-primary"
+            />
+            <button
+              onClick={() => typed.trim() && commit(typed)}
+              className="mt-3 bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+            >
+              Gửi câu trả lời →
+            </button>
+          </div>
+        )}
+        <p className="mt-6 text-xs leading-relaxed text-foreground/55">
+          Câu mẫu sẽ hiện ở phần kết quả, sau khi bạn trả lời hết — để đây là bài kiểm tra nói,
+          không phải đọc lại.
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
 export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const { recordSuiteResult, awardStars } = useAcademy();
   const markCheckpointPassed = useMarkCheckpointPassed();
@@ -210,7 +426,12 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const paper = useMemo(() => (week ? buildPaper(dep, week) : []), [dep, week, attempt]);
 
-  const [stage, setStage] = useState<"intro" | "sitting" | "done">("intro");
+  const [stage, setStage] = useState<"intro" | "sitting" | "oral" | "done">("intro");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const oral = useMemo(() => (week ? buildOral(dep, week) : []), [dep, week, attempt]);
+  const [oralResults, setOralResults] = useState<
+    { item: OralItem; passed: boolean; said: string }[]
+  >([]);
   const [idx, setIdx] = useState(0);
   // Answers are held until the end — a test that reveals each answer as
   // you go is a practice drill, not an assessment.
@@ -218,6 +439,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const [picked, setPicked] = useState<number | null>(null);
   const [scorePct, setScorePct] = useState(0);
   const [tallies, setTallies] = useState<ConstructTally[]>([]);
+  const [mcqCorrect, setMcqCorrect] = useState(0);
   const awardedRef = useRef(false);
   // Set by the first playback that found an English voice — observed
   // capability, not a render-time probe: Chrome returns an empty getVoices()
@@ -265,33 +487,59 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         },
       );
       setTallies(tallied);
-      const passed = checkpointPassed(pct, tallied);
-      if (passed && !awardedRef.current) {
-        awardedRef.current = true;
-        awardStars(correct);
-      }
-      // The true score is recorded even when a floor blocks the pass: the
-      // gate now keys off `mastered` alone, so an honest score_pct no longer
-      // opens the phase behind the floors' back, and the trainer dashboard
-      // keeps a real number instead of a capped marker.
-      recordSuiteResult(dep, week!, "weektest", passed ? correct : 0, {
-        scorePct: pct,
-        mastered: passed,
+      setMcqCorrect(correct);
+      // Commit the written half the moment it is earned, WITHOUT mastery:
+      // the oral stage can be abandoned, crashed out of, or interrupted by a
+      // shift starting, and 20 answered questions must not evaporate. The
+      // score is held below the mark until both halves pass, so this write
+      // can never open a phase on its own.
+      recordSuiteResult(dep, week!, "weektest", 0, {
+        scorePct: Math.min(pct, CHECKPOINT_PASS_PCT - 1),
       });
-      // Open the next phase for this session immediately; the upsert above
-      // is fire-and-forget, so waiting for it to be readable would leave
-      // the learner staring at a lock they just cleared.
-      if (passed) markCheckpointPassed(dep, week!);
-      else setFailedAt(Date.now());
-      setStage("done");
+      setStage(oral.length >= CHECKPOINT_ORAL_ITEMS ? "oral" : "done");
+      if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, []);
       return;
     }
     setIdx((i) => i + 1);
     setPicked(null);
   }
 
+  /** The single place a sitting is graded and recorded. Both halves must
+   *  pass — a conjunction, not a blended percentage, so 16 right answers
+   *  cannot buy a silent learner a pass. */
+  function finish(
+    pct: number,
+    tallied: ConstructTally[],
+    results: { item: OralItem; passed: boolean; said: string }[],
+  ) {
+    const oralPassed = results.filter((r) => r.passed).length;
+    const writtenOk = checkpointPassed(pct, tallied);
+    const ok = writtenOk && (results.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN);
+    setOralResults(results);
+    if (ok && !awardedRef.current) {
+      awardedRef.current = true;
+      awardStars(mcqCorrect + oralPassed);
+    }
+    // Recorded score stays the 20-item written figure so it remains
+    // comparable with every historical row, capped below the mark when
+    // either half failed — the same guard writing-score.ts uses. Mastery is
+    // the only thing the gate reads, so the cap plus `mastered: ok` is what
+    // makes the conjunction real.
+    recordSuiteResult(dep, week!, "weektest", ok ? mcqCorrect + oralPassed : 0, {
+      scorePct: ok ? pct : Math.min(pct, CHECKPOINT_PASS_PCT - 1),
+      mastered: ok,
+    });
+    // Open the next phase for this session immediately; the upsert above
+    // is fire-and-forget, so waiting for it to be readable would leave
+    // the learner staring at a lock they just cleared.
+    if (ok) markCheckpointPassed(dep, week!);
+    else setFailedAt(Date.now());
+    setStage("done");
+  }
+
   function retake() {
     awardedRef.current = false;
+    setOralResults([]);
     setAttempt((a) => a + 1);
     setStage("intro");
   }
@@ -328,6 +576,12 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               ) để qua giai đoạn và mở các tuần tiếp theo. Điểm cao ở một kỹ năng không bù được cho
               kỹ năng bị bỏ trống.
             </p>
+            <p>
+              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} câu nói</strong> lấy từ khắp
+              giai đoạn — cần đạt <strong>{CHECKPOINT_ORAL_PASS_MIN} câu</strong>. Câu mẫu chỉ hiện
+              ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn được
+              tính.
+            </p>
           </div>
           {cooldownMsLeft > 0 ? (
             <div className="mt-7">
@@ -356,8 +610,14 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     );
   }
 
+  if (stage === "oral") {
+    return <OralStage items={oral} onFinish={(results) => finish(scorePct, tallies, results)} />;
+  }
+
   if (stage === "done") {
-    const passed = checkpointPassed(scorePct, tallies);
+    const oralPassed = oralResults.filter((r) => r.passed).length;
+    const oralOk = oralResults.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN;
+    const passed = checkpointPassed(scorePct, tallies) && oralOk;
     const shortfall = tallies.filter((t) => !blockCleared(t));
     const undeliverable = tallies.filter((t) => !t.deliverable);
     const nextPhase = PHASES.find((p) => p.index === (phaseOfWeek(week!)?.index ?? -1) + 1) ?? null;
@@ -380,16 +640,18 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               ? nextPhase
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
-              : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
-                ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
-                    .map(
-                      (t) =>
-                        `${CONSTRUCT_LABEL_VI[t.construct]} (${t.correct}/${t.total}, cần ${blockFloor(t.construct)})`,
-                    )
-                    .join(
-                      ", ",
-                    )}. Mỗi kỹ năng phải đạt ít nhất một nửa — hãy luyện đúng kỹ năng đó rồi thi lại.`
-                : `Cần ≥ ${CHECKPOINT_PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
+              : !oralOk && checkpointPassed(scorePct, tallies)
+                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${CHECKPOINT_ORAL_PASS_MIN}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
+                  ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
+                      .map(
+                        (t) =>
+                          `${CONSTRUCT_LABEL_VI[t.construct]} (${t.correct}/${t.total}, cần ${blockFloor(t.construct)})`,
+                      )
+                      .join(
+                        ", ",
+                      )}. Mỗi kỹ năng phải đạt ít nhất một nửa — hãy luyện đúng kỹ năng đó rồi thi lại.`
+                  : `Cần ≥ ${CHECKPOINT_PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
           </p>
 
           {/* Per-skill breakdown: the learner must be able to see WHICH skill
@@ -423,6 +685,31 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               không tính vào sàn tối thiểu từng kỹ năng. Hãy dùng Chrome hoặc Edge để luyện nghe đầy
               đủ.
             </p>
+          )}
+          {oralResults.length > 0 && (
+            <div className="mt-6 border-t border-foreground/10 pt-5 text-left">
+              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em]">
+                <span className="text-foreground/60">Phần nói</span>
+                <span className={oralOk ? "text-foreground/60" : "text-primary"}>
+                  {oralPassed}/{oralResults.length} · cần {CHECKPOINT_ORAL_PASS_MIN}
+                </span>
+              </div>
+              {/* Targets are revealed only here — during the oral stage they
+                  are hidden so the item measures speech, not reading. */}
+              <div className="mt-4 space-y-3">
+                {oralResults.map((r, i) => (
+                  <div key={r.item.key + i} className="text-xs leading-relaxed">
+                    <div className={r.passed ? "text-foreground/60" : "text-primary"}>
+                      {r.passed ? "✓" : "✗"} Khách: "{r.item.guestPrompt}"
+                    </div>
+                    <div className="mt-1 text-foreground/75">
+                      Câu mẫu: <span className="text-foreground">{r.item.target}</span>
+                    </div>
+                    {r.said && <div className="mt-0.5 text-foreground/50">Bạn nói: "{r.said}"</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {passed && nextPhase && (

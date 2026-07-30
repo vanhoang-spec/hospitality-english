@@ -35,6 +35,26 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 
 ### Week-gating (đã triển khai)
 
+- **Bài sát hạch có hai nửa (từ 2026-07-30): viết và nói.** Trước đó cửa quyết định lên trình
+  độ là 20 câu trắc nghiệm thuần — không một câu nói nào — nên học viên đi được từ pre-A1 tới
+  B1.1 mà chưa từng mở miệng, trong khi chính tài liệu này tuyên bố "Speaking là đầu ra trung
+  tâm". Nay sau phần trắc nghiệm là **5 câu nói** lấy từ khắp giai đoạn, cần đạt **3 câu**.
+  Điều kiện qua là **phép AND của hai nửa**, không phải điểm gộp — 16 câu trắc nghiệm đúng
+  không mua được một lượt đạt cho người không nói.
+  - **Không hiện câu mẫu trong lúc thi nói** (chỉ hiện ở phần kết quả), tối đa 2 lượt nói mỗi
+    câu. Repo này đã học bài học đó một lần: bản đầu của bài viết in sẵn từ khóa vào đề và
+    biến bài tập thành sao chép đáp án.
+  - Mỗi câu được chấm theo **ngưỡng của tuần nó được viết ra**, không phải tuần checkpoint —
+    nếu chấm câu tuần 16 bằng ngưỡng role-play mở của tuần 40 thì bài thi cuối khóa lại thành
+    phần nói dễ nhất cả lộ trình.
+  - **Fail open với thiết bị**: bất kỳ lỗi nhận diện giọng nói nào (kể cả `network` khi mạng
+    khách sạn chặn dịch vụ của Chrome, hay Firefox không có API) đều chuyển sang **gõ câu trả
+    lời** và vẫn được tính. Nút "Gõ thay vì nói" luôn có sẵn. Không học viên nào bị chặn vì
+    thiết bị.
+  - Nửa viết được **ghi lại ngay khi làm xong** (điểm giữ dưới ngưỡng, chưa gắn `mastered`),
+    nên bỏ dở phần nói hay vào ca giữa bài không làm mất 20 câu đã trả lời.
+  - `verify:content` GATE 4 canh bể speaking của mọi phase × bộ phận ≥ 5 câu, để phần nói
+    không âm thầm biến mất vì thiếu ngữ liệu.
 - **Sàn tối thiểu từng kỹ năng (từ 2026-07-30).** Ngoài mức 70% tổng thể, mỗi khối phải đạt
   ít nhất một nửa: Từ vựng 4/8, Ngữ pháp 2/4, Nghe hiểu 2/4, Đọc hiểu 2/4. Trước đó 8+4+4 =
   16/20 = 80% cho phép **qua giai đoạn với 0/4 nghe hiểu** — điểm cao ở kỹ năng khác bù được

@@ -83,6 +83,18 @@ export function checkpointPassed(scorePct: number, tallies: readonly ConstructTa
   return scorePct >= CHECKPOINT_PASS_PCT && tallies.every(blockCleared);
 }
 
+/** The oral half of a checkpoint.
+ *
+ *  The curriculum calls speaking the central output and every week carries a
+ *  "nói được…" can-do, yet progression used to be decided by a paper with no
+ *  spoken item in it: a learner could reach B1.1 without ever opening their
+ *  mouth. Five utterances drawn from across the phase, of which three must
+ *  pass — the written 70% and the per-skill floors are the demanding part,
+ *  and the oral half is there to make the claim "can speak" true at all,
+ *  not to become the hardest gate in the course. */
+export const CHECKPOINT_ORAL_ITEMS = 5;
+export const CHECKPOINT_ORAL_PASS_MIN = 3;
+
 /** How long a learner waits after a FAILED checkpoint sitting.
  *
  *  A checkpoint paper reshuffles from a large pool every attempt (55-156
