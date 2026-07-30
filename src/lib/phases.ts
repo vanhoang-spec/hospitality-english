@@ -36,6 +36,66 @@ export const CHECKPOINT_WEEKS: readonly number[] = PHASES.map((p) => p.checkpoin
  *  recorded as mastered, and whether the next phase unlocks. */
 export const CHECKPOINT_PASS_PCT = 70;
 
+/** The checkpoint paper's fixed composition. Lives here rather than in the
+ *  suite because the pass RULE below is written against it, and a mix that
+ *  drifts from its floors silently changes what passing means. */
+export const CHECKPOINT_MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
+export type CheckpointConstruct = keyof typeof CHECKPOINT_MIX;
+export const CHECKPOINT_TOTAL_QUESTIONS = Object.values(CHECKPOINT_MIX).reduce((a, b) => a + b, 0);
+
+export const CONSTRUCT_LABEL_VI: Record<CheckpointConstruct, string> = {
+  vocab: "Từ vựng",
+  grammar: "Ngữ pháp",
+  listening: "Nghe hiểu",
+  reading: "Đọc hiểu",
+};
+
+/** Every skill must clear half its block, on top of the overall mark.
+ *
+ *  Without this, 70% overall was reachable while scoring ZERO on a whole
+ *  skill: vocab 8 + grammar 4 + reading 4 = 16/20 = 80% with 0/4 listening
+ *  passed a learner up a CEFR band who had understood nothing they heard.
+ *  The floors are deliberately set so their sum (4+2+2+2 = 10) sits below
+ *  the 14 the overall mark already demands — they close the hole without
+ *  raising the bar for a learner who is evenly competent. */
+export const CHECKPOINT_BLOCK_FLOOR_PCT = 50;
+
+export function blockFloor(construct: CheckpointConstruct): number {
+  return Math.ceil((CHECKPOINT_MIX[construct] * CHECKPOINT_BLOCK_FLOOR_PCT) / 100);
+}
+
+export type ConstructTally = {
+  construct: CheckpointConstruct;
+  correct: number;
+  total: number;
+  /** False when the paper could not actually deliver this block on this
+   *  device — an unheard listening item must cost marks, never a lockout. */
+  deliverable: boolean;
+};
+
+export function blockCleared(t: ConstructTally): boolean {
+  return !t.deliverable || t.correct >= blockFloor(t.construct);
+}
+
+/** The whole pass rule in one place: the overall mark AND every deliverable
+ *  block's floor. */
+export function checkpointPassed(scorePct: number, tallies: readonly ConstructTally[]): boolean {
+  return scorePct >= CHECKPOINT_PASS_PCT && tallies.every(blockCleared);
+}
+
+/** How long a learner waits after a FAILED checkpoint sitting.
+ *
+ *  A checkpoint paper reshuffles from a large pool every attempt (55-156
+ *  vocabulary items per phase), so unlimited immediate retakes let a learner
+ *  re-roll the dice until a lucky draw passes, and a pass recorded that way
+ *  is indistinguishable from competence. This is a rate limit, not a
+ *  barrier: it does not stop a determined re-roller, it stops the paper from
+ *  being a slot machine, and the per-skill floors above are what actually
+ *  make a lucky pass unlikely. Kept short on purpose — these are shift
+ *  workers who may have one session per day, and an honest second try must
+ *  stay inside the same sitting. A pass is never subject to it. */
+export const CHECKPOINT_RETAKE_COOLDOWN_MIN = 20;
+
 export function weekNum(week: string | number): number {
   return typeof week === "string" ? parseInt(week, 10) : week;
 }

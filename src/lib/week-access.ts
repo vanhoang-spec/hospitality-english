@@ -56,14 +56,24 @@ export function nextCheckpoint(passed: readonly number[]): Phase | null {
 async function fetchPassedCheckpoints(userId: string, dep: string): Promise<number[]> {
   const { data, error } = await supabase
     .from("lesson_progress")
-    .select("week_number, mastered, score_pct")
+    .select("week_number, mastered")
     .eq("user_id", userId)
     .eq("department_id", dep.toUpperCase())
     .eq("suite", "weektest");
   if (error) throw error;
-  return (data ?? [])
-    .filter((r) => r.mastered || (r.score_pct ?? 0) >= CHECKPOINT_PASS_PCT)
-    .map((r) => r.week_number);
+  // `mastered` alone, deliberately. The old predicate also accepted
+  // `score_pct >= CHECKPOINT_PASS_PCT`, which made the per-skill floors
+  // unenforceable: a paper scoring 85% overall with 0/4 listening writes
+  // mastered = false, and the score clause opened the phase anyway.
+  //
+  // Dropping it changes nothing for existing learners. 'weektest' and both
+  // columns arrived in the same migration (20260721120000), so every
+  // weektest row was written by WeekTestSuite, which only ever records a
+  // score at or above the mark together with mastered = true — verified as
+  // zero such rows on production before this change. And `mastered` is the
+  // sticky column (academy-store.ts), so unlike a live score read it can
+  // never close a phase a learner has already opened.
+  return (data ?? []).filter((r) => r.mastered).map((r) => r.week_number);
 }
 
 export type WeekAccess = {
@@ -115,6 +125,39 @@ export function useWeekAccess(dep: string): WeekAccess {
     next: bypass ? null : nextCheckpoint(known),
     passed: known,
   };
+}
+
+/** When this learner last SAT and failed this checkpoint, as epoch ms, or
+ *  null if they never have (or if it cannot be read).
+ *
+ *  Its own query key rather than a widening of `weekAccessQueryKey`: that
+ *  cache holds a `number[]` which useMarkCheckpointPassed patches, and the
+ *  gate must not start depending on a second shape. Fail-open like the gate
+ *  — an unreadable row means no cooldown, never a locked-out learner. */
+export function useLastFailedCheckpoint(dep: string, week: string | number) {
+  const { session } = useSession();
+  const userId = session?.user.id;
+  const { data } = useQuery({
+    queryKey: ["checkpoint-last-attempt", userId, dep.toUpperCase(), weekNum(week)] as const,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lesson_progress")
+        .select("completed_at, mastered")
+        .eq("user_id", userId!)
+        .eq("department_id", dep.toUpperCase())
+        .eq("week_number", weekNum(week))
+        .eq("suite", "weektest")
+        .maybeSingle();
+      if (error) throw error;
+      // A pass is never rate-limited; only a failed sitting starts the clock.
+      if (!data || data.mastered || !data.completed_at) return null;
+      const at = Date.parse(data.completed_at);
+      return Number.isFinite(at) ? at : null;
+    },
+    enabled: !!userId,
+    staleTime: 60_000,
+  });
+  return data ?? null;
 }
 
 /** Opens the next phase the moment a checkpoint is passed, without waiting

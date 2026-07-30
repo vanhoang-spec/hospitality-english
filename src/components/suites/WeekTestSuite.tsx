@@ -1,16 +1,25 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
-import { CHECKPOINT_PASS_PCT, PHASES, phaseOfWeek, weeksInPhase } from "@/lib/phases";
-import { useMarkCheckpointPassed } from "@/lib/week-access";
+import {
+  CHECKPOINT_MIX as MIX,
+  CHECKPOINT_PASS_PCT,
+  CHECKPOINT_RETAKE_COOLDOWN_MIN,
+  CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
+  CONSTRUCT_LABEL_VI,
+  PHASES,
+  blockCleared,
+  blockFloor,
+  checkpointPassed,
+  phaseOfWeek,
+  weeksInPhase,
+  type CheckpointConstruct,
+  type ConstructTally,
+} from "@/lib/phases";
+import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
-
-const TOTAL_QUESTIONS = 20;
-// Fixed per-construct counts so the paper always samples every skill and
-// the pass mark means the same thing on every retake.
-const MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
 
 type Question =
   | {
@@ -56,8 +65,15 @@ function shuffle<T>(a: T[]): T[] {
   return c;
 }
 
-function speakVaried(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+/** Returns whether an English voice was actually available for this
+ *  utterance. The listening floor is only enforced when the device has
+ *  proven at least once that it can deliver English audio: many of this
+ *  app's learners are on cheap Android handsets or in-app WebViews carrying
+ *  only a vi-VN voice, where the "🔊 Nghe" button reads English orthography
+ *  in Vietnamese or stays silent. Making the floor blocking there would
+ *  turn a missing voice pack into a permanent course-wide lockout. */
+function speakVaried(text: string): boolean {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   const voices = window.speechSynthesis
@@ -67,6 +83,7 @@ function speakVaried(text: string) {
   u.lang = u.voice?.lang ?? "en-US";
   u.rate = 0.85;
   window.speechSynthesis.speak(u);
+  return voices.length > 0;
 }
 
 /**
@@ -172,6 +189,23 @@ function buildPaper(dep: string, week: string): Question[] {
 export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const { recordSuiteResult, awardStars } = useAcademy();
   const markCheckpointPassed = useMarkCheckpointPassed();
+  const dbFailedAt = useLastFailedCheckpoint(dep, week ?? 0);
+  // This session's own failure, because the row above is written
+  // fire-and-forget and read from a cache — without it the cooldown would
+  // not apply to the retake happening right now.
+  const [failedAt, setFailedAt] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const lastFailure = Math.max(failedAt ?? 0, dbFailedAt ?? 0) || null;
+  const cooldownMsLeft = lastFailure
+    ? Math.max(0, lastFailure + CHECKPOINT_RETAKE_COOLDOWN_MIN * 60_000 - now)
+    : 0;
+  // Tick only while the wait is actually running, so the button unlocks
+  // without the learner having to reload.
+  useEffect(() => {
+    if (cooldownMsLeft <= 0) return;
+    const t = setInterval(() => setNow(Date.now()), 15_000);
+    return () => clearInterval(t);
+  }, [cooldownMsLeft]);
   const [attempt, setAttempt] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const paper = useMemo(() => (week ? buildPaper(dep, week) : []), [dep, week, attempt]);
@@ -183,7 +217,13 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const [answers, setAnswers] = useState<(number | null)[]>([]);
   const [picked, setPicked] = useState<number | null>(null);
   const [scorePct, setScorePct] = useState(0);
+  const [tallies, setTallies] = useState<ConstructTally[]>([]);
   const awardedRef = useRef(false);
+  // Set by the first playback that found an English voice — observed
+  // capability, not a render-time probe: Chrome returns an empty getVoices()
+  // until `voiceschanged` fires, so checking at mount would drop the
+  // listening floor for everyone on first paint.
+  const sawEnVoiceRef = useRef(false);
 
   if (!week || paper.length < TOTAL_QUESTIONS) return <SuiteComingSoon />;
 
@@ -209,11 +249,31 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
       );
       const pct = Math.round((correct / paper.length) * 100);
       setScorePct(pct);
-      const passed = pct >= CHECKPOINT_PASS_PCT;
+      // Per-skill tally, so the pass rule can require a floor in each block
+      // and the results screen can name the skill that fell short.
+      const tallied: ConstructTally[] = (Object.keys(MIX) as CheckpointConstruct[]).map(
+        (construct) => {
+          const items = paper
+            .map((question, i) => ({ question, given: next[i] }))
+            .filter((r) => r.question.kind === construct);
+          return {
+            construct,
+            correct: items.filter((r) => r.given === r.question.correctIdx).length,
+            total: items.length,
+            deliverable: construct === "listening" ? sawEnVoiceRef.current : true,
+          };
+        },
+      );
+      setTallies(tallied);
+      const passed = checkpointPassed(pct, tallied);
       if (passed && !awardedRef.current) {
         awardedRef.current = true;
         awardStars(correct);
       }
+      // The true score is recorded even when a floor blocks the pass: the
+      // gate now keys off `mastered` alone, so an honest score_pct no longer
+      // opens the phase behind the floors' back, and the trainer dashboard
+      // keeps a real number instead of a capped marker.
       recordSuiteResult(dep, week!, "weektest", passed ? correct : 0, {
         scorePct: pct,
         mastered: passed,
@@ -222,6 +282,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
       // is fire-and-forget, so waiting for it to be readable would leave
       // the learner staring at a lock they just cleared.
       if (passed) markCheckpointPassed(dep, week!);
+      else setFailedAt(Date.now());
       setStage("done");
       return;
     }
@@ -259,23 +320,46 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               {TOTAL_QUESTIONS} câu, sau đó mới xem kết quả và giải thích từng câu sai.
             </p>
             <p>
-              Cần đạt <strong>≥ {CHECKPOINT_PASS_PCT}%</strong> để qua giai đoạn và mở các tuần tiếp
-              theo. Thi lại không giới hạn số lần — mỗi lần đề sẽ được trộn lại.
+              Cần đạt <strong>≥ {CHECKPOINT_PASS_PCT}% tổng thể</strong> và{" "}
+              <strong>ít nhất một nửa mỗi kỹ năng</strong> (
+              {(Object.keys(MIX) as CheckpointConstruct[])
+                .map((c) => `${CONSTRUCT_LABEL_VI[c]} ${blockFloor(c)}/${MIX[c]}`)
+                .join(", ")}
+              ) để qua giai đoạn và mở các tuần tiếp theo. Điểm cao ở một kỹ năng không bù được cho
+              kỹ năng bị bỏ trống.
             </p>
           </div>
-          <button
-            onClick={start}
-            className="mt-7 bg-primary px-7 py-3 text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl"
-          >
-            Bắt đầu thi →
-          </button>
+          {cooldownMsLeft > 0 ? (
+            <div className="mt-7">
+              <button
+                disabled
+                className="cursor-not-allowed border border-foreground/20 px-7 py-3 text-xs uppercase tracking-[0.25em] text-foreground/40"
+              >
+                Thi lại sau {Math.ceil(cooldownMsLeft / 60_000)} phút
+              </button>
+              <p className="mt-3 text-xs leading-relaxed text-foreground/60">
+                Mỗi lượt thi dùng một đề trộn mới, nên thi lại liên tục là đoán mò chứ không phải
+                tiến bộ. Hãy dùng {CHECKPOINT_RETAKE_COOLDOWN_MIN} phút này luyện lại đúng kỹ năng
+                còn yếu — các tuần bạn đã mở vẫn mở, không mất gì.
+              </p>
+            </div>
+          ) : (
+            <button
+              onClick={start}
+              className="mt-7 bg-primary px-7 py-3 text-xs uppercase tracking-[0.25em] text-primary-foreground shadow-xl"
+            >
+              Bắt đầu thi →
+            </button>
+          )}
         </motion.div>
       </div>
     );
   }
 
   if (stage === "done") {
-    const passed = scorePct >= CHECKPOINT_PASS_PCT;
+    const passed = checkpointPassed(scorePct, tallies);
+    const shortfall = tallies.filter((t) => !blockCleared(t));
+    const undeliverable = tallies.filter((t) => !t.deliverable);
     const nextPhase = PHASES.find((p) => p.index === (phaseOfWeek(week!)?.index ?? -1) + 1) ?? null;
     const wrong = paper
       .map((question, i) => ({ question, given: answers[i] }))
@@ -296,8 +380,50 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               ? nextPhase
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
-              : `Cần ≥ ${CHECKPOINT_PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
+              : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
+                ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
+                    .map(
+                      (t) =>
+                        `${CONSTRUCT_LABEL_VI[t.construct]} (${t.correct}/${t.total}, cần ${blockFloor(t.construct)})`,
+                    )
+                    .join(
+                      ", ",
+                    )}. Mỗi kỹ năng phải đạt ít nhất một nửa — hãy luyện đúng kỹ năng đó rồi thi lại.`
+                : `Cần ≥ ${CHECKPOINT_PASS_PCT}% để qua. Xem lại các câu sai bên dưới rồi thi lại nhé.`}
           </p>
+
+          {/* Per-skill breakdown: the learner must be able to see WHICH skill
+              fell short, not just a single percentage. */}
+          <div className="mt-6 grid gap-2 text-left text-xs sm:grid-cols-2">
+            {tallies.map((t) => {
+              const ok = blockCleared(t);
+              return (
+                <div
+                  key={t.construct}
+                  className={`flex items-center justify-between border px-3 py-2 ${
+                    ok ? "border-foreground/15 text-foreground/75" : "border-primary text-primary"
+                  }`}
+                >
+                  <span>{CONSTRUCT_LABEL_VI[t.construct]}</span>
+                  <span className="tabular-nums">
+                    {t.correct}/{t.total}
+                    {!t.deliverable
+                      ? " · không tính sàn"
+                      : ok
+                        ? ""
+                        : ` · cần ${blockFloor(t.construct)}`}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          {undeliverable.length > 0 && (
+            <p className="mt-4 text-xs leading-relaxed text-foreground/60">
+              Thiết bị của bạn chưa có giọng đọc tiếng Anh — phần nghe hiểu vẫn được tính điểm nhưng
+              không tính vào sàn tối thiểu từng kỹ năng. Hãy dùng Chrome hoặc Edge để luyện nghe đầy
+              đủ.
+            </p>
+          )}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {passed && nextPhase && (
               <Link
@@ -312,7 +438,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               onClick={retake}
               className="border border-primary px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
-              Thi lại
+              {cooldownMsLeft > 0 ? "Xem lại bài" : "Thi lại"}
             </button>
           </div>
         </motion.div>
@@ -386,7 +512,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               Nghe lời khách và chọn câu trả lời chuẩn 5 sao:
             </p>
             <button
-              onClick={() => speakVaried(q.audio)}
+              onClick={() => {
+                if (speakVaried(q.audio)) sawEnVoiceRef.current = true;
+              }}
               className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
               🔊 Nghe

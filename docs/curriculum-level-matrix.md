@@ -35,6 +35,24 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 
 ### Week-gating (đã triển khai)
 
+- **Sàn tối thiểu từng kỹ năng (từ 2026-07-30).** Ngoài mức 70% tổng thể, mỗi khối phải đạt
+  ít nhất một nửa: Từ vựng 4/8, Ngữ pháp 2/4, Nghe hiểu 2/4, Đọc hiểu 2/4. Trước đó 8+4+4 =
+  16/20 = 80% cho phép **qua giai đoạn với 0/4 nghe hiểu** — điểm cao ở kỹ năng khác bù được
+  cho một kỹ năng bỏ trống hoàn toàn. Tổng các sàn là 10, thấp hơn 14 mà mức 70% đã đòi, nên
+  sàn chỉ bịt lỗ hổng chứ không nâng chuẩn với học viên đều tay.
+  - Ngoại lệ có điều kiện: khối **nghe hiểu chỉ bị tính sàn khi thiết bị thực sự phát được
+    tiếng Anh** (quan sát tại thời điểm bấm nghe, không phải probe lúc mount). Máy Android
+    giá thấp và WebView trong Zalo/Facebook thường chỉ có giọng vi-VN; nếu tính sàn ở đó thì
+    một gói giọng bị thiếu sẽ thành khóa vĩnh viễn cả lộ trình. Điểm nghe vẫn tính vào 70%.
+- **Gate chỉ đọc cờ `mastered`**, không còn đọc `score_pct`. Nhánh `score_pct >= 70` cũ khiến
+  sàn từng kỹ năng vô hiệu: bài 85% nhưng nghe 0/4 ghi `mastered = false` mà vẫn mở phase.
+  Không ảnh hưởng dữ liệu cũ (`weektest` và hai cột này ra đời cùng migration, nên mọi bản ghi
+  đạt mức đều kèm `mastered = true` — đã kiểm trên production: 0 bản ghi phụ thuộc nhánh đó).
+- **Chờ 20 phút sau mỗi lượt thi trượt.** Đề trộn lại mỗi lượt, nên thi lại liên tục là quay
+  xúc xắc: đây là _rate limit_ chứ không phải rào cản — thứ khiến một lượt đạt do may mắn trở
+  nên khó là sàn từng kỹ năng ở trên. Cố ý giữ ngắn vì học viên làm theo ca. Lượt **đạt** không
+  bao giờ bị chờ, và thời gian chờ không đóng lại tuần nào đã mở.
+
 - Ngưỡng đạt: **`CHECKPOINT_PASS_PCT` = 70%** — đã chốt ngày 2026-07-28, thay cho con số 80%
   ở bản thảo đầu của tài liệu này. Lý do giữ 70%: đó là ngưỡng bài thi vẫn hiển thị và chấm
   từ trước tới nay, nên nâng lên sẽ hồi tố những học viên đã qua ở 70–79%.
