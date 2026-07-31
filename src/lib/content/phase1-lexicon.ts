@@ -20,7 +20,22 @@
 //  · Across departments, at most ONE shared headword per week.
 // ============================================================
 
-export type P1Word = { word: string; phonetic: string; definition: string; icon: string };
+export type P1Word = {
+  word: string;
+  phonetic: string;
+  definition: string;
+  icon: string;
+  /** What the indefinite frames put in front of this headword. Omit and the
+   *  frame supplies "a"/"an" by sound; set "some" for mass nouns and plurals
+   *  ("some ice", "some slippers"), or "" for a headword that needs nothing.
+   *
+   *  Week 9 teaches the request formula, and it shipped as "Can I have the
+   *  fork?" — grammatical, but wrong for a first mention, and wrong in the
+   *  one place it matters most: Vietnamese has no articles, so this frame is
+   *  where the article system is first drilled into a reflex. Same mechanism
+   *  and same reason as `art` in phase2-lexicon.ts. */
+  art?: string;
+};
 
 export type P1Bank = {
   /** W7 — people and job titles inside this department. */
@@ -104,7 +119,13 @@ const FO_BANK: P1Bank = {
     { word: "Newspaper", phonetic: "/ˈnjuːzpeɪpə/", definition: "Báo giấy", icon: "📰" },
     { word: "Umbrella", phonetic: "/ʌmˈbrelə/", definition: "Ô, dù", icon: "☂️" },
     { word: "Receipt", phonetic: "/rɪˈsiːt/", definition: "Biên lai", icon: "🧾" },
-    { word: "Directions", phonetic: "/dɪˈrekʃnz/", definition: "Chỉ dẫn đường đi", icon: "🧭" },
+    {
+      word: "Directions",
+      phonetic: "/dɪˈrekʃnz/",
+      definition: "Chỉ dẫn đường đi",
+      icon: "🧭",
+      art: "some",
+    },
   ],
   states: [
     { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃" },
@@ -220,8 +241,8 @@ const FB_BANK: P1Bank = {
     { word: "Plate", phonetic: "/pleɪt/", definition: "Đĩa", icon: "🍽️" },
     { word: "Straw", phonetic: "/strɔː/", definition: "Ống hút", icon: "🥤" },
     { word: "High chair", phonetic: "/haɪ tʃeə/", definition: "Ghế ăn cho trẻ em", icon: "🪑" },
-    { word: "Ice", phonetic: "/aɪs/", definition: "Đá lạnh", icon: "🧊" },
-    { word: "Bread", phonetic: "/bred/", definition: "Bánh mì", icon: "🍞" },
+    { word: "Ice", phonetic: "/aɪs/", definition: "Đá lạnh", icon: "🧊", art: "some" },
+    { word: "Bread", phonetic: "/bred/", definition: "Bánh mì", icon: "🍞", art: "some" },
   ],
   states: [
     { word: "Hot", phonetic: "/hɒt/", definition: "Nóng", icon: "🔥" },
@@ -349,11 +370,17 @@ const HK_BANK: P1Bank = {
   ],
   requests: [
     { word: "Extra bed", phonetic: "/ˈekstrə bed/", definition: "Giường phụ", icon: "🛏️" },
-    { word: "Shampoo", phonetic: "/ʃæmˈpuː/", definition: "Dầu gội", icon: "🧴" },
+    { word: "Shampoo", phonetic: "/ʃæmˈpuː/", definition: "Dầu gội", icon: "🧴", art: "some" },
     { word: "Toothbrush", phonetic: "/ˈtuːθbrʌʃ/", definition: "Bàn chải đánh răng", icon: "🪥" },
     { word: "Hairdryer", phonetic: "/ˈheədraɪə/", definition: "Máy sấy tóc", icon: "💨" },
     { word: "Bed sheet", phonetic: "/bed ʃiːt/", definition: "Ga trải giường", icon: "🛏️" },
-    { word: "Slippers", phonetic: "/ˈslɪpəz/", definition: "Dép đi trong phòng", icon: "🩴" },
+    {
+      word: "Slippers",
+      phonetic: "/ˈslɪpəz/",
+      definition: "Dép đi trong phòng",
+      icon: "🩴",
+      art: "some",
+    },
     { word: "Tissue", phonetic: "/ˈtɪʃuː/", definition: "Khăn giấy", icon: "🧻" },
     { word: "Water bottle", phonetic: "/ˈwɔːtə ˈbɒtl/", definition: "Chai nước", icon: "💧" },
   ],
@@ -515,8 +542,14 @@ const SW_BANK: P1Bank = {
     { word: "Water glass", phonetic: "/ˈwɔːtə ɡlɑːs/", definition: "Ly nước", icon: "🥛" },
     { word: "Sun bed", phonetic: "/sʌn bed/", definition: "Ghế tắm nắng", icon: "🏖️" },
     { word: "Blanket", phonetic: "/ˈblæŋkɪt/", definition: "Chăn đắp", icon: "🛌" },
-    { word: "Music", phonetic: "/ˈmjuːzɪk/", definition: "Nhạc", icon: "🎵" },
-    { word: "Herbal tea", phonetic: "/ˈhɜːbl tiː/", definition: "Trà thảo mộc", icon: "🍵" },
+    { word: "Music", phonetic: "/ˈmjuːzɪk/", definition: "Nhạc", icon: "🎵", art: "some" },
+    {
+      word: "Herbal tea",
+      phonetic: "/ˈhɜːbl tiː/",
+      definition: "Trà thảo mộc",
+      icon: "🍵",
+      art: "some",
+    },
     { word: "Hair cap", phonetic: "/heə kæp/", definition: "Mũ trùm tóc", icon: "🧢" },
     { word: "Appointment", phonetic: "/əˈpɔɪntmənt/", definition: "Lịch hẹn", icon: "📅" },
   ],
@@ -666,7 +699,13 @@ const GR_BANK: P1Bank = {
     { word: "Candle", phonetic: "/ˈkændl/", definition: "Nến", icon: "🕯️" },
     { word: "Balloon", phonetic: "/bəˈluːn/", definition: "Bóng bay", icon: "🎈" },
     { word: "Fruit basket", phonetic: "/fruːt ˈbɑːskɪt/", definition: "Giỏ trái cây", icon: "🧺" },
-    { word: "Champagne", phonetic: "/ʃæmˈpeɪn/", definition: "Rượu sâm banh", icon: "🍾" },
+    {
+      word: "Champagne",
+      phonetic: "/ʃæmˈpeɪn/",
+      definition: "Rượu sâm banh",
+      icon: "🍾",
+      art: "some",
+    },
     { word: "Postcard", phonetic: "/ˈpəʊstkɑːd/", definition: "Bưu thiếp", icon: "📮" },
     { word: "Wheelchair", phonetic: "/ˈwiːltʃeə/", definition: "Xe lăn", icon: "♿" },
     { word: "Baby cot", phonetic: "/ˈbeɪbi kɒt/", definition: "Nôi em bé", icon: "🍼" },
@@ -806,12 +845,14 @@ const BO_BANK: P1Bank = {
     // (which stays in slot 4, the staff-to-staff "Do you need…?" frame).
     { word: "Envelope", phonetic: "/ˈenvələʊp/", definition: "Phong bì", icon: "✉️" },
     { word: "Notebook", phonetic: "/ˈnəʊtbʊk/", definition: "Sổ tay", icon: "📓" },
-    { word: "Paper", phonetic: "/ˈpeɪpə/", definition: "Giấy", icon: "📄" },
+    { word: "Paper", phonetic: "/ˈpeɪpə/", definition: "Giấy", icon: "📄", art: "some" },
     { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
     { word: "Calculator", phonetic: "/ˈkælkjuleɪtə/", definition: "Máy tính bỏ túi", icon: "🧮" },
     { word: "Charger", phonetic: "/ˈtʃɑːdʒə/", definition: "Bộ sạc", icon: "🔌" },
     { word: "Name tag", phonetic: "/neɪm tæɡ/", definition: "Bảng tên", icon: "🏷️" },
-    { word: "Uniform", phonetic: "/ˈjuːnɪfɔːm/", definition: "Đồng phục", icon: "👔" },
+    // "a uniform", not "an" — /juː/ is a consonant sound, and the by-spelling
+    // default would get this one wrong.
+    { word: "Uniform", phonetic: "/ˈjuːnɪfɔːm/", definition: "Đồng phục", icon: "👔", art: "a" },
   ],
   states: [
     { word: "Detailed", phonetic: "/ˈdiːteɪld/", definition: "Chi tiết", icon: "✔️" },

@@ -66,6 +66,23 @@ function bw(w: P1Word, context: string) {
 }
 const lower = (w: P1Word) => w.word.toLowerCase();
 
+/** The headword as a FIRST MENTION: "a fork", "an envelope", "some ice".
+ *
+ *  Week 9 is where the request formula becomes a reflex, and it shipped as
+ *  "Can I have the fork?" — well-formed, but wrong for something the guest
+ *  has not mentioned before, and wrong in the worst possible place:
+ *  Vietnamese has no articles, so whatever this frame drills is what the
+ *  learner will say for the rest of the course. Any frame putting a bank
+ *  word in a first-mention position must use this, never `lower()` behind a
+ *  bare "the". Mass nouns and plurals declare `art: "some"` in the lexicon;
+ *  "Uniform" declares "a" because /juː/ is a consonant sound that the
+ *  by-spelling default would get wrong. */
+const wa = (w: P1Word) => {
+  const bare = lower(w);
+  const art = w.art ?? (/^[aeiou]/i.test(bare) ? "an" : "a");
+  return art === "" ? bare : `${art} ${bare}`;
+};
+
 // ============================================================
 // WEEK 7 — People & Jobs in the Hotel
 // FRAMES · "This is {name}. He/She is our {role}."
@@ -512,15 +529,15 @@ function week9(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 9, 1, "Can I Have…?", "Khách xin đồ: Can I have…?", {
       vocabulary: [
-        v("Need", "/niːd/", "Cần", `I need the ${lower(q1)}.`, "🙋"),
+        v("Need", "/niːd/", "Cần", `I need ${wa(q1)}.`, "🙋"),
         v("Another", "/əˈnʌðə/", "Thêm một cái nữa", "Another one, please.", "➕"),
-        bw(q1, `Can I have the ${lower(q1)}?`),
+        bw(q1, `Can I have ${wa(q1)}?`),
         bw(q2, `Here is your ${lower(q2)}.`),
       ],
       grammar: [
         g(
           `I want ${lower(q1)}.`,
-          `Can I have the ${lower(q1)}?`,
+          `Can I have ${wa(q1)}?`,
           "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng.",
         ),
         g(
@@ -531,19 +548,19 @@ function week9(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          `Can I have the ${lower(q1)}, please?`,
+          `Can I have ${wa(q1)}, please?`,
           `Of course. I will bring one.`,
           "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin.",
         ),
       ],
       reading: read(
-        `A guest needs something. He asks: "Can I have the ${lower(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
+        `A guest needs something. He asks: "Can I have ${wa(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
         [
           {
             q: "Khách xin cái gì?",
             options: [q1.definition, q2.definition, "Không xin gì"],
             correct: 0,
-            explanation: `Khách nói "Can I have the ${lower(q1)}?"`,
+            explanation: `Khách nói "Can I have ${wa(q1)}?"`,
           },
           {
             q: "Câu đáp nào đúng chuẩn dịch vụ?",
@@ -612,10 +629,7 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 3, "When Will It Come?", "Bao lâu thì có?", {
-      vocabulary: [
-        bw(q5, `Your ${lower(q5)} is coming.`),
-        bw(q6, `I will bring the ${lower(q6)}.`),
-      ],
+      vocabulary: [bw(q5, `Your ${lower(q5)} is coming.`), bw(q6, `I will bring ${wa(q6)}.`)],
       grammar: [
         g(
           `Five minute.`,
@@ -1668,7 +1682,7 @@ function week14(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          `Can I have the ${lower(q1)}?`,
+          `Can I have ${wa(q1)}?`,
           "Of course. I will bring one.",
           "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca.",
         ),

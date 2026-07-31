@@ -860,6 +860,23 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     why: "two determiners in a row",
   },
   {
+    // A guest asking for something has not mentioned it yet, so it takes
+    // a/an or some — never "the". The course shipped "Can I have the fork?"
+    // and "I will bring the slippers." across all six departments at weeks 9
+    // and 13: well-formed English, invisible to every structural check, and
+    // wrong in the one place it does the most damage. Vietnamese has no
+    // articles, so the week-9 request formula is where the article system
+    // becomes a reflex, and it was drilling the wrong one.
+    //
+    // Verified to match nothing in the 9,784 generated sentences once the
+    // frames were fixed. A genuinely definite request ("Can I have the bill,
+    // please?" — unique in its situation) would trip this; author it with the
+    // article inside the headword, or narrow this rule then.
+    name: "definite-article-on-first-mention",
+    test: (s) => /\b(can|could|may) i have the\b|\bi (need|will bring) the\b/i.test(s),
+    why: 'a first request takes "a"/"an"/"some", not "the" — the guest has not mentioned it yet',
+  },
+  {
     // a/an follows SOUND, not spelling: "a universal adapter", "an hour".
     name: "a-an-mismatch",
     test: (s) => {
