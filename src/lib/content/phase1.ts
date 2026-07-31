@@ -966,9 +966,13 @@ function week11(lx: Ctx): LessonContent[] {
       ],
       grammar: [
         g(
-          `Every day I ${lower(t1)} it.`,
-          `I ${lower(t1)} it every day.`,
-          "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … it EVERY DAY.",
+          // No "it": the routines bank holds complete verb phrases ("Make the
+          // bed", "Check in", "Send an email"), so the frame's own object
+          // produced "I make the bed it every day." for four of six
+          // departments — as the sentence the learner is told is correct.
+          `Every day I ${lower(t1)}.`,
+          `I ${lower(t1)} every day.`,
+          "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … EVERY DAY.",
         ),
         g(
           `He ${lower(t1)} every day.`,
