@@ -56,6 +56,12 @@ export type P0Lexicon = {
   deptPhonetic: string;
   deptVi: string;
   staff: string;
+  /** Pronouns for `staff`. Three of the six personas are women (Linh, Mai,
+   *  Trang) and the P3/P4 frames used to hardcode "He"/"His", so half the
+   *  course narrated a learner's own department persona as a man — 25
+   *  passages across weeks 25-39. Any frame referring back to `staff` must
+   *  read from here. */
+  pron: { subj: string; obj: string; poss: string; refl: string };
   /** Where this staff member greets guests, lowercase, article included. */
   station: string;
   items: [P0Item, P0Item, P0Item, P0Item, P0Item, P0Item];
@@ -74,6 +80,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/frʌnt ˈɒfɪs/",
     deptVi: "Lễ tân",
     staff: "Nam",
+    pron: { subj: "he", obj: "him", poss: "his", refl: "himself" },
     station: "the front desk",
     items: [
       { word: "Key", phonetic: "/kiː/", definition: "Chìa khóa phòng", icon: "🔑" },
@@ -94,6 +101,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/fuːd ənd ˈbevərɪdʒ/",
     deptVi: "Nhà hàng & Bar",
     staff: "Linh",
+    pron: { subj: "she", obj: "her", poss: "her", refl: "herself" },
     station: "the restaurant door",
     items: [
       { word: "Menu", phonetic: "/ˈmenjuː/", definition: "Thực đơn", icon: "📋" },
@@ -114,6 +122,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/ˈhaʊskiːpɪŋ/",
     deptVi: "Buồng phòng",
     staff: "Huy",
+    pron: { subj: "he", obj: "him", poss: "his", refl: "himself" },
     station: "the guest room door",
     items: [
       { word: "Towel", phonetic: "/ˈtaʊəl/", definition: "Khăn tắm", icon: "🧺" },
@@ -134,6 +143,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/spɑː ənd ˈwelnəs/",
     deptVi: "Spa & Sức khỏe",
     staff: "Mai",
+    pron: { subj: "she", obj: "her", poss: "her", refl: "herself" },
     station: "the spa reception",
     items: [
       { word: "Robe", phonetic: "/rəʊb/", definition: "Áo choàng tắm", icon: "🥼" },
@@ -158,6 +168,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/ɡest rɪˈleɪʃnz/",
     deptVi: "Quan hệ khách hàng",
     staff: "Trang",
+    pron: { subj: "she", obj: "her", poss: "her", refl: "herself" },
     station: "the lounge door",
     items: [
       // "Lounge card", not "Card" — the shared week-4 payment vocabulary
@@ -186,6 +197,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     deptPhonetic: "/bæk ˈɒfɪs/",
     deptVi: "Vận hành & Kinh doanh",
     staff: "Dũng",
+    pron: { subj: "he", obj: "him", poss: "his", refl: "himself" },
     station: "the office door",
     items: [
       { word: "Invoice", phonetic: "/ˈɪnvɔɪs/", definition: "Hóa đơn", icon: "🧾" },

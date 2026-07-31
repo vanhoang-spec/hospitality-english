@@ -33,7 +33,13 @@ export type P2Word = {
 };
 
 export type P2Bank = {
-  /** W15 — the named steps of this department's core service sequence. */
+  /** W15 — the named steps of this department's core service sequence.
+   *  SLOT CONTRACT: every entry is a BARE VERB PHRASE ("Confirm the
+   *  details", "Say goodbye warmly"), because the frames drop it straight
+   *  after a subject — "First I {1}, then I {2}." and "We always {8}."
+   *  The week-15 frame used to read "We always work {8}", which generated
+   *  "We always work confirm the details." for four departments: a frame
+   *  that supplies its own verb cannot also take one from this slot. */
   steps: P2Word[];
   /** W16 — what this department offers guests. SLOT CONTRACT:
    *   1-7  countable noun phrase; the frames supply "a"/"an" via `wa()`,

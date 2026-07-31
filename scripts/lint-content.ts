@@ -860,6 +860,26 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     why: "two determiners in a row",
   },
   {
+    // A frequency adverb followed by "work" followed by another verb is a
+    // frame that supplied its own verb and then took a second one from the
+    // bank. Week 15 shipped "We always work confirm the details.", "…work
+    // say goodbye warmly.", "…work file the document." and "…work walk the
+    // guest out." — four departments, invisible to every other check
+    // because each word is fine on its own.
+    //
+    // The allow-list is what genuinely follows "work" in this domain, so a
+    // real sentence like "We always work together." stays clean.
+    name: "double-verb-after-work",
+    test: (s) => {
+      const m = /\b(always|never|usually|often|sometimes)\s+work\s+([a-z']+)/i.exec(s);
+      if (!m) return false;
+      const OK =
+        /^(with|together|here|there|late|early|hard|fast|in|on|at|as|from|for|until|during|overtime|nights|weekends|alone|closely|safely|quickly)$/i;
+      return !OK.test(m[2]);
+    },
+    why: 'a verb after "work" — the frame already has its verb, so the bank word doubles it',
+  },
+  {
     // A guest asking for something has not mentioned it yet, so it takes
     // a/an or some — never "the". The course shipped "Can I have the fork?"
     // and "I will bring the slippers." across all six departments at weeks 9

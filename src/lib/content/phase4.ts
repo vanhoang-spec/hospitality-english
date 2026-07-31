@@ -54,6 +54,8 @@ function bw(w: P4Word, context: string) {
   return v(w.word, w.phonetic, w.definition, context, w.icon);
 }
 const lo = (w: P4Word) => w.word.toLowerCase();
+/** Sentence-initial form of a pronoun from `lx.pron`. */
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // ============================================================
 // WEEK 31 — Telling the Story
@@ -300,7 +302,7 @@ function week31(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} never ends abruptly. He closes with: "I hope you will experience the ${lo(s13)} yourself. Do ask me anything about the ${lo(s14)} during your stay." Mr. Bianchi comes back to him twice more that week.`,
+        `${lx.staff} never ends abruptly. ${cap(lx.pron.subj)} closes with: "I hope you will experience the ${lo(s13)} yourself. Do ask me anything about the ${lo(s14)} during your stay." Mr. Bianchi comes back to ${lx.pron.obj} twice more that week.`,
         [
           {
             q: "Vì sao khách quay lại tìm nhân viên này?",
@@ -445,7 +447,7 @@ function week32(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A returning guest is greeted by name. ${lx.staff} says: "I have arranged your ${lo(p5)} as usual. We kept a note of your ${lo(p7)}." He then checks: "Your ${lo(p8)} has not changed, I hope?" The guest is delighted, and corrects one small detail.`,
+        `A returning guest is greeted by name. ${lx.staff} says: "I have arranged your ${lo(p5)} as usual. We kept a note of your ${lo(p7)}." ${cap(lx.pron.subj)} then checks: "Your ${lo(p8)} has not changed, I hope?" The guest is delighted, and corrects one small detail.`,
         [
           {
             q: "Vì sao nhân viên vẫn hỏi lại dù đã có hồ sơ?",
@@ -663,7 +665,7 @@ function week33(lx: Ctx): LessonContent[] {
           : []),
       ],
       reading: read(
-        `Mr. Halvorsen makes a serious claim. ${lx.staff} does not argue: "I am very sorry about the ${lo(d1)}. Could you describe the ${lo(d2)} in detail? I will record it exactly as you say it." He writes down the guest's own words.`,
+        `Mr. Halvorsen makes a serious claim. ${lx.staff} does not argue: "I am very sorry about the ${lo(d1)}. Could you describe the ${lo(d2)} in detail? I will record it exactly as you say it." ${cap(lx.pron.subj)} writes down the guest's own words.`,
         [
           {
             q: "Vì sao ghi đúng nguyên văn lời khách?",
@@ -2085,7 +2087,7 @@ function week38(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Asked something he cannot answer, ${lx.staff} does not bluff: "That is a fair question about the ${lo(r9)}. I do not have that figure, but the ${lo(r10)} is accurate. May I come back to you on the ${lo(r12)} tomorrow?" He calls back the next morning.`,
+        `Asked something ${lx.pron.subj} cannot answer, ${lx.staff} does not bluff: "That is a fair question about the ${lo(r9)}. I do not have that figure, but the ${lo(r10)} is accurate. May I come back to you on the ${lo(r12)} tomorrow?" ${cap(lx.pron.subj)} calls back the next morning.`,
         [
           {
             q: "Nhân viên làm gì khi không biết câu trả lời?",
@@ -2227,7 +2229,7 @@ function week39(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `In the rehearsal, ${lx.staff} plays a full arrival: story first, then a question about the ${lo(p1)}, then one suggestion. His trainer notes: "He listened before he sold." No script was used.`,
+        `In the rehearsal, ${lx.staff} plays a full arrival: story first, then a question about the ${lo(p1)}, then one suggestion. ${cap(lx.pron.poss)} trainer notes: "${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold." No script was used.`,
         [
           {
             q: "Điều gì được người huấn luyện ghi nhận?",
@@ -2238,7 +2240,7 @@ function week39(lx: Ctx): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "'He listened before he sold' — trình tự này phân biệt tư vấn với chào hàng.",
+              "'${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold' — trình tự này phân biệt tư vấn với chào hàng.",
           },
           {
             q: "Ứng biến nghĩa là gì trong ngữ cảnh này?",
@@ -2295,7 +2297,7 @@ function week39(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — acknowledge the ${lo(d1)}, state what policy allows, then offer to ${lo(t1)}. His trainer stops the exercise and says nothing needs changing.`,
+        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — acknowledge the ${lo(d1)}, state what policy allows, then offer to ${lo(t1)}. ${cap(lx.pron.poss)} trainer stops the exercise and says nothing needs changing.`,
         [
           {
             q: "Thứ tự xử lý đúng là gì?",
@@ -2485,7 +2487,7 @@ function week40(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `At the final review ${lx.staff} says: "I used to feel nervous, but I can handle the ${lo(w1)} on my own now. The ${lo(w2)} no longer worries me. I can explain the ${lo(w4)} to any guest." His supervisor agrees with every point.`,
+        `At the final review ${lx.staff} says: "I used to feel nervous, but I can handle the ${lo(w1)} on my own now. The ${lo(w2)} no longer worries me. I can explain the ${lo(w4)} to any guest." ${cap(lx.pron.poss)} supervisor agrees with every point.`,
         [
           {
             q: "Nhân viên nói về tiến bộ bằng cách nào?",
@@ -2547,7 +2549,7 @@ function week40(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Asked about difficulty, ${lx.staff} does not complain: "The ${lo(w6)} taught me the most. Even the ${lo(w5)} can be handled calmly. I still prepare carefully for the ${lo(w7)}." He is honest about what still takes effort.`,
+        `Asked about difficulty, ${lx.staff} does not complain: "The ${lo(w6)} taught me the most. Even the ${lo(w5)} can be handled calmly. I still prepare carefully for the ${lo(w7)}." ${cap(lx.pron.subj)} is honest about what still takes effort.`,
         [
           {
             q: "Nhân viên nói về khó khăn theo cách nào?",

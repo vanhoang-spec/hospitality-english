@@ -53,6 +53,8 @@ function bw(w: P3Word, context: string) {
 }
 /** Bank words sit mid-sentence far more often than they start one. */
 const lo = (w: P3Word) => w.word.toLowerCase();
+/** Sentence-initial form of a pronoun from `lx.pron`. */
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // ============================================================
 // WEEK 23 — Recommending an Upgrade
@@ -762,7 +764,7 @@ function week25(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} is late with a promise. He goes to the guest first: "I am very sorry. I could not ${lo(c10)} on time. I will ${lo(c11)} immediately instead. We will ${lo(c12)} to make it right." The guest appreciates the honesty.`,
+        `${lx.staff} is late with a promise. ${cap(lx.pron.subj)} goes to the guest first: "I am very sorry. I could not ${lo(c10)} on time. I will ${lo(c11)} immediately instead. We will ${lo(c12)} to make it right." The guest appreciates the honesty.`,
         [
           {
             q: "Nhân viên làm gì khi biết mình trễ hẹn?",
@@ -833,13 +835,14 @@ function week26(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A request arrives that belongs to another team. ${lx.staff} does not send the guest away. He says: "Let me check with the ${lo(t1)} for you. This part belongs to the ${lo(t3)}." He makes the call himself.`,
+        `A request arrives that belongs to another team. ${lx.staff} does not send the guest away. ${cap(lx.pron.subj)} says: "Let me check with the ${lo(t1)} for you. This part belongs to the ${lo(t3)}." ${cap(lx.pron.subj)} makes the call ${lx.pron.refl}.`,
         [
           {
             q: "Nhân viên xử lý thế nào khi việc thuộc bộ phận khác?",
             options: ["Tự liên hệ giúp khách", "Bảo khách tự đi hỏi", "Từ chối"],
             correct: 0,
-            explanation: "'He makes the call himself' — cầm lấy việc thay vì đẩy khách đi.",
+            explanation:
+              "'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}' — cầm lấy việc thay vì đẩy khách đi.",
           },
           {
             q: "Câu nào giữ khách ở lại thay vì đẩy đi?",
@@ -1141,7 +1144,7 @@ function week27(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} does not blame anyone else. He says: "The ${lo(k6)} was our mistake, and I apologise. The ${lo(k4)} should not happen here." Ms. Weber notices he did not blame a colleague, and her anger fades.`,
+        `${lx.staff} does not blame anyone else. ${cap(lx.pron.subj)} says: "The ${lo(k6)} was our mistake, and I apologise. The ${lo(k4)} should not happen here." Ms. Weber notices ${lx.pron.subj} did not blame a colleague, and her anger fades.`,
         [
           {
             q: "Nhân viên nhận lỗi thế nào?",
@@ -1431,7 +1434,7 @@ function week28(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The problem is fixed, but ${lx.staff} does not disappear. He says: "I will ${lo(s7)} and check again later. We can ${lo(s9)} if it happens again." Ms. Bauer sleeps well that night.`,
+        `The problem is fixed, but ${lx.staff} does not disappear. ${cap(lx.pron.subj)} says: "I will ${lo(s7)} and check again later. We can ${lo(s9)} if it happens again." Ms. Bauer sleeps well that night.`,
         [
           {
             q: "Nhân viên làm gì sau khi đã xử lý xong?",
@@ -1489,7 +1492,7 @@ function week28(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest demands more than ${lx.staff} can approve. He answers honestly: "I cannot ${lo(s10)} myself. My manager can review that for you. We will ${lo(s12)} as a gesture of apology." The guest accepts.`,
+        `A guest demands more than ${lx.staff} can approve. ${cap(lx.pron.subj)} answers honestly: "I cannot ${lo(s10)} myself. My manager can review that for you. We will ${lo(s12)} as a gesture of apology." The guest accepts.`,
         [
           {
             q: "Nhân viên xử lý yêu cầu vượt thẩm quyền thế nào?",
@@ -1570,7 +1573,7 @@ function week29(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} meets the evening colleague. He says: "I updated the ${lo(h1)} this morning. The ${lo(h2)} is ready for the next shift. Please check the ${lo(h3)} first." The handover takes two minutes.`,
+        `${lx.staff} meets the evening colleague. ${cap(lx.pron.subj)} says: "I updated the ${lo(h1)} this morning. The ${lo(h2)} is ready for the next shift. Please check the ${lo(h3)} first." The handover takes two minutes.`,
         [
           {
             q: "Đồng nghiệp nên xem gì trước tiên?",
@@ -1700,7 +1703,7 @@ function week29(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} is honest about what is unfinished: "The ${lo(h7)} has not been finished yet. Have you followed up on the ${lo(h8)} yet? I have left a note about the ${lo(h9)}." His colleague thanks him for being clear.`,
+        `${lx.staff} is honest about what is unfinished: "The ${lo(h7)} has not been finished yet. Have you followed up on the ${lo(h8)} yet? I have left a note about the ${lo(h9)}." ${cap(lx.pron.poss)} colleague thanks ${lx.pron.obj} for being clear.`,
         [
           {
             q: "Nhân viên có giấu việc chưa xong không?",
@@ -1946,7 +1949,7 @@ function week30(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The same problem returns. ${lx.staff} does not repeat old excuses: "I am very sorry, and if you like, I can ${lo(s1)}. The ${lo(w8)} will not happen again." He then writes it in the log so the next shift knows.`,
+        `The same problem returns. ${lx.staff} does not repeat old excuses: "I am very sorry, and if you like, I can ${lo(s1)}. The ${lo(w8)} will not happen again." ${cap(lx.pron.subj)} then writes it in the log so the next shift knows.`,
         [
           {
             q: "Nhân viên làm gì sau khi hứa với khách?",
@@ -1999,7 +2002,7 @@ function week30(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `At the end of the phase ${lx.staff} reviews his own week: "I checked the ${lo(w10)} before the end of my shift. The ${lo(w11)} is complete for today. I am ready for the ${lo(w12)}." His supervisor agrees.`,
+        `At the end of the phase ${lx.staff} reviews ${lx.pron.poss} own week: "I checked the ${lo(w10)} before the end of my shift. The ${lo(w11)} is complete for today. I am ready for the ${lo(w12)}." ${cap(lx.pron.poss)} supervisor agrees.`,
         [
           {
             q: "Nhân viên tự đánh giá thế nào?",

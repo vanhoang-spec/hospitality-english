@@ -105,7 +105,7 @@ function week15(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} explains the routine to a new colleague. "First I ${lo(a1)}, then I ${lo(a2)}. After that, I ${lo(a3)}. We always work ${lo(a8)}."`,
+        `${lx.staff} explains the routine to a new colleague. "First I ${lo(a1)}, then I ${lo(a2)}. After that, I ${lo(a3)}. We always ${lo(a8)}."`,
         [
           {
             q: "Bước thứ hai là gì?",
@@ -192,7 +192,7 @@ function week15(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(a6, `The ${lo(a6)} comes last.`),
         bw(a7, `Do not forget to ${lo(a7)}.`),
-        bw(a8, `We always work ${lo(a8)}.`),
+        bw(a8, `We always ${lo(a8)}.`),
       ],
       grammar: [
         g(
@@ -1550,7 +1550,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The supervisor asks about the work. ${lx.staff} answers: "I ${lo(e1)} it this morning, about two hours ago. ${e5.word} was very busy today."`,
+        `The supervisor asks about the work. ${lx.staff} answers: "I ${lo(e1)} it this morning, about two hours ago. ${e5.word} was very busy."`,
         [
           {
             q: "Việc đó được làm khi nào?",
