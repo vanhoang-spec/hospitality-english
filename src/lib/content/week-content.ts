@@ -133,28 +133,28 @@ export const FO_WEEK_17: WeekContent = {
       vocabulary: [
         {
           word: "Welcome",
-          phonetic: "/ˈwɛlkəm/",
+          phonetic: "/ˈwelkəm/",
           definition: "Chào đón",
           context: "Welcome to our hotel, sir.",
           icon: "🙏",
         },
         {
           word: "Reservation",
-          phonetic: "/ˌrɛzərˈveɪʃən/",
+          phonetic: "/ˌrezəˈveɪʃən/",
           definition: "Sự đặt phòng trước",
           context: "Do you have a reservation with us?",
           icon: "📅",
         },
         {
           word: "Booking reference",
-          phonetic: "/ˈbʊkɪŋ ˈrɛfərəns/",
+          phonetic: "/ˈbʊkɪŋ ˈrefərəns/",
           definition: "Mã số đặt phòng",
           context: "May I have your booking reference number?",
           icon: "🔖",
         },
         {
           word: "Registration card",
-          phonetic: "/ˌrɛdʒɪˈstreɪʃən kɑːrd/",
+          phonetic: "/ˌredʒɪˈstreɪʃən kɑːd/",
           definition: "Phiếu đăng ký lưu trú",
           context: "Could you please sign the registration card for me?",
           icon: "📝",
@@ -221,14 +221,14 @@ export const FO_WEEK_17: WeekContent = {
       vocabulary: [
         {
           word: "Passport",
-          phonetic: "/ˈpæspɔːrt/",
+          phonetic: "/ˈpæspɔːt/",
           definition: "Hộ chiếu",
           context: "May I have your passport, please?",
           icon: "📘",
         },
         {
           word: "Local registration",
-          phonetic: "/ˈloʊkəl ˌrɛdʒɪˈstreɪʃən/",
+          phonetic: "/ˈləʊkəl ˌredʒɪˈstreɪʃən/",
           definition: "Đăng ký lưu trú địa phương",
           context: "We need your passport for local registration.",
           icon: "📝",
@@ -313,7 +313,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "Incidental charges",
-          phonetic: "/ˌɪnsɪˈdɛntl ˈtʃɑːrdʒɪz/",
+          phonetic: "/ˌɪnsɪˈdentl ˈtʃɑːdʒɪz/",
           definition: "Chi phí phát sinh (minibar, v.v.)",
           context: "The deposit is for any incidental charges.",
           icon: "🧾",
@@ -407,14 +407,14 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "Elevator",
-          phonetic: "/ˈɛlɪveɪtər/",
+          phonetic: "/ˈelɪveɪtə/",
           definition: "Thang máy",
           context: "The elevators are just behind you on the left.",
           icon: "🛗",
         },
         {
           word: "Breakfast buffet",
-          phonetic: "/ˈbrɛkfəst ˈbʊfeɪ/",
+          phonetic: "/ˈbrekfəst ˈbʊfeɪ/",
           definition: "Buffet ăn sáng",
           context: "Our breakfast buffet is on the first floor.",
           icon: "🍽️",
@@ -501,28 +501,28 @@ export const FB_WEEK_15: WeekContent = {
       vocabulary: [
         {
           word: "Entrance",
-          phonetic: "/ˈɛntrəns/",
+          phonetic: "/ˈentrəns/",
           definition: "Lối vào",
           context: "Please wait for me at the restaurant entrance.",
           icon: "🚪",
         },
         {
           word: "Breakfast voucher",
-          phonetic: "/ˈbrɛkfəst ˈvaʊtʃər/",
+          phonetic: "/ˈbrekfəst ˈvaʊtʃə/",
           definition: "Phiếu ăn sáng",
           context: "Could I see your breakfast voucher, please?",
           icon: "🎫",
         },
         {
           word: "In-house guest",
-          phonetic: "/ɪn haʊs ɡɛst/",
+          phonetic: "/ɪn haʊs ɡest/",
           definition: "Khách đang lưu trú tại khách sạn",
           context: "All in-house guests receive complimentary breakfast.",
           icon: "🏨",
         },
         {
           word: "Verify",
-          phonetic: "/ˈvɛrɪfaɪ/",
+          phonetic: "/ˈverɪfaɪ/",
           definition: "Xác minh, kiểm tra",
           context: "I need to verify your room number on our list.",
           icon: "🔍",
@@ -608,7 +608,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           word: "Peak hours",
-          phonetic: "/piːk ˈaʊərz/",
+          phonetic: "/piːk ˈaʊəz/",
           definition: "Giờ cao điểm",
           context: "Breakfast is busiest during peak hours, from 8 to 9:30.",
           icon: "⏰",
@@ -622,7 +622,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           word: "Shortly",
-          phonetic: "/ˈʃɔːrtli/",
+          phonetic: "/ˈʃɔːtli/",
           definition: "Trong chốc lát, sớm thôi",
           context: "Your table will be ready shortly, sir.",
           icon: "⏱️",
@@ -697,7 +697,7 @@ export const FB_WEEK_15: WeekContent = {
       vocabulary: [
         {
           word: "Escort",
-          phonetic: "/ɪˈskɔːrt/",
+          phonetic: "/ɪˈskɔːt/",
           definition: "Dẫn, hộ tống khách",
           context: "Let me escort you to your table, please follow me.",
           icon: "🚶",
@@ -711,14 +711,14 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           word: "Bakery corner",
-          phonetic: "/ˈbeɪkəri ˈkɔːrnər/",
+          phonetic: "/ˈbeɪkəri ˈkɔːnə/",
           definition: "Khu vực quầy bánh mì",
           context: "You will find fresh croissants at the bakery corner.",
           icon: "🥐",
         },
         {
           word: "Juice area",
-          phonetic: "/dʒuːs ˈɛriə/",
+          phonetic: "/dʒuːs ˈeriə/",
           definition: "Khu vực nước trái cây",
           context: "The juice area is right next to the coffee machines.",
           icon: "🧃",
@@ -788,14 +788,14 @@ export const FB_WEEK_15: WeekContent = {
       vocabulary: [
         {
           word: "Clear",
-          phonetic: "/klɪr/",
+          phonetic: "/klɪə/",
           definition: "Dọn (đĩa, bàn)",
           context: "May I clear this plate for you, madam?",
           icon: "🍽️",
         },
         {
           word: "Empty plate",
-          phonetic: "/ˈɛmpti pleɪt/",
+          phonetic: "/ˈempti pleɪt/",
           definition: "Đĩa đã dùng xong, trống",
           context: "I can see an empty plate, shall I take it away?",
           icon: "🍴",
@@ -908,7 +908,7 @@ export const HK_WEEK_15: WeekContent = {
         {
           word: "Housekeeping",
           phonetic: "/ˈhaʊsˌkiːpɪŋ/",
-          definition: "Bộ phận buồng phòng",
+          definition: "Bộ phận Buồng phòng",
           context: "Housekeeping! Good morning!",
           icon: "🧹",
         },
@@ -1010,14 +1010,14 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           word: "Razor",
-          phonetic: "/ˈreɪzər/",
+          phonetic: "/ˈreɪzə/",
           definition: "Dao cạo râu",
           context: "I can bring a disposable razor to your room shortly.",
           icon: "🪒",
         },
         {
           word: "Complimentary",
-          phonetic: "/ˌkɒmplɪˈmɛntəri/",
+          phonetic: "/ˌkɒmplɪˈmentəri/",
           definition: "Miễn phí (dịch vụ đi kèm)",
           context: "Bottled water is complimentary in every room.",
           icon: "💧",
@@ -1085,28 +1085,28 @@ export const HK_WEEK_15: WeekContent = {
       vocabulary: [
         {
           word: "Rollaway bed",
-          phonetic: "/ˈroʊləweɪ bɛd/",
+          phonetic: "/ˈrəʊləweɪ bed/",
           definition: "Giường phụ có bánh xe",
           context: "We can set up a rollaway bed for an extra guest.",
           icon: "🛏️",
         },
         {
           word: "Adapter",
-          phonetic: "/əˈdæptər/",
+          phonetic: "/əˈdæptə/",
           definition: "Bộ chuyển đổi ổ cắm",
           context: "I can lend you a universal adapter for your device.",
           icon: "🔌",
         },
         {
           word: "Iron",
-          phonetic: "/ˈaɪərn/",
+          phonetic: "/ˈaɪən/",
           definition: "Bàn là (ủi đồ)",
           context: "Would you like to borrow an iron and ironing board?",
           icon: "👔",
         },
         {
           word: "Extra charge",
-          phonetic: "/ˈɛkstrə tʃɑːrdʒ/",
+          phonetic: "/ˈekstrə tʃɑːdʒ/",
           definition: "Phụ phí",
           context: "Please note the rollaway bed has an extra charge per night.",
           icon: "💲",
@@ -1180,14 +1180,14 @@ export const HK_WEEK_15: WeekContent = {
       vocabulary: [
         {
           word: "Do Not Disturb",
-          phonetic: "/duː nɒt dɪˈstɜːrb/",
+          phonetic: "/duː nɒt dɪˈstɜːb/",
           definition: 'Biển "Xin đừng làm phiền"',
           context: "The sign on the door says Do Not Disturb.",
           icon: "🚫",
         },
         {
           word: "Courtesy call",
-          phonetic: "/ˈkɜːrtəsi kɔːl/",
+          phonetic: "/ˈkɜːtəsi kɔːl/",
           definition: "Cuộc gọi nhắc nhở lịch sự",
           context: "We will make a courtesy call before checkout time.",
           icon: "☎️",
@@ -1201,7 +1201,7 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           word: "Slip under the door",
-          phonetic: "/slɪp ˈʌndər ðə dɔːr/",
+          phonetic: "/slɪp ˈʌndə ðə dɔː/",
           definition: "Nhét đồ/giấy qua khe cửa",
           context: "I will slip a note under the door instead.",
           icon: "✉️",
@@ -1307,14 +1307,14 @@ export const SW_WEEK_23: WeekContent = {
         },
         {
           word: "Allergy",
-          phonetic: "/ˈælərdʒi/",
+          phonetic: "/ˈælədʒi/",
           definition: "Dị ứng",
           context: "Do you have any allergies to essential oils or nuts?",
           icon: "🤧",
         },
         {
           word: "Pressure",
-          phonetic: "/ˈprɛʃər/",
+          phonetic: "/ˈpreʃə/",
           definition: "Lực ấn, áp lực (khi massage)",
           context: "What pressure level do you prefer, light or firm?",
           icon: "✋",
@@ -1400,21 +1400,21 @@ export const SW_WEEK_23: WeekContent = {
         },
         {
           word: "Hot stone",
-          phonetic: "/hɒt stoʊn/",
+          phonetic: "/hɒt stəʊn/",
           definition: "Đá nóng",
           context: "The hot stone massage uses heated basalt stones to relax your muscles.",
           icon: "🪨",
         },
         {
           word: "Herbal steam",
-          phonetic: "/ˈhɜːrbəl stiːm/",
+          phonetic: "/ˈhɜːbəl stiːm/",
           definition: "Xông hơi thảo dược",
           context: "Herbal steam opens your pores and clears your sinuses.",
           icon: "🌿",
         },
         {
           word: "Circulation",
-          phonetic: "/ˌsɜːrkjəˈleɪʃən/",
+          phonetic: "/ˌsɜːkjəˈleɪʃən/",
           definition: "Sự tuần hoàn (máu)",
           context: "This treatment improves blood circulation throughout your body.",
           icon: "💓",
@@ -1501,14 +1501,14 @@ export const SW_WEEK_23: WeekContent = {
         },
         {
           word: "Combo",
-          phonetic: "/ˈkɒmboʊ/",
+          phonetic: "/ˈkɒmbəʊ/",
           definition: "Gói kết hợp",
           context: "The combo includes a massage and a facial treatment.",
           icon: "🧖",
         },
         {
           word: "Complimentary",
-          phonetic: "/ˌkɒmplɪˈmɛntəri/",
+          phonetic: "/ˌkɒmplɪˈmentəri/",
           definition: "Miễn phí (đi kèm)",
           context: "The family package includes a complimentary herbal tea.",
           icon: "🍵",
@@ -1596,7 +1596,7 @@ export const SW_WEEK_23: WeekContent = {
         },
         {
           word: "Essential oil",
-          phonetic: "/ɪˈsɛnʃəl ɔɪl/",
+          phonetic: "/ɪˈsenʃəl ɔɪl/",
           definition: "Tinh dầu",
           context: "This essential oil helped relax your muscles during the session.",
           icon: "🧴",
@@ -1610,7 +1610,7 @@ export const SW_WEEK_23: WeekContent = {
         },
         {
           word: "Recommend",
-          phonetic: "/ˌrɛkəˈmɛnd/",
+          phonetic: "/ˌrekəˈmend/",
           definition: "Giới thiệu, đề xuất",
           context: "I'd like to recommend a take-home product for your skin type.",
           icon: "🛍️",
@@ -1718,21 +1718,21 @@ export const GR_WEEK_27: WeekContent = {
         },
         {
           word: "Complimentary",
-          phonetic: "/ˌkɒmplɪˈmɛntəri/",
+          phonetic: "/ˌkɒmplɪˈmentəri/",
           definition: "Miễn phí (đi kèm dịch vụ)",
           context: "Breakfast is complimentary for all Executive Suite guests.",
           icon: "🆓",
         },
         {
           word: "Personalized",
-          phonetic: "/ˈpɜːrsənəlaɪzd/",
+          phonetic: "/ˈpɜːsənəlaɪzd/",
           definition: "Được cá nhân hóa",
           context: "We have prepared a personalized welcome for you, Mr. Tran.",
           icon: "✨",
         },
         {
           word: "Access",
-          phonetic: "/ˈæksɛs/",
+          phonetic: "/ˈækses/",
           definition: "Quyền sử dụng, truy cập",
           context: "Your key card gives you access to the Executive Lounge on the 20th floor.",
           icon: "🔑",
@@ -1810,14 +1810,14 @@ export const GR_WEEK_27: WeekContent = {
       vocabulary: [
         {
           word: "Refreshments",
-          phonetic: "/rɪˈfrɛʃmənts/",
+          phonetic: "/rɪˈfreʃmənts/",
           definition: "Đồ ăn nhẹ, thức uống giải khát",
           context: "Refreshments are served in the lounge throughout the day.",
           icon: "🍰",
         },
         {
           word: "Guest satisfaction score",
-          phonetic: "/ɡest ˌsætɪsˈfækʃn skɔːr/",
+          phonetic: "/ɡest ˌsætɪsˈfækʃn skɔː/",
           definition: "Điểm hài lòng của khách",
           context: "Your feedback directly affects our guest satisfaction score.",
           icon: "📊",
@@ -1831,7 +1831,7 @@ export const GR_WEEK_27: WeekContent = {
         },
         {
           word: "Replenish",
-          phonetic: "/rɪˈplɛnɪʃ/",
+          phonetic: "/rɪˈplenɪʃ/",
           definition: "Bổ sung thêm (đồ ăn/uống)",
           context: "I will replenish the pastry tray for you right away.",
           icon: "🔄",
@@ -1856,7 +1856,7 @@ export const GR_WEEK_27: WeekContent = {
           targetResponse:
             "Afternoon Tea is served daily from 3:00 to 5:00 PM, madam. You're welcome to join us anytime within that window. I'll be happy to prepare a fresh selection for you.",
           helpTip:
-            "Practice the linking sound between 'set' and 'time' — /sɛt‿taɪm/ — so it flows naturally instead of sounding choppy.",
+            "Practice the linking sound between 'set' and 'time' — /set‿taɪm/ — so it flows naturally instead of sounding choppy.",
         },
       ],
       reading: {
@@ -1910,7 +1910,7 @@ export const GR_WEEK_27: WeekContent = {
       vocabulary: [
         {
           word: "Confidential",
-          phonetic: "/ˌkɒnfɪˈdɛnʃəl/",
+          phonetic: "/ˌkɒnfɪˈdenʃəl/",
           definition: "Bảo mật, riêng tư",
           context: "This is a confidential business meeting, so we need a private room.",
           icon: "🔒",
@@ -1924,7 +1924,7 @@ export const GR_WEEK_27: WeekContent = {
         },
         {
           word: "Urgent",
-          phonetic: "/ˈɜːrdʒənt/",
+          phonetic: "/ˈɜːdʒənt/",
           definition: "Khẩn cấp",
           context: "I have an urgent document that needs printing before my 3 PM call.",
           icon: "⏰",
@@ -2008,21 +2008,21 @@ export const GR_WEEK_27: WeekContent = {
       vocabulary: [
         {
           word: "Preference",
-          phonetic: "/ˈprɛfərəns/",
+          phonetic: "/ˈprefərəns/",
           definition: "Sở thích, sự ưu tiên",
           context: "Please note the guest's preference for a high floor room.",
           icon: "📝",
         },
         {
           word: "Anniversary",
-          phonetic: "/ˌænɪˈvɜːrsəri/",
+          phonetic: "/ˌænɪˈvɜːsəri/",
           definition: "Ngày kỷ niệm",
           context: "Mr. and Mrs. Lee are celebrating their wedding anniversary during this stay.",
           icon: "💍",
         },
         {
           word: "Allergy",
-          phonetic: "/ˈælərdʒi/",
+          phonetic: "/ˈælədʒi/",
           definition: "Dị ứng",
           context: "The guest has a shellfish allergy, so please inform the kitchen.",
           icon: "⚠️",
@@ -2129,7 +2129,7 @@ export const BO_WEEK_37: WeekContent = {
       vocabulary: [
         {
           word: "Corporate rate",
-          phonetic: "/ˈkɔːrpərət reɪt/",
+          phonetic: "/ˈkɔːpərət reɪt/",
           definition: "Giá phòng dành cho doanh nghiệp",
           context: "We can offer you a special corporate rate for your company.",
           icon: "🏢",
@@ -2239,14 +2239,14 @@ export const BO_WEEK_37: WeekContent = {
         },
         {
           word: "Unsold rooms",
-          phonetic: "/ʌnˈsoʊld ruːmz/",
+          phonetic: "/ʌnˈsəʊld ruːmz/",
           definition: "Phòng chưa được bán",
           context: "Please confirm or release the unsold rooms by Friday.",
           icon: "🚪",
         },
         {
           word: "Confirm",
-          phonetic: "/kənˈfɜːrm/",
+          phonetic: "/kənˈfɜːm/",
           definition: "Xác nhận",
           context: "Could you confirm your rooms before the release deadline?",
           icon: "✅",
@@ -2347,7 +2347,7 @@ export const BO_WEEK_37: WeekContent = {
         },
         {
           word: "Penalty fee",
-          phonetic: "/ˈpɛnəlti fiː/",
+          phonetic: "/ˈpenəlti fiː/",
           definition: "Phí phạt",
           context: "A penalty fee applies for cancellations made after the deadline.",
           icon: "⚠️",
@@ -2429,21 +2429,21 @@ export const BO_WEEK_37: WeekContent = {
         },
         {
           word: "ADR",
-          phonetic: "/eɪ diː ɑːr/",
+          phonetic: "/eɪ diː ɑː/",
           definition: "Giá phòng bình quân (Average Daily Rate)",
           context: "We calculate ADR before agreeing to any group discount.",
           icon: "💰",
         },
         {
           word: "Renegotiate",
-          phonetic: "/ˌriːnɪˈɡoʊʃieɪt/",
+          phonetic: "/ˌriːnɪˈɡəʊʃieɪt/",
           definition: "Đàm phán lại",
           context: "We are open to renegotiate the terms next quarter.",
           icon: "🔄",
         },
         {
           word: "Long-term partnership",
-          phonetic: "/lɔːŋ tɜːrm ˈpɑːrtnərʃɪp/",
+          phonetic: "/lɔːŋ tɜːm ˈpɑːtnəʃɪp/",
           definition: "Quan hệ đối tác lâu dài",
           context: "We value this as a long-term partnership, not a one-time deal.",
           icon: "🤝",
@@ -2554,7 +2554,7 @@ export const FO_WEEK_26: WeekContent = {
         },
         {
           word: "Tour leader",
-          phonetic: "/tʊər ˈliːdər/",
+          phonetic: "/tʊə ˈliːdə/",
           definition: "Trưởng đoàn",
           context: "The tour leader will confirm the final numbers.",
           icon: "🧑‍💼",
@@ -2568,7 +2568,7 @@ export const FO_WEEK_26: WeekContent = {
         },
         {
           word: "Discrepancy",
-          phonetic: "/dɪˈskrɛpənsi/",
+          phonetic: "/dɪˈskrepənsi/",
           definition: "Sự sai lệch, không khớp",
           context: "We found a small discrepancy in the room count.",
           icon: "⚠️",
@@ -2594,7 +2594,7 @@ export const FO_WEEK_26: WeekContent = {
           targetResponse:
             "Thank you. Let's go through the list together. We'll confirm each guest name and room type before we start check-in.",
           helpTip:
-            "Link the words smoothly in 'check-in' — /ˈtʃɛk ɪn/ — so it does not sound like two separate words.",
+            "Link the words smoothly in 'check-in' — /ˈtʃek ɪn/ — so it does not sound like two separate words.",
         },
       ],
       reading: {
@@ -2644,7 +2644,7 @@ export const FO_WEEK_26: WeekContent = {
       vocabulary: [
         {
           word: "Express check-in",
-          phonetic: "/ɪkˈsprɛs ˈtʃɛk ɪn/",
+          phonetic: "/ɪkˈspres ˈtʃek ɪn/",
           definition: "Thủ tục nhận phòng nhanh",
           context: "We have prepared an express check-in for your group.",
           icon: "⚡",
@@ -2665,7 +2665,7 @@ export const FO_WEEK_26: WeekContent = {
         },
         {
           word: "Coordinate",
-          phonetic: "/koʊˈɔːrdɪneɪt/",
+          phonetic: "/kəʊˈɔːdɪneɪt/",
           definition: "Phối hợp, điều phối",
           context: "I will coordinate with the bellman team on your luggage.",
           icon: "🤝",
@@ -2845,14 +2845,14 @@ export const FO_WEEK_26: WeekContent = {
         },
         {
           word: "Departure time",
-          phonetic: "/dɪˈpɑːrtʃər taɪm/",
+          phonetic: "/dɪˈpɑːtʃə taɪm/",
           definition: "Giờ khởi hành",
           context: "Please note the departure time for tomorrow's shuttle.",
           icon: "⏰",
         },
         {
           word: "Group breakfast",
-          phonetic: "/ɡruːp ˈbrɛkfəst/",
+          phonetic: "/ɡruːp ˈbrekfəst/",
           definition: "Ăn sáng tập thể",
           context: "Group breakfast is reserved in the private hall.",
           icon: "🥐",
@@ -2954,14 +2954,14 @@ export const FB_WEEK_31: WeekContent = {
         },
         {
           word: "Simmer",
-          phonetic: "/ˈsɪmər/",
+          phonetic: "/ˈsɪmə/",
           definition: "Ninh, hầm nhỏ lửa",
           context: "The bones are simmered slowly to make the broth rich and clear.",
           icon: "🔥",
         },
         {
           word: "Fresh herbs",
-          phonetic: "/frɛʃ hɜːrbz/",
+          phonetic: "/freʃ hɜːbz/",
           definition: "Rau thơm tươi",
           context: "Please add fresh herbs and a squeeze of lime to your Phở.",
           icon: "🌿",
@@ -3046,14 +3046,14 @@ export const FB_WEEK_31: WeekContent = {
       vocabulary: [
         {
           word: "Robusta bean",
-          phonetic: "/roʊˈbʌstə biːn/",
+          phonetic: "/rəʊˈbʌstə biːn/",
           definition: "Hạt cà phê Robusta",
           context: "Vietnamese coffee is famous for its strong Robusta beans.",
           icon: "☕",
         },
         {
           word: "Condensed milk",
-          phonetic: "/kənˈdɛnst mɪlk/",
+          phonetic: "/kənˈdenst mɪlk/",
           definition: "Sữa đặc",
           context: "Cà phê sữa đá is coffee mixed with sweet condensed milk.",
           icon: "🥛",
@@ -3145,14 +3145,14 @@ export const FB_WEEK_31: WeekContent = {
       vocabulary: [
         {
           word: "Allergic reaction",
-          phonetic: "/əˈlɜːrdʒɪk riˈækʃən/",
+          phonetic: "/əˈlɜːdʒɪk riˈækʃən/",
           definition: "Phản ứng dị ứng",
           context: "Please tell us if you've ever had an allergic reaction to seafood.",
           icon: "⚠️",
         },
         {
           word: "Vegetarian",
-          phonetic: "/ˌvɛdʒɪˈtɛəriən/",
+          phonetic: "/ˌvedʒɪˈteəriən/",
           definition: "Người ăn chay",
           context: "We have a separate vegetarian menu with plant-based dishes.",
           icon: "🥦",
@@ -3246,28 +3246,28 @@ export const FB_WEEK_31: WeekContent = {
       vocabulary: [
         {
           word: "Signature dish",
-          phonetic: "/ˈsɪɡnətʃər dɪʃ/",
+          phonetic: "/ˈsɪɡnətʃə dɪʃ/",
           definition: "Món ăn đặc trưng, đặc sản của nhà hàng",
           context: "Our chef's signature dish is the grilled lemongrass beef.",
           icon: "⭐",
         },
         {
           word: "Recommend",
-          phonetic: "/ˌrɛkəˈmɛnd/",
+          phonetic: "/ˌrekəˈmend/",
           definition: "Đề xuất, gợi ý",
           context: "May I recommend a dish based on what you enjoy?",
           icon: "👌",
         },
         {
           word: "Spicy level",
-          phonetic: "/ˈspaɪsi ˈlɛvəl/",
+          phonetic: "/ˈspaɪsi ˈlevəl/",
           definition: "Mức độ cay",
           context: "Would you prefer a mild or a spicy level for this dish?",
           icon: "🌶️",
         },
         {
           word: "Pair well with",
-          phonetic: "/pɛr wɛl wɪð/",
+          phonetic: "/peə wel wɪð/",
           definition: "Kết hợp tốt với, hợp với",
           context: "This dish pairs well with a glass of chilled white wine.",
           icon: "🍷",
@@ -3381,7 +3381,7 @@ export const HK_WEEK_33: WeekContent = {
         },
         {
           word: "Inspect",
-          phonetic: "/ɪnˈspɛkt/",
+          phonetic: "/ɪnˈspekt/",
           definition: "Kiểm tra kỹ lưỡng",
           context: "I need to inspect each item before sending it to the laundry.",
           icon: "🔍",
@@ -3411,7 +3411,7 @@ export const HK_WEEK_33: WeekContent = {
           guestPrompt: "Here are my clothes for laundry. Can you check them now?",
           targetResponse:
             "Of course, sir. Let's go through each item together and note down the count and condition before I take them.",
-          helpTip: "Link 'go through' smoothly — /ɡoʊ θruː/ — don't pause between the two words.",
+          helpTip: "Link 'go through' smoothly — /ɡəʊ θruː/ — don't pause between the two words.",
         },
       ],
       reading: {
@@ -3472,14 +3472,14 @@ export const HK_WEEK_33: WeekContent = {
         },
         {
           word: "Express service",
-          phonetic: "/ɪkˈsprɛs ˈsɜːvɪs/",
+          phonetic: "/ɪkˈspres ˈsɜːvɪs/",
           definition: "Dịch vụ hỏa tốc",
           context: "Express service returns your laundry within 4 hours.",
           icon: "⚡",
         },
         {
           word: "Surcharge",
-          phonetic: "/ˈsɜːrtʃɑːrdʒ/",
+          phonetic: "/ˈsɜːtʃɑːdʒ/",
           definition: "Phụ phí",
           context: "A 50% surcharge applies for express service.",
           icon: "💰",
@@ -3678,14 +3678,14 @@ export const HK_WEEK_33: WeekContent = {
         },
         {
           word: "Reimburse",
-          phonetic: "/ˌriːɪmˈbɜːrs/",
+          phonetic: "/ˌriːɪmˈbɜːs/",
           definition: "Hoàn tiền",
           context: "We can reimburse you according to hotel policy.",
           icon: "🔄",
         },
         {
           word: "Par stock",
-          phonetic: "/pɑːr stɒk/",
+          phonetic: "/pɑː stɒk/",
           definition: "Định mức đồ vải/vật tư tiêu chuẩn cho mỗi phòng",
           context: "Each room keeps a par stock of two towel sets.",
           icon: "📦",
@@ -3794,7 +3794,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           word: "Locker",
-          phonetic: "/ˈlɒkər/",
+          phonetic: "/ˈlɒkə/",
           definition: "Tủ đồ có khóa",
           context: "Your locker number is printed on this key card.",
           icon: "🔐",
@@ -3808,7 +3808,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           word: "Key card",
-          phonetic: "/kiː kɑːrd/",
+          phonetic: "/kiː kɑːd/",
           definition: "Thẻ chìa khóa",
           context: "This key card opens both your locker and the private cabana.",
           icon: "🗝️",
@@ -3889,21 +3889,21 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           word: "Supervise",
-          phonetic: "/ˈsuːpərvaɪz/",
+          phonetic: "/ˈsuːpəvaɪz/",
           definition: "Giám sát",
           context: "Please supervise your children closely near the pool.",
           icon: "👀",
         },
         {
           word: "Swimwear",
-          phonetic: "/ˈswɪmwɛr/",
+          phonetic: "/ˈswɪmweə/",
           definition: "Trang phục bơi",
           context: "Proper swimwear is required in the pool area.",
           icon: "🩱",
         },
         {
           word: "Lifeguard",
-          phonetic: "/ˈlaɪfɡɑːrd/",
+          phonetic: "/ˈlaɪfɡɑːd/",
           definition: "Nhân viên cứu hộ",
           context: "Our lifeguard is on duty from 7 a.m. to 7 p.m.",
           icon: "🛟",
@@ -3978,7 +3978,7 @@ export const SW_WEEK_19: WeekContent = {
       vocabulary: [
         {
           word: "Warning",
-          phonetic: "/ˈwɔːrnɪŋ/",
+          phonetic: "/ˈwɔːnɪŋ/",
           definition: "Cảnh báo",
           context: "We have issued a storm warning for this afternoon.",
           icon: "⚠️",
@@ -3992,7 +3992,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           word: "Red flag",
-          phonetic: "/rɛd flæg/",
+          phonetic: "/red flæg/",
           definition: "Cờ đỏ (cấm bơi)",
           context: "When the red flag is up, guests must stay out of the water.",
           icon: "🚩",
@@ -4204,7 +4204,7 @@ export const GR_WEEK_34: WeekContent = {
         },
         {
           word: "Anniversary",
-          phonetic: "/ˌænɪˈvɜːrsəri/",
+          phonetic: "/ˌænɪˈvɜːsəri/",
           definition: "Ngày kỷ niệm",
           context: "Congratulations on your wedding anniversary!",
           icon: "💍",
@@ -4218,7 +4218,7 @@ export const GR_WEEK_34: WeekContent = {
         },
         {
           word: "Milestone",
-          phonetic: "/ˈmaɪlstoʊn/",
+          phonetic: "/ˈmaɪlstəʊn/",
           definition: "Cột mốc quan trọng",
           context: "We would love to celebrate this milestone with you.",
           icon: "🏆",
@@ -4300,28 +4300,28 @@ export const GR_WEEK_34: WeekContent = {
       vocabulary: [
         {
           word: "Coordinate",
-          phonetic: "/koʊˈɔːrdɪneɪt/",
+          phonetic: "/kəʊˈɔːdɪneɪt/",
           definition: "Phối hợp",
           context: "I will coordinate with the kitchen for the cake.",
           icon: "🤝",
         },
         {
           word: "Set-up",
-          phonetic: "/ˈsɛt ʌp/",
+          phonetic: "/ˈset ʌp/",
           definition: "Sự bài trí, thiết lập",
           context: "The romantic set-up will be ready by 6 PM.",
           icon: "🛏️",
         },
         {
           word: "Petal",
-          phonetic: "/ˈpɛtl/",
+          phonetic: "/ˈpetl/",
           definition: "Cánh hoa",
           context: "We will decorate the bed with rose petals.",
           icon: "🌹",
         },
         {
           word: "Amenity",
-          phonetic: "/əˈmɛnɪti/",
+          phonetic: "/əˈmenɪti/",
           definition: "Tiện nghi/quà tặng đi kèm",
           context: "Please prepare the anniversary amenity for Room 812.",
           icon: "🎁",
@@ -4398,28 +4398,28 @@ export const GR_WEEK_34: WeekContent = {
       vocabulary: [
         {
           word: "Present",
-          phonetic: "/prɪˈzɛnt/",
+          phonetic: "/prɪˈzent/",
           definition: "Trao tặng (một cách trang trọng)",
           context: "Allow me to present this gift on behalf of our hotel.",
           icon: "🎀",
         },
         {
           word: "Heartfelt",
-          phonetic: "/ˈhɑːrtfɛlt/",
+          phonetic: "/ˈhɑːtfelt/",
           definition: "Chân thành, từ đáy lòng",
           context: "Please accept our heartfelt congratulations.",
           icon: "💖",
         },
         {
           word: "Honor",
-          phonetic: "/ˈɒnər/",
+          phonetic: "/ˈɒnə/",
           definition: "Vinh dự",
           context: "It is our honor to celebrate this special day with you.",
           icon: "🙌",
         },
         {
           word: "Cherish",
-          phonetic: "/ˈtʃɛrɪʃ/",
+          phonetic: "/ˈtʃerɪʃ/",
           definition: "Trân trọng, nâng niu",
           context: "May you always cherish this beautiful moment.",
           icon: "✨",
@@ -4501,7 +4501,7 @@ export const GR_WEEK_34: WeekContent = {
       vocabulary: [
         {
           word: "Misspell",
-          phonetic: "/ˌmɪsˈspɛl/",
+          phonetic: "/ˌmɪsˈspel/",
           definition: "Viết sai chính tả",
           context: "We noticed the guest's name was misspelled on the card.",
           icon: "✏️",
@@ -4629,21 +4629,21 @@ export const BO_WEEK_38: WeekContent = {
       vocabulary: [
         {
           word: "Request for Proposal (RFP)",
-          phonetic: "/rɪˈkwɛst fɔːr prəˈpoʊzəl/",
+          phonetic: "/rɪˈkwest fɔː prəˈpəʊzəl/",
           definition: "Văn bản yêu cầu chào giá",
           context: "We received an RFP from a corporation for their annual conference.",
           icon: "📄",
         },
         {
           word: "Cost estimate",
-          phonetic: "/kɔːst ˈɛstɪmət/",
+          phonetic: "/kɔːst ˈestɪmət/",
           definition: "Bảng dự toán chi phí",
           context: "I will prepare a cost estimate based on your requirements.",
           icon: "💰",
         },
         {
           word: "Corporate client",
-          phonetic: "/ˈkɔːrpərət ˈklaɪənt/",
+          phonetic: "/ˈkɔːpərət ˈklaɪənt/",
           definition: "Khách hàng doanh nghiệp",
           context: "Our corporate clients often book the Grand Ballroom.",
           icon: "🏢",
@@ -4722,7 +4722,7 @@ export const BO_WEEK_38: WeekContent = {
       vocabulary: [
         {
           word: "Site inspection",
-          phonetic: "/saɪt ɪnˈspɛkʃən/",
+          phonetic: "/saɪt ɪnˈspekʃən/",
           definition: "Khảo sát mặt bằng",
           context: "Let's begin the site inspection in our main ballroom.",
           icon: "🔍",
@@ -4736,7 +4736,7 @@ export const BO_WEEK_38: WeekContent = {
         },
         {
           word: "Theater style",
-          phonetic: "/ˈθiːətər staɪl/",
+          phonetic: "/ˈθiːətə staɪl/",
           definition: "Kiểu rạp hát (ghế xếp hàng)",
           context: "Theater style is best for a keynote presentation.",
           icon: "🎭",
@@ -4818,28 +4818,28 @@ export const BO_WEEK_38: WeekContent = {
       vocabulary: [
         {
           word: "Beverage package",
-          phonetic: "/ˈbɛvərɪdʒ ˈpækɪdʒ/",
+          phonetic: "/ˈbevərɪdʒ ˈpækɪdʒ/",
           definition: "Gói đồ uống",
           context: "Our beverage package includes soft drinks and coffee.",
           icon: "🥤",
         },
         {
           word: "Set menu",
-          phonetic: "/sɛt ˈmɛnjuː/",
+          phonetic: "/set ˈmenjuː/",
           definition: "Thực đơn cố định",
           context: "We recommend our three-course set menu for the gala dinner.",
           icon: "🍽️",
         },
         {
           word: "Audio-visual (AV) equipment",
-          phonetic: "/ˈɔːdioʊ ˈvɪʒuəl ɪˈkwɪpmənt/",
+          phonetic: "/ˈɔːdiəʊ ˈvɪʒuəl ɪˈkwɪpmənt/",
           definition: "Thiết bị nghe nhìn",
           context: "The AV equipment includes a projector and wireless microphones.",
           icon: "🎤",
         },
         {
           word: "LED screen",
-          phonetic: "/ˌɛl iː ˈdiː skriːn/",
+          phonetic: "/ˌel iː ˈdiː skriːn/",
           definition: "Màn hình LED",
           context: "We can install an LED screen behind the main stage.",
           icon: "📺",
@@ -4916,7 +4916,7 @@ export const BO_WEEK_38: WeekContent = {
       vocabulary: [
         {
           word: "Banquet Event Order (BEO)",
-          phonetic: "/ˈbæŋkwɪt ɪˈvɛnt ˈɔːrdər/",
+          phonetic: "/ˈbæŋkwɪt ɪˈvent ˈɔːdə/",
           definition: "Lệnh tổ chức sự kiện",
           context: "Please review the BEO carefully before signing.",
           icon: "📋",
@@ -4930,7 +4930,7 @@ export const BO_WEEK_38: WeekContent = {
         },
         {
           word: "Final headcount",
-          phonetic: "/ˈfaɪnəl ˈhɛdkaʊnt/",
+          phonetic: "/ˈfaɪnəl ˈhedkaʊnt/",
           definition: "Số lượng khách cuối cùng",
           context: "Please confirm your final headcount three days before the event.",
           icon: "🔢",

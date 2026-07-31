@@ -717,7 +717,7 @@ const GR_BANK: P1Bank = {
     // "Surprised" doesn't work in the week-10 "It is too ___" frame (an
     // emotion can't describe "it"); "Formal" is a real GR ambiance word
     // that still fits the same slot.
-    { word: "Formal", phonetic: "/ˈfɔːrml/", definition: "Trang trọng", icon: "🎩" },
+    { word: "Formal", phonetic: "/ˈfɔːml/", definition: "Trang trọng", icon: "🎩" },
     { word: "Upset", phonetic: "/ʌpˈset/", definition: "Buồn bực", icon: "😞" },
     { word: "Important", phonetic: "/ɪmˈpɔːtnt/", definition: "Quan trọng", icon: "❗" },
     { word: "Lovely", phonetic: "/ˈlʌvli/", definition: "Đáng yêu, dễ chịu", icon: "💐" },

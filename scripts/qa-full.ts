@@ -150,6 +150,22 @@ const slugify = (t: string) =>
       for (const v of l.vocabulary) {
         if (!/^\/.+\/$/.test(v.phonetic))
           fail("T2", `${key} "${v.word}" phonetic not slash-delimited: ${v.phonetic}`);
+        // One accent, consistently. The course transcribes British English
+        // (/ˈnʌmbə/, /ˈtʃɑːdʒə/), but the hand-authored weeks arrived with
+        // American IPA mixed in — 116 of 2,309 transcriptions, concentrated
+        // in weeks 15/17/19/23. A learner sounding words out from the key
+        // was being taught two different pronunciations of the same course.
+        //   · ɛ  → e   (DRESS: British /e/)
+        //   · oʊ → əʊ  (GOAT)
+        //   · r before a consonant or at the end of a word — British is
+        //     non-rhotic. An r before a VOWEL is the linking r and correct
+        //     ("offer a" = /ˈɒfər ə/), so it is deliberately not flagged.
+        const AMERICAN_IPA = /ɛ|oʊ|(?:ɑː|ɔː|ɜː|ə|ɪ|ʊ|e|æ)r(?![\sˈˌ]*[aeiouæɑɒɔəɜɪʊʌ])/;
+        if (AMERICAN_IPA.test(v.phonetic))
+          fail(
+            "T2",
+            `${key} "${v.word}" phonetic mixes American IPA into a British-transcribed course: ${v.phonetic}`,
+          );
         if (!v.icon || v.icon.length > 6) fail("T2", `${key} "${v.word}" icon missing or too long`);
         // A Vietnamese gloss should not just echo the English headword.
         if (v.definition.toLowerCase() === v.word.toLowerCase())

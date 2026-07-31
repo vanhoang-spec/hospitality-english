@@ -139,7 +139,8 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Robe", phonetic: "/rəʊb/", definition: "Áo choàng tắm", icon: "🥼" },
       { word: "Locker", phonetic: "/ˈlɒkə/", definition: "Tủ khóa", icon: "🔒" },
       { word: "Slipper", phonetic: "/ˈslɪpə/", definition: "Dép đi trong spa", icon: "🩴" },
-      { word: "Tea", phonetic: "/tiː/", definition: "Trà thảo mộc", icon: "🍵" },
+      // "Trà", not "Trà thảo mộc" — herbal tea is its own SW week-9 headword.
+      { word: "Tea", phonetic: "/tiː/", definition: "Trà", icon: "🍵" },
       { word: "Oil", phonetic: "/ɔɪl/", definition: "Tinh dầu", icon: "🫗" },
       { word: "Candle", phonetic: "/ˈkændl/", definition: "Nến thơm", icon: "🕯️" },
     ],

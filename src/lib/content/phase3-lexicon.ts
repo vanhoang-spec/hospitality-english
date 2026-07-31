@@ -266,7 +266,7 @@ const FO_BANK: P3Bank = {
     {
       word: "Housekeeping team",
       phonetic: "/ˈhaʊskiːpɪŋ tiːm/",
-      definition: "Bộ phận buồng phòng",
+      definition: "Bộ phận Buồng phòng",
       icon: "🧺",
     },
     { word: "Bell desk", phonetic: "/bel desk/", definition: "Quầy hành lý", icon: "🛎️" },
@@ -2501,7 +2501,9 @@ const GR_BANK: P3Bank = {
     {
       word: "Front office",
       phonetic: "/frʌnt ˈɒfɪs/",
-      definition: "Bộ phận tiền sảnh",
+      // "Lễ tân" is what departments.ts calls FO and what every other week
+      // teaches; a learner must not meet a second name for their own team.
+      definition: "Bộ phận Lễ tân",
       icon: "🛎️",
     },
     {
@@ -3095,7 +3097,9 @@ const BO_BANK: P3Bank = {
     {
       word: "Front office",
       phonetic: "/frʌnt ˈɒfɪs/",
-      definition: "Bộ phận tiền sảnh",
+      // "Lễ tân" is what departments.ts calls FO and what every other week
+      // teaches; a learner must not meet a second name for their own team.
+      definition: "Bộ phận Lễ tân",
       icon: "🛎️",
     },
     {
