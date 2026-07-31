@@ -145,6 +145,17 @@ const slugify = (t: string) =>
         fail("T2", `${key} ${field} has an unexpanded template literal: "${t.slice(0, 50)}"`);
     }
 
+    // The grammar `rule` is the explanation a learner reads, and this course
+    // runs from pre-A1. Explaining an English structure IN English to a
+    // beginner teaches nothing — 96 rules shipped that way, all of them in
+    // the hand-authored weeks, while every bank-generated week explained in
+    // Vietnamese. Detected by the absence of any accented Latin character,
+    // which no real Vietnamese sentence of this length lacks.
+    for (const l of wk.lessons)
+      for (const g of l.grammar)
+        if (g.rule.length > 20 && !/[À-ɏḀ-ỿ]/.test(g.rule))
+          fail("T2", `${key} grammar rule is not in Vietnamese: "${g.rule.slice(0, 60)}"`);
+
     // Vocabulary specifics
     for (const l of wk.lessons)
       for (const v of l.vocabulary) {

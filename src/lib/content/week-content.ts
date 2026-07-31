@@ -164,12 +164,12 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give me your name.",
           polite: "May I have your name, please?",
-          rule: "Use 'May I have...' to ask for information politely.",
+          rule: "Xin thông tin của khách bằng 'May I have…?' — lịch sự hơn hẳn câu mệnh lệnh.",
         },
         {
           rude: "What is your booking number?",
           polite: "Could you please share your booking reference?",
-          rule: "Use 'Could you please...' for professional questions.",
+          rule: "Câu hỏi mang tính nghiệp vụ mở đầu bằng 'Could you please…?'.",
         },
       ],
       speaking: [
@@ -252,12 +252,12 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give passport.",
           polite: "Could you provide your passport, please?",
-          rule: "Use 'Could you ..., please?' to soften a request — one softener is enough; 'please kindly' sounds unnatural.",
+          rule: "Làm mềm lời đề nghị bằng 'Could you…, please?'. Một từ làm mềm là đủ — 'please kindly' nghe không tự nhiên.",
         },
         {
           rude: "I take this.",
           polite: "May I hold your passport for a moment?",
-          rule: "Use 'May I hold...' to ask for temporary permission.",
+          rule: "Xin phép giữ tạm thứ gì đó bằng 'May I hold…?'.",
         },
       ],
       speaking: [
@@ -337,12 +337,12 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give me your credit card.",
           polite: "May I secure a pre-authorization on your credit card?",
-          rule: "Use 'May I secure...' instead of demanding a card.",
+          rule: "Dùng 'May I secure…?' thay vì đòi thẻ của khách.",
         },
         {
           rude: "You must pay for minibar.",
           polite: "This deposit is for incidental charges like the minibar.",
-          rule: "Explain rules gently using 'This is for...'",
+          rule: "Giải thích quy định nhẹ nhàng bằng 'This is for…'.",
         },
       ],
       speaking: [
@@ -431,12 +431,12 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Go to first floor for food.",
           polite: "Breakfast is served at the main restaurant on the first floor.",
-          rule: "Use passive structures like 'Breakfast is served...' to sound professional.",
+          rule: "Câu bị động kiểu 'Breakfast is served…' nghe chuyên nghiệp hơn.",
         },
         {
           rude: "Pool closes at 9.",
           polite: "The swimming pool is open until 9:00 PM.",
-          rule: "State facility hours using 'is open until...'.",
+          rule: "Nói giờ hoạt động bằng 'is open until…'.",
         },
       ],
       speaking: [
@@ -532,13 +532,13 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "What's your room number?",
           polite: "May I ask for your room number, please?",
-          rule: "Use 'May I ask for...' to request information softly with a modal verb.",
+          rule: "Hỏi xin thông tin nhẹ nhàng bằng động từ khuyết thiếu: 'May I ask for…?'.",
         },
         {
           rude: "You're not on the list.",
           polite:
             "I'm sorry, I can't find your name on the list just yet. Could you give me a moment?",
-          rule: "Open with an apology and a hedge ('just yet') before delivering a problem.",
+          rule: "Báo tin không vui: xin lỗi trước, rồi rào bằng 'just yet'.",
         },
       ],
       speaking: [
@@ -632,12 +632,12 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Wait there.",
           polite: "Would you mind waiting here for just a moment, sir?",
-          rule: "Use 'Would you mind...?' to turn a command into an indirect, polite request.",
+          rule: "'Would you mind…?' biến câu mệnh lệnh thành lời đề nghị gián tiếp, lịch sự.",
         },
         {
           rude: "Table's not ready.",
           polite: "Your table is being prepared now. It will take a few minutes.",
-          rule: "Use the passive voice ('is being prepared') to sound professional and avoid blame.",
+          rule: "Bị động ('is being prepared') nghe chuyên nghiệp và không quy lỗi cho ai.",
         },
       ],
       speaking: [
@@ -728,12 +728,12 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Go get food there.",
           polite: "Let me show you where the hot food station is.",
-          rule: "Use 'Let me...' to offer help instead of giving a direct order.",
+          rule: "'Let me…' là lời mời giúp đỡ, không phải ra lệnh.",
         },
         {
           rude: "Coffee's over there.",
           polite: "You'll find the coffee and juice station just next to the bakery corner.",
-          rule: "Use 'You'll find...' to guide guests gently instead of pointing or commanding.",
+          rule: "'You'll find…' hướng dẫn khách nhẹ nhàng, thay vì chỉ trỏ hay ra lệnh.",
         },
       ],
       speaking: [
@@ -819,12 +819,12 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Give me your plate.",
           polite: "Would you like me to clear your plate for you?",
-          rule: "Use 'Would you like me to...?' to offer service without sounding intrusive.",
+          rule: "'Would you like me to…?' mời phục vụ mà không gây phiền.",
         },
         {
           rude: "Is food ok?",
           polite: "I hope you're enjoying your breakfast so far, is everything to your liking?",
-          rule: "Use 'I hope...' plus a warm tag question to check satisfaction naturally.",
+          rule: "'I hope…' kèm câu hỏi đuôi ấm áp để hỏi khách có hài lòng không.",
         },
       ],
       speaking: [
@@ -938,12 +938,12 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "Housekeeping, open the door.",
           polite: "Housekeeping! May I come in to service the room?",
-          rule: "Use 'May I come in...' as a modal verb to ask permission, not a command.",
+          rule: "Xin phép vào phòng bằng 'May I come in…?', không nói trống không.",
         },
         {
           rude: "I'm coming in now.",
           polite: "Would it be convenient for me to clean the room now?",
-          rule: "Use 'Would it be convenient...' to check timing politely.",
+          rule: "Hỏi giờ giấc lịch sự bằng 'Would it be convenient…?'.",
         },
       ],
       speaking: [
@@ -1027,12 +1027,12 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "What do you want?",
           polite: "How may I assist you today?",
-          rule: "Use the open, polite question 'How may I...' instead of a blunt one.",
+          rule: "Câu hỏi mở lịch sự 'How may I…?' thay cho câu cộc lốc.",
         },
         {
           rude: "Wait there.",
           polite: "I will bring that up to your room right away.",
-          rule: "Use 'will' with a specific time reference to reassure the guest instead of giving a command.",
+          rule: "'will' kèm mốc thời gian cụ thể làm khách yên tâm, thay vì ra lệnh.",
         },
       ],
       speaking: [
@@ -1116,12 +1116,12 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "You want a bed or not?",
           polite: "Would you like us to set up a rollaway bed for you?",
-          rule: "Use 'Would you like us to...' to offer a service politely.",
+          rule: "Mời dùng dịch vụ lịch sự bằng 'Would you like us to…?'.",
         },
         {
           rude: "That costs more money.",
           polite: "Please note there is a small extra charge for this service.",
-          rule: "Soften unwelcome news with 'Please note...' instead of stating it bluntly.",
+          rule: "Làm mềm tin không vui bằng 'Please note…' thay vì nói thẳng tuột.",
         },
       ],
       speaking: [
@@ -1211,12 +1211,12 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "Wake up, we need to clean.",
           polite: "I'm sorry to disturb you. Could I check if you need housekeeping later?",
-          rule: "Apologize first with 'I'm sorry to disturb you, but...' before making a request.",
+          rule: "Xin lỗi trước bằng 'I'm sorry to disturb you, but…' rồi mới nêu đề nghị.",
         },
         {
           rude: "You have to open the door now.",
           polite: "Whenever it's convenient, please let us know. When may we service the room?",
-          rule: "Use 'Whenever it's convenient...' to give the guest control over timing.",
+          rule: "'Whenever it's convenient…' để khách tự chọn thời điểm.",
         },
       ],
       speaking: [
@@ -1331,12 +1331,12 @@ export const SW_WEEK_23: WeekContent = {
         {
           rude: "Fill this out.",
           polite: "Could you please fill out this health form for us?",
-          rule: "Use 'Could you please...' + verb to turn a command into a polite request.",
+          rule: "'Could you please…' + động từ biến mệnh lệnh thành đề nghị lịch sự.",
         },
         {
           rude: "Do you have allergies?",
           polite: "Would you mind telling us if you have any allergies?",
-          rule: "'Would you mind + verb-ing' softens a direct question about personal or health information.",
+          rule: "'Would you mind + V-ing' làm mềm câu hỏi về thông tin cá nhân hay sức khỏe.",
         },
       ],
       speaking: [
@@ -1425,13 +1425,13 @@ export const SW_WEEK_23: WeekContent = {
           rude: "This one is better than that one.",
           polite:
             "I'd recommend our hot stone massage, as it works especially well for muscle tension.",
-          rule: "Use 'I'd recommend...' + reason with 'as/because' to suggest, instead of a blunt comparison.",
+          rule: "'I'd recommend…' kèm lý do với 'as/because' — gợi ý có căn cứ, không so sánh cộc lốc.",
         },
         {
           rude: "That treatment is old-fashioned.",
           polite:
             "Our traditional massage is a wonderful choice if you prefer gentle, relaxing techniques.",
-          rule: "Use 'is a wonderful choice if...' to frame an option positively rather than criticize another.",
+          rule: "'is a wonderful choice if…' khen lựa chọn này thay vì chê lựa chọn kia.",
         },
       ],
       speaking: [
@@ -1525,12 +1525,12 @@ export const SW_WEEK_23: WeekContent = {
         {
           rude: "You should buy the bigger package.",
           polite: "Have you considered our couple's combo? It's a lovely way to relax together.",
-          rule: "Use 'Have you considered...?' to suggest an upgrade without pressuring the guest.",
+          rule: "'Have you considered…?' gợi ý nâng hạng mà không ép khách.",
         },
         {
           rude: "It's cheaper if you buy more.",
           polite: "If you'd like, we could offer you our family package at a special rate.",
-          rule: "Use a conditional 'If you'd like, we could...' to offer an upgrade gently.",
+          rule: "Câu điều kiện 'If you'd like, we could…' mời nâng hạng nhẹ nhàng.",
         },
       ],
       speaking: [
@@ -1620,13 +1620,13 @@ export const SW_WEEK_23: WeekContent = {
         {
           rude: "How was it?",
           polite: "May I ask how you found your treatment today?",
-          rule: "Use 'May I ask...' to open a feedback question more formally.",
+          rule: "Mở đầu câu hỏi lấy ý kiến trang trọng bằng 'May I ask…?'.",
         },
         {
           rude: "You should buy this cream.",
           polite:
             "If you're interested, I could recommend this moisturizing cream for your skin type.",
-          rule: "Use 'If you're interested, I could...' to suggest a product gently, without sounding pushy.",
+          rule: "'If you're interested, I could…' giới thiệu sản phẩm mà không nài ép.",
         },
       ],
       speaking: [
@@ -1742,12 +1742,12 @@ export const GR_WEEK_27: WeekContent = {
         {
           rude: "You get free breakfast and evening drinks.",
           polite: "You will be entitled to complimentary breakfast and evening cocktails.",
-          rule: "Use 'will be entitled to' instead of 'get' to sound more formal and precise about guest privileges.",
+          rule: "Nói quyền lợi của khách bằng 'will be entitled to' — trang trọng và chính xác hơn 'get'.",
         },
         {
           rude: "I need to explain the rules to you.",
           polite: "Allow me to walk you through your Club privileges.",
-          rule: "Use 'Allow me to...' as a polite softener when offering to explain or assist.",
+          rule: "'Allow me to…' là cách mở lời lịch sự khi muốn giải thích hoặc giúp khách.",
         },
       ],
       speaking: [
@@ -1841,13 +1841,13 @@ export const GR_WEEK_27: WeekContent = {
         {
           rude: "Do you want tea or coffee?",
           polite: "Would you prefer tea or coffee this afternoon?",
-          rule: "Use 'Would you prefer...' instead of 'Do you want...' for a softer, more refined offer.",
+          rule: "'Would you prefer…?' nhã hơn 'Do you want…?'.",
         },
         {
           rude: "The drinks are over there, help yourself.",
           polite:
             "Our Cocktail Hour selection is displayed on the counter — please feel free to help yourself.",
-          rule: "Add a polite lead-in phrase before an instruction to soften a direct command.",
+          rule: "Thêm một cụm mở đầu lịch sự trước khi hướng dẫn để câu không thành mệnh lệnh.",
         },
       ],
       speaking: [
@@ -1942,13 +1942,13 @@ export const GR_WEEK_27: WeekContent = {
           rude: "You can't use the meeting room now, it's busy.",
           polite:
             "I'm afraid the meeting room is currently occupied. May I reserve it for you at 2:00 PM instead?",
-          rule: "Use 'I'm afraid...' to soften bad news, then immediately offer an alternative.",
+          rule: "'I'm afraid…' làm mềm tin xấu — nói xong phải đưa ngay phương án thay thế.",
         },
         {
           rude: "Send me the file and I'll print it.",
           polite:
             "If you could send me the file, I would be glad to help. I'll have it printed for you right away.",
-          rule: "Use conditional 'If you could...' with 'I would be glad to...' to make a request-and-offer sound courteous.",
+          rule: "Ghép 'If you could…' với 'I would be glad to…' để vừa đề nghị vừa mời một cách nhã nhặn.",
         },
       ],
       speaking: [
@@ -2039,12 +2039,12 @@ export const GR_WEEK_27: WeekContent = {
         {
           rude: "Write down what he likes.",
           polite: "Let's make sure to record his preferences in the guest profile.",
-          rule: "Use 'Let's make sure to...' to turn a blunt instruction into a collaborative, professional suggestion.",
+          rule: "'Let's make sure to…' biến lời nhắc cộc thành đề nghị cùng làm.",
         },
         {
           rude: "He wants a firm pillow, note it.",
           polite: "It has been noted that the guest prefers a firm pillow for future stays.",
-          rule: "Use the passive voice ('It has been noted that...') to record information formally and objectively.",
+          rule: "Bị động 'It has been noted that…' để ghi nhận thông tin một cách khách quan.",
         },
       ],
       speaking: [
@@ -2160,13 +2160,13 @@ export const BO_WEEK_37: WeekContent = {
         {
           rude: "You should sign now.",
           polite: "Would you be interested in signing the agreement today?",
-          rule: "Use 'Would you be interested in...' to introduce an offer softly instead of pushing directly.",
+          rule: "'Would you be interested in…?' mở lời chào dịch vụ nhẹ nhàng.",
         },
         {
           rude: "This is the best price, take it.",
           polite:
             "I would strongly recommend this package, as it offers the best value for your volume.",
-          rule: "Use 'I would strongly recommend...' to give advice diplomatically instead of a command.",
+          rule: "'I would strongly recommend…' khuyên mạnh mà vẫn khéo, không ra lệnh.",
         },
       ],
       speaking: [
@@ -2257,12 +2257,12 @@ export const BO_WEEK_37: WeekContent = {
           rude: "Give back rooms you don't sell.",
           polite:
             "If you cannot sell the rooms, we would ask that you release them by the deadline.",
-          rule: "Use a conditional 'If... we would ask that...' to state a policy collaboratively.",
+          rule: "Câu điều kiện 'If… we would ask that…' nêu quy định theo cách cùng hợp tác.",
         },
         {
           rude: "We will cancel rooms automatically.",
           polite: "Any unsold rooms will be automatically released after the deadline.",
-          rule: "Use passive voice ('will be released') to state a policy neutrally, without sounding like blame.",
+          rule: "Bị động 'will be released' nêu chính sách trung tính, không như đang trách khách.",
         },
       ],
       speaking: [
@@ -2357,12 +2357,12 @@ export const BO_WEEK_37: WeekContent = {
         {
           rude: "You can't book on those dates.",
           polite: "We kindly request that you avoid booking during the listed blackout dates.",
-          rule: "Use 'We kindly request that...' to make a formal restriction sound polite.",
+          rule: "'We kindly request that…' làm lời hạn chế trang trọng mà vẫn lịch sự.",
         },
         {
           rude: "You pay a fine if you cancel late.",
           polite: "I'm afraid a penalty fee will apply for cancellations made after the deadline.",
-          rule: "Use 'I'm afraid...' to soften a negative or restrictive statement.",
+          rule: "'I'm afraid…' làm mềm câu từ chối hoặc hạn chế.",
         },
       ],
       speaking: [
@@ -2454,13 +2454,13 @@ export const BO_WEEK_37: WeekContent = {
           rude: "No, we won't raise your commission.",
           polite:
             "I understand your concern, however, our current commission rate is already very competitive.",
-          rule: "Use 'I understand your concern, however...' to acknowledge the partner's point before disagreeing.",
+          rule: "'I understand your concern, however…' — ghi nhận ý đối tác trước khi phản biện.",
         },
         {
           rude: "Take it or leave it.",
           polite:
             "What if we offered a slightly higher commission in exchange for a longer contract term?",
-          rule: "Use 'What if we...' to propose a counter-offer instead of flatly rejecting a request.",
+          rule: "'What if we…?' đưa phương án đối ứng thay vì từ chối thẳng.",
         },
       ],
       speaking: [
@@ -2579,12 +2579,12 @@ export const FO_WEEK_26: WeekContent = {
           rude: "This list is wrong.",
           polite:
             "I've noticed a small discrepancy on the list — could we double-check it together?",
-          rule: "Use 'I've noticed...' plus a question to raise an issue without blaming the guest.",
+          rule: "'I've noticed…' kèm một câu hỏi để nêu vấn đề mà không đổ lỗi cho khách.",
         },
         {
           rude: "Give me the final numbers.",
           polite: "Would you be able to confirm the final numbers for us?",
-          rule: "Use 'Would you be able to...' as a softer modal for requesting confirmation.",
+          rule: "'Would you be able to…?' là cách hỏi xác nhận mềm hơn.",
         },
       ],
       speaking: [
@@ -2676,12 +2676,12 @@ export const FO_WEEK_26: WeekContent = {
           rude: "Wait for your bags.",
           polite:
             "Let me coordinate with our bellman team so your luggage arrives directly at your room.",
-          rule: "Use 'Let me + verb' to offer help proactively.",
+          rule: "'Let me + động từ' — chủ động đề nghị giúp.",
         },
         {
           rude: "Bags come later.",
           polite: "Your luggage will be delivered to your room shortly by our bellman.",
-          rule: "Use passive voice ('will be delivered') to describe a process professionally.",
+          rule: "Bị động 'will be delivered' mô tả quy trình một cách chuyên nghiệp.",
         },
       ],
       speaking: [
@@ -2773,12 +2773,12 @@ export const FO_WEEK_26: WeekContent = {
           rude: "You can't change rooms now.",
           polite:
             "I'm afraid room changes need a quick update in our system. I can arrange that for you now.",
-          rule: "Use 'I'm afraid...' to soften a limitation before offering a solution.",
+          rule: "'I'm afraid…' làm mềm giới hạn, rồi mới đưa giải pháp.",
         },
         {
           rude: "I can't split it.",
           polite: "If you would like, I can set up two separate folios for individual billing.",
-          rule: "Use a conditional 'If you would like, I can...' to offer options politely.",
+          rule: "Câu điều kiện 'If you would like, I can…' đưa lựa chọn một cách lịch sự.",
         },
       ],
       speaking: [
@@ -2869,13 +2869,13 @@ export const FO_WEEK_26: WeekContent = {
         {
           rude: "Listen up, breakfast is at 7.",
           polite: "Please note that group breakfast will be served at 7:00 AM in the private hall.",
-          rule: "Use 'Please note that...' to introduce formal group announcements.",
+          rule: "'Please note that…' mở đầu thông báo trang trọng cho đoàn khách.",
         },
         {
           rude: "Don't be late for the bus.",
           polite:
             "Would you mind reminding your group to be at the lobby five minutes before departure?",
-          rule: "Use 'Would you mind + gerund' to make a polite request or reminder.",
+          rule: "'Would you mind + V-ing' để đề nghị hoặc nhắc nhở lịch sự.",
         },
       ],
       speaking: [
@@ -2978,12 +2978,12 @@ export const FB_WEEK_31: WeekContent = {
         {
           rude: "Eat it like this.",
           polite: "You might like to try it this way, if you'd enjoy the full flavor.",
-          rule: "Use 'You might like to...' to suggest rather than instruct the guest.",
+          rule: "'You might like to…' là gợi ý, không phải chỉ thị.",
         },
         {
           rude: "This has meat in it.",
           polite: "I should mention this dish contains beef, in case that's helpful to know.",
-          rule: "Use 'I should mention...' to volunteer useful information smoothly and politely.",
+          rule: "'I should mention…' để chủ động cung cấp thông tin hữu ích một cách khéo léo.",
         },
       ],
       speaking: [
@@ -3077,12 +3077,12 @@ export const FB_WEEK_31: WeekContent = {
         {
           rude: "Drink it slow, it's hot.",
           polite: "You'll find it's best enjoyed slowly, as it's served quite hot.",
-          rule: "Use 'You'll find it's best...' to frame advice as a helpful discovery, not a warning.",
+          rule: "'You'll find it's best…' biến lời khuyên thành gợi mở, không phải cảnh cáo.",
         },
         {
           rude: "Wait, the coffee is dripping.",
           polite: "While the coffee is dripping, please feel free to relax and take in the aroma.",
-          rule: "Use 'While...' to turn a waiting moment into a positive, guided experience.",
+          rule: "'While…' biến lúc chờ đợi thành trải nghiệm có người hướng dẫn.",
         },
       ],
       speaking: [
@@ -3176,13 +3176,13 @@ export const FB_WEEK_31: WeekContent = {
         {
           rude: "Are you allergic to anything?",
           polite: "Before I take your order, may I check if there's anything you're allergic to?",
-          rule: "Frame the question with 'Before I..., may I check...' to sound thorough and caring, not interrogative.",
+          rule: "Đặt câu hỏi theo khung 'Before I…, may I check…?' — nghe chu đáo chứ không như tra hỏi.",
         },
         {
           rude: "We can't guarantee that.",
           polite:
             "I'm not able to guarantee that completely, but I'll let the kitchen know right away.",
-          rule: "Soften a limitation by pairing it with an immediate, reassuring action.",
+          rule: "Nêu giới hạn thì phải kèm ngay một hành động trấn an.",
         },
       ],
       speaking: [
@@ -3277,12 +3277,12 @@ export const FB_WEEK_31: WeekContent = {
         {
           rude: "You should get this.",
           polite: "Based on what you've enjoyed so far, I'd suggest our signature lemongrass beef.",
-          rule: "Use 'Based on..., I'd suggest...' to personalize a recommendation instead of pushing it.",
+          rule: "'Based on…, I'd suggest…' — tư vấn theo đúng nhu cầu khách, không áp đặt.",
         },
         {
           rude: "Everyone likes this one.",
           polite: "This is one of our most loved dishes, and it might suit your taste perfectly.",
-          rule: "Use a hedge like 'might suit' to recommend confidently without sounding pushy.",
+          rule: "Từ rào như 'might suit' giúp gợi ý tự tin mà không nài ép.",
         },
       ],
       speaking: [
@@ -3398,12 +3398,12 @@ export const HK_WEEK_33: WeekContent = {
         {
           rude: "Count your clothes.",
           polite: "Shall we count the items together, sir?",
-          rule: "Use 'Shall we...?' to politely invite the guest to join an action.",
+          rule: "'Shall we…?' mời khách cùng làm một việc.",
         },
         {
           rude: "You have a stain here.",
           polite: "I've noticed a small mark here — would you like me to point it out?",
-          rule: "Soften observations with 'I've noticed...' instead of direct statements.",
+          rule: "Làm mềm nhận xét bằng 'I've noticed…' thay vì nói thẳng.",
         },
       ],
       speaking: [
@@ -3490,12 +3490,12 @@ export const HK_WEEK_33: WeekContent = {
           rude: "Express costs more.",
           polite:
             "Express service comes with an additional surcharge of 50%, if that works for you.",
-          rule: "Present extra costs positively with 'comes with' instead of a blunt statement of cost.",
+          rule: "Nói về chi phí kèm theo bằng 'comes with' thay vì phán một câu về giá.",
         },
         {
           rude: "You must choose a service.",
           polite: "Which service would you prefer — regular, express, or dry cleaning?",
-          rule: "Offer choices with 'would you prefer' instead of issuing a command.",
+          rule: "Đưa lựa chọn bằng 'would you prefer', không ra lệnh.",
         },
       ],
       speaking: [
@@ -3590,13 +3590,13 @@ export const HK_WEEK_33: WeekContent = {
           rude: "It's not our fault.",
           polite:
             "Let me look into what may have caused this, and I sincerely apologize for the inconvenience.",
-          rule: "Use indirect framing ('look into what may have caused') to avoid assigning blame while taking responsibility for resolving the issue.",
+          rule: "Cách nói gián tiếp 'look into what may have caused' — nhận trách nhiệm xử lý mà không quy lỗi cho ai.",
         },
         {
           rude: "This always happens.",
           polite:
             "This isn't something we expect to happen, and I'd like to make it right for you.",
-          rule: "Use 'I'd like to...' to express willingness to resolve an issue, sounding proactive rather than dismissive.",
+          rule: "'I'd like to…' thể hiện sẵn sàng xử lý, nghe chủ động chứ không phủi tay.",
         },
       ],
       speaking: [
@@ -3696,13 +3696,13 @@ export const HK_WEEK_33: WeekContent = {
           rude: "We can only give you this much.",
           polite:
             "According to our policy, we're able to offer up to this amount — may I get my supervisor to confirm the details?",
-          rule: "Use 'we're able to...' (modal of ability) plus an offer to escalate, softening a limit into a solution-oriented statement.",
+          rule: "'we're able to…' kèm đề nghị xin ý kiến cấp trên — biến giới hạn thành hướng giải quyết.",
         },
         {
           rude: "That's the maximum, take it or leave it.",
           polite:
             "I understand this may not fully cover the item's value, but this is the maximum our policy allows — I hope this helps.",
-          rule: "Acknowledge the guest's feelings first ('I understand...') before stating a policy limit, using an empathy-plus-explanation structure.",
+          rule: "Ghi nhận cảm xúc của khách bằng 'I understand…' trước khi nêu giới hạn chính sách.",
         },
       ],
       speaking: [
@@ -3818,12 +3818,12 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Towels are over there.",
           polite: "Fresh towels are at the station past the pool bar. Please help yourself.",
-          rule: "State where things are, then add 'Please help yourself' to turn a plain direction into a warm invitation.",
+          rule: "Chỉ chỗ xong thêm 'Please help yourself' để lời chỉ dẫn thành lời mời.",
         },
         {
           rude: "Use your key for the locker.",
           polite: "Your room key card will open the locker for you.",
-          rule: "Use passive/future statements ('will open') to give directions in a neutral, informative tone.",
+          rule: "Câu tương lai 'will open' đưa thông tin trung tính, dễ tiếp nhận.",
         },
       ],
       speaking: [
@@ -3914,12 +3914,12 @@ export const SW_WEEK_19: WeekContent = {
           rude: "Your kid needs an adult with him.",
           polite:
             "I'm afraid children under 12 must be with an adult. That applies in the pool area.",
-          rule: "Use 'I'm afraid...' to soften the delivery of a mandatory rule.",
+          rule: "'I'm afraid…' làm mềm khi phải nêu quy định bắt buộc.",
         },
         {
           rude: "You can't wear that in the pool.",
           polite: "Would you mind changing into proper swimwear before entering the pool, please?",
-          rule: "Use 'Would you mind + verb-ing...?' to politely request a change in behavior.",
+          rule: "'Would you mind + V-ing…?' để đề nghị khách thay đổi hành vi một cách lịch sự.",
         },
       ],
       speaking: [
@@ -4009,12 +4009,12 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "The sea is too dangerous today.",
           polite: "For your safety, swimming is not recommended today due to rough sea conditions.",
-          rule: "Use 'For your safety, ...' to open a warning in a caring, non-alarming tone.",
+          rule: "Mở đầu lời cảnh báo bằng 'For your safety, …' — quan tâm chứ không hù dọa.",
         },
         {
           rude: "You can't swim, the flag is red.",
           polite: "I'm sorry, sir. Guests may not enter the water now. The red flag is displayed.",
-          rule: "Use passive voice ('are not permitted') instead of 'can't' to state a rule formally.",
+          rule: "Bị động 'are not permitted' nêu quy định trang trọng hơn 'can't'.",
         },
       ],
       speaking: [
@@ -4108,12 +4108,12 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Sit down, you're sick.",
           polite: "Let's get you into the shade and have a seat right away, sir.",
-          rule: "Use 'Let's...' to join the guest in taking action, sounding caring rather than commanding.",
+          rule: "'Let's…' cùng khách hành động, nghe quan tâm chứ không ra lệnh.",
         },
         {
           rude: "Drink water, you're dehydrated.",
           polite: "Please try to drink some water slowly. I will bring you a cool towel.",
-          rule: "Use 'Please try to...' plus a reassuring follow-up to guide a guest gently during an emergency.",
+          rule: "'Please try to…' kèm một câu trấn an để hướng dẫn khách trong tình huống khẩn.",
         },
       ],
       speaking: [
@@ -4228,12 +4228,12 @@ export const GR_WEEK_34: WeekContent = {
         {
           rude: "Why are you here?",
           polite: "May I ask if you're celebrating anything special during your stay?",
-          rule: "Use an indirect question with 'if' to soften a personal question and make it sound caring, not intrusive.",
+          rule: "Câu hỏi gián tiếp với 'if' làm mềm câu hỏi riêng tư — quan tâm chứ không tọc mạch.",
         },
         {
           rude: "Is this your honeymoon?",
           polite: "I couldn't help but notice the lovely bouquet — are you newlyweds, perhaps?",
-          rule: "Add 'perhaps' as a softening adverb to turn a direct guess into a gentle, respectful observation.",
+          rule: "Thêm trạng từ rào 'perhaps' để lời phỏng đoán thành nhận xét nhã nhặn.",
         },
       ],
       speaking: [
@@ -4331,13 +4331,13 @@ export const GR_WEEK_34: WeekContent = {
         {
           rude: "Send a cake to room 812.",
           polite: "Could you please arrange for a cake to be sent to Room 812 by 6 PM?",
-          rule: "Use the passive voice ('to be sent') to make an internal request sound professional and collaborative rather than like an order.",
+          rule: "Bị động 'to be sent' làm yêu cầu nội bộ nghe chuyên nghiệp, cùng phối hợp chứ không ra lệnh.",
         },
         {
           rude: "I need towels for the bed now.",
           polite:
             "Would it be possible to have the towel decoration set up before the guests return?",
-          rule: "Use 'Would it be possible to...' as a highly polite, indirect way to make a request among colleagues.",
+          rule: "'Would it be possible to…?' là cách nhờ đồng nghiệp gián tiếp và rất lịch sự.",
         },
       ],
       speaking: [
@@ -4430,13 +4430,13 @@ export const GR_WEEK_34: WeekContent = {
           rude: "Here's your cake.",
           polite:
             "On behalf of our entire team, we are delighted to present this cake to celebrate your special day.",
-          rule: "Use 'On behalf of...' with 'delighted to' to elevate a simple presentation into a formal, heartfelt gesture.",
+          rule: "'On behalf of…' kèm 'delighted to' nâng một lời trao tặng thành nghi thức trang trọng.",
         },
         {
           rude: "Happy anniversary. Enjoy.",
           polite:
             "May your love continue to grow, and may this anniversary be the first of many more to celebrate together.",
-          rule: "Open a well-wish with 'May...' to create a poetic, formal blessing rather than a plain statement.",
+          rule: "Mở lời chúc bằng 'May…' tạo câu chúc trang trọng, có vần điệu.",
         },
       ],
       speaking: [
@@ -4533,13 +4533,13 @@ export const GR_WEEK_34: WeekContent = {
           rude: "We made a mistake with your cake.",
           polite:
             "I am so sorry — it seems there has been a mix-up with your cake, and we are correcting it right away.",
-          rule: "Use the indirect passive phrase 'it seems there has been...' to soften the admission of a staff error.",
+          rule: "Cụm bị động gián tiếp 'it seems there has been…' làm nhẹ việc thừa nhận lỗi của nhân viên.",
         },
         {
           rude: "We spelled your name wrong. Sorry.",
           polite:
             "I do apologize for the error on your card; may we prepare a corrected one for you immediately?",
-          rule: "Follow the apology with 'may we...' to politely offer an immediate solution, keeping the focus on fixing the issue.",
+          rule: "Sau lời xin lỗi dùng 'may we…' để đề nghị ngay giải pháp, giữ trọng tâm vào việc khắc phục.",
         },
       ],
       speaking: [
@@ -4660,12 +4660,12 @@ export const BO_WEEK_38: WeekContent = {
         {
           rude: "How much money do you have?",
           polite: "Could you share your estimated budget for this event?",
-          rule: "Use 'Could you share...' to ask about sensitive information indirectly (hedging language).",
+          rule: "'Could you share…?' hỏi thông tin nhạy cảm một cách gián tiếp.",
         },
         {
           rude: "Send me the RFP now.",
           polite: "Would you be able to send us the RFP at your earliest convenience?",
-          rule: "Use 'Would you be able to...' to soften a request with a modal verb.",
+          rule: "'Would you be able to…?' dùng động từ khuyết thiếu để làm mềm lời đề nghị.",
         },
       ],
       speaking: [
@@ -4753,12 +4753,12 @@ export const BO_WEEK_38: WeekContent = {
         {
           rude: "Follow me.",
           polite: "Please follow me this way, and I'll show you the ballroom.",
-          rule: "Use 'Please' plus a full sentence to turn an instruction into a friendly invitation (softener).",
+          rule: "'Please' kèm câu đầy đủ biến lời hướng dẫn thành lời mời thân thiện.",
         },
         {
           rude: "This room fits 300 people.",
           polite: "This room can comfortably accommodate up to 300 guests.",
-          rule: "Use 'can' with the adverb 'comfortably' to add a positive, reassuring tone.",
+          rule: "'can' đi với trạng từ 'comfortably' tạo giọng tích cực, làm khách yên tâm.",
         },
       ],
       speaking: [
@@ -4849,13 +4849,13 @@ export const BO_WEEK_38: WeekContent = {
         {
           rude: "You must pay extra for the LED screen.",
           polite: "There will be an additional charge for the LED screen.",
-          rule: "Use the impersonal structure 'There will be...' instead of 'you must' to state a cost neutrally (passive/impersonal voice).",
+          rule: "Cấu trúc vô nhân xưng 'There will be…' nêu chi phí trung tính, thay cho 'you must'.",
         },
         {
           rude: "That menu is too expensive for you.",
           polite:
             "This menu is a bit above your current budget, but we can suggest a similar option.",
-          rule: "Use 'a bit' plus an alternative solution to soften negative news (hedging language).",
+          rule: "'a bit' kèm một phương án thay thế để làm nhẹ tin không vui.",
         },
       ],
       speaking: [
@@ -4947,12 +4947,12 @@ export const BO_WEEK_38: WeekContent = {
         {
           rude: "Sign this now.",
           polite: "Could you please review and sign the BEO at your earliest convenience?",
-          rule: "Use 'Could you please...' with 'at your earliest convenience' to request action politely without pressure (indirect request).",
+          rule: "'Could you please…' kèm 'at your earliest convenience' — đề nghị lịch sự mà không tạo áp lực.",
         },
         {
           rude: "You need to tell us the final number of guests.",
           polite: "We would appreciate it if you could confirm your final headcount by Wednesday.",
-          rule: "Use the conditional 'We would appreciate it if you could...' to make a request sound courteous.",
+          rule: "Câu điều kiện 'We would appreciate it if you could…' làm lời đề nghị nghe nhã nhặn.",
         },
       ],
       speaking: [
