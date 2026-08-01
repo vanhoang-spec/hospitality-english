@@ -15,10 +15,10 @@
 
 Vấn đề nằm ở chỗ khác: **228 trên 240 tuần được sinh tự động bằng cách nhét từ vựng vào khung câu cố định, không có bất kỳ kiểm tra ngữ nghĩa nào.** Kết quả là học viên được dạy tiếng Anh sai ở quy mô lớn. Trên mẫu chấm thủ công 12 tuần sinh tự động (552 đơn vị câu mẫu):
 
-| Nhóm nội dung | Đơn vị chấm | Sai hỏng (BROKEN) | Không tự nhiên (UNNATURAL) | Tổng lỗi |
-|---|---|---|---|---|
-| Sinh tự động (12 tuần) | 552 | 61 = **11,1%** | 67 = **12,1%** | **23,2%** |
-| Biên soạn tay (3 tuần đối chứng) | 132 | 0 = **0,0%** | 1 = 0,8% | **0,8%** |
+| Nhóm nội dung                    | Đơn vị chấm | Sai hỏng (BROKEN) | Không tự nhiên (UNNATURAL) | Tổng lỗi  |
+| -------------------------------- | ----------- | ----------------- | -------------------------- | --------- |
+| Sinh tự động (12 tuần)           | 552         | 61 = **11,1%**    | 67 = **12,1%**             | **23,2%** |
+| Biên soạn tay (3 tuần đối chứng) | 132         | 0 = **0,0%**      | 1 = 0,8%                   | **0,8%**  |
 
 Chênh lệch khoảng **30 lần**. Và mật độ lỗi **tăng theo số tuần**: FO-8 sạch 0%, nhưng từ tuần 18 trở đi trung bình ~26%. Nghĩa là chất lượng tệ nhất rơi đúng vào đoạn app tuyên bố đang dạy trình độ cao nhất.
 
@@ -26,13 +26,13 @@ Ba con số quyết định verdict:
 
 1. **94,7% bài luyện nói là đọc thuộc lòng.** 1.296/1.368 speaking item được chấm bằng cách so khớp với một câu mẫu cố định (ngưỡng 60–80% từ đúng + thứ tự). Chỉ 72 item (5,3%, tuần 39–40) chấm mở.
 2. **Học viên gần như không bao giờ được luyện đặt câu hỏi.** Chỉ 42/1.368 (3,1%) speaking item yêu cầu học viên hỏi lấy thông tin (WH-question). Một lễ tân A2 phải hỏi được "How many nights will you be staying?" — kỹ năng đó gần như không có trong khoá.
-3. **Từ phase 2 trở đi, phần lớn từ vựng mới của tuần không bao giờ được kiểm tra.** Bài quiz từ vựng lấy 12 câu ngẫu nhiên từ hồ *từ mới + từ ôn*, mà hồ ôn phình dần. Đến phase 4 chỉ khoảng **3,3 trên 16,8 từ mới (20%)** lọt vào bài kiểm tra — học viên đạt "80% chuẩn" mà 80% từ mới chưa từng được truy xuất.
+3. **Từ phase 2 trở đi, phần lớn từ vựng mới của tuần không bao giờ được kiểm tra.** Bài quiz từ vựng lấy 12 câu ngẫu nhiên từ hồ _từ mới + từ ôn_, mà hồ ôn phình dần. Đến phase 4 chỉ khoảng **3,3 trên 16,8 từ mới (20%)** lọt vào bài kiểm tra — học viên đạt "80% chuẩn" mà 80% từ mới chưa từng được truy xuất.
 
-**Verdict A2 (chuẩn bắt buộc):** *Chưa đạt.* Khung có thể đưa người học tới A2 và trên thực tế **nội dung ngữ pháp/chức năng đã đủ cho A2 từ khoảng tuần 22–26**. Nhưng chuẩn đầu ra A2 đòi hỏi *sản sinh* ngôn ngữ trong tình huống quen thuộc, còn khoá này chủ yếu huấn luyện *tái tạo* câu mẫu. Cộng với 23% câu mẫu có lỗi, người học tốt nghiệp sẽ nói được nhiều câu đúng đã thuộc, nhưng chưa xử lý được một lượt hội thoại lệch kịch bản — đó chính là ranh giới A2 thật.
+**Verdict A2 (chuẩn bắt buộc):** _Chưa đạt._ Khung có thể đưa người học tới A2 và trên thực tế **nội dung ngữ pháp/chức năng đã đủ cho A2 từ khoảng tuần 22–26**. Nhưng chuẩn đầu ra A2 đòi hỏi _sản sinh_ ngôn ngữ trong tình huống quen thuộc, còn khoá này chủ yếu huấn luyện _tái tạo_ câu mẫu. Cộng với 23% câu mẫu có lỗi, người học tốt nghiệp sẽ nói được nhiều câu đúng đã thuộc, nhưng chưa xử lý được một lượt hội thoại lệch kịch bản — đó chính là ranh giới A2 thật.
 
-**Verdict nhãn B1.1 (tuần 31–40):** *Thổi phồng.* Độ dài câu và độ phức tạp cú pháp có tăng thật, nhưng đây cũng là đoạn mật độ lỗi cao nhất (~26–37% ở các tuần được chấm), độ dài bài đọc **đứng yên** từ phase 3 sang phase 4 (38,3 → 39,5 từ, +3%), tốc độ nghe **không tăng suốt 40 tuần**, và bài kiểm tra cuối không hề đo kỹ năng viết. B1.1 chưa được chứng minh bằng bằng chứng đo lường nào trong app.
+**Verdict nhãn B1.1 (tuần 31–40):** _Thổi phồng._ Độ dài câu và độ phức tạp cú pháp có tăng thật, nhưng đây cũng là đoạn mật độ lỗi cao nhất (~26–37% ở các tuần được chấm), độ dài bài đọc **đứng yên** từ phase 3 sang phase 4 (38,3 → 39,5 từ, +3%), tốc độ nghe **không tăng suốt 40 tuần**, và bài kiểm tra cuối không hề đo kỹ năng viết. B1.1 chưa được chứng minh bằng bằng chứng đo lường nào trong app.
 
-**Verdict động lực (người đi làm bận rộn):** *Nền tảng tốt, nhưng thiếu đúng những thứ quyết định việc quay lại.* App có sao/XP, chuỗi ngày học, ôn tập ngắt quãng, thứ bậc nghề nghiệp. Nhưng **không có bất kỳ cơ chế nhắc học nào** (không push, không service worker, không email), **không hoạt động offline**, **không có nút "học tiếp"**, và **màn hình tuần không cho biết học viên đã hoàn thành phần nào**. Với nhân viên khách sạn làm ca gãy, một app không bao giờ chủ động nhắc là một app sẽ bị quên.
+**Verdict động lực (người đi làm bận rộn):** _Nền tảng tốt, nhưng thiếu đúng những thứ quyết định việc quay lại._ App có sao/XP, chuỗi ngày học, ôn tập ngắt quãng, thứ bậc nghề nghiệp. Nhưng **không có bất kỳ cơ chế nhắc học nào** (không push, không service worker, không email), **không hoạt động offline**, **không có nút "học tiếp"**, và **màn hình tuần không cho biết học viên đã hoàn thành phần nào**. Với nhân viên khách sạn làm ca gãy, một app không bao giờ chủ động nhắc là một app sẽ bị quên.
 
 Dự báo trên 100 nhân viên được cấp tài khoản (§9): **khoảng 21 người qua được sát hạch tuần 6, và khoảng 1 người hoàn thành tuần 40.** Con số quan trọng hơn nằm ở độ nhạy — chỉ cần thêm quy trình quản lý chủ động, **không sửa một dòng code nào**, mọi mốc tăng gần gấp đôi (38 / 4). Sửa thêm bốn lỗi động lực hàng đầu đưa con số lên 56 / 9. **Giáo trình không phải điểm nghẽn; tầng giao nội dung mới là.**
 
@@ -44,15 +44,15 @@ Dự báo trên 100 nhân viên được cấp tài khoản (§9): **khoảng 21
 
 Bảy vòng kiểm tra độc lập, mọi con số tái lập được:
 
-| Vòng | Nội dung | Công cụ |
-|---|---|---|
-| 0 | Chạy lại toàn bộ QA gate sẵn có | `bun scripts/verify-content.ts`, `lint-content.ts`, `qa-full.ts` |
-| 1 | Đối chiếu CEFR: kho cấu trúc ngữ pháp, thang độ khó, chức năng giao tiếp A2 | script trích 240 tuần qua `getWeekContent()` |
-| 2 | Chất lượng ngôn ngữ: đếm mẫu lỗi tự động + chấm tay 15 tuần | script đếm + rà soát thủ công 684 đơn vị câu |
-| 3 | Tính đặc thù nghề nghiệp và độ xác thực nghiệp vụ | đối chiếu với thực tế vận hành resort 4–5 sao VN |
-| 4 | Thời lượng thực tế và mô phỏng hành trình 3 persona | mô hình thời gian theo item + đọc mã giao diện |
-| 5 | Hệ thống tạo động lực | rà soát `academy-store.ts`, `review.ts`, các route |
-| 6 | Giá trị đo lường của bài sát hạch | `phases.ts`, `WeekTestSuite.tsx`, `speaking-score.ts`, `writing-score.ts` |
+| Vòng | Nội dung                                                                    | Công cụ                                                                   |
+| ---- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| 0    | Chạy lại toàn bộ QA gate sẵn có                                             | `bun scripts/verify-content.ts`, `lint-content.ts`, `qa-full.ts`          |
+| 1    | Đối chiếu CEFR: kho cấu trúc ngữ pháp, thang độ khó, chức năng giao tiếp A2 | script trích 240 tuần qua `getWeekContent()`                              |
+| 2    | Chất lượng ngôn ngữ: đếm mẫu lỗi tự động + chấm tay 15 tuần                 | script đếm + rà soát thủ công 684 đơn vị câu                              |
+| 3    | Tính đặc thù nghề nghiệp và độ xác thực nghiệp vụ                           | đối chiếu với thực tế vận hành resort 4–5 sao VN                          |
+| 4    | Thời lượng thực tế và mô phỏng hành trình 3 persona                         | mô hình thời gian theo item + đọc mã giao diện                            |
+| 5    | Hệ thống tạo động lực                                                       | rà soát `academy-store.ts`, `review.ts`, các route                        |
+| 6    | Giá trị đo lường của bài sát hạch                                           | `phases.ts`, `WeekTestSuite.tsx`, `speaking-score.ts`, `writing-score.ts` |
 
 **Vòng 0 cho kết quả đáng chú ý ngay:** cả ba gate đều báo xanh — `verify-content` báo "all authored content passes", `lint-content` kiểm 9.784 câu và báo "no structural violations", `qa-full` báo "QA PASS — all 7 test layers clean". Nhưng chính bộ nội dung được ba gate này chứng nhận lại chứa "It would relaxing option nicely", "I signed the supervisor", "The pipe is overcooked". **Kết luận vòng 0: bộ QA hiện tại kiểm cấu trúc, không kiểm nghĩa. Nó không thể phát hiện loại lỗi nghiêm trọng nhất của kiến trúc sinh nội dung này.** Đây là phát hiện nền tảng cho toàn bộ báo cáo.
 
@@ -62,11 +62,11 @@ Bảy vòng kiểm tra độc lập, mọi con số tái lập được:
 
 ### 3.1 Những gì tuân thủ đúng spec
 
-| Chỉ số | P0 | P1 | P2 | P3 | P4 | Nhận xét |
-|---|---|---|---|---|---|---|
-| Độ dài câu đích trung bình (từ) | 4,8 | 6,3 | 8,4 | 12,2 | 13,6 | Thang tăng đều, **0 vi phạm trần trên 4.206 câu** |
-| Từ vựng mới / tuần | 9,2 | 10,6 | 12,5 | 15,1 | 16,8 | Đúng spec `curriculum-level-matrix.md` |
-| Speaking item / tuần | 4,2 | 4,0 | 7,7 | 5,8 | 6,4 | P3 hụt nhẹ so với spec (6) |
+| Chỉ số                          | P0  | P1   | P2   | P3   | P4   | Nhận xét                                          |
+| ------------------------------- | --- | ---- | ---- | ---- | ---- | ------------------------------------------------- |
+| Độ dài câu đích trung bình (từ) | 4,8 | 6,3  | 8,4  | 12,2 | 13,6 | Thang tăng đều, **0 vi phạm trần trên 4.206 câu** |
+| Từ vựng mới / tuần              | 9,2 | 10,6 | 12,5 | 15,1 | 16,8 | Đúng spec `curriculum-level-matrix.md`            |
+| Speaking item / tuần            | 4,2 | 4,0  | 7,7  | 5,8  | 6,4  | P3 hụt nhẹ so với spec (6)                        |
 
 Trình tự giới thiệu cấu trúc ngữ pháp hợp lý và đúng thứ tự sư phạm: hiện tại tiếp diễn tuần 9, so sánh hơn tuần 21, hiện tại hoàn thành tuần 26, `used to` tuần 40. Không có hiện tượng dạy cấu trúc B1 quá sớm.
 
@@ -87,18 +87,18 @@ Trình tự giới thiệu cấu trúc ngữ pháp hợp lý và đúng thứ t�
 - **Học viên đặt câu hỏi: 42/1.368 = 3,1%.** Theo phase: P0 0%, P1 16%, P2 21%, P3 5%, P4 17% (con số này tính cả câu hỏi đóng như "Would you like…?"; riêng câu hỏi WH lấy thông tin chỉ 3,1%).
 - **Viết: 6/240 dep-week.** **Hoà giải/thông dịch (mediation): 6/240.** Chính tài liệu spec gọi mediation là "tác vụ B1 phổ biến nhất trong khách sạn VN" rồi xếp lịch cho nó đúng một tuần.
 
-Chuẩn A2 của CEFR yêu cầu người học *trao đổi thông tin trong tình huống quen thuộc* — hỏi và đáp, xử lý lượt lời không đoán trước. Một khoá học mà 95% hoạt động nói là đọc lại câu có sẵn và 3% là đặt câu hỏi thì không huấn luyện đúng năng lực đó, dù nội dung ngôn ngữ có đủ.
+Chuẩn A2 của CEFR yêu cầu người học _trao đổi thông tin trong tình huống quen thuộc_ — hỏi và đáp, xử lý lượt lời không đoán trước. Một khoá học mà 95% hoạt động nói là đọc lại câu có sẵn và 3% là đặt câu hỏi thì không huấn luyện đúng năng lực đó, dù nội dung ngôn ngữ có đủ.
 
 ### 3.4 Chức năng giao tiếp A2: có, nhưng muộn và mỏng
 
-| Chức năng A2 lõi | Xuất hiện lần đầu | Số lần toàn khoá |
-|---|---|---|
-| `Could you please…` (yêu cầu lịch sự) | tuần 17 | **chỉ 6 lần** |
-| Lượng từ (a few / a lot of) | tuần 15 | 13 |
-| Câu hỏi quá khứ `Did you…?` | tuần 21 | 18 |
-| `Have you…?` | tuần 23 | 20 |
-| Sắp xếp tương lai `will be + V-ing` | — | **0** |
-| Chỉ đường | tuần 8 | 13 |
+| Chức năng A2 lõi                      | Xuất hiện lần đầu | Số lần toàn khoá |
+| ------------------------------------- | ----------------- | ---------------- |
+| `Could you please…` (yêu cầu lịch sự) | tuần 17           | **chỉ 6 lần**    |
+| Lượng từ (a few / a lot of)           | tuần 15           | 13               |
+| Câu hỏi quá khứ `Did you…?`           | tuần 21           | 18               |
+| `Have you…?`                          | tuần 23           | 20               |
+| Sắp xếp tương lai `will be + V-ing`   | —                 | **0**            |
+| Chỉ đường                             | tuần 8            | 13               |
 
 `I am afraid…` (98 lần) và `I will check and…` (90 lần) được luyện rất kỹ — tốt. Nhưng "Could you please" xuất hiện 6 lần trong 40 tuần là quá mỏng cho một mẫu câu nhân viên khách sạn dùng hằng ngày.
 
@@ -116,15 +116,15 @@ Nghiêm trọng hơn: **cùng một câu hỏng được chép vào 4–5 chỗ*
 
 ### 4.2 Các khung câu hỏng, đã đếm trên toàn bộ 240 tuần
 
-| Khung câu | Số câu mẫu bị ảnh hưởng | Ví dụ |
-|---|---|---|
-| `I am ready for the {danh từ}` | **60** (P3: 24, P4: 36) | "I am ready for the flight time." · "I am ready for the stay summary." |
-| `Based on your {X}, I would suggest a quieter option` | **48** (12 dep-week) | Khách nói "I am a very light sleeper" → FB đáp "Based on your **spice tolerance**…", BO đáp "…your **preferred billing cycle**…", GR đáp "…your **preferred newspaper**…" |
-| `There is a {sự cố} at the property` (khủng hoảng) | **78** ở tuần 36/39 | xem §4.3 |
-| `The {danh từ} taught me the most` | **30** (toàn P4) | "The departure transfer taught me the most." · "The kitchen capacity taught me the most." |
-| `{danh từ} is part of my daily work now` | **24** (P4) | "The booking amendment is part of my daily work now." |
-| `The {danh từ} will not happen again` | **18** (P3) | "The room preference will not happen again, madam." · "The turndown time will not happen again." |
-| `I can explain the {danh từ} to any guest` | **18** (P4) | "I can explain the repeat guest to any guest." |
+| Khung câu                                             | Số câu mẫu bị ảnh hưởng | Ví dụ                                                                                                                                                                     |
+| ----------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `I am ready for the {danh từ}`                        | **60** (P3: 24, P4: 36) | "I am ready for the flight time." · "I am ready for the stay summary."                                                                                                    |
+| `Based on your {X}, I would suggest a quieter option` | **48** (12 dep-week)    | Khách nói "I am a very light sleeper" → FB đáp "Based on your **spice tolerance**…", BO đáp "…your **preferred billing cycle**…", GR đáp "…your **preferred newspaper**…" |
+| `There is a {sự cố} at the property` (khủng hoảng)    | **78** ở tuần 36/39     | xem §4.3                                                                                                                                                                  |
+| `The {danh từ} taught me the most`                    | **30** (toàn P4)        | "The departure transfer taught me the most." · "The kitchen capacity taught me the most."                                                                                 |
+| `{danh từ} is part of my daily work now`              | **24** (P4)             | "The booking amendment is part of my daily work now."                                                                                                                     |
+| `The {danh từ} will not happen again`                 | **18** (P3)             | "The room preference will not happen again, madam." · "The turndown time will not happen again."                                                                          |
+| `I can explain the {danh từ} to any guest`            | **18** (P4)             | "I can explain the repeat guest to any guest."                                                                                                                            |
 
 Bốn trong sáu bộ phận nhận ô điền vô nghĩa ở khung `Based on your…`: chỉ FO ("pillow firmness") và HK ("preferred pillow type") còn tạm hợp lý khi khách than khó ngủ.
 
@@ -136,14 +136,14 @@ Tuần 39, bài "Under Pressure" (`src/lib/content/phase4.ts:2354-2357`). Câu k
 
 Câu đáp mẫu lấy từ ô `emergencies[0]` riêng của từng bộ phận:
 
-| Bộ phận | Câu đáp mẫu học viên phải học thuộc |
-|---|---|
-| FO | "There is a **medical call** at the property. Please stay calm and follow me." |
-| FB | "There is a **kitchen fire alarm** at the property…" |
-| HK | "There is a **water leak** at the property…" |
-| SW | "There is a **severe allergic reaction** at the property…" |
-| GR | "There is a **guest collapse** at the property…" |
-| BO | "There is a **cash shortage** at the property…" |
+| Bộ phận | Câu đáp mẫu học viên phải học thuộc                                            |
+| ------- | ------------------------------------------------------------------------------ |
+| FO      | "There is a **medical call** at the property. Please stay calm and follow me." |
+| FB      | "There is a **kitchen fire alarm** at the property…"                           |
+| HK      | "There is a **water leak** at the property…"                                   |
+| SW      | "There is a **severe allergic reaction** at the property…"                     |
+| GR      | "There is a **guest collapse** at the property…"                               |
+| BO      | "There is a **cash shortage** at the property…"                                |
 
 Khách báo có khói ở hành lang; **5/6 bộ phận được dạy đáp lại bằng một sự cố hoàn toàn khác.** Đây không chỉ là lỗi tiếng Anh — đây là dạy sai phản xạ trong tình huống an toàn tính mạng. Cùng khung này sinh ra 78 câu mẫu ở tuần 36 và 39.
 
@@ -170,7 +170,7 @@ FB/SW/GR dùng nhân vật nữ (Linh, Mai, Trang) nhưng khung câu vẫn xuấ
 
 ### 4.6 Trò chơi chấm ngược ở tuần cao
 
-Từ khoảng tuần 24, các phương án nhiễu trở nên trôi chảy và đúng nghiệp vụ, trong khi đáp án được đánh dấu đúng đôi khi lại là câu hỏng. Ví dụ FO-24: khách hỏi "Is that included, or do I pay extra?" → đáp án *đúng* theo hệ thống là "There is a small **cancellation fee** for that, madam." (sai loại phí), còn phương án bị chấm sai — "That depends on which package you booked, madam." — mới là câu chuẩn nghiệp vụ. **Học viên trả lời đúng bị trừ điểm.**
+Từ khoảng tuần 24, các phương án nhiễu trở nên trôi chảy và đúng nghiệp vụ, trong khi đáp án được đánh dấu đúng đôi khi lại là câu hỏng. Ví dụ FO-24: khách hỏi "Is that included, or do I pay extra?" → đáp án _đúng_ theo hệ thống là "There is a small **cancellation fee** for that, madam." (sai loại phí), còn phương án bị chấm sai — "That depends on which package you booked, madam." — mới là câu chuẩn nghiệp vụ. **Học viên trả lời đúng bị trừ điểm.**
 
 ---
 
@@ -192,29 +192,29 @@ Từ tuần 7 trở đi độ đặc thù lên 61–89% — hoàn toàn ổn. V�
 
 12 tuần biên soạn tay (FO-17/26, FB-15/31, HK-15/33, SW-19/23, GR-27/34, BO-37/38) là tài liệu chuyên nghiệp thật sự — bài đọc là voucher Agoda, quy trình SOP, điều khoản hợp đồng; hội thoại đúng ngữ cảnh nghiệp vụ.
 
-| Chỉ số | Tuần soạn tay | Tuần sinh tự động |
-|---|---|---|
-| Độ dài bài đọc | 40 từ/bài | 29 từ/bài |
-| Tỉ lệ lỗi | 0,8% | 23,2% |
+| Chỉ số                    | Tuần soạn tay          | Tuần sinh tự động      |
+| ------------------------- | ---------------------- | ---------------------- |
+| Độ dài bài đọc            | 40 từ/bài              | 29 từ/bài              |
+| Tỉ lệ lỗi                 | 0,8%                   | 23,2%                  |
 | Ngôn ngữ câu hỏi đọc hiểu | **tiếng Anh** (95 câu) | tiếng Việt (1.825 câu) |
 
 Điểm cuối bảng đáng lưu ý: 95 câu hỏi đọc hiểu bằng tiếng Anh nằm **chính xác** trong 12 tuần soạn tay. Nghĩa là người học đang đi trong tuần tiếng Việt bỗng gặp một tuần hỏi bằng tiếng Anh rồi lại quay về tiếng Việt — vừa lệch chuẩn, vừa rơi đúng vào tuần khó nhất.
 
-Ví dụ chất lượng tuần soạn tay (FO-17): *"Why do you need my credit card if the room is already paid?"* → *"This is just a temporary deposit for any incidental charges during your stay."* Kèm bài đọc SOP: *"The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM."* — đúng thực tế đăng ký lưu trú tại Việt Nam.
+Ví dụ chất lượng tuần soạn tay (FO-17): _"Why do you need my credit card if the room is already paid?"_ → _"This is just a temporary deposit for any incidental charges during your stay."_ Kèm bài đọc SOP: _"The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM."_ — đúng thực tế đăng ký lưu trú tại Việt Nam.
 
 ### 5.3 Khoảng trống nghiệp vụ quan trọng
 
 Rà theo tiêu chuẩn vận hành resort 4–5 sao Việt Nam, xếp theo mức độ quan trọng:
 
-**Lễ tân (FO)** — thiếu: hoá đơn đỏ/VAT và mã số thuế (chỉ có "invoice address"); taxi dù và cách hướng dẫn khách dùng taxi chính hãng; thẻ tín dụng bị từ chối (0 lần xuất hiện trong toàn bộ 240 tuần); nhận phòng sớm (trong khi trả phòng muộn được dạy rất kỹ); tranh chấp giá OTA. *Đã có tốt:* đặt cọc/pre-auth (tuần 17, xuất sắc), nâng hạng phòng, mất thẻ từ, xử lý overbooking (tuần 33).
+**Lễ tân (FO)** — thiếu: hoá đơn đỏ/VAT và mã số thuế (chỉ có "invoice address"); taxi dù và cách hướng dẫn khách dùng taxi chính hãng; thẻ tín dụng bị từ chối (0 lần xuất hiện trong toàn bộ 240 tuần); nhận phòng sớm (trong khi trả phòng muộn được dạy rất kỹ); tranh chấp giá OTA. _Đã có tốt:_ đặt cọc/pre-auth (tuần 17, xuất sắc), nâng hạng phòng, mất thẻ từ, xử lý overbooking (tuần 33).
 
-**Buồng phòng (HK)** — thiếu: khách phàn nàn côn trùng (kiến/gián — sự cố hằng tuần ở resort biển, chỉ có "pest control team" như từ vựng nội bộ); Lost & Found (đúng một dòng từ vựng); tranh chấp minibar ("tôi không hề uống lon Coca đó" — tranh chấp phổ biến nhất liên quan buồng phòng). *Đã có tốt:* quy trình DND sau 14:00, giường phụ, đền bù giặt là với mức trần 10 lần phí (tuần 33 — đúng chuẩn ngành VN).
+**Buồng phòng (HK)** — thiếu: khách phàn nàn côn trùng (kiến/gián — sự cố hằng tuần ở resort biển, chỉ có "pest control team" như từ vựng nội bộ); Lost & Found (đúng một dòng từ vựng); tranh chấp minibar ("tôi không hề uống lon Coca đó" — tranh chấp phổ biến nhất liên quan buồng phòng). _Đã có tốt:_ quy trình DND sau 14:00, giường phụ, đền bù giặt là với mức trần 10 lần phí (tuần 33 — đúng chuẩn ngành VN).
 
-**Nhà hàng (FB)** — thiếu: đồ ăn Halal (đúng một dòng ở tuần 32, trong khi thị trường Trung Đông/Malaysia/Indonesia đang lớn); thực đơn trẻ em/suất nhỏ (thị trường gia đình Hàn Quốc rất đông); tranh chấp voucher ăn sáng; nghi thức phục vụ rượu vang (có từ vựng nhưng không có quy trình trình chai/rót thử). *Đã có tốt:* dị ứng thực phẩm (7 tuần), phí phục vụ, giờ nhận order cuối. Tuần 31 về phở, cà phê trứng, phin lọc là điểm sáng bản địa hoá.
+**Nhà hàng (FB)** — thiếu: đồ ăn Halal (đúng một dòng ở tuần 32, trong khi thị trường Trung Đông/Malaysia/Indonesia đang lớn); thực đơn trẻ em/suất nhỏ (thị trường gia đình Hàn Quốc rất đông); tranh chấp voucher ăn sáng; nghi thức phục vụ rượu vang (có từ vựng nhưng không có quy trình trình chai/rót thử). _Đã có tốt:_ dị ứng thực phẩm (7 tuần), phí phục vụ, giờ nhận order cuối. Tuần 31 về phở, cà phê trứng, phin lọc là điểm sáng bản địa hoá.
 
-**Spa (SW)** — thiếu: **hỏi mức lực khi đang trị liệu** ("Is the pressure okay? Would you like it softer?") — câu quan trọng nhất của một kỹ thuật viên, không hề có; chính sách tip; yêu cầu kỹ thuật viên theo giới tính (chỉ có một dòng không tự nhiên); xử lý khách mang thai. *Đã có tốt:* phiếu khai sức khoẻ và chống chỉ định (tuần 17/23), an toàn hồ bơi/cờ đỏ bãi biển (tuần 19 — xuất sắc).
+**Spa (SW)** — thiếu: **hỏi mức lực khi đang trị liệu** ("Is the pressure okay? Would you like it softer?") — câu quan trọng nhất của một kỹ thuật viên, không hề có; chính sách tip; yêu cầu kỹ thuật viên theo giới tính (chỉ có một dòng không tự nhiên); xử lý khách mang thai. _Đã có tốt:_ phiếu khai sức khoẻ và chống chỉ định (tuần 17/23), an toàn hồ bơi/cờ đỏ bãi biển (tuần 19 — xuất sắc).
 
-**Quan hệ khách hàng (GR)** — thiếu nghiêm trọng: **quy trình cấp cứu y tế** (gọi bác sĩ trực, phòng khám quốc tế, xe cứu thương, bảo hiểm du lịch) — chỉ tồn tại dưới dạng mảnh từ vựng; **bão và gián đoạn thời tiết** (0 nội dung, trong khi miền Trung có mùa bão hằng năm); mất hộ chiếu (chỉ là bối cảnh, không có quy trình khai báo công an/lãnh sự); nội dung concierge thật (không có địa danh nào — Đà Nẵng, Hội An, Nha Trang, Phú Quốc đều không xuất hiện trong 240 tuần; GR "gợi ý" cho khách bằng những cụm trừu tượng như "the perfect match"). *Đã có tốt:* đưa đón sân bay, chuyển cấp quản lý, phòng chờ VIP (tuần 27), tổ chức dịp đặc biệt (tuần 34).
+**Quan hệ khách hàng (GR)** — thiếu nghiêm trọng: **quy trình cấp cứu y tế** (gọi bác sĩ trực, phòng khám quốc tế, xe cứu thương, bảo hiểm du lịch) — chỉ tồn tại dưới dạng mảnh từ vựng; **bão và gián đoạn thời tiết** (0 nội dung, trong khi miền Trung có mùa bão hằng năm); mất hộ chiếu (chỉ là bối cảnh, không có quy trình khai báo công an/lãnh sự); nội dung concierge thật (không có địa danh nào — Đà Nẵng, Hội An, Nha Trang, Phú Quốc đều không xuất hiện trong 240 tuần; GR "gợi ý" cho khách bằng những cụm trừu tượng như "the perfect match"). _Đã có tốt:_ đưa đón sân bay, chuyển cấp quản lý, phòng chờ VIP (tuần 27), tổ chức dịp đặc biệt (tuần 34).
 
 **Back Office (BO)** — nội dung tuần 37–38 (hợp đồng đoàn, allotment, blackout dates dịp Tết, RFP, BEO) là chất lượng cao và đúng nghiệp vụ. Nhưng tuần 1–36 chỉ là tiếng Anh dịch vụ chung khoác áo hành chính. **Đặt vấn đề về lựa chọn bộ phận thứ sáu:** một resort Việt Nam sẽ ưu tiên dạy tiếng Anh cho **Bell/Concierge và An ninh/Kỹ thuật** — những người tiếp xúc khách hằng ngày và yếu tiếng Anh nhất — hơn là đội sales back-office thường đã có tiếng Anh tốt nhất khách sạn. Ngoài ra BO không có nội dung về **tiệc cưới**, dòng doanh thu tiệc lớn nhất của resort biển.
 
@@ -236,13 +236,13 @@ Ngược lại, 5/6 bộ phận đều bị "tặng" tuần 37–38 về hợp �
 
 Giao diện hiển thị "Week N · 4h" trên mọi dòng timeline (`src/routes/department.$dep.tsx:77`) và mô tả "Mỗi tuần là một ca làm 4 giờ". Mô hình thời gian theo từng item (lật thẻ 12 giây, câu trắc nghiệm 15 giây, chính tả 40 giây, ghép câu 45 giây, luyện nói 75 giây, nghe 35 giây, đọc 4 giây/từ, cộng 25% làm lại để đạt chuẩn 80%) cho kết quả:
 
-| Phase | Thời lượng thực tế / tuần |
-|---|---|
-| P0 (tuần 1–6) | 39 phút |
-| P1 | 39 phút |
-| P2 | 48 phút |
-| P3 | 49 phút |
-| P4 | 51 phút |
+| Phase          | Thời lượng thực tế / tuần        |
+| -------------- | -------------------------------- |
+| P0 (tuần 1–6)  | 39 phút                          |
+| P1             | 39 phút                          |
+| P2             | 48 phút                          |
+| P3             | 49 phút                          |
+| P4             | 51 phút                          |
 | **Trung bình** | **46 phút** so với nhãn 240 phút |
 
 Toàn khoá vì vậy là **khoảng 31 giờ học thật**, không phải 160 giờ như `docs/curriculum-level-matrix.md` tuyên bố.
@@ -268,7 +268,7 @@ Với người học có 10–15 phút rảnh, đường đi đến bài học l
 
 **Ngữ pháp.** Đạt chuẩn đòi giải sạch **100%** số câu đố (`GrammarSuite.tsx:90`: `mastered: correctCount === puzzles.length`), không được bấm "Xem đáp án" lần nào. Nói và Đọc cũng đòi qua **mọi** mục.
 
-Nói cách khác: thang độ khó của *nội dung* được hiệu chỉnh rất cẩn thận, nhưng thang độ khó của *đánh giá* thì không. Người học pre-A1 gặp chuẩn 80–100% ngay tuần đầu.
+Nói cách khác: thang độ khó của _nội dung_ được hiệu chỉnh rất cẩn thận, nhưng thang độ khó của _đánh giá_ thì không. Người học pre-A1 gặp chuẩn 80–100% ngay tuần đầu.
 
 ### 6.4 Hai suite không có màn hình kết thúc
 
@@ -276,7 +276,7 @@ Nói cách khác: thang độ khó của *nội dung* được hiệu chỉnh r�
 
 ### 6.5 Ngõ cụt theo thiết bị
 
-`SpeakingSuite.tsx:55-57`: khi trình duyệt không có `SpeechRecognition`, suite hiển thị đúng một dòng lỗi *"Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy thử dùng Chrome."* và **không có gì khác**. Trong khi phần thi nói của bài sát hạch có sẵn chế độ gõ thay thế (`WeekTestSuite.tsx:246-249`). Link chia sẻ qua Zalo hoặc Messenger mở trong WebView không có Web Speech API — nghĩa là **một trong sáu suite bị khoá vĩnh viễn suốt 40 tuần** với cách chia sẻ link phổ biến nhất ở Việt Nam.
+`SpeakingSuite.tsx:55-57`: khi trình duyệt không có `SpeechRecognition`, suite hiển thị đúng một dòng lỗi _"Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy thử dùng Chrome."_ và **không có gì khác**. Trong khi phần thi nói của bài sát hạch có sẵn chế độ gõ thay thế (`WeekTestSuite.tsx:246-249`). Link chia sẻ qua Zalo hoặc Messenger mở trong WebView không có Web Speech API — nghĩa là **một trong sáu suite bị khoá vĩnh viễn suốt 40 tuần** với cách chia sẻ link phổ biến nhất ở Việt Nam.
 
 Tương tự, `ListeningSuite` chỉ kiểm tra `"speechSynthesis" in window` mà không kiểm tra có giọng tiếng Anh nào thật sự tồn tại hay không — trong khi `WeekTestSuite` có kiểm tra và miễn sàn điểm nghe khi thiếu giọng. Điện thoại Android giá rẻ chỉ có gói giọng `vi-VN` sẽ đọc tiếng Anh bằng ngữ âm tiếng Việt hoặc im lặng, và người học bị chấm trượt mà không có lời giải thích nào.
 
@@ -293,32 +293,33 @@ Thứ bậc nghề nghiệp là đòn bẩy động lực dài hạn mạnh nh�
 ### 7.1 Những gì làm tốt
 
 - **Sao dịch vụ (XP)** ghi vào localStorage trước rồi đồng bộ Supabase, có hàng đợi ghi lại khi mất mạng (`academy-store.ts`) — chịu lỗi mạng tốt, đúng bối cảnh wifi khách sạn.
-- **Chuỗi ngày học** tính theo *hoàn thành bài*, không phải mở app, và không đòi hỏi đạt chuẩn — quyết định sư phạm đúng: người học yếu cần được ghi nhận nỗ lực.
-- **Ôn tập ngắt quãng** (`review.ts`) dùng SM-2 rút gọn, khoá theo slug chứ không theo chỉ số mảng, nên đổi thứ tự nội dung không làm hỏng lịch ôn của người học. Gieo item ngay khi *hoàn thành* chứ không đợi *đạt chuẩn*.
+- **Chuỗi ngày học** tính theo _hoàn thành bài_, không phải mở app, và không đòi hỏi đạt chuẩn — quyết định sư phạm đúng: người học yếu cần được ghi nhận nỗ lực.
+- **Ôn tập ngắt quãng** (`review.ts`) dùng SM-2 rút gọn, khoá theo slug chứ không theo chỉ số mảng, nên đổi thứ tự nội dung không làm hỏng lịch ôn của người học. Gieo item ngay khi _hoàn thành_ chứ không đợi _đạt chuẩn_.
 - **Bảng kết quả sát hạch** phân tích rõ từng kỹ năng, chỉ đúng kỹ năng chưa đạt sàn và khuyên luyện lại đúng chỗ. Đây là phản hồi đánh giá chất lượng cao.
 - **Sổ tay in được** (`handbook.$dep.$week.tsx`) — giải pháp thực dụng cho người học không có điện thoại tốt.
 
 ### 7.2 Những gì thiếu, xếp theo tác động
 
 1. **Không có bất kỳ cơ chế nhắc học nào.** Không push notification, không service worker, không email, không cron. Chuỗi ngày học và hàng đợi ôn tập tồn tại nhưng **không có cách nào báo cho người học biết**. Chúng chỉ hiện ra nếu người học tự nhớ mở app. Với nhân viên làm ca, đây là lỗ hổng động lực lớn nhất trong toàn bộ hệ thống.
-2. **Không hoạt động offline.** Không manifest, không service worker, không thư mục `public/`. Toàn bộ nội dung nằm trong bundle JS nên *có thể* chạy offline, nhưng không có gì cache vỏ ứng dụng. Nhân viên học trên xe buýt hoặc ở khu nhân viên sóng yếu sẽ mở ra màn hình trắng.
+2. **Không hoạt động offline.** Không manifest, không service worker, không thư mục `public/`. Toàn bộ nội dung nằm trong bundle JS nên _có thể_ chạy offline, nhưng không có gì cache vỏ ứng dụng. Nhân viên học trên xe buýt hoặc ở khu nhân viên sóng yếu sẽ mở ra màn hình trắng.
 3. **Không có bài kiểm tra xếp lớp — nhưng lối xếp lớp thì đã tồn tại, chỉ chưa được đặt tên.** Cơ chế khoá là **theo phase, không theo tuần** (`week-access.ts:40-44`): mọi tuần trong phase đang mở đều vào được ngay, và bài sát hạch tuần 6 mở sẵn từ ngày đầu. `WeekLocked.tsx:44-50` thậm chí còn hiện nút "Vào thi sát hạch tuần 6 →". Nghĩa là một người đã có A1 chỉ cần ba lần chạm là nhảy phase — nhưng chỉ khi họ tình cờ bấm vào một tuần bị khoá. Người học nhút nhát sẽ bò qua sáu tuần dạy bảng chữ cái, và sáu tuần đó cũng chính là sáu tuần không có nội dung đặc thù bộ phận (§5.1). **Đây là tính năng đã xây xong mà chưa gắn nhãn** — chi phí sửa gần bằng không.
 4. **Không có chỉ dấu hoàn thành ở bất kỳ đâu người học nhìn thấy** (§6.2).
 5. **Không có mục tiêu ngày, huy hiệu, bảng xếp hạng cho người học, hay cơ chế bảo vệ chuỗi ngày.** Mất chuỗi 30 ngày vì một ca trực đêm là mất trắng, không có cách cứu. Với nhân viên làm 6 ngày/tuần, ô chuỗi ngày gần như luôn hiển thị 0 hoặc 1 — một tín hiệu thất bại lặp đi lặp lại gắn vào nỗ lực có thật.
 6. **Hàng đợi ôn tập phân kỳ thành nợ không thể trả.** `seedReviewItems` gieo toàn bộ vocab + grammar + speaking của tuần; `fetchDueItems` lấy tối đa 20 mục, sắp theo `due_at` tăng dần; còn `fetchDueCount` — con số hiển thị trên banner — thì **không giới hạn**. Mô phỏng bằng số liệu gieo thật của bộ phận FO (tuần 1: 23 mục, tuần 22: 29, tuần 40: 30) theo đúng tham số trong `review.ts` (`INTERVAL_GROWTH 2.2`, trần 60 ngày, trượt về 1 ngày):
 
-   | Kịch bản người học | Tổng mục đã gieo | Tồn đọng cuối kỳ | Đỉnh tồn đọng |
-   |---|---|---|---|
-   | Ôn mỗi ngày, nhớ 90%, đến tuần 14 | 311 | 25 | 72 |
-   | Ôn mỗi ngày, nhớ 90%, đến tuần 22 | 536 | **173** | 207 |
-   | Ôn mỗi ngày, nhớ 90%, đến tuần 40 | 1.083 | **699** | 735 |
-   | Ôn 3 ngày/tuần, nhớ 80%, đến tuần 22 | 536 | **498** | 509 |
-   | Ôn 3 ngày/tuần, nhớ 80%, đến tuần 40 | 1.083 | **1.025** | 1.044 |
+   | Kịch bản người học                   | Tổng mục đã gieo | Tồn đọng cuối kỳ | Đỉnh tồn đọng |
+   | ------------------------------------ | ---------------- | ---------------- | ------------- |
+   | Ôn mỗi ngày, nhớ 90%, đến tuần 14    | 311              | 25               | 72            |
+   | Ôn mỗi ngày, nhớ 90%, đến tuần 22    | 536              | **173**          | 207           |
+   | Ôn mỗi ngày, nhớ 90%, đến tuần 40    | 1.083            | **699**          | 735           |
+   | Ôn 3 ngày/tuần, nhớ 80%, đến tuần 22 | 536              | **498**          | 509           |
+   | Ôn 3 ngày/tuần, nhớ 80%, đến tuần 40 | 1.083            | **1.025**        | 1.044         |
 
    Ngay cả người học chăm chỉ tuyệt đối cũng thấy hàng đợi phân kỳ từ khoảng tuần 22. Người học thực tế (3 ngày/tuần) thì đến tuần 22 đã có **93% toàn bộ số mục quá hạn**. Banner sẽ hiển thị con số đó — một bộ đếm nợ chỉ có thể tăng.
 
    Nghiêm trọng hơn con số: vì sắp theo `due_at` tăng dần, khi đã có tồn đọng thì mỗi phiên ôn chỉ phục vụ **các mục cũ nhất mãi mãi**. Người học tuần 22 sẽ ôn đi ôn lại từ vựng tuần 1–3, còn **từ đang học tuần này thì không bao giờ được ôn** — đảo ngược đúng mục đích của ôn tập ngắt quãng.
-7. **Không có onboarding, và không có gì dẫn người học tới đúng bộ phận của họ.** Không màn hình hướng dẫn, không tour, không giải thích các suite là gì. Người học mất gốc mở app lần đầu gặp tiêu đề tiếng Anh *"Choose your atelier"* — một từ tiếng Pháp mà đối tượng mục tiêu chắc chắn không hiểu — rồi sáu thẻ vàng giống hệt nhau, mỗi thẻ mang một tên bộ phận tiếng Anh. Trường `profiles.department` **có tồn tại** nhưng là văn bản tự do, không bao giờ được ánh xạ sang mã FO/FB/HK/SW/GR/BO và không bao giờ dùng để định tuyến. Nhân viên buồng phòng phải tự đoán thẻ nào là của mình.
+
+7. **Không có onboarding, và không có gì dẫn người học tới đúng bộ phận của họ.** Không màn hình hướng dẫn, không tour, không giải thích các suite là gì. Người học mất gốc mở app lần đầu gặp tiêu đề tiếng Anh _"Choose your atelier"_ — một từ tiếng Pháp mà đối tượng mục tiêu chắc chắn không hiểu — rồi sáu thẻ vàng giống hệt nhau, mỗi thẻ mang một tên bộ phận tiếng Anh. Trường `profiles.department` **có tồn tại** nhưng là văn bản tự do, không bao giờ được ánh xạ sang mã FO/FB/HK/SW/GR/BO và không bao giờ dùng để định tuyến. Nhân viên buồng phòng phải tự đoán thẻ nào là của mình.
 
 8. **Sao có thể "cày" được ở bốn trên sáu suite**, làm hỏng cả thang cấp bậc lẫn bảng theo dõi của quản lý (`org-admin.tsx` hiển thị `service_stars` từng nhân viên):
    - `GrammarSuite.tsx:62,128-131` — điều kiện thưởng là `awardedRoundRef.current !== round`, mà `round` tăng vô hạn còn `puzzleIdx = round % puzzles.length`. Giải lại đúng 9 câu đố cũ được **+4 sao mỗi lần, không giới hạn**.
@@ -347,13 +348,13 @@ Bài sát hạch ở tuần 6/14/22/30/40 là phần được thiết kế tốt
 
 **Bài quiz từ vựng không kiểm tra từ mới.** `VocabSuite.tsx:39-41` gộp `[...terms, ...reviewWords]` rồi lấy ngẫu nhiên 12 câu. Hồ ôn phình theo tuần (FO-35: 18 từ mới + 51 từ ôn = hồ 69 từ). Số từ mới kỳ vọng lọt vào bài kiểm tra:
 
-| Phase | Hồ trung bình | Từ mới kỳ vọng trong 12 câu | % từ vựng mới được kiểm tra |
-|---|---|---|---|
-| P0 | 21 | 7,1 | 76% |
-| P1 | 31 | 5,0 | 46% |
-| P2 | 44 | 3,9 | 31% |
-| P3 | 62 | 3,3 | 22% |
-| **P4** | **71** | **3,3** | **20%** |
+| Phase  | Hồ trung bình | Từ mới kỳ vọng trong 12 câu | % từ vựng mới được kiểm tra |
+| ------ | ------------- | --------------------------- | --------------------------- |
+| P0     | 21            | 7,1                         | 76%                         |
+| P1     | 31            | 5,0                         | 46%                         |
+| P2     | 44            | 3,9                         | 31%                         |
+| P3     | 62            | 3,3                         | 22%                         |
+| **P4** | **71**        | **3,3**                     | **20%**                     |
 
 Từ phase 2 trở đi, người học đạt "80% chuẩn" trong khi 70–80% từ vựng mới của tuần chưa từng được truy xuất một lần nào. Ý định ôn tập ngắt quãng là đúng, nhưng vì trần bài quiz cố định ở 12 câu, việc ôn đã **lấn át** việc học mới.
 
@@ -377,25 +378,25 @@ Giới hạn cần nói thẳng: **không có đánh giá phát âm ở mức â
 
 Trên 100 nhân viên được khách sạn cấp tài khoản (không tự đăng ký, nên không có bộ lọc động lực), học ở nhà bằng điện thoại cá nhân, thời gian không lương. Cơ cấu giả định theo đúng thực tế nhân sự resort: ~60% mất gốc dùng điện thoại phổ thông, ~25% có động lực nhưng lịch thất thường, ~15% đã có A1 và có khung giờ tối ổn định. Mốc "hoàn thành tuần N" = có bản ghi đạt bài sát hạch tuần N.
 
-| Mốc | Của 100 người | Rào cản quyết định |
-|---|---|---|
-| Đăng nhập ít nhất một lần | 88 | Không có tự đặt lại mật khẩu |
-| Hoàn thành ≥1 suite trong tuần 1 | 68 | Cổng lật thẻ + cuộn ~3.000px + 13 câu quiz không lưu điểm dừng |
-| Còn hoạt động ngày thứ 14 | 41 | **Không có cơ chế nhắc học** — biến số áp đảo |
-| **Qua sát hạch tuần 6** | **21** | Bài thi 12–19 phút không gián đoạn được; 85% từ vựng đề thi lấy từ tuần 1–5 chưa ôn lại |
-| **Qua sát hạch tuần 14** | **8** | 8 tuần không có mốc nào, không thấy tiến độ, tồn đọng ôn tập bắt đầu dồn |
-| **Qua sát hạch tuần 22** | **4** | Vách ngưỡng chấm nói tuần 15 + nội dung nhảy bậc + tồn đọng ~173–498 mục |
-| Qua sát hạch tuần 30 | 2 | — |
-| **Hoàn thành tuần 40** | **1** | 9,5 tháng; riêng biến động nhân sự ngành đã lấy đi 35–50% |
+| Mốc                              | Của 100 người | Rào cản quyết định                                                                      |
+| -------------------------------- | ------------- | --------------------------------------------------------------------------------------- |
+| Đăng nhập ít nhất một lần        | 88            | Không có tự đặt lại mật khẩu                                                            |
+| Hoàn thành ≥1 suite trong tuần 1 | 68            | Cổng lật thẻ + cuộn ~3.000px + 13 câu quiz không lưu điểm dừng                          |
+| Còn hoạt động ngày thứ 14        | 41            | **Không có cơ chế nhắc học** — biến số áp đảo                                           |
+| **Qua sát hạch tuần 6**          | **21**        | Bài thi 12–19 phút không gián đoạn được; 85% từ vựng đề thi lấy từ tuần 1–5 chưa ôn lại |
+| **Qua sát hạch tuần 14**         | **8**         | 8 tuần không có mốc nào, không thấy tiến độ, tồn đọng ôn tập bắt đầu dồn                |
+| **Qua sát hạch tuần 22**         | **4**         | Vách ngưỡng chấm nói tuần 15 + nội dung nhảy bậc + tồn đọng ~173–498 mục                |
+| Qua sát hạch tuần 30             | 2             | —                                                                                       |
+| **Hoàn thành tuần 40**           | **1**         | 9,5 tháng; riêng biến động nhân sự ngành đã lấy đi 35–50%                               |
 
 Độ nhạy — điều đáng chú ý nhất trong toàn bộ báo cáo này:
 
-| Kịch bản | Tuần 6 | Tuần 14 | Tuần 22 | Tuần 40 |
-|---|---|---|---|---|
-| Hiện trạng | 21 | 8 | 4 | **1** |
-| Chỉ thêm quản lý chủ động (giám sát bảng `org-admin` hằng tuần + nhắc thủ công, **không sửa code**) | 38 | 17 | 10 | **4** |
-| Sửa 4 lỗi động lực hàng đầu (nhắc học + offline, tiến độ nhìn thấy được, lưu điểm dừng, hạ chuẩn theo phase) | 56 | 31 | 20 | **9** |
-| Sửa cả 8 lỗi + quản lý chủ động | 65 | 44 | 32 | **16** |
+| Kịch bản                                                                                                     | Tuần 6 | Tuần 14 | Tuần 22 | Tuần 40 |
+| ------------------------------------------------------------------------------------------------------------ | ------ | ------- | ------- | ------- |
+| Hiện trạng                                                                                                   | 21     | 8       | 4       | **1**   |
+| Chỉ thêm quản lý chủ động (giám sát bảng `org-admin` hằng tuần + nhắc thủ công, **không sửa code**)          | 38     | 17      | 10      | **4**   |
+| Sửa 4 lỗi động lực hàng đầu (nhắc học + offline, tiến độ nhìn thấy được, lưu điểm dừng, hạ chuẩn theo phase) | 56     | 31      | 20      | **9**   |
+| Sửa cả 8 lỗi + quản lý chủ động                                                                              | 65     | 44      | 32      | **16**  |
 
 Hai kết luận từ bảng này. Thứ nhất, **can thiệp rẻ nhất là quản lý chủ động** — bảng theo dõi dành cho quản lý đã đủ tốt để làm việc đó ngay hôm nay, không cần sửa dòng code nào, và nó nhân đôi mọi mốc. Thứ hai, **giáo trình không phải là điểm nghẽn.** Tám lỗi ở tầng giao nội dung mới là điểm nghẽn, và không lỗi nào đòi hỏi thay đổi kiến trúc.
 
@@ -403,17 +404,17 @@ Hai kết luận từ bảng này. Thứ nhất, **can thiệp rẻ nhất là q
 
 ## 10. Bảng điểm tổng hợp
 
-| Trục đánh giá | Điểm /10 | Nhận định |
-|---|---|---|
-| Thiết kế khung chương trình & lộ trình CEFR | **8** | Năm phase mạch lạc, trần độ khó tuân thủ tuyệt đối, mốc kiểm tra hợp lý |
-| Chất lượng ngôn ngữ nội dung | **3** | 23,2% câu mẫu có lỗi ở nội dung sinh tự động; dạy sai tiếng Anh ở quy mô lớn |
-| Tính đặc thù & xác thực nghiệp vụ | **6** | 12 tuần soạn tay xuất sắc; tuần 3–6 không phân hoá; nhiều khoảng trống nghiệp vụ trọng yếu |
-| Cân bằng kỹ năng (nghe/nói/đọc/viết) | **4** | 94,7% luyện nói là đọc thuộc; viết 1/40 tuần; thang nghe không tồn tại |
-| Thiết kế đo lường & sát hạch | **6** | Sàn kỹ năng + phần thi nói + phản hồi tốt; nhưng quiz bỏ sót 80% từ mới, chuẩn "đạt" không thể chạm ở phase 0, không đo viết |
-| Động lực cho người đi làm bận rộn | **3** | Nền tảng tốt bị vô hiệu vì không nhắc học, không offline, không thấy tiến độ, hàng đợi ôn phân kỳ |
-| Trải nghiệm trên điện thoại | **3** | Ẩn động lực chính khỏi người dùng mobile; không lưu điểm dừng; hai suite có thể bị khoá theo thiết bị |
-| Liêm chính dữ liệu (sao, chỉ số năng lực) | **2** | Sao cày được ở 4/6 suite; `courtesy_score` là hàm của số vòng bấm, không phải độ đúng |
-| Độ tin cậy của tuyên bố (nhãn CEFR, thời lượng) | **3** | "4h/tuần" thực tế 46 phút; "160 giờ" thực tế ~31 giờ; nhãn B1.1 chưa được chứng minh |
+| Trục đánh giá                                   | Điểm /10 | Nhận định                                                                                                                    |
+| ----------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Thiết kế khung chương trình & lộ trình CEFR     | **8**    | Năm phase mạch lạc, trần độ khó tuân thủ tuyệt đối, mốc kiểm tra hợp lý                                                      |
+| Chất lượng ngôn ngữ nội dung                    | **3**    | 23,2% câu mẫu có lỗi ở nội dung sinh tự động; dạy sai tiếng Anh ở quy mô lớn                                                 |
+| Tính đặc thù & xác thực nghiệp vụ               | **6**    | 12 tuần soạn tay xuất sắc; tuần 3–6 không phân hoá; nhiều khoảng trống nghiệp vụ trọng yếu                                   |
+| Cân bằng kỹ năng (nghe/nói/đọc/viết)            | **4**    | 94,7% luyện nói là đọc thuộc; viết 1/40 tuần; thang nghe không tồn tại                                                       |
+| Thiết kế đo lường & sát hạch                    | **6**    | Sàn kỹ năng + phần thi nói + phản hồi tốt; nhưng quiz bỏ sót 80% từ mới, chuẩn "đạt" không thể chạm ở phase 0, không đo viết |
+| Động lực cho người đi làm bận rộn               | **3**    | Nền tảng tốt bị vô hiệu vì không nhắc học, không offline, không thấy tiến độ, hàng đợi ôn phân kỳ                            |
+| Trải nghiệm trên điện thoại                     | **3**    | Ẩn động lực chính khỏi người dùng mobile; không lưu điểm dừng; hai suite có thể bị khoá theo thiết bị                        |
+| Liêm chính dữ liệu (sao, chỉ số năng lực)       | **2**    | Sao cày được ở 4/6 suite; `courtesy_score` là hàm của số vòng bấm, không phải độ đúng                                        |
+| Độ tin cậy của tuyên bố (nhãn CEFR, thời lượng) | **3**    | "4h/tuần" thực tế 46 phút; "160 giờ" thực tế ~31 giờ; nhãn B1.1 chưa được chứng minh                                         |
 
 ---
 
@@ -471,4 +472,4 @@ Nhắc học, PWA/offline, nút "học tiếp" + chỉ dấu hoàn thành, hiệ
 
 ---
 
-*Báo cáo này chỉ đánh giá, không thay đổi mã nguồn hay nội dung. Mọi số liệu tái lập được bằng script trong quy trình mô tả ở §2 hoặc bằng trích dẫn file:dòng.*
+_Báo cáo này chỉ đánh giá, không thay đổi mã nguồn hay nội dung. Mọi số liệu tái lập được bằng script trong quy trình mô tả ở §2 hoặc bằng trích dẫn file:dòng._
