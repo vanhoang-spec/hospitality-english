@@ -5,17 +5,37 @@ dropping bank words into fixed frames, so **each slot has a required part of
 speech**. A word that does not fit its frame produces ungrammatical output —
 this is the single most common defect in this codebase's content history.
 
-| Slot          | Week | Part of speech required                   | Frames it must fit                                                                          |
-| ------------- | ---- | ----------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `story`       | 31   | **noun phrase**                           | `The {w} is what makes this place special.` · `Let me tell you about the {w}.`              |
-| `preferences` | 32   | **noun phrase** naming a taste/need       | `Based on your {w}, I would suggest the quiet wing.` · `May I note your {w} in the system?` |
-| `disputes`    | 33   | **noun phrase** naming a claim/loss       | `I am very sorry about the {w}.` · `Our policy allows compensation for the {w}.`            |
-| `occasions`   | 34   | **noun phrase** naming an event element   | `We have prepared the {w} for you.` · `The {w} will be ready before you return.`            |
-| `tradeoffs`   | 35   | **bare verb phrase** (after "we"/"I can") | `What if we {w} instead?` · `I can {w} in exchange for a longer stay.`                      |
-| `emergencies` | 36   | **noun phrase** naming an incident        | `There is a {w} on the third floor.` · `Please stay calm — we are handling the {w}.`        |
-| `terms`       | 37   | **noun phrase** naming a contract term    | `The {w} is valid for twelve months.` · `Could we review the {w} together?`                 |
-| `proposal`    | 38   | **noun phrase** naming a proposal element | `The {w} is included in this offer.` · `I have attached the {w} for your review.`           |
-| `wrapUp`      | 40   | **noun phrase**, mixed review             | `Let me confirm the {w} with you.`                                                          |
+Part of speech is necessary but **not sufficient**. Every defect the 2026-08
+academic review found in this phase passed the part-of-speech check: the
+frames were satisfied and the sentences still meant nothing. So each slot
+also declares the **semantic class** its frames assume; both columns have to
+hold when you author a replacement word.
+
+| Slot          | Week | Part of speech required                   | Frames it must fit                                                                                         |
+| ------------- | ---- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `story`       | 31   | **noun phrase**                           | `The {w} is what makes this place special.` · `Let me tell you about the {w}.`                             |
+| `preferences` | 32   | **noun phrase** naming a taste/need       | `Based on your {w}, may I suggest something that suits you better?` · `May I note your {w} in the system?` |
+| `disputes`    | 33   | **noun phrase** naming a claim/loss       | `I am very sorry about the {w}.` · `Our policy allows compensation for the {w}.`                           |
+| `occasions`   | 34   | **noun phrase** naming an event element   | `We have prepared the {w} for you.` · `The {w} will be ready before you return.`                           |
+| `tradeoffs`   | 35   | **bare verb phrase** (after "we"/"I can") | `What if we {w} instead?` · `I can {w} in exchange for a longer stay.`                                     |
+| `emergencies` | 36   | **noun phrase** naming an incident        | `There is a {w} at the property.` · `Please stay calm — we are handling the {w}.`                          |
+| `terms`       | 37   | **noun phrase** naming a contract term    | `The {w} is valid for twelve months.` · `Could we review the {w} together?`                                |
+| `proposal`    | 38   | **noun phrase** naming a proposal element | `The {w} is included in this offer.` · `I have attached the {w} for your review.`                          |
+| `wrapUp`      | 40   | **noun phrase**, mixed review             | `Let me confirm the {w} with you.` · `The {w} is routine for me now.`                                      |
+
+### Semantic class per slot
+
+| Slot          | Must denote                                    | Fails as                                                                                                                                                              |
+| ------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `story`       | something about the property worth telling     | an internal KPI — "The market position is what makes this place special."                                                                                             |
+| `preferences` | **a guest taste the staff can act on**         | a back-office setting — "Based on your preferred billing cycle…"                                                                                                      |
+| `disputes`    | a loss or claim the guest raises               | a routine charge                                                                                                                                                      |
+| `occasions`   | an element of a celebration                    | a commercial event with no guest present                                                                                                                              |
+| `tradeoffs`   | a concession the speaker may grant             | an action needing approval the speaker does not have                                                                                                                  |
+| `emergencies` | **an on-site incident a guest can witness**    | a back-office problem — "There is a cash shortage at the property."; an off-site event — "The flight cancellation has been fully resolved."; a medical event (rule 8) |
+| `terms`       | a clause of an agreement                       | a party to the agreement                                                                                                                                              |
+| `proposal`    | a component of a written offer                 | a decision                                                                                                                                                            |
+| `wrapUp`      | **a detail the job requires you to get right** | a situation, a career step — "I am ready for the stay summary."                                                                                                       |
 
 ## Hard rules
 

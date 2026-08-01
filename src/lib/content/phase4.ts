@@ -174,7 +174,7 @@ function week31(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} avoids empty praise. Instead of "very nice", he says: "The ${lo(s5)} is quite remarkable. Many guests describe the ${lo(s6)} as unforgettable. There is something calming about the ${lo(s7)}." Mrs. Halvorsen writes it down.`,
+        `${lx.staff} avoids empty praise. Instead of "very nice", ${lx.pron.subj} says: "The ${lo(s5)} is quite remarkable. Many guests describe the ${lo(s6)} as unforgettable. There is something calming about the ${lo(s7)}." Mrs. Halvorsen writes it down.`,
         [
           {
             q: "Nhân viên tránh cách nói nào?",
@@ -242,7 +242,7 @@ function week31(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Two guests arrive an hour apart. To the business traveller ${lx.staff} says: "Business guests particularly appreciate the ${lo(s10)}." To the family he says: "Families usually enjoy the ${lo(s11)} most." Same property, two different stories.`,
+        `Two guests arrive an hour apart. To the business traveller ${lx.staff} says: "Business guests particularly appreciate the ${lo(s10)}." To the family ${lx.pron.subj} says: "Families usually enjoy the ${lo(s11)} most." Same property, two different stories.`,
         [
           {
             q: "Vì sao nhân viên kể hai câu chuyện khác nhau?",
@@ -348,7 +348,14 @@ function week32(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Based on", "/beɪst ɒn/", "Dựa trên", "Based on your needs, I suggest this.", "🧭"),
         v("Suggest", "/səˈdʒest/", "Đề xuất", "May I suggest another option?", "💡"),
-        bw(p1, `Based on your ${lo(p1)}, I would suggest a quieter option.`),
+        // The advice "a quieter option" was hardcoded to a light-sleeper
+        // scenario, but preferences[0] is a department preference — spice
+        // tolerance, preferred billing cycle, preferred newspaper. Four of
+        // six departments answered a noise complaint with an unrelated
+        // taste. Keeping the "Based on your {w}" frame (which is the
+        // week's teaching point) and making the SUGGESTION generic works
+        // for every slot.
+        bw(p1, `Based on your ${lo(p1)}, may I suggest something that suits you better?`),
         bw(p2, `May I note your ${lo(p2)} in the system?`),
         bw(p3, `I remember your ${lo(p3)} from last time.`),
         bw(p4, `Your ${lo(p4)} is already recorded, madam.`),
@@ -356,7 +363,7 @@ function week32(lx: Ctx): LessonContent[] {
       grammar: [
         g(
           `You want this so take that.`,
-          `Based on your ${lo(p1)}, I would suggest a quieter option.`,
+          `Based on your ${lo(p1)}, may I suggest something that suits you better?`,
           "'Based on…' mở đầu lời tư vấn cho thấy bạn đã lắng nghe, không áp đặt.",
         ),
         g(
@@ -367,8 +374,8 @@ function week32(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          "I am a very light sleeper, unfortunately.",
-          `Based on your ${lo(p1)}, I would suggest a quieter option, sir.`,
+          "There is one thing I am quite particular about.",
+          `Based on your ${lo(p1)}, may I suggest something that suits you better, sir?`,
           "Khung vàng tuần này. Nhắc lại điều khách vừa nói rồi mới đề xuất.",
         ),
         sp(
@@ -378,7 +385,7 @@ function week32(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms. Aliyeva mentions a preference in passing. ${lx.staff} catches it: "Based on your ${lo(p1)}, I would suggest a quieter option. May I note your ${lo(p2)} in the system?" On her next stay, nobody has to ask again.`,
+        `Ms. Aliyeva mentions a preference in passing. ${lx.staff} catches it: "Based on your ${lo(p1)}, may I suggest something that suits you better? May I note your ${lo(p2)} in the system?" On her next stay, nobody has to ask again.`,
         [
           {
             q: "Vì sao lần sau không ai phải hỏi lại khách?",
@@ -406,10 +413,10 @@ function week32(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "I do not sleep well if there is any noise at all.",
-          `Based on your ${lo(p1)}, I would suggest a quieter option, madam.`,
-          `I can guarantee that you will not hear any noise at all, madam.`,
-          `Most of our rooms are actually fairly quiet, madam.`,
+          "I am quite specific about what I like, actually.",
+          `Based on your ${lo(p1)}, may I suggest something that suits you better, madam?`,
+          `I can guarantee you will be completely satisfied, madam.`,
+          `Most guests are quite happy with the standard arrangement, madam.`,
         ),
       ],
     }),
@@ -802,7 +809,7 @@ function week33(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest says money is not the point. ${lx.staff} answers: "I understand the ${lo(d11)} means more than money to you. Let us find a fair outcome for the ${lo(d12)} together." Only then does he mention the refund.`,
+        `The guest says money is not the point. ${lx.staff} answers: "I understand the ${lo(d11)} means more than money to you. Let us find a fair outcome for the ${lo(d12)} together." Only then does ${lx.pron.subj} mention the refund.`,
         [
           {
             q: "Nhân viên nói về tiền vào lúc nào?",
@@ -812,8 +819,7 @@ function week33(lx: Ctx): LessonContent[] {
               "Không nói tới tiền",
             ],
             correct: 0,
-            explanation:
-              "'Only then does he mention the refund' — đề nghị tiền quá sớm khiến khách thấy bị mua chuộc.",
+            explanation: "'Only then …' — đề nghị tiền quá sớm khiến khách thấy bị mua chuộc.",
           },
           {
             q: "Từ 'together' có tác dụng gì?",
@@ -1054,7 +1060,7 @@ function week34(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `At the right moment ${lx.staff} steps forward: "On behalf of the whole team, congratulations on the ${lo(o9)}. It is our honour to be part of the ${lo(o12)}." Then he steps back and leaves the couple alone.`,
+        `At the right moment ${lx.staff} steps forward: "On behalf of the whole team, congratulations on the ${lo(o9)}. It is our honour to be part of the ${lo(o12)}." Then ${lx.pron.subj} steps back and leaves the couple alone.`,
         [
           {
             q: "Nhân viên làm gì sau khi chúc mừng?",
@@ -1448,12 +1454,12 @@ function week36(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is anyone injured?",
-          `No. Nobody has been hurt by the ${lo(e4)}.`,
+          `No. Nobody has been hurt by the ${lo(e1)}.`,
           "Câu hỏi về người bị thương phải được trả lời trước tiên và dứt khoát.",
         ),
       ],
       reading: read(
-        `${lx.staff} calls it in without panic: "There is a ${lo(e1)} at the property. The ${lo(e3)} started about five minutes ago. Nobody has been hurt by the ${lo(e4)}." The response team knows exactly what to bring.`,
+        `${lx.staff} calls it in without panic: "There is a ${lo(e1)} at the property. It started about five minutes ago. Nobody has been hurt." The response team knows exactly what to bring.`,
         [
           {
             q: "Vì sao đội ứng cứu biết cần mang gì?",
@@ -1512,12 +1518,12 @@ function week36(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Are you sure it is safe to stay here?",
-          `Yes, madam. The ${lo(e6)} is under control, and our team is trained for it.`,
+          `Yes, madam. The ${lo(e5)} is under control, and our team is trained for it.`,
           "Trả lời 'yes' rõ ràng rồi mới đưa hai lý do. Do dự ở đây sẽ khiến khách hoảng hơn.",
         ),
       ],
       reading: read(
-        `Guests gather in the lobby, worried. ${lx.staff} speaks slowly and clearly: "Please stay calm — we are handling the ${lo(e5)}. The ${lo(e6)} is under control now. There is no danger from the ${lo(e7)}." The lobby settles.`,
+        `Guests gather in the lobby, worried. ${lx.staff} speaks slowly and clearly: "Please stay calm — we are handling the ${lo(e5)}. It is under control now, and there is no danger." The lobby settles.`,
         [
           {
             q: "Nhân viên nói với giọng thế nào?",
@@ -1541,7 +1547,7 @@ function week36(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Everyone is panicking. Is it safe to stay in the building?",
-          `Please stay calm — the ${lo(e6)} is under control now.`,
+          `Please stay calm — the ${lo(e5)} is under control now.`,
           `Please stay calm, everyone is completely safe right now.`,
           `Please try to stay calm, we are checking on it.`,
         ),
@@ -1635,7 +1641,7 @@ function week36(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `An hour later ${lx.staff} announces: "The ${lo(e13)} has been fully resolved. Normal service has resumed." Afterwards he adds to his colleague: "I have written a full report on the ${lo(e14)}." The next shift starts fully informed.`,
+        `An hour later ${lx.staff} announces: "The ${lo(e13)} has been fully resolved. Normal service has resumed." Afterwards ${lx.pron.subj} adds to ${lx.pron.poss} colleague: "I have written a full report on the ${lo(e14)}." The next shift starts fully informed.`,
         [
           {
             q: "Nhân viên làm gì sau khi sự cố kết thúc?",
@@ -2207,7 +2213,7 @@ function week39(lx: Ctx): LessonContent[] {
       grammar: [
         g(
           `I say all my sentences fast.`,
-          `Based on your ${lo(p1)}, I would suggest something quieter, sir.`,
+          `Based on your ${lo(p1)}, may I suggest something that suits you better, sir?`,
           "Ứng biến không phải nói nhanh — mà là chọn đúng khung câu cho đúng tình huống.",
         ),
         g(
@@ -2223,9 +2229,9 @@ function week39(lx: Ctx): LessonContent[] {
           "Vào vai tự nhiên. Khách chưa hỏi gì thì bạn mở chuyện bằng điều đáng tự hào nhất.",
         ),
         sp(
-          "That sounds nice. We are quite tired though.",
-          `Of course. Based on your ${lo(p1)}, I would suggest something quieter.`,
-          "Đổi hướng ngay khi khách phát tín hiệu mệt — đó là lắng nghe thật.",
+          "That sounds nice. We are quite particular though.",
+          `Of course. Based on your ${lo(p1)}, may I suggest something that suits you better?`,
+          "Đổi hướng ngay khi khách phát tín hiệu về sở thích — đó là lắng nghe thật.",
         ),
       ],
       reading: read(
@@ -2257,8 +2263,8 @@ function week39(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Good evening. We have just arrived and we are exhausted.",
-          `Welcome, sir. Based on your ${lo(p1)}, I would suggest something quieter.`,
+          "Good evening. We have just arrived, and we do have our preferences.",
+          `Welcome, sir. Based on your ${lo(p1)}, may I suggest something that suits you better?`,
           `Welcome, sir. Let me tell you about our property's history first.`,
           `You should be able to rest well here tonight, sir.`,
         ),
@@ -2352,7 +2358,15 @@ function week39(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          "There is smoke in the corridor and our guests are panicking!",
+          // The prompt used to hardcode smoke in the corridor while the
+          // response named emergencies[0] — a per-department incident. Five
+          // of six departments therefore answered a fire with something
+          // else entirely ("There is a cash shortage at the property.
+          // Please stay calm and follow me."), drilling the wrong reflex in
+          // the one lesson where the reflex matters. The prompt now signals
+          // an emergency without naming one, so the department's own
+          // incident is the right answer.
+          "Something has happened downstairs and our guests are panicking!",
           `There is a ${lo(e1)} at the property. Please stay calm and follow me.`,
           "Bài kiểm tra khó nhất: báo cáo và trấn an trong cùng một hơi thở.",
         ),
@@ -2378,7 +2392,7 @@ function week39(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "There is smoke in the corridor and everyone is shouting!",
+          "Something is going on downstairs and everyone is shouting!",
           `There is a ${lo(e1)} at the property. Please follow me now.`,
           `I am sure it is nothing serious, please stay calm.`,
           `Let me first find out exactly what is going on.`,
@@ -2413,7 +2427,7 @@ function week39(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The final rehearsal is commercial. ${lx.staff} opens with the ${lo(r1)}, explains the ${lo(c1)}, answers two hard questions and asks for a decision date. The trainer signs him off as ready.`,
+        `The final rehearsal is commercial. ${lx.staff} opens with the ${lo(r1)}, explains the ${lo(c1)}, answers two hard questions and asks for a decision date. The trainer signs ${lx.pron.obj} off as ready.`,
         [
           {
             q: "Bài trình bày kết thúc bằng gì?",
@@ -2460,7 +2474,7 @@ function week40(lx: Ctx): LessonContent[] {
         bw(w1, `I can handle the ${lo(w1)} on my own now.`),
         bw(w2, `The ${lo(w2)} no longer worries me.`),
         bw(w3, `I know who to call about the ${lo(w3)}.`),
-        bw(w4, `I can explain the ${lo(w4)} to any guest.`),
+        bw(w4, `I can explain the ${lo(w4)} to anyone who asks.`),
       ],
       grammar: [
         g(
@@ -2482,12 +2496,12 @@ function week40(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Give me one example of that.",
-          `I can explain the ${lo(w4)} to any guest, and I know who to call about the ${lo(w3)}.`,
+          `I can explain the ${lo(w4)} to anyone who asks, and I know who to call about the ${lo(w3)}.`,
           "Lượt hai đưa ví dụ cụ thể — đây là điều nhà tuyển dụng và quản lý muốn nghe.",
         ),
       ],
       reading: read(
-        `At the final review ${lx.staff} says: "I used to feel nervous, but I can handle the ${lo(w1)} on my own now. The ${lo(w2)} no longer worries me. I can explain the ${lo(w4)} to any guest." ${cap(lx.pron.poss)} supervisor agrees with every point.`,
+        `At the final review ${lx.staff} says: "I used to feel nervous, but I can handle the ${lo(w1)} on my own now. The ${lo(w2)} no longer worries me. I can explain the ${lo(w4)} to anyone who asks." ${cap(lx.pron.poss)} supervisor agrees with every point.`,
         [
           {
             q: "Nhân viên nói về tiến bộ bằng cách nào?",
@@ -2520,7 +2534,10 @@ function week40(lx: Ctx): LessonContent[] {
     lesson(lx, 40, 2, "The Hardest Situations", "Những tình huống khó nhất", {
       vocabulary: [
         bw(w5, `Even the ${lo(w5)} can be handled calmly.`),
-        bw(w6, `The ${lo(w6)} taught me the most.`),
+        // The guest prompt asks which SITUATION was hardest, but the slot
+        // holds a detail: "The kitchen capacity taught me the most."
+        // Getting that detail right IS the situation.
+        bw(w6, `Getting the ${lo(w6)} right taught me the most.`),
         bw(w7, `I still prepare carefully for the ${lo(w7)}.`),
         bw(w8, `Nothing about the ${lo(w8)} surprises me now.`),
       ],
@@ -2532,14 +2549,14 @@ function week40(lx: Ctx): LessonContent[] {
         ),
         g(
           `I learn much from that.`,
-          `The ${lo(w6)} taught me the most during this year.`,
+          `Getting the ${lo(w6)} right taught me the most during this year.`,
           "Câu có tân ngữ kép 'taught me the most' — cách nói về bài học rút ra.",
         ),
       ],
       speaking: [
         sp(
           "Which situation was the most difficult for you?",
-          `The ${lo(w6)} taught me the most, madam.`,
+          `Getting the ${lo(w6)} right taught me the most, madam.`,
           "Nói về khó khăn như bài học, không như lời than phiền.",
         ),
         sp(
@@ -2549,7 +2566,7 @@ function week40(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Asked about difficulty, ${lx.staff} does not complain: "The ${lo(w6)} taught me the most. Even the ${lo(w5)} can be handled calmly. I still prepare carefully for the ${lo(w7)}." ${cap(lx.pron.subj)} is honest about what still takes effort.`,
+        `Asked about difficulty, ${lx.staff} does not complain: "Getting the ${lo(w6)} right taught me the most. Even the ${lo(w5)} can be handled calmly. I still prepare carefully for the ${lo(w7)}." ${cap(lx.pron.subj)} is honest about what still takes effort.`,
         [
           {
             q: "Nhân viên nói về khó khăn theo cách nào?",
@@ -2570,7 +2587,7 @@ function week40(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Which part of the job did you find most difficult?",
-          `The ${lo(w6)} taught me the most, sir.`,
+          `Getting the ${lo(w6)} right taught me the most, sir.`,
           `Honestly, sir, nothing here was ever difficult for me.`,
           `There were many things that felt difficult, sir.`,
         ),
@@ -2604,7 +2621,7 @@ function week40(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} is asked to mentor: "I can show a new colleague the ${lo(w9)}. The ${lo(w10)} is the first thing I would teach. Understanding the ${lo(w12)} takes practice." A year ago he was the new colleague.`,
+        `${lx.staff} is asked to mentor: "I can show a new colleague the ${lo(w9)}. The ${lo(w10)} is the first thing I would teach. Understanding the ${lo(w12)} takes practice." A year ago ${lx.pron.subj} was the new colleague.`,
         [
           {
             q: "Một năm trước nhân viên này là ai?",
@@ -2614,8 +2631,7 @@ function week40(lx: Ctx): LessonContent[] {
               "Khách của khách sạn",
             ],
             correct: 0,
-            explanation:
-              "'A year ago he was the new colleague' — vòng học nghề khép lại khi bạn dạy được người khác.",
+            explanation: "'A year ago …' — vòng học nghề khép lại khi bạn dạy được người khác.",
           },
           {
             q: "Anh ấy sẽ dạy điều gì đầu tiên?",
@@ -2638,36 +2654,40 @@ function week40(lx: Ctx): LessonContent[] {
     lesson(lx, 40, 4, "Forty Weeks Complete", "Hoàn thành bốn mươi tuần", {
       vocabulary: [
         bw(w13, `The ${lo(w13)} is part of my daily work now.`),
-        bw(w14, `I am ready for the ${lo(w14)}.`),
+        // The wrapUp bank is detail nouns, so "I am ready for the {w}."
+        // read as "I am ready for the stay summary." / "…the final invoice
+        // total." What forty weeks actually earned is that the detail is no
+        // longer difficult.
+        bw(w14, `The ${lo(w14)} is routine for me now.`),
       ],
       grammar: [
         g(
           `I finish study, good.`,
-          `The ${lo(w13)} is part of my daily work now, and I am ready for the ${lo(w14)}.`,
+          `The ${lo(w13)} is part of my daily work now, and the ${lo(w14)} is routine for me.`,
           "Câu tổng kết ghép hai mệnh đề: hiện tại đã thành thạo, tương lai đã sẵn sàng.",
         ),
         g(
           `Maybe I ready.`,
-          `I am ready for the ${lo(w14)}, sir.`,
+          `The ${lo(w14)} is routine for me now, sir.`,
           "Nói về năng lực của mình một cách dứt khoát, không rào đón — đây là câu cuối của khoá học.",
         ),
       ],
       speaking: [
         sp(
           "You have finished the whole programme. How do you feel?",
-          `The ${lo(w13)} is part of my daily work now, and I am ready for the ${lo(w14)}.`,
+          `The ${lo(w13)} is part of my daily work now, and the ${lo(w14)} is routine for me.`,
           "Câu cuối cùng của bốn mươi tuần. Nói chậm, rõ, và tự tin.",
         ),
       ],
       reading: read(
-        `On the last day ${lx.staff} looks back over forty weeks: from spelling his own name in week one to negotiating a contract in week thirty-seven. "The ${lo(w13)} is part of my daily work now. I am ready for the ${lo(w14)}."`,
+        `On the last day ${lx.staff} looks back over forty weeks: from spelling ${lx.pron.poss} own name in week one to negotiating a contract in week thirty-seven. "The ${lo(w13)} is part of my daily work now. The ${lo(w14)} is routine for me."`,
         [
           {
             q: "Tuần đầu tiên nhân viên học gì?",
             options: ["Đánh vần tên của chính mình", "Đàm phán hợp đồng", "Xử lý khủng hoảng"],
             correct: 0,
             explanation:
-              "'from spelling his own name in week one' — hành trình bắt đầu từ những điều cơ bản nhất.",
+              "'from spelling my own name in week one' — hành trình bắt đầu từ những điều cơ bản nhất.",
           },
           {
             q: "Câu kết cho thấy điều gì?",
@@ -2685,7 +2705,7 @@ function week40(lx: Ctx): LessonContent[] {
       game: [
         game(
           "After forty weeks, are you ready for more responsibility?",
-          `Yes. I am ready for the ${lo(w14)}, madam.`,
+          `Yes. The ${lo(w14)} is routine for me now, madam.`,
           `I think I may need a little more training first, madam.`,
           `That would really depend on what my manager decides, madam.`,
         ),

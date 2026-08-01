@@ -3,6 +3,7 @@
 Kèm theo `docs/academic-review-2026-08.md`. Mỗi mục ghi: bằng chứng, phạm vi ảnh hưởng, hướng sửa.
 
 **Phân hạng:**
+
 - **P0** — dạy sai tiếng Anh hoặc sai phản xạ nghiệp vụ cho người học. Chặn triển khai.
 - **P1** — sai lệch so với chuẩn CEFR hoặc so với chính spec đã cam kết.
 - **P2** — thiếu hụt động lực / trải nghiệm khiến người học bỏ cuộc.
@@ -12,21 +13,32 @@ Kèm theo `docs/academic-review-2026-08.md`. Mỗi mục ghi: bằng chứng, ph
 
 ---
 
+## Trạng thái
+
+**Toàn bộ nhóm P0 đã được xử lý** (xem phần "Đã sửa" cuối tài liệu). P1–P3 vẫn còn nguyên.
+
+Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
+
+- **Lỗi đại từ: 18 chỗ, không phải 57.** Phép đếm ban đầu quét "tên nhân vật nữ + he/his trong cùng câu", nên gộp cả những chỗ `he` chỉ **vị khách** — hợp lệ, vì khách trong các đoạn này được xưng "sir". Số chỗ thật sự trỏ về nhân viên là 18.
+- **Tuần 36 không hỏng ở cấp câu.** Câu khách hỏi ở tuần 36 vốn trung tính ("Control room. What is the situation?"), nên từng câu đều mạch lạc. Lỗi thật của tuần 36 là **một cảnh dùng bốn ô sự cố khác nhau như thể cùng một sự việc** (báo cáo dị ứng → trấn an về nhiễm nước hồ bơi → kết thúc bằng sự cố ngất trong phòng xông). Lỗi an toàn nghiêm trọng chỉ nằm ở **tuần 39**.
+
+---
+
 ## P0 — Chặn triển khai
 
 ### P0-1. Bài học khủng hoảng dạy đáp lại sai sự cố
 
-**Bằng chứng.** `src/lib/content/phase4.ts:2354-2357` ghép cứng câu khách *"There is smoke in the corridor and our guests are panicking!"* với câu đáp lấy từ `lx.bank.emergencies[0]` — vốn là tên sự cố riêng của từng bộ phận:
+**Bằng chứng.** `src/lib/content/phase4.ts:2354-2357` ghép cứng câu khách _"There is smoke in the corridor and our guests are panicking!"_ với câu đáp lấy từ `lx.bank.emergencies[0]` — vốn là tên sự cố riêng của từng bộ phận:
 
-| Bộ phận | Câu đáp mẫu |
-|---|---|
-| FO | "There is a **medical call** at the property. Please stay calm and follow me." |
-| HK | "There is a **water leak** at the property…" |
-| SW | "There is a **severe allergic reaction** at the property…" |
-| GR | "There is a **guest collapse** at the property…" |
-| BO | "There is a **cash shortage** at the property…" |
+| Bộ phận | Câu đáp mẫu                                                                    |
+| ------- | ------------------------------------------------------------------------------ |
+| FO      | "There is a **medical call** at the property. Please stay calm and follow me." |
+| HK      | "There is a **water leak** at the property…"                                   |
+| SW      | "There is a **severe allergic reaction** at the property…"                     |
+| GR      | "There is a **guest collapse** at the property…"                               |
+| BO      | "There is a **cash shortage** at the property…"                                |
 
-Chỉ FB ("kitchen fire alarm") là tương thích. Cùng gia đình khung này (`phase4.ts:1416-1456`, `1615-1638`, `2344-2356`) sinh ra **78 câu mẫu** ở tuần 36 và 39. Tuần 36 GR còn có: khách hỏi *"Is it finally over? Can we go back up?"* sau sơ tán → đáp *"The **flight cancellation** has been fully resolved."*
+Chỉ FB ("kitchen fire alarm") là tương thích. Cùng gia đình khung này (`phase4.ts:1416-1456`, `1615-1638`, `2344-2356`) sinh ra **78 câu mẫu** ở tuần 36 và 39. Tuần 36 GR còn có: khách hỏi _"Is it finally over? Can we go back up?"_ sau sơ tán → đáp _"The **flight cancellation** has been fully resolved."_
 
 **Ảnh hưởng.** 5/6 bộ phận, 78 câu mẫu, ở đúng bài dạy xử lý tình huống khẩn cấp.
 
@@ -38,16 +50,16 @@ Chỉ FB ("kitchen fire alarm") là tương thích. Cùng gia đình khung này 
 
 **Bằng chứng.** Đếm trên toàn bộ 240 tuần:
 
-| Khung | Số câu | Vị trí generator | Ví dụ |
-|---|---|---|---|
-| `I am ready for the {X}` | 60 | phase3/phase4 | "I am ready for the flight time." |
-| `Based on your {X}, I would suggest a quieter option` | 48 | `phase4.ts:341-410`, `2210-2261` | Khách: "I am a very light sleeper" → FB: "Based on your **spice tolerance**…" · BO: "…your **preferred billing cycle**…" · GR: "…your **preferred newspaper**…" |
-| `The {X} taught me the most` | 30 | phase4 (tuần 40) | "The kitchen capacity taught me the most." |
-| `{X} is part of my daily work now` | 24 | phase4 (tuần 40) | "The booking amendment is part of my daily work now." |
-| `The {X} will not happen again` | 18 | phase3 | "The turndown time will not happen again, madam." |
-| `I can explain the {X} to any guest` | 18 | phase4 (tuần 40) | "I can explain the repeat guest to any guest." |
-| `It would {X} nicely` | 1 | `phase2.ts:1372` | "It would environment nicely." |
-| `I would suggest {X}, because…` | 1 | `phase2.ts:1362-1372` | "I would suggest the guest decision, because it is popular." |
+| Khung                                                 | Số câu | Vị trí generator                 | Ví dụ                                                                                                                                                           |
+| ----------------------------------------------------- | ------ | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `I am ready for the {X}`                              | 60     | phase3/phase4                    | "I am ready for the flight time."                                                                                                                               |
+| `Based on your {X}, I would suggest a quieter option` | 48     | `phase4.ts:341-410`, `2210-2261` | Khách: "I am a very light sleeper" → FB: "Based on your **spice tolerance**…" · BO: "…your **preferred billing cycle**…" · GR: "…your **preferred newspaper**…" |
+| `The {X} taught me the most`                          | 30     | phase4 (tuần 40)                 | "The kitchen capacity taught me the most."                                                                                                                      |
+| `{X} is part of my daily work now`                    | 24     | phase4 (tuần 40)                 | "The booking amendment is part of my daily work now."                                                                                                           |
+| `The {X} will not happen again`                       | 18     | phase3                           | "The turndown time will not happen again, madam."                                                                                                               |
+| `I can explain the {X} to any guest`                  | 18     | phase4 (tuần 40)                 | "I can explain the repeat guest to any guest."                                                                                                                  |
+| `It would {X} nicely`                                 | 1      | `phase2.ts:1372`                 | "It would environment nicely."                                                                                                                                  |
+| `I would suggest {X}, because…`                       | 1      | `phase2.ts:1362-1372`            | "I would suggest the guest decision, because it is popular."                                                                                                    |
 
 Với khung `Based on your {X}`: 4/6 bộ phận nhận ô điền vô nghĩa (chỉ FO "pillow firmness" và HK "preferred pillow type" hợp lý).
 
@@ -59,21 +71,21 @@ Với khung `Based on your {X}`: 4/6 bộ phận nhận ô điền vô nghĩa (c
 
 Các câu dưới đây nằm ở trường `grammar.polite`, `vocabulary.context` hoặc `speaking.targetResponse` — tức nội dung học viên phải ghép lại, đọc theo và ghi nhớ. (Trường `grammar.rude` là câu sai cố ý, không tính.)
 
-| Vị trí | Câu | Lỗi |
-|---|---|---|
-| Tuần 11, 5 bộ phận (`polite`) | "He **make the beds the room** every day." (HK) · "He **meet the guests the room** every day." (GR) · "He **massages the room** every day." (SW) · "He **serves the room** every day." (FB) · "He **check ins the room** every day." (FO) | Sai chia ngôi ba + thừa tân ngữ |
-| BO-21 (`polite`, ×4) | "**It checked the figures than usual**, sir." | Ô động từ ghi đè khung "took longer than usual" |
-| BO-21 (`polite`, ×4) | "**I signed the supervisor** this afternoon." | "informed" bị thay bằng "signed" |
-| BO-21 (`vocab`) | "The guest **received** at noon." | Ngoại động từ thiếu tân ngữ |
-| SW-18 (×5) | "A ten percent **duration** is added, madam." | Ô "service charge" bị điền bằng "duration"; đáp án tiếng Việt lan lỗi thành "Thời lượng" |
-| SW-18 (`polite`, ×3) | "One moment, please. **The system is confirmed**." | Vô nghĩa |
-| SW-29 (×5) | "Everything has been recorded in the **locker key count**." | "count" không phải nơi lưu hồ sơ |
-| GR-20 (`polite`+`target`, ×3) | "Would you prefer **the lounge or room or the early or late**?" | Hai mục từ vựng va nhau trong một khung |
-| GR-20 (`vocab`) | "The **something local** is fine, sir." | Định từ + đại từ |
-| FB-13 (`vocab`) | "The **pipe is overcooked**." · "The **machine is unhappy**." | Tính từ nấu ăn gán cho ống nước/máy móc |
-| HK-12 (`vocab`+`polite`) | "Let me **send up** for you." | Cụm động từ thiếu tân ngữ |
-| Tuần 10 (4 câu) | "This one is **more empty**." · "This one is **more bright**." | Sai dạng so sánh hơn của tính từ một âm tiết |
-| Tuần 10 (2 câu) | "It is **a little safe**." | Vô nghĩa |
+| Vị trí                        | Câu                                                                                                                                                                                                                                       | Lỗi                                                                                      |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Tuần 11, 5 bộ phận (`polite`) | "He **make the beds the room** every day." (HK) · "He **meet the guests the room** every day." (GR) · "He **massages the room** every day." (SW) · "He **serves the room** every day." (FB) · "He **check ins the room** every day." (FO) | Sai chia ngôi ba + thừa tân ngữ                                                          |
+| BO-21 (`polite`, ×4)          | "**It checked the figures than usual**, sir."                                                                                                                                                                                             | Ô động từ ghi đè khung "took longer than usual"                                          |
+| BO-21 (`polite`, ×4)          | "**I signed the supervisor** this afternoon."                                                                                                                                                                                             | "informed" bị thay bằng "signed"                                                         |
+| BO-21 (`vocab`)               | "The guest **received** at noon."                                                                                                                                                                                                         | Ngoại động từ thiếu tân ngữ                                                              |
+| SW-18 (×5)                    | "A ten percent **duration** is added, madam."                                                                                                                                                                                             | Ô "service charge" bị điền bằng "duration"; đáp án tiếng Việt lan lỗi thành "Thời lượng" |
+| SW-18 (`polite`, ×3)          | "One moment, please. **The system is confirmed**."                                                                                                                                                                                        | Vô nghĩa                                                                                 |
+| SW-29 (×5)                    | "Everything has been recorded in the **locker key count**."                                                                                                                                                                               | "count" không phải nơi lưu hồ sơ                                                         |
+| GR-20 (`polite`+`target`, ×3) | "Would you prefer **the lounge or room or the early or late**?"                                                                                                                                                                           | Hai mục từ vựng va nhau trong một khung                                                  |
+| GR-20 (`vocab`)               | "The **something local** is fine, sir."                                                                                                                                                                                                   | Định từ + đại từ                                                                         |
+| FB-13 (`vocab`)               | "The **pipe is overcooked**." · "The **machine is unhappy**."                                                                                                                                                                             | Tính từ nấu ăn gán cho ống nước/máy móc                                                  |
+| HK-12 (`vocab`+`polite`)      | "Let me **send up** for you."                                                                                                                                                                                                             | Cụm động từ thiếu tân ngữ                                                                |
+| Tuần 10 (4 câu)               | "This one is **more empty**." · "This one is **more bright**."                                                                                                                                                                            | Sai dạng so sánh hơn của tính từ một âm tiết                                             |
+| Tuần 10 (2 câu)               | "It is **a little safe**."                                                                                                                                                                                                                | Vô nghĩa                                                                                 |
 
 **Hướng sửa.** Sửa khung sinh của từng nhóm; riêng nhóm tuần 10 cần bổ sung quy tắc chọn dạng so sánh theo số âm tiết vào generator phase 1.
 
@@ -81,7 +93,7 @@ Các câu dưới đây nằm ở trường `grammar.polite`, `vocabulary.contex
 
 ### P0-4. Lỗi đại từ theo giới của nhân vật — 57 câu
 
-**Bằng chứng.** FB/SW/GR dùng nhân vật nữ (Linh, Mai, Trang) nhưng khung vẫn xuất `he/him/his`: *"Linh shows **his** log"*, *"Mai answers… **He** asks"*, *"The trainer signs **him** off as ready"* (Trang). Nặng nhất, FB-7 dạy nguyên văn:
+**Bằng chứng.** FB/SW/GR dùng nhân vật nữ (Linh, Mai, Trang) nhưng khung vẫn xuất `he/him/his`: _"Linh shows **his** log"_, _"Mai answers… **He** asks"_, _"The trainer signs **him** off as ready"_ (Trang). Nặng nhất, FB-7 dạy nguyên văn:
 
 > "This is my colleague. **He is our waitress.**"
 
@@ -93,7 +105,7 @@ Các câu dưới đây nằm ở trường `grammar.polite`, `vocabulary.contex
 
 ### P0-5. Trò chơi chấm ngược ở tuần cao — trừ điểm câu trả lời đúng
 
-**Bằng chứng.** Từ khoảng tuần 24, phương án nhiễu trở nên trôi chảy và đúng nghiệp vụ, còn đáp án được đánh dấu đúng lại hỏng. FO-24: khách hỏi *"Is that included, or do I pay extra?"* → đáp án *đúng* theo hệ thống là "There is a small **cancellation fee** for that, madam." (sai loại phí); phương án bị chấm sai — "That depends on which package you booked, madam." — mới là câu chuẩn. FB-32 tương tự: đáp án đúng là câu "spice tolerance" hỏng, còn "Most of our rooms are actually fairly quiet, madam." bị chấm sai.
+**Bằng chứng.** Từ khoảng tuần 24, phương án nhiễu trở nên trôi chảy và đúng nghiệp vụ, còn đáp án được đánh dấu đúng lại hỏng. FO-24: khách hỏi _"Is that included, or do I pay extra?"_ → đáp án _đúng_ theo hệ thống là "There is a small **cancellation fee** for that, madam." (sai loại phí); phương án bị chấm sai — "That depends on which package you booked, madam." — mới là câu chuẩn. FB-32 tương tự: đáp án đúng là câu "spice tolerance" hỏng, còn "Most of our rooms are actually fairly quiet, madam." bị chấm sai.
 
 `qa-full.ts` đã đo được triệu chứng (27% game round có một phương án đúng dài hơn hẳn) nhưng không kết luận được là chấm ngược.
 
@@ -112,13 +124,13 @@ Các câu dưới đây nằm ở trường `grammar.polite`, `vocabulary.contex
 
 `VocabSuite.tsx:39-41`: `const pool = [...terms, ...reviewWords]; shuffle(pool).slice(0, MAX_MCQ)`. Hồ ôn phình theo tuần (FO-35: 18 từ mới + 51 từ ôn = 69), nên số từ mới lọt vào bài 12 câu chỉ còn:
 
-| Phase | Hồ | Từ mới kỳ vọng | % từ mới được kiểm tra |
-|---|---|---|---|
-| P0 | 21 | 7,1 | 76% |
-| P1 | 31 | 5,0 | 46% |
-| P2 | 44 | 3,9 | 31% |
-| P3 | 62 | 3,3 | 22% |
-| P4 | 71 | 3,3 | **20%** |
+| Phase | Hồ  | Từ mới kỳ vọng | % từ mới được kiểm tra |
+| ----- | --- | -------------- | ---------------------- |
+| P0    | 21  | 7,1            | 76%                    |
+| P1    | 31  | 5,0            | 46%                    |
+| P2    | 44  | 3,9            | 31%                    |
+| P3    | 62  | 3,3            | 22%                    |
+| P4    | 71  | 3,3            | **20%**                |
 
 **Sửa:** phân bổ cố định — bảo đảm tối thiểu 8/12 câu lấy từ `terms` (từ mới của tuần), phần còn lại từ `reviewWords`. Hoặc nâng `MAX_MCQ` theo phase.
 
@@ -174,15 +186,15 @@ Writing xuất hiện ở 6/240 dep-week (chỉ tuần 33), Mediation 6/240 (ch�
 
 Xếp theo mức độ quan trọng trong vận hành resort 4–5 sao Việt Nam:
 
-| Bộ phận | Thiếu |
-|---|---|
-| **GR** | **Quy trình cấp cứu y tế** (gọi bác sĩ trực, phòng khám quốc tế, bảo hiểm du lịch) — chỉ tồn tại dưới dạng mảnh từ vựng; **bão và gián đoạn thời tiết** (0 nội dung); mất hộ chiếu (không có quy trình khai báo); nội dung concierge thật (không có địa danh nào trong 240 tuần) |
-| **FO** | Hoá đơn đỏ/VAT + mã số thuế; taxi dù; thẻ tín dụng bị từ chối (0 lần xuất hiện); nhận phòng sớm; tranh chấp giá OTA |
-| **HK** | Khách phàn nàn côn trùng; Lost & Found (1 dòng từ vựng); tranh chấp minibar |
-| **SW** | **Hỏi mức lực khi đang trị liệu** ("Is the pressure okay?") — câu quan trọng nhất của kỹ thuật viên, không có; chính sách tip; yêu cầu kỹ thuật viên theo giới tính; khách mang thai |
-| **FB** | Đồ ăn Halal (1 dòng); thực đơn trẻ em; tranh chấp voucher ăn sáng; nghi thức phục vụ rượu vang |
-| **BO** | Tiệc cưới (0 lần xuất hiện) |
-| **Mọi bộ phận** | Chiến lược giao tiếp với khách hạn chế tiếng Anh (thị trường Nga/Hàn/Trung); nội dung Tết ở các bộ phận tiếp khách |
+| Bộ phận         | Thiếu                                                                                                                                                                                                                                                                            |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **GR**          | **Quy trình cấp cứu y tế** (gọi bác sĩ trực, phòng khám quốc tế, bảo hiểm du lịch) — chỉ tồn tại dưới dạng mảnh từ vựng; **bão và gián đoạn thời tiết** (0 nội dung); mất hộ chiếu (không có quy trình khai báo); nội dung concierge thật (không có địa danh nào trong 240 tuần) |
+| **FO**          | Hoá đơn đỏ/VAT + mã số thuế; taxi dù; thẻ tín dụng bị từ chối (0 lần xuất hiện); nhận phòng sớm; tranh chấp giá OTA                                                                                                                                                              |
+| **HK**          | Khách phàn nàn côn trùng; Lost & Found (1 dòng từ vựng); tranh chấp minibar                                                                                                                                                                                                      |
+| **SW**          | **Hỏi mức lực khi đang trị liệu** ("Is the pressure okay?") — câu quan trọng nhất của kỹ thuật viên, không có; chính sách tip; yêu cầu kỹ thuật viên theo giới tính; khách mang thai                                                                                             |
+| **FB**          | Đồ ăn Halal (1 dòng); thực đơn trẻ em; tranh chấp voucher ăn sáng; nghi thức phục vụ rượu vang                                                                                                                                                                                   |
+| **BO**          | Tiệc cưới (0 lần xuất hiện)                                                                                                                                                                                                                                                      |
+| **Mọi bộ phận** | Chiến lược giao tiếp với khách hạn chế tiếng Anh (thị trường Nga/Hàn/Trung); nội dung Tết ở các bộ phận tiếp khách                                                                                                                                                               |
 
 **Nguồn tuần để lấp:** tuần 37–38 (hợp đồng đoàn, thuyết trình đề xuất) là nội dung B2B mà FO/FB/HK/SW/GR không dùng tới — **10 tuần** có thể thu hồi. Cũng nên xem lại việc chọn BO làm bộ phận thứ sáu thay vì Bell/Concierge hoặc An ninh/Kỹ thuật, là những nhóm tiếp khách hằng ngày và yếu tiếng Anh nhất.
 
@@ -201,12 +213,12 @@ Xác minh: không có `public/`, không manifest, không service worker, không 
 
 `review.ts:89-99` — `fetchDueItems` giới hạn 20, sắp `due_at ASC`; `fetchDueCount` **không giới hạn** và banner hiển thị con số thô đó. Mô phỏng bằng số liệu gieo thật (FO: 23–30 mục/tuần) theo đúng tham số `INTERVAL_GROWTH 2.2`:
 
-| Kịch bản | Tổng gieo | Tồn đọng cuối | Đỉnh |
-|---|---|---|---|
-| Ôn hằng ngày, nhớ 90%, tuần 22 | 536 | 173 | 207 |
-| Ôn hằng ngày, nhớ 90%, tuần 40 | 1.083 | 699 | 735 |
-| Ôn 3 ngày/tuần, nhớ 80%, tuần 22 | 536 | 498 | 509 |
-| Ôn 3 ngày/tuần, nhớ 80%, tuần 40 | 1.083 | 1.025 | 1.044 |
+| Kịch bản                         | Tổng gieo | Tồn đọng cuối | Đỉnh  |
+| -------------------------------- | --------- | ------------- | ----- |
+| Ôn hằng ngày, nhớ 90%, tuần 22   | 536       | 173           | 207   |
+| Ôn hằng ngày, nhớ 90%, tuần 40   | 1.083     | 699           | 735   |
+| Ôn 3 ngày/tuần, nhớ 80%, tuần 22 | 536       | 498           | 509   |
+| Ôn 3 ngày/tuần, nhớ 80%, tuần 40 | 1.083     | 1.025         | 1.044 |
 
 Hệ quả nặng hơn con số: khi đã có tồn đọng, mỗi phiên chỉ phục vụ mục **cũ nhất** mãi mãi — từ đang học tuần này không bao giờ được ôn.
 **Sửa:** (a) Banner hiển thị `Math.min(due, 20)`, không bao giờ hiện số nợ. (b) Đổi thứ tự lấy mục: 60% mục gieo gần nhất + 40% mục quá hạn lâu nhất. (c) Quy tắc "leech": sau 5 lần trượt liên tiếp, tạm treo mục và đưa lại vào suite của tuần tương ứng. (d) Ở P0–P1 chỉ gieo vocab, không gieo grammar + speaking (giảm từ ~23 xuống ~10 mục/tuần).
@@ -238,7 +250,7 @@ Trạng thái suite chỉ nằm trong React state (`VocabSuite.tsx:170-181`, `Li
 
 ### P2-8. Không có onboarding và không định tuyến theo bộ phận
 
-Tiêu đề đầu tiên người học mất gốc nhìn thấy là tiếng Anh — *"Choose your atelier"* — rồi 6 thẻ giống nhau mang tên bộ phận tiếng Anh. `profiles.department` tồn tại nhưng là văn bản tự do, không bao giờ ánh xạ sang mã FO/FB/HK/SW/GR/BO.
+Tiêu đề đầu tiên người học mất gốc nhìn thấy là tiếng Anh — _"Choose your atelier"_ — rồi 6 thẻ giống nhau mang tên bộ phận tiếng Anh. `profiles.department` tồn tại nhưng là văn bản tự do, không bao giờ ánh xạ sang mã FO/FB/HK/SW/GR/BO.
 **Sửa:** chuẩn hoá `profiles.department` thành mã bộ phận, tự chuyển thẳng người học vào bộ phận của mình; Việt hoá màn hình đầu; thêm hướng dẫn ngắn "bắt đầu từ đây".
 
 ### P2-9. Xếp lớp đã tồn tại nhưng chưa gắn nhãn
@@ -311,13 +323,30 @@ Nếu quản lý dùng bảng này cho quyết định nhân sự, họ đang đ
 
 ## Thứ tự thực hiện đề xuất
 
-| Đợt | Nội dung | Lý do |
-|---|---|---|
-| **1** | P0-1 → P0-5 | Chặn việc dạy sai tiếng Anh và sai phản xạ an toàn. Sửa ở tầng khung, không sửa từng câu. |
-| **2** | Gate ngữ nghĩa mới (ràng buộc loại cho từng ô + rà soát toàn bộ câu sinh tự động bằng mô hình ngôn ngữ) | QA hiện tại đã chứng minh không bắt được loại lỗi này. Phải có trước khi sinh thêm nội dung. |
-| **3** | P2-1, P2-3, P2-4, P2-5, P1-3 | Bốn thay đổi giữ chân + hạ chuẩn theo phase. Theo dự báo, nhóm này đưa tỉ lệ hoàn thành tuần 6 từ 21 lên 56 trên 100. |
-| **4** | P1-1, P1-2, P1-6, P1-8, P2-9 | Đóng khoảng cách A2 thật sự: thang nghe, phủ từ mới, luyện sản sinh, phân hoá tuần đầu, gắn nhãn xếp lớp. |
-| **5** | P1-12 (thu hồi tuần 37–38 để lấp khoảng trống nghiệp vụ), P1-4, P1-5 | Nội dung nghiệp vụ và bài thi cuối khoá. |
-| **6** | P3 | Liêm chính dữ liệu, dọn dẹp. |
+| Đợt   | Nội dung                                                                                                | Lý do                                                                                                                 |
+| ----- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **1** | P0-1 → P0-5                                                                                             | Chặn việc dạy sai tiếng Anh và sai phản xạ an toàn. Sửa ở tầng khung, không sửa từng câu.                             |
+| **2** | Gate ngữ nghĩa mới (ràng buộc loại cho từng ô + rà soát toàn bộ câu sinh tự động bằng mô hình ngôn ngữ) | QA hiện tại đã chứng minh không bắt được loại lỗi này. Phải có trước khi sinh thêm nội dung.                          |
+| **3** | P2-1, P2-3, P2-4, P2-5, P1-3                                                                            | Bốn thay đổi giữ chân + hạ chuẩn theo phase. Theo dự báo, nhóm này đưa tỉ lệ hoàn thành tuần 6 từ 21 lên 56 trên 100. |
+| **4** | P1-1, P1-2, P1-6, P1-8, P2-9                                                                            | Đóng khoảng cách A2 thật sự: thang nghe, phủ từ mới, luyện sản sinh, phân hoá tuần đầu, gắn nhãn xếp lớp.             |
+| **5** | P1-12 (thu hồi tuần 37–38 để lấp khoảng trống nghiệp vụ), P1-4, P1-5                                    | Nội dung nghiệp vụ và bài thi cuối khoá.                                                                              |
+| **6** | P3                                                                                                      | Liêm chính dữ liệu, dọn dẹp.                                                                                          |
 
 Song song từ đợt 1: **áp dụng ngay quy trình quản lý chủ động** (giám sát `org-admin` hằng tuần + đặt mục tiêu + nhắc thủ công). Không cần sửa dòng code nào và theo dự báo nó nhân đôi tỉ lệ hoàn thành ở mọi mốc.
+
+---
+
+## Đã sửa — đợt P0 (2026-08)
+
+Nguyên tắc áp dụng xuyên suốt: **sửa khung câu trong generator, không sửa từng câu output**. Chỉ khi ô điền sai loại ngữ nghĩa mà khung vốn đúng thì mới đổi từ trong lexicon — 31/3167 headword (~1%) bị thay, tổng số headword không đổi.
+
+| Mục      | Cách xử lý                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **P0-1** | Tuần 39: câu khách không còn viết cứng "smoke in the corridor", nên đáp án dùng sự cố riêng của bộ phận là đúng; `emergencies[0]` của BO đổi từ "Cash shortage" sang "Building power failure" (sự cố khách nhìn thấy được). Tuần 36: mỗi cảnh nay dùng **một** ô sự cố xuyên suốt. Ba mục "Guest fainting" và "Flight cancellation" đổi sang sự cố vận hành tại chỗ (quy tắc 8 của bank contract).                                                                                                                                                                                                                        |
+| **P0-2** | Khung sửa: `It would {c8} nicely` → `It would suit you nicely`; `{c9} depends on the weather` → `is worth considering`; `The system is {p9}` → `Your request is {p9}`; `The {w8} will not happen again` → `The mistake with the {w8}…`; `I am ready for the {w12}` → `I can confirm the {w12} myself now`; tuần 40 bốn khung tự phản ánh viết lại; `Based on your {p1}` giữ nguyên phần dạy, lời khuyên "quieter option" thành `may I suggest something that suits you better`. Lexicon sửa: `paperwork[4]` (SW/GR/BO → danh từ chỉ phí), `reports[1,3,6,7,8]` (BO/GR/HK/SW → đúng loại động từ), `choices[7,9]` (FO/HK). |
+| **P0-3** | Helper `third()` chia đúng động từ chính (tuần 11, bỏ tân ngữ thừa); helper `cmpOf()` + trường `cmp?` trên `P1Word` (tuần 10 so sánh hơn); ô `states[4]` đổi sang tính từ hơi tiêu cực ở FO/SW/GR/BO; chủ ngữ viết cứng "pipe"/"room"/"machine" ở tuần 13 thay bằng "It"; `problems` bỏ hai tính từ chỉ người; `phone[3]` của HK "Send up" → "Send it up".                                                                                                                                                                                                                                                                |
+| **P0-4** | 18 chỗ. `phase1.ts` nay dùng `lx.pron` (trước đó là spine duy nhất chưa dùng) cộng helper `roleSubj()` cho chức danh đồng nghiệp; FB hoán đổi `roles[0]/[1]` để vai trò khớp giới tính nhân vật Linh; `phase3.ts` 9 chỗ, `phase4.ts` 11 chỗ. Các dòng giải thích tiếng Việt trích lại nguyên văn được sửa đồng bộ.                                                                                                                                                                                                                                                                                                        |
+| **P0-5** | FO-24 lesson 1: đáp án đúng dùng sai ô phí (`p2` → `p1`) và phương án nhiễu vốn là câu chuẩn nghiệp vụ, nay thay bằng câu pidgin. Các trường hợp khác đã tự khỏi sau khi sửa P0-2/P0-3.                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **Gate** | `scripts/lint-content.ts`: khai báo bổ sung `P3.wrapUp`, `P4.terms/proposal/wrapUp` (trước đó **không có** entry nào — lý do khung tuần 30/40 trôi lọt); thêm 4 luật layer C — `female-persona-male-pronoun`, `third-person-s-on-phrase-tail`, `more-with-short-adjective`, `a-little-positive-adjective`. Đã kiểm chứng: bắt **11/11** câu lỗi cũ, **0** dương tính giả. `scripts/verify-content.ts`: thêm 30 canary là câu lỗi nguyên văn. `docs/phase3-bank-contract.md` và `phase4-bank-contract.md`: thêm bảng **loại ngữ nghĩa từng ô** bên cạnh từ loại — đây là chiều mà mọi lỗi P0 đều lọt qua.                  |
+
+**Lưu ý vận hành:** đổi headword làm mồ côi các dòng `review_items` cũ của 31 từ đó. `resolveReviewItem` (`src/lib/review.ts:144`) trả `null` và `review.tsx:45` lọc bỏ, nên phiên ôn tập chỉ ngắn đi chứ không lỗi — không cần migration. Tác dụng phụ: banner vẫn đếm cả mục mồ côi (đã ghi ở P2-2).

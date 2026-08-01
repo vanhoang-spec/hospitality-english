@@ -271,7 +271,7 @@ function week23(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms. Lindqvist declines the upgrade. ${lx.staff} smiles: "Of course, madam. The standard one is also excellent. We can keep the ${lo(u11)} for your next visit." She thanks him warmly.`,
+        `Ms. Lindqvist declines the upgrade. ${lx.staff} smiles: "Of course, madam. The standard one is also excellent. We can keep the ${lo(u11)} for your next visit." She thanks ${lx.pron.obj} warmly.`,
         [
           {
             q: "Nhân viên phản ứng thế nào khi khách từ chối?",
@@ -363,11 +363,16 @@ function week24(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        // Two defects, both punishing a learner who answers well. The keyed
+        // answer used p2 (FO: "Cancellation fee"), which is not what "is that
+        // included?" asks about — p1 is the service fee this lesson drills.
+        // And the third option was a genuinely professional reply, so the
+        // item marked correct English wrong.
         game(
           "Is that included, or do I pay extra?",
-          `There is a small ${lo(p2)} for that, madam.`,
+          `There is a small ${lo(p1)} for that, madam.`,
           `I am not sure if that costs extra, madam.`,
-          `That depends on which package you booked, madam.`,
+          `Extra, extra. You pay after, madam.`,
         ),
       ],
     }),
@@ -710,7 +715,7 @@ function week25(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest is waiting for news. ${lx.staff} says: "I have no answer yet, but I will ${lo(c8)} and call you. I will ${lo(c9)} before the end of my shift." The guest thanks him for the update.`,
+        `A guest is waiting for news. ${lx.staff} says: "I have no answer yet, but I will ${lo(c8)} and call you. I will ${lo(c9)} before the end of my shift." The guest thanks ${lx.pron.obj} for the update.`,
         [
           {
             q: "Nhân viên đã có câu trả lời chưa?",
@@ -894,7 +899,7 @@ function week26(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr. Silva needs help from another team. ${lx.staff} replies: "I will ask the ${lo(t4)} to help you. The ${lo(t5)} will come up shortly." Ten minutes later he adds: "I have informed the ${lo(t6)} already."`,
+        `Mr. Silva needs help from another team. ${lx.staff} replies: "I will ask the ${lo(t4)} to help you. The ${lo(t5)} will come up shortly." Ten minutes later ${lx.pron.subj} adds: "I have informed the ${lo(t6)} already."`,
         [
           {
             q: "Nhân viên hứa nhờ ai giúp khách?",
@@ -947,13 +952,13 @@ function week26(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest doubts that anything is happening. ${lx.staff} shows his log: "I passed the note to the ${lo(t9)} at nine o'clock. The ${lo(t8)} confirmed the request. I will follow up with the ${lo(t7)} now." The guest is reassured.`,
+        `A guest doubts that anything is happening. ${lx.staff} shows ${lx.pron.poss} log: "I passed the note to the ${lo(t9)} at nine o'clock. The ${lo(t8)} confirmed the request. I will follow up with the ${lo(t7)} now." The guest is reassured.`,
         [
           {
             q: "Nhân viên chứng minh bằng cách nào?",
             options: ["Cho khách xem sổ ghi việc", "Nói lớn tiếng hơn", "Hứa thêm lần nữa"],
             correct: 0,
-            explanation: "'shows his log' — ghi chép cụ thể thuyết phục hơn mọi lời hứa.",
+            explanation: "'shows my log' — ghi chép cụ thể thuyết phục hơn mọi lời hứa.",
           },
           {
             q: "'Follow up with' nghĩa là gì?",
@@ -1196,7 +1201,7 @@ function week27(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} takes out his notebook: "I will write down the ${lo(k8)} so nothing is missed. Could you tell me when the ${lo(k7)} started? May I check the ${lo(k9)} myself?" Mr. Ferreira feels taken seriously.`,
+        `${lx.staff} takes out ${lx.pron.poss} notebook: "I will write down the ${lo(k8)} so nothing is missed. Could you tell me when the ${lo(k7)} started? May I check the ${lo(k9)} myself?" Mr. Ferreira feels taken seriously.`,
         [
           {
             q: "Vì sao nhân viên ghi chép?",
@@ -1252,14 +1257,14 @@ function week27(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest raises his voice. ${lx.staff} keeps his own voice low and says: "I understand. The ${lo(k10)} is being checked right now. I will stay with you until the ${lo(k11)} is solved." The guest lowers his voice too.`,
+        `The guest raises his voice. ${lx.staff} keeps ${lx.pron.poss} own voice low and says: "I understand. The ${lo(k10)} is being checked right now. I will stay with you until the ${lo(k11)} is solved." The guest lowers his voice too.`,
         [
           {
             q: "Nhân viên phản ứng thế nào khi khách to tiếng?",
             options: ["Giữ giọng nói nhỏ nhẹ", "Nói to hơn khách", "Bỏ đi"],
             correct: 0,
             explanation:
-              "'keeps his own voice low' — giọng của bạn quyết định nhiệt độ của cuộc trò chuyện.",
+              "'keeps my own voice low' — giọng của bạn quyết định nhiệt độ của cuộc trò chuyện.",
           },
           {
             q: "Cam kết nào được đưa ra?",
@@ -1382,7 +1387,7 @@ function week28(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} lays out the choices: "We can ${lo(s4)}. If you prefer, we will ${lo(s5)} instead. I can ${lo(s6)} at no extra cost." Mr. Novak picks the second option and thanks him.`,
+        `${lx.staff} lays out the choices: "We can ${lo(s4)}. If you prefer, we will ${lo(s5)} instead. I can ${lo(s6)} at no extra cost." Mr. Novak picks the second option and thanks ${lx.pron.obj}.`,
         [
           {
             q: "Nhân viên đưa ra bao nhiêu phương án?",
@@ -1926,7 +1931,12 @@ function week30(lx: Ctx): LessonContent[] {
     lesson(lx, 30, 3, "Apologise and Solve", "Ôn: xin lỗi và giải quyết", {
       vocabulary: [
         bw(w7, `I am sorry about the ${lo(w7)}.`),
-        bw(w8, `The ${lo(w8)} will not happen again.`),
+        // The wrapUp bank holds DETAILS to confirm ("Room preference",
+        // "Turndown time", "Delivery address"), so "The {w} will not happen
+        // again." promised that a room preference would stop occurring —
+        // wrong in all six departments. What recurs is the MISTAKE with the
+        // detail, which is also the more useful thing to be able to say.
+        bw(w8, `The mistake with the ${lo(w8)} will not happen again.`),
         bw(w9, `We keep the ${lo(w9)} for every guest.`),
       ],
       grammar: [
@@ -1937,7 +1947,7 @@ function week30(lx: Ctx): LessonContent[] {
         ),
         g(
           `Never again this.`,
-          `The ${lo(w8)} will not happen again, madam.`,
+          `The mistake with the ${lo(w8)} will not happen again, madam.`,
           "Cam kết không tái diễn phải nói rõ ràng, nhưng chỉ hứa khi thật sự làm được.",
         ),
       ],
@@ -1949,7 +1959,7 @@ function week30(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The same problem returns. ${lx.staff} does not repeat old excuses: "I am very sorry, and if you like, I can ${lo(s1)}. The ${lo(w8)} will not happen again." ${cap(lx.pron.subj)} then writes it in the log so the next shift knows.`,
+        `The same problem returns. ${lx.staff} does not repeat old excuses: "I am very sorry, and if you like, I can ${lo(s1)}. The mistake with the ${lo(w8)} will not happen again." ${cap(lx.pron.subj)} then writes it in the log so the next shift knows.`,
         [
           {
             q: "Nhân viên làm gì sau khi hứa với khách?",
@@ -1980,7 +1990,11 @@ function week30(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(w10, `I checked the ${lo(w10)} before the end of my shift.`),
         bw(w11, `The ${lo(w11)} is complete for today.`),
-        bw(w12, `I am ready for the ${lo(w12)}.`),
+        // Same bank, same trap as lesson 3: "I am ready for the flight
+        // time." / "…the final invoice total." The self-review the lesson
+        // is after is about handling the detail unaided, which is what the
+        // learner can now genuinely claim.
+        bw(w12, `I can confirm the ${lo(w12)} myself now.`),
       ],
       grammar: [
         g(
@@ -1990,25 +2004,25 @@ function week30(lx: Ctx): LessonContent[] {
         ),
         g(
           `I can do now these things.`,
-          `I am ready for the ${lo(w12)}, and I feel confident.`,
+          `I can confirm the ${lo(w12)} myself now, and I feel confident.`,
           "Tự đánh giá bằng câu hai mệnh đề — chốt lại toàn bộ giai đoạn.",
         ),
       ],
       speaking: [
         sp(
           "Do you feel ready for busier shifts now?",
-          `Yes. I checked the ${lo(w10)} today, and I am ready for the ${lo(w12)}.`,
+          `Yes. I checked the ${lo(w10)}, and I can confirm the ${lo(w12)} myself now.`,
           "Câu cuối của giai đoạn ba: nói về năng lực của chính mình bằng hai mệnh đề.",
         ),
       ],
       reading: read(
-        `At the end of the phase ${lx.staff} reviews ${lx.pron.poss} own week: "I checked the ${lo(w10)} before the end of my shift. The ${lo(w11)} is complete for today. I am ready for the ${lo(w12)}." ${cap(lx.pron.poss)} supervisor agrees.`,
+        `At the end of the phase ${lx.staff} reviews ${lx.pron.poss} own week: "I checked the ${lo(w10)} before the end of my shift. The ${lo(w11)} is complete for today. I can confirm the ${lo(w12)} myself now." ${cap(lx.pron.poss)} supervisor agrees.`,
         [
           {
             q: "Nhân viên tự đánh giá thế nào?",
             options: ["Đã sẵn sàng cho phần việc khó hơn", "Chưa làm được gì", "Muốn đổi bộ phận"],
             correct: 0,
-            explanation: `"I am ready for the ${lo(w12)}" — tự tin dựa trên việc đã hoàn thành, không phải cảm tính.`,
+            explanation: `"I can confirm the ${lo(w12)} myself now" — tự tin dựa trên việc đã hoàn thành, không phải cảm tính.`,
           },
           {
             q: "Giai đoạn ba đã dạy những gì?",

@@ -83,6 +83,34 @@ const wa = (w: P1Word) => {
   return art === "" ? bare : `${art} ${bare}`;
 };
 
+/** Sentence-initial form of a pronoun from lx.pron. Same helper as
+ *  phase3.ts/phase4.ts — Phase 1 was the last spine still narrating its own
+ *  department persona with a hardcoded pronoun. */
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** Subject pronoun for a ROLE headword, used where week 7 introduces a
+ *  colleague rather than the persona. Unmarked roles read as "she": half the
+ *  personas are women and every other narrating pronoun in the course now
+ *  comes from lx.pron, so defaulting the other way would put the men back. */
+const roleSubj = (w: P1Word) => (w.gender === "m" ? "He" : "She");
+
+/** Third-person singular of a bank verb PHRASE. The -s belongs on the head
+ *  verb, not on the end of the phrase: "Check in" → "checks in", "Make the
+ *  bed" → "makes the bed". Naive concatenation shipped "He check ins…",
+ *  "He make the beds…" and "He send an emails…" as the CORRECT model
+ *  sentence in week 11, across all six departments. */
+const third = (w: P1Word) => {
+  const [head, ...rest] = lower(w).split(" ");
+  const s = /(s|sh|ch|x|z|o)$/.test(head) ? "es" : /[^aeiou]y$/.test(head) ? "ies" : "s";
+  const stem = s === "ies" ? head.slice(0, -1) : head;
+  return [stem + s, ...rest].join(" ");
+};
+
+/** Comparative form of a bank adjective: "-er" for the short ones, "more …"
+ *  for the rest. The week-10 frame hardcoded "more", which is correct for
+ *  "important" and wrong for "empty", "bright", "sour" and "tired". */
+const cmpOf = (w: P1Word) => w.cmp ?? `more ${lower(w)}`;
+
 // ============================================================
 // WEEK 7 — People & Jobs in the Hotel
 // FRAMES · "This is {name}. He/She is our {role}."
@@ -93,15 +121,15 @@ function week7(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 7, 1, "Introducing a Colleague", "Giới thiệu đồng nghiệp", {
       vocabulary: [
-        v("Colleague", "/ˈkɒliːɡ/", "Đồng nghiệp", "This is my colleague, Mai.", "🤝"),
+        v("Colleague", "/ˈkɒliːɡ/", "Đồng nghiệp", "This is my colleague, Hoa.", "🤝"),
         v("Manager", "/ˈmænɪdʒə/", "Quản lý", "She is our manager.", "👔"),
-        bw(r1, `This is ${lx.staff}. She is our ${lower(r1)}.`),
-        bw(r2, `He is our ${lower(r2)}.`),
+        bw(r1, `This is ${lx.staff}. ${cap(lx.pron.subj)} is our ${lower(r1)}.`),
+        bw(r2, `${roleSubj(r2)} is our ${lower(r2)}.`),
       ],
       grammar: [
         g(
           "This my colleague.",
-          "This is my colleague, Mai.",
+          "This is my colleague, Hoa.",
           "Tiếng Anh cần động từ 'is': THIS IS my colleague. Tiếng Việt bỏ được 'là', tiếng Anh thì không.",
         ),
         g(
@@ -118,13 +146,13 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. He is our ${lower(r2)}."`,
+        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. ${roleSubj(r2)} is our ${lower(r2)}."`,
         [
           {
             q: "Người thứ hai làm chức danh gì?",
             options: [r2.definition, r1.definition, "Khách"],
             correct: 0,
-            explanation: `${lx.staff} nói "He is our ${lower(r2)}" — tức ${r2.definition}.`,
+            explanation: `${lx.staff} nói "${roleSubj(r2)} is our ${lower(r2)}" — tức ${r2.definition}.`,
           },
           {
             q: "Câu 'This is my colleague' thiếu gì nếu bỏ 'is'?",
@@ -848,7 +876,13 @@ function week10(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 10, 3, "Comparing Two Things", "So sánh hai thứ", {
-      vocabulary: [bw(s6, `This one is more ${lower(s6)}.`), bw(s7, `This one is ${lower(s7)}.`)],
+      // "more" was hardcoded here, so a one-syllable bank word shipped as
+      // "This one is more empty." (FO) and "more bright." (HK). cmpOf() reads
+      // the form the lexicon declares and falls back to "more …".
+      vocabulary: [
+        bw(s6, `This one is ${lower(s6)}. That one is ${cmpOf(s6)}.`),
+        bw(s7, `This one is ${lower(s7)}.`),
+      ],
       grammar: [
         g(
           `This good, that no good.`,
@@ -869,7 +903,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest compares two things. ${lx.staff} says: "This one is better, madam. It is more ${lower(s6)}." The guest chooses it.`,
+        `A guest compares two things. ${lx.staff} says: "This one is better, madam. It is ${cmpOf(s6)}." The guest chooses it.`,
         [
           {
             q: "Nhân viên khuyên chọn cái nào?",
@@ -975,9 +1009,17 @@ function week11(lx: Ctx): LessonContent[] {
           "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … EVERY DAY.",
         ),
         g(
+          // Same trap as the pair above, twice over: the -s was concatenated
+          // onto the END of a verb phrase and the frame added an object the
+          // phrase already carries, so "Check in" / "Make the bed" / "Send an
+          // email" came out as "He check ins the room every day.", "He make
+          // the beds the room every day.", "He send an emails the room every
+          // day." — all six departments, in the sentence marked correct.
+          // third() puts the -s on the head verb; the object stays in the
+          // bank word where it belongs.
           `He ${lower(t1)} every day.`,
-          `He ${lower(t1)}s the room every day.`,
-          "Ngôi thứ ba số ít thêm -s vào động từ ở thì hiện tại đơn.",
+          `He ${third(t1)} every day.`,
+          "Ngôi thứ ba số ít thêm -s vào ĐỘNG TỪ CHÍNH: he checks in, he makes the bed.",
         ),
       ],
       speaking: [
@@ -1450,8 +1492,14 @@ function week13(lx: Ctx): LessonContent[] {
 
     lesson(lx, 13, 2, "Saying Sorry Properly", "Xin lỗi đúng cách", {
       vocabulary: [
-        bw(b3, `The pipe is ${lower(b3)}.`),
-        bw(b4, `The room is a little ${lower(b4)}.`),
+        // Lesson 1 parameterises its subject from lx.items; these two were
+        // written against the Housekeeping bank and hardcoded, so F&B taught
+        // "The pipe is overcooked." and "The room is a little undercooked."
+        // "It" is the subject the whole problems bank actually shares —
+        // and "It is broken / It is a little smelly" is the A1 target
+        // language anyway.
+        bw(b3, `It is ${lower(b3)}, sir.`),
+        bw(b4, `It is a little ${lower(b4)}.`),
       ],
       grammar: [
         g(
@@ -1502,7 +1550,10 @@ function week13(lx: Ctx): LessonContent[] {
     lesson(lx, 13, 3, "I Will Check", "Hứa kiểm tra và quay lại", {
       vocabulary: [
         v("Check", "/tʃek/", "Kiểm tra", "I will check now.", "🔍"),
-        bw(b5, `The machine is ${lower(b5)}.`),
+        // Hardcoded "machine" for the same reason as lesson 2 above — it
+        // produced "The machine is unhappy." for F&B and "The machine is
+        // melted." for Guest Relations.
+        bw(b5, `It is ${lower(b5)} now.`),
         bw(b6, `It is ${lower(b6)} today.`),
       ],
       grammar: [

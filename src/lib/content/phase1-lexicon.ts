@@ -35,6 +35,20 @@ export type P1Word = {
    *  where the article system is first drilled into a reflex. Same mechanism
    *  and same reason as `art` in phase2-lexicon.ts. */
   art?: string;
+  /** Comparative form, for the ONE frame that compares two things
+   *  ("This one is {cmp}."). English picks -er or "more" by syllable count,
+   *  and the week-10 frame hardcoded "more", so a one-syllable bank word
+   *  shipped as "This one is more empty." / "more bright." across four
+   *  departments. There is no syllable table anywhere in the repo and a
+   *  reliable one is not worth writing for six words, so the form is
+   *  declared here — same shape, same reason as `art` above. */
+  cmp?: string;
+  /** Grammatical gender, for role headwords that carry it in English.
+   *  Week 7 introduces a colleague as "He is our {role}", which produced
+   *  "He is our waitress." for F&B. Only the roles bank needs this, and
+   *  only where the English word is itself marked; an unmarked role reads
+   *  as "she" so the course does not narrate every colleague as a man. */
+  gender?: "m" | "f";
 };
 
 export type P1Bank = {
@@ -68,7 +82,13 @@ const FO_BANK: P1Bank = {
       definition: "Nhân viên lễ tân",
       icon: "🧑‍💼",
     },
-    { word: "Bellman", phonetic: "/ˈbelmæn/", definition: "Nhân viên hành lý", icon: "🛎️" },
+    {
+      word: "Bellman",
+      phonetic: "/ˈbelmæn/",
+      definition: "Nhân viên hành lý",
+      icon: "🛎️",
+      gender: "m",
+    },
     {
       word: "Concierge",
       phonetic: "/ˌkɒnsiˈeəʒ/",
@@ -132,8 +152,11 @@ const FO_BANK: P1Bank = {
     { word: "Full", phonetic: "/fʊl/", definition: "Kín phòng, đầy", icon: "🈵" },
     { word: "Quiet", phonetic: "/ˈkwaɪət/", definition: "Yên tĩnh", icon: "🤫" },
     { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
-    { word: "Safe", phonetic: "/seɪf/", definition: "An toàn", icon: "🛡️" },
-    { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜" },
+    // Slot 4 sits in "It is a little {w}." — a frame that softens a mild
+    // COMPLAINT, so a positive word inverts it. "Safe" gave "It is a little
+    // safe.", which is not a thing anyone says.
+    { word: "Crowded", phonetic: "/ˈkraʊdɪd/", definition: "Đông người", icon: "👥" },
+    { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜", cmp: "emptier" },
     { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
     // Slot 8 feeds "Careful, the floor is ___" — a floor cannot be
     // "crowded"; a marble lobby floor after rain genuinely is slippery.
@@ -200,8 +223,24 @@ const FO_BANK: P1Bank = {
 // ------------------------------------------------------------
 const FB_BANK: P1Bank = {
   roles: [
-    { word: "Waiter", phonetic: "/ˈweɪtə/", definition: "Nhân viên phục vụ (nam)", icon: "🧑‍🍳" },
-    { word: "Waitress", phonetic: "/ˈweɪtrəs/", definition: "Nhân viên phục vụ (nữ)", icon: "👩‍🍳" },
+    // Slot 0 is the persona's OWN role and slot 1 the colleague's, so the
+    // female-marked word has to come first here: F&B's persona is Linh.
+    // Ordered the other way, week 7 introduced her as "our waiter" and the
+    // colleague as "He is our waitress."
+    {
+      word: "Waitress",
+      phonetic: "/ˈweɪtrəs/",
+      definition: "Nhân viên phục vụ (nữ)",
+      icon: "👩‍🍳",
+      gender: "f",
+    },
+    {
+      word: "Waiter",
+      phonetic: "/ˈweɪtə/",
+      definition: "Nhân viên phục vụ (nam)",
+      icon: "🧑‍🍳",
+      gender: "m",
+    },
     { word: "Chef", phonetic: "/ʃef/", definition: "Bếp trưởng", icon: "👨‍🍳" },
     {
       word: "Barista",
@@ -301,7 +340,9 @@ const FB_BANK: P1Bank = {
     { word: "Dirty", phonetic: "/ˈdɜːti/", definition: "Bẩn", icon: "🧻" },
     { word: "Overcooked", phonetic: "/ˌəʊvəˈkʊkt/", definition: "Nấu quá chín", icon: "🍖" },
     { word: "Undercooked", phonetic: "/ˌʌndəˈkʊkt/", definition: "Chưa chín tới", icon: "🥩" },
-    { word: "Unhappy", phonetic: "/ʌnˈhæpi/", definition: "Không hài lòng", icon: "😟" },
+    // Every problems frame describes a THING ("It is {w}."), so a
+    // person-adjective here shipped as "The machine is unhappy."
+    { word: "Burnt", phonetic: "/bɜːnt/", definition: "Bị cháy khét", icon: "🔥" },
     { word: "Slow", phonetic: "/sləʊ/", definition: "Chậm", icon: "🐢" },
     { word: "Cracked", phonetic: "/krækt/", definition: "Bị nứt, mẻ", icon: "💔" },
     { word: "Sold out", phonetic: "/səʊld aʊt/", definition: "Đã hết món", icon: "🚷" },
@@ -390,7 +431,7 @@ const HK_BANK: P1Bank = {
     { word: "Wet", phonetic: "/wet/", definition: "Ướt", icon: "💧" },
     { word: "Dry", phonetic: "/draɪ/", definition: "Khô", icon: "☀️" },
     { word: "Dusty", phonetic: "/ˈdʌsti/", definition: "Bụi bặm", icon: "🌫️" },
-    { word: "Bright", phonetic: "/braɪt/", definition: "Sáng sủa", icon: "🍃" },
+    { word: "Bright", phonetic: "/braɪt/", definition: "Sáng sủa", icon: "🍃", cmp: "brighter" },
     { word: "Soft", phonetic: "/sɒft/", definition: "Mềm", icon: "☁️" },
     // "Heavy" doesn't fit the week-10 "Careful, the floor is ___" warning
     // frame (a floor cannot itself be heavy) — "Uneven" is the real
@@ -439,7 +480,9 @@ const HK_BANK: P1Bank = {
       definition: "Trong năm phút nữa",
       icon: "🕔",
     },
-    { word: "Send up", phonetic: "/send ʌp/", definition: "Gửi lên phòng", icon: "⬆️" },
+    // "Send up" is separable and needs its object: the week-12 frame is
+    // "Let me {w} for you.", which turned it into "Let me send up for you."
+    { word: "Send it up", phonetic: "/send ɪt ʌp/", definition: "Gửi lên phòng", icon: "⬆️" },
     { word: "Fresh linen", phonetic: "/freʃ ˈlɪnɪn/", definition: "Đồ vải sạch", icon: "🛏️" },
     { word: "Note down", phonetic: "/nəʊt daʊn/", definition: "Ghi lại", icon: "📝" },
     { word: "Report", phonetic: "/rɪˈpɔːt/", definition: "Báo cáo", icon: "📢" },
@@ -562,8 +605,12 @@ const SW_BANK: P1Bank = {
     // massage pressure, not the space). "Stuffy" is the real spa
     // complaint word for a warm treatment/sauna room.
     { word: "Stuffy", phonetic: "/ˈstʌfi/", definition: "Ngột ngạt, bí hơi", icon: "😖" },
-    { word: "Calm", phonetic: "/kɑːm/", definition: "Yên bình", icon: "🧘" },
-    { word: "Tired", phonetic: "/ˈtaɪəd/", definition: "Mệt", icon: "😴" },
+    // Slot 4 = a mild complaint ("It is a little {w}."), slot 5 = a thing
+    // being compared ("This one is {cmp}."). "Calm" made the complaint frame
+    // praise the room, and "Tired" made the comparison describe a towel as
+    // tired. Cool/Warm is the temperature pair a spa actually argues about.
+    { word: "Cool", phonetic: "/kuːl/", definition: "Hơi lạnh", icon: "🌬️" },
+    { word: "Warm", phonetic: "/wɔːm/", definition: "Ấm", icon: "🔆", cmp: "warmer" },
     { word: "Deep", phonetic: "/diːp/", definition: "Sâu", icon: "🌊" },
     { word: "Slippery", phonetic: "/ˈslɪpəri/", definition: "Trơn trượt", icon: "⚠️" },
   ],
@@ -718,7 +765,9 @@ const GR_BANK: P1Bank = {
     // emotion can't describe "it"); "Formal" is a real GR ambiance word
     // that still fits the same slot.
     { word: "Formal", phonetic: "/ˈfɔːml/", definition: "Trang trọng", icon: "🎩" },
-    { word: "Upset", phonetic: "/ʌpˈset/", definition: "Buồn bực", icon: "😞" },
+    // "Upset" describes a person, and slot 4's frame is "It is a little {w}."
+    // about a thing — "It is a little upset." belonged to no one.
+    { word: "Plain", phonetic: "/pleɪn/", definition: "Đơn điệu, không nổi bật", icon: "▫️" },
     { word: "Important", phonetic: "/ɪmˈpɔːtnt/", definition: "Quan trọng", icon: "❗" },
     { word: "Lovely", phonetic: "/ˈlʌvli/", definition: "Đáng yêu, dễ chịu", icon: "💐" },
     { word: "Dark", phonetic: "/dɑːk/", definition: "Tối", icon: "⚠️" },
@@ -757,7 +806,9 @@ const GR_BANK: P1Bank = {
     { word: "Forgotten", phonetic: "/fəˈɡɒtn/", definition: "Bị quên", icon: "🤦" },
     { word: "Misspelled", phonetic: "/ˌmɪsˈspeld/", definition: "Bị viết sai tên", icon: "✏️" },
     { word: "Not ready", phonetic: "/nɒt ˈredi/", definition: "Chưa sẵn sàng", icon: "⏳" },
-    { word: "Disappointed", phonetic: "/ˌdɪsəˈpɔɪntɪd/", definition: "Thất vọng", icon: "😔" },
+    // Same reason as F&B's "Unhappy": the frame is "It is a little {w}."
+    // about a thing, and "Disappointed" describes a person.
+    { word: "Wilted", phonetic: "/ˈwɪltɪd/", definition: "Bị héo (hoa)", icon: "🥀" },
     { word: "Melted", phonetic: "/ˈmeltɪd/", definition: "Bị chảy (bánh, kem)", icon: "🫠" },
     { word: "Mistimed", phonetic: "/ˌmɪsˈtaɪmd/", definition: "Sai thời điểm", icon: "📅" },
     { word: "Rainy", phonetic: "/ˈreɪni/", definition: "Có mưa", icon: "🌧️" },
@@ -788,8 +839,11 @@ const BO_BANK: P1Bank = {
   roles: [
     { word: "Accountant", phonetic: "/əˈkaʊntənt/", definition: "Kế toán", icon: "🧮" },
     {
-      word: "Sales staff",
-      phonetic: "/seɪlz stɑːf/",
+      // "Staff" is collective, so the week-7 frame "{Pronoun} is our {role}."
+      // made it "She is our sales staff." A countable job title is what the
+      // frame needs.
+      word: "Sales executive",
+      phonetic: "/seɪlz ɪɡˈzekjʊtɪv/",
       definition: "Nhân viên kinh doanh",
       icon: "📈",
     },
@@ -866,7 +920,9 @@ const BO_BANK: P1Bank = {
     // warning (spilled coffee in the pantry).
     { word: "Cloudy", phonetic: "/ˈklaʊdi/", definition: "Nhiều mây", icon: "☁️" },
     { word: "Complicated", phonetic: "/ˈkɒmplɪkeɪtɪd/", definition: "Phức tạp", icon: "🧩" },
-    { word: "Cheap", phonetic: "/tʃiːp/", definition: "Rẻ", icon: "🪙" },
+    // "It is a little cheap." reads as an insult to the product, not a mild
+    // reservation. Back office softens objections about DOCUMENTS.
+    { word: "Unclear", phonetic: "/ʌnˈklɪə/", definition: "Chưa rõ ràng", icon: "❓" },
     { word: "Expensive", phonetic: "/ɪkˈspensɪv/", definition: "Đắt", icon: "💎" },
     { word: "Confidential", phonetic: "/ˌkɒnfɪˈdenʃl/", definition: "Bảo mật", icon: "🔐" },
     { word: "Sticky", phonetic: "/ˈstɪki/", definition: "Dính", icon: "⚠️" },

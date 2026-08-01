@@ -4,6 +4,13 @@ Each department bank has 8 slots × 12 words. The spine builds sentences by
 dropping bank words into fixed frames, so **each slot has a required part of
 speech**. A word that does not fit its frame produces ungrammatical output.
 
+Part of speech is necessary but **not sufficient**. Every defect the 2026-08
+academic review found passed the part-of-speech check: "Duration" is a
+perfectly good noun and a nonsense surcharge, "Received" is a perfectly good
+past verb and cannot stand without an object. So each slot also declares the
+**semantic class** its frames assume. When you author a replacement word,
+both columns have to hold.
+
 | Slot          | Week | Part of speech required                    | Frames it must fit                                                                  |
 | ------------- | ---- | ------------------------------------------ | ----------------------------------------------------------------------------------- |
 | `upgrades`    | 23   | **noun phrase** (usable after "the")       | `I recommend the {w}.` · `The {w} is quieter than the standard one.`                |
@@ -13,7 +20,20 @@ speech**. A word that does not fit its frame produces ungrammatical output.
 | `complaints`  | 27   | **noun phrase** naming a problem           | `I am very sorry about the {w}.` · `I understand your concern about the {w}.`       |
 | `solutions`   | 28   | **bare verb phrase** (after "I can")       | `If you like, I can {w}.` · `If you prefer, we will {w} instead.`                   |
 | `handover`    | 29   | **noun phrase** naming a shift-report item | `I updated the {w} this morning.` · `The {w} is ready for the next shift.`          |
-| `wrapUp`      | 30   | **noun phrase**, mixed review              | `Let me confirm the {w}.`                                                           |
+| `wrapUp`      | 30   | **noun phrase**, mixed review              | `Let me confirm the {w}.` · `I can confirm the {w} myself now.`                     |
+
+### Semantic class per slot
+
+| Slot          | Must denote                              | Fails as                                                                      |
+| ------------- | ---------------------------------------- | ----------------------------------------------------------------------------- |
+| `upgrades`    | something a guest can be offered         | an abstraction with no price                                                  |
+| `policies`    | **a charge or a rule**                   | a duration, an ID number, a payment term — "A ten percent duration is added." |
+| `commitments` | an action the speaker performs           | an action requiring someone else                                              |
+| `partners`    | a team or role, animate                  | a document                                                                    |
+| `complaints`  | a problem the hotel caused               | a solution — "Recovery plan" inverts the apology                              |
+| `solutions`   | a remedy the speaker may grant           | a task unrelated to the complaint                                             |
+| `handover`    | an item recorded on a shift report       | a person                                                                      |
+| `wrapUp`      | **a detail a guest asks you to confirm** | an incident, a career step — "I am ready for the flight time."                |
 
 ## Hard rules
 

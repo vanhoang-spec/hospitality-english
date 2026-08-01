@@ -555,10 +555,14 @@ const FO_BANK: P4Bank = {
       icon: "📦",
     },
     {
-      word: "Guest fainting",
-      phonetic: "/ɡest ˈfeɪntɪŋ/",
-      definition: "Khách bị ngất xỉu",
-      icon: "😵",
+      // Slot 13 fills "I have written a full report on the {w}." — the
+      // week-36 frames name an OPERATIONAL incident (bank contract rule 8),
+      // and a gerund read badly behind "the": "…a full report on the guest
+      // fainting."
+      word: "Lift entrapment",
+      phonetic: "/lɪft ɪnˈtræpmənt/",
+      definition: "Khách bị kẹt trong thang máy",
+      icon: "🛗",
     },
   ],
   terms: [
@@ -1303,10 +1307,10 @@ const FB_BANK: P4Bank = {
     { word: "Knife cut", phonetic: "/naɪf kʌt/", definition: "Vết đứt tay do dao", icon: "🔪" },
     { word: "Oil burn", phonetic: "/ɔɪl bɜːn/", definition: "Vết bỏng do dầu ăn", icon: "🩹" },
     {
-      word: "Guest fainting",
-      phonetic: "/ɡest ˈfeɪntɪŋ/",
-      definition: "Việc khách bị ngất",
-      icon: "😵",
+      word: "Kitchen power cut",
+      phonetic: "/ˈkɪtʃɪn ˈpaʊə kʌt/",
+      definition: "Mất điện khu bếp",
+      icon: "🔌",
     },
   ],
   terms: [
@@ -2076,10 +2080,10 @@ const HK_BANK: P4Bank = {
       icon: "🐞",
     },
     {
-      word: "Guest fainting",
-      phonetic: "/ɡest ˈfeɪntɪŋ/",
-      definition: "Trường hợp khách bị ngất",
-      icon: "🚑",
+      word: "Ceiling leak",
+      phonetic: "/ˈsiːlɪŋ liːk/",
+      definition: "Rò rỉ nước từ trần",
+      icon: "💧",
     },
   ],
   terms: [
@@ -3630,10 +3634,10 @@ const GR_BANK: P4Bank = {
       icon: "👜",
     },
     {
-      word: "Flight cancellation",
-      phonetic: "/flaɪt ˌkænsəˈleɪʃn/",
-      definition: "Chuyến bay của khách bị hủy",
-      icon: "✈️",
+      word: "Lost passport report",
+      phonetic: "/lɒst ˈpɑːspɔːt rɪˈpɔːt/",
+      definition: "Trình báo mất hộ chiếu",
+      icon: "🛂",
     },
     {
       word: "Family emergency call",
@@ -4336,10 +4340,14 @@ const BO_BANK: P4Bank = {
   emergencies: [
     // Slot order is semantic — see the note on the FO bank above.
     {
-      word: "Cash shortage",
-      phonetic: "/kæʃ ˈʃɔːtɪdʒ/",
-      definition: "Thiếu hụt tiền mặt",
-      icon: "🪙",
+      // Slot 0 is the incident a guest can SEE, reported in week 36 and again
+      // in the week-39 pressure drill ("There is a {w} at the property.
+      // Please stay calm and follow me."). A cash shortage is a back-office
+      // problem no guest ever panics about, so the drill made no sense here.
+      word: "Building power failure",
+      phonetic: "/ˈbɪldɪŋ ˈpaʊə ˈfeɪljə/",
+      definition: "Sự cố mất điện toàn toà nhà",
+      icon: "🔌",
     },
     {
       word: "Payment gateway failure",

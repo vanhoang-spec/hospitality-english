@@ -272,7 +272,10 @@ const FO_BANK: P2Bank = {
     { word: "Either one", phonetic: "/ˈaɪðə wʌn/", definition: "Cái nào cũng được", icon: "🤷" },
     { word: "Best option", phonetic: "/best ˈɒpʃn/", definition: "Phương án tốt nhất", icon: "👍" },
     { word: "Ground floor", phonetic: "/ɡraʊnd flɔː/", definition: "Tầng trệt", icon: "🔇" },
-    { word: "Option", phonetic: "/ˈɒpʃn/", definition: "Lựa chọn", icon: "🔀" },
+    // Slot 9 is what the staff member actually recommends ("I would suggest
+    // the {w}, because it is popular."), so a word meaning "a choice" made
+    // the recommendation circular: "I would suggest the option."
+    { word: "High floor", phonetic: "/haɪ flɔː/", definition: "Tầng cao", icon: "🏙️" },
   ],
   reports: [
     { word: "Confirmed", phonetic: "/kənˈfɜːmd/", definition: "Đã xác nhận", icon: "✅" },
@@ -803,7 +806,15 @@ const HK_BANK: P2Bank = {
       definition: "Sở thích của khách",
       icon: "❓",
     },
-    { word: "Environment", phonetic: "/ɪnˈvaɪrənmənt/", definition: "Môi trường", icon: "🌍" },
+    // Slot 7 is "The {w} is a good match." — a recommendable option, the way
+    // the other five departments hold "Best option" / "Sharing plate" /
+    // "Popular choice". "Environment" is a topic, not something to recommend.
+    {
+      word: "Eco option",
+      phonetic: "/ˈiːkəʊ ˈɒpʃn/",
+      definition: "Lựa chọn thân thiện môi trường",
+      icon: "🌍",
+    },
     {
       word: "Water saving",
       phonetic: "/ˈwɔːtə ˈseɪvɪŋ/",
@@ -811,17 +822,20 @@ const HK_BANK: P2Bank = {
       icon: "💧",
     },
     {
-      word: "Guest decision",
-      phonetic: "/ɡest dɪˈsɪʒn/",
-      definition: "Quyết định của khách",
-      icon: "🤲",
+      // Slot 9 fills "I would suggest the {w}, because it is popular." and
+      // "Most guests choose the {w}." — it has to BE a choice, not the act of
+      // choosing: "I would suggest the guest decision" recommended nothing.
+      word: "Morning cleaning",
+      phonetic: "/ˈmɔːnɪŋ ˈkliːnɪŋ/",
+      definition: "Dọn phòng buổi sáng",
+      icon: "🌅",
     },
   ],
   reports: [
     { word: "Cleaned", phonetic: "/kliːnd/", definition: "Đã dọn", icon: "✨" },
     { word: "Finished", phonetic: "/ˈfɪnɪʃt/", definition: "Đã hoàn thành", icon: "🏁" },
     { word: "Found", phonetic: "/faʊnd/", definition: "Đã tìm thấy", icon: "🔍" },
-    { word: "Reported", phonetic: "/rɪˈpɔːtɪd/", definition: "Đã báo cáo", icon: "📢" },
+    { word: "Updated", phonetic: "/ʌpˈdeɪtɪd/", definition: "Đã cập nhật cho", icon: "🔄" },
     { word: "This morning", phonetic: "/ðɪs ˈmɔːnɪŋ/", definition: "Sáng nay", icon: "🌅" },
     { word: "Rooms done", phonetic: "/ruːmz dʌn/", definition: "Số phòng đã xong", icon: "🔢" },
     {
@@ -995,7 +1009,16 @@ const SW_BANK: P2Bank = {
       definition: "Tên kỹ thuật viên",
       icon: "🧑",
     },
-    { word: "Duration", phonetic: "/djuˈreɪʃn/", definition: "Thời lượng", icon: "⏳" },
+    // Slot 4 fills "A ten percent {w} is added." — it must name a CHARGE.
+    // The old fillers made the surcharge lesson teach "A ten percent duration
+    // is added." / "…membership number…" / "…thirty days…", and the Vietnamese
+    // answer key inherited the wrong noun straight from `definition`.
+    {
+      word: "Treatment fee",
+      phonetic: "/ˈtriːtmənt fiː/",
+      definition: "Phí liệu trình",
+      icon: "💆",
+    },
     { word: "Total price", phonetic: "/ˈtəʊtl praɪs/", definition: "Tổng giá", icon: "💰" },
     { word: "Room charge", phonetic: "/ruːm tʃɑːdʒ/", definition: "Tính vào phòng", icon: "🏨" },
     {
@@ -1080,15 +1103,15 @@ const SW_BANK: P2Bank = {
     { word: "Completed", phonetic: "/kəmˈpliːtɪd/", definition: "Đã hoàn thành", icon: "✅" },
     { word: "Booked", phonetic: "/bʊkt/", definition: "Đã đặt lịch", icon: "📔" },
     { word: "Cancelled", phonetic: "/ˈkænsld/", definition: "Đã hủy", icon: "🚫" },
-    { word: "Rescheduled", phonetic: "/ˌriːˈʃedjuːld/", definition: "Đã dời lịch", icon: "🔄" },
+    { word: "Notified", phonetic: "/ˈnəʊtɪfaɪd/", definition: "Đã báo cho", icon: "📢" },
     { word: "Last week", phonetic: "/lɑːst wiːk/", definition: "Tuần trước", icon: "📅" },
     { word: "Treatments", phonetic: "/ˈtriːtmənts/", definition: "Các liệu trình", icon: "🔢" },
     { word: "Felt better", phonetic: "/felt ˈbetə/", definition: "Cảm thấy khá hơn", icon: "😌" },
     {
-      word: "Cleaned the pool",
-      phonetic: "/kliːnd ðə puːl/",
-      definition: "Đã vệ sinh hồ",
-      icon: "🏊",
+      word: "Checked",
+      phonetic: "/tʃekt/",
+      definition: "Đã kiểm tra",
+      icon: "🔍",
     },
     { word: "Peaceful", phonetic: "/ˈpiːsfl/", definition: "Yên ả", icon: "💧" },
     { word: "Listed", phonetic: "/ˈlɪstɪd/", definition: "Đã liệt kê", icon: "👍" },
@@ -1315,11 +1338,15 @@ const GR_BANK: P2Bank = {
       definition: "Quyền lợi hội viên",
       icon: "🎁",
     },
+    // Slot 4 fills "A ten percent {w} is added." — it must name a CHARGE.
+    // The old fillers made the surcharge lesson teach "A ten percent duration
+    // is added." / "…membership number…" / "…thirty days…", and the Vietnamese
+    // answer key inherited the wrong noun straight from `definition`.
     {
-      word: "Membership number",
-      phonetic: "/ˈmembəʃɪp ˈnʌmbə/",
-      definition: "Số hội viên",
-      icon: "🔢",
+      word: "Arrangement fee",
+      phonetic: "/əˈreɪndʒmənt fiː/",
+      definition: "Phí sắp xếp dịch vụ",
+      icon: "🎀",
     },
     { word: "Points", phonetic: "/pɔɪnts/", definition: "Điểm tích lũy", icon: "⭐" },
     {
@@ -1433,9 +1460,9 @@ const GR_BANK: P2Bank = {
   ],
   reports: [
     { word: "Welcomed", phonetic: "/ˈwelkəmd/", definition: "Đã đón tiếp", icon: "🙏" },
-    { word: "Arranged", phonetic: "/əˈreɪndʒd/", definition: "Đã sắp xếp", icon: "🗂️" },
+    { word: "Arrived", phonetic: "/əˈraɪvd/", definition: "Đã tới", icon: "🚶" },
     { word: "Delivered", phonetic: "/dɪˈlɪvəd/", definition: "Đã chuyển tới", icon: "📦" },
-    { word: "Upgraded", phonetic: "/ˌʌpˈɡreɪdɪd/", definition: "Đã nâng hạng", icon: "⬆️" },
+    { word: "Briefed", phonetic: "/briːft/", definition: "Đã trao đổi nhanh với", icon: "🗣️" },
     { word: "This week", phonetic: "/ðɪs wiːk/", definition: "Tuần này", icon: "📅" },
     {
       word: "VIP arrivals",
@@ -1443,9 +1470,9 @@ const GR_BANK: P2Bank = {
       definition: "Số khách VIP đến",
       icon: "🌟",
     },
-    { word: "Wrote a note", phonetic: "/rəʊt ə nəʊt/", definition: "Đã viết thiệp", icon: "✉️" },
+    { word: "Went better", phonetic: "/went ˈbetə/", definition: "Diễn ra tốt hơn", icon: "👍" },
     { word: "Remembered", phonetic: "/rɪˈmembəd/", definition: "Đã nhớ được", icon: "🧠" },
-    { word: "Very pleased", phonetic: "/ˈveri pliːzd/", definition: "Rất hài lòng", icon: "😊" },
+    { word: "Very smooth", phonetic: "/ˈveri smuːð/", definition: "Rất suôn sẻ", icon: "🌊" },
     { word: "Jotted", phonetic: "/ˈdʒɒtɪd/", definition: "Đã ghi nhanh", icon: "✍️" },
   ],
   wrapUp: [
@@ -1639,7 +1666,11 @@ const BO_BANK: P2Bank = {
       definition: "Điều khoản thanh toán",
       icon: "📆",
     },
-    { word: "Thirty days", phonetic: "/ˈθɜːti deɪz/", definition: "Ba mươi ngày", icon: "📅" },
+    // Slot 4 fills "A ten percent {w} is added." — it must name a CHARGE.
+    // The old fillers made the surcharge lesson teach "A ten percent duration
+    // is added." / "…membership number…" / "…thirty days…", and the Vietnamese
+    // answer key inherited the wrong noun straight from `definition`.
+    { word: "Handling fee", phonetic: "/ˈhændlɪŋ fiː/", definition: "Phí xử lý", icon: "📦" },
     {
       word: "Bank transfer",
       phonetic: "/bæŋk ˈtrænsfɜː/",
@@ -1752,16 +1783,16 @@ const BO_BANK: P2Bank = {
   ],
   reports: [
     { word: "Sent", phonetic: "/sent/", definition: "Đã gửi", icon: "📤" },
-    { word: "Received", phonetic: "/rɪˈsiːvd/", definition: "Đã nhận", icon: "📥" },
+    { word: "Departed", phonetic: "/dɪˈpɑːtɪd/", definition: "Đã rời đi", icon: "🚪" },
     { word: "Paid", phonetic: "/peɪd/", definition: "Đã thanh toán", icon: "💳" },
-    { word: "Signed", phonetic: "/saɪnd/", definition: "Đã ký", icon: "✍️" },
+    { word: "Emailed", phonetic: "/ˈiːmeɪld/", definition: "Đã gửi email cho", icon: "📧" },
     { word: "Last month", phonetic: "/lɑːst mʌnθ/", definition: "Tháng trước", icon: "📅" },
     { word: "Invoices", phonetic: "/ˈɪnvɔɪsɪz/", definition: "Các hoá đơn", icon: "🧾" },
     {
-      word: "Checked the figures",
-      phonetic: "/tʃekt ðə ˈfɪɡəz/",
-      definition: "Đã kiểm tra số liệu",
-      icon: "🔢",
+      word: "Arrived later",
+      phonetic: "/əˈraɪvd ˈleɪtə/",
+      definition: "Tới muộn hơn",
+      icon: "🕐",
     },
     { word: "Followed up", phonetic: "/ˈfɒləʊd ʌp/", definition: "Đã theo dõi tiếp", icon: "🔍" },
     { word: "Agreed", phonetic: "/əˈɡriːd/", definition: "Đã thống nhất", icon: "🤝" },

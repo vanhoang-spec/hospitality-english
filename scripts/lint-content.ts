@@ -59,6 +59,10 @@ const warnings: string[] = [];
 // fall through to NOUN, which is the right default for these banks.
 // ------------------------------------------------------------
 const VERBS = new Set([
+  // Intransitive past-report verbs, added with the P0 content fix so
+  // "The guest arrived at noon." tags as a verb rather than a noun.
+  "arrive",
+  "depart",
   "greet",
   "check",
   "allocate",
@@ -427,10 +431,21 @@ const POS_OVERRIDES: Record<string, Pos> = {
   "well done": "ADJ",
   // intensifier + participle is a predicate adjective
   "very pleased": "ADJ",
+  "very smooth": "ADJ",
   "very busy": "ADJ",
   "very good": "ADJ",
 };
 const ADJS = new Set([
+  // Replacements from the P0 content fix: the words that took over slots
+  // where the old filler was the wrong semantic class for its frame
+  // ("It is a little safe.", "The machine is unhappy.").
+  "crowded",
+  "cool",
+  "warm",
+  "plain",
+  "unclear",
+  "wilted",
+  "burnt",
   "smooth",
   "clean",
   "tidy",
@@ -743,6 +758,11 @@ const SLOT_CONTRACTS: Record<string, Record<string, SlotSpec>> = {
     complaints: "NOUN",
     solutions: "VERB",
     handover: "NOUN",
+    // W30 · every frame is "Let me confirm the {w}." and its siblings — the
+    // slot is DETAILS TO CONFIRM throughout. It had no entry at all, which is
+    // why "The {w} will not happen again." and "I am ready for the {w}."
+    // sailed through with a room preference and a flight time in them.
+    wrapUp: "NOUN",
   },
   P4: {
     story: "NOUN",
@@ -751,6 +771,11 @@ const SLOT_CONTRACTS: Record<string, Record<string, SlotSpec>> = {
     occasions: "NOUN",
     tradeoffs: "VERB",
     emergencies: "NOUN",
+    // Undeclared until the P0 fix, so the week-37/38/40 frames were checked
+    // by layer A alone (all six agreeing is not the same as all six right).
+    terms: "NOUN",
+    proposal: "NOUN",
+    wrapUp: "NOUN",
   },
 };
 
@@ -987,6 +1012,68 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
       return !posOf(m[2].trim()).has("VERB");
     },
     why: "the 'Let me … for you' frame requires a bare verb phrase",
+  },
+  {
+    // Three of the six department personas are women (Linh, Mai, Trang) and
+    // the spines narrate them by name. Every frame that refers back to the
+    // persona must read from lx.pron; the ones that hardcoded "he"/"his"
+    // shipped "Linh shows his log." and "Mai avoids empty praise. Instead of
+    // 'very nice', he says…".
+    //
+    // Guests are male by default in these passages ("sir", "Mr. Haddad"), so
+    // a sentence that also addresses or names a man is left alone — that is
+    // where a legitimate "he" lives.
+    name: "female-persona-male-pronoun",
+    test: (s) => {
+      if (!/\b(Linh|Mai|Trang)\b/.test(s)) return false;
+      if (!/\b(he|him|his|himself)\b/i.test(s)) return false;
+      return !/(\bsir\b|Mr\.|\bgentleman\b|\bthe guest\b)/i.test(s);
+    },
+    why: "a female persona is referred to with he/him/his — read the pronoun from lx.pron",
+  },
+  {
+    // The -s of the third person belongs on the head verb, not on the end of
+    // a verb phrase. Week 11 concatenated it and taught "He check ins the
+    // room every day." / "He make the beds the room every day." as the
+    // CORRECT sentence, in all six departments.
+    name: "third-person-s-on-phrase-tail",
+    test: (s) => {
+      // Form 1 — the -s landed on the object: "he make the beds".
+      const obj = /\b(he|she)\s+([a-z]+)\s+(?:the|a|an|my|your|our)\s+\w+s\b/i.exec(s);
+      if (obj) {
+        const verb = obj[2].toLowerCase();
+        // "he makes the beds" is correct; the bug is an UNINFLECTED head verb
+        // with the -s stranded on the object. The copula and other inflected
+        // forms are not this bug.
+        if (VERBS.has(verb) && !verb.endsWith("s")) return true;
+      }
+      // Form 2 — the -s landed on a particle: "he check ins the room".
+      const part = /\b(he|she)\s+([a-z]+)\s+(in|out|up|down|off|over|back)s\b/i.exec(s);
+      if (part && VERBS.has(part[2].toLowerCase())) return true;
+      return false;
+    },
+    why: "the third-person -s landed on the object, not on the head verb",
+  },
+  {
+    // "more" plus a one-syllable adjective. Week 10 hardcoded "more" and the
+    // banks supplied "empty" and "bright", so four departments drilled
+    // "This one is more empty." Declare the form as `cmp` in the lexicon.
+    name: "more-with-short-adjective",
+    test: (s) =>
+      /\bmore (empty|bright|clean|dry|warm|cool|soft|hard|safe|late|full|busy|quiet|deep|salty|tired|dark|plain|cheap|slow|quick|small|big|nice|fresh|sweet)\b/i.test(
+        s,
+      ),
+    why: 'a short adjective takes -er, not "more" — declare `cmp` on the lexicon entry',
+  },
+  {
+    // "a little" softens a mild COMPLAINT, so a positive adjective inverts
+    // the sentence: "It is a little safe." / "It is a little calm."
+    name: "a-little-positive-adjective",
+    test: (s) =>
+      /\ba little (safe|calm|clean|good|nice|lovely|beautiful|elegant|perfect|excellent|happy|pleased|special)\b/i.test(
+        s,
+      ),
+    why: '"a little" introduces a mild problem — a positive adjective inverts the meaning',
   },
 ];
 

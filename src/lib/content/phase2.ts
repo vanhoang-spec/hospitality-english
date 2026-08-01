@@ -46,7 +46,10 @@ function lesson(
 function bw(w: P2Word, context: string) {
   return v(w.word, w.phonetic, w.definition, context, w.icon);
 }
-const lo = (w: P2Word) => w.word.toLowerCase();
+/** Mid-sentence form of a headword. Acronyms keep their case: "VAT" is how
+ *  the word is said and written on a Vietnamese hotel bill, and lowercasing
+ *  it shipped "A ten percent vat is added." */
+const lo = (w: P2Word) => (/^[A-Z]{2,}$/.test(w.word) ? w.word : w.word.toLowerCase());
 
 /** The headword with the determiner its slot requires — "an upgrade",
  *  "a higher floor", "turndown service". Frames that place a bank word in a
@@ -811,7 +814,11 @@ function week18(lx: Ctx): LessonContent[] {
         ),
         g(
           `Wait, system slow.`,
-          `One moment, please. The system is ${lo(p9)}.`,
+          // Slot 8 is a REQUEST status ("in progress", "on hold",
+          // "confirmed", "with the team"), so predicating it of the system
+          // gave "The system is confirmed." / "The system is with the team."
+          // The vocab card one lesson up already frames it correctly.
+          `One moment, please. Your request is ${lo(p9)}.`,
           "Giải thích lý do chờ bằng câu đủ — khách chờ có lý do thì kiên nhẫn hơn.",
         ),
       ],
@@ -823,12 +830,12 @@ function week18(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is there a problem?",
-          `No problem at all. The system is ${lo(p9)}.`,
+          `No problem at all. Your request is ${lo(p9)}.`,
           "Trấn an trước, giải thích sau — đừng để khách tự đoán.",
         ),
       ],
       reading: read(
-        `The guest waits at the desk. ${lx.staff} says: "Just a moment, sir. I am preparing your ${lo(p1)}. The system is ${lo(p9)} now." The guest waits calmly.`,
+        `The guest waits at the desk. ${lx.staff} says: "Just a moment, sir. I am preparing your ${lo(p1)}. Your request is ${lo(p9)} now." The guest waits calmly.`,
         [
           {
             q: "Nhân viên đang làm gì?",
@@ -917,7 +924,11 @@ function week18(lx: Ctx): LessonContent[] {
 
     lesson(lx, 18, 3, "Money & Charges", "Tiền bạc & các khoản phí", {
       vocabulary: [
-        bw(p5, `A ${lo(p5)} is added.`),
+        // The article has to follow the SOUND of whatever fills the slot —
+        // hardcoding "A" gave "A arrangement fee is added." wa() is the
+        // helper that already knows this; the "ten percent" variants below
+        // keep their literal "A" because a number always follows it.
+        bw(p5, `${wa(p5).charAt(0).toUpperCase()}${wa(p5).slice(1)} is added.`),
         bw(p6, `Which ${lo(p6)} would you prefer?`),
         bw(p8, `You can ${lo(p8)} now.`),
       ],
@@ -1342,7 +1353,11 @@ function week20(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(c10, `The ${lo(c10)} is very popular.`),
         bw(c8, `The ${lo(c8)} is a good match.`),
-        bw(c9, `The ${lo(c9)} depends on the weather.`),
+        // Slot 9 holds a CONSIDERATION a guest weighs (skin type, water
+        // saving, personal opinion), not a weather-dependent thing — "The
+        // personal opinion depends on the weather." made no sense in four of
+        // six departments.
+        bw(c9, `The ${lo(c9)} is worth considering.`),
       ],
       grammar: [
         g(
@@ -1369,7 +1384,13 @@ function week20(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest wants advice. ${lx.staff} says: "I would suggest ${lo(c10)}, because it is very popular with our guests. It would ${lo(c8)} nicely."`,
+        // `It would ${lo(c8)} nicely` put a NOUN slot where the frame's own
+        // verb goes — "It would environment nicely.", "It would relaxing
+        // option nicely." The sentence the author meant is two lines up in
+        // the same lesson, at the second sp(): "It would suit you very
+        // nicely." Also "suggest THE {c10}": the bare version read as
+        // "I would suggest guest decision".
+        `The guest wants advice. ${lx.staff} says: "I would suggest the ${lo(c10)}, because it is very popular with our guests. It would suit you nicely."`,
         [
           {
             q: "Lời khuyên nên kèm theo gì?",

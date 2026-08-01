@@ -162,6 +162,48 @@ const KNOWN_BAD_STRINGS = [
   "outage comes first",
   "booking comes first",
   "failure comes first",
+  // P0 academic-review round: frames whose slot held the wrong semantic
+  // class. Each string below was the sentence marked CORRECT for the
+  // learner. They are matched as SUBSTRINGS, so each has to carry enough
+  // context to be unable to appear inside its own fixed version — "he is
+  // our waitress" would fire on the correct "She is our waitress."
+  "it would environment nicely",
+  "it would relaxing option nicely",
+  "i would suggest the guest decision",
+  "i would suggest the option, because",
+  "ten percent duration is added",
+  "ten percent membership number is added",
+  "ten percent thirty days is added",
+  "the system is confirmed",
+  "the system is with the team",
+  "i signed the supervisor",
+  "the guest received at noon",
+  "the guest arranged at noon",
+  "it checked the figures than usual",
+  "it wrote a note than usual",
+  "let me send up for you",
+  "the pipe is overcooked",
+  "the machine is unhappy",
+  "colleague. he is our waitress",
+  "i am ready for the stay summary",
+  "i am ready for the final invoice total",
+  "the departure transfer taught me the most",
+  "the kitchen capacity taught me the most",
+  "there is a cash shortage at the property",
+  "the flight cancellation has been fully resolved",
+  "report on the guest fainting",
+  // The week-32/39 preamble "Based on your {preference}" is the correct
+  // teaching frame; what broke was the advice bolted onto it, which
+  // assumed every department's slot 0 was about noise.
+  "i would suggest a quieter option",
+  "i would suggest something quieter",
+  "he check ins the room",
+  "he make the beds the room",
+  "he massages the room every day",
+  "this one is more empty",
+  "this one is more bright",
+  "it is a little safe",
+  "it is a little calm",
   // Register / terminology the LQA pass retired
   "please kindly provide",
   "masseuse",
