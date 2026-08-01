@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
-import { listeningRateForWeek } from "@/lib/phases";
+import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
@@ -88,7 +88,9 @@ function GrammarSuiteInner({
     const pct = Math.round((correctCount / puzzles.length) * 100);
     recordSuiteResult(dep, week, "grammar", earned.current, {
       scorePct: pct,
-      mastered: correctCount === puzzles.length,
+      // Was 100% — the only suite demanding a clean sweep. Mastery is the
+      // phase bar applied to the puzzles solved, like everywhere else.
+      mastered: correctCount >= Math.ceil((suiteMasteryPct(week) / 100) * puzzles.length),
     });
   }
 

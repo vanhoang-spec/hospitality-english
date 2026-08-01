@@ -2,10 +2,9 @@ import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
-import { listeningRateForWeek } from "@/lib/phases";
+import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-const MASTERY_PCT = 80;
 const MAX_LISTENS = 3;
 
 // Listening tasks are generated from content that already exists for
@@ -99,6 +98,8 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
 
 export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  // Rises with the phase — a flat 80 was unreachable at pre-A1.
+  const MASTERY_PCT = suiteMasteryPct(week ?? 1);
   const [seed, setSeed] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tasks = useMemo(() => (week ? buildTasks(dep, week) : []), [dep, week, seed]);
@@ -141,9 +142,26 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       if (picked === null) return;
       ok = picked === task.correctIdx;
     } else {
-      ok = task.tokens.every(
-        (t, i) => !t.blank || stripWord(blankValues[i] ?? "") === stripWord(t.text),
-      );
+      // Credit per blank, not per task. A cloze carries up to three blanks
+      // and used to score all-or-nothing, so two right out of three was worth
+      // exactly as much as understanding none of the sentence.
+      let total = 0;
+      let got = 0;
+      task.tokens.forEach((t, i) => {
+        if (!t.blank) return;
+        total++;
+        if (stripWord(blankValues[i] ?? "") === stripWord(t.text)) got++;
+      });
+      const frac = total > 0 ? got / total : 0;
+      ok = frac === 1;
+      setAnswered(ok);
+      setCorrectCount((c) => c + frac);
+      if (ok && !awardedRef.current.has(task.key)) {
+        awardedRef.current.add(task.key);
+        awardStars(1);
+        earnedRef.current += 1;
+      }
+      return;
     }
     setAnswered(ok);
     if (ok) {

@@ -3,7 +3,12 @@ import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
-import { headwordRateForWeek, listeningRateForWeek } from "@/lib/phases";
+import {
+  dictationMatches,
+  headwordRateForWeek,
+  listeningRateForWeek,
+  suiteMasteryPct,
+} from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Term = { en: string; ipa: string; vi: string; usage: string; icon?: string };
@@ -47,7 +52,6 @@ type QuizQuestion =
 const MCQ_NEW_MAX = 10;
 const MCQ_REVIEW = 4;
 const MAX_DICTATION = 3;
-const MASTERY_PCT = 80;
 
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
@@ -115,6 +119,8 @@ function VocabSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  // Rises with the phase — a flat 80 was unreachable at pre-A1.
+  const MASTERY_PCT = suiteMasteryPct(week);
   const terms: Term[] = content.lessons.flatMap((l) =>
     l.vocabulary.map((v) => ({
       en: v.word,
@@ -182,7 +188,9 @@ function VocabSuiteInner({
       if (picked === null) return;
       ok = picked === q.correctIdx;
     } else {
-      ok = typed.trim().toLowerCase() === q.word.toLowerCase();
+      // One slipped letter is not evidence the word was not learned — at
+      // pre-A1/A1 only. See dictationMatches.
+      ok = dictationMatches(typed, q.word, week);
     }
     setAnswered(ok);
     if (ok) {

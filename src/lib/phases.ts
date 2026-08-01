@@ -155,6 +155,66 @@ export function headwordRateForWeek(week: string | number): number {
   return Math.round(Math.max(0.6, r) * 1000) / 1000;
 }
 
+/** The bar a SUITE must clear to be recorded as mastered — distinct from
+ *  CHECKPOINT_PASS_PCT, which decides progression.
+ *
+ *  It was a flat 80 in every suite at every week, which a pre-A1 learner
+ *  could not realistically reach: a vocabulary paper of 10 MCQ + 3 dictation
+ *  needs 11 right, so a perfect multiple-choice run that missed every
+ *  spelling item scored 76.9% and failed. A bar nobody can clear stops being
+ *  a standard and becomes noise — it neither certifies competence nor guides
+ *  practice, and it lands hardest on the beginners with least confidence to
+ *  spare. It rises with the ladder instead: the same 80 by A2+, reached
+ *  after the learner has the vocabulary to earn it. */
+export function suiteMasteryPct(week: string | number): number {
+  const phase = phaseOfWeek(week);
+  if (!phase) return 80;
+  return [70, 70, 75, 80, 80][phase.index];
+}
+
+/** Whether a dictation answer may differ from the target by one character.
+ *
+ *  Spelling is taught from week 1, so it is graded — but at pre-A1/A1 the
+ *  objective is recognising the word's written form, and a single slipped
+ *  letter in "toothbrush" is not evidence that the word was not learned.
+ *  From A2.1 the learner writes these words on real registration cards and
+ *  order dockets, so the match becomes exact. */
+export function dictationAllowsTypo(week: string | number): boolean {
+  const phase = phaseOfWeek(week);
+  return !!phase && phase.index <= 1;
+}
+
+/** True when `typed` matches `target` closely enough for the week. */
+export function dictationMatches(typed: string, target: string, week: string | number): boolean {
+  const a = typed.trim().toLowerCase();
+  const b = target.trim().toLowerCase();
+  if (a === b) return true;
+  if (!dictationAllowsTypo(week)) return false;
+  // One insertion, deletion or substitution — bounded so it cannot swallow a
+  // genuinely different word: "key" and "keys" differ by one, and that is
+  // intended at A1; "bed" and "bad" also differ by one, which is why the
+  // tolerance stops at A1 rather than running the whole course.
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      i++;
+      j++;
+      continue;
+    }
+    if (++edits > 1) return false;
+    if (a.length > b.length) i++;
+    else if (a.length < b.length) j++;
+    else {
+      i++;
+      j++;
+    }
+  }
+  return edits + (a.length - i) + (b.length - j) <= 1;
+}
+
 export function weekNum(week: string | number): number {
   return typeof week === "string" ? parseInt(week, 10) : week;
 }

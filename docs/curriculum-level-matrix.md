@@ -109,6 +109,32 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 | Speaking items / tuần          | 4 (chunk nhắc lại)    | 4              | 4–6              | 6                  | 6–8               |
 | Dạng speaking                  | nghe–nhắc lại chunk   | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở      |
 
+### Chuẩn "đạt chuẩn" của từng suite (từ 2026-08-01)
+
+Khác với `CHECKPOINT_PASS_PCT` (quyết định mở phase), đây là chuẩn để một **suite** được ghi
+`mastered` — thứ cấp sao và đưa từ vào hàng đợi ôn. Khai báo ở `suiteMasteryPct()` trong
+`phases.ts`: **70% (P0–P1) → 75% (P2) → 80% (P3–P4)**.
+
+Trước đó là **80% phẳng ở mọi suite, mọi tuần**, và ở pre-A1 thì gần như không thể chạm tới:
+bài từ vựng 10 trắc nghiệm + 3 chính tả cần 11 câu đúng, nên **làm đúng trọn phần trắc nghiệm
+mà trượt cả chính tả = 76,9% = trượt**. Một chuẩn không ai với tới thì không còn là chuẩn: nó
+không chứng nhận năng lực, không định hướng luyện tập, và giáng xuống đúng nhóm người mới ít
+tự tin nhất. Mức 80 vẫn còn nguyên — chỉ dời tới A2+ là lúc học viên đã đủ vốn từ để đạt nó.
+
+Ba sửa đổi kèm theo, cùng một tinh thần:
+
+- **Chính tả dung sai 1 ký tự ở P0–P1** (`dictationMatches`). Đánh vần có được dạy từ tuần 1
+  nên vẫn chấm, nhưng ở pre-A1/A1 mục tiêu là **nhận ra mặt chữ**; sai một chữ cái trong
+  "toothbrush" không chứng minh là chưa học từ đó. Từ A2.1 khớp tuyệt đối, vì lúc đó học viên
+  viết những từ này lên phiếu đăng ký và phiếu order thật.
+- **Câu điền chấm theo từng chỗ trống**, không còn "đúng hết hoặc không điểm". Một câu cloze có
+  tới 3 chỗ trống, nên điền đúng 2/3 từng được tính ngang với không hiểu gì cả.
+- **Ngữ pháp không còn đòi giải sạch 100%** — suite duy nhất đòi tuyệt đối. Nay dùng chính
+  thang trên: `⌈bar × số câu⌉`.
+
+`qa:full` T3 chặn: thang không được lùi, phải nằm trong dải 70–80, phải **thực sự tăng** suốt
+khoá (chặn đúng hành vi cũ là hằng số 80), và dung sai chính tả phải kết thúc trước A2.1.
+
 ### Thang tốc độ nghe (đã lập trình, từ 2026-08-01)
 
 Khai báo một chỗ duy nhất ở `listeningRateForWeek()` trong `src/lib/phases.ts`, dùng cho

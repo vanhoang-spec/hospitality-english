@@ -25,8 +25,10 @@ import {
   LISTENING_RATE_CEILING,
   LISTENING_RATE_FLOOR,
   PHASES as PHASES_APP,
+  dictationAllowsTypo,
   headwordRateForWeek,
   listeningRateForWeek,
+  suiteMasteryPct,
 } from "../src/lib/phases";
 
 const DEPS = DEPARTMENTS.map((d) => d.code);
@@ -329,6 +331,29 @@ const slugify = (t: string) =>
     );
   console.log(
     `T3 ladder — listening rate: ${[1, 7, 15, 23, 31, 40].map((w) => listeningRateForWeek(w)).join(" → ")} (w1/7/15/23/31/40)`,
+  );
+
+  // The mastery bar is the fourth rung. It was a flat 80 in every suite at
+  // every week — unreachable at pre-A1, where a perfect multiple-choice run
+  // that missed the spelling items scored 76.9%. Criteria: it never falls,
+  // it starts below where it ends (so it is a ladder and not a constant in
+  // disguise), and it stays inside the band the curriculum can defend.
+  let prevBar = 0;
+  for (let w = 1; w <= AUTHORED_MAX; w++) {
+    const bar = suiteMasteryPct(w);
+    if (bar < prevBar) fail("T3", `suite mastery bar falls at week ${w}: ${prevBar} → ${bar}`);
+    if (bar < 70 || bar > 80) fail("T3", `suite mastery bar out of band at week ${w}: ${bar}`);
+    prevBar = bar;
+  }
+  if (!(suiteMasteryPct(1) < suiteMasteryPct(AUTHORED_MAX)))
+    fail("T3", "suite mastery bar does not rise across the course");
+  // Dictation tolerance is a beginner allowance, not a permanent discount.
+  if (!dictationAllowsTypo(1) || dictationAllowsTypo(AUTHORED_MAX))
+    fail("T3", "dictation typo tolerance must apply at pre-A1/A1 and stop by A2.1");
+  console.log(
+    `T3 ladder — mastery bar: ${[1, 7, 15, 23, 31, 40].map((w) => suiteMasteryPct(w)).join(" → ")}%  ·  dictation tolerance ends at week ${
+      [...Array(AUTHORED_MAX)].findIndex((_, i) => !dictationAllowsTypo(i + 1)) + 1
+    }`,
   );
 }
 

@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
+import { suiteMasteryPct } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Passage = {
@@ -73,7 +74,11 @@ function ReadingSuiteInner({
     if (dep && week) {
       const sumPct = passages.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
       const avgPct = Math.round(sumPct / passages.length);
-      const allMastered = passages.every((_, i) => (bestPctRef.current.get(i) ?? 0) >= 80);
+      // Every passage must clear the PHASE bar, not a flat 80 — the same
+      // ladder the other suites now use.
+      const allMastered = passages.every(
+        (_, i) => (bestPctRef.current.get(i) ?? 0) >= suiteMasteryPct(week ?? 1),
+      );
       recordSuiteResult(dep, week, "reading", earned.current, {
         scorePct: avgPct,
         mastered: allMastered,
