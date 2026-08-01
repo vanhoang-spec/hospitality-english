@@ -17,6 +17,7 @@ import {
   blockCleared,
   blockFloor,
   checkpointPassed,
+  listeningRateForWeek,
   phaseOfWeek,
   weeksInPhase,
   type CheckpointConstruct,
@@ -76,7 +77,7 @@ function shuffle<T>(a: T[]): T[] {
  *  only a vi-VN voice, where the "🔊 Nghe" button reads English orthography
  *  in Vietnamese or stays silent. Making the floor blocking there would
  *  turn a missing voice pack into a permanent course-wide lockout. */
-function speakVaried(text: string): boolean {
+function speakVaried(text: string, week: string | number): boolean {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
@@ -85,7 +86,9 @@ function speakVaried(text: string): boolean {
     .filter((v) => v.lang.toLowerCase().startsWith("en"));
   if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
   u.lang = u.voice?.lang ?? "en-US";
-  u.rate = 0.85;
+  // Same ladder as ListeningSuite: a flat 0.85 made the week-6 pre-A1 paper
+  // and the week-40 B1.1 paper equally hard to hear.
+  u.rate = listeningRateForWeek(week);
   window.speechSynthesis.speak(u);
   return voices.length > 0;
 }
@@ -346,7 +349,9 @@ function OralStage({
         <p className="font-display mt-4 text-2xl leading-snug">"{item.guestPrompt}"</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <button
-            onClick={() => speakEN(item.guestPrompt, 0.9)}
+            // The item's OWN week, not the checkpoint's — it is graded at that
+            // week's threshold, so it should be heard at that week's speed.
+            onClick={() => speakEN(item.guestPrompt, listeningRateForWeek(item.sourceWeek))}
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
           >
             ▶ Nghe lời khách
@@ -800,7 +805,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             </p>
             <button
               onClick={() => {
-                if (speakVaried(q.audio)) sawEnVoiceRef.current = true;
+                if (speakVaried(q.audio, week!)) sawEnVoiceRef.current = true;
               }}
               className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >

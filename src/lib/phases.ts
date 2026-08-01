@@ -108,6 +108,53 @@ export const CHECKPOINT_ORAL_PASS_MIN = 3;
  *  stay inside the same sitting. A pass is never subject to it. */
 export const CHECKPOINT_RETAKE_COOLDOWN_MIN = 20;
 
+/** TTS speed a learner hears, by week — the ladder promised in
+ *  docs/curriculum-level-matrix.md (0.70 → 0.75 → 0.80 → 0.85 → 0.90).
+ *
+ *  It had never been programmed. ListeningSuite ran `0.8 + random * 0.2` on
+ *  every week, so a week-1 beginner met 0.80-1.00 — faster than the rate the
+ *  spec reserves for week 40 — and the checkpoint ran a flat 0.85. Listening
+ *  difficulty was therefore identical at week 1 and week 40, which removes
+ *  the single most controllable variable in comprehension training.
+ *
+ *  Each phase OPENS at its committed rate and rises across its own weeks
+ *  toward the next phase's rate, rather than holding flat for eight weeks and
+ *  then stepping. Two reasons, both pedagogical: comprehension gains come
+ *  from steady incremental pressure, not from a cliff every eighth week; and
+ *  a learner reaches the checkpoint already hearing next-phase speed, so the
+ *  test certifies readiness for what comes next instead of for what is past.
+ *  P3's "0.85-0.9" in the matrix is exactly this shape, now applied
+ *  throughout. Deterministic — the same week always sounds the same, so a
+ *  learner can tell their own progress from the audio. */
+const LISTENING_RATE_ANCHOR = [0.7, 0.75, 0.8, 0.85, 0.9] as const;
+export const LISTENING_RATE_FLOOR = LISTENING_RATE_ANCHOR[0];
+export const LISTENING_RATE_CEILING = LISTENING_RATE_ANCHOR[4];
+
+export function listeningRateForWeek(week: string | number): number {
+  const phase = phaseOfWeek(week);
+  if (!phase) return LISTENING_RATE_FLOOR;
+  const base = LISTENING_RATE_ANCHOR[phase.index];
+  // The last phase has nothing to climb toward: 0.9 is the B1.1 target and
+  // holds for weeks 31-40 while the language, not the speed, gets harder.
+  const next = LISTENING_RATE_ANCHOR[phase.index + 1] ?? base;
+  const span = phase.to - phase.from + 1;
+  const step = (next - base) / span;
+  return Math.round((base + (weekNum(week) - phase.from) * step) * 1000) / 1000;
+}
+
+/** A single headword, played on its own, is a PRONUNCIATION MODEL — the
+ *  learner is about to imitate it — while connected speech is the
+ *  comprehension target. The two jobs want different speeds, so a headword
+ *  is always played a step below its week's rate: slow enough to hear the
+ *  final consonant, which is the sound Vietnamese learners drop most. It
+ *  still rises with the ladder, so nothing is frozen at beginner speed. */
+export const HEADWORD_RATE_OFFSET = 0.1;
+
+export function headwordRateForWeek(week: string | number): number {
+  const r = listeningRateForWeek(week) - HEADWORD_RATE_OFFSET;
+  return Math.round(Math.max(0.6, r) * 1000) / 1000;
+}
+
 export function weekNum(week: string | number): number {
   return typeof week === "string" ? parseInt(week, 10) : week;
 }

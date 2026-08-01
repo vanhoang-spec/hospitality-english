@@ -5,6 +5,7 @@ import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
 import { compareWords, passThresholds } from "@/lib/speaking-score";
+import { listeningRateForWeek } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
@@ -121,7 +122,7 @@ function SpeakingSuiteInner({
   }
 
   function speakComplaint() {
-    speakEN(scenario.complaint, 0.9);
+    speakEN(scenario.complaint, listeningRateForWeek(week));
   }
 
   return (
@@ -152,7 +153,7 @@ function SpeakingSuiteInner({
               ▶ Nghe lời khách
             </button>
             <button
-              onClick={() => speakEN(scenario.target, 0.9)}
+              onClick={() => speakEN(scenario.target, listeningRateForWeek(week))}
               className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
               🔊 Nghe câu mẫu

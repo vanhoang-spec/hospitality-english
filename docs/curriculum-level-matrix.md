@@ -99,15 +99,35 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 
 ## Thông số kỹ thuật content theo phase
 
-| Thông số                       | P0 (1–6)            | P1 (7–14)      | P2 (15–22)       | P3 (23–30)         | P4 (31–40)       |
-| ------------------------------ | ------------------- | -------------- | ---------------- | ------------------ | ---------------- |
-| Từ vựng mới / tuần             | 8–10                | 10–12          | 12–16            | 14–16              | 16–18            |
-| Trần độ dài câu đích (từ)      | 5                   | 8              | 12               | 16                 | 22               |
-| Số mệnh đề tối đa / câu        | 1                   | 1              | 1–2              | 2                  | 2–3              |
-| `reviewWords` tối thiểu / tuần | — (từ W2: 3)        | 30%            | 30%              | 35%                | 40%              |
-| Tốc độ listening (TTS rate)    | 0.7, câu đơn lẻ     | 0.75           | 0.8              | 0.85–0.9           | 0.9, đa lượt lời |
-| Speaking items / tuần          | 4 (chunk nhắc lại)  | 4              | 4–6              | 6                  | 6–8              |
-| Dạng speaking                  | nghe–nhắc lại chunk | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở     |
+| Thông số                       | P0 (1–6)              | P1 (7–14)      | P2 (15–22)       | P3 (23–30)         | P4 (31–40)        |
+| ------------------------------ | --------------------- | -------------- | ---------------- | ------------------ | ----------------- |
+| Từ vựng mới / tuần             | 8–10                  | 10–12          | 12–16            | 14–16              | 16–18             |
+| Trần độ dài câu đích (từ)      | 5                     | 8              | 12               | 16                 | 22                |
+| Số mệnh đề tối đa / câu        | 1                     | 1              | 1–2              | 2                  | 2–3               |
+| `reviewWords` tối thiểu / tuần | — (từ W2: 3)          | 30%            | 30%              | 35%                | 40%               |
+| Tốc độ listening (TTS rate)    | 0.70→0.74, câu đơn lẻ | 0.75→0.79      | 0.80→0.84        | 0.85→0.89          | 0.90, đa lượt lời |
+| Speaking items / tuần          | 4 (chunk nhắc lại)    | 4              | 4–6              | 6                  | 6–8               |
+| Dạng speaking                  | nghe–nhắc lại chunk   | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở      |
+
+### Thang tốc độ nghe (đã lập trình, từ 2026-08-01)
+
+Khai báo một chỗ duy nhất ở `listeningRateForWeek()` trong `src/lib/phases.ts`, dùng cho
+**mọi** chỗ học viên nghe tiếng Anh: ListeningSuite, phần nghe của bài sát hạch, câu mẫu
+ngữ pháp, lời khách và câu mẫu luyện nói.
+
+- **Mỗi phase MỞ đúng mốc cam kết** rồi tăng dần qua các tuần của chính nó, thay vì đứng yên
+  8 tuần rồi nhảy bậc. Hai lý do: khả năng nghe tiến bộ nhờ áp lực tăng đều chứ không nhờ một
+  vách mỗi tám tuần; và học viên tới checkpoint thì đã nghe quen tốc độ của phase kế tiếp, nên
+  bài thi chứng nhận khả năng đi tiếp chứ không phải khả năng đã qua. Ô "0.85–0.9" của P3 ở
+  bảng trên vốn đã mô tả đúng hình dạng này — nay áp dụng cho cả năm phase.
+- **Từ đơn chậm hơn câu 0.1** (`headwordRateForWeek`): một headword phát riêng là _mẫu phát âm
+  để bắt chước_, không phải bài đo nghe hiểu — cần đủ chậm để nghe rõ phụ âm cuối, đúng âm mà
+  người Việt hay nuốt.
+- **Tất định**: cùng một tuần luôn nghe cùng tốc độ, để học viên tự cảm nhận được tiến bộ.
+  Bản cũ dùng `0.8 + random × 0.2` cho mọi tuần — tuần 1 có thể nghe nhanh hơn tuần 40, và
+  biến khó nhất của bài tập là con số ngẫu nhiên chứ không phải trình độ.
+- `qa:full` T3 chặn năm điều: tuần 1 = 0.70, tuần 40 = 0.90, không tuần nào chậm hơn tuần
+  trước, mỗi phase mở đúng mốc, và từ đơn luôn chậm hơn câu.
 
 Tổng từ vựng chủ động toàn lộ trình: ~560–620 từ + cụm công thức — phù hợp chuẩn ESP
 (từ vựng lễ tân/buồng phòng/F&B lõi), không nhắm 2.000 từ tổng quát của B1 đại trà.

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
+import { listeningRateForWeek } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
@@ -198,7 +199,7 @@ function GrammarSuiteInner({
           <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Câu của bạn</div>
           {checked === true && (
             <button
-              onClick={() => speakEN(puzzle.target, 0.9)}
+              onClick={() => speakEN(puzzle.target, listeningRateForWeek(week!))}
               className="border border-primary/60 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
               🔊 Đọc câu

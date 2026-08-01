@@ -21,6 +21,13 @@
 import { ALL_WEEKS, getWeekContent, resolveReviewVocab } from "../src/lib/content/week-content";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
+import {
+  LISTENING_RATE_CEILING,
+  LISTENING_RATE_FLOOR,
+  PHASES as PHASES_APP,
+  headwordRateForWeek,
+  listeningRateForWeek,
+} from "../src/lib/phases";
 
 const DEPS = DEPARTMENTS.map((d) => d.code);
 const AUTHORED_MAX = 40;
@@ -288,6 +295,41 @@ const slugify = (t: string) =>
   );
   if (!(v0 <= v1 && v1 <= v2))
     fail("T3", `vocabulary load does not rise: ${v0.toFixed(1)}/${v1.toFixed(1)}/${v2.toFixed(1)}`);
+
+  // Listening speed is the third rung of the ladder, and the one that had
+  // never been programmed: ListeningSuite ran 0.8 + random*0.2 on every week,
+  // so week 1 could be faster than week 40. Five criteria, each exact:
+  //   1. week 1 opens at the matrix floor, week 40 lands on its ceiling
+  //   2. never slower than the week before  (a learner cannot regress)
+  //   3. every phase OPENS on its committed anchor
+  //   4. nothing outside [floor, ceiling]
+  //   5. a headword is always slower than connected speech at the same week
+  const ANCHORS = [0.7, 0.75, 0.8, 0.85, 0.9];
+  let prevRate = 0;
+  for (let w = 1; w <= AUTHORED_MAX; w++) {
+    const r = listeningRateForWeek(w);
+    if (r < prevRate) fail("T3", `listening rate falls at week ${w}: ${prevRate} → ${r}`);
+    if (r < LISTENING_RATE_FLOOR || r > LISTENING_RATE_CEILING)
+      fail("T3", `listening rate out of range at week ${w}: ${r}`);
+    if (headwordRateForWeek(w) >= r)
+      fail("T3", `headword rate not below connected speech at week ${w}`);
+    prevRate = r;
+  }
+  PHASES_APP.forEach((p, i) => {
+    const opened = listeningRateForWeek(p.from);
+    if (Math.abs(opened - ANCHORS[i]) > 1e-9)
+      fail("T3", `phase ${p.band} opens at ${opened}, matrix commits ${ANCHORS[i]}`);
+  });
+  if (listeningRateForWeek(1) !== LISTENING_RATE_FLOOR)
+    fail("T3", `week 1 is ${listeningRateForWeek(1)}, must be ${LISTENING_RATE_FLOOR}`);
+  if (listeningRateForWeek(AUTHORED_MAX) !== LISTENING_RATE_CEILING)
+    fail(
+      "T3",
+      `week 40 is ${listeningRateForWeek(AUTHORED_MAX)}, must be ${LISTENING_RATE_CEILING}`,
+    );
+  console.log(
+    `T3 ladder — listening rate: ${[1, 7, 15, 23, 31, 40].map((w) => listeningRateForWeek(w)).join(" → ")} (w1/7/15/23/31/40)`,
+  );
 }
 
 // ============================================================
