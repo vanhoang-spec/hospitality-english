@@ -30,7 +30,22 @@ type QuizQuestion =
     }
   | { kind: "dictation"; key: string; word: string };
 
-const MAX_MCQ = 12;
+/** The week's OWN vocabulary always takes the majority of the paper, and
+ *  review takes a fixed tail — the two are drawn SEPARATELY.
+ *
+ *  They used to share one shuffled pool of `[...terms, ...reviewWords]`
+ *  sliced to 12. The review pool grows every week (a P4 week carries ~17 new
+ *  words against ~54 recycled ones), so the share of questions landing on
+ *  what the week actually taught decayed to 24% — 2.8 questions out of 12,
+ *  covering 17% of the new vocabulary. A learner could be marked "mastered"
+ *  on a week whose words they had barely met, because nine of twelve
+ *  questions asked about words they already knew.
+ *
+ *  Allocation instead of chance: up to 10 new-word items plus 4 review
+ *  items, so the new-word share sits near 70% in every phase and the quiz
+ *  lengthens slightly in the phases that teach more. */
+const MCQ_NEW_MAX = 10;
+const MCQ_REVIEW = 4;
 const MAX_DICTATION = 3;
 const MASTERY_PCT = 80;
 
@@ -39,7 +54,10 @@ const MASTERY_PCT = 80;
 // Distractors are drawn from the same term set so they stay plausible.
 function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
-  const mcqTerms = shuffle(pool).slice(0, MAX_MCQ);
+  const mcqTerms = shuffle([
+    ...shuffle(terms).slice(0, MCQ_NEW_MAX),
+    ...shuffle(reviewWords).slice(0, MCQ_REVIEW),
+  ]);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
     const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
     if (i % 2 === 0) {
@@ -62,10 +80,15 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
       correctIdx: options.indexOf(t.en),
     };
   });
-  const dictationTerms = shuffle(pool.filter((t) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en))).slice(
-    0,
-    MAX_DICTATION,
-  );
+  // Dictation is spelling practice, so it goes to THIS week's words first
+  // and only falls back to the review pool when the week has too few
+  // spellable ones. It used to draw from the mixed pool, which at P4 meant
+  // the three spelling items were almost always words learned weeks ago.
+  const spellable = (t: Term) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en);
+  const dictationTerms = [
+    ...shuffle(terms.filter(spellable)),
+    ...shuffle(reviewWords.filter(spellable)),
+  ].slice(0, MAX_DICTATION);
   const dictations: QuizQuestion[] = dictationTerms.map((t) => ({
     kind: "dictation",
     key: `dict:${t.en}`,

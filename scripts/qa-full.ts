@@ -411,6 +411,27 @@ const slugify = (t: string) =>
     if (heads.size !== vocab.length)
       fail("T5", `${key} VocabSuite: duplicate headword inside the week`);
 
+    // The week's quiz must actually test the week. VocabSuite allocates
+    // min(vocab, 10) new-word items against min(review, 4) recycled ones;
+    // when both were drawn from one shuffled pool the recycled side grew
+    // every week until only 24% of a P4 paper asked about what that week
+    // taught. Criterion: the week's own vocabulary holds at least 60% of the
+    // items, which also means a week can never carry so few new words that
+    // its quiz becomes a review sheet.
+    const VOCAB_NEW_MIN_SHARE = 0.6;
+    const newSlots = Math.min(vocab.length, 10);
+    const reviewSlots = Math.min(
+      resolveReviewVocab(wk.departmentId, wk.reviewWords ?? []).length,
+      4,
+    );
+    const share = newSlots / (newSlots + reviewSlots);
+    if (newSlots < 1) fail("T5", `${key} VocabSuite: no new vocabulary to quiz`);
+    else if (share < VOCAB_NEW_MIN_SHARE)
+      fail(
+        "T5",
+        `${key} VocabSuite: only ${(share * 100).toFixed(0)}% of the quiz is this week's vocabulary (need ${VOCAB_NEW_MIN_SHARE * 100}%)`,
+      );
+
     // --- GrammarSuite: chips must rebuild the target exactly
     for (const l of wk.lessons)
       for (const g of l.grammar) {
