@@ -215,7 +215,7 @@ function week31(lx: Ctx): LessonContent[] {
         bw(s9, `For a first visit, I always mention the ${lo(s9)}.`),
         bw(s10, `Business guests appreciate the ${lo(s10)}.`),
         bw(s11, `Families usually enjoy the ${lo(s11)} most.`),
-        bw(s12, `The ${lo(s12)} suits guests who prefer quiet.`),
+        bw(s12, `The ${lo(s12)} is a favourite with our regular guests.`),
       ],
       grammar: [
         g(
@@ -225,7 +225,7 @@ function week31(lx: Ctx): LessonContent[] {
         ),
         g(
           `You quiet person, this good.`,
-          `The ${lo(s12)} suits guests who prefer quiet.`,
+          `The ${lo(s12)} is a favourite with our regular guests.`,
           "Mệnh đề quan hệ 'who prefer quiet' — cấu trúc ba mệnh đề, đúng trần B1.1.",
         ),
       ],
@@ -237,7 +237,7 @@ function week31(lx: Ctx): LessonContent[] {
         ),
         sp(
           "We would rather avoid crowds if possible.",
-          `Then the ${lo(s12)} suits guests who prefer quiet, sir.`,
+          `Then the ${lo(s12)} is a favourite with our regular guests, sir.`,
           "Đổi hoàn toàn nội dung kể khi nhu cầu khách đổi — đó là điều phân biệt B1 với học thuộc lòng.",
         ),
       ],
@@ -270,8 +270,8 @@ function week31(lx: Ctx): LessonContent[] {
       game: [
         game(
           "We are travelling with our two young children.",
-          `Then families usually enjoy the ${lo(s11)} most, madam.`,
-          `Children are always welcome to enjoy our facilities here, madam.`,
+          `Then families usually notice the ${lo(s11)} most, madam.`,
+          `Children, yes. Many children here, madam.`,
           `You could ask the kids' club staff for more information.`,
         ),
       ],
@@ -327,8 +327,8 @@ function week31(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Thank you for explaining all of that to us.",
-          `I hope you will experience the ${lo(s13)} yourself, madam.`,
-          `It was no trouble at all, madam, I am glad to help.`,
+          `I hope you will notice the ${lo(s13)} during your stay, madam.`,
+          `No trouble, madam. Anything else you want to know?`,
           `I am happy that you found the information useful today.`,
         ),
       ],
@@ -479,9 +479,9 @@ function week32(lx: Ctx): LessonContent[] {
       game: [
         game(
           "I stayed with you last spring, if you have my details.",
-          `Would you like the same ${lo(p6)} as last time, sir?`,
+          `Of course, sir. We have your ${lo(p6)} on file from last time.`,
           `I will try to find your details somewhere in our system, sir.`,
-          `Could you give me your booking reference to confirm that, sir?`,
+          `Last spring? Long time, sir. Maybe not in system.`,
         ),
       ],
     }),
@@ -490,13 +490,13 @@ function week32(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(p9, `May I ask about your ${lo(p9)}?`),
         bw(p10, `Some guests care about the ${lo(p10)}, others do not.`),
-        bw(p11, `Do you have any preference regarding the ${lo(p11)}?`),
+        bw(p11, `May I ask about the ${lo(p11)}, madam?`),
         bw(p12, `I will adjust the ${lo(p12)} to suit you.`),
       ],
       grammar: [
         g(
           `Tell me what you like.`,
-          `Do you have any preference regarding the ${lo(p11)}, madam?`,
+          `May I ask about the ${lo(p11)}, madam?`,
           "'Do you have any preference regarding…?' là câu hỏi mở, lịch sự, đúng tầm B1.",
         ),
         g(
@@ -508,7 +508,7 @@ function week32(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "This is our first time here.",
-          `Welcome, madam. Do you have any preference regarding the ${lo(p11)}?`,
+          `Welcome, madam. May I ask about the ${lo(p11)}?`,
           "Khách mới thì hỏi, đừng đoán. Hỏi đúng câu quan trọng nhất trước.",
         ),
       ],
@@ -536,7 +536,7 @@ function week32(lx: Ctx): LessonContent[] {
       game: [
         game(
           "We have never stayed at this kind of property before.",
-          `Do you have any preference regarding the ${lo(p11)}, sir?`,
+          `May I ask about the ${lo(p11)}, sir?`,
           `I am sure you will enjoy everything just as much, sir.`,
           `Do not worry, we will take care of everything for you, sir.`,
         ),
@@ -700,9 +700,9 @@ function week33(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Something of mine was damaged during my stay.",
+          "I need to raise a claim about my stay, please.",
           `I am very sorry, sir. Could you describe the ${lo(d2)} in detail?`,
-          `Could you tell me exactly when this happened, sir?`,
+          `You really should have told us about this earlier, sir.`,
           `I will need to look into this further before I can respond, sir.`,
         ),
       ],
@@ -961,9 +961,9 @@ function week34(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "It is our thirtieth anniversary this week.",
+          "We are here for something special this week.",
           `Congratulations! May I arrange the ${lo(o3)} for you?`,
-          `Congratulations, sir. That is a wonderful milestone to reach.`,
+          `Very nice, sir. Please enjoy your stay with us.`,
           `Congratulations! We will organise a big celebration for you.`,
         ),
       ],
@@ -1084,9 +1084,9 @@ function week34(lx: Ctx): LessonContent[] {
       game: [
         game(
           "We will remember this evening for a very long time.",
-          `It is our honour to be part of the ${lo(o12)}, madam.`,
+          `It is our honour to have arranged the ${lo(o12)} for you, madam.`,
           `We would be delighted if you shared this online, madam.`,
-          `We are very pleased that you enjoyed the evening, madam.`,
+          `Yes, madam. Very good evening, thank you.`,
         ),
       ],
     }),
@@ -1546,7 +1546,7 @@ function week36(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Everyone is panicking. Is it safe to stay in the building?",
+          "Everyone is worried. Is this under control?",
           `Please stay calm — the ${lo(e5)} is under control now.`,
           `Please stay calm, everyone is completely safe right now.`,
           `Please try to stay calm, we are checking on it.`,
@@ -1794,10 +1794,10 @@ function week37(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Why has our rate changed since last year?",
+          "How exactly is our rate decided each year?",
           `The ${lo(c5)} depends on your annual volume, sir.`,
           `Rates do tend to change a little every year, sir.`,
-          `Costs have gone up for us as well, sir.`,
+          `Price go up, sir. Every year same.`,
         ),
       ],
     }),
@@ -1857,9 +1857,9 @@ function week37(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Your cancellation terms are far too strict for us.",
+          "Why do we need a clause like this at all?",
           `The ${lo(c11)} protects you as well as us, sir.`,
-          `These terms are actually fairly standard in our industry, sir.`,
+          `That is simply our rule, sir. Nothing can be changed.`,
           `I can remove that clause from the contract for you, sir.`,
         ),
       ],
@@ -1913,10 +1913,10 @@ function week37(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "What happens when this contract comes to an end?",
+          "What should we review before we renew for next year?",
           `The ${lo(c14)} can be discussed next November, sir.`,
           `We can discuss that whenever it becomes necessary, sir.`,
-          `The agreement will simply expire unless you contact us, sir.`,
+          `Contract finish, then we talk again, sir.`,
         ),
       ],
     }),

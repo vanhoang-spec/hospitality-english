@@ -1766,10 +1766,10 @@ const SW_BANK: P3Bank = {
   ],
   policies: [
     {
-      word: "Late arrival policy",
-      phonetic: "/leɪt əˈraɪvl ˈpɒləsi/",
-      definition: "Quy định khách đến trễ",
-      icon: "⏰",
+      word: "No-show fee",
+      phonetic: "/nəʊ ʃəʊ fiː/",
+      definition: "Phí không đến theo hẹn",
+      icon: "💸",
     },
     {
       word: "Cancellation window",
@@ -1778,10 +1778,10 @@ const SW_BANK: P3Bank = {
       icon: "🚫",
     },
     {
-      word: "No-show fee",
-      phonetic: "/nəʊ ʃəʊ fiː/",
-      definition: "Phí không đến theo hẹn",
-      icon: "💸",
+      word: "Late arrival policy",
+      phonetic: "/leɪt əˈraɪvl ˈpɒləsi/",
+      definition: "Quy định khách đến trễ",
+      icon: "⏰",
     },
     {
       word: "Health declaration form",
@@ -2351,10 +2351,14 @@ const GR_BANK: P3Bank = {
   ],
   policies: [
     {
-      word: "Membership tier rule",
-      phonetic: "/ˈmembəʃɪp tɪə ruːl/",
-      definition: "Quy định hạng hội viên",
-      icon: "🏅",
+      // Slot 0 fills "There is a small {w} for that." Guest Relations had no
+      // charge anywhere in its bank, so the swap that fixed Spa and Back
+      // Office landed a discounted RATE here — "There is a small member rate
+      // for that" is not something anyone says.
+      word: "Lounge access fee",
+      phonetic: "/laʊndʒ ˈækses fiː/",
+      definition: "Phí vào phòng chờ",
+      icon: "🛋️",
     },
     {
       word: "Benefit condition",
@@ -2393,10 +2397,10 @@ const GR_BANK: P3Bank = {
       icon: "🔄",
     },
     {
-      word: "Member rate",
-      phonetic: "/ˈmembə reɪt/",
-      definition: "Giá dành cho hội viên",
-      icon: "💵",
+      word: "Membership tier rule",
+      phonetic: "/ˈmembəʃɪp tɪə ruːl/",
+      definition: "Quy định hạng hội viên",
+      icon: "🏅",
     },
     {
       word: "Guest privacy rule",
@@ -2646,9 +2650,11 @@ const GR_BANK: P3Bank = {
       icon: "✉️",
     },
     {
-      word: "Invite you to the lounge",
-      phonetic: "/ɪnˈvaɪt juː tə ðə laʊndʒ/",
-      definition: "Mời quý khách lên phòng chờ",
+      // The frame is "We could {w} for you today." — a word carrying its own
+      // "you" produced "We could invite you to the lounge for you today."
+      word: "Offer lounge access",
+      phonetic: "/ˈɒfə laʊndʒ ˈækses/",
+      definition: "Mời sử dụng phòng chờ",
       icon: "🛋️",
     },
     {
@@ -2927,10 +2933,10 @@ const BO_BANK: P3Bank = {
   ],
   policies: [
     {
-      word: "Deposit policy",
-      phonetic: "/dɪˈpɒzɪt ˈpɒləsi/",
-      definition: "Chính sách đặt cọc",
-      icon: "💰",
+      word: "Late payment charge",
+      phonetic: "/leɪt ˈpeɪmənt tʃɑːdʒ/",
+      definition: "Phí thanh toán trễ hạn",
+      icon: "⏰",
     },
     {
       word: "Cancellation clause",
@@ -2951,10 +2957,10 @@ const BO_BANK: P3Bank = {
       icon: "🧾",
     },
     {
-      word: "Late payment charge",
-      phonetic: "/leɪt ˈpeɪmənt tʃɑːdʒ/",
-      definition: "Phí thanh toán trễ hạn",
-      icon: "⏰",
+      word: "Deposit policy",
+      phonetic: "/dɪˈpɒzɪt ˈpɒləsi/",
+      definition: "Chính sách đặt cọc",
+      icon: "💰",
     },
     {
       word: "Minimum spend",

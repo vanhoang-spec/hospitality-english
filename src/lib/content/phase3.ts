@@ -1223,10 +1223,10 @@ function week27(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "I want to report a problem with my room.",
+          "I would like to report a problem, please.",
           `Could you tell me when the ${lo(k7)} started?`,
           `I am sure it is a small problem, sir.`,
-          `Someone will come to look at your room.`,
+          `Problem? Okay, I write it down, sir.`,
         ),
       ],
     }),
@@ -1465,8 +1465,8 @@ function week28(lx: Ctx): LessonContent[] {
         game(
           "Thank you, that seems to be working now.",
           `I will check again later to be sure.`,
-          `I am glad to hear that, sir.`,
-          `That is good news for both of us.`,
+          `Okay. Finished then, sir.`,
+          `Good, good. No more problem now, sir.`,
         ),
       ],
     }),

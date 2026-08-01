@@ -864,7 +864,7 @@ for (const banks of [P2_BANKS] as unknown as BankSetWithArt[]) {
 
 /** Common uncountables beyond the declared ones. */
 const MASS_OR_PLURAL =
-  /^(breakfast|lunch|dinner|service|help|information|advice|luggage|baggage|water|coffee|tea|bread|ice|music|cash|change|parking|access|housekeeping|storage|delivery|polish|oil|equipment|staff|news|feedback|training|transport|laundry|maintenance|security|chicken|beef|rice|noodles|fish|pork|soup|salad|juice|wine|beer|late check-out|early check-in|room service|turndown|valet|wifi|breakfast service)\b/i;
+  /^(breakfast|lunch|dinner|service|help|information|advice|luggage|baggage|water|coffee|tea|bread|ice|music|cash|change|parking|access|housekeeping|storage|delivery|polish|oil|equipment|staff|news|feedback|training|transport|laundry|maintenance|security|chicken|beef|rice|noodles|fish|pork|soup|salad|juice|wine|beer|late check-out|early check-in|lounge access|room service|turndown|valet|wifi|breakfast service)\b/i;
 
 const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string }[] = [
   {

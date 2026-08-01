@@ -1636,22 +1636,28 @@ const HK_BANK: P4Bank = {
       icon: "♻️",
     },
     {
-      word: "Organic cotton towel",
-      phonetic: "/ɔːˈɡænɪk ˈkɒtn ˈtaʊəl/",
-      definition: "Khăn bông hữu cơ",
-      icon: "🤍",
+      // Slots 10-12 land in frames a guest EXPERIENCES ("Families usually
+      // enjoy the {w} most.", "The {w} suits guests who prefer quiet.",
+      // "I hope you will experience the {w} yourself."). Housekeeping
+      // supplies broke all three — "Families usually enjoy the organic
+      // cotton towel most." What the department can actually show is the
+      // room and the part of the property it keeps.
+      word: "Family connecting room",
+      phonetic: "/ˈfæməli kəˈnektɪŋ ruːm/",
+      definition: "Phòng thông nhau cho gia đình",
+      icon: "🚪",
     },
     {
-      word: "Chemical-free cleaning",
-      phonetic: "/ˈkemɪkl friː ˈkliːnɪŋ/",
-      definition: "Việc dọn phòng không dùng hóa chất",
-      icon: "🍃",
+      word: "Quiet garden wing",
+      phonetic: "/ˈkwaɪət ˈɡɑːdn wɪŋ/",
+      definition: "Khu phòng hướng vườn yên tĩnh",
+      icon: "🌿",
     },
     {
-      word: "Bamboo laundry basket",
-      phonetic: "/bæmˈbuː ˈlɔːndri ˈbɑːskɪt/",
-      definition: "Giỏ đựng đồ giặt bằng tre",
-      icon: "🧺",
+      word: "Linen scent garden",
+      phonetic: "/ˈlɪnɪn sent ˈɡɑːdn/",
+      definition: "Vườn thảo mộc tạo hương đồ vải",
+      icon: "🌱",
     },
     {
       word: "Embroidered bed runner",
@@ -2583,9 +2589,12 @@ const SW_BANK: P4Bank = {
       icon: "💳",
     },
     {
-      word: "Unused package sessions",
-      phonetic: "/ˌʌnˈjuːzd ˈpækɪdʒ ˈseʃnz/",
-      definition: "Số buổi trong gói chưa dùng",
+      // Slot fills "I understand the {w} means more than money to you." — a
+      // plural headword broke the agreement: "the unused package sessions
+      // means more than money".
+      word: "Unused session credit",
+      phonetic: "/ʌnˈjuːzd ˈseʃn ˈkredɪt/",
+      definition: "Buổi trị liệu chưa dùng",
       icon: "📦",
     },
     {
@@ -3939,16 +3948,22 @@ const BO_BANK: P4Bank = {
       icon: "📈",
     },
     {
-      word: "Repeat client base",
-      phonetic: "/rɪˈpiːt ˈklaɪənt beɪs/",
-      definition: "Lượng khách hàng quay lại",
-      icon: "🔁",
+      // Week 31 frames put this slot in a visitor's experience ("Many guests
+      // describe the {w} as unforgettable.", "There is something calming
+      // about the {w}.", "Families usually notice the {w} most.", "I hope
+      // you will notice the {w} during your stay."). Internal metrics broke
+      // every one of them. Back Office runs site inspections, so what it
+      // shows a corporate client is the property itself.
+      word: "Executive lounge",
+      phonetic: "/ɪɡˈzekjʊtɪv laʊndʒ/",
+      definition: "Phòng chờ hạng thương gia",
+      icon: "🛋️",
     },
     {
-      word: "Brand reputation",
-      phonetic: "/brænd ˌrepjuˈteɪʃn/",
-      definition: "Uy tín thương hiệu",
-      icon: "💎",
+      word: "Garden courtyard",
+      phonetic: "/ˈɡɑːdn ˈkɔːtjɑːd/",
+      definition: "Sân vườn trong",
+      icon: "🌳",
     },
     {
       word: "Service track record",
@@ -3969,22 +3984,22 @@ const BO_BANK: P4Bank = {
       icon: "🗺️",
     },
     {
-      word: "Renovation investment",
-      phonetic: "/ˌrenəˈveɪʃn ɪnˈvestmənt/",
-      definition: "Khoản đầu tư cải tạo",
-      icon: "🔨",
+      word: "Family suite layout",
+      phonetic: "/ˈfæməli swiːt ˈleɪaʊt/",
+      definition: "Bố trí phòng suite gia đình",
+      icon: "🛏️",
     },
     {
-      word: "Staff retention rate",
-      phonetic: "/stɑːf rɪˈtenʃn reɪt/",
-      definition: "Tỷ lệ giữ chân nhân viên",
-      icon: "🤝",
+      word: "Upper floor",
+      phonetic: "/ˈʌpə flɔː/",
+      definition: "Tầng cao",
+      icon: "🏙️",
     },
     {
-      word: "Market share",
-      phonetic: "/ˈmɑːkɪt ʃeə/",
-      definition: "Thị phần đang nắm giữ",
-      icon: "🥧",
+      word: "Riverside terrace",
+      phonetic: "/ˈrɪvəsaɪd ˈterəs/",
+      definition: "Sân hiên bên sông",
+      icon: "🌅",
     },
     {
       word: "Client testimonial",
