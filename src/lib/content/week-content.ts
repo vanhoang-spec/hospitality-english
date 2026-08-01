@@ -184,12 +184,12 @@ export const FO_WEEK_17: WeekContent = {
         text: "AGODA CONFIRMATION VOUCHER\nGuest Name: David Green\nRoom Type: Deluxe Ocean View\nStay: 2 Nights\nStatus: Confirmed / Paid Online",
         questions: [
           {
-            q: "How did the guest pay for the room?",
+            q: "Khách đã thanh toán phòng bằng cách nào?",
             options: ["A. Paid online via Agoda", "B. Pay later at front desk", "C. Cash"],
             correct: 0,
           },
           {
-            q: "What is the room type booked by David Green?",
+            q: "David Green đã đặt loại phòng nào?",
             options: ["A. Standard Room", "B. Superior City View", "C. Deluxe Ocean View"],
             correct: 2,
           },
@@ -272,12 +272,12 @@ export const FO_WEEK_17: WeekContent = {
         text: "HOTEL SOP - LOCAL REGISTRATION:\nAll international guests must show their original passport at check-in. The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM.",
         questions: [
           {
-            q: "What document must international guests show at check-in?",
+            q: "Khách quốc tế phải xuất trình giấy tờ gì khi nhận phòng?",
             options: ["A. Credit card", "B. Original passport", "C. Flight ticket"],
             correct: 1,
           },
           {
-            q: "When must the receptionist upload the scanned passport?",
+            q: "Lễ tân phải tải bản scan hộ chiếu lên khi nào?",
             options: ["A. Next morning", "B. Before 11:00 PM", "C. After check-out"],
             correct: 1,
           },
@@ -357,12 +357,12 @@ export const FO_WEEK_17: WeekContent = {
         text: "INCIDENTAL POLICY:\nA security deposit of 1,000,000 VND per night is required at check-in. This amount will be released automatically at check-out if there are no mini-bar or laundry uses.",
         questions: [
           {
-            q: "When will the security deposit be released?",
+            q: "Tiền đặt cọc được hoàn khi nào?",
             options: ["A. At check-out time", "B. Two weeks later", "C. At dinner time"],
             correct: 0,
           },
           {
-            q: "What is the security deposit amount per night?",
+            q: "Tiền đặt cọc mỗi đêm là bao nhiêu?",
             options: ["A. 500,000 VND", "B. 1,000,000 VND", "C. 2,000,000 VND"],
             correct: 1,
           },
@@ -451,12 +451,12 @@ export const FO_WEEK_17: WeekContent = {
         text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.",
         questions: [
           {
-            q: "Where is the swimming pool located?",
+            q: "Hồ bơi nằm ở đâu?",
             options: ["A. First floor", "B. On the rooftop", "C. Room 512"],
             correct: 1,
           },
           {
-            q: "What time does the complimentary breakfast buffet close?",
+            q: "Buffet sáng miễn phí đóng lúc mấy giờ?",
             options: ["A. 9:00 AM", "B. 10:00 AM", "C. 11:00 AM"],
             correct: 1,
           },
@@ -553,7 +553,7 @@ export const FB_WEEK_15: WeekContent = {
         text: "IN-HOUSE GUEST LIST - BREAKFAST\nRoom 512 - Mr. David Green - 2 Adults - B&B Included\nRoom 608 - Ms. Lisa Tran - 1 Adult - Room Only (No Breakfast)\nRestaurant Hours: 06:30 - 10:00",
         questions: [
           {
-            q: "Which guest is NOT included for breakfast?",
+            q: "Khách nào KHÔNG được kèm bữa sáng?",
             options: [
               "A. Mr. David Green in Room 512",
               "B. Ms. Lisa Tran in Room 608",
@@ -562,7 +562,7 @@ export const FB_WEEK_15: WeekContent = {
             correct: 1,
           },
           {
-            q: "What does 'B&B' mean for the guest in Room 512?",
+            q: "'B&B' nghĩa là gì với khách phòng 512?",
             options: [
               "A. Bed and Breakfast included",
               "B. Bed only, no meals",
@@ -653,12 +653,12 @@ export const FB_WEEK_15: WeekContent = {
         text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.",
         questions: [
           {
-            q: "During which hours are tables usually full?",
+            q: "Khung giờ nào nhà hàng thường kín bàn?",
             options: ["A. 6:00 - 7:00 AM", "B. 8:00 - 9:30 AM", "C. 10:00 - 11:00 AM"],
             correct: 1,
           },
           {
-            q: "Where should waiting guests be directed to?",
+            q: "Nên mời khách đang chờ sang đâu?",
             options: [
               "A. Near the buffet line",
               "B. To another restaurant",
@@ -748,12 +748,12 @@ export const FB_WEEK_15: WeekContent = {
         text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)",
         questions: [
           {
-            q: "Where is the bakery corner located?",
+            q: "Quầy bánh nằm ở đâu?",
             options: ["A. Center", "B. Left wall", "C. Near the windows"],
             correct: 1,
           },
           {
-            q: "What can guests order at the live station?",
+            q: "Khách gọi được món gì ở quầy chế biến tại chỗ?",
             options: ["A. Only bread and jam", "B. Only coffee", "C. Phở and made-to-order eggs"],
             correct: 2,
           },
@@ -840,7 +840,7 @@ export const FB_WEEK_15: WeekContent = {
         text: "TABLE SERVICE SOP - CLEARING\nAlways ask for permission before clearing any plate.\nNever clear a plate while a guest is still using cutlery on it.\nAsk 'Is everything to your liking?' at least once during the meal.",
         questions: [
           {
-            q: "When should staff NOT clear a plate?",
+            q: "Khi nào nhân viên KHÔNG được dọn đĩa?",
             options: [
               "A. When it is empty",
               "B. While the guest is still using cutlery on it",
@@ -849,7 +849,7 @@ export const FB_WEEK_15: WeekContent = {
             correct: 1,
           },
           {
-            q: "What should staff ask during the meal?",
+            q: "Trong bữa ăn, nhân viên nên hỏi câu gì?",
             options: [
               "A. 'Is everything to your liking?'",
               "B. 'Are you finished?'",
@@ -959,12 +959,12 @@ export const HK_WEEK_15: WeekContent = {
         text: "HOUSEKEEPING SOP - KNOCK AND ANNOUNCE:\n1. Knock on the door twice and say 'Housekeeping' in a clear voice.\n2. Wait at least 10 seconds for a response.\n3. If there is no answer, knock and announce a second time before entering.\n4. If a guest answers, greet them and politely ask permission to clean the room.",
         questions: [
           {
-            q: "What should staff say while knocking on the door?",
+            q: "Khi gõ cửa, nhân viên phải nói gì?",
             options: ["A. Room service", "B. Housekeeping", "C. Reception"],
             correct: 1,
           },
           {
-            q: "How long should staff wait for a response after knocking?",
+            q: "Sau khi gõ cửa, phải chờ phản hồi bao lâu?",
             options: ["A. At least 10 seconds", "B. 1 minute", "C. No need to wait"],
             correct: 0,
           },
@@ -1048,12 +1048,12 @@ export const HK_WEEK_15: WeekContent = {
         text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.",
         questions: [
           {
-            q: "How many bath towels did the guest in Room 812 request?",
+            q: "Khách phòng 812 xin mấy chiếc khăn tắm?",
             options: ["A. One", "B. Two", "C. Three"],
             correct: 1,
           },
           {
-            q: "What is the delivery deadline for amenities requests?",
+            q: "Yêu cầu đồ dùng phải giao trong bao lâu?",
             options: ["A. Within 15 minutes", "B. Within 1 hour", "C. Next morning"],
             correct: 0,
           },
@@ -1137,12 +1137,12 @@ export const HK_WEEK_15: WeekContent = {
         text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes",
         questions: [
           {
-            q: "How much does the rollaway bed cost per night?",
+            q: "Giường phụ giá bao nhiêu một đêm?",
             options: ["A. Free", "B. 300,000 VND", "C. 500,000 VND"],
             correct: 1,
           },
           {
-            q: "How far in advance should guests request a rollaway bed?",
+            q: "Khách cần báo trước bao lâu để xin giường phụ?",
             options: ["A. 2 hours", "B. 1 day", "C. No need to request"],
             correct: 0,
           },
@@ -1232,12 +1232,12 @@ export const HK_WEEK_15: WeekContent = {
         text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- Never remove the DND sign or enter without guest confirmation.",
         questions: [
           {
-            q: "What time should staff call a DND room to check on the guest?",
+            q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
             options: ["A. Past 2:00 PM", "B. Past 6:00 PM", "C. Immediately in the morning"],
             correct: 0,
           },
           {
-            q: "What should staff do if there is no answer on the phone?",
+            q: "Nếu gọi điện không ai bắt máy, nhân viên phải làm gì?",
             options: [
               "A. Enter the room anyway",
               "B. Leave a voicemail and slip a note under the door",
@@ -1352,7 +1352,7 @@ export const SW_WEEK_23: WeekContent = {
         text: "SPA HEALTH CONSULTATION FORM\nGuest Name: Ms. Lan Pham\nAny allergies: Peanut oil\nSkin condition: Sensitive skin\nPregnant: No\nPreferred pressure: Medium\nAreas to avoid: Lower back (recent injury)",
         questions: [
           {
-            q: "Which area should the therapist avoid during the massage?",
+            q: "Trong lúc xoa bóp, kỹ thuật viên phải tránh vùng nào?",
             options: [
               "A. The guest's arms",
               "B. The guest's lower back",
@@ -1361,7 +1361,7 @@ export const SW_WEEK_23: WeekContent = {
             correct: 1,
           },
           {
-            q: "What allergy does the guest have?",
+            q: "Khách bị dị ứng gì?",
             options: ["A. Peanut oil", "B. Lavender", "C. Nuts and dairy"],
             correct: 0,
           },
@@ -1447,7 +1447,7 @@ export const SW_WEEK_23: WeekContent = {
         text: "SERENITY SPA - TREATMENT MENU\nTraditional Vietnamese Massage - 60 min - Gentle stretching, eases fatigue\nHot Stone Massage - 75 min - Heated basalt stones, deep muscle relief\nHerbal Steam Therapy - 30 min - Local herbs, clears sinuses, softens skin",
         questions: [
           {
-            q: "Which treatment uses heated basalt stones?",
+            q: "Liệu trình nào dùng đá bazan làm nóng?",
             options: [
               "A. Traditional Vietnamese Massage",
               "B. Hot Stone Massage",
@@ -1456,7 +1456,7 @@ export const SW_WEEK_23: WeekContent = {
             correct: 1,
           },
           {
-            q: "How long does the Herbal Steam Therapy last?",
+            q: "Liệu trình xông thảo mộc kéo dài bao lâu?",
             options: ["A. 30 minutes", "B. 60 minutes", "C. 75 minutes"],
             correct: 0,
           },
@@ -1546,12 +1546,12 @@ export const SW_WEEK_23: WeekContent = {
         text: "SERENITY SPA - THIS MONTH'S OFFER\nCouple's Combo: 2 x 90-min Massage + Herbal Tea for Two - 20% off\nFamily Care Package: 4 Sessions (Valid 3 Months) - Save 1,200,000 VND\nBook 2 or more sessions to receive a complimentary foot scrub.",
         questions: [
           {
-            q: "What do guests receive with the Couple's Combo?",
+            q: "Gói Couple's Combo tặng kèm những gì?",
             options: ["A. Herbal tea for two", "B. A free foot scrub", "C. A discount voucher"],
             correct: 0,
           },
           {
-            q: "How long is the Family Care Package valid?",
+            q: "Gói Family Care có hiệu lực bao lâu?",
             options: ["A. 1 month", "B. 3 months", "C. 1 year"],
             correct: 1,
           },
@@ -1642,7 +1642,7 @@ export const SW_WEEK_23: WeekContent = {
         text: "SERENITY SPA - TAKE-HOME PRODUCTS\nLavender Essential Oil - Relaxation & sleep support - 350,000 VND\nGinger Body Scrub - Improves circulation - 280,000 VND\nAloe Vera Moisturizer - For sensitive, sun-exposed skin - 320,000 VND\nAsk your therapist which product suits your skin type.",
         questions: [
           {
-            q: "Which product is best for sensitive, sun-exposed skin?",
+            q: "Sản phẩm nào hợp nhất với da nhạy cảm, bị nắng?",
             options: [
               "A. Lavender Essential Oil",
               "B. Ginger Body Scrub",
@@ -1651,7 +1651,7 @@ export const SW_WEEK_23: WeekContent = {
             correct: 2,
           },
           {
-            q: "What is the Lavender Essential Oil used for?",
+            q: "Tinh dầu oải hương dùng để làm gì?",
             options: [
               "A. Improves circulation",
               "B. Relaxation and sleep support",
@@ -1763,12 +1763,12 @@ export const GR_WEEK_27: WeekContent = {
         text: "EXECUTIVE CLUB PRIVILEGES\nGuest: Mr. Minh Tran | Room: Club Suite 1802\n- Executive Lounge access (7:00 AM - 10:00 PM)\n- Complimentary breakfast & all-day refreshments\n- Evening Cocktail Hour (6:00 PM - 8:00 PM)\n- Late check-out until 2:00 PM (subject to availability)\n- Complimentary pressing of two garments per stay",
         questions: [
           {
-            q: "What time does the Executive Lounge close?",
+            q: "Executive Lounge đóng cửa lúc mấy giờ?",
             options: ["A. 8:00 PM", "B. 10:00 PM", "C. 2:00 PM"],
             correct: 1,
           },
           {
-            q: "What is included besides breakfast and drinks?",
+            q: "Ngoài bữa sáng và đồ uống còn kèm gì?",
             options: [
               "A. Free spa treatment",
               "B. Free garment pressing",
@@ -1863,12 +1863,12 @@ export const GR_WEEK_27: WeekContent = {
         text: "EXECUTIVE LOUNGE DAILY SCHEDULE\n7:00 - 10:30 AM: Breakfast\n10:30 AM - 3:00 PM: All-day Refreshments\n3:00 - 5:00 PM: Afternoon Tea\n6:00 - 8:00 PM: Evening Cocktail Hour (canapés & selected beverages)\nNote: Children under 12 are welcome before 6:00 PM only.",
         questions: [
           {
-            q: "When can guests enjoy Afternoon Tea?",
+            q: "Khách dùng trà chiều được vào khung giờ nào?",
             options: ["A. 7:00 - 10:30 AM", "B. 3:00 - 5:00 PM", "C. 6:00 - 8:00 PM"],
             correct: 1,
           },
           {
-            q: "What is the age policy for the lounge?",
+            q: "Quy định độ tuổi vào phòng chờ là gì?",
             options: [
               "A. No children allowed at all",
               "B. Children under 12 welcome only before 6:00 PM",
@@ -1965,12 +1965,12 @@ export const GR_WEEK_27: WeekContent = {
         text: "BUSINESS CENTER REQUEST FORM\nGuest: Ms. Lan Pham | Suite 2105\nService Requested: Private Meeting Room (30 mins)\nPrinting: 1 document, Confidential, 5 copies\nRequested Time: 2:30 PM\nStatus: Confirmed - Room B, Urgent Print Queue",
         questions: [
           {
-            q: "How many copies of the document does the guest need?",
+            q: "Khách cần bao nhiêu bản sao tài liệu?",
             options: ["A. 1 copy", "B. 5 copies", "C. 10 copies"],
             correct: 1,
           },
           {
-            q: "What type of document is being printed?",
+            q: "Tài liệu đang in là loại gì?",
             options: ["A. Confidential", "B. Public", "C. Marketing material"],
             correct: 0,
           },
@@ -2061,12 +2061,12 @@ export const GR_WEEK_27: WeekContent = {
         text: "GUEST HISTORY PROFILE\nGuest: Mr. James Carter | Loyalty Tier: Diamond\nPreferences:\n- Coffee: Black, no sugar\n- Pillow: Firm, 2 extra\n- Room: High floor, away from elevator\n- Special Note: Wedding anniversary on Aug 15 - arrange small cake\nAllergy: None reported",
         questions: [
           {
-            q: "How does Mr. Carter like his coffee?",
+            q: "Ông Carter thích uống cà phê thế nào?",
             options: ["A. Black, no sugar", "B. With milk and sugar", "C. Black with sugar"],
             correct: 0,
           },
           {
-            q: "What special arrangement should be made for Mr. Carter?",
+            q: "Cần chuẩn bị riêng điều gì cho ông Carter?",
             options: [
               "A. Airport pickup",
               "B. A small cake for his anniversary",
@@ -2181,7 +2181,7 @@ export const BO_WEEK_37: WeekContent = {
         text: "GRAND HOTEL - CORPORATE RATE PROPOSAL\nPartner: Viet Travel Co., Ltd.\nRoom Type: Deluxe Room\nCorporate Rate: 1,800,000 VND/night (net)\nMinimum Volume: 150 room-nights/month\nContract Term: 12 months",
         questions: [
           {
-            q: "What is the minimum volume required for this corporate rate?",
+            q: "Mức giá doanh nghiệp này đòi sản lượng tối thiểu bao nhiêu?",
             options: [
               "A. 100 room-nights/month",
               "B. 150 room-nights/month",
@@ -2190,7 +2190,7 @@ export const BO_WEEK_37: WeekContent = {
             correct: 1,
           },
           {
-            q: "How long is the contract term?",
+            q: "Hợp đồng có thời hạn bao lâu?",
             options: ["A. 6 months", "B. 12 months", "C. 24 months"],
             correct: 1,
           },
@@ -2278,12 +2278,12 @@ export const BO_WEEK_37: WeekContent = {
         text: "CONTRACT CLAUSE 4 - ROOM ALLOTMENT:\nThe Hotel shall allot ten (10) rooms per night to the Partner.\nAny rooms not confirmed by the Partner within the Release Period (7 days prior to arrival) shall be automatically released back to general inventory.",
         questions: [
           {
-            q: "How many rooms does the Hotel allot per night?",
+            q: "Khách sạn giữ bao nhiêu phòng mỗi đêm cho đối tác?",
             options: ["A. 5 rooms", "B. 10 rooms", "C. 15 rooms"],
             correct: 1,
           },
           {
-            q: "What happens to rooms not confirmed within the release period?",
+            q: "Phòng không được xác nhận trong hạn giữ chỗ sẽ ra sao?",
             options: [
               "A. They are held for another week",
               "B. They are released back to general inventory",
@@ -2378,12 +2378,12 @@ export const BO_WEEK_37: WeekContent = {
         text: "CONTRACT CLAUSE 6 - BLACKOUT DATES & CANCELLATION:\nThe Contract Rate excludes the following Blackout Dates: 15 Jan - 05 Feb (Tet Holiday), 30 Apr - 03 May.\nCancellations made less than 14 days before arrival are subject to a penalty fee of one (1) night's rate.",
         questions: [
           {
-            q: "Which holiday is listed as a blackout date?",
+            q: "Dịp lễ nào bị liệt vào ngày không áp dụng giá?",
             options: ["A. Christmas", "B. Tet Holiday", "C. National Day"],
             correct: 1,
           },
           {
-            q: "What is the penalty for cancelling less than 14 days before arrival?",
+            q: "Hủy dưới 14 ngày trước ngày đến thì bị phạt thế nào?",
             options: ["A. No penalty", "B. One night's rate", "C. Full stay charge"],
             correct: 1,
           },
@@ -2477,12 +2477,12 @@ export const BO_WEEK_37: WeekContent = {
         text: "EMAIL FROM TRAVEL AGENT PARTNER:\nSubject: Commission Review Request\nHi team, we've received a better offer from a competitor hotel at 15% commission. We currently receive 10% with you. Please advise if you can match this, or we may need to shift our allocation next quarter.",
         questions: [
           {
-            q: "What commission rate is the competitor hotel offering?",
+            q: "Khách sạn đối thủ chào mức hoa hồng bao nhiêu?",
             options: ["A. 10%", "B. 12%", "C. 15%"],
             correct: 2,
           },
           {
-            q: "What does the partner say might happen if the rate is not matched?",
+            q: "Đối tác nói điều gì có thể xảy ra nếu không theo được mức giá đó?",
             options: [
               "A. They will end the partnership immediately",
               "B. They may shift allocation next quarter",
@@ -2601,12 +2601,12 @@ export const FO_WEEK_26: WeekContent = {
         text: "ROOMING LIST - SUNRISE TRAVEL GROUP\nGroup Size: 25 Rooms / 50 Pax\nArrival Date: 20 JUL 2026\nRoom Type: 20 Twin Rooms, 5 Triple Rooms (extra bed)\nSpecial Note: 2 guests require rooms on a low floor",
         questions: [
           {
-            q: "How many rooms in the group need an extra bed?",
+            q: "Trong đoàn có bao nhiêu phòng cần giường phụ?",
             options: ["A. 20", "B. 5", "C. 2"],
             correct: 1,
           },
           {
-            q: "What special request is noted for two guests?",
+            q: "Hai khách có ghi chú yêu cầu đặc biệt gì?",
             options: ["A. Early check-in", "B. Extra pillows", "C. Low floor rooms"],
             correct: 2,
           },
@@ -2698,12 +2698,12 @@ export const FO_WEEK_26: WeekContent = {
         text: "EXPRESS GROUP CHECK-IN - SOP\nStep 1: Pre-assign rooms & key packets before arrival.\nStep 2: Hand out key packets in the lobby (max 5 minutes).\nStep 3: Bellman team collects luggage tags and delivers bags directly to rooms.",
         questions: [
           {
-            q: "What must be prepared before the group arrives?",
+            q: "Trước khi đoàn đến phải chuẩn bị gì?",
             options: ["A. Key packets", "B. Luggage tags only", "C. Nothing"],
             correct: 0,
           },
           {
-            q: "Who delivers the luggage directly to the rooms?",
+            q: "Ai đưa hành lý thẳng lên phòng?",
             options: ["A. Front desk staff", "B. The bellman team", "C. The tour leader"],
             correct: 1,
           },
@@ -2795,12 +2795,12 @@ export const FO_WEEK_26: WeekContent = {
         text: "FRONT DESK NOTE - ROOM ADJUSTMENT\nRoom 812 (Mr. Tran) and Room 815 (Mr. Le) requested to swap rooms.\nBoth guests also requested separate folios for individual billing.\nAction: Update PMS room assignment and issue two new keycards.",
         questions: [
           {
-            q: "What did Mr. Tran and Mr. Le request regarding their rooms?",
+            q: "Ông Trần và ông Lê yêu cầu gì về phòng của họ?",
             options: ["A. To swap rooms", "B. To upgrade rooms", "C. To cancel their rooms"],
             correct: 0,
           },
           {
-            q: "What billing change did the guests request?",
+            q: "Khách yêu cầu đổi gì trong cách xuất hóa đơn?",
             options: ["A. One combined bill", "B. Separate folios", "C. No bill needed"],
             correct: 1,
           },
@@ -2892,12 +2892,12 @@ export const FO_WEEK_26: WeekContent = {
         text: "GROUP NOTICE BOARD - SUNRISE TRAVEL\nGroup Breakfast: 07:00 - 08:00, Lotus Private Hall\nShuttle Bus Departure: 08:00 AM sharp, Main Lobby\nPlease be seated five minutes before departure.",
         questions: [
           {
-            q: "Where will the group have breakfast?",
+            q: "Đoàn sẽ ăn sáng ở đâu?",
             options: ["A. Lotus Private Hall", "B. Main Lobby", "C. Rooftop Restaurant"],
             correct: 0,
           },
           {
-            q: "What time does the shuttle bus depart?",
+            q: "Xe đưa đón khởi hành lúc mấy giờ?",
             options: ["A. 07:00 AM", "B. 07:55 AM", "C. 08:00 AM"],
             correct: 2,
           },
@@ -2999,12 +2999,12 @@ export const FB_WEEK_31: WeekContent = {
         text: "MENU NOTE - BEEF PHỞ (PHỞ BÒ)\nBroth: Beef bones simmered 8 hours with star anise & cinnamon\nNoodles: Fresh flat rice noodles\nServed with: Fresh herbs, bean sprouts, lime, chili\nChef's Tip: Add herbs just before eating for the best aroma.",
         questions: [
           {
-            q: "How long is the beef broth simmered?",
+            q: "Nước dùng bò được ninh trong bao lâu?",
             options: ["A. 2 hours", "B. 8 hours", "C. 1 hour"],
             correct: 1,
           },
           {
-            q: "When should the herbs be added, according to the chef's tip?",
+            q: "Theo lời bếp trưởng, khi nào mới cho rau thơm vào?",
             options: [
               "A. While the broth is simmering",
               "B. Just before eating",
@@ -3098,7 +3098,7 @@ export const FB_WEEK_31: WeekContent = {
         text: "VIETNAMESE COFFEE MENU\nCà Phê Sữa Đá: Robusta coffee, condensed milk, served over ice\nCà Phê Trứng: Whisked egg yolk & condensed milk over hot coffee\nBạc Sỉu: Coffee with a higher ratio of condensed milk, less bitter\nBrewing Method: Traditional metal drip filter (phin), 4-5 minutes",
         questions: [
           {
-            q: "How long does the traditional drip filter take to brew?",
+            q: "Pha phin truyền thống mất bao lâu?",
             options: ["A. 4-5 minutes", "B. 30 seconds", "C. 1 hour"],
             correct: 0,
           },
@@ -3199,12 +3199,12 @@ export const FB_WEEK_31: WeekContent = {
         text: "GUEST DIETARY NOTE\nTable 14 - Mr. & Mrs. Carter\nMrs. Carter: Peanut allergy (severe)\nMr. Carter: Gluten-free diet\nKitchen Note: Use separate pan, avoid peanut oil, confirm all sauces before serving.",
         questions: [
           {
-            q: "What allergy does Mrs. Carter have?",
+            q: "Bà Carter bị dị ứng gì?",
             options: ["A. Peanut allergy", "B. Seafood allergy", "C. Dairy allergy"],
             correct: 0,
           },
           {
-            q: "What must the kitchen do before serving, according to the note?",
+            q: "Theo ghi chú, bếp phải làm gì trước khi phục vụ?",
             options: [
               "A. Nothing special",
               "B. Confirm all sauces and use a separate pan",
@@ -3298,7 +3298,7 @@ export const FB_WEEK_31: WeekContent = {
         text: "CHEF'S SIGNATURE RECOMMENDATIONS\nFor Spice Lovers: Grilled Squid with Chili Lime Sauce\nFor Vegetarian Guests: Stir-Fried Morning Glory with Tofu\nFor Special Occasions: Grilled Lemongrass Beef, pairs well with red wine\nNote: Ask about the guest's preferences before recommending a dish.",
         questions: [
           {
-            q: "Which dish is recommended for spice lovers?",
+            q: "Món nào được gợi ý cho khách thích ăn cay?",
             options: [
               "A. Stir-Fried Morning Glory",
               "B. Grilled Squid with Chili Lime Sauce",
@@ -3307,7 +3307,7 @@ export const FB_WEEK_31: WeekContent = {
             correct: 1,
           },
           {
-            q: "What does the Grilled Lemongrass Beef pair well with?",
+            q: "Món bò nướng sả hợp với món gì?",
             options: ["A. Red wine", "B. Iced coffee", "C. Green tea"],
             correct: 0,
           },
@@ -3418,12 +3418,12 @@ export const HK_WEEK_33: WeekContent = {
         text: "LAUNDRY PICK-UP RECORD\nRoom: 812\nGuest: Mr. Tanaka\nItems Collected: 3 Shirts, 2 Trousers, 1 Jacket\nCondition Noted: Small stain on 1 shirt collar\nCollected by: Housekeeping Attendant - Linh\nTime: 9:15 AM",
         questions: [
           {
-            q: "How many trousers did the guest give for laundry?",
+            q: "Khách gửi giặt mấy chiếc quần?",
             options: ["A. 1", "B. 2", "C. 3"],
             correct: 1,
           },
           {
-            q: "What condition was noted before collection?",
+            q: "Trước khi nhận đồ đã ghi nhận tình trạng gì?",
             options: ["A. A missing button", "B. A torn sleeve", "C. A small stain on the collar"],
             correct: 2,
           },
@@ -3511,12 +3511,12 @@ export const HK_WEEK_33: WeekContent = {
         text: "HOTEL LAUNDRY SERVICE MENU\nRegular Wash: Ready in 24 hours - Standard Rate\nDry Cleaning: Ready in 24 hours - +30% of Standard Rate\nExpress Service: Ready in 4 hours - +50% of Standard Rate\nNote: Express orders placed after 6 PM will be delivered the next morning.",
         questions: [
           {
-            q: "What is the surcharge for dry cleaning?",
+            q: "Giặt khô tính phụ thu bao nhiêu?",
             options: ["A. +50%", "B. +30%", "C. No extra charge"],
             correct: 1,
           },
           {
-            q: "What happens to an express order placed after 6 PM?",
+            q: "Đơn giặt nhanh đặt sau 18h thì sao?",
             options: [
               "A. It is cancelled",
               "B. It is delivered within 4 hours anyway",
@@ -3613,7 +3613,7 @@ export const HK_WEEK_33: WeekContent = {
         text: "LAUNDRY DAMAGE INCIDENT REPORT\nRoom: 1204\nGuest: Ms. Delacroix\nItem: White cotton blouse\nIssue Reported: Faded color, missing button\nReported On: Return of laundry, 5:40 PM\nAction: Escalated to Housekeeping Supervisor for review",
         questions: [
           {
-            q: "What two issues did the guest report?",
+            q: "Khách phản ánh hai vấn đề gì?",
             options: [
               "A. Faded color and missing button",
               "B. Torn sleeve and wrong size",
@@ -3622,7 +3622,7 @@ export const HK_WEEK_33: WeekContent = {
             correct: 0,
           },
           {
-            q: "Who was the incident escalated to?",
+            q: "Sự việc được báo lên ai?",
             options: [
               "A. The Front Office Manager",
               "B. The Housekeeping Supervisor",
@@ -3718,12 +3718,12 @@ export const HK_WEEK_33: WeekContent = {
         text: "HOUSEKEEPING SOP - LAUNDRY COMPENSATION GUIDE\nMinor Damage (stain, small mark): Free re-cleaning\nMajor Damage (shrinkage, fading, tearing): Up to 10x the laundry service fee\nLost Item: Up to 10x the laundry service fee or replacement value, whichever is lower, pending Manager approval\nAll compensation above $50 requires Duty Manager sign-off.",
         questions: [
           {
-            q: "What compensation is given for minor damage like a stain?",
+            q: "Hư hỏng nhẹ như vết ố được bồi thường thế nào?",
             options: ["A. Cash refund", "B. Free re-cleaning", "C. 10x the laundry fee"],
             correct: 1,
           },
           {
-            q: "What is required for compensation above $50?",
+            q: "Bồi thường trên 50 đô cần điều kiện gì?",
             options: [
               "A. Guest signature only",
               "B. Duty Manager sign-off",
@@ -3839,12 +3839,12 @@ export const SW_WEEK_19: WeekContent = {
         text: "POOL AREA GUEST GUIDE\nTowel Station: Located at the pool entrance, open 7:00 AM - 7:00 PM\nLockers: Complimentary, use your room key card\nPrivate Cabanas: Reserve at least 2 hours in advance at the Pool Bar\nLost your key card? Please inform any pool attendant immediately.",
         questions: [
           {
-            q: "What do guests need in order to use the lockers?",
+            q: "Khách cần gì để dùng tủ khóa?",
             options: ["A. A separate rental fee", "B. Their room key card", "C. A signed form"],
             correct: 1,
           },
           {
-            q: "How far in advance should a private cabana be reserved?",
+            q: "Cần đặt chòi riêng trước bao lâu?",
             options: ["A. At least 30 minutes", "B. At least 2 hours", "C. One full day"],
             correct: 1,
           },
@@ -3935,12 +3935,12 @@ export const SW_WEEK_19: WeekContent = {
         text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.",
         questions: [
           {
-            q: "According to the rules, what must children under 12 have with them in the pool?",
+            q: "Theo nội quy, trẻ dưới 12 tuổi xuống hồ phải có ai đi kèm?",
             options: ["A. A swimming certificate", "B. An adult", "C. A pool pass"],
             correct: 1,
           },
           {
-            q: "What is not allowed in the shallow end?",
+            q: "Ở khu nước nông không được làm gì?",
             options: ["A. Diving", "B. Floating", "C. Standing"],
             correct: 0,
           },
@@ -4030,7 +4030,7 @@ export const SW_WEEK_19: WeekContent = {
         text: "RESORT SAFETY BULLETIN\nStatus: RED FLAG - Tropical Storm Approaching\nSea Condition: Strong currents and rough waves expected until 6:00 PM\nSwimming: Prohibited in the ocean; pool remains open\nGuests are advised to stay on the beach deck and avoid the shoreline.",
         questions: [
           {
-            q: "What does the red flag warning prohibit?",
+            q: "Cờ đỏ cảnh báo cấm điều gì?",
             options: [
               "A. Swimming in the ocean",
               "B. Sitting on the beach deck",
@@ -4039,7 +4039,7 @@ export const SW_WEEK_19: WeekContent = {
             correct: 0,
           },
           {
-            q: "Which area remains open during the warning?",
+            q: "Trong lúc có cảnh báo, khu nào vẫn mở?",
             options: ["A. The beach shoreline", "B. The pool", "C. The private cabanas"],
             correct: 1,
           },
@@ -4129,7 +4129,7 @@ export const SW_WEEK_19: WeekContent = {
         text: "BEACH FIRST AID - QUICK GUIDE\nHeat Exhaustion Signs: Dizziness, heavy sweating, weakness\nAction: Move guest to shade, offer water, loosen tight clothing\nMuscle Cramps: Gently stretch the affected muscle, apply light massage\nAlways call the on-duty nurse for serious cases: Ext. 115",
         questions: [
           {
-            q: "What is the first action for a guest with heat exhaustion?",
+            q: "Gặp khách bị say nắng, việc đầu tiên phải làm là gì?",
             options: [
               "A. Give them coffee",
               "B. Move them to the shade",
@@ -4138,7 +4138,7 @@ export const SW_WEEK_19: WeekContent = {
             correct: 1,
           },
           {
-            q: "Which extension should staff call for serious cases?",
+            q: "Ca nặng thì gọi số máy lẻ nào?",
             options: ["A. Ext. 100", "B. Ext. 115", "C. Ext. 911"],
             correct: 1,
           },
@@ -4249,7 +4249,7 @@ export const GR_WEEK_34: WeekContent = {
         text: "GUEST PROFILE NOTE – GR OBSERVATION LOG\nRoom: 812\nGuest: Mr. & Mrs. Tran\nObservation: Guest mentioned \"first anniversary trip\" during check-in small talk.\nGuests wearing matching rings, asked concierge about rose petal options.\nAction: Flag profile as 'Anniversary – Day 2 of stay'. Notify GR Manager for surprise planning.",
         questions: [
           {
-            q: "What clue led staff to believe the guests were celebrating something special?",
+            q: "Dấu hiệu nào khiến nhân viên đoán khách đang có dịp đặc biệt?",
             options: [
               'A. They mentioned a "first anniversary trip"',
               "B. They asked for extra towels",
@@ -4258,7 +4258,7 @@ export const GR_WEEK_34: WeekContent = {
             correct: 0,
           },
           {
-            q: "What should the staff do after making this observation?",
+            q: "Sau khi nhận ra điều đó, nhân viên nên làm gì?",
             options: [
               "A. Ignore it and continue as normal",
               "B. Flag the profile and notify the GR Manager",
@@ -4354,12 +4354,12 @@ export const GR_WEEK_34: WeekContent = {
         text: 'INTERNAL COORDINATION SLIP – SPECIAL SET-UP\nRoom: 1205\nOccasion: Wedding Anniversary\nRequested by: GR Team\nKitchen: 1 heart-shaped chocolate cake, "Happy Anniversary" in red icing, deliver 6:45 PM\nHousekeeping: Rose petal bed decoration + 2 candles, complete by 6:30 PM\nGR: Confirm room access with guest before 6:15 PM',
         questions: [
           {
-            q: "By what time should Housekeeping finish the decoration?",
+            q: "Buồng phòng phải trang trí xong trước mấy giờ?",
             options: ["A. 6:15 PM", "B. 6:30 PM", "C. 6:45 PM"],
             correct: 1,
           },
           {
-            q: "What must GR confirm before 6:15 PM?",
+            q: "GR phải xác nhận điều gì trước 18h15?",
             options: ["A. Room access with the guest", "B. The cake flavor", "C. The candle color"],
             correct: 0,
           },
@@ -4453,12 +4453,12 @@ export const GR_WEEK_34: WeekContent = {
         text: 'MILESTONE MOMENT – PRESENTATION CHECKLIST\n1. Confirm guest is in the room before entering\n2. Knock, announce "Guest Relations" politely\n3. Present cake/gift with both hands\n4. Deliver congratulatory speech (use guest\'s name)\n5. Offer photo assistance if guest wishes\n6. Exit graciously, wish them a wonderful evening',
         questions: [
           {
-            q: "How should staff hold the cake or gift when entering?",
+            q: "Khi bưng bánh hoặc quà vào phòng, phải cầm thế nào?",
             options: ["A. With both hands", "B. Behind their back", "C. On a rolling cart only"],
             correct: 0,
           },
           {
-            q: "What is step 2 in the checklist?",
+            q: "Bước 2 trong checklist là gì?",
             options: [
               "A. Offer photo assistance",
               "B. Knock and announce politely",
@@ -4556,7 +4556,7 @@ export const GR_WEEK_34: WeekContent = {
         text: 'GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name "Nguyen" printed as "Nguyan" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered\nFollow-up: Manager to review order-confirmation process with Kitchen team',
         questions: [
           {
-            q: "What was the error described in this incident?",
+            q: "Sự cố này mô tả lỗi gì?",
             options: [
               "A. Wrong cake flavor and a misspelled name",
               "B. Late delivery only",
@@ -4565,7 +4565,7 @@ export const GR_WEEK_34: WeekContent = {
             correct: 0,
           },
           {
-            q: "What did GR offer the guest as a gesture of goodwill?",
+            q: "GR đã tặng khách gì để bày tỏ thiện chí?",
             options: [
               "A. A room discount",
               "B. A complimentary bottle of wine",
@@ -4681,12 +4681,12 @@ export const BO_WEEK_38: WeekContent = {
         text: "REQUEST FOR PROPOSAL\nCompany: Saigon Tech Corporation\nEvent: Annual Sales Conference\nDelegates: 200 pax\nDates: 15-17 October\nBudget Range: $15,000 - $20,000\nDeadline for Proposal: 25 July",
         questions: [
           {
-            q: "How many delegates will attend the conference?",
+            q: "Hội nghị có bao nhiêu đại biểu tham dự?",
             options: ["A. 15", "B. 200", "C. 20"],
             correct: 1,
           },
           {
-            q: "What is the deadline for submitting the proposal?",
+            q: "Hạn nộp đề xuất là khi nào?",
             options: ["A. 15 October", "B. 17 October", "C. 25 July"],
             correct: 2,
           },
@@ -4774,12 +4774,12 @@ export const BO_WEEK_38: WeekContent = {
         text: "VENUE FLOOR PLAN NOTE\nBallroom B\nTheater Style: 250 pax\nClassroom Style: 150 pax\nBanquet Style: 180 pax\nCeiling Height: 4.5m\nNatural Light: Yes (with blackout curtains)",
         questions: [
           {
-            q: "How many guests can Ballroom B hold in classroom style?",
+            q: "Ballroom B kê kiểu lớp học chứa được bao nhiêu khách?",
             options: ["A. 250", "B. 150", "C. 180"],
             correct: 1,
           },
           {
-            q: "Does Ballroom B have natural light?",
+            q: "Ballroom B có ánh sáng tự nhiên không?",
             options: [
               "A. No windows at all",
               "B. Yes, with blackout curtains",
@@ -4872,12 +4872,12 @@ export const BO_WEEK_38: WeekContent = {
         text: "AV & TECHNICAL PROPOSAL - ADDENDUM\nSound System: Wireless mic x4, Speaker set\nLighting: Stage wash + spotlight\nLED Screen: 4m x 3m, additional $300\nSetup Time Required: 3 hours before event",
         questions: [
           {
-            q: "What is the additional charge for the LED screen?",
+            q: "Màn hình LED tính thêm bao nhiêu?",
             options: ["A. $300", "B. $400", "C. Free of charge"],
             correct: 0,
           },
           {
-            q: "How much setup time is required before the event?",
+            q: "Trước sự kiện cần bao nhiêu thời gian dựng?",
             options: ["A. 1 hour", "B. 3 hours", "C. 30 minutes"],
             correct: 1,
           },
@@ -4967,7 +4967,7 @@ export const BO_WEEK_38: WeekContent = {
         text: "BANQUET EVENT ORDER (DRAFT)\nClient: Saigon Tech Corporation\nEvent Date: 15 October\nRoom: Grand Ballroom\nFinal Headcount: Due 3 days before event\nDeposit Required: 50% upon signing\nStatus: Pending Client Sign-off",
         questions: [
           {
-            q: "When is the final headcount due?",
+            q: "Khi nào phải chốt số khách cuối cùng?",
             options: [
               "A. On the event day",
               "B. 3 days before the event",
@@ -4976,7 +4976,7 @@ export const BO_WEEK_38: WeekContent = {
             correct: 1,
           },
           {
-            q: "What is the current status of the BEO?",
+            q: "BEO hiện đang ở trạng thái nào?",
             options: ["A. Confirmed and paid", "B. Cancelled", "C. Pending client sign-off"],
             correct: 2,
           },

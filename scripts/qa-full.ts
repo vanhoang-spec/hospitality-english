@@ -166,6 +166,18 @@ const slugify = (t: string) =>
         if (g.rule.length > 20 && !/[À-ɏḀ-ỿ]/.test(g.rule))
           fail("T2", `${key} grammar rule is not in Vietnamese: "${g.rule.slice(0, 60)}"`);
 
+    // Reading questions ask in Vietnamese, like every other instruction in
+    // the app. 95 of them were in English — all inside the twelve
+    // hand-authored weeks, the same twelve that carried American IPA and
+    // English grammar rules. A learner moving through Vietnamese weeks met
+    // one English week and then went back, which tests reading the QUESTION
+    // rather than reading the passage. The passages and their documents stay
+    // in English: that is the material being read.
+    for (const l of wk.lessons)
+      for (const q of l.reading.questions)
+        if (q.q.length > 15 && !/[À-ɏḀ-ỿ]/.test(q.q))
+          fail("T2", `${key} reading question is not in Vietnamese: "${q.q.slice(0, 60)}"`);
+
     // Vocabulary specifics
     for (const l of wk.lessons)
       for (const v of l.vocabulary) {
