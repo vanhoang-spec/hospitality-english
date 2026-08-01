@@ -22,6 +22,7 @@ import { ALL_WEEKS, getWeekContent, resolveReviewVocab } from "../src/lib/conten
 import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
 import { passThresholds } from "../src/lib/speaking-score";
+import { MAX_CHIPS } from "../src/components/suites/GrammarSuite";
 import {
   LISTENING_RATE_CEILING,
   LISTENING_RATE_FLOOR,
@@ -496,10 +497,18 @@ const slugify = (t: string) =>
     // --- GrammarSuite: chips must rebuild the target exactly
     for (const l of wk.lessons)
       for (const g of l.grammar) {
-        const chips = g.polite
+        // Mirrors toChips() in GrammarSuite: words for a short sentence,
+        // phrases for a long one, so the tray never exceeds MAX_CHIPS.
+        const words = g.polite
           .replace(/[.!?,]/g, "")
           .split(/\s+/)
           .filter(Boolean);
+        let chips = words;
+        if (words.length > MAX_CHIPS) {
+          const per = Math.ceil(words.length / MAX_CHIPS);
+          chips = [];
+          for (let i = 0; i < words.length; i += per) chips.push(words.slice(i, i + per).join(" "));
+        }
         const rebuilt = chips.join(" ");
         const expect = g.polite
           .replace(/[.!?,]/g, "")
@@ -510,10 +519,13 @@ const slugify = (t: string) =>
           fail("T5", `${key} GrammarSuite: chips do not rebuild "${g.polite}"`);
         if (chips.length < 3)
           fail("T5", `${key} GrammarSuite: "${g.polite}" makes only ${chips.length} chips`);
-        if (chips.length > 18)
-          warn(
+        // A hard cap now, not a warning. Above it the tray wraps to four or
+        // five rows on a phone and the drill becomes a hunt: 251 sentences
+        // crossed 12 chips and the worst made 23.
+        if (chips.length > MAX_CHIPS)
+          fail(
             "T5",
-            `${key} GrammarSuite: "${g.polite}" makes ${chips.length} chips — hard to assemble`,
+            `${key} GrammarSuite: "${g.polite}" makes ${chips.length} chips, cap is ${MAX_CHIPS}`,
           );
         if (g.rude === g.polite) fail("T5", `${key} GrammarSuite: rude and polite are identical`);
       }

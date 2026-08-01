@@ -8,6 +8,32 @@ import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
 
+/** Most chips a sentence may be broken into. Beyond this the tray wraps to
+ *  four or five rows on a phone and the exercise becomes a hunt rather than
+ *  a grammar drill — 251 of 1,943 sentences (13%) crossed it, the worst
+ *  being a 23-word line in HK-33. */
+export const MAX_CHIPS = 12;
+
+/** Words for a short sentence, PHRASES for a long one.
+ *
+ *  A B1.1 sentence can run past twenty words, and one chip per word is
+ *  unusable on the device most of these learners have. Grouping consecutive
+ *  words keeps the whole sentence assemblable in one screen — and it is the
+ *  same "chunk-first" principle the matrix states for phase 0, applied where
+ *  the sentences finally got long enough to need it: ordering "Could you
+ *  please" as one unit drills the formula as a formula. */
+function toChips(sentence: string): string[] {
+  const words = sentence
+    .replace(/[.!?,]/g, "")
+    .split(/\s+/)
+    .filter(Boolean);
+  if (words.length <= MAX_CHIPS) return words;
+  const per = Math.ceil(words.length / MAX_CHIPS);
+  const chips: string[] = [];
+  for (let i = 0; i < words.length; i += per) chips.push(words.slice(i, i + per).join(" "));
+  return chips;
+}
+
 function shuffle<T>(a: T[]): T[] {
   const c = [...a];
   for (let i = c.length - 1; i > 0; i--) {
@@ -52,10 +78,7 @@ function GrammarSuiteInner({
     l.grammar.map((g) => ({
       bad: g.rude,
       target: g.polite,
-      chips: g.polite
-        .replace(/[.!?,]/g, "")
-        .split(/\s+/)
-        .filter(Boolean),
+      chips: toChips(g.polite),
       rule: g.rule,
     })),
   );
