@@ -79,15 +79,44 @@ export function compareWords(spoken: string, target: string) {
   return { correctIdx, accuracy, orderRatio, words: b };
 }
 
-// Pass thresholds vary by week. A zero-beginner should not have to nail
-// 80% of a four-word utterance to earn a star, and the open role-play
-// weeks (39-40) reward a valid improvised answer that hits the key ideas
-// rather than reciting one fixed reference sentence in order.
+/** How closely a spoken answer must match the model, by week.
+ *
+ *  It used to be three steps: 60% up to week 14, then 80% from week 15, then
+ *  50% from week 39. Two things were wrong with that.
+ *
+ *  THE CLIFF. Week 14 asked for 60% and week 15 asked for 80% — twenty
+ *  points in one week, landing exactly where the content also steps up
+ *  (vocabulary 10→13 per week, speaking 4→8 scenarios, reading 86→129
+ *  words). A learner who was clearing every scenario suddenly cleared none,
+ *  with nothing to tell them the standard had moved. It now ramps across
+ *  weeks 15-22, so the rise is spread over the phase that causes it.
+ *
+ *  THE DIP. Weeks 39-40 dropped to 50% with word order ignored, described in
+ *  the old comment as "open role-play … idea coverage". That content does
+ *  not exist: weeks 39 and 40 carry fixed `targetResponse` sentences like
+ *  every other week, only longer (12-14 words). So the exception applied a
+ *  much lower bar to the same metric, and made the final speaking assessment
+ *  of the course the most lenient in it. Removed. If open role-play with
+ *  idea-coverage scoring is ever authored — see the production-practice item
+ *  in docs/academic-review-backlog.md — it needs its own scorer, not a
+ *  discount on this one.
+ *
+ *  Monotonic by construction: the bar never falls as the course goes on. */
 export function passThresholds(week: string | number): { accPct: number; orderRatio: number } {
   const n = typeof week === "string" ? parseInt(week, 10) : week;
-  if (n >= 39) return { accPct: 50, orderRatio: 0 }; // open role-play: idea coverage, any order
-  if (n <= 14) return { accPct: 60, orderRatio: 0.4 }; // Phase 0-1: gentle floor for beginners
-  return { accPct: 80, orderRatio: 0.6 }; // A2+ default
+  // Phase 0-1 — a zero-beginner should not have to nail 80% of a four-word
+  // utterance to earn a star.
+  if (n <= 14) return { accPct: 60, orderRatio: 0.4 };
+  // Phase 2 — the step to A2 spread across its eight weeks (65/70/75/80),
+  // rather than delivered in one jump at week 15.
+  if (n <= 22) {
+    const step = Math.floor((n - 15) / 2); // 0,0,1,1,2,2,3,3
+    // Rounded: 0.45 + 3 * 0.05 lands on 0.6000000000000001 in binary
+    // floating point, which reads as a fall against week 23's flat 0.6.
+    return { accPct: 65 + step * 5, orderRatio: Math.round((0.45 + step * 0.05) * 100) / 100 };
+  }
+  // A2+ and B1.1 — full standard, and it stays there to the last week.
+  return { accPct: 80, orderRatio: 0.6 };
 }
 
 /** One place that decides whether an utterance passed, so the drill and the

@@ -21,6 +21,7 @@
 import { ALL_WEEKS, getWeekContent, resolveReviewVocab } from "../src/lib/content/week-content";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
+import { passThresholds } from "../src/lib/speaking-score";
 import {
   LISTENING_RATE_CEILING,
   LISTENING_RATE_FLOOR,
@@ -347,6 +348,29 @@ const slugify = (t: string) =>
   }
   if (!(suiteMasteryPct(1) < suiteMasteryPct(AUTHORED_MAX)))
     fail("T3", "suite mastery bar does not rise across the course");
+  // Speaking is the fifth rung, and the one that used to run 60 → 80 → 50:
+  // a twenty-point cliff at week 15, then a drop at week 39 that made the
+  // final speaking assessment the most lenient in the course. Criteria: it
+  // never falls on either axis, it starts below where it ends, and no single
+  // week may raise the accuracy bar by more than 5 points.
+  let prevAcc = 0;
+  let prevOrder = 0;
+  for (let w = 1; w <= AUTHORED_MAX; w++) {
+    const t = passThresholds(w);
+    if (t.accPct < prevAcc) fail("T3", `speaking bar falls at week ${w}: ${prevAcc} → ${t.accPct}`);
+    if (t.orderRatio < prevOrder)
+      fail("T3", `speaking word-order bar falls at week ${w}: ${prevOrder} → ${t.orderRatio}`);
+    if (w > 1 && t.accPct - prevAcc > 5)
+      fail("T3", `speaking bar jumps ${t.accPct - prevAcc} points at week ${w} — ramp it`);
+    prevAcc = t.accPct;
+    prevOrder = t.orderRatio;
+  }
+  if (!(passThresholds(1).accPct < passThresholds(AUTHORED_MAX).accPct))
+    fail("T3", "speaking bar does not rise across the course");
+  console.log(
+    `T3 ladder — speaking bar: ${[1, 15, 17, 19, 21, 40].map((w) => passThresholds(w).accPct).join(" → ")}% (w1/15/17/19/21/40)`,
+  );
+
   // Dictation tolerance is a beginner allowance, not a permanent discount.
   if (!dictationAllowsTypo(1) || dictationAllowsTypo(AUTHORED_MAX))
     fail("T3", "dictation typo tolerance must apply at pre-A1/A1 and stop by A2.1");

@@ -109,6 +109,28 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 | Speaking items / tuần          | 4 (chunk nhắc lại)    | 4              | 4–6              | 6                  | 6–8               |
 | Dạng speaking                  | nghe–nhắc lại chunk   | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở      |
 
+### Thang chấm nói (từ 2026-08-01)
+
+`passThresholds()` trong `speaking-score.ts`: **60% (P0–P1) → 65/70/75/80% trải đều P2 →
+80% (P3–P4)**, kèm ngưỡng đúng thứ tự từ 0,40 lên 0,60.
+
+Trước đó là ba bậc **60 → 80 → 50**, sai ở cả hai đầu:
+
+- **Vách ở tuần 15**: nhảy 20 điểm trong một tuần, đúng lúc nội dung cũng nhảy bậc (từ vựng
+  10→13, speaking 4→8 tình huống, bài đọc 86→129 từ). Học viên tuần 14 đang qua hết mọi tình
+  huống, sang tuần 15 trượt sạch, và **không có gì báo cho họ biết chuẩn đã đổi**. Nay
+  SpeakingSuite hiện thông báo ngay tuần chuẩn tăng.
+- **Hố ở tuần 39–40**: hạ xuống 50% và bỏ luôn yêu cầu đúng thứ tự, với lý do ghi trong code
+  là "open role-play — chấm theo ý, không theo thứ tự". **Nội dung đó không tồn tại**: tuần 39
+  và 40 vẫn là câu mẫu cố định như mọi tuần, chỉ dài hơn (12–14 từ). Nên ngoại lệ này áp một
+  ngưỡng thấp hơn hẳn lên _cùng một phép đo_, biến bài nói cuối khoá thành bài dễ nhất cả lộ
+  trình. Đã bỏ. Nếu sau này soạn role-play mở thật (xem mục luyện sản sinh trong
+  `academic-review-backlog.md`) thì nó cần **bộ chấm riêng**, không phải một khoản giảm giá
+  trên bộ chấm này.
+
+`qa:full` T3 chặn: không lùi ở cả hai trục, phải tăng suốt khoá, và **không tuần nào được nâng
+quá 5 điểm** — tiêu chí cuối chính là thứ bắt được cái vách 20 điểm cũ.
+
 ### Chuẩn "đạt chuẩn" của từng suite (từ 2026-08-01)
 
 Khác với `CHECKPOINT_PASS_PCT` (quyết định mở phase), đây là chuẩn để một **suite** được ghi

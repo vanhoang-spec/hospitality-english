@@ -25,6 +25,11 @@ function SpeakingSuiteInner({
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const th = passThresholds(week);
+  // The bar rises during phase 2. Say so on the week it moves, rather than
+  // letting a learner who cleared every scenario last week discover in
+  // silence that the same performance no longer passes.
+  const prevTh = passThresholds(Math.max(1, Number(week) - 1));
+  const barJustRose = th.accPct > prevTh.accPct;
   const earned = useRef(0);
   // Per-scenario pass state — mirrors ReadingSuite's bestPctRef pattern.
   // Mastery requires passing every scenario in the week, and stars are
@@ -127,6 +132,15 @@ function SpeakingSuiteInner({
 
   return (
     <div className="space-y-4">
+      {barJustRose && (
+        <div className="border-l-2 border-primary bg-primary/5 px-4 py-3 text-xs leading-relaxed text-foreground/80">
+          <strong className="text-primary">
+            Từ tuần {week}, chuẩn phần nói tăng lên {th.accPct}%
+          </strong>{" "}
+          (trước là {prevTh.accPct}%). Giai đoạn A2 đòi câu dài hơn và đúng thứ tự hơn — nói chậm
+          lại, đủ ý, hơn là nói nhanh cho xong.
+        </div>
+      )}
       {scenarios.length > 1 && (
         <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
           <span>
