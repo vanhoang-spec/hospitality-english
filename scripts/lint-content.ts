@@ -119,6 +119,9 @@ const VERBS = new Set([
   "write",
   "deliver",
   "collect",
+  // "Let me fetch it for you" — a service verb the dictionary did not know,
+  // so the verb-slot rule read a correct sentence as a defect.
+  "fetch",
   "inspect",
   "replace",
   "repair",
