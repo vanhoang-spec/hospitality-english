@@ -15,7 +15,9 @@ Kèm theo `docs/academic-review-2026-08.md`. Mỗi mục ghi: bằng chứng, ph
 
 ## Trạng thái
 
-**Toàn bộ nhóm P0 đã được xử lý** (xem phần "Đã sửa" cuối tài liệu). P1–P3 vẫn còn nguyên.
+**Toàn bộ nhóm P0 đã được xử lý.** Nhóm P1 đã xử lý 7/12: P1-1, P1-2, P1-3, P1-7, P1-9,
+P1-10, P1-12. Còn lại **P1-4, P1-5, P1-6, P1-8, P1-11** — đều là câu hỏi thiết kế cần quyết
+định, không phải lỗi. P2–P3 vẫn còn nguyên. Chi tiết ở hai phần "Đã sửa" cuối tài liệu.
 
 Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
 
@@ -198,6 +200,12 @@ Xếp theo mức độ quan trọng trong vận hành resort 4–5 sao Việt Na
 
 **Nguồn tuần để lấp:** tuần 37–38 (hợp đồng đoàn, thuyết trình đề xuất) là nội dung B2B mà FO/FB/HK/SW/GR không dùng tới — **10 tuần** có thể thu hồi. Cũng nên xem lại việc chọn BO làm bộ phận thứ sáu thay vì Bell/Concierge hoặc An ninh/Kỹ thuật, là những nhóm tiếp khách hằng ngày và yếu tiếng Anh nhất.
 
+> **ĐÃ XỬ LÝ** (`f3b198c`, `2a712e3`) — thu hồi 7 tuần, lấp 7 khoảng trống. Xem bảng ở cuối
+> tài liệu. Ba mục trong bảng trên **chưa** làm và cần quyết định riêng: khách mang thai (SW),
+> tranh chấp voucher ăn sáng và nghi thức rượu vang (FB), tiệc cưới (BO), hoá đơn đỏ/VAT và
+> tranh chấp giá OTA (FO), tranh chấp minibar (HK), và cả dòng "Mọi bộ phận".
+> Đề xuất bộ phận An ninh/Kỹ thuật đã thành bộ phận thứ 7 (`43490b6`, mã `SE`, đang soạn).
+
 ---
 
 ## P2 — Giữ chân người học
@@ -350,3 +358,28 @@ Nguyên tắc áp dụng xuyên suốt: **sửa khung câu trong generator, khô
 | **Gate** | `scripts/lint-content.ts`: khai báo bổ sung `P3.wrapUp`, `P4.terms/proposal/wrapUp` (trước đó **không có** entry nào — lý do khung tuần 30/40 trôi lọt); thêm 4 luật layer C — `female-persona-male-pronoun`, `third-person-s-on-phrase-tail`, `more-with-short-adjective`, `a-little-positive-adjective`. Đã kiểm chứng: bắt **11/11** câu lỗi cũ, **0** dương tính giả. `scripts/verify-content.ts`: thêm 30 canary là câu lỗi nguyên văn. `docs/phase3-bank-contract.md` và `phase4-bank-contract.md`: thêm bảng **loại ngữ nghĩa từng ô** bên cạnh từ loại — đây là chiều mà mọi lỗi P0 đều lọt qua.                                                                                                                                                                     |
 
 **Lưu ý vận hành:** đổi headword làm mồ côi các dòng `review_items` cũ của 42 từ đó. `resolveReviewItem` (`src/lib/review.ts:144`) trả `null` và `review.tsx:45` lọc bỏ, nên phiên ôn tập chỉ ngắn đi chứ không lỗi — không cần migration. Tác dụng phụ: banner vẫn đếm cả mục mồ côi (đã ghi ở P2-2).
+
+---
+
+## Đã sửa — đợt P1 (2026-08)
+
+| Mục       | Cách xử lý                                                                                                                                                                                                                                                                                                                                                                       | Commit               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| **P1-1**  | `listeningRateForWeek()` + `headwordRateForWeek()` trong `phases.ts`: 5 mốc neo 0,7 → 0,9 nội suy tuyến tính trong từng phase, từ đơn luôn chậm hơn câu nối. Gate T3 kiểm 5 tiêu chí riêng biệt.                                                                                                                                                                                 | `8b27f0d`            |
+| **P1-2**  | `VocabSuite` bốc riêng `MCQ_NEW_MAX = 10` từ mới và `MCQ_REVIEW = 4` từ ôn rồi trộn, thay vì bốc từ một rổ chung. Gate T5: từ của chính tuần đó phải chiếm ≥ 60% đề.                                                                                                                                                                                                             | `56ba403`            |
+| **P1-3**  | `suiteMasteryPct(week)` theo phase (70/70/75/80/80); chấm thành phần theo từng chỗ trống ở bài điền; `dictationMatches()` chấp nhận sai 1 ký tự ở P0–P1.                                                                                                                                                                                                                         | `a670020`            |
+| **P1-7**  | `passThresholds()` dốc dần 60 → 65 → 70 → 75 → 80 qua tuần 15–21 thay vì nhảy 60 → 80 → 50. Gate T3: không tuần nào được nâng quá 5 điểm.                                                                                                                                                                                                                                        | `2b5e247`            |
+| **P1-9**  | `MAX_CHIPS = 12` + `toChips()` gộp từ thành cụm khi câu dài. Gate T5 chuyển từ cảnh báo thành **fail cứng**.                                                                                                                                                                                                                                                                     | `8f0e0a6`            |
+| **P1-10** | Dịch 95 câu hỏi đọc hiểu sang tiếng Việt. Gate T2: câu hỏi dài > 15 ký tự mà không có ký tự có dấu thì fail. Đoạn văn giữ nguyên tiếng Anh — đó là thứ đang được đọc.                                                                                                                                                                                                            | `ef275b2`            |
+| **P1-12** | Thu hồi 7 tuần B2B: **FO 37–38** → concierge (địa danh, tour, taxi, đặt bàn, giữ hành lý); **GR 37** → cấp cứu y tế; **GR 38** → bão và gián đoạn; **FB 37** → thực đơn trẻ em + Halal; **SW 37** → giới tính KTV + tip + đồng thuận; **HK 37** → côn trùng + Lost & Found. Thẻ bị từ chối vào **FO-17 bài 3** (đúng lúc quẹt pre-authorization), không vào tuần 24 như dự kiến. | `f3b198c`, `2a712e3` |
+
+**Hệ quả kỹ thuật của P1-12 — tuần 39.** Bài 4 tuần 39 là bài tổng duyệt và lấy từ thẳng
+từ bank tuần 37/38. Sau khi thu hồi, FO sẽ tổng duyệt "cover letter" và "allotment" — những từ
+bộ phận đó không còn gặp ở đâu nữa. `week39` nay đọc **từ vựng thật sự đã dạy** qua chính map
+`overrides` mà cơ chế ôn tập đã dùng. Hai khung chỉ đúng trong ngữ cảnh thương mại
+("valid for twelve months", "asks for a decision date") được viết lại để đúng cho cả hợp đồng
+lẫn quầy concierge; tên bài đổi sang **kỹ năng** ("The Last Fifteen Minutes") thay vì bối cảnh.
+
+**Còn nợ, cần quyết định:** tuần 38 của FB/SW/HK vẫn là "Presenting a Proposal" — lệch nghiệp
+vụ đúng như tuần 37 từng lệch, chỉ là chưa có khoảng trống nào đủ lớn để lấp vào. Ba tuần này
+là ứng viên rõ ràng cho đợt sau (tranh chấp minibar, nghi thức rượu vang, khách mang thai).
