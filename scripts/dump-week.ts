@@ -1,9 +1,13 @@
 /* Dump every generated learner-facing sentence for given weeks so a human
    can read what the frame×bank substitution actually produces. */
 import { getWeekContent } from "../src/lib/content/week-content";
+import { DEPARTMENTS } from "../src/lib/departments";
 
 const weeks = process.argv.slice(2).map(Number);
-const DEPS = ["FO", "FB", "HK", "SW", "GR", "BO"];
+/* Read from DEPARTMENTS, including hidden ones — this script exists to read a
+   department's sentences with your own eyes, which is exactly what you need
+   most while a department is still being authored. */
+const DEPS = DEPARTMENTS.map((d) => d.code);
 
 for (const w of weeks) {
   console.log(`\n########## WEEK ${w} ##########`);

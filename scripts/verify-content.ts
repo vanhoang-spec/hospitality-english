@@ -503,19 +503,35 @@ if (legacyGameDupes.length) {
 // for that department. This makes the pool a checked invariant instead.
 // ============================================================
 {
+  let checked = 0;
   for (const phase of PHASES) {
-    for (const dep of DEPARTMENTS.map((d) => d.code)) {
+    for (const d of DEPARTMENTS) {
+      const dep = d.code;
       let n = 0;
-      for (let w = phase.from; w <= phase.to; w++)
-        n += (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? []).reduce((s, l) => s + l.speaking.length, 0);
+      let authored = 0;
+      for (let w = phase.from; w <= phase.to; w++) {
+        const week = ALL_WEEKS[`${dep}-${w}`];
+        if (!week) continue;
+        authored++;
+        n += week.lessons.reduce((s, l) => s + l.speaking.length, 0);
+      }
+      // A department still being authored has half-built phases by definition,
+      // and a half-built phase has a short pool for an innocent reason. Exempt
+      // only the phases it has not finished; the moment its last week lands,
+      // the pool must hold — no department ships on a written-only checkpoint.
+      const phaseComplete = authored === phase.to - phase.from + 1;
+      if (d.hidden && !phaseComplete) continue;
+      checked++;
       if (n < CHECKPOINT_ORAL_ITEMS)
         errors.push(
           `${dep} ${phase.name} (weeks ${phase.from}-${phase.to}) has only ${n} speaking items — the checkpoint needs ${CHECKPOINT_ORAL_ITEMS}`,
         );
     }
   }
+  const wip = DEPARTMENTS.filter((d) => d.hidden).map((d) => d.code);
   console.log(
-    `Checkpoint oral pools — 5 phases × ${DEPARTMENTS.length} departments each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items`,
+    `Checkpoint oral pools — ${checked} phase×department pools each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items` +
+      (wip.length ? ` (unfinished phases of ${wip.join(", ")} not yet due)` : ""),
   );
 }
 

@@ -62,12 +62,17 @@ const slugify = (t: string) =>
 {
   let n = 0;
   for (const dep of DEPS) {
+    // A department still being authored is exempt from COVERAGE only — the
+    // weeks it does have are checked exactly like everyone else's, here and
+    // in every other layer. Shipping it (removing `hidden`) turns this back
+    // on and the 40/40 requirement applies.
+    const inProgress = !!DEPARTMENTS.find((d) => d.code === dep)?.hidden;
     for (let w = 1; w <= AUTHORED_MAX; w++) {
       const viaRegistry = ALL_WEEKS[`${dep}-${w}`];
       const viaAccessor = getWeekContent(dep, w);
       const viaString = getWeekContent(dep.toLowerCase(), String(w));
       if (!viaRegistry) {
-        fail("T1", `${dep}-${w} missing from registry`);
+        if (!inProgress) fail("T1", `${dep}-${w} missing from registry`);
         continue;
       }
       if (!viaAccessor) fail("T1", `${dep}-${w} unreachable via getWeekContent(number)`);
@@ -95,7 +100,21 @@ const slugify = (t: string) =>
         fail("T1", `${dep}-${w} exists but has empty lessons`);
     }
   }
-  console.log(`T1 coverage — ${n}/${DEPS.length * AUTHORED_MAX} authored dep-weeks reachable`);
+  // Report the two populations apart. Folding an in-progress department into
+  // one ratio would let a shipping department lose weeks and still read as
+  // "240/280" — a number nobody would question.
+  const shipping = DEPARTMENTS.filter((d) => !d.hidden);
+  const wip = DEPARTMENTS.filter((d) => d.hidden);
+  const weeksOf = (dep: string) =>
+    Array.from({ length: AUTHORED_MAX }, (_, i) => ALL_WEEKS[`${dep}-${i + 1}`]).filter(Boolean)
+      .length;
+  const shipped = shipping.reduce((s, d) => s + weeksOf(d.code), 0);
+  console.log(
+    `T1 coverage — ${shipped}/${shipping.length * AUTHORED_MAX} dep-weeks reachable across ${shipping.length} shipping departments` +
+      (wip.length
+        ? `; in progress: ${wip.map((d) => `${d.code} ${weeksOf(d.code)}/${AUTHORED_MAX}`).join(", ")}`
+        : ""),
+  );
 }
 
 // ============================================================
@@ -678,9 +697,13 @@ const slugify = (t: string) =>
 //   handbook             → week-content directly
 // ============================================================
 {
+  let checked = 0;
   for (const dep of DEPS) {
     for (let w = 1; w <= AUTHORED_MAX; w++) {
       const content = getWeekContent(dep, w)!;
+      // A week not authored yet cannot break a screen nobody can reach.
+      if (!content) continue;
+      checked++;
       const fw = findWeek(dep, w);
       if (!fw) {
         fail(
@@ -713,9 +736,7 @@ const slugify = (t: string) =>
         fail("T7", `${dep}-${w} handbook would show only ${patterns.size} patterns`);
     }
   }
-  console.log(
-    `T7 UI contracts — timeline/hub/handbook inputs cross-checked for ${DEPS.length * AUTHORED_MAX} weeks`,
-  );
+  console.log(`T7 UI contracts — timeline/hub/handbook inputs cross-checked for ${checked} weeks`);
 }
 
 // ============================================================

@@ -10,7 +10,7 @@ import {
   updateMemberRole,
 } from "@/lib/org-admin-actions";
 import { formatPhoneDisplay } from "@/lib/phone";
-import { DEPARTMENTS } from "@/lib/departments";
+import { DEPARTMENTS, SHIPPING_DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
 import { isCheckpointWeek } from "@/lib/phases";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
@@ -39,10 +39,14 @@ const SUITES = ["vocab", "grammar", "speaking", "listening", "reading", "arcade"
  *  shows up here. Every department carries these on the same weeks, which
  *  is what lets the matrix keep a uniform column count per week. */
 const WRITING_WEEKS = new Set(
-  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.writing)),
+  AVAILABLE_WEEKS.filter((w) =>
+    SHIPPING_DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.writing),
+  ),
 );
 const MEDIATION_WEEKS = new Set(
-  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.mediation)),
+  AVAILABLE_WEEKS.filter((w) =>
+    SHIPPING_DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.mediation),
+  ),
 );
 
 /** Suites that exist on a given week. Most weeks carry the six core ones;
@@ -509,7 +513,7 @@ function AddMemberDialog({
               onChange={(e) => setDepartmentChoice(e.target.value)}
               className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
             >
-              {DEPARTMENTS.map((d) => (
+              {SHIPPING_DEPARTMENTS.map((d) => (
                 <option key={d.code} value={d.code}>
                   {d.code} — {d.name_vi}
                 </option>
@@ -1014,7 +1018,7 @@ function MemberDrawer({
                   </tr>
                 </thead>
                 <tbody>
-                  {DEPARTMENTS.map((d) => (
+                  {SHIPPING_DEPARTMENTS.map((d) => (
                     <tr key={d.code} className="border-t border-primary/10">
                       <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">
                         {d.code}
@@ -1102,8 +1106,10 @@ type OrgProgressRow = { user_id: string; stars: number; mastered: boolean; suite
 
 // Only dep/week combos that actually have authored content count as
 // completable slots (weeks differ per department after the 40-week frame),
-// and checkpoint weeks carry one extra slot for the phase test.
-const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
+// and checkpoint weeks carry one extra slot for the phase test. Departments
+// still being authored are excluded: nobody is placed in one, so counting
+// their weeks would silently deflate every member's completion percentage.
+const TOTAL_SLOTS_PER_MEMBER = SHIPPING_DEPARTMENTS.reduce(
   (sum, d) =>
     sum +
     AVAILABLE_WEEKS.filter((w) => getWeekContent(d.code, w) !== null).reduce(
@@ -1115,7 +1121,7 @@ const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
 
 /** Every authored checkpoint slot across all departments — the
  *  denominator for the org's phase-test pass rate. */
-const TOTAL_CHECKPOINTS_PER_MEMBER = DEPARTMENTS.reduce(
+const TOTAL_CHECKPOINTS_PER_MEMBER = SHIPPING_DEPARTMENTS.reduce(
   (sum, d) =>
     sum +
     AVAILABLE_WEEKS.filter((w) => isCheckpointWeek(w) && getWeekContent(d.code, w) !== null).length,
