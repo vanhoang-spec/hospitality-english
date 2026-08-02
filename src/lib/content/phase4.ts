@@ -2183,7 +2183,7 @@ function week38(lx: Ctx): LessonContent[] {
 // Recombines the seven functions of weeks 31-38 with no new bank
 // vocabulary: the learner improvises inside frames already learned.
 // ============================================================
-function week39(lx: Ctx): LessonContent[] {
+function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonContent[] {
   const s1 = lx.bank.story[0];
   const s2 = lx.bank.story[1];
   const p1 = lx.bank.preferences[0];
@@ -2194,12 +2194,29 @@ function week39(lx: Ctx): LessonContent[] {
   const t2 = lx.bank.tradeoffs[1];
   const e1 = lx.bank.emergencies[0];
   const e2 = lx.bank.emergencies[1];
-  const r1 = lx.bank.proposal[0];
-  const r2 = lx.bank.proposal[1];
   const o1 = lx.bank.occasions[0];
   const o2 = lx.bank.occasions[1];
-  const c1 = lx.bank.terms[0];
-  const c2 = lx.bank.terms[1];
+  // Weeks 37-38 are the two slots a department can have replaced by a
+  // hand-authored week, so the rehearsal must read what the department was
+  // actually taught rather than the bank the spine would have used. Front
+  // Office spends those weeks on concierge work; taking r1/c1 from the
+  // bank had week 39 drilling "cover letter" and "allotment" — words that
+  // department now meets nowhere in the course.
+  const taughtIn = (week: number, fallback: P4Word[]): [P4Word, P4Word] => {
+    const override = overrides[`${lx.code}-${week}`];
+    if (!override) return [fallback[0], fallback[1]];
+    const taught = override.lessons
+      .flatMap((l) => l.vocabulary)
+      .map((item) => ({
+        word: item.word,
+        phonetic: item.phonetic,
+        definition: item.definition,
+        icon: item.icon ?? "📌",
+      }));
+    return [taught[0] ?? fallback[0], taught[1] ?? fallback[1]];
+  };
+  const [r1, r2] = taughtIn(38, lx.bank.proposal);
+  const [c1, c2] = taughtIn(37, lx.bank.terms);
   return [
     lesson(lx, 39, 1, "From Welcome to Upsell", "Từ đón khách tới gợi ý nâng cấp", {
       vocabulary: [
@@ -2400,7 +2417,12 @@ function week39(lx: Ctx): LessonContent[] {
       ],
     }),
 
-    lesson(lx, 39, 4, "The Commercial Conversation", "Cuộc trò chuyện thương mại", {
+    // Named for the SKILL, not the setting. The words in this lesson come
+    // from whatever the department's weeks 37-38 actually taught, which is
+    // a contract for Back Office and a concierge desk for Front Office —
+    // but the demand is the same either way: say the important thing first
+    // because the listener has fifteen minutes.
+    lesson(lx, 39, 4, "The Last Fifteen Minutes", "Mười lăm phút cuối cùng", {
       vocabulary: [
         bw(r1, `Open with the ${lo(r1)}, not with small talk.`),
         bw(r2, `Keep the ${lo(r2)} for the questions at the end.`),
@@ -2411,12 +2433,12 @@ function week39(lx: Ctx): LessonContent[] {
         g(
           `We talk weather first, then business.`,
           `Let me begin with the ${lo(r1)}, and then I will take your questions.`,
-          "Với khách hàng doanh nghiệp, tôn trọng thời gian là hình thức lịch sự cao nhất.",
+          "Khi người nghe đang vội, tôn trọng thời gian của họ là hình thức lịch sự cao nhất.",
         ),
         g(
-          `Contract thing difficult, later.`,
-          `The ${lo(c1)} is valid for twelve months; however, we review it every six months.`,
-          "Ghép điều khoản hợp đồng (tuần 37) với 'however' của đàm phán (tuần 35).",
+          `That thing difficult, later.`,
+          `You are right about the ${lo(c1)}; however, there is one detail I should mention first.`,
+          "Ghép nội dung tuần 37 với cấu trúc nhượng bộ 'however' của tuần 35 — công nhận trước, bổ sung sau.",
         ),
       ],
       speaking: [
@@ -2427,24 +2449,25 @@ function week39(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The final rehearsal is commercial. ${lx.staff} opens with the ${lo(r1)}, explains the ${lo(c1)}, answers two hard questions and asks for a decision date. The trainer signs ${lx.pron.obj} off as ready.`,
+        `The final rehearsal is against the clock. ${lx.staff} opens with the ${lo(r1)}, explains the ${lo(c1)}, answers two hard questions and confirms what happens next. The trainer signs ${lx.pron.obj} off as ready.`,
         [
           {
-            q: "Bài trình bày kết thúc bằng gì?",
-            options: ["Hỏi mốc quyết định", "Lời cảm ơn dài", "Câu chuyện về khách sạn"],
+            q: "Phần trình bày kết thúc bằng gì?",
+            options: ["Xác nhận bước tiếp theo", "Lời cảm ơn dài", "Câu chuyện về khách sạn"],
             correct: 0,
-            explanation: "Hỏi mốc quyết định là bước biến một bài trình bày thành một cơ hội thật.",
+            explanation:
+              "Xác nhận bước tiếp theo là điều biến một lượt nói thành một việc thực sự được giải quyết.",
           },
           {
             q: "Vì sao không mở đầu bằng xã giao?",
             options: [
-              "Vì tôn trọng thời gian của khách hàng",
+              "Vì tôn trọng thời gian của người nghe",
               "Vì không biết nói gì",
               "Vì quy định cấm",
             ],
             correct: 0,
             explanation:
-              "Với khách hàng doanh nghiệp, đi thẳng vào việc chính là biểu hiện của sự chuyên nghiệp.",
+              "Khi người nghe chỉ có mười lăm phút, đi thẳng vào việc chính là biểu hiện của sự chuyên nghiệp.",
           },
         ],
       ),
@@ -2718,7 +2741,17 @@ function week40(lx: Ctx): LessonContent[] {
 // Assembly
 // ============================================================
 
-const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => LessonContent[] }> = {
+const WEEK_META: Record<
+  number,
+  {
+    en: string;
+    vi: string;
+    /** `overrides` is passed to every builder but only week 39 reads it —
+     *  see the note on week39 for why the rehearsal week cannot take its
+     *  words from the bank. */
+    build: (lx: Ctx, overrides: Record<string, WeekContent>) => LessonContent[];
+  }
+> = {
   31: { en: "Telling the Story", vi: "Kể chuyện sản phẩm & dịch vụ", build: week31 },
   32: { en: "Personalised Advice", vi: "Tư vấn cá nhân hoá", build: week32 },
   33: { en: "Disputes & Compensation", vi: "Tranh chấp & bồi thường", build: week33 },
@@ -2736,7 +2769,7 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
  *  recycling must read those, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
   const override = overrides[`${lx.code}-${week}`];
-  const lessons = override ? override.lessons : WEEK_META[week].build(lx);
+  const lessons = override ? override.lessons : WEEK_META[week].build(lx, overrides);
   return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
@@ -2954,7 +2987,7 @@ function buildWeek(
     weekNumber: week,
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
-    lessons: meta.build(lx),
+    lessons: meta.build(lx, overrides),
     reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
     writing: week === 33 ? WEEK33_WRITING_TASKS[lx.code] : undefined,
   };

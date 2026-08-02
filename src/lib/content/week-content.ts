@@ -5010,6 +5010,885 @@ export const BO_WEEK_38: WeekContent = {
   ],
 };
 
+// ============================================================
+// RECOVERED WEEKS 37-38 — the B2B contract/proposal weeks were the same
+// for all six departments. A receptionist was learning "allotment",
+// "release period" and "credit facility": commercial terms only Back
+// Office ever uses. BO keeps them. Everyone else spends the two weeks on
+// work they actually do, which is where the audit found the real holes.
+//
+// Front Office gets Concierge — measured at zero across all 240 authored
+// dep-weeks. "City tour" appeared once, at week 3, as a prop for teaching
+// the days of the week; there was no landmark, no tour booking, no taxi
+// call and no restaurant reservation anywhere in the course.
+// ============================================================
+
+export const FO_WEEK_37: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 37,
+  weekTitleEn: "The Concierge Desk — Recommending the City",
+  weekTitleVi: "Quầy Concierge — Tư vấn điểm đến cho khách",
+  // Pulled forward from Phases 0-3 so this hand-authored week joins the
+  // spaced-recycling system instead of standing outside it.
+  reviewWords: ["City map", "Taxi", "Directions", "Near", "Lobby", "Recommend", "Trip", "Umbrella"],
+  lessons: [
+    {
+      lessonId: "FO_37_1",
+      lessonOrder: 1,
+      titleEn: "Naming What Is Worth Seeing",
+      titleVi: "Gọi tên điểm đến đáng đi",
+      vocabulary: [
+        {
+          word: "Landmark",
+          phonetic: "/ˈlændmɑːk/",
+          definition: "Địa danh nổi bật, dễ nhận ra",
+          context: "The cathedral is the easiest landmark to find from here.",
+          icon: "🗿",
+        },
+        {
+          word: "Old Quarter",
+          phonetic: "/əʊld ˈkwɔːtə/",
+          definition: "Khu phố cổ",
+          context: "The Old Quarter is best explored on foot.",
+          icon: "🏘️",
+        },
+        {
+          word: "Water puppet show",
+          phonetic: "/ˈwɔːtə ˈpʌpɪt ʃəʊ/",
+          definition: "Múa rối nước",
+          context: "The water puppet show lasts about one hour.",
+          icon: "🎭",
+        },
+        {
+          word: "Worth seeing",
+          phonetic: "/wɜːθ ˈsiːɪŋ/",
+          definition: "Đáng để ghé xem",
+          context: "The old bridge is worth seeing at sunset.",
+          icon: "👀",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Go to the Old Quarter.",
+          polite: "If you have a free morning, the Old Quarter is well worth the walk.",
+          rule: "Mở bằng mệnh đề 'If you have…' biến mệnh lệnh thành gợi ý — khách vẫn được quyền chọn.",
+        },
+        {
+          rude: "That place is boring.",
+          polite:
+            "The museum is quieter in the afternoon, madam, if you would rather avoid the crowds.",
+          rule: "Không chê điểm đến. Nêu một điều kiện khách quan ('quieter in the afternoon') rồi để khách tự quyết.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We only have one free day. What should we see?",
+          targetResponse:
+            "If you have just one day, sir, I would start with the Old Quarter. The water puppet show is lovely after dinner.",
+          helpTip:
+            "Nối 'start with the' thành một hơi. Đừng tách rời từng từ — câu tư vấn phải nghe như lời khuyên, không như đọc danh sách.",
+        },
+        {
+          guestPrompt: "Is the museum far from here?",
+          targetResponse:
+            "It is about ten minutes on foot, madam, and the walk itself passes two landmarks worth seeing.",
+          helpTip:
+            "'About' đứng trước con số làm câu trả lời mềm và trung thực hơn — bạn ước lượng chứ không cam kết chính xác.",
+        },
+      ],
+      reading: {
+        text: "CONCIERGE DESK — WALKING RECOMMENDATIONS\nOld Quarter: 10 min on foot. Best 7-10 AM or after 4 PM. Narrow lanes, wear flat shoes.\nCity Museum: 12 min on foot. Closed Mondays. Entrance 60,000 VND.\nWater Puppet Theatre: 15 min by taxi. Shows 18:00 and 20:00. Book one day ahead.\nNote: In the rainy season, offer the guest an umbrella from the desk before they leave.",
+        questions: [
+          {
+            q: "Bảo tàng thành phố đóng cửa vào ngày nào?",
+            options: ["A. Sundays", "B. Mondays", "C. It never closes"],
+            correct: 1,
+          },
+          {
+            q: "Theo ghi chú, mùa mưa thì nhân viên nên làm gì trước khi khách rời quầy?",
+            options: [
+              "A. Offer the guest an umbrella from the desk",
+              "B. Tell the guest to stay in the hotel",
+              "C. Cancel the guest's plan",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "I don't know, just walk around.",
+          good: "May I suggest the Old Quarter, sir? It is ten minutes on foot from our door.",
+        },
+        {
+          bad: "Museum closed today. Go tomorrow.",
+          good: "The museum is closed on Mondays, madam. Would tomorrow morning suit you instead?",
+        },
+      ],
+      game: [
+        {
+          prompt: "We have three hours before our flight. Is that enough to see anything?",
+          options: [
+            {
+              text: "Three hours is comfortable for the Old Quarter, sir. It is close, and I can hold your bags here.",
+              correct: true,
+            },
+            { text: "No, three hours is not enough. Please wait in the lobby.", correct: false },
+            { text: "Maybe. It depends on the traffic.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_37_2",
+      lessonOrder: 2,
+      titleEn: "How Far, How Long, How Much",
+      titleVi: "Bao xa, bao lâu, bao nhiêu tiền",
+      vocabulary: [
+        {
+          word: "Walking distance",
+          phonetic: "/ˈwɔːkɪŋ ˈdɪstəns/",
+          definition: "Khoảng cách đi bộ được",
+          context: "The night market is within walking distance of the hotel.",
+          icon: "🚶",
+        },
+        {
+          word: "Entrance fee",
+          phonetic: "/ˈentrəns fiː/",
+          definition: "Phí vào cửa",
+          context: "The entrance fee is sixty thousand dong per person.",
+          icon: "🎫",
+        },
+        {
+          word: "Half-day",
+          phonetic: "/hɑːf deɪ/",
+          definition: "Nửa ngày",
+          context: "The half-day trip returns before lunch.",
+          icon: "🕧",
+        },
+        {
+          word: "Peak hour",
+          phonetic: "/piːk aʊə/",
+          definition: "Giờ cao điểm",
+          context: "Please avoid peak hour if you are going to the airport.",
+          icon: "🚦",
+        },
+      ],
+      grammar: [
+        {
+          rude: "It is far. Take a taxi.",
+          polite: "It is a little far to walk, sir, so a taxi would be more comfortable.",
+          rule: "'A little' làm nhẹ thông tin bất lợi, rồi 'so' dẫn thẳng sang giải pháp — nêu vấn đề phải kèm lối ra.",
+        },
+        {
+          rude: "You pay entrance fee yourself.",
+          polite:
+            "The entrance fee is not included, madam, but it is only sixty thousand dong at the gate.",
+          rule: "Nói rõ khoản không bao gồm trước, rồi 'but it is only…' để khách thấy con số nhỏ hơn nỗi lo.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "How long does it take to get to the airport?",
+          targetResponse:
+            "Around forty minutes, sir, but at peak hour I would allow a full hour to be safe.",
+          helpTip:
+            "Đưa hai con số: bình thường và tình huống xấu. Khách ra sân bay cần biên an toàn, không cần con số đẹp.",
+        },
+      ],
+      reading: {
+        text: "TRANSFER & TIMING GUIDE — CONCIERGE\nAirport: 40 min normal, 60-70 min at peak hour (07:00-09:00, 17:00-19:00).\nNight Market: 8 min on foot, within walking distance. Opens 18:00.\nHalf-day countryside trip: departs 08:00, returns 12:30. Entrance fee not included.\nFull-day trip: departs 08:00, returns 17:00. Lunch included.\nAlways confirm the guest's flight time before recommending a departure time.",
+        questions: [
+          {
+            q: "Đi sân bay vào giờ cao điểm mất bao lâu?",
+            options: ["A. 40 minutes", "B. 60-70 minutes", "C. 8 minutes"],
+            correct: 1,
+          },
+          {
+            q: "Chuyến nửa ngày về khách sạn lúc mấy giờ?",
+            options: ["A. 12:30", "B. 17:00", "C. 18:00"],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Forty minutes. Maybe more. I am not sure.",
+          good: "Around forty minutes, sir, and an hour at peak time. Shall I book the car for eight?",
+        },
+        {
+          bad: "The trip price does not have entrance fee.",
+          good: "The entrance fee is paid at the gate, madam — sixty thousand dong per person.",
+        },
+      ],
+      game: [
+        {
+          prompt: "My flight is at two in the afternoon. When should we leave the hotel?",
+          options: [
+            {
+              text: "I would suggest leaving by eleven, madam. That clears the peak hour and leaves time to check in.",
+              correct: true,
+            },
+            { text: "Two o'clock flight, so leave at one.", correct: false },
+            { text: "Whenever you like. The car is always ready.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_37_3",
+      lessonOrder: 3,
+      titleEn: "Matching the Guest to the Right Trip",
+      titleVi: "Chọn đúng trải nghiệm cho đúng khách",
+      vocabulary: [
+        {
+          word: "Guided tour",
+          phonetic: "/ˈɡaɪdɪd tʊə/",
+          definition: "Tour có hướng dẫn viên",
+          context: "A guided tour is easier if you do not speak Vietnamese.",
+          icon: "🧭",
+        },
+        {
+          word: "On your own",
+          phonetic: "/ɒn jɔːr əʊn/",
+          definition: "Tự đi, không theo đoàn",
+          context: "You can explore the market on your own if you prefer.",
+          icon: "🙋",
+        },
+        {
+          word: "Stroller",
+          phonetic: "/ˈstrəʊlə/",
+          definition: "Xe đẩy em bé",
+          context: "The lanes are narrow, so a stroller may be difficult.",
+          icon: "👶",
+        },
+        {
+          word: "Pace",
+          phonetic: "/peɪs/",
+          definition: "Nhịp độ, tốc độ đi",
+          context: "The countryside trip has a gentle pace.",
+          icon: "🐢",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You have a baby, so no tour for you.",
+          polite:
+            "With a young child, madam, I would suggest the countryside trip — the pace is much gentler.",
+          rule: "Đừng nói khách 'không đi được'. Nêu hoàn cảnh rồi đề xuất lựa chọn hợp hơn.",
+        },
+        {
+          rude: "Old people cannot walk there.",
+          polite:
+            "The lanes are quite steep, sir, so many guests prefer the boat route for the same view.",
+          rule: "Tránh nhận xét về tuổi tác hay thể trạng. Mô tả địa hình và để khách tự cân nhắc.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We are travelling with my mother. She walks slowly.",
+          targetResponse:
+            "Then I would recommend the boat route, sir. There is very little walking, and the view is the same.",
+          helpTip:
+            "'Then I would recommend' cho thấy bạn nghe rồi mới tư vấn — không đọc thuộc một gợi ý có sẵn.",
+        },
+        {
+          guestPrompt: "We would rather not join a big group.",
+          targetResponse:
+            "Of course, madam. You can do the same route on your own, and I will mark the stops on your map.",
+          helpTip:
+            "Nhận yêu cầu ('Of course'), giữ nguyên nội dung khách muốn, chỉ đổi hình thức. Rồi thêm một hành động cụ thể.",
+        },
+      ],
+      reading: {
+        text: "TOUR MATCHING NOTES — FOR DESK USE\nFamilies with small children: countryside trip (gentle pace, short walks, shaded seating). Avoid the hill pagoda — 200 steps, no stroller access.\nGuests over 70 or with mobility needs: boat route. Same scenery, almost no walking.\nIndependent travellers: give the walking map, mark 4 stops, no guide needed.\nGuests with no Vietnamese and a tight schedule: guided tour, English-speaking guide, hotel pick-up.",
+        questions: [
+          {
+            q: "Vì sao không nên gợi ý chùa trên đồi cho gia đình có trẻ nhỏ?",
+            options: [
+              "A. It is too expensive",
+              "B. There are 200 steps and no stroller access",
+              "C. It closes early",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách không nói được tiếng Việt và ít thời gian thì hợp với lựa chọn nào?",
+            options: [
+              "A. The walking map on their own",
+              "B. The boat route",
+              "C. A guided tour with an English-speaking guide",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Your mother is too old for this tour.",
+          good: "The boat route may suit your mother better, sir — the same view with almost no walking.",
+        },
+        {
+          bad: "Group tour only. No choice.",
+          good: "You may also go on your own, madam. Shall I mark the four best stops on your map?",
+        },
+      ],
+      game: [
+        {
+          prompt: "Our children are five and seven. Will they be bored on this trip?",
+          options: [
+            {
+              text: "The countryside trip suits their age well, madam — short walks, a boat ride, and a stop at the buffalo field.",
+              correct: true,
+            },
+            {
+              text: "Children are always bored on tours. Leave them at the hotel.",
+              correct: false,
+            },
+            { text: "I think it is fine. Most people like it.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_37_4",
+      lessonOrder: 4,
+      titleEn: "Honest Advice When the Answer Is No",
+      titleVi: "Tư vấn trung thực khi câu trả lời là không",
+      vocabulary: [
+        {
+          word: "Fully booked",
+          phonetic: "/ˈfʊli bʊkt/",
+          definition: "Đã kín chỗ",
+          context: "The sunset cruise is fully booked this evening.",
+          icon: "🚫",
+        },
+        {
+          word: "Alternative",
+          phonetic: "/ɔːlˈtɜːnətɪv/",
+          definition: "Phương án thay thế",
+          context: "May I offer an alternative for tomorrow?",
+          icon: "🔀",
+        },
+        {
+          word: "Overrated",
+          phonetic: "/ˌəʊvəˈreɪtɪd/",
+          definition: "Được khen quá mức so với thực tế",
+          context: "Some guests find that spot overrated in the rainy season.",
+          icon: "🤔",
+        },
+        {
+          word: "Honestly",
+          phonetic: "/ˈɒnɪstli/",
+          definition: "Nói thật lòng",
+          context: "Honestly, sir, the market is quieter on a weekday.",
+          icon: "🤝",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No tickets. Nothing I can do.",
+          polite:
+            "The cruise is fully booked tonight, sir, but I can hold two seats for tomorrow at six.",
+          rule: "Không bao giờ dừng ở lời từ chối. Cấu trúc: sự thật + 'but' + một phương án cụ thể có giờ giấc.",
+        },
+        {
+          rude: "That place is not good, don't go.",
+          polite:
+            "Honestly, madam, many guests find it crowded in July. The riverside walk is calmer.",
+          rule: "'Honestly' báo hiệu lời khuyên thật lòng. Đưa lý do cụ thể rồi mới nêu lựa chọn khác.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The hotel website said the cruise runs every night.",
+          targetResponse:
+            "I am sorry for the confusion, madam. It does run nightly, but tonight it is fully booked. May I hold tomorrow for you?",
+          helpTip:
+            "Xin lỗi vì sự nhầm lẫn, không phủ nhận điều khách đọc được. Rồi chuyển ngay sang việc bạn làm được.",
+        },
+      ],
+      reading: {
+        text: "CONCIERGE LOG — 14 JULY\n19:10 Room 604 requested 2 seats, sunset cruise tonight. Operator confirmed FULLY BOOKED.\nAction taken: offered tomorrow 18:00, held 2 seats under guest name, no deposit required.\nAlso offered riverside walk this evening as an alternative, with a map and torch from the desk.\nGuest accepted both. Follow up at 17:00 tomorrow to reconfirm the cruise pick-up.",
+        questions: [
+          {
+            q: "Nhân viên đã làm gì sau khi biết du thuyền hết chỗ?",
+            options: [
+              "A. Told the guest to try again another time",
+              "B. Held two seats for the next evening and offered a walk tonight",
+              "C. Asked the guest to pay a deposit",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Ngày hôm sau phải làm gì lúc 17h?",
+            options: [
+              "A. Follow up to reconfirm the cruise pick-up",
+              "B. Cancel the booking",
+              "C. Send the guest a new map",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Sold out. Try another hotel.",
+          good: "It is fully booked tonight, sir, but I have held two seats for tomorrow at six.",
+        },
+        {
+          bad: "Don't go there, it is bad.",
+          good: "Honestly, madam, July is very crowded there. The riverside walk is calmer this week.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Everyone online says this temple is the best thing in the city. Is it?",
+          options: [
+            {
+              text: "It is beautiful early in the morning, sir. By ten it is very crowded, so I would go before eight.",
+              correct: true,
+            },
+            { text: "Yes, it is the best. Everyone loves it.", correct: false },
+            { text: "It is overrated. I would not bother.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const FO_WEEK_38: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 38,
+  weekTitleEn: "The Concierge Desk — Arranging and Confirming",
+  weekTitleVi: "Quầy Concierge — Đặt chỗ và xác nhận cho khách",
+  reviewWords: [
+    "Landmark",
+    "Guided tour",
+    "Fully booked",
+    "Peak hour",
+    "Confirmed",
+    "Arrange a taxi",
+    "Booking reference",
+    "Departure time",
+  ],
+  lessons: [
+    {
+      lessonId: "FO_38_1",
+      lessonOrder: 1,
+      titleEn: "Booking a Tour for a Guest",
+      titleVi: "Đặt tour thay cho khách",
+      vocabulary: [
+        {
+          word: "Availability",
+          phonetic: "/əˌveɪləˈbɪləti/",
+          definition: "Tình trạng còn chỗ",
+          context: "Let me check availability for Thursday morning.",
+          icon: "📅",
+        },
+        {
+          word: "Pick-up point",
+          phonetic: "/ˈpɪk ʌp pɔɪnt/",
+          definition: "Điểm đón khách",
+          context: "The pick-up point is the main lobby door.",
+          icon: "📍",
+        },
+        {
+          word: "Itinerary",
+          phonetic: "/aɪˈtɪnərəri/",
+          definition: "Lịch trình chi tiết",
+          context: "I will print the itinerary for you tonight.",
+          icon: "🗒️",
+        },
+        {
+          word: "Head count",
+          phonetic: "/hed kaʊnt/",
+          definition: "Số người tham gia",
+          context: "May I confirm the head count for the tour?",
+          icon: "🔢",
+        },
+      ],
+      grammar: [
+        {
+          rude: "How many people? Tell me now.",
+          polite: "May I confirm the head count, sir, so the operator reserves the right vehicle?",
+          rule: "Nêu LÝ DO hỏi ('so the operator…') biến câu hỏi hành chính thành sự chăm sóc.",
+        },
+        {
+          rude: "I will check. Wait there.",
+          polite: "Let me check availability for you, madam. It will take two minutes, no longer.",
+          rule: "Cam kết một khoảng thời gian cụ thể. 'Wait' không kèm con số là chờ vô hạn với khách.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Can you book the countryside tour for the four of us on Thursday?",
+          targetResponse:
+            "Certainly, sir. Let me check availability for Thursday, and I will confirm the head count and pick-up point with you.",
+          helpTip:
+            "Nhắc lại thông tin khách vừa nói (thứ Năm, bốn người) trong câu trả lời — đó là cách chứng minh bạn đã nghe đúng.",
+        },
+      ],
+      reading: {
+        text: "TOUR BOOKING SLIP — CONCIERGE\nGuest: Mr. Alvarez, Room 1108\nTour: Countryside half-day, Thursday 12 March\nHead count: 4 adults\nPick-up point: Main lobby door, 07:45 (tour departs 08:00)\nOperator: Green Fields Travel, ref GF-4471\nDesk actions: print itinerary tonight · leave wake-up call 06:45 · reconfirm with operator Wednesday 18:00",
+        questions: [
+          {
+            q: "Khách được đón lúc mấy giờ và ở đâu?",
+            options: [
+              "A. 08:00 at the car park",
+              "B. 07:45 at the main lobby door",
+              "C. 06:45 in the restaurant",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Quầy phải xác nhận lại với công ty tour vào lúc nào?",
+            options: ["A. Thursday 08:00", "B. Wednesday 18:00", "C. Thursday 07:45"],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "How many? Four? Okay, done.",
+          good: "Four adults, Thursday morning. May I confirm the pick-up point as the lobby door, sir?",
+        },
+        {
+          bad: "Wait. I check.",
+          good: "Let me check availability for you, madam — two minutes and I will come back to you.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Book us on the eight o'clock tour tomorrow, please.",
+          options: [
+            {
+              text: "With pleasure, madam. May I confirm the head count, and shall I arrange a wake-up call for a quarter to seven?",
+              correct: true,
+            },
+            { text: "Okay. Be in the lobby at eight.", correct: false },
+            { text: "I will try. Come back later and I will tell you.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_38_2",
+      lessonOrder: 2,
+      titleEn: "Calling a Taxi and Agreeing the Fare",
+      titleVi: "Gọi taxi và thống nhất giá cước",
+      vocabulary: [
+        {
+          word: "Metered taxi",
+          phonetic: "/ˈmiːtəd ˈtæksi/",
+          definition: "Taxi tính theo đồng hồ",
+          context: "I will call a metered taxi for you, sir.",
+          icon: "🚕",
+        },
+        {
+          word: "Fare",
+          phonetic: "/feə/",
+          definition: "Tiền cước xe",
+          context: "The fare to the airport is about four hundred thousand dong.",
+          icon: "💵",
+        },
+        {
+          word: "Fixed price",
+          phonetic: "/fɪkst praɪs/",
+          definition: "Giá trọn gói, không đổi",
+          context: "Our hotel car is a fixed price to the airport.",
+          icon: "🏷️",
+        },
+        {
+          word: "Plate number",
+          phonetic: "/pleɪt ˈnʌmbə/",
+          definition: "Biển số xe",
+          context: "I have written the plate number on your card.",
+          icon: "🔖",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Take any taxi outside.",
+          polite:
+            "I would rather call a metered taxi from the desk, sir — the fare is then on record.",
+          rule: "'I would rather' nêu khuyến nghị nghề nghiệp mà không hạ thấp lựa chọn của khách.",
+        },
+        {
+          rude: "Driver will tell you price.",
+          polite:
+            "The fare is about four hundred thousand dong on the meter, madam, and I have noted the plate number.",
+          rule: "Đưa trước con số ước lượng và biển số. Khách nước ngoài sợ nhất là không biết mình sẽ trả bao nhiêu.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Last time a driver charged us triple. Can you make sure that does not happen?",
+          targetResponse:
+            "I understand, madam. I will call a metered taxi myself and write the plate number and the usual fare on your card.",
+          helpTip:
+            "'I understand' rồi hành động cụ thể. Đừng bào chữa cho tài xế lần trước — khách cần bảo đảm cho lần này.",
+        },
+      ],
+      reading: {
+        text: "TRANSPORT CARD — GIVE ONE TO EVERY DEPARTING GUEST\nHotel car to airport: FIXED PRICE 450,000 VND. Book at the desk, 30 min notice.\nMetered taxi to airport: usually 380,000-420,000 VND depending on traffic.\nDesk procedure: call the taxi, note the plate number on the guest card, hand the card to the guest.\nIf the guest returns with a fare complaint, log the plate number and the amount, then inform the Duty Manager the same shift.",
+        questions: [
+          {
+            q: "Xe khách sạn đi sân bay có giá bao nhiêu?",
+            options: ["A. 380,000 VND", "B. 450,000 VND fixed", "C. It depends on the meter"],
+            correct: 1,
+          },
+          {
+            q: "Nếu khách quay lại phàn nàn về giá cước thì phải làm gì?",
+            options: [
+              "A. Log the plate number and amount, then inform the Duty Manager",
+              "B. Pay the difference from the desk float",
+              "C. Ask the guest to call the taxi company",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Taxi is outside. Go and ask them.",
+          good: "Allow me to call one for you, sir. I will note the plate number on your card.",
+        },
+        {
+          bad: "Price is price. I cannot help.",
+          good: "The meter should read about four hundred thousand, madam. Please keep this card with the plate number.",
+        },
+      ],
+      game: [
+        {
+          prompt: "How much should a taxi to the airport cost? I do not want to be cheated.",
+          options: [
+            {
+              text: "About four hundred thousand dong on the meter, sir. Our own car is fixed at four hundred and fifty.",
+              correct: true,
+            },
+            { text: "It depends. Ask the driver before you get in.", correct: false },
+            { text: "Taxis here are fine. Do not worry about it.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_38_3",
+      lessonOrder: 3,
+      titleEn: "Reserving a Restaurant Table",
+      titleVi: "Đặt bàn nhà hàng bên ngoài",
+      vocabulary: [
+        {
+          word: "Table for two",
+          phonetic: "/ˈteɪbl fə tuː/",
+          definition: "Bàn hai người",
+          context: "I have reserved a table for two at seven.",
+          icon: "🍽️",
+        },
+        {
+          word: "Dress code",
+          phonetic: "/dres kəʊd/",
+          definition: "Quy định trang phục",
+          context: "That restaurant has a smart dress code in the evening.",
+          icon: "👔",
+        },
+        {
+          word: "Dietary requirement",
+          phonetic: "/ˈdaɪətəri rɪˈkwaɪəmənt/",
+          definition: "Yêu cầu về chế độ ăn",
+          context: "Please tell me any dietary requirement before I call.",
+          icon: "🥗",
+        },
+        {
+          word: "Under your name",
+          phonetic: "/ˈʌndə jɔː neɪm/",
+          definition: "Đặt dưới tên của quý khách",
+          context: "The booking is under your name, sir.",
+          icon: "📝",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You eat meat or not?",
+          polite:
+            "May I ask if anyone in your party has a dietary requirement, madam? I will pass it on.",
+          rule: "Hỏi gián tiếp 'May I ask if…' cho chủ đề riêng tư, và nói rõ bạn sẽ dùng thông tin để làm gì.",
+        },
+        {
+          rude: "Wear proper clothes there.",
+          polite:
+            "One small note, sir: they ask for long trousers in the evening. Nothing formal beyond that.",
+          rule: "Báo trước quy định bằng 'One small note' và giới hạn ngay ('nothing formal beyond that') để khách không lo lắng thừa.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We would like somewhere quiet for our anniversary tonight.",
+          targetResponse:
+            "How lovely. May I suggest the riverside terrace, madam? I will ask for a corner table under your name.",
+          helpTip:
+            "Ghi nhận dịp đặc biệt bằng một câu ngắn ('How lovely') rồi mới tư vấn — sự ấm áp đến trước thông tin.",
+        },
+        {
+          guestPrompt: "One of us cannot eat shellfish. Is that a problem?",
+          targetResponse:
+            "Not at all, sir. I will note the shellfish allergy on the booking and confirm it with the restaurant when I call.",
+          helpTip:
+            "Với dị ứng, phải nói rõ hai bước: ghi vào booking VÀ xác nhận qua điện thoại. Một bước là chưa đủ an toàn.",
+        },
+      ],
+      reading: {
+        text: "OUTSIDE DINING — DESK REFERENCE\nRiverside Terrace: quiet, corner tables available, smart casual, long trousers after 18:00. Book 4 hours ahead.\nStreet Kitchen: lively and loud, no reservations, best before 19:00.\nLotus Vegetarian: fully vegetarian, good for dietary requirements, book 1 day ahead.\nWhen booking: give the guest's name, the head count, the time, and ANY dietary requirement. Write the confirmation on a card for the guest.",
+        questions: [
+          {
+            q: "Nhà hàng nào phù hợp nhất cho khách ăn chay?",
+            options: ["A. Riverside Terrace", "B. Street Kitchen", "C. Lotus Vegetarian"],
+            correct: 2,
+          },
+          {
+            q: "Khi gọi điện đặt bàn, phải cung cấp những thông tin nào?",
+            options: [
+              "A. Only the guest's room number",
+              "B. Name, head count, time, and any dietary requirement",
+              "C. The guest's passport number",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "That restaurant is full. Eat here.",
+          good: "They are full at seven, sir. I can hold eight thirty there, or book our terrace at seven.",
+        },
+        {
+          bad: "Allergy? Tell the waiter yourself.",
+          good: "I will note the shellfish allergy on the booking and confirm it by phone, madam.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Book us a table somewhere good tonight. Surprise us.",
+          options: [
+            {
+              text: "It would be my pleasure, sir. May I ask the head count and whether anyone has a dietary requirement?",
+              correct: true,
+            },
+            { text: "Okay, I will choose something. Come back at seven.", correct: false },
+            { text: "I cannot choose for you. Please tell me the restaurant.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_38_4",
+      lessonOrder: 4,
+      titleEn: "Left Luggage and the Late Departure",
+      titleVi: "Giữ hành lý và khách rời muộn",
+      vocabulary: [
+        {
+          word: "Left luggage",
+          phonetic: "/left ˈlʌɡɪdʒ/",
+          definition: "Dịch vụ giữ hành lý",
+          context: "We can keep your bags in left luggage until six.",
+          icon: "🧳",
+        },
+        {
+          word: "Claim tag",
+          phonetic: "/kleɪm tæɡ/",
+          definition: "Phiếu nhận lại hành lý",
+          context: "Please keep the claim tag until you collect the bags.",
+          icon: "🏷️",
+        },
+        {
+          word: "Day-use shower",
+          phonetic: "/deɪ juːs ˈʃaʊə/",
+          definition: "Phòng tắm dùng trong ngày",
+          context: "A day-use shower is available near the pool.",
+          icon: "🚿",
+        },
+        {
+          word: "Collect",
+          phonetic: "/kəˈlekt/",
+          definition: "Đến lấy lại đồ",
+          context: "What time would you like to collect your luggage?",
+          icon: "🤲",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Put your bags there. Take this paper.",
+          polite:
+            "May I keep your bags in left luggage, sir? Here is your claim tag — please keep it safe.",
+          rule: "Xin phép trước khi cầm đồ của khách, rồi giao phiếu kèm một lời dặn ngắn.",
+        },
+        {
+          rude: "Check-out is twelve. You must go.",
+          polite:
+            "Check-out is at twelve, madam, but you are very welcome to use the pool and the shower until your flight.",
+          rule: "Nêu quy định rồi nối ngay bằng 'but you are welcome to…' — khách nghe thấy điều còn được, chứ không chỉ điều mất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Our flight is at nine tonight but check-out is at noon. What do we do for eight hours?",
+          targetResponse:
+            "We will keep your luggage here, madam, and you are welcome to use the pool and the day-use shower until you leave.",
+          helpTip:
+            "Trả lời cả hai nỗi lo cùng lúc: hành lý để đâu, và người đi đâu. Khách hỏi một câu nhưng đang lo hai việc.",
+        },
+      ],
+      reading: {
+        text: "LEFT LUGGAGE PROCEDURE — FRONT OFFICE\n1. Count the bags with the guest and write the number on the claim tag.\n2. Give the top half of the tag to the guest, tie the bottom half to the bag.\n3. Note the collection time in the log book.\n4. Never release a bag without the claim tag. If the guest has lost it, check photo ID against the log and call the Duty Manager.\nDay-use facilities for departing guests: pool, changing room, day-use shower until 18:00.",
+        questions: [
+          {
+            q: "Nếu khách làm mất phiếu nhận hành lý thì phải làm gì?",
+            options: [
+              "A. Give the bag anyway if the guest describes it",
+              "B. Check photo ID against the log and call the Duty Manager",
+              "C. Keep the bag until the next day",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách đã trả phòng dùng được phòng tắm ban ngày tới mấy giờ?",
+            options: ["A. 12:00", "B. 18:00", "C. 21:00"],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "No tag, no bag. Rules are rules.",
+          good: "Without the tag I must check your ID against our log, sir. May I see your passport?",
+        },
+        {
+          bad: "You cannot stay after twelve.",
+          good: "Your room is until twelve, madam, but the pool and shower are yours until six.",
+        },
+      ],
+      game: [
+        {
+          prompt:
+            "We checked out this morning but our car is not here yet. Can we leave the suitcases?",
+          options: [
+            {
+              text: "Of course, sir. I will count the bags with you and give you a claim tag — collect them whenever your car arrives.",
+              correct: true,
+            },
+            { text: "Yes, put them in the corner. Nobody will touch them.", correct: false },
+            { text: "We only keep bags for guests who are still checked in.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -5045,6 +5924,8 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "GR-34": GR_WEEK_34,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
+  "FO-37": FO_WEEK_37,
+  "FO-38": FO_WEEK_38,
 };
 
 /** Everything a department met in Phases 0-3 — the pool Phase 4 walks
@@ -5081,6 +5962,8 @@ const REGISTRY: Record<string, WeekContent> = {
   "SW-19": SW_WEEK_19,
   "GR-34": GR_WEEK_34,
   "BO-38": BO_WEEK_38,
+  "FO-37": FO_WEEK_37,
+  "FO-38": FO_WEEK_38,
 };
 
 /** Every registered dep-week, keyed `${DEP}-${week}`. Exposed for the
