@@ -1,4 +1,4 @@
-// LEARNER-FACING PROGRESS (backlog P2-3).
+// LEARNER-FACING PROGRESS (backlog P2-3, P2-4).
 //
 // `lesson_progress` has held per-suite results since the mastery migration,
 // but until now only two callers read it: week-access.ts (the phase gate)
@@ -12,9 +12,11 @@
 // able to change who gets locked out. The cost is one extra select per
 // department page, held fresh for five minutes.
 
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
+import { weekNum } from "@/lib/phases";
 
 /** The six doors every authored week carries.
  *
@@ -137,4 +139,100 @@ export function useDepartmentProgress(dep: string): DepartmentProgress {
 
   if (!isSuccess || !data) return EMPTY;
   return { ready: true, ...summarise(data) };
+}
+
+// ---------------------------------------------------------------------------
+// Where the learner left off (P2-4)
+// ---------------------------------------------------------------------------
+
+const LAST_PLACE_PREFIX = "academy.lastPlace.v1.";
+
+export type LastPlace = { dep: string; week: number };
+
+function lastPlaceKey(userId: string | undefined) {
+  return LAST_PLACE_PREFIX + (userId ?? "anon");
+}
+
+/** Called on every suite entry. Cheap, synchronous, and survives a logged
+ *  -out reload — the learner's own device is the fastest source of truth
+ *  for "where was I". */
+export function rememberPlace(userId: string | undefined, dep: string, week: string | number) {
+  if (typeof window === "undefined") return;
+  const w = weekNum(week);
+  if (!Number.isFinite(w)) return;
+  try {
+    window.localStorage.setItem(
+      lastPlaceKey(userId),
+      JSON.stringify({ dep: dep.toUpperCase(), week: w }),
+    );
+  } catch {
+    // Private-mode quota failures must never break entering a lesson.
+  }
+}
+
+function readPlace(userId: string | undefined): LastPlace | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(lastPlaceKey(userId));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<LastPlace>;
+    if (typeof parsed.dep !== "string" || typeof parsed.week !== "number") return null;
+    return { dep: parsed.dep.toUpperCase(), week: parsed.week };
+  } catch {
+    return null;
+  }
+}
+
+/** The most recent result this learner recorded in ANY department.
+ *
+ *  The cross-device half of the answer: localStorage knows where they were
+ *  on THIS phone, and nothing else. A learner who studied at work and opens
+ *  the app at home would otherwise get no card at all. */
+async function fetchLastRecordedPlace(userId: string): Promise<LastPlace | null> {
+  const { data, error } = await supabase
+    .from("lesson_progress")
+    .select("department_id, week_number, completed_at")
+    .eq("user_id", userId)
+    .order("completed_at", { ascending: false, nullsFirst: false })
+    .limit(1);
+  if (error) throw error;
+  const row = data?.[0];
+  if (!row) return null;
+  return { dep: row.department_id.toUpperCase(), week: row.week_number };
+}
+
+/**
+ * Where to send the learner when they open the app.
+ *
+ * localStorage wins when present: it is written on entering a suite, so it
+ * points at the week they were *in*, whereas the DB only knows the last
+ * week they *finished* something in. Falls back to the DB so a new device
+ * still lands somewhere useful, and to null for a genuinely new learner —
+ * whom the card must not greet with "continue" when there is nothing to
+ * continue.
+ */
+export function useLastPlace(): { place: LastPlace | null; ready: boolean } {
+  const { session, loading } = useSession();
+  const userId = session?.user.id;
+
+  const { data: remote, isFetched } = useQuery({
+    queryKey: ["last-recorded-place", userId] as const,
+    queryFn: () => fetchLastRecordedPlace(userId!),
+    enabled: !!userId,
+    staleTime: 5 * 60_000,
+  });
+
+  // Read on the client only. Reading during render would hand SSR a value
+  // the server cannot have, and the hydration mismatch flashes the card.
+  const [local, setLocal] = useState<LastPlace | null>(null);
+  const [localRead, setLocalRead] = useState(false);
+  useEffect(() => {
+    if (loading) return;
+    setLocal(readPlace(userId));
+    setLocalRead(true);
+  }, [userId, loading]);
+
+  if (!localRead) return { place: null, ready: false };
+  if (local) return { place: local, ready: true };
+  return { place: remote ?? null, ready: !userId || isFetched };
 }
