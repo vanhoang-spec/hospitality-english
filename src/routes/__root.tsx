@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AcademyNav } from "@/components/AcademyNav";
 import { AuthGate } from "@/components/AuthGate";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 function NotFoundComponent() {
   return (
@@ -87,8 +88,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "A 5-star hospitality English training academy." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      // Paints the phone's status bar and the splash screen in the app's
+      // own navy instead of browser white on launch.
+      { name: "theme-color", content: "#0A192F" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "HE Academy" },
     ],
     links: [
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "icon", href: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      // iOS never reads the manifest for the home-screen icon.
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -127,6 +138,7 @@ function RootComponent() {
         <div className="min-h-screen bg-background text-foreground">
           <AcademyNav />
           <Outlet />
+          <InstallPrompt />
         </div>
       </AuthGate>
     </QueryClientProvider>

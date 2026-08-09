@@ -7,6 +7,7 @@ import { localDateStr, yesterdayStr } from "@/lib/date";
 const LEGACY_KEY = "academy.state.v1";
 const PENDING_STARS_PREFIX = "academy.pendingStars.v1.";
 const LAST_LEARNED_PREFIX = "academy.lastLearned.v1.";
+const FIRST_SUITE_PREFIX = "academy.firstSuiteDone.v1.";
 const METRICS_DEBOUNCE_MS = 600;
 
 export type Metrics = {
@@ -151,6 +152,26 @@ function readLastLearned(userId: string): string | null {
 function writeLastLearned(userId: string, date: string) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(LAST_LEARNED_PREFIX + userId, date);
+}
+
+/** Has this learner ever finished a suite on this device?
+ *
+ *  The install prompt waits on it (backlog P2-1a): asking someone to put an
+ *  icon on their home screen before they have finished a single lesson is
+ *  asking them to commit to something they have not tried. */
+export function hasFinishedASuite(userId: string | undefined): boolean {
+  if (typeof window === "undefined" || !userId) return false;
+  return window.localStorage.getItem(FIRST_SUITE_PREFIX + userId) === "1";
+}
+
+function markFinishedASuite(userId: string) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(FIRST_SUITE_PREFIX + userId, "1");
+    window.dispatchEvent(new CustomEvent("academy:suite-finished"));
+  } catch {
+    // Storage is a nicety here; a full quota must not break recording.
+  }
 }
 
 function readPendingStars(userId: string): number {
@@ -379,6 +400,7 @@ export function useAcademy() {
         .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" })
         .then(() => {});
 
+      markFinishedASuite(userId);
       // Streak = the learner showed up and finished a suite today, not
       // that they cleared the 80% mastery bar. Punishing an effortful
       // sub-mastery day with a streak reset churns exactly the weak,
