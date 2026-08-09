@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
@@ -9,6 +9,8 @@ import {
   listeningRateForWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
+import { useSuiteSession } from "@/lib/session-resume";
+import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Term = { en: string; ipa: string; vi: string; usage: string; icon?: string };
@@ -101,6 +103,23 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
   return [...mcqs, ...dictations];
 }
 
+/** What survives an interruption (P2-5).
+ *
+ *  `flipped` matters as much as the quiz position: the flip gate is
+ *  component state, so every remount re-locked the quiz behind flipping
+ *  all 10–17 cards again. `picked`/`typed` are deliberately left out —
+ *  resuming to the START of the question in hand is honest, whereas
+ *  restoring a half-typed answer to a prompt the learner no longer has in
+ *  mind is not. */
+type VocabSnapshot = {
+  flipped: number[];
+  quiz: QuizQuestion[];
+  qIdx: number;
+  correctCount: number;
+  awarded: string[];
+  earned: number;
+};
+
 export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
   const content = week ? getWeekContent(dep, week) : null;
   // Guard component keeps all hooks in the inner component so the
@@ -156,6 +175,52 @@ function VocabSuiteInner({
   const earnedRef = useRef(0);
   const [lastScorePct, setLastScorePct] = useState(0);
 
+  const store = useSuiteSession<VocabSnapshot>(dep, week, "vocab");
+  const [resumeHandled, setResumeHandled] = useState(false);
+  const resumable = store.ready && !resumeHandled && store.saved !== null;
+
+  // Snapshot on change rather than at each call site: the state that
+  // matters lands across several setState calls, and anything written
+  // straight after one of them captures the value it is replacing.
+  useEffect(() => {
+    // Never write over the snapshot the learner has not answered the
+    // resume prompt for yet — flipping one card would otherwise destroy
+    // the run they came back to finish.
+    if (!store.ready || resumable || stage === "done") return;
+    if (flipped.size === 0 && quiz.length === 0) return;
+    store.save({
+      flipped: [...flipped],
+      quiz,
+      qIdx,
+      correctCount,
+      awarded: [...awardedRef.current],
+      earned: earnedRef.current,
+    });
+  }, [store, resumable, stage, flipped, quiz, qIdx, correctCount]);
+
+  function resume() {
+    const s = store.saved;
+    setResumeHandled(true);
+    if (!s) return;
+    setFlipped(new Set(s.flipped));
+    awardedRef.current = new Set(s.awarded);
+    earnedRef.current = s.earned;
+    if (s.quiz.length > 0) {
+      setQuiz(s.quiz);
+      setQIdx(s.qIdx);
+      setCorrectCount(s.correctCount);
+      setPicked(null);
+      setTyped("");
+      setAnswered(null);
+      setStage("quiz");
+    }
+  }
+
+  function restart() {
+    setResumeHandled(true);
+    store.clear();
+  }
+
   function flip(i: number) {
     setFlipped((s) => {
       const n = new Set(s);
@@ -209,6 +274,9 @@ function VocabSuiteInner({
           scorePct: pct,
           mastered: pct >= MASTERY_PCT,
         });
+      // The run is banked; a snapshot of it would only offer to replay a
+      // paper that has already been scored.
+      store.clear();
       setStage("done");
       return;
     }
@@ -373,6 +441,17 @@ function VocabSuiteInner({
 
   return (
     <div>
+      {resumable && store.saved && (
+        <ResumeBanner
+          detail={
+            store.saved.quiz.length > 0
+              ? `Tiếp tục từ câu ${store.saved.qIdx + 1}/${store.saved.quiz.length} của phần kiểm tra.`
+              : `Bạn đã lật ${store.saved.flipped.length}/${terms.length} thẻ từ.`
+          }
+          onResume={resume}
+          onRestart={restart}
+        />
+      )}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-sm text-foreground/75">
           Chạm từng thẻ để học phát âm, ngữ cảnh sử dụng và nghĩa tiếng Việt. Lật đủ {terms.length}{" "}

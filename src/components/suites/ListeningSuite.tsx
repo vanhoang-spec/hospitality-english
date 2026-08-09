@@ -1,8 +1,10 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent } from "@/lib/content/week-content";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
+import { useSuiteSession } from "@/lib/session-resume";
+import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 const MAX_LISTENS = 3;
@@ -96,13 +98,26 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
   return [...shuffle(chooses), ...shuffle(clozes)];
 }
 
+/** The task list itself has to travel with the position (P2-5): the order
+ *  is shuffled per sitting, so "câu 5" of a fresh build is a different
+ *  question from "câu 5" of the run being resumed. */
+type ListeningSnapshot = {
+  tasks: ListeningTask[];
+  idx: number;
+  correctCount: number;
+  awarded: string[];
+  earned: number;
+};
+
 export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
   // Rises with the phase — a flat 80 was unreachable at pre-A1.
   const MASTERY_PCT = suiteMasteryPct(week ?? 1);
   const [seed, setSeed] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const tasks = useMemo(() => (week ? buildTasks(dep, week) : []), [dep, week, seed]);
+  const built = useMemo(() => (week ? buildTasks(dep, week) : []), [dep, week, seed]);
+  const [restored, setRestored] = useState<ListeningTask[] | null>(null);
+  const tasks = restored ?? built;
 
   const [idx, setIdx] = useState(0);
   const [stage, setStage] = useState<"task" | "done">("task");
@@ -114,6 +129,44 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const [lastScorePct, setLastScorePct] = useState(0);
   const awardedRef = useRef<Set<string>>(new Set());
   const earnedRef = useRef(0);
+
+  const store = useSuiteSession<ListeningSnapshot>(dep, week ?? "", "listening");
+  const [resumeHandled, setResumeHandled] = useState(false);
+  const resumable = store.ready && !resumeHandled && store.saved !== null;
+
+  useEffect(() => {
+    if (!store.ready || resumable || stage === "done") return;
+    // Nothing worth restoring until the learner is past the first task.
+    if (idx === 0 && correctCount === 0) return;
+    store.save({
+      tasks,
+      idx,
+      correctCount,
+      awarded: [...awardedRef.current],
+      earned: earnedRef.current,
+    });
+  }, [store, resumable, stage, tasks, idx, correctCount]);
+
+  function resume() {
+    const s = store.saved;
+    setResumeHandled(true);
+    if (!s || s.tasks.length === 0) return;
+    setRestored(s.tasks);
+    setIdx(s.idx);
+    setCorrectCount(s.correctCount);
+    awardedRef.current = new Set(s.awarded);
+    earnedRef.current = s.earned;
+    setPicked(null);
+    setBlankValues({});
+    setAnswered(null);
+    setListens(0);
+    setStage("task");
+  }
+
+  function restartFresh() {
+    setResumeHandled(true);
+    store.clear();
+  }
 
   const ttsAvailable = typeof window !== "undefined" && "speechSynthesis" in window;
 
@@ -183,6 +236,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           scorePct: pct,
           mastered: pct >= MASTERY_PCT,
         });
+      store.clear();
       setStage("done");
       return;
     }
@@ -194,6 +248,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   }
 
   function retry() {
+    // Back to a freshly shuffled build — the restored list belonged to the
+    // run that just ended.
+    setRestored(null);
     setSeed((s) => s + 1);
     setIdx(0);
     setPicked(null);
@@ -237,6 +294,13 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
 
   return (
     <div className="mx-auto max-w-2xl">
+      {resumable && store.saved && (
+        <ResumeBanner
+          detail={`Tiếp tục từ câu ${store.saved.idx + 1}/${store.saved.tasks.length} của phần luyện nghe.`}
+          onResume={resume}
+          onRestart={restartFresh}
+        />
+      )}
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
         <span>
           Luyện nghe · Câu {idx + 1}/{tasks.length}
