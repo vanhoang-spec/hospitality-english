@@ -15,7 +15,29 @@ Kèm theo `docs/academic-review-2026-08.md`. Mỗi mục ghi: bằng chứng, ph
 
 ## Trạng thái
 
-**Toàn bộ nhóm P0 đã được xử lý** (xem phần "Đã sửa" cuối tài liệu). P1–P3 vẫn còn nguyên.
+**Toàn bộ nhóm P0 đã được xử lý** (xem phần "Đã sửa" cuối tài liệu).
+
+Tiến độ theo thứ tự thực hiện đề xuất ở cuối tài liệu:
+
+| Đợt | Nội dung                     | Trạng thái                                  |
+| --- | ---------------------------- | ------------------------------------------- |
+| 1   | P0-1 → P0-5                  | ✅ xong                                     |
+| 2   | Gate ngữ nghĩa mới           | ✅ xong                                     |
+| 3   | P2-1, P2-3, P2-4, P2-5, P1-3 | ✅ xong, trừ **P2-1(b)** — xem ghi chú dưới |
+| 4   | P1-1, P1-2, P1-6, P1-8, P2-9 | P1-1, P1-2 ✅ — **còn P1-6, P1-8, P2-9**    |
+| 5   | P1-12, P1-4, P1-5            | ❌ chưa                                     |
+| 6   | P3-1 → P3-6                  | ❌ chưa                                     |
+
+Ngoài thứ tự trên, đã làm thêm: **P1-7, P1-9, P1-10**.
+
+**P2-1(b) đang chờ quyết định, không phải chờ code.** Phần (a) — PWA, manifest,
+icon, service worker, gợi ý thêm vào màn hình chính — đã xong. Phần (b) là edge
+function gửi nhắc học qua Zalo ZNS hoặc SMS: cần một Zalo OA, một mẫu tin được
+duyệt, và một mức ngân sách cho mỗi tin nhắn. Ba thứ đó là quyết định vận hành.
+
+Còn tồn ở P2-5: chỉ ba suite được nêu đích danh trong backlog (Vocab, Listening,
+WeekTest) là có lưu điểm dừng. Grammar, Speaking, Reading và Arcade vẫn giữ toàn
+bộ phiên trong bộ nhớ React.
 
 Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
 
