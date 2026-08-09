@@ -4,6 +4,7 @@ import { Tier3SkillSuitesHub } from "@/components/Tier3SkillSuitesHub";
 import { getDepartment } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
 import { isCheckpointWeek } from "@/lib/phases";
+import { CORE_SUITES, useDepartmentProgress } from "@/lib/progress";
 import { useWeekAccess } from "@/lib/week-access";
 
 export const Route = createFileRoute("/department/$dep")({
@@ -28,6 +29,7 @@ function DeptPage() {
   const weekNumber = allParams.week;
   const department = getDepartment(dep);
   const access = useWeekAccess(dep ?? "");
+  const progress = useDepartmentProgress(dep ?? "");
 
   // The timeline titles come straight from the authored content
   // (week-content.ts), the same source of truth the week hub uses. The
@@ -48,6 +50,9 @@ function DeptPage() {
         ];
       })
     : null;
+  // The denominator is the weeks this department actually has authored,
+  // not a hardcoded 40 — a bar that can never fill is worse than none.
+  const totalWeeks = scenarios?.length ?? 0;
 
   if (!department) throw notFound();
 
@@ -79,6 +84,38 @@ function DeptPage() {
               Mỗi tuần là một ca làm 4 giờ, được chia thành 4 bài học nhỏ.
             </span>
           </p>
+
+          {/* The learner's own progress, in the learner's own view (P2-3).
+              lesson_progress has carried these numbers all along; until
+              now only the phase gate and the manager's matrix read them. */}
+          {progress.ready && totalWeeks > 0 && progress.byWeek.size > 0 && (
+            <div className="mt-6 border border-primary/30 bg-card/70 p-4 shadow-xl">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <span className="font-display text-xl text-foreground">
+                  Tuần {progress.currentWeek}/{totalWeeks}
+                </span>
+                <span className="text-xs uppercase tracking-[0.22em] text-primary">
+                  {progress.weeksCompleted} tuần trọn vẹn · ⭐ {progress.stars}
+                </span>
+              </div>
+              <div
+                className="mt-3 h-1.5 w-full bg-primary/15"
+                role="progressbar"
+                aria-valuenow={progress.weeksCompleted}
+                aria-valuemin={0}
+                aria-valuemax={totalWeeks}
+                aria-label="Số tuần đã hoàn thành đủ sáu suite"
+              >
+                <div
+                  className="h-1.5 bg-primary transition-all"
+                  style={{ width: `${(progress.weeksCompleted / totalWeeks) * 100}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-foreground/60">
+                Một tuần được tính là trọn vẹn khi đã học đủ {CORE_SUITES.length} suite.
+              </p>
+            </div>
+          )}
 
           {/* Where the learner stands in the five-phase frame, and the one
               test that opens the next stretch of weeks. */}
@@ -131,6 +168,8 @@ function DeptPage() {
                 // they have already earned is worse than none at all.
                 const locked = access.ready && !access.isUnlocked(s.week_number);
                 const checkpoint = isCheckpointWeek(s.week_number);
+                const wp = progress.byWeek.get(s.week_number);
+                const complete = wp?.done === CORE_SUITES.length;
                 return (
                   <motion.li
                     key={s.id}
@@ -143,7 +182,9 @@ function DeptPage() {
                       className={`absolute left-0 top-3 flex h-9 w-9 items-center justify-center border bg-card font-display text-sm shadow-xl md:left-1.5 md:h-10 md:w-10 ${
                         locked
                           ? "border-foreground/20 text-foreground/40"
-                          : "border-primary/40 text-primary"
+                          : complete
+                            ? "border-primary bg-primary/15 text-primary"
+                            : "border-primary/40 text-primary"
                       }`}
                     >
                       {locked ? "🔒" : s.week_number}
@@ -182,10 +223,25 @@ function DeptPage() {
                           <p className="mt-1 text-sm italic text-foreground/60">{s.title_vi}</p>
                         )}
                         <div className="mt-3 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-primary">
-                          <span>Open shift →</span>
+                          <span>{wp ? "Học tiếp →" : "Open shift →"}</span>
                           {checkpoint && (
                             <span className="border border-primary/40 px-2 py-0.5 tracking-[0.18em] text-primary/90">
                               Sát hạch · mở giai đoạn sau
+                            </span>
+                          )}
+                          {/* Only rendered for weeks the learner has touched:
+                              a "0/6" on all forty rows is a wall of zeroes,
+                              not information. */}
+                          {wp && (
+                            <span
+                              className={`border px-2 py-0.5 tracking-[0.18em] ${
+                                complete
+                                  ? "border-primary bg-primary/15 text-primary"
+                                  : "border-primary/30 text-primary/80"
+                              }`}
+                            >
+                              {complete ? "✓ Đủ 6 suite" : `${wp.done}/${CORE_SUITES.length} suite`}
+                              {wp.stars > 0 ? ` · ⭐ ${wp.stars}` : ""}
                             </span>
                           )}
                         </div>

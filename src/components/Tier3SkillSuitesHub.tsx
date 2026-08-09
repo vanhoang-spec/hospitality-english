@@ -11,6 +11,7 @@ import {
   CHECKPOINT_TOTAL_QUESTIONS,
   isCheckpointWeek,
 } from "@/lib/phases";
+import { useDepartmentProgress } from "@/lib/progress";
 import { useWeekAccess } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
 
@@ -93,6 +94,8 @@ export function Tier3SkillSuitesHub({
   // the previous checkpoint. Checked here as well as on the timeline
   // because this page is reachable by URL.
   const access = useWeekAccess(department.code);
+  const progress = useDepartmentProgress(department.code);
+  const weekProgress = progress.byWeek.get(parseInt(week, 10));
   // week-content.ts is the source of truth for any week that has authored
   // lessons — the DB `lessons` rows are placeholders that only describe
   // weeks still awaiting content. Letting the DB win here is what made
@@ -249,36 +252,60 @@ export function Tier3SkillSuitesHub({
           className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
           aria-label="Golden Service Suite doors"
         >
-          {doors.map((suite, index) => (
-            <motion.div
-              key={suite.slug}
-              initial={{ opacity: 0, y: 26 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.45, delay: index * 0.06 }}
-            >
-              <Link
-                to="/learn/$dep/$week/$suite"
-                params={{ dep: department.code, week, suite: suite.slug }}
-                onClick={() => document.body.setAttribute("data-active-suite", suite.slug)}
-                className="group relative flex h-64 flex-col overflow-hidden border border-primary/30 bg-card p-5 text-left shadow-xl transition-colors hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/70"
+          {doors.map((suite, index) => {
+            // P2-3: the door tells the learner what they already did here.
+            // Undefined until the query lands, so nothing claims "chưa học"
+            // about a suite that is merely still loading.
+            const result = weekProgress?.suites[suite.slug];
+            return (
+              <motion.div
+                key={suite.slug}
+                initial={{ opacity: 0, y: 26 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
               >
-                <span className="text-xs uppercase tracking-[0.3em] text-primary">{suite.tag}</span>
-                <span className="font-display mt-5 block text-2xl leading-tight text-foreground">
-                  {suite.title}
-                </span>
-                <span className="mt-4 block text-sm leading-6 text-foreground/62">
-                  {suite.detail}
-                </span>
-                <span className="mt-auto flex items-center justify-between pt-8 text-xs uppercase tracking-[0.22em] text-primary">
-                  Vào học
-                  <span className="font-display text-2xl transition-transform group-hover:translate-x-1">
-                    →
+                <Link
+                  to="/learn/$dep/$week/$suite"
+                  params={{ dep: department.code, week, suite: suite.slug }}
+                  onClick={() => document.body.setAttribute("data-active-suite", suite.slug)}
+                  className={`group relative flex h-64 flex-col overflow-hidden border bg-card p-5 text-left shadow-xl transition-colors hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/70 ${
+                    result?.mastered ? "border-primary" : "border-primary/30"
+                  }`}
+                >
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="text-xs uppercase tracking-[0.3em] text-primary">
+                      {suite.tag}
+                    </span>
+                    {result && (
+                      <span
+                        className={`shrink-0 border px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] ${
+                          result.mastered
+                            ? "border-primary bg-primary/15 text-primary"
+                            : "border-primary/30 text-primary/80"
+                        }`}
+                      >
+                        {result.mastered ? "✓ Đạt" : "Đã học"}
+                        {result.scorePct !== null ? ` · ${result.scorePct}%` : ""}
+                      </span>
+                    )}
                   </span>
-                </span>
-              </Link>
-            </motion.div>
-          ))}
+                  <span className="font-display mt-5 block text-2xl leading-tight text-foreground">
+                    {suite.title}
+                  </span>
+                  <span className="mt-4 block text-sm leading-6 text-foreground/62">
+                    {suite.detail}
+                  </span>
+                  <span className="mt-auto flex items-center justify-between pt-8 text-xs uppercase tracking-[0.22em] text-primary">
+                    {result ? "Học lại" : "Vào học"}
+                    <span className="font-display text-2xl transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </span>
+                </Link>
+              </motion.div>
+            );
+          })}
         </section>
       </div>
     </main>
