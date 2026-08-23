@@ -4,19 +4,24 @@ export type Department = {
   name_vi: string;
   tagline: string;
   motif: string;
-  /** Authored but not yet offered to learners.
+  /** Not offered to learners — and WHY, because the two reasons behave
+   *  differently and a gate that conflates them lies in its own log.
    *
-   *  A department's 40 weeks cannot land in one commit, and a half-finished
-   *  one must not appear in the lounge — a learner who picks it would meet a
-   *  course that stops mid-way. Hidden keeps it out of the picker while the
-   *  QA gates still check every week that DOES exist, so the content is held
-   *  to the full standard from the first week authored rather than audited
-   *  at the end. Two checks, and only two, are deferred: T1 coverage
-   *  ("all 40 weeks present") and the oral-pool size of phases that are not
-   *  finished yet. Nothing else is relaxed.
+   *  `"in-progress"` — the 40 weeks are still being written. A learner who
+   *  picked it would meet a course that stops mid-way. Two checks are
+   *  deferred while it holds: T1 coverage ("all 40 weeks present") and the
+   *  oral-pool size of phases not finished yet. Nothing else is relaxed, so
+   *  the content is held to the full standard from the first week authored.
+   *  Shipping it is deleting this line.
    *
-   *  Shipping the department is deleting this line. */
-  hidden?: boolean;
+   *  `"withdrawn"` — the weeks are complete and the department has been
+   *  taken out of the catalogue anyway. Nothing is deferred: a withdrawn
+   *  department is checked exactly like a shipping one, because its content
+   *  is finished and may return. Restoring it is deleting this line.
+   *
+   *  Both keep the department out of the picker, out of every learner route
+   *  (see getDepartment), and out of the org-admin denominators. */
+  hidden?: "in-progress" | "withdrawn";
 };
 
 export const DEPARTMENTS: Department[] = [
@@ -60,7 +65,12 @@ export const DEPARTMENTS: Department[] = [
     name_en: "Back Office",
     name_vi: "Vận hành & Kinh doanh",
     tagline: "Corporate operations & sales",
+    // Withdrawn 2026-08. The 40 weeks are complete and BO-37/38 are among
+    // the strongest material in the course, but three Phase 4 slots assume a
+    // guest-facing job Back Office does not do — see docs/semantic-class-debt.md.
+    // The content stays in the repo, gated and unchanged, until that is settled.
     motif: "✤",
+    hidden: "withdrawn",
   },
   {
     // Security and Engineering as one team: both meet a guest only when
@@ -75,7 +85,7 @@ export const DEPARTMENTS: Department[] = [
     name_vi: "An ninh & Kỹ thuật",
     tagline: "Secure, working, unnoticed",
     motif: "✥",
-    hidden: true,
+    hidden: "in-progress",
   },
 ];
 

@@ -66,7 +66,10 @@ const slugify = (t: string) =>
     // weeks it does have are checked exactly like everyone else's, here and
     // in every other layer. Shipping it (removing `hidden`) turns this back
     // on and the 40/40 requirement applies.
-    const inProgress = !!DEPARTMENTS.find((d) => d.code === dep)?.hidden;
+    // Only an UNFINISHED department is exempt from coverage. A withdrawn one
+    // has all forty weeks and is checked exactly like a shipping one — its
+    // content is done and may come back, so it must not rot while it waits.
+    const inProgress = DEPARTMENTS.find((d) => d.code === dep)?.hidden === "in-progress";
     for (let w = 1; w <= AUTHORED_MAX; w++) {
       const viaRegistry = ALL_WEEKS[`${dep}-${w}`];
       const viaAccessor = getWeekContent(dep, w);
@@ -104,7 +107,8 @@ const slugify = (t: string) =>
   // one ratio would let a shipping department lose weeks and still read as
   // "240/280" — a number nobody would question.
   const shipping = DEPARTMENTS.filter((d) => !d.hidden);
-  const wip = DEPARTMENTS.filter((d) => d.hidden);
+  const wip = DEPARTMENTS.filter((d) => d.hidden === "in-progress");
+  const withdrawn = DEPARTMENTS.filter((d) => d.hidden === "withdrawn");
   const weeksOf = (dep: string) =>
     Array.from({ length: AUTHORED_MAX }, (_, i) => ALL_WEEKS[`${dep}-${i + 1}`]).filter(Boolean)
       .length;
@@ -113,6 +117,9 @@ const slugify = (t: string) =>
     `T1 coverage — ${shipped}/${shipping.length * AUTHORED_MAX} dep-weeks reachable across ${shipping.length} shipping departments` +
       (wip.length
         ? `; in progress: ${wip.map((d) => `${d.code} ${weeksOf(d.code)}/${AUTHORED_MAX}`).join(", ")}`
+        : "") +
+      (withdrawn.length
+        ? `; withdrawn but still fully checked: ${withdrawn.map((d) => `${d.code} ${weeksOf(d.code)}/${AUTHORED_MAX}`).join(", ")}`
         : ""),
   );
 }

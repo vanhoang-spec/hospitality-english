@@ -8,7 +8,7 @@
 - **Lộ trình:** pre-A1 → B1 bậc đầu (B1.1) **trong phạm vi nghiệp vụ khách sạn/resort** (ESP),
   không phải B1 tổng quát. 40 tuần × ~4h = ~160 giờ hướng dẫn; khả thi vì phạm vi hẹp,
   công thức lặp cao, và học viên dùng tiếng Anh hằng ngày trong ca làm.
-- **Áp dụng đồng loạt cho cả 6 bộ phận** (FO, FB, HK, SW, GR, BO): cùng một _xương sống
+- **Áp dụng đồng loạt cho 5 bộ phận đang mở** (FO, FB, HK, SW, GR): cùng một _xương sống
   ngôn ngữ_ (ngữ pháp, chức năng, độ khó) theo tuần — chỉ khác _chủ đề nghiệp vụ_ và bộ từ vựng.
 - **Speaking là đầu ra trung tâm.** Mục tiêu của app là cải thiện _giao tiếp_; mọi tuần phải
   có can-do statement dạng "nói được…".
@@ -210,7 +210,7 @@ việc ở những nơi khác nhau, và hỏng những thiết bị khác nhau. 
 
 > **MẪU CÂU DÙNG CHUNG + NGÂN HÀNG TỪ RIÊNG**
 
-Cả 6 bộ phận drill cùng 2–3 mẫu câu mỗi tuần, nhưng thay từ vựng riêng của mình vào. Đây là
+Các bộ phận drill cùng 2–3 mẫu câu mỗi tuần, nhưng thay từ vựng riêng của mình vào. Đây là
 _substitution drill_ — cơ chế biến mẫu câu thành phản xạ ở trình độ A1, đồng thời là thứ **tự
 luyện ở nhà được** (chỉ cần thay từ vào khung đã thuộc). Các mẫu câu được hiển thị cho học viên
 ở trang **Sổ tay tuần** (`/handbook/$dep/$week`, in ra giấy được).
@@ -218,7 +218,7 @@ luyện ở nhà được** (chỉ cần thay từ vào khung đã thuộc). Cá
 Ngân hàng từ đặt tại `src/lib/content/phase1-lexicon.ts` — 7 chủ đề × 8 từ + 7 từ closing =
 **60 headword riêng mỗi bộ phận**. Xương sống 32 giáo án ở `src/lib/content/phase1.ts`.
 
-| Tuần | Mẫu câu lõi (chung 6 bộ phận)                                        | Ngân hàng từ riêng    |
+| Tuần | Mẫu câu lõi (dùng chung)                                             | Ngân hàng từ riêng    |
 | ---- | -------------------------------------------------------------------- | --------------------- |
 | 7    | `This is {tên}. He/She is our {chức danh}.` · `I work in {bộ phận}.` | chức danh             |
 | 8    | `The {nơi} is on the {vị trí}.` · `There is a {nơi} near the {nơi}.` | địa điểm              |
