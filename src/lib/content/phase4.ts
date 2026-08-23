@@ -2981,6 +2981,15 @@ function buildWeek(
   priorWords: string[],
   overrides: Record<string, WeekContent>,
 ): WeekContent {
+  // A hand-authored week replaces the spine week entirely, and the registry
+  // used to let the spine build anyway and then overwrite the result. That
+  // wasted the work and, worse, kept every bank slot artificially alive: a
+  // builder that still destructures fourteen entries forces fourteen entries
+  // to exist even when nothing a learner sees comes from them. Returning the
+  // override here is what lets those banks be trimmed.
+  const override = overrides[`${lx.code}-${week}`];
+  if (override) return override;
+
   const meta = WEEK_META[week];
   return {
     departmentId: lx.code,
