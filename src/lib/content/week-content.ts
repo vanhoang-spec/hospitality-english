@@ -8244,7 +8244,7 @@ export const FO_WEEK_31: WeekContent = {
         {
           guestPrompt: "This lobby is beautiful. How old is the hotel?",
           targetResponse:
-            "The building dates from 1925, madam. It was a merchant house, and the courtyard was the family garden.",
+            "The building dates from 1925, madam. It was a family home, and the courtyard was their garden.",
           helpTip:
             "Đọc năm 1925 là 'nineteen twenty-five', không phải 'one thousand nine hundred'. Ngắt nhẹ sau năm rồi mới kể tiếp.",
         },
@@ -9201,7 +9201,7 @@ export const FO_WEEK_33: WeekContent = {
         {
           word: "Within fifteen minutes",
           phonetic: "/wɪˈðɪn ˌfɪfˈtiːn ˈmɪnɪts/",
-          definition: "Trong vòng mười phút",
+          definition: "Trong vòng mười lăm phút",
           context: "I will come back to you within fifteen minutes, sir.",
           icon: "⏱️",
         },
@@ -10041,7 +10041,7 @@ export const FO_WEEK_35: WeekContent = {
           prompt: "Your own website is cheaper than the price you just gave me at this desk.",
           options: [
             {
-              text: "Our own site should never undercut this desk, madam. Let me match it on the same conditions, and my Shift Leader will confirm it on your folio.",
+              text: "May I look at the screen with you, madam? If it is the same conditions, I will put it to my Shift Leader and come back within ten minutes.",
               correct: true,
             },
             {
@@ -10063,7 +10063,7 @@ export const FO_WEEK_35: WeekContent = {
           word: "Throw in",
           phonetic: "/θrəʊ ɪn/",
           definition: "Tặng kèm thêm",
-          context: "I can throw in breakfast for both of you.",
+          context: "I can throw in a late check-out for you.",
           icon: "➕",
         },
         {
@@ -10092,7 +10092,7 @@ export const FO_WEEK_35: WeekContent = {
         {
           rude: "No discount. Take it or leave it.",
           polite:
-            "I cannot move the rate, madam, but I can throw in breakfast for both of you each morning.",
+            "I cannot move the rate, madam, but I can add a two o'clock check-out and a welcome drink.",
           rule: "Cấu trúc 'I cannot X, but I can Y' giữ nguyên lập trường mà vẫn mở một cánh cửa. Vế 'but' phải cụ thể, đếm được.",
         },
         {
@@ -10106,13 +10106,13 @@ export const FO_WEEK_35: WeekContent = {
         {
           guestPrompt: "Come on, give me ten percent. I stay here four times a year.",
           targetResponse:
-            "I cannot move the rate, sir, but I can add breakfast, and a two o'clock check-out on your departure day.",
+            "I cannot move the rate, sir, but I can add a two o'clock check-out and move you to a higher floor.",
           helpTip:
             "Nhấn vào CAN ở vế sau, không nhấn 'cannot'. Tiếng Anh đặt trọng âm tương phản lên thông tin MỚI — ở đây là thứ bạn cho được.",
         },
       ],
       reading: {
-        text: "WHAT THE DESK CAN GIVE INSTEAD OF A DISCOUNT\\nCosts the hotel little, valued highly by guests: late check-out to 14:00 (on a low-occupancy day) · breakfast added for one or two · welcome drink · a room on a higher floor within the same category · early check-in when the room is ready · one pressed garment.\\nCosts the hotel real money, so it needs approval: a category upgrade at weekends, airport transfer, spa credit, waiving a cancellation fee.\\nThe order matters. Offer the free item FIRST. A guest who accepts breakfast stops asking about the rate; a guest who is refused a discount and then offered breakfast hears a consolation prize.\\nAsk for something back whenever you can — a Sunday night, a direct booking next time, a review. A negotiation where only one side gives teaches the guest to push harder next stay.\nWatch the total, not the item. Breakfast for two over four nights is more than 3,000,000 VND, which crosses the Duty Manager line from week 33. Offer it, then get the approving name on the folio BEFORE you confirm it to the guest.",
+        text: "WHAT THE DESK CAN GIVE INSTEAD OF A DISCOUNT\nCheck every offer against YOUR OWN approval limit before you open your mouth. The limits below are one hotel's; ask your Front Office Manager for yours in your first week.\nUsually inside a desk limit, and guests value them highly: late check-out to 14:00 on a low-occupancy day · welcome drink · a room on a higher floor within the same category · early check-in when the room is ready · one pressed garment.\nUsually ABOVE it, however small it sounds: breakfast (at 380,000 VND a head it passes a 500,000 limit with two people on one night) · a category upgrade at weekends · airport transfer · spa credit · waiving a cancellation fee.\nThe order matters. Offer the free item FIRST. A guest who accepts a late check-out stops asking about the rate; a guest who is refused a discount and then offered one hears a consolation prize.\nAnything above your limit is offered as a request, never as a promise: 'I can put that to my Shift Leader for you, sir. Five minutes, and I will come back either way.' A promise you then have to take back costs more than the discount would have.\nAsk for something back whenever you can — a Sunday night, a direct booking next time, a review. A negotiation where only one side gives teaches the guest to push harder next stay.",
         questions: [
           {
             q: "Vì sao phải đưa món tặng TRƯỚC khi từ chối giảm giá?",
@@ -10137,7 +10137,7 @@ export const FO_WEEK_35: WeekContent = {
       arcade: [
         {
           bad: "We do not give discounts here.",
-          good: "I cannot move the rate, madam, but I can add breakfast for both of you.",
+          good: "I cannot move the rate, madam, but I can add a two o'clock check-out for you.",
         },
         {
           bad: "If you will stay Sunday I will give late check-out.",
@@ -10149,7 +10149,7 @@ export const FO_WEEK_35: WeekContent = {
           prompt: "Every other hotel gives me something. What can you do for me?",
           options: [
             {
-              text: "Quite a lot, madam. Breakfast for both of you and a two o'clock check-out — and if you book direct next time, I will hold this rate.",
+              text: "Quite a lot, madam. A two o'clock check-out and a higher floor — and if you book direct next time, I will hold this rate.",
               correct: true,
             },
             { text: "I am afraid our rates are already very competitive, madam.", correct: false },
@@ -10301,7 +10301,7 @@ export const FO_WEEK_35: WeekContent = {
         {
           rude: "Okay, done. See you at check-in.",
           polite:
-            "May I read it back to you, madam? Breakfast for two, four nights, and a two o'clock check-out.",
+            "May I read it back to you, madam? A higher floor, four nights, and a two o'clock check-out on Sunday.",
           rule: "Đọc lại bằng danh sách có SỐ LƯỢNG và SỐ ĐÊM. Hai bên nhớ khác nhau là nguồn gốc của mọi cuộc cãi ở quầy thanh toán.",
         },
         {
@@ -10350,7 +10350,7 @@ export const FO_WEEK_35: WeekContent = {
         },
         {
           bad: "Late check-out is included, that is all noted.",
-          good: "Check-out at fourteen hundred on your departure day — it has been noted on your booking, sir.",
+          good: "Check-out at fourteen hundred on Sunday, and a courtyard room — it has been noted on your booking, sir.",
         },
       ],
       game: [
@@ -10418,14 +10418,14 @@ export const FO_WEEK_36: WeekContent = {
           word: "Assembly point",
           phonetic: "/əˈsembli pɔɪnt/",
           definition: "Điểm tập trung khi sơ tán",
-          context: "Our assembly point is the car park, not the lobby.",
+          context: "Our assembly point is outside the front entrance.",
           icon: "📍",
         },
       ],
       grammar: [
         {
           rude: "Do not worry, it is probably nothing.",
-          polite: "Please take the stairs to the car park, madam. The lifts are out of use.",
+          polite: "Please take the stairs down and outside, madam. The lifts are out of use.",
           rule: "Trong sự cố, dùng câu mệnh lệnh có 'please' và nói ĐIỀU PHẢI LÀM. Đoán nguyên nhân ('probably nothing') là điều duy nhất bị cấm tuyệt đối.",
         },
         {
@@ -10438,7 +10438,7 @@ export const FO_WEEK_36: WeekContent = {
         {
           guestPrompt: "What is that noise? Is there a fire?",
           targetResponse:
-            "The alarm has been triggered, madam. Please take the stairs to the car park — the lifts are out of use.",
+            "The alarm has been triggered, madam. Please take the stairs down and outside — the lifts are out of use.",
           helpTip:
             "'Triggered' kết thúc bằng /d/ và 'stairs' bằng /z/. Người Việt hay bỏ cả hai; giữ được âm cuối là giữ được thì và số nhiều.",
         },
@@ -10473,7 +10473,7 @@ export const FO_WEEK_36: WeekContent = {
         },
         {
           bad: "The problem is on the fourth floor.",
-          good: "We are checking it now, sir. Please make your way to the car park.",
+          good: "We are checking it now, sir. Please make your way outside.",
         },
       ],
       game: [
@@ -10481,7 +10481,7 @@ export const FO_WEEK_36: WeekContent = {
           prompt: "Is this a real fire or just another drill?",
           options: [
             {
-              text: "We are checking that now, sir. Either way, please take the stairs to the car park — I will have news for you there.",
+              text: "We are checking that now, sir. Either way, please take the stairs down and outside — I will have news for you there.",
               correct: true,
             },
             { text: "It is almost certainly a drill, sir. They test it monthly.", correct: false },
@@ -10655,7 +10655,7 @@ export const FO_WEEK_36: WeekContent = {
           guestPrompt:
             "I have paid for this room and I am not walking down eight floors in a towel.",
           targetResponse:
-            "I understand, sir. Take a moment to dress — a colleague is at your floor and will walk down with you.",
+            "I understand, sir. Take a moment to dress — I am asking a colleague to come to your floor now.",
           helpTip:
             "Nói câu này chậm và trầm. Trong khủng hoảng, tốc độ nói của bạn là thứ khách sao chép — nói nhanh làm khách hoảng thêm.",
         },
@@ -10759,7 +10759,7 @@ export const FO_WEEK_36: WeekContent = {
         {
           guestPrompt: "My children were terrified. Is this how you run a hotel?",
           targetResponse:
-            "I am sorry it frightened them, madam. The alarm did exactly what it is meant to do, madam, and the fire officer has cleared the building. May I send something warm up to your room?",
+            "I am sorry they were so frightened, madam. The fire officer has cleared the building now. May I send something warm up to your room?",
           helpTip:
             "'Frightened' đọc /ˈfraɪtn̩d/ — âm /n/ tự thành một âm tiết, KHÔNG chèn nguyên âm vào giữa. Nếu khó, đổi sang 'I am sorry it upset them'.",
         },
@@ -10974,7 +10974,7 @@ export const FO_WEEK_39: WeekContent = {
           guestPrompt:
             "About the airport car — actually, wait, has my colleague checked in yet? And is breakfast still open?",
           targetResponse:
-            "Three things, sir. Breakfast closes in ten minutes, so let me start there. Then your colleague, then the car.",
+            "Three things, sir. Breakfast closes in ten minutes, so let me start there. Then I will ring your colleague's room, then the car.",
           helpTip:
             "Đếm 'three things' rõ ràng rồi mới đi. Việc gấp nhất lên đầu, không phải việc khách hỏi đầu.",
         },
@@ -11050,7 +11050,7 @@ export const FO_WEEK_39: WeekContent = {
           word: "Expecting a call",
           phonetic: "/ɪkˈspektɪŋ ə kɔːl/",
           definition: "Đang chờ được gọi lại",
-          context: "Room 508 is expecting a call before eight.",
+          context: "Room 508 expects a call before eight this evening.",
           icon: "📞",
         },
         {
@@ -11065,7 +11065,7 @@ export const FO_WEEK_39: WeekContent = {
         {
           rude: "I did not finish this one. Your problem now.",
           polite:
-            "Room 508 is unresolved, and this is where I left it: she is expecting a call before eight.",
+            "Room 508 is unresolved, and this is where I left it: she expects a call before eight this evening.",
           rule: "Bàn giao phải có TRẠNG THÁI và ĐIỂM DỪNG. 'Chưa xong' không phải bàn giao, nó chỉ là một lời than.",
         },
         {
@@ -11078,7 +11078,7 @@ export const FO_WEEK_39: WeekContent = {
         {
           guestPrompt: "I am taking over from you. Anything I should know?",
           targetResponse:
-            "Two things, sir. Room 508 is expecting a call before eight, and the minibar dispute in 312 is with the Duty Manager.",
+            "Two things, sir. Room 508 expects a call before eight this evening, and the minibar dispute in 312 is with the Duty Manager.",
           helpTip:
             "Đọc số phòng thành từng chữ số: 'five-oh-eight', không phải 'five hundred and eight'. Đây là chuẩn của quầy lễ tân.",
         },
@@ -11109,7 +11109,7 @@ export const FO_WEEK_39: WeekContent = {
       arcade: [
         {
           bad: "I did not finish this. You deal with it.",
-          good: "Room 508 is unresolved, sir. This is where I left it: a call before eight.",
+          good: "Room 508 is unresolved, sir. This is where I left it: a call before eight tonight.",
         },
         {
           bad: "Just ask the guest what the problem was.",
@@ -11390,7 +11390,7 @@ export const FO_WEEK_40: WeekContent = {
       grammar: [
         {
           rude: "I can do everything now.",
-          polite: "I can handle most of the desk on my own, but a legal claim is beyond me.",
+          polite: "I can handle most of the desk on my own, but a legal claim is not my decision.",
           rule: "Cấu trúc 'most of X, but Y' vừa nêu năng lực vừa nêu giới hạn. Người nói được câu này đáng tin hơn người nói mình làm được tất cả.",
         },
         {
@@ -11403,7 +11403,7 @@ export const FO_WEEK_40: WeekContent = {
         {
           guestPrompt: "I want to make a formal complaint and I am considering legal action.",
           targetResponse:
-            "I understand, sir. That is beyond the desk, and my Duty Manager should hear it from you directly. Let me bring her.",
+            "I understand, sir. That is a decision for my Duty Manager, and she should hear it from you directly. Let me bring her.",
           helpTip:
             "'Depth' và 'beyond' đều có âm khó: /depθ/ kết thúc bằng /θ/ (lưỡi giữa răng), và /bɪˈjɒnd/ giữ /d/ cuối.",
         },
@@ -11438,7 +11438,7 @@ export const FO_WEEK_40: WeekContent = {
         },
         {
           bad: "I can handle anything at this desk now.",
-          good: "I can handle most of it on my own, madam, but a legal claim is beyond the desk.",
+          good: "I can handle most of it on my own, madam, but a legal claim is not my decision.",
         },
       ],
       game: [
