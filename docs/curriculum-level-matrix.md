@@ -178,8 +178,17 @@ ngữ pháp, lời khách và câu mẫu luyện nói.
 - `qa:full` T3 chặn năm điều: tuần 1 = 0.70, tuần 40 = 0.90, không tuần nào chậm hơn tuần
   trước, mỗi phase mở đúng mốc, và từ đơn luôn chậm hơn câu.
 
-Tổng từ vựng chủ động toàn lộ trình: ~560–620 từ + cụm công thức — phù hợp chuẩn ESP
-(từ vựng lễ tân/buồng phòng/F&B lõi), không nhắm 2.000 từ tổng quát của B1 đại trà.
+Tổng từ vựng chủ động toàn lộ trình: **≥510 từ** + cụm công thức — phù hợp chuẩn ESP
+
+> **Hạ mục tiêu ngày 23/08/2026: 560–620 → ≥510.** Con số 560–620 chưa từng có căn cứ và
+> chưa từng có gate nào canh; đo thật thì cả năm bộ phận nằm ở 502–508. Với một khoá ESP phạm
+> vi hẹp 40 tuần, 510 từ chủ động **chuyên ngành** là mức phòng vệ được — mục tiêu cũ đòi
+> thêm ~55 từ mỗi bộ phận mà không nói được thêm để làm gì.
+>
+> Khác với lần trước, con số này **có gate canh** (`verify:content`, GATE 5). Một mục tiêu
+> không được kiểm chỉ là trang trí, và các đợt soạn tay Phase 4 sắp tới có thể làm tổng
+> **tụt** nếu một tuần soạn tay dạy ít từ hơn tuần sinh tự động mà nó thay thế.
+> (từ vựng lễ tân/buồng phòng/F&B lõi), không nhắm 2.000 từ tổng quát của B1 đại trà.
 
 ---
 

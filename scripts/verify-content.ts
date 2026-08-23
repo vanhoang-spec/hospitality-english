@@ -83,10 +83,11 @@ const PHASES: Phase[] = [
     reviewPct: 0.35,
     deptSpecificMin: 0.65,
   },
-  // B1.1 — the top of the ladder. Three clauses are allowed, so the cap
-  // rises to 22 words; recycling peaks at 40%.
+  // The top of the ladder. Three clauses are allowed, so the cap rises to
+  // 22 words; recycling peaks at 40%. The MATERIAL here reaches B1.1; the
+  // band the course can certify is A2+ — see the note in src/lib/phases.ts.
   {
-    name: "P4 B1.1",
+    name: "P4 A2+ (B1.1 material)",
     from: 31,
     to: 40,
     wordCap: 22,
@@ -533,6 +534,44 @@ if (legacyGameDupes.length) {
     `Checkpoint oral pools — ${checked} phase×department pools each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items` +
       (wip.length ? ` (unfinished phases of ${wip.join(", ")} not yet due)` : ""),
   );
+}
+
+// ============================================================
+// GATE 5 — active vocabulary total per department
+//
+// The matrix carried "~560-620 từ" for months with nothing checking it, and
+// the real figure was 502-508 everywhere. A target nobody measures is not a
+// target; it is decoration that drifts.
+//
+// The number moved to >=510 because 560 was never argued for, and the floor
+// below is what makes 510 mean something. The risk it guards is specific and
+// live: the Phase 4 hand-authoring batches replace a generated week with a
+// written one, and a written week that teaches fewer headwords than the week
+// it replaced takes the total DOWN. Thirty-eight of those are queued. Without
+// this gate the course could quietly shrink while every other check stayed
+// green.
+//
+// A department still being authored has no total to defend yet. A withdrawn
+// one does — its forty weeks are finished, so it is checked like any other.
+// ============================================================
+{
+  const FLOOR = 500;
+  const TARGET = 510;
+  const totals: string[] = [];
+  for (const d of DEPARTMENTS) {
+    if (d.hidden === "in-progress") continue;
+    const words = new Set<string>();
+    for (let w = 1; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${d.code}-${w}`]?.lessons ?? [])
+        for (const v of l.vocabulary) words.add(v.word.toLowerCase());
+    const n = words.size;
+    totals.push(`${d.code} ${n}${n >= TARGET ? "" : ` (còn ${TARGET - n})`}`);
+    if (n < FLOOR)
+      errors.push(
+        `${d.code} teaches ${n} active headwords — below the floor of ${FLOOR}. The matrix target is ${TARGET}.`,
+      );
+  }
+  console.log(`Active vocabulary — ${totals.join(" · ")}  (sàn ${FLOOR}, mục tiêu ${TARGET})`);
 }
 
 if (warnings.length) {
