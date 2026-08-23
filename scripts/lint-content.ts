@@ -793,6 +793,113 @@ function specFor(spec: SlotSpec | undefined, index: number): Pos[] | undefined {
   return undefined;
 }
 
+// ------------------------------------------------------------
+// LAYER D — semantic class of a bank slot
+//
+// Part of speech is necessary and not sufficient. Both bank contracts say so
+// in as many words, and both carry a "Fails as" column naming the exact
+// sentences that must never render. Nothing enforced that column, so two of
+// the sentences it names by name were live in the course: BO-31 shipped
+// "The market position is what makes this place special." and BO-32 shipped
+// "Based on your preferred billing cycle, may I suggest something that suits
+// you better?" — the first and second rows of the phase-4 table. The document
+// was right; it just had no teeth.
+//
+// A general semantic classifier is not on the table. What IS decidable is the
+// narrow thing the contracts actually assert: certain slots feed frames that
+// only make sense about something a GUEST can see, choose, or witness, and a
+// back-office noun in that slot is always wrong. Layer D encodes that as
+// lexical markers per slot, each carrying the contract line it comes from.
+//
+// Two kinds of rule:
+//   · slot   — applies to every index of the slot
+//   · index  — one frame in the week is narrower than the slot as a whole
+//              (week 32 asks "Would you like the same {preferences[5]} as
+//              last time?", which needs something choosable; an allergy is a
+//              constraint, not a choice)
+// ------------------------------------------------------------
+
+type SemanticRule = {
+  slot: string;
+  /** Restrict to one index when a single frame is narrower than the slot. */
+  index?: number;
+  deny: RegExp;
+  /** What the slot must denote, quoted from the bank contract. */
+  must: string;
+  /** The contract's own "Fails as" wording. */
+  failsAs: string;
+};
+
+const SEMANTIC_RULES: Record<string, SemanticRule[]> = {
+  P4: [
+    {
+      slot: "story",
+      deny: /\b(position|score|trend|record|certification|testimonial|advantage|capacity|occupancy|revenue|margin|index)\b/i,
+      must: "something about the property worth telling",
+      failsAs: "an internal KPI",
+    },
+    {
+      slot: "preferences",
+      deny: /\b(billing|invoice|budget|contract|supplier|policy|reporting|signing|payment|decision|authority|cycle|format|frequency|ceiling)\b/i,
+      must: "a guest taste the staff can act on",
+      failsAs: "a back-office setting",
+    },
+    {
+      slot: "preferences",
+      index: 5,
+      deny: /\b(allergy|allergic|intolerance|sensitivity|restriction)\b/i,
+      must: 'something choosable — the frame is "Would you like the same {w} as last time?"',
+      failsAs: "a constraint the guest cannot be offered a repeat of",
+    },
+    {
+      slot: "emergencies",
+      deny: /\b(system|gateway|payroll|breach|email|outage|crash|default|fraudulent|overbooking|bank transfer|mass cancellation|contract file)\b/i,
+      must: "an on-site incident a guest can witness",
+      failsAs: "a back-office problem",
+    },
+  ],
+};
+
+/** Known violations, each waiting on a content fix. A word listed here is
+ *  reported as debt instead of failing the build — and a word listed here
+ *  that NO LONGER violates fails the build too, so the file cannot rot into
+ *  a list of things that were fixed years ago. Format: "P4.slot[i] DEP". */
+const SEMANTIC_DEBT: Set<string> = new Set(
+  JSON.parse(await Bun.file(new URL("./_semantic-debt.json", import.meta.url)).text())
+    .entries as string[],
+);
+const debtSeen = new Set<string>();
+
+function lintSemantics(phase: string, banks: BankSet) {
+  for (const rule of SEMANTIC_RULES[phase] ?? []) {
+    for (const dep of Object.keys(banks)) {
+      const words = banks[dep][rule.slot] ?? [];
+      words.forEach((w, i) => {
+        if (rule.index !== undefined && i !== rule.index) return;
+        if (!rule.deny.test(w.word)) return;
+        const key = `${phase}.${rule.slot}[${i}] ${dep}`;
+        if (SEMANTIC_DEBT.has(key)) {
+          debtSeen.add(key);
+          return;
+        }
+        errors.push(
+          `[D semantic-class] ${key} "${w.word}" — slot must denote ${rule.must}; this reads as ${rule.failsAs}`,
+        );
+      });
+    }
+  }
+}
+
+/** A debt entry whose word was fixed (or renumbered) must be deleted. */
+function reportStaleDebt() {
+  for (const key of SEMANTIC_DEBT) {
+    if (!debtSeen.has(key))
+      errors.push(
+        `[D semantic-debt] ${key} is listed in scripts/_semantic-debt.json but no longer violates — delete the line`,
+      );
+  }
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1149,6 +1256,8 @@ lintBanks("P1", P1_BANKS as unknown as BankSet);
 lintBanks("P2", P2_BANKS as unknown as BankSet);
 lintBanks("P3", P3_BANKS as unknown as BankSet);
 lintBanks("P4", P4_BANKS as unknown as BankSet);
+lintSemantics("P4", P4_BANKS as unknown as BankSet);
+reportStaleDebt();
 
 let sentenceCount = 0;
 for (const [key, week] of Object.entries(ALL_WEEKS)) {
