@@ -16,7 +16,7 @@
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
 import { DEPARTMENTS } from "../src/lib/departments";
-import { CHECKPOINT_ORAL_ITEMS } from "../src/lib/phases";
+import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 
 type Phase = {
   name: string;
@@ -588,6 +588,81 @@ if (legacyGameDupes.length) {
   console.log(`Active vocabulary — ${totals.join(" · ")}  (sàn ${FLOOR}, mục tiêu ${TARGET})`);
 }
 
+// ============================================================
+// GATE 6 — a reading question must be unanswerable without reading
+//
+// Two strategies let a learner score without knowing any English, and both
+// were live until this gate was written:
+//
+//   POSITION. Every one of the 1,704 generated questions stored its answer
+//   first, and ReadingSuite rendered options in stored order, so tapping
+//   the first button scored 100%. Fixed in the suite rather than in 1,920
+//   questions: options are permuted by a seed taken from the question text,
+//   stable per question. This gate measures the permuted order, because
+//   that is what a learner actually sees.
+//
+//   LENGTH. An answer that carries its own reasoning is longer than the
+//   distractors, and the learner picks the long one. This is a CONTENT
+//   problem — no shuffle fixes it. The threshold below is a floor, not a
+//   target: the generated spine sits near 80% and is recorded as debt
+//   rather than blocking every build, while any week authored from here is
+//   held to something a real test could defend.
+//
+// The pass mark for a checkpoint is 70%. Any guessing strategy that beats
+// that means the reading half of the checkpoint certifies nothing.
+// ============================================================
+{
+  const seedOf = (s: string) => {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  };
+  /** Mirrors shuffleOptions() in src/components/suites/ReadingSuite.tsx. */
+  const permute = (q: { q: string; options: string[]; correct: number }) => {
+    const order = q.options.map((_, i) => i);
+    let seed = seedOf(q.q);
+    for (let i = order.length - 1; i > 0; i--) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const j = Math.floor((seed / 4294967296) * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return { options: order.map((i) => q.options[i]), correct: order.indexOf(q.correct) };
+  };
+
+  const POSITION_MAX = 0.5;
+  const LENGTH_MAX = 0.85;
+  const pos = [0, 0, 0, 0];
+  let longest = 0;
+  let total = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading.questions) {
+        const shown = permute(q);
+        total++;
+        pos[shown.correct] = (pos[shown.correct] ?? 0) + 1;
+        const lens = shown.options.map((o) => o.length);
+        if (lens[shown.correct] === Math.max(...lens)) longest++;
+      }
+
+  const worstPos = Math.max(...pos) / total;
+  const longShare = longest / total;
+  console.log(
+    `Reading answerability — always-same-position wins ${(worstPos * 100).toFixed(0)}%, ` +
+      `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
+      `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
+  );
+  if (worstPos > POSITION_MAX)
+    errors.push(
+      `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
+    );
+  if (longShare > LENGTH_MAX)
+    errors.push(
+      `a learner who always picks the longest option scores ${(longShare * 100).toFixed(0)}% on reading — balance the distractor lengths`,
+    );
+}
 if (warnings.length) {
   console.log("\nWARNINGS:");
   for (const w of warnings) console.log("  ! " + w);

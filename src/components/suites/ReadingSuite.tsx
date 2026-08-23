@@ -13,6 +13,49 @@ type Passage = {
   questions: { q: string; options: string[]; correct: number; explanation?: string }[];
 };
 
+/** Reading options were rendered in the order they are stored, and the
+ *  stored order put the answer first almost everywhere: 100% of the 1,704
+ *  generated questions answer A, and 82% of all questions make the correct
+ *  option the longest one. A learner who tapped the first button every time
+ *  scored 100% on reading without reading anything.
+ *
+ *  Shuffling here fixes every question at once rather than editing 1,920 of
+ *  them. The seed comes from the question text, so the order is STABLE — the
+ *  same question always presents the same way, for every learner, on every
+ *  render. A re-shuffle on each render would move the buttons under the
+ *  learner's finger between tapping and submitting.
+ *
+ *  This does not fix the length bias. That is a content problem and is
+ *  measured separately by verify-content. */
+function seedOf(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function shuffleOptions(q: { q: string; options: string[]; correct: number }): {
+  options: string[];
+  correct: number;
+} {
+  const order = q.options.map((_, i) => i);
+  let seed = seedOf(q.q);
+  // Fisher-Yates với PRNG tất định
+  for (let i = order.length - 1; i > 0; i--) {
+    // Bit THẤP của một LCG lệch nặng — lấy modulo trên chúng cho ra phân bố
+    // 4/61/36 thay vì 33/33/33. Dùng bit cao bằng cách chia cho 2^32.
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    const j = Math.floor((seed / 4294967296) * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return {
+    options: order.map((i) => q.options[i]),
+    correct: order.indexOf(q.correct),
+  };
+}
+
 export function ReadingSuite({ dep, week }: { dep?: string; week?: string }) {
   const content = dep && week ? getWeekContent(dep, week) : null;
   if (!content) return <SuiteComingSoon />;
@@ -56,7 +99,7 @@ function ReadingSuiteInner({
   }, [pIdx]);
 
   const score = picks.reduce<number>(
-    (s, p, i) => (p === passage.questions[i].correct ? s + 1 : s),
+    (s, p, i) => (p === shuffleOptions(passage.questions[i]).correct ? s + 1 : s),
     0,
   );
   const total = passage.questions.length;
@@ -145,10 +188,11 @@ function ReadingSuiteInner({
                 </p>
               )}
               <div className="mt-3 space-y-2">
-                {q.options.map((opt, j) => {
+                {shuffleOptions(q).options.map((opt, j) => {
+                  const answer = shuffleOptions(q).correct;
                   const isPicked = picks[i] === j;
-                  const isCorrect = submitted && j === q.correct;
-                  const isWrong = submitted && isPicked && j !== q.correct;
+                  const isCorrect = submitted && j === answer;
+                  const isWrong = submitted && isPicked && j !== answer;
                   return (
                     <button
                       key={j}

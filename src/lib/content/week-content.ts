@@ -8187,8 +8187,8 @@ export const FO_WEEK_31: WeekContent = {
     "Sea-view room",
     "Executive suite",
     "Quieter",
-    "Landmark",
-    "Old Quarter",
+    "Sea-view room",
+    "Deluxe room",
     "Instead",
     "Confident",
   ],
@@ -10018,7 +10018,7 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Khách vẫn chọn giá trên mạng thì nên làm gì?",
             options: [
-              "A. Nhận vui vẻ và ghi hồ sơ rằng khách nhạy cảm về giá",
+              "A. Nhận vui vẻ, ghi lại SỰ VIỆC: đã báo giá trực tiếp, khách chọn giá trả trước",
               "B. Giải thích lại một lần nữa cho tới khi khách hiểu",
               "C. Báo quản lý để duyệt giá bằng trang web",
             ],
