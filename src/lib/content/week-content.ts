@@ -9054,6 +9054,875 @@ export const FO_WEEK_32: WeekContent = {
   ],
 };
 
+export const FO_WEEK_33: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 33,
+  weekTitleEn: "Disputes and What You Can Put Right",
+  weekTitleVi: "Tranh chấp và những gì bạn có quyền sửa",
+  reviewWords: [
+    "Concern",
+    "Apologise",
+    "Disappointed",
+    "Double charge",
+    "Remove the charge",
+    "Refund",
+    "Policy",
+    "Frankly",
+  ],
+  lessons: [
+    {
+      lessonId: "FO_33_1",
+      lessonOrder: 1,
+      titleEn: "Hearing the Claim Without Defending",
+      titleVi: "Nghe khiếu nại mà không biện hộ",
+      vocabulary: [
+        {
+          word: "Claim",
+          phonetic: "/kleɪm/",
+          definition: "Khiếu nại đòi bồi hoàn",
+          context: "Let me write down your claim exactly as you describe it.",
+          icon: "📢",
+        },
+        {
+          word: "Interrupt",
+          phonetic: "/ˌɪntəˈrʌpt/",
+          definition: "Ngắt lời",
+          context: "Never interrupt a guest who is still explaining.",
+          icon: "🤐",
+        },
+        {
+          word: "Take your word",
+          phonetic: "/teɪk jɔː wɜːd/",
+          definition: "Tin lời khách nói",
+          context: "I take your word for it, madam.",
+          icon: "🤝",
+        },
+        {
+          word: "Look into it",
+          phonetic: "/lʊk ˈɪntu ɪt/",
+          definition: "Kiểm tra, tìm hiểu sự việc",
+          context: "I will look into it myself and come back to you.",
+          icon: "🔎",
+        },
+      ],
+      grammar: [
+        {
+          rude: "That cannot be right. Our system never makes mistakes.",
+          polite: "I take your word for it, madam. Let me look into it and come back to you.",
+          rule: "Không bao giờ bảo vệ hệ thống trước mặt khách. Câu đầu tiên phải là câu đứng về phía họ.",
+        },
+        {
+          rude: "Wait, wait — that is not what happened.",
+          polite: "Please go on, sir. I would rather hear all of it before I say anything.",
+          rule: "Ngắt lời khách đang khiếu nại làm hỏng cả cuộc nói chuyện. Mời họ nói tiếp là cách hạ nhiệt rẻ nhất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "I have been charged twice for the same night. This is the third time I have raised it.",
+          targetResponse:
+            "I am sorry you have had to raise it three times, sir. I take your word for it, and I will look into it now.",
+          helpTip:
+            "Xin lỗi về việc khách phải nhắc lại ba lần — đó mới là điều họ tức. Số tiền tính sau.",
+        },
+      ],
+      reading: {
+        text: "COMPLAINT INTAKE — FRONT DESK\n1. Listen to the end. Do not interrupt, do not check the system while the guest is speaking.\n2. Write the claim in the guest's own words. Read it back to them before you act.\n3. Apologise for the EXPERIENCE first, not for the amount. 'I am sorry you had to raise it three times' lands; 'I am sorry about the 400,000' does not.\n4. Never say the system is correct, never blame another shift, never blame the guest's bank.\n5. Only then check the folio. A guest who feels heard will accept a slower answer.",
+        questions: [
+          {
+            q: "Trong lúc khách đang nói, nhân viên KHÔNG được làm gì?",
+            options: [
+              "A. Interrupt or check the system",
+              "B. Write down what the guest says",
+              "C. Look at the guest",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Phải xin lỗi về điều gì trước tiên?",
+            options: ["A. The amount charged", "B. The experience", "C. The other shift's mistake"],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Our system does not make that kind of mistake, madam.",
+          good: "I take your word for it, madam. Let me look into it and come back to you.",
+        },
+        {
+          bad: "The night shift must have entered it wrong.",
+          good: "I am sorry this happened, sir. I will find out what went wrong myself.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Are you saying I am making this up?",
+          options: [
+            {
+              text: "Not at all, madam. I take your word for it — I only need a moment to find where it went wrong.",
+              correct: true,
+            },
+            { text: "I am just checking the system to see what it says.", correct: false },
+            { text: "Sometimes guests remember the amount differently, madam.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_33_2",
+      lessonOrder: 2,
+      titleEn: "What You Can Put Right Yourself",
+      titleVi: "Việc bạn có quyền tự xử lý",
+      vocabulary: [
+        {
+          word: "Authorise",
+          phonetic: "/ˈɔːθəraɪz/",
+          definition: "Có quyền duyệt, chuẩn chi",
+          context: "I can authorise this myself, sir.",
+          icon: "✅",
+        },
+        {
+          word: "Straight from the desk",
+          phonetic: "/streɪt frəm ðə desk/",
+          definition: "Xử lý ngay tại quầy, không phải chờ ai",
+          context: "I can remove that straight from the desk, madam.",
+          icon: "⚡",
+        },
+        {
+          word: "Escalate",
+          phonetic: "/ˈeskəleɪt/",
+          definition: "Chuyển lên cấp trên",
+          context: "Anything above two million dong I escalate.",
+          icon: "⬆️",
+        },
+        {
+          word: "Within ten minutes",
+          phonetic: "/wɪˈðɪn ten ˈmɪnɪts/",
+          definition: "Trong vòng mười phút",
+          context: "He will call you within ten minutes, sir.",
+          icon: "⏱️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I have to ask my manager about everything.",
+          polite: "I can authorise this myself, madam. It is removed from your bill already.",
+          rule: "Nói rõ bạn tự quyết được và việc đã xong. Khách sợ nhất là bị đá qua đá lại.",
+        },
+        {
+          rude: "That is too much money. Not my problem.",
+          polite:
+            "Anything above two million dong I escalate, sir. My manager will call you within ten minutes.",
+          rule: "Khi vượt quyền, nói rõ NGƯỠNG và THỜI HẠN. 'Tôi phải hỏi sếp' không có hai thứ đó.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "How long is this going to take? I have a flight at six.",
+          targetResponse:
+            "The minibar charge I can remove straight from the desk, sir. That is done. The rest my manager will confirm within ten minutes.",
+          helpTip:
+            "Tách việc làm được ngay ra khỏi việc phải chờ. Khách vội cần thấy có thứ đã xong rồi.",
+        },
+      ],
+      reading: {
+        text: "FRONT DESK AUTHORITY LIMITS\nYou may authorise WITHOUT asking:\n· minibar and laundry charges under 500,000 VND\n· late check-out fee waiver, once per stay\n· one night's parking, one welcome drink, one press of a garment\n· any charge the guest disputes where the folio has no signature\nYou must ESCALATE:\n· anything above 2,000,000 VND · any refund to a card · any compensation for a third party\n· any claim involving injury, theft or lost valuables — these go to the Duty Manager and are never settled at the desk\nSay the limit out loud. A guest who hears 'above two million I escalate' understands the process; a guest who hears 'I have to ask' hears delay.",
+        questions: [
+          {
+            q: "Khoản nào lễ tân được tự duyệt?",
+            options: [
+              "A. A refund to the guest's card",
+              "B. Minibar charges under 500,000 VND",
+              "C. Compensation for lost valuables",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khiếu nại liên quan tới thương tích hoặc mất đồ có giá trị thì xử lý thế nào?",
+            options: [
+              "A. Settled at the desk if the amount is small",
+              "B. Never settled at the desk — goes to the Duty Manager",
+              "C. Sent to the guest's insurance",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "I need to check with my manager first.",
+          good: "I can authorise this myself, madam — it is off your bill already.",
+        },
+        {
+          bad: "This is above my level, sorry.",
+          good: "Above two million I escalate, sir. My manager will call you within ten minutes.",
+        },
+      ],
+      game: [
+        {
+          prompt:
+            "Just tell me straight — can you fix this or do I need to speak to somebody else?",
+          options: [
+            {
+              text: "The minibar part I can fix now, sir. The room rate is above my limit, so my manager will call you within ten minutes.",
+              correct: true,
+            },
+            { text: "I will need to speak to my manager about all of it.", correct: false },
+            { text: "I can probably do something. Let me see what I can arrange.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_33_3",
+      lessonOrder: 3,
+      titleEn: "The Charge the Guest Never Made",
+      titleVi: "Khoản phí khách không hề tiêu",
+      vocabulary: [
+        {
+          word: "Itemised",
+          phonetic: "/ˈaɪtəmaɪzd/",
+          definition: "Bảng kê chi tiết từng khoản",
+          context: "May I print an itemised bill for you?",
+          icon: "🧾",
+        },
+        {
+          word: "Reverse",
+          phonetic: "/rɪˈvɜːs/",
+          definition: "Huỷ, hoàn lại khoản đã tính",
+          context: "I have reversed the charge, madam.",
+          icon: "↩️",
+        },
+        {
+          word: "Posted in error",
+          phonetic: "/ˈpəʊstɪd ɪn ˈerə/",
+          definition: "Bị ghi nhầm vào hoá đơn",
+          context: "It was posted in error to your room.",
+          icon: "❌",
+        },
+        {
+          word: "Clear your name",
+          phonetic: "/klɪə jɔː neɪm/",
+          definition: "Làm rõ khách không có lỗi",
+          context: "The note on your file will clear your name, sir.",
+          icon: "🕊️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Somebody in your room drank it.",
+          polite: "It looks as though it was posted in error, madam. I have reversed it.",
+          rule: "Không bao giờ ám chỉ khách hoặc người đi cùng đã tiêu. 'Posted in error' đặt lỗi vào quy trình.",
+        },
+        {
+          rude: "You can check the bill yourself.",
+          polite: "May I print an itemised bill so you can see every line, sir?",
+          rule: "Chủ động đưa bảng kê chi tiết. Khách nghi ngờ hoá đơn thì minh bạch rẻ hơn tranh luận.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We never opened the minibar. Not once in four nights.",
+          targetResponse:
+            "Then it was posted in error, madam, and I have reversed it. May I print a clean itemised bill for you?",
+          helpTip:
+            "'Then' cho thấy bạn hành động NGAY từ lời khách, không đi xác minh trước. Đó là điều khách nhớ.",
+        },
+      ],
+      reading: {
+        text: "DISPUTED POSTING — WHAT THE DESK DOES\nA disputed charge under the authority limit is reversed FIRST and investigated afterwards. The guest is not held while we check.\nNever suggest that a companion, a child or a previous occupant consumed it. Say 'posted in error'.\nPrint a fresh itemised bill after the reversal so the guest leaves with a clean document, not a corrected one.\nWrite a note in the profile: what was disputed, that it was reversed, and that the guest was not at fault. This clears the guest's name if the same charge is queried at the next stay.\nReport the pattern, not the guest: three minibar disputes on one floor in a week is a stock-control problem, not three dishonest guests.",
+        questions: [
+          {
+            q: "Với khoản tranh chấp trong hạn mức, thứ tự xử lý là gì?",
+            options: [
+              "A. Investigate first, reverse afterwards",
+              "B. Reverse first, investigate afterwards",
+              "C. Ask the guest to pay and claim later",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Ba lần tranh chấp minibar cùng một tầng trong một tuần nghĩa là gì?",
+            options: [
+              "A. A stock-control problem",
+              "B. Three dishonest guests",
+              "C. A system fault in the billing software",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Maybe the person staying with you used it.",
+          good: "It was posted in error, madam. I have reversed it and I will print a clean bill.",
+        },
+        {
+          bad: "The charge is on the bill, so somebody used it.",
+          good: "May I print an itemised bill, sir, so you can see every line for yourself?",
+        },
+      ],
+      game: [
+        {
+          prompt: "So you think one of my children drank a two-hundred-thousand-dong beer?",
+          options: [
+            {
+              text: "Not at all, sir. It was posted in error and I have already reversed it.",
+              correct: true,
+            },
+            { text: "I am only telling you what the system recorded, sir.", correct: false },
+            { text: "Sometimes housekeeping records it by mistake. I will check.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_33_4",
+      lessonOrder: 4,
+      titleEn: "Putting It in Writing",
+      titleVi: "Chốt lại bằng văn bản",
+      vocabulary: [
+        {
+          word: "In writing",
+          phonetic: "/ɪn ˈraɪtɪŋ/",
+          definition: "Bằng văn bản, có giấy tờ",
+          context: "May I confirm that in writing for you?",
+          icon: "📝",
+        },
+        {
+          word: "Case number",
+          phonetic: "/keɪs ˈnʌmbə/",
+          definition: "Mã hồ sơ để tra cứu",
+          context: "Your case number is FO dash four one seven.",
+          icon: "🔢",
+        },
+        {
+          word: "Working days",
+          phonetic: "/ˈwɜːkɪŋ deɪz/",
+          definition: "Ngày làm việc, không tính cuối tuần",
+          context: "A card refund takes five to seven working days.",
+          icon: "📅",
+        },
+        {
+          word: "Follow up",
+          phonetic: "/ˈfɒləʊ ʌp/",
+          definition: "Chủ động liên hệ lại",
+          context: "I will follow up with you on Friday either way.",
+          icon: "🔔",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The money will come back sometime.",
+          polite:
+            "A card refund takes five to seven working days, madam, and I will follow up on Friday either way.",
+          rule: "Đưa một khoảng thời gian thật cộng một lời hứa liên hệ lại. 'Sometime' làm khách phải tự đi đòi.",
+        },
+        {
+          rude: "You can trust me, I will remember.",
+          polite: "May I confirm that in writing, sir? Your case number is FO dash four one seven.",
+          rule: "Với tranh chấp tiền bạc, văn bản bảo vệ cả khách lẫn bạn. Đọc mã hồ sơ thành từng chữ số.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "And what happens if the refund does not appear?",
+          targetResponse:
+            "Then you email me the case number, madam, and I chase it that day. But I will follow up on Friday whether it appears or not.",
+          helpTip:
+            "Hứa cả hai chiều: khách có đường liên hệ, và bạn vẫn chủ động dù khách không nhắn gì.",
+        },
+      ],
+      reading: {
+        text: "CLOSING A DISPUTE — WHAT THE GUEST LEAVES WITH\nEvery settled dispute produces THREE things before the guest walks away:\n1. A clean itemised bill, reprinted after the correction.\n2. A written confirmation — email or printed slip — naming what was reversed, the amount, and the date.\n3. A case number, read aloud digit by digit and written on the slip.\nRefund timing to state: cash at the desk, immediate. Card reversal, 5-7 working days. Bank transfer, up to 10.\nSet your own follow-up before the guest asks for one. A guest chased by the hotel tells a different story from a guest who had to chase the hotel.",
+        questions: [
+          {
+            q: "Khách rời đi phải cầm theo ba thứ gì?",
+            options: [
+              "A. A clean itemised bill, a written confirmation, and a case number",
+              "B. A receipt, a business card, and a voucher",
+              "C. An apology letter, a refund and a free night",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Hoàn tiền vào thẻ mất bao lâu?",
+            options: ["A. Immediately", "B. 5-7 working days", "C. Up to 30 days"],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "It will come back to your card eventually.",
+          good: "Five to seven working days, madam, and I will follow up on Friday either way.",
+        },
+        {
+          bad: "Do not worry, I will remember your case.",
+          good: "May I put it in writing, sir? Your case number is FO dash four one seven.",
+        },
+      ],
+      game: [
+        {
+          prompt: "I have heard promises like this before and nothing happened.",
+          options: [
+            {
+              text: "Then let me put it in writing, sir. Case number FO dash four one seven, and I will follow up on Friday myself.",
+              correct: true,
+            },
+            { text: "I understand, but this time it really will be processed.", correct: false },
+            { text: "Please call the hotel if it does not arrive within a week.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const FO_WEEK_34: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 34,
+  weekTitleEn: "Special Occasions the Desk Can Make Happen",
+  weekTitleVi: "Dịp đặc biệt mà quầy lễ tân làm được",
+  reviewWords: [
+    "Mention",
+    "On file",
+    "Coordinate",
+    "Straight away",
+    "Within",
+    "Recommend",
+    "Confident",
+    "Prefer",
+  ],
+  lessons: [
+    {
+      lessonId: "FO_34_1",
+      lessonOrder: 1,
+      titleEn: "Finding Out Without Prying",
+      titleVi: "Biết được mà không tọc mạch",
+      vocabulary: [
+        {
+          word: "Celebration",
+          phonetic: "/ˌselɪˈbreɪʃən/",
+          definition: "Dịp ăn mừng",
+          context: "Is this trip a celebration, or a quiet few days?",
+          icon: "🎉",
+        },
+        {
+          word: "Pick up on",
+          phonetic: "/pɪk ʌp ɒn/",
+          definition: "Nhận ra dấu hiệu",
+          context: "The desk picked up on the flowers they were carrying.",
+          icon: "👂",
+        },
+        {
+          word: "Discreetly",
+          phonetic: "/dɪˈskriːtli/",
+          definition: "Kín đáo, không phô trương",
+          context: "May I ask discreetly, sir — is it a surprise?",
+          icon: "🤫",
+        },
+        {
+          word: "In on it",
+          phonetic: "/ɪn ɒn ɪt/",
+          definition: "Có biết về bất ngờ đó",
+          context: "Is your wife in on it, or is it a surprise?",
+          icon: "🎭",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Why are you here? Honeymoon?",
+          polite: "Is this trip a celebration, madam, or a quiet few days away?",
+          rule: "Cho khách hai lối trả lời, một lối là 'không có gì đặc biệt'. Câu hỏi chỉ có một đáp án đúng là câu hỏi tọc mạch.",
+        },
+        {
+          rude: "Does she know about the cake?",
+          polite: "May I ask discreetly, sir — is your wife in on it, or is it a surprise?",
+          rule: "Hỏi ai đã biết TRƯỚC khi sắp xếp. Một câu chúc mừng sai chỗ có thể phá hỏng cả điều bất ngờ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "It is our thirtieth anniversary, actually. We came here on our honeymoon.",
+          targetResponse:
+            "Thirty years, and back where it started — congratulations to you both. May I arrange something small for this evening?",
+          helpTip:
+            "Nhắc lại chi tiết khách vừa kể trước khi chúc mừng. Đó là bằng chứng bạn nghe chứ không đáp cho có.",
+        },
+      ],
+      reading: {
+        text: "SPOTTING AN OCCASION — FRONT DESK\nAsk once, at check-in, with an exit built in: 'Is this trip a celebration, or a quiet few days away?'\nSigns worth picking up on: flowers or a gift box in the luggage · a cake ordered to the room · both guests dressed up on a weekday · a booking note saying 'quiet table' or 'high floor, romantic'.\nBefore arranging anything, ask WHO KNOWS. A surprise that is announced by a receptionist is not a surprise any more.\nNever assume the relationship. 'Congratulations to you both' works for a couple, a mother and daughter, and two colleagues. 'Congratulations to you and your wife' does not.\nIf the guest says it is nothing special, write NOTHING in the profile and never raise it again.",
+        questions: [
+          {
+            q: "Vì sao phải hỏi ai đã biết trước khi sắp xếp?",
+            options: [
+              "A. Because a surprise announced by a receptionist is no longer a surprise",
+              "B. Because the kitchen needs the name",
+              "C. Because the policy requires two signatures",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khách nói không có dịp gì đặc biệt thì làm gì?",
+            options: [
+              "A. Write nothing in the profile and never raise it again",
+              "B. Note it as 'declined' and ask again tomorrow",
+              "C. Arrange something small anyway",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Honeymoon, is it?",
+          good: "Is this trip a celebration, madam, or a quiet few days away?",
+        },
+        {
+          bad: "Congratulations to you and your wife!",
+          good: "Congratulations to you both — may I arrange something small for this evening?",
+        },
+      ],
+      game: [
+        {
+          prompt: "It is my mother's seventieth. I want it to be a surprise.",
+          options: [
+            {
+              text: "How lovely, sir. Then nobody at the desk will mention it — may I arrange the cake for after dinner instead of at check-in?",
+              correct: true,
+            },
+            { text: "Wonderful! We will greet her with it when she arrives.", correct: false },
+            {
+              text: "I will make a note so all our staff know to congratulate her.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_34_2",
+      lessonOrder: 2,
+      titleEn: "What the Desk Can Arrange Tonight",
+      titleVi: "Quầy làm được gì ngay tối nay",
+      vocabulary: [
+        {
+          word: "Turn-down surprise",
+          phonetic: "/ˈtɜːn daʊn səˈpraɪz/",
+          definition: "Bất ngờ bày sẵn lúc dọn phòng buổi tối",
+          context: "A turn-down surprise is set while the guests are at dinner.",
+          icon: "🛏️",
+        },
+        {
+          word: "At short notice",
+          phonetic: "/ət ʃɔːt ˈnəʊtɪs/",
+          definition: "Báo gấp, không kịp chuẩn bị lâu",
+          context: "The kitchen can do a small cake at short notice.",
+          icon: "⏳",
+        },
+        {
+          word: "Handwritten card",
+          phonetic: "/ˌhændˈrɪtn kɑːd/",
+          definition: "Thiệp viết tay",
+          context: "A handwritten card costs nothing and is remembered longest.",
+          icon: "💌",
+        },
+        {
+          word: "Complimentary",
+          phonetic: "/ˌkɒmplɪˈmentəri/",
+          definition: "Miễn phí, do khách sạn tặng",
+          context: "The fruit plate is complimentary, madam.",
+          icon: "🎁",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Too late, you should have told us before.",
+          polite: "The kitchen can still do a small cake at short notice, sir. Shall I ask them?",
+          rule: "Không trách khách báo muộn. Nói cái gì còn kịp, rồi hỏi một câu để việc xảy ra ngay.",
+        },
+        {
+          rude: "We can do a cake, flowers, champagne, decoration, a photo, a late check-out…",
+          polite:
+            "May I suggest two things, madam: a small cake after dinner and a handwritten card?",
+          rule: "Đề xuất tối đa hai thứ. Danh sách dài biến một món quà thành một tờ thực đơn.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We only decided to celebrate an hour ago. Is anything still possible?",
+          targetResponse:
+            "Quite a lot, madam. The kitchen can do a small cake at short notice, and I can have the room set while you are at dinner.",
+          helpTip:
+            "'Quite a lot' mở đầu bằng sự rộng rãi. Rồi nêu đúng hai việc cụ thể có thể hình dung được.",
+        },
+      ],
+      reading: {
+        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions), sparkling wine on ice.\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, cake with a written message.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.",
+        questions: [
+          {
+            q: "Món nào cần báo trước 24 giờ?",
+            options: [
+              "A. A handwritten card",
+              "B. Balloons and a cake with a written message",
+              "C. Rose petals on the bed",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Với món có tính phí, phải làm gì trước khi sắp xếp?",
+            options: [
+              "A. State the price to the guest",
+              "B. Get the Duty Manager's signature",
+              "C. Charge it and tell the guest at check-out",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "You needed to book that yesterday.",
+          good: "The kitchen can still do a small cake at short notice, madam. Shall I ask them?",
+        },
+        {
+          bad: "We have cake, flowers, wine, balloons, decoration, photos…",
+          good: "May I suggest two things, sir: a cake after dinner, and a handwritten card?",
+        },
+      ],
+      game: [
+        {
+          prompt: "Could you do balloons and a photographer for tonight?",
+          options: [
+            {
+              text: "Those need a day, madam, and I would rather not promise what arrives late. Tonight I can do a cake and the room set while you dine.",
+              correct: true,
+            },
+            { text: "I will try my best to arrange both for tonight.", correct: false },
+            { text: "Balloons and a photographer are not available. Sorry.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_34_3",
+      lessonOrder: 3,
+      titleEn: "The Handover That Makes It Happen",
+      titleVi: "Bàn giao để việc thật sự xảy ra",
+      vocabulary: [
+        {
+          word: "Timing",
+          phonetic: "/ˈtaɪmɪŋ/",
+          definition: "Thời điểm phải khớp",
+          context: "The timing matters more than the cake.",
+          icon: "🕗",
+        },
+        {
+          word: "Trigger",
+          phonetic: "/ˈtrɪɡə/",
+          definition: "Dấu hiệu để bắt đầu làm",
+          context: "The trigger is the guests leaving for dinner.",
+          icon: "🔔",
+        },
+        {
+          word: "Chase it",
+          phonetic: "/tʃeɪs ɪt/",
+          definition: "Đi hỏi lại cho chắc",
+          context: "Ring the kitchen at seven and chase it.",
+          icon: "📞",
+        },
+        {
+          word: "Named person",
+          phonetic: "/neɪmd ˈpɜːsn/",
+          definition: "Người cụ thể chịu trách nhiệm",
+          context: "Every step has a named person, not a department.",
+          icon: "🙋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Housekeeping will do it sometime this evening.",
+          polite:
+            "Housekeeping sets the room when the guests leave for dinner, madam — around half past seven.",
+          rule: "Bàn giao phải có DẤU HIỆU bắt đầu, không phải một khoảng thời gian. 'Sometime' là cách một điều bất ngờ chết đi.",
+        },
+        {
+          rude: "I told the kitchen already.",
+          polite: "Chef Nam has it, and I will ring him at seven to chase it myself.",
+          rule: "Giao cho một người có tên, và tự mình đi hỏi lại. 'Đã báo bếp rồi' không phải là bàn giao.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So it will definitely be there when we come back up?",
+          targetResponse:
+            "It will, sir. Housekeeping sets it when you leave for dinner, and I ring the kitchen at seven to check myself.",
+          helpTip:
+            "Trả lời bằng cơ chế, không bằng lời hứa. Khách tin quy trình cụ thể hơn tin chữ 'chắc chắn'.",
+        },
+      ],
+      reading: {
+        text: "OCCASION HANDOVER SLIP — ONE PER ARRANGEMENT\nRoom · guest name · what the occasion is · WHO ALREADY KNOWS.\nEach line carries three things: the task, a NAMED person, and a trigger.\n  Cake, 6 portions, no message — Chef Nam — ready 19:00, held in the pastry fridge\n  Petals and card — Housekeeping, Chi — trigger: guests leave for dinner (~19:30)\n  Card written and signed — Front desk, Duy — before 18:00\n  Chase call to kitchen — Front desk, Duy — 19:00\nA slip with 'Housekeeping' but no name is not a handover; it is a hope. Departments do not remember things, people do.\nThe desk keeps the slip until the guest confirms it happened, then files it in the profile.",
+        questions: [
+          {
+            q: "Mỗi dòng bàn giao phải có ba thứ gì?",
+            options: [
+              "A. The task, a named person, and a trigger",
+              "B. The task, the price, and the room number",
+              "C. The department, the time, and the manager",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao ghi 'Housekeeping' mà không ghi tên người là chưa đủ?",
+            options: [
+              "A. Because departments do not remember things, people do",
+              "B. Because housekeeping is often busy",
+              "C. Because the system needs a staff number",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Housekeeping will sort it out this evening.",
+          good: "Chi from housekeeping sets it the moment you leave for dinner, madam.",
+        },
+        {
+          bad: "I passed it to the kitchen, so it should be fine.",
+          good: "Chef Nam has it, sir, and I ring him at seven to chase it myself.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Last time we asked for something like this, nobody actually did it.",
+          options: [
+            {
+              text: "I understand, madam. This time each step has a name against it, and I make the chase call myself at seven.",
+              correct: true,
+            },
+            { text: "That will not happen this time, I promise you.", correct: false },
+            { text: "I have already told housekeeping and the kitchen about it.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_34_4",
+      lessonOrder: 4,
+      titleEn: "When the Surprise Goes Wrong",
+      titleVi: "Khi điều bất ngờ hỏng việc",
+      vocabulary: [
+        {
+          word: "Spoil it",
+          phonetic: "/spɔɪl ɪt/",
+          definition: "Làm hỏng điều bất ngờ",
+          context: "A greeting at the desk can spoil it completely.",
+          icon: "💔",
+        },
+        {
+          word: "Own the mistake",
+          phonetic: "/əʊn ðə mɪˈsteɪk/",
+          definition: "Nhận lỗi về mình, không đổ lỗi",
+          context: "Own the mistake before the guest has to describe it.",
+          icon: "🙇",
+        },
+        {
+          word: "Make it right tonight",
+          phonetic: "/meɪk ɪt raɪt təˈnaɪt/",
+          definition: "Sửa ngay trong tối nay",
+          context: "Let me make it right tonight rather than tomorrow.",
+          icon: "🌙",
+        },
+        {
+          word: "Never charge",
+          phonetic: "/ˈnevə tʃɑːdʒ/",
+          definition: "Tuyệt đối không tính tiền",
+          context: "We never charge for an occasion we got wrong.",
+          icon: "🚫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The kitchen forgot. Nothing I can do now.",
+          polite:
+            "The cake did not reach your room and that is our mistake, madam. May I bring it up now with the wine?",
+          rule: "Nhận lỗi bằng 'our mistake' rồi đề xuất ngay. Đổ lỗi cho bếp không sửa được gì cho khách.",
+        },
+        {
+          rude: "We will take it off the bill and that is that.",
+          polite:
+            "We never charge for an occasion we got wrong, sir, and I would still like to make it right tonight.",
+          rule: "Bỏ phí là mức tối thiểu, không phải cách sửa. Khách mất một dịp, không mất một khoản tiền.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "The receptionist congratulated her at check-in. It was supposed to be a surprise.",
+          targetResponse:
+            "That is our mistake and I am very sorry, sir. May I move the cake to tomorrow night so there is still a moment she does not expect?",
+          helpTip:
+            "Nhận lỗi rồi cứu lấy điều còn cứu được. Khách mất bất ngờ hôm nay, nhưng ngày mai vẫn còn.",
+        },
+      ],
+      reading: {
+        text: "WHEN AN OCCASION FAILS — FRONT DESK\nThe three failures, in order of how often they happen:\n1. The surprise is spoiled — someone congratulates the guest who was not meant to know. Apologise to the ORGANISER privately, never in front of the other guest, and offer to move the moment to another evening.\n2. The item never arrives. Own it before the guest describes it. Bring it now if the evening is still going; move it to tomorrow if not.\n3. The wrong occasion. A birthday cake for an anniversary, or the wrong name written on the card. Remove it immediately and rewrite; never present a corrected card.\nNever charge for an occasion the hotel got wrong, and do not offer money. The guest lost a moment, not an amount.\nLog every failure. The handover slip shows which step broke, and it is nearly always the one with no name against it.",
+        questions: [
+          {
+            q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
+            options: [
+              "A. The organiser, privately",
+              "B. Both guests, at the desk",
+              "C. The guest who was surprised, at dinner",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không nên đề nghị bồi thường bằng tiền?",
+            options: [
+              "A. Because the guest lost a moment, not an amount",
+              "B. Because the desk has no authority",
+              "C. Because it would need a manager's approval",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "The kitchen forgot your cake. Sorry about that.",
+          good: "Your cake did not reach the room and that is our mistake, madam. May I bring it up now?",
+        },
+        {
+          bad: "We have removed the charge, so it is settled.",
+          good: "We never charge for something we got wrong, sir. May I make it right tomorrow evening?",
+        },
+      ],
+      game: [
+        {
+          prompt: "The card had the wrong name on it. Her name is Mai, not Mai Anh.",
+          options: [
+            {
+              text: "I am sorry, madam — that is our error. I will write a fresh card now rather than send up a corrected one.",
+              correct: true,
+            },
+            {
+              text: "I will have the name corrected on the card and sent back up.",
+              correct: false,
+            },
+            { text: "The booking was under Mai Anh, so that is what we used.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -9093,6 +9962,8 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "FO-38": FO_WEEK_38,
   "FO-31": FO_WEEK_31,
   "FO-32": FO_WEEK_32,
+  "FO-33": FO_WEEK_33,
+  "FO-34": FO_WEEK_34,
   "GR-37": GR_WEEK_37,
   "GR-38": GR_WEEK_38,
   "FB-37": FB_WEEK_37,
