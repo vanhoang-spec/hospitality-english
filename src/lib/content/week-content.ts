@@ -8354,7 +8354,7 @@ export const FO_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "UPSELL GUIDE — FRONT DESK\nCourtyard rooms (floors 2-4): quiet, morning light, view of the 1931 tree. Plus 400,000 VND per night.\nStreet rooms: brighter in the afternoon, closer to the lift, some traffic noise until 22:00.\nMethod: name ONE thing the guest will notice, then offer to show the room. Never lead with the price.\nIf the guest declines, note it and do not raise it again during the stay.\nNever sell a courtyard room to a guest arriving after 22:00 — they will not see the view until morning.",
+        text: "UPSELL GUIDE — FRONT DESK\nCourtyard rooms (floors 2-4): quiet, morning light, view of the 1931 tree. Plus 400,000 VND per night.\nStreet rooms: brighter in the afternoon, closer to the lift, and lively outside until late — busiest on Friday and Saturday evenings.\nMethod: name ONE thing the guest will notice, then offer to show the room. Never lead with the price.\nIf the guest declines, note it and do not raise it again during the stay.\nAfter 22:00, sell the courtyard room on the QUIET, never on the view: a guest off a late flight is the one who needs it most. Say: the courtyard side is away from the street, so you will sleep better tonight.",
         questions: [
           {
             q: "Theo hướng dẫn, phải mở đầu bằng gì?",
@@ -8504,7 +8504,7 @@ export const FO_WEEK_31: WeekContent = {
           prompt: "We are quite tired, actually.",
           options: [
             {
-              text: "Then let me get you upstairs, madam. Room 304, and the lift is just on the left.",
+              text: "Then let me get you upstairs, madam. Your key is here, and the lift is just on the left.",
               correct: true,
             },
             { text: "It will only take two minutes to explain the history.", correct: false },
@@ -8527,24 +8527,24 @@ export const FO_WEEK_31: WeekContent = {
           icon: "📐",
         },
         {
-          word: "Frankly",
-          phonetic: "/ˈfræŋkli/",
+          word: "In all honesty",
+          phonetic: "/ɪn ɔːl ˈɒnɪsti/",
           definition: "Nói thẳng, thật lòng",
-          context: "Frankly, madam, the new wing suits families better.",
+          context: "In all honesty, madam, the new wing suits families better.",
           icon: "🤝",
         },
         {
           word: "Trade-off",
           phonetic: "/ˈtreɪd ɒf/",
           definition: "Sự đánh đổi giữa hai điều",
-          context: "The trade-off is charm against space.",
+          context: "The trade-off is between charm and space.",
           icon: "🔀",
         },
         {
-          word: "No surprise",
-          phonetic: "/nəʊ səˈpraɪz/",
+          word: "No surprises",
+          phonetic: "/nəʊ səˈpraɪzɪz/",
           definition: "Không để khách bị bất ngờ",
-          context: "I mention it now so there is no surprise later.",
+          context: "I mention it now so there are no surprises later.",
           icon: "📋",
         },
       ],
@@ -8552,13 +8552,13 @@ export const FO_WEEK_31: WeekContent = {
         {
           rude: "The old rooms are small. Nothing I can do.",
           polite:
-            "The old-wing rooms are compact, madam. I mention it now so there is no surprise upstairs.",
+            "The old-wing rooms are compact, madam. I mention it now so there are no surprises upstairs.",
           rule: "'Compact' thay cho 'small', và nêu lý do nói trước. Sự thật nói sớm là dịch vụ; nói muộn là khiếu nại.",
         },
         {
           rude: "You should have booked the new wing.",
           polite:
-            "Frankly, sir, the new wing suits a family better. May I move you if a room is free?",
+            "In all honesty, sir, the new wing suits a family better. May I move you if a room is free?",
           rule: "Không trách lựa chọn của khách. 'Frankly' cộng một đề nghị hành động biến lời khuyên thành sự giúp đỡ.",
         },
       ],
@@ -8572,7 +8572,7 @@ export const FO_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "SETTING EXPECTATIONS AT CHECK-IN — FRONT DESK\nSay these BEFORE the guest goes up, every time:\n· Old wing: rooms are compact (18-22 m2), no bathtub, the lift stops one floor below the top.\n· Courtyard rooms: the tree is lit until 22:00; some guests find it bright.\n· Street rooms: traffic noise until about 22:00.\n· Renovation on the fourth floor until 30 April, weekdays 09:00-16:00.\nA guest told at the desk asks a question. A guest who finds out upstairs makes a complaint. Same fact, two very different shifts.",
+        text: "SETTING EXPECTATIONS AT CHECK-IN — FRONT DESK\nSay these BEFORE the guest goes up, every time:\n· Old wing: rooms are compact (18-22 m2), no bathtub, the lift stops one floor below the top.\n· Courtyard rooms: the tree is lit until 22:00; some guests find it bright.\n· Street rooms: the street is lively until late, and loudest at the weekend. Do not name an hour we cannot hold.\n· Renovation on the fourth floor until 30 April, weekdays 09:00-16:00.\nA guest told at the desk asks a question. A guest who finds out upstairs makes a complaint. Same fact, two very different shifts.",
         questions: [
           {
             q: "Vì sao phải nói những điều này TRƯỚC khi khách lên phòng?",
@@ -8605,7 +8605,7 @@ export const FO_WEEK_31: WeekContent = {
           prompt: "Nobody told us there would be drilling above our room all morning.",
           options: [
             {
-              text: "That is our failure to tell you, madam, and I am sorry. May I move you to a room away from the work?",
+              text: "We should have told you, madam, and I am sorry. May I move you to a room away from the work?",
               correct: true,
             },
             { text: "The renovation is listed on our website, madam.", correct: false },
@@ -8677,7 +8677,8 @@ export const FO_WEEK_32: WeekContent = {
         },
         {
           rude: "Tell me if you want something changed.",
-          polite: "I have already moved the room, sir. Please tell me if it does not suit you.",
+          polite:
+            "I have already moved you, sir. Please tell me if the new room does not suit you.",
           rule: "Làm trước rồi mới mời phản hồi. Hỏi trước là đẩy việc về phía khách.",
         },
       ],
@@ -8832,7 +8833,7 @@ export const FO_WEEK_32: WeekContent = {
           prompt: "Last time somebody wrote down all my preferences. Did that go anywhere?",
           options: [
             {
-              text: "It did, madam. Your high floor and firm pillow were set before you arrived. Anything different this time?",
+              text: "It did, madam. Your room on a high floor was ready, with a firm pillow, before you arrived. Anything different this time?",
               correct: true,
             },
             { text: "Yes, we keep all guest notes in the system.", correct: false },
@@ -8858,7 +8859,7 @@ export const FO_WEEK_32: WeekContent = {
           word: "Next best",
           phonetic: "/nekst best/",
           definition: "Phương án tốt nhì",
-          context: "The next best is a high street room with double glazing.",
+          context: "The next best is a room on a high floor with double glazing.",
           icon: "🥈",
         },
         {
@@ -8880,27 +8881,27 @@ export const FO_WEEK_32: WeekContent = {
         {
           rude: "No quiet room tonight. Sorry.",
           polite:
-            "The courtyard side is fully occupied tonight, madam. The next best is a high room with double glazing.",
+            "The courtyard side is fully occupied tonight, madam. The next best is a room on a high floor with double glazing.",
           rule: "Không dừng ở lời từ chối. 'The next best is…' đưa ngay một phương án cụ thể có thể hình dung được.",
         },
         {
           rude: "You will have to accept it for tonight.",
           polite:
-            "May I move you to your usual side tomorrow night, sir? I have blocked it already.",
-          rule: "Ghép giải pháp tạm thời với một cam kết có thời hạn. 'I have blocked it' chứng minh việc đã làm rồi.",
+            "May I move you to your usual side tomorrow night, sir? It is held under your name already.",
+          rule: "Ghép giải pháp tạm thời với một cam kết có thời hạn. Nói 'held under your name' chứ đừng nói 'blocked' — 'block' là tiếng lóng nội bộ, khách nghe ra là bị chặn.",
         },
       ],
       speaking: [
         {
           guestPrompt: "So the quiet room I always get is not available. That is disappointing.",
           targetResponse:
-            "I am sorry, madam. Tonight I can offer a high room with double glazing, and I have blocked your usual room for tomorrow.",
+            "I am sorry, madam. Tonight I can offer a room on a high floor with double glazing, and I have held your usual room for tomorrow.",
           helpTip:
             "Xin lỗi, phương án đêm nay, cam kết đêm mai — ba phần, một hơi. Đừng giải thích vì sao hết phòng.",
         },
       ],
       reading: {
-        text: "WHEN A RECORDED PREFERENCE FAILS — DESK RULE\n1. Tell the guest at the desk, before they go up. Never let them discover it in the room.\n2. Offer the nearest equivalent and name WHY it is near: double glazing, top floor, away from the lift.\n3. Block the correct room for the next night and say that you have done so.\n4. Log the failure. Three failures for one guest is a Duty Manager conversation, not a front-desk one.\n5. Do not explain the hotel's occupancy to the guest. It is our problem to solve, not theirs to understand.",
+        text: "WHEN A RECORDED PREFERENCE FAILS — DESK RULE\n1. Tell the guest at the desk, before they go up. Never let them discover it in the room.\n2. Offer the nearest equivalent and name WHY it is near: double glazing, top floor, away from the lift.\n3. Hold the correct room for the next night and say that you have done so. Say HELD to the guest — block is an internal word and a guest hears it as barred.\n4. Log the failure. Three failures for one guest is a Duty Manager conversation, not a front-desk one.\n5. Do not explain the hotel's occupancy to the guest. It is our problem to solve, not theirs to understand.",
         questions: [
           {
             q: "Vì sao phải báo cho khách ngay tại quầy?",
@@ -8925,11 +8926,11 @@ export const FO_WEEK_32: WeekContent = {
       arcade: [
         {
           bad: "We are very full tonight, so there is nothing available.",
-          good: "The courtyard side is full tonight, madam. May I offer a high room with double glazing?",
+          good: "The courtyard side is full tonight, madam. May I offer a room on a high floor with double glazing?",
         },
         {
           bad: "Maybe tomorrow something will open up.",
-          good: "I have blocked your usual room for tomorrow night, sir. It is held under your name.",
+          good: "I have held your usual room for tomorrow night, sir. It is under your name.",
         },
       ],
       game: [
@@ -9067,7 +9068,7 @@ export const FO_WEEK_33: WeekContent = {
     "Remove the charge",
     "Refund",
     "Policy",
-    "Frankly",
+    "In all honesty",
   ],
   lessons: [
     {
@@ -9080,7 +9081,7 @@ export const FO_WEEK_33: WeekContent = {
           word: "Claim",
           phonetic: "/kleɪm/",
           definition: "Khiếu nại đòi bồi hoàn",
-          context: "Let me write down your claim exactly as you describe it.",
+          context: "Let me write down exactly what happened, in your words.",
           icon: "📢",
         },
         {
@@ -9208,27 +9209,27 @@ export const FO_WEEK_33: WeekContent = {
       grammar: [
         {
           rude: "I have to ask my manager about everything.",
-          polite: "I can authorise this myself, madam. It is removed from your bill already.",
+          polite: "I can authorise this myself, madam. I have removed it from your bill already.",
           rule: "Nói rõ bạn tự quyết được và việc đã xong. Khách sợ nhất là bị đá qua đá lại.",
         },
         {
           rude: "That is too much money. Not my problem.",
           polite:
-            "Anything above two million dong I escalate, sir. My manager will call you within ten minutes.",
-          rule: "Khi vượt quyền, nói rõ NGƯỠNG và THỜI HẠN. 'Tôi phải hỏi sếp' không có hai thứ đó.",
+            "That is above what I can approve myself, sir. I will come back to you within fifteen minutes either way.",
+          rule: "Khi vượt quyền, nói rõ QUY TRÌNH và THỜI HẠN — nhưng đừng nói con số hạn mức, khách sẽ xin ngay dưới ngưỡng. Và hứa việc CHÍNH BẠN làm được, đừng hứa thay quản lý.",
         },
       ],
       speaking: [
         {
           guestPrompt: "How long is this going to take? I have a flight at six.",
           targetResponse:
-            "The minibar charge I can remove straight from the desk, sir. That is done. The rest my manager will confirm within ten minutes.",
+            "I can remove the minibar charge right now, sir — that is done. The rest needs my Duty Manager, and I will come back to you within fifteen minutes.",
           helpTip:
-            "Tách việc làm được ngay ra khỏi việc phải chờ. Khách vội cần thấy có thứ đã xong rồi.",
+            "Tách việc làm được ngay ra khỏi việc phải chờ, và đặt chủ ngữ 'I' lên đầu cả hai vế. Khách vội cần thấy có thứ đã xong rồi.",
         },
       ],
       reading: {
-        text: "FRONT DESK AUTHORITY LIMITS\nYou may authorise WITHOUT asking:\n· minibar and laundry charges under 500,000 VND\n· late check-out fee waiver, once per stay\n· one night's parking, one welcome drink, one press of a garment\n· any charge the guest disputes where the folio has no signature\nYou must ESCALATE:\n· anything above 2,000,000 VND · any refund to a card · any compensation for a third party\n· any claim involving injury, theft or lost valuables — these go to the Duty Manager and are never settled at the desk\nSay the limit out loud. A guest who hears 'above two million I escalate' understands the process; a guest who hears 'I have to ask' hears delay.",
+        text: "FRONT DESK AUTHORITY LIMITS — THREE TIERS, NO GAP\nUnder 500,000 VND — you decide. Minibar and laundry, one late check-out waiver per stay, one night's parking, one welcome drink, one pressed garment.\n500,000 to 2,000,000 VND — Shift Leader or Duty Manager approves by phone. Write the approving name on the folio before you tell the guest.\nAbove 2,000,000 VND — Duty Manager signs. Also: any refund to a card, any payment to a third party.\nNEVER at the desk, at any amount: injury, theft, or lost valuables. Those go to the Duty Manager, always.\nAn unsigned folio is a REASON to reverse, not an exception to the tiers — a disputed 15,000,000 VND banquet charge is still a Duty Manager decision.\nTell the guest the PROCESS and the TIME, never the number. A guest who learns the threshold asks for the amount just below it.",
         questions: [
           {
             q: "Khoản nào lễ tân được tự duyệt?",
@@ -9257,7 +9258,7 @@ export const FO_WEEK_33: WeekContent = {
         },
         {
           bad: "This is above my level, sorry.",
-          good: "Above two million I escalate, sir. My manager will call you within ten minutes.",
+          good: "That is above what I can approve myself, sir. I will come back to you within fifteen minutes.",
         },
       ],
       game: [
@@ -9266,7 +9267,7 @@ export const FO_WEEK_33: WeekContent = {
             "Just tell me straight — can you fix this or do I need to speak to somebody else?",
           options: [
             {
-              text: "The minibar part I can fix now, sir. The room rate is above my limit, so my manager will call you within ten minutes.",
+              text: "I can remove the minibar charge right now, sir — that is done. The room rate needs my Duty Manager, and I will come back to you within fifteen minutes.",
               correct: true,
             },
             { text: "I will need to speak to my manager about all of it.", correct: false },
@@ -9303,10 +9304,10 @@ export const FO_WEEK_33: WeekContent = {
           icon: "❌",
         },
         {
-          word: "Clear your name",
-          phonetic: "/klɪə jɔː neɪm/",
-          definition: "Làm rõ khách không có lỗi",
-          context: "The note on your file will clear your name, sir.",
+          word: "On record",
+          phonetic: "/ɒn ˈrekɔːd/",
+          definition: "Đã ghi nhận lại, tra cứu được về sau",
+          context: "The reversal is on record, sir, so it will not come back.",
           icon: "🕊️",
         },
       ],
@@ -9332,7 +9333,7 @@ export const FO_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "DISPUTED POSTING — WHAT THE DESK DOES\nA disputed charge under the authority limit is reversed FIRST and investigated afterwards. The guest is not held while we check.\nNever suggest that a companion, a child or a previous occupant consumed it. Say 'posted in error'.\nPrint a fresh itemised bill after the reversal so the guest leaves with a clean document, not a corrected one.\nWrite a note in the profile: what was disputed, that it was reversed, and that the guest was not at fault. This clears the guest's name if the same charge is queried at the next stay.\nReport the pattern, not the guest: three minibar disputes on one floor in a week is a stock-control problem, not three dishonest guests.",
+        text: "DISPUTED POSTING — WHAT THE DESK DOES\nA disputed charge under the authority limit is reversed FIRST and investigated afterwards. The guest is not held while we check.\nNever suggest that a companion, a child or a previous occupant consumed it. Say 'posted in error'.\nPrint a fresh itemised bill after the reversal so the guest leaves with a clean document, not a corrected one.\nWrite a note in the profile recording the EVENT, never a verdict: what was disputed, the amount, that it was reversed at the desk, and by whom. 'Minibar 200,000 disputed 12/08, reversed at desk by Duy, pending stock check.' Never write that the guest was not at fault — the profile is read aloud in complaint reviews and in card chargebacks, and a verdict written before the investigation is evidence against the hotel.\nReport the pattern, not the guest: three minibar disputes on one floor in a week is a stock-control problem, not three dishonest guests.",
         questions: [
           {
             q: "Với khoản tranh chấp trong hạn mức, thứ tự xử lý là gì?",
@@ -9407,7 +9408,7 @@ export const FO_WEEK_33: WeekContent = {
         },
         {
           word: "Follow up",
-          phonetic: "/ˈfɒləʊ ʌp/",
+          phonetic: "/ˌfɒləʊ ˈʌp/",
           definition: "Chủ động liên hệ lại",
           context: "I will follow up with you on Friday either way.",
           icon: "🔔",
@@ -9436,7 +9437,7 @@ export const FO_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "CLOSING A DISPUTE — WHAT THE GUEST LEAVES WITH\nEvery settled dispute produces THREE things before the guest walks away:\n1. A clean itemised bill, reprinted after the correction.\n2. A written confirmation — email or printed slip — naming what was reversed, the amount, and the date.\n3. A case number, read aloud digit by digit and written on the slip.\nRefund timing to state: cash at the desk, immediate. Card reversal, 5-7 working days. Bank transfer, up to 10.\nSet your own follow-up before the guest asks for one. A guest chased by the hotel tells a different story from a guest who had to chase the hotel.",
+        text: "CLOSING A DISPUTE — WHAT THE GUEST LEAVES WITH\nEvery settled dispute produces THREE things before the guest walks away:\n1. A clean itemised bill, reprinted after the correction. If a VAT e-invoice was already issued — most company guests and many domestic ones — it cannot be reprinted: call Accounting within the shift, have an adjustment invoice issued, and tell the guest WHEN it will reach their email.\n2. A written confirmation — email or printed slip — naming what was reversed, the amount, and the date.\n3. A case number, read aloud digit by digit and written on the slip.\nRefund timing to state — say the SLOWEST case, never the fastest: cash at the desk, immediate. Domestic VND bank transfer, same working day. Card reversal, usually 7-15 working days and up to 30 for a card issued abroad, because it depends on the guest's own bank, not on us.\nSet your own follow-up before the guest asks for one. A guest chased by the hotel tells a different story from a guest who had to chase the hotel.",
         questions: [
           {
             q: "Khách rời đi phải cầm theo ba thứ gì?",
@@ -9518,10 +9519,10 @@ export const FO_WEEK_34: WeekContent = {
           icon: "👂",
         },
         {
-          word: "Discreetly",
-          phonetic: "/dɪˈskriːtli/",
-          definition: "Kín đáo, không phô trương",
-          context: "May I ask discreetly, sir — is it a surprise?",
+          word: "Keep it quiet",
+          phonetic: "/kiːp ɪt ˈkwaɪət/",
+          definition: "Giữ kín, không để lộ",
+          context: "May I ask, sir — is this a surprise for her?",
           icon: "🤫",
         },
         {
@@ -9540,7 +9541,7 @@ export const FO_WEEK_34: WeekContent = {
         },
         {
           rude: "Does she know about the cake?",
-          polite: "May I ask discreetly, sir — is your wife in on it, or is it a surprise?",
+          polite: "May I ask, sir — does your wife know, or is it a surprise?",
           rule: "Hỏi ai đã biết TRƯỚC khi sắp xếp. Một câu chúc mừng sai chỗ có thể phá hỏng cả điều bất ngờ.",
         },
       ],
@@ -9661,13 +9662,13 @@ export const FO_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions), sparkling wine on ice.\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, cake with a written message.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.",
+        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions, ~350,000-600,000 VND), a written message piped on it, sparkling wine on ice (~800,000-1,500,000 VND).\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, custom or photo cake, a specific flavour, or a cake for a dietary restriction.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.\nNo candles or sparklers in guest rooms — the smoke detector does not know it is a birthday. Ask the kitchen for an LED candle.\nAsk about allergies before ordering any cake. A celebration that sends someone to hospital is the one nobody forgets.",
         questions: [
           {
             q: "Món nào cần báo trước 24 giờ?",
             options: [
               "A. A handwritten card",
-              "B. Balloons and a cake with a written message",
+              "B. Balloons and a photo cake",
               "C. Rose petals on the bed",
             ],
             correct: 1,
@@ -9698,7 +9699,7 @@ export const FO_WEEK_34: WeekContent = {
           prompt: "Could you do balloons and a photographer for tonight?",
           options: [
             {
-              text: "Those need a day, madam, and I would rather not promise what arrives late. Tonight I can do a cake and the room set while you dine.",
+              text: "Those need a day, madam, and I would rather not promise something that then arrives late. Tonight I can do a cake and set the room while you dine.",
               correct: true,
             },
             { text: "I will try my best to arrange both for tonight.", correct: false },
