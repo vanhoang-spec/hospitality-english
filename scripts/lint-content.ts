@@ -900,6 +900,64 @@ function reportStaleDebt() {
   }
 }
 
+// ------------------------------------------------------------
+// LAYER E — dead bank entries
+//
+// A hand-authored week replaces the spine week for one department, and the
+// bank slot that fed that week stops reaching anyone. Nothing noticed: 162
+// headwords — fully authored, with IPA and Vietnamese glosses — sat in
+// phase4-lexicon.ts feeding nobody, created silently by the week 37-38
+// recovery three commits earlier. `terms` was dead in all six departments
+// at once.
+//
+// This gets worse rather than better from here: every hand-authored week
+// kills its own slot, and the Phase 4 batches ahead will author many. So
+// the invariant is checked rather than the symptom — a bank entry must be
+// taught somewhere in its own department, or it must not exist.
+//
+// Week 39 rehearses the phase from index 0-1 of most slots, which is why a
+// hand-authored week 31-36 leaves two entries alive rather than none. That
+// is genuine reach, not an exemption.
+//
+// The opposite mistake needs no rule here: a slot emptied while its week is
+// still built from the spine makes the builder destructure undefined and
+// the import throws, which is louder than a lint error.
+// ------------------------------------------------------------
+
+/** Which P4 bank slot feeds which week, from phase4-bank-contract.md. */
+const P4_SLOT_WEEK: Record<string, number> = {
+  story: 31,
+  preferences: 32,
+  disputes: 33,
+  occasions: 34,
+  tradeoffs: 35,
+  emergencies: 36,
+  terms: 37,
+  proposal: 38,
+  wrapUp: 40,
+};
+
+function lintDeadBankEntries(banks: BankSet) {
+  for (const [dep, slots] of Object.entries(banks)) {
+    const taught = new Set<string>();
+    for (let w = 1; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        for (const v of l.vocabulary) taught.add(v.word.toLowerCase());
+
+    for (const [slot, words] of Object.entries(slots)) {
+      if (P4_SLOT_WEEK[slot] === undefined) continue;
+      const dead = words.filter((w) => !taught.has(w.word.toLowerCase()));
+      if (dead.length)
+        errors.push(
+          `[E dead-bank] ${dep}.${slot} holds ${dead.length} entr${dead.length === 1 ? "y" : "ies"} no week of ${dep} teaches — delete them, or teach them: ${dead
+            .slice(0, 3)
+            .map((w) => `"${w.word}"`)
+            .join(", ")}${dead.length > 3 ? " …" : ""}`,
+        );
+    }
+  }
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1257,6 +1315,7 @@ lintBanks("P2", P2_BANKS as unknown as BankSet);
 lintBanks("P3", P3_BANKS as unknown as BankSet);
 lintBanks("P4", P4_BANKS as unknown as BankSet);
 lintSemantics("P4", P4_BANKS as unknown as BankSet);
+lintDeadBankEntries(P4_BANKS as unknown as BankSet);
 reportStaleDebt();
 
 let sentenceCount = 0;
