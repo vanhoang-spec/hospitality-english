@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/vanhoang-spec/hospitality-english/actions/workflows/ci.yml/badge.svg)](https://github.com/vanhoang-spec/hospitality-english/actions/workflows/ci.yml)
 
-Khoá tiếng Anh chuyên ngành khách sạn 40 tuần cho nhân viên người Việt — sáu bộ phận,
+Khoá tiếng Anh chuyên ngành khách sạn 40 tuần cho nhân viên người Việt — năm bộ phận đang mở,
 pre-A1 → A2+. Spec gốc: [`docs/curriculum-level-matrix.md`](docs/curriculum-level-matrix.md).
 
 ## Chạy
@@ -11,7 +11,7 @@ pre-A1 → A2+. Spec gốc: [`docs/curriculum-level-matrix.md`](docs/curriculum-
 bun install
 bun run dev          # http://localhost:8080
 bun run ci           # toàn bộ gate — chính lệnh CI và Netlify chạy
-bun scripts/dump-week.ts 9 24 37   # đọc câu render thật của một tuần, cả 6 bộ phận
+bun scripts/dump-week.ts 9 24 37   # đọc câu render thật của một tuần, mọi bộ phận
 ```
 
 ## Đường đi của một thay đổi

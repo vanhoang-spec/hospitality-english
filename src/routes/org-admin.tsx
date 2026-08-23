@@ -428,7 +428,7 @@ function AddMemberDialog({
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(generateTempPassword());
   const [role, setRole] = useState<"member" | "org_admin">("member");
-  const [departmentChoice, setDepartmentChoice] = useState<string>(DEPARTMENTS[0].code);
+  const [departmentChoice, setDepartmentChoice] = useState<string>(SHIPPING_DEPARTMENTS[0].code);
   const [departmentCustom, setDepartmentCustom] = useState("");
   const [submitting, setSubmitting] = useState(false);
 

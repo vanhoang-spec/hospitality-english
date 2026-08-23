@@ -520,7 +520,7 @@ if (legacyGameDupes.length) {
       // only the phases it has not finished; the moment its last week lands,
       // the pool must hold — no department ships on a written-only checkpoint.
       const phaseComplete = authored === phase.to - phase.from + 1;
-      if (d.hidden && !phaseComplete) continue;
+      if (d.hidden === "in-progress" && !phaseComplete) continue;
       checked++;
       if (n < CHECKPOINT_ORAL_ITEMS)
         errors.push(
@@ -528,7 +528,7 @@ if (legacyGameDupes.length) {
         );
     }
   }
-  const wip = DEPARTMENTS.filter((d) => d.hidden).map((d) => d.code);
+  const wip = DEPARTMENTS.filter((d) => d.hidden === "in-progress").map((d) => d.code);
   console.log(
     `Checkpoint oral pools — ${checked} phase×department pools each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items` +
       (wip.length ? ` (unfinished phases of ${wip.join(", ")} not yet due)` : ""),
