@@ -24,6 +24,9 @@ both columns have to hold.
 
 ### Semantic class per slot
 
+> Cột này nay **được thi hành bằng máy**: Layer D trong `scripts/lint-content.ts`.
+> Nợ đã biết nằm ở `scripts/_semantic-debt.json`; bối cảnh ở `docs/semantic-class-debt.md`.
+
 | Slot          | Must denote                              | Fails as                                                                      |
 | ------------- | ---------------------------------------- | ----------------------------------------------------------------------------- |
 | `upgrades`    | something a guest can be offered         | an abstraction with no price                                                  |
