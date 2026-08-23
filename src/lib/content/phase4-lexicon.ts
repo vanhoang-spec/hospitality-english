@@ -46,61 +46,10 @@ export type P4Bank = {
 };
 
 const FO_BANK: P4Bank = {
-  story: [
-    {
-      word: "Heritage building",
-      phonetic: "/ˈherɪtɪdʒ ˈbɪldɪŋ/",
-      definition: "Tòa nhà cổ có giá trị lịch sử",
-      icon: "🏰",
-    },
-    {
-      word: "Rooftop view",
-      phonetic: "/ˈruːftɒp vjuː/",
-      definition: "Tầm nhìn từ sân thượng",
-      icon: "🌆",
-    },
-  ],
-  preferences: [
-    {
-      word: "Pillow firmness",
-      phonetic: "/ˈpɪləʊ ˈfɜːmnəs/",
-      definition: "Độ cứng mềm của gối",
-      icon: "🛏️",
-    },
-    {
-      word: "High floor request",
-      phonetic: "/haɪ flɔː rɪˈkwest/",
-      definition: "Yêu cầu ở tầng cao",
-      icon: "🏢",
-    },
-  ],
-  disputes: [
-    {
-      word: "Billing dispute",
-      phonetic: "/ˈbɪlɪŋ dɪˈspjuːt/",
-      definition: "Tranh cãi về hóa đơn",
-      icon: "🧾",
-    },
-    {
-      word: "Missing valuables",
-      phonetic: "/ˈmɪsɪŋ ˈvæljəblz/",
-      definition: "Đồ có giá trị bị mất",
-      icon: "💎",
-    },
-  ],
+  story: [],
+  preferences: [],
+  disputes: [],
   occasions: [
-    {
-      word: "Honeymoon package",
-      phonetic: "/ˈhʌnimuːn ˈpækɪdʒ/",
-      definition: "Gói dịch vụ tuần trăng mật",
-      icon: "💗",
-    },
-    {
-      word: "Anniversary cake",
-      phonetic: "/ˌænɪˈvɜːsəri keɪk/",
-      definition: "Bánh mừng ngày kỷ niệm",
-      icon: "🎂",
-    },
     {
       word: "Handwritten card",
       phonetic: "/ˌhændˈrɪtn kɑːd/",
@@ -108,20 +57,7 @@ const FO_BANK: P4Bank = {
       icon: "💌",
     },
   ],
-  tradeoffs: [
-    {
-      word: "Waive the resort fee",
-      phonetic: "/weɪv ðə rɪˈzɔːt fiː/",
-      definition: "Miễn phí dịch vụ khu nghỉ dưỡng",
-      icon: "🆓",
-    },
-    {
-      word: "Upgrade the room category",
-      phonetic: "/ˈʌpɡreɪd ðə ruːm ˈkætəɡəri/",
-      definition: "Nâng lên hạng phòng cao hơn",
-      icon: "⬆️",
-    },
-  ],
+  tradeoffs: [],
   // SLOT ORDER IS SEMANTIC, not decorative — the week-36 frames commit to
   // what each position means, and a word in the wrong position produces
   // sentences no property would ever say ("we are handling the missing
@@ -131,108 +67,10 @@ const FO_BANK: P4Bank = {
   //   [6] must be a physical hazard — "There is no danger from the {6}."
   //   [8] must make the LIFT unsafe — "Because of the {8}, use the stairs."
   //   [9] must be a blockage — "Do not proceed until the {9} is cleared."
-  emergencies: [
-    {
-      word: "Medical call",
-      phonetic: "/ˈmedɪkl kɔːl/",
-      definition: "Cuộc gọi cần trợ giúp y tế",
-      icon: "🚑",
-    },
-    {
-      word: "Lift breakdown",
-      phonetic: "/lɪft ˈbreɪkdaʊn/",
-      definition: "Thang máy bị hỏng giữa chừng",
-      icon: "🛗",
-    },
-  ],
+  emergencies: [],
   terms: [],
   proposal: [],
-  wrapUp: [
-    {
-      word: "Guest history",
-      phonetic: "/ɡest ˈhɪstəri/",
-      definition: "Lịch sử lưu trú của khách",
-      icon: "📚",
-    },
-    {
-      word: "Loyalty number",
-      phonetic: "/ˈlɔɪəlti ˈnʌmbə/",
-      definition: "Số thẻ khách hàng thân thiết",
-      icon: "🏅",
-    },
-    {
-      word: "Billing instruction",
-      phonetic: "/ˈbɪlɪŋ ɪnˈstrʌkʃn/",
-      definition: "Chỉ dẫn cách xuất hóa đơn",
-      icon: "🧾",
-    },
-    {
-      word: "Room assignment",
-      phonetic: "/ruːm əˈsaɪnmənt/",
-      definition: "Việc xếp phòng cho khách",
-      icon: "🗝️",
-    },
-    {
-      word: "Arrival time",
-      phonetic: "/əˈraɪvl taɪm/",
-      definition: "Giờ khách đến khách sạn",
-      icon: "🕐",
-    },
-    {
-      word: "Departure transfer",
-      phonetic: "/dɪˈpɑːtʃə ˈtrænsfɜː/",
-      definition: "Xe đưa khách lúc rời đi",
-      icon: "🚐",
-    },
-    {
-      word: "Goodwill gesture",
-      phonetic: "/ˌɡʊdˈwɪl ˈdʒestʃə/",
-      definition: "Cử chỉ thiện chí bù đắp",
-      icon: "🤝",
-    },
-    {
-      word: "Emergency contact",
-      phonetic: "/ɪˈmɜːdʒənsi ˈkɒntækt/",
-      definition: "Người liên hệ khi khẩn cấp",
-      icon: "📞",
-    },
-    {
-      word: "Follow-up call",
-      phonetic: "/ˈfɒləʊ ʌp kɔːl/",
-      definition: "Cuộc gọi hỏi thăm sau đó",
-      icon: "☎️",
-    },
-    {
-      word: "Outstanding balance",
-      phonetic: "/aʊtˈstændɪŋ ˈbæləns/",
-      definition: "Số tiền khách còn nợ lại",
-      icon: "💰",
-    },
-    {
-      word: "Feedback form",
-      phonetic: "/ˈfiːdbæk fɔːm/",
-      definition: "Phiếu góp ý của khách",
-      icon: "📝",
-    },
-    {
-      word: "Guarantee type",
-      phonetic: "/ˌɡærənˈtiː taɪp/",
-      definition: "Hình thức bảo đảm đặt phòng",
-      icon: "🔐",
-    },
-    {
-      word: "Booking amendment",
-      phonetic: "/ˈbʊkɪŋ əˈmendmənt/",
-      definition: "Việc sửa đổi thông tin đặt phòng",
-      icon: "✏️",
-    },
-    {
-      word: "Stay summary",
-      phonetic: "/steɪ ˈsʌməri/",
-      definition: "Bản tóm tắt kỳ lưu trú",
-      icon: "📄",
-    },
-  ],
+  wrapUp: [],
 };
 
 const FB_BANK: P4Bank = {

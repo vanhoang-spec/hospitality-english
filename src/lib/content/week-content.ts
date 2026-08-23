@@ -10810,6 +10810,860 @@ export const FO_WEEK_36: WeekContent = {
   ],
 };
 
+export const FO_WEEK_39: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 39,
+  weekTitleEn: "When the Script Runs Out",
+  weekTitleVi: "Khi kịch bản không còn câu nào",
+  reviewWords: [
+    "Escalate",
+    "In writing",
+    "On record",
+    "Hold the rate",
+    "Mention",
+    "Evacuate",
+    "In all honesty",
+    "Authorise",
+  ],
+  lessons: [
+    {
+      lessonId: "FO_39_1",
+      lessonOrder: 1,
+      titleEn: "Three Things at Once",
+      titleVi: "Ba việc cùng lúc",
+      vocabulary: [
+        {
+          word: "One at a time",
+          phonetic: "/wʌn ət ə taɪm/",
+          definition: "Từng việc một",
+          context: "I will take them one at a time, madam.",
+          icon: "1️⃣",
+        },
+        {
+          word: "Bear with me",
+          phonetic: "/beə wɪð miː/",
+          definition: "Xin chờ tôi một chút",
+          context: "Bear with me for thirty seconds, sir.",
+          icon: "⏳",
+        },
+        {
+          word: "Put you on hold",
+          phonetic: "/pʊt juː ɒn həʊld/",
+          definition: "Giữ máy chờ",
+          context: "May I put you on hold for one moment?",
+          icon: "☎️",
+        },
+        {
+          word: "Whoever is waiting longest",
+          phonetic: "/huːˈevər ɪz ˈweɪtɪŋ ˈlɒŋɡɪst/",
+          definition: "Người chờ lâu nhất",
+          context: "Serve whoever is waiting longest, not whoever is loudest.",
+          icon: "⚖️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Wait. I am busy.",
+          polite: "I am with another guest, madam. Bear with me for thirty seconds.",
+          rule: "Hiện tại tiếp diễn 'I am with' nói rõ bạn đang bận việc gì NGAY LÚC NÀY. 'I am busy' chỉ nói về bạn; 'I am with another guest' nói về lý do.",
+        },
+        {
+          rude: "Hold on.",
+          polite: "May I put you on hold for one moment, sir? I will come straight back.",
+          rule: "Xin phép rồi mới giữ máy, và nêu thời lượng. Người bị giữ máy không biết mình chờ bao lâu thì mỗi giây dài gấp đôi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Excuse me — I have been standing here while you deal with the phone.",
+          targetResponse:
+            "You are quite right, madam, and I am sorry. Let me finish this call in ten seconds and you are next.",
+          helpTip:
+            "Nói 'quite right' với /t/ cuối rõ. Nuốt âm cuối ở đây làm câu công nhận nghe như câu chống chế.",
+        },
+      ],
+      reading: {
+        text: 'THE DESK UNDER PRESSURE — ORDER OF SERVICE\nWhen three things arrive at once, the order is not first come first served. It is: (1) anyone in danger, (2) the person physically in front of you, (3) the phone, (4) email and messages.\nThe phone feels most urgent because it is loudest. It is not. A caller can be put on hold with permission; a guest standing at the desk cannot.\nSay the order out loud to the people waiting. A guest who is told "you are next" stops counting the seconds; a guest who is ignored starts.\nNever serve the loudest guest first. It is the fastest way to teach every guest in the lobby that raising their voice works.\nIf the queue passes four people, call for a second colleague. Not when it passes eight — the extra pair of hands takes three minutes to arrive.',
+        questions: [
+          {
+            q: "Theo tài liệu, việc nào được ưu tiên hơn: điện thoại đang reo hay khách đứng trước mặt?",
+            options: [
+              "A. Khách đứng trước mặt — người gọi có thể xin phép giữ máy, khách đứng thì không",
+              "B. Điện thoại — vì người gọi không thấy mình đang chờ ai",
+              "C. Tuỳ ai đến trước",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khi hàng chờ tới bao nhiêu người thì gọi thêm đồng nghiệp?",
+            options: ["A. Bốn người", "B. Tám người", "C. Khi khách bắt đầu phàn nàn"],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        { bad: "Wait a minute, I am busy.", good: "I am with another guest, sir. You are next." },
+        {
+          bad: "Hold on.",
+          good: "May I put you on hold for one moment, madam? I will come straight back.",
+        },
+      ],
+      game: [
+        {
+          prompt: "I have been waiting five minutes while you answer the phone twice.",
+          options: [
+            {
+              text: "You are right and I am sorry, sir. The phone is on hold now — you have my full attention.",
+              correct: true,
+            },
+            { text: "The telephone is also guests, sir. I have to answer it.", correct: false },
+            { text: "I will be with you as soon as I possibly can.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_39_2",
+      lessonOrder: 2,
+      titleEn: "When the Guest Changes the Subject",
+      titleVi: "Khi khách đổi chủ đề giữa chừng",
+      vocabulary: [
+        {
+          word: "Before I forget",
+          phonetic: "/bɪˈfɔːr aɪ fəˈɡet/",
+          definition: "Nhân tiện kẻo quên",
+          context: "Before I forget, sir — your taxi is booked for six.",
+          icon: "💭",
+        },
+        {
+          word: "Come back to that",
+          phonetic: "/kʌm bæk tə ðæt/",
+          definition: "Quay lại chuyện đó sau",
+          context: "May I come back to that in a moment, madam?",
+          icon: "↩️",
+        },
+        {
+          word: "Two things there",
+          phonetic: "/tuː θɪŋz ðeə/",
+          definition: "Có hai việc trong câu hỏi đó",
+          context: "There are two things there, sir. Let me take the first.",
+          icon: "✌️",
+        },
+        {
+          word: "Was there anything else",
+          phonetic: "/wɒz ðər ˈeniθɪŋ els/",
+          definition: "Còn gì nữa không ạ",
+          context: "Was there anything else, madam, before you go up?",
+          icon: "🔚",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You asked about the taxi, not the bill.",
+          polite: "There are two things there, sir. May I take the taxi first, then the bill?",
+          rule: "Đếm số việc ra thành tiếng rồi xin phép chọn thứ tự. Khách hỏi lan man không phải khách khó — họ chỉ đang nghĩ thành tiếng.",
+        },
+        {
+          rude: "I already answered that.",
+          polite: "I did mention it earlier, madam, but let me go through it again.",
+          rule: "Trợ động từ nhấn mạnh 'I did mention' vừa khẳng định bạn đã nói, vừa không trách khách quên. Đây là cách lịch sự duy nhất để nhắc lại.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "About the airport car — actually, wait, has my colleague checked in yet? And is breakfast still open?",
+          targetResponse:
+            "Three things, sir. Breakfast closes in ten minutes, so let me start there. Then your colleague, then the car.",
+          helpTip:
+            "Đếm 'three things' rõ ràng rồi mới đi. Việc gấp nhất lên đầu, không phải việc khách hỏi đầu.",
+        },
+      ],
+      reading: {
+        text: 'GUESTS WHO ASK THREE QUESTIONS IN ONE BREATH\nThis is normal, not difficult. A guest arriving after a flight is holding six unfinished thoughts and is putting them down as they come.\nCount them out loud: "three things there, sir". The guest hears that you caught all three, which is most of what they wanted.\nAnswer in order of URGENCY, not in the order asked. Breakfast closing in ten minutes beats a taxi for tomorrow, even if the taxi came first.\nName the one you are parking: "may I come back to the bill in a moment?" An unnamed question feels dropped.\nClose with "was there anything else?" — the fourth question the guest forgot is the one that comes back to the desk at midnight.',
+        questions: [
+          {
+            q: "Trả lời theo thứ tự nào?",
+            options: [
+              "A. Theo mức độ gấp, không theo thứ tự khách hỏi",
+              "B. Theo đúng thứ tự khách hỏi, cho lịch sự",
+              "C. Việc dễ nhất trước để giải quyết nhanh",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao phải gọi tên việc mình tạm gác lại?",
+            options: [
+              "A. Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
+              "B. Vì hệ thống yêu cầu ghi lại",
+              "C. Vì khách sẽ quên mất họ đã hỏi",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "One question at a time, please.",
+          good: "Three things there, madam. Let me start with breakfast — it closes in ten minutes.",
+        },
+        {
+          bad: "I told you that already, sir.",
+          good: "I did mention it earlier, sir, but let me go through it again.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Sorry, I know I am jumping around. Where were we?",
+          options: [
+            {
+              text: "Not at all, madam. We had done the taxi and the breakfast — the bill was the one left.",
+              correct: true,
+            },
+            { text: "You were asking about several things at the same time.", correct: false },
+            { text: "Perhaps we should start again from the beginning, madam.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_39_3",
+      lessonOrder: 3,
+      titleEn: "Handing Over a Problem You Have Not Solved",
+      titleVi: "Bàn giao một việc chưa xong",
+      vocabulary: [
+        {
+          word: "Unresolved",
+          phonetic: "/ˌʌnrɪˈzɒlvd/",
+          definition: "Chưa giải quyết xong",
+          context: "Two things are still unresolved from my shift.",
+          icon: "🔗",
+        },
+        {
+          word: "Where I left it",
+          phonetic: "/weər aɪ left ɪt/",
+          definition: "Đến đâu thì tôi dừng",
+          context: "This is where I left it with the guest.",
+          icon: "📍",
+        },
+        {
+          word: "Expecting a call",
+          phonetic: "/ɪkˈspektɪŋ ə kɔːl/",
+          definition: "Đang chờ được gọi lại",
+          context: "Room 508 is expecting a call before eight.",
+          icon: "📞",
+        },
+        {
+          word: "Do not start again",
+          phonetic: "/duː nɒt stɑːt əˈɡen/",
+          definition: "Đừng bắt khách kể lại từ đầu",
+          context: "Read the note first — do not start again with the guest.",
+          icon: "🔁",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I did not finish this one. Your problem now.",
+          polite:
+            "Room 508 is unresolved, and this is where I left it: she is expecting a call before eight.",
+          rule: "Bàn giao phải có TRẠNG THÁI và ĐIỂM DỪNG. 'Chưa xong' không phải bàn giao, nó chỉ là một lời than.",
+        },
+        {
+          rude: "Ask the guest what happened.",
+          polite: "The guest has told this story twice already, sir. Please read the note first.",
+          rule: "Hiện tại hoàn thành 'has told' cho thấy việc đã xảy ra và hậu quả còn đó — khách đang mệt vì phải kể lại.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I am taking over from you. Anything I should know?",
+          targetResponse:
+            "Two things, sir. Room 508 is expecting a call before eight, and the minibar dispute in 312 is with the Duty Manager.",
+          helpTip:
+            "Đọc số phòng thành từng chữ số: 'five-oh-eight', không phải 'five hundred and eight'. Đây là chuẩn của quầy lễ tân.",
+        },
+      ],
+      reading: {
+        text: "SHIFT HANDOVER — THE UNFINISHED COLUMN\nA handover is not a list of what happened. It is a list of what is still OPEN, and for each one: the room, the state, and what the guest is expecting next.\n  508 — refund agreed, waiting on Accounting. Guest expects a call before 20:00. Case FO-417.\n  312 — minibar disputed, reversed at the desk, with the Duty Manager for the stock check.\n  1104 — asked twice for a firm pillow. Not yet delivered. She has stopped asking, which is worse.\nThe last line matters most. A guest who has stopped asking has not stopped minding.\nNever hand over a problem by telling the next shift to ask the guest. The guest has already explained it once, sometimes twice, and being asked again is the moment a small problem becomes a review.\nIf you promised something for a time inside the next shift, say so out loud AND write it. A promise that lives only in your memory ends when your shift does.",
+        questions: [
+          {
+            q: "Dòng nào trong bàn giao là quan trọng nhất, theo tài liệu?",
+            options: [
+              "A. Phòng 1104 — khách đã thôi hỏi, và đó mới là dấu hiệu xấu",
+              "B. Phòng 508 — vì có mã hồ sơ",
+              "C. Phòng 312 — vì đang ở chỗ Duty Manager",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không được bảo ca sau đi hỏi lại khách?",
+            options: [
+              "A. Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
+              "B. Vì khách có thể kể sai",
+              "C. Vì mất thời gian của ca sau",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "I did not finish this. You deal with it.",
+          good: "Room 508 is unresolved, sir. This is where I left it: a call before eight.",
+        },
+        {
+          bad: "Just ask the guest what the problem was.",
+          good: "She has explained it twice already, madam. Please read the note first.",
+        },
+      ],
+      game: [
+        {
+          prompt: "There is nothing in the book about 1104. Should I just ask her?",
+          options: [
+            {
+              text: "Please do not, madam. She asked twice for a firm pillow and stopped asking — send one up before she has to raise it again.",
+              correct: true,
+            },
+            { text: "Yes, ask her. She will tell you what she needs.", correct: false },
+            { text: "If it is not in the book, it is probably resolved.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_39_4",
+      lessonOrder: 4,
+      titleEn: "When You Do Not Know the Answer",
+      titleVi: "Khi bạn không biết câu trả lời",
+      vocabulary: [
+        {
+          word: "Find out",
+          phonetic: "/faɪnd aʊt/",
+          definition: "Đi hỏi cho ra",
+          context: "Let me find out and come back to you.",
+          icon: "🔎",
+        },
+        {
+          word: "Rather than guess",
+          phonetic: "/ˈrɑːðə ðən ɡes/",
+          definition: "Thay vì đoán bừa",
+          context: "I would rather check than guess, madam.",
+          icon: "🎯",
+        },
+        {
+          word: "Two minutes",
+          phonetic: "/tuː ˈmɪnɪts/",
+          definition: "Hai phút — mốc thời gian cụ thể",
+          context: "Give me two minutes and I will have the answer.",
+          icon: "⏱️",
+        },
+        {
+          word: "Come back either way",
+          phonetic: "/kʌm bæk ˈaɪðə weɪ/",
+          definition: "Dù có tin hay không cũng quay lại báo",
+          context: "I will come back either way, sir, even if the answer is no.",
+          icon: "🔔",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I think maybe it is possible, I am not sure.",
+          polite: "I would rather check than guess, sir. Give me two minutes.",
+          rule: "'Would rather + nguyên thể + than + nguyên thể' so sánh hai lựa chọn. Nói ra rằng bạn chọn kiểm tra thay vì đoán làm khách tin bạn HƠN, không phải ít hơn.",
+        },
+        {
+          rude: "I will ask someone.",
+          polite: "I am asking the Duty Manager now, and I will come back either way.",
+          rule: "Hiện tại tiếp diễn 'I am asking' nghĩa là đang làm ngay lúc này; 'I will ask' có thể là bất cứ lúc nào. Với khách đang chờ, khác biệt đó là tất cả.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Can I bring my dog into the restaurant? Nobody seems able to tell me.",
+          targetResponse:
+            "I do not want to guess on that one, sir. Give me two minutes with the restaurant manager and I will come back either way.",
+          helpTip:
+            "'Guess' kết thúc bằng /s/, không phải /ʃ/. Đọc thành 'ghét-sờ' làm mất trọng lượng của cả câu.",
+        },
+      ],
+      reading: {
+        text: '"I DO NOT KNOW" — HOW TO SAY IT WELL\nThree parts, always in this order: say you will check, give a time, and promise to return either way.\n  "I would rather check than guess, madam. Two minutes, and I will come back either way."\nWhat NOT to do: guess and hope · say "I think so" · say "probably" · send the guest to another department to ask for you · say "I will find out" with no time attached.\nA guess that turns out wrong costs far more than a two-minute wait. The guest does not remember that you were quick; they remember that you were wrong.\nComing back with "the answer is no" is a completed job. Not coming back at all is the failure, and it is the one guests write about.\nA new receptionist who says "let me check" is trusted more than one who answers everything instantly. Certainty is not the same as competence, and guests can tell the difference.',
+        questions: [
+          {
+            q: "Theo tài liệu, ba phần của câu 'tôi chưa biết' là gì?",
+            options: [
+              "A. Nói sẽ kiểm tra, cho một mốc thời gian, hứa quay lại dù kết quả thế nào",
+              "B. Xin lỗi, giải thích lý do, rồi hỏi đồng nghiệp",
+              "C. Nói 'tôi nghĩ là', rồi kiểm tra sau",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Nhân viên mới nói 'let me check' được khách tin hơn hay kém hơn người trả lời ngay?",
+            options: [
+              "A. Tin hơn — sự chắc chắn không đồng nghĩa với năng lực",
+              "B. Kém hơn — khách muốn câu trả lời ngay",
+              "C. Như nhau, miễn là cuối cùng đúng",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "I think it is allowed, probably.",
+          good: "I would rather check than guess, madam. Two minutes.",
+        },
+        {
+          bad: "Go and ask the restaurant yourself, sir.",
+          good: "Let me ask the restaurant manager for you, sir. I will come back either way.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Just give me a yes or a no. You must know your own hotel.",
+          options: [
+            {
+              text: "I would rather be right than quick, sir. Two minutes, and you will have a proper answer.",
+              correct: true,
+            },
+            { text: "Yes, I am fairly sure it is allowed, sir.", correct: false },
+            { text: "I am new here, sir. Somebody else would know better.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const FO_WEEK_40: WeekContent = {
+  departmentId: "FO",
+  weekNumber: 40,
+  weekTitleEn: "Forty Weeks, and What Comes After",
+  weekTitleVi: "Bốn mươi tuần, và chặng sau đó",
+  reviewWords: [
+    "Find out",
+    "One at a time",
+    "Unresolved",
+    "Escalate",
+    "In writing",
+    "Compact",
+    "On file",
+    "Hold the rate",
+  ],
+  lessons: [
+    {
+      lessonId: "FO_40_1",
+      lessonOrder: 1,
+      titleEn: "What You Could Not Do a Year Ago",
+      titleVi: "Điều một năm trước bạn chưa làm được",
+      vocabulary: [
+        {
+          word: "Used to",
+          phonetic: "/ˈjuːst tuː/",
+          definition: "Trước kia thường (nay không còn)",
+          context: "I used to write the words down before I spoke.",
+          icon: "📜",
+        },
+        {
+          word: "On my own",
+          phonetic: "/ɒn maɪ əʊn/",
+          definition: "Tự làm, không cần ai kèm",
+          context: "I can handle a late check-out on my own now.",
+          icon: "🙋",
+        },
+        {
+          word: "Without thinking",
+          phonetic: "/wɪˈðaʊt ˈθɪŋkɪŋ/",
+          definition: "Bật ra tự nhiên, không phải nghĩ",
+          context: "The greeting comes without thinking now.",
+          icon: "💬",
+        },
+        {
+          word: "Steady",
+          phonetic: "/ˈstedi/",
+          definition: "Vững, không run",
+          context: "My voice is steady on the telephone now.",
+          icon: "🪨",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Before I am very bad English.",
+          polite: "I used to write the words down before I spoke.",
+          rule: "'Used to + nguyên thể' nói về thói quen CŨ đã chấm dứt. Đây là cách kể sự tiến bộ mà không phải khoe.",
+        },
+        {
+          rude: "Now I am good.",
+          polite: "I can take a complaint on my own now, without calling my supervisor.",
+          rule: "Nêu MỘT việc cụ thể làm được thay vì một tính từ chung. 'I am good' không cho ai biết bạn làm được gì.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Your English is very good. How long have you been doing this?",
+          targetResponse:
+            "Thank you, sir. About a year. I used to write everything down first, and now it comes without thinking.",
+          helpTip:
+            "'Used to' đọc là /ˈjuːst tuː/ với âm /s/, không phải /z/. Đây là chỗ khác với động từ 'use' thường.",
+        },
+      ],
+      reading: {
+        text: "WEEK 40 — LOOK BACK BEFORE YOU LOOK FORWARD\nIn week 1 you learned to spell a name and say good morning. That is not a small thing: a guest who is greeted by name at the door has already decided the stay is going well.\nBy week 14 you could take a request and answer the telephone. By week 22 you could run a check-in from start to finish. By week 30 you could handle a complaint using a structure instead of an apology.\nIn the last ten weeks you have learned the language of the difficult shift: a disputed bill, a rate you cannot move, an occasion to arrange, an alarm at two in the morning.\nWhat has changed is not the number of words you know. It is that you now reach for a SHAPE — hear it out, name what you can do, give a time, write it down — instead of reaching for a single sentence and hoping it fits.\nThat shape is what carries you into situations this course never showed you.",
+        questions: [
+          {
+            q: "Theo tài liệu, điều thay đổi lớn nhất sau 40 tuần là gì?",
+            options: [
+              "A. Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
+              "B. Bạn biết nhiều từ vựng hơn",
+              "C. Bạn phát âm chuẩn hơn",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Tuần 30 bạn xử lý phàn nàn bằng cách nào?",
+            options: [
+              "A. Bằng một cấu trúc, thay vì bằng một lời xin lỗi",
+              "B. Bằng cách gọi quản lý",
+              "C. Bằng cách xin lỗi thật nhiều lần",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Before my English very bad.",
+          good: "I used to write the words down before I spoke, sir.",
+        },
+        { bad: "Now I am good at English.", good: "I can take a complaint on my own now, madam." },
+      ],
+      game: [
+        {
+          prompt: "Did you learn all this at school?",
+          options: [
+            {
+              text: "No, madam — here, over the last year. I used to need my supervisor for a complaint, and now I do not.",
+              correct: true,
+            },
+            { text: "Yes, I studied English for many years at school.", correct: false },
+            { text: "My English is still not very good, madam.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_40_2",
+      lessonOrder: 2,
+      titleEn: "Knowing What You Still Cannot Do",
+      titleVi: "Biết rõ điều mình vẫn chưa làm được",
+      vocabulary: [
+        {
+          word: "Out of my depth",
+          phonetic: "/aʊt əv maɪ depθ/",
+          definition: "Vượt quá khả năng của mình",
+          context: "That conversation was out of my depth.",
+          icon: "🌊",
+        },
+        {
+          word: "Know when to ask",
+          phonetic: "/nəʊ wen tu ɑːsk/",
+          definition: "Biết lúc nào phải hỏi người khác",
+          context: "Knowing when to ask is a skill, not a weakness.",
+          icon: "🙋",
+        },
+        {
+          word: "Beyond the desk",
+          phonetic: "/bɪˈjɒnd ðə desk/",
+          definition: "Ngoài thẩm quyền của quầy",
+          context: "Anything legal is beyond the desk.",
+          icon: "🚧",
+        },
+        {
+          word: "Nothing to be ashamed of",
+          phonetic: "/ˈnʌθɪŋ tə biː əˈʃeɪmd ɒv/",
+          definition: "Không có gì phải xấu hổ",
+          context: "Asking for help is nothing to be ashamed of.",
+          icon: "🤝",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I can do everything now.",
+          polite: "I can handle most of the desk on my own, but a legal claim is beyond me.",
+          rule: "Cấu trúc 'most of X, but Y' vừa nêu năng lực vừa nêu giới hạn. Người nói được câu này đáng tin hơn người nói mình làm được tất cả.",
+        },
+        {
+          rude: "Sorry, my English is not good enough for this.",
+          polite: "This one needs my Duty Manager, madam. Let me bring her to you now.",
+          rule: "Đừng đổ cho tiếng Anh của mình. Nêu rằng việc này CẦN cấp cao hơn — đó là sự thật, và nó giữ được uy tín của bạn trước khách.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I want to make a formal complaint and I am considering legal action.",
+          targetResponse:
+            "I understand, sir. That is beyond the desk, and my Duty Manager should hear it from you directly. Let me bring her.",
+          helpTip:
+            "'Depth' và 'beyond' đều có âm khó: /depθ/ kết thúc bằng /θ/ (lưỡi giữa răng), và /bɪˈjɒnd/ giữ /d/ cuối.",
+        },
+      ],
+      reading: {
+        text: 'THE LINE THE DESK DOES NOT CROSS\nAfter forty weeks you can run a shift. You still do not decide these, and you never will from this desk:\n· anything legal, or any mention of a lawyer\n· injury, illness, theft, or a missing valuable\n· anything above your approval limit\n· a complaint about a named colleague\n· anything a journalist or an official asks\nSaying "this needs my Duty Manager" is not a failure of English. It is the correct professional answer, and every experienced receptionist gives it several times a month.\nWhat HAS changed is that you can now hand it over in English: what happened, what the guest wants, what you already offered, and what you promised. A handover in three clear sentences is worth more than an hour of your manager\'s time.\nThe receptionist who never escalates is not the strongest one on the team. They are the one whose mistakes arrive later, and bigger.',
+        questions: [
+          {
+            q: "Theo tài liệu, nhân viên không bao giờ escalate là người thế nào?",
+            options: [
+              "A. Là người mà sai sót sẽ đến muộn hơn và lớn hơn",
+              "B. Là người giỏi nhất trong nhóm",
+              "C. Là người tiếng Anh tốt nhất",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Sau 40 tuần, cái ĐÃ thay đổi khi phải chuyển việc lên cấp trên là gì?",
+            options: [
+              "A. Bạn bàn giao được bằng tiếng Anh trong ba câu rõ ràng",
+              "B. Bạn không còn phải chuyển lên nữa",
+              "C. Bạn được tự quyết những việc đó",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Sorry, my English is not good enough for this.",
+          good: "This one needs my Duty Manager, sir. Let me bring her to you now.",
+        },
+        {
+          bad: "I can handle anything at this desk now.",
+          good: "I can handle most of it on my own, madam, but a legal claim is beyond the desk.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Surely after a year here you can make this decision yourself?",
+          options: [
+            {
+              text: "Not this one, madam. Anything legal goes to my Duty Manager — that is the rule, not my English.",
+              correct: true,
+            },
+            { text: "You are right, sir. Let me see what I can do for you.", correct: false },
+            { text: "I am sorry, my English is not good enough for this.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_40_3",
+      lessonOrder: 3,
+      titleEn: "Teaching the Person Who Comes After You",
+      titleVi: "Chỉ lại cho người đến sau",
+      vocabulary: [
+        {
+          word: "Show someone",
+          phonetic: "/ʃəʊ ˈsʌmwʌn/",
+          definition: "Chỉ tận tay cho ai đó",
+          context: "Show her the phrase, then let her say it.",
+          icon: "👐",
+        },
+        {
+          word: "Let them try",
+          phonetic: "/let ðəm traɪ/",
+          definition: "Để họ tự làm thử",
+          context: "Let them try before you correct anything.",
+          icon: "🎤",
+        },
+        {
+          word: "One correction",
+          phonetic: "/wʌn kəˈrekʃən/",
+          definition: "Chỉ sửa một lỗi mỗi lần",
+          context: "One correction at a time, or they stop speaking.",
+          icon: "☝️",
+        },
+        {
+          word: "In front of a guest",
+          phonetic: "/ɪn frʌnt əv ə ɡest/",
+          definition: "Trước mặt khách",
+          context: "Never correct a colleague in front of a guest.",
+          icon: "🙊",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You said it wrong. Say it again.",
+          polite: "That worked well. Next time, try 'may I' instead of 'can I'.",
+          rule: "Khen trước, rồi MỘT gợi ý. Người mới bị sửa ba lỗi một lúc sẽ ngừng nói tiếng Anh hoàn toàn.",
+        },
+        {
+          rude: "No, no, listen to me say it.",
+          polite: "Let her try it with the next guest, and we can look at it afterwards.",
+          rule: "'Let + tân ngữ + nguyên thể' là cấu trúc trao quyền. Người học chỉ tiến bộ khi được nói với khách thật, không phải khi nghe bạn nói giỏi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Your new colleague seems nervous. Is she all right?",
+          targetResponse:
+            "She is on her second week, madam. She is doing well, and she will take your booking herself.",
+          helpTip:
+            "Nói câu này với giọng ấm và rõ — khách nghe được, và người mới cũng nghe được. Đây là câu xây dựng sự tự tin cho cả hai phía.",
+        },
+      ],
+      reading: {
+        text: 'HELPING THE NEXT RECEPTIONIST — WHAT ACTUALLY WORKS\nNever correct a colleague in front of a guest. The guest loses confidence in both of you, and the new person will avoid speaking English for a week afterwards.\nStand beside them for the first difficult call, not in front of them. Take over only if the guest is becoming unhappy.\nAfterwards, give ONE correction and one thing they did well. Three corrections at once teaches nothing except that speaking is dangerous.\nGive them your phrases, not your rules. "Bear with me for thirty seconds" is easier to use than "be polite when you are busy".\nAnd tell them what you got wrong in your first month. A new receptionist who hears that you also froze on the telephone will pick the phone up sooner.',
+        questions: [
+          {
+            q: "Sau khi đồng nghiệp mới xử lý xong, nên góp ý thế nào?",
+            options: [
+              "A. Một lỗi cần sửa và một điều họ làm tốt",
+              "B. Liệt kê đủ mọi lỗi để họ nhớ hết",
+              "C. Chỉ khen, không sửa gì",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao nên kể cho người mới nghe lỗi của chính mình hồi mới vào?",
+            options: [
+              "A. Vì họ sẽ dám cầm điện thoại sớm hơn",
+              "B. Vì như vậy lịch sự hơn",
+              "C. Vì quản lý yêu cầu chia sẻ kinh nghiệm",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "You said that wrong. Listen to me.",
+          good: "That worked well. Next time try 'may I' instead of 'can I'.",
+        },
+        {
+          bad: "Let me take the phone, you are too slow.",
+          good: "Let her finish, sir. She has it — I am right here if she needs me.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Could I speak to someone more experienced, please?",
+          options: [
+            {
+              text: "Of course, madam. My colleague is with you now, and I will stay beside her while she takes it.",
+              correct: true,
+            },
+            { text: "She is new, madam, so let me handle it for you instead.", correct: false },
+            { text: "There is nobody more experienced on this shift, madam.", correct: false },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FO_40_4",
+      lessonOrder: 4,
+      titleEn: "What This Course Did Not Teach You",
+      titleVi: "Điều khoá học này chưa dạy bạn",
+      vocabulary: [
+        {
+          word: "Never came up",
+          phonetic: "/ˈnevə keɪm ʌp/",
+          definition: "Chưa từng gặp trong bài học",
+          context: "That situation never came up in any lesson.",
+          icon: "❓",
+        },
+        {
+          word: "Work it out",
+          phonetic: "/wɜːk ɪt aʊt/",
+          definition: "Tự xoay xở tìm cách",
+          context: "You will work it out with the shape you know.",
+          icon: "🧩",
+        },
+        {
+          word: "Keep listening",
+          phonetic: "/kiːp ˈlɪsnɪŋ/",
+          definition: "Tiếp tục lắng nghe để học",
+          context: "Keep listening to how the guests say it.",
+          icon: "👂",
+        },
+        {
+          word: "Write it down",
+          phonetic: "/raɪt ɪt daʊn/",
+          definition: "Ghi lại để dùng lần sau",
+          context: "Write down any phrase a guest uses twice.",
+          icon: "✍️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The course finished so I stop now.",
+          polite: "The course has finished, but I am still writing down new phrases.",
+          rule: "Hiện tại hoàn thành 'has finished' cho việc vừa kết thúc, hiện tại tiếp diễn 'am writing' cho việc đang tiếp tục. Hai thì trong một câu, đúng nghĩa của tuần cuối.",
+        },
+        {
+          rude: "I never saw this in the lessons, so I cannot do it.",
+          polite: "This never came up in any lesson, but I can work it out from what I know.",
+          rule: "Mệnh đề nhượng bộ với 'but' nối một hạn chế với một khả năng. Đây là câu quan trọng nhất của cả bốn mươi tuần.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "This is an unusual request. I doubt anyone has asked you this before.",
+          targetResponse:
+            "Probably not, madam, but let me find out for you. Give me two minutes and I will come back either way.",
+          helpTip:
+            "'Probably' ba âm tiết: /ˈprɒbəbli/. Người Việt hay rút thành hai — giữ đủ, vì đây là từ làm câu nghe khiêm tốn mà tự tin.",
+        },
+      ],
+      reading: {
+        text: "WHAT THIS COURSE DID NOT TEACH YOU\nThis course showed you perhaps two hundred situations. Your career will bring you thousands, and most of them will not match any lesson exactly.\nThat is not a gap in the course. It is the point of it.\nWhat you carry out of here is a shape, not a script: hear the whole thing before you answer · say what you CAN do before what you cannot · give a time · write it down · come back either way, even when the answer is no.\nThat shape fits a lost passport, a wedding party, a power cut, and a guest complaining about something you have never heard of.\nThree habits keep the English growing after the last lesson: write down any phrase a guest uses twice; ask a colleague what they would have said, after the shift and never during; and keep listening to how guests phrase things, because they are teaching you every day for free.\nWeek 41 has no lesson. It has a shift, and that shift is where the rest of it is learned.",
+        questions: [
+          {
+            q: "Theo tài liệu, việc phần lớn tình huống nghề nghiệp không khớp bài học nào là gì?",
+            options: [
+              "A. Đó chính là mục đích của khoá học, không phải thiếu sót",
+              "B. Đó là một lỗ hổng cần bổ sung thêm bài",
+              "C. Đó là lý do phải học lại từ đầu",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Nên hỏi đồng nghiệp 'anh sẽ nói thế nào' vào lúc nào?",
+            options: [
+              "A. Sau ca, không bao giờ trong ca",
+              "B. Ngay lúc đang xử lý khách",
+              "C. Trước khi vào ca",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "I never learned this, so I cannot help.",
+          good: "This never came up in a lesson, sir, but let me work it out for you.",
+        },
+        {
+          bad: "The course is finished, so I stop studying.",
+          good: "The course has finished, but I am still writing down new phrases.",
+        },
+      ],
+      game: [
+        {
+          prompt: "So what happens now that you have finished the training?",
+          options: [
+            {
+              text: "Now the real learning starts, madam. I still write down any phrase a guest uses twice.",
+              correct: true,
+            },
+            { text: "Now I have finished, so my English is complete.", correct: false },
+            { text: "Now I will start another course to learn more.", correct: false },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -10853,6 +11707,8 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "FO-34": FO_WEEK_34,
   "FO-35": FO_WEEK_35,
   "FO-36": FO_WEEK_36,
+  "FO-39": FO_WEEK_39,
+  "FO-40": FO_WEEK_40,
   "GR-37": GR_WEEK_37,
   "GR-38": GR_WEEK_38,
   "FB-37": FB_WEEK_37,
