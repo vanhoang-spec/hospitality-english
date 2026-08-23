@@ -22,6 +22,9 @@ nhánh → PR → CI (code · content · build) → merge main → Netlify (ci &
 
 - **CI** chạy ba job song song trên mọi push và PR. Tên job nói thẳng lỗi ở đâu.
 - **Netlify** chạy lại đúng bộ gate trước khi build. Gate đỏ = không deploy, bản cũ vẫn sống.
+- **`main` không nhận push thẳng** từ máy có hook (`.githooks/pre-push`, tự bật khi `bun install`).
+  Repo private trên GitHub Free không bật được branch protection phía server, nên chặn ở phía
+  push. Bypass có chủ đích: `ALLOW_MAIN_PUSH=1 git push origin main`.
 - **Batch nội dung** còn thêm một tầng con người: kiểm định mù kép (Academic Director ·
   Hotel Manager) trong hai context cách ly, rồi kiểm đường nối với phần sinh tự động.
   Checklist nằm trong PR template — gate xanh là sàn, không phải trần.

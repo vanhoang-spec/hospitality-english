@@ -15,7 +15,8 @@
     "verify:content": "bun scripts/verify-content.ts && bun scripts/lint-content.ts",
     "lint:content": "bun scripts/lint-content.ts",
     "qa:full": "bun scripts/qa-full.ts",
-    "ci": "bun run typecheck && bun run verify:content && bun run qa:full && bun run format:check && bun run lint"
+    "ci": "bun run typecheck && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
