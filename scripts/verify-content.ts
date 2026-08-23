@@ -252,6 +252,20 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
             `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
           );
       }
+      // The cap covered only grammar.polite and speaking.targetResponse. A
+      // game's correct option is just as much a sentence the learner is
+      // rewarded for producing, and a 24-word answer sat in FO-35 for a week
+      // because nothing looked at it. `arcade` is deliberately NOT checked: no
+      // suite reads that field, so capping it would gate text no learner sees.
+      for (const g of lesson.game) {
+        const right = g.options.find((o) => o.correct);
+        if (!right) continue;
+        const n = maxSentenceLen(right.text);
+        if (n > phase.wordCap + 1)
+          errors.push(
+            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+          );
+      }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.
       const lw = longWords(s.targetResponse);
       if (lw.length < 2)

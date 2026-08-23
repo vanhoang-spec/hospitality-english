@@ -302,7 +302,7 @@ export const FO_WEEK_17: WeekContent = {
       titleVi: "Quy trình quẹt thẻ đặt cọc",
       vocabulary: [
         {
-          word: "Pre-authorization",
+          word: "Pre-authorisation",
           phonetic: "/ˌpriːˌɔːθəraɪˈzeɪʃən/",
           definition: "Khoảng tạm giữ/Đặt cọc thẻ",
           context: "We require a credit card pre-authorization.",
@@ -1206,7 +1206,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "My nephew arrives tonight. Can we add another bed?",
           options: [
             {
-              text: "Certainly, sir. We can set up a rollaway bed in your room, with a small extra charge per night.",
+              text: "Certainly, sir. We can set up a rollaway bed in your room. There is a small charge per night.",
               correct: true,
             },
             { text: "You want a bed or not?", correct: false },
@@ -4942,7 +4942,7 @@ export const BO_WEEK_38: WeekContent = {
             "We won't need a live band, but we'd like extra wireless microphones for speeches. Is that possible?",
           options: [
             {
-              text: "Of course. We can add extra wireless microphones to your package, and I can also recommend our in-house sound team to manage them on the day.",
+              text: "Of course. We can add extra wireless microphones to your package. I can also recommend our in-house sound team for the day.",
               correct: true,
             },
             { text: "We only have one microphone available.", correct: false },
@@ -8559,7 +8559,7 @@ export const FO_WEEK_31: WeekContent = {
           rude: "You should have booked the new wing.",
           polite:
             "In all honesty, sir, the new wing suits a family better. May I move you if a room is free?",
-          rule: "Không trách lựa chọn của khách. 'Frankly' cộng một đề nghị hành động biến lời khuyên thành sự giúp đỡ.",
+          rule: "Không trách lựa chọn của khách. 'In all honesty' cộng một đề nghị hành động biến lời khuyên thành sự giúp đỡ.",
         },
       ],
       speaking: [
@@ -8597,7 +8597,7 @@ export const FO_WEEK_31: WeekContent = {
         },
         {
           bad: "There is building work, but it is not very loud.",
-          good: "There is work on the fourth floor until four each weekday, sir. Shall I move you higher?",
+          good: "There is work on the fourth floor until four each weekday, sir. Shall I move you away from it?",
         },
       ],
       game: [
@@ -8939,7 +8939,7 @@ export const FO_WEEK_32: WeekContent = {
             "I book here because of that one quiet room. Now you are telling me I cannot have it?",
           options: [
             {
-              text: "Not for tonight, madam, and I am sorry. I have blocked it for tomorrow, and tonight I can offer the quietest room we have.",
+              text: "Not for tonight, madam, and I am sorry. I have held it for tomorrow, and tonight I can offer the quietest room we have.",
               correct: true,
             },
             { text: "We are fully booked tonight. There is nothing I can do.", correct: false },
@@ -9081,7 +9081,7 @@ export const FO_WEEK_33: WeekContent = {
           word: "Claim",
           phonetic: "/kleɪm/",
           definition: "Khiếu nại đòi bồi hoàn",
-          context: "Let me write down exactly what happened, in your words.",
+          context: "Let me write your claim down exactly as it happened, in your words.",
           icon: "📢",
         },
         {
@@ -9195,14 +9195,14 @@ export const FO_WEEK_33: WeekContent = {
           word: "Escalate",
           phonetic: "/ˈeskəleɪt/",
           definition: "Chuyển lên cấp trên",
-          context: "Anything above two million dong I escalate.",
+          context: "I escalate anything above my own limit to the Duty Manager.",
           icon: "⬆️",
         },
         {
-          word: "Within ten minutes",
-          phonetic: "/wɪˈðɪn ten ˈmɪnɪts/",
+          word: "Within fifteen minutes",
+          phonetic: "/wɪˈðɪn ˌfɪfˈtiːn ˈmɪnɪts/",
           definition: "Trong vòng mười phút",
-          context: "He will call you within ten minutes, sir.",
+          context: "I will come back to you within fifteen minutes, sir.",
           icon: "⏱️",
         },
       ],
@@ -9403,7 +9403,7 @@ export const FO_WEEK_33: WeekContent = {
           word: "Working days",
           phonetic: "/ˈwɜːkɪŋ deɪz/",
           definition: "Ngày làm việc, không tính cuối tuần",
-          context: "A card refund takes five to seven working days.",
+          context: "A card refund can take up to thirty working days.",
           icon: "📅",
         },
         {
@@ -9418,8 +9418,8 @@ export const FO_WEEK_33: WeekContent = {
         {
           rude: "The money will come back sometime.",
           polite:
-            "A card refund takes five to seven working days, madam, and I will follow up on Friday either way.",
-          rule: "Đưa một khoảng thời gian thật cộng một lời hứa liên hệ lại. 'Sometime' làm khách phải tự đi đòi.",
+            "A card refund takes seven to fifteen working days, madam, and I will follow up on Friday either way.",
+          rule: "Nêu khoảng thời gian CHẬM NHẤT, không phải nhanh nhất — hứa bảy ngày rồi trả về sau mười lăm ngày là tạo ra khiếu nại thứ hai. Rồi cộng một lời hứa liên hệ lại.",
         },
         {
           rude: "You can trust me, I will remember.",
@@ -9449,8 +9449,12 @@ export const FO_WEEK_33: WeekContent = {
             correct: 0,
           },
           {
-            q: "Hoàn tiền vào thẻ mất bao lâu?",
-            options: ["A. Immediately", "B. 5-7 working days", "C. Up to 30 days"],
+            q: "Theo tài liệu, hoàn tiền vào thẻ mất bao lâu?",
+            options: [
+              "A. Immediately",
+              "B. 7-15 working days, and up to 30 for a card issued abroad",
+              "C. Always exactly 5 working days",
+            ],
             correct: 1,
           },
         ],
@@ -9458,7 +9462,7 @@ export const FO_WEEK_33: WeekContent = {
       arcade: [
         {
           bad: "It will come back to your card eventually.",
-          good: "Five to seven working days, madam, and I will follow up on Friday either way.",
+          good: "Seven to fifteen working days, madam, and up to thirty for a card issued abroad.",
         },
         {
           bad: "Do not worry, I will remember your case.",
@@ -9522,14 +9526,14 @@ export const FO_WEEK_34: WeekContent = {
           word: "Keep it quiet",
           phonetic: "/kiːp ɪt ˈkwaɪət/",
           definition: "Giữ kín, không để lộ",
-          context: "May I ask, sir — is this a surprise for her?",
+          context: "We keep it quiet until the moment, sir — is this a surprise for her?",
           icon: "🤫",
         },
         {
           word: "In on it",
           phonetic: "/ɪn ɒn ɪt/",
           definition: "Có biết về bất ngờ đó",
-          context: "Is your wife in on it, or is it a surprise?",
+          context: "Is she in on it, or is it a surprise?",
           icon: "🎭",
         },
       ],
@@ -9541,7 +9545,7 @@ export const FO_WEEK_34: WeekContent = {
         },
         {
           rude: "Does she know about the cake?",
-          polite: "May I ask, sir — does your wife know, or is it a surprise?",
+          polite: "May I ask, sir — does she know, or is it a surprise?",
           rule: "Hỏi ai đã biết TRƯỚC khi sắp xếp. Một câu chúc mừng sai chỗ có thể phá hỏng cả điều bất ngờ.",
         },
       ],
@@ -9930,7 +9934,7 @@ export const FO_WEEK_35: WeekContent = {
   weekTitleEn: "Negotiating Without Dropping the Rate",
   weekTitleVi: "Đàm phán mà không phải hạ giá",
   reviewWords: [
-    "Pre-authorization",
+    "Pre-authorisation",
     "Deposit",
     "Cancellation fee",
     "Waive the late fee",
@@ -9950,7 +9954,7 @@ export const FO_WEEK_35: WeekContent = {
           word: "Third party",
           phonetic: "/θɜːd ˈpɑːti/",
           definition: "Bên thứ ba (Agoda, Booking.com…)",
-          context: "That price is on a third party site, sir.",
+          context: "That price is on a third-party site, sir.",
           icon: "🌐",
         },
         {
@@ -10000,7 +10004,7 @@ export const FO_WEEK_35: WeekContent = {
         },
       ],
       reading: {
-        text: "RATE OBJECTIONS AT THE DESK — WHAT THE THIRD-PARTY PRICE USUALLY HIDES\nPrepaid and non-refundable: the guest pays now and loses everything on a change. Our direct rate cancels free until 18:00 on arrival day.\nRoom only: breakfast for two is 380,000 VND per person if bought separately.\nRun-of-house: the site sells a category, we assign the room. A direct booking can request a floor and a side.\nNo loyalty points, and no upgrade at check-in.\nNEVER say the site is wrong or that the guest misread it. The price is usually real; it is the product that is different.\nIf the guest still prefers the site price, take it graciously and note in the profile that they are rate-sensitive. That note earns more at the next booking than winning the argument tonight.",
+        text: "RATE OBJECTIONS AT THE DESK — WHAT THE THIRD-PARTY PRICE USUALLY HIDES\nPrepaid and non-refundable: the guest pays now and loses everything on a change. Our direct rate cancels free until 18:00 on arrival day.\nRoom only: breakfast is 380,000 VND per person if bought separately.\nRun-of-house: the site sells a category, we assign the room. A direct booking can request a floor and a side.\nNo loyalty points, and no upgrade at check-in.\nNEVER say the site is wrong or that the guest misread it. The price is usually real; it is the product that is different.\nIf the guest still prefers the site price, take it graciously and record the EVENT, never a label: 'Quoted direct rate 12/08; guest booked the prepaid third-party rate.' That note earns more at the next booking than winning the argument tonight, and it does not put an opinion about a guest into a file the guest may ask to see.",
         questions: [
           {
             q: "Theo tài liệu, giá trên trang bên thứ ba thường là gì?",
@@ -10037,7 +10041,7 @@ export const FO_WEEK_35: WeekContent = {
           prompt: "Your own website is cheaper than the price you just gave me at this desk.",
           options: [
             {
-              text: "Then you should have our website price, madam. Let me apply it now, and I am sorry you had to point it out.",
+              text: "Our own site should never undercut this desk, madam. Let me match it on the same conditions, and my Shift Leader will confirm it on your folio.",
               correct: true,
             },
             {
@@ -10094,7 +10098,7 @@ export const FO_WEEK_35: WeekContent = {
         {
           rude: "If you pay more I give you late check-out.",
           polite:
-            "If you can stay the Sunday night, sir, I will hold the same rate and add a late check-out.",
+            "If you stay the Sunday night, sir, I will hold the same rate and add a late check-out.",
           rule: "Câu điều kiện loại 1: 'If + hiện tại đơn, will + động từ nguyên thể'. KHÔNG dùng 'will' ở vế 'if' — đây là lỗi người Việt hay mắc nhất khi mặc cả.",
         },
       ],
@@ -10102,13 +10106,13 @@ export const FO_WEEK_35: WeekContent = {
         {
           guestPrompt: "Come on, give me ten percent. I stay here four times a year.",
           targetResponse:
-            "I cannot move the rate, sir, but I can add breakfast and a two o'clock check-out for the whole stay.",
+            "I cannot move the rate, sir, but I can add breakfast, and a two o'clock check-out on your departure day.",
           helpTip:
-            "Nhấn mạnh vào 'cannot' rồi hạ giọng ở 'but I can' — ngữ điệu xuống ở vế sau làm lời từ chối nghe như một lời mời.",
+            "Nhấn vào CAN ở vế sau, không nhấn 'cannot'. Tiếng Anh đặt trọng âm tương phản lên thông tin MỚI — ở đây là thứ bạn cho được.",
         },
       ],
       reading: {
-        text: "WHAT THE DESK CAN GIVE INSTEAD OF A DISCOUNT\nCosts the hotel little, and guests value highly: late check-out to 14:00 (on a low-occupancy day) · breakfast added for one or two · welcome drink · a room on a higher floor within the same category · early check-in when the room is ready · one pressed garment.\nCosts the hotel real money, so it needs approval: a category upgrade at weekends, airport transfer, spa credit, waiving a cancellation fee.\nThe order matters. Offer the free item FIRST. A guest who accepts breakfast stops asking about the rate; a guest who is refused a discount and then offered breakfast hears a consolation prize.\nAsk for something back whenever you can — a Sunday night, a direct booking next time, a review. A negotiation where only one side gives teaches the guest to push harder next stay.",
+        text: "WHAT THE DESK CAN GIVE INSTEAD OF A DISCOUNT\\nCosts the hotel little, valued highly by guests: late check-out to 14:00 (on a low-occupancy day) · breakfast added for one or two · welcome drink · a room on a higher floor within the same category · early check-in when the room is ready · one pressed garment.\\nCosts the hotel real money, so it needs approval: a category upgrade at weekends, airport transfer, spa credit, waiving a cancellation fee.\\nThe order matters. Offer the free item FIRST. A guest who accepts breakfast stops asking about the rate; a guest who is refused a discount and then offered breakfast hears a consolation prize.\\nAsk for something back whenever you can — a Sunday night, a direct booking next time, a review. A negotiation where only one side gives teaches the guest to push harder next stay.\nWatch the total, not the item. Breakfast for two over four nights is more than 3,000,000 VND, which crosses the Duty Manager line from week 33. Offer it, then get the approving name on the folio BEFORE you confirm it to the guest.",
         questions: [
           {
             q: "Vì sao phải đưa món tặng TRƯỚC khi từ chối giảm giá?",
@@ -10208,7 +10212,7 @@ export const FO_WEEK_35: WeekContent = {
           targetResponse:
             "Not this weekend, madam. We are usually sold out by Thursday. But if you come midweek, I can hold a better rate for you.",
           helpTip:
-            "'Sold out' có cụm phụ âm /ldaʊt/ — đừng thêm nguyên âm thành 'sol-đờ-out'. Nối /d/ sang /aʊ/ trong một hơi.",
+            "Nối /d/ cuối 'sold' thẳng sang /aʊ/ của 'out' — đừng chèn nguyên âm thành 'sol-đờ-out'. Đây là tật epenthesis điển hình của người Việt.",
         },
       ],
       reading: {
@@ -10249,7 +10253,7 @@ export const FO_WEEK_35: WeekContent = {
           prompt: "I will just book somewhere else then.",
           options: [
             {
-              text: "I understand, madam. If you change your mind, I can hold this room until six, and I would be glad to quote you for a midweek stay.",
+              text: "I understand, madam. If you change your mind, I can hold this room until six. I would be glad to quote you for a midweek stay.",
               correct: true,
             },
             { text: "That is your choice, madam. Have a good evening.", correct: false },
@@ -10313,7 +10317,7 @@ export const FO_WEEK_35: WeekContent = {
           targetResponse:
             "It has been noted on the booking, sir. I will email you the confirmation tonight so you have it in writing.",
           helpTip:
-            "'Noted' và 'honoured' đều có đuôi /d/. Giữ cả hai — nuốt đuôi làm câu mất thì hoàn thành và nghe như chuyện chưa xảy ra.",
+            "'Noted' đọc là /ˈnəʊtɪd/ — đuôi -ed thành /ɪd/ vì thân từ tận cùng /t/. Đừng nuốt cả âm tiết đó, nó là thứ mang thì hoàn thành.",
         },
       ],
       reading: {
@@ -10346,7 +10350,7 @@ export const FO_WEEK_35: WeekContent = {
         },
         {
           bad: "Late check-out is included, that is all noted.",
-          good: "Check-out at fourteen hundred, all four nights — it has been noted on your booking, sir.",
+          good: "Check-out at fourteen hundred on your departure day — it has been noted on your booking, sir.",
         },
       ],
       game: [
@@ -10440,7 +10444,7 @@ export const FO_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "FIRE ALARM — FRONT DESK, FIRST FIFTEEN MINUTES\n0-2 min: do NOT leave the desk. Acknowledge the panel, note the zone, call Security on 7777. The desk is where every guest will come.\n2-5 min: print the in-house list and the room-status report. These two pages are the only record of who is in the building tonight.\nAll fifteen: the lifts are out of use, and you say so before a guest asks. Direct everyone to the nearest stairwell and to the CAR PARK. Never the lobby - the lobby is under the building.\nSay what is known and what is being done. Never guess the cause, never say 'it is probably a false alarm', and never name a floor or a room to a guest.\nIf it IS a drill, you still say all of the above. A guest cannot tell the difference, and the first shift that treats a drill casually is the shift that treats a fire casually.",
+        text: "FIRE ALARM — FRONT DESK, FIRST FIFTEEN MINUTES\nFOUR THINGS ONLY YOUR OWN HOTEL CAN TELL YOU. Ask your Security Manager in your first week and write the answers on this page: (1) where is our assembly point? (2) who calls 114, and from which phone? (3) do we have a refuge area, and on which floor? (4) who reads the PA announcement?\n0-2 min: do NOT leave the desk. Read the zone from the repeater panel and report it. NEVER silence and never reset — that is Security's panel, not yours. The desk is where every guest will come.\n2-5 min: confirm 114 has been called. Print the in-house list and the room-status report; those two pages are the only record of who is in the building tonight.\nAll fifteen: the lifts are out of use, and you say so before a guest asks. Direct everyone to the nearest staircase and OUT to the assembly point — never to a basement car park, and never onto the road the fire engines need.\nSay what is known and what is being done. Never guess the cause, never say 'it is probably a false alarm', and never name a floor or a room where other guests can hear.\nIf it IS a drill, you still say all of the above. A guest cannot tell the difference, and the first shift that treats a drill casually is the shift that treats a fire casually.",
         questions: [
           {
             q: "Trong hai phút đầu, lễ tân phải làm gì?",
@@ -10452,11 +10456,11 @@ export const FO_WEEK_36: WeekContent = {
             correct: 1,
           },
           {
-            q: "Vì sao điểm tập trung KHÔNG phải là sảnh?",
+            q: "Tài liệu nói tuyệt đối không dẫn khách tới đâu?",
             options: [
-              "A. Vì sảnh nằm dưới toà nhà",
-              "B. Vì sảnh quá nhỏ cho tất cả khách",
-              "C. Vì sảnh cần trống để đón xe cứu hoả",
+              "A. Tầng hầm, và đường cho xe chữa cháy tiếp cận",
+              "B. Khu vườn phía sau khách sạn",
+              "C. Bãi cỏ đối diện cổng chính",
             ],
             correct: 0,
           },
@@ -10500,10 +10504,11 @@ export const FO_WEEK_36: WeekContent = {
           icon: "♿",
         },
         {
-          word: "Refuge point",
-          phonetic: "/ˈrefjuːdʒ pɔɪnt/",
-          definition: "Điểm chờ cứu hộ trong lồng cầu thang",
-          context: "The refuge point is inside the stairwell on each floor.",
+          word: "Refuge area",
+          phonetic: "/ˈrefjuːdʒ ˈeəriə/",
+          definition:
+            "Gian lánh nạn — khu vực được thiết kế riêng để chờ cứu hộ (không phải khách sạn nào cũng có)",
+          context: "Ask Security whether our building has a refuge area, and on which floor.",
           icon: "🛡️",
         },
         {
@@ -10514,8 +10519,8 @@ export const FO_WEEK_36: WeekContent = {
           icon: "📋",
         },
         {
-          word: "Stay with them",
-          phonetic: "/steɪ wɪð ðəm/",
+          word: "Stay with",
+          phonetic: "/steɪ wɪð/",
           definition: "Ở lại cùng khách, không bỏ đi",
           context: "Someone stays with them until the fire team arrives.",
           icon: "🤝",
@@ -10525,7 +10530,7 @@ export const FO_WEEK_36: WeekContent = {
         {
           rude: "You have to go down the stairs like everybody.",
           polite:
-            "The refuge point is inside the stairwell, madam, and I will stay with you until the fire team reaches us.",
+            "Please stay in your room and close the door, madam. I am telling the fire team your room number now, and someone is coming to you.",
           rule: "Không bao giờ ra lệnh cho khách làm điều họ không làm được. Nêu nơi an toàn cụ thể rồi cam kết ở lại — 'I will stay' là lời hứa mạnh nhất trong khủng hoảng.",
         },
         {
@@ -10538,22 +10543,22 @@ export const FO_WEEK_36: WeekContent = {
         {
           guestPrompt: "My mother uses a wheelchair. We cannot get her down four floors.",
           targetResponse:
-            "You do not have to, madam. Take her into the stairwell — that is the refuge point — and I am sending someone up to stay with you.",
+            "You do not have to, madam. Stay in the room with the door closed, and I am telling the fire team your room number right now.",
           helpTip:
-            "'Wheelchair' và 'stairwell' đều có /w/ và /r/ liền nhau. Đọc chậm hai từ này; nói sai một từ trong sự cố là khách hiểu sai chỗ phải đến.",
+            "'Stairwell' đọc /ˈsteəwel/ — không có âm /r/ nào (tiếng Anh-Anh không đọc r cuối). Nhấn vào /ˈsteə/ rồi mới tới /wel/.",
         },
       ],
       reading: {
-        text: "GUESTS WHO CANNOT USE THE STAIRS — FRONT DESK\nAt check-in, every guest with a mobility need is recorded on the in-house list with their FLOOR. This is the only reason the list exists.\nDuring an alarm: they do NOT go down. They go into the stairwell, which is fire-rated and is the refuge point on every floor. A member of staff stays with them.\nThe desk tells Security the floor and the number of people, never the room number over an open radio.\nAt the assembly point, account for every name on the in-house list. Report the ones you cannot find to the fire team by NAME AND FLOOR before they enter the building.\nGuests who refuse to leave are counted as still inside. Their room stays on the not-accounted list until someone has seen them outside.",
+        text: 'GUESTS WHO CANNOT USE THE STAIRS — FRONT DESK\nAsk at check-in, and ask permission first: "May I note that you would need help in an emergency, madam? It stays with the duty team only." Record the FLOOR on the in-house list. That list is the only reason anyone knows to look for them.\nWhat happens during an alarm depends on YOUR building, and there are only two answers. If your hotel has a designated refuge area — a protected room with two-way communication — that is where they wait. Most hotels do not have one, and then the guest stays in the room, closes the door, blocks the gap with a wet towel, and the desk reports the ROOM NUMBER. Ask your Security Manager which one your hotel is. Never park a guest on a staircase landing: that is the escape route for every floor above.\nTwo channels, two rules. On an open radio, or anywhere a guest can hear: floor and number of people only. Face to face with the fire commander or the Security Manager: room number, name, how many, and whether they can walk. Making the fire team open twenty doors instead of one costs minutes they do not have.\nGuests who refuse to leave are counted as still inside. Their room stays on the not-accounted list until somebody has seen them outside.\nGuests who went out to dinner will also show as not accounted for. Say so when you hand the list over, or you send a search team into an empty room.',
         questions: [
           {
-            q: "Khách không đi cầu thang được thì đi đâu khi có báo động?",
+            q: "Khách sạn KHÔNG có gian lánh nạn thì khách không đi cầu thang được phải làm gì?",
             options: [
-              "A. Xuống bằng thang máy có nhân viên đi kèm",
-              "B. Vào trong lồng cầu thang, là điểm chờ cứu hộ",
-              "C. Ở lại trong phòng và đóng cửa",
+              "A. Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
+              "B. Chờ ở chiếu nghỉ trong lồng cầu thang",
+              "C. Xuống bằng thang máy có nhân viên đi kèm",
             ],
-            correct: 1,
+            correct: 0,
           },
           {
             q: "Khách từ chối rời phòng được tính là gì?",
@@ -10569,7 +10574,7 @@ export const FO_WEEK_36: WeekContent = {
       arcade: [
         {
           bad: "Everybody has to use the stairs, madam.",
-          good: "The refuge point is inside the stairwell, madam. I am sending someone to stay with you.",
+          good: "Please stay in the room with the door shut, madam. The fire team has your room number.",
         },
         {
           bad: "We have a disabled guest in 402.",
@@ -10581,14 +10586,17 @@ export const FO_WEEK_36: WeekContent = {
           prompt: "I have a broken leg. Am I supposed to hop down six floors?",
           options: [
             {
-              text: "No, sir. Go into the stairwell and wait just inside — that is the refuge point, and someone is coming to stay with you.",
+              text: "No, sir. Please stay in your room with the door closed — I am giving the fire team your room number now.",
               correct: true,
             },
             {
               text: "Please try the stairs slowly, sir. We will help you at the bottom.",
               correct: false,
             },
-            { text: "Stay in your room, sir, and we will come and find you.", correct: false },
+            {
+              text: "Wait on the staircase landing, sir, and somebody will find you there.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -10614,8 +10622,8 @@ export const FO_WEEK_36: WeekContent = {
           icon: "❓",
         },
         {
-          word: "Argue with them",
-          phonetic: "/ˈɑːɡjuː wɪð ðəm/",
+          word: "Argue with",
+          phonetic: "/ˈɑːɡjuː wɪð/",
           definition: "Tranh cãi với khách",
           context: "Never argue with them in a corridor.",
           icon: "🚫",
@@ -10632,7 +10640,7 @@ export const FO_WEEK_36: WeekContent = {
         {
           rude: "You must come out right now.",
           polite:
-            "The building is being evacuated, sir. May I walk down with you, or shall I send a colleague?",
+            "The building is being evacuated, sir. Shall I send a colleague to walk down with you?",
           rule: "Bị động tiếp diễn 'is being evacuated' cho thấy việc đang diễn ra với TẤT CẢ mọi người, không phải bạn đang chọn riêng khách này.",
         },
         {
@@ -10647,13 +10655,13 @@ export const FO_WEEK_36: WeekContent = {
           guestPrompt:
             "I have paid for this room and I am not walking down eight floors in a towel.",
           targetResponse:
-            "I understand, sir. Take a moment to dress — I will wait at your door and we will go down together.",
+            "I understand, sir. Take a moment to dress — a colleague is at your floor and will walk down with you.",
           helpTip:
             "Nói câu này chậm và trầm. Trong khủng hoảng, tốc độ nói của bạn là thứ khách sao chép — nói nhanh làm khách hoảng thêm.",
         },
       ],
       reading: {
-        text: "A GUEST WHO WILL NOT EVACUATE — FRONT DESK\nAsk twice, calmly, then stop. Do not argue in a corridor and do not touch the guest. The desk has no authority to remove anyone, and an argument keeps two people inside instead of one.\nHand it over: tell Security the FLOOR, the number of people, and that they have declined. Security or the fire officer decides what happens next, not the desk.\nThe room stays on the not-accounted list, and the fire team is told before they enter. That single line is the difference between a search and a rescue.\nCommon reasons a guest refuses, and what works: not dressed (offer to wait at the door) · valuables in the safe (say the room is locked and Security is on the floor) · does not believe it is real (say the fire brigade is on its way, which is true for every alarm) · language (walk to them, point to the stairwell, and go together).\nWrite it in the incident log afterwards with the time you asked and the time you handed over. Never write an opinion about the guest.",
+        text: "A GUEST WHO WILL NOT EVACUATE — FRONT DESK\nAsk twice, calmly, then stop. Do not argue in a corridor and do not touch the guest. The desk has no authority to remove anyone, and an argument keeps two people inside instead of one.\nHand it over: tell Security the FLOOR, the number of people, and that they have declined. Security or the fire officer decides what happens next, not the desk.\nThe room stays on the not-accounted list, and the fire team is told before they enter. That single line is the difference between a search and a rescue.\nCommon reasons a guest refuses, and what works: not dressed (offer to wait at the door) · valuables in the safe (say the door locks behind them, and invite them to bring the passport) · does not believe it is real (say the alarm is treated as real every single time, which is true) · language (walk to them, point to the stairwell, and go together).\nWrite it in the incident log afterwards with the time you asked and the time you handed over. Never write an opinion about the guest.",
         questions: [
           {
             q: "Hỏi hai lần mà khách vẫn không đi thì làm gì?",
@@ -10690,7 +10698,7 @@ export const FO_WEEK_36: WeekContent = {
           prompt: "I am not leaving my laptop and passport in an unlocked room.",
           options: [
             {
-              text: "Your door locks behind you, sir, and Security is on your floor. Bring the passport and let us go down together.",
+              text: "Your door locks behind you, sir. Bring the passport with you and let us go down together.",
               correct: true,
             },
             { text: "Nobody will take anything, sir. The hotel is very safe.", correct: false },
@@ -10727,8 +10735,8 @@ export const FO_WEEK_36: WeekContent = {
           icon: "📓",
         },
         {
-          word: "Check on them",
-          phonetic: "/tʃek ɒn ðəm/",
+          word: "Check on",
+          phonetic: "/tʃek ɒn/",
           definition: "Ghé hỏi thăm lại",
           context: "Check on them again in the morning.",
           icon: "🔔",
@@ -10737,7 +10745,8 @@ export const FO_WEEK_36: WeekContent = {
       grammar: [
         {
           rude: "It is over. You can go back up.",
-          polite: "The fire officer has given the all-clear, madam. The lifts are working again.",
+          polite:
+            "The fire officer has given the all-clear, madam. The lifts are back in service — engineering has confirmed it.",
           rule: "Nêu AI cho phép vào lại. Khách vừa sợ cần biết quyết định đến từ cơ quan chức năng, không từ nhân viên khách sạn.",
         },
         {
@@ -10750,13 +10759,13 @@ export const FO_WEEK_36: WeekContent = {
         {
           guestPrompt: "My children were terrified. Is this how you run a hotel?",
           targetResponse:
-            "I am sorry it frightened them, madam. The alarm did what it should, and the fire officer has cleared the building. May I send something warm up to your room?",
+            "I am sorry it frightened them, madam. The alarm did exactly what it is meant to do, madam, and the fire officer has cleared the building. May I send something warm up to your room?",
           helpTip:
-            "'Frightened' có cụm /tnd/ ở cuối — rất khó. Đọc thành 'frigh-tend', giữ /d/. Nếu khó quá, dùng 'I am sorry they were so frightened'.",
+            "'Frightened' đọc /ˈfraɪtn̩d/ — âm /n/ tự thành một âm tiết, KHÔNG chèn nguyên âm vào giữa. Nếu khó, đổi sang 'I am sorry it upset them'.",
         },
       ],
       reading: {
-        text: "AFTER AN EVACUATION — FRONT DESK\nOnly the fire officer gives the all-clear. The desk never tells guests to go back in, however obvious it looks.\nBack in the lobby, do three things in this order: (1) say the all-clear came from the fire officer, (2) say the lifts are working again, (3) offer something warm - tea, water, a seat.\nGuests who were shaken are not settled by an explanation. They are settled by a person staying near them for ten minutes.\nWrite the incident log before the shift ends: time the alarm sounded, zone, time of the all-clear, who was not accounted for and when they were found, and what was said to guests. Facts only, no opinion about any guest.\nNext morning, check on the rooms with children, elderly guests, and anyone who used a refuge point. A note in the profile that they were checked on is worth more than any compensation.",
+        text: "AFTER AN EVACUATION — FRONT DESK\nOnly the fire officer gives the all-clear. The desk never tells guests to go back in, however obvious it looks.\nBack in the lobby, do three things in this order: (1) say the all-clear came from the fire officer, (2) say the lifts are back in service ONLY after engineering confirms it, (3) offer something warm - tea, water, a seat.\nGuests who were shaken are not settled by an explanation. They are settled by a person staying near them for ten minutes.\nWrite the incident log before the shift ends: time the alarm sounded, zone, time of the all-clear, who was not accounted for and when they were found, and what was said to guests. Facts only, no opinion about any guest.\nNext morning, check on the rooms with children, elderly guests, and anyone who used a refuge point. A note in the profile that they were checked on is worth more than any compensation.",
         questions: [
           {
             q: "Ai là người cho phép khách vào lại toà nhà?",
@@ -10777,7 +10786,7 @@ export const FO_WEEK_36: WeekContent = {
       arcade: [
         {
           bad: "It is finished, you can all go up now.",
-          good: "The fire officer has given the all-clear, madam. The lifts are working again.",
+          good: "The fire officer has given the all-clear, madam. The lifts are back in service — engineering has confirmed it.",
         },
         {
           bad: "It was only a drill, so nothing to worry about.",
@@ -10789,7 +10798,7 @@ export const FO_WEEK_36: WeekContent = {
           prompt: "Everyone else is going back inside. Can we go up now?",
           options: [
             {
-              text: "Not quite yet, madam. We wait for the fire officer to give the all-clear, and I will come and tell you the moment he does.",
+              text: "Not quite yet, madam. We wait for the fire officer to give the all-clear, and I will come and tell you the moment they do.",
               correct: true,
             },
             { text: "Yes, it looks like it is finished. Please use the lifts.", correct: false },
