@@ -20,12 +20,35 @@ export type Phase = {
   nameVi: string;
 };
 
+// The band a phase CERTIFIES, not the band its material samples from.
+//
+// Phase 4 read "B1.1" until two blind audits reached the same verdict
+// independently: the course cannot measure B1. Every speaking exercise in
+// all forty weeks scores a learner against a fixed targetResponse shown on
+// screen, weeks 39-40 included — the "open role-play" the matrix promised
+// does not exist, and speaking-score.ts says so in its own comments. The
+// final paper is 20 multiple-choice items plus 5 imitated sentences. None
+// of that asks a learner to produce an unrehearsed turn, which is the line
+// between A2 and B1.
+//
+// The material genuinely reaches B1.1 — three-clause sentences, concession
+// clauses, the 22-word cap. So the label says exactly that and no more:
+// A2+ output, B1.1 exposure. Restoring "B1.1" means building the measure
+// first (see P1-4/5/6 in docs/academic-review-backlog.md), not editing this
+// line.
 export const PHASES: readonly Phase[] = [
   { index: 0, from: 1, to: 6, checkpointWeek: 6, band: "pre-A1", nameVi: "Nền tảng sống còn" },
   { index: 1, from: 7, to: 14, checkpointWeek: 14, band: "A1", nameVi: "Giao tiếp câu đơn" },
   { index: 2, from: 15, to: 22, checkpointWeek: 22, band: "A2.1", nameVi: "Nghiệp vụ chuẩn" },
   { index: 3, from: 23, to: 30, checkpointWeek: 30, band: "A2+", nameVi: "Dịch vụ chủ động" },
-  { index: 4, from: 31, to: 40, checkpointWeek: 40, band: "B1.1", nameVi: "Xử lý & thuyết phục" },
+  {
+    index: 4,
+    from: 31,
+    to: 40,
+    checkpointWeek: 40,
+    band: "A2+ · tiếp xúc B1.1",
+    nameVi: "Xử lý & thuyết phục",
+  },
 ];
 
 export const CHECKPOINT_WEEKS: readonly number[] = PHASES.map((p) => p.checkpointWeek);
