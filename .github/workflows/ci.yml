@@ -1,0 +1,98 @@
+# Mỗi push lên main và mỗi PR đều đi qua ba job song song. Tách job có chủ
+# đích: khi một cái đỏ, tên job nói ngay là lỗi CODE, lỗi NỘI DUNG hay lỗi
+# BUILD — không phải mở log mới biết.
+#
+# Bài học của dự án này: gate xanh không đồng nghĩa nội dung đúng. CI ở đây là
+# sàn, không phải trần — kiểm định mù kép sau mỗi batch nội dung vẫn là việc
+# của con người (xem .github/pull_request_template.md).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Push dồn dập lên cùng một nhánh thì chỉ chạy lần mới nhất.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Netlify pin NODE_VERSION=22 (netlify.toml). Giữ CI cùng phiên bản để một
+  # bản build xanh ở đây cũng xanh ở đó.
+  NODE_VERSION: "22"
+  BUN_VERSION: "1.3.x"
+
+jobs:
+  code:
+    name: code · tsc · eslint · prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Lint
+        run: bun run lint
+      - name: Format check
+        run: bun run format:check
+
+  content:
+    name: content · verify · qa-full
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      # Engine + curriculum constraints + structural linter over every
+      # generated sentence (GATE 0-4, layers A/B/C).
+      - name: Engine & curriculum gates
+        run: bun run verify:content
+      # T1-T7: coverage, hygiene, CEFR ladders, review keys, suite
+      # simulations, answerability, UI contracts.
+      - name: Full QA (T1-T7)
+        run: bun run qa:full
+
+  build:
+    name: build · vite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      # Build không cần biến môi trường: Supabase client khởi tạo lười, chỉ
+      # đọc env lúc runtime. Đã kiểm chứng bằng cách build với .env bị gỡ.
+      - name: Production build
+        run: bun run build

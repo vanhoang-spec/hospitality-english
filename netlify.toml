@@ -8,7 +8,12 @@
 # Vì vậy KHÔNG cần khai báo redirect ở đây.
 
 [build]
-  command = "bun run build"
+  # Gate TRƯỚC build. Gate đỏ thì build fail, Netlify giữ nguyên bản đang
+  # chạy — một câu mẫu sai không bao giờ tới được học viên chỉ vì ai đó push
+  # thẳng lên main. GitHub Actions chạy cùng bộ gate này (.github/workflows);
+  # chạy hai nơi là cố ý: Actions báo sớm trên PR, Netlify là chốt chặn cuối.
+  # Chi phí: ~1 phút build time mỗi deploy.
+  command = "bun run ci && bun run build"
   publish = "dist"
 
 [build.environment]
