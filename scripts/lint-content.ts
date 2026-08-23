@@ -865,9 +865,8 @@ const SEMANTIC_RULES: Record<string, SemanticRule[]> = {
  *  that NO LONGER violates fails the build too, so the file cannot rot into
  *  a list of things that were fixed years ago. Format: "P4.slot[i] DEP". */
 const SEMANTIC_DEBT: Set<string> = new Set(
-  JSON.parse(
-    await Bun.file(new URL("./_semantic-debt.json", import.meta.url)).text(),
-  ).entries as string[],
+  JSON.parse(await Bun.file(new URL("./_semantic-debt.json", import.meta.url)).text())
+    .entries as string[],
 );
 const debtSeen = new Set<string>();
 
