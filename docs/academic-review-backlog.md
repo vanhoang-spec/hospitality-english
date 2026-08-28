@@ -406,3 +406,26 @@ lẫn quầy concierge; tên bài đổi sang **kỹ năng** ("The Last Fifteen 
 **Còn nợ, cần quyết định:** tuần 38 của FB/SW/HK vẫn là "Presenting a Proposal" — lệch nghiệp
 vụ đúng như tuần 37 từng lệch, chỉ là chưa có khoảng trống nào đủ lớn để lấp vào. Ba tuần này
 là ứng viên rõ ràng cho đợt sau (tranh chấp minibar, nghi thức rượu vang, khách mang thai).
+
+---
+
+## Sổ hậu kỳ batch FB Phase 4 (30/08/2026 — PR #7, vòng chấm phát hành 9.0/9.0)
+
+Cả tám tuần FB 32–36, 38–40 phát hành với phán quyết "ĐỦ ĐIỀU KIỆN" từ hai auditor mù
+độc lập (Academic 9.0 · Hotel Manager 9.0). Những mục dưới đây được cả hai ghi rõ
+**không chặn phát hành** — giữ lại đây để làm trong các đợt biên tập sau:
+
+| Mục  | Nội dung                                                                                                                                                               | Nguồn                        |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| FB-A | Cân distractor toàn corpus: 73% câu đọc của batch có đáp án đúng dài nhất (corpus 79%); FB-39 đã cân lại ngay trước merge, còn FB-33/40 và các bộ phận cũ              | Academic chung cuộc #1       |
+| FB-B | 2–3 câu reading vượt band (47 từ ở FB-34_1 cakeage, 38 từ ở FB-38_4) — tách câu, giữ nội dung                                                                          | Academic #3                  |
+| FB-C | reviewWords của 38–40 chưa truy hồi nhóm từ an toàn của FB-37 (Halal, Cross-contamination) — đổi 1–2 slot                                                              | Academic #4, HM #4 cluster 4 |
+| FB-D | Ma trận nói tuần 40 "≥50% ngữ liệu tái sử dụng" nhưng FO-40/FB-40 đều dạy 16 từ mới — ghi chú ngoại lệ vào ma trận (rẻ nhất) hoặc đổi cấu trúc tuần 40 ở các batch sau | Academic #5                  |
+| FB-E | Bài hóc dị vật: cân nhắc thêm "If the guest can still cough, encourage them to keep coughing" (phổ quát, an toàn)                                                      | HM chung cuộc #3             |
+| FB-F | Thiếu lượt thoại: đổ đồ ăn/uống lên người khách (top sự cố sảnh) và câu hỏi tipping của khách Tây                                                                      | HM #7, #8                    |
+| FB-G | FB_33_2 "replacement of any dish" — thêm "at the same or lower price" để khỏi vênh POS                                                                                 | HM #5                        |
+| FB-H | Ghi chú đào tạo: tuần FB-38 nhắm captain/supervisor (báo giá banquet thuộc Sales ở đa số khách sạn lớn)                                                                | HM #6                        |
+
+**Cập nhật món nợ P1-12:** FB-38 "Presenting a Proposal" đã được soạn tay lại trong batch
+này theo đúng nghiệp vụ (báo giá tiệc bằng đồng, plus-plus, headcount, hoá đơn đỏ) — món nợ
+tuần 38 giờ chỉ còn **SW-38 và HK-38**, sẽ xử trong batch của hai bộ phận đó.
