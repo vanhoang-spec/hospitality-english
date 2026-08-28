@@ -8424,7 +8424,7 @@ export const FO_WEEK_31: WeekContent = {
           word: "Another time",
           phonetic: "/əˈnʌðə taɪm/",
           definition: "Để dịp khác",
-          context: "I can tell you another time, madam, whenever suits you.",
+          context: "I can tell you another time, madam, whenever it suits you.",
           icon: "🕰️",
         },
         {
@@ -8444,7 +8444,7 @@ export const FO_WEEK_31: WeekContent = {
         },
         {
           rude: "You are not interested, I see.",
-          polite: "Of course, madam. I will tell you another time, whenever suits you.",
+          polite: "Of course, madam. I will tell you another time, whenever it suits you.",
           rule: "Không bao giờ để lộ mình phật ý. 'Another time' giữ cánh cửa mở cho cả hai bên.",
         },
       ],
@@ -9807,7 +9807,7 @@ export const FO_WEEK_34: WeekContent = {
         },
         {
           bad: "I passed it to the kitchen, so it should be fine.",
-          good: "Chef Nam has it, sir, and I ring him at seven to chase it myself.",
+          good: "Chef Nam has it, sir, and I will ring him at six to chase it myself.",
         },
       ],
       game: [
@@ -10508,7 +10508,7 @@ export const FO_WEEK_36: WeekContent = {
           word: "Mobility need",
           phonetic: "/məʊˈbɪləti niːd/",
           definition: "Nhu cầu hỗ trợ di chuyển",
-          context: "Room 402 has a guest with a mobility need.",
+          context: "There is a guest with a mobility need on the fourth floor.",
           icon: "♿",
         },
         {
@@ -10539,7 +10539,7 @@ export const FO_WEEK_36: WeekContent = {
           rude: "You have to go down the stairs like everybody.",
           polite:
             "Please stay in your room and close the door, madam. I am telling the fire team your room number now, and someone is coming to you.",
-          rule: "Không bao giờ ra lệnh cho khách làm điều họ không làm được. Nêu nơi an toàn cụ thể rồi cam kết ở lại — 'I will stay' là lời hứa mạnh nhất trong khủng hoảng.",
+          rule: "Không bao giờ ra lệnh cho khách làm điều họ không làm được. Nêu nơi an toàn cụ thể rồi hứa một điều đang xảy ra — 'someone is coming to you' giữ khách bình tĩnh hơn mọi lời trấn an chung chung.",
         },
         {
           rude: "Room 402 has a disabled guest.",
@@ -10624,7 +10624,7 @@ export const FO_WEEK_36: WeekContent = {
         },
         {
           word: "Not accounted for",
-          phonetic: "/nɒt əˈkaʊntɪd fə/",
+          phonetic: "/nɒt əˈkaʊntɪd fɔː/",
           definition: "Chưa xác nhận được đang ở đâu",
           context: "Room 312 is still not accounted for.",
           icon: "❓",
@@ -11590,7 +11590,7 @@ export const FO_WEEK_40: WeekContent = {
           word: "Absorb",
           phonetic: "/əbˈzɔːb/",
           definition: "Thấm, học vào người một cách tự nhiên",
-          context: "You absorb new phrases from every guest, free.",
+          context: "You absorb new phrases from every guest, for free.",
           icon: "👂",
         },
         {
