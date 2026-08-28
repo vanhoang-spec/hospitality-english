@@ -11679,7 +11679,7 @@ export const FO_WEEK_40: WeekContent = {
 export const FB_WEEK_32: WeekContent = {
   departmentId: "FB",
   weekNumber: 32,
-  weekTitleEn: "Advice from the Table in Front of You",
+  weekTitleEn: "Advice from What You Notice at the Table",
   weekTitleVi: "Tư vấn từ chính bàn khách trước mặt",
   reviewWords: [
     "Recommend",
@@ -11744,7 +11744,7 @@ export const FB_WEEK_32: WeekContent = {
         {
           guestPrompt: "Oh, you remembered us! We came here back in March.",
           targetResponse:
-            "Of course, madam — the corner table, and mild chili for you. Shall I set the same tonight?",
+            "Of course, madam — the corner table, and mild chili for you. Shall I do the same tonight?",
           helpTip:
             "Nhấn 'corner' và 'mild' — hai chi tiết chứng minh bạn thật sự nhớ. Đừng nuốt âm cuối /ld/ trong 'mild'.",
         },
@@ -11764,22 +11764,22 @@ export const FB_WEEK_32: WeekContent = {
           {
             q: "Vì sao dùng thẻ ghi chú dưới dạng câu hỏi 'Still no coriander?'",
             options: [
-              "Vì khẩu vị của khách có thể đã thay đổi",
               "Vì nhân viên không tin thông tin trên thẻ",
               "Vì quy định bắt buộc phải hỏi lại ba lần",
+              "Vì khẩu vị của khách có thể đã thay đổi",
             ],
-            correct: 0,
+            correct: 2,
           },
         ],
       },
       arcade: [
         {
-          bad: "You again! The usual, right?",
-          good: "Welcome back, Mr. Tanaka. Your usual table by the window is free — would you like it?",
+          bad: "I remember you. You complained last time.",
+          good: "Lovely to see you again, madam — the quiet table you enjoyed is ready.",
         },
         {
-          bad: "I know already what you want to eat.",
-          good: "On your last visit you enjoyed the sea bass, sir. Shall I start with the same?",
+          bad: "Why you not order your normal food?",
+          good: "Something different tonight, sir? I would love to hear what you feel like.",
         },
       ],
       game: [
@@ -11871,11 +11871,11 @@ export const FB_WEEK_32: WeekContent = {
           {
             q: "Bàn có laptop và giấy tờ thì phục vụ thế nào?",
             options: [
-              "Rót nước lặng lẽ, chờ khách ngừng nói mới mời món",
               "Mời món ngay lập tức để khách không phải chờ lâu",
+              "Rót nước lặng lẽ, chờ khách ngừng nói mới mời món",
               "Đề nghị khách dọn bớt giấy tờ để bày món ăn",
             ],
-            correct: 0,
+            correct: 1,
           },
           {
             q: "Điều gì KHÔNG được nói với khách đi ăn một mình?",
@@ -11886,8 +11886,8 @@ export const FB_WEEK_32: WeekContent = {
       },
       arcade: [
         {
-          bad: "Are you ready? Kitchen closes at ten.",
-          good: "Based on the time you have, may I suggest dishes that come out quickly?",
+          bad: "You look busy. Talk less, order more.",
+          good: "I will come back the moment you are ready, sir — no rush at all.",
         },
         {
           bad: "Just one person tonight?",
@@ -11899,7 +11899,7 @@ export const FB_WEEK_32: WeekContent = {
           prompt: "We're celebrating closing a deal — but we still have emails to send tonight.",
           options: [
             {
-              text: "Congratulations! Then shall I bring the courses briskly, and coffee the moment the laptops open?",
+              text: "Congratulations! Then shall I bring the courses quickly, and coffee the moment the laptops open?",
               correct: true,
             },
             {
@@ -11952,8 +11952,9 @@ export const FB_WEEK_32: WeekContent = {
       grammar: [
         {
           rude: "That wine costs three million dong, you know.",
-          polite: "A bold choice, sir. May I also point out two neighbours on the same page?",
-          rule: "Giá rượu KHÔNG đọc thành tiếng trước bàn — chỉ tay trên danh sách để con số tự nói. 'May I also point out…?' mở thêm lựa chọn mà không chê lựa chọn ban đầu.",
+          polite:
+            "A bold choice, sir. May I also show you two other lovely wines on the same page?",
+          rule: "Giá rượu KHÔNG đọc thành tiếng trước bàn — chỉ tay trên danh sách để con số tự nói. 'May I also show you…?' mở thêm lựa chọn mà không chê lựa chọn ban đầu.",
         },
         {
           rude: "You don't know wine? Then take the house wine.",
@@ -11972,13 +11973,13 @@ export const FB_WEEK_32: WeekContent = {
         {
           guestPrompt: "We'd like something special — but between us, not at a crazy price.",
           targetResponse:
-            "Understood, sir. Shall we stay around this line of the list? Two lovely choices sit right there.",
+            "Understood, sir. Shall we stay around this part of the list? Two lovely choices sit right there.",
           helpTip:
             "'Shall we stay around this line?' — hạ giọng nhỏ hơn một chút và chỉ vào danh sách: sự kín đáo là một phần của câu.",
         },
       ],
       reading: {
-        text: "WINE AT THE TABLE — DISCRETION RULES\nThe list speaks the numbers. Point to the page — 'around this line' — and let the guest read the price. It is never said aloud across the table.\nWhoever ordered the bottle tastes first. Pour the taste, wait for the nod, then serve the table, finishing with the host's glass.\nNo shame in the house wine: recommend it by name and by taste, never with an apology. A guest who feels judged for the cheaper bottle does not come back.\nIf the bottle the guest wants is out of stock, say so before it is opened anywhere else in the story — and name the nearest neighbour on the list: same grape, same line of the page.\nA half bottle or a glass is a recommendation, not a downgrade — offer it with the same pride as the grandest bottle.",
+        text: "WINE AT THE TABLE — DISCRETION RULES\nThe list speaks the numbers. Point to the page — 'around this line' — and let the guest read the price. It is never said aloud across the table.\nWhoever ordered the bottle tastes first. Pour the taste, wait for the nod, then serve the table, finishing with the host's glass.\nNo shame in the house wine: recommend it by name and by taste, never with an apology. A guest who feels judged for the cheaper bottle does not come back.\nIf the bottle the guest wants is out of stock, say so before the order goes to the bar — and name the nearest one on the list: same grape, same part of the page.\nA half bottle or a glass is a recommendation, not a downgrade — offer it with the same pride as the grandest bottle.",
         questions: [
           {
             q: "Giá của chai rượu được truyền tới khách bằng cách nào?",
@@ -11992,22 +11993,22 @@ export const FB_WEEK_32: WeekContent = {
           {
             q: "Khi gợi ý house wine, điều gì bị cấm?",
             options: [
-              "Kèm một lời xin lỗi vì chai rượu rẻ",
               "Gọi tên chai rượu một cách rõ ràng",
+              "Kèm một lời xin lỗi vì chai rượu rẻ",
               "Miêu tả hương vị chai rượu cho khách",
             ],
-            correct: 0,
+            correct: 1,
           },
         ],
       },
       arcade: [
         {
-          bad: "That bottle is three million dong, sir.",
-          good: "A bold choice, sir — and two lovely neighbours sit on the same page here.",
+          bad: "Red wine with fish? Wrong choice, madam.",
+          good: "Of course, madam — a lighter red sits beautifully beside the sea bass.",
         },
         {
           bad: "The house wine is for guests on a budget.",
-          good: "The house white is dry, light, and lovely with fish — I recommend it often.",
+          good: "The house wine is on the list because we are proud of it, madam.",
         },
       ],
       game: [
@@ -12095,16 +12096,16 @@ export const FB_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "'SURPRISE ME' — A PRIVILEGE WITH RULES\nA guest who hands you the menu is giving you trust, not a blank cheque.\nAsk two things before anything moves: what they do not eat, and roughly how hungry the table is. One light eater changes the whole order.\nChoose from the middle of the menu. A guest who trusts you with the choice is not asking you to spend their money — if they wanted the dearest dish, they would have ordered it.\nName each dish as it lands: a surprise the guest cannot pronounce or describe later is a story they cannot retell.\nOne veto is part of the game: 'If the river fish is too far for you, say so — the beef comes straight out instead.'\nAnd tell the kitchen it is a 'surprise me' table — the chef may want to send something of their own.",
+        text: "'SURPRISE ME' — A PRIVILEGE WITH RULES\nA guest who hands you the menu is giving you trust, not their wallet.\nAsk two things before anything moves: what they do not eat, and roughly how hungry the table is. One light eater changes the whole order.\nChoose from the middle of the menu. A guest who trusts you with the choice is not asking you to spend their money — a guest who wants the most expensive dish orders it without help.\nName each dish as it lands: a surprise the guest cannot pronounce or describe later is a story they cannot retell.\nLeave one choice open: 'If the river fish is too far for you, say so — the beef comes straight out instead.'\nAnd tell the kitchen it is a 'surprise me' table — the chef may want to send something of their own.",
         questions: [
           {
             q: "Trước khi chọn món thay khách, phải hỏi hai điều gì?",
             options: [
-              "Món khách không ăn được và mức độ đói của bàn",
               "Ngân sách của khách và thời gian khách đang có",
               "Quốc tịch của khách và số lần đã đến nhà hàng",
+              "Món khách không ăn được và mức độ đói của bàn",
             ],
-            correct: 0,
+            correct: 2,
           },
           {
             q: "Vì sao nên chọn món ở tầm giữa của thực đơn?",
@@ -12119,12 +12120,12 @@ export const FB_WEEK_32: WeekContent = {
       },
       arcade: [
         {
-          bad: "Everything here is delicious, you cannot go wrong.",
-          good: "My personal favourite is the clay-pot fish — I order it on my day off.",
+          bad: "The chef will cook whatever is easy tonight.",
+          good: "The chef would love to choose for you — may I ask what you both avoid?",
         },
         {
-          bad: "Fine, I will choose. You eat what comes.",
-          good: "Happily, madam. Before I choose — is there anything you do not eat?",
+          bad: "Trust me, you will eat what I like.",
+          good: "Then two dishes I truly love are coming, madam — one gentle, one adventurous.",
         },
       ],
       game: [
@@ -12190,8 +12191,9 @@ export const FB_WEEK_33: WeekContent = {
         {
           word: "Fire",
           phonetic: "/ˈfaɪə/",
-          definition: "Lệnh cho bếp bắt đầu nấu một món",
-          context: "I will ask the kitchen to fire a new steak now.",
+          definition:
+            "Lệnh cho bếp bắt đầu nấu một món — chỉ dùng trong nội bộ, không nói với khách",
+          context: "Fire one more steak for table nine, please.",
           icon: "🔥",
         },
         {
@@ -12216,9 +12218,9 @@ export const FB_WEEK_33: WeekContent = {
       ],
       speaking: [
         {
-          guestPrompt: "This steak is completely well done. I asked for medium rare.",
+          guestPrompt: "This steak is well done all the way through. I asked for medium rare.",
           targetResponse:
-            "You are right, sir, and I am sorry. The kitchen will fire a new one — about ten minutes.",
+            "You are right, sir, and I am sorry. The kitchen is starting a fresh one — about ten minutes.",
           helpTip:
             "'You are right' nói trọn ba từ, không nuốt 'are'. Nhận đúng–sai xong mới tới thời gian: thứ tự này hạ nhiệt bàn ăn.",
         },
@@ -12231,7 +12233,7 @@ export const FB_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "A DISH COMES BACK — FLOOR PROCEDURE\nApologise for the experience, not for the recipe: 'I am sorry it is not to your liking' — then move.\nOffer both roads every time: a remake of the same dish, or a different dish at the same course. Say the honest time for each — a remade steak takes as long as the first one took.\nAsk the table whether to hold the other plates or serve them. Offer to keep the returned guest's sides warm either way.\nCarry the returned plate straight through — it is never inspected, discussed or tasted in the dining room.\nTell the kitchen the fact — 'table nine finds it over for medium rare' — never the blame. The kitchen is not told the guest is difficult, and the guest is never told the kitchen is busy. The floor carries the message, not the fault.",
+        text: "A DISH COMES BACK — FLOOR PROCEDURE\nApologise for the experience, not for the recipe: 'I am sorry it is not to your liking' — then move.\nOffer both roads every time: a remake of the same dish, or a different dish at the same course. Say the honest time for each — a remade steak takes as long as the first one took.\nAsk the table whether to hold the other plates or serve them. Offer to keep the returned guest's sides warm either way.\nCarry the returned plate straight through — it is never inspected, discussed or tasted in the dining room.\nTell the kitchen the fact — 'table nine finds it overdone for medium rare' — never the blame. The kitchen is not told the guest is difficult, and the guest is never told the kitchen is busy. The floor carries the message, not the fault.",
         questions: [
           {
             q: "Khi món bị trả về, khách được đưa những lựa chọn nào?",
@@ -12245,22 +12247,22 @@ export const FB_WEEK_33: WeekContent = {
           {
             q: "Người phục vụ nói gì với bếp về món bị trả?",
             options: [
-              "Sự việc — 'bàn 9 thấy món quá chín so với medium rare'",
               "Nhận xét — 'khách ở bàn 9 là một người rất khó tính'",
+              "Sự việc — 'bàn 9 thấy món quá chín so với medium rare'",
               "Lời trách — 'bếp nấu sai cho nên khách mới phàn nàn'",
             ],
-            correct: 0,
+            correct: 1,
           },
         ],
       },
       arcade: [
         {
-          bad: "This is exactly what medium looks like, sir.",
-          good: "I am sorry it is not to your liking, sir — the kitchen will remake it now.",
+          bad: "It is just a small piece of shell, sir.",
+          good: "I am so sorry, sir — this goes straight back, and my supervisor is coming to you now.",
         },
         {
-          bad: "The kitchen is very busy, please be patient.",
-          good: "The new steak is on now, madam — ten minutes, and I will keep your sides warm.",
+          bad: "You ate half already. I cannot change it.",
+          good: "Thank you for telling me, madam — would you like the same dish again, or something else?",
         },
       ],
       game: [
@@ -12272,11 +12274,28 @@ export const FB_WEEK_33: WeekContent = {
               correct: false,
             },
             {
-              text: "I am sorry, madam — a hot one will be with you in five minutes.",
+              text: "I am sorry, madam — a hot one is five minutes away, or may I bring you something else?",
               correct: true,
             },
             {
               text: "I will mention it to the kitchen so it does not happen with the next course.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "There's a piece of glass in my salad. GLASS. Look at it!",
+          options: [
+            {
+              text: "Are you hurt, sir? I am so sorry — the plate goes back now, and my Duty Manager is coming.",
+              correct: true,
+            },
+            {
+              text: "I am terribly sorry, sir — a fresh salad and a free dessert are coming right away.",
+              correct: false,
+            },
+            {
+              text: "That may have come in with the lettuce, sir — the supplier washes it, not our kitchen.",
               correct: false,
             },
           ],
@@ -12293,14 +12312,14 @@ export const FB_WEEK_33: WeekContent = {
           word: "On the house",
           phonetic: "/ɒn ðə ˈhaʊs/",
           definition: "Nhà hàng mời — miễn phí",
-          context: "The dessert is on the house tonight, madam.",
+          context: "My supervisor approved it — the dessert is on the house tonight, madam.",
           icon: "🎁",
         },
         {
           word: "Floor supervisor",
           phonetic: "/ˈflɔː ˈsuːpəvaɪzə/",
           definition: "Giám sát ca ngoài sảnh",
-          context: "My floor supervisor approves anything that touches the bill.",
+          context: "Any change to a bill starts with my floor supervisor.",
           icon: "🧑‍💼",
         },
         {
@@ -12349,16 +12368,16 @@ export const FB_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT THE FLOOR MAY GIVE — THREE TIERS, NO GAP\nThe server decides: a remake or replacement of any dish or drink, keeping sides warm, a pot of tea while a table waits. Nothing that changes the bill.\nThe floor supervisor or Restaurant Manager decides: taking a dish off the bill, a dessert on the house, waiving a service charge — up to 500,000 VND on one bill. The approving name goes on the order slip before the guest is told.\nThe Duty Manager decides: anything above that, any refund to a card — and always, at any amount: illness after eating, an injury in the restaurant, damage to a guest's clothing or property.\nTell the guest the PROCESS and the TIME — 'my supervisor, within five minutes' — never the number. A guest who learns the threshold orders just under it.\nThese tiers are ONE hotel's. Your restaurant has its own — ask your Restaurant Manager in your first week, and write theirs over these.",
+        text: "WHAT THE FLOOR MAY GIVE — THREE TIERS, NO GAP\nThe server decides: a remake or replacement of any dish or drink, keeping sides warm, a pot of complimentary tea while a table waits. Nothing that changes the bill.\nThe floor supervisor or Restaurant Manager decides: taking a dish off the bill, a dessert on the house, waiving a service charge — up to 500,000 VND on one bill. The approving name goes on the order slip before the guest is told.\nThe Duty Manager decides: anything above that, any refund to a card — and always, at any amount: illness after eating, an injury in the restaurant, damage to a guest's clothing or property.\nTell the guest the PROCESS and the TIME — 'my supervisor, within five minutes' — never the number. A guest who learns the threshold orders just under it.\nThese tiers are ONE hotel's. Your restaurant has its own — ask your Restaurant Manager in your first week, and write theirs over these.",
         questions: [
           {
             q: "Người phục vụ được tự quyết những gì?",
             options: [
-              "Làm lại hoặc đổi món, giữ ấm đồ ăn — không đụng hoá đơn",
               "Xoá một món khỏi hoá đơn nếu khách phàn nàn hợp lý",
               "Mời cả bàn tráng miệng miễn phí để thay lời xin lỗi",
+              "Làm lại hoặc đổi món, giữ ấm đồ ăn — không đụng hoá đơn",
             ],
-            correct: 0,
+            correct: 2,
           },
           {
             q: "Khách bị ốm sau bữa ăn thuộc quyền xử lý của ai?",
@@ -12373,12 +12392,12 @@ export const FB_WEEK_33: WeekContent = {
       },
       arcade: [
         {
-          bad: "The bill is not my department, sorry.",
-          good: "The remake is on now, sir — and my supervisor will decide the bill within five minutes.",
+          bad: "Free dessert? I decide that, no problem.",
+          good: "Let me ask Ms. Lan about the dessert, sir — she decides that, and she is quick.",
         },
         {
-          bad: "OK, everything free tonight, please don't be angry.",
-          good: "That is above my own decision, madam. My supervisor is coming to you now.",
+          bad: "Manager is busy. Come back tomorrow.",
+          good: "My supervisor is with another table, madam — she will be with you within five minutes.",
         },
       ],
       game: [
@@ -12424,7 +12443,8 @@ export const FB_WEEK_33: WeekContent = {
         {
           word: "Docket",
           phonetic: "/ˈdɒkɪt/",
-          definition: "Phiếu ghi món chuyển cho bếp và quầy bar",
+          definition:
+            "Phiếu ghi món chuyển cho bếp và quầy bar — ở Việt Nam thường gọi là captain order",
           context: "Every order has a docket we can check against the bill.",
           icon: "🧾",
         },
@@ -12440,8 +12460,8 @@ export const FB_WEEK_33: WeekContent = {
         {
           rude: "The computer added it, so it must be right.",
           polite:
-            "That line is the ten percent service charge, madam — may I take you through the bill line by line?",
-          rule: "Gọi tên khoản phí + mời rà cùng nhau. 'The computer' không bao giờ là một lời giải thích — máy chỉ ghi thứ con người bấm vào.",
+            "That line is the service charge, madam — may I take you through the bill line by line?",
+          rule: "Gọi tên khoản phí + mời rà cùng nhau (mức phí phục vụ mỗi nhà một khác — học con số của khách sạn mình, đừng học thuộc một con số). 'The computer' không bao giờ là một lời giải thích — máy chỉ ghi thứ con người bấm vào.",
         },
         {
           rude: "It says three beers here. You drank three beers.",
@@ -12481,22 +12501,22 @@ export const FB_WEEK_33: WeekContent = {
           {
             q: "Đối chiếu hoá đơn dựa vào căn cứ nào?",
             options: [
-              "Các docket — phiếu ghi món đã gọi và giờ gọi",
               "Trí nhớ của người phục vụ phụ trách bàn đó",
+              "Các docket — phiếu ghi món đã gọi và giờ gọi",
               "Lời kể lại thành thật của khách ngồi tại bàn",
             ],
-            correct: 0,
+            correct: 1,
           },
         ],
       },
       arcade: [
         {
-          bad: "The system never makes mistakes with bills.",
-          good: "Let me read the bill against the dockets, madam — line by line.",
+          bad: "If you do not pay, I will call the police.",
+          good: "May I ask my supervisor to join us, sir? We will go through the bill together.",
         },
         {
-          bad: "Splitting bills is complicated, please pay together.",
-          good: "Of course — two bills, two cards. Three minutes, sir.",
+          bad: "Cash only now. Card machine went home.",
+          good: "The card machine is at the bar tonight, sir — I will bring it to your table.",
         },
       ],
       game: [
@@ -12514,6 +12534,23 @@ export const FB_WEEK_33: WeekContent = {
             {
               text: "Let me check the docket now, sir. If it is our error, it comes off at once.",
               correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "We're not paying this bill. The evening was a disaster from start to finish.",
+          options: [
+            {
+              text: "Then I will remove the service charge myself, sir — that seems the fairest ending.",
+              correct: false,
+            },
+            {
+              text: "I hear you, sir. My supervisor is coming now — please tell her everything, from the start.",
+              correct: true,
+            },
+            {
+              text: "I am sorry, sir, but the food was eaten — the bill has to be settled tonight.",
+              correct: false,
             },
           ],
         },
@@ -12591,11 +12628,11 @@ export const FB_WEEK_33: WeekContent = {
           {
             q: "Thứ tự đúng khi khách báo bị ốm sau bữa ăn là gì?",
             options: [
-              "Hỏi thăm — mời bác sĩ — ghi chép — báo Duty Manager",
               "Kiểm tra bếp — xin lỗi — đưa ra mức bồi thường hợp lý",
+              "Hỏi thăm — mời bác sĩ — ghi chép — báo Duty Manager",
               "Báo Duty Manager — chờ chỉ đạo — quay lại xin lỗi khách",
             ],
-            correct: 0,
+            correct: 1,
           },
           {
             q: "Vì sao người phục vụ không được đề nghị bồi thường?",
@@ -12610,12 +12647,12 @@ export const FB_WEEK_33: WeekContent = {
       },
       arcade: [
         {
-          bad: "It cannot be our food, our kitchen is spotless.",
-          good: "I am sorry you are unwell, sir. May I call a doctor, while my manager comes over?",
+          bad: "Sick? Nobody else is sick tonight, madam.",
+          good: "I am sorry you feel unwell, madam. Please sit comfortably — help is on the way.",
         },
         {
-          bad: "Perhaps lunch somewhere else did this, madam.",
-          good: "I am not able to say what caused it — a doctor can. May I call one now?",
+          bad: "Sign here that the hotel is not at fault.",
+          good: "No paperwork now, sir — a doctor first, and my manager will speak with you.",
         },
       ],
       game: [

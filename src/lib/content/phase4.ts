@@ -2850,23 +2850,32 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 4 ngày trước",
     reviewText:
       "The chicken in our main course was undercooked and we felt sick afterwards. We told the waiter but nobody from management ever followed up. Won't be dining here again.",
+    // A guest who "felt sick afterwards" is a health claim, and FB week 33
+    // teaches the floor never to settle or admit one. The reply is therefore
+    // written AS the Restaurant Manager, after the Duty Manager has handled
+    // the file — and it apologises for the experience, states the review of
+    // procedures, and moves the conversation to a direct channel. It never
+    // promises a free dinner in public.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý nhà hàng — SAU khi Duty Manager đã xử lý hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Đã làm việc với bếp để rà soát quy trình",
-        any: ["kitchen", "chef", "food safety", "our team", "procedures"],
+        labelVi: "Xin lỗi về trải nghiệm, không xác nhận nguyên nhân",
+        any: ["sorry", "apologise", "apologize", "apologies", "regret"],
       },
       {
-        labelVi: "Mời khách quay lại, chi phí do khách sạn chịu",
-        any: ["complimentary", "free of charge", "on us", "at no cost", "our guest"],
+        labelVi: "Đã cùng bếp rà soát quy trình an toàn thực phẩm",
+        any: ["kitchen", "chef", "food safety", "reviewed", "procedures"],
+      },
+      {
+        labelVi: "Mời khách liên hệ trực tiếp Quản lý nhà hàng",
+        any: ["contact", "reach me", "get in touch", "call", "email"],
       },
     ],
     modelReply:
-      "We are truly sorry to hear about the undercooked chicken and that you felt unwell — this does not meet our standards. We have already spoken with our kitchen team to review food safety procedures. We would be honoured to welcome you back for a complimentary dinner so we can show you the experience we intended to give you the first time.",
+      "We are very sorry to read about your experience, and that you felt unwell after your visit — and I am sorry nobody followed up as they should have. Our kitchen team and I have reviewed our food safety procedures in full. Please contact me directly at the restaurant so I can hear the details from you personally.",
     explanationVi:
-      "'Undercooked chicken' là lỗi an toàn thực phẩm nghiêm trọng — phản hồi phải nêu hành động cụ thể với bếp, không chỉ xin lỗi suông, và đề nghị bù đắp rõ ràng.",
+      "Khiếu nại có yếu tố sức khoẻ không dàn xếp công khai: xin lỗi về TRẢI NGHIỆM (không xác nhận nguyên nhân), nêu việc đã rà soát với bếp, và kéo cuộc trao đổi về kênh riêng — đúng nguyên tắc của bài 'The Claim You Must Not Settle' cùng tuần.",
   },
   HK: {
     reviewMeta: "★★☆☆☆ · Booking.com · 3 ngày trước",
