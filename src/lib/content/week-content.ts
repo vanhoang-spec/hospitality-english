@@ -14706,7 +14706,7 @@ export const FB_WEEK_39: WeekContent = {
         {
           word: "Off the menu",
           phonetic: "/ˌɒf ðə ˈmenjuː/",
-          definition: "Ngoài thực đơn",
+          definition: "Ngoài thực đơn (phân biệt: 'the dish is off' = món đã hết)",
           context: "An off-the-menu request goes to the chef, not to a guess.",
           icon: "📖",
         },
@@ -14732,15 +14732,15 @@ export const FB_WEEK_39: WeekContent = {
           targetResponse:
             "Let me make sure I understand, sir — grilled, with the marinade on before, not after? Three minutes with the chef.",
           helpTip:
-            "Nhắc lại bằng chi tiết ('marinade on before') chứ không nhại nguyên văn — khách nghe thấy bạn đã HIỂU, không chỉ đã NGHE.",
+            "Nhắc lại bằng chi tiết ('marinade on before') chứ không nhại nguyên văn — khách nghe thấy bạn đã HIỂU, không chỉ đã NGHE. 'Marinade' /ˈmærɪneɪd/ — trọng âm đầu.",
         },
         {
           guestPrompt:
             "It's a strange question, but could you make my wife's soup exactly half spicy?",
           targetResponse:
-            "Not strange at all, madam is lucky. Half the chili, full the flavour — I will ask the kitchen now.",
+            "Not strange at all, sir — a lucky lady. Half the chili, all the flavour — I will ask the kitchen now.",
           helpTip:
-            "'Not strange at all' — gỡ ngại cho khách trước, xử lý yêu cầu sau. Cấu trúc song song 'half the chili, full the flavour' dễ nhớ và nghe có nghề.",
+            "'Not strange at all' — gỡ ngại cho khách trước, xử lý yêu cầu sau. Cấu trúc song song 'half the chili, all the flavour' dễ nhớ và nghe có nghề.",
         },
       ],
       reading: {
@@ -14782,7 +14782,7 @@ export const FB_WEEK_39: WeekContent = {
             "My daughter only eats plain white rice with butter. I know it's not on the menu.",
           options: [
             {
-              text: "Butter rice for the young lady — the kitchen will be delighted, madam. Five minutes.",
+              text: "Butter rice is an easy yes, madam — I will tell the kitchen now. Five minutes.",
               correct: true,
             },
             {
@@ -14850,9 +14850,9 @@ export const FB_WEEK_39: WeekContent = {
         {
           guestPrompt: "The bill is wrong AND we're late for the airport. Fix both. Now.",
           targetResponse:
-            "Both, sir, in this order: the taxi is called first, and the bill is checked while your bags come down.",
+            "Both at once, sir: the taxi is called this minute, and the bill is checked while it comes.",
           helpTip:
-            "'In this order' — ba từ biến hai đám cháy thành một kế hoạch. Đọc chậm, đếm rõ hai vế bằng ngữ điệu.",
+            "'Both at once' + hai vế song song — hai đám cháy thành một kế hoạch. Đọc chậm, đếm rõ hai vế bằng ngữ điệu.",
         },
         {
           guestPrompt:
@@ -14864,7 +14864,7 @@ export const FB_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "TWO FIRES, ONE FLOOR — THE ORDER OF THINGS\nSome evenings stack their problems. The order never changes: SAFETY first, MONEY second, COMFORT third. A swollen lip outranks a wrong bill; a wrong bill outranks a cold dessert.\nName both problems aloud to the guest — 'two things, and I have both' — then solve one at a time. A guest who hears the list stops repeating it.\nPARK the second problem with three things attached: a place, a person, a time. 'The cake waits in the pantry, with Mai, until the doctor nods.' A parked problem without an owner is a dropped one.\nCALL FOR BACKUP at two problems, not at five. The strongest member of the team is the one who says 'I need a second pair of hands' while both hands still work.\nAnd when both fires are out, close both loops with the guest — the one they remember is the one you finish last.",
+        text: "TWO FIRES, ONE FLOOR — THE ORDER OF THINGS\nSome evenings stack their problems. The order never changes: SAFETY first, MONEY second, COMFORT third. A swollen lip outranks a wrong bill; a wrong bill outranks a cold dessert. When both can run at once, start the slowest one first — the order decides what you drop, never what you start.\nName both problems aloud to the guest — 'two things, and I have both' — then solve one at a time. A guest who hears the list stops repeating it.\nPARK the second problem with three things attached: a place, a person, a time. 'The cake waits in the pantry, with Mai, until the doctor nods.' A parked problem without an owner is a dropped one.\nCALL FOR BACKUP at two problems, not at five. The strongest member of the team is the one who says 'I need a second pair of hands' while both hands still work.\nAnd when both fires are out, close both loops with the guest — the one they remember is the one you finish last.",
         questions: [
           {
             q: "Thứ tự ưu tiên khi nhiều việc dồn cùng lúc là gì?",
@@ -14893,7 +14893,7 @@ export const FB_WEEK_39: WeekContent = {
         },
         {
           bad: "Your bill problem is small, forget it for now.",
-          good: "The bill is parked with my supervisor, sir — and I come back to it in five minutes.",
+          good: "The bill is with my supervisor, sir — and I come back to it in five minutes.",
         },
       ],
       game: [
@@ -14971,20 +14971,20 @@ export const FB_WEEK_39: WeekContent = {
           guestPrompt:
             "We caught this fish ourselves this afternoon. Could your chef cook it for our dinner?",
           targetResponse:
-            "What a catch, sir. Whether our kitchen may cook outside food is the chef's rule — let me ask him now.",
+            "What a catch, sir. Whether our kitchen may cook outside food is the chef's call — let me ask him now.",
           helpTip:
             "Khen trước, rồi chỉ đúng CHỦ của câu trả lời: an toàn thực phẩm là luật của bếp, không phải phép lịch sự của sảnh.",
         },
         {
           guestPrompt: "Could you move our table out onto the sand? It's our last night.",
           targetResponse:
-            "A last night deserves trying, madam. Give me five minutes — the terrace I can say yes to myself.",
+            "A last night deserves a try, madam. Give me five minutes — the terrace I can say yes to myself.",
           helpTip:
             "Nói rõ tầng quyền: cái BẠN tự quyết được ('the terrace') nói ngay, cái phải hỏi thì mang đi hỏi. Đừng hứa bãi cát khi chưa ai đồng ý.",
         },
       ],
       reading: {
-        text: "THE REQUEST WITH NO RULE — THREE QUESTIONS BEFORE ANY ANSWER\nOne: IS ANYONE UNSAFE? Outside food into the kitchen, candles into the dark, a guest onto a wet pool deck — safety questions belong to the chef, Security or the manager, never to the floor's goodwill. When safety is touched, 'let me ask' IS the answer.\nTwo: DOES IT TOUCH THE BILL? If money moves, week thirty-three's tiers move with it. No new rule was invented that cancels the old ones.\nThree: DOES IT BORROW FROM OTHER GUESTS? The song on the shared speakers, the lights, the table on the walkway — one table must not borrow the room. If it does, the supervisor weighs the room, not you.\nIf all three answers are no — the photo, the extra chair, the recipe written for a guest's mother — then say yes, warmly, and write it on the table's slip so the next shift knows what was promised.\nThe rule-less request is where guests decide what kind of house this is. Answer it with judgement, not with a shrug.",
+        text: "THE REQUEST WITH NO RULE — THREE QUESTIONS BEFORE ANY ANSWER\nOne: IS ANYONE UNSAFE? Outside food into the kitchen, candles into the dark, a guest onto a wet pool deck — safety questions belong to the chef, Security or the manager, never to the floor's goodwill. When safety is touched, 'let me ask' IS the answer.\nTwo: DOES IT TOUCH THE BILL? If money moves, week thirty-three's tiers move with it. No new rule was invented that cancels the old ones.\nThree: DOES IT BORROW FROM OTHER GUESTS? The song on the shared speakers, the lights, the table on the walkway — one table must not borrow the room. If it does, the supervisor weighs the room, not you.\nIf all three answers are no — the photo, the extra chair, a taxi booked for later — then say yes, warmly, and write it on the table's slip so the next shift knows what was promised.\nAnd one more check hides inside the three: if the thing asked for belongs to someone — the chef's recipe, a colleague's time — the yes belongs to its owner, not to you.\nThe rule-less request is where guests decide what kind of house this is. Answer it with judgement, not with a shrug.",
         questions: [
           {
             q: "Ba câu hỏi kiểm tra trước khi trả lời yêu cầu lạ là gì?",
@@ -15104,7 +15104,7 @@ export const FB_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THE UNFINISHED COLUMN — FLOOR EDITION\nA restaurant evening rarely ends finished. The cake not yet out, the bill query with the supervisor, the taxi promised for ten — the shift ends, the promises do not.\nBefore you clock out, walk the unfinished column with ONE named colleague: WHAT was promised, to WHICH table, by WHEN, and what is already done. Have them repeat the list back — the same read-back you give the kitchen.\nThe slip carries it all. A promise that lives only in your head leaves the building with you, and tomorrow a guest asks a stranger for it.\nThen the debrief — five minutes, same question every night: what surprised us, and what do we change so tomorrow cannot repeat it? Process, not people. The night the team stops asking is the night the same mistakes book a return visit.\nAnd on your way out, one look back at the room: tomorrow it starts again, and the floor you hand over is the floor you will inherit.",
+        text: "THE UNFINISHED COLUMN — FLOOR EDITION\nA restaurant evening rarely ends finished. The cake not yet out, the bill query with the supervisor, the taxi promised for ten — the shift ends, the promises do not.\nBefore you clock out, walk the unfinished column with ONE named colleague: WHAT was promised, to WHICH table, by WHEN, and what is already done. Have them repeat the list back — the same read-back you give the guest when the order matters.\nThe slip carries it all. A promise that lives only in your head leaves the building with you, and tomorrow a guest asks a stranger for it.\nThen the debrief — five minutes, same question every night: what surprised us, and what do we change so tomorrow cannot repeat it? Process, not people. The night the team stops asking is the night the same mistakes book a return visit.\nAnd on your way out, one look back at the room: tomorrow it starts again, and the floor you hand over is the floor you will inherit.",
         questions: [
           {
             q: "Bàn giao cột việc dang dở gồm những thông tin nào?",
@@ -15242,7 +15242,7 @@ export const FB_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "FORTY WEEKS — WHAT IS ACTUALLY IN THE TOOLBOX\nWeek one taught a greeting. By week ten you carried numbers, time and the bill. By twenty you could take an order accurately and fix a cold soup. By thirty you handled the phone, the handover book and a full complaint.\nPhase four gave the hard tools: the story of a dish, advice from what you notice, the three tiers of putting things right, the occasion slip, the trade that is not a discount, the emergency verbs, the honest proposal, and the request no rule covers.\nNone of it lives in a certificate. It lives in habits: the read-back before the kitchen, the docket before the argument, the 'let me ask' before the guess, the slip before the shift change.\nThe measure of forty weeks is not the test on Friday. It is the table on Saturday — the one you will hold without thinking about which week taught you how.",
+        text: "FORTY WEEKS — WHAT IS ACTUALLY IN THE TOOLBOX\nWeek one taught a greeting. By week ten you carried numbers, time and the bill. By twenty you could take an order accurately and fix a cold soup. By thirty you handled the phone, the handover book and a complaint heard to its end.\nPhase four gave the hard tools: the story of a dish, advice from what you notice, the three tiers of putting things right, the occasion slip, the trade that is not a discount, the emergency verbs, the family table and the honest no of the buffet, the honest proposal, and the request no rule covers.\nNone of it lives in a certificate. It lives in habits: the read-back before the order moves, the docket before the argument, the 'let me ask' before the guess, the slip before the shift change.\nThe measure of forty weeks is not the test on Friday. It is the table on Saturday — the one you will hold without thinking about which week taught you how.",
         questions: [
           {
             q: "Theo bài đọc, thành quả của khoá học sống ở đâu?",
@@ -15362,7 +15362,7 @@ export const FB_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LINE THE FLOOR DOES NOT CROSS — SIX SENTENCES TO KEEP\nNever guess where safety is asked: allergy, halal, what is in the dish. 'Let me check' is the professional answer, forever.\nNever blame the kitchen to a guest, or the guest to the kitchen. The floor carries messages, not faults.\nNever touch the bill alone. The tiers of week thirty-three do not retire when the course does.\nNever settle, admit or deny an illness claim at the table — care for the person, write the facts, bring the Duty Manager.\nNever repeat what a table said, to anyone who was not at it. Privacy is part of the tasting menu.\nNever promise what only your manager can hold — say 'I will put it to her', and mean it.\nSix sentences. They fit on one card. Forty weeks taught many phrases; these are the ones the house pays you to remember.",
+        text: "THE LINE THE FLOOR DOES NOT CROSS — SIX SENTENCES TO KEEP\nNever guess where safety is asked: allergy, halal, what is in the dish. 'Let me check' is the professional answer, forever.\nNever blame the kitchen to a guest, or the guest to the kitchen. The floor carries messages, not faults.\nNever touch the bill alone. The tiers of week thirty-three do not retire when the course does.\nNever settle, admit or deny an illness claim at the table — care for the person, write the facts, bring the Duty Manager.\nNever gossip what a table said — the slip and the Duty Manager get what the work needs; nobody else gets anything. Privacy is part of the tasting menu.\nNever send a guest past their limit to the road on their own wheels — Security joins you, and the way home is the house's business.\nSix sentences. They fit on one card. Forty weeks taught many phrases; these are the ones the house pays you to remember.\nAnd one line for yourself: a guest who crosses the line with YOU — hands or words — is never yours to handle alone. The supervisor comes. That, too, is what the tiers are for.",
         questions: [
           {
             q: "Vì sao 'Let me check' là câu trả lời chuyên nghiệp mãi mãi?",
@@ -15400,7 +15400,7 @@ export const FB_WEEK_40: WeekContent = {
             "Last dinner of our stay. Be honest — what's the one thing you'd never do, even for us?",
           options: [
             {
-              text: "Guess about an allergy, sir. Everything else bends a little — that one never has.",
+              text: "Guess where safety is asked, sir — the hardest of our six lines. And none of the six moves.",
               correct: true,
             },
             {
@@ -15470,7 +15470,7 @@ export const FB_WEEK_40: WeekContent = {
           targetResponse:
             "Ready, madam — the test is a dinner service on paper. And I have served a year of dinner services.",
           helpTip:
-            "'A dinner service on paper' — hình ảnh giúp CHÍNH BẠN bình tĩnh. Nói câu này với khách cũng là nói với mình.",
+            "'A dinner service on paper' — hình ảnh giúp CHÍNH BẠN bình tĩnh. Và 'breathe' /briːð/ hữu thanh — khác 'breath' /breθ/.",
         },
         {
           guestPrompt: "Any advice for the new trainee starting the same course next month?",
@@ -15481,7 +15481,7 @@ export const FB_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "THE FINAL ASSESSMENT — WHAT FRIDAY ACTUALLY HOLDS\nThe shape: scenarios from the year — a complaint with a bill inside it, an occasion with a secret inside it, an emergency with a guest who argues. Nothing appears that the weeks did not teach.\nHow to prepare: not by rereading everything. Walk the six lines of the floor, the three tiers, the four moves for the script-less table, the three verbs of an emergency. Frames, not sentences — the sentences come when the frame is yours.\nThe night before: run the checklist, close the book, sleep. A tired candidate loses more marks than a nervous one.\nIn the room: breathe once before each answer. Repeat the scenario back in your own words — the same read-back that has opened every hard conversation this year. It works on examiners too.\nAnd if an answer collapses: say so, fix it, continue. The floor is not graded on never falling — it is graded on how it stands back up.",
+        text: "THE FINAL ASSESSMENT — WHAT FRIDAY ACTUALLY HOLDS\nThe shape: scenarios from the year — a complaint with a bill inside it, an occasion with a secret inside it, an emergency with a guest who argues. Nothing appears that the weeks did not teach.\nHow to prepare: not by rereading everything. Walk the six lines of the floor, the three tiers, the four moves for the script-less table, the three verbs of an emergency. Frames, not sentences — the sentences come when the frame is yours.\nThe shape of Friday: questions on paper and a handful of lines spoken aloud — the same week test as every checkpoint, wearing its final coat. No examiner sits across a table; the scenarios sit inside the questions.\nThe night before: run the checklist, close the book, sleep. A tired candidate loses more marks than a nervous one.\nIn the seat: breathe once, read each scenario twice, and hear the table in it — every question is a guest you have already met.\nAnd if the first attempt falls short: a retake follows after a short rest, the way a hard shift is followed by a better one. The floor is not graded on never falling — it is graded on how it stands back up.",
         questions: [
           {
             q: "Cách ôn thi đúng theo bài đọc là gì?",
@@ -15493,11 +15493,11 @@ export const FB_WEEK_40: WeekContent = {
             correct: 1,
           },
           {
-            q: "Nếu một câu trả lời trong phòng thi 'sụp đổ' thì làm gì?",
+            q: "Nếu lần làm bài đầu tiên không đạt thì sao?",
             options: [
-              "Nói ra điều đó, sửa lại, và đi tiếp — như trên sảnh thật",
-              "Xin giám khảo bỏ qua câu đó và chuyển sang câu khác",
-              "Dừng lại xin lỗi nhiều lần để thể hiện thái độ cầu thị",
+              "Được làm lại sau một khoảng nghỉ ngắn — như ca khó nối bằng ca tốt hơn",
+              "Phải chờ sang tuần kế tiếp mới được phép làm lại bài",
+              "Học lại từ đầu phase bốn rồi mới được thi lại lần nữa",
             ],
             correct: 0,
           },
@@ -15564,7 +15564,7 @@ export const FB_WEEK_40: WeekContent = {
         {
           word: "Pass it forward",
           phonetic: "/ˌpɑːs ɪt ˈfɔːwəd/",
-          definition: "Trao lại điều mình đã được trao",
+          definition: "Trao lại điều mình đã được trao (gần với idiom 'pay it forward')",
           context: "The best thank-you to a teacher is to pass it forward.",
           icon: "🎁",
         },
