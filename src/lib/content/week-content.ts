@@ -11975,7 +11975,7 @@ export const FB_WEEK_32: WeekContent = {
           targetResponse:
             "Understood, sir. Shall we stay around this part of the list? Two lovely choices sit right there.",
           helpTip:
-            "'Shall we stay around this line?' — hạ giọng nhỏ hơn một chút và chỉ vào danh sách: sự kín đáo là một phần của câu.",
+            "'Shall we stay around this part of the list?' — hạ giọng nhỏ hơn một chút và chỉ vào danh sách: sự kín đáo là một phần của câu.",
         },
       ],
       reading: {
@@ -13990,7 +13990,7 @@ export const FB_WEEK_36: WeekContent = {
         {
           guestPrompt: "My bag! I left my bag at the table!",
           targetResponse:
-            "Your bag is safe, madam — the room is closed and watched. We go back for it the moment we are cleared.",
+            "Your bag is safe, madam — the room is closed and locked. We go back for it the moment we are cleared.",
           helpTip:
             "Không ai quay vào — kể cả bạn. Chỉ hứa điều giữ được: túi AN TOÀN trong phòng khoá, và có mốc rõ ('the moment we are cleared') — không hứa ai đó sẽ mang ra.",
         },
@@ -14751,14 +14751,14 @@ export const FB_WEEK_39: WeekContent = {
             options: [
               "Một con số là một lời hứa; 'a moment' chỉ là hy vọng",
               "Vì ba phút là thời gian chuẩn của mọi yêu cầu bếp",
-              "Vì khách sẽ bấm giờ và phàn nàn nếu quá một phút",
+              "Vì khách sẽ bấm giờ và phàn nàn ngay nếu phải chờ quá một phút",
             ],
             correct: 0,
           },
           {
             q: "Điều gì KHÔNG bao giờ được làm khi hết kịch bản?",
             options: [
-              "Thú nhận rằng đây là yêu cầu mới gặp lần đầu",
+              "Thú nhận với khách rằng đây là yêu cầu mới gặp lần đầu",
               "Đoán câu trả lời của bếp hoặc bịa ra một chính sách",
               "Nhắc lại yêu cầu của khách bằng lời của mình",
             ],
@@ -14871,7 +14871,7 @@ export const FB_WEEK_39: WeekContent = {
             options: [
               "Việc của khách quen trước, khách mới sau",
               "An toàn trước, tiền bạc sau, thoải mái cuối cùng",
-              "Việc dễ xử trước để giảm nhanh số đám cháy",
+              "Việc dễ xử lý trước để giảm nhanh số lượng đám cháy",
             ],
             correct: 1,
           },
@@ -14879,7 +14879,7 @@ export const FB_WEEK_39: WeekContent = {
             q: "'Park' một việc đúng cách cần gắn theo ba thứ gì?",
             options: [
               "Một địa điểm, một người giữ, một mốc thời gian",
-              "Một lời xin lỗi, một món quà, một lời hứa",
+              "Một lời xin lỗi, một món quà nhỏ, và một lời hứa chắc chắn",
               "Một ghi chú, một chữ ký, một số hồ sơ",
             ],
             correct: 0,
@@ -14991,14 +14991,14 @@ export const FB_WEEK_39: WeekContent = {
             options: [
               "Có ai mất an toàn không, có đụng hoá đơn không, có mượn của khách khác không",
               "Khách có phải khách quen không, có vui không, có boa không",
-              "Bếp có rảnh không, quản lý có mặt không, ca có đủ người không",
+              "Bếp có đang rảnh không, quản lý có mặt không, và ca trực có đủ người không",
             ],
             correct: 0,
           },
           {
             q: "Khi yêu cầu chạm tới an toàn, câu trả lời đúng là gì?",
             options: [
-              "'Không' — an toàn thì không bao giờ có ngoại lệ",
+              "'Không' — vì chuyện an toàn thì không bao giờ được phép có ngoại lệ",
               "'Có' — vì khách hàng luôn luôn đúng ở khách sạn 5 sao",
               "'Để tôi hỏi' — người sở hữu câu trả lời là bếp, an ninh, quản lý",
             ],
@@ -15110,7 +15110,7 @@ export const FB_WEEK_39: WeekContent = {
             q: "Bàn giao cột việc dang dở gồm những thông tin nào?",
             options: [
               "Việc gì đã hứa, bàn nào, hạn khi nào, đã làm tới đâu",
-              "Tên khách, số phòng, quốc tịch, thói quen ăn uống",
+              "Tên khách, số phòng, quốc tịch, và thói quen ăn uống của bàn",
               "Doanh thu ca, số bàn phục vụ, tiền tip, giờ tăng ca",
             ],
             correct: 0,
@@ -15118,7 +15118,7 @@ export const FB_WEEK_39: WeekContent = {
           {
             q: "Câu hỏi debrief mỗi tối nhìn vào điều gì?",
             options: [
-              "Ai trong ca đã gây ra sai sót lớn nhất tối nay",
+              "Ai trong ca trực đã gây ra sai sót lớn nhất trong tối nay",
               "Quy trình — 'ta đổi gì để ngày mai không lặp lại?'",
               "Bàn nào boa nhiều nhất và vì sao họ hài lòng",
             ],
