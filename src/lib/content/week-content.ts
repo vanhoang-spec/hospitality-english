@@ -12678,6 +12678,990 @@ export const FB_WEEK_33: WeekContent = {
   ],
 };
 
+export const FB_WEEK_34: WeekContent = {
+  departmentId: "FB",
+  weekNumber: 34,
+  weekTitleEn: "Occasions the Table Will Remember",
+  weekTitleVi: "Những dịp đặc biệt tại bàn ăn",
+  reviewWords: [
+    "Special occasion",
+    "Cake delivery time",
+    "Sparkling wine",
+    "Private dining room",
+    "Dessert",
+    "Terrace",
+    "Booking",
+    "Chef's table",
+  ],
+  lessons: [
+    {
+      lessonId: "FB_34_1",
+      lessonOrder: 1,
+      titleEn: "Taking the Occasion Brief",
+      titleVi: "Nhận đặt chỗ cho một dịp đặc biệt",
+      vocabulary: [
+        {
+          word: "Milestone",
+          phonetic: "/ˈmaɪlstəʊn/",
+          definition: "Cột mốc đáng nhớ — sinh nhật tròn, năm kỷ niệm",
+          context: "A fiftieth birthday is a milestone the whole table feels.",
+          icon: "🏁",
+        },
+        {
+          word: "Name on the cake",
+          phonetic: "/ˌneɪm ɒn ðə ˈkeɪk/",
+          definition: "Dòng tên viết trên bánh",
+          context: "Check the name on the cake letter by letter.",
+          icon: "🎂",
+        },
+        {
+          word: "Keep it a secret",
+          phonetic: "/ˌkiːp ɪt ə ˈsiːkrət/",
+          definition: "Giữ bí mật",
+          context: "We will keep it a secret until the cake arrives.",
+          icon: "🤐",
+        },
+        {
+          word: "Timing",
+          phonetic: "/ˈtaɪmɪŋ/",
+          definition: "Thời điểm — chọn đúng lúc",
+          context: "The timing of the cake is the host's decision, not ours.",
+          icon: "⏰",
+        },
+      ],
+      grammar: [
+        {
+          rude: "OK birthday dinner. What time you come?",
+          polite:
+            "Happy to arrange that, sir. May I take three details — the date, the number of guests, and the name for the cake?",
+          rule: "Cấu trúc liệt kê 'three details — A, B, and C' gom mọi câu hỏi vào MỘT lượt nói: khách đặt tiệc không muốn bị hỏi vụn mười lần.",
+        },
+        {
+          rude: "Who is the birthday person? Tell me everything.",
+          polite: "And is the dinner a surprise, madam — or does Mr. Chen know we are celebrating?",
+          rule: "Câu hỏi lựa chọn 'or' xác định điều quan trọng nhất của một buổi tiệc: AI được biết. Ghi câu trả lời vào phiếu — cả ca phải giữ cùng một bí mật.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "It's our tenth anniversary on Saturday. I want everything to be special.",
+          targetResponse:
+            "Congratulations, sir — ten years is a milestone. May I take the details, from the table to the cake?",
+          helpTip:
+            "'Congratulations' — trọng âm rơi vào 'LA': /kənˌɡrætʃuˈleɪʃnz/. Chúc mừng TRƯỚC, hỏi chi tiết SAU.",
+        },
+        {
+          guestPrompt: "Please — my wife must not suspect anything at all.",
+          targetResponse:
+            "Understood, sir. Not a word from any of us — the cake stays hidden until you give me the sign.",
+          helpTip:
+            "'Not a word' — ba từ ngắn, nói chậm và chắc: đó là lời cam kết, không phải lời đệm.",
+        },
+      ],
+      reading: {
+        text: "AN OCCASION BOOKING — WHAT GOES ON THE SLIP\nDate and time; number of guests; the occasion; the name for the cake, checked letter by letter — read it back and have the guest spell it. A cake with the wrong spelling cannot be fixed at nine in the evening.\nWho knows: mark the booking SURPRISE if one person at the table must not hear about it. Every colleague who touches the table reads the slip before the shift.\nThe trigger: agree with the host WHEN the cake comes — 'after the main course is cleared', or 'when I signal'. The host owns the moment; we own the delivery.\nWho pays, and how: quietly, before or after — never a bill presented in the middle of the celebration.\nOne slip, one shift briefing, one named owner per evening. If you hand the table to a colleague, the slip and the secret go with it, by name.",
+        questions: [
+          {
+            q: "Dòng tên trên bánh kem được kiểm tra thế nào?",
+            options: [
+              "Đọc lại cho khách và nhờ khách đánh vần từng chữ",
+              "Nhìn kỹ một lần rồi ghi nhanh vào phiếu đặt chỗ",
+              "Để thợ làm bánh tự kiểm tra trước khi giao bánh",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Ai quyết định thời điểm bánh được mang ra?",
+            options: [
+              "Bếp trưởng — vì bếp biết lúc nào bánh sẵn sàng",
+              "Người chủ tiệc — nhà hàng chỉ lo phần thực hiện",
+              "Người phục vụ — vì họ theo sát nhịp của bàn ăn",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Birthday? OK. Anything else you want?",
+          good: "Lovely — and should the cake be a surprise, madam, or does he know?",
+        },
+        {
+          bad: "We will remember, no need to write.",
+          good: "It goes on the booking slip now, sir — every colleague tonight will read it.",
+        },
+      ],
+      game: [
+        {
+          prompt: "I'd like to book a birthday dinner for my mother. She's turning seventy.",
+          options: [
+            {
+              text: "A seventieth — what a milestone, madam. May I take the details, including the name for the cake?",
+              correct: true,
+            },
+            {
+              text: "Of course, madam — and may I suggest our set menu? Most guests her age prefer the softer dishes.",
+              correct: false,
+            },
+            {
+              text: "Lovely, madam. We will surprise her with singing waiters at the table — guests love it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_34_2",
+      lessonOrder: 2,
+      titleEn: "Words for the Moment",
+      titleVi: "Lời chúc đúng khoảnh khắc",
+      vocabulary: [
+        {
+          word: "Congratulations",
+          phonetic: "/kənˌɡrætʃuˈleɪʃnz/",
+          definition: "Lời chúc mừng",
+          context: "Congratulations on your anniversary, madam.",
+          icon: "🎉",
+        },
+        {
+          word: "On behalf of",
+          phonetic: "/ɒn bɪˈhɑːf əv/",
+          definition: "Thay mặt cho",
+          context: "On behalf of the whole team, happy anniversary.",
+          icon: "🤝",
+        },
+        {
+          word: "Raise a glass",
+          phonetic: "/ˌreɪz ə ˈɡlɑːs/",
+          definition: "Nâng ly chúc mừng",
+          context: "The table would like to raise a glass at eight.",
+          icon: "🥂",
+        },
+        {
+          word: "Step back",
+          phonetic: "/ˌstep ˈbæk/",
+          definition: "Lùi lại — nhường khoảnh khắc cho khách",
+          context: "Serve the champagne, then step back from the table.",
+          icon: "🚶",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Happy birthday! Blow the candle, grandma!",
+          polite:
+            "On behalf of all of us — happy birthday, madam. We are honoured you chose us tonight.",
+          rule: "'On behalf of' nâng lời chúc cá nhân thành lời chúc của cả nhà hàng — trang trọng, một câu, rồi lùi lại. Khoảnh khắc là của khách, không phải của nhân viên.",
+        },
+        {
+          rude: "You propose now? I bring ring? So romantic!",
+          polite: "Everything is ready, sir. When you would like the champagne, just look my way.",
+          rule: "Với khoảnh khắc riêng tư, nhân viên nói NGẮN đi: 'just look my way' — một tín hiệu thay cho mọi lời hỏi han. Không bình luận, không đứng chờ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We're celebrating — my husband was promoted this morning!",
+          targetResponse:
+            "Congratulations to him, madam! Shall we open with something sparkling to mark it?",
+          helpTip:
+            "'Congratulations' đọc đủ năm âm tiết, trọng âm ở 'LA'. Đề nghị ăn mừng đi liền sau lời chúc — nhưng vẫn là một CÂU HỎI.",
+        },
+        {
+          guestPrompt:
+            "Could you say a few words when the cake comes out? In English, keep it short.",
+          targetResponse:
+            "With pleasure, sir. On behalf of the restaurant — happy fiftieth birthday, and may the year be kind to you.",
+          helpTip:
+            "Học thuộc MỘT câu chúc chuẩn là đủ dùng cả năm: 'On behalf of… — happy…, and may…'. Đọc chậm, mỉm cười, rồi lùi lại.",
+        },
+      ],
+      reading: {
+        text: "THE STAFF AND THE MOMENT — WHERE WE STAND\nA toast, a ring, a first look at the cake: these belong to the guests. Our part is delivery, then distance — serve, say one short line if the host invites it, and step back.\nA formal wish has a shape: 'On behalf of the restaurant, congratulations on…' or 'May the year ahead be…'. One sentence. No jokes about age, about weddings, about babies to come — the line that lands at one table can wound at another, and we cannot know which table is which.\nDuring a proposal: no clapping from staff, no gathering of colleagues to watch, no photographs unless the couple asks. If the answer is not yes, clear quietly and treat the table like any other — the kindest service is to remember nothing.\nIf other tables notice a celebration, keep their service running at full attention — the fastest way to sour a party is a neighbouring table that feels forgotten.",
+        questions: [
+          {
+            q: "Một lời chúc trang trọng của nhân viên có hình dạng nào?",
+            options: [
+              "Một bài phát biểu ngắn khoảng ba đến bốn câu",
+              "Một câu đùa vui để cả bàn cùng cười thoải mái",
+              "Một câu duy nhất theo khung 'On behalf of… / May…'",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Nếu lời cầu hôn không được nhận lời, nhân viên làm gì?",
+            options: [
+              "Dọn bàn lặng lẽ và phục vụ như mọi bàn khác",
+              "Mang tráng miệng miễn phí ra để an ủi khách",
+              "Đổi khách sang một bàn khuất để đỡ ngại ngùng",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Speech! Speech! Say something, madam!",
+          good: "Whenever you are ready for the toast, madam — the glasses are poured.",
+        },
+        {
+          bad: "Forty years old! You look older, sir!",
+          good: "Congratulations on the big day, sir — from the whole team.",
+        },
+      ],
+      game: [
+        {
+          prompt: "The cake's coming out now — quick, should we all sing or what do we do?",
+          options: [
+            {
+              text: "Yes! The whole team will sing loudly, madam — we do it for every birthday table.",
+              correct: false,
+            },
+            {
+              text: "Sing away, madam — that is yours to choose. The cake comes in with candles lit.",
+              correct: true,
+            },
+            {
+              text: "Singing is not allowed in the dining room, madam — the other tables must not be disturbed.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_34_3",
+      lessonOrder: 3,
+      titleEn: "The Cake, the Secret, and the Handover",
+      titleVi: "Chiếc bánh, bí mật, và ca kế tiếp",
+      vocabulary: [
+        {
+          word: "Signal",
+          phonetic: "/ˈsɪɡnəl/",
+          definition: "Tín hiệu đã hẹn trước với chủ tiệc",
+          context: "Wait for the host's signal before the cake moves.",
+          icon: "🤙",
+        },
+        {
+          word: "Out of sight",
+          phonetic: "/ˌaʊt əv ˈsaɪt/",
+          definition: "Khuất tầm mắt khách",
+          context: "The cake waits out of sight until the signal.",
+          icon: "🫥",
+        },
+        {
+          word: "Candle",
+          phonetic: "/ˈkændl/",
+          definition: "Nến",
+          context: "Light the candles just before the cake leaves the pantry.",
+          icon: "🕯️",
+        },
+        {
+          word: "Pass it on",
+          phonetic: "/ˌpɑːs ɪt ˈɒn/",
+          definition: "Bàn giao lại cho người kế tiếp",
+          context: "Going off shift? Pass it on to one named colleague.",
+          icon: "🤲",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Cake is in the kitchen. Somebody will bring it, hopefully.",
+          polite: "The cake is chilled and out of sight, sir, and it moves only on your signal.",
+          rule: "Bị động 'is chilled' + 'out of sight' báo cáo trạng thái đã sẵn sàng; 'only on your signal' trả quyền bấm nút cho chủ tiệc — một câu, đủ ba điều khách lo.",
+        },
+        {
+          rude: "My shift ends at nine. Not my problem after.",
+          polite:
+            "I finish at nine, madam, so Mai will carry your evening from there — she has every detail.",
+          rule: "Bàn giao có TÊN NGƯỜI: 'Mai will carry your evening'. Lời hứa không được rời đi cùng ca trực — nó phải có chủ mới trước khi bạn ra về.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "How do I let you know it's time for the cake?",
+          targetResponse:
+            "Catch my eye and touch the table twice, sir — I will be watching. The candles take one minute.",
+          helpTip:
+            "'Catch my eye' — cụm quan trọng, đọc liền một hơi. Đưa tín hiệu CỤ THỂ, đừng nói 'bất cứ khi nào ngài muốn'.",
+        },
+        {
+          guestPrompt: "You're leaving? But you know the whole plan for tonight!",
+          targetResponse:
+            "Every detail is on the slip, madam, and Mai owns it now — she will introduce herself in one minute.",
+          helpTip:
+            "Giới thiệu người kế nhiệm bằng tên + thời điểm khách sẽ gặp. Sự yên tâm nằm ở con số 'one minute'.",
+        },
+      ],
+      reading: {
+        text: "THE SURPRISE ACROSS A SHIFT CHANGE\nA surprise does not survive on goodwill. It survives on the slip: the trigger, the cake's place, the name spelling, who must not know, who pays.\nBefore you go: hand the slip to ONE named colleague. Walk them to the cake. Point out the host. Have them read the trigger back to you. Then introduce them to the host by name — 'Mai will carry your evening from here.'\nBrief the team in the back office, not at the pass — kitchens carry voices, and the surprise can reach the wrong table faster than a starter.\nCandles are lit in the pantry, not at the table; the room lights stay untouched — dimming the whole dining room borrows every other table's evening for one table's moment.\nIf the host's signal never comes — the evening ran long, the mood turned — ask once, quietly: 'Shall the cake wait for another day?' A surprise forced on a tired table pleases nobody.",
+        questions: [
+          {
+            q: "Bàn giao một bí mật cho ca sau gồm những bước nào?",
+            options: [
+              "Trao phiếu cho MỘT người có tên, dẫn tới chỗ bánh, đọc lại tín hiệu",
+              "Ghi chú vào sổ chung của ca và nhắn tin cho cả nhóm trực tối",
+              "Nói nhanh với cả ca trong giờ briefing ngay tại khu vực pass",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không chỉnh đèn cả phòng ăn cho khoảnh khắc bánh kem?",
+            options: [
+              "Vì đèn phòng ăn thuộc quyền điều khiển của bộ phận kỹ thuật",
+              "Vì làm vậy là mượn buổi tối của mọi bàn khác cho một bàn",
+              "Vì ánh sáng yếu khiến ảnh chụp của khách kém đẹp đi nhiều",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Don't worry, probably someone lights the candles.",
+          good: "The candles are with me, sir — lit in the pantry the moment you signal.",
+        },
+        {
+          bad: "I go home now. Good luck with the party.",
+          good: "Before I go, madam — this is Mai, and she knows the evening by heart.",
+        },
+      ],
+      game: [
+        {
+          prompt:
+            "Half past nine and my husband still hasn't given the signal. The kids are falling asleep.",
+          options: [
+            {
+              text: "Shall the cake come now, madam — or wait for another day? Either way is easy for us.",
+              correct: true,
+            },
+            {
+              text: "The signal is his to give, madam — I am afraid we must keep waiting for him.",
+              correct: false,
+            },
+            {
+              text: "I will bring it out right away, madam — the kitchen wants to close the pastry section.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_34_4",
+      lessonOrder: 4,
+      titleEn: "When the Surprise Goes Wrong",
+      titleVi: "Khi điều bất ngờ trục trặc",
+      vocabulary: [
+        {
+          word: "Mix-up",
+          phonetic: "/ˈmɪks ʌp/",
+          definition: "Sự nhầm lẫn",
+          context: "The two bookings caused a mix-up with the cakes.",
+          icon: "🔀",
+        },
+        {
+          word: "Recover",
+          phonetic: "/rɪˈkʌvə/",
+          definition: "Cứu lại tình huống",
+          context: "A calm team can recover almost any evening.",
+          icon: "🛟",
+        },
+        {
+          word: "Plan B",
+          phonetic: "/ˌplæn ˈbiː/",
+          definition: "Phương án dự phòng",
+          context: "The pastry kitchen always has a plan B for a dropped cake.",
+          icon: "🅱️",
+        },
+        {
+          word: "Own the mistake",
+          phonetic: "/ˌəʊn ðə mɪˈsteɪk/",
+          definition: "Nhận lỗi về mình, không đổ vòng quanh",
+          context: "Own the mistake first; explain it later, if the guest asks.",
+          icon: "🙋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The bakery wrote the wrong name, not us.",
+          polite:
+            "The name on the cake is wrong, madam, and that is ours to fix. Ten minutes, and a new plate comes out.",
+          rule: "'That is ours to fix' — nhận trách nhiệm KHÔNG kèm địa chỉ đổ lỗi. Khách không cần biết ai sai; khách cần biết ai đang sửa và mất bao lâu.",
+        },
+        {
+          rude: "Cake fell in kitchen. No cake today. Sorry sorry.",
+          polite:
+            "I am sorry, sir — the cake had an accident with us. The pastry chef is plating a birthday dessert now, candles and all.",
+          rule: "Tin xấu + phương án B trong CÙNG một lượt nói. Đừng bắt khách ngồi một mình với tin xấu, dù chỉ nửa phút.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "This says 'Happy Birthday David'. My husband's name is Daniel.",
+          targetResponse:
+            "That is our mix-up, madam, and it is being fixed now — ten minutes, and Daniel gets his own cake.",
+          helpTip:
+            "'Daniel' phát âm rõ ngay trong câu sửa lỗi — cái tên đúng chính là lời xin lỗi thuyết phục nhất.",
+        },
+        {
+          guestPrompt: "You had ONE job — the cake at nine. It's half past nine!",
+          targetResponse:
+            "You are right, sir, and I am sorry. The cake is being plated now — it reaches the table in five minutes.",
+          helpTip:
+            "'You are right' trước, thời gian cụ thể sau. Đừng kể lý do bếp bận — khách đang đúng, hãy để họ đúng.",
+        },
+      ],
+      reading: {
+        text: "WHEN THE OCCASION BREAKS — RECOVERY ORDER\nFirst, protect the moment, not the process: the guest of honour should never learn anything went wrong if the room can move faster than the news.\nWrong name on the cake: the plate goes back, and the pastry section re-pipes or re-plates — ask your own pastry chef what they can do in ten minutes. Every kitchen has a plan B, and it is faster than an apology speech.\nCake dropped or missing: say so to the HOST only, away from the table, with the plan B in the same breath. The table hears 'dessert is coming', not the story.\nWhat you may give to repair the evening follows week thirty-three's tiers: the remake and the re-plate are the floor's; anything off the bill carries the supervisor's name; and the evening itself is never 'free' by a waiter's promise.\nAfterwards, write what happened on the occasion slip — the fact, the fix, the time. The next shift plans better because tonight was written down, not retold.",
+        questions: [
+          {
+            q: "Bánh bị hỏng hoặc thất lạc thì báo cho ai, ở đâu?",
+            options: [
+              "Báo cả bàn cùng nghe để mọi người thông cảm cho bếp",
+              "Không báo ai cả, lặng lẽ bỏ phần bánh khỏi chương trình",
+              "Chỉ báo người chủ tiệc, tránh xa bàn, kèm ngay phương án B",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Việc bù đắp cho buổi tối trục trặc tuân theo điều gì?",
+            options: [
+              "Ba bậc phân quyền của tuần 33 — sảnh không tự hứa miễn phí",
+              "Cảm nhận của người phục vụ về mức độ nghiêm trọng",
+              "Yêu cầu cụ thể mà khách đưa ra ngay tại bàn ăn",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Not our fault. The printer wrote it wrong.",
+          good: "We are fixing it now, madam — the right name, ten minutes, my promise.",
+        },
+        {
+          bad: "Everyone, sorry, there is no cake tonight!",
+          good: "A quiet word, sir — the dessert plan has changed, and here is the new one.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Please tell me the truth — is the cake going to make it out tonight or not?",
+          options: [
+            {
+              text: "I really hope so, sir — the pastry section is doing everything they possibly can.",
+              correct: false,
+            },
+            {
+              text: "Of course, sir — nothing ever goes wrong with our cakes. Five more minutes only.",
+              correct: false,
+            },
+            {
+              text: "The truth, sir: the first cake failed. Plan B is plating now and reaches you in ten minutes.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const FB_WEEK_35: WeekContent = {
+  departmentId: "FB",
+  weekNumber: 35,
+  weekTitleEn: "Negotiating at the Table",
+  weekTitleVi: "Đàm phán tại bàn — đổi, không cho không",
+  reviewWords: [
+    "Corkage fee",
+    "Minimum spend",
+    "Policy",
+    "Instead",
+    "Last order time",
+    "Group deposit",
+    "Table time limit",
+    "Offer",
+  ],
+  lessons: [
+    {
+      lessonId: "FB_35_1",
+      lessonOrder: 1,
+      titleEn: "Trade, Don't Drop",
+      titleVi: "Đổi, đừng bớt",
+      vocabulary: [
+        {
+          word: "In exchange for",
+          phonetic: "/ɪn ɪksˈtʃeɪndʒ fɔː/",
+          definition: "Để đổi lấy",
+          context: "We can add the welcome drinks in exchange for an earlier start.",
+          icon: "🔄",
+        },
+        {
+          word: "What if",
+          phonetic: "/ˈwɒt ɪf/",
+          definition: "Còn nếu… thì sao — mở một phương án",
+          context: "What if we seat you at seven instead of eight?",
+          icon: "💡",
+        },
+        {
+          word: "However",
+          phonetic: "/haʊˈevə/",
+          definition: "Tuy nhiên — bước ngoặt lịch sự trong câu",
+          context: "However, the room does carry a minimum spend, madam.",
+          icon: "↪️",
+        },
+        {
+          word: "Meet in the middle",
+          phonetic: "/ˌmiːt ɪn ðə ˈmɪdl/",
+          definition: "Gặp nhau ở giữa — cùng nhượng một phần",
+          context: "Let us meet in the middle on the timing, sir.",
+          icon: "🤝",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No discount. This is the price.",
+          polite:
+            "The price stays, sir. However — what if we added the welcome tea for the whole party?",
+          rule: "Khung đàm phán của tuần: giữ giá + 'however' + 'what if we…' — lời từ chối lập tức mở sang một đề nghị. Không bao giờ để chữ 'no' đứng một mình cuối câu.",
+        },
+        {
+          rude: "You want cheap? Go somewhere cheap.",
+          polite:
+            "What if we looked at Tuesday, madam? The weekday set menu carries a friendlier price.",
+          rule: "Đổi BIẾN SỐ thay vì đổi GIÁ: ngày trong tuần, giờ ngồi, thực đơn — người đàm phán giỏi tìm thứ rẻ với nhà hàng mà quý với khách.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Twelve of us, and honestly, your set menu price is above our budget.",
+          targetResponse:
+            "What if we set four courses instead of five, sir? The room and the service stay the same.",
+          helpTip:
+            "'What if we…' — nói như một người cùng phe khách đang giải bài toán, không như người gác giá.",
+        },
+        {
+          guestPrompt: "Can you at least throw in something? We're bringing thirty people.",
+          targetResponse:
+            "With thirty guests, madam, I can put the welcome drinks to my manager — in exchange, may I confirm the set menu?",
+          helpTip:
+            "Đề nghị đổi chác vẫn phải đi qua đúng người có quyền — 'put it to my manager' là một nước đi đàm phán, không phải lời thoái thác.",
+        },
+      ],
+      reading: {
+        text: "NEGOTIATION AT A RESTAURANT — WHAT MOVES AND WHAT DOES NOT\nThe menu price does not move. What moves: the day of the week, the sitting time, the number of courses, the room, and what the house adds as a welcome.\nEvery 'no' travels with a 'what if': 'The terrace has a minimum spend on Saturdays. However — what if we held Sunday for you instead?'\nTrade value for value, and name both sides aloud: what the guest gives (an earlier sitting, a weekday, a confirmed set menu) and what the house gives (the private room, the welcome drinks, the corkage waived on one bottle).\nWhat the floor may put into a trade is week thirty-three's question: within your own authority, trade freely; above it, 'I will put that to my manager' — said as an offer, not an escape.\nAnd write every agreed trade on the booking: a trade that lives only in the conversation dies at the next shift change.",
+        questions: [
+          {
+            q: "Trong đàm phán ở nhà hàng, thứ gì KHÔNG dịch chuyển?",
+            options: [
+              "Ngày và giờ ngồi của bàn tiệc",
+              "Giá niêm yết của thực đơn",
+              "Số món trong set menu của khách",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Mỗi lời từ chối phải đi cùng điều gì?",
+            options: [
+              "Một đề nghị 'what if' mở phương án khác",
+              "Một lời xin lỗi chân thành và rõ ràng",
+              "Một lời giải thích chi tiết về chính sách",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "That price? Impossible. Next question.",
+          good: "The menu price is fixed, sir — the day, the time and the room are not.",
+        },
+        {
+          bad: "Take it or leave it, madam.",
+          good: "Let me see which pieces can move, madam — several usually can.",
+        },
+      ],
+      game: [
+        {
+          prompt:
+            "Your competitor down the street quoted us twenty percent less for the same party.",
+          options: [
+            {
+              text: "Then perhaps that restaurant suits your budget better, sir — we cannot match it.",
+              correct: false,
+            },
+            {
+              text: "I cannot move the price, sir. What I can do is ask my manager to add the room — shall I?",
+              correct: true,
+            },
+            {
+              text: "Twenty percent is easy, sir — I will simply take it off the total for you tonight.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_35_2",
+      lessonOrder: 2,
+      titleEn: "The Corkage Conversation",
+      titleVi: "Câu chuyện phí khui rượu",
+      vocabulary: [
+        {
+          word: "Waive",
+          phonetic: "/weɪv/",
+          definition: "Miễn một khoản phí",
+          context: "Only the supervisor can waive the fee, and rarely.",
+          icon: "🪶",
+        },
+        {
+          word: "Per bottle",
+          phonetic: "/pə ˈbɒtl/",
+          definition: "Tính trên mỗi chai",
+          context: "Corkage is charged per bottle, not per guest.",
+          icon: "🍾",
+        },
+        {
+          word: "Cellar",
+          phonetic: "/ˈselə/",
+          definition: "Hầm rượu của nhà hàng",
+          context: "May I show you what our cellar has from the same region?",
+          icon: "🏛️",
+        },
+        {
+          word: "Decant",
+          phonetic: "/dɪˈkænt/",
+          definition: "Chuyên rượu sang bình thở",
+          context: "Shall we decant your bottle before the first course?",
+          icon: "⚗️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Outside wine not allowed. Hotel rule.",
+          polite:
+            "Of course you may bring it, madam — there is a corkage fee per bottle, and we serve it as our own.",
+          rule: "Nói CÓ trước, điều kiện sau: 'you may… — there is a fee… — and we serve it as our own.' Phí khui rượu là một dịch vụ có tên, không phải một hình phạt.",
+        },
+        {
+          rude: "Why bring wine? Our wine not good enough for you?",
+          polite:
+            "A bottle from your wedding year — how lovely, sir. Shall we decant it before the first course?",
+          rule: "Chai rượu khách mang theo thường mang một câu chuyện — khen câu chuyện, rồi phục vụ nó chuẩn như rượu nhà. Tự ái thay cho hầm rượu là thứ không ai gọi món.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We brought a bottle from the year we got married. Is that allowed?",
+          targetResponse:
+            "What a lovely year to open, madam. There is a corkage fee per bottle — and we will serve it beautifully.",
+          helpTip:
+            "'Corkage' — /ˈkɔːkɪdʒ/, hai âm tiết, trọng âm đầu. Nêu phí bằng giọng dịch vụ, không phải giọng cảnh báo.",
+        },
+        {
+          guestPrompt: "Corkage? Seriously? At these prices you should open it for free.",
+          targetResponse:
+            "The fee covers the glasses, the ice and the service, sir. However — if you order a cellar bottle too, I can ask about the fee on yours.",
+          helpTip:
+            "Giải thích phí bằng những thứ nhìn thấy được: ly, đá, người phục vụ. Rồi 'however' mở một nước đổi.",
+        },
+      ],
+      reading: {
+        text: "OUTSIDE BOTTLES — THE HOUSE POSITION\nYes is the first word: a guest's own bottle is welcome. The corkage fee is charged per bottle and quoted BEFORE the cork moves, never after.\nSay what the fee buys: proper glasses, ice or decanting, service through the meal, and the cellar's care if the bottle must wait. A named service is easier to accept than a bare number.\nWhen a guest asks for the fee to be waived: the floor does not waive — that trade belongs to the supervisor, and it usually travels with something in exchange, like a cellar bottle ordered beside the guest's own.\nNever taste, judge or comment on the guest's bottle beyond service questions. If it turns out corked or faded, tell the host quietly and offer the cellar — the bad news belongs to the wine, not to their choice.\nThe fee, the limit per table, and what may be traded are ONE restaurant's numbers — ask your own manager for yours.",
+        questions: [
+          {
+            q: "Phí corkage được báo cho khách vào lúc nào?",
+            options: [
+              "Trước khi chai rượu được mở",
+              "Sau khi bữa ăn đã kết thúc",
+              "Chỉ khi khách chủ động hỏi tới",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Ai có quyền miễn phí corkage?",
+            options: [
+              "Người phục vụ — nếu khách là khách quen của nhà hàng",
+              "Giám sát hoặc quản lý — thường kèm một điều kiện trao đổi",
+              "Không một ai cả — phí này không bao giờ được miễn",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "You bring wine to a restaurant? Really?",
+          good: "Of course, sir — many guests bring a special bottle. May I tell you the corkage fee?",
+        },
+        {
+          bad: "This wine is warm. Bad storage at home?",
+          good: "Shall I chill it for twenty minutes, madam, while the starters arrive?",
+        },
+      ],
+      game: [
+        {
+          prompt: "We're regulars here — surely you can skip the corkage fee for us tonight?",
+          options: [
+            {
+              text: "That trade sits with my supervisor, sir — shall I ask, while the bottle chills with us?",
+              correct: true,
+            },
+            {
+              text: "For a regular, of course — I will quietly leave it off the bill tonight.",
+              correct: false,
+            },
+            {
+              text: "The fee is our standing policy, sir, so there is truly nothing anyone can do.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_35_3",
+      lessonOrder: 3,
+      titleEn: "Last Orders and the Table That Stays",
+      titleVi: "Giờ gọi món cuối và bàn khách nán lại",
+      vocabulary: [
+        {
+          word: "Wind down",
+          phonetic: "/ˌwaɪnd ˈdaʊn/",
+          definition: "Thu dần về cuối buổi",
+          context: "We start to wind down the kitchen at ten, sir.",
+          icon: "🌙",
+        },
+        {
+          word: "Linger",
+          phonetic: "/ˈlɪŋɡə/",
+          definition: "Nán lại thong thả",
+          context: "Guests may linger over coffee after the kitchen closes.",
+          icon: "🛋️",
+        },
+        {
+          word: "Nightcap",
+          phonetic: "/ˈnaɪtkæp/",
+          definition: "Ly cuối ngày trước khi về",
+          context: "May I offer a nightcap from the bar, madam?",
+          icon: "🥃",
+        },
+        {
+          word: "Carry on",
+          phonetic: "/ˌkæri ˈɒn/",
+          definition: "Tiếp tục",
+          context: "The evening can carry on at the bar until midnight.",
+          icon: "➡️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Kitchen closed. You must order now or never.",
+          polite:
+            "The kitchen takes its last orders at ten, sir — may I bring anything before it rests?",
+          rule: "'Takes its last orders' + 'before it rests' — nhân hoá căn bếp để lời giục nghe như lời mời. Thời hạn nêu MỘT lần, kèm một đề nghị.",
+        },
+        {
+          rude: "We are closing. Please pay and go home.",
+          polite:
+            "Please take your time over coffee, madam. However — the bar carries the evening on until midnight, if you would like.",
+          rule: "Đuổi khéo là mở một cánh cửa khác: 'the bar carries the evening on'. Khách rời BÀN mà không rời KHÁCH SẠN — buổi tối ở lại cùng khách.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "I know you're closing, but we're right in the middle of celebrating a birthday here.",
+          targetResponse:
+            "The table is yours, sir. The kitchen takes last orders in ten minutes — shall I bring one more round?",
+          helpTip:
+            "Hai sự thật trong một câu: bàn vẫn của khách, bếp sắp nghỉ. Đọc vế đầu ấm áp, vế sau như thông tin — không như tối hậu thư.",
+        },
+        {
+          guestPrompt: "What do you mean the kitchen is closed? It's my wife's fortieth!",
+          targetResponse:
+            "The stoves are down, sir — however, the pastry section is still on. What if the celebration moved to dessert and champagne?",
+          helpTip:
+            "'However' + 'what if' — cặp khung của tuần dùng đúng lúc bếp đã tắt: không mở lại bếp được, nhưng mở được một phương án.",
+        },
+      ],
+      reading: {
+        text: "CLOSING TIME — MOVING THE EVENING, NOT THE GUEST\nLast orders are offered once, at the table, quietly — 'the kitchen takes its last orders at ten' — with an offer attached, never called across the room.\nAfter the kitchen rests: coffee, tea and the pastry counter carry on, and the bar runs later than the dining room. A guest mid-celebration is offered the bridge, not the door: 'the bar carries the evening on until midnight.'\nThe bill is never brought unasked to hurry a table. Lights stay up, music stays on, chairs stay unstacked while any guest is seated — a room being packed away around a guest says what no member of staff would ever be allowed to say.\nIf one table's long evening truly blocks tomorrow's setup, the supervisor decides and the supervisor speaks — the floor never hurries a guest on its own.\nHours differ by season and by house — learn your own room's clock in your first week.",
+        questions: [
+          {
+            q: "Lượt gọi món cuối được thông báo như thế nào?",
+            options: [
+              "Nhiều lần để chắc chắn mọi khách đều nghe",
+              "Qua loa chung của phòng ăn cho nhanh gọn",
+              "Một lần, tại bàn, kèm theo một lời mời",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Điều gì bị cấm khi khách vẫn còn ngồi tại bàn?",
+            options: [
+              "Xếp ghế, tắt nhạc, dọn phòng ăn quanh khách",
+              "Mời khách chuyển sang quầy bar để tiếp tục",
+              "Mang cà phê và tráng miệng ra phục vụ thêm",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Last chance! Kitchen closing! Order fast!",
+          good: "One more round before the kitchen rests, sir? The bar stays open later.",
+        },
+        {
+          bad: "Why so slow? Other guests already left.",
+          good: "There is no clock on your table, madam — shall I bring fresh tea?",
+        },
+      ],
+      game: [
+        {
+          prompt: "Are you trying to kick us out? The waiters keep circling our table like sharks.",
+          options: [
+            {
+              text: "Not at all, sir — although the team does need to reset the room for the morning shift.",
+              correct: false,
+            },
+            {
+              text: "Never, sir — this table is yours for the evening. May I bring more coffee while you talk?",
+              correct: true,
+            },
+            {
+              text: "They are only doing their closing duties, sir — please do not take it personally.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "FB_35_4",
+      lessonOrder: 4,
+      titleEn: "The Regular Who Asks for a Discount",
+      titleVi: "Khách quen xin bớt giá",
+      vocabulary: [
+        {
+          word: "Loyalty",
+          phonetic: "/ˈlɔɪəlti/",
+          definition: "Sự gắn bó của khách quen",
+          context: "Loyalty earns attention, not a percentage.",
+          icon: "💛",
+        },
+        {
+          word: "Regular",
+          phonetic: "/ˈreɡjələ/",
+          definition: "Khách quen",
+          context: "Mr. Costa is a regular — Tuesdays, table nine.",
+          icon: "🪑",
+        },
+        {
+          word: "Gesture",
+          phonetic: "/ˈdʒestʃə/",
+          definition: "Một cử chỉ thiện chí nhỏ",
+          context: "A small gesture from the kitchen says more than a discount.",
+          icon: "🎀",
+        },
+        {
+          word: "Put it to",
+          phonetic: "/ˌpʊt ɪt ˈtuː/",
+          definition: "Chuyển đề nghị lên người có quyền quyết",
+          context: "I can put it to my manager for you tonight.",
+          icon: "📮",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Discount? No. Manager decide, not me.",
+          polite:
+            "That is my manager's to give, sir — I can put it to her tonight, and she will call you tomorrow.",
+          rule: "'That is my manager's to give' — sở hữu cách chỉ đúng CHỦ của quyền quyết định, rồi bạn làm người đưa thư có thời hạn. Từ chối mà vẫn tiến một bước.",
+        },
+        {
+          rude: "You come often but you also eat a lot, sir.",
+          polite:
+            "Your Tuesdays are part of this room, sir. Loyalty here earns attention — the best table, the first pour, the chef's hello.",
+          rule: "Liệt kê ba đãi ngộ phi tiền tệ — 'the best table, the first pour, the chef's hello'. Nhà hàng trả ơn khách quen bằng sự chăm chút; tiền bớt là quyền của quản lý, sự chăm chút là quyền của bạn.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Fourth time this month — that has to be worth ten percent off, no?",
+          targetResponse:
+            "It is worth more than that, sir — the best table and the kitchen's care. The percentage is my manager's; I will put it to her.",
+          helpTip:
+            "Vế đầu nâng giá trị của khách, vế sau chỉ đúng cửa có quyền. Đọc 'more than that' với nụ cười — đây là lời khen, không phải né tránh.",
+        },
+        {
+          guestPrompt: "The place around the corner gives regulars a free drink every visit.",
+          targetResponse:
+            "Every house has its own way, madam. May I put a regular's welcome to my manager — she decides those.",
+          helpTip:
+            "So sánh với nhà khác không cần phản bác — 'every house has its own way' đóng phép so sánh lại một cách lịch sự.",
+        },
+      ],
+      reading: {
+        text: "THE REGULAR AND THE PRICE — HOUSE DOCTRINE\nA regular is revenue that chose you twice. The thank-you is service before it is money: the remembered table, the preference card read before the shift, the chef who comes out to say hello.\nWhat the floor gives a regular: attention, memory, and the better table when there is one to give.\nWhat the floor never gives: a price. Any standing discount, birthday percentage or waived fee is the manager's, in writing, on the profile — never invented at the table, however warm the evening. A discount whispered once becomes a debt collected forever.\nWhen a regular asks directly: name the right owner and carry the request the same night — 'I will put it to my manager, and she will call you tomorrow.' The regular hears an honest next step, not a wall.\nAnd a warning from every long bar in this business: the regular who is owed a favour was usually promised it by a member of staff who no longer works here. Write things down.",
+        questions: [
+          {
+            q: "Sảnh nhà hàng trả ơn khách quen bằng thứ gì?",
+            options: [
+              "Sự chăm chút — bàn đẹp, trí nhớ, lời chào từ bếp",
+              "Phần trăm giảm giá cố định ghi trong hồ sơ khách",
+              "Đồ uống miễn phí mỗi lần khách ghé nhà hàng",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao giảm giá không được 'thì thầm' tặng tại bàn?",
+            options: [
+              "Vì các bàn xung quanh có thể nghe thấy và ganh tị",
+              "Vì lời hứa một lần sẽ thành món nợ bị đòi mãi mãi",
+              "Vì hệ thống tính tiền không cho phép sửa hoá đơn",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      arcade: [
+        {
+          bad: "Discount is impossible, do not ask again.",
+          good: "Let me carry that to my manager tonight, sir — you will hear tomorrow.",
+        },
+        {
+          bad: "You are lucky we even have a table for you.",
+          good: "Your table is the one by the window, madam — it waited for you.",
+        },
+      ],
+      game: [
+        {
+          prompt:
+            "We've spent a fortune here this year. One free bottle of wine — that's all I'm asking.",
+          options: [
+            {
+              text: "One bottle, sir — but please keep it between us, or everyone will want the same.",
+              correct: false,
+            },
+            {
+              text: "You are the kind of guest every room wants, sir. The bottle is my manager's call — I will ask her tonight.",
+              correct: true,
+            },
+            {
+              text: "A fortune for you is a normal year for others, sir — the policy protects everyone.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -12711,6 +13695,8 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
   "FB-33": FB_WEEK_33,
+  "FB-34": FB_WEEK_34,
+  "FB-35": FB_WEEK_35,
   "HK-33": HK_WEEK_33,
   "GR-34": GR_WEEK_34,
   "BO-37": BO_WEEK_37,
