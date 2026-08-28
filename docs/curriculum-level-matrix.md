@@ -5,7 +5,8 @@
 
 ## Nguyên tắc nền
 
-- **Lộ trình:** pre-A1 → B1 bậc đầu (B1.1) **trong phạm vi nghiệp vụ khách sạn/resort** (ESP),
+- **Lộ trình:** pre-A1 → **A2+** **trong phạm vi nghiệp vụ khách sạn/resort** (ESP), có tiếp xúc
+  ngữ liệu B1.1 ở phase 4,
   không phải B1 tổng quát. 40 tuần × ~4h = ~160 giờ hướng dẫn; khả thi vì phạm vi hẹp,
   công thức lặp cao, và học viên dùng tiếng Anh hằng ngày trong ca làm.
 - **Áp dụng đồng loạt cho 5 bộ phận đang mở** (FO, FB, HK, SW, GR): cùng một _xương sống
@@ -21,13 +22,13 @@
 
 ## Tổng quan 5 phase
 
-| Phase | Tuần  | Band CEFR  | Giờ tích lũy | Tên gọi                                     |
-| ----- | ----- | ---------- | ------------ | ------------------------------------------- |
-| 0     | 1–6   | pre-A1     | 24h          | Nền tảng sống còn (Survival Foundation)     |
-| 1     | 7–14  | A1         | 56h          | Giao tiếp câu đơn (First Sentences)         |
-| 2     | 15–22 | A2.1       | 88h          | Nghiệp vụ chuẩn (Core SOP Service)          |
-| 3     | 23–30 | A2.2 / A2+ | 120h         | Dịch vụ chủ động (Proactive Service)        |
-| 4     | 31–40 | B1.1       | 160h         | Xử lý & thuyết phục (Recovery & Persuasion) |
+| Phase | Tuần  | Band CEFR           | Giờ tích lũy | Tên gọi                                     |
+| ----- | ----- | ------------------- | ------------ | ------------------------------------------- |
+| 0     | 1–6   | pre-A1              | 24h          | Nền tảng sống còn (Survival Foundation)     |
+| 1     | 7–14  | A1                  | 56h          | Giao tiếp câu đơn (First Sentences)         |
+| 2     | 15–22 | A2.1                | 88h          | Nghiệp vụ chuẩn (Core SOP Service)          |
+| 3     | 23–30 | A2.2 / A2+          | 120h         | Dịch vụ chủ động (Proactive Service)        |
+| 4     | 31–40 | A2+ · tiếp xúc B1.1 | 160h         | Xử lý & thuyết phục (Recovery & Persuasion) |
 
 **Tuần checkpoint (weektest):** 6, 14, 22, 30, 40 — tuần củng cố gồm ≥50% ngữ liệu tái sử
 dụng cộng bài kiểm tra tổng hợp phase (suite `weektest`). Qua checkpoint mới mở phase kế
@@ -177,8 +178,17 @@ ngữ pháp, lời khách và câu mẫu luyện nói.
 - `qa:full` T3 chặn năm điều: tuần 1 = 0.70, tuần 40 = 0.90, không tuần nào chậm hơn tuần
   trước, mỗi phase mở đúng mốc, và từ đơn luôn chậm hơn câu.
 
-Tổng từ vựng chủ động toàn lộ trình: ~560–620 từ + cụm công thức — phù hợp chuẩn ESP
-(từ vựng lễ tân/buồng phòng/F&B lõi), không nhắm 2.000 từ tổng quát của B1 đại trà.
+Tổng từ vựng chủ động toàn lộ trình: **≥510 từ** + cụm công thức — phù hợp chuẩn ESP
+
+> **Hạ mục tiêu ngày 23/08/2026: 560–620 → ≥510.** Con số 560–620 chưa từng có căn cứ và
+> chưa từng có gate nào canh; đo thật thì cả năm bộ phận nằm ở 502–508. Với một khoá ESP phạm
+> vi hẹp 40 tuần, 510 từ chủ động **chuyên ngành** là mức phòng vệ được — mục tiêu cũ đòi
+> thêm ~55 từ mỗi bộ phận mà không nói được thêm để làm gì.
+>
+> Khác với lần trước, con số này **có gate canh** (`verify:content`, GATE 5). Một mục tiêu
+> không được kiểm chỉ là trang trí, và các đợt soạn tay Phase 4 sắp tới có thể làm tổng
+> **tụt** nếu một tuần soạn tay dạy ít từ hơn tuần sinh tự động mà nó thay thế.
+> (từ vựng lễ tân/buồng phòng/F&B lõi), không nhắm 2.000 từ tổng quát của B1 đại trà.
 
 ---
 
@@ -302,20 +312,31 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 | 29   | Kể lại & bàn giao ca                                  | Past continuous nhẹ; báo cáo miệng              |
 | 30   | **Checkpoint P3**                                     | Ôn W23–29                                       |
 
-## Phase 4 — B1.1 (tuần 31–40): Xử lý & thuyết phục
+## Phase 4 — A2+ · tiếp xúc B1.1 (tuần 31–40): Xử lý & thuyết phục
 
-| Tuần | Chức năng chung                                                  | Ngôn ngữ mới                                            |
-| ---- | ---------------------------------------------------------------- | ------------------------------------------------------- |
-| 31   | Kể chuyện sản phẩm/dịch vụ (storytelling)                        | Câu ghép 2–3 mệnh đề; tính từ cảm xúc                   |
-| 32   | Tư vấn chuyên sâu & cá nhân hóa                                  | Based on…; đề xuất theo sở thích                        |
-| 33   | Tranh chấp & bồi thường (LAST đầy đủ)                            | Policy allows…; up to…; Let me check with my supervisor |
-| 34   | Sự kiện đặc biệt & bất ngờ cho khách                             | Phối hợp đa bộ phận; câu chúc trang trọng               |
-| 35   | Đàm phán nhẹ (nội bộ & khách)                                    | What if we…? in exchange for…; however                  |
-| 36   | Xử lý khủng hoảng (thời tiết, y tế, kỹ thuật)                    | Hướng dẫn khẩn; trấn an                                 |
-| 37   | Thương lượng B2B cơ bản                                          | Điều khoản, tỷ lệ, thời hạn                             |
-| 38   | Trình bày đề xuất/báo giá                                        | Cấu trúc pitch ngắn                                     |
-| 39   | Tổng duyệt role-play liên tình huống                             | Kết hợp mọi chức năng                                   |
-| 40   | **Đánh giá cuối khóa** — mock role-play + weektest toàn lộ trình | Chuẩn đầu ra B1.1 nghiệp vụ                             |
+> **Nhãn hạ ngày 23/08/2026.** Phase này từng ghi "B1.1". Hai vòng kiểm định độc lập cùng
+> kết luận khoá học **không có phép đo nào chứng nhận được B1**: toàn bộ speaking 40 tuần
+> chấm bằng cách so khớp một `targetResponse` hiển thị sẵn trên màn hình — kể cả tuần 39–40,
+> nơi ma trận này từng hứa "role-play mở"; bài thi cuối là 20 câu trắc nghiệm cộng 5 câu nhại
+> lại. Không mục nào bắt học viên tạo ra một lượt lời chưa luyện, mà đó chính là ranh giới
+> A2/B1. **Ngữ liệu** thì đúng là chạm B1.1 (câu ba mệnh đề, mệnh đề nhượng bộ, trần 22 từ),
+> nên nhãn nói đúng chừng đó: đầu ra A2+, có tiếp xúc B1.1.
+>
+> Khôi phục nhãn B1.1 nghĩa là **xây phép đo trước** (P1-4/5/6 trong
+> `docs/academic-review-backlog.md`), không phải sửa lại dòng này.
+
+| Tuần | Chức năng chung                                                        | Ngôn ngữ mới                                            |
+| ---- | ---------------------------------------------------------------------- | ------------------------------------------------------- |
+| 31   | Kể chuyện sản phẩm/dịch vụ (storytelling)                              | Câu ghép 2–3 mệnh đề; tính từ cảm xúc                   |
+| 32   | Tư vấn chuyên sâu & cá nhân hóa                                        | Based on…; đề xuất theo sở thích                        |
+| 33   | Tranh chấp & bồi thường (LAST đầy đủ)                                  | Policy allows…; up to…; Let me check with my supervisor |
+| 34   | Sự kiện đặc biệt & bất ngờ cho khách                                   | Phối hợp đa bộ phận; câu chúc trang trọng               |
+| 35   | Đàm phán nhẹ (nội bộ & khách)                                          | What if we…? in exchange for…; however                  |
+| 36   | Xử lý khủng hoảng (thời tiết, y tế, kỹ thuật)                          | Hướng dẫn khẩn; trấn an                                 |
+| 37   | Thương lượng B2B cơ bản                                                | Điều khoản, tỷ lệ, thời hạn                             |
+| 38   | Trình bày đề xuất/báo giá                                              | Cấu trúc pitch ngắn                                     |
+| 39   | Tổng duyệt role-play liên tình huống                                   | Kết hợp mọi chức năng                                   |
+| 40   | **Đánh giá cuối khóa** — weektest toàn lộ trình (chưa có role-play mở) | Chuẩn đầu ra A2+ nghiệp vụ, có tiếp xúc B1.1            |
 
 ---
 

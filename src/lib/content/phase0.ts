@@ -68,10 +68,28 @@ export type P0Lexicon = {
   /** A service this department owns, used for opening-hours work in week 3. */
   service: { en: string; vi: string; open: string; close: string };
   /** One paid item, used for price work in week 4. */
-  priced: { en: string; vi: string; usd: number; usdWord: string };
+  /** Giá dịch vụ dùng để dạy số tiền. VND là đơn vị giao dịch thật ở
+   *  Việt Nam nên nó dẫn dắt; USD giữ lại cho bài quy đổi (tuần 4 bài 3).
+   *  `vndWord` phải đọc được trong 3 từ tiếng Anh trở xuống — trần pre-A1
+   *  là 5 từ một câu. */
+  priced: {
+    en: string;
+    vi: string;
+    vnd: number;
+    vndWord: string;
+    usd: number;
+    usdWord: string;
+  };
   roomNo: { digits: string; spoken: string };
   floor: { ordinal: string; vi: string };
 };
+
+/** Chữ cái đầu câu. Số tiền VND hay đứng đầu câu ("Five hundred thousand
+ *  dong, sir.") nên khung phải hoa nó lên — 18 câu mẫu từng bắt đầu bằng
+ *  chữ thường vì thiếu bước này. */
+function capFirst(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
 export const LEXICONS: Record<string, P0Lexicon> = {
   FO: {
@@ -91,7 +109,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
     service: { en: "check-in", vi: "giờ nhận phòng", open: "two", close: "eleven" },
-    priced: { en: "airport transfer", vi: "xe đưa đón sân bay", usd: 25, usdWord: "twenty-five" },
+    priced: {
+      en: "airport transfer",
+      vi: "xe đưa đón sân bay",
+      vnd: 500000,
+      vndWord: "five hundred thousand",
+      usd: 20,
+      usdWord: "twenty",
+    },
     roomNo: { digits: "205", spoken: "two-oh-five" },
     floor: { ordinal: "second", vi: "tầng hai" },
   },
@@ -112,7 +137,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Napkin", phonetic: "/ˈnæpkɪn/", definition: "Khăn ăn", icon: "🧻" },
     ],
     service: { en: "breakfast", vi: "bữa sáng", open: "six", close: "ten" },
-    priced: { en: "Vietnamese coffee", vi: "cà phê Việt Nam", usd: 4, usdWord: "four" },
+    priced: {
+      en: "Vietnamese coffee",
+      vi: "cà phê Việt Nam",
+      vnd: 90000,
+      vndWord: "ninety thousand",
+      usd: 4,
+      usdWord: "four",
+    },
     roomNo: { digits: "310", spoken: "three-one-oh" },
     floor: { ordinal: "third", vi: "tầng ba" },
   },
@@ -133,7 +165,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Bin", phonetic: "/bɪn/", definition: "Thùng rác", icon: "🗑️" },
     ],
     service: { en: "room cleaning", vi: "giờ dọn phòng", open: "eight", close: "four" },
-    priced: { en: "laundry for one shirt", vi: "giặt là một áo sơ mi", usd: 3, usdWord: "three" },
+    priced: {
+      en: "laundry for one shirt",
+      vi: "giặt là một áo sơ mi",
+      vnd: 70000,
+      vndWord: "seventy thousand",
+      usd: 3,
+      usdWord: "three",
+    },
     roomNo: { digits: "812", spoken: "eight-one-two" },
     floor: { ordinal: "eighth", vi: "tầng tám" },
   },
@@ -158,7 +197,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     // as answer options, so identical values give the learner two identical
     // choices and no correct answer to pick.
     service: { en: "the spa", vi: "giờ mở cửa spa", open: "ten", close: "eight" },
-    priced: { en: "foot massage", vi: "massage chân", usd: 30, usdWord: "thirty" },
+    priced: {
+      en: "foot massage",
+      vi: "massage chân",
+      vnd: 700000,
+      vndWord: "seven hundred thousand",
+      usd: 28,
+      usdWord: "twenty-eight",
+    },
     roomNo: { digits: "104", spoken: "one-oh-four" },
     floor: { ordinal: "first", vi: "tầng một" },
   },
@@ -187,7 +233,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Umbrella", phonetic: "/ʌmˈbrelə/", definition: "Ô, dù", icon: "☂️" },
     ],
     service: { en: "the lounge", vi: "giờ mở cửa phòng chờ", open: "seven", close: "ten" },
-    priced: { en: "birthday cake", vi: "bánh sinh nhật", usd: 20, usdWord: "twenty" },
+    priced: {
+      en: "birthday cake",
+      vi: "bánh sinh nhật",
+      vnd: 500000,
+      vndWord: "five hundred thousand",
+      usd: 20,
+      usdWord: "twenty",
+    },
     roomNo: { digits: "720", spoken: "seven-two-oh" },
     floor: { ordinal: "seventh", vi: "tầng bảy" },
   },
@@ -208,7 +261,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
     service: { en: "the office", vi: "giờ làm việc văn phòng", open: "eight", close: "five" },
-    priced: { en: "meeting room for one hour", vi: "phòng họp một giờ", usd: 50, usdWord: "fifty" },
+    priced: {
+      en: "meeting room for one hour",
+      vi: "phòng họp một giờ",
+      vnd: 1000000,
+      vndWord: "one million",
+      usd: 40,
+      usdWord: "forty",
+    },
     roomNo: { digits: "415", spoken: "four-one-five" },
     floor: { ordinal: "fourth", vi: "tầng bốn" },
   },
@@ -562,7 +622,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           "Room what?",
         ),
         game(
-          "Is the total thirty dollars?",
+          "Is the total four hundred thousand?",
           "No, sir. It is forty dollars.",
           "Thirty yes, sir.",
           "Dollar forty is.",
@@ -948,17 +1008,23 @@ function week3(lx: P0Lexicon): LessonContent[] {
 // ============================================================
 function week4(lx: P0Lexicon): LessonContent[] {
   return [
-    lesson(lx, 4, 1, "Prices in Dollars", "Giá bằng đô la", {
+    lesson(lx, 4, 1, "Prices in Dong", "Giá bằng tiền đồng", {
       vocabulary: [
-        v("Price", "/praɪs/", "Giá", "The price is twenty dollars.", "💲"),
-        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is ${lx.priced.usd} dollars.`, "💵"),
+        v("Price", "/praɪs/", "Giá", `The price is ${lx.priced.vndWord}.`, "💲"),
+        v(
+          "Dong",
+          "/dɒŋ/",
+          "Đồng (tiền Việt Nam)",
+          `${capFirst(lx.priced.vndWord)} dong, sir.`,
+          "🇻🇳",
+        ),
         v("Free", "/friː/", "Miễn phí", "The water is free, sir.", "🆓"),
       ],
       grammar: [
         g(
-          `Twenty dollar.`,
-          `It is twenty dollars.`,
-          "Từ 2 đô trở lên phải có -s: twenty dollarS. Và cần 'It is' ở đầu.",
+          `${capFirst(lx.priced.vndWord)} dongs.`,
+          `${capFirst(lx.priced.vndWord)} dong, sir.`,
+          "'Dong' KHÔNG bao giờ thêm -s, dù số tiền lớn đến đâu. Đây là ngoại lệ với thói quen thêm -s cho số nhiều.",
         ),
         g(
           "Price what?",
@@ -969,30 +1035,33 @@ function week4(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "How much is it?",
-          `It is ${lx.priced.usdWord} dollars, sir.`,
-          "Công thức: 'It is + số + dollars'. Nhớ -s khi từ 2 trở lên.",
+          `${capFirst(lx.priced.vndWord)} dong, sir.`,
+          "Đọc số tiền thành cụm liền, đừng ngắt từng chữ. Và giữ âm /ŋ/ cuối 'dong' — đừng đọc thành 'đon'.",
         ),
       ],
       reading: read(
-        `A guest asks about the ${lx.priced.en}. ${lx.staff} says: "It is ${lx.priced.usd} dollars, sir." The guest says: "That is fine."`,
+        `A guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine."`,
         [
           {
             q: `${lx.priced.vi} giá bao nhiêu?`,
-            options: [`${lx.priced.usd} đô`, "Miễn phí", "10 đô"],
+            options: [`${lx.priced.vndWord} đồng`, "Miễn phí", "Chưa nói giá"],
             correct: 0,
-            explanation: `Nhân viên nói "It is ${lx.priced.usd} dollars".`,
+            explanation: `Nhân viên nói "${lx.priced.vndWord} dong".`,
           },
           {
-            q: "Vì sao nói 'dollars' chứ không phải 'dollar'?",
-            options: ["Vì nhiều hơn một", "Vì lịch sự hơn", "Vì khách là nam"],
+            q: "Vì sao KHÔNG nói 'dongs'?",
+            options: [
+              "Vì 'dong' không bao giờ thêm -s",
+              "Vì số tiền còn nhỏ",
+              "Vì khách là người nước ngoài",
+            ],
             correct: 0,
-            explanation: "Danh từ đếm được, số nhiều phải thêm -s: two dollars, twenty dollars.",
+            explanation:
+              "Tên tiền tệ này không đếm được trong tiếng Anh: 'five hundred thousand dong'.",
           },
         ],
       ),
-      game: [
-        game("Is the water free?", "Yes, madam. It is free.", "No, water dollar.", "Free no."),
-      ],
+      game: [game("Is the water free?", "Yes, madam. It is free.", "No, water dong.", "Free no.")],
     }),
 
     lesson(lx, 4, 2, "Cash or Card?", "Tiền mặt hay thẻ", {
@@ -1041,44 +1110,46 @@ function week4(lx: P0Lexicon): LessonContent[] {
       ],
     }),
 
-    lesson(lx, 4, 3, "Vietnamese Dong", "Tiền đồng Việt Nam", {
+    // Khách nước ngoài vẫn hỏi giá bằng đô, nên bài này giữ lại — nhưng đúng
+    // vị trí của nó: một bài quy đổi, không phải đơn vị mặc định của khách sạn.
+    lesson(lx, 4, 3, "When a Guest Asks in Dollars", "Khi khách hỏi giá bằng đô", {
       vocabulary: [
-        v("Dong", "/dɒŋ/", "Đồng (tiền Việt Nam)", "Five hundred thousand dong.", "🇻🇳"),
+        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usd} dollars.`, "💵"),
         v("Change", "/tʃeɪndʒ/", "Tiền thối lại", "Here is your change.", "🪙"),
       ],
       grammar: [
         g(
-          "Dong five hundred thousand.",
-          "Five hundred thousand dong.",
-          "Tiếng Anh nói số trước, đơn vị tiền sau: five hundred thousand DONG.",
+          `${lx.priced.usd} dollar.`,
+          `It is about ${lx.priced.usd} dollars.`,
+          "Hai điều: từ 2 đô trở lên phải có -s, và thêm 'about' vì tỷ giá thay đổi hằng ngày.",
         ),
         g(
-          "Money back here.",
-          "Here is your change.",
-          "Tiền thối gọi là 'change'. Đưa cho khách nói 'Here is your change.'",
+          "We take dollar too.",
+          "We take dong, madam.",
+          "Khách sạn thu bằng tiền đồng. Nói giá quy đổi để khách hình dung, nhưng hoá đơn vẫn là dong.",
         ),
       ],
       speaking: [
         sp(
-          "Do you take dong?",
-          "Yes, we take dong, madam.",
-          "Nhắc lại đơn vị tiền khách hỏi để xác nhận rõ ràng.",
+          "How much is that in dollars?",
+          `It is about ${lx.priced.usdWord} dollars, sir.`,
+          "Giữ 'about' — nói một con số đô chính xác là hứa một tỷ giá bạn không kiểm soát được.",
         ),
       ],
       reading: read(
-        `The guest pays with dong. ${lx.staff} counts the money and says: "Thank you, madam. Here is your change."`,
+        `A guest asks the price in dollars. ${lx.staff} says: "It is about ${lx.priced.usd} dollars, sir. We take dong." The guest pays and gets change.`,
         [
           {
-            q: "'Change' trong bài nghĩa là gì?",
-            options: ["Tiền thối lại", "Thay đổi lịch", "Đổi phòng"],
+            q: "Vì sao nhân viên nói 'about'?",
+            options: ["Vì tỷ giá thay đổi hằng ngày", "Vì chưa biết giá", "Vì đang giảm giá"],
             correct: 0,
-            explanation: "Trong thanh toán, 'change' là tiền thối lại cho khách.",
+            explanation: "Nói con số đô chính xác là hứa một tỷ giá khách sạn không quyết định.",
           },
           {
-            q: "Trật tự đúng khi nói số tiền là gì?",
-            options: ["Số trước, đơn vị sau", "Đơn vị trước, số sau", "Không quan trọng"],
+            q: "Khách sạn thu tiền bằng đơn vị nào?",
+            options: ["Tiền đồng", "Đô la Mỹ", "Cả hai đều được"],
             correct: 0,
-            explanation: "Tiếng Anh: 'five hundred thousand dong' — số đứng trước đơn vị tiền.",
+            explanation: "Giá quy đổi chỉ để khách hình dung; hoá đơn và thanh toán là tiền đồng.",
           },
         ],
       ),
@@ -1094,13 +1165,13 @@ function week4(lx: P0Lexicon): LessonContent[] {
 
     lesson(lx, 4, 4, "Confirming the Total", "Xác nhận tổng tiền", {
       vocabulary: [
-        v("Total", "/ˈtəʊtl/", "Tổng cộng", "The total is thirty dollars.", "🧮"),
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", "The total is four hundred thousand.", "🧮"),
         v("Bill", "/bɪl/", "Hóa đơn", "Here is your bill, sir.", "🧾"),
       ],
       grammar: [
         g(
           "Total thirty.",
-          "The total is thirty dollars.",
+          "The total is four hundred thousand.",
           "Cần mạo từ 'The', động từ 'is' và đơn vị tiền: THE total IS thirty DOLLARS.",
         ),
         g(
@@ -1112,7 +1183,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "Two coffees, please.",
-          "Two coffees. Eight dollars, please.",
+          "Two coffees. Ninety thousand dong, please.",
           "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn.",
         ),
       ],
@@ -1135,7 +1206,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          "Here is fifty dollars.",
+          "Here is five hundred thousand.",
           "Thank you, sir. Your change, please.",
           "Fifty dollar OK.",
           "Total fifty yes.",
@@ -1481,8 +1552,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
       ],
       grammar: [
         g(
-          `${lx.service.en} open ${lx.service.open}, price ${lx.priced.usdWord} dollar.`,
-          `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`,
+          `${lx.service.en} open ${lx.service.open}, price ${lx.priced.vndWord} dong.`,
+          `We open at ${lx.service.open}. ${capFirst(lx.priced.vndWord)} dong.`,
           "Ôn tuần 3 và 4: 'at' trước giờ, 'It is' trước giá, và -s ở 'dollars'.",
         ),
         g(
@@ -1494,12 +1565,12 @@ function week6(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "Sorry, what time and how much?",
-          `We open at ${lx.service.open}. It is ${lx.priced.usdWord} dollars.`,
+          `We open at ${lx.service.open}. ${capFirst(lx.priced.vndWord)} dong.`,
           "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài.",
         ),
       ],
       reading: read(
-        `A guest asks about ${lx.service.en} and the ${lx.priced.en}. ${lx.staff} says: "We open at ${lx.service.open}, madam. The ${lx.priced.en} is ${lx.priced.usd} dollars."`,
+        `A guest asks about ${lx.service.en} and the ${lx.priced.en}. ${lx.staff} says: "We open at ${lx.service.open}, madam. The ${lx.priced.en} is ${lx.priced.vndWord} dong."`,
         [
           {
             q: "Khi không nghe rõ, nên nói câu nào?",

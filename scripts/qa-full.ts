@@ -129,7 +129,13 @@ const slugify = (t: string) =>
 // ============================================================
 {
   const placeholder = /\b(TODO|TBD|FIXME|XXX|lorem|placeholder|undefined|null|NaN)\b/i;
-  const mojibake = /Ã|â€|Ð|Ñ‚|�/;
+  // Mojibake is UTF-8 read as Latin-1, so its signature is a high-Latin
+  // letter FOLLOWED by another one: "Ã¡", "Ã©", "Ãª". A bare "Ã" is not
+  // damage — it is the uppercase of "ã", and Vietnamese emphasis uses it
+  // constantly ("bạn ĐÃ xem rồi"). The old pattern flagged every one of
+  // those, which meant the only safe way to pass the gate was to stop
+  // writing uppercase Vietnamese.
+  const mojibake = /[ÃÐÑ][-¿]|â€|�/;
   let checked = 0;
 
   for (const [key, wk] of Object.entries(ALL_WEEKS)) {
@@ -458,6 +464,10 @@ const slugify = (t: string) =>
 
     // Every declared reviewWord must resolve to a real VocabItem.
     const declared = wk.reviewWords ?? [];
+    // A duplicate reviewWord renders the learner two identical review chips.
+    // One shipped in FO-31 for a day because nothing looked.
+    if (new Set(declared.map((w) => w.toLowerCase())).size !== declared.length)
+      fail("T4", `${key} has duplicate reviewWords: ${declared.join(", ")}`);
     if (declared.length) {
       const resolved = resolveReviewVocab(dep, declared);
       const got = new Set(resolved.map((v) => v.word.toLowerCase()));

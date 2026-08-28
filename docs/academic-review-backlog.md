@@ -15,9 +15,33 @@ Kèm theo `docs/academic-review-2026-08.md`. Mỗi mục ghi: bằng chứng, ph
 
 ## Trạng thái
 
-**Toàn bộ nhóm P0 đã được xử lý.** Nhóm P1 đã xử lý 7/12: P1-1, P1-2, P1-3, P1-7, P1-9,
-P1-10, P1-12. Còn lại **P1-4, P1-5, P1-6, P1-8, P1-11** — đều là câu hỏi thiết kế cần quyết
-định, không phải lỗi. P2–P3 vẫn còn nguyên. Chi tiết ở hai phần "Đã sửa" cuối tài liệu.
+**P0: 5/5 xong. P1: 9/12 xong** — P1-1, P1-2, P1-3, **P1-4**, P1-7, P1-9, P1-10, **P1-11**,
+P1-12.
+
+Còn đúng **ba** mục P1:
+
+| Mục      | Việc                                            | Trạng thái                      |
+| -------- | ----------------------------------------------- | ------------------------------- |
+| **P1-5** | Viết & phiên dịch chỉ 1 tuần/khoá mỗi thứ       | chờ quyết                       |
+| **P1-6** | Luyện sản sinh quá mỏng (2 nhiệm vụ/40 tuần)    | chờ quyết                       |
+| **P1-8** | Tuần 3–6 phân hoá 0% (giá USD **đã sửa** 24/08) | một nửa xong — xem ghi chú dưới |
+
+**P1-8 đã xử một nửa (24/08).** Người dùng chọn phương án B: đảo VND lên dẫn dắt, giữ một
+bài quy đổi USD. Tuần 4 bài 1 đổi từ "Prices in Dollars" sang "Prices in Dong"; bài 3 từ
+"Vietnamese Dong" thành "When a Guest Asks in Dollars" — dạy nói `about` vì tỷ giá thay đổi
+hằng ngày, và dạy rằng hoá đơn vẫn là tiền đồng. Tuần 1–6 giờ nghiêng về đồng (54 so với 36).
+Thêm `vnd`/`vndWord` vào `LEXICONS.priced` và helper `capFirst()` vì số tiền VND hay đứng
+đầu câu. **Nửa còn chưa làm:** tuần 3–6 vẫn phân hoá 0% theo từ vựng, và buồng phòng vẫn
+học "Cash or card, sir?" dù không thu tiền — đó là phương án C, chưa chọn.
+
+Hai mục vừa đóng ngày 23/08, theo cách khác với đề xuất ban đầu:
+
+- **P1-4** đóng bằng vế thứ hai của chính nó ("sửa spec cho khớp thực tế"): hạ nhãn phase 4
+  từ `B1.1` xuống `A2+ · tiếp xúc B1.1`. Khôi phục nhãn cũ đòi **xây phép đo trước**.
+- **P1-11** đóng bằng cách hạ mục tiêu `560–620` → `≥510` **kèm GATE 5 canh** (sàn 500),
+  thay vì soạn thêm ~55 từ mỗi bộ phận. Con số 560 chưa từng có căn cứ và chưa từng có gate.
+
+P2 (12 mục) và P3 (6 mục) vẫn còn nguyên. Chi tiết ở hai phần "Đã sửa" cuối tài liệu.
 
 Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
 

@@ -16,7 +16,7 @@
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
 import { DEPARTMENTS } from "../src/lib/departments";
-import { CHECKPOINT_ORAL_ITEMS } from "../src/lib/phases";
+import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 
 type Phase = {
   name: string;
@@ -83,10 +83,11 @@ const PHASES: Phase[] = [
     reviewPct: 0.35,
     deptSpecificMin: 0.65,
   },
-  // B1.1 — the top of the ladder. Three clauses are allowed, so the cap
-  // rises to 22 words; recycling peaks at 40%.
+  // The top of the ladder. Three clauses are allowed, so the cap rises to
+  // 22 words; recycling peaks at 40%. The MATERIAL here reaches B1.1; the
+  // band the course can certify is A2+ — see the note in src/lib/phases.ts.
   {
-    name: "P4 B1.1",
+    name: "P4 A2+ (B1.1 material)",
     from: 31,
     to: 40,
     wordCap: 22,
@@ -249,6 +250,20 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
         if (n > phase.wordCap + 1)
           errors.push(
             `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+          );
+      }
+      // The cap covered only grammar.polite and speaking.targetResponse. A
+      // game's correct option is just as much a sentence the learner is
+      // rewarded for producing, and a 24-word answer sat in FO-35 for a week
+      // because nothing looked at it. `arcade` is deliberately NOT checked: no
+      // suite reads that field, so capping it would gate text no learner sees.
+      for (const g of lesson.game) {
+        const right = g.options.find((o) => o.correct);
+        if (!right) continue;
+        const n = maxSentenceLen(right.text);
+        if (n > phase.wordCap + 1)
+          errors.push(
+            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
           );
       }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.
@@ -535,6 +550,119 @@ if (legacyGameDupes.length) {
   );
 }
 
+// ============================================================
+// GATE 5 — active vocabulary total per department
+//
+// The matrix carried "~560-620 từ" for months with nothing checking it, and
+// the real figure was 502-508 everywhere. A target nobody measures is not a
+// target; it is decoration that drifts.
+//
+// The number moved to >=510 because 560 was never argued for, and the floor
+// below is what makes 510 mean something. The risk it guards is specific and
+// live: the Phase 4 hand-authoring batches replace a generated week with a
+// written one, and a written week that teaches fewer headwords than the week
+// it replaced takes the total DOWN. Thirty-eight of those are queued. Without
+// this gate the course could quietly shrink while every other check stayed
+// green.
+//
+// A department still being authored has no total to defend yet. A withdrawn
+// one does — its forty weeks are finished, so it is checked like any other.
+// ============================================================
+{
+  const FLOOR = 500;
+  const TARGET = 510;
+  const totals: string[] = [];
+  for (const d of DEPARTMENTS) {
+    if (d.hidden === "in-progress") continue;
+    const words = new Set<string>();
+    for (let w = 1; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${d.code}-${w}`]?.lessons ?? [])
+        for (const v of l.vocabulary) words.add(v.word.toLowerCase());
+    const n = words.size;
+    totals.push(`${d.code} ${n}${n >= TARGET ? "" : ` (còn ${TARGET - n})`}`);
+    if (n < FLOOR)
+      errors.push(
+        `${d.code} teaches ${n} active headwords — below the floor of ${FLOOR}. The matrix target is ${TARGET}.`,
+      );
+  }
+  console.log(`Active vocabulary — ${totals.join(" · ")}  (sàn ${FLOOR}, mục tiêu ${TARGET})`);
+}
+
+// ============================================================
+// GATE 6 — a reading question must be unanswerable without reading
+//
+// Two strategies let a learner score without knowing any English, and both
+// were live until this gate was written:
+//
+//   POSITION. Every one of the 1,704 generated questions stored its answer
+//   first, and ReadingSuite rendered options in stored order, so tapping
+//   the first button scored 100%. Fixed in the suite rather than in 1,920
+//   questions: options are permuted by a seed taken from the question text,
+//   stable per question. This gate measures the permuted order, because
+//   that is what a learner actually sees.
+//
+//   LENGTH. An answer that carries its own reasoning is longer than the
+//   distractors, and the learner picks the long one. This is a CONTENT
+//   problem — no shuffle fixes it. The threshold below is a floor, not a
+//   target: the generated spine sits near 80% and is recorded as debt
+//   rather than blocking every build, while any week authored from here is
+//   held to something a real test could defend.
+//
+// The pass mark for a checkpoint is 70%. Any guessing strategy that beats
+// that means the reading half of the checkpoint certifies nothing.
+// ============================================================
+{
+  const seedOf = (s: string) => {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  };
+  /** Mirrors shuffleOptions() in src/components/suites/ReadingSuite.tsx. */
+  const permute = (q: { q: string; options: string[]; correct: number }) => {
+    const order = q.options.map((_, i) => i);
+    let seed = seedOf(q.q);
+    for (let i = order.length - 1; i > 0; i--) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const j = Math.floor((seed / 4294967296) * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return { options: order.map((i) => q.options[i]), correct: order.indexOf(q.correct) };
+  };
+
+  const POSITION_MAX = 0.5;
+  const LENGTH_MAX = 0.85;
+  const pos = [0, 0, 0, 0];
+  let longest = 0;
+  let total = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading.questions) {
+        const shown = permute(q);
+        total++;
+        pos[shown.correct] = (pos[shown.correct] ?? 0) + 1;
+        const lens = shown.options.map((o) => o.length);
+        if (lens[shown.correct] === Math.max(...lens)) longest++;
+      }
+
+  const worstPos = Math.max(...pos) / total;
+  const longShare = longest / total;
+  console.log(
+    `Reading answerability — always-same-position wins ${(worstPos * 100).toFixed(0)}%, ` +
+      `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
+      `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
+  );
+  if (worstPos > POSITION_MAX)
+    errors.push(
+      `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
+    );
+  if (longShare > LENGTH_MAX)
+    errors.push(
+      `a learner who always picks the longest option scores ${(longShare * 100).toFixed(0)}% on reading — balance the distractor lengths`,
+    );
+}
 if (warnings.length) {
   console.log("\nWARNINGS:");
   for (const w of warnings) console.log("  ! " + w);
