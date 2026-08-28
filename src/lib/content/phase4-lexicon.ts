@@ -74,33 +74,8 @@ const FO_BANK: P4Bank = {
 };
 
 const FB_BANK: P4Bank = {
-  story: [
-    {
-      word: "Heirloom recipe",
-      phonetic: "/ˈeəluːm ˈresəpi/",
-      definition: "Công thức nấu gia truyền",
-      icon: "📜",
-    },
-    {
-      word: "Regional origin",
-      phonetic: "/ˈriːdʒənl ˈɒrɪdʒɪn/",
-      definition: "Xuất xứ vùng miền của món",
-      icon: "🧭",
-    },
-  ],
+  story: [],
   preferences: [
-    {
-      word: "Spice tolerance",
-      phonetic: "/spaɪs ˈtɒlərəns/",
-      definition: "Mức ăn cay chịu được",
-      icon: "🌶️",
-    },
-    {
-      word: "Favourite vintage",
-      phonetic: "/ˈfeɪvərɪt ˈvɪntɪdʒ/",
-      definition: "Năm rượu vang khách ưa thích",
-      icon: "🍷",
-    },
     {
       word: "Dining pace",
       phonetic: "/ˈdaɪnɪŋ peɪs/",
@@ -121,13 +96,6 @@ const FB_BANK: P4Bank = {
     },
   ],
   disputes: [
-    { word: "Spoiled dish", phonetic: "/spɔɪld dɪʃ/", definition: "Món ăn đã bị hỏng", icon: "🤢" },
-    {
-      word: "Billing error",
-      phonetic: "/ˈbɪlɪŋ ˈerə/",
-      definition: "Sai sót khi tính hóa đơn",
-      icon: "🧾",
-    },
     {
       word: "Food poisoning claim",
       phonetic: "/fuːd ˈpɔɪzənɪŋ kleɪm/",
@@ -135,48 +103,10 @@ const FB_BANK: P4Bank = {
       icon: "⚠️",
     },
   ],
-  occasions: [
-    {
-      word: "Banquet set menu",
-      phonetic: "/ˈbæŋkwɪt set ˈmenjuː/",
-      definition: "Thực đơn cố định cho tiệc",
-      icon: "🎊",
-    },
-    {
-      word: "Celebration cake",
-      phonetic: "/ˌseləˈbreɪʃn keɪk/",
-      definition: "Bánh kem chúc mừng",
-      icon: "🍰",
-    },
-  ],
-  tradeoffs: [
-    {
-      word: "Waive the corkage fee",
-      phonetic: "/weɪv ðə ˈkɔːkɪdʒ fiː/",
-      definition: "Miễn phí mở rượu khách mang theo",
-      icon: "🍾",
-    },
-    {
-      word: "Include a welcome cocktail",
-      phonetic: "/ɪnˈkluːd ə ˈwelkəm ˈkɒkteɪl/",
-      definition: "Tặng kèm ly khai vị pha chế",
-      icon: "🍸",
-    },
-  ],
+  occasions: [],
+  tradeoffs: [],
   emergencies: [
     // Slot order is semantic — see the note on the FO bank above.
-    {
-      word: "Kitchen fire alarm",
-      phonetic: "/ˈkɪtʃɪn ˈfaɪər əˈlɑːm/",
-      definition: "Chuông báo cháy khu bếp",
-      icon: "🚨",
-    },
-    {
-      word: "Choking guest",
-      phonetic: "/ˈtʃəʊkɪŋ ɡest/",
-      definition: "Khách bị hóc nghẹn",
-      icon: "🆘",
-    },
   ],
   terms: [],
   proposal: [
@@ -187,92 +117,7 @@ const FB_BANK: P4Bank = {
       icon: "🧮",
     },
   ],
-  wrapUp: [
-    {
-      word: "Guest history note",
-      phonetic: "/ɡest ˈhɪstri nəʊt/",
-      definition: "Ghi chú các lần khách đã đến",
-      icon: "📓",
-    },
-    {
-      word: "Event brief",
-      phonetic: "/ɪˈvent briːf/",
-      definition: "Bản tóm tắt yêu cầu buổi tiệc",
-      icon: "📝",
-    },
-    {
-      word: "Feedback form",
-      phonetic: "/ˈfiːdbæk fɔːm/",
-      definition: "Phiếu góp ý của khách",
-      icon: "🗳️",
-    },
-    {
-      word: "Repeat guest",
-      phonetic: "/rɪˈpiːt ɡest/",
-      definition: "Khách quay lại nhiều lần",
-      icon: "🔁",
-    },
-    {
-      word: "Wine list update",
-      phonetic: "/waɪn lɪst ˈʌpdeɪt/",
-      definition: "Bản cập nhật danh mục rượu vang",
-      icon: "🍷",
-    },
-    {
-      word: "Kitchen capacity",
-      phonetic: "/ˈkɪtʃɪn kəˈpæsəti/",
-      definition: "Sức đáp ứng tối đa của bếp",
-      icon: "🍳",
-    },
-    {
-      word: "Table turnover",
-      phonetic: "/ˈteɪbl ˈtɜːnəʊvə/",
-      definition: "Số lượt khách mỗi bàn phục vụ",
-      icon: "♻️",
-    },
-    {
-      word: "Peak season rate",
-      phonetic: "/piːk ˈsiːzn reɪt/",
-      definition: "Giá áp dụng mùa cao điểm",
-      icon: "📈",
-    },
-    {
-      word: "Menu tasting note",
-      phonetic: "/ˈmenjuː ˈteɪstɪŋ nəʊt/",
-      definition: "Ghi chú sau buổi nếm thử món",
-      icon: "🖊️",
-    },
-    {
-      word: "Allergy checklist",
-      phonetic: "/ˈælədʒi ˈtʃeklɪst/",
-      definition: "Bảng kiểm tra dị ứng của khách",
-      icon: "✅",
-    },
-    {
-      word: "Beverage cost",
-      phonetic: "/ˈbevərɪdʒ kɒst/",
-      definition: "Chi phí phần đồ uống",
-      icon: "💵",
-    },
-    {
-      word: "Guest satisfaction score",
-      phonetic: "/ɡest ˌsætɪsˈfækʃn skɔː/",
-      definition: "Điểm hài lòng của khách",
-      icon: "⭐",
-    },
-    {
-      word: "Banquet order form",
-      phonetic: "/ˈbæŋkwɪt ˈɔːdə fɔːm/",
-      definition: "Phiếu đặt tiệc chính thức",
-      icon: "📃",
-    },
-    {
-      word: "Closing checklist",
-      phonetic: "/ˈkləʊzɪŋ ˈtʃeklɪst/",
-      definition: "Bảng kiểm tra khi đóng ca",
-      icon: "🌙",
-    },
-  ],
+  wrapUp: [],
 };
 
 const HK_BANK: P4Bank = {
