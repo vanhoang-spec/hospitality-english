@@ -8187,7 +8187,7 @@ export const FO_WEEK_31: WeekContent = {
     "Sea-view room",
     "Executive suite",
     "Quieter",
-    "Sea-view room",
+    "Junior suite",
     "Deluxe room",
     "Instead",
     "Confident",
@@ -8696,7 +8696,7 @@ export const FO_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "PREFERENCE CAPTURE — FRONT DESK STANDARD\nA preference is anything the guest says about how they want to stay, even in passing, even with a smile.\nCapture from: check-in small talk, complaints softened with 'never mind', requests to housekeeping, what the guest asks the concierge.\nWrite it in the profile the same shift, in the guest's own words. Do not translate 'light sleeper' into 'noise complaint'.\nAct on it within the stay if you can, not at the next booking. An unprompted change on day two is worth more than a perfect room on the next visit.\nNever tell the guest you have 'a note about them'. Say what you did, not what you recorded.",
+        text: "PREFERENCE CAPTURE — FRONT DESK STANDARD\nA preference is anything the guest says about how they want to stay, even in passing, even with a smile.\nCapture from: check-in small talk, complaints softened with 'never mind', requests to housekeeping, what the guest asks the concierge.\nWrite it in the profile the same shift, in the guest's own words. Do not translate 'light sleeper' into 'noise complaint'.\nAct on it within the stay if you can, not at the next booking. An unprompted change on day two is worth more than a perfect room on the next visit.\nNever tell the guest you have 'a note about them'. Say what you did, not what you recorded. One exception: when the guest ASKS whether they must repeat themselves, 'it is on file' is the reassurance they are asking for.",
         questions: [
           {
             q: "Ghi sở thích vào hồ sơ phải theo cách nào?",
@@ -9561,7 +9561,7 @@ export const FO_WEEK_34: WeekContent = {
         {
           guestPrompt: "It is our thirtieth anniversary, actually. We came here on our honeymoon.",
           targetResponse:
-            "Thirty years, and back where it started — congratulations to you both. May I arrange something small for this evening?",
+            "Thirty years — congratulations to you both. May I arrange something small for this evening?",
           helpTip:
             "Nhắc lại chi tiết khách vừa kể trước khi chúc mừng. Đó là bằng chứng bạn nghe chứ không đáp cho có.",
         },
@@ -9884,7 +9884,7 @@ export const FO_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "WHEN AN OCCASION FAILS — FRONT DESK\nThe three failures, in order of how often they happen:\n1. The surprise is spoiled — someone congratulates the guest who was not meant to know. Apologise to the ORGANISER privately, never in front of the other guest, and offer to move the moment to another evening.\n2. The item never arrives. Own it before the guest describes it. Bring it now if the evening is still going; move it to tomorrow if not.\n3. The wrong occasion. A birthday cake for an anniversary, or the wrong name written on the card. Remove it immediately and rewrite; never present a corrected card.\nNever charge for an occasion the hotel got wrong, and do not offer money. The guest lost a moment, not an amount.\nLog every failure. The handover slip shows which step broke, and it is nearly always the one with no name against it.",
+        text: "WHEN AN OCCASION FAILS — FRONT DESK\nThe three failures, in order of how often they happen:\n1. The surprise is spoiled — someone congratulates the guest who was not meant to know. Apologise to the ORGANISER privately, never in front of the other guest, and offer to move the moment to another evening.\n2. The item never arrives. Own it before the guest describes it. Bring it now if the evening is still going; move it to tomorrow if not.\n3. The wrong occasion. A birthday cake for an anniversary, or the wrong name written on the card. Remove it immediately and rewrite; never present a corrected card.\nNever charge for an occasion the hotel got wrong, and do not offer money. The guest lost a moment, not an amount. The guest hears only that it is waived — but a waiver above your own limit still gets an approving name on the folio, behind the desk, same as week 33.\nLog every failure. The handover slip shows which step broke, and it is nearly always the one with no name against it.",
         questions: [
           {
             q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
@@ -10426,7 +10426,7 @@ export const FO_WEEK_36: WeekContent = {
           word: "Assembly point",
           phonetic: "/əˈsembli pɔɪnt/",
           definition: "Điểm tập trung khi sơ tán",
-          context: "Our assembly point is outside the front entrance.",
+          context: "The assembly point is marked on the map by the lift.",
           icon: "📍",
         },
       ],

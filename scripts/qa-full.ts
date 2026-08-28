@@ -464,6 +464,10 @@ const slugify = (t: string) =>
 
     // Every declared reviewWord must resolve to a real VocabItem.
     const declared = wk.reviewWords ?? [];
+    // A duplicate reviewWord renders the learner two identical review chips.
+    // One shipped in FO-31 for a day because nothing looked.
+    if (new Set(declared.map((w) => w.toLowerCase())).size !== declared.length)
+      fail("T4", `${key} has duplicate reviewWords: ${declared.join(", ")}`);
     if (declared.length) {
       const resolved = resolveReviewVocab(dep, declared);
       const got = new Set(resolved.map((v) => v.word.toLowerCase()));
