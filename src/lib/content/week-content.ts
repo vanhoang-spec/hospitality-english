@@ -8255,18 +8255,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Cầu thang được phục dựng dựa trên cái gì?",
             options: [
-              "A. Photographs from 1954",
-              "B. The original 1925 drawings",
-              "C. A design by the current owner",
+              "A. Ảnh chụp tư liệu từ năm 1954",
+              "B. Bộ bản vẽ gốc năm 1925",
+              "C. Bản thiết kế của người chủ hiện nay",
             ],
             correct: 1,
           },
           {
             q: "Nếu khách hỏi điều bạn không biết thì phải làm gì?",
             options: [
-              "A. Say so and offer the history folder kept at the desk",
-              "B. Give the most likely answer",
-              "C. Ask the guest to search online",
+              "A. Nói thật là chưa chắc, và mời khách xem cuốn sổ tư liệu ở quầy",
+              "B. Đưa câu trả lời nhiều khả năng đúng nhất để khách khỏi chờ",
+              "C. Mời khách tự tra cứu trên mạng vì ở đó thông tin đầy đủ hơn",
             ],
             correct: 0,
           },
@@ -8359,18 +8359,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Theo hướng dẫn, phải mở đầu bằng gì?",
             options: [
-              "A. The price difference",
-              "B. One thing the guest will notice, then an offer to show the room",
-              "C. A list of all the room's features",
+              "A. Mức chênh lệch giá giữa hai hạng phòng, cho khách cân nhắc từ đầu",
+              "B. Một điều khách sẽ tự cảm nhận được, rồi mời khách lên xem phòng",
+              "C. Danh sách đầy đủ mọi ưu điểm của căn phòng, càng nhiều càng tốt",
             ],
             correct: 1,
           },
           {
             q: "Khi khách từ chối nâng cấp thì làm gì?",
             options: [
-              "A. Note it and do not raise it again during the stay",
-              "B. Offer again at check-out",
-              "C. Offer a bigger discount",
+              "A. Ghi nhận lại và không nhắc chuyện nâng hạng nữa trong kỳ ở",
+              "B. Chờ tới lúc khách trả phòng rồi khéo léo đề nghị lần nữa",
+              "C. Đề nghị lại ngay với mức giảm giá sâu hơn để khách đổi ý",
             ],
             correct: 0,
           },
@@ -8472,18 +8472,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Khi nào KHÔNG nên kể chuyện toà nhà?",
             options: [
-              "A. When the guest is looking around the lobby",
-              "B. When the guest arrived on a night flight or there is a queue",
-              "C. When the guest mentions photography",
+              "A. Khi khách đang đứng ngắm quanh sảnh",
+              "B. Khi khách vừa xuống chuyến bay đêm, hoặc đang có hàng chờ",
+              "C. Khi khách nhắc tới chuyện chụp ảnh",
             ],
             correct: 1,
           },
           {
             q: "Nguyên tắc 'một câu trước' nghĩa là gì?",
             options: [
-              "A. Say one sentence; continue only if the guest asks a second question",
-              "B. Say one sentence and always continue",
-              "C. Wait one minute before speaking",
+              "A. Nói một câu; khách hỏi tiếp câu thứ hai thì mới kể tiếp",
+              "B. Nói một câu rồi luôn kể tiếp, vì khách đã tỏ ra quan tâm",
+              "C. Chờ khách nhận phòng xong chừng một phút rồi mới bắt đầu",
             ],
             correct: 0,
           },
@@ -8577,15 +8577,19 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Vì sao phải nói những điều này TRƯỚC khi khách lên phòng?",
             options: [
-              "A. Because a guest told at the desk asks a question, while one who finds out upstairs complains",
-              "B. Because the policy requires a signature",
-              "C. Because it saves time at check-out",
+              "A. Khách được báo ở quầy sẽ hỏi lại; khách tự phát hiện trên phòng sẽ khiếu nại",
+              "B. Quy định yêu cầu khách ký xác nhận là đã được thông báo trước",
+              "C. Nói trước ở quầy giúp thủ tục trả phòng về sau nhanh hơn nhiều",
             ],
             correct: 0,
           },
           {
             q: "Việc sửa chữa ở tầng bốn diễn ra vào khung giờ nào?",
-            options: ["A. 09:00-16:00 on weekdays", "B. All day every day", "C. Only at weekends"],
+            options: [
+              "A. 09:00–16:00 các ngày trong tuần",
+              "B. Cả ngày, tất cả các ngày",
+              "C. Chỉ vào hai ngày cuối tuần",
+            ],
             correct: 0,
           },
         ],
@@ -8673,13 +8677,13 @@ export const FO_WEEK_32: WeekContent = {
           rude: "You said you sleep badly, so I moved you.",
           polite:
             "You mentioned you are a light sleeper, madam, so I have moved you to the courtyard side.",
-          rule: "Nhắc lại đúng chữ khách dùng ('light sleeper'), không diễn giải lại thành điều tiêu cực hơn.",
+          rule: "Hiện tại hoàn thành 'I have moved you': việc vừa làm xong và kết quả đang còn — khách nghe là phòng ĐÃ đổi. Và nhắc lại đúng chữ khách dùng ('light sleeper'), đừng diễn giải thành điều tiêu cực hơn.",
         },
         {
           rude: "Tell me if you want something changed.",
           polite:
             "I have already moved you, sir. Please tell me if the new room does not suit you.",
-          rule: "Làm trước rồi mới mời phản hồi. Hỏi trước là đẩy việc về phía khách.",
+          rule: "'Already' đứng giữa 'have' và động từ chính: 'I have ALREADY moved you'. Cặp already + hiện tại hoàn thành nghĩa là việc xong trước khi khách phải hỏi — làm trước, mời phản hồi sau.",
         },
       ],
       speaking: [
@@ -8697,18 +8701,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Ghi sở thích vào hồ sơ phải theo cách nào?",
             options: [
-              "A. In the guest's own words, the same shift",
-              "B. Summarised as a complaint category",
-              "C. At the end of the stay",
+              "A. Bằng đúng lời khách nói, ngay trong ca",
+              "B. Tóm tắt lại thành một nhóm khiếu nại",
+              "C. Vào cuối kỳ lưu trú, khi đã đủ thông tin",
             ],
             correct: 0,
           },
           {
             q: "Với khách, nên nói điều gì?",
             options: [
-              "A. That there is a note about them in the system",
-              "B. What you did, not what you recorded",
-              "C. Which colleague wrote the note",
+              "A. Rằng hệ thống có lưu một ghi chú về họ",
+              "B. Điều bạn đã làm, không phải điều bạn đã ghi",
+              "C. Tên đồng nghiệp nào đã viết ghi chú đó",
             ],
             correct: 1,
           },
@@ -8801,18 +8805,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Ở quầy, xác nhận sở thích của khách quen thế nào?",
             options: [
-              "A. As a list of questions, one by one",
-              "B. In one sentence, then ask whether anything should change",
-              "C. Only if the guest raises it first",
+              "A. Hỏi lần lượt thành một danh sách câu hỏi",
+              "B. Gộp trong một câu, rồi hỏi có gì cần đổi không",
+              "C. Chỉ nhắc tới khi khách tự nêu ra trước",
             ],
             correct: 1,
           },
           {
             q: "Khi nào thì nên nói số lần lưu trú?",
             options: [
-              "A. Every time, from the first stay",
-              "B. From the third stay or higher",
-              "C. Only for members",
+              "A. Mọi lần, ngay từ lần lưu trú đầu tiên",
+              "B. Từ lần lưu trú thứ ba trở lên",
+              "C. Chỉ với khách có thẻ thành viên",
             ],
             correct: 1,
           },
@@ -8882,7 +8886,7 @@ export const FO_WEEK_32: WeekContent = {
           rude: "No quiet room tonight. Sorry.",
           polite:
             "The courtyard side is fully occupied tonight, madam. The next best is a room on a high floor with double glazing.",
-          rule: "Không dừng ở lời từ chối. 'The next best is…' đưa ngay một phương án cụ thể có thể hình dung được.",
+          rule: "'The next best' — mạo từ 'the' + so sánh nhất biến tính từ thành DANH TỪ chỉ phương án. Sau lời từ chối, cấu trúc này trao ngay một danh từ cụ thể để khách bám vào.",
         },
         {
           rude: "You will have to accept it for tonight.",
@@ -8906,18 +8910,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Vì sao phải báo cho khách ngay tại quầy?",
             options: [
-              "A. So they never discover it in the room",
-              "B. Because the system requires it",
-              "C. To avoid paperwork later",
+              "A. Để khách không bao giờ tự phát hiện ra trên phòng",
+              "B. Vì hệ thống yêu cầu ghi nhận trước khi giao chìa khoá",
+              "C. Để tiết kiệm giấy tờ đối chiếu về sau",
             ],
             correct: 0,
           },
           {
             q: "Ba lần không đáp ứng được cho cùng một khách thì sao?",
             options: [
-              "A. It becomes a Duty Manager conversation",
-              "B. The preference is deleted",
-              "C. The guest is offered a refund",
+              "A. Thành cuộc trao đổi của Duty Manager",
+              "B. Sở thích đó bị xoá khỏi hồ sơ khách",
+              "C. Khách được đề nghị hoàn lại tiền phòng",
             ],
             correct: 0,
           },
@@ -8988,7 +8992,7 @@ export const FO_WEEK_32: WeekContent = {
           rude: "Guest is fussy about rooms.",
           polite:
             "Guest is a light sleeper — prefers courtyard side, high floor. Standing request.",
-          rule: "Không bao giờ ghi nhận xét về tính cách khách. Ghi điều kiện cụ thể và hành động cần làm.",
+          rule: "Đây là VĂN GHI CHÚ, không phải câu nói: lược chủ ngữ và mạo từ ('prefers courtyard side') là đúng chuẩn ghi chú — nhưng nói với khách thì phải đủ câu. Và không bao giờ ghi nhận xét về tính cách.",
         },
         {
           rude: "Wants a good pillow.",
@@ -9011,18 +9015,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Một ghi chú dùng được phải trả lời những gì?",
             options: [
-              "A. What, how many, and when",
-              "B. Who asked and which shift recorded it",
-              "C. Why the guest wants it",
+              "A. Cái gì, số lượng bao nhiêu, và khi nào",
+              "B. Ai đã yêu cầu và ca nào ghi nhận việc đó",
+              "C. Lý do vì sao khách lại muốn như vậy",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không bao giờ ghi nhận xét cá nhân về khách?",
             options: [
-              "A. Anything in a profile may be read aloud in a complaint review",
-              "B. There is not enough space in the field",
-              "C. The system deletes opinions automatically",
+              "A. Vì hồ sơ có thể bị đọc to trong một phiên xử lý khiếu nại",
+              "B. Vì trường dữ liệu không đủ chỗ cho nhận xét dài như vậy",
+              "C. Vì hệ thống tự động xoá mọi nhận xét mang tính cá nhân",
             ],
             correct: 0,
           },
@@ -9092,8 +9096,8 @@ export const FO_WEEK_33: WeekContent = {
           icon: "🤐",
         },
         {
-          word: "Take your word",
-          phonetic: "/teɪk jɔː wɜːd/",
+          word: "Take your word for it",
+          phonetic: "/teɪk jɔː ˈwɜːd fər ɪt/",
           definition: "Tin lời khách nói",
           context: "I take your word for it, madam.",
           icon: "🤝",
@@ -9110,7 +9114,7 @@ export const FO_WEEK_33: WeekContent = {
         {
           rude: "That cannot be right. Our system never makes mistakes.",
           polite: "I take your word for it, madam. Let me look into it and come back to you.",
-          rule: "Không bao giờ bảo vệ hệ thống trước mặt khách. Câu đầu tiên phải là câu đứng về phía họ.",
+          rule: "'Let me + động từ nguyên thể' ('Let me look into it') — xin phép và bắt tay ngay trong cùng một câu. Và không bao giờ bảo vệ hệ thống trước mặt khách: câu đầu tiên đứng về phía họ.",
         },
         {
           rude: "Wait, wait — that is not what happened.",
@@ -9134,15 +9138,19 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Trong lúc khách đang nói, nhân viên KHÔNG được làm gì?",
             options: [
-              "A. Interrupt or check the system",
-              "B. Write down what the guest says",
-              "C. Look at the guest",
+              "A. Ngắt lời khách, hoặc tra hệ thống trong lúc khách nói",
+              "B. Ghi lại những gì khách đang trình bày",
+              "C. Nhìn thẳng vào khách trong lúc lắng nghe",
             ],
             correct: 0,
           },
           {
             q: "Phải xin lỗi về điều gì trước tiên?",
-            options: ["A. The amount charged", "B. The experience", "C. The other shift's mistake"],
+            options: [
+              "A. Về số tiền đã bị tính",
+              "B. Về trải nghiệm khách phải chịu",
+              "C. Về sai sót của ca trực trước đó",
+            ],
             correct: 1,
           },
         ],
@@ -9229,23 +9237,23 @@ export const FO_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "FRONT DESK AUTHORITY LIMITS — THREE TIERS, NO GAP\nUnder 500,000 VND — you decide. Minibar and laundry, one late check-out waiver per stay, one night's parking, one welcome drink, one pressed garment.\n500,000 to 2,000,000 VND — Shift Leader or Duty Manager approves by phone. Write the approving name on the folio before you tell the guest.\nAbove 2,000,000 VND — Duty Manager signs. Also: any refund to a card, any payment to a third party.\nNEVER at the desk, at any amount: injury, theft, or lost valuables. Those go to the Duty Manager, always.\nAn unsigned folio is a REASON to reverse, not an exception to the tiers — a disputed 15,000,000 VND banquet charge is still a Duty Manager decision.\nTell the guest the PROCESS and the TIME, never the number. A guest who learns the threshold asks for the amount just below it.",
+        text: "FRONT DESK AUTHORITY LIMITS — THREE TIERS, NO GAP\nUnder 500,000 VND — you decide. Minibar and laundry, one late check-out waiver per stay, one night's parking, one welcome drink, one pressed garment.\n500,000 to 2,000,000 VND — Shift Leader or Duty Manager approves by phone. Write the approving name on the folio before you tell the guest.\nAbove 2,000,000 VND — Duty Manager signs. Also: any refund to a card, any payment to a third party.\nNEVER at the desk, at any amount: injury, theft, or lost valuables. Those go to the Duty Manager, always.\nAn unsigned folio is a REASON to reverse, not an exception to the tiers — a disputed 15,000,000 VND banquet charge is still a Duty Manager decision.\nTell the guest the PROCESS and the TIME, never the number. A guest who learns the threshold asks for the amount just below it.\nThe tiers above are ONE hotel's numbers. Ask your Front Office Manager for yours in your first week, and write them over these.",
         questions: [
           {
             q: "Khoản nào lễ tân được tự duyệt?",
             options: [
-              "A. A refund to the guest's card",
-              "B. Minibar charges under 500,000 VND",
-              "C. Compensation for lost valuables",
+              "A. Một khoản hoàn tiền về thẻ của khách",
+              "B. Khoản minibar dưới 500.000 đồng",
+              "C. Bồi thường cho đồ có giá trị bị mất",
             ],
             correct: 1,
           },
           {
             q: "Khiếu nại liên quan tới thương tích hoặc mất đồ có giá trị thì xử lý thế nào?",
             options: [
-              "A. Settled at the desk if the amount is small",
-              "B. Never settled at the desk — goes to the Duty Manager",
-              "C. Sent to the guest's insurance",
+              "A. Xử lý tại quầy nếu số tiền không lớn",
+              "B. Không bao giờ xử tại quầy — chuyển Duty Manager",
+              "C. Chuyển sang bảo hiểm du lịch của khách",
             ],
             correct: 1,
           },
@@ -9315,7 +9323,7 @@ export const FO_WEEK_33: WeekContent = {
         {
           rude: "Somebody in your room drank it.",
           polite: "It looks as though it was posted in error, madam. I have reversed it.",
-          rule: "Không bao giờ ám chỉ khách hoặc người đi cùng đã tiêu. 'Posted in error' đặt lỗi vào quy trình.",
+          rule: "Hai thì trong một lượt nói: bị động quá khứ 'was posted in error' cho lỗi đã xảy ra, hiện tại hoàn thành 'I have reversed it' cho việc vừa sửa xong. Và không bao giờ ám chỉ người đi cùng đã tiêu.",
         },
         {
           rude: "You can check the bill yourself.",
@@ -9338,18 +9346,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Với khoản tranh chấp trong hạn mức, thứ tự xử lý là gì?",
             options: [
-              "A. Investigate first, reverse afterwards",
-              "B. Reverse first, investigate afterwards",
-              "C. Ask the guest to pay and claim later",
+              "A. Điều tra trước, hoàn khoản sau",
+              "B. Hoàn khoản trước, điều tra sau",
+              "C. Đề nghị khách cứ thanh toán rồi khiếu nại lại sau",
             ],
             correct: 1,
           },
           {
             q: "Ba lần tranh chấp minibar cùng một tầng trong một tuần nghĩa là gì?",
             options: [
-              "A. A stock-control problem",
-              "B. Three dishonest guests",
-              "C. A system fault in the billing software",
+              "A. Vấn đề kiểm soát kho hàng",
+              "B. Ba vị khách không trung thực",
+              "C. Lỗi hệ thống của phần mềm tính tiền",
             ],
             correct: 0,
           },
@@ -9418,7 +9426,7 @@ export const FO_WEEK_33: WeekContent = {
         {
           rude: "The money will come back sometime.",
           polite:
-            "A card refund takes seven to fifteen working days, madam, and I will follow up on Friday either way.",
+            "A card refund can take up to thirty working days, madam, and I will follow up on Friday either way.",
           rule: "Nêu khoảng thời gian CHẬM NHẤT, không phải nhanh nhất — hứa bảy ngày rồi trả về sau mười lăm ngày là tạo ra khiếu nại thứ hai. Rồi cộng một lời hứa liên hệ lại.",
         },
         {
@@ -9437,23 +9445,23 @@ export const FO_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "CLOSING A DISPUTE — WHAT THE GUEST LEAVES WITH\nEvery settled dispute produces THREE things before the guest walks away:\n1. A clean itemised bill, reprinted after the correction. If a VAT e-invoice was already issued — most company guests and many domestic ones — it cannot be reprinted: call Accounting within the shift, have an adjustment invoice issued, and tell the guest WHEN it will reach their email.\n2. A written confirmation — email or printed slip — naming what was reversed, the amount, and the date.\n3. A case number, read aloud digit by digit and written on the slip.\nRefund timing to state — say the SLOWEST case, never the fastest: cash at the desk, immediate. Domestic VND bank transfer, same working day. Card reversal, usually 7-15 working days and up to 30 for a card issued abroad, because it depends on the guest's own bank, not on us.\nSet your own follow-up before the guest asks for one. A guest chased by the hotel tells a different story from a guest who had to chase the hotel.",
+        text: "CLOSING A DISPUTE — WHAT THE GUEST LEAVES WITH\nEvery settled dispute produces THREE things before the guest walks away:\n1. A clean itemised bill, reprinted after the correction. If a VAT e-invoice was already issued — most company guests and many domestic ones — it cannot be reprinted: call Accounting within the shift, have an adjustment invoice issued, and tell the guest WHEN it will reach their email.\n2. A written confirmation — email or printed slip — naming what was reversed, the amount, and the date.\n3. A case number, read aloud digit by digit and written on the slip.\nRefund timing to state — say the SLOWEST case, never the fastest: cash at the desk, immediate. Domestic VND bank transfer, same working day. Card reversal, usually 7-15 working days and up to 30 for a card issued abroad, because it depends on the guest's own bank, not on us.\nSet your own follow-up before the guest asks for one. A guest chased by the hotel tells a different story from a guest who had to chase the hotel.\nA reversal on an OPEN folio is not a refund. Once the guest has paid, the same correction becomes a refund and follows the timings above — and cash never leaves the float above your own limit without a named approval.",
         questions: [
           {
             q: "Khách rời đi phải cầm theo ba thứ gì?",
             options: [
-              "A. A clean itemised bill, a written confirmation, and a case number",
-              "B. A receipt, a business card, and a voucher",
-              "C. An apology letter, a refund and a free night",
+              "A. Hoá đơn kê sạch, xác nhận bằng văn bản, và mã hồ sơ",
+              "B. Biên lai, danh thiếp của quầy, và một phiếu ưu đãi",
+              "C. Thư xin lỗi, khoản hoàn tiền và một đêm miễn phí",
             ],
             correct: 0,
           },
           {
             q: "Theo tài liệu, hoàn tiền vào thẻ mất bao lâu?",
             options: [
-              "A. Immediately",
-              "B. 7-15 working days, and up to 30 for a card issued abroad",
-              "C. Always exactly 5 working days",
+              "A. Ngay lập tức, giống như hoàn tiền mặt tại quầy",
+              "B. 7–15 ngày làm việc, thẻ nước ngoài có thể tới 30 ngày",
+              "C. Luôn đúng 5 ngày làm việc với mọi loại thẻ",
             ],
             correct: 1,
           },
@@ -9564,18 +9572,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Vì sao phải hỏi ai đã biết trước khi sắp xếp?",
             options: [
-              "A. Because a surprise announced by a receptionist is no longer a surprise",
-              "B. Because the kitchen needs the name",
-              "C. Because the policy requires two signatures",
+              "A. Vì điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ",
+              "B. Vì bếp cần biết tên khách để viết lên bánh cho đúng chính tả",
+              "C. Vì chính sách yêu cầu hai chữ ký trước khi sắp xếp",
             ],
             correct: 0,
           },
           {
             q: "Khách nói không có dịp gì đặc biệt thì làm gì?",
             options: [
-              "A. Write nothing in the profile and never raise it again",
-              "B. Note it as 'declined' and ask again tomorrow",
-              "C. Arrange something small anyway",
+              "A. Không ghi gì vào hồ sơ và không bao giờ nhắc lại nữa",
+              "B. Ghi chú là 'đã từ chối' và hỏi lại vào ngày hôm sau",
+              "C. Vẫn cứ chuẩn bị một món nhỏ để tạo bất ngờ cho khách",
             ],
             correct: 0,
           },
@@ -9666,23 +9674,23 @@ export const FO_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions, ~350,000-600,000 VND), a written message piped on it, sparkling wine on ice (~800,000-1,500,000 VND).\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, custom or photo cake, a specific flavour, or a cake for a dietary restriction.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.\nNo candles or sparklers in guest rooms — the smoke detector does not know it is a birthday. Ask the kitchen for an LED candle.\nAsk about allergies before ordering any cake. A celebration that sends someone to hospital is the one nobody forgets.",
+        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions, ~350,000-600,000 VND), a written message piped on it, sparkling wine on ice (~800,000-1,500,000 VND).\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, custom or photo cake, a specific flavour, or a cake for a dietary restriction.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.\nNo candles or sparklers in guest rooms — the smoke detector does not know it is a birthday. Ask the kitchen for an LED candle.\nAsk about allergies before ordering any cake. A celebration that sends someone to hospital is the one nobody forgets.\nThe prices and lead times above are one hotel's — ask your F&B coordinator for this month's. And quote the TOTAL the guest will see on the bill: F&B prices are usually ++, with service charge and VAT on top.",
         questions: [
           {
             q: "Món nào cần báo trước 24 giờ?",
             options: [
-              "A. A handwritten card",
-              "B. Balloons and a photo cake",
-              "C. Rose petals on the bed",
+              "A. Một tấm thiệp viết tay",
+              "B. Bóng bay và bánh in ảnh",
+              "C. Cánh hoa hồng rải trên giường",
             ],
             correct: 1,
           },
           {
             q: "Với món có tính phí, phải làm gì trước khi sắp xếp?",
             options: [
-              "A. State the price to the guest",
-              "B. Get the Duty Manager's signature",
-              "C. Charge it and tell the guest at check-out",
+              "A. Báo giá cho khách trước khi sắp xếp",
+              "B. Xin chữ ký duyệt của Duty Manager",
+              "C. Cứ tính vào phòng rồi báo khách lúc trả phòng",
             ],
             correct: 0,
           },
@@ -9703,7 +9711,7 @@ export const FO_WEEK_34: WeekContent = {
           prompt: "Could you do balloons and a photographer for tonight?",
           options: [
             {
-              text: "Those need a day, madam, and I would rather not promise something that then arrives late. Tonight I can do a cake and set the room while you dine.",
+              text: "Those need a day, madam, and I would rather not promise something that would then arrive late. Tonight I can do a cake and set the room while you dine.",
               correct: true,
             },
             { text: "I will try my best to arrange both for tonight.", correct: false },
@@ -9736,7 +9744,7 @@ export const FO_WEEK_34: WeekContent = {
           word: "Chase it",
           phonetic: "/tʃeɪs ɪt/",
           definition: "Đi hỏi lại cho chắc",
-          context: "Ring the kitchen at seven and chase it.",
+          context: "Ring the kitchen at six and chase it.",
           icon: "📞",
         },
         {
@@ -9752,11 +9760,11 @@ export const FO_WEEK_34: WeekContent = {
           rude: "Housekeeping will do it sometime this evening.",
           polite:
             "Housekeeping sets the room when the guests leave for dinner, madam — around half past seven.",
-          rule: "Bàn giao phải có DẤU HIỆU bắt đầu, không phải một khoảng thời gian. 'Sometime' là cách một điều bất ngờ chết đi.",
+          rule: "Lịch trình cố định dùng hiện tại đơn ở CẢ HAI vế: 'Housekeeping sets it when the guests leave' — không có 'will' sau 'when'. Và bàn giao phải có DẤU HIỆU bắt đầu, không phải khoảng giờ.",
         },
         {
           rude: "I told the kitchen already.",
-          polite: "Chef Nam has it, and I will ring him at seven to chase it myself.",
+          polite: "Chef Nam has it, and I will ring him at six to chase it myself.",
           rule: "Giao cho một người có tên, và tự mình đi hỏi lại. 'Đã báo bếp rồi' không phải là bàn giao.",
         },
       ],
@@ -9764,29 +9772,29 @@ export const FO_WEEK_34: WeekContent = {
         {
           guestPrompt: "So it will definitely be there when we come back up?",
           targetResponse:
-            "It will, sir. Housekeeping sets it when you leave for dinner, and I ring the kitchen at seven to check myself.",
+            "It will, sir. Housekeeping sets it when you leave for dinner, and I will ring the kitchen at six to check myself.",
           helpTip:
             "Trả lời bằng cơ chế, không bằng lời hứa. Khách tin quy trình cụ thể hơn tin chữ 'chắc chắn'.",
         },
       ],
       reading: {
-        text: "OCCASION HANDOVER SLIP — ONE PER ARRANGEMENT\nRoom · guest name · what the occasion is · WHO ALREADY KNOWS.\nEach line carries three things: the task, a NAMED person, and a trigger.\n  Cake, 6 portions, no message — Chef Nam — ready 19:00, held in the pastry fridge\n  Petals and card — Housekeeping, Chi — trigger: guests leave for dinner (~19:30)\n  Card written and signed — Front desk, Duy — before 18:00\n  Chase call to kitchen — Front desk, Duy — 19:00\nA slip with 'Housekeeping' but no name is not a handover; it is a hope. Departments do not remember things, people do.\nThe desk keeps the slip until the guest confirms it happened, then files it in the profile.",
+        text: "OCCASION HANDOVER SLIP — ONE PER ARRANGEMENT\nRoom · guest name · what the occasion is · WHO ALREADY KNOWS.\nEach line carries three things: the task, a NAMED person, and a trigger.\n  Cake, 6 portions, no message — Chef Nam — ready 19:00, held in the pastry fridge\n  Petals and card — Housekeeping, Chi — trigger: guests leave for dinner (~19:30)\n  Card written and signed — Front desk, Duy — before 18:00\n  Chase call to kitchen — Front desk, Duy — 18:00\nA slip with 'Housekeeping' but no name is not a handover; it is a hope. Departments do not remember things, people do.\nThe desk keeps the slip until the guest confirms it happened, then files it in the profile.",
         questions: [
           {
             q: "Mỗi dòng bàn giao phải có ba thứ gì?",
             options: [
-              "A. The task, a named person, and a trigger",
-              "B. The task, the price, and the room number",
-              "C. The department, the time, and the manager",
+              "A. Đầu việc, một người có tên, và dấu hiệu bắt đầu",
+              "B. Đầu việc, mức giá, và số phòng của khách",
+              "C. Bộ phận phụ trách, khung giờ, và người quản lý",
             ],
             correct: 0,
           },
           {
             q: "Vì sao ghi 'Housekeeping' mà không ghi tên người là chưa đủ?",
             options: [
-              "A. Because departments do not remember things, people do",
-              "B. Because housekeeping is often busy",
-              "C. Because the system needs a staff number",
+              "A. Vì phòng ban không nhớ việc, chỉ con người nhớ việc",
+              "B. Vì buồng phòng thường là bộ phận bận rộn nhất ca",
+              "C. Vì hệ thống cần mã số nhân viên để lưu lại",
             ],
             correct: 0,
           },
@@ -9807,7 +9815,7 @@ export const FO_WEEK_34: WeekContent = {
           prompt: "Last time we asked for something like this, nobody actually did it.",
           options: [
             {
-              text: "I understand, madam. This time each step has a name against it, and I make the chase call myself at seven.",
+              text: "I understand, madam. This time each step has a name against it, and I will make the chase call myself at six.",
               correct: true,
             },
             { text: "That will not happen this time, I promise you.", correct: false },
@@ -9844,10 +9852,10 @@ export const FO_WEEK_34: WeekContent = {
           icon: "🌙",
         },
         {
-          word: "Never charge",
-          phonetic: "/ˈnevə tʃɑːdʒ/",
-          definition: "Tuyệt đối không tính tiền",
-          context: "We never charge for an occasion we got wrong.",
+          word: "Waive",
+          phonetic: "/weɪv/",
+          definition: "Miễn, xoá một khoản phí",
+          context: "We waive the charge for an occasion we got wrong.",
           icon: "🚫",
         },
       ],
@@ -9856,7 +9864,7 @@ export const FO_WEEK_34: WeekContent = {
           rude: "The kitchen forgot. Nothing I can do now.",
           polite:
             "The cake did not reach your room and that is our mistake, madam. May I bring it up now with the wine?",
-          rule: "Nhận lỗi bằng 'our mistake' rồi đề xuất ngay. Đổ lỗi cho bếp không sửa được gì cho khách.",
+          rule: "Quá khứ đơn phủ định 'did not reach' cho một việc KHÔNG xảy ra — không dùng tiếp diễn ở đây. Nhận lỗi bằng 'our mistake' rồi đề xuất ngay; đổ lỗi cho bếp không sửa được gì.",
         },
         {
           rude: "We will take it off the bill and that is that.",
@@ -9881,18 +9889,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
             options: [
-              "A. The organiser, privately",
-              "B. Both guests, at the desk",
-              "C. The guest who was surprised, at dinner",
+              "A. Người tổ chức, một cách kín đáo",
+              "B. Cả hai vị khách, ngay tại quầy",
+              "C. Người được nhận bất ngờ, ngay trong bữa tối",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không nên đề nghị bồi thường bằng tiền?",
             options: [
-              "A. Because the guest lost a moment, not an amount",
-              "B. Because the desk has no authority",
-              "C. Because it would need a manager's approval",
+              "A. Vì khách mất một khoảnh khắc, không phải một khoản tiền",
+              "B. Vì quầy lễ tân không có thẩm quyền chi tiền bồi thường",
+              "C. Vì mọi khoản đền bù đều cần quản lý phê duyệt trước",
             ],
             correct: 0,
           },
@@ -10000,7 +10008,7 @@ export const FO_WEEK_35: WeekContent = {
           targetResponse:
             "I have checked, sir. That rate is prepaid and non-refundable, and ours includes breakfast. May we compare the two side by side?",
           helpTip:
-            "Đuôi -ed của 'checked' đọc là /t/, không phải /ɪd/. Người Việt hay nuốt phụ âm cuối — mất /t/ ở đây là mất luôn thì hiện tại hoàn thành.",
+            "Đuôi -ed của 'checked' đọc là /t/, không phải /ɪd/. Nuốt /t/ thì câu thành 'I have check' — sai ngữ pháp ngay ở từ thứ ba.",
         },
       ],
       reading: {
@@ -10060,17 +10068,17 @@ export const FO_WEEK_35: WeekContent = {
       titleVi: "Cho thứ khác thay vì giảm giá",
       vocabulary: [
         {
-          word: "Throw in",
-          phonetic: "/θrəʊ ɪn/",
-          definition: "Tặng kèm thêm",
-          context: "I can throw in a late check-out for you.",
+          word: "At no extra charge",
+          phonetic: "/ət nəʊ ˈekstrə tʃɑːdʒ/",
+          definition: "Không tính thêm tiền",
+          context: "I can add a welcome drink at no extra charge.",
           icon: "➕",
         },
         {
-          word: "Costs us little",
-          phonetic: "/kɒsts ʌs ˈlɪtl/",
-          definition: "Khách sạn tốn ít nhưng khách thấy đáng",
-          context: "A late check-out costs us little on a quiet Tuesday.",
+          word: "Gesture",
+          phonetic: "/ˈdʒestʃə/",
+          definition: "Cử chỉ thiện chí nhỏ",
+          context: "A welcome drink is a gesture that costs us little.",
           icon: "🪙",
         },
         {
@@ -10108,7 +10116,7 @@ export const FO_WEEK_35: WeekContent = {
           targetResponse:
             "I cannot move the rate, sir, but I can add a two o'clock check-out and move you to a higher floor.",
           helpTip:
-            "Nhấn vào CAN ở vế sau, không nhấn 'cannot'. Tiếng Anh đặt trọng âm tương phản lên thông tin MỚI — ở đây là thứ bạn cho được.",
+            "Nhấn CAN ở vế sau và đọc đầy đủ /kæn/ — 'can' không nhấn chỉ còn /kən/. Trọng âm tương phản rơi vào thông tin MỚI: thứ bạn cho được.",
         },
       ],
       reading: {
@@ -10117,18 +10125,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao phải đưa món tặng TRƯỚC khi từ chối giảm giá?",
             options: [
-              "A. Vì khách nhận bữa sáng rồi sẽ thôi hỏi giá; nếu bị từ chối trước thì món tặng nghe như giải khuyến khích",
-              "B. Vì quy định bắt buộc như vậy",
-              "C. Vì bữa sáng đắt hơn khoản giảm giá",
+              "A. Khách nhận món tặng sẽ thôi hỏi giá; bị từ chối trước thì món tặng thành giải khuyến khích",
+              "B. Vì quy trình yêu cầu nêu hết ưu đãi trước khi nói bất kỳ lời từ chối nào",
+              "C. Vì món tặng thường có giá trị cao hơn hẳn khoản giảm giá khách đang đòi",
             ],
             correct: 0,
           },
           {
             q: "Vì sao nên xin lại một thứ gì đó từ khách?",
             options: [
-              "A. Để bù chi phí món tặng",
+              "A. Để bù lại phần chi phí của món tặng mà khách sạn vừa bỏ ra",
               "B. Vì cuộc đàm phán chỉ một bên cho sẽ dạy khách ép mạnh hơn lần sau",
-              "C. Vì quản lý yêu cầu ghi lại",
+              "C. Vì quản lý yêu cầu ghi lại mọi nhượng bộ để tổng kết cuối tháng",
             ],
             correct: 1,
           },
@@ -10222,8 +10230,8 @@ export const FO_WEEK_35: WeekContent = {
             q: "Vì sao KHÔNG được nói 'maybe' khi câu trả lời là không?",
             options: [
               "A. Vì khách sẽ hỏi lại lúc trả phòng, và lần từ chối thứ hai tốn thiện chí hơn nhiều",
-              "B. Vì quản lý cấm dùng từ đó",
-              "C. Vì khách sẽ nghĩ nhân viên không biết giá",
+              "B. Vì quản lý đã cấm nhân viên dùng những từ mơ hồ khi báo giá",
+              "C. Vì khách sẽ nghĩ nhân viên không nắm được bảng giá của khách sạn",
             ],
             correct: 0,
           },
@@ -10283,10 +10291,10 @@ export const FO_WEEK_35: WeekContent = {
           icon: "🔁",
         },
         {
-          word: "Applies to",
-          phonetic: "/əˈplaɪz tuː/",
-          definition: "Áp dụng cho phần nào",
-          context: "The breakfast applies to both guests, all four nights.",
+          word: "Cover",
+          phonetic: "/ˈkʌvə/",
+          definition: "Bao trùm, áp dụng cho",
+          context: "The offer covers both guests, all four nights.",
           icon: "🎯",
         },
         {
@@ -10335,9 +10343,9 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao phải nêu cả những thứ KHÔNG bao gồm?",
             options: [
-              "A. Để hoá đơn dài hơn",
-              "B. Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí chính là cuộc cãi đang được phòng ngừa",
-              "C. Vì hệ thống bắt buộc điền đủ trường",
+              "A. Để hoá đơn liệt kê đầy đủ và trông chuyên nghiệp hơn khi in",
+              "B. Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí — đúng cuộc cãi đang phòng ngừa",
+              "C. Vì hệ thống đặt phòng bắt buộc điền đủ mọi trường trước khi lưu",
             ],
             correct: 1,
           },
@@ -10350,7 +10358,7 @@ export const FO_WEEK_35: WeekContent = {
         },
         {
           bad: "Late check-out is included, that is all noted.",
-          good: "Check-out at fourteen hundred on Sunday, and a courtyard room — it has been noted on your booking, sir.",
+          good: "Check-out at two o'clock on Sunday, and a courtyard room — it has been noted on your booking, sir.",
         },
       ],
       game: [
@@ -10545,7 +10553,7 @@ export const FO_WEEK_36: WeekContent = {
           targetResponse:
             "You do not have to, madam. Stay in the room with the door closed, and I am telling the fire team your room number right now.",
           helpTip:
-            "'Stairwell' đọc /ˈsteəwel/ — không có âm /r/ nào (tiếng Anh-Anh không đọc r cuối). Nhấn vào /ˈsteə/ rồi mới tới /wel/.",
+            "'Closed' đọc /kləʊzd/ — MỘT âm tiết, đuôi /zd/. Đừng tách thành 'clo-sờ'; chính đuôi /zd/ nói rằng cửa đã đóng xong.",
         },
       ],
       reading: {
@@ -10555,8 +10563,8 @@ export const FO_WEEK_36: WeekContent = {
             q: "Khách sạn KHÔNG có gian lánh nạn thì khách không đi cầu thang được phải làm gì?",
             options: [
               "A. Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
-              "B. Chờ ở chiếu nghỉ trong lồng cầu thang",
-              "C. Xuống bằng thang máy có nhân viên đi kèm",
+              "B. Chờ ngay bên trong lồng cầu thang, ở chiếu nghỉ gần cửa nhất",
+              "C. Xuống bằng thang máy dịch vụ, có nhân viên trực đi kèm suốt",
             ],
             correct: 0,
           },
@@ -10765,7 +10773,7 @@ export const FO_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "AFTER AN EVACUATION — FRONT DESK\nOnly the fire officer gives the all-clear. The desk never tells guests to go back in, however obvious it looks.\nBack in the lobby, do three things in this order: (1) say the all-clear came from the fire officer, (2) say the lifts are back in service ONLY after engineering confirms it, (3) offer something warm - tea, water, a seat.\nGuests who were shaken are not settled by an explanation. They are settled by a person staying near them for ten minutes.\nWrite the incident log before the shift ends: time the alarm sounded, zone, time of the all-clear, who was not accounted for and when they were found, and what was said to guests. Facts only, no opinion about any guest.\nNext morning, check on the rooms with children, elderly guests, and anyone who used a refuge point. A note in the profile that they were checked on is worth more than any compensation.",
+        text: "AFTER AN EVACUATION — FRONT DESK\nOnly the fire officer gives the all-clear. The desk never tells guests to go back in, however obvious it looks.\nBack in the lobby, do three things in this order: (1) say the all-clear came from the fire officer, (2) say the lifts are back in service ONLY after engineering confirms it, (3) offer something warm - tea, water, a seat.\nGuests who were shaken are not settled by an explanation. They are settled by a person staying near them for ten minutes.\nWrite the incident log before the shift ends: time the alarm sounded, zone, time of the all-clear, who was not accounted for and when they were found, and what was said to guests. Facts only, no opinion about any guest.\nNext morning, check on the rooms with children, elderly guests, and anyone who could not take the stairs. A note in the profile that they were checked on is worth more than any compensation.",
         questions: [
           {
             q: "Ai là người cho phép khách vào lại toà nhà?",
@@ -10854,10 +10862,10 @@ export const FO_WEEK_39: WeekContent = {
           icon: "☎️",
         },
         {
-          word: "Whoever is waiting longest",
-          phonetic: "/huːˈevər ɪz ˈweɪtɪŋ ˈlɒŋɡɪst/",
-          definition: "Người chờ lâu nhất",
-          context: "Serve whoever is waiting longest, not whoever is loudest.",
+          word: "First in line",
+          phonetic: "/ˌfɜːst ɪn ˈlaɪn/",
+          definition: "Người đứng trước trong hàng chờ",
+          context: "Serve the guest first in line, not the loudest one.",
           icon: "⚖️",
         },
       ],
@@ -10865,7 +10873,7 @@ export const FO_WEEK_39: WeekContent = {
         {
           rude: "Wait. I am busy.",
           polite: "I am with another guest, madam. Bear with me for thirty seconds.",
-          rule: "Hiện tại tiếp diễn 'I am with' nói rõ bạn đang bận việc gì NGAY LÚC NÀY. 'I am busy' chỉ nói về bạn; 'I am with another guest' nói về lý do.",
+          rule: "Cấu trúc 'be + with + người' nêu đúng việc đang giữ bạn NGAY LÚC NÀY. 'I am busy' chỉ nói về bạn; 'I am with another guest' nói về lý do — và lý do là thứ khách chấp nhận được.",
         },
         {
           rude: "Hold on.",
@@ -10877,9 +10885,9 @@ export const FO_WEEK_39: WeekContent = {
         {
           guestPrompt: "Excuse me — I have been standing here while you deal with the phone.",
           targetResponse:
-            "You are quite right, madam, and I am sorry. Let me finish this call in ten seconds and you are next.",
+            "You are quite right, madam, and I am sorry. Give me thirty seconds to finish this call, and you are next.",
           helpTip:
-            "Nói 'quite right' với /t/ cuối rõ. Nuốt âm cuối ở đây làm câu công nhận nghe như câu chống chế.",
+            "Nhấn vào 'right' và 'sorry' — hai từ khách cần nghe nhất. 'Quite right' đọc liền một nhịp, đừng tách rời từng từ.",
         },
       ],
       reading: {
@@ -10929,10 +10937,10 @@ export const FO_WEEK_39: WeekContent = {
       titleVi: "Khi khách đổi chủ đề giữa chừng",
       vocabulary: [
         {
-          word: "Before I forget",
-          phonetic: "/bɪˈfɔːr aɪ fəˈɡet/",
-          definition: "Nhân tiện kẻo quên",
-          context: "Before I forget, sir — your taxi is booked for six.",
+          word: "Slip your mind",
+          phonetic: "/ˌslɪp jɔː ˈmaɪnd/",
+          definition: "Quên bẵng đi mất",
+          context: "Write it down before it slips your mind.",
           icon: "💭",
         },
         {
@@ -10950,10 +10958,10 @@ export const FO_WEEK_39: WeekContent = {
           icon: "✌️",
         },
         {
-          word: "Was there anything else",
-          phonetic: "/wɒz ðər ˈeniθɪŋ els/",
-          definition: "Còn gì nữa không ạ",
-          context: "Was there anything else, madam, before you go up?",
+          word: "Loose end",
+          phonetic: "/ˌluːs ˈend/",
+          definition: "Việc còn dở, chưa được chốt",
+          context: "Close every loose end before the guest goes up.",
           icon: "🔚",
         },
       ],
@@ -10995,8 +11003,8 @@ export const FO_WEEK_39: WeekContent = {
             q: "Vì sao phải gọi tên việc mình tạm gác lại?",
             options: [
               "A. Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
-              "B. Vì hệ thống yêu cầu ghi lại",
-              "C. Vì khách sẽ quên mất họ đã hỏi",
+              "B. Vì hệ thống yêu cầu ghi lại đầy đủ mọi câu khách từng hỏi",
+              "C. Vì khách chắc chắn sẽ quên mất những gì họ vừa hỏi xong",
             ],
             correct: 0,
           },
@@ -11017,7 +11025,7 @@ export const FO_WEEK_39: WeekContent = {
           prompt: "Sorry, I know I am jumping around. Where were we?",
           options: [
             {
-              text: "Not at all, madam. We had done the taxi and the breakfast — the bill was the one left.",
+              text: "Not at all, madam. We have done the taxi and the breakfast — the bill is the one left.",
               correct: true,
             },
             { text: "You were asking about several things at the same time.", correct: false },
@@ -11040,10 +11048,10 @@ export const FO_WEEK_39: WeekContent = {
           icon: "🔗",
         },
         {
-          word: "Where I left it",
-          phonetic: "/weər aɪ left ɪt/",
-          definition: "Đến đâu thì tôi dừng",
-          context: "This is where I left it with the guest.",
+          word: "Status",
+          phonetic: "/ˈsteɪtəs/",
+          definition: "Trạng thái một việc đang ở đâu",
+          context: "Give the status first: agreed, waiting, or done.",
           icon: "📍",
         },
         {
@@ -11054,10 +11062,10 @@ export const FO_WEEK_39: WeekContent = {
           icon: "📞",
         },
         {
-          word: "Do not start again",
-          phonetic: "/duː nɒt stɑːt əˈɡen/",
-          definition: "Đừng bắt khách kể lại từ đầu",
-          context: "Read the note first — do not start again with the guest.",
+          word: "Background",
+          phonetic: "/ˈbækɡraʊnd/",
+          definition: "Bối cảnh đã diễn ra trước đó",
+          context: "Read the background before you speak to the guest.",
           icon: "🔁",
         },
       ],
@@ -11099,8 +11107,8 @@ export const FO_WEEK_39: WeekContent = {
             q: "Vì sao không được bảo ca sau đi hỏi lại khách?",
             options: [
               "A. Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
-              "B. Vì khách có thể kể sai",
-              "C. Vì mất thời gian của ca sau",
+              "B. Vì khách có thể kể lại sai chi tiết so với lần trình bày đầu",
+              "C. Vì hỏi lại làm mất thời gian của cả ca sau lẫn của khách",
             ],
             correct: 0,
           },
@@ -11151,10 +11159,10 @@ export const FO_WEEK_39: WeekContent = {
           icon: "🎯",
         },
         {
-          word: "Two minutes",
-          phonetic: "/tuː ˈmɪnɪts/",
-          definition: "Hai phút — mốc thời gian cụ thể",
-          context: "Give me two minutes and I will have the answer.",
+          word: "Timeframe",
+          phonetic: "/ˈtaɪmfreɪm/",
+          definition: "Mốc thời gian cam kết với khách",
+          context: "Give a timeframe, then beat it.",
           icon: "⏱️",
         },
         {
@@ -11181,9 +11189,9 @@ export const FO_WEEK_39: WeekContent = {
         {
           guestPrompt: "Can I bring my dog into the restaurant? Nobody seems able to tell me.",
           targetResponse:
-            "I do not want to guess on that one, sir. Give me two minutes with the restaurant manager and I will come back either way.",
+            "I would rather not guess, sir. Give me two minutes with the restaurant manager and I will come back either way.",
           helpTip:
-            "'Guess' kết thúc bằng /s/, không phải /ʃ/. Đọc thành 'ghét-sờ' làm mất trọng lượng của cả câu.",
+            "'Guess' là MỘT âm tiết /ɡes/, đóng gọn bằng /s/. Đừng chèn nguyên âm thành 'ghe-sờ' — thêm âm tiết là tật phát âm số một của người Việt.",
         },
       ],
       reading: {
@@ -11315,8 +11323,8 @@ export const FO_WEEK_40: WeekContent = {
             q: "Theo tài liệu, điều thay đổi lớn nhất sau 40 tuần là gì?",
             options: [
               "A. Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
-              "B. Bạn biết nhiều từ vựng hơn",
-              "C. Bạn phát âm chuẩn hơn",
+              "B. Bạn biết nhiều từ vựng chuyên ngành hơn hẳn lúc bắt đầu",
+              "C. Bạn phát âm chuẩn hơn và nghe tự nhiên hơn trước nhiều",
             ],
             correct: 0,
           },
@@ -11405,7 +11413,7 @@ export const FO_WEEK_40: WeekContent = {
           targetResponse:
             "I understand, sir. That is a decision for my Duty Manager, and she should hear it from you directly. Let me bring her.",
           helpTip:
-            "'Depth' và 'beyond' đều có âm khó: /depθ/ kết thúc bằng /θ/ (lưỡi giữa răng), và /bɪˈjɒnd/ giữ /d/ cuối.",
+            "'Decision' /dɪˈsɪʒən/ có âm /ʒ/ hiếm gặp với người Việt — đừng đọc thành /z/. Và giữ đủ cụm /ktl/ trong 'directly'.",
         },
       ],
       reading: {
@@ -11469,10 +11477,10 @@ export const FO_WEEK_40: WeekContent = {
           icon: "👐",
         },
         {
-          word: "Let them try",
-          phonetic: "/let ðəm traɪ/",
-          definition: "Để họ tự làm thử",
-          context: "Let them try before you correct anything.",
+          word: "Take over",
+          phonetic: "/ˌteɪk ˈəʊvə/",
+          definition: "Giành làm thay phần của người khác",
+          context: "Do not take over unless the guest is unhappy.",
           icon: "🎤",
         },
         {
@@ -11506,7 +11514,7 @@ export const FO_WEEK_40: WeekContent = {
         {
           guestPrompt: "Your new colleague seems nervous. Is she all right?",
           targetResponse:
-            "She is on her second week, madam. She is doing well, and she will take your booking herself.",
+            "She is in her second week, madam. She is doing well, and she will take your booking herself.",
           helpTip:
             "Nói câu này với giọng ấm và rõ — khách nghe được, và người mới cũng nghe được. Đây là câu xây dựng sự tự tin cho cả hai phía.",
         },
@@ -11565,10 +11573,10 @@ export const FO_WEEK_40: WeekContent = {
       titleVi: "Điều khoá học này chưa dạy bạn",
       vocabulary: [
         {
-          word: "Never came up",
-          phonetic: "/ˈnevə keɪm ʌp/",
-          definition: "Chưa từng gặp trong bài học",
-          context: "That situation never came up in any lesson.",
+          word: "Unfamiliar",
+          phonetic: "/ˌʌnfəˈmɪljə/",
+          definition: "Lạ lẫm, chưa gặp bao giờ",
+          context: "Most requests in a career are unfamiliar at first.",
           icon: "❓",
         },
         {
@@ -11579,10 +11587,10 @@ export const FO_WEEK_40: WeekContent = {
           icon: "🧩",
         },
         {
-          word: "Keep listening",
-          phonetic: "/kiːp ˈlɪsnɪŋ/",
-          definition: "Tiếp tục lắng nghe để học",
-          context: "Keep listening to how the guests say it.",
+          word: "Absorb",
+          phonetic: "/əbˈzɔːb/",
+          definition: "Thấm, học vào người một cách tự nhiên",
+          context: "You absorb new phrases from every guest, free.",
           icon: "👂",
         },
         {
@@ -11601,8 +11609,8 @@ export const FO_WEEK_40: WeekContent = {
         },
         {
           rude: "I never saw this in the lessons, so I cannot do it.",
-          polite: "This never came up in any lesson, but I can work it out from what I know.",
-          rule: "Mệnh đề nhượng bộ với 'but' nối một hạn chế với một khả năng. Đây là câu quan trọng nhất của cả bốn mươi tuần.",
+          polite: "Although this never came up in any lesson, I can work it out from what I know.",
+          rule: "Mệnh đề nhượng bộ 'Although…' mở đầu câu — cấu trúc đặc trưng B1.1: một hạn chế và một khả năng trong cùng một câu. Đây là câu quan trọng nhất của cả bốn mươi tuần.",
         },
       ],
       speaking: [
@@ -11611,7 +11619,7 @@ export const FO_WEEK_40: WeekContent = {
           targetResponse:
             "Probably not, madam, but let me find out for you. Give me two minutes and I will come back either way.",
           helpTip:
-            "'Probably' ba âm tiết: /ˈprɒbəbli/. Người Việt hay rút thành hai — giữ đủ, vì đây là từ làm câu nghe khiêm tốn mà tự tin.",
+            "'Probably' người bản ngữ thường đọc gọn thành /ˈprɒbli/ — hai âm tiết là bình thường. Thứ phải giữ là trọng âm đầu: PRO-bably.",
         },
       ],
       reading: {
