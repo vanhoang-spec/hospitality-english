@@ -452,3 +452,19 @@ câu trích trần, không nhãn "khách" (`SpeakingSuite.tsx:161`). HK-34 và H
 để đưa vào một số lượt **giám sát/quản lý nói với nhân viên** — đó là cách duy nhất luyện được
 ngôn ngữ nội bộ (`lead time`, `cue`, và cả tuần đề xuất HK-38) mà không dạy nhân viên nói
 những từ đó vào mặt khách. `helpTip` của các lượt này luôn mở đầu bằng "Đây là CẤP TRÊN nói".
+
+**Bổ sung 30/08/2026 — trường `speakerRole` và món nợ nó để lộ ra.**
+Hai auditor mù độc lập cùng phát hiện: `guestPrompt` được BỐN màn hình dán nhãn "Khách nói"
+(`SpeakingSuite.tsx`, `handbook.$dep.$week.tsx`, `review.tsx`, và `WeekTestSuite.tsx` in
+`Khách: "…"`). Ghi chú thiết kế trước đó của tôi — rằng prompt render ra không có nhãn — là
+**SAI**; tôi grep phân biệt hoa thường nên trượt chuỗi `"Lời khách nói"`.
+
+Đã sửa tận gốc: `SpeakingItem` có thêm `speakerRole?: "guest" | "colleague"`, hàm
+`speakerLabel()` in "Đồng nghiệp nói" cho lượt nội bộ, và cả bốn màn hình dùng nó. Đây là kênh
+duy nhất trong khoá học luyện được **ngôn ngữ nội bộ** (`lead time`, `cue`, `service window`,
+`put it forward`, `not my call`) mà không dạy nhân viên nói những từ đó vào mặt khách.
+
+| Mục  | Nội dung                                                                                                                                                                                                                                                                                                                       | Nguồn     |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
+| HK-H | **`GR_34_2.speaking[0]` đang bị dán nhãn sai.** guestPrompt là `"Housekeeping here. We only have white towels left, no red ones for the heart shape."` — rõ ràng là lời một bộ phận khác gọi sang, không phải lời khách. Cần thêm `speakerRole: "colleague"`. Để lại cho batch GR để không đụng file khi hai auditor đang đọc. | HM v5 1-E |
+| HK-I | **Rà toàn corpus** tìm các lượt nội bộ khác đang mang nhãn khách (1349 lượt chưa đánh dấu). Nên viết một lớp lint: nếu `guestPrompt` chứa tên bộ phận tự xưng ("Housekeeping here", "the desk here") hoặc thuật ngữ nội bộ, cảnh báo nếu chưa có `speakerRole`.                                                                | phái sinh |
