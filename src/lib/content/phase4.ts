@@ -2898,9 +2898,9 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
     ],
     modelReply:
-      "We are very sorry that your silk dress was damaged in our laundry service — this is not the outcome we want for any guest. We would like to review the compensation offered, as a small credit does not reflect the value of your dress. Please contact our Housekeeping Manager directly so we can offer a fair resolution and regain your trust.",
+      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. Our Housekeeping Manager would like to look at this with you personally. Please contact us directly so that we can put it right.",
     explanationVi:
-      "Khi khách đã nói mức đền bù ban đầu chưa thỏa đáng, phản hồi tốt phải THỪA NHẬN điều đó và cam kết xem lại — lặp lại đề nghị cũ sẽ khiến khách càng bực.",
+      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Đừng viết ra nguyên nhân do mình, và đừng thừa nhận mức đền bù cũ là thấp — cả hai câu đó nằm lại trên internet và thành bằng chứng cho một yêu cầu lớn hơn.",
   },
   SW: {
     reviewMeta: "★★☆☆☆ · Google Reviews · 1 tuần trước",
