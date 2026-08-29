@@ -1114,6 +1114,71 @@ async function lintHelpTipQuotes() {
   console.log(`  helpTip orphan quotes: ${offenders.length} (ratchet holds).`);
 }
 
+// ── Layer H · trần độ dài câu trong bài đọc ────────────────────────────────
+// The productive cap is 22 words. Reading may sit above it — receptive before
+// productive is ordinary — but not at 66. A safety rule buried in a 43-word
+// sentence with three nested clauses is a rule an A2.2 learner does not have.
+// Every offender today is hand-authored Phase 4; generated weeks have none.
+const READ_SENT_BASELINE = new URL("./_reading-sentence-baseline.json", import.meta.url);
+const READ_SENT_MAX = 25;
+
+async function lintReadingSentenceLength() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      for (const sentence of lesson.reading.text.split(/(?<=[.!?])\s+|\n/)) {
+        const n = sentence.trim().split(/\s+/).filter(Boolean).length;
+        if (n > READ_SENT_MAX)
+          offenders.push(
+            `${key}/${lesson.lessonId}: ${n} words — "${sentence.trim().slice(0, 50)}…"`,
+          );
+      }
+
+  const file = Bun.file(READ_SENT_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).longSentences as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      READ_SENT_BASELINE,
+      JSON.stringify(
+        {
+          longSentences: n,
+          max: READ_SENT_MAX,
+          note: "Ratchet only — a reading sentence over 25 words is above the band it is written for.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  Reading sentences over ${READ_SENT_MAX} words: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[H reading-sentence] ${offenders.length} reading sentences run over ${READ_SENT_MAX} words, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Reading sentences over ${READ_SENT_MAX} words: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(
+    `  Reading sentences over ${READ_SENT_MAX} words: ${offenders.length} (ratchet holds).`,
+  );
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1474,6 +1539,7 @@ lintSemantics("P4", P4_BANKS as unknown as BankSet);
 lintDeadBankEntries(P4_BANKS as unknown as BankSet);
 await lintDeadArcadeField();
 await lintHelpTipQuotes();
+await lintReadingSentenceLength();
 reportStaleDebt();
 
 let sentenceCount = 0;
