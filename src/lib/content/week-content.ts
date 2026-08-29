@@ -15839,7 +15839,8 @@ export const HK_WEEK_31: WeekContent = {
         },
         {
           rude: "You use too many towels. Bad for the environment.",
-          polite: "A towel left on the rail stays, sir — a towel on the floor goes to the wash.",
+          polite:
+            "A clean towel left on the towel rail stays, sir — one on the floor goes to the wash.",
           rule: "Dạy KÝ HIỆU thay vì dạy đạo đức: giá khăn = giữ, sàn = giặt. Khách tự chọn mà không bị ai chấm điểm.",
         },
       ],
@@ -15855,27 +15856,27 @@ export const HK_WEEK_31: WeekContent = {
         {
           guestPrompt: "We're here for ten nights. I'd like fresh sheets every single day, please.",
           targetResponse:
-            "Of course, madam — I am glad you said so. Fresh sheets every morning from tomorrow, and you will not have to ask again.",
+            "Of course, madam — I am glad you said so. Fresh sheets every morning from tomorrow.",
           helpTip:
             "Nói 'of course' TRƯỚC, không kèm bài giảng môi trường. Rồi thêm giá trị: ghi lại để khách khỏi phải nhắc.",
         },
       ],
       reading: {
-        text: "THE TOWEL CARD — WHAT IT REALLY MEANS\nOn the rail: the guest wants to keep it. On the floor or in the basket: it goes to the laundry. That is the whole system, and it has no exceptions.\nSheets are changed every second day under the eco programme, on departure, and whenever a guest asks — at no charge, without a raised eyebrow.\nSome guests test us: 'do you really wash them?' The honest answer is short. Anything on the floor is laundered. Anything visibly soiled is laundered, wherever it is lying.\nNever teach the environment to a guest. They booked a room, not a lesson.\nIf a guest asks for daily linen, note it on the guest's profile the same day.\nHow often your own hotel changes linen, and what the card says, is your Executive Housekeeper's answer — ask before your first floor.",
+        text: "THE TOWEL CARD — WHAT IT REALLY MEANS\nOn the rail: the guest wants to keep it. On the floor or in the basket: it goes to the laundry. One thing overrides the card — anything marked or soiled is washed, wherever it is hanging.\nSheets are changed every second day under the eco programme, on departure, and whenever a guest asks — at no charge, without a raised eyebrow.\nSome guests test us: 'do you really wash them?' The honest answer is short. Anything on the floor is laundered. Anything visibly soiled is laundered, wherever it is lying.\nNever teach the environment to a guest. They booked a room, not a lesson.\nIf a guest asks for daily linen, note it on the guest's profile the same day.\nHow often your own hotel changes linen, and what the card says, is your Executive Housekeeper's answer — ask before your first floor.",
         questions: [
           {
             q: "Khăn nằm trên sàn nghĩa là gì?",
             options: [
               "Khách muốn giữ lại chiếc khăn đó thêm một ngày nữa",
               "Nhân viên phải hỏi lại khách trước khi mang khăn đi giặt",
-              "Khăn được mang đi giặt — không có ngoại lệ nào cả",
+              "Khăn được mang đi giặt, dù khách chưa dùng tới nó",
             ],
             correct: 2,
           },
           {
             q: "Khách xin thay ga mỗi ngày thì xử lý thế nào?",
             options: [
-              "Đồng ý ngay, miễn phí, và ghi vào hồ sơ phòng trong ngày",
+              "Đồng ý ngay, miễn phí, và ghi vào hồ sơ khách trong ngày",
               "Giải thích lợi ích môi trường rồi mới đồng ý thay ga hằng ngày",
               "Đồng ý nhưng báo trước rằng khoản này sẽ tính thêm phí dịch vụ",
             ],
@@ -15937,7 +15938,7 @@ export const HK_WEEK_31: WeekContent = {
           word: "Artisan",
           phonetic: "/ˌɑːtɪˈzæn/",
           definition: "Nghệ nhân thủ công",
-          context: "An artisan in the old town makes these bowls.",
+          context: "An artisan in the old town makes the tea sets.",
           icon: "🪵",
         },
         {
@@ -15985,7 +15986,7 @@ export const HK_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT LEAVES THE ROOM WITH THE GUEST — AND WHAT DOES NOT\nYours to keep: slippers, the sewing kit, the small amenity items, the pen and the notepad.\nStays with the room: the robe, the towels, the hairdryer, the umbrella, the art, the bed runner. The bathroom bottles are refillable and stay — say so kindly if a guest asks.\nUsually complimentary and replaced daily: the bottled water, the tea and the coffee sachets. Usually charged when used: what is in the minibar fridge — though some houses give the water and the soft drinks free. If a guest asks whether something is free, say which of the two it is, and never guess a price.\nSold downstairs: the robe, the light bed throw, the room scent and the tea set — the throw is not the runner on your bed. The boutique keeps the price list.\nIf an item is missing after a departure, report it to the housekeeping office at once — the guest may still be at the desk. What happens next is the Duty Manager's decision, never a conversation you start.\nEvery hotel draws these lines differently. Ask your Executive Housekeeper for your own list in your first week.",
+        text: "WHAT LEAVES THE ROOM WITH THE GUEST — AND WHAT DOES NOT\nYours to keep: slippers, the sewing kit, the small amenity items, the pen and the notepad.\nStays with the room: the robe, the towels, the hairdryer, the umbrella, the art, the bed runner. The bathroom bottles are refillable and stay — say so kindly if a guest asks.\nUsually complimentary and replaced daily: the bottled water, the tea and the coffee sachets. Usually charged when used: what is in the minibar fridge — though some houses give the water and the soft drinks free. If a guest asks whether something is free, say so only when you are certain. Otherwise bring the price list, and never guess a price.\nSold downstairs: the robe, the light bed throw, the room scent and the tea set — the throw is not the runner on your bed. The boutique keeps the price list.\nIf an item is missing after a departure, report it to the housekeeping office at once — the guest may still be at the desk. What happens next is the Duty Manager's decision, never a conversation you start.\nEvery hotel draws these lines differently. Ask your Executive Housekeeper for your own list in your first week.",
         questions: [
           {
             q: "Món nào khách được mang về?",
@@ -16033,11 +16034,11 @@ export const HK_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "The water is free and so is everything in the fridge, madam — nothing there is charged.",
+              text: "The price list is in the folder on the desk, madam — shall I bring it over to you?",
               correct: false,
             },
             {
-              text: "The price list is in the folder on the desk, madam — may I bring it to you?",
+              text: "The water is complimentary, madam — only the fridge goes on the bill.",
               correct: true,
             },
           ],
@@ -16068,7 +16069,7 @@ export const HK_WEEK_31: WeekContent = {
           word: "Bedside light",
           phonetic: "/ˈbedsaɪd ˌlaɪt/",
           definition: "Đèn ngủ đầu giường",
-          context: "The bedside light is left on for you.",
+          context: "The bedside light is left on, and the room safe stays untouched.",
           icon: "💡",
         },
         {
@@ -16096,9 +16097,9 @@ export const HK_WEEK_31: WeekContent = {
           guestPrompt:
             "Someone came in while we were at dinner and moved things around. What was that?",
           targetResponse:
-            "We are proud of the evening ritual, sir — the bed folded back, the light on, fresh water.",
+            "I am sorry if it startled you, sir — that was turndown. We cleared the cups and refreshed the water; nothing of yours was moved.",
           helpTip:
-            "'Ritual' /ˈrɪtʃuəl/ — âm /tʃ/ như trong 'church', ba âm tiết. Kể ba việc CỤ THỂ đã làm thì khách hết lo.",
+            "Khách hỏi câu này vì đang LO, không vì tò mò. Kể ba việc cụ thể, rồi câu quan trọng nhất: 'Nothing of yours was moved.' 'Ritual' /ˈrɪtʃuəl/ — âm /tʃ/ như trong 'church'.",
         },
         {
           guestPrompt: "We'd rather nobody came in after six. Is that possible?",
@@ -16109,7 +16110,7 @@ export const HK_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "THE EVENING SERVICE — WHAT WE DO, AND WHAT WE ASK\nKnock and announce in the evening exactly as in the morning: 'Good evening — housekeeping, turndown service.'\nBetween six and eight, an attendant folds back one corner of the bed and closes the curtains. The bedside light goes on, the slippers go by the bed, the bath mat is laid, the water is refreshed and the day's cups are cleared.\nWhat we never do in the evening: move a guest's belongings to clean under them, or open a suitcase. We never tidy papers into a pile, and we touch nothing on the bedside table except the water.\nIf the room shows Do Not Disturb, the service does not happen. DURING THE DAY we may leave a voicemail and slip a note under the door. After six in the evening we never do: the paper and the corridor light wake a sleeping guest. The evening refusal goes on the turndown list instead.\nA guest may decline the ritual for one night or the whole stay. Mark it once, and make sure the next shift reads it.\nYour own hotel's turndown hours may differ — ask your Floor Supervisor in your first week.",
+        text: "THE EVENING SERVICE — WHAT WE DO, AND WHAT WE ASK\nKnock and announce in the evening as you do in the morning: two knocks, then 'Good evening — housekeeping, turndown service.'\nBetween six and eight, an attendant folds back one corner of the bed and closes the curtains. The bedside light goes on, the slippers go by the bed, the bath mat is laid, the water is refreshed and the day's cups are cleared.\nWhat we never do in the evening: move a guest's belongings to clean under them, or open a suitcase. We never tidy papers into a pile, and we touch nothing on the bedside table except the water.\nIf the room shows Do Not Disturb, the service does not happen. DURING THE DAY we may leave a voicemail and slip a note under the door. After six in the evening we never do: the paper and the corridor light wake a sleeping guest. The evening refusal goes on the turndown list instead.\nA guest may decline the ritual for one night or the whole stay. Mark it once, and make sure the next shift reads it.\nYour own hotel's turndown hours may differ — ask your Floor Supervisor in your first week.",
         questions: [
           {
             q: "Buổi tối, nhân viên KHÔNG được làm gì?",
@@ -16227,7 +16228,7 @@ export const HK_WEEK_32: WeekContent = {
           rude: "You never use second pillow. I take it away, OK?",
           polite:
             "Based on what you said about the pillows, madam, may I leave one firm and one soft?",
-          rule: "Khung tư vấn của tuần: 'Based on + điều bạn quan sát, may I…?' Quan sát biến thành ĐỀ NGHỊ VỀ CĂN PHÒNG, không bao giờ thành nhận xét về khách.",
+          rule: "Khung tư vấn của tuần: 'Based on + điều khách đã nói (hoặc một sự việc của CĂN PHÒNG), may I…?' Quan sát biến thành ĐỀ NGHỊ, không bao giờ thành nhận xét về con người.",
         },
         {
           rude: "The room is always too cold. Why you set like that?",
@@ -16240,9 +16241,9 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt: "The extra blanket in the wardrobe — we've been using it every night.",
           targetResponse:
-            "Based on what you have told me, madam, it stays on the bed from tonight — and a second one too.",
+            "Based on what you said, madam, it stays on the bed from tonight — and a second one too.",
           helpTip:
-            "Một luật duy nhất cho cả tuần: nêu điều CĂN PHÒNG cho thấy, không bao giờ nêu điều bạn suy ra về CON NGƯỜI. 'The window was open each morning' là căn phòng; 'you sleep on one side' là con người. Âm /st/ trong 'based' nối thẳng sang 'on'.",
+            "Một luật duy nhất cho cả tuần: nêu điều CĂN PHÒNG cho thấy, không bao giờ nêu điều bạn suy ra về CON NGƯỜI. Âm /st/ trong 'based' nối thẳng sang 'on', đọc liền /beɪst‿ɒn/ — đừng tách hai từ.",
         },
         {
           guestPrompt: "The room is freezing every time we come back from the beach.",
@@ -16297,7 +16298,7 @@ export const HK_WEEK_32: WeekContent = {
           prompt: "You've put both pillows back. I only ever sleep on the firm one.",
           options: [
             {
-              text: "I noticed you sleep on one side, madam, so I left the other pillow away.",
+              text: "I noticed you sleep on one side, madam, so I put the other pillow away.",
               correct: false,
             },
             {
@@ -16363,16 +16364,16 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt: "Here, take this — you have looked after us beautifully all week.",
           targetResponse:
-            "You are very kind, madam. Thank you very much — may I tell my supervisor you gave it to me?",
+            "You are very kind, madam. Thank you very much — I will let my supervisor know, as our house asks.",
           helpTip:
-            "Nhận lời cảm ơn cho ấm, rồi thêm một vế minh bạch. Khoản lớn bất thường thì đổi vế sau thành 'May I ask my supervisor first? Our house has a rule.'",
+            "Nhận lời cảm ơn cho ấm, rồi THÔNG BÁO — không bao giờ xin phép khách để khai báo một khoản tiền, vì khách có thể nói 'không'. Phong bì dán kín hoặc khoản lớn thì hỏi giám sát TRƯỚC khi nhận.",
         },
         {
           guestPrompt: "You were the only person in my room today. My money is gone.",
           targetResponse:
-            "I understand, madam. I have not moved anything. May I call my supervisor, so we can look together?",
+            "I understand, madam. None of your belongings have been moved. May I call my supervisor now?",
           helpTip:
-            "Ba bước, không hơn: hiểu lời khách, nói sự thật ngắn, gọi giám sát. Không bao giờ tự mở túi hay xe đẩy cho khách xem khi chưa có người chứng kiến.",
+            "Ba bước, không hơn: hiểu lời khách, nói sự thật ngắn, gọi giám sát. 'Belongings' /bɪˈlɒŋɪŋz/ có cụm /ŋz/ cuối — đừng nuốt mất âm /z/. Không bao giờ tự mở túi hay xe đẩy khi chưa có người chứng kiến.",
         },
       ],
       reading: {
@@ -16412,7 +16413,7 @@ export const HK_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "I did, sir — it had fallen by the door. May I call my supervisor up now?",
+              text: "I did, sir — it had fallen by the door, and I wrote it on my room report. May I call my supervisor?",
               correct: true,
             },
           ],
@@ -16490,14 +16491,14 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt: "The room smells strongly of cleaning products. It gives me a headache.",
           targetResponse:
-            "I am sorry, madam. May I move you to another room tonight? I will tell my supervisor now.",
+            "I am sorry, madam. I will ask my supervisor to move you tonight, and the Duty Manager will hear today.",
           helpTip:
-            "Triệu chứng của khách thì đề nghị ĐỔI PHÒNG trước, rồi báo giám sát — mở cửa sổ không cứu được đêm nay. 'Move' /muːv/ giữ trọn âm /v/ cuối.",
+            "Triệu chứng của khách là việc của Duty Manager NGAY TRONG CA, không phải một yêu cầu dịch vụ. Và đừng tự hứa có phòng trống — 'I will ask my supervisor to move you'. 'Move' /muːv/ giữ trọn âm /v/ cuối.",
         },
         {
           guestPrompt: "Do you have anything for someone who reacts to feathers?",
           targetResponse:
-            "We do, sir — foam pillows now, and I will ask the linen store for anti-allergy bedding today.",
+            "Based on what you have told me, sir, foam pillows now — and I will ask the linen store today.",
           helpTip:
             "Nói 'anti-allergy' khi giao tiếp; giữ 'hypoallergenic' để ĐỌC HIỂU trên nhãn — sáu âm tiết không nên đứng giữa ca bận.",
         },
@@ -16538,7 +16539,7 @@ export const HK_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "No spray in this room from today, sir. I will ask our office what else we keep.",
+              text: "No spray in this room from today, sir. My supervisor will report it to the Duty Manager.",
               correct: true,
             },
           ],
@@ -16622,8 +16623,7 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt:
             "I told the morning girl about the carpet spray. Do I have to explain again?",
-          targetResponse:
-            "Based on what you told the morning attendant, madam, no spray goes on that carpet again.",
+          targetResponse: "You do not, madam — it is on file. No spray goes on that carpet again.",
           helpTip:
             "Đây là NGOẠI LỆ: khách tự hỏi có phải nhắc lại không, nên 'it is on file' chính là lời trấn an họ đang cần.",
         },
@@ -16657,7 +16657,7 @@ export const HK_WEEK_32: WeekContent = {
             "Every attendant this week has sprayed something on that carpet. I've asked three times.",
           options: [
             {
-              text: "I am sorry, madam. No spray on that carpet again — it is on your profile from today.",
+              text: "I am sorry, madam. No spray on that carpet again — I will tell the evening team myself.",
               correct: true,
             },
             {
@@ -16674,7 +16674,7 @@ export const HK_WEEK_32: WeekContent = {
           prompt: "Do you write things about guests? I'd rather not be in some file somewhere.",
           options: [
             {
-              text: "Only what helps us serve you, madam — service times, what not to touch. My manager can show you what we keep.",
+              text: "Only what helps us serve you, madam — service times, what not to touch. Nothing personal at all.",
               correct: true,
             },
             {
