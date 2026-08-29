@@ -194,7 +194,7 @@ const FO_BANK: P1Bank = {
   ],
   problems: [
     { word: "Broken", phonetic: "/ˈbrəʊkən/", definition: "Bị hỏng", icon: "🔧" },
-    { word: "Lost", phonetic: "/lɒst/", definition: "Bị mất", icon: "❓" },
+    { word: "Lost", phonetic: "/lɒst/", definition: "Bị mất", icon: "🔍" },
     { word: "Wrong", phonetic: "/rɒŋ/", definition: "Sai, nhầm", icon: "❌" },
     { word: "Delayed", phonetic: "/dɪˈleɪd/", definition: "Bị chậm trễ", icon: "⏳" },
     { word: "Faulty", phonetic: "/ˈfɔːlti/", definition: "Bị lỗi kỹ thuật", icon: "⚠️" },

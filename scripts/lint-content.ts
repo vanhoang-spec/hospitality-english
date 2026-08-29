@@ -958,6 +958,73 @@ function lintDeadBankEntries(banks: BankSet) {
   }
 }
 
+/** LAYER F — the dead `arcade` field, ratcheted down.
+ *
+ *  `arcade` is a legacy field: ArcadeSuite runs on `game`, and nothing in the
+ *  app reads `arcade` at all. It stayed authored for months anyway — a blind
+ *  auditor found ~296 hand-written English sentences no learner would ever
+ *  see, and two audit rounds before that had spent their findings critiquing
+ *  the style of invisible content.
+ *
+ *  A hard ban would fail on every legacy week at once, so this ratchets
+ *  instead: the count may fall and may never rise. When it falls, the
+ *  baseline rewrites itself, exactly like the semantic-debt ledger. Delete
+ *  arcade blocks from a week you are touching anyway and the gate records the
+ *  new floor for you. */
+const ARCADE_BASELINE = new URL("./_arcade-baseline.json", import.meta.url);
+
+async function lintDeadArcadeField() {
+  let live = 0;
+  const carriers: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const n = week.lessons.filter((l) => (l.arcade?.length ?? 0) > 0).length;
+    if (n > 0) {
+      live += n;
+      carriers.push(key);
+    }
+  }
+
+  const file = Bun.file(ARCADE_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).lessonsWithArcade as number)
+    : live;
+
+  const writeBaseline = (n: number) =>
+    Bun.write(
+      ARCADE_BASELINE,
+      JSON.stringify(
+        { lessonsWithArcade: n, note: "Ratchet only — this number may fall, never rise." },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await writeBaseline(live);
+    console.log(`  Dead \`arcade\` field: baseline recorded at ${live} lessons.`);
+    return;
+  }
+
+  if (live > baseline) {
+    errors.push(
+      `[F dead-arcade] ${live} lessons author the dead \`arcade\` field, up from ${baseline}. ` +
+        `No suite reads it — ArcadeSuite runs on \`game\`. Put the writing into \`game\` rounds instead.`,
+    );
+    return;
+  }
+  if (live < baseline) {
+    await writeBaseline(live);
+    console.log(
+      `  Dead \`arcade\` field: ${live} lessons still carry it, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(
+    `  Dead \`arcade\` field: ${live} lessons still carry it across ${carriers.length} dep-weeks (ratchet holds).`,
+  );
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1316,6 +1383,7 @@ lintBanks("P3", P3_BANKS as unknown as BankSet);
 lintBanks("P4", P4_BANKS as unknown as BankSet);
 lintSemantics("P4", P4_BANKS as unknown as BankSet);
 lintDeadBankEntries(P4_BANKS as unknown as BankSet);
+await lintDeadArcadeField();
 reportStaleDebt();
 
 let sentenceCount = 0;
