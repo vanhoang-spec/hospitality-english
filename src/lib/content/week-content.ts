@@ -17861,6 +17861,1103 @@ export const HK_WEEK_35: WeekContent = {
   ],
 };
 
+export const HK_WEEK_36: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 36,
+  weekTitleEn: "When the Floor Becomes an Emergency",
+  weekTitleVi: "Khi tầng của bạn thành hiện trường",
+  reviewWords: [
+    "Report",
+    "Unattended",
+    "Wet floor sign",
+    "Never touch",
+    "Guest privacy",
+    "Duty manager",
+    "Engineering team",
+    "Do not mix",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_36_1",
+      lessonOrder: 1,
+      titleEn: "The Guest Who Does Not Answer",
+      titleVi: "Vị khách không trả lời",
+      vocabulary: [
+        {
+          word: "Unresponsive",
+          phonetic: "/ˌʌnrɪˈspɒnsɪv/",
+          definition: "Không phản ứng — gọi, lay đều không tỉnh",
+          context: "A guest who is unresponsive is an emergency, not a sleeping guest.",
+          icon: "🚨",
+        },
+        {
+          word: "First aider",
+          phonetic: "/ˌfɜːst ˈeɪdə/",
+          definition: "Người đã được huấn luyện sơ cứu",
+          context: "Call the first aider by name, not by shouting into the corridor.",
+          icon: "⛑️",
+        },
+        {
+          word: "Calm",
+          phonetic: "/kɑːm/",
+          definition: "Bình tĩnh — và giữ cho người khác bình tĩnh theo",
+          context: "A calm voice in a corridor is worth more than a fast one.",
+          icon: "🧘",
+        },
+        {
+          word: "Situation",
+          phonetic: "/ˌsɪtʃuˈeɪʃn/",
+          definition: "Tình huống — phần mô tả gọn khi gọi báo",
+          context: "Give the room number first, then the situation in one sentence.",
+          icon: "📍",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I found a man on the floor! Somebody come!",
+          polite:
+            "Room 812, a guest is unresponsive on the floor — send our first aider and the Duty Manager now.",
+          rule: "Gọi cấp cứu theo đúng thứ tự: SỐ PHÒNG trước, tình huống sau, rồi tên người bạn cần. 'Somebody' không phải là một cái tên — không ai nhận việc khi bạn gọi 'somebody'.",
+        },
+        {
+          rude: "Are you all right? Wake up, sir! Sit up, please!",
+          polite:
+            "I will not move him, madam — I am staying right here, and help is on its way up now.",
+          rule: "Không di chuyển, không cho uống nước, không lay người. Ba việc người chưa được huấn luyện làm được là GỌI, DỌN CHỖ và Ở LẠI — và cả ba đều có ích thật.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "My husband collapsed in the bathroom — please, do something!",
+          targetResponse:
+            "Please stay calm, madam — the first aider is on her way up. I will stay here, and I will not move him.",
+          helpTip:
+            "Bốn việc trong bốn mệnh đề ngắn: giữ bình tĩnh, người đang tới, tôi ở lại, tôi không di chuyển. 'Calm' /kɑːm/ — chữ 'l' hoàn toàn câm.",
+        },
+        {
+          guestPrompt: "Duty Manager. What have you got?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Room 812, sir. A guest is unresponsive on the floor — that is the whole situation. The first aider is with him.",
+          helpTip:
+            "Đây là DUTY MANAGER hỏi. Báo theo đúng thứ tự đã học: số phòng, rồi 'situation' gọn trong một câu, rồi ai đang ở đó. 'Unresponsive' /ˌʌnrɪˈspɒnsɪv/ — trọng âm rơi vào âm tiết thứ ba.",
+        },
+      ],
+      reading: {
+        text: "A GUEST FOUND UNWELL — THE THREE THINGS AN UNTRAINED PERSON CAN DO\nCALL. The first aider and the Duty Manager, by name, from the room phone. Say the room number FIRST, then the situation in one sentence: 'Room 812, a guest is unresponsive.' A number said first survives a bad line.\nCLEAR. Open the door fully, move the trolley out of the corridor, and leave a clean path from the lift. Whoever is running to you must not climb past your buckets.\nSTAY. Do not leave to fetch anyone — that is what the phone is for. If a companion is in the room, you stay with them too.\nNEVER: move the guest, sit them up, give water, give medicine, or take anything from the guest's own medicine bag.\nSay nothing to any other guest and nothing in the corridor. What happened in that room belongs to the guest and to the report.\nAfterwards you write what you SAW and what you DID, with times. You never write what you think was wrong with them.\nWho is trained on your floor, and which number reaches them fastest, differs by house. Ask your Floor Supervisor this week, not on the day.",
+        questions: [
+          {
+            q: "Khi gọi báo, phải nói điều gì TRƯỚC tiên?",
+            options: [
+              "Số phòng, rồi tình huống gọn trong đúng một câu",
+              "Tên khách và số hộ chiếu ghi trong hồ sơ phòng",
+              "Tình trạng sức khoẻ mà bạn phỏng đoán về khách",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không rời phòng đi tìm người tới giúp?",
+            options: [
+              "Vì điện thoại làm được việc đó, còn khách cần có người ở lại",
+              "Vì hành lang mỗi tầng đều có camera ghi lại toàn bộ lối đi",
+              "Vì giám sát tầng sẽ không tìm ra phòng nếu cửa đang khép lại",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Should I give him some water? He looks so pale.",
+          options: [
+            {
+              text: "A little water may help, madam — let me fetch a glass from the bathroom for him.",
+              correct: false,
+            },
+            {
+              text: "Nothing by mouth, madam. The first aider is thirty seconds away, and I am staying here.",
+              correct: true,
+            },
+            {
+              text: "Please try to sit him up against the bed, madam, while we wait for somebody to come.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Is he going to be all right? Tell me honestly.",
+          options: [
+            {
+              text: "He looks a great deal better already, madam — I am sure he will be perfectly fine.",
+              correct: false,
+            },
+            {
+              text: "I am not able to say, madam. The first aider is with him and the doctor is coming.",
+              correct: true,
+            },
+            {
+              text: "It is hard to say, madam, but these things almost always turn out to be nothing.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_2",
+      lessonOrder: 2,
+      titleEn: "Sharps, Blood and Broken Glass",
+      titleVi: "Kim tiêm, máu và mảnh vỡ",
+      vocabulary: [
+        {
+          word: "Sharps box",
+          phonetic: "/ˈʃɑːps ˌbɒks/",
+          definition: "Hộp đựng vật sắc nhọn y tế",
+          context: "Every needle goes into the sharps box, never into a bin bag.",
+          icon: "🧷",
+        },
+        {
+          word: "Broken glass hazard",
+          phonetic: "/ˌbrəʊkən ˈɡlɑːs ˌhæzəd/",
+          definition: "Mối nguy từ mảnh thuỷ tinh vỡ",
+          context: "A broken glass hazard is swept up, never picked up by hand.",
+          icon: "🥃",
+        },
+        {
+          word: "Chemical spill",
+          phonetic: "/ˈkemɪkl ˌspɪl/",
+          definition: "Hoá chất đổ tràn",
+          context: "A chemical spill is Engineering's job, not a job for a mop.",
+          icon: "☣️",
+        },
+        {
+          word: "Biohazard bag",
+          phonetic: "/ˌbaɪəʊˈhæzəd ˌbæɡ/",
+          definition: "Túi niêm phong đồ dính dịch cơ thể",
+          context: "Soiled linen is sealed in a biohazard bag inside the room.",
+          icon: "🧺",
+        },
+      ],
+      grammar: [
+        {
+          rude: "There was a needle in the bin. I threw it out already.",
+          polite:
+            "I have found a needle in 610, and I have not touched the bag — may I have a sharps box?",
+          rule: "Không bao giờ bóp, ấn hay lắc một túi rác. Kim tiêm xuyên qua nilon dễ như xuyên qua giấy, và một mũi kim đâm phải là hàng tháng trời xét nghiệm.",
+        },
+        {
+          rude: "Broken glass everywhere. I picked it all up, no problem.",
+          polite:
+            "There is broken glass by the balcony door, madam — may I ask you to stay on the carpet for a moment?",
+          rule: "Với khách: nói rõ chỗ nguy hiểm rồi xin họ đứng yên một chỗ. Với mảnh vỡ: chổi và ky, không bao giờ bằng tay — kể cả khi đã đeo găng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Housekeeping desk — what do you need sending up to 610?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A sharps box and a biohazard bag, please. There is a broken glass hazard by the bath as well.",
+          helpTip:
+            "Đây là BÀN BUỒNG PHÒNG hỏi. Gọi đúng tên từng thứ cần, rồi thêm mối nguy còn lại — người ở đầu dây kia phải hình dung được căn phòng. 'Biohazard' /ˌbaɪəʊˈhæzəd/ — trọng âm rơi vào 'ha'.",
+        },
+        {
+          guestPrompt: "My son is diabetic — where are we supposed to put his needles?",
+          targetResponse:
+            "I will bring a sharps box up within the hour, sir, and I will collect it each morning.",
+          helpTip:
+            "Trả lời bằng một VIỆC CÓ MỐC GIỜ, không bằng một quy định. 'Sharps box' — cụm /ps/ trong 'sharps' /ʃɑːps/ đừng nuốt mất.",
+        },
+      ],
+      reading: {
+        text: "WHAT YOU MUST NOT PICK UP\nA needle, a lancet, a razor blade, a broken ampoule: these go into the sharps box, and nothing else does. Never into a bin bag, never into a pocket, never onto the trolley.\nNever squeeze, press down or shake a bin bag. Hold it away from your leg and carry it by the neck. Most needle injuries in a hotel happen to the person emptying the bin, not to the person who used the needle.\nIf you are pricked: let it bleed under running water, do not suck it, and tell your supervisor the same minute. Every hour you wait makes the treatment harder.\nBroken glass is swept with a brush and pan, then wiped with a damp cloth for the pieces you cannot see. Gloved fingers are still fingers.\nBlood or any body fluid on linen: seal it in the room, in a biohazard bag, and label it. It never travels loose on a trolley and never joins the normal linen.\nAnything you cannot make safe in one minute — a chemical spill, a trapped lift passenger, a missing master key — is a phone call, not a job.\nSay nothing about what a guest's medication is for, to anyone, ever. What is in a room stays in the room.\nWhich bag, which box and which number differ by house. Ask your Executive Housekeeper in your first week.",
+        questions: [
+          {
+            q: "Vì sao không được ấn hay bóp túi rác xuống?",
+            options: [
+              "Vì kim trong túi xuyên qua nilon và xuyên qua cả bàn tay",
+              "Vì túi sẽ rách và làm bẩn thảm hành lang của cả tầng",
+              "Vì mùi trong túi bay ra và ám vào đồng phục nhân viên",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khăn ga dính máu được xử lý thế nào?",
+            options: [
+              "Niêm phong ngay trong phòng, cho vào túi y tế và dán nhãn",
+              "Gấp thật gọn rồi để riêng ở ngăn dưới cùng của xe đẩy",
+              "Đem thẳng xuống phòng giặt và báo miệng cho tổ trưởng ca",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "There's something sharp in the bin — a razor, I think. Can you just empty it?",
+          options: [
+            {
+              text: "Of course, sir — I will be very careful when I lift the bag out of the holder.",
+              correct: false,
+            },
+            {
+              text: "I will not empty that by hand, sir. May I bring the proper box up for it?",
+              correct: true,
+            },
+            {
+              text: "Certainly, sir — I will wrap it up in a hand towel first so that nothing can cut through.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Sorry — I dropped a glass in the bathroom. I've cleared most of it up.",
+          options: [
+            {
+              text: "That is quite all right, sir — I will run the vacuum over it when I do the room.",
+              correct: false,
+            },
+            {
+              text: "Thank you for telling me, sir. May I ask you to keep your shoes on until I have swept it?",
+              correct: true,
+            },
+            {
+              text: "Please put the pieces in the bin for me, sir, and I will take the bag down later.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "I cut my hand on the glass. It's only small — don't make a fuss.",
+          options: [
+            {
+              text: "As you wish, madam — I will say nothing about it and finish the room now.",
+              correct: false,
+            },
+            {
+              text: "Let me bring the first-aid kit, madam, and I must report it either way.",
+              correct: true,
+            },
+            {
+              text: "You could go down to the lobby, madam, and ask the front desk for a plaster.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_3",
+      lessonOrder: 3,
+      titleEn: "The Alarm on Your Floor",
+      titleVi: "Chuông báo cháy trên tầng của bạn",
+      vocabulary: [
+        {
+          word: "Smoke smell",
+          phonetic: "/ˈsməʊk ˌsmel/",
+          definition: "Mùi khói — dấu hiệu đi trước tiếng chuông",
+          context: "A smoke smell is reported before you look for the cause.",
+          icon: "👃",
+        },
+        {
+          word: "Burning wire smell",
+          phonetic: "/ˌbɜːnɪŋ ˈwaɪə ˌsmel/",
+          definition: "Mùi dây điện cháy",
+          context: "A burning wire smell empties the room, then calls Engineering.",
+          icon: "🔌",
+        },
+        {
+          word: "Blocked fire exit",
+          phonetic: "/ˌblɒkt ˈfaɪər ˌeksɪt/",
+          definition: "Lối thoát hiểm bị chắn",
+          context: "A blocked fire exit is cleared and reported the same minute.",
+          icon: "🚪",
+        },
+        {
+          word: "Assembly point",
+          phonetic: "/əˈsembli ˌpɔɪnt/",
+          definition: "Điểm tập kết khi sơ tán",
+          context: "Say your assembly point aloud at handover, every single shift.",
+          icon: "🚩",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Alarm! Get out! Move, move, move!",
+          polite:
+            "This way please, madam — leave everything, and the stairs are just to your left.",
+          rule: "Giọng bình tĩnh, câu ngắn, có HƯỚNG ĐI. Không ai chạy theo tiếng hét; người ta đi theo giọng bình tĩnh nhất trong hành lang.",
+        },
+        {
+          rude: "I must check every room first. This is my floor.",
+          polite:
+            "I knock and I move on, sir — I do not open doors or search rooms during an alarm.",
+          rule: "Gõ cửa rồi đi tiếp. Không mở cửa, không tìm người, không quay lại lấy bất cứ thứ gì — trừ chìa khoá tổng vốn đã ở trên người bạn.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Fire panel shows your floor. What can you smell up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A burning wire smell outside 1104, not a smoke smell. The blocked fire exit on nine is clear now.",
+          helpTip:
+            "Đây là TRỰC BAN hỏi. Phân biệt đúng loại mùi — hai mùi khác nhau dẫn tới hai đội khác nhau — rồi báo luôn thứ mình vừa xử lý. 'Wire' /ˈwaɪə/ — hai âm, đừng đọc thành một.",
+        },
+        {
+          guestPrompt: "I'm not walking down eleven floors. I'll take the lift.",
+          targetResponse:
+            "The lift is not safe during an alarm, madam. May I walk down the stairs beside you?",
+          helpTip:
+            "Nêu lý do an toàn rồi ĐI CÙNG khách — một lời mời đi cùng hiệu quả hơn một lệnh cấm. 'Lift' /lɪft/ — cụm /ft/ cuối phải nghe rõ.",
+        },
+      ],
+      reading: {
+        text: "THE ALARM WHILE YOU ARE ON THE FLOOR\nBefore the bell there are smells: a smoke smell, a burning wire smell, a socket warm to the back of your hand, a fire door propped open with a wedge. Report the smell before you look for the cause. Finding it is Engineering's work; losing four minutes is nobody's.\nA SMELL OF BURNING: get everyone out and CLOSE the door behind you — it is a fire door, and it only works shut. Then call the operator from the corridor: the room number, and the word 'burning'.\nA SMELL OF GAS is the other way round. Get everyone out and leave the room door exactly as you found it. Touch no switch, no light and no telephone on that floor, and call from the stairwell or the floor above. Engineering isolates the supply, and nobody goes back in until Engineering and your supervisor say so.\nWhen the bell sounds you are a guide, not a searcher. Knock, call 'housekeeping — please leave by the stairs', and move on. You do not open doors, you do not look under beds, and you do not wait for an answer.\nWalk, do not run. Stairs, never the lift. Leave the trolley where it stands, and stand it ALONG the corridor wall, never across it.\nOffer an arm to anyone slow. Do not stop to count heads — that is done at the assembly point by the person holding the list.\nNever go back up. Not for a guest's bag, not for your own phone, not for the floor keys: those are already on you.\nA blocked fire exit is the one fault you never leave for the next shift. Move it if it is a chair; report it that minute if it is anything heavier.\nAfterwards, tell the Duty Manager which rooms answered and which did not. That list is the only reason a floor ever gets searched twice.\nAssembly points, and who sweeps which floor, differ by house. Learn yours before your first night shift.",
+        questions: [
+          {
+            q: "Nghe chuông báo cháy, nhân viên buồng phòng làm gì?",
+            options: [
+              "Gõ cửa, gọi to hướng thoát hiểm, rồi đi tiếp sang phòng bên",
+              "Mở từng cửa để chắc chắn không còn ai sót lại trong phòng",
+              "Đứng chờ giám sát tầng tới rồi mới bắt đầu di chuyển khách",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Sau khi ra ngoài, thông tin nào quan trọng nhất?",
+            options: [
+              "Những phòng nào có người trả lời và những phòng nào không",
+              "Số xe đẩy và số chìa khoá còn để lại trên tầng lúc đó",
+              "Tên những vị khách đã tự ý dùng thang máy để đi xuống",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Is this a real fire or just another drill? I'm in the bath.",
+          options: [
+            {
+              text: "It is almost certainly a drill, sir — they run one most months at about this hour.",
+              correct: false,
+            },
+            {
+              text: "We treat every alarm as a real one, sir. The stairs are to your left — leave everything.",
+              correct: true,
+            },
+            {
+              text: "Let me go down and find out for you, sir, and I will come back and tell you.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Hold the lift! I'm not doing eleven flights with this knee.",
+          options: [
+            {
+              text: "Of course, madam — one trip in the lift will be quicker for both of us now.",
+              correct: false,
+            },
+            {
+              text: "May I walk down with you, madam? The lift stops on its own in an alarm.",
+              correct: true,
+            },
+            {
+              text: "You will have to manage the stairs, madam, as the lift is switched off today.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My laptop's still in the room. Two minutes, that's all.",
+          options: [
+            {
+              text: "Two minutes should be all right, sir — go quickly and I will wait here for you.",
+              correct: false,
+            },
+            {
+              text: "I cannot let you go back, sir — but I will walk you to the assembly point now.",
+              correct: true,
+            },
+            {
+              text: "The room doors lock automatically, sir, so your laptop is perfectly safe in there.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_4",
+      lessonOrder: 4,
+      titleEn: "The Storm Shift",
+      titleVi: "Ca trực ngày bão",
+      vocabulary: [
+        {
+          word: "Typhoon",
+          phonetic: "/taɪˈfuːn/",
+          definition: "Bão lớn",
+          context: "A typhoon shift begins on the balconies, not in the bathrooms.",
+          icon: "🌀",
+        },
+        {
+          word: "Flooded bathroom",
+          phonetic: "/ˌflʌdɪd ˈbɑːθruːm/",
+          definition: "Phòng tắm ngập nước",
+          context: "A flooded bathroom is switched off at the wall before anything else.",
+          icon: "💧",
+        },
+        {
+          word: "Burst pipe",
+          phonetic: "/ˌbɜːst ˈpaɪp/",
+          definition: "Ống nước vỡ",
+          context: "A burst pipe is Engineering's, and the room below is yours.",
+          icon: "🚿",
+        },
+        {
+          word: "Power cut",
+          phonetic: "/ˈpaʊə ˌkʌt/",
+          definition: "Mất điện",
+          context: "In a power cut the torch lives on the trolley, not in the store.",
+          icon: "🔦",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Big storm coming. Maybe your balcony door breaks tonight.",
+          polite:
+            "May I bring your balcony chairs inside, sir? The wind is due to turn around midnight.",
+          rule: "Nói việc mình SẮP LÀM, kèm một lý do có mốc giờ. Đừng doạ khách bằng cơn bão — khách sạn nào cũng có kịch bản, và giọng bình tĩnh chính là kịch bản đó.",
+        },
+        {
+          rude: "Water everywhere in 704. Not my job — call engineering.",
+          polite:
+            "There is water coming through the ceiling in 704, and I have moved the guest's bags onto the bed.",
+          rule: "Báo sự cố kèm VIỆC MÌNH ĐÃ LÀM. Kê đồ của khách lên cao là việc bạn được phép làm ngay; sửa đường ống thì không bao giờ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The lights have gone out. Are we safe up here?",
+          targetResponse:
+            "In a typhoon our power comes back on its own, madam. I have a torch here, and I will wait with you.",
+          helpTip:
+            "Nói cái sắp xảy ra, rồi ở lại. Ở lại là phần khách nhớ. 'Torch' /tɔːtʃ/ — cụm /tʃ/ cuối, không phải /k/.",
+        },
+        {
+          guestPrompt: "Engineering. What have you got up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A burst pipe above 704 and a flooded bathroom below it. The power cut is still on this floor.",
+          helpTip:
+            "Đây là KỸ THUẬT hỏi. Báo theo thứ tự nước chảy: nguồn trước, hậu quả sau, rồi điều kiện chung của tầng. 'Burst' /bɜːst/ — nguyên âm dài, cụm /st/ cuối gọn.",
+        },
+      ],
+      reading: {
+        text: "THE STORM SHIFT — WHAT THE FLOOR DOES BEFORE THE WIND\nBalconies first, every floor, before anything else: chairs, tables, drying racks, plant pots, ashtrays. A plastic chair on the ninth floor is not furniture in a typhoon; it is a thing that goes through somebody's window.\nThen the doors. Balcony doors LATCHED, not just closed. Curtains drawn — glass that breaks into a curtain stays in the curtain.\nTorches on every trolley, checked at the start of the shift and never borrowed for the store room. In a power cut you are the light on your floor.\nWater: switch it off at the wall before you touch a flooded bathroom, and never stand in water to reach a socket. A burst pipe and a ceiling leak are both Engineering's — but the room BELOW the water is yours, and you check it first.\nMoving a guest's belongings up and away from water is yours to do, in front of the guest when they are there, and you write down what you moved and where you put it.\nNever promise a guest anything about the weather, the flights or the road. That belongs to the Duty Manager and the desk, and it changes every hour.\nLifts stop on a storm alert in many houses, and the stairs get dark. Know yours before you need them.\nWhat your house does at each storm level is written in its emergency plan. Ask your Executive Housekeeper to walk you through it before the season, not during it.",
+        questions: [
+          {
+            q: "Trước cơn bão, việc đầu tiên trên tầng là gì?",
+            options: [
+              "Thu hết bàn ghế trên ban công vào trong, ở mọi phòng của tầng",
+              "Kiểm tra đèn pin trên xe đẩy của từng nhân viên buồng phòng",
+              "Kê toàn bộ hành lý của khách lên mặt giường cho khỏi bị ướt",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Trần bị dột thì phải kiểm tra phòng nào trước?",
+            options: [
+              "Phòng nằm ngay bên dưới chỗ nước đang chảy xuống",
+              "Phòng bên cạnh, vì nước thường chảy ngang theo trần",
+              "Phòng ở tầng trên cùng, nơi mưa đổ xuống trước tiên",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "There's water coming down the wall in my room. Can you mop it up?",
+          options: [
+            {
+              text: "Of course, madam — give me ten minutes and the floor will be completely dry again.",
+              correct: false,
+            },
+            {
+              text: "I will move your bags first, madam, then call Engineering — the mop comes last.",
+              correct: true,
+            },
+            {
+              text: "That is Engineering's, madam — you will need to ring the front desk about it yourself.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Will our flight tomorrow be cancelled? What have you heard?",
+          options: [
+            {
+              text: "The airport usually closes in a storm like this one, madam, so I would expect so.",
+              correct: false,
+            },
+            {
+              text: "I am not the one to ask, sir. May I ask the Front Desk to call your room about it?",
+              correct: true,
+            },
+            {
+              text: "Nobody has told us anything at all, sir, so your flight is probably going ahead.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Everyone says the storm hits at nine tonight. Is that right?",
+          options: [
+            {
+              text: "That is what we have been told too, madam, so please do stay inside after eight.",
+              correct: false,
+            },
+            {
+              text: "I could not say, madam. May I ask the Duty Manager to ring your room?",
+              correct: true,
+            },
+            {
+              text: "Nobody really knows, madam — these storms usually turn away at the last minute.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_38: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 38,
+  weekTitleEn: "Putting a Case to Your Manager",
+  weekTitleVi: "Trình một hồ sơ lên cấp trên",
+  reviewWords: [
+    "Compensation",
+    "Reimburse",
+    "Stain",
+    "Inspect",
+    "Waive",
+    "Approval",
+    "Executive housekeeper",
+    "Room inspection result",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_38_1",
+      lessonOrder: 1,
+      titleEn: "The One-Page Case",
+      titleVi: "Hồ sơ một trang",
+      vocabulary: [
+        {
+          word: "Propose",
+          phonetic: "/prəˈpəʊz/",
+          definition: "Đề xuất một phương án để cấp trên quyết",
+          context: "I propose one repair and one replacement, nothing more.",
+          icon: "📄",
+        },
+        {
+          word: "Overview",
+          phonetic: "/ˈəʊvəvjuː/",
+          definition: "Phần tóm lược ba câu mở đầu hồ sơ",
+          context: "The overview is three sentences, and busy managers read only those.",
+          icon: "🗂️",
+        },
+        {
+          word: "Incident summary",
+          phonetic: "/ˈɪnsɪdənt ˌsʌməri/",
+          definition: "Bản tóm tắt diễn biến sự việc",
+          context: "An incident summary carries times and facts, never opinions.",
+          icon: "📝",
+        },
+        {
+          word: "Photo evidence sheet",
+          phonetic: "/ˈfəʊtəʊ ˈevɪdəns ˌʃiːt/",
+          definition: "Trang ảnh chứng cứ có ký xác nhận",
+          context: "Each photo evidence sheet is dated and signed by two people.",
+          icon: "📸",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The jacket is ruined. Somebody has to pay for it.",
+          polite:
+            "I propose we replace the jacket, madam, and I have the docket, the photographs and the times.",
+          rule: "Mở đầu bằng ĐỀ XUẤT, không bằng lời than. Cấp trên nghe câu đầu tiên để biết bạn muốn họ QUYẾT điều gì; mọi thứ sau đó chỉ là bằng chứng.",
+        },
+        {
+          rude: "I think the machine was too hot. Probably. Someone said so.",
+          polite:
+            "The wash log shows sixty degrees at ten past two, madam, and the label says thirty.",
+          rule: "Trong một hồ sơ đề xuất, mỗi câu phải có một NGUỒN: nhật ký máy, nhãn quần áo, ảnh, giờ. 'Tôi nghĩ' và 'hình như' không có chỗ ở đây.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "You've got two minutes before my next meeting. Go.",
+          speakerRole: "colleague",
+          targetResponse:
+            "One guest jacket, shrunk on Tuesday. I propose replacement — the overview is on top, and the photo evidence sheet is behind it.",
+          helpTip:
+            "Đây là CẤP TRÊN hỏi, không phải khách. Hai phút thì nói theo thứ tự: cái gì, khi nào, đề xuất gì. 'Propose' /prəˈpəʊz/ — trọng âm ở âm tiết sau.",
+        },
+        {
+          guestPrompt: "So what's actually happening about my jacket?",
+          targetResponse:
+            "The case is with my manager today, sir, and she will come to you herself before six.",
+          helpTip:
+            "Với KHÁCH thì vẫn là quy trình và mốc giờ — không con số, không lời hứa, đúng luật tuần ba mươi lăm. 'Manager' /ˈmænɪdʒə/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "A PROPOSAL THAT GETS READ — ONE PAGE, FOUR PARTS\n1. OVERVIEW. Three sentences at the top: what happened, what it cost, what you want decided. A manager who reads only those three must still be able to answer you.\n2. INCIDENT SUMMARY. Times and facts, in the order they happened: 'Collected 09:40. Washed 14:10 at sixty degrees. Label reads thirty.' No adjectives, no blame, and no colleague's name unless the name is itself a fact.\n3. PHOTO EVIDENCE SHEET. The garment before, the garment after, the label, the docket — dated, and signed by you and one other person. A photograph nobody signed is a photograph nobody trusts.\n4. WHAT YOU PROPOSE. One option, and one alternative if the first is refused. Two is a decision; five is a discussion you will not win.\nWrite it the same shift. A summary written two days later is a memory, and memories lose to laundry logs.\nNever write what you think somebody else did wrong. Write what the record shows and let the record do it for you.\nYour name goes at the bottom. A proposal nobody signed belongs to nobody, and it will sit unread.\nWhich form your house uses, and who signs beside you, differs. Ask your Executive Housekeeper for a real one from last month — a finished example teaches faster than a blank form.",
+        questions: [
+          {
+            q: "Phần OVERVIEW gồm những gì?",
+            options: [
+              "Ba câu: chuyện gì, tốn bao nhiêu, cần quyết điều gì",
+              "Toàn bộ diễn biến theo giờ, từ nhận đồ tới lúc trả",
+              "Danh sách những người có mặt trong ca hôm xảy ra",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao đề xuất chỉ nên có hai phương án?",
+            options: [
+              "Vì hai phương án là một quyết định, năm là một cuộc tranh luận",
+              "Vì biểu mẫu của khách sạn chỉ chừa đúng hai ô trống để điền",
+              "Vì cấp trên không có thời gian đọc quá hai trang giấy A4 đâu",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Why should I sign this? Convince me.",
+          options: [
+            {
+              text: "He is very angry, madam, and he is threatening to write a review about us.",
+              correct: false,
+            },
+            {
+              text: "The incident summary has it, madam: thirty degrees on the label, sixty in our own log.",
+              correct: true,
+            },
+            {
+              text: "It is only a small amount, madam, and it will make the whole thing go away.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Just tell me what you're going to pay me.",
+          options: [
+            {
+              text: "The full replacement value, sir — that is what the policy says in a case like this.",
+              correct: false,
+            },
+            {
+              text: "That is my manager's to say, sir, and she will call your room before six.",
+              correct: true,
+            },
+            {
+              text: "I have put a number in the report, sir, but I am not allowed to tell you it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_2",
+      lessonOrder: 2,
+      titleEn: "Putting a Number on It",
+      titleVi: "Đặt một con số lên bàn",
+      vocabulary: [
+        {
+          word: "Garment replacement value",
+          phonetic: "/ˈɡɑːmənt rɪˈpleɪsmənt ˌvæljuː/",
+          definition: "Giá trị thay thế món đồ của khách",
+          context: "A garment replacement value needs a receipt standing behind it.",
+          icon: "👔",
+        },
+        {
+          word: "Linen replacement estimate",
+          phonetic: "/ˈlɪnɪn rɪˈpleɪsmənt ˌestɪmət/",
+          definition: "Dự toán thay mới đồ vải của khách sạn",
+          context: "Our linen replacement estimate uses the store's cost, not a shop price.",
+          icon: "🛏️",
+        },
+        {
+          word: "Compensation amount",
+          phonetic: "/ˌkɒmpenˈseɪʃn əˌmaʊnt/",
+          definition: "Mức bồi thường được duyệt",
+          context: "The compensation amount is proposed by me and decided above me.",
+          icon: "💰",
+        },
+        {
+          word: "Payment timeline",
+          phonetic: "/ˈpeɪmənt ˌtaɪmlaɪn/",
+          definition: "Lịch chi trả có ngày cụ thể",
+          context: "A payment timeline names a date, never the word 'soon'.",
+          icon: "📅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Just give him what he wants. It is easier for everyone.",
+          polite:
+            "The receipt shows four million dong, madam, and I propose the compensation amount matches it.",
+          rule: "Mỗi con số phải đi kèm một NGUỒN: hoá đơn, giá kho, bảng bồi thường. Con số không nguồn sẽ bị hỏi lại, và bạn sẽ không trả lời được.",
+        },
+        {
+          rude: "We will pay him some time next week, probably.",
+          polite:
+            "I propose we pay within seven working days, madam, and I have put that date on the letter.",
+          rule: "'Some time' không phải một mốc. Đề xuất phải có NGÀY — lời hứa mơ hồ luôn quay lại thành khiếu nại thứ hai.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Four million? That is above what I can sign myself.",
+          speakerRole: "colleague",
+          targetResponse:
+            "It is, madam. The garment replacement value comes from the receipt, and the payment timeline is seven working days.",
+          helpTip:
+            "CẤP TRÊN nói. Xác nhận là đúng, đưa bằng chứng, đề xuất bước tiếp theo — ba việc, ba mệnh đề. 'Receipt' /rɪˈsiːt/ — chữ 'p' hoàn toàn câm.",
+        },
+        {
+          guestPrompt: "I paid four million for that jacket. Are you covering it?",
+          targetResponse:
+            "I have your receipt with the file, sir. The Duty Manager decides the amount, and you will hear today.",
+          helpTip:
+            "Nhận đúng thứ khách vừa đưa, rồi trả quyền quyết định về đúng chỗ — không xác nhận và cũng không phủ nhận con số. 'Amount' /əˈmaʊnt/ — trọng âm ở âm tiết sau.",
+        },
+      ],
+      reading: {
+        text: "WHERE A NUMBER COMES FROM\nA garment replacement value has three sources, in this order: the guest's receipt, the brand's current price, or the laundry compensation table. Use the first one you actually hold, and say on the page which one you used.\nDepreciation is real and it is written down. A three-year-old jacket is not a new jacket, and your compensation guide says by how much. Never invent that percentage while a guest is waiting.\nA linen replacement estimate uses the store's cost price — never the guest's idea of it, and never the retail price. Hotel linen costs what the hotel pays for it.\nThe compensation amount is proposed by you and decided above you. Week thirty-three set the tiers; anything above your Duty Manager's ceiling goes higher still, and the whole file travels with it.\nA payment timeline names a DATE. 'Within seven working days' is a timeline. 'As soon as possible' is a second complaint waiting to be written.\nWhatever currency the guest paid in, the proposal also shows dong. Finance works in dong, and so does the audit.\nAnd the rule that outlives every figure on the page: the guest hears the PROCESS and the DATE from you, and the AMOUNT from the manager who signed it.\nYour house's depreciation table and its ceilings are its own. Ask your Executive Housekeeper for the current one — last year's has been wrong since January.",
+        questions: [
+          {
+            q: "Giá trị thay thế lấy từ đâu, theo thứ tự ưu tiên?",
+            options: [
+              "Hoá đơn của khách, rồi giá hãng, rồi bảng bồi thường",
+              "Bảng bồi thường, rồi giá kho, rồi ước lượng giám sát",
+              "Giá bán lẻ hiện nay, rồi hoá đơn, rồi ý kiến của khách",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Ai là người nói con số bồi thường cho khách nghe?",
+            options: [
+              "Người quản lý đã ký duyệt, không phải nhân viên buồng phòng",
+              "Nhân viên buồng phòng, ngay khi hồ sơ vừa được lập xong xuôi",
+              "Lễ tân, vào lúc khách làm thủ tục trả phòng rời khách sạn",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Where did this figure come from?",
+          options: [
+            {
+              text: "I looked up a similar jacket online this morning, madam, and took that price.",
+              correct: false,
+            },
+            {
+              text: "From the receipt, madam — the compensation amount matches it, less depreciation.",
+              correct: true,
+            },
+            {
+              text: "The guest told me what he paid for it, madam, and I wrote that down.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "When exactly will I see the money?",
+          options: [
+            {
+              text: "Very soon, sir — these things usually go through by the end of the week.",
+              correct: false,
+            },
+            {
+              text: "Within seven working days, sir — the date is written on your letter.",
+              correct: true,
+            },
+            {
+              text: "As soon as the manager finds the time to sign it, sir, I should think.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_3",
+      lessonOrder: 3,
+      titleEn: "What the Hotel Offers",
+      titleVi: "Khách sạn đưa ra điều gì",
+      vocabulary: [
+        {
+          word: "Service recovery offer",
+          phonetic: "/ˈsɜːvɪs rɪˈkʌvəri ˌɒfə/",
+          definition: "Gói khắc phục dành cho khách",
+          context: "A service recovery offer is signed before it is ever spoken.",
+          icon: "🤝",
+        },
+        {
+          word: "Laundry service voucher",
+          phonetic: "/ˈlɔːndri ˈsɜːvɪs ˌvaʊtʃə/",
+          definition: "Phiếu dịch vụ giặt là bù cho khách",
+          context: "A laundry service voucher costs us little and says a great deal.",
+          icon: "🎟️",
+        },
+        {
+          word: "Written apology letter",
+          phonetic: "/ˌrɪtn əˈpɒlədʒi ˌletə/",
+          definition: "Thư xin lỗi bằng văn bản có người ký",
+          context: "A written apology letter carries a name, never just a department.",
+          icon: "✉️",
+        },
+        {
+          word: "Room recovery plan",
+          phonetic: "/ˈruːm rɪˈkʌvəri ˌplæn/",
+          definition: "Kế hoạch đưa phòng trở lại bán",
+          context: "A room recovery plan says which rooms leave sale, and for how long.",
+          icon: "🛎️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "We will give him a free night. That always works.",
+          polite:
+            "I propose the letter and a laundry service voucher, madam, and I have left the free night out.",
+          rule: "Đề xuất thứ RẺ NHẤT mà có tác dụng, trước tiên. Một lá thư có tên người ký thường giữ khách tốt hơn một đêm miễn phí — và bạn vẫn còn chỗ để lùi.",
+        },
+        {
+          rude: "I already told the guest we would fix everything for him.",
+          polite:
+            "Nothing has been offered yet, madam — I wrote it down and waited for your signature.",
+          rule: "Không bao giờ nói trước với khách một điều chưa ai ký. Lời hứa bị rút lại tạo ra khiếu nại thứ hai, và khiếu nại thứ hai luôn đắt hơn cái thứ nhất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Why a letter? He wants money, not words.",
+          speakerRole: "colleague",
+          targetResponse:
+            "He asked twice for an apology, madam. I propose the written apology letter and a laundry service voucher first.",
+          helpTip:
+            "CẤP TRÊN hỏi. Trả lời bằng chính điều KHÁCH ĐÃ NÓI, không bằng cảm nhận của mình. 'Apology' /əˈpɒlədʒi/ — trọng âm ở âm tiết thứ hai.",
+        },
+        {
+          guestPrompt: "A letter? That's all I get for a ruined suit?",
+          targetResponse:
+            "That is not all of it, sir. My manager is bringing the rest to you herself at five o'clock.",
+          helpTip:
+            "Đừng bênh gói khắc phục, cũng đừng chê nó. Nói rằng CÒN NỮA, ai mang tới, và mấy giờ. 'Manager' /ˈmænɪdʒə/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "WHAT A HOUSE CAN OFFER, AND IN WHICH ORDER\nThe cheapest thing that works comes first, and it is almost never money.\n1. A WRITTEN APOLOGY LETTER, signed by a person with a job title, delivered by hand. Guests keep these. Nobody keeps a discount code.\n2. A LAUNDRY SERVICE VOUCHER, or the same service done again, free and fast. When the failure was a service, the repair is usually that service done properly.\n3. THE REPAIR OR REPLACEMENT itself, at the value agreed in the file.\n4. MONEY OFF THE FOLIO — last, and only with the signature the tiers require.\nA service recovery offer is SIGNED before it is SPOKEN. The order of those two words never changes, in any house, at any hour.\nA room recovery plan belongs beside it when a room caused the failure: which rooms come out of sale, for how long, what work is done, and who inspects before they go back. A room sold again too early earns the same complaint twice.\nNever bundle everything at once. Offer, listen, and keep something in reserve — a guest refused twice tells more people than a guest refused once.\nAnd never offer anything at all to a guest who has already gone to a review site or a lawyer, unless the Duty Manager is standing there. That conversation stopped being yours.\nWhat each level of your house may offer is in the compensation guide. Read it in a quiet week, not in a loud one.",
+        questions: [
+          {
+            q: "Thứ tự đề xuất khắc phục bắt đầu từ đâu?",
+            options: [
+              "Thư xin lỗi có người ký, vì đó là thứ rẻ mà hiệu quả",
+              "Giảm tiền trên hoá đơn, vì khách quan tâm nhất tới tiền",
+              "Đổi sang một phòng khác cho khách ngay trong tối hôm đó",
+            ],
+            correct: 0,
+          },
+          {
+            q: "'Ký trước, nói sau' ở đây nghĩa là gì?",
+            options: [
+              "Không nói với khách bất cứ điều gì chưa có chữ ký duyệt",
+              "Khách phải ký nhận trước khi khách sạn trao gói khắc phục",
+              "Thư xin lỗi phải được ký tay chứ không được đóng dấu sẵn",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "He is asking for two free nights. What do we do?",
+          options: [
+            {
+              text: "Just give him the two nights, madam — it is far cheaper than a bad review online.",
+              correct: false,
+            },
+            {
+              text: "The offer is the letter and the voucher first, madam, and we keep a night back.",
+              correct: true,
+            },
+            {
+              text: "Tell him no, madam, and let him take it up with the front desk himself.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Your manager promised me a free night. Where is it?",
+          options: [
+            {
+              text: "She could not have promised that, sir — nobody here can give away a night.",
+              correct: false,
+            },
+            {
+              text: "Let me find out today, sir. May I ask her to come and see you herself?",
+              correct: true,
+            },
+            {
+              text: "I will put it on your room now, sir, and sort the paperwork out later.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_4",
+      lessonOrder: 4,
+      titleEn: "So It Does Not Happen Again",
+      titleVi: "Để chuyện đó không lặp lại",
+      vocabulary: [
+        {
+          word: "Corrective action plan",
+          phonetic: "/kəˈrektɪv ˈækʃn ˌplæn/",
+          definition: "Kế hoạch sửa tận gốc nguyên nhân",
+          context: "A corrective action plan names one change and one owner.",
+          icon: "🛠️",
+        },
+        {
+          word: "Preventive measure list",
+          phonetic: "/prɪˈventɪv ˈmeʒə ˌlɪst/",
+          definition: "Danh mục biện pháp phòng ngừa",
+          context: "A preventive measure list stays short, or nobody follows it.",
+          icon: "🧾",
+        },
+        {
+          word: "Follow-up inspection date",
+          phonetic: "/ˈfɒləʊ ʌp ɪnˈspekʃn ˌdeɪt/",
+          definition: "Ngày kiểm tra lại đã ấn định",
+          context: "A follow-up inspection date turns a promise into a diary entry.",
+          icon: "📆",
+        },
+        {
+          word: "Housekeeping manager contact",
+          phonetic: "/ˈhaʊskiːpɪŋ ˈmænɪdʒə ˌkɒntækt/",
+          definition: "Đầu mối liên hệ trực tiếp của quản lý buồng phòng",
+          context: "The housekeeping manager contact goes on the letter, not a hotline.",
+          icon: "☎️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "We will all be more careful from now on, I promise.",
+          polite:
+            "I propose one change, madam: the wash temperature is checked against the label by two people.",
+          rule: "'Cẩn thận hơn' không phải một biện pháp — không đo được và không ai chịu trách nhiệm. Một thay đổi CỤ THỂ, một người CHỊU TRÁCH NHIỆM.",
+        },
+        {
+          rude: "The new rule is on the noticeboard. Everyone can read it.",
+          polite:
+            "The linen team was briefed on Tuesday, madam, and the follow-up inspection date is the tenth.",
+          rule: "Một quy tắc chỉ tồn tại khi có người được PHỔ BIẾN và có NGÀY KIỂM TRA LẠI. Dán lên bảng tin không phải là phổ biến.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "How do I know this will not happen again next month?",
+          speakerRole: "colleague",
+          targetResponse:
+            "The corrective action plan names one change and one owner, madam, and the follow-up inspection date is the tenth.",
+          helpTip:
+            "CẤP TRÊN hỏi. Đừng hứa 'sẽ cẩn thận hơn' — đưa MỘT thay đổi, MỘT người, MỘT ngày. 'Inspection' /ɪnˈspekʃn/ — trọng âm ở âm tiết thứ hai.",
+        },
+        {
+          guestPrompt: "And what stops this happening to the next person?",
+          targetResponse:
+            "We have changed how the labels are checked, sir, and my manager will write to you about it.",
+          helpTip:
+            "Với KHÁCH thì nói THAY ĐỔI ĐÃ LÀM — không nói tên đồng nghiệp, không nói ai sai. 'Labels' /ˈleɪblz/ — cụm /blz/ cuối đọc liền một hơi.",
+        },
+      ],
+      reading: {
+        text: "CLOSING THE FILE — THE PART EVERYONE SKIPS\nA complaint is closed twice: once with the guest, and once with the process that produced it. Skip the second and the same file returns next season with a different name on it.\nA CORRECTIVE ACTION PLAN names ONE change and ONE owner. Ten changes owned by 'the team' is a list nobody does; one change owned by a named person is a habit within a month.\nA PREVENTIVE MEASURE LIST is written for the people who will actually do it, in the words they use, and pinned where the work happens — at the machine, on the trolley, inside the linen room door. A measure that lives only in a manager's folder prevents nothing at all.\nA FOLLOW-UP INSPECTION DATE turns a promise into a diary entry. Without a date, every plan is finished the moment it is written.\nThe HOUSEKEEPING MANAGER CONTACT goes on the guest's letter: a name and a direct line, not a general hotline. A guest made to tell the story a second time has been failed a second time.\nWrite down what did NOT work as well. A near-miss caught by luck is the cheapest lesson your department will ever get, and it disappears if nobody writes it down.\nThen close the loop with whoever found it. An attendant whose report changed something will bring you the next one.\nWhich form, which meeting and which signature close a file differ by house. Ask your Executive Housekeeper to show you one that was closed well.",
+        questions: [
+          {
+            q: "Một kế hoạch khắc phục tốt gồm những gì?",
+            options: [
+              "Một thay đổi cụ thể và một người chịu trách nhiệm rõ ràng",
+              "Một danh sách dài các việc mà cả tổ cùng nhau thực hiện",
+              "Một buổi họp toàn bộ phận vào cuối mỗi tháng làm việc đó",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao thư gửi khách phải ghi tên và số máy trực tiếp?",
+            options: [
+              "Để khách không phải kể lại câu chuyện của mình lần thứ hai",
+              "Để khách biết chính xác ai là người đã gây ra sự cố đó",
+              "Để tổng đài của khách sạn không phải nhận thêm cuộc gọi",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "So what actually changes on Monday?",
+          options: [
+            {
+              text: "The whole team has been told to take much more care with guest garments.",
+              correct: false,
+            },
+            {
+              text: "One thing, madam: two people now check every label before the wash.",
+              correct: true,
+            },
+            {
+              text: "I have put a notice up on the linen room door for everyone to read.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "How do I reach someone if it happens again?",
+          options: [
+            {
+              text: "You can always call the main hotel number, sir, and ask for housekeeping.",
+              correct: false,
+            },
+            {
+              text: "My manager's name and direct line are both on your letter, sir.",
+              correct: true,
+            },
+            {
+              text: "Just stop any of our staff on the floor, sir, and they will find me.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -17905,6 +19002,8 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "HK-33": HK_WEEK_33,
   "HK-34": HK_WEEK_34,
   "HK-35": HK_WEEK_35,
+  "HK-36": HK_WEEK_36,
+  "HK-38": HK_WEEK_38,
   "GR-34": GR_WEEK_34,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
