@@ -525,3 +525,39 @@ cụm Phase 4.
 ngẫu nhiên không sinh hoán vị đều; với ba phương án nó để lộ thứ tự soạn nhiều hơn là giấu đi —
 mà thứ tự soạn của cụm này là **27/30 vòng đáp án đúng nằm ở vị trí giữa**. Đã đổi sang
 Fisher-Yates, khớp với `GrammarSuite`/`ListeningSuite` vốn đã làm đúng.
+
+## Sổ hậu kỳ cụm HK-36/38 — vòng 9
+
+### HK-U · Bài luyện nói tiếng Việt là bài KHÔNG CHẤM ĐƯỢC — ĐÃ SỬA, nguyên nhân gốc CHƯA
+
+`src/lib/speech.ts:8` đặt cứng `u.lang = "en-US"`, và `SpeakingSuite` phát `guestPrompt` bằng
+`speakEN(...)`. Bài luyện gọi 115 tôi viết ở vòng 8 có `guestPrompt` tiếng Việt — nó được đọc
+bằng giọng Anh, ra âm thanh vô nghĩa.
+
+Nặng hơn: chấm bằng `compareWords` với ngưỡng `accPct: 80`. helpTip bảo học viên thay tên và
+địa chỉ khách sạn mình vào — làm đúng thế thì mất gần hết content word và **trượt vì đã tuân
+thủ hướng dẫn**. Bài đã thay bằng một item chấm được, vẫn luyện đúng thứ tự khai báo.
+
+Nguyên nhân gốc chưa sửa: engine không có đường nào phát một câu tiếng Việt, và không có
+đường nào cho một item "tự thay dữ liệu của mình". Cả hai đều là quyết định thiết kế, không
+phải sửa câu chữ. Mọi tuần sau này muốn dạy một câu nói với người Việt đều vướng.
+
+### HK-V · Chip ghép câu bị cắt ngang cụm khi câu dài quá 12 từ — CHƯA SỬA
+
+`GrammarSuite.MAX_CHIPS = 12`; câu dài hơn thì `toChips()` gộp từ theo lô
+`per = ceil(n/12)`. Mọi cặp grammar của Phase 4 đều dài 14–29 từ, nên chip ra kiểu
+`"service fee Two"`, `"million dong The"` — cắt ngang cụm từ. Trò chơi sắp xếp câu khi đó
+không còn dạy trật tự từ nữa. Ảnh hưởng toàn Phase 4, không riêng cụm này.
+
+### HK-W · Bài đọc HK-36 vẫn quá tải — GIẢM ĐƯỢC MỘT PHẦN, phần còn lại là quyết định chương trình
+
+Vòng 9 đã cân lại: 1.275/777/847/367 → 986/916/948/367 từ, không cắt một quy tắc nào —
+CHOKING và co giật về bài 2 (khách đang nguy ngay trước mặt), ẩu đả và khách tử vong về bài 3
+(phòng đã thành việc của an ninh), đoạn bể bơi nén còn một câu. Câu hỏi đọc: bài 1 lên 4 câu,
+bài 2 và 3 lên 3 câu, nên phần bài đọc được ĐO tăng gấp đôi.
+
+Phần còn lại không sửa được bằng biên tập. Tuần này chở nội dung của hai tuần: cấp cứu y tế
+(bất tỉnh, ngưng thở, AED, ép tim, hóc nghẹn, co giật, ba ngoại lệ) và sự cố toà nhà (cháy,
+gas, sơ tán, bão, mất điện, ngập). Mỗi quy tắc trong đó do một phát hiện kiểm định cụ thể đặt
+vào qua chín vòng. Muốn xuống 400–550 từ/bài như chuẩn band đòi thì phải **tách thành hai
+tuần** — tức đánh số lại lịch 40 tuần. Đó là quyết định của chủ dự án, không phải của biên tập.
