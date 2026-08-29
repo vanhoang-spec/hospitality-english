@@ -164,9 +164,14 @@ function ReadingSuiteInner({
             )}
           </div>
           <h2 className="font-display mt-3 text-2xl">{passage.title}</h2>
-          <pre className="font-sans mt-5 whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
-            {passage.body}
-          </pre>
+          {/* Split on newlines rather than dumping the passage into one <pre>:
+              a 700-word safety reading arrived as a single block of small type
+              that took five screens to scroll before the first question. */}
+          <div className="mt-5 space-y-3 text-sm leading-relaxed text-foreground/85">
+            {passage.body.split(/\n/).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </motion.article>
 
         <motion.section

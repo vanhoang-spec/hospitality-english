@@ -95,7 +95,14 @@ function ArcadeSuiteInner({
   useEffect(() => {
     if (stage !== "playing") return;
     const round = rounds[roundIdx % rounds.length];
-    const shuffled = [...round.options].sort(() => Math.random() - 0.5);
+    // Fisher-Yates, not sort(() => Math.random() - 0.5): a comparator that
+    // answers at random is not a uniform shuffle, and with three options it
+    // leaves the authored order showing more often than it hides it.
+    const shuffled = [...round.options];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
     const timers: number[] = [];
     shuffled.forEach((opt, i) => {
       const t = window.setTimeout(() => {

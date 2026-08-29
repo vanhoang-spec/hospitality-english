@@ -292,8 +292,18 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
         errors.push(`${where}: game "${gm.prompt}" has duplicate options`);
     }
 
-    if (lesson.reading.questions.length !== 2)
-      errors.push(`${where}: reading has ${lesson.reading.questions.length} questions (want 2)`);
+    // Two questions is the norm. A long passage may carry up to four: a
+    // 700-word safety reading measured by two items is not measured at all,
+    // and the cap was the reason such readings had nowhere to put content.
+    const qWant = lesson.reading.text.split(/\s+/).length > 400 ? "2-4" : "2";
+    const qOk =
+      qWant === "2"
+        ? lesson.reading.questions.length === 2
+        : lesson.reading.questions.length >= 2 && lesson.reading.questions.length <= 4;
+    if (!qOk)
+      errors.push(
+        `${where}: reading has ${lesson.reading.questions.length} questions (want ${qWant})`,
+      );
     for (const q of lesson.reading.questions) {
       if (q.correct < 0 || q.correct >= q.options.length)
         errors.push(`${where}: reading q "${q.q}" has an out-of-range correct index`);
@@ -688,7 +698,12 @@ if (legacyGameDupes.length) {
   };
 
   const POSITION_MAX = 0.5;
-  const LENGTH_MAX = 0.85;
+  // 0.85 was a number with nothing behind it: a learner needs CHECKPOINT_PASS_PCT
+  // to pass, so any share above that means "tap the longest bubble" is a winning
+  // strategy for the whole course. The course sits at 0.77 today — inherited from
+  // generated content, worst in weeks 5, 9, 17 and 24 where it is 100%. Until that
+  // is fixed batch by batch, this is a ratchet: it may fall, never rise.
+  const LENGTH_MAX = 0.771; // 1482/1923 today
   const pos = [0, 0, 0, 0];
   let longest = 0;
   let total = 0;

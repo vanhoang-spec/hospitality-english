@@ -594,8 +594,14 @@ const slugify = (t: string) =>
 
     // --- ReadingSuite
     for (const l of wk.lessons) {
-      if (l.reading.questions.length !== 2)
-        fail("T5", `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions`);
+      // Two is the norm; a passage over 400 words may carry up to four. Two
+      // questions on a 700-word safety reading measure almost none of it.
+      const qMax = words(l.reading.text).length > 400 ? 4 : 2;
+      if (l.reading.questions.length < 2 || l.reading.questions.length > qMax)
+        fail(
+          "T5",
+          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2${qMax > 2 ? "-4" : ""})`,
+        );
       if (words(l.reading.text).length < 12)
         warn("T5", `${key} Reading: ${l.lessonId} passage is very short`);
       for (const q of l.reading.questions) {

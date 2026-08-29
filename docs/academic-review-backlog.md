@@ -482,3 +482,46 @@ duy nhất trong khoá học luyện được **ngôn ngữ nội bộ** (`lead 
 | HK-N | **Quyền dùng AED là quyết định chính sách, không phải quyết định biên tập.** Nội dung hiện viết "không tự mở trừ khi Duty Manager bảo", và đưa "nhà bạn có cho nhân viên bật AED không" vào danh sách năm câu hỏi phải hỏi Executive Housekeeper. Trưởng an ninh/PCCC và bác sĩ khách sạn cần ký xác nhận đoạn này trước khi in.                                                                                                                                                                                                                                                                                   | HM v4 M1-1 · HM v5 1-C              |
 | HK-O | **FO-36 không có bài y tế nào** — cả bốn bài là cháy và sơ tán. HK-36 và FB-36 đều chuyền cuộc gọi 115 về phía quầy, mà quầy chưa từng được dạy ca cấp cứu y tế. Lỗ này thuộc batch FO.                                                                                                                                                                                                                                                                                                                                                                                                                            | HM v5 M3-9                          |
 | HK-P | **Không gate nào đo độ dài bài đọc theo phase**, và không gate nào đo mẹo "chọn phương án dài nhất" trên `game` (chỉ đo trên `reading`). HK-36 từng lên 81% trên game — vượt ngưỡng mastery 80% — mà mọi gate vẫn xanh.                                                                                                                                                                                                                                                                                                                                                                                            | Acad v3 N3 · Acad v5                |
+
+## Sổ hậu kỳ cụm HK-36/38 — vòng 6
+
+Ba mục dưới đây là **nguyên nhân gốc toàn khoá**, không phải lỗi của riêng cụm HK-36/38.
+Hai mục đầu đã sửa trong vòng này; mục thứ ba mới chỉ được chốt ratchet, chưa sửa.
+
+### HK-Q · Bài đọc dài chỉ được đo bằng đúng hai câu hỏi — ĐÃ SỬA
+
+`verify-content.ts` và `qa-full.ts` đều ép `reading.questions.length === 2` cho mọi bài đọc,
+bất kể dài bao nhiêu. HK_36_1 dài 807 từ và được đo bằng hai câu — nghĩa là gần như không
+được đo. Đây cũng là lý do năm vòng kiểm định trước đó liên tục đòi cắt bớt bài đọc: khung
+không cho chỗ nào khác để đặt nội dung an toàn đã được duyệt.
+
+Nay: bài trên 400 từ được phép mang 2–4 câu hỏi. HK_36_1/2/3 đã có câu thứ ba, đo đúng ba
+quy tắc chết người nhất (nghe 115 hay nghe trang giấy · biên bản kim đâm · khói trong hành lang).
+
+### HK-R · `<pre>` khiến bài đọc thành một khối chữ liền — ĐÃ SỬA
+
+`ReadingSuite.tsx` đổ nguyên `passage.body` vào một thẻ `<pre>`, nên `\n` chỉ xuống dòng chứ
+không tách đoạn. Bài 800 từ hiện ra thành một khối chữ nhỏ, cuộn năm màn hình mới tới câu hỏi
+đầu tiên. Ảnh hưởng **toàn bộ 240 dep-week**, không riêng Phase 4. Nay tách theo `\n` thành
+từng `<p>` có giãn cách.
+
+### HK-S · Mẹo "chọn câu dài nhất" qua được cả khoá — CHƯA SỬA, ĐÃ CHỐT RATCHET
+
+Người học không đọc gì, cứ bấm phương án dài nhất, thắng **77% (1482/1923)** câu hỏi đọc toàn
+khoá. Mốc qua checkpoint là **70%**. Nghĩa là mẹo này một mình đủ qua môn.
+
+Ngưỡng gate cũ đặt ở 0.85 — cao hơn 15 điểm so với mức mà mẹo đã đủ qua môn, tức là một con số
+không đo cái gì cả. Nay hạ về `LENGTH_MAX = 0.771` và dùng như ratchet: chỉ được giảm.
+
+Phân bố: P0 69% · P1 82% · P2 73% · P3 84% · P4 76%. Nặng nhất là nội dung **sinh tự động**,
+không phải nội dung soạn tay — tuần 5 cả sáu bộ phận đều 100%, tuần 9/17/24 nhiều bộ phận 100%.
+Vì cả sáu bộ phận cùng 100% ở cùng một tuần, nguồn lỗi nằm ở **hàm sinh tuần**, không nằm ở bank:
+sửa một chỗ sẽ kéo cả sáu. Việc này nên làm thành một đợt riêng theo phase, không nhét vào một
+cụm Phase 4.
+
+### HK-T · Xáo phương án bằng comparator ngẫu nhiên — ĐÃ SỬA
+
+`ArcadeSuite` và `BoardGameSuite` xáo bằng `sort(() => Math.random() - 0.5)`. Comparator trả lời
+ngẫu nhiên không sinh hoán vị đều; với ba phương án nó để lộ thứ tự soạn nhiều hơn là giấu đi —
+mà thứ tự soạn của cụm này là **27/30 vòng đáp án đúng nằm ở vị trí giữa**. Đã đổi sang
+Fisher-Yates, khớp với `GrammarSuite`/`ListeningSuite` vốn đã làm đúng.

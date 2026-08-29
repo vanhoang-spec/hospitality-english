@@ -17945,7 +17945,7 @@ export const HK_WEEK_36: WeekContent = {
         {
           rude: "I am sitting him up, madam — a little water will bring him round.",
           polite:
-            "Moving him is for the trained person, madam — I am staying right here, and help is on its way up.",
+            "Moving him is the trained person's job, madam — I am staying right here, and help is on its way up.",
           rule: "Không di chuyển, không cho uống nước, không lay người. Ba việc người chưa được huấn luyện làm được là GỌI, DỌN CHỖ và Ở LẠI — và cả ba đều có ích thật.",
         },
       ],
@@ -17961,13 +17961,13 @@ export const HK_WEEK_36: WeekContent = {
           guestPrompt: "Duty Manager. Go ahead.",
           speakerRole: "manager",
           targetResponse:
-            "Room 906, sir — a guest is not breathing. I need an ambulance and the AED now.",
+            "Room 906, sir — a guest is not breathing. We need an ambulance and the AED now.",
           helpTip:
             "Đây là cuộc gọi của CHÍNH BẠN, nên số phòng đứng trước — trên một đường dây xấu, cái sống sót phải là số phòng. Rồi 'not breathing', rồi thứ bạn cần. 'Breathing' /ˈbriːðɪŋ/ — âm /ð/ rung, không phải /d/.",
         },
       ],
       reading: {
-        text: "A GUEST FOUND UNWELL — THE THREE THINGS AN UNTRAINED PERSON CAN DO\nCALL. The first aider and the Duty Manager, by name, from the room phone. THEY call the hotel doctor or 115 — you do not, unless the Duty Manager tells you to. Tell the Duty Manager whether the service lift is free — three minutes lost at a lift is three minutes off a life. But if nobody answers within thirty seconds, dial the operator; and if the operator does not answer either, you call 115 yourself, and you keep trying the inside numbers between the operator's questions. Nobody in this hotel has ever been disciplined for calling an ambulance. And a guest who is NOT BREATHING does not wait thirty seconds for an inside line: 115 first, the inside numbers second.\nOnce you are on 115, the controller on that line IS the trained person. If she tells you to move the guest, to tip the head back, or to push on the chest, you do it, and you say aloud what you are doing. Her instruction outranks every NEVER on this page. Say the room number FIRST, then the situation in one sentence, then whether the guest is BREATHING: 'Room 812, a guest is unresponsive, and he is breathing.' A number said first survives a bad line, and that last word decides whether an ambulance is called before anybody reaches you.\nIf the chest is not moving and the guest is not breathing normally — look for ten seconds, no longer — that word comes straight after the room number: 'Room 812, a guest is not breathing.' Nothing goes between those two, and everything else follows.\nIf your house keeps an AED, that goes on the same call: 'Room 812, a guest is not breathing — bring the AED.' You do not open it before help arrives unless the Duty Manager tells you to; what you do is make sure it reaches the room WITH the first aider, not five minutes behind her. If you ARE told to switch it on, put it on the floor beside the guest and do exactly what the machine says out loud — it will not shock a heart that does not need it. But an AED never goes onto a guest lying in water and never onto a wet chest: the guest comes clear of the water first and the chest is dried, and nobody is touching the guest when the machine says to stand clear. The button that switches yours on may not be green — learn the machine on your own floor before the night you need it. And if you cannot tell, say you cannot tell — that is an observation, not a diagnosis, and it is yours to give.\nCLEAR. Open the door fully and stand the trolley flat against the far wall — never across the corridor, and never in the doorway. A stretcher must reach that door without anybody moving your buckets. Whoever is running to you must not climb past your buckets.\nSTAY. Do not leave to fetch anyone — that is what the phone is for. If a companion is in the room, you stay with them too.\nNEVER: move the guest to another room, sit them up, give water, give medicine, or take anything from the guest's own medicine bag.\nTHREE exceptions, and only three. Look at the water before you touch it. If anything electrical is in it or hanging over it — a hairdryer, a shaver, a charger — you touch nothing and nobody: you call from the corridor, and Engineering kills the power before anyone goes in. If the water is clear of anything electrical, get the face clear at once — pull the plug and lift the head — and then keep the airway open. If the guest is being sick and cannot clear it, roll the whole body onto its side — head, shoulders and hips turning together — and keep the mouth lower than the throat. And a CONSCIOUS guest reaching for their own inhaler or adrenaline pen may be helped to reach it — you never choose it for them.\nSay nothing to any other guest and nothing in the corridor. What happened in that room belongs to the guest and to the report.\nAfterwards you write what you SAW and what you DID, with times. You never write what you think was wrong with them.\nIf YOU are the trained first aider on this floor tonight, you do what you were trained to do and somebody else makes the call. Everything on this page is written for the person who is not.\nWho is trained on your floor, which number reaches them fastest, WHERE the nearest AED is kept, WHETHER you may switch it on, and WHO calls 115 — five answers that differ by house. Some houses train every attendant on the AED, and then this page changes for you. Ask your Floor Supervisor this week, not on the day.",
+        text: "A GUEST FOUND UNWELL — THE THREE THINGS AN UNTRAINED PERSON CAN DO\nCALL. The first aider and the Duty Manager, by name, from the room phone. THEY call the hotel doctor or 115 — you do not, unless the Duty Manager tells you to. Tell the Duty Manager whether the service lift is free — three minutes lost at a lift is three minutes off a life. But if nobody answers within thirty seconds, dial the operator; and if the operator does not answer either, you call 115 yourself, and you keep trying the inside numbers between the ambulance operator's questions. Nobody in this hotel has ever been disciplined for calling an ambulance. And a guest who is NOT BREATHING does not wait thirty seconds for an inside line: 115 first, the inside numbers second.\nOnce you are on 115, the controller on that line IS the trained person. If she tells you to move the guest, to tip the head back, or to push on the chest, you do it, and you say aloud what you are doing. Her instruction outranks every NEVER on this page. Say the room number FIRST, then the situation in one sentence, then whether the guest is BREATHING: 'Room 812, a guest is unresponsive, and he is breathing.' A number said first survives a bad line.\nIf the chest is not moving and the guest is not breathing normally — look for ten seconds, no longer — that word comes straight after the room number: 'Room 812, a guest is not breathing.'\nIf your house keeps an AED, that goes on the same call: 'Room 812, a guest is not breathing — bring the AED.' You do not open it before help arrives unless the Duty Manager tells you to; what you do is make sure it reaches the room WITH the first aider, not five minutes behind her. If you ARE told to switch it on, put it on the floor beside the guest and do exactly what the machine says out loud — it will not shock a heart that does not need it. But an AED never goes onto a guest lying in water and never onto a wet chest: the guest comes clear of the water first and the chest is dried, and nobody is touching the guest when the machine says to stand clear. The button that switches yours on may not be green — learn the machine on your own floor before the night you need it. And if you cannot tell, say you cannot tell — that is an observation, not a diagnosis, and it is yours to give.\nCLEAR. Open the door fully and stand the trolley flat against the far wall — never across the corridor, and never in the doorway. A stretcher must reach that door without anybody moving your buckets.\nSTAY. Do not leave to fetch anyone — that is what the phone is for. If a companion is in the room, you stay with them too.\nNEVER: move the guest to another room, sit them up, give water, give medicine, or take anything from the guest's own medicine bag.\nTHREE exceptions, and only three. THE FIRST IS WATER — a guest face down in a bath or a pool. Look at that water before you touch it. If anything electrical is in it or hanging over it — a hairdryer, a shaver, a charger — you touch nothing and nobody: you call from the corridor, and Engineering kills the power before anyone goes in. If the water is clear of anything electrical, get the face clear at once — pull the plug and lift the head — and then keep the airway open. If the guest is being sick and cannot clear it, roll the whole body onto its side — head, shoulders and hips turning together — and keep the mouth lower than the throat. And a CONSCIOUS guest reaching for their own inhaler or adrenaline pen may be helped to reach it — you never choose it for them.\nSay nothing to any other guest and nothing in the corridor. What happened in that room belongs to the guest and to the report.\nAfterwards you write what you SAW and what you DID, with times. You never write what you think was wrong with them.\nIf YOU are the trained first aider on this floor tonight, you do what you were trained to do and somebody else makes the call. Everything on this page is written for the person who is not.\nWho is trained on your floor, which number reaches them fastest, WHERE the nearest AED is kept, WHETHER you may switch it on, and WHO calls 115 — five answers that differ by house. Ask your Floor Supervisor this week, not on the day.",
         questions: [
           {
             q: "Khi gọi báo, phải nói điều gì TRƯỚC tiên?",
@@ -17987,6 +17987,15 @@ export const HK_WEEK_36: WeekContent = {
             ],
             correct: 2,
           },
+          {
+            q: "Tổng đài 115 bảo lật người khách lại, mà trang này ghi KHÔNG di chuyển. Nghe ai?",
+            options: [
+              "Nghe trang này, vì đó là quy định do chính khách sạn ban hành",
+              "Nghe 115 — người trực tổng đài đó chính là người đã được huấn luyện",
+              "Cúp máy rồi chạy đi tìm giám sát tầng hỏi cho chắc rồi hẵng làm",
+            ],
+            correct: 1,
+          },
         ],
       },
       game: [
@@ -17995,7 +18004,7 @@ export const HK_WEEK_36: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "There is a man lying on the floor in 812 and I think he may have had a heart attack of some kind.",
+              text: "There is a man lying on the floor in 812 and I think he may have had a heart attack of some kind, but I could not really say.",
               correct: false,
             },
             {
@@ -18116,7 +18125,7 @@ export const HK_WEEK_36: WeekContent = {
           guestPrompt: "Housekeeping desk — what do you need sending up to 610?",
           speakerRole: "colleague",
           targetResponse:
-            "A sharps box and a biohazard bag, please. There is a broken glass hazard by the bath as well.",
+            "A sharps box and a biohazard bag, please. There is broken glass by the bath as well.",
           helpTip:
             "Đây là BÀN BUỒNG PHÒNG hỏi. Gọi đúng tên từng thứ cần, rồi thêm mối nguy còn lại — người ở đầu dây kia phải hình dung được căn phòng. 'Biohazard' /ˈbaɪəʊˌhæzəd/ — trọng âm rơi vào 'BI' ở đầu từ, không phải vào 'ha'.",
         },
@@ -18124,7 +18133,7 @@ export const HK_WEEK_36: WeekContent = {
           guestPrompt: "Housekeeping desk. You sound out of breath — what has happened?",
           speakerRole: "colleague",
           targetResponse:
-            "A needle has gone into my hand in 610. I have washed it, and I need to see the nurse now.",
+            "A needle has gone into my hand in 610. I have washed the wound, and I need to see the nurse now.",
           helpTip:
             "Đây là chấn thương của CHÍNH BẠN, và bạn phải nói được nó bằng tiếng Anh khi tay đang run. Ba việc: chuyện gì, đã rửa chưa, cần gì NGAY TRONG CA. Đừng nói 'later'. 'Needle' /ˈniːdl/ — /iː/ dài, /dl/ cuối liền một hơi.",
         },
@@ -18138,6 +18147,15 @@ export const HK_WEEK_36: WeekContent = {
               "Vì kim trong túi xuyên qua nilon và xuyên qua cả bàn tay",
               "Vì túi sẽ rách ra và làm bẩn thảm hành lang của cả tầng đó",
               "Vì mùi trong túi bay ra và ám vào đồng phục nhân viên",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Bị kim đâm, việc nào KHÔNG được để lại cho ca sau?",
+            options: [
+              "Ghi biên bản: phòng nào, mấy giờ, vật gì, đã báo cho ai",
+              "Thay túi rác mới cho phòng đó rồi lau lại sàn cho sạch",
+              "Nhắn cho tổ trưởng biết là hôm nay mình sẽ về sớm hơn",
             ],
             correct: 0,
           },
@@ -18216,7 +18234,7 @@ export const HK_WEEK_36: WeekContent = {
               correct: true,
             },
             {
-              text: "You could go down to the lobby, madam, and ask the front desk for a plaster.",
+              text: "You could go down to the lobby, madam, and ask the front desk for a plaster whenever you have a moment.",
               correct: false,
             },
           ],
@@ -18291,7 +18309,7 @@ export const HK_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "THE ALARM WHILE YOU ARE ON THE FLOOR\nBefore the bell there are smells: a smoke smell, a burning wire smell, a socket warm to the back of your hand, a fire door propped open with a wedge. Report the smell before you look for the cause. Finding it is Engineering's work; losing four minutes is nobody's.\nA SMELL OF BURNING: get everyone out and CLOSE the door behind you — it is a fire door, and it only works shut. Then call the operator from the corridor: the room number, and the word 'burning'.\nA SMELL OF GAS is the other way round. Get everyone out and leave the room door exactly as you found it. Touch no switch, no light and no telephone on that floor, and call from the stairwell or the floor above. Open nothing and close nothing — not a window, not a curtain: Engineering wants that room exactly as the guest left it. Engineering isolates the supply, and nobody goes back in until Engineering and your supervisor say so.\nWhen the bell sounds you are a guide, not a searcher. Knock, call 'housekeeping — please leave by the stairs', and move on. You do not open doors, you do not look under beds, and you do not wait for an answer.\nIf there is smoke in the corridor, the sweep is over. You take the nearest stairs at once and tell the Duty Manager where you stopped and which doors you did not reach. Nobody sweeps a corridor they cannot see the end of.\nAnd a guest who refuses to leave is asked twice, calmly, and then left. You never argue and you never touch a guest — you give the Duty Manager the room number and the words 'declined to leave', and the Duty Manager passes it to Security — one list, in one place, so the fire team reads it once.\nIf a door is already open and you see flame: close that door, break the nearest call point on your way past, and telephone from the next corridor. You do not fight it — an extinguisher is for the person trained on it, and for a fire smaller than you are.\nWalk, do not run. Stairs, never the lift. The open-door rule of week thirty-five stops at the bell: in an alarm the room is empty, so the door is closed and the trolley comes out. Pull the trolley clear of the doorway and close the door — it is a fire door, and your trolley is holding it open. Then stand the trolley ALONG the corridor wall, never across it, and leave it there.\nA guest who cannot manage the stairs does NOT go into the stairwell, and never waits on a landing — that landing is the escape route for every floor above. They stay in the room with the door closed and a wet towel along the gap, and you give the Duty Manager the ROOM NUMBER for the fire team. Then you keep sweeping.\nOffer an arm to anyone merely slow — as far as the stairhead, then hand them to the next person on the stairs and keep going. A guest who cannot walk at all is a room number, not an arm. Do not stop to count heads — that is done at the assembly point by the person holding the list.\nNever go back up. Not for a guest's bag, not for your own phone, not for the floor keys: those are already on you.\nAfterwards, tell the Duty Manager which rooms answered and which did not. That list is the only reason a floor ever gets searched twice.\nSome houses have a refuge area instead of the room, for a guest who cannot take the stairs. Assembly points, refuge areas, who calls 114 and from which phone, and who sweeps which floor all differ by house. Learn yours before your first night shift.",
+        text: "THE ALARM WHILE YOU ARE ON THE FLOOR\nBefore the bell there are smells: a smoke smell, a burning wire smell, a socket warm to the back of your hand, a fire door propped open with a wedge. Report the smell before you look for the cause. Finding it is Engineering's work; losing four minutes is nobody's.\nA SMELL OF BURNING: get everyone out and CLOSE the door behind you — it is a fire door, and it only works shut. Then call the operator from the corridor: the room number, and the word 'burning'.\nA SMELL OF GAS is the other way round. Get everyone out and leave the room door exactly as you found it. Touch no switch, no light and no telephone on that floor, and call from the stairwell or the floor above. Open nothing and close nothing — not a window, not a curtain: Engineering wants that room exactly as the guest left it. Engineering isolates the supply, and nobody goes back in until Engineering and your supervisor say so.\nWhen the bell sounds you are a guide, not a searcher. Knock, call 'housekeeping — please leave by the stairs', and move on. You do not open doors, you do not look under beds, and you do not wait for an answer.\nIf there is smoke in the corridor, the sweep is over. You take the nearest stairs at once and tell the Duty Manager where you stopped and which doors you did not reach. Nobody sweeps a corridor when they cannot see the end of it.\nAnd a guest who refuses to leave is asked twice, calmly, and then left. You never argue and you never touch a guest — you give the Duty Manager the room number and the words 'declined to leave', and the Duty Manager passes it to Security — one list, in one place, so the fire team reads it once.\nIf a door is already open and you see flame: close that door, break the nearest call point on your way past, and telephone from the next corridor. You do not fight it — an extinguisher is for the person trained on it, and for a fire smaller than you are.\nWalk, do not run. Stairs, never the lift. The open-door rule of week thirty-five stops at the bell: in an alarm the room is empty, so the door is closed and the trolley comes out. Pull the trolley clear of the doorway and close the door — it is a fire door, and your trolley is holding it open. Then stand the trolley ALONG the corridor wall, never across it, and leave it there.\nA guest who cannot manage the stairs does NOT go into the stairwell, and never waits on a landing — that landing is the escape route for every floor above. They stay in the room with the door closed and a wet towel along the gap, and you give the Duty Manager the ROOM NUMBER for the fire team. Then you keep sweeping.\nOffer an arm to anyone merely slow — as far as the stairhead, then hand them to the next person on the stairs and keep going. A guest who cannot walk at all is a room number, not an arm. Do not stop to count heads — that is done at the assembly point by the person holding the list.\nNever go back up. Not for a guest's bag, not for your own phone, not for the floor keys: those are already on you.\nAfterwards, tell the Duty Manager which rooms answered and which did not. That list is the only reason a floor ever gets searched twice.\nSome houses have a refuge area instead of the room, for a guest who cannot take the stairs. Assembly points, refuge areas, who calls 114 and from which phone, and who sweeps which floor all differ by house. Learn yours before your first night shift.",
         questions: [
           {
             q: "Nghe chuông báo cháy, nhân viên buồng phòng làm gì?",
@@ -18301,6 +18319,15 @@ export const HK_WEEK_36: WeekContent = {
               "Đứng chờ giám sát tầng tới rồi mới bắt đầu di chuyển khách",
             ],
             correct: 1,
+          },
+          {
+            q: "Đang gõ cửa quét tầng thì hành lang có khói. Làm gì?",
+            options: [
+              "Dừng quét, xuống cầu thang gần nhất, báo đã dừng ở đâu và chưa tới phòng nào",
+              "Cúi thấp người xuống rồi gõ nốt những phòng còn lại cho hết tầng",
+              "Quay lại lấy khăn ướt bịt mũi rồi tiếp tục quét như bình thường",
+            ],
+            correct: 0,
           },
           {
             q: "Ngửi thấy mùi GAS thì cửa phòng xử lý thế nào?",
@@ -18322,7 +18349,7 @@ export const HK_WEEK_36: WeekContent = {
               correct: false,
             },
             {
-              text: "We treat every alarm as a real one, sir. Throw on a robe and take the stairs to your left — I have the rest of this floor to knock.",
+              text: "We treat every alarm as a real one, sir. Throw on a robe and take the stairs to your left — I have the rest of this floor to check.",
               correct: true,
             },
             {
@@ -18335,7 +18362,7 @@ export const HK_WEEK_36: WeekContent = {
           prompt: "Hold the lift! I'm not doing eleven flights with this knee.",
           options: [
             {
-              text: "Of course, madam — one trip in the lift will be quicker for both of us now.",
+              text: "Of course, madam — one trip in the lift will be quicker for both of us, and I will come down with you.",
               correct: false,
             },
             {
@@ -18377,7 +18404,7 @@ export const HK_WEEK_36: WeekContent = {
               correct: true,
             },
             {
-              text: "Let me sit with you until it stops, sir, and then neither of us has to walk down.",
+              text: "Let me sit with you until the bell stops, sir, and then neither of us has to walk all the way down.",
               correct: false,
             },
           ],
@@ -18394,7 +18421,7 @@ export const HK_WEEK_36: WeekContent = {
               correct: true,
             },
             {
-              text: "The room doors all lock automatically, sir, so your laptop is perfectly safe in there until we go back.",
+              text: "The room doors all lock automatically, sir, so your laptop is perfectly safe in there until they let us back in.",
               correct: false,
             },
           ],
@@ -18493,19 +18520,18 @@ export const HK_WEEK_36: WeekContent = {
       },
       game: [
         {
-          prompt: "Engineering. Which floor, and is it burning or gas?",
-          speakerRole: "colleague",
+          prompt: "It's only a plastic chair. Can't it just stay out on the balcony?",
           options: [
             {
-              text: "Eleven, and I think it might be gas, but I would not want to swear to it.",
+              text: "You are quite right, sir — I will leave it out and come back for it this evening.",
               correct: false,
             },
             {
-              text: "Eleven, and it is a burning wire smell. The door is closed and the corridor is clear.",
+              text: "A plastic chair on the ninth floor is a missile in that wind, sir. It comes inside now.",
               correct: true,
             },
             {
-              text: "It is somewhere on eleven — I am still walking along the corridor to find out which room it is.",
+              text: "I will take everything else off the balcony, sir, and leave your own chair exactly where it stands.",
               correct: false,
             },
           ],
@@ -18621,7 +18647,7 @@ export const HK_WEEK_38: WeekContent = {
         {
           rude: "The jacket is ruined. Somebody has to pay for it.",
           polite:
-            "This is above the guide, madam, and I propose we replace the jacket — the docket and the photo evidence sheet are attached.",
+            "This is above the guide, madam, and I propose the letter first — the docket and the photo evidence sheet are attached.",
           rule: "NÓI VỚI CẤP TRÊN, không bao giờ nói với khách. Mở đầu bằng ĐỀ XUẤT, không bằng lời than. Cấu trúc của cả tuần: 'I propose (that) we + động từ NGUYÊN THỂ' — 'I propose we replace the jacket', không phải 'we replaces' và cũng không phải 'we to replace'. (Riêng 'I propose to replace…' vẫn đúng ngữ pháp, nhưng nó nghĩa là TÔI sẽ làm; tuần này ta xin cấp trên quyết nên luôn dùng 'we'.) Cấp trên nghe câu đầu để biết bạn muốn họ QUYẾT điều gì.",
         },
         {
@@ -18633,12 +18659,12 @@ export const HK_WEEK_38: WeekContent = {
       ],
       speaking: [
         {
-          guestPrompt: "You've got two minutes before my next meeting. Go.",
+          guestPrompt: "Floor Supervisor. You've got two minutes before my next meeting. Go.",
           speakerRole: "manager",
           targetResponse:
             "For the Duty Manager, madam. One guest jacket, shrunk on Tuesday — the overview is on top, and I propose an apology letter first.",
           helpTip:
-            "Đây là CẤP TRÊN hỏi, không phải khách. Hai phút thì nói theo thứ tự: cái gì, khi nào, đề xuất gì. Nửa hướng-lên của tuần này là việc của người tổ cử đi trình — giám sát tầng hoặc tổ trưởng; học trước, dùng khi tới lượt. 'Propose' /prəˈpəʊz/ — trọng âm ở âm tiết sau.",
+            "Đây là CẤP TRÊN hỏi, không phải khách. Hai phút thì nói theo BỐN phần, đúng thứ tự: xin CHỮ KÝ NÀO (bài đọc bắt buộc mở đầu bằng phần này), cái gì, khi nào, đề xuất gì. Nửa hướng-lên của tuần là việc của người tổ cử đi trình; học trước, dùng khi tới lượt. 'Propose' /prəˈpəʊz/ — trọng âm ở âm tiết sau.",
         },
         {
           guestPrompt: "So what's actually happening about my jacket?",
@@ -18661,11 +18687,11 @@ export const HK_WEEK_38: WeekContent = {
             correct: 1,
           },
           {
-            q: "Vì sao đề xuất chỉ nên có hai phương án?",
+            q: "Nộp năm phương án lên thì chuyện gì xảy ra?",
             options: [
-              "Vì biểu mẫu của khách sạn chỉ chừa đúng hai ô trống để điền",
-              "Vì cấp trên không có đủ thời gian đọc quá hai trang giấy A4 đâu",
-              "Vì hai phương án là một quyết định, năm là một cuộc tranh luận",
+              "Biểu mẫu của khách sạn không chừa đủ ô trống để điền vào",
+              "Cấp trên chọn nhanh hơn vì có nhiều lựa chọn để cân nhắc",
+              "Cấp trên sẽ bàn thay vì quyết, và hồ sơ nằm lại đó",
             ],
             correct: 2,
           },
@@ -18685,7 +18711,7 @@ export const HK_WEEK_38: WeekContent = {
               correct: true,
             },
             {
-              text: "It is only a small amount, madam, and it will make the whole thing go away.",
+              text: "It is only a small amount, madam, and signing it now will make the whole thing go away quietly.",
               correct: false,
             },
           ],
@@ -18795,7 +18821,7 @@ export const HK_WEEK_38: WeekContent = {
         },
       ],
       reading: {
-        text: "WHERE A NUMBER COMES FROM\nYour compensation guide decides what is PAYABLE; a receipt only decides what the item was WORTH. Week thirty-three: a shrunk, faded or torn garment is major damage, and that is up to ten times the laundry service fee — not the figure on the receipt. Where your guide does allow a replacement, take the value from the guest's receipt first and the brand's current price second. Then compare that figure with the guide's ceiling. Propose the LOWER of the two, and that is the normal case. You may propose ABOVE the ceiling only when the guest can show a receipt or a written repair quote — and then you say in the FIRST line that you are asking to go above, and why. Say on the page which rule you used and which source.\nDepreciation is real and it is written down. A three-year-old jacket is not a new jacket, and your compensation guide says by how much. Never invent that percentage while a guest is waiting.\nA linen replacement estimate uses the store's cost price — never the guest's idea of it, and never the retail price. Hotel linen costs what the hotel pays for it.\nThe compensation amount is proposed by you and decided above you. Week thirty-three set the tiers, and those tiers govern our OWN linen and our OWN services: above the figure printed there your Floor Supervisor stops and the Duty Manager signs. A guest's own property is not on that ladder at all — it carries the Duty Manager's signature from the first dong, and the whole file travels with it.\nA payment timeline names a DATE. 'Within seven working days' is a timeline. 'As soon as possible' is a second complaint waiting to be written.\nIf your laundry is contracted out, the log belongs to the contractor and the file still travels with your name on it — ask your Executive Housekeeper who pays in your house.\nWhatever currency the guest paid in, the proposal also shows dong. Finance works in dong, and so does the audit.\nAnd the rule that outlives every figure on the page: the guest hears the PROCESS and the DATE from you, and the AMOUNT from the manager who signed it.\nYour house's depreciation table and its ceilings are its own. Ask your Executive Housekeeper for the current one — last year's has been wrong since January.",
+        text: "WHERE A NUMBER COMES FROM\nYour compensation guide decides what is PAYABLE; a receipt only decides what the item was WORTH. Week thirty-three: a shrunk, faded or torn garment is major damage, and that is up to ten times the laundry service fee — not the figure on the receipt. Where your guide does allow a replacement, take the value from the guest's receipt first and the brand's current price second. Then compare that figure with the guide's ceiling. Propose the LOWER of the two, and that is the normal case. You may propose ABOVE the ceiling only when the guest can show a receipt or a written repair quote — and then you say in the FIRST line that you are asking to go above, and why. Say on the page which rule you used and which source.\nDepreciation is real and it is written down. A three-year-old jacket is not a new jacket, and your compensation guide says by how much. Never invent that percentage while a guest is waiting.\nA linen replacement estimate uses the store's cost price — never the guest's idea of it, and never the retail price. Hotel linen costs what the hotel pays for it.\nThe compensation amount is proposed by you and decided above you. Week thirty-three set the tiers, and those tiers govern our OWN linen and our OWN services: above the figure printed there your Floor Supervisor stops and the Duty Manager signs — and a guest's own garment needs that signature at any figure. A guest's own property is not on that ladder at all — it carries the Duty Manager's signature from the first dong, and the whole file travels with it.\nA payment timeline names a DATE. 'Within seven working days' is a timeline. 'As soon as possible' is a second complaint waiting to be written.\nIf your laundry is contracted out, the log belongs to the contractor and the file still travels with your name on it — ask your Executive Housekeeper who pays in your house.\nWhatever currency the guest paid in, the proposal also shows dong. Finance works in dong, and so does the audit.\nAnd the rule that outlives every figure on the page: the guest hears the PROCESS and the DATE from you, and the AMOUNT from the manager who signed it.\nYour house's depreciation table and its ceilings are its own. Ask your Executive Housekeeper for the current one — last year's has been wrong since January.",
         questions: [
           {
             q: "Giá trị món đồ — trước khi so với trần — lấy từ đâu?",
@@ -18823,7 +18849,7 @@ export const HK_WEEK_38: WeekContent = {
           speakerRole: "manager",
           options: [
             {
-              text: "I looked up a very similar jacket online this morning, madam, and took that price.",
+              text: "I looked up a very similar jacket on a shopping site this morning, madam, and took the first price that came up on the screen.",
               correct: false,
             },
             {
@@ -19002,7 +19028,7 @@ export const HK_WEEK_38: WeekContent = {
           prompt: "Your manager promised me a free night. Where is it?",
           options: [
             {
-              text: "She could not have promised that, sir — nobody here can give away a night.",
+              text: "She could not have promised that, sir — nobody working here is allowed to give away a night.",
               correct: false,
             },
             {
@@ -19085,7 +19111,7 @@ export const HK_WEEK_38: WeekContent = {
         },
       ],
       reading: {
-        text: "CLOSING THE FILE — THE PART EVERYONE SKIPS\nA complaint is closed twice: once with the guest, and once with the process that produced it. Skip the second and the same file returns next season with a different name on it.\nA CORRECTIVE ACTION PLAN names ONE change and ONE owner. Ten changes owned by 'the team' is a list nobody does; one change owned by a named person is a habit within a month.\nA PREVENTIVE MEASURE LIST is written for the people who will actually do it, in the words they use. Pin it where the work happens: at the machine, on the trolley, inside the linen room door. A measure that lives only in a manager's folder prevents nothing at all.\nA FOLLOW-UP INSPECTION DATE turns a promise into a diary entry. Without a date, every plan is finished the moment it is written.\nThe HOUSEKEEPING MANAGER CONTACT goes on the guest's letter: a name and a direct line, not a general hotline. A guest made to tell the story a second time has been failed a second time.\nWrite down what did NOT work as well. A near-miss caught by luck is the cheapest lesson your department will ever get, and it disappears if nobody writes it down.\nThen close the loop with whoever found it. An attendant whose report changed something will bring you the next one.\nWhich form, which meeting and which signature close a file differ by house. Ask your Executive Housekeeper to show you one that was closed well.",
+        text: "CLOSING THE FILE — THE PART EVERYONE SKIPS\nA complaint is closed twice: once with the guest, and once with the process that produced it. Skip the second and the same file returns next season with a different name on it.\nA CORRECTIVE ACTION PLAN names ONE change and ONE owner. Ten changes owned by 'the team' is a list nobody does; one change owned by a named person is a habit within a month.\nA PREVENTIVE MEASURE LIST is written for the people who will actually do it, in the words they use. Pin it where the work happens: at the machine, on the trolley, inside the linen room door. A measure that lives only in a manager's folder prevents nothing at all.\nA FOLLOW-UP INSPECTION DATE turns a promise into a diary entry. Without a date, every plan is finished the moment it is written.\nThe HOUSEKEEPING MANAGER CONTACT goes on the guest's letter: a name and a direct line, not a general hotline. A guest who has to tell the story twice has been failed twice.\nWrite down what did NOT work as well. A near-miss caught by luck is the cheapest lesson your department will ever get, and it disappears if nobody writes it down.\nThen close the loop with whoever found it. An attendant whose report changed something will bring you the next one.\nWhich form, which meeting and which signature close a file differ by house. Ask your Executive Housekeeper to show you one that was closed well.",
         questions: [
           {
             q: "Một kế hoạch khắc phục tốt gồm những gì?",
@@ -19113,7 +19139,7 @@ export const HK_WEEK_38: WeekContent = {
           speakerRole: "manager",
           options: [
             {
-              text: "The whole team has been told to take much more care with guest garments.",
+              text: "The whole team has been told to take a great deal more care with guests' garments.",
               correct: false,
             },
             {
@@ -19148,11 +19174,11 @@ export const HK_WEEK_38: WeekContent = {
           prompt: "How do I reach someone if it happens again?",
           options: [
             {
-              text: "You can always call the main hotel number, sir, and ask for housekeeping.",
+              text: "You can always call the main hotel number, sir, and ask them to put you through to housekeeping.",
               correct: false,
             },
             {
-              text: "The housekeeping manager contact is on your letter, sir — a name and a direct line.",
+              text: "My manager's name and her direct line are on your letter, sir — not a hotline.",
               correct: true,
             },
             {
