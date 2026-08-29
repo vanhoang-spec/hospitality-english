@@ -182,15 +182,22 @@ function buildPaper(dep: string, week: string): Question[] {
   const readingPool = shuffle(
     phaseLessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
   );
-  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => ({
-    kind: "reading" as const,
-    key: `r:${q.q}`,
-    passage: text,
-    prompt: q.q,
-    options: q.options,
-    correctIdx: q.correct,
-    note: q.explanation ?? "",
-  }));
+  // Reading options are shuffled here like every other question type. Without
+  // this they arrived in authored order, so a week whose answers all sit at A
+  // handed the paper away.
+  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => {
+    const answer = q.options[q.correct];
+    const options = shuffle(q.options);
+    return {
+      kind: "reading" as const,
+      key: `r:${q.q}`,
+      passage: text,
+      prompt: q.q,
+      options,
+      correctIdx: options.indexOf(answer),
+      note: q.explanation ?? "",
+    };
+  });
 
   return shuffle([...vocabQs, ...grammarQs, ...listeningQs, ...readingQs]).slice(
     0,

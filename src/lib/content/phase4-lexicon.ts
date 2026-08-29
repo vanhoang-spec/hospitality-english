@@ -240,12 +240,6 @@ const HK_BANK: P4Bank = {
   terms: [],
   proposal: [
     {
-      word: "Written apology letter",
-      phonetic: "/ˈrɪtn əˈpɒlədʒi ˈletə/",
-      definition: "Thư xin lỗi bằng văn bản",
-      icon: "✉️",
-    },
-    {
       word: "Incident summary",
       phonetic: "/ˈɪnsɪdənt ˈsʌməri/",
       definition: "Bản tóm tắt diễn biến sự việc",
@@ -270,12 +264,6 @@ const HK_BANK: P4Bank = {
       icon: "🎫",
     },
     {
-      word: "Room recovery plan",
-      phonetic: "/ruːm rɪˈkʌvəri plæn/",
-      definition: "Kế hoạch khắc phục căn phòng",
-      icon: "🔧",
-    },
-    {
       word: "Photo evidence sheet",
       phonetic: "/ˈfəʊtəʊ ˈevɪdəns ʃiːt/",
       definition: "Bảng ảnh chứng minh hư hại",
@@ -292,12 +280,6 @@ const HK_BANK: P4Bank = {
       phonetic: "/ˈsɜːvɪs rɪˈkʌvəri ˈɒfə/",
       definition: "Đề nghị bù đắp chất lượng dịch vụ",
       icon: "🕊️",
-    },
-    {
-      word: "Linen replacement estimate",
-      phonetic: "/ˈlɪnɪn rɪˈpleɪsmənt ˈestɪmət/",
-      definition: "Dự toán chi phí thay khăn ga",
-      icon: "🧾",
     },
     {
       word: "Payment timeline",
