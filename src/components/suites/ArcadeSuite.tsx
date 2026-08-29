@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, type GameRound, type WeekContent } from "@/lib/content/week-content";
+import {
+  getWeekContent,
+  type GameRound,
+  type WeekContent,
+  speakerLabel,
+} from "@/lib/content/week-content";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Bubble = {
@@ -199,9 +204,9 @@ function ArcadeSuiteInner({
                 <span className="text-[10px] uppercase tracking-[0.25em] text-primary not-italic">
                   LUẬT CHƠI ·{" "}
                 </span>
-                Đọc kỹ yêu cầu của Khách ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay
-                ngang qua màn hình. Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5
-                sao phù hợp với yêu cầu của Khách trước khi hết giờ!
+                Đọc kỹ lượt thoại ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay ngang qua
+                màn hình. Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5 sao phù hợp
+                với yêu cầu của Khách trước khi hết giờ!
               </p>
             </div>
             <button
@@ -221,7 +226,9 @@ function ArcadeSuiteInner({
             animate={{ opacity: 1, y: 0 }}
             className="absolute left-1/2 top-3 z-10 w-[92%] -translate-x-1/2 border border-primary/60 bg-background/80 p-3 text-center shadow-xl backdrop-blur"
           >
-            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Khách nói</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+              {speakerLabel(currentRound)}
+            </div>
             <p className="mt-1 font-display text-lg text-foreground">"{currentRound.prompt}"</p>
           </motion.div>
         )}

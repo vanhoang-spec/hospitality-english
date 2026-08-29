@@ -175,7 +175,7 @@ function buildPaper(dep: string, week: string): Question[] {
       audio: round.prompt,
       options: options.map((o) => o.text),
       correctIdx: options.findIndex((o) => o.correct),
-      note: `Khách nói: "${round.prompt}"`,
+      note: `${speakerLabel(round)}: "${round.prompt}"`,
     };
   });
 
