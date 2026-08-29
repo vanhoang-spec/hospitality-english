@@ -2,7 +2,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
+import {
+  getWeekContent,
+  resolveReviewVocab,
+  speakerLabel,
+  type VocabItem,
+} from "@/lib/content/week-content";
 import { speakEN, dedupeTranscript } from "@/lib/speech";
 import { utterancePassed } from "@/lib/speaking-score";
 import {
@@ -196,6 +201,7 @@ function buildPaper(dep: string, week: string): Question[] {
 type OralItem = {
   key: string;
   guestPrompt: string;
+  who: string;
   target: string;
   tip: string;
   /** The week the sentence was authored for — graded at THAT week's
@@ -214,6 +220,7 @@ function buildOral(dep: string, week: string): OralItem[] {
       l.speaking.map((s) => ({
         key: `s:${w}:${s.guestPrompt}`,
         guestPrompt: s.guestPrompt,
+        who: speakerLabel(s),
         target: s.targetResponse,
         tip: s.helpTip,
         sourceWeek: c.weekNumber,
@@ -705,7 +712,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 {oralResults.map((r, i) => (
                   <div key={r.item.key + i} className="text-xs leading-relaxed">
                     <div className={r.passed ? "text-foreground/60" : "text-primary"}>
-                      {r.passed ? "✓" : "✗"} Khách: "{r.item.guestPrompt}"
+                      {r.passed ? "✓" : "✗"} {r.item.who}: "{r.item.guestPrompt}"
                     </div>
                     <div className="mt-1 text-foreground/75">
                       Câu mẫu: <span className="text-foreground">{r.item.target}</span>

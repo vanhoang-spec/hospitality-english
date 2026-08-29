@@ -429,3 +429,26 @@ Cả tám tuần FB 32–36, 38–40 phát hành với phán quyết "ĐỦ ĐI�
 **Cập nhật món nợ P1-12:** FB-38 "Presenting a Proposal" đã được soạn tay lại trong batch
 này theo đúng nghiệp vụ (báo giá tiệc bằng đồng, plus-plus, headcount, hoá đơn đỏ) — món nợ
 tuần 38 giờ chỉ còn **SW-38 và HK-38**, sẽ xử trong batch của hai bộ phận đó.
+
+---
+
+## Sổ hậu kỳ cụm HK-34/35 (30/08/2026 — đang trong vòng chấm)
+
+Những mục dưới đây do hai auditor mù nêu ra ở vòng 4 và **được ghi nhận là không chặn**,
+hoặc là chỗ hai luồng chấm xung khắc mà tôi đã chọn một bên có lập luận.
+
+| Mục  | Nội dung                                                                                                                                                                                                                                                                                                                                                                                                               | Nguồn                     |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| HK-A | **Dựng phòng ĐÓN KHÁCH chưa có ở đâu.** Cả HK-34 chỉ dạy dựng phòng buổi tối trong kỳ lưu trú; phần lớn việc "dịp đặc biệt" thật của buồng phòng là set-up trước ETA (giường honeymoon, amenity VIP, thư TGĐ) với ràng buộc khác hẳn: không có cue, phòng phải ở trạng thái VC trước ETA hai giờ, amenity đặt sau cùng. Hạng mục nội dung mới, ~2 giờ.                                                                 | HM v4 2.9                 |
+| HK-B | **`in exchange for` — xung khắc giữa hai luồng.** HM cho rằng mặc cả tay đôi không hợp register 5★ ("khách sạn không đổi chác với khách; khách sạn thu xếp"). Academic ngược lại, coi đây là cách dùng ĐÚNG duy nhất của cụm và muốn thêm. **Đã giữ theo Academic**, vì ma trận quy định tuần 35 chính là tuần Đàm phán — bỏ ngữ liệu đàm phán để chiều register sẽ phá ma trận. Cần một quyết định thiết kế dứt điểm. | HM v4 2.16b vs Acad v4 N5 |
+| HK-C | **Ba headword của HK-34 cố ý không vào ngôn ngữ sản sinh:** `Low-key`, `Unattended`, `Latex balloon`. Hai từ đầu là lệnh cho NHÂN VIÊN, không phải câu nói với khách — Academic đã yêu cầu gỡ `low-key` khỏi miệng nói với khách. Đây là lựa chọn có ý thức, không phải chỗ sót; nhưng phép đo "tỷ lệ từ vào sản sinh" cần biết để không báo động nhầm ở các vòng sau.                                                 | Acad v4 VỪA-6             |
+| HK-D | **Tình huống chưa phủ ở HK-35:** khách dúi tiền để xoá phí, khách quay điện thoại khi tranh chấp, khách tự mua nước bỏ lại vào minibar, trẻ con lấy đồ minibar, kiểm minibar lúc trả phòng gấp. Ba cái sau là tranh chấp minibar phổ biến nhất trong nghề.                                                                                                                                                             | HM v4 3.6, 3.7            |
+| HK-E | **reviewWords HK-35 chứa `Damaged linen charge` và `Missing towel charge`** nhưng quy trình phí đồ vải không được dạy ở bất kỳ bài nào trong tuần — chỉ có minibar. Đổi slot hoặc bổ sung.                                                                                                                                                                                                                             | HM v4 3.8                 |
+| HK-F | **Rượu vào phòng chưa có ai nhận:** FO-34 có `"sparkling wine on ice"`, HK-34 không có một dòng nào về ai đặt xô đá, ai bê lên, và xử lý thế nào khi phòng có trẻ vị thành niên.                                                                                                                                                                                                                                       | HM v4 3.4                 |
+| HK-G | **Văn phong tỉnh lược toàn corpus.** Nhiều câu đích mở bằng mảnh không động từ (`"Two now, madam."`, `"Ten minutes now, madam."`). Rất thật với nghề và rất Anh, nhưng ở A2+ nó mô hình hoá mảnh câu thay vì mệnh đề, và bộ chấm nói chấm chính những mảnh đó. Là quyết định thiết kế cần chốt cho cả khoá, không riêng HK.                                                                                            | Acad v4 VỪA-12            |
+
+**Ghi chú thiết kế đã áp dụng, cần nhớ:** trường `guestPrompt` render ra màn hình dưới dạng
+câu trích trần, không nhãn "khách" (`SpeakingSuite.tsx:161`). HK-34 và HK-38 dùng đặc điểm này
+để đưa vào một số lượt **giám sát/quản lý nói với nhân viên** — đó là cách duy nhất luyện được
+ngôn ngữ nội bộ (`lead time`, `cue`, và cả tuần đề xuất HK-38) mà không dạy nhân viên nói
+những từ đó vào mặt khách. `helpTip` của các lượt này luôn mở đầu bằng "Đây là CẤP TRÊN nói".
