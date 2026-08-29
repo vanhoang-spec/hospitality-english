@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 // useEffect used inside FireworksCanvas below
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, speakerLabel, type WeekContent } from "@/lib/content/week-content";
+import {
+  getWeekContent,
+  speakerAudioLabel,
+  speakerLabel,
+  type WeekContent,
+} from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
 import { compareWords, passThresholds } from "@/lib/speaking-score";
 import { listeningRateForWeek } from "@/lib/phases";
@@ -42,7 +47,7 @@ function SpeakingSuiteInner({
       target: s.targetResponse,
       tip: s.helpTip,
       who: speakerLabel(s),
-      colleague: s.speakerRole === "colleague",
+      audioWho: speakerAudioLabel(s),
     })),
   );
   const [idx, setIdx] = useState(0);
@@ -166,7 +171,7 @@ function SpeakingSuiteInner({
               onClick={speakComplaint}
               className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-foreground hover:border-primary"
             >
-              ▶ Nghe {scenario.colleague ? "lời đồng nghiệp" : "lời khách"}
+              ▶ Nghe {scenario.audioWho}
             </button>
             <button
               onClick={() => speakEN(scenario.target, listeningRateForWeek(week))}

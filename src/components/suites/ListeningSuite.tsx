@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, speakerAudioLabel } from "@/lib/content/week-content";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -14,7 +14,14 @@ const MAX_LISTENS = 3;
 //  - "cloze": a target service sentence is spoken; the learner types
 //    the blanked-out key words.
 type ListeningTask =
-  | { kind: "choose"; key: string; audio: string; options: string[]; correctIdx: number }
+  | {
+      kind: "choose";
+      key: string;
+      audio: string;
+      options: string[];
+      correctIdx: number;
+      audioWho: string;
+    }
   | { kind: "cloze"; key: string; audio: string; tokens: { text: string; blank: boolean }[] };
 
 function shuffle<T>(a: T[]): T[] {
@@ -65,6 +72,7 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
         audio: round.prompt,
         options: opts.map((o) => o.text),
         correctIdx: opts.findIndex((o) => o.correct),
+        audioWho: speakerAudioLabel(round),
       };
     }),
   );
@@ -259,7 +267,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-display text-xl text-foreground">
             {task.kind === "choose"
-              ? "Nghe lời khách nói và chọn câu trả lời chuẩn 5 sao:"
+              ? `Nghe ${task.audioWho} nói và chọn câu trả lời chuẩn 5 sao:`
               : "Nghe câu mẫu và điền các từ còn thiếu:"}
           </p>
         </div>

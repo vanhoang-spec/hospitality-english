@@ -670,31 +670,43 @@ const slugify = (t: string) =>
   // direct instructions to the learner. Blunt in-character lines like
   // "You want upgrade?" or "You need to sign here" are legitimate
   // dialogue (often the rude distractor) and must not trip this.
-  const META = new RegExp(
+  // Instructions aimed at the learner. Wrong whoever is speaking.
+  const INSTRUCTION = new RegExp(
     [
       "what do you say\\b",
       "what is the best reply\\b",
       "which reply is best\\b",
       "what do you (?:do|offer|add|promise|tell)\\b",
-      "\\b(?:the|a) guest (?:says|asks|doubts|wants|demands|mentions|is |politely)",
-      "\\byour (?:colleague|manager|supervisor) (?:arrives|asks)\\b",
       "\\byou (?:cannot|have just|are going to|still have|want to offer|need details)\\b",
     ].join("|"),
     "i",
   );
+  // Third-person narration of the scene. Wrong in a GUEST turn — a guest does
+  // not describe themselves that way — but correct in a turn labelled
+  // colleague or manager, where reporting ABOUT a guest is the skill itself
+  // ("Room 812, a guest is unresponsive and he is breathing").
+  const NARRATION = new RegExp(
+    [
+      "\\b(?:the|a) guest (?:says|asks|doubts|wants|demands|mentions|is |politely)",
+      "\\byour (?:colleague|manager|supervisor) (?:arrives|asks)\\b",
+    ].join("|"),
+    "i",
+  );
+  const isMeta = (text: string, role?: string) =>
+    INSTRUCTION.test(text) || (role !== "colleague" && role !== "manager" && NARRATION.test(text));
   let checked = 0;
   for (const [key, wk] of Object.entries(ALL_WEEKS)) {
     if (wk.weekNumber > AUTHORED_MAX) continue;
     for (const l of wk.lessons) {
       for (const r of l.game) {
         checked++;
-        if (META.test(r.prompt))
+        if (isMeta(r.prompt, r.speakerRole))
           fail(
             "T6b",
             `${key} game prompt is a task description, not something a guest says: "${r.prompt}"`,
           );
         for (const o of r.options) {
-          if (META.test(o.text))
+          if (isMeta(o.text, r.speakerRole))
             fail(
               "T6b",
               `${key} game option is a task description, not a spoken reply: "${o.text}"`,

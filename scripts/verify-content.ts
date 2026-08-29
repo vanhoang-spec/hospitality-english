@@ -386,10 +386,19 @@ for (const phase of PHASES) {
 // professional sense — so it is reported rather than blocked.
 const HAND_AUTHORED = new Set(["FB-15", "HK-15", "FO-17", "SW-19"]);
 const spiralIntoLegacy: string[] = [];
+// Headwords minted twice inside weeks 23-40, inherited from the generated
+// Phase 3-4 spine. Ratcheted, not blocked: the count may fall, never rise.
+const latePhaseDuplicates: string[] = [];
+const DUP_BASELINE = new URL("./_late-dup-baseline.json", import.meta.url);
 
 for (const dep of DEPS) {
   const firstSeen = new Map<string, number>();
-  for (let w = 1; w <= 22; w++) {
+  // Spans the whole course, not weeks 1-22. It stopped at 22 while Phase 3
+  // and 4 were still generated; now that they are hand-authored, a headword
+  // minted twice there is exactly the collision this gate exists to catch —
+  // the review scheduler keys on the word, so the second card silently
+  // overwrites the first one's schedule.
+  for (let w = 1; w <= 40; w++) {
     for (const h of headwords(dep, w)) {
       const key = h.toLowerCase();
       const earlier = firstSeen.get(key);
@@ -397,8 +406,16 @@ for (const dep of DEPS) {
         firstSeen.set(key, w);
       } else if (earlier !== w) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
-        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
+        // Weeks 39-40 are the course's own revision weeks: the matrix asks
+        // them to reuse material, so a repeat there is reported, not blocked.
+        const revision = w >= 39 || earlier >= 39;
+        if (revision || HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
           spiralIntoLegacy.push(msg);
+        else if (w > 22 || earlier > 22)
+          // Phase 3-4 debt inherited from the generated spine. Ratcheted below
+          // rather than blocked, so new hand-authored weeks cannot add to it
+          // while the existing count is worked down.
+          latePhaseDuplicates.push(msg);
         else errors.push(msg);
       }
     }
@@ -486,6 +503,44 @@ for (const n of [...freqBuckets.keys()].sort((a, b) => a - b))
   console.log(`  ${String(n).padStart(2)}x — ${freqBuckets.get(n)} headwords`);
 if (neverRecycled)
   console.log(`  never recycled: ${neverRecycled} (e.g. ${neverRecycledSample.join(", ")})`);
+
+{
+  const file = Bun.file(DUP_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).lateDuplicates as number)
+    : latePhaseDuplicates.length;
+  const write = (n: number) =>
+    Bun.write(
+      DUP_BASELINE,
+      JSON.stringify(
+        {
+          lateDuplicates: n,
+          note: "Ratchet only — a headword may not be minted twice in weeks 23-40. This number may fall, never rise.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+  if (!known) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: baseline recorded at ${latePhaseDuplicates.length}.`,
+    );
+  } else if (latePhaseDuplicates.length > baseline) {
+    errors.push(
+      `${latePhaseDuplicates.length} headwords are minted twice in weeks 23-40, up from ${baseline}. ` +
+        `Newest: ${latePhaseDuplicates.slice(-3).join(" · ")}`,
+    );
+  } else if (latePhaseDuplicates.length < baseline) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: ${latePhaseDuplicates.length}, down from ${baseline} — baseline lowered.`,
+    );
+  } else {
+    console.log(`  Late-phase duplicate headwords: ${latePhaseDuplicates.length} (ratchet holds).`);
+  }
+}
 
 if (spiralIntoLegacy.length) {
   console.log(

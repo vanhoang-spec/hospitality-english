@@ -213,12 +213,6 @@ const HK_BANK: P4Bank = {
       icon: "🥃",
     },
     {
-      word: "Smoke smell",
-      phonetic: "/sməʊk smel/",
-      definition: "Mùi khói trong phòng",
-      icon: "🚬",
-    },
-    {
       word: "Chemical spill",
       phonetic: "/ˈkemɪkl spɪl/",
       definition: "Sự cố đổ hóa chất tẩy rửa",

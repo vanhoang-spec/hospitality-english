@@ -5,6 +5,7 @@ import { useAcademy } from "@/lib/academy-store";
 import {
   getWeekContent,
   resolveReviewVocab,
+  speakerAudioLabel,
   speakerLabel,
   type VocabItem,
 } from "@/lib/content/week-content";
@@ -55,6 +56,9 @@ type Question =
       options: string[];
       correctIdx: number;
       note: string;
+      /** "lời khách" / "lời đồng nghiệp" / "lời cấp trên" — a game round whose
+       *  prompt is a manager's must not be introduced as a guest's. */
+      audioWho: string;
     }
   | {
       kind: "reading";
@@ -176,6 +180,7 @@ function buildPaper(dep: string, week: string): Question[] {
       options: options.map((o) => o.text),
       correctIdx: options.findIndex((o) => o.correct),
       note: `${speakerLabel(round)}: "${round.prompt}"`,
+      audioWho: speakerAudioLabel(round),
     };
   });
 
@@ -209,6 +214,7 @@ type OralItem = {
   key: string;
   guestPrompt: string;
   who: string;
+  audioWho: string;
   target: string;
   tip: string;
   /** The week the sentence was authored for — graded at THAT week's
@@ -228,6 +234,7 @@ function buildOral(dep: string, week: string): OralItem[] {
         key: `s:${w}:${s.guestPrompt}`,
         guestPrompt: s.guestPrompt,
         who: speakerLabel(s),
+        audioWho: speakerAudioLabel(s),
         target: s.targetResponse,
         tip: s.helpTip,
         sourceWeek: c.weekNumber,
@@ -368,7 +375,7 @@ function OralStage({
             onClick={() => speakEN(item.guestPrompt, listeningRateForWeek(item.sourceWeek))}
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
           >
-            ▶ Nghe lời khách
+            ▶ Nghe {item.audioWho}
           </button>
           {!typedMode && (
             <button
@@ -815,7 +822,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         {q.kind === "listening" ? (
           <>
             <p className="font-display text-xl text-foreground">
-              Nghe lời khách và chọn câu trả lời chuẩn 5 sao:
+              Nghe {q.audioWho} và chọn câu trả lời chuẩn 5 sao:
             </p>
             <button
               onClick={() => {
