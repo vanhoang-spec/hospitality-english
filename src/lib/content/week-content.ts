@@ -16727,7 +16727,7 @@ export const HK_WEEK_34: WeekContent = {
           word: "Lead time",
           phonetic: "/ˈliːd taɪm/",
           definition: "Thời gian cần chuẩn bị trước",
-          context: "Flowers need a lead time of four hours.",
+          context: "Flowers need a lead time of a full day.",
           icon: "⏳",
         },
         {
@@ -16753,7 +16753,7 @@ export const HK_WEEK_34: WeekContent = {
         },
         {
           rude: "Flowers in one hour? Impossible, nobody told me.",
-          polite: "Flowers need four hours, sir. May I ask the desk what we can do for tonight?",
+          polite: "Flowers need a full day, sir. May I ask the desk what we can do for tonight?",
           rule: "Nêu LEAD TIME thật rồi mở một lối đi tiếp. Hứa cái không kịp làm còn tệ hơn nói không kịp ngay từ đầu.",
         },
       ],
@@ -16762,7 +16762,7 @@ export const HK_WEEK_34: WeekContent = {
           guestPrompt:
             "It's my wife's birthday tonight. Could the room look special when we come back?",
           targetResponse:
-            "Of course, sir. However — the desk sends the details down. Is she allergic to anything at all?",
+            "Of course, sir. May I ask two things — what time will you be out, and is she allergic to anything?",
           helpTip:
             "Hai câu hỏi trong một lượt: GIỜ khách ra ngoài và ĐIỀU KIÊNG KỴ. Không có hai thứ đó thì không dựng phòng được. 'Cannot' nhấn vào 'CAN', đọc rõ /t/ cuối.",
         },
@@ -16775,7 +16775,7 @@ export const HK_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "AN OCCASION SET-UP — WHAT THE FLOOR NEEDS FIRST\n1. Room number, and the occasion.\n2. GUESTS OUT — the hour the room will be empty, not the hour of the dinner. A set-up starts in an empty room.\n3. What the desk has promised the guest, word for word.\n4. Who at the desk promised it, by name — and WHO ALREADY KNOWS. If the slip does not say, you say nothing until the desk tells you.\n5. Allergies and anything with a scent. Ask before flowers or petals enter the room.\nLead times are real: petals and towel art take fifteen minutes; fruit and a card take an hour; flowers and a cake take four hours; balloons and any room decoration beyond petals need a full day, the same as the desk quotes.\nNever start while the guests are in the room, and never enter a room showing Do Not Disturb to set one up. Send that question back to the desk.\nReport back when the room is finished, so the desk can time the guests' return.\nThe lead times above are one hotel's. Ask your Executive Housekeeper for yours.",
+        text: "AN OCCASION SET-UP — WHAT THE FLOOR NEEDS FIRST\n1. Room number, and the occasion.\n2. GUESTS OUT — the hour the room will be empty, not the hour of the dinner. A set-up starts in an empty room.\n3. What the desk has promised the guest, word for word.\n4. Who at the desk promised it, by name — and WHO ALREADY KNOWS. If the slip does not say, you say nothing until the desk tells you.\n5. Allergies and anything with a scent. Ask before flowers or petals enter the room.\nLead times are real, and they are the desk's numbers too: petals and towel art take fifteen minutes; fruit and a card take an hour; a small cake takes four hours; flowers, balloons and any decoration beyond petals need a full day.\nNever start while the guests are in the room, and never enter a room showing Do Not Disturb to set one up. Send that question back to the desk.\nReport back when the room is finished, so the desk can time the guests' return.\nThe lead times above are one hotel's. Ask your Executive Housekeeper for yours.",
         questions: [
           {
             q: "Giờ ghi trên phiếu phải là giờ nào?",
@@ -16799,10 +16799,11 @@ export const HK_WEEK_34: WeekContent = {
       },
       game: [
         {
-          prompt: "Can you have the room ready with flowers by seven? We're going out now.",
+          prompt:
+            "Can you have the room ready with fruit and a card by seven? We're going out now.",
           options: [
             {
-              text: "The desk quotes a day for flowers, madam. May I ask them what is possible for tonight?",
+              text: "The desk quotes an hour for fruit and a card, madam. Shall I ask them to send it down?",
               correct: true,
             },
             {
@@ -16894,13 +16895,13 @@ export const HK_WEEK_34: WeekContent = {
         {
           guestPrompt: "Could you put balloons up for my daughter's birthday?",
           targetResponse:
-            "With pleasure, madam. May I check first — is anyone in the room allergic to latex?",
+            "Balloons need a day, madam. May I check too — is anyone in the room allergic to latex?",
           helpTip:
             "Nhận lời trước, hỏi an toàn sau, trong cùng một lượt. 'Allergic' /əˈlɜːdʒɪk/ — trọng âm giữa, không phải đầu.",
         },
       ],
       reading: {
-        text: "WHAT MAY GO INTO A ROOM — AND WHAT MAY NOT\nYES: rose petals, towel art, an LED candle, a card, fruit, chocolates, air-filled balloons.\nNO, in every room and for every occasion: real flames, incense, sparklers, and glitter that blocks a drain. A drawn bath only when the desk confirms the hour — warm, not to the rim, checked again in fifteen minutes.\nASK FIRST: allergies before petals or scent; latex before balloons. If the answer is 'I do not know', the answer is no latex, no flowers, no scent.\nOccasions are not only birthdays. A milestone birthday for an elder, a baby's first month, a family memorial: ask the desk which it is, because the flowers change with it. White chrysanthemums belong at a memorial and nowhere else.\nIncense is always a no, and the sentence is short: 'I am sorry, madam — no incense in the rooms. May I bring an LED candle instead?'\nPhotograph the decorated area only, never a guest's belongings, on the department device. If your house has none, write what you set on the slip.\nAsk your Executive Housekeeper before you promise anything that burns, floats or sticks.",
+        text: "WHAT MAY GO INTO A ROOM — AND WHAT MAY NOT\nYES: rose petals, towel art, an LED candle, a card, fruit, chocolates, air-filled balloons.\nNO, in every room and for every occasion: real flames, incense, sparklers, and glitter that blocks a drain.\nA DRAWN BATH is a yes, but only when the desk confirms the hour: warm not hot, not filled to the rim, and checked again within fifteen minutes.\nASK FIRST: allergies before petals or scent; latex before balloons. If the answer is 'I do not know', the answer is no latex, no flowers, no scent.\nOccasions are not only birthdays. A milestone birthday for an elder, a baby's first month, a family memorial: ask the desk which it is, because the flowers change with it. White chrysanthemums belong at a memorial and nowhere else.\nIncense is always a no, and the sentence is short: 'I am sorry, madam — no incense in the rooms. May I bring an LED candle instead?'\nPhotograph the decorated area only, never a guest's belongings, on the department device. If your house has none, write what you set on the slip.\nAsk your Executive Housekeeper before you promise anything that burns, floats or sticks.",
         questions: [
           {
             q: "Vật nào KHÔNG được đưa vào phòng, dù là dịp gì?",
@@ -16912,13 +16913,13 @@ export const HK_WEEK_34: WeekContent = {
             correct: 1,
           },
           {
-            q: "Vì sao phải chụp ảnh căn phòng sau khi dựng xong?",
+            q: "Được chụp cái gì, và bằng máy nào?",
             options: [
-              "Để gửi ảnh trước cho khách xem qua tin nhắn điện thoại",
-              "Để tính thời gian dựng phòng phục vụ việc chấm công ca",
-              "Để bảo vệ phần việc đã làm và làm mẫu cho người sau",
+              "Toàn bộ căn phòng, bằng điện thoại cá nhân của nhân viên dọn",
+              "Chỉ khu vừa trang trí, bằng máy của bộ phận, không chụp đồ khách",
+              "Cả phòng lẫn đồ khách, để làm bằng chứng nếu sau này mất đồ",
             ],
-            correct: 2,
+            correct: 1,
           },
         ],
       },
@@ -16932,7 +16933,7 @@ export const HK_WEEK_34: WeekContent = {
               correct: false,
             },
             {
-              text: "Petals along the bath and our LED candles, madam — real flames we are not allowed to use.",
+              text: "Petals along the bath and our LED candles, madam — we are not allowed to use real flames.",
               correct: true,
             },
             {
@@ -17023,7 +17024,7 @@ export const HK_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "A SET-UP THE GUESTS MUST NOT SEE\nWork in an order that can stop. Do the parts a guest may walk in on first — a tidy room, fresh water, folded towels — and the parts that give it away last. Then an early return costs ten minutes, not the evening.\nThe trolley waits on standby outside, not inside. A set-up room is never left unattended with the door open: gifts go missing, and the attendant is the one asked about it.\nA guest's own ring or envelope never travels on a trolley. Your supervisor signs for it, and two people place it.\nAgree the cue with the desk, never with the guest who ordered it. Never text a guest.\nIf they walk in: name an ordinary task, ask for a few more minutes, keep it low-key. Never say birthday, anniversary or surprise.\nSteering away is allowed; a false denial is not. 'I could not say, madam' survives being checked; a denial does not.\nIf a guest asks you to leave, you leave at once and tell the desk. What you did still goes on the room report.\nWho agrees the cue, and whether you may wait outside a room, differs by house. Ask your Floor Supervisor.",
+        text: "A SET-UP THE GUESTS MUST NOT SEE\nWork in an order that can stop. Do the parts a guest may walk in on first — a tidy room, fresh water, folded towels — and the parts that give it away last. Then an early return costs ten minutes, not the evening.\nThe trolley waits on standby outside, not inside. A set-up room is never left unattended with the door open: gifts go missing, and the attendant is the one asked about it.\nA guest's own ring or envelope never travels on a trolley. Your supervisor signs for it, and two people place it.\nAgree the cue with the desk, never with the guest who ordered it. Never text a guest.\nIf they walk in: name an ordinary task, ask for a few more minutes, keep it low-key. Never say birthday, anniversary or surprise.\nSteering away is allowed; a false denial is not. 'I could not say, madam' survives being checked; a denial does not.\n'I could not say' is for a question about the occasion. A question about the room itself gets a plain, true answer.\nIf a guest asks you to leave, you leave at once and tell the desk. What you did still goes on the room report.\nWho agrees the cue, and whether you may wait outside a room, differs by house. Ask your Floor Supervisor.",
         questions: [
           {
             q: "Nên dựng phòng theo thứ tự nào?",
@@ -17163,7 +17164,7 @@ export const HK_WEEK_34: WeekContent = {
             options: [
               "Vết cháy trên khăn trải giường do khách gây ra trong đêm",
               "Vết bẩn không tẩy được dù đã giặt là chuyên nghiệp kỹ càng",
-              "Cánh hoa và kim tuyến từ chính phần dựng phòng của khách sạn",
+              "Cánh hoa và tim giấy từ chính phần dựng phòng của khách sạn",
             ],
             correct: 2,
           },
@@ -17178,7 +17179,7 @@ export const HK_WEEK_34: WeekContent = {
               correct: false,
             },
             {
-              text: "I am glad you told me, madam — I will treat it now, and my supervisor decides the rest.",
+              text: "I am glad you told me, madam — I will photograph it and treat it now. My supervisor decides the rest.",
               correct: true,
             },
             {
@@ -17256,7 +17257,7 @@ export const HK_WEEK_35: WeekContent = {
           word: "Skip a day",
           phonetic: "/ˌskɪp ə ˈdeɪ/",
           definition: "Bỏ qua một ngày không dọn",
-          context: "Some guests skip a day and keep the room to themselves.",
+          context: "Some guests skip a day — but never two without a check.",
           icon: "📆",
         },
       ],
@@ -17279,18 +17280,18 @@ export const HK_WEEK_35: WeekContent = {
           targetResponse:
             "Six is after my shift, sir. However — what if I fit you in at four instead?",
           helpTip:
-            "Nói giới hạn bằng SỰ THẬT VỀ CA TRỰC, không bằng 'không được'. Rồi đưa đúng hai lựa chọn — ba là quá nhiều để chọn.",
+            "Nói giới hạn bằng SỰ THẬT VỀ CA TRỰC, không bằng 'không được'. Rồi mở một phương án bằng 'However — what if…'.",
         },
         {
           guestPrompt: "Just don't clean at all this week. We'll manage on our own.",
           targetResponse:
-            "Of course, madam. However — what if I left towels at your door each morning?",
+            "Of course for today, madam. However — what if I left towels at your door, and told my supervisor?",
           helpTip:
-            "Nhận lời ngay, giữ một mức dịch vụ tối thiểu, và báo giám sát. 'Towels' /ˈtaʊəlz/ — giữ trọn cụm /lz/ cuối.",
+            "Nhận lời cho HÔM NAY, không cho cả tuần — sau hai ngày không ai vào phòng là việc của giám sát. 'Towels' /ˈtaʊəlz/ — giữ trọn cụm /lz/ cuối.",
         },
       ],
       reading: {
-        text: "WHAT MOVES AND WHAT DOES NOT — HOUSEKEEPING\nWHAT MOVES: the hour, the order of the floor, which attendant comes, whether you skip a day, whether towels are left at the door.\nWHAT NEVER MOVES: the standard of the clean, the safety checks, and what goes on the record. A shorter visit is a smaller job done fully, not a lighter one.\nThe safety checks, every visit: the kettle and its socket, the balcony door, any smell of burning, the smoke detector, the safe closed. Those five happen even in ten minutes.\nA room may skip a day. It may not skip two: after forty-eight hours with no entry, your supervisor arranges a check with the Duty Manager.\nEvery no travels with a what-if: 'Five is outside our hours. However — what if I came at four?' Then write the window down.\nA guest who takes a later slot gets the full service, in exchange for the later hour.\nWrite the agreed window on the guest's profile the same day. A schedule that lives in one head disappears on that attendant's day off.\nShift hours differ by hotel. Ask your Floor Supervisor what your house can promise.",
+        text: "WHAT MOVES AND WHAT DOES NOT — HOUSEKEEPING\nWHAT MOVES: the hour, the order of the floor, which attendant comes, whether you skip a day, whether towels are left at the door.\nWHAT NEVER MOVES: the standard of the clean, the safety checks, and what goes on the record. A shorter visit is a smaller job done fully, not a lighter one.\nThe safety checks, every visit: the kettle and its socket, the balcony door, any smell of burning, the smoke detector, the safe closed. Those five happen even in ten minutes.\nA room may skip a day. It may not skip two: after forty-eight hours with no entry, your supervisor arranges a check. And a room with Do Not Disturb up and no sound inside goes up after twenty-four hours, not forty-eight — the Duty Manager and Security open that one together, never you.\nEvery no travels with a what-if: 'Five is outside our hours. However — what if I came at four?' Then write the window down.\nA guest who takes a later slot gets the full service, in exchange for the later hour.\nWrite the agreed window on the guest's profile the same day. A schedule that lives in one head disappears on that attendant's day off.\nShift hours differ by hotel. Ask your Floor Supervisor what your house can promise.",
         questions: [
           {
             q: "Thứ gì KHÔNG bao giờ được đem ra đổi?",
@@ -17388,7 +17389,7 @@ export const HK_WEEK_35: WeekContent = {
         {
           rude: "One robe per person. That is the rule, madam.",
           polite:
-            "What I have I will bring now, madam. However — the rest I will put forward today.",
+            "I will bring what I have now, madam. However — for the rest, I will ask my supervisor today.",
           rule: "Tách rõ CÁI TỰ LÀM ĐƯỢC và CÁI PHẢI TRÌNH LÊN, trong cùng một câu ngắn — nhưng đừng nói ra con số hạn mức, vì khách sẽ xin đúng bằng con số đó. Dùng 'For X, I will ask…' cho vế thứ hai; đừng đảo tân ngữ lên đầu câu.",
         },
         {
@@ -17402,7 +17403,7 @@ export const HK_WEEK_35: WeekContent = {
         {
           guestPrompt: "We'd like the bed made twice a day, and fresh towels each time.",
           targetResponse:
-            "Towels twice a day, easily, madam. What if I put the second bed service to my supervisor?",
+            "Towels twice a day, easily, madam. What if I put the second bed service forward today?",
           helpTip:
             "Cho ngay cái rẻ, trình lên cái đắt. 'Easily' /ˈiːzɪli/ — ba âm tiết, khiến khách thấy mình không phiền phức.",
         },
@@ -17411,7 +17412,7 @@ export const HK_WEEK_35: WeekContent = {
           targetResponse:
             "A double tray from today, sir — in exchange, tell me if it is ever short.",
           helpTip:
-            "'Double the tray' và 'nobody halves it again' — hai hình ảnh cụ thể, dễ nhớ, và hứa đúng việc buồng phòng làm được.",
+            "'In exchange' biến một ưu ái thành một thoả thuận hai chiều — khách thấy mình có phần việc của mình. 'Exchange' /ɪksˈtʃeɪndʒ/ — cụm /kstʃ/ đọc liền.",
         },
       ],
       reading: {
@@ -17447,7 +17448,7 @@ export const HK_WEEK_35: WeekContent = {
               correct: false,
             },
             {
-              text: "Soap and shampoo daily, madam. However — the full set I must put to my supervisor.",
+              text: "Soap and shampoo daily, madam. However — for the full set, I must ask my supervisor.",
               correct: true,
             },
             {
@@ -17464,7 +17465,7 @@ export const HK_WEEK_35: WeekContent = {
               correct: false,
             },
             {
-              text: "Two now, madam. However — what if I put the third to my supervisor before this afternoon is out?",
+              text: "Two now, madam. However — what if I put the third forward this afternoon, and ring you?",
               correct: true,
             },
             {
@@ -17515,7 +17516,7 @@ export const HK_WEEK_35: WeekContent = {
           rude: "I cannot touch the bill. Not my job at all.",
           polite:
             "That approval is the Duty Manager's, madam — the charge is hers to waive. I will come back before six.",
-          rule: "Sở hữu cách chỉ đúng CHỦ của quyết định, rồi bạn thành người đưa tin có thời hạn. Miễn phí trên hoá đơn KHÔNG thuộc giám sát tầng — đó là Duty Manager, đúng như bảng bồi thường giặt là đã dạy.",
+          rule: "Sở hữu cách chỉ đúng CHỦ của quyết định, rồi bạn thành người đưa tin có thời hạn. Miễn phí trên hoá đơn KHÔNG thuộc giám sát tầng — đó là Duty Manager. Giám sát có hạn mức riêng ở bảng bồi thường tuần 33; nhân viên buồng phòng thì không có hạn mức nào.",
         },
         {
           rude: "Fine, fine — no charge, just please calm down.",
@@ -17577,7 +17578,7 @@ export const HK_WEEK_35: WeekContent = {
               correct: true,
             },
             {
-              text: "I am afraid the Front Desk handles all of the billing, madam — please speak to them.",
+              text: "Billing is all downstairs, madam — you will have to take it up with them yourself.",
               correct: false,
             },
           ],
@@ -17666,7 +17667,7 @@ export const HK_WEEK_35: WeekContent = {
         },
       ],
       reading: {
-        text: "A MINIBAR THE GUEST DISPUTES — WHY YOUR RECORD MATTERS\nHousekeeping does not bill, does not remove a charge, and does not argue about one. Housekeeping records — and a good record settles more disputes than any conversation.\nDo the minibar check at the same hour every day, and write the hour down: 'two waters, one beer, 10:20.' A restock list without a time proves very little a month later.\nKeep the wording neutral. 'Two bottles used' is a record. 'Guest clearly had a party' is an opinion that will be read aloud in a complaint review, and it will not help.\nIf a guest challenges a charge, say it is not your call, and offer to have the desk ring the room. Never say the guest is wrong, and never say the hotel is wrong — you do not know which.\nA charge that cannot be backed up should be dropped — the manager's decision, made easy by a clean record.\nWho checks the minibar differs by hotel. Ask which it is in your house.",
+        text: "A MINIBAR THE GUEST DISPUTES — WHY YOUR RECORD MATTERS\nHousekeeping does not bill, does not remove a charge, and does not argue about one. Housekeeping records — and a good record settles more disputes than any conversation.\nTwo different things: a charge recorded in error is the desk's to correct; a correct charge a guest wants removed is the Duty Manager's to waive.\nDo the minibar check at the same hour every day, and write the hour down: 'two waters, one beer, 10:20.' A restock list without a time proves very little a month later.\nKeep the wording neutral. 'Two bottles used' is a record. 'Guest clearly had a party' is an opinion that will be read aloud in a complaint review, and it will not help.\nIf a guest challenges a charge, say it is not your call, and offer to have the desk ring the room. Never say the guest is wrong, and never say the hotel is wrong — you do not know which.\nA charge that cannot be backed up should be dropped — the manager's decision, made easy by a clean record.\nWho checks the minibar differs by hotel. Ask which it is in your house.",
         questions: [
           {
             q: "Vai trò của buồng phòng khi khách phản đối một khoản minibar là gì?",

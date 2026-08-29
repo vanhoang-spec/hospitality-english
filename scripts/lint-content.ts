@@ -1025,6 +1025,95 @@ async function lintDeadArcadeField() {
   );
 }
 
+/** LAYER G — a helpTip may only quote English that its own target says.
+ *
+ *  A helpTip sits beside one `targetResponse` and coaches the learner through
+ *  saying exactly that sentence. When the sentence is rewritten and the tip is
+ *  not, the tip starts coaching a line that no longer exists: stress marks for
+ *  a word that was cut, "count the two questions" beside a target that asks
+ *  one. A blind auditor found four of these in a single pair of weeks, and
+ *  the learners who lean on tips hardest are the ones with the least English
+ *  to notice.
+ *
+ *  So: every single-quoted run of English inside a helpTip must appear in that
+ *  item's own targetResponse. Vietnamese quotes are ignored (they are glosses,
+ *  not things to say), and so are quotes that are plainly a counter-example —
+ *  a tip is allowed to name the phrase it is warning against, as long as it
+ *  marks it. */
+const VN_MARK = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
+/** A tip may quote a phrase in order to forbid it — but only when the warning
+ *  sits immediately in front of the quote. Scanning a wide window instead
+ *  swallows real defects, because "không" appears in almost every Vietnamese
+ *  tip: a planted bad quote slipped through until this was tightened. */
+const COUNTER_EXAMPLE =
+  /(đừng|không phải|không nói|tránh|thay vì|thay cho|nghe như|sai thành|chứ không)[^']{0,24}$/i;
+
+const HELPTIP_BASELINE = new URL("./_helptip-baseline.json", import.meta.url);
+
+async function lintHelpTipQuotes() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      for (const item of lesson.speaking) {
+        const target = item.targetResponse.toLowerCase();
+        for (const raw of item.helpTip.match(/'([^']{2,60})'/g) ?? []) {
+          const q = raw.slice(1, -1);
+          if (VN_MARK.test(q)) continue; // Vietnamese gloss, not a line to say
+          if (!/[a-z]/i.test(q)) continue; // punctuation or a bare IPA fragment
+          if (q !== q.trim()) continue; // " and " — a slice of prose, not a quote
+          if (/-/.test(q) && !target.includes(q.toLowerCase())) continue; // "che-kyer": a respelling
+          if (target.includes(q.toLowerCase())) continue;
+          const at = item.helpTip.indexOf(raw);
+          const before = item.helpTip.slice(Math.max(0, at - 40), at);
+          if (COUNTER_EXAMPLE.test(before)) continue; // the tip is naming what NOT to say
+          offenders.push(`${key}/${lesson.lessonId}: "${q}"`);
+        }
+      }
+    }
+  }
+
+  const file = Bun.file(HELPTIP_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).orphanQuotes as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      HELPTIP_BASELINE,
+      JSON.stringify(
+        {
+          orphanQuotes: n,
+          note: "Ratchet only — a helpTip may not quote English its own target never says.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  helpTip quotes with no home in their target: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[G helptip-quote] ${offenders.length} helpTips quote English their own targetResponse never says, up from ${baseline}. ` +
+        `Newest offenders: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  helpTip orphan quotes: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  helpTip orphan quotes: ${offenders.length} (ratchet holds).`);
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1384,6 +1473,7 @@ lintBanks("P4", P4_BANKS as unknown as BankSet);
 lintSemantics("P4", P4_BANKS as unknown as BankSet);
 lintDeadBankEntries(P4_BANKS as unknown as BankSet);
 await lintDeadArcadeField();
+await lintHelpTipQuotes();
 reportStaleDebt();
 
 let sentenceCount = 0;
