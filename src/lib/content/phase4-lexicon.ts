@@ -207,7 +207,7 @@ const HK_BANK: P4Bank = {
       icon: "🚿",
     },
     {
-      word: "Broken glass hazard",
+      word: "Broken glass",
       phonetic: "/ˈbrəʊkən ɡlɑːs ˈhæzəd/",
       definition: "Mối nguy do mảnh kính vỡ",
       icon: "🥃",
