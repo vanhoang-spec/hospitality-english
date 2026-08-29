@@ -15711,7 +15711,7 @@ export const HK_WEEK_31: WeekContent = {
           rude: "Is hotel cloth. Very nice. You like?",
           polite:
             "The bed runner is hand-woven, madam — it comes from a weaving village near Hoi An.",
-          rule: "Khung kể chuyện của tuần: MỘT sự thật về vật + MỘT xuất xứ, nối bằng dấu gạch ngang. Hai vế là đủ; người phục vụ phòng không cần bài thuyết minh dài.",
+          rule: "Khung kể chuyện của tuần: MỘT sự thật về vật + MỘT xuất xứ, ngắt một nhịp ngắn giữa hai vế. Hai vế là đủ; người phục vụ phòng không cần bài thuyết minh dài.",
         },
         {
           rude: "I don't know. I only clean the room.",
@@ -15730,7 +15730,7 @@ export const HK_WEEK_31: WeekContent = {
         {
           guestPrompt: "Everything in this room smells wonderful. What is it?",
           targetResponse:
-            "That is our own scent, sir — pandan and green tea, in every corridor of the hotel.",
+            "That is our signature scent, sir — pandan and green tea, in every corridor of the hotel.",
           helpTip:
             "'Scent' đọc /sent/, chữ 'c' câm hoàn toàn, cụm /nt/ cuối nghe rõ. Và thay tên mùi hương bằng mùi của khách sạn bạn — mỗi nhà một khác.",
         },
@@ -15780,11 +15780,11 @@ export const HK_WEEK_31: WeekContent = {
           prompt: "Who actually makes these bed runners? They look handmade.",
           options: [
             {
-              text: "From a weaving village near Hoi An, madam — every runner in the hotel is hand-woven.",
+              text: "A lady called Mrs. Hoa weaves every single one of them herself, madam, in her own home.",
               correct: false,
             },
             {
-              text: "I could not say for certain, madam — may I find out and leave a note for you?",
+              text: "They come from a weaving village near Hoi An, madam — the weaver's name I could find out.",
               correct: true,
             },
             {
@@ -15819,7 +15819,7 @@ export const HK_WEEK_31: WeekContent = {
           word: "Towel rail",
           phonetic: "/ˈtaʊəl ˌreɪl/",
           definition: "Thanh treo khăn trong phòng tắm",
-          context: "A towel left on the towel rail stays with the guest.",
+          context: "A clean towel left on the towel rail stays with the guest.",
           icon: "🪝",
         },
         {
@@ -15856,7 +15856,7 @@ export const HK_WEEK_31: WeekContent = {
         {
           guestPrompt: "We're here for ten nights. I'd like fresh sheets every single day, please.",
           targetResponse:
-            "Of course, madam — I am delighted you asked. Fresh sheets every morning from tomorrow.",
+            "Of course, madam — I am delighted you asked. Fresh sheets today, and every morning after.",
           helpTip:
             "Nói 'of course' TRƯỚC, không kèm bài giảng môi trường. Rồi thêm giá trị: ghi lại để khách khỏi phải nhắc.",
         },
@@ -16062,7 +16062,7 @@ export const HK_WEEK_31: WeekContent = {
           word: "Fold back",
           phonetic: "/ˌfəʊld ˈbæk/",
           definition: "Gấp mở góc chăn cho khách lên giường",
-          context: "We fold back the corner of the bed at seven.",
+          context: "We fold back the corner of the bed between six and eight.",
           icon: "🛌",
         },
         {
@@ -16100,7 +16100,7 @@ export const HK_WEEK_31: WeekContent = {
           targetResponse:
             "I am sorry, sir — that was turndown. We cleared the cups and changed the water. Nothing of yours was moved.",
           helpTip:
-            "Khách hỏi câu này vì đang LO, không vì tò mò. Kể ba việc cụ thể, rồi câu quan trọng nhất: 'Nothing of yours was moved.' 'Ritual' /ˈrɪtʃuəl/ — âm /tʃ/ như trong 'church'.",
+            "Khách hỏi câu này vì đang LO, không vì tò mò. Kể ba việc cụ thể, rồi câu quan trọng nhất: 'Nothing of yours was moved.' 'Turndown' /ˈtɜːndaʊn/ — trọng âm ở âm tiết đầu.",
         },
         {
           guestPrompt: "We'd rather nobody came in after six. Is that possible?",
@@ -16111,7 +16111,7 @@ export const HK_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "THE EVENING SERVICE — WHAT WE DO, AND WHAT WE ASK\nKnock and announce in the evening as you do in the morning — two knocks, wait, then a second round: 'Good evening — housekeeping, turndown service.'\nBetween six and eight, an attendant folds back one corner of the bed and closes the curtains. The bedside light goes on, the slippers go by the bed, the bath mat is laid, the water is refreshed and the day's cups are cleared.\nWhat we never do in the evening: move a guest's belongings to clean under them, or open a suitcase. We never tidy papers into a pile, and we touch nothing on the bedside table except the water.\nIf the room shows Do Not Disturb, the service does not happen. DURING THE DAY we may leave a voicemail and slip a note under the door. After six in the evening we never do: the paper and the corridor light wake a sleeping guest. The evening refusal goes on the turndown list instead.\nThe ritual is older than this hotel. Houses turned the bed down so a guest could find it open in the dark, before there was a light by the bed at all. We keep it because guests still remember it.\nA guest may decline the ritual for one night or the whole stay. Mark it once, and make sure the next shift reads it.\nYour own hotel's turndown hours may differ — ask your Floor Supervisor in your first week.",
+        text: "THE EVENING SERVICE — WHAT WE DO, AND WHAT WE ASK\nKnock and announce in the evening as you do in the morning — two knocks, wait, then a second round: 'Good evening — housekeeping, turndown service.'\nBetween six and eight, an attendant folds back one corner of the bed and closes the curtains. The bedside light goes on, the slippers go by the bed, the bath mat is laid, the water is refreshed and the day's cups are cleared.\nWhat we never do in the evening: move a guest's belongings to clean under them, or open a suitcase. We never tidy papers into a pile, and we touch nothing on the bedside table except the water.\nIf the room shows Do Not Disturb, the service does not happen. DURING THE DAY we may leave a voicemail and slip a note under the door. After six in the evening we slip nothing under the door: the paper and the corridor light wake a sleeping guest. A phone call before nine is still fine. The evening refusal goes on the turndown list instead.\nThe ritual is older than this hotel. Houses turned the bed down so a guest could find it open in the dark, before there was a light by the bed at all. We keep it because guests still remember it.\nA guest may decline the ritual for one night or the whole stay. Mark it once, and make sure the next shift reads it.\nYour own hotel's turndown hours may differ — ask your Floor Supervisor in your first week.",
         questions: [
           {
             q: "Buổi tối, nhân viên KHÔNG được làm gì?",
@@ -16142,7 +16142,7 @@ export const HK_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "The bed folded back, the curtains closed, the light on and fresh water, madam. Five minutes.",
+              text: "We fold back the bed, close the curtains, put the light on and change the water, madam. Five minutes.",
               correct: true,
             },
             {
@@ -16213,14 +16213,15 @@ export const HK_WEEK_32: WeekContent = {
           word: "Set aside",
           phonetic: "/ˌset əˈsaɪd/",
           definition: "Để riêng ra một bên",
-          context: "I set aside the blanket the guest pulled out.",
+          context: "I set aside the unused pillow for the wardrobe.",
           icon: "📥",
         },
         {
           word: "Leave it as found",
           phonetic: "/ˌliːv ɪt əz ˈfaʊnd/",
           definition: "Để nguyên hiện trạng như lúc bạn thấy",
-          context: "When in doubt, leave it as found and tell your supervisor.",
+          context:
+            "When in doubt, leave it as found — those four words save more jobs than any excuse.",
           icon: "🤫",
         },
       ],
@@ -16234,7 +16235,7 @@ export const HK_WEEK_32: WeekContent = {
         {
           rude: "The room is always too cold. Why you set like that?",
           polite:
-            "Shall I set the room to twenty-six each morning, sir? That is how I have been finding it.",
+            "Shall I set the room to twenty-six each morning, sir? That is how I find it each day.",
           rule: "Nêu điều nhìn thấy TRONG PHÒNG rồi đề nghị làm sẵn cho lần sau. Buồng phòng phục vụ tốt nhất khi khách không phải yêu cầu lần thứ hai.",
         },
       ],
@@ -16242,20 +16243,20 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt: "The extra blanket in the wardrobe — we've been using it every night.",
           targetResponse:
-            "Based on what you said, madam, it stays on the bed from tonight — and a second one too.",
+            "Based on what you said, madam, it stays on the bed tonight — the second one is untouched.",
           helpTip:
             "Một luật duy nhất cho cả tuần: nêu điều CĂN PHÒNG cho thấy, không bao giờ nêu điều bạn suy ra về CON NGƯỜI. Âm /st/ trong 'based' nối thẳng sang 'on', đọc liền /beɪst‿ɒn/ — đừng tách hai từ.",
         },
         {
           guestPrompt: "The room is freezing every time we come back from the beach.",
           targetResponse:
-            "I am sorry, madam. Shall I set the thermostat warmer each morning, so the room is ready for you?",
+            "I am sorry, madam. Shall I set the room warmer each morning, so it is ready when you come back?",
           helpTip:
-            "'Thermostat' bắt đầu bằng /θ/ — lưỡi chạm nhẹ răng trên, không thành /t/ hay /s/. Đọc chậm cả từ: THƠ-mơ-stat.",
+            "'Thermostat' bắt đầu bằng /θ/ — đầu lưỡi chạm nhẹ mặt sau răng cửa trên rồi thổi hơi ra, không thành /t/ cũng không thành /s/. Đừng phiên sang tiếng Việt: mọi cách phiên đều làm hỏng đúng âm này.",
         },
       ],
       reading: {
-        text: "READING A ROOM — THE QUIET HALF OF THE JOB\nEvery morning a room tells its story. Which pillow was slept on. Which towel was never opened. How the thermostat was left.\nKnow which half is silent. Putting something back where it belongs is done in silence: the unused pillow returns to the wardrobe. Changing how the room is set for the rest of the stay is asked first. The blanket pulled out at midnight stays on the bed. The thermostat returns to the setting the guest chose — unless your hotel's energy rule says otherwise while the room is empty. Ask your Executive Housekeeper which applies.\nDo not act on anything that is a person rather than a preference. A guest who sleeps badly, a couple in separate beds, a bin that tells a story — none of that is yours.\nWrite the preference on the guest's profile so the next attendant does not start from zero. One line is enough.\nAnd know the difference between a preference and a report. A preference is served in silence. Smoking in a non-smoking room, a candle or incense, cooking, or somebody staying who is not on the booking — those are reported to your supervisor the same hour, every time. Silence is a service; it is never a safety decision.\nAnd say what you will DO, never what the room told you about the person. 'Shall I keep the window open?' is service. 'I saw you slept on one side' is not.",
+        text: "READING A ROOM — THE QUIET HALF OF THE JOB\nEvery morning a room tells its story. Which pillow was slept on. Which towel was never opened. How the thermostat was left.\nKnow which half is silent. Putting something back where it belongs is done in silence: the unused pillow is set aside, back into the wardrobe. Changing how the room is set for the rest of the stay is asked first. The blanket pulled out at midnight stays on the bed. The thermostat returns to the setting the guest chose — unless your hotel's energy rule says otherwise while the room is empty. Ask your Executive Housekeeper which applies.\nDo not act on anything that is a person rather than a preference. A guest who sleeps badly, a couple in separate beds, a bin that tells a story — none of that is yours.\nWrite the preference on the guest's profile so the next attendant does not start from zero. One line is enough.\nAnd know the difference between a preference and a report. A preference is served in silence. Smoking in a non-smoking room, a candle or incense, cooking, or somebody staying who is not on the booking — those are reported to your supervisor the same hour, every time. Silence is a service; it is never a safety decision.\nAnd say what you will DO, never what the room told you about the person. 'Shall I keep the window open?' is service. 'I saw you slept on one side' is not.",
         questions: [
           {
             q: "Điều gì nên tự làm mà không cần khách yêu cầu?",
@@ -16303,7 +16304,7 @@ export const HK_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "Based on that, madam, the firm one stays and the soft one goes in the wardrobe.",
+              text: "Based on that, madam — the firm one stays, and I will set the soft one aside.",
               correct: true,
             },
             {
@@ -16353,7 +16354,7 @@ export const HK_WEEK_32: WeekContent = {
         {
           rude: "I moved your papers to clean. They are in the drawer now.",
           polite: "I cleaned around your papers, sir — nothing on the desk has been moved.",
-          rule: "Câu này bảo vệ chính bạn. Bị động 'has been moved' + phủ định là lời cam kết ngắn nhất mà buồng phòng có thể đưa ra về đồ đạc của khách.",
+          rule: "Câu này bảo vệ bạn CHỈ KHI nó đúng. Nếu bạn có di chuyển bất cứ thứ gì, hãy nói đúng thứ bạn đã di chuyển và chỉ vào báo cáo phòng — một câu phủ nhận sai bị camera hoặc chính sổ ghi của bạn lật lại sẽ đắt hơn nhiều.",
         },
         {
           rude: "You take many medicines, madam. Are you sick?",
@@ -16367,18 +16368,18 @@ export const HK_WEEK_32: WeekContent = {
           targetResponse:
             "You are very kind, madam. Thank you very much — I will let my supervisor know, as the hotel asks us to.",
           helpTip:
-            "Nhận lời cảm ơn cho ấm, rồi THÔNG BÁO — không bao giờ xin phép khách để khai báo một khoản tiền, vì khách có thể nói 'không'. 'Supervisor' /ˈsuːpəvaɪzə/ — trọng âm đầu, bốn âm tiết. Phong bì dán kín hoặc khoản lớn thì hỏi giám sát TRƯỚC khi nhận.",
+            "Nhận lời cảm ơn cho ấm, rồi THÔNG BÁO — không bao giờ xin phép khách để khai báo một khoản tiền, vì khách có thể nói 'không'. 'Supervisor' /ˈsuːpəvaɪzə/ — trọng âm đầu, bốn âm tiết. Đây là mẫu cho nhà theo quy định NHẬN-VÀ-KHAI-BÁO. Nhà từ chối tip thì mẫu là: 'You are very kind, madam — the hotel asks us not to accept it, but I will tell my supervisor how kind you have been.' Phong bì dán kín hoặc khoản lớn thì hỏi giám sát TRƯỚC khi nhận.",
         },
         {
           guestPrompt: "You were the only person in my room today. My money is gone.",
           targetResponse:
-            "I understand, madam. None of your belongings have been moved. May I call my supervisor now?",
+            "I understand, madam. Everything I moved today is on my room report. May I call my supervisor now?",
           helpTip:
             "Ba bước, không hơn: hiểu lời khách, nói sự thật ngắn, gọi giám sát. 'Belongings' /bɪˈlɒŋɪŋz/ có cụm /ŋz/ cuối — đừng nuốt mất âm /z/. Không bao giờ tự mở túi hay xe đẩy khi chưa có người chứng kiến.",
         },
       ],
       reading: {
-        text: "PRIVACY IN A ROOM YOU MUST ENTER\nYou will see everything: medicines, documents, money, letters. None of it is conversation, with a guest or with a colleague. Discretion is half of this job.\nClean around a guest's belongings. Never lift a bag to vacuum under it. Never gather papers into a pile, and never move medication to wipe a table.\nA prayer mat, a religious book, a small shrine: clean around it, never lift it, and never put a book on the floor.\nNever reach into a bin — tip it out. Anything sharp is reported, not handled.\nMoney and valuables stay exactly where they are. You never tidy them into a drawer 'for safety' — a helpful hand looks identical to a dishonest one on a camera. Something clearly fallen may be moved out of a doorway, in plain sight. Write it on the room report either way.\nTips are the one place where houses differ, so learn yours before your first floor. Money left WITH A NOTE is a tip everywhere. Money with no note is not your decision: leave it, and tell your Floor Supervisor.\nMoney put into your hand is a third case, and it is your house's rule, not yours. Some houses ask you to accept it and declare it. Some ask you to put it in the team box. Some ask you to decline politely. A sealed envelope, or any large sum, goes to your supervisor before you accept it.\nThe moment a guest suggests something is missing, you stop being alone in that conversation. Answer honestly, then call your supervisor to the room.\nA silent room refused for twenty-four hours goes to your supervisor: the Duty Manager and Security open it together, never you and never alone.",
+        text: "PRIVACY IN A ROOM YOU MUST ENTER\nYou will see everything: medicines, documents, money, letters. None of it is conversation, with a guest or with a colleague. Discretion is half of this job.\nClean around a guest's belongings. Never lift a bag to vacuum under it. Never gather papers into a pile, and never move medication to wipe a table.\nA prayer mat, a religious book, a small shrine: clean around it, never lift it, and never put a book on the floor.\nAn open flame is the one exception: report it as a fire matter the same hour, without touching anything and without saying a word to the guest. The Duty Manager speaks to the guest, not you.\nNever reach into a bin — tip it out. Anything sharp is reported, not handled.\nMoney and valuables stay exactly where they are — leave it as found. You never tidy them into a drawer 'for safety' — a helpful hand looks identical to a dishonest one on a camera. Something clearly fallen may be moved out of a doorway, in plain sight. Write it on the room report either way. A valuable is the exception: leave it, and call your supervisor before you touch it.\nTips are the one place where houses differ, so learn yours before your first floor. Money left WITH A NOTE is a tip everywhere. Money with no note is not your decision: leave it, and tell your Floor Supervisor.\nMoney put into your hand is a third case, and it is your house's rule, not yours. Some houses ask you to accept it and declare it. Some ask you to put it in the team box. Some ask you to decline politely. A sealed envelope, or any large sum, goes to your supervisor before you accept it.\nThe moment a guest suggests something is missing, you stop being alone in that conversation. Answer honestly, then call your supervisor to the room.\nA room that has kept Do Not Disturb up for twenty-four hours, with no sound inside, goes to your supervisor: the Duty Manager and Security open it together, never you and never alone.",
         questions: [
           {
             q: "Nhìn thấy tiền mặt trên bàn làm việc thì làm gì?",
@@ -16414,7 +16415,7 @@ export const HK_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "I did, sir — it had fallen by the door, and I wrote it on my room report. May I call my supervisor?",
+              text: "I did, sir — it had fallen by the door, so I put it on the shelf beside it and wrote it down.",
               correct: true,
             },
           ],
@@ -16424,7 +16425,7 @@ export const HK_WEEK_32: WeekContent = {
             "I left fifty thousand dong on the pillow this morning. Did you see it when you cleaned?",
           options: [
             {
-              text: "I saw it, madam, and I left it exactly where it was. My supervisor knows, so nothing is lost.",
+              text: "I saw it, madam, and left it where it was. The room safe is there if you would rather lock it away.",
               correct: true,
             },
             {
@@ -16479,12 +16480,12 @@ export const HK_WEEK_32: WeekContent = {
           rude: "Everyone likes this room spray. I use it in all rooms.",
           polite:
             "Would a fragrance-free clean suit you better, madam, or shall I keep the room scent?",
-          rule: "Câu hỏi lựa chọn với 'or' để khách chọn mà không phải giải thích lý do — đặc biệt quan trọng với dị ứng và mùi hương.",
+          rule: "Câu hỏi lựa chọn với 'or' để khách chọn mà không phải giải thích lý do — đặc biệt quan trọng với dị ứng và mùi hương. Nếu khách sạn bạn không có dòng sản phẩm không mùi, câu trung thực là 'Plain water on the floors today, madam, and no room scent at all.'",
         },
         {
           rude: "I think maybe you have allergy, so I change everything.",
           polite:
-            "Based on your note about dust, madam, may I ask the linen store for anti-allergy bedding?",
+            "Based on your note about dust, madam, may I ask the linen store for anti-allergy bedding tonight?",
           rule: "Suy đoán về sức khoẻ là vùng cấm. Dẫn nguồn cụ thể ('your note about dust') rồi xin phép, và nêu mốc thời gian kho vải thật sự đáp ứng được.",
         },
       ],
@@ -16499,7 +16500,7 @@ export const HK_WEEK_32: WeekContent = {
         {
           guestPrompt: "Do you have anything for someone who reacts to feathers?",
           targetResponse:
-            "Based on what you have told me, sir, foam pillows from today — and I will ask the linen store.",
+            "Based on what you have told me, sir, I will bring foam pillows today and ask the linen store.",
           helpTip:
             "Nói 'anti-allergy' khi giao tiếp; giữ 'hypoallergenic' để ĐỌC HIỂU trên nhãn — sáu âm tiết không nên đứng giữa ca bận.",
         },
@@ -16609,7 +16610,7 @@ export const HK_WEEK_32: WeekContent = {
         {
           rude: "It is written in your file, madam. We have a note about you.",
           polite:
-            "The window is set for eleven from tomorrow, madam — you will not have to say it again.",
+            "Your cleaning time is set for eleven from tomorrow, madam — you will not have to say it again.",
           rule: "Nói VIỆC BẠN ĐÃ LÀM, không nói việc bạn đã ghi. Chỉ khi khách tự hỏi 'tôi có phải nhắc lại không?' thì 'it is on file' mới là câu trấn an đúng — đúng như quầy lễ tân được dạy.",
         },
       ],
@@ -16630,14 +16631,14 @@ export const HK_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "THE GUEST PROFILE — THREE LINES, WRITTEN WELL\nTwo files, not one. The GUEST profile follows the person between stays: pillow, allergies as they stated them, service window, whether turndown is wanted. The ROOM profile stays with the room: no carpet spray here, this bathroom holds damp, this balcony door sticks. Put a person's preference on a room and next week's guest inherits it — which is meaningless at best and, with an allergy, worse.\nWhat stays out: opinions about the guest, guesses about health, anything about visitors, and anything you would not read aloud to the guest's face. A security report is not a guest profile — somebody staying who is not on the booking goes to your supervisor, never onto this line.\nHealth details go on a profile only with the guest's agreement — ask, then write. They are never read aloud where another guest can hear.\nWording, tested three ways: is it a fact, is it useful tomorrow, could the guest read it without being hurt? If a line fails any of the three, rewrite it.\nGood, on the GUEST file: 'service after 11:00; DND most mornings.' Good, on the ROOM file: 'no carpet spray.' Poor, anywhere: 'never lets us in.'\nPreferences carry over between stays. Who types them into the system differs by house — ask your Executive Housekeeper whether you write it or your supervisor does, how long your hotel keeps it, and who may read it.",
+        text: "THE GUEST PROFILE — THREE LINES, WRITTEN WELL\nTwo files, not one. The GUEST profile follows the person between stays: pillow, allergies as they stated them, service window, whether turndown is wanted. The ROOM profile stays with the room: no carpet spray here, this bathroom holds damp, this balcony door sticks. Put a person's preference on a room and next week's guest inherits it — which is meaningless at best and, with an allergy, worse.\nWhat stays out: opinions about the guest, guesses about health, anything about visitors, and anything you would not read aloud to the guest's face. A security report is not a guest profile — somebody staying who is not on the booking goes to your supervisor, never onto this line.\nHealth details go on a profile only with the guest's agreement — ask, then write. They are never read aloud where another guest can hear.\nWording, tested three ways: is it factual, is it useful tomorrow, could the guest read it without being hurt? If a line fails any of the three, rewrite it.\nGood, on the GUEST file: 'service after 11:00; DND most mornings.' Good, on the ROOM file: 'no carpet spray.' Poor, anywhere: 'never lets us in.'\nPreferences carry over between stays. Who types them into the system differs by house — ask your Executive Housekeeper whether you write it or your supervisor does, how long your hotel keeps it, and who may read it.",
         questions: [
           {
             q: "Ba câu kiểm tra một dòng ghi chú là gì?",
             options: [
-              "Chính tả đúng chưa, câu đủ ngắn chưa, ai đã ký xác nhận vào dòng đó",
+              "Chính tả đã đúng chưa, câu đã đủ ngắn chưa, và ai là người ký xác nhận vào dòng ghi đó",
               "Có phải sự việc không, mai còn dùng được không, khách đọc có tổn thương không",
-              "Ai là người viết dòng này, viết vào lúc mấy giờ, ca nào sẽ đọc lại nó",
+              "Ai là người đã viết dòng này, viết vào lúc mấy giờ trong ca, và ca nào sẽ đọc lại nó",
             ],
             correct: 1,
           },
@@ -16658,7 +16659,7 @@ export const HK_WEEK_32: WeekContent = {
             "Every attendant this week has sprayed something on that carpet. I've asked three times.",
           options: [
             {
-              text: "I am sorry, madam. I am putting it on the room file now, so no spray goes on that carpet again.",
+              text: "I am sorry, madam. It goes on the room file now, and I will tell my supervisor you had to ask three times.",
               correct: true,
             },
             {
@@ -16675,7 +16676,7 @@ export const HK_WEEK_32: WeekContent = {
           prompt: "Do you write things about guests? I'd rather not be in some file somewhere.",
           options: [
             {
-              text: "Only what helps us serve you, madam — service times, and anything you tell us yourself. Never an opinion.",
+              text: "Only what helps us serve you, madam — service times, and what you tell us yourself. Shall I ask my supervisor to come and explain?",
               correct: true,
             },
             {
