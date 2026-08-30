@@ -23212,8 +23212,8 @@ const GR_WEEK_36: WeekContent = {
           rule: "Trong khủng hoảng, mọi con số phải có NGUỒN. 'I think' và 'about' biến một dữ kiện thành phỏng đoán, và đội ứng phó sẽ đi tìm người theo con số đó. Tuần 31 đã dạy: 'I would rather find out than guess' — ở đây thì không kịp đi tìm, nên hãy nói con số bạn đã GHI, và nói bạn ghi lúc mấy giờ.",
         },
         {
-          rude: "Somebody said there is smoke on one of the upper floors.",
-          polite: "Which floor and whereabouts on it, madam? I will call it in now.",
+          rude: "Somebody said there is smoke upstairs, madam. Are you quite sure?",
+          polite: "Which floor and whereabouts on it, madam? I am calling security now.",
           rule: "Một tầng là chưa đủ để tìm ra nguồn khói trong ba phút. Hỏi HAI dữ kiện — tầng, và chỗ nào trên tầng đó — rồi dừng. Đừng hỏi câu thứ ba: bạn không phải người điều tra, bạn là người chuyển tin.",
         },
       ],
@@ -23228,7 +23228,7 @@ const GR_WEEK_36: WeekContent = {
         },
         {
           guestPrompt: "There's smoke coming out somewhere upstairs — I saw it from the garden.",
-          targetResponse: "Which floor and whereabouts on it, madam? I will call it in now.",
+          targetResponse: "Which floor and whereabouts on it, madam? I am calling security now.",
           helpTip:
             "Hỏi đúng hai dữ kiện rồi dừng, và nói ngay rằng bạn đang chuyển tin — khách cần biết việc đã bắt đầu. Đừng hỏi lại xem khách có chắc không, và đừng tự đi xem trước: xác minh là việc của bảo vệ, chuyển tin là việc của bạn. 'Whereabouts' /ˈweərəbaʊts/ — trọng âm ở âm tiết đầu.",
         },
@@ -23239,7 +23239,7 @@ const GR_WEEK_36: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Around nine or ten, I would say — it was a fairly big group this morning.",
+              text: "Around nine or ten, I would say — it was a fairly big group going out this morning.",
               correct: false,
             },
             {
@@ -23260,7 +23260,7 @@ const GR_WEEK_36: WeekContent = {
               correct: false,
             },
             {
-              text: "I cannot confirm who is upstairs, madam. Give me his name.",
+              text: "I am not able to say who is upstairs, madam. May I have his name?",
               correct: true,
             },
             {
@@ -23271,7 +23271,7 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LIST ONLY YOU HAVE\nWhen an alarm is real, three desks start counting at once, and each one counts something different.\nThe front office counts rooms. Housekeeping counts floors. You count the people you placed somewhere.\nThat is the list nobody else has. Nine on the tour until four. Twelve in the ballroom. Two on the boat. One in the spa who booked through you at eleven.\nNone of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.\nSo the first call is not to the lobby. It is to the Duty Manager, and it is one sentence: who is not in the building, and where they are instead.\nEvery number you give must have a source. 'I think about nine' sends a team looking for a number you invented.\nSay the number you wrote down, and say when you wrote it. 'Nine on the tour. I wrote it down at nine, when they left.'\nWeek thirty-one taught the reason for it — 'I would rather find out than guess'.\nIn a crisis there is no time to find out, so guessing is all that is left.\nThat is why you write things down before there is a crisis.\nSeparate what you saw from what you were told. 'That is what I saw myself. The rest I was told by the lounge.' Both are useful. Only one of them is yours.\nWhen a guest brings you the emergency, take two facts and stop. Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.\nDo not ask a third question, and do not go and look. Verifying is security's work. Carrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.\nAnd the guest who asks whether her husband is safe upstairs gets week thirty-one's answer, not a kind one. You do not confirm who is in this house, even now. Take his name for the Duty Manager instead.",
+        text: "THE LIST ONLY YOU HAVE\nWhen an alarm is real, three desks start counting at once, and each one counts something different.\nThe front office counts rooms. Housekeeping counts floors. You count the people you placed somewhere.\nThe front office already knows they are not in their rooms; that list says 'not accounted for' and stops there.\nOnly you know where they are instead. Nine on the tour until four. Twelve in the ballroom. Two on the boat. One in the spa who booked through you at eleven.\nNone of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.\nSo the first call is not to the lobby. It is to the Duty Manager, and it is one sentence: who is not in the building, and where they are instead.\nEvery number you give must have a source. 'I think about nine' sends a team looking for a number you invented.\nSay the number you wrote down, and say when you wrote it. 'Nine on the tour. I wrote it down at nine, when they left.'\nWeek thirty-one taught the reason for it — 'I would rather find out than guess'.\nIn a crisis there is no time to find out, so guessing is all that is left.\nThat is why you write things down before there is a crisis.\nSeparate what you saw from what you were told. 'That is what I saw myself. The rest I was told by the lounge.' Both are useful. Only one of them is yours.\nWhen a guest brings you the emergency, take two facts and stop. Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.\nWeek thirty-three gave you one question for a smell of burning at the desk, and told you to stop there.\nA bell that is already ringing buys you the second question, and no more. What has not changed is who you ring: security first, the Duty Manager after.\nDo not ask a third question, and do not go and look. Verifying is security's work.\nCarrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.\nAnd the guest who asks whether her husband is safe upstairs gets week thirty-one's answer, not a kind one. You do not confirm who is in this house, even now. Take his name for the Duty Manager instead.",
         questions: [
           {
             q: "Danh sách mà chỉ Guest Relations có là danh sách gì?",
@@ -23346,7 +23346,7 @@ const GR_WEEK_36: WeekContent = {
         },
         {
           word: "I do not know that yet",
-          phonetic: "/aɪ də ˌnɒt ˈnəʊ ðæt jet/",
+          phonetic: "/aɪ ˌduː nɒt ˈnəʊ ðæt jet/",
           definition: "Điều đó tôi chưa biết — nói ra được, và tốt hơn một câu đoán",
           context: "I do not know that yet, sir, and I will not guess.",
           icon: "🤷",
@@ -23414,7 +23414,7 @@ const GR_WEEK_36: WeekContent = {
               correct: true,
             },
             {
-              text: "You have plenty of time, sir. Six o'clock is more than three hours away yet.",
+              text: "You have plenty of time, sir. Six o'clock is still more than three hours away from now.",
               correct: false,
             },
           ],
@@ -23514,7 +23514,7 @@ const GR_WEEK_36: WeekContent = {
         },
         {
           word: "Do not go back",
-          phonetic: "/də ˌnɒt ɡəʊ ˈbæk/",
+          phonetic: "/ˌduː nɒt ɡəʊ ˈbæk/",
           definition: "Đừng quay lại — lệnh cấm kèm sẵn phương án thay thế",
           context: "Do not go back up, sir. I will have it brought down.",
           icon: "⛔",
@@ -23530,18 +23530,18 @@ const GR_WEEK_36: WeekContent = {
           word: "The assembly point",
           phonetic: "/ði əˈsembli pɔɪnt/",
           definition: "Điểm tập kết — nói tên chỗ thật, không nói chữ chuyên môn",
-          context: "The assembly point is the front garden, sir.",
+          context: "For a fire alarm the assembly point is the front garden, sir.",
           icon: "🚩",
         },
       ],
       grammar: [
         {
-          rude: "Could I possibly ask you to make your way towards the staircase, madam?",
+          rude: "Would you like to make your way to the staircase, madam?",
           polite: "Because of the alarm, please use the stairs. The lifts are out of use.",
-          rule: "Câu lệnh khẩn phải NGẮN và chỉ chứa MỘT hành động. 'Could I possibly ask you to…' là câu lịch sự chuẩn của tuần 12, và ở đây nó làm người ta chần chừ vì nghe như một lời đề nghị có thể từ chối. Lý do đứng TRƯỚC, lệnh đứng sau, rồi dừng.",
+          rule: "Câu lệnh khẩn phải NGẮN và chỉ chứa MỘT hành động. 'Would you like…' là khuôn mời của tuần 16, và ở đây nó làm người ta chần chừ, vì một lời mời thì từ chối được. Lý do đứng TRƯỚC, lệnh đứng sau, rồi dừng.",
         },
         {
-          rude: "You cannot go back up there, it is not allowed during an evacuation.",
+          rude: "You cannot go back up there. It is not allowed during an evacuation.",
           polite: "Do not go back up, sir. I will have it brought down to you outside.",
           rule: "Một lệnh cấm không kèm phương án thì khách sẽ tự đi tìm phương án — và phương án của họ là chạy lên cầu thang. Cấm rồi đưa ngay cái thay thế. Tuần 31 đã dạy đừng nói 'you cannot'; ở đây vẫn thế, chỉ khác là bạn không có thời gian để nói dài.",
         },
@@ -23557,7 +23557,7 @@ const GR_WEEK_36: WeekContent = {
         {
           guestPrompt: "Where are we supposed to go? Nobody has told us anything.",
           targetResponse:
-            "The assembly point is the front garden, madam. Because of the alarm, please use the stairs.",
+            "For this alarm the assembly point is the front garden, madam. Please use the stairs.",
           helpTip:
             "Nói TÊN CHỖ THẬT trước, rồi mới tới đường đi. 'Assembly point' là chữ của nhà, không phải chữ của khách — nên luôn nói kèm nó là chỗ nào. Với khách yếu tiếng Anh thì bỏ hẳn chữ assembly point, chỉ nói tên khu vườn. 'Assembly' /əˈsembli/ — trọng âm ở âm tiết hai.",
         },
@@ -23568,15 +23568,15 @@ const GR_WEEK_36: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Tell her it is compulsory and that the fire officer will make her leave anyway.",
+              text: "Tell her it is compulsory, and that the fire officer will simply make her leave anyway.",
               correct: false,
             },
             {
-              text: "Stay with her and send for the Duty Manager. Nobody argues alone in an evacuation.",
+              text: "Ask her twice, then tell Security 'the lounge, one lady, declined' and come out.",
               correct: true,
             },
             {
-              text: "Leave her and take the rest out — we can come back for her afterwards.",
+              text: "Take her by the arm and walk her out — she will thank us for it later on.",
               correct: false,
             },
           ],
@@ -23585,11 +23585,11 @@ const GR_WEEK_36: WeekContent = {
           prompt: "My mother uses a walking frame. She cannot manage six floors of stairs.",
           options: [
             {
-              text: "Take the lift with her, madam — it is still running for the moment.",
+              text: "Take the lift down with her, madam — it is still running perfectly well for the moment.",
               correct: false,
             },
             {
-              text: "Stay with her there, madam. I am telling the Duty Manager now.",
+              text: "Her room number, madam? I am giving the Duty Manager 'cannot manage the stairs' now.",
               correct: true,
             },
             {
@@ -23600,7 +23600,7 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "INSTRUCTIONS PEOPLE FOLLOW\nAn instruction people follow is short, has one action in it, and puts the reason first.\n'Because of the alarm, please use the stairs. The lifts are out of use.'\nThat is two sentences and one thing to do. Everything else can wait.\nThe polite English of week twelve is the wrong English here. 'Could I possibly ask you to make your way towards the staircase?' sounds like an offer, and an offer can be declined. People hesitate, and hesitation is the thing you are trying to remove.\nBeing brief is not being rude. Say please, say it once, and say the action.\nA prohibition on its own does not work either. Tell a guest they cannot go back up and they will go and find their own way back up.\nSo every 'do not' carries a 'instead'. 'Do not go back up. Leave it and come with me — I will have it brought down to you outside.'\nThe passport is the one they argue about, every time. The answer is not the rule. Nobody stands in a stairwell listening to a rule. The answer is the alternative, said fast.\nName the place, not the term. 'The assembly point' is a phrase from a plan on a wall. 'The front garden' is somewhere a guest can picture.\nSay both, in that order, and the guest who speaks little English still hears a garden.\nTwo people are not yours to move alone. The guest who will not stand up, and the guest who cannot manage the stairs.\nFor the first, stay with them and send for the Duty Manager. Nobody argues alone in an evacuation, and nobody is dragged.\nFor the second, do not put them in a lift, and do not carry them down. Stay at the lift lobby with them and tell the Duty Manager where you both are. The front office runs the door in an evacuation. Your job is the people in front of you.\nAnd anything medical stops being this week's problem. That is week thirty-seven, and it starts with the Duty Manager and the room number.",
+        text: "INSTRUCTIONS PEOPLE FOLLOW\nAn instruction people follow is short, has one action in it, and puts the reason first.\n'Because of the alarm, please use the stairs. The lifts are out of use.'\nThat is two sentences and one thing to do. Everything else can wait.\nThe polite English of week sixteen is the wrong English here. Week sixteen taught 'Would you like a late check-out, sir?' — an offer, and an offer can be declined.\nPeople hesitate, and hesitation is the thing you are trying to remove. Week nineteen gave you the shape you want instead: 'If there is a fire, please use the exit.'\nBeing brief is not being rude. Say please, say it once, and say the action.\nA prohibition on its own does not work either. Tell a guest they cannot go back up and they will go and find their own way back up.\nSo every 'do not' carries an 'instead'. 'Do not go back up. Leave it and come with me — I will have it brought down to you outside.'\nThe passport is the one they argue about, every time. The answer is not the rule. Nobody stands in a stairwell listening to a rule. The answer is the alternative, said fast.\nName the place, not the term. 'The assembly point' is a phrase from a plan on a wall. A garden is somewhere a guest can picture.\nFOUR ANSWERS ONLY YOUR OWN HOUSE CAN GIVE YOU. Ask your Guest Relations Manager this week, not on the night.\nWhere is our assembly point for a fire, and where for a storm? Who gives the all-clear here? Do we have a refuge area, and on which floor? Who dials one-one-four, and from which telephone?\nThe garden on this page is one hotel's, and it changes with the emergency. A fire sends people out. Week thirty-eight will show you a storm, which keeps them in.\nSay both, in that order, and the guest who speaks little English still hears a garden.\nTwo people are not yours to move alone. The guest who will not stand up, and the guest who cannot manage the stairs.\nFor the first, ask twice, calmly, and then stop. Do not argue, and never take hold of a guest who has said no.\nTell Security the place, how many, and that they have declined — then go out with everybody else.\nAn argument keeps two people inside instead of one, and the second one is you.\nFor the second, the floor is not yours and the stairs are not yours. Do not send them to a lift, and do not go up for them.\nGive the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.\nWhere they wait is the floor team's call, not this desk's.\nA refuge area if this house has one, and a room with the door shut if it has not.\nThe front desk stays at the desk with the list. Your job is the people in front of you, and the message that reaches the right floor.\nAnd anything medical stops being this week's problem. That is week thirty-seven, and it starts with the Duty Manager and the room number.",
         questions: [
           {
             q: "Một câu lệnh khẩn được cấu tạo thế nào?",
@@ -23614,15 +23614,15 @@ const GR_WEEK_36: WeekContent = {
               "Bài đọc: 'short, has one action in it, and puts the reason first.' — 'Because of the alarm, please use the stairs.'",
           },
           {
-            q: "Vì sao tiếng Anh lịch sự của tuần 12 lại sai chỗ ở đây?",
+            q: "Vì sao khuôn mời lịch sự của tuần 16 lại sai chỗ ở đây?",
             options: [
               "Vì khách nước ngoài không quen với cách nói vòng của người Việt trong lúc gấp",
-              "Vì 'Could I possibly ask you to…' nghe như một lời đề nghị, mà đề nghị thì từ chối được",
+              "Vì 'Would you like…' nghe như một lời mời, mà lời mời thì từ chối được",
               "Vì câu dài làm khách không nghe rõ khi chuông báo cháy đang kêu quá to",
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'sounds like an offer, and an offer can be declined. People hesitate, and hesitation is the thing you are trying to remove.'",
+              "Bài đọc: 'an offer, and an offer can be declined. People hesitate, and hesitation is the thing you are trying to remove.'",
           },
           {
             q: "Mỗi câu cấm phải đi kèm cái gì?",
@@ -23638,7 +23638,7 @@ const GR_WEEK_36: WeekContent = {
           {
             q: "Vì sao phải nói tên chỗ thật chứ không chỉ nói 'the assembly point'?",
             options: [
-              "Vì đó là chữ trong sơ đồ trên tường, còn tên khu vườn thì khách hình dung được",
+              "Vì đó là chữ trong sơ đồ trên tường, còn tên một khu vườn thì khách hình dung ra được",
               "Vì khách sạn Việt Nam không được phép dùng thuật ngữ tiếng Anh cho lối thoát hiểm",
               "Vì điểm tập kết thay đổi theo từng loại sự cố nên phải nói rõ lần nào ra lần đó",
             ],
@@ -23651,11 +23651,11 @@ const GR_WEEK_36: WeekContent = {
             options: [
               "Đưa khách vào thang máy vì lúc đó thang vẫn còn chạy được",
               "Cõng khách xuống và bảo những người khác chờ ở ngoài",
-              "Ở lại cùng khách và báo vị trí cho Duty Manager",
+              "Cho Duty Manager số phòng và chữ 'cannot manage the stairs'",
             ],
             correct: 2,
             explanation:
-              "Bài đọc: 'do not put them in a lift, and do not carry them down. Stay at the lift lobby with them and tell the Duty Manager where you both are.'",
+              "Bài đọc: 'Give the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.'",
           },
         ],
       },
@@ -23669,8 +23669,9 @@ const GR_WEEK_36: WeekContent = {
         {
           word: "The all-clear",
           phonetic: "/ði ˌɔːl ˈklɪə/",
-          definition: "Lệnh báo an toàn — chỉ Duty Manager mới được đưa ra",
-          context: "Only the Duty Manager gives the all-clear, madam.",
+          definition:
+            "Lệnh cho phép vào lại — cán bộ PCCC đưa ra, Duty Manager là người truyền lại cho quầy",
+          context: "The fire officer gives the all-clear, and the Duty Manager brings it to us.",
           icon: "✅",
         },
         {
@@ -23689,17 +23690,18 @@ const GR_WEEK_36: WeekContent = {
           icon: "🏨",
         },
         {
-          word: "Not the person to say",
-          phonetic: "/ˌnɒt ðə ˈpɜːsn tə ˈseɪ/",
+          word: "Not the person to speak about that",
+          phonetic: "/ˌnɒt ðə ˈpɜːsn tə ˈspiːk əˌbaʊt ðæt/",
           definition: "Không phải người có thẩm quyền nói — câu dành cho ống kính và micro",
-          context: "I am not the person to say, sir.",
+          context: "I am not the person to speak about that, sir.",
           icon: "🎤",
         },
       ],
       grammar: [
         {
           rude: "It is all finished now, everyone. You can go back up to your rooms.",
-          polite: "Only the Duty Manager gives the all-clear, madam. I am asking him now.",
+          polite:
+            "The fire officer gives the all-clear, madam, and my Duty Manager brings it to us.",
           rule: "Bạn không bao giờ tuyên bố hết sự cố, kể cả khi chuông đã tắt và mọi người đang đi vào. Chuông tắt không phải lệnh báo an toàn. Nói ai là người đưa ra lệnh đó, và nói bạn đang đi hỏi — đó là hai vế, và cả hai đều đúng sự thật.",
         },
         {
@@ -23712,14 +23714,15 @@ const GR_WEEK_36: WeekContent = {
       speaking: [
         {
           guestPrompt: "The bell has stopped. Can we go back up to the room now?",
-          targetResponse: "Only the Duty Manager gives the all-clear, madam. I am asking him now.",
+          targetResponse:
+            "The fire officer gives the all-clear, madam. I am asking my Duty Manager now.",
           helpTip:
             "Chuông tắt là thứ khách nghe được, nên họ sẽ đi vào dù bạn nói gì. Đừng chặn bằng 'no' — nói AI là người quyết và nói bạn đang đi hỏi ngay. Hai vế đó cho khách một lý do để đứng lại thêm hai phút. 'All-clear' — trọng âm rơi vào 'clear', và /ɔː/ ở 'all' phải dài.",
         },
         {
           guestPrompt: "Excuse me, I'm from the local paper. What actually happened here tonight?",
           targetResponse:
-            "I am not the person to say, sir. I am asking my Duty Manager to come to you.",
+            "I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.",
           helpTip:
             "Đây đúng là câu tuần 33 đã dạy, và giờ nó tới vào lúc bạn mệt nhất. MỘT câu rồi dừng: không tên bạn, không ý kiến, và đặc biệt là không nói câu no-comment — tuần 33 chấm chính câu đó là SAI. Đừng đồng ý cho quay phim. 'Person' /ˈpɜːsn/ — /ɜː/ dài, đừng thành /ˈpesn/.",
         },
@@ -23730,11 +23733,11 @@ const GR_WEEK_36: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Yes — the bell has stopped, so the building must have been cleared by now.",
+              text: "Yes — the bell has stopped, so the building must surely have been cleared by now.",
               correct: false,
             },
             {
-              text: "Not yet. The bell is not the all-clear. I am asking the Duty Manager.",
+              text: "Not yet. The bell is not the all-clear, and the fire officer has not given it.",
               correct: true,
             },
             {
@@ -23763,18 +23766,18 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "STANDING DOWN, AND WHAT GOES ON PAPER\nThe bell stopping is not the all-clear. It is only the bell stopping.\nGuests know the difference and ignore it anyway, because standing in a garden is dull and a room is upstairs.\nSo do not block them with a flat no. Tell them who gives the all-clear, and tell them you are asking now. Two facts, both true, and they buy you the two minutes it takes.\nOnly the Duty Manager stands this house down. Not the bell, not security, and not you — even if you can see that it is over.\nThen go back to your own list. The nine on the tour are still on the tour, and nobody has told them anything.\nBring them back inside yourself, and count the same people you reported out. A number that goes out and does not come back in is the whole reason anybody counted.\nNow the paper. Week thirty-three gave you two books, and they are not interchangeable.\nThe complaint log is for a guest who is unhappy. The incident report is for a thing that happened.\nAn evacuation is a thing that happened, so it is a report, and it is written in your own shift. The next shift did not see what you saw.\nWrite what happened and when. Do not write why, because nobody has established why yet. Do not write what anybody was like.\n'The lady in the lounge would not stand up' belongs on the report. 'The lady in the lounge was rude to me' does not.\nAnd then the part nobody warns you about. An hour after it is over, somebody arrives with a phone or a microphone.\nWeek thirty-three already wrote your line: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you.' One sentence, then nothing — not your name, not your opinion, and not 'no comment'.\nLast, hand it over by name and hour. A tour party still out at six o'clock belongs to somebody by six o'clock, and that somebody has a name.",
+        text: "STANDING DOWN, AND WHAT GOES ON PAPER\nThe bell stopping is not the all-clear. It is only the bell stopping.\nGuests know the difference and ignore it anyway, because standing in a garden is dull and a room is upstairs.\nSo do not block them with a flat no. Tell them who gives the all-clear, and tell them you are asking now. Two facts, both true, and they buy you the two minutes it takes.\nWhile the brigade is here, the fire officer stands this house down, and the Duty Manager is who brings you that word.\nNot the bell, and not you — even if you can see that it is over.\nThen go back to your own list. The nine on the tour are still on the tour, and nobody has told them anything.\nBring them back inside yourself, and count the same people you reported out. A number that goes out and does not come back in is the whole reason anybody counted.\nNow the paper. Week thirty-three gave you two books, and they are not interchangeable.\nThe complaint log is for a guest who is unhappy. The incident report is for a thing that happened.\nAn evacuation is a thing that happened, so it is a report, and it is written in your own shift. The next shift did not see what you saw.\nWrite what happened and when. Do not write why, because nobody has established why yet. Do not write what anybody was like.\n'The lady in the lounge would not stand up' belongs on the report. 'The lady in the lounge was rude to me' does not.\nAnd then the part nobody warns you about. An hour after it is over, somebody arrives with a phone or a microphone.\nWeek thirty-three already wrote your line: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nOne sentence, then nothing — not your name, not your opinion, and not 'no comment'.\nAnd before any of the paper, one guest at a time. The people who were frightened are not settled by an explanation.\nThey are settled by somebody standing near them for ten minutes. 'That was frightening, madam. Sit here with me — I will bring something warm.'\nLast, hand it over by name and hour. A tour party still out at six o'clock belongs to somebody by six o'clock, and that somebody has a name.",
         questions: [
           {
             q: "Chuông tắt có nghĩa là gì?",
             options: [
               "Nghĩa là toà nhà đã được kiểm tra xong và khách được phép lên phòng",
-              "Chỉ nghĩa là chuông đã tắt — báo an toàn là việc của Duty Manager",
+              "Chỉ nghĩa là chuông đã tắt — lệnh vào lại đến từ cán bộ PCCC, qua Duty Manager",
               "Nghĩa là bảo vệ đã xác nhận không còn nguy hiểm ở khu vực đó nữa",
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'The bell stopping is not the all-clear. It is only the bell stopping.' Chỉ Duty Manager mới đứng ra kết thúc.",
+              "Bài đọc: 'The bell stopping is not the all-clear. It is only the bell stopping.' Lệnh vào lại là của cán bộ PCCC; Duty Manager truyền lại.",
           },
           {
             q: "Sau khi hết sự cố, việc riêng của Guest Relations là gì?",

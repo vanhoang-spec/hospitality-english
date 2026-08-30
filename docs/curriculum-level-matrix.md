@@ -338,6 +338,19 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 | 39   | Tổng duyệt role-play liên tình huống                                   | Kết hợp mọi chức năng                                   |
 | 40   | **Đánh giá cuối khóa** — weektest toàn lộ trình (chưa có role-play mở) | Chuẩn đầu ra A2+ nghiệp vụ, có tiếp xúc B1.1            |
 
+> **Ngoại lệ Guest Relations, tuần 36–38.** Bảng trên gộp "thời tiết, y tế, kỹ thuật" vào một
+> tuần 36 rồi giao tuần 37 cho B2B và tuần 38 cho pitch. Track GR không đi theo: nó tách khối
+> khủng hoảng ra ba tuần — **36 sơ tán và sự cố khẩn · 37 cấp cứu y tế · 38 bão và gián đoạn
+> lịch trình** — và không dạy B2B hay pitch, vì quầy Guest Relations không bán hợp đồng.
+>
+> Ba tuần đó đã viết và đã qua kiểm định theo cách chia này; dòng bảng mới là thứ lạc hậu.
+> Ghi lại ở đây theo đúng luật của chính file này (_"Thay đổi ma trận = sửa file này trước"_),
+> để lần thẩm định sau không tính đây là content lệch tài liệu.
+>
+> Một hệ quả kèm theo: **tuần 36 cố ý dạy ngược vế "trấn an"**. Câu `"Please stay calm"` được
+> chấm là SAI, vì nó bảo người ta cảm thấy một điều thay vì cho họ một việc để làm. Thay vào đó
+> là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
+
 ---
 
 ## Di dời 12 tuần content đã viết (hiện gắn nhãn "tuần 1–2")

@@ -1085,3 +1085,29 @@ Cùng loại: `verify:content` GATE 6 cộng gộp 1978 câu toàn khoá (75% d�
 Đề xuất (chưa làm, vì cần ratchet cho 200 dep-week đang có): một lớp lint đo **theo từng bài đọc**
 trên thứ tự sau `permute` — dài-nhất ≤60%, một-vị-trí ≤60%. Hàm xáo đã có sẵn, chi phí là một vòng
 lặp. Hiện tôi đo bằng script ngoài repo trước mỗi lần giao cho auditor.
+
+### GR-X · Spine tuần 36 dạy chính câu GR-36 chấm là sai
+
+`phase4.ts:1496` và `:1516` sinh ra cho **mọi** tuần 36 tự động (SW-36, BO-36):
+
+> "Please stay calm — we are handling the {emergency}. **There is no danger.**"
+
+GR-36 dành cả bài 2 để chứng minh câu đó sai: _"'Please stay calm' asks people to feel something,
+and nobody has ever managed it on request"_ và _"you may not say it is safe, and you may not say
+it is nothing."_ Cùng lỗi ở `phase4.ts:2368` cho GR-39, nơi câu đó là vế **polite** được chấm ĐÚNG
+— ba tuần sau khi GR-36 cấm nó.
+
+Hai auditor độc lập nêu mục này. Đóng khi soạn tay GR-39 và khi tới lượt SW-36/BO-36.
+
+### GR-Y · Đề xuất một lớp lint mới: mâu thuẫn học thuyết liên bộ phận
+
+Vòng kiểm định GR-36 phát hiện ba mâu thuẫn an toàn giữa GR-36 và FO-36/HK-36/GR-38 — ai đưa lệnh
+báo an toàn, khách không đi được cầu thang chờ ở đâu, điểm tập kết ở đâu. **Không lớp gate nào so
+một dữ kiện giữa hai bộ phận trong cùng một tuần.**
+
+`lint-content.ts:1188` đã có tiền lệ đúng khuôn: `CLINICAL_CLASHES` so các cặp lâm sàng và tự ghi
+rằng _"không lớp nào ở trên nhìn thấy nó: câu đúng cú pháp, từ vựng đúng, độ dài đạt"_. Một lớp
+tương tự cho học thuyết vận hành — cùng số tuần, khác bộ phận, cùng khái niệm (`all-clear`,
+`assembly point`, `refuge area`, `who dials 114`) — sẽ chặn được ba trong số đó tự động.
+
+Chưa làm vì cần ratchet cho 200 dep-week hiện có. Ghi lại kèm ca chứng minh.
