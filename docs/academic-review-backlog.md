@@ -598,15 +598,15 @@ from the corridor."` — tức khách XIN ĐÓNG CỬA. Đáp án được chấ
 `"I have to keep the door open while I work, sir — that is our rule for every room."` — đứng lại,
 dẫn quy định, làm tiếp.
 
-Một tuần sau, `HK_35_1.reading` chốt: *"A guest who asks you to close it, or who crosses the line
+Một tuần sau, `HK_35_1.reading` chốt: _"A guest who asks you to close it, or who crosses the line
 with you — hands or words — is not yours to handle alone: you step out, and your supervisor
-comes."* Theo tuần 35, đáp án được chấm đúng ở tuần 34 là đáp án sai.
+comes."_ Theo tuần 35, đáp án được chấm đúng ở tuần 34 là đáp án sai.
 
 Đọc theo hướng lũy tiến thì hợp lệ — tuần 34 dạy phát biểu quy tắc, tuần 35 thêm bậc rút lui.
 Nhưng vòng game tuần 34 vẫn chấm sau khi học viên đã học tuần 35, và không có dòng nào nói rằng
-nó đã bị thay thế. HK-39 hiện đã nói rõ ranh giới trong bài đọc (*"A guest who asks WHY the door
+nó đã bị thay thế. HK-39 hiện đã nói rõ ranh giới trong bài đọc (_"A guest who asks WHY the door
 is open hears the rule, and you keep working. A guest who asks you to CLOSE it — asks, not
-insists — is week thirty-five"*), nên người học tới tuần 39 sẽ gỡ được. Người dừng ở tuần 34 thì
+insists — is week thirty-five"_), nên người học tới tuần 39 sẽ gỡ được. Người dừng ở tuần 34 thì
 không.
 
 Sửa đúng cách là đổi prompt của `HK_34_3.game[3]` sang câu khách hỏi VÌ SAO cửa mở, để đáp án
