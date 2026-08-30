@@ -19350,10 +19350,10 @@ const HK_WEEK_39: WeekContent = {
           icon: "🤝",
         },
         {
-          word: "Standby",
-          phonetic: "/ˈstændbaɪ/",
+          word: "Stand by",
+          phonetic: "/ˌstænd ˈbaɪ/",
           definition: "Chờ máy — trả lời bộ đàm ngay, mất hai giây, để người gọi biết mình đã nghe",
-          context: "Standby — give me two minutes, I am in a room.",
+          context: "Stand by — give me two minutes, I am in a room.",
           icon: "📻",
         },
         {
@@ -19388,13 +19388,13 @@ const HK_WEEK_39: WeekContent = {
           guestPrompt: "Housekeeping desk. You sound busy — what is going on up there?",
           speakerRole: "colleague",
           targetResponse:
-            "Three rooms waiting and none started, and 812 is a departure. Can you send me a second pair of hands?",
+            "Three rooms waiting and none started, and 819 is a departure. Can you send me a second pair of hands?",
           helpTip:
             "ĐỒNG NGHIỆP ở bàn buồng phòng. Nêu CON SỐ trước rồi mới xin người — ba phòng chờ, chưa bắt đầu phòng nào. Gọi lúc chậm ba phòng, đừng đợi tới sáu: người lên tới tầng đã mất mười phút. 'Hands' /hændz/ — đuôi /dz/ rung, đừng nuốt.",
         },
       ],
       reading: {
-        text: "THE FLOOR WHEN EVERYTHING ARRIVES AT ONCE\nThree rooms want you and the radio is going. The order is not first come first served.\nThe top of it is not new. Week thirty-six comes first: a guest who is not breathing, or a smell of burning. Then week thirty-five: an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. Week thirty-seven puts you at that door inside five. Then the room the desk is waiting for, then everything else. And once nothing on this floor is an emergency, the guest standing in front of you is ANSWERED first — answered, not served.\nThe radio is answered too, unless week thirty-six has taken it out of your hand: a gas smell means no talk button at all. The radio carries a room and a job. What it never carries is a room number joined to a fact about the guest. That she is out, that the room is empty, that she cannot walk, that the safe is open, that anybody is unwell. Anyone on that floor with a handset hears you. Those go on the floor phone, or into Security's ear. 'Standby' takes two seconds and costs you nothing. What can wait is what the radio asked you to do, not the radio itself.\nA room with an agreed service window keeps its hour — that is a promise from week thirty-five, not a place in this queue.\nSay the order out loud. A guest who hears 'straight after this room' stops counting; a guest who hears nothing starts.\nNever do the loudest room first. That teaches a floor that raising your voice moves you up the list. Hold your order, and telephone your supervisor to say that a guest on your floor is pushing. Who moves up the list is your supervisor's call, not the loudest guest's. Tell that guest the truth instead: 'two rooms are ahead of yours, madam, and I will knock when I start your room'. The truth about her own room is hers. What is happening in the room next door is not yours to say.\nIf three rooms are waiting and none is started, ask for a second pair of hands. That call goes to the desk, not to the attendant on the next section. Call when you are three behind, not when you are six.\nThe second pair of hands takes ten minutes to reach your floor. At three behind you still have those ten minutes; at six you do not.\nAnd whatever else moves, the trolley does not stand alone in a corridor. Chemicals stay on the locked shelf, and the keys stay on you — never on the trolley, not for one room.\nWrite down what you skipped. A room done out of turn is fine; a room skipped and unwritten is not.",
+        text: "THE FLOOR WHEN EVERYTHING ARRIVES AT ONCE\nThree rooms want you and the radio is going. The order is not first come first served.\nThe top of it is not new. Week thirty-six comes first: a guest who is not breathing, or a smell of burning. Then week thirty-five: an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. Week thirty-seven puts you at that door inside five. Then the room the desk is waiting for, then everything else. And once nothing on this floor is an emergency, the guest standing in front of you is ANSWERED first — answered, not served.\nThe radio is answered too, unless week thirty-six has taken it out of your hand: a gas smell means no talk button at all. The radio carries a room and a job. What it never carries is a room number joined to a fact about the guest. That she is out, that the room is empty, that she cannot walk, that the safe is open, that anybody is unwell. Anyone on that floor with a handset hears you. Those go on the floor phone, or into Security's ear. 'Stand by' takes two seconds and costs you nothing. What can wait is what the radio asked you to do, not the radio itself.\nA room with an agreed service window keeps its hour — that is a promise from week thirty-five, not a place in this queue.\nSay the order out loud. A guest who hears 'straight after this room' stops counting; a guest who hears nothing starts.\nNever do the loudest room first. That teaches a floor that raising your voice moves you up the list. Hold your order, and telephone your supervisor to say that a guest on your floor is pushing. Your supervisor decides who moves up the list. The loudest guest does not. Tell that guest the truth instead: 'two rooms are ahead of yours, madam, and I will knock when I start your room'. The truth about her own room is hers. What is happening in the room next door is not yours to say.\nIf three rooms are waiting and none is started, ask for a second pair of hands. That call goes to the desk, not to the attendant on the next section. Call when you are three behind, not when you are six.\nThe second pair of hands takes ten minutes to reach your floor. At three behind you still have those ten minutes; at six you do not.\nAnd whatever else moves, the trolley does not stand alone in a corridor. Chemicals stay on the locked shelf, and the keys stay on you — never on the trolley, not for one room.\nWrite down what you skipped. A room done out of turn is fine; a room skipped and unwritten is not.",
         questions: [
           {
             q: "Ba phòng cùng chờ và bộ đàm đang gọi. Thứ tự đúng là gì?",
@@ -19413,6 +19413,15 @@ const HK_WEEK_39: WeekContent = {
               "Ba phòng — vì người tới phụ mất mười phút mới lên tới tầng",
             ],
             correct: 2,
+          },
+          {
+            q: "Bộ đàm không được mang cái gì?",
+            options: [
+              "Số phòng gắn với một sự thật về khách — khách đi vắng, phòng trống, khách ốm",
+              "Bất cứ số phòng nào, kể cả khi chỉ báo trạng thái dọn dẹp cho bàn",
+              "Tên của đồng nghiệp đang trực cùng tầng với mình hôm đó",
+            ],
+            correct: 0,
           },
         ],
       },
@@ -19493,7 +19502,7 @@ const HK_WEEK_39: WeekContent = {
         {
           rude: "No. That is not allowed.",
           polite:
-            "A second bed service is my supervisor's, sir. I will put it forward, and bring fresh towels twice a day.",
+            "A second bed service is my supervisor's, sir. Fresh towels twice a day meanwhile, and I will come back before six.",
           rule: "'Not allowed' đóng cửa và nói về khách. Nói đúng sự thật về THẨM QUYỀN thì không đổ lỗi cho ai — 'my supervisor's', 'not mine to change', 'not mine to approve': đổi động từ theo việc. Rồi TRÌNH LÊN và mở ngay một cửa khác trong cùng một hơi.",
         },
         {
@@ -19508,7 +19517,7 @@ const HK_WEEK_39: WeekContent = {
           targetResponse:
             "Of course, sir. Shall I move them together and put them back exactly as they are?",
           helpTip:
-            "Luật tuần 32 — không gom giấy tờ thành chồng — vẫn nguyên. Thứ duy nhất gỡ được nó là lời của CHÍNH CHỦ NHÂN, nói trực tiếp, đang đứng đó — và bạn vẫn hỏi CÁCH làm chứ không tự quyết. 'Exactly as they are' là phần giữ bạn an toàn — nó hứa trả về đúng chỗ cũ. 'Exactly' /ɪɡˈzæktli/ — trọng âm rơi vào âm tiết giữa.",
+            "Luật tuần 32 — không gom giấy tờ thành chồng — vẫn nguyên. Thứ duy nhất gỡ được nó là lời của CHÍNH CHỦ NHÂN, nói trực tiếp, đang đứng đó — và bạn vẫn hỏi CÁCH làm chứ không tự quyết. Và ghi vào BÁO CÁO PHÒNG rằng chính khách bảo bạn làm — tuần 32: bất cứ thứ gì bạn di chuyển đều phải có một dòng. Lời nói không cứu được bạn; dòng ghi thì có. 'Exactly' /ɪɡˈzæktli/ — trọng âm rơi vào âm tiết giữa.",
         },
         {
           guestPrompt: "Just go ahead and clean. I left the safe open — do not worry about it.",
@@ -19554,7 +19563,7 @@ const HK_WEEK_39: WeekContent = {
               correct: false,
             },
             {
-              text: "The rule is there for you as much as for me, madam.",
+              text: "I will leave it wide open, madam, and try to be quick in the bathroom.",
               correct: false,
             },
           ],
@@ -19618,7 +19627,7 @@ const HK_WEEK_39: WeekContent = {
           rude: "704 is nearly done.",
           polite:
             "704 is half done — bathroom finished, bed stripped, and waiting for clean linen.",
-          rule: "'Nearly done' không nói được gì cả. Nêu TRẠNG THÁI: cái gì xong, cái gì thiếu. Người ca sau phải bắt đầu được từ chính câu của bạn.",
+          rule: "KHÔNG ĐỦ THÔNG TIN, không phải bất lịch sự. 'Nearly done' không nói được gì cả. Nêu TRẠNG THÁI: cái gì xong, cái gì thiếu. Người ca sau phải bắt đầu được từ chính câu của bạn.",
         },
         {
           rude: "704 is not finished.",
@@ -19646,7 +19655,7 @@ const HK_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LOG IS FOR WHAT DID NOT GET DONE\nA handover that ONLY lists finished rooms is a list nobody needs. The next shift can see the board; what the board cannot show them is the half of 704 you did not reach. So every room gets a line, and the ones that matter are the lines with something still on them.\nAn unfinished job needs five things and no more. The room, what state it is in, what is missing, who is waiting, and the hour.\nNearly done is not a state. Bathroom done, bed stripped, no clean linen on the floor — that is a state, and the next person can pick it up from there.\nAnd the desk gets it before the log does. A room you stripped and could not finish cannot be sold. Say the number and the status down the phone the moment you know it.\nA job that will not close in your shift is one you carry over. The phrase has two senses. Week thirty-two carried a guest's preferences to the next stay; this one carries a job to the next shift. Carrying over is a thing you write, not a thing you hope. A laundry claim you opened and could not close goes over with its docket number and the hour. The file is week thirty-eight; the table under it is week thirty-three. Anything out of order goes down as out of order, in those words: week thirty-seven, and no gentler words for it.\nNothing comes off that list until somebody signs it off, and you report back to whoever asked.\nWrite down the guest who is waiting, by room number, and put anything that will matter next time on the guest profile. A request that lives only in your head leaves the building when you do.\nAnd write what you got wrong. A mistake you report is a mistake. One the next shift finds is a mistake with your name beside it.\nRooms with nothing outstanding still get one line each. A blank beside a room number reads as forgotten, not as finished.",
+        text: "THE LOG IS FOR WHAT DID NOT GET DONE\nA handover that ONLY lists finished rooms is a list nobody needs. The next shift can see the board; what the board cannot show them is the half of 704 you did not reach. So every room gets a line, and the ones that matter are the lines with something still on them.\nAn unfinished job needs five things and no more. The room, what state it is in, what is missing, who is waiting, and the hour.\nNearly done is not a state. Bathroom done, bed stripped, no clean linen on the floor — that is a state, and the next person can pick it up from there.\nAnd the desk gets it before the log does. A room you stripped and could not finish cannot be sold. Say the number and the status down the phone the moment you know it.\nA job that will not close in your shift is one you carry over. The phrase has two senses. Week thirty-two carried a guest's preferences to the next stay; this one carries a job to the next shift. Carrying over is a thing you write, not a thing you hope. A laundry claim you opened and could not close goes over with its docket number and the hour. The file is week thirty-eight; the table under it is week thirty-three. Anything out of order goes down as out of order, in those words: week thirty-seven, and no gentler words for it.\nNothing comes off that list until somebody signs it off, and you report back to whoever asked.\nWrite down the guest who is waiting, by room number, and put anything that will matter next time on the guest profile. Anything about health you ask for first, as in week thirty-two. A request that lives only in your head leaves the building when you do.\nAnd write what you got wrong. A mistake you report is a mistake. One the next shift finds is a mistake with your name beside it.\nRooms with nothing outstanding still get one line each. A blank beside a room number reads as forgotten, not as finished.",
         questions: [
           {
             q: "Sổ bàn giao dùng để ghi gì?",
@@ -19670,7 +19679,7 @@ const HK_WEEK_39: WeekContent = {
       },
       game: [
         {
-          prompt: "Floor Supervisor. Night shift is asking about 812 — what do I tell them?",
+          prompt: "Floor Supervisor. Night shift is asking about 807 — what do I tell them?",
           speakerRole: "manager",
           options: [
             {
@@ -19700,7 +19709,7 @@ const HK_WEEK_39: WeekContent = {
               correct: false,
             },
             {
-              text: "Not yet — the shower is out and Engineering have not been up. I will ring you when they sign it off.",
+              text: "706 is out of order, the shower. Engineering have not been up — I will ring you when they sign it off.",
               correct: true,
             },
           ],
@@ -19730,7 +19739,8 @@ const HK_WEEK_39: WeekContent = {
         {
           word: "Face to face",
           phonetic: "/ˌfeɪs tə ˈfeɪs/",
-          definition: "Nói trực tiếp — thêm vào sổ, không thay sổ",
+          definition:
+            "Nói trực tiếp — việc này KHÔNG vào sổ tầng, nhưng sổ vẫn ghi đủ phần còn lại",
           context: "There is one thing I would rather say face to face too, Ms Lan.",
           icon: "👥",
         },
@@ -19751,7 +19761,7 @@ const HK_WEEK_39: WeekContent = {
         {
           rude: "I gave the key to someone.",
           polite: "The master key is signed in, and the log has my name and the hour.",
-          rule: "Chìa khoá tổng chỉ có một trạng thái được chấp nhận: đã ký nộp. 'Gave it to someone' không phải một trạng thái — đó là một khoảng trống trong sổ.",
+          rule: "MỘT KHOẢNG TRỐNG TRONG SỔ, không phải bất lịch sự. Chìa khoá tổng chỉ có một trạng thái được chấp nhận: đã ký nộp. 'Gave it to someone' không phải một trạng thái — đó là một khoảng trống trong sổ.",
         },
       ],
       speaking: [
@@ -19772,7 +19782,7 @@ const HK_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LAST FIFTEEN MINUTES ARE NOT FOR STARTING A ROOM\nOpen a room at ten to three and the next shift inherits it half-stripped. The bed is bare and the guest's things are moved. That is worse than a room nobody touched.\nThe last fifteen minutes are for five things. Any guest still waiting for something — you deliver it, or you hand it to the desk by name and room. Carry it over in the log as well. Nothing a guest is waiting for rests on one conversation. Then the trolley stripped and restocked, the keys handed in and signed in, the log written, and the one thing you say face to face.\nA room with Do Not Disturb up and no sound inside is not a handover item at all. Count the hours that sign has been up, and telephone your supervisor the moment it reaches twenty-four. Every room you did not get into goes down with the hour you last knocked. A sign still up past two o'clock gets a call to the room. Two days with nobody inside is a check your supervisor arranges, and neither clock survives a shift change unless you write it. That is week thirty-five: the Duty Manager and Security open that one together, never you.\nA smell you cannot name is treated as gas until you can rule gas out. Everyone out, and the door exactly as you found it: a handle makes a spark. No switch, no telephone and no radio on that floor. You call from the stairwell. If what you smell is burning and there is no gas smell at all, it is the other rule. Everyone out, close that door behind you, and call the operator from the corridor. A fire door only works shut. Say which of the two you can smell: the operator cannot smell it from downstairs. Neither one waits for three o'clock.\nThe one thing face to face goes to your supervisor, not into the floor log — that log is read by everyone. The way the man in 810 would not look at you when he opened the door. If he only made you uneasy, you tell her at handover. If he said anything at all, or touched anything at all, you telephone her the same minute. You do not go back into that room. She writes it where she writes those, and she tells the evening shift that nine is a two-person floor tonight.\nAnd one thing is not on that list at all. A needle, a chemical in an eye, blood in an eye or a mouth — that is week thirty-six. It is a doctor in THIS shift, not at the next handover. Say the words to your supervisor before you touch the log: 'this is a needle injury'. Then write the room, the hour, what pricked you, and who you told.\nSign the key in. A master key that walks off the floor in a pocket is a Security matter the minute you know. The log is the only thing that says when it left your hand.\nThen go. A shift that ends late every day is a floor that is short a person. That is a conversation for your supervisor, not a habit for you.",
+        text: "THE LAST FIFTEEN MINUTES ARE NOT FOR STARTING A ROOM\nOpen a room at ten to three and the next shift inherits it half-stripped. The bed is bare and the guest's things are moved. That is worse than a room nobody touched.\nThe last fifteen minutes are for five things. Any guest still waiting for something — you deliver it, or you hand it to the desk by name and room. Carry it over in the log as well. Nothing a guest is waiting for rests on one conversation. Then the trolley stripped and restocked, the keys handed in and signed in, the log written, and the one thing you say face to face.\nA room with Do Not Disturb up and no sound inside is not a handover item at all. Count the hours that sign has been up, and telephone your supervisor the moment it reaches twenty-four. Every room you did not get into goes down with the hour you last knocked. A sign still up past two o'clock gets a call to the room. Two days with nobody inside is a check your supervisor arranges, and neither clock survives a shift change unless you write it. That is week thirty-five: the Duty Manager and Security open that one together, never you.\nIf you smell burning and there is no gas smell at all, it is week thirty-six's first rule. Everyone out, close that door behind you, and call the operator from the corridor: a fire door only works shut. If you smell gas, it is the other rule. Everyone out, the door exactly as you found it, and no switch, no telephone and no radio on that floor. You call from the stairwell. And if you cannot tell which it is, you say so and you say where. Everyone out, touch nothing at all, and call from the stairwell. Naming it is Engineering's work, and week thirty-six says so. Neither rule waits for three o'clock.\nThe one thing face to face goes to your supervisor, not into the floor log — that log is read by everyone. The way the man in 810 would not look at you when he opened the door. If he only made you uneasy, you tell her at handover. If he said anything at all, or touched anything at all, you telephone her the same minute. You do not go back into that room. She writes it where she writes those, and she tells the evening shift that nine is a two-person floor tonight.\nAnd one thing is not on that list at all. A needle, a chemical in an eye, blood in an eye or a mouth — that is week thirty-six. Water first: running water, fifteen minutes for an eye, and never rub it. It is a doctor in THIS shift, not at the next handover. Say the words to your supervisor before you touch the log: 'this is a needle injury'. Then write the room, the hour, what pricked you, and who you told.\nSign the key in. A master key that walks off the floor in a pocket is a Security matter the minute you know. The log is the only thing that says when it left your hand.\nThen go. A shift that ends late every day is a floor that is short a person. That is a conversation for your supervisor, not a habit for you.",
         questions: [
           {
             q: "Mười lăm phút cuối ca dùng để làm gì?",
@@ -19791,6 +19801,24 @@ const HK_WEEK_39: WeekContent = {
               "Vì chìa khoá tổng phải được cất trong tủ của bộ phận lễ tân",
             ],
             correct: 0,
+          },
+          {
+            q: "Bị kim đâm lúc 14 giờ 40. Việc đầu tiên là gì?",
+            options: [
+              "Ghi vào sổ bàn giao rồi báo giám sát trước khi hết ca",
+              "Rửa ngay dưới vòi nước chảy, rồi mới báo giám sát",
+              "Đợi tới lúc giao ca để nói trực tiếp, vì đây là chuyện của mình",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Ngửi thấy mùi lạ mà không gọi được tên. Làm gì với cánh cửa?",
+            options: [
+              "Đóng lại, vì cửa chống cháy chỉ có tác dụng khi đóng",
+              "Để nguyên như đã thấy, và không chạm vào bất cứ thứ gì",
+              "Mở rộng ra cho thoáng rồi gọi từ trong hành lang",
+            ],
+            correct: 1,
           },
         ],
       },
@@ -19846,7 +19874,7 @@ const HK_WEEK_40: WeekContent = {
     "AED",
     "Discretion",
     "Leave it as found",
-    "Come back to you",
+    "What I can do",
     "Found item",
     "Docket",
     "Propose",
@@ -19897,7 +19925,7 @@ const HK_WEEK_40: WeekContent = {
           rude: "They never let me do the laundry claims.",
           polite:
             "I take the docket and the hour on my own now, Ms Chen — and the photographs get two signatures.",
-          rule: "Hiện tại đơn cộng 'now' nêu một năng lực ĐANG CÓ. Đừng dùng thì quá khứ để nói về việc hôm nay mình làm được.",
+          rule: "'They never let me…' là câu nói về NGƯỜI KHÁC và đặt bạn ở thế bị từ chối. Hiện tại đơn cộng 'now' nói về NĂNG LỰC ĐANG CÓ của bạn, và nó kiểm chứng được — mở sổ ra là thấy phiếu bạn nhận hôm nay.",
         },
       ],
       speaking: [
@@ -20048,13 +20076,13 @@ const HK_WEEK_40: WeekContent = {
           guestPrompt: "Duty Manager. You asked for me — what is it?",
           speakerRole: "manager",
           targetResponse:
-            "Room 812, sir. The guest wants the cleaning charge off, and his receipt is with the file. I have named no figure.",
+            "Room 811, sir. The guest wants the cleaning charge off, and his receipt is with the file. I have named no figure.",
           helpTip:
             "DUTY MANAGER — người duy nhất ký được khoản trên hoá đơn. Với ông ấy thì mở bằng SỐ PHÒNG và VIỆC, không mở bằng lời chào. Nêu hồ sơ đã có gì, rồi nói rõ mình CHƯA đưa con số nào: tuần 38 chốt con số là của người ký, không phải của người trình. 'Receipt' /rɪˈsiːt/ — chữ p câm, đừng đọc thành ri-xép.",
         },
       ],
       reading: {
-        text: "THE LIST OF THINGS THAT ARE STILL NOT YOURS\nForty weeks did not make you a first aider, a manager, or a person who signs money away. It made you someone who knows exactly where those lines are, which is a different and more useful thing.\nThe nine numbered actions of week thirty-six are still yours, and they still wait for nobody. The recovery position is still yours, and so is switching the AED on. No house disciplines anyone for switching one on. Ask your Floor Supervisor this week where the nearest one is kept, so you are not looking for it on the day. It never goes onto a wet chest: bring him clear of the water and dry him first. Knowing where you stop is not the same as stopping early.\nYou still do not decide compensation. You propose it, and somebody above you signs it.\nYou still do not lift and you still do not carry a guest who cannot walk in a fire. If your house has a refuge area and she can move herself in her chair, you walk beside her to it. You may do that only while the air is clear and the way is flat. Most houses have no refuge area at all. If she cannot, she stays in the room with the door closed and a wet towel along the gap. If your corridor stays clear, you stay at that door until Security or the fire team reaches you. If there is smoke on your floor, she stays in the room and you go. Security gets three things and never the room number on the radio: the floor, 'cannot walk', and the state of the corridor. The number itself still has to reach them: the floor phone, or Security's ear at the stairhead.\nYou still do not name what is wrong with a guest. You say what you saw, with the hour, and you let the nurse or the doctor name it. You still leave it as found, you still log a found item, and you still come back to the guest either way.\nSaying that something is beyond what you know is not a failure. It is the sentence that keeps a guest safe and keeps your name off a report.\nNobody was ever hurt by asking. People are hurt by guessing — once, on a quiet night, because asking felt like admitting something.",
+        text: "THE LIST OF THINGS THAT ARE STILL NOT YOURS\nForty weeks did not make you a first aider, a manager, or a person who signs money away. It made you someone who knows exactly where those lines are, which is a different and more useful thing.\nThe nine numbered actions of week thirty-six are still yours, and they still wait for nobody. The recovery position is still yours, and so is switching the AED on where your house allows it. No house disciplines anyone for switching one on. Ask your Floor Supervisor this week where the nearest one is kept, and whether you may switch it on. It never goes onto a wet chest: bring him clear of the water and dry him first. Knowing where you stop is not the same as stopping early.\nYou still do not decide compensation. You propose it, and somebody above you signs it.\nYou still do not lift and you still do not carry a guest who cannot walk in a fire. If your house has a refuge area and she can move herself in her chair, you walk beside her to it. You may do that only while the air is clear and the way is flat. Most houses have no refuge area at all. If she cannot, she stays in the room with the door closed and a wet towel along the gap. If your corridor stays clear, you stay at that door until Security or the fire team reaches you. If there is smoke on your floor, she stays in the room and you go. Security gets three things and never the room number on the radio: the floor, 'cannot walk', and the state of the corridor. The number itself still has to reach them: the floor phone, or Security's ear at the stairhead.\nYou still do not name what is wrong with a guest. You say what you saw, with the hour, and you let the nurse or the doctor name it. You still leave it as found, you still log a found item, and you still come back to the guest either way.\nSaying that something is beyond what you know is not a failure, as long as you go and ask in the same minute. It is the sentence that keeps a guest safe and keeps your name off a report.\nNobody was ever hurt by asking. People are hurt by guessing — once, on a quiet night, because asking felt like admitting something.",
         questions: [
           {
             q: "Bốn mươi tuần đã làm được gì cho bạn?",
@@ -20074,23 +20102,31 @@ const HK_WEEK_40: WeekContent = {
             ],
             correct: 1,
           },
+          {
+            q: "Cháy tầng dưới, hành lang tầng bạn có khói, khách 1104 ngồi xe lăn. Làm gì?",
+            options: [
+              "Đẩy khách theo mình ra cầu thang gần nhất, càng nhanh càng tốt",
+              "Ở lại ngoài cửa phòng khách cho tới khi đội cứu hoả lên tới nơi",
+              "Khách ở lại trong phòng, đóng cửa; bạn đi, và báo an ninh tầng nào, 'cannot walk', hành lang thế nào",
+            ],
+            correct: 2,
+          },
         ],
       },
       game: [
         {
-          prompt:
-            "You have been here long enough. Surely you can take this cleaning charge off my bill.",
+          prompt: "Your trolley has cracked my suitcase. I want it replaced today.",
           options: [
             {
-              text: "You are right that I have been here a while, sir, so let me sort it out for you.",
+              text: "The Floor Supervisor can sign that, sir, if it comes to under a million and a half.",
               correct: false,
             },
             {
-              text: "I am afraid I am really not allowed to do anything at all about that, sir.",
+              text: "I am afraid a suitcase is not something we would normally cover, sir.",
               correct: false,
             },
             {
-              text: "That one is not mine, sir. The manager on duty signs it — may I ask him to come up?",
+              text: "A case is the Duty Manager's from the first dong, sir. I am photographing it now.",
               correct: true,
             },
           ],
@@ -20180,7 +20216,7 @@ const HK_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "THE NEW ONE ON YOUR FLOOR NEXT MONTH\nYour supervisor will put somebody new beside you for her first week, and she will know none of this. Everything you show her is already on these pages: the door rule of week thirty-five, the glass box of week thirty-six, the week thirty-eight docket. Glass is swept into that box: a bin with glass in it is never tipped out, and never lifted by the bag. What you do in that week decides more than the training does.\nShow them once, slowly, with your hands where they can see them. Then let them try while you stand there and say nothing.\nSaying nothing is the hard part. A person who is corrected mid-task learns that they cannot finish anything without you.\nOne thing cuts across all of this. If what they are doing is unsafe, you stop them that second — guest or no guest, mid-task or not. 'Hold on — hands off that one. I will show you.' Everything on this page is about work that is slow or untidy. None of it is about work that is dangerous. Stopping her is yours. Deciding whether it happens twice is not — an unsafe habit goes to your supervisor before you go home, with the hour. Anything that leaves a room unsafe still goes the same minute.\nCorrect them once, after, and pick the one thing that matters most. A list of six corrections teaches nothing except that they are bad at this.\nNever in front of a guest. Not a word, not a look — the guest is watching both of you, and a corrected person stops speaking English for a week.\nAnd tell them what you got wrong in your own first month. It is the only part of this they will remember on a bad day.",
+        text: "THE NEW ONE ON YOUR FLOOR NEXT MONTH\nYour supervisor will put somebody new beside you for her first week, and she will know none of this. Everything you show her is already on these pages: the door rule of week thirty-five, the glass box of week thirty-six, the week thirty-eight docket. Glass is swept into that box. Week thirty-two said tip a bin out rather than reach into it. But a bin you know has glass in it is neither tipped nor lifted by the bag. The box goes to the glass. What you do in that week decides more than the training does.\nShow them once, slowly, with your hands where they can see them. Then let them try while you stand there and say nothing.\nSaying nothing is the hard part. A person who is corrected mid-task learns that they cannot finish anything without you.\nOne thing cuts across all of this. If what they are doing is unsafe, you stop them that second — guest or no guest, mid-task or not. 'Hold on — hands off that one. I will show you.' Everything on this page is about work that is slow or untidy. None of it is about work that is dangerous. Stopping her is yours. Deciding whether it happens twice is not — an unsafe habit goes to your supervisor before you go home, with the hour. Anything that leaves a room unsafe still goes the same minute.\nCorrect them once, after, and pick the one thing that matters most. A list of six corrections teaches nothing except that they are bad at this.\nNever in front of a guest. Not a word, not a look — the guest is watching both of you, and a corrected person stops speaking English for a week.\nAnd tell them what you got wrong in your own first month. It is the only part of this they will remember on a bad day.",
         questions: [
           {
             q: "Sau khi làm mẫu một lần thì nên làm gì?",
