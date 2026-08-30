@@ -207,10 +207,10 @@ const HK_BANK: P4Bank = {
       icon: "🚿",
     },
     {
-      word: "Broken glass",
-      phonetic: "/ˈbrəʊkən ɡlɑːs ˈhæzəd/",
-      definition: "Mối nguy do mảnh kính vỡ",
-      icon: "🥃",
+      word: "Choking",
+      phonetic: "/ˈtʃəʊkɪŋ/",
+      definition: "Hóc nghẹn — không nói được, không ho được",
+      icon: "🫁",
     },
     {
       word: "Chemical spill",
