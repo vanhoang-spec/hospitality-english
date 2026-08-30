@@ -22469,6 +22469,681 @@ const GR_WEEK_33: WeekContent = {
   ],
 };
 
+const GR_WEEK_35: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 35,
+  weekTitleEn: "Negotiating Inside a Range",
+  weekTitleVi: "Đàm phán trong khung đã duyệt",
+  reviewWords: [
+    "Policy allows",
+    "The loyalty office decides",
+    "You mentioned",
+    "Would that suit you",
+    "Shall I put that down",
+    "Based on that",
+    "Not mine to open",
+    "Ask the manager",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_35_1",
+      lessonOrder: 1,
+      titleEn: "Getting the Range First",
+      titleVi: "Xin khung trước khi ngồi xuống",
+      vocabulary: [
+        {
+          word: "What if we",
+          phonetic: "/ˌwɒt ɪf ˈwiː/",
+          definition: "Hay là mình…? — mở một hướng khác thay vì đóng cửa",
+          context: "What if we look at the dates instead, sir?",
+          icon: "🔀",
+        },
+        {
+          word: "Before we sit down",
+          phonetic: "/bɪˌfɔː wi ˈsɪt daʊn/",
+          definition: "Trước khi ngồi vào bàn — đúng thời điểm phải xin khung",
+          context: "Before we sit down with him, may I know the range?",
+          icon: "⏱️",
+        },
+        {
+          word: "The range",
+          phonetic: "/ðə ˈreɪndʒ/",
+          definition:
+            "Khung quản lý đã duyệt — bạn làm việc BÊN TRONG nó, và không nói nó ra với khách",
+          context: "The range is my manager's, and she set it this morning.",
+          icon: "📐",
+        },
+        {
+          word: "What I may offer",
+          phonetic: "/wɒt aɪ meɪ ˈɒfə/",
+          definition: "Những gì tôi được phép đưa ra — hỏi trước, không đoán",
+          context: "I asked her what I may offer before I came down.",
+          icon: "✅",
+        },
+        {
+          word: "Outside what I was given",
+          phonetic: "/aʊtˌsaɪd wɒt aɪ wəz ˈɡɪvn/",
+          definition: "Ngoài khung được giao — nói ra ngay tại chỗ, rồi mang lên quản lý",
+          context: "That is outside what I was given, madam.",
+          icon: "🚧",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No. We cannot do that price.",
+          polite: "What if we look at the dates instead, sir? That part I can move.",
+          rule: "'What if we…?' mở ra một hướng khác thay vì đóng cửa. Đóng bằng 'no' thì việc duy nhất khách còn làm được là đòi gặp quản lý. Nhưng chỉ mở hướng bạn THẬT SỰ đi được — 'that part I can move' là một lời hứa, và tuần 33 đã dạy giá của một lời hứa không giữ được.",
+        },
+        {
+          rude: "I will see how much I can give you.",
+          polite: "Before we sit down, sir, may I check what I may offer with my manager?",
+          rule: "Xin khung TRƯỚC, không xin giữa chừng. Đứng trước mặt khách mà gọi điện xin phép là cho khách nghe thấy bạn không có quyền — và ai nghe thấy điều đó cũng sẽ đòi gặp người có quyền. Tuần 33 dạy nói mình đang đứng ở tầng nào; tuần này dạy BIẾT tầng đó trước khi mở miệng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Your best rate is still too high for us.",
+          targetResponse:
+            "I understand, sir. What if we look at the dates instead? That part I can move today.",
+          helpTip:
+            "Đừng đáp một con số bằng một con số — tuần 33 cấm nêu con số và tuần này không gỡ lệnh đó. Đổi TRỤC: khách đang nói về giá, bạn mở sang ngày. Và chỉ mở sang thứ bạn thật sự chuyển được. 'Instead' /ɪnˈsted/ — trọng âm ở âm tiết hai, đừng đọc thành /ˈɪnsted/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. Mr Pham wants to talk about his bill at four. Just go and see him.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Before we sit down, I need a range from our manager. I will not guess it.",
+          helpTip:
+            "Đồng nghiệp đang đẩy bạn vào bàn đàm phán tay không. Từ chối đúng cách không phải là từ chối gặp khách, mà là từ chối gặp khách KHI CHƯA CÓ KHUNG — bốn giờ thì vẫn còn kịp đi hỏi. 'Range' /reɪndʒ/ — /eɪ/ là nguyên âm đôi, và đuôi /dʒ/ phải bật ra.",
+        },
+      ],
+      game: [
+        {
+          prompt: "We were quoted less by the hotel down the road.",
+          options: [
+            {
+              text: "I am afraid that really is the best rate I am able to do for you today, sir.",
+              correct: false,
+            },
+            {
+              text: "What if we look at the room type instead, sir? I have room to move there.",
+              correct: true,
+            },
+            {
+              text: "Other hotels set their own prices, sir, and I would rather not comment on theirs.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just offer him something and close it — he is getting loud.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Not without the range. I will ask her now and be back in ten minutes.",
+              correct: true,
+            },
+            {
+              text: "Give him whatever stops the noise and we can sort the paperwork out afterwards.",
+              correct: false,
+            },
+            {
+              text: "Tell him the manager is busy and he will have to come back tomorrow morning.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE RANGE COMES FIRST\nA negotiation is not a conversation you win. It is a conversation you were sent into with something to give.\nWhat you were given is called the range. It has a top and it has a bottom, and your manager sets both before you sit down.\nGetting it is your job, not hers. You go to her with the four things from week thirty-three — what was promised, who promised it, when, and what happened instead. Then you ask three questions.\nWhat may I offer. What may I not. Who signs it.\nWrite the answers down. A range you are carrying in your head at four o'clock is a range you will stretch by half past.\nThe range is yours to work inside, and it is never yours to say out loud. Week thirty-three holds here too: you do not quote a figure. You say there is room, and you say where.\n'What if we look at the dates instead?' moves the talk onto ground you were given. 'No' moves it upstairs, to somebody who was not in the room.\nSo open a door rather than close one. But open only doors you can walk through: if you cannot move the room type, do not name the room type.\nTwo things stay outside the range whatever your manager says, because they were never hers to give. A room change is the front office's. Tier and points are the loyalty office's. Week thirty-three named both, and a negotiation does not rename them.\nAnd when a guest asks for something outside what you were given, say so in the room. 'That is outside what I was given, madam, and I will put it to my manager' is a real answer. Going quiet and hoping is not.\nYou will be back within the hour with her answer. Say the hour.",
+        questions: [
+          {
+            q: "Khung (the range) do ai đặt, và đặt lúc nào?",
+            options: [
+              "Bạn tự đặt trong lúc nói chuyện, dựa vào phản ứng của khách",
+              "Quản lý đặt, trước khi bạn ngồi vào bàn",
+              "Khách và bạn cùng thoả thuận ra trong chính buổi nói chuyện đó",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'It has a top and it has a bottom, and your manager sets both before you sit down.' Xin khung là việc của bạn; đặt khung là việc của quản lý.",
+          },
+          {
+            q: "Vì sao phải ghi khung ra giấy?",
+            options: [
+              "Vì quản lý cần chữ ký của bạn xác nhận đã nhận khung",
+              "Vì khách có quyền đòi xem tờ giấy đó khi cần",
+              "Vì khung nhớ trong đầu lúc bốn giờ thì bốn rưỡi đã nới ra",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A range you are carrying in your head at four o'clock is a range you will stretch by half past.'",
+          },
+          {
+            q: "Khách chê giá cao. Câu nào mở đúng một hướng đi tiếp?",
+            options: [
+              "'No' — nói thẳng là không được, cho gọn và dứt khoát",
+              "'What if we look at the dates instead?' — nếu ngày là thứ bạn chuyển được",
+              "Nêu luôn con số trần mà quản lý vừa duyệt cho bạn sáng nay",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'open only doors you can walk through: if you cannot move the room type, do not name the room type.' Và tuần 33 vẫn nguyên hiệu lực: không nêu con số.",
+          },
+          {
+            q: "Hai thứ nào nằm ngoài khung, dù quản lý có nói gì?",
+            options: [
+              "Đổi phòng, và hạng thẻ cùng điểm",
+              "Lời xin lỗi, và mốc thời gian phản hồi",
+              "Bữa sáng, và giờ trả phòng muộn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A room change is the front office's. Tier and points are the loyalty office's.' Đàm phán đổi được điều kiện, không đổi được ai sở hữu cái gì.",
+          },
+          {
+            q: "Khách đòi một thứ ngoài khung. Làm gì ngay tại chỗ?",
+            options: [
+              "Im lặng cho qua rồi tính sau, đừng làm hỏng không khí buổi nói chuyện",
+              "Nói thẳng là ngoài khung, sẽ trình quản lý, và hẹn giờ quay lại",
+              "Nhận lời trước cho êm, rồi về xin quản lý duyệt lại sau",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Going quiet and hoping is not.' và 'You will be back within the hour with her answer. Say the hour.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_2",
+      lessonOrder: 2,
+      titleEn: "Nothing Moves On Its Own",
+      titleVi: "Không nhượng bộ nào đi một mình",
+      vocabulary: [
+        {
+          word: "In exchange for",
+          phonetic: "/ɪn ɪksˈtʃeɪndʒ fə/",
+          definition: "Đổi lại — gắn phần bạn đưa ra với phần khách đưa lại",
+          context: "In exchange for the longer stay, I can ask about the transfer.",
+          icon: "🔁",
+        },
+        {
+          word: "If you can confirm today",
+          phonetic: "/ɪf ju kən kənˈfɜːm təˈdeɪ/",
+          definition: "Nếu anh/chị xác nhận được hôm nay — một điều kiện ghi xuống được",
+          context: "If you can confirm today, I will put it to my manager.",
+          icon: "📅",
+        },
+        {
+          word: "On one condition",
+          phonetic: "/ɒn ˌwʌn kənˈdɪʃn/",
+          definition: "Với một điều kiện — nói rõ có điều kiện trước khi nói điều kiện là gì",
+          context: "On one condition, sir: the dates cannot move.",
+          icon: "☝️",
+        },
+        {
+          word: "That part I can do",
+          phonetic: "/ðæt ˌpɑːt aɪ kən ˈduː/",
+          definition: "Phần đó thì tôi làm được — tách phần làm được ra khỏi phần không",
+          context: "That part I can do today, madam.",
+          icon: "🧩",
+        },
+        {
+          word: "Provided the dates hold",
+          phonetic: "/prəˈvaɪdɪd ðə ˈdeɪts həʊld/",
+          definition: "Miễn là ngày giữ nguyên — nhắc lại điều kiện bằng chính lời khách",
+          context: "Provided the dates hold, I can ask about the fee.",
+          icon: "🔒",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Okay, I give you the transfer.",
+          polite: "In exchange for the longer stay, I can ask about the transfer, sir.",
+          rule: "Một nhượng bộ đi một mình là một nhượng bộ sẽ bị đòi thêm. Gắn mỗi thứ bạn đưa ra với một thứ khách đưa lại — và thứ khách đưa lại phải là thứ họ trao được thật: ngày ở, số đêm, một xác nhận hôm nay. 'Thiện chí' không phải một điều kiện.",
+        },
+        {
+          rude: "You confirm today then I do it.",
+          polite: "If you can confirm today, madam, I will put it to my manager this afternoon.",
+          rule: "Câu điều kiện loại 1: điều kiện đứng trước, việc của bạn đứng sau — và việc của bạn là ĐỀ XUẤT, không phải kết quả. 'I will put it to my manager' thì hứa được; 'I will get it for you' thì không, vì tuần 33 đã đặt chữ ký ở chỗ khác.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Fine — but I want the airport transfer thrown in.",
+          targetResponse:
+            "In exchange for the two extra nights, I can ask about the transfer, sir.",
+          helpTip:
+            "Khách vừa xin thêm một thứ. Đừng gật, đừng lắc — GẮN nó với thứ khách vừa đưa ra. Và chú ý động từ — bạn XIN HỎI về xe, bạn không SẮP XẾP xe. Xe đưa đón là của concierge, tuần 31 đã đặt ranh giới đó và một cuộc đàm phán không dời được nó. 'Exchange' /ɪksˈtʃeɪndʒ/ — trọng âm ở âm tiết hai.",
+        },
+        {
+          guestPrompt: "I can probably move my flight to Sunday.",
+          targetResponse:
+            "Provided the dates hold, madam, I can put the cancellation fee to my manager.",
+          helpTip:
+            "Khách vừa đưa điều kiện — nhận nó bằng 'provided', bằng chính chữ của họ, rồi mới nói phần của mình. Chữ probably của khách chưa phải một cam kết, nên phần bạn đưa lại cũng phải mềm tương ứng. 'Provided' /prəˈvaɪdɪd/ — đuôi -ed sau /d/ đọc thành /ɪd/, thành ba âm tiết.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Could you throw in breakfast as well?",
+          options: [
+            {
+              text: "Of course, madam — breakfast is included from tomorrow for the rest of your stay.",
+              correct: false,
+            },
+            {
+              text: "If you can confirm today, madam, I will put breakfast to my manager as well.",
+              correct: true,
+            },
+            {
+              text: "Breakfast is not something I am able to discuss with you at this desk, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. She has agreed to the dates. Shall I write in the free dinner too?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — she gave us the dates, so the dinner is the least we can do now.",
+              correct: false,
+            },
+            {
+              text: "Write it in, and let the Duty Manager take it out again if she disagrees.",
+              correct: false,
+            },
+            {
+              text: "The dinner was never in the range. It goes to the manager before it goes in writing.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "WHAT YOU GIVE, AND WHAT COMES BACK\nEvery concession has two halves. A concession with only one half is not a negotiation. It is a gift, and a gift teaches the guest to ask again.\nSo say both halves in one breath. 'In exchange for the longer stay, I can ask about the transfer.' The guest hears the two together, and neither half stands alone.\nWhat comes back must be something the guest can actually hand over. Dates. Nights. A confirmation today. A signature this afternoon.\nGoodwill is not a condition. 'If you are happy with that' gives you nothing you can write down, and nothing you can carry back to your manager.\nWatch the verb on your own half. 'I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise, and week thirty-three showed you whose signature that needs.\nThe difference is four letters. A guest who is told 'arrange' and then hears 'my manager said no' has been let down twice by the same person.\nTake the guest's condition in their own words before you answer. 'Provided the dates hold' repeats back exactly what they offered, so nobody remembers it differently at six o'clock.\nAnd when the guest's half is soft, keep your half soft to match. They said 'probably Sunday'. So you say 'I can put it to my manager', not 'it is done'.\nMatch soft with soft, and firm with firm. That is the whole of it.\nOne thing never trades, whatever else moves. You do not trade away something the guest was already owed. Restoring what should have happened is not a concession, and week thirty-three said not to count it.\nCounting it twice is how a recovery turns into a second complaint.",
+        questions: [
+          {
+            q: "Vì sao một nhượng bộ không kèm điều kiện lại nguy hiểm?",
+            options: [
+              "Vì khách sạn mất tiền ngay trong lần đầu tiên đưa ra",
+              "Vì quản lý sẽ không duyệt bất cứ thứ gì cho không",
+              "Vì nó dạy khách rằng cứ đòi là được, và lần sau khách đòi tiếp",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'It is a gift, and a gift teaches the guest to ask again.'",
+          },
+          {
+            q: "Thứ khách đưa lại phải như thế nào?",
+            options: [
+              "Phải là thứ khách trao được thật: ngày, số đêm, một xác nhận hôm nay",
+              "Phải là một cam kết sẽ quay lại nghỉ vào mùa sau",
+              "Phải là thiện chí và sự hài lòng của khách với phương án",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Goodwill is not a condition.' Điều kiện phải ghi xuống được và mang về cho quản lý được.",
+          },
+          {
+            q: "'I can ask about the transfer' khác 'I will arrange the transfer' ở chỗ nào?",
+            options: [
+              "Câu đầu lịch sự hơn, còn nghĩa thì như nhau",
+              "Câu đầu là đề xuất; câu sau là lời hứa cần chữ ký của người khác",
+              "Câu sau dùng cho khách quen, câu đầu dùng cho khách mới",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: ''I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise.'",
+          },
+          {
+            q: "Khách nói 'probably Sunday'. Phần của bạn nên chắc tới đâu?",
+            options: [
+              "Chắc hẳn — chốt luôn để khách khỏi đổi ý vào phút chót",
+              "Không trả lời gì cho tới khi khách đổi 'probably' thành 'yes'",
+              "Mềm tương ứng — 'I can put it to my manager', không phải 'it is done'",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Match soft with soft, and firm with firm. That is the whole of it.'",
+          },
+          {
+            q: "Thứ duy nhất không bao giờ đem ra đổi là gì?",
+            options: [
+              "Một bữa tối mà quản lý đã duyệt sẵn trong khung",
+              "Thứ khách vốn đã được hưởng — trả lại không phải là nhượng bộ",
+              "Quyền được gặp Duty Manager của khách khi họ yêu cầu",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'You do not trade away something the guest was already owed.' Tuần 33: trả lại thứ đáng ra phải có thì không đếm là bồi thường.",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_3",
+      lessonOrder: 3,
+      titleEn: "However — The Part That Does Not Move",
+      titleVi: "'However' — phần không dời được",
+      vocabulary: [
+        {
+          word: "However",
+          phonetic: "/haʊˈevə/",
+          definition: "Tuy nhiên — nối hai vế ngược nhau, trang trọng hơn 'but'",
+          context: "I can ask about the room; however, the rate cannot change.",
+          icon: "↔️",
+        },
+        {
+          word: "Although",
+          phonetic: "/ɔːlˈðəʊ/",
+          definition: "Mặc dù — đặt cái khó lên trước, cái làm được xuống sau",
+          context: "Although the dates are tight, I can put it to my manager.",
+          icon: "⚖️",
+        },
+        {
+          word: "The part I cannot move",
+          phonetic: "/ðə ˌpɑːt aɪ ˌkænɒt ˈmuːv/",
+          definition: "Phần tôi không dời được — chỉ nêu MỘT phần, đừng nêu ba",
+          context: "The rate is the part I cannot move, madam.",
+          icon: "🧱",
+        },
+        {
+          word: "Not mine to trade",
+          phonetic: "/ˌnɒt ˈmaɪn tə ˈtreɪd/",
+          definition: "Không phải của tôi để đem đổi — cửa vẫn mở, chỉ không phải cửa của bạn",
+          context: "Your tier is not mine to trade, sir.",
+          icon: "🚪",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Yes but no, is difficult.",
+          polite: "I can ask about the late check-out; however, the rate cannot change, sir.",
+          rule: "'However' nối hai vế ngược nhau trang trọng hơn 'but', và nó buộc bạn nói vế CÓ trước. Nói vế không được trước thì khách đã đứng dậy trước khi nghe hết câu. 'However' đứng sau dấu chấm phẩy hoặc mở một câu mới, và luôn có dấu phẩy theo sau.",
+        },
+        {
+          rude: "Dates hard, but maybe we try something.",
+          polite: "Although the dates are tight, madam, I can put the suite to my manager.",
+          rule: "Mệnh đề nhượng bộ 'Although…' đặt cái khó lên trước rồi mới đưa ra cái làm được — cấu trúc ba mệnh đề của B1.1. Và đừng dùng 'although' rồi lại thêm 'but' ở vế sau: tiếng Việt cho phép 'tuy… nhưng…', tiếng Anh chỉ được một.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So you can do the suite, the transfer and the rate?",
+          targetResponse:
+            "I can put the suite to my manager; however, the rate cannot change, sir.",
+          helpTip:
+            "Khách vừa gộp ba thứ vào một câu để lấy về một chữ đồng ý. Tách ra: nói phần LÀM ĐƯỢC trước, rồi 'however', rồi đúng MỘT phần không dời. Đừng liệt kê cả ba phần không được — một lời từ chối rõ dễ nghe hơn ba. 'However' /haʊˈevə/ — trọng âm ở giữa, và ngắt nhẹ sau nó.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. He is asking for his tier to be restored. Can we just do it?",
+          speakerRole: "colleague",
+          targetResponse:
+            "His tier is not mine to trade. That one is the loyalty office's, and always was.",
+          helpTip:
+            "Đồng nghiệp đang hỏi bạn một câu mà bạn không có quyền trả lời. Trả lời bằng QUYỀN SỞ HỮU, không bằng cảm tính: tuần 33 đã đặt hạng thẻ và điểm ở loyalty office, và một cuộc đàm phán không dời được nó. 'Trade' /treɪd/ — /eɪ/ là nguyên âm đôi, đừng đọc thành /tred/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Everything we asked for, then? Yes or no.",
+          options: [
+            {
+              text: "Yes to all of it, madam — I will confirm the whole thing in writing tonight.",
+              correct: false,
+            },
+            {
+              text: "The suite I can put to my manager; however, the rate is fixed, madam.",
+              correct: true,
+            },
+            {
+              text: "I am afraid the answer to all of that is going to have to be no, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just say although the rate is fixed but we will try our best.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Not both — 'although' already carries the 'but'. Say one or the other.",
+              correct: true,
+            },
+            {
+              text: "That sounds right to me: it softens the rate and still leaves us room.",
+              correct: false,
+            },
+            {
+              text: "Turn it round so the guest hears the good half of it first.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE HALF THAT MOVES, AND THE HALF THAT DOES NOT\nA guest in a negotiation will gather everything into one question and ask for one word back. 'So you can do all of that?' There is no honest yes.\nAnswer in two halves, and put the half that moves first. 'I can put the suite to my manager; however, the rate cannot change.'\nThe order matters more than the words. A guest who hears the refusal first stops listening, and the part you could have given dies in their ear.\n'However' is the hinge. It is more formal than 'but', it belongs in this kind of conversation, and it takes a comma after it every time.\n'Although' does the same work from the front. Put the difficulty first and the offer last, which is where a guest remembers it.\n'Although the dates are tight, I can put the suite to my manager.'\nOne warning for us. Vietnamese lets you say tuy and nhung in the same sentence. English does not. 'Although the rate is fixed, but we will try' is one word too many, and it is the commonest sentence in this room.\nPick one hinge and stop.\nNow the harder half. Some things are not fixed by your manager at all, because they were never hers. A room change is the front office's. Tier and points are the loyalty office's. Any refund is the Duty Manager's.\nSay which, and say it plainly. 'Your tier is not mine to trade' tells the guest who owns it, and it does not pretend the door is shut. It is open. It is just not your door.\nAnd say only one refusal at a time. Three refusals in one breath sound like a policy. One sounds like a person.",
+        questions: [
+          {
+            q: "Khách gộp mọi thứ vào một câu hỏi. Trả lời thế nào?",
+            options: [
+              "Trả lời một chữ 'yes' rồi nêu các điều kiện ở câu tiếp theo",
+              "Hai vế: vế LÀM ĐƯỢC trước, rồi 'however', rồi vế không dời",
+              "Nói hết các phần không làm được trước cho khách khỏi hy vọng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'put the half that moves first' — và 'A guest who hears the refusal first stops listening.'",
+          },
+          {
+            q: "Vì sao thứ tự hai vế quan trọng hơn từ ngữ?",
+            options: [
+              "Vì tiếng Anh bắt buộc mệnh đề khẳng định phải đứng trước",
+              "Vì quản lý chỉ duyệt biên bản viết đúng theo thứ tự đó",
+              "Vì nghe vế từ chối trước thì khách thôi nghe, và vế cho được cũng mất theo",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'the part you could have given dies in their ear.'",
+          },
+          {
+            q: "Lỗi tiếng Anh mà người Việt hay mắc nhất trong bài này là gì?",
+            options: [
+              "Dùng 'although' và 'but' trong cùng một câu",
+              "Đặt 'however' ở cuối câu thay vì đầu câu",
+              "Quên dấu phẩy sau 'although' khi nó mở đầu câu",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Vietnamese lets you say tuy and nhung in the same sentence. English does not.' Chọn MỘT bản lề rồi dừng.",
+          },
+          {
+            q: "'Your tier is not mine to trade' nói với khách điều gì?",
+            options: [
+              "Rằng cửa đã đóng và khách không nên hỏi thêm nữa",
+              "Rằng cửa vẫn mở, chỉ là nó không phải cửa của bạn",
+              "Rằng hạng thẻ của khách đã hết hạn từ trước rồi",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'It is open. It is just not your door.'",
+          },
+          {
+            q: "Vì sao chỉ nói MỘT lời từ chối một lúc?",
+            options: [
+              "Vì mỗi lời từ chối phải ghi thành một dòng riêng trong complaint log",
+              "Vì khách chỉ nhớ được đúng một thông tin trong mỗi lượt nói",
+              "Vì ba lời từ chối liền nghe như một chính sách; một lời nghe như một con người",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Three refusals in one breath sound like a policy. One sounds like a person.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_4",
+      lessonOrder: 4,
+      titleEn: "Closing It, and Writing It Down",
+      titleVi: "Chốt, và ghi lại ngay tại bàn",
+      vocabulary: [
+        {
+          word: "Shall we agree",
+          phonetic: "/ʃəl wi əˈɡriː/",
+          definition: "Ta chốt thế nhé — mời khách kết thúc cùng phía với bạn",
+          context: "Shall we agree on those two, sir, and I will write them down?",
+          icon: "🤝",
+        },
+        {
+          word: "Once you agree",
+          phonetic: "/wʌns ju əˈɡriː/",
+          definition: "Khi anh/chị đồng ý — nói rõ điều gì kích hoạt việc của bạn",
+          context: "Once you agree, I will put it to my manager this afternoon.",
+          icon: "▶️",
+        },
+        {
+          word: "Before you leave the desk",
+          phonetic: "/bɪˌfɔː ju ˈliːv ðə ˈdesk/",
+          definition: "Trước khi anh/chị rời quầy — mốc phải có giấy trắng mực đen",
+          context: "You will have it in writing before you leave the desk.",
+          icon: "📄",
+        },
+        {
+          word: "Back to my manager",
+          phonetic: "/ˌbæk tə maɪ ˈmænɪdʒə/",
+          definition: "Quay lại chỗ quản lý — dành cho thứ xin thêm ở phút chót",
+          context: "Anything above that goes back to my manager, madam.",
+          icon: "↩️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Okay finish. We do it.",
+          polite: "Shall we agree on those two, sir, and I will write them down now?",
+          rule: "'Shall we…?' mời khách chốt CÙNG PHÍA với bạn, khác hẳn 'Do you accept?' — câu kia đặt hai người ở hai đầu bàn. Và chỉ chốt đúng phần đã thoả thuận: đọc lại hai thứ, đừng gộp cả thứ còn treo vào cho gọn.",
+        },
+        {
+          rude: "You say yes then I ask boss fast.",
+          polite: "Once you agree, madam, I will put it to my manager before six.",
+          rule: "'Once you agree' nói rõ điều gì kích hoạt việc của bạn — khách biết quả bóng đang ở chân ai. Và luôn kèm một MỐC: tuần 32 lẫn tuần 33 đều đã dạy rằng chuyển việc mà không có giờ thì mới chỉ là chỉ tay.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "All right. I think we can work with that.",
+          targetResponse:
+            "Shall we agree on those two, sir? You will have it in writing before you leave.",
+          helpTip:
+            "Đừng để một thoả thuận sống bằng miệng: tuần 33 đã dạy rằng khách đã bị lỡ hẹn một lần thì không nhận lời hứa miệng thứ hai. Chốt xong là viết ngay tại bàn, hai bản, khách giữ một. Và chỉ chốt hai thứ đã thoả thuận — phần còn treo thì nói rõ là còn treo. 'Agree' /əˈɡriː/ — trọng âm ở âm tiết hai.",
+        },
+        {
+          guestPrompt: "And one more thing — I want the spa included too.",
+          targetResponse: "That goes back to my manager, madam. I will have her answer before six.",
+          helpTip:
+            "Câu 'một điều nữa' ở phút chót là phép thử cổ điển, và nó đến ĐÚNG lúc bạn đang muốn xong việc. Đừng nới khung ra để được về sớm. Nói nó thuộc về ai, rồi nói mấy giờ có trả lời — hai vế, không bỏ vế nào. 'Answer' /ˈɑːnsə/ — chữ w câm.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Yes, that works for me.",
+          options: [
+            {
+              text: "Wonderful, madam. I will send you an email tonight confirming everything we discussed.",
+              correct: false,
+            },
+            {
+              text: "Shall we agree on those two, madam? I will write them down now.",
+              correct: true,
+            },
+            {
+              text: "Thank you, madam. I will let the front office know and they will take it on.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. He signed. Shall I close the recovery case?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — he signed, so there is nothing further for us to do on it now.",
+              correct: false,
+            },
+            {
+              text: "Close it tomorrow, after the manager has countersigned the sheet he was given.",
+              correct: false,
+            },
+            {
+              text: "Not yet. The manager has not answered on the spa, and he is waiting on that.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "CLOSING WITHOUT LOSING IT\nA negotiation that ends in the air ends twice. Once at the desk, and again on the telephone tomorrow, from the beginning.\nSo close it out loud. 'Shall we agree on those two?' invites the guest to finish it with you, on the same side of the desk. 'Do you accept?' puts you on opposite sides, and there is nothing to gain there.\nClose only what is actually agreed. Name the two things. Leave the third where it is, and say out loud that it is still open.\nThen write it before they stand up. Everything agreed goes on paper at the desk, two copies, and the guest keeps one. Week thirty-three set that rule for complaints, and it holds harder here, because a negotiation has more moving parts than a complaint does.\nWrite what was agreed, who agreed it, and when it happens. No figure. The figure is on the line your manager signs.\nExpect the last request. It arrives after the handshake, when you want to be finished, and it is always small. 'And the spa as well?'\nThis is the moment ranges get stretched. Do not stretch it to get home. 'That goes back to my manager, madam, and I will have her answer before six' costs you nothing and keeps the paper true.\nSay the hour every time. A promise with no hour on it is the promise week thirty-three spent four lessons taking away from you.\nAnd the case stays open until the guest says it is closed. Not when they sign. Not when the manager answers. When the guest says so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who negotiates with you and not with the internet.",
+        questions: [
+          {
+            q: "'Shall we agree on those two?' khác 'Do you accept?' ở chỗ nào?",
+            options: [
+              "Câu đầu trang trọng hơn nên hợp với khách VIP hơn",
+              "Câu đầu đặt hai người cùng một phía; câu sau đặt hai bên hai đầu bàn",
+              "Câu đầu dùng khi quản lý đã duyệt, câu sau dùng khi chưa duyệt",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'invites the guest to finish it with you, on the same side of the desk.'",
+          },
+          {
+            q: "Chốt xong thì viết lúc nào?",
+            options: [
+              "Ngay tại bàn, trước khi khách đứng dậy, hai bản, khách giữ một",
+              "Tối nay bằng email, để có dấu thời gian rõ ràng hơn",
+              "Sau khi quản lý đã duyệt xong toàn bộ các phần còn treo",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Everything agreed goes on paper at the desk, two copies, and the guest keeps one.'",
+          },
+          {
+            q: "Tờ giấy đó KHÔNG được có thứ gì?",
+            options: ["Tên của người đã đồng ý", "Một con số", "Thời điểm sẽ thực hiện"],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'No figure. The figure is on the line your manager signs.' Tuần 33 đặt luật này và tuần 35 không gỡ.",
+          },
+          {
+            q: "Khách xin thêm một thứ sau khi đã bắt tay. Xử lý ra sao?",
+            options: [
+              "Đồng ý cho nhanh, vì phần đó nhỏ và buổi làm việc đã tốt đẹp",
+              "Nói rằng đã chốt xong rồi và không nhận thêm yêu cầu nào nữa",
+              "Nói nó thuộc về quản lý, và nói rõ mấy giờ sẽ có câu trả lời",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'This is the moment ranges get stretched. Do not stretch it to get home.'",
+          },
+          {
+            q: "Hồ sơ đóng lại khi nào?",
+            options: [
+              "Khi khách ký vào bản thoả thuận ngay tại bàn",
+              "Khi quản lý trả lời xong phần còn treo lại",
+              "Khi chính khách nói rằng đã xong",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Not when they sign. Not when the manager answers. When the guest says so.'",
+          },
+        ],
+      },
+    },
+  ],
+};
+
 const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
@@ -22492,6 +23167,7 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "GR-32": GR_WEEK_32,
   "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
+  "GR-35": GR_WEEK_35,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
@@ -22547,6 +23223,7 @@ const REGISTRY: Record<string, WeekContent> = {
   "GR-32": GR_WEEK_32,
   "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
+  "GR-35": GR_WEEK_35,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
   "FO-38": FO_WEEK_38,
