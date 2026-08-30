@@ -1179,6 +1179,56 @@ async function lintReadingSentenceLength() {
   );
 }
 
+// ── Layer I · cặp lâm sàng không được đứng chung một câu ─────────────────
+// Hai lần trong đợt biên tập tuần cấp cứu, một mệnh đề đúng ngữ pháp và đúng
+// thuật ngữ đã gắn TƯ THẾ NẰM NGHIÊNG vào khách KHÔNG THỞ. Đó là sai điều trị,
+// không phải sai văn phong, và không lớp nào ở trên nhìn thấy nó: câu đúng cú
+// pháp, từ vựng đúng, độ dài đạt. Lớp này chỉ đọc nghĩa ở mức thô nhất — hai
+// khái niệm loại trừ nhau xuất hiện trong cùng một câu mà không có phủ định.
+const SENTENCE_SPLIT = /(?<=[.!?])\s+|\n/;
+const CLINICAL_CLASHES: { a: RegExp; b: RegExp; negate: RegExp; why: string }[] = [
+  {
+    a: /\b(recovery position|side position|onto (his|her|their) side|on (his|her|their) side|nằm nghiêng|lật nghiêng)\b/i,
+    b: /\b(not breathing|NOT BREATHING|no breathing|không thở|ngừng thở)\b/i,
+    negate: /\b(never|not for|KHÔNG BAO GIỜ|không dành cho|only when .{0,20}breathing)\b/i,
+    why: "the side position is for a guest who IS breathing; on a non-breathing guest it replaces compressions",
+  },
+  {
+    a: /\b(AED|defibrillator)\b/i,
+    b: /\b(wet chest|lying in water|in the water|trong nước|ngực ướt)\b/i,
+    negate: /\b(never|not|clear of|bring (him|her|them) clear|KHÔNG|dry the chest)\b/i,
+    why: "an AED must never go onto a wet chest or a guest lying in water",
+  },
+  {
+    a: /\b(chest compressions?|push(ing)? (hard|on the chest)|ép tim)\b/i,
+    b: /\b(on the bed|trên giường|mattress|đệm)\b/i,
+    negate: /\b(not hard|onto the floor|xuống sàn|slide (him|her|them))\b/i,
+    why: "compressions on a mattress do nothing; the guest comes onto the floor first",
+  },
+];
+
+function lintClinicalClashes() {
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons) {
+      const surfaces: string[] = [
+        lesson.reading.text,
+        ...lesson.grammar.flatMap((g) => [g.rule, g.polite, g.rude]),
+        ...lesson.speaking.flatMap((s) => [s.targetResponse, s.helpTip]),
+        ...lesson.vocabulary.flatMap((v) => [v.definition, v.context]),
+      ];
+      for (const surface of surfaces)
+        for (const sentence of surface.split(SENTENCE_SPLIT)) {
+          for (const c of CLINICAL_CLASHES) {
+            if (!c.a.test(sentence) || !c.b.test(sentence)) continue;
+            if (c.negate.test(sentence)) continue;
+            errors.push(
+              `[I clinical-clash] ${key}/${lesson.lessonId}: ${c.why} — "${sentence.trim().slice(0, 90)}"`,
+            );
+          }
+        }
+    }
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1540,6 +1590,7 @@ lintDeadBankEntries(P4_BANKS as unknown as BankSet);
 await lintDeadArcadeField();
 await lintHelpTipQuotes();
 await lintReadingSentenceLength();
+lintClinicalClashes();
 reportStaleDebt();
 
 let sentenceCount = 0;
