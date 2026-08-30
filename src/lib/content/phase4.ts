@@ -2242,8 +2242,8 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       speaking: [
         sp(
           "Good evening. This is our first time here.",
-          `Welcome, madam. The ${lo(s1)} is what makes this place special.`,
-          "Vào vai tự nhiên. Khách chưa hỏi gì thì bạn mở chuyện bằng điều đáng tự hào nhất.",
+          `Welcome, madam. Would you like the short version of the ${lo(s1)}?`,
+          "Vào vai tự nhiên. Khách chưa hỏi thì bạn MỜI kể, không kể luôn — tuần 31 đặt luật đó và tuần này không gỡ nó.",
         ),
         sp(
           "That sounds nice. We are quite particular though.",
@@ -2303,8 +2303,8 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         ),
         g(
           `Policy say no more.`,
-          `Our policy allows compensation, however I can ${lo(t1)} in addition.`,
-          "'However' nối giới hạn chính sách với nhượng bộ bổ sung — cấu trúc đàm phán của tuần 35.",
+          `Our policy allows compensation, however my manager decides whether we ${lo(t1)}.`,
+          "'However' nối giới hạn chính sách với phần bạn ĐỀ XUẤT. Tuần 33 đặt mọi khoản khỏi hoá đơn dưới Duty Manager — 'I can' ở đây là lời hứa bạn không giữ được.",
         ),
       ],
       speaking: [
@@ -2320,17 +2320,18 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         ),
       ],
       reading: read(
-        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — acknowledge the ${lo(d1)}, state what policy allows, then offer to ${lo(t1)}. ${cap(lx.pron.poss)} trainer stops the exercise and says nothing needs changing.`,
+        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — the four things first, then the ${lo(d1)}, and then what policy allows. Only then comes the offer ${lx.pron.subj} will put to ${lx.pron.poss} manager. ${cap(lx.pron.poss)} trainer stops the exercise and says nothing needs changing.`,
         [
           {
             q: "Thứ tự xử lý đúng là gì?",
             options: [
-              "Thừa nhận → nêu chính sách → đề nghị phương án",
+              "Bốn dữ kiện → thừa nhận → nêu chính sách → đề xuất lên quản lý",
               "Đề nghị tiền → xin lỗi",
               "Nêu chính sách → từ chối",
             ],
             correct: 0,
-            explanation: "Đề nghị bồi thường trước khi thừa nhận sẽ bị hiểu là mua sự im lặng.",
+            explanation:
+              "Đề nghị bồi thường trước khi có bốn dữ kiện là đoán, và trước khi thừa nhận thì bị hiểu là mua sự im lặng. Con số vẫn là của quản lý.",
           },
           {
             q: "Khi khách nói 'xin lỗi không giải quyết được', nên làm gì?",
@@ -2937,11 +2938,17 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
         labelVi: "Nêu quyền lợi hội viên được kỳ vọng, không xác nhận trách nhiệm",
-        any: ["lounge access", "loyalty", "member", "expect", "entitled"],
+        any: [
+          "lounge access",
+          "loyalty",
+          "our members",
+          "are told to expect",
+          "part of the programme",
+        ],
       },
       {
         labelVi: "Nêu mốc thời gian sẽ liên hệ lại",
-        any: ["within", "by ", "today", "48 hours", "forty-eight"],
+        any: ["within", "by tomorrow", "by this evening", "48 hours", "forty-eight", "same day"],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
