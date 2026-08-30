@@ -19331,7 +19331,7 @@ const HK_WEEK_39: WeekContent = {
           word: "Straight after this",
           phonetic: "/ˌstreɪt ˈɑːftə ðɪs/",
           definition: "Ngay sau việc đang làm — một mốc bạn giữ được",
-          context: "I am with you straight after this room, sir.",
+          context: "I will be with you straight after this room, sir.",
           icon: "⏭️",
         },
         {
@@ -19353,14 +19353,14 @@ const HK_WEEK_39: WeekContent = {
           word: "On the list",
           phonetic: "/ˌɒn ðə ˈlɪst/",
           definition: "Đã có tên trong danh sách chờ",
-          context: "Your room is on the list, madam, and it is next.",
+          context: "Your room is on the list, madam, and I will knock when I start it.",
           icon: "📋",
         },
       ],
       grammar: [
         {
           rude: "I am busy. Wait.",
-          polite: "I am in another room, madam. I am with you straight after this one.",
+          polite: "I am in another room, madam. I will be with you straight after this one.",
           rule: "'I am busy' chỉ nói về bạn; 'I am in another room' nói LÝ DO — và lý do là thứ khách chấp nhận được. Nêu luôn một mốc giữ được: 'straight after this one'.",
         },
         {
@@ -19373,31 +19373,39 @@ const HK_WEEK_39: WeekContent = {
         {
           guestPrompt: "I have been waiting since eleven. The room next door was done before mine.",
           targetResponse:
-            "I am sorry you have waited, madam. There are two rooms ahead of yours, and yours is next after them.",
+            "I am sorry you have waited, madam. There are two rooms ahead of yours, and I will knock when I start yours.",
           helpTip:
             "Xin lỗi vì KHÁCH ĐÃ PHẢI CHỜ, đừng xin lỗi vì thứ tự — thứ tự của bạn đúng, và tuần 38 cấm nhận một lỗi chưa ai xác lập. Cũng đừng nói phòng bên là phòng gì: đó là chuyện của khách khác. 'Waited' /ˈweɪtɪd/ — đuôi -ed sau /t/ thành một âm tiết riêng /ɪd/.",
         },
+        {
+          guestPrompt: "Housekeeping desk. You sound busy — what is going on up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Three rooms waiting and none started, and 812 is a departure. Can you send me a second pair of hands?",
+          helpTip:
+            "ĐỒNG NGHIỆP ở bàn buồng phòng. Nêu CON SỐ trước rồi mới xin người — ba phòng chờ, chưa bắt đầu phòng nào. Gọi lúc chậm ba phòng, đừng đợi tới sáu: người lên tới tầng đã mất mười phút. 'Hands' /hændz/ — đuôi /dz/ rung, đừng nuốt.",
+        },
       ],
       reading: {
-        text: "THE FLOOR WHEN EVERYTHING ARRIVES AT ONCE\nThree rooms want you and the radio is going. The order is not first come first served.\nThe top of it is not new. Week thirty-six comes first: a guest who is not breathing, or a smell of burning. Then week thirty-five: an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. Then the room the desk is waiting for, then everything else. And the guest standing in front of you is ANSWERED first, always — answered, not served.\nThe radio is answered, always — 'standby' takes two seconds and costs you nothing. What can wait is what the radio asked you to do, not the radio itself.\nSay the order out loud. A guest who hears 'straight after this room' stops counting; a guest who hears nothing starts.\nNever do the loudest room first. That teaches a floor that raising your voice moves you up the list. Tell that guest the truth instead: 'two rooms are ahead of yours, madam, and I will knock when I start it'.\nIf three rooms are waiting and none is started, ask for a second pair of hands. That call goes to the desk, not to the girl next door. Call when you are three behind, not when you are six.\nThe second pair of hands takes ten minutes to reach your floor, and ten minutes is what you no longer have.\nAnd whatever else moves, the trolley does not stand alone in a corridor. Chemicals at a child's height, and your floor keys on it.\nWrite down what you skipped. A room done out of turn is fine; a room skipped and unwritten is not.",
+        text: "THE FLOOR WHEN EVERYTHING ARRIVES AT ONCE\nThree rooms want you and the radio is going. The order is not first come first served.\nThe top of it is not new. Week thirty-six comes first: a guest who is not breathing, or a smell of burning. Then week thirty-five: an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. Then the room the desk is waiting for, then everything else. And once nothing on this floor is an emergency, the guest standing in front of you is ANSWERED first — answered, not served.\nThe radio is answered too, unless week thirty-six has taken it out of your hand: a gas smell means no talk button at all. 'Standby' takes two seconds and costs you nothing. What can wait is what the radio asked you to do, not the radio itself.\nA room with an agreed service window keeps its hour — that is a promise from week thirty-five, not a place in this queue.\nSay the order out loud. A guest who hears 'straight after this room' stops counting; a guest who hears nothing starts.\nNever do the loudest room first. That teaches a floor that raising your voice moves you up the list. Hold your order, and telephone the desk that a guest on your floor is pushing. Who moves up the list is your supervisor's call, not the loudest guest's. Tell that guest the truth instead: 'two rooms are ahead of yours, madam, and I will knock when I start it'.\nIf three rooms are waiting and none is started, ask for a second pair of hands. That call goes to the desk, not to the attendant on the next section. Call when you are three behind, not when you are six.\nThe second pair of hands takes ten minutes to reach your floor. At three behind you still have those ten minutes; at six you do not.\nAnd whatever else moves, the trolley does not stand alone in a corridor. Chemicals stay on the locked shelf, and the keys stay on you — never on the trolley, not for one room.\nWrite down what you skipped. A room done out of turn is fine; a room skipped and unwritten is not.",
         questions: [
           {
             q: "Ba phòng cùng chờ và bộ đàm đang gọi. Thứ tự đúng là gì?",
             options: [
+              "Xong việc khẩn đã; rồi khách trước mặt được TRẢ LỜI ngay, chưa phải dọn ngay",
               "Bộ đàm được LÀM trước, vì người gọi không nhìn thấy mình đang bận việc gì",
-              "Việc mất an toàn trước; khách trước mặt thì TRẢ LỜI ngay, chưa phải dọn ngay",
               "Phòng nào gọi trước thì làm trước, như thế mới công bằng",
             ],
-            correct: 1,
+            correct: 0,
           },
           {
             q: "Chậm mấy phòng thì gọi thêm người phụ?",
             options: [
               "Sáu phòng, khi đã chắc chắn là mình không thể tự làm hết được nữa",
-              "Ba phòng — vì người tới phụ mất mười phút mới lên tới tầng",
               "Khi khách bắt đầu phàn nàn xuống bộ phận lễ tân dưới sảnh",
+              "Ba phòng — vì người tới phụ mất mười phút mới lên tới tầng",
             ],
-            correct: 1,
+            correct: 2,
           },
         ],
       },
@@ -19416,6 +19424,24 @@ const HK_WEEK_39: WeekContent = {
             {
               text: "I will come back to yours a little later on, madam, once I have finished all the rest.",
               correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Floor Supervisor. Why is 806 done before 802?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "The lady in 806 came and asked me twice, so I thought it was easier to start there.",
+              correct: false,
+            },
+            {
+              text: "I did not really notice the order this morning, but both of them are finished now.",
+              correct: false,
+            },
+            {
+              text: "802 had a Do Not Disturb on it at nine, so I moved on and I have written it down.",
+              correct: true,
             },
           ],
         },
@@ -19443,7 +19469,7 @@ const HK_WEEK_39: WeekContent = {
         },
         {
           word: "Either way",
-          phonetic: "/ˈaɪðə ˌweɪ/",
+          phonetic: "/ˌaɪðə ˈweɪ/",
           definition: "Dù kết quả thế nào đi nữa",
           context: "Either way I will come back to you before six.",
           icon: "↔️",
@@ -19452,7 +19478,7 @@ const HK_WEEK_39: WeekContent = {
           word: "Not that, but this",
           phonetic: "/ˌnɒt ðæt bət ˈðɪs/",
           definition: "Không phải cái đó, nhưng có cái này",
-          context: "Not that, but this — that is what a guest needs to hear.",
+          context: "Not that one, madam, but this — a second robe tonight.",
           icon: "➡️",
         },
       ],
@@ -19465,7 +19491,7 @@ const HK_WEEK_39: WeekContent = {
         {
           rude: "I cannot close the door. It is the rule.",
           polite:
-            "I am stepping outside now, madam. The door stays open while I am working — that is our rule for every room.",
+            "I am stepping outside now, madam, and my supervisor will come up. The door stays open while anyone is working.",
           rule: "Khách XIN đóng cửa là đã đủ để bước ra — không cần khách ép, đúng như tuần 35. Nói quy tắc trong lúc ĐANG ĐI RA, không phải trong lúc đứng lại giải thích. Không có bậc trung gian nào giữa 'xin' và 'ép': bạn không phải người đo cái đó. Và đặt quy tắc vào KHÁCH SẠN, đừng đặt vào mình.",
         },
       ],
@@ -19476,9 +19502,16 @@ const HK_WEEK_39: WeekContent = {
           helpTip:
             "Khách chỉ hỏi dép, nên trả lời đúng phần khách hỏi và đừng chào bán thêm áo choàng. Cụm tuần 31 là 'yours to keep' — trọng âm rơi vào KEEP, học nguyên khối, đừng đổi thành 'to take'. Nếu khách hỏi tiếp thì áo choàng thuộc về phòng và do boutique dưới sảnh bán, không phải quầy lễ tân — nhờ boutique gọi lên cho khách. 'Slippers' /ˈslɪpəz/ — đuôi /z/ rung, không phải /s/.",
         },
+        {
+          guestPrompt: "Just go ahead and clean. I left the safe open — do not worry about it.",
+          targetResponse:
+            "I will leave it exactly as it is, sir, and call my supervisor before I touch anything near it.",
+          helpTip:
+            "Két mở không phải chuyện phán đoán: để nguyên, rồi gọi giám sát TRƯỚC KHI CHẠM vào bất cứ thứ gì gần đó — tuần 32 đặt mốc ở chữ chạm, không phải ở lúc bắt đầu dọn. Quy tắc này bảo vệ chính bạn khỏi một cáo buộc mất đồ. 'Exactly' /ɪɡˈzæktli/ — trọng âm rơi vào âm tiết giữa.",
+        },
       ],
       reading: {
-        text: "WHEN TWO RULES ARRIVE IN THE SAME MINUTE\nSome guests ask for something one rule allows, and another rule does not. The guest who wants his room done while he is out, with the safe left open. The guest who wants the door shut while you work. The guest who wants the robe in her case.\nThe open safe is not a judgement at all. You leave it exactly as you found it, you do not work in that room alone, and you tell your supervisor before you start.\nTwo rules never both bend. When one of them keeps somebody safe, that one wins, and it is not a matter of judgement. When neither does, the rule is not yours to weigh — it goes up.\nSay the losing half once, and plainly: that one is not yours to change. Then say what you CAN do, in the same breath. A guest who hears only 'no' hears a person refusing. A guest who hears 'not that, but this' hears a hotel.\nName the hotel, not yourself. 'That is our rule' closes the argument; 'I keep the door open' opens one. And if a guest asks you to close it — asks, not insists — that is week thirty-five: you step out, and your supervisor comes.\nWhat is left goes up, not away. It is not your call — say so, and put it forward, exactly as in week thirty-five. Then come back either way, even when the answer is no.",
+        text: "WHEN TWO RULES ARRIVE IN THE SAME MINUTE\nSome guests ask for something one rule allows, and another rule does not. The guest who wants his room done while he is out, with the safe left open. The guest who wants the door shut while you work. The guest who wants the robe in her case.\nThe open safe is not a judgement at all. You leave it exactly as you found it, and you call your supervisor before you touch anything near it. That is week thirty-two, and it has not changed.\nTwo rules never both bend. When one of them keeps somebody safe, that one wins, and it is not a matter of judgement. When neither does, the rule is not yours to weigh — it goes up.\nSay the losing half once, and plainly: that one is not yours to change. Then say what you CAN do, in the same breath. A guest who hears only 'no' hears a person refusing. A guest who hears 'not that, but this' hears a hotel.\nName the hotel, not yourself. 'That is our rule' closes the argument; 'I keep the door open' opens one. And if a guest asks you to close it — asks, not insists — that is week thirty-five: you step out, and your supervisor comes.\nWhat is left goes up, not away. It is not your call — say so, and put it forward, exactly as in week thirty-five. Then come back either way, even when the answer is no.",
         questions: [
           {
             q: "Hai quy tắc va nhau thì quy tắc nào thắng?",
@@ -19493,10 +19526,10 @@ const HK_WEEK_39: WeekContent = {
             q: "Phần mình không quyết được thì xử lý thế nào?",
             options: [
               "Nói với khách là không được, rồi khép lại chuyện đó tại chỗ luôn",
-              "Trình lên cấp trên — nó đi lên, chứ không biến mất",
               "Hẹn khách hỏi lại vào ca sau, khi có người khác trực tầng",
+              "Trình lên cấp trên — nó đi lên, chứ không biến mất",
             ],
-            correct: 1,
+            correct: 2,
           },
         ],
       },
@@ -19505,15 +19538,32 @@ const HK_WEEK_39: WeekContent = {
           prompt: "Just shut the door while you do the bathroom. I am trying to sleep.",
           options: [
             {
+              text: "I am going to step out, madam, and ask my supervisor to come up.",
+              correct: true,
+            },
+            {
               text: "Of course, madam. I will pull it to and work as quietly as I possibly can.",
               correct: false,
             },
             {
-              text: "I am stepping outside now, madam. My supervisor will come up to you.",
+              text: "The rule is there for you as much as for me, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "This robe is beautiful. Can I just take it with me?",
+          options: [
+            {
+              text: "I am afraid that one is not allowed to leave the room at all, madam.",
+              correct: false,
+            },
+            {
+              text: "The robe belongs to the room, madam, but the boutique downstairs sells it. Shall I ask them to call you?",
               correct: true,
             },
             {
-              text: "The rule is there for you as much as for me, madam.",
+              text: "I will have to ask my supervisor about the robe and come back to you later on.",
               correct: false,
             },
           ],
@@ -19574,22 +19624,30 @@ const HK_WEEK_39: WeekContent = {
           guestPrompt: "Floor Supervisor. Anything I need to know before you go?",
           speakerRole: "manager",
           targetResponse:
-            "704 is half done, Ms Lan, waiting for clean linen. 709 has been waiting for a pillow since two — carry it over.",
+            "709 has been waiting for a mattress topper since two, Ms Lan — the store had none, and I have carried it over.",
           helpTip:
-            "CẤP TRÊN hỏi. Chỉ nói việc CHƯA XONG — phòng đã xong thì chị ấy tự thấy trên bảng. Mỗi việc gồm số phòng, thứ đang chờ, và giờ. Có since thì phải dùng thì HOÀN THÀNH — 'has been waiting for a pillow since two', hoặc gọn hơn là has waited since two; cả hai đều đúng. Cái KHÔNG được nói là is waiting since two: tiếng Việt không có thể hoàn thành nên đây là lỗi rất dễ mắc. 'Linen' /ˈlɪnɪn/ — hai âm tiết ngắn, không phải lai-nần.",
+            "CẤP TRÊN hỏi. Nêu số phòng, thứ đang chờ, giờ — rồi việc MÌNH đã làm với nó. Đừng nói 'carry it over' với cấp trên: đó là mệnh lệnh, và ghi sổ vốn là việc của bạn. Có since thì phải dùng thì HOÀN THÀNH — 'has been waiting for a mattress topper since two', has waited since two cũng đúng ngữ pháp, nhưng nghe như đã chờ xong — việc còn đang chờ thì dùng has been waiting. Cái KHÔNG được nói là is waiting since two: tiếng Việt không có thể hoàn thành nên đây là lỗi rất dễ mắc.",
+        },
+        {
+          guestPrompt: "I am taking over your section. Where do I start?",
+          speakerRole: "colleague",
+          targetResponse:
+            "704 first — you can pick it up from here, the bed is stripped. Everything else has nothing outstanding.",
+          helpTip:
+            "ĐỒNG NGHIỆP nhận ca. Mở bằng phòng CÒN VIỆC, rồi mới nói phần sạch — người ta cần biết đặt tay xuống chỗ nào trước. 'Pick it up from here' là cụm bàn giao, nghĩa là làm tiếp từ đúng chỗ này. 'Outstanding' /aʊtˈstændɪŋ/ — trọng âm rơi vào âm tiết hai.",
         },
       ],
       reading: {
-        text: "THE LOG IS FOR WHAT DID NOT GET DONE\nA handover that ONLY lists finished rooms is a list nobody needs. The next shift can see the board; what the board cannot show them is the half of 704 you did not reach. So every room gets a line, and the ones that matter are the lines with something still on them.\nAn unfinished job needs five things and no more. The room, what state it is in, what is missing, who is waiting, and the hour.\nNearly done is not a state. Bathroom done, bed stripped, no clean linen on the floor — that is a state, and the next person can pick it up from there.\nAnd the desk gets it before the book does. A room you stripped and could not finish cannot be sold. Say the number and the status down the phone the moment you know it.\nA job that will not close in your shift is one you carry over. Carrying over is a thing you write, not a thing you hope. A laundry claim you opened and could not close goes over with its docket number and the hour — week thirty-three. Anything out of order goes down as out of order, in those words: week thirty-seven, and no gentler words for it.\nWrite the guest who is waiting, by room number. A request that lives only in your head leaves the building when you do.\nAnd write what you got wrong. A discrepancy you report is a discrepancy. One the next shift finds is a discrepancy with your name beside it.\nRooms with nothing outstanding still get one line each. A blank beside a room number reads as forgotten, not as finished.",
+        text: "THE LOG IS FOR WHAT DID NOT GET DONE\nA handover that ONLY lists finished rooms is a list nobody needs. The next shift can see the board; what the board cannot show them is the half of 704 you did not reach. So every room gets a line, and the ones that matter are the lines with something still on them.\nAn unfinished job needs five things and no more. The room, what state it is in, what is missing, who is waiting, and the hour.\nNearly done is not a state. Bathroom done, bed stripped, no clean linen on the floor — that is a state, and the next person can pick it up from there.\nAnd the desk gets it before the log does. A room you stripped and could not finish cannot be sold. Say the number and the status down the phone the moment you know it.\nA job that will not close in your shift is one you carry over. Carrying over is a thing you write, not a thing you hope. A laundry claim you opened and could not close goes over with its docket number and the hour — weeks thirty-three and thirty-eight. Anything out of order goes down as out of order, in those words: week thirty-seven, and no gentler words for it.\nNothing comes off that list until somebody signs it off, and you report back to whoever asked.\nWrite the guest who is waiting, by room number, and put anything that will matter next time on the guest profile. A request that lives only in your head leaves the building when you do.\nAnd write what you got wrong. A mistake you report is a mistake. One the next shift finds is a mistake with your name beside it.\nRooms with nothing outstanding still get one line each. A blank beside a room number reads as forgotten, not as finished.",
         questions: [
           {
             q: "Sổ bàn giao dùng để ghi gì?",
             options: [
-              "Danh sách những phòng đã làm xong trong ca của mình",
               "Mọi phòng đều có một dòng, nhưng dòng đáng đọc là dòng còn việc",
+              "Danh sách những phòng đã làm xong trong ca của mình",
               "Toàn bộ những gì đã xảy ra trên tầng suốt tám tiếng qua",
             ],
-            correct: 1,
+            correct: 0,
           },
           {
             q: "Một việc chưa xong cần ghi mấy thứ?",
@@ -19604,20 +19662,38 @@ const HK_WEEK_39: WeekContent = {
       },
       game: [
         {
-          prompt: "Floor Supervisor. Is 704 finished or not?",
+          prompt: "Floor Supervisor. Night shift is asking about 812 — what do I tell them?",
           speakerRole: "manager",
           options: [
             {
-              text: "Nearly. I ran out of time this morning and left it exactly as it was, I am afraid.",
-              correct: false,
-            },
-            {
-              text: "Half done, and written up — bathroom finished, bed stripped, waiting for clean linen since eleven.",
+              text: "Bathroom done, bed made, waiting for a second blanket since four. It is in the log.",
               correct: true,
             },
             {
-              text: "Not quite. I will mention it to the next shift when they come up.",
+              text: "It is nearly there — tell them to have a look when they come up.",
               correct: false,
+            },
+            {
+              text: "Say it is finished. The blanket can go up in the morning.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Housekeeping desk. Reception is asking for 706 — can I release it?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes, go ahead — I am nearly finished with it and it should be fine by now.",
+              correct: false,
+            },
+            {
+              text: "I would rather you asked the Floor Supervisor about that one, to be on the safe side.",
+              correct: false,
+            },
+            {
+              text: "Not yet — bed stripped, waiting for clean linen. I will ring you the moment it is done.",
+              correct: true,
             },
           ],
         },
@@ -19666,7 +19742,7 @@ const HK_WEEK_39: WeekContent = {
         },
         {
           rude: "I gave the key to someone.",
-          polite: "The master key is signed in, and the book has my name and the hour.",
+          polite: "The master key is signed in, and the log has my name and the hour.",
           rule: "Chìa khoá tổng chỉ có một trạng thái được chấp nhận: đã ký nộp. 'Gave it to someone' không phải một trạng thái — đó là một khoảng trống trong sổ.",
         },
       ],
@@ -19675,31 +19751,38 @@ const HK_WEEK_39: WeekContent = {
           guestPrompt: "Housekeeping desk. It is five to three — are you clear?",
           speakerRole: "colleague",
           targetResponse:
-            "All done. Key signed in, log written, and nothing out of order. One thing I want to say face to face.",
+            "All done. Nobody waiting, trolley restocked, key signed in, log written. I will come down before I sign out.",
           helpTip:
-            "ĐỒNG NGHIỆP ở bàn buồng phòng hỏi. Ba việc đã xong nói thật gọn, rồi báo trước rằng còn MỘT việc phải nói trực tiếp — đừng nhét nó vào bộ đàm. 'Signed' /saɪnd/ — /aɪ/ là nguyên âm đôi, đuôi /d/ nghe rõ.",
+            "ĐỒNG NGHIỆP ở bàn buồng phòng hỏi. Ba việc đã xong nói thật gọn, rồi hẹn xuống. Đừng nói trên đường dây rằng còn một chuyện phải nói riêng: cả tầng nghe được, và người ở bàn sẽ hỏi ngay chuyện gì. 'Signed' /saɪnd/ — /aɪ/ là nguyên âm đôi, đuôi /d/ nghe rõ.",
+        },
+        {
+          guestPrompt: "Could you do my room now? I am going out for an hour.",
+          targetResponse:
+            "My shift ends in ten minutes, madam. I will leave it for the next attendant and she will come at three.",
+          helpTip:
+            "Đừng mở một phòng lúc còn mười phút — ca sau nhận nó ở trạng thái dở dang, tệ hơn phòng chưa ai động vào. Cho MỐC GIỜ của người đến sau, đừng nói 'I cannot do it'. 'Attendant' /əˈtendənt/ — trọng âm rơi vào âm tiết hai.",
         },
       ],
       reading: {
-        text: "THE LAST FIFTEEN MINUTES ARE NOT FOR STARTING A ROOM\nOpen a room at ten to three and the next shift inherits it half-stripped. The bed is bare and the guest's things are moved. That is worse than a room nobody touched.\nThe last fifteen minutes are for five things. Any guest still waiting for something — you deliver it, or you hand it to the desk by name and room. Carry it over in the book as well. Nothing a guest is waiting for rests on one conversation. Then the trolley stripped and restocked, the keys handed in and signed for, the log written, and the one thing you say face to face.\nThe one thing face to face is the one that does not survive writing. The guest in 806 who was crying — you reported her at the time, and the next shift still needs to hear it. The way 810 has stopped answering the door. A smell you cannot name goes on the phone the minute you smell it — week thirty-six, and it never waits for a handover. Write it too, but say it as well.\nSign the key in. A master key that walks off the floor in a pocket is a Security matter the minute you know. The log is the only thing that says when it left your hand.\nThen go. A shift that ends late every day is a floor that is short a person. That is a conversation for your supervisor, not a habit for you.",
+        text: "THE LAST FIFTEEN MINUTES ARE NOT FOR STARTING A ROOM\nOpen a room at ten to three and the next shift inherits it half-stripped. The bed is bare and the guest's things are moved. That is worse than a room nobody touched.\nThe last fifteen minutes are for five things. Any guest still waiting for something — you deliver it, or you hand it to the desk by name and room. Carry it over in the log as well. Nothing a guest is waiting for rests on one conversation. Then the trolley stripped and restocked, the keys handed in and signed for, the log written, and the one thing you say face to face.\nA door that has stopped being answered is not a handover item at all. Count the hours since anybody saw that guest, and telephone your supervisor the moment it reaches twenty-four. That is week thirty-five: the Duty Manager and Security open that one together, never you.\nThe one thing face to face is the one that does not survive writing. The guest in 806 who was in tears — your supervisor has the line already, and the next shift still needs to hear it. The way the man in 810 would not look at you. A smell you cannot name goes on the phone the minute you smell it — week thirty-six, and it never waits for a handover. Write it too, but say it as well.\nSign the key in. A master key that walks off the floor in a pocket is a Security matter the minute you know. The log is the only thing that says when it left your hand.\nThen go. A shift that ends late every day is a floor that is short a person. That is a conversation for your supervisor, not a habit for you.",
         questions: [
           {
             q: "Mười lăm phút cuối ca dùng để làm gì?",
             options: [
               "Bắt đầu thêm một phòng nữa cho ca sau đỡ việc phải làm",
-              "Đóng việc khách đang chờ, dọn xe, nộp chìa, ghi sổ, và nói trực tiếp một việc",
               "Đi kiểm lại toàn bộ những phòng mình đã làm trong ca hôm nay",
+              "Đóng việc khách đang chờ, dọn xe, nộp chìa, ghi sổ, và nói trực tiếp một việc",
             ],
-            correct: 1,
+            correct: 2,
           },
           {
             q: "Vì sao chìa khoá tổng phải ký nộp?",
             options: [
-              "Vì tổ trưởng cần biết ai đang giữ chìa để còn gọi khi cần tới",
               "Vì sổ là thứ duy nhất nói được chìa rời tay mình lúc nào",
-              "Vì đó là quy định của khách sạn và ai cũng phải làm như vậy",
+              "Vì tổ trưởng cần biết ai đang giữ chìa để còn gọi khi cần tới",
+              "Vì chìa khoá tổng phải được cất trong tủ của bộ phận lễ tân",
             ],
-            correct: 1,
+            correct: 0,
           },
         ],
       },
@@ -19718,6 +19801,24 @@ const HK_WEEK_39: WeekContent = {
             },
             {
               text: "Yes, if I skip the bathroom and just do the bed.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Floor Supervisor. Who has the master key for nine?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "It is signed in, Ms Lan — the log has my name and the hour against it.",
+              correct: true,
+            },
+            {
+              text: "I gave it to the attendant who came on after me, so she will still have it.",
+              correct: false,
+            },
+            {
+              text: "I think I left it down at the desk when I came past a moment ago.",
               correct: false,
             },
           ],
@@ -19767,7 +19868,7 @@ const HK_WEEK_40: WeekContent = {
           word: "Without checking",
           phonetic: "/wɪˌðaʊt ˈtʃekɪŋ/",
           definition: "Không cần tra lại sổ",
-          context: "I say the door rule without checking the book.",
+          context: "I say the door rule without checking the guide.",
           icon: "🧠",
         },
         {
@@ -19786,7 +19887,8 @@ const HK_WEEK_40: WeekContent = {
         },
         {
           rude: "Someone else always did the laundry claims.",
-          polite: "I take the docket, the hour and the photographs on my own now, Ms Trang.",
+          polite:
+            "I take the docket and the hour on my own now, Ms Trang — and the photographs get two signatures.",
           rule: "Hiện tại đơn cộng 'now' nêu một năng lực ĐANG CÓ. Đừng dùng thì quá khứ để nói về việc hôm nay mình làm được.",
         },
       ],
@@ -19796,13 +19898,20 @@ const HK_WEEK_40: WeekContent = {
             "Executive Housekeeper. What can you do now that you could not forty weeks ago?",
           speakerRole: "manager",
           targetResponse:
-            "I take the docket and the photographs on my own now, Ms Trang, and the safety sentences come out word for word.",
+            "I open the file on my own now, Ms Trang — docket, hour, and the linen supervisor signing the photographs beside me.",
           helpTip:
-            "CẤP TRÊN hỏi, nên câu trả lời phải CỤ THỂ: một việc làm được, một thứ đã thuộc. Đừng nói my English is better — câu đó không đo được bằng gì cả. 'Word for word' đọc liền một nhịp.",
+            "CẤP TRÊN hỏi, nên câu trả lời phải CỤ THỂ: một việc mình mở được, và ai ký cùng. Đừng nói my English is better — câu đó không đo được bằng gì cả. Ảnh chứng cứ không bao giờ chỉ có một tên dưới nó: tuần 38 chốt hai người cùng nhìn, hai người cùng ký. 'Docket' /ˈdɒkɪt/ — trọng âm âm tiết đầu, đuôi /t/ nghe rõ.",
+        },
+        {
+          guestPrompt: "Why does that door have to stay open? Nobody else does that.",
+          targetResponse:
+            "It stays open while anyone is working in a room, madam. That is our rule, in every room.",
+          helpTip:
+            "Câu này phải ra được mà không cần tra sổ — bốn mươi tuần trước bạn tra, giờ thì thuộc. Đặt quy tắc vào KHÁCH SẠN, đừng đặt vào mình, và nói cùng một câu mỗi lần, đúng từng chữ. 'Rule' /ruːl/ — /uː/ dài, chữ l cuối chạm lợi.",
         },
       ],
       reading: {
-        text: "WHAT YOU COULD NOT DO FORTY WEEKS AGO\nForty weeks ago you knocked on 704 and hoped they were out.\nNow you knock twice, say 'Housekeeping', and count ten before you touch the handle — the same way every time. That is not confidence. That is a script you built, and a script holds when confidence does not.\nForty weeks ago a complaint was a bad afternoon. Now it is a docket, an hour, a photograph on the department device with two names under it, and a line in the guest profile. Four things you can hold, instead of one feeling you cannot.\nForty weeks ago a guest who was crying was a room you cleaned faster. Now it is a room you leave and report — unless she says she means to hurt herself. Then you stay, you send the next person you see for the Duty Manager and Security, and you do not leave.\nNone of that came from being braver. It came from having the words ready, and the words came from saying them out loud, badly, until they stopped being hard.\nKeep the sentences you use every week. The rest were scaffolding, and scaffolding is supposed to come down.",
+        text: "WHAT YOU COULD NOT DO FORTY WEEKS AGO\nForty weeks ago you knocked on 704 and hoped they were out.\nNow you knock twice and say 'Housekeeping', wait, then knock and say it a second time before you touch the handle. The same way every time. That is not confidence. That is a script you built, and a script holds when confidence does not.\nForty weeks ago a complaint was a bad afternoon. Now it is a docket, an hour, a photograph on the department device with two names under it, and a line in the guest profile. Four things you can hold, instead of one feeling you cannot.\nForty weeks ago a guest in tears was a room you cleaned faster. Now she is a room you finish quietly and a line for your supervisor — unless she says she means to hurt herself. Then you stay, you send the next person you see for the Duty Manager and Security, and you do not leave.\nNone of that came from being braver. It came from having the words ready, and the words came from saying them out loud, badly, until they stopped being hard.\nKeep the sentences you use every week. The rest were scaffolding, and scaffolding is supposed to come down.",
         questions: [
           {
             q: "Vì sao câu nói ra được lúc căng thẳng?",
@@ -19816,11 +19925,11 @@ const HK_WEEK_40: WeekContent = {
           {
             q: "Khách khóc và nói cô ấy định tự làm hại mình. Làm gì?",
             options: [
-              "Rời phòng và báo lại ngay, như mọi trường hợp khách khóc khác",
               "Ở lại, không rời đi, nhờ người đi qua gọi Duty Manager và an ninh",
+              "Làm nốt phòng thật khẽ rồi ghi một dòng cho giám sát, như mọi lần khác",
               "Ngồi xuống hỏi chuyện cho khách bình tĩnh lại rồi mới đi báo",
             ],
-            correct: 1,
+            correct: 0,
           },
         ],
       },
@@ -19843,6 +19952,24 @@ const HK_WEEK_40: WeekContent = {
             },
           ],
         },
+        {
+          prompt: "Executive Housekeeper. Which sentence comes out without you thinking?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I would say most of them by now, although I still look things up quite often.",
+              correct: false,
+            },
+            {
+              text: "I do not really have one — I say whatever seems right at the time.",
+              correct: false,
+            },
+            {
+              text: "The door rule, Ms Trang. It comes out word for word, and I have not checked the book since spring.",
+              correct: true,
+            },
+          ],
+        },
       ],
     },
     {
@@ -19859,10 +19986,10 @@ const HK_WEEK_40: WeekContent = {
           icon: "🚧",
         },
         {
-          word: "Know when to stop",
-          phonetic: "/ˌnəʊ wen tə ˈstɒp/",
-          definition: "Biết lúc phải dừng lại",
-          context: "Knowing when to stop is part of the job, not a gap in it.",
+          word: "That is where I stop",
+          phonetic: "/ˌðæt ɪz weər aɪ ˈstɒp/",
+          definition: "Đến đây là hết phần của tôi",
+          context: "That is where I stop, sir — the rest is the Duty Manager's.",
           icon: "✋",
         },
         {
@@ -19876,7 +20003,7 @@ const HK_WEEK_40: WeekContent = {
           word: "No shame in asking",
           phonetic: "/ˌnəʊ ʃeɪm ɪn ˈɑːskɪŋ/",
           definition: "Hỏi thì không có gì phải ngại",
-          context: "There is no shame in asking, and a great deal in guessing.",
+          context: "There is no shame in asking, sir — I would rather check than guess.",
           icon: "🙂",
         },
       ],
@@ -19889,7 +20016,7 @@ const HK_WEEK_40: WeekContent = {
         {
           rude: "I can sign that for you.",
           polite:
-            "Taking that off the folio is above my level, sir. That is the Duty Manager's, and I will come back before six.",
+            "Taking that off the folio is the Duty Manager's, sir, not mine. I will come back before six either way.",
           rule: "Nói ra giới hạn bằng một câu bình thường, không kèm lời xin lỗi. Rồi nêu AI quyết và KHI NÀO — khách cần hai thứ đó, không cần lời xin lỗi.",
         },
       ],
@@ -19901,18 +20028,26 @@ const HK_WEEK_40: WeekContent = {
           helpTip:
             "Khách ép trả lời có hoặc không, nhưng câu trả lời thật là NGƯỜI NÀO quyết. Khoản trên hoá đơn là của Duty Manager, không phải của giám sát tầng — tuần 35 và 38 đều chốt thế. Cho một mốc giờ của CHÍNH BẠN, đừng hẹn giờ thay sếp. 'Duty' /ˈdjuːti/ — trọng âm ở âm tiết đầu.",
         },
+        {
+          guestPrompt: "The guest is waiting. Can you just sign this compensation line for me?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Signing that figure is above my level. I will take it to the Duty Manager now and come back to you.",
+          helpTip:
+            "ĐỒNG NGHIỆP nhờ, và khách đang đứng chờ — sức ép đúng lúc dễ ký bừa nhất. 'Above my level' là câu nói trong tổ; với khách thì nêu AI quyết chứ không hạ thấp mình. Rồi nói ngay việc mình LÀM tiếp, đừng dừng ở lời từ chối. 'Level' /ˈlevl/ — đừng thành 'lê-vồ'.",
+        },
       ],
       reading: {
-        text: "THE LIST OF THINGS THAT ARE STILL NOT YOURS\nForty weeks did not make you a first aider, a manager, or a person who signs money. It made you someone who knows exactly where those lines are, which is a different and more useful thing.\nThe nine numbered actions of week thirty-six are still yours, and they still wait for nobody. Knowing where you stop is not the same as stopping early.\nYou still do not decide compensation. You propose it, and somebody above you signs it.\nYou still do not move a guest who cannot walk in a fire. If your house has a refuge area, that is where she waits. If it has none, she stays in the room — corridor clear, and the fire not on your floor. You stay at that door until Security or the fire team reaches you. If there is smoke on your floor, you go. Security gets three things and never the room number on the radio: the floor, 'cannot walk', and the state of the corridor.\nYou still do not name what is wrong with a guest. You say what you saw, with the hour, and you let the nurse or the doctor name it.\nSaying that something is beyond what you know is not a failure. It is the sentence that keeps a guest safe and keeps your name off a report.\nNobody was ever hurt by asking. People are hurt by guessing — once, on a quiet night, because asking felt like admitting something.",
+        text: "THE LIST OF THINGS THAT ARE STILL NOT YOURS\nForty weeks did not make you a first aider, a manager, or a person who signs money away. It made you someone who knows exactly where those lines are, which is a different and more useful thing.\nThe nine numbered actions of week thirty-six are still yours, and they still wait for nobody. The recovery position is still yours, and so is switching the AED on. Those two never waited for permission, and they still do not. Knowing where you stop is not the same as stopping early.\nYou still do not decide compensation. You propose it, and somebody above you signs it.\nYou still do not lift and you still do not carry a guest who cannot walk in a fire. If she can move herself and the air is still clear, you walk beside her to the refuge area. If she cannot, she stays in the room with the door closed and a wet towel along the gap. Corridor clear, you stay at that door until Security or the fire team reaches you. Smoke on your floor, she stays and you go. Security gets three things and never the room number on the radio: the floor, 'cannot walk', and the state of the corridor. The number itself still has to reach them: the floor phone, or Security's ear at the stairhead.\nYou still do not name what is wrong with a guest. You say what you saw, with the hour, and you let the nurse or the doctor name it. You still leave it as found, you still log a found item, and you still come back to the guest either way.\nSaying that something is beyond what you know is not a failure. It is the sentence that keeps a guest safe and keeps your name off a report.\nNobody was ever hurt by asking. People are hurt by guessing — once, on a quiet night, because asking felt like admitting something.",
         questions: [
           {
             q: "Bốn mươi tuần đã làm được gì cho bạn?",
             options: [
               "Giúp bạn tự quyết được phần lớn những việc thường gặp trên tầng",
-              "Cho bạn biết chính xác ranh giới nằm ở đâu",
               "Thay thế được phần huấn luyện sơ cấp cứu của khách sạn",
+              "Cho bạn biết chính xác ranh giới nằm ở đâu",
             ],
-            correct: 1,
+            correct: 2,
           },
           {
             q: "Theo bài đọc, tai nạn nghề nghiệp đến từ đâu?",
@@ -19927,18 +20062,35 @@ const HK_WEEK_40: WeekContent = {
       },
       game: [
         {
-          prompt: "You have been here a year. Surely you can decide this yourself.",
+          prompt: "You have been here long enough. Surely you can decide this yourself.",
           options: [
             {
-              text: "You are right that I have been here a while, sir, so let me sort this out for you.",
+              text: "You are right that I have been here a while, sir, so let me sort it out for you.",
               correct: false,
             },
             {
-              text: "A year is why I know it is not mine, sir. The manager on duty signs it.",
+              text: "I am afraid I am really not allowed to do anything at all about that, sir.",
+              correct: false,
+            },
+            {
+              text: "Long enough to know it is not mine, sir. The manager on duty signs it.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "You saw him fall. Was it a stroke, or was he just drunk?",
+          options: [
+            {
+              text: "I can tell you what I saw and the hour, sir. The nurse is the one who names it.",
               correct: true,
             },
             {
-              text: "I am afraid I am really not allowed to do anything at all about that, sir.",
+              text: "It looked like a stroke to me, sir, but of course I am not a doctor at all.",
+              correct: false,
+            },
+            {
+              text: "I really could not say either way, sir — you would have to ask somebody else.",
               correct: false,
             },
           ],
@@ -19966,10 +20118,10 @@ const HK_WEEK_40: WeekContent = {
           icon: "🤲",
         },
         {
-          word: "Hold on — hands off that",
-          phonetic: "/ˌhəʊld ˈɒn/",
+          word: "Hold on — hands off that one",
+          phonetic: "/ˌhəʊld ˈɒn ˌhændz ˈɒf ðæt ˈwʌn/",
           definition: "Dừng ngay — câu cắt ngang duy nhất được phép, dùng khi có nguy hiểm",
-          context: "Hold on — hands off that. That one needs tongs.",
+          context: "Hold on — hands off that one. I will show you.",
           icon: "🛑",
         },
         {
@@ -19989,7 +20141,7 @@ const HK_WEEK_40: WeekContent = {
         {
           rude: "You did that wrong in front of the guest.",
           polite:
-            "One thing about the trolley — I waited until the guest had gone before I mentioned it.",
+            "One thing about the trolley — I waited until the guest had gone before saying it.",
           rule: "Sửa đồng nghiệp thì nói riêng, và nói rõ mình đã ĐỢI. Câu đó dạy hai điều cùng lúc: việc cần sửa, và luật không sửa trước mặt khách.",
         },
       ],
@@ -19998,29 +20150,37 @@ const HK_WEEK_40: WeekContent = {
           guestPrompt: "I have never stripped a bed this size. Can you just do it?",
           speakerRole: "colleague",
           targetResponse:
-            "I will show you once, then you try it while I say nothing. I am here either way.",
+            "I will show you once, then it is yours — I will not say a word until you are done.",
           helpTip:
             "ĐỒNG NGHIỆP MỚI hỏi. Đừng làm hộ — làm mẫu một lần rồi để họ thử, và nói rõ mình vẫn đứng đó. 'Show you once' là lời hứa nhỏ mà bạn giữ được, và nó đúng nghĩa đen. 'Once' /wʌns/ — nguyên âm /ʌ/ ngắn, đuôi /s/ nghe rõ.",
         },
+        {
+          guestPrompt: "There is glass in this bin. I will just lift the bag out.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Hold on — hands off that one. We tip a bin out, we never lift it, and I will tell the supervisor.",
+          helpTip:
+            "Đây là câu cắt ngang DUY NHẤT được phép, và nó dùng ngay giây đó — đang giữa việc hay đang trước mặt khách cũng vậy. Chặn tay là việc của bạn; quyết định nó có lặp lại không thì không, nên vế cuối phải có. 'Hold on' — hai từ ngắn, trọng âm rơi vào ON.",
+        },
       ],
       reading: {
-        text: "THE NEW ONE ON YOUR FLOOR NEXT MONTH\nSomebody will start on your floor and know none of this. What you do in their first week decides more than the training does.\nShow them once, slowly, with your hands where they can see them. Then let them try while you stand there and say nothing.\nSaying nothing is the hard part. A person who is corrected mid-task learns that they cannot finish anything without you.\nOne thing cuts across all of this. If what they are doing is unsafe, you stop them that second — guest or no guest, mid-task or not. 'Hold on. Hands off that one, I will show you.' Everything on this page is about work that is slow or untidy. None of it is about work that is dangerous.\nCorrect them once, after, and pick the one thing that matters most. A list of six corrections teaches nothing except that they are bad at this.\nNever in front of a guest. Not a word, not a look — the guest is watching both of you, and a corrected person stops speaking English for a week.\nAnd tell them what you got wrong in your own first month. It is the only part of this they will remember on a bad day.",
+        text: "THE NEW ONE ON YOUR FLOOR NEXT MONTH\nYour supervisor will put somebody new beside you for her first week, and she will know none of this. What you do in that week decides more than the training does.\nShow them once, slowly, with your hands where they can see them. Then let them try while you stand there and say nothing.\nSaying nothing is the hard part. A person who is corrected mid-task learns that they cannot finish anything without you.\nOne thing cuts across all of this. If what they are doing is unsafe, you stop them that second — guest or no guest, mid-task or not. 'Hold on — hands off that one. I will show you.' Everything on this page is about work that is slow or untidy. None of it is about work that is dangerous. Stopping her is yours. Deciding whether it happens twice is not — anything unsafe goes to your supervisor the same shift, with the hour.\nCorrect them once, after, and pick the one thing that matters most. A list of six corrections teaches nothing except that they are bad at this.\nNever in front of a guest. Not a word, not a look — the guest is watching both of you, and a corrected person stops speaking English for a week.\nAnd tell them what you got wrong in your own first month. It is the only part of this they will remember on a bad day.",
         questions: [
           {
             q: "Sau khi làm mẫu một lần thì nên làm gì?",
             options: [
-              "Vừa nhìn vừa nhắc từng bước cho người ta khỏi làm sai",
               "Đứng nhìn và im lặng để người ta tự làm hết",
+              "Vừa nhìn vừa nhắc từng bước cho người ta khỏi làm sai",
               "Làm cùng thêm một lượt nữa cho người ta nhớ kỹ hơn",
             ],
-            correct: 1,
+            correct: 0,
           },
           {
-            q: "Vì sao không sửa đồng nghiệp trước mặt khách?",
+            q: "Đồng nghiệp mới đang cầm một vật sắc bằng tay, ngay trước mặt khách. Làm gì?",
             options: [
-              "Vì khách sẽ nghĩ khách sạn đào tạo nhân viên chưa được tốt",
-              "Vì người bị sửa sẽ thôi nói tiếng Anh suốt một tuần",
-              "Vì như thế là không tôn trọng đồng nghiệp của mình",
+              "Đợi khách đi rồi mới nói riêng, vì luật là không sửa trước mặt khách",
+              "Dừng tay ngay lập tức — luật không sửa trước mặt khách không áp cho việc nguy hiểm",
+              "Nhặt hộ rồi nói lại sau ca cho đồng nghiệp đỡ mất mặt",
             ],
             correct: 1,
           },
@@ -20037,11 +20197,29 @@ const HK_WEEK_40: WeekContent = {
               correct: false,
             },
             {
+              text: "I picked it up myself and did not say anything to her about it at all.",
+              correct: false,
+            },
+            {
               text: "I said nothing there. I will take it up with her after the guest has gone.",
               correct: true,
             },
+          ],
+        },
+        {
+          prompt: "Just do this one for me and I will watch. I am slower with a guest waiting.",
+          speakerRole: "colleague",
+          options: [
             {
-              text: "I picked it up myself and did not say anything to her about it at all.",
+              text: "All right, I will do it, and you can try again when nobody is waiting on us.",
+              correct: false,
+            },
+            {
+              text: "I will show you this one and then you take the next room, with me standing there.",
+              correct: true,
+            },
+            {
+              text: "You do it and I will tell you each step as you go, so you do not get it wrong.",
               correct: false,
             },
           ],
@@ -20100,31 +20278,39 @@ const HK_WEEK_40: WeekContent = {
           guestPrompt: "Executive Housekeeper. What did this course not give you?",
           speakerRole: "manager",
           targetResponse:
-            "The figures for this house, Ms Trang. Nobody taught me those — may I copy them from the guide when you have a moment?",
+            "Our own figures, Ms Trang. Nobody taught me those — may I copy them from the guide when you have a moment?",
           helpTip:
             "CẤP TRÊN hỏi. Trả lời bằng một thứ CỤ THỂ mà nhà mình có còn khoá học thì không — con số của nhà. Rồi xin nó ở dạng viết. 'Nobody taught me' ở đây là câu nêu dữ kiện, không phải câu than. 'Copy' /ˈkɒpi/ — trọng âm âm tiết đầu, /ɒ/ ngắn.",
         },
+        {
+          guestPrompt: "The chemical for the marble floor is the green one. You will remember.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Could you write it down for me? I will not remember it at seven, and it has a number on it.",
+          helpTip:
+            "ĐỒNG NGHIỆP chỉ miệng. Xin ghi lại không phải kém trí nhớ: bất cứ thứ gì có CON SỐ, HOÁ CHẤT hay CHỮ KÝ đều phải tra sổ trước, và ghi lại là bước đầu của việc đó. 'Write it down' — trọng âm rơi vào DOWN.",
+        },
       ],
       reading: {
-        text: "WHAT FORTY WEEKS DID NOT COVER\nThis course did not teach you your own hotel. It taught you the shape of the questions, and every answer is a local one.\nIt did not give you the figures. The tiers, the ceiling, the depreciation table, the hour the linen room closes — those are your house's, and they change when your house changes.\nIt taught you discretion in week thirty-two. It did not teach you the version you need at three in the morning, or the guest who fits none of these pages. There is one every month, and there is no script for that guest.\nFor that guest the method is the same as everywhere else. Say what you can see, say what you can do, and put the rest up.\nAnd it did not teach you the words you will need next. Nobody will teach you those either; you will say them out loud, badly, until they come back.\nAsk the floor for the things nobody wrote down — which service lift is slow, which corridor the ice machine is on. Anything with a number, a chemical or a signature on it you ask the book first, and then your supervisor.",
+        text: "WHAT FORTY WEEKS DID NOT COVER\nThis course did not teach you your own hotel. It taught you the shape of the questions, and every answer is a local one.\nIt did not give you the figures. The tiers, the ceiling, the depreciation table, the hour the linen room closes — those are your house's, and they change when your house changes.\nIt taught you discretion in week thirty-two. It did not teach you the version you need at three in the morning, or the guest who fits none of these pages. There is one every month, and there is no script for that guest.\nFor that guest the method is the same as everywhere else. Say what you can see, say what you can do, and put the rest up.\nAnd it did not teach you the words you will need next. Nobody will teach you those either; you will say them out loud, badly, until they come back.\nAsk the floor for the things nobody wrote down — which service lift is slow, which corridor the ice machine is on. Anything with a number, a chemical or a signature on it you ask the guide first, and then your supervisor.",
         questions: [
           {
             q: "Khoá học không dạy được điều gì?",
             options: [
               "Cách nói với khách khi có sự cố xảy ra trên tầng",
-              "Những con số của chính khách sạn mình",
               "Cách ghi lại một việc chưa xong cho ca sau",
+              "Những con số của chính khách sạn mình",
             ],
-            correct: 1,
+            correct: 2,
           },
           {
             q: "Thứ không ai ghi lại thì hỏi ai, còn thứ có con số hay chữ ký thì hỏi ở đâu?",
             options: [
               "Cả hai đều hỏi giám sát, vì giám sát là người nắm rõ nhất",
-              "Không ai ghi lại thì hỏi người cùng làm trên tầng; có số hay chữ ký thì tra sổ trước",
               "Cả hai đều tra trong sổ tay khoá học, vì đó là tài liệu chính thức",
+              "Không ai ghi lại thì hỏi người cùng làm trên tầng; có số hay chữ ký thì tra sổ trước",
             ],
-            correct: 1,
+            correct: 2,
           },
         ],
       },
@@ -20139,11 +20325,30 @@ const HK_WEEK_40: WeekContent = {
               correct: false,
             },
             {
-              text: "What I can see, what I can do, and the rest goes up.",
+              text: "I would answer her myself and check it with somebody after.",
+              correct: false,
+            },
+            {
+              text: "What I can see, what I can do, Ms Trang, and the rest goes up.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Floor Supervisor. Nobody told you which lift is slow at seven — how did you find out?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I asked the attendants on the floor, Ms Trang, and I wrote it in my own notebook.",
               correct: true,
             },
             {
-              text: "I would answer her myself and check it with somebody after.",
+              text: "I worked it out myself after a few weeks of being late with the trolley.",
+              correct: false,
+            },
+            {
+              text: "It is in the training guide somewhere, I think, so I looked it up in there.",
               correct: false,
             },
           ],
