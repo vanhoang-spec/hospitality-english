@@ -2262,8 +2262,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
               "Anh ấy thuộc lòng kịch bản",
             ],
             correct: 0,
-            explanation:
-              "'${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold' — trình tự này phân biệt tư vấn với chào hàng.",
+            explanation: `'${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold' — trình tự này phân biệt tư vấn với chào hàng.`,
           },
           {
             q: "Ứng biến nghĩa là gì trong ngữ cảnh này?",
@@ -2940,7 +2939,7 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
     promptVi:
-      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. BỐN điều không được viết ra chỗ công khai: không nhận lỗi, không nêu nguyên nhân hay tên bộ phận, không hứa phần bù và không nêu con số, và không xác nhận hạng thẻ của khách — kể cả khi chính khách đã tự nêu.",
+      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ cả BA ý bên dưới — thiếu một ý là chưa đạt. Bốn điều không được viết ra chỗ công khai: không nhận lỗi, không nêu nguyên nhân hay tên bộ phận, không hứa phần bù và không nêu con số, và không xác nhận hạng thẻ của khách — kể cả khi chính khách đã tự nêu.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
@@ -3035,13 +3034,6 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "your tier",
       "your status",
       "entitled to",
-      // repeating the guest's own review back is not a reply
-      "you were promised",
-      "you were told",
-      "wasn't available",
-      "was not available",
-      "nobody offered",
-      "that part is ours",
     ],
     modelReply:
       "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",

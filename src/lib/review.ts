@@ -188,13 +188,24 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
       ...ls.flatMap((l) => l.game).flatMap((g) => g.options),
       ...ls.flatMap((l) => l.grammar).map((g) => ({ text: g.rude, correct: false })),
     ];
-    const authoredWrong = [...wrongOf(own ? [own] : []), ...wrongOf(content.lessons)]
-      .filter((o) => !o.correct && o.text !== speaking.targetResponse)
-      .map((o) => o.text)
-      .filter((t, i, a) => a.indexOf(t) === i);
-    const distractors = authoredWrong.length
-      ? authoredWrong
-      : flatSpeaking.filter((s) => s !== speaking).map((s) => s.targetResponse);
+    const textsOf = (ls: typeof content.lessons) =>
+      wrongOf(ls)
+        .filter((o) => !o.correct && o.text !== speaking.targetResponse)
+        .map((o) => o.text)
+        .filter((t, i, a) => a.indexOf(t) === i);
+    const ownWrong = textsOf(own ? [own] : []);
+    const authoredWrong = [...ownWrong, ...textsOf(content.lessons)].filter(
+      (t, i, a) => a.indexOf(t) === i,
+    );
+    // Draw the pair from THIS lesson whenever it has two to give. Rotating over the
+    // whole week defeats the ordering above: the offset lands outside the own-lesson
+    // block four times in five, and the learner rules those out by subject.
+    const distractors =
+      ownWrong.length >= 2
+        ? ownWrong
+        : authoredWrong.length
+          ? authoredWrong
+          : flatSpeaking.filter((s) => s !== speaking).map((s) => s.targetResponse);
     // A stable offset per item, so every card in a week does not draw the same pair
     // while any one card still shows the same options every time it comes round.
     const offset =
