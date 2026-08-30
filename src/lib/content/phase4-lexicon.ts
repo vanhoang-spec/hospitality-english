@@ -121,79 +121,13 @@ const FB_BANK: P4Bank = {
 };
 
 const HK_BANK: P4Bank = {
-  story: [
-    {
-      word: "Hand-woven linen",
-      phonetic: "/hænd ˈwəʊvən ˈlɪnɪn/",
-      definition: "Vải trải giường dệt thủ công",
-      icon: "🧵",
-    },
-    {
-      word: "Hypoallergenic bedding",
-      phonetic: "/ˌhaɪpəʊæləˈdʒenɪk ˈbedɪŋ/",
-      definition: "Bộ chăn ga ít gây dị ứng",
-      icon: "🛌",
-    },
-  ],
-  preferences: [
-    {
-      word: "Preferred pillow type",
-      phonetic: "/prɪˈfɜːd ˈpɪləʊ taɪp/",
-      definition: "Loại gối khách quen dùng",
-      icon: "🛏️",
-    },
-    {
-      word: "Room temperature setting",
-      phonetic: "/ruːm ˈtemprətʃə ˈsetɪŋ/",
-      definition: "Mức nhiệt độ phòng khách thích",
-      icon: "🌡️",
-    },
-  ],
-  disputes: [
-    {
-      word: "Damaged garment",
-      phonetic: "/ˈdæmɪdʒd ˈɡɑːmənt/",
-      definition: "Món quần áo bị hư hỏng",
-      icon: "👗",
-    },
-    {
-      word: "Missing valuable item",
-      phonetic: "/ˈmɪsɪŋ ˈvæljuəbl ˈaɪtəm/",
-      definition: "Món đồ có giá trị bị mất",
-      icon: "🔍",
-    },
-  ],
-  occasions: [
-    {
-      word: "Rose petal turndown",
-      phonetic: "/rəʊz ˈpetl ˈtɜːndaʊn/",
-      definition: "Chỉnh giường rải cánh hoa hồng",
-      icon: "🌹",
-    },
-    {
-      word: "Bath ritual set-up",
-      phonetic: "/bɑːθ ˈrɪtʃuəl ˈset ʌp/",
-      definition: "Việc chuẩn bị nghi thức ngâm tắm",
-      icon: "🛁",
-    },
-  ],
-  tradeoffs: [
-    {
-      word: "Replace the damaged garment",
-      phonetic: "/rɪˈpleɪs ðə ˈdæmɪdʒd ˈɡɑːmənt/",
-      definition: "Đền món quần áo bị hỏng",
-      icon: "👗",
-    },
-    {
-      word: "Cover the cleaning cost",
-      phonetic: "/ˈkʌvə ðə ˈkliːnɪŋ kɒst/",
-      definition: "Chịu chi phí giặt tẩy cho khách",
-      icon: "💵",
-    },
-  ],
+  story: [],
+  preferences: [],
+  disputes: [],
+  occasions: [],
+  tradeoffs: [],
   emergencies: [
     // Slot order is semantic — see the note on the FO bank above.
-    { word: "Water leak", phonetic: "/ˈwɔːtə liːk/", definition: "Sự cố rò rỉ nước", icon: "💧" },
     {
       word: "Blocked fire exit",
       phonetic: "/blɒkt ˈfaɪər ˈeksɪt/",
@@ -300,92 +234,7 @@ const HK_BANK: P4Bank = {
       icon: "🔎",
     },
   ],
-  wrapUp: [
-    {
-      word: "Room readiness standard",
-      phonetic: "/ruːm ˈredinəs ˈstændəd/",
-      definition: "Tiêu chuẩn phòng sẵn sàng đón khách",
-      icon: "✅",
-    },
-    {
-      word: "Guest history file",
-      phonetic: "/ɡest ˈhɪstri faɪl/",
-      definition: "Hồ sơ lưu thói quen khách quen",
-      icon: "🗂️",
-    },
-    {
-      word: "Laundry claim record",
-      phonetic: "/ˈlɔːndri kleɪm ˈrekɔːd/",
-      definition: "Hồ sơ khiếu nại về giặt là",
-      icon: "📁",
-    },
-    {
-      word: "Turndown quality check",
-      phonetic: "/ˈtɜːndaʊn ˈkwɒləti tʃek/",
-      definition: "Việc kiểm tra chất lượng chỉnh giường",
-      icon: "🌙",
-    },
-    {
-      word: "Incident escalation route",
-      phonetic: "/ˈɪnsɪdənt ˌeskəˈleɪʃn ruːt/",
-      definition: "Đường báo sự cố lên cấp trên",
-      icon: "📈",
-    },
-    {
-      word: "Celebration set-up brief",
-      phonetic: "/ˌseləˈbreɪʃn ˈset ʌp briːf/",
-      definition: "Bản hướng dẫn bày trí dịp lễ",
-      icon: "🎉",
-    },
-    {
-      word: "Amenity replenishment plan",
-      phonetic: "/əˈmiːnəti rɪˈplenɪʃmənt plæn/",
-      definition: "Kế hoạch bổ sung đồ dùng trong phòng",
-      icon: "📦",
-    },
-    {
-      word: "Sustainability programme",
-      phonetic: "/səˌsteɪnəˈbɪləti ˈprəʊɡræm/",
-      definition: "Chương trình vận hành bền vững",
-      icon: "♻️",
-    },
-    {
-      word: "Deep clean rotation",
-      phonetic: "/diːp kliːn rəʊˈteɪʃn/",
-      definition: "Lịch luân phiên tổng vệ sinh phòng",
-      icon: "🔄",
-    },
-    {
-      word: "Room inspection score",
-      phonetic: "/ruːm ɪnˈspekʃn skɔː/",
-      definition: "Điểm chấm khi kiểm tra phòng",
-      icon: "💯",
-    },
-    {
-      word: "Compensation approval limit",
-      phonetic: "/ˌkɒmpenˈseɪʃn əˈpruːvl ˈlɪmɪt/",
-      definition: "Hạn mức được duyệt bồi thường",
-      icon: "⚖️",
-    },
-    {
-      word: "Guest satisfaction score",
-      phonetic: "/ɡest ˌsætɪsˈfækʃn skɔː/",
-      definition: "Điểm hài lòng của khách",
-      icon: "⭐",
-    },
-    {
-      word: "Linen life cycle",
-      phonetic: "/ˈlɪnɪn laɪf ˈsaɪkl/",
-      definition: "Vòng đời sử dụng của khăn ga",
-      icon: "🔁",
-    },
-    {
-      word: "Staff training record",
-      phonetic: "/stɑːf ˈtreɪnɪŋ ˈrekɔːd/",
-      definition: "Hồ sơ đào tạo nhân viên buồng phòng",
-      icon: "🎓",
-    },
-  ],
+  wrapUp: [],
 };
 
 const SW_BANK: P4Bank = {
