@@ -904,3 +904,58 @@ Kết luận thành thật: đây là hơn một tuần nội dung. Lối thoát
 cho GR **hai tuần** cho khiếu nại (ví dụ 33 xử lý "ai quyết cái gì" và một tuần nữa xử lý "việc
 không phải của bạn" + đóng hồ sơ), thay vì nhồi cả hai vào tuần 33. Việc đó đổi bản đồ 40 tuần,
 nên nó không phải quyết định của người soạn nội dung.
+
+---
+
+## Vòng 7 — ba mục mới, đều ngoài phạm vi cụm
+
+### GR-L · Bộ chấm bài viết tuần 33 không đo được điều nào nó cấm — CẢ SÁU BỘ PHẬN
+
+Kiểm định Academic vòng 7 chạy thử `scoreFreeText` (`src/lib/writing-score.ts`) với đề GR:
+
+| Bài nộp                                                                                                      | Kết quả       |
+| ------------------------------------------------------------------------------------------------------------ | ------------- |
+| Phá cả ba điều cấm của đề (nêu nguyên nhân _"that was our mistake"_, nêu tên bộ phận, nêu con số 4.000.000đ) | **ĐẠT 100%**  |
+| Xác nhận hạng thẻ của người vừa đánh giá — thứ `explanationVi` cấm đích danh                                 | **ĐẠT 100%**  |
+| Sáo rỗng: _"Loyalty matters to us… within a few days"_                                                       | **ĐẠT 100%**  |
+| Bài đúng chuẩn, tiếng Anh tự nhiên                                                                           | **TRƯỢT 50%** |
+
+Thủ phạm là token trần trong `any`-list: `"loyalty"` khớp _"Loyalty matters to us"_, `"within"` khớp
+_"within a few days"_. **Đã siết cho GR ở vòng 7.**
+
+**Còn nguyên ở năm bộ phận kia.** `WEEK33_WRITING_TASKS` của FO dùng `"the charge"`, HK dùng
+`"compensation"`, SW dùng `"health"` — cùng một kiểu token trần, cùng một `scoreFreeText`. Và
+`scoreFreeText` không có khái niệm "ý CẤM", nên mọi điều cấm in trong `promptVi` hiện là trang trí.
+Cần một `forbid` field, hoặc chuyển các điều cấm sang `explanationVi` và nói thẳng rằng máy không
+chấm phần đó.
+
+### GR-M · Ngân hàng đàm phán tuần 35 vẫn hứa thay vì đề xuất — SỬA KHI SOẠN GR-35
+
+`phase4-lexicon.ts` ~1010–1060 cho GR sáu headword tuần 35; khung `phase4.ts` biến chúng thành lời
+hứa ngôi thứ nhất: _"We will restore your tier status if you can confirm today."_ ·
+_"I am able to double your bonus points for a group of twenty."_ · _"Once you agree, I will add two
+free nights immediately."_ Tuần 33 nay báo trước điều này bằng tên (xem GR-G), và **tuần 39 đã được
+vá ở vòng 7** — cả `grammar`, `speaking` lẫn đáp án game của `GR_39_2` nay là ĐỀ XUẤT.
+
+Tuần 35 thì chưa. Tan khi soạn tay GR-35.
+
+### GR-N · Bể chính tả nghe–gõ nhận headword dài sáu từ — VẤN ĐỀ TOÀN PHASE 4
+
+`VocabSuite.tsx` lọc `spellable = /^[A-Za-z][A-Za-z- ]{3,}$/` — chấp nhận dấu cách — còn
+`dictationMatches` (`phases.ts`) khớp tuyệt đối từ tuần 15. Nên ở Phase 4 học viên có thể phải nghe
+rồi gõ đúng từng chữ `"As this is your first stay"` (6 từ) hoặc `"I only know what I saw"` (6 từ).
+Sai một từ = 0 điểm.
+
+Không phải lỗi của ba tuần này — viết headword dạng cụm là đúng triết lý ESP và ma trận công nhận
+("≥510 từ + cụm công thức"). Nhưng ba tuần này đẩy độ dài lên mức cao nhất khoá. Cách rẻ nhất: siết
+`spellable` xuống ≤3 từ.
+
+### Còn mở, mức nhẹ
+
+- **GR-34** `4612`: _"it seems there has been a mix-up with your cake"_ nêu NGUYÊN NHÂN, thứ tuần 33
+  cấm. Nên là _"This is not the cake you asked for, and I am putting it right now."_
+- **Viết hoa `Duty Manager`**: tuần 31 dùng thường, tuần 33 dùng hoa. Chốt một luật — hoa khi chỉ
+  người đang trực, thường khi chỉ vai trò.
+- **FO-32 / GR-32 về khách quay lại**: FO xác nhận ba sở thích trong một câu, GR gọi đó là "a
+  performance". Cả hai đều kết bằng "anything different?" nên sống được, nhưng nên thêm một dòng
+  giải thích vì sao hai quầy làm khác nhau.

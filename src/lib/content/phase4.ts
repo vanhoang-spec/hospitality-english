@@ -2298,7 +2298,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       grammar: [
         g(
           `Sorry. Here money. Bye.`,
-          `I am very sorry about the ${lo(d1)}. What if we ${lo(t1)} instead?`,
+          `I am very sorry about the ${lo(d1)}. May I put it to my manager that we ${lo(t1)}?`,
           "Thứ tự đúng: thừa nhận trước, đề nghị sau — đảo lại là mua chuộc. Nhưng con số là của quản lý: tuần 33 đặt mọi khoản khỏi hoá đơn dưới Duty Manager, nên ở đây bạn ĐỀ XUẤT chứ không hứa.",
         ),
         g(
@@ -2315,7 +2315,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         ),
         sp(
           "Sorry is not going to fix it, is it?",
-          `You are right. What if we ${lo(t1)} instead?`,
+          `You are right, sir. Let me put it to my Duty Manager that we ${lo(t1)}.`,
           "Đồng ý với khách rồi chuyển sang phương án — không phòng thủ.",
         ),
       ],
@@ -2348,7 +2348,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       game: [
         game(
           "Apologies do not really help us at this point.",
-          `You are right. What if we ${lo(t1)} instead, madam?`,
+          `You are right, madam. Let me ask my Duty Manager whether we can ${lo(t1)}.`,
           `I understand, madam, and I truly am very sorry again.`,
           `I am afraid there is nothing further we can offer.`,
         ),
@@ -2940,7 +2940,7 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         labelVi: "Nêu quyền lợi hội viên được kỳ vọng, không xác nhận trách nhiệm",
         any: [
           "lounge access",
-          "loyalty",
+          "loyalty members",
           "our members",
           "are told to expect",
           "part of the programme",
@@ -2948,11 +2948,30 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
       {
         labelVi: "Nêu mốc thời gian sẽ liên hệ lại",
-        any: ["within", "by tomorrow", "by this evening", "48 hours", "forty-eight", "same day"],
+        any: [
+          "within forty-eight",
+          "within 48",
+          "within twenty-four",
+          "within 24",
+          "by tomorrow",
+          "by this evening",
+          "48 hours",
+          "forty-eight hours",
+          "same day",
+        ],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        any: [
+          "contact",
+          "get in touch",
+          "reach out",
+          "call the hotel",
+          "call us",
+          "email us",
+          "ask for me",
+          "ask for the guest relations manager",
+        ],
       },
     ],
     modelReply:
