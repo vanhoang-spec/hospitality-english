@@ -282,13 +282,13 @@ const HK_BANK: P4Bank = {
       icon: "📆",
     },
     {
-      word: "Housekeeping manager contact",
+      word: "Direct line",
       phonetic: "/ˈhaʊskiːpɪŋ ˈmænɪdʒə ˈkɒntækt/",
       definition: "Thông tin liên hệ trưởng buồng phòng",
       icon: "📞",
     },
     {
-      word: "Preventive measure list",
+      word: "Preventive measures",
       phonetic: "/prɪˈventɪv ˈmeʒə lɪst/",
       definition: "Danh sách biện pháp phòng ngừa",
       icon: "🛡️",
