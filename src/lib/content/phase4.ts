@@ -2891,7 +2891,14 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
       {
         labelVi: "Sẽ xem lại mức đền bù cho thoả đáng",
-        any: ["compensation", "reimburse", "cover the cost", "make it right", "review the offer"],
+        any: [
+          "compensation",
+          "reimburse",
+          "cover the cost",
+          "make it right",
+          "put it right",
+          "review the offer",
+        ],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
@@ -2937,16 +2944,6 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Nêu quyền lợi hội viên được kỳ vọng, không xác nhận trách nhiệm",
-        any: [
-          "lounge access",
-          "loyalty members",
-          "our members",
-          "are told to expect",
-          "part of the programme",
-        ],
-      },
-      {
         labelVi: "Nêu mốc thời gian sẽ liên hệ lại",
         any: [
           "within forty-eight",
@@ -2988,11 +2985,11 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "our failure",
       "we let you down",
       "accept responsibility",
-      "responsibility for",
+      "full responsibility",
+      "take responsibility for what",
       "our error",
       "our oversight",
       "at fault",
-      "on our side",
       // naming a cause, a department or a colleague
       "front office",
       "front desk",
@@ -3009,7 +3006,15 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       // promising the compensation in public
       "free night",
       "free nights",
-      "complimentary",
+      "complimentary night",
+      "complimentary stay",
+      "complimentary dinner",
+      "private dinner",
+      "late check-out",
+      "cancel the extra charge",
+      "refund",
+      "goodwill gesture",
+      "million",
       "spa credit",
       "room upgrade",
       "upgrade you",
@@ -3030,11 +3035,18 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "your tier",
       "your status",
       "entitled to",
+      // repeating the guest's own review back is not a reply
+      "you were promised",
+      "you were told",
+      "wasn't available",
+      "was not available",
+      "nobody offered",
+      "that part is ours",
     ],
     modelReply:
       "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
-      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Ba điều KHÔNG viết ra chỗ công khai: đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
+      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Bốn điều KHÔNG viết ra chỗ công khai: đừng nêu nguyên nhân hay tên bộ phận ('the front office did not pass it on'); đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
   },
   BO: {
     reviewMeta: "✉️ Email khiếu nại từ đối tác lữ hành · ABC Travel",

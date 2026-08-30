@@ -180,18 +180,34 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
   if (matchingRound) {
     options = matchingRound.options.map((o) => ({ text: o.text, correct: o.correct }));
   } else {
-    const authoredWrong = [
-      ...content.lessons.flatMap((l) => l.game).flatMap((g) => g.options),
-      ...content.lessons.flatMap((l) => l.grammar).map((g) => ({ text: g.rude, correct: false })),
-    ]
+    // Wrong options authored for the lesson this prompt belongs to come first: a
+    // distractor from another lesson is off-topic, and a learner rules it out by
+    // subject instead of by rule.
+    const own = content.lessons.find((l) => l.speaking.includes(speaking));
+    const wrongOf = (ls: typeof content.lessons) => [
+      ...ls.flatMap((l) => l.game).flatMap((g) => g.options),
+      ...ls.flatMap((l) => l.grammar).map((g) => ({ text: g.rude, correct: false })),
+    ];
+    const authoredWrong = [...wrongOf(own ? [own] : []), ...wrongOf(content.lessons)]
       .filter((o) => !o.correct && o.text !== speaking.targetResponse)
-      .map((o) => o.text);
+      .map((o) => o.text)
+      .filter((t, i, a) => a.indexOf(t) === i);
     const distractors = authoredWrong.length
       ? authoredWrong
       : flatSpeaking.filter((s) => s !== speaking).map((s) => s.targetResponse);
+    // A stable offset per item, so every card in a week does not draw the same pair
+    // while any one card still shows the same options every time it comes round.
+    const offset =
+      distractors.length > 2
+        ? [...row.item_key].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) %
+          distractors.length
+        : 0;
+    const picked = [distractors[offset], distractors[(offset + 1) % distractors.length]].filter(
+      (t, i, a) => t && a.indexOf(t) === i,
+    );
     options = [
       { text: speaking.targetResponse, correct: true },
-      ...distractors.slice(0, 2).map((text) => ({ text, correct: false })),
+      ...picked.map((text) => ({ text, correct: false })),
     ];
   }
   return { kind: "speaking", row, speaking, options };

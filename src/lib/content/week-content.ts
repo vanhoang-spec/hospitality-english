@@ -4314,7 +4314,7 @@ export const GR_WEEK_34: WeekContent = {
         {
           rude: "Is this your honeymoon?",
           polite: "I couldn't help but notice the lovely bouquet — are you newlyweds, perhaps?",
-          rule: "Thêm trạng từ rào 'perhaps' để lời phỏng đoán thành nhận xét nhã nhặn.",
+          rule: "Nhìn thấy một thứ là quyền được HỎI, không phải quyền được đoán — tuần 32. 'Perhaps' giữ câu ở dạng câu hỏi; bỏ nó đi là thành một kết luận về khách.",
         },
       ],
       speaking: [
@@ -4635,7 +4635,7 @@ export const GR_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: 'GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name "Nguyen" printed as "Nguyan" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered\nFollow-up: Manager to review order-confirmation process with Kitchen team',
+        text: 'GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name "Nguyen" printed as "Nguyan" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered from the GR desk limit; GR Manager informed\nFollow-up: Manager to review order-confirmation process with Kitchen team',
         questions: [
           {
             q: "Sự cố này mô tả lỗi gì?",
@@ -20410,9 +20410,9 @@ const GR_WEEK_31: WeekContent = {
   weekTitleVi: "Câu chuyện bạn được phép kể",
   reviewWords: [
     "House rule",
-    "Library",
+    "Availability",
     "Concierge desk",
-    "Garden",
+    "Confidential",
     "Quiet table",
     "Lounge dress code",
     "Speak to the duty manager",
@@ -20509,6 +20509,8 @@ const GR_WEEK_31: WeekContent = {
               "Nêu con số rồi hẹn tra lại the history folder cho chắc",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'Whichever three are yours, you say them plainly, with no hedge in front of them.' Rào đón một dữ kiện mình biết chắc làm khách nghe ra là nhà không dạy nhân viên.",
           },
           {
             q: "Một người mặc đồng phục nói mình từ cơ quan chức năng, đòi xem danh sách khách đêm qua. Làm gì?",
@@ -20518,6 +20520,8 @@ const GR_WEEK_31: WeekContent = {
               "Trả lời phần mình chắc chắn, phần không chắc thì nói là không biết",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'Dial from the desk telephone, in front of them. Do not leave the desk.' Bạn không từ chối và không cản — bạn chỉ không phải người trả lời.",
           },
           {
             q: "Một người hỏi đích danh tên một vị khách đang ở trong nhà. Làm gì?",
@@ -20527,6 +20531,30 @@ const GR_WEEK_31: WeekContent = {
               "Không xác nhận gì, và báo duty manager là đã có người hỏi",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'What is not curiosity is a person asking about a guest by name.' Không xác nhận, không phủ nhận, và để quản lý quyết.",
+          },
+          {
+            q: "Ba dữ kiện in trong bài này là của ai?",
+            options: [
+              "Của khách sạn nơi bạn làm — học thuộc là đủ",
+              "Của một khách sạn ví dụ — hỏi quản lý ba dữ kiện của nhà mình",
+              "Của tập đoàn, dùng chung cho mọi khách sạn",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The three facts printed in this week are one hotel's. Yours will be different.' Một năm sai nói bằng giọng chắc chắn là câu trả lời tệ nhất.",
+          },
+          {
+            q: "Vị khách đó đã trả phòng từ năm ngoái. Có được kể tên họ không?",
+            options: [
+              "Được, vì họ đã rời khách sạn rồi",
+              "Được nếu người hỏi là người trong gia đình",
+              "Không — luật riêng tư không hết hạn khi khách trả phòng",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Everything this desk knows about a guest is confidential, and it does not expire when they check out.'",
           },
         ],
       },
@@ -20643,6 +20671,8 @@ const GR_WEEK_31: WeekContent = {
               "Ghi vào hồ sơ rằng vị khách này không thích trò chuyện",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'ask the lounge team to keep away from that table for the evening — service as normal, no conversation.' Khách chỉ nên phải nói không MỘT lần.",
           },
           {
             q: "Vì sao phải trao câu 'do stop me' trước khi kể dài?",
@@ -20652,6 +20682,37 @@ const GR_WEEK_31: WeekContent = {
               "Để khách không phải ngắt lời mình",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'a guest who interrupts remembers doing it.' Trao nút dừng trước là để khách không bao giờ phải dùng tới nó.",
+          },
+          {
+            q: "Bản ngắn của câu chuyện dài bao nhiêu?",
+            options: ["Ba câu", "Khoảng bốn phút", "Tuỳ khách hỏi tới đâu"],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The short version is three sentences.' Bản đầy đủ mất khoảng bốn phút, và bốn phút là dài với một tách cà phê đang nguội.",
+          },
+          {
+            q: "Khách nói không muốn nghe. Đáp thế nào?",
+            options: [
+              "Hỏi lại lần nữa khi đồ uống của khách được mang ra",
+              "'Another time, then' — và giữ cửa mở cho dịp khác",
+              "Kể phần ngắn nhất cho đỡ phí",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'No is a complete answer.' Câu đó không tốn gì của khách và vẫn giữ cửa mở.",
+          },
+          {
+            q: "Khách hỏi có gì hay ở ngoài khách sạn. Ai lo việc đó?",
+            options: [
+              "The concierge desk",
+              "Guest Relations, vì mình ngồi với khách lâu nhất",
+              "Quản lý Guest Relations",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'a guest who wants something local is a question for the concierge desk, not a story about the house.'",
           },
         ],
       },
@@ -20759,7 +20820,7 @@ const GR_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nYou may show a guest around some of this house. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the garden, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the staff areas. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask them, or show it from the door.\nThe rooftop belongs to the bar that runs it, and the lounge dress code applies during its hours, not ours. Each of those is a house rule, and it is easier to give a guest a house rule than an opinion.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nDial from the desk telephone yourself, and say who is asking before anything else. Hand the receiver over only after the guest upstairs has said yes. The receiver is the door, and you hold the handle.\nIf nobody answers, or the guest upstairs says no, say the same sentence.\n'I am afraid I am not able to connect you, madam.'\nThat one is true either way. Never say that somebody does not want to see them — that answer confirms they are here.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
+        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nYou may show a guest around some of this house. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the garden, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the staff areas. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. Their availability is the banquet team's to give, not yours. The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask them, or show it from the door.\nThe rooftop belongs to the bar that runs it, and the lounge dress code applies during its hours, not ours. Each of those is a house rule, and it is easier to give a guest a house rule than an opinion.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nDial from the desk telephone yourself, and say who is asking before anything else. Hand the receiver over only after the guest upstairs has said yes. The receiver is the door, and you hold the handle.\nIf nobody answers, or the guest upstairs says no, say the same sentence.\n'I am afraid I am not able to connect you, madam.'\nThat one is true either way. Never say that somebody does not want to see them — that answer confirms they are here.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
         questions: [
           {
             q: "Khách muốn lên phòng 1806 tìm bạn. Làm gì?",
@@ -20769,6 +20830,8 @@ const GR_WEEK_31: WeekContent = {
               "Đưa khách lên, vì khách biết số phòng nên chắc là bạn thật",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'You do not say whether that person is in the house, and you do not say which floor.'",
           },
           {
             q: "Khách muốn xem phòng khiêu vũ. Ai quyết?",
@@ -20778,6 +20841,41 @@ const GR_WEEK_31: WeekContent = {
               "Duty Manager, vì mọi khu vực chung đều thuộc quyền ông ấy",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow.'",
+          },
+          {
+            q: "Gọi được lên phòng, nhưng khách trên phòng nói không muốn gặp. Nói gì với người dưới sảnh?",
+            options: [
+              "'She does not want to see you, sir'",
+              "'I am afraid I am not able to connect you, madam'",
+              "'There is nobody in that room, sir'",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'That one is true either way.' Nói khách không muốn gặp cũng là xác nhận người đó đang ở đây.",
+          },
+          {
+            q: "Khách hỏi có gì đáng xem trước bữa tối. Cho bao nhiêu?",
+            options: [
+              "Một danh sách để khách tự chọn theo ý mình",
+              "Ba gợi ý xếp theo thứ tự ưu tiên",
+              "Một chỗ và một giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Give one place and one hour.' Khách trước bữa tối có mười lăm phút, không có cả buổi chiều.",
+          },
+          {
+            q: "Ai đặt luật trang phục cho rooftop?",
+            options: [
+              "Quầy bar điều hành rooftop, trong giờ của họ",
+              "Guest Relations",
+              "Front office",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The rooftop belongs to the bar that runs it.' Giờ của họ, luật của họ.",
           },
         ],
       },
@@ -20899,6 +20997,8 @@ const GR_WEEK_31: WeekContent = {
               "Vì nó lan ra, và sau một tháng thành dữ kiện không ai tra được",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'It travels. The guest repeats it at dinner, another colleague hears it, and in a month the house has a fact nobody can find.'",
           },
           {
             q: "Khách kể cho bạn một chi tiết lịch sử. Làm gì với nó?",
@@ -20908,6 +21008,35 @@ const GR_WEEK_31: WeekContent = {
               "Dùng luôn trong bài giới thiệu, vì chính khách nói ra",
             ],
             correct: 0,
+            explanation: "Bài đọc: 'writing something down does not make it true.'",
+          },
+          {
+            q: "Chuyển việc cho người khác mà không kèm mốc giờ thì là gì?",
+            options: ["Là một cuộc bàn giao", "Chỉ là chỉ tay", "Là cách lịch sự để từ chối"],
+            correct: 1,
+            explanation: "Bài đọc: 'Handing on needs a time, or it is only pointing.'",
+          },
+          {
+            q: "Ai là người thêm dữ kiện vào the history folder?",
+            options: [
+              "Guest Relations Manager",
+              "Lễ tân trực đêm",
+              "Bất kỳ ai tìm được một dữ kiện mới",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The Guest Relations Manager wrote the history folder and is the one who adds to it.'",
+          },
+          {
+            q: "Khách hỏi một chi tiết ngoài ba dữ kiện, và bạn không chắc. Câu nào đúng?",
+            options: [
+              "'It is probably from the French period'",
+              "'I would rather find out than guess'",
+              "'Nobody here has ever been told that'",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The wrong move is to reward that with a guess.' Câu đó khen câu hỏi của khách và buộc bạn phải đi tra thật.",
           },
         ],
       },
@@ -21023,7 +21152,7 @@ const GR_WEEK_32: WeekContent = {
           targetResponse:
             "You mentioned your children are small, madam. Based on that, I would take the two o'clock boat.",
           helpTip:
-            "Đừng bắt đầu bằng gợi ý — bắt đầu bằng lời khách. Một dữ kiện khách đã cho, rồi một gợi ý, rồi dừng. Đừng liệt kê ba lựa chọn: khách hỏi what would you do là đang xin một câu trả lời, không xin một thực đơn. 'Mentioned' /ˈmenʃnd/ — đuôi -ed sau /n/ đọc thành /d/.",
+            "Chỉ nói 'You mentioned' khi bạn nhớ CHÍNH XÁC câu khách đã nói; không nhớ thì hỏi trước. Đừng bắt đầu bằng gợi ý — bắt đầu bằng lời khách. Một dữ kiện khách đã cho, rồi một gợi ý, rồi dừng. Đừng liệt kê ba lựa chọn: khách hỏi what would you do là đang xin một câu trả lời, không xin một thực đơn. 'Mentioned' /ˈmenʃnd/ — đuôi -ed sau /n/ đọc thành /d/.",
         },
         {
           guestPrompt: "Black, no sugar. And I'll be down at six every morning.",
@@ -21040,19 +21169,56 @@ const GR_WEEK_32: WeekContent = {
             q: "Gợi ý được phép mọc ra từ những nguồn nào?",
             options: [
               "Từ điều khách nói, hồ sơ có xin phép, và điều nhà biết về ngày mai",
-              "Từ hồ sơ khách và từ kinh nghiệm của mình với khách cùng quốc tịch trước đây",
-              "Từ điều khách nói và từ những gì mình quan sát được ở khách",
+              "Từ điều mình quan sát được về khách",
+              "Từ kinh nghiệm của mình với những vị khách trông giống họ, vì mình đã gặp nhiều rồi",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'Advice has exactly three sources.' Nguồn thứ tư — điều bạn nhìn thấy — là nguồn làm người ta gặp rắc rối.",
           },
           {
             q: "Khách hỏi 'anh/chị sẽ làm gì?'. Trả lời thế nào?",
             options: [
-              "Đưa ba lựa chọn để khách tự chọn cho công bằng",
-              "Hỏi thêm vài câu nữa rồi mới gợi ý cho chắc",
+              "Đưa ba lựa chọn để khách tự so sánh rồi chọn cái hợp nhất với mình",
+              "Hỏi lại xem khách thích kiểu gì",
               "Một gợi ý, rồi trả quyền quyết định lại cho khách",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'A guest who asks what you would do is asking for an answer, not a menu.'",
+          },
+          {
+            q: "Nguồn thứ tư — điều bạn quan sát được về khách — dùng vào việc gì?",
+            options: [
+              "Vào hồ sơ, vì nó cũng là một dữ kiện mình quan sát được và ca sau cần biết",
+              "Chỉ để HỎI; chỉ câu trả lời của khách mới được ghi",
+              "Không dùng vào việc gì cả",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Noticing is permission to ASK. What goes on the file is the guest's answer, never the thing you saw.'",
+          },
+          {
+            q: "Khách xin cà phê lúc sáu giờ, trước giờ lounge mở. Hứa được gì?",
+            options: [
+              "Hứa lounge sẽ mở sớm cho khách, rồi báo lại cho tổ lounge sau",
+              "Không hứa gì, để khách tự hỏi lounge",
+              "Một phích ở quầy — phần đó là của bạn",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'a flask at the desk is yours to promise, and the lounge is not.'",
+          },
+          {
+            q: "Có chuyến thuyền bảy giờ và khách gật đầu. Ai đặt chỗ?",
+            options: [
+              "Hỏi concierge desk đặt",
+              "Bạn đặt luôn cho nhanh",
+              "Đưa số điện thoại cho khách tự gọi",
+            ],
+            correct: 0,
+            explanation:
+              "Tuần 31: 'A city tour, a boat, a restaurant: none of those is yours to arrange.' Lời khuyên là của bạn; chỗ đặt thì không.",
           },
         ],
       },
@@ -21162,16 +21328,18 @@ const GR_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A special request they made, and what was promised back: by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact.\nAn allergy is a safety record, not a preference. It goes on the allergy slip the moment you hear it, and nobody has to be asked first.\nWritten, never spoken. You write it on the allergy slip and put the slip into the chef's hand.\nThen enter it on the guest's profile in the same minute, so every outlet sees it on the order.\nRestaurant, lounge, room service, and the banquet chef if there is an event. Verbal instructions to a kitchen are not accepted anywhere in this house.\nThen go back and tell the guest the kitchen has it. A sentence said to one cook is not an allergy record. Consent decides only whether it also stays on the preference file for the next stay.\nFor the file, ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nConsent decides the file, not the kitchen.\nBut consent governs the preference file only. It does not govern an incident report. When something happens to a guest — a fall, an ambulance, a doctor — you write what was seen and what was done. Nobody has to be asked first. That record is the incident report, it is marked confidential, and it is a different piece of paper from this one.\nThe consent form you met in week twenty-four is signed once, at booking, and it covers the guest's data. A photograph needs the photograph consent sheet, signed the day the photograph is taken. A preference needs neither. It needs a spoken yes, and you write the date and your own name beside it.\nCheck the details with the guest, not with the file.\nA guest may ask to see what we hold, and may ask us to take something out. Both are the Duty Manager's. Say 'Of course I will pass that on, madam.'\n'My Duty Manager will come to you about it today.'\nThen tell the Duty Manager the same minute. Do not promise the copy yourself, and do not promise the deletion. Some of what this house holds it is required to keep, and only the Duty Manager knows which lines those are. Never turn the screen towards a guest at the desk.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nWeek twenty-four gave this rule its name. Week thirty-one gave it its first half: not a name, not a room, not a year. Every line above is the other half. The reason is the same: somebody will read this file who was not there. A file that holds anything about health is marked confidential.\nThis replaces what weeks twenty-five and twenty-seven taught. Those weeks noted a preference and told the guest afterwards. From now on the guest says yes first, every time.\nThe front desk works this way too, from week thirty-two. If you see a preference written straight from small talk anywhere in this house, that is the old standard, and it is being changed. A preference the guest did not say yes to is not a preference — it is a note about a person.\nThe same rule covers anything you only noticed. A ring, a bouquet, who somebody walked in with — none of that goes on a file by itself. Notice it, ask about it, and write only the answer.\nNote the preference, and stop at the preference.\nAnd a confidential file is not read out, not even to a colleague. Somebody who needs to act needs the action, not the reason.",
+        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A special request they made, and what was promised back: by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact.\nAn allergy is a safety record, not a preference. It goes on the allergy slip the moment you hear it, and nobody has to be asked first.\nWritten, never spoken. You write it on the allergy slip and put the slip into the chef's hand.\nThen enter it on the guest's file for this stay in the same minute, so every outlet sees it on the order.\nRestaurant, lounge, room service, and the banquet chef if there is an event. Verbal instructions to a kitchen are not accepted anywhere in this house.\nThen go back and tell the guest the kitchen has it. A sentence said to one cook is not an allergy record. Consent decides only whether it stays on the file after they check out.\nFor the file, ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nConsent decides the file, not the kitchen.\nBut consent governs the preference file only. It does not govern an incident report. When something happens to a guest — a fall, an ambulance, a doctor — you write what was seen and what was done. Nobody has to be asked first. That record is the incident report, it is marked confidential, and it is a different piece of paper from this one.\nThe consent form you met in week twenty-four is signed once, at booking, and it covers the guest's data. A photograph needs the photograph consent sheet, signed the day the photograph is taken. A preference needs neither. It needs a spoken yes, and you write the date and your own name beside it.\nCheck the details with the guest, not with the file.\nA guest may ask to see what we hold, and may ask us to take something out. Both are the Duty Manager's. Say 'Of course I will pass that on, madam.'\n'My Duty Manager will come to you about it today.'\nThen tell the Duty Manager the same minute. Do not promise the copy yourself, and do not promise the deletion. Some of what this house holds it is required to keep, and only the Duty Manager knows which lines those are. Never turn the screen towards a guest at the desk.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nWeek twenty-four gave this rule its name. Week thirty-one gave it its first half: not a name, not a room, not a year. Every line above is the other half. The reason is the same: somebody will read this file who was not there. A file that holds anything about health is marked confidential.\nThis replaces what week twenty-seven taught: a preference noted, and the guest told afterwards. From now on the guest says yes first, every time.\nThe front desk works this way too, from week thirty-two. If you see a preference written straight from small talk anywhere in this house, that is the old standard, and it is being changed. A preference the guest did not say yes to is not a preference — it is a note about a person.\nThe same rule covers anything you only noticed. A ring, a bouquet, who somebody walked in with — none of that goes on a file by itself. Notice it, ask about it, and write only the answer.\nNote the preference, and stop at the preference.\nAnd a confidential file is not read out, not even to a colleague. Somebody who needs to act needs the action, not the reason.",
         questions: [
           {
             q: "Khách nói 'tôi không ăn được hải sản'. Ghi thế nào?",
             options: [
               "Báo bếp ngay, không cần hỏi ai — rồi xin phép riêng cho phần lưu vào hồ sơ",
               "Xin phép khách trước đã, rồi mới báo bếp và ghi hồ sơ",
-              "Ghi là khách dị ứng hải sản, vì đó là cách viết gọn nhất",
+              "Ghi là khách dị ứng hải sản, vì đó là cách viết gọn nhất cho ca sau đọc",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'An allergy is a safety record, not a preference… nobody has to be asked first.' Đồng ý chỉ quyết phần hồ sơ, không quyết phần bếp.",
           },
           {
             q: "Khách không muốn nói lý do xin tầng yên tĩnh. Hồ sơ ghi gì?",
@@ -21181,6 +21349,7 @@ const GR_WEEK_32: WeekContent = {
               "Ghi yêu cầu, và để trống phần lý do",
             ],
             correct: 2,
+            explanation: "Bài đọc: 'A blank is not a hole in the file — it is the guest's answer.'",
           },
           {
             q: "Khách ngã ở sảnh và phải gọi xe cấp cứu. Có phải xin phép khách trước khi viết biên bản không?",
@@ -21190,6 +21359,30 @@ const GR_WEEK_32: WeekContent = {
               "Có, nhưng xin phép sau khi khách đã ổn định là được",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'consent governs the preference file only. It does not govern an incident report.'",
+          },
+          {
+            q: "Ảnh chụp chung với khách, khách muốn lưu vào hồ sơ. Cần gì?",
+            options: [
+              "Một lời đồng ý bằng miệng là đủ, vì chính khách là người xin chụp",
+              "Phiếu đã ký lúc booking",
+              "Phiếu the photograph consent sheet, ký đúng ngày chụp",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A photograph needs the photograph consent sheet, signed the day the photograph is taken.'",
+          },
+          {
+            q: "Khách xin xem hồ sơ của mình, và xin xoá một dòng. Trả lời thế nào?",
+            options: [
+              "Hứa xoá ngay trong hôm nay, vì dữ liệu đó là của chính vị khách",
+              "Cả hai đều là việc của Duty Manager — chuyển lên và báo ngay",
+              "Xoay màn hình cho khách tự xem",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Both are the Duty Manager's… some of what this house holds it is required to keep.' Và không bao giờ xoay màn hình về phía khách.",
           },
         ],
       },
@@ -21308,6 +21501,8 @@ const GR_WEEK_32: WeekContent = {
               "Dựng sẵn mọi thứ như lần trước rồi báo cho khách biết",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: ''Has anything changed since your last stay?' does more work than any list of remembered details.'",
           },
           {
             q: "Hồ sơ ghi gối cứng từ hai năm trước. Làm gì với dòng đó?",
@@ -21317,6 +21512,40 @@ const GR_WEEK_32: WeekContent = {
               "Hỏi Duty Manager xem còn dùng được không",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'Anything reversible and free… you set before they arrive, then offer back in your first sentence.'",
+          },
+          {
+            q: "Dịp kỷ niệm khách tự kể. Kiểm hai thứ ở đâu?",
+            options: [
+              "Trên hồ sơ sở thích",
+              "Trên booking — ngày còn nằm trong kỳ này, và tên người đi cùng",
+              "Hỏi lại khách thêm một lần nữa cho chắc, ngay lúc khách vừa tới quầy",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'First check two things on the booking, not on the file.'",
+          },
+          {
+            q: "Tên người đi cùng khách được lưu ở đâu?",
+            options: [
+              "Trên booking, và không bao giờ chép sang hồ sơ sở thích",
+              "Trên hồ sơ sở thích, để ca sau còn biết mà chuẩn bị cho đúng",
+              "Ở cả hai chỗ cho chắc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A companion's name lives on the booking. It is never copied across to the preference file.'",
+          },
+          {
+            q: "Đọc lại ba sở thích trong hồ sơ cho khách nghe là gì?",
+            options: [
+              "Là dịch vụ tốt, vì nó chứng minh mình nhớ khách",
+              "Là một màn trình diễn, và nó không chừa cho khách đường nào ngoài gật",
+              "Là bắt buộc theo quy trình đón khách quay lại, và khách sẽ thấy mình được nhớ",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Reciting a guest's own preferences at them is not service. It is a performance.'",
           },
         ],
       },
@@ -21435,6 +21664,8 @@ const GR_WEEK_32: WeekContent = {
               "Mở bằng 'as this is your first stay', rồi xin hỏi một câu",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'tells the guest the same fact without reading them an empty page.'",
           },
           {
             q: "Vì sao phải ghi ngay chứ không để cuối ca?",
@@ -21444,6 +21675,31 @@ const GR_WEEK_32: WeekContent = {
               "Vì quản lý kiểm tra hồ sơ vào cuối mỗi ca",
             ],
             correct: 0,
+            explanation: "Bài đọc: 'the thing they said quietly is the first thing to go.'",
+          },
+          {
+            q: "Khách mới thì hỏi năm câu hay một câu?",
+            options: [
+              "Năm câu, để dựng hồ sơ cho đủ",
+              "Một câu, có sẵn hai lựa chọn",
+              "Không hỏi gì, để khách tự nói ra",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Five questions is an interview.' Khách vừa xuống máy bay sẽ trả lời lịch sự và không nhớ gì cả.",
+          },
+          {
+            q: "'Somebody will know' cần thêm gì mới thành một lời hứa?",
+            options: ["Một cái tên", "Một mốc giờ", "Một lời xin lỗi"],
+            correct: 1,
+            explanation: "Bài đọc: ''By this evening' is an hour. 'Soon' is not.'",
+          },
+          {
+            q: "'As far as I know' dùng cho loại thông tin nào?",
+            options: ["Cho dữ kiện về toà nhà", "Cho hồ sơ của khách", "Cho cả hai"],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'It is never for a guest's own file — there you either wrote it down or you did not.'",
           },
         ],
       },
@@ -21543,7 +21799,8 @@ const GR_WEEK_33: WeekContent = {
         {
           word: "Policy allows",
           phonetic: "/ˈpɒləsi əˌlaʊz/",
-          definition: "Chính sách cho phép — cách nêu TRẦN trước khi khách hỏi tới",
+          definition:
+            "Chính sách cho phép — chỉ nói SAU khi đã đủ bốn dữ kiện và chỉ khi khách đã hỏi tới tiền; nêu là CÓ một trần, không bao giờ nêu con số",
           context: "Our policy allows for this, madam, and my manager decides what we can do.",
           icon: "📋",
         },
@@ -21562,7 +21819,7 @@ const GR_WEEK_33: WeekContent = {
         {
           rude: "Maybe we pay you some money.",
           polite:
-            "I have the four things now, madam. Our policy allows compensation up to a limit, and my manager sets it.",
+            "Thank you, madam — I have everything I need. Our policy allows for this, and my manager decides what we can do.",
           rule: "Câu này chỉ nói SAU khi đã có đủ bốn dữ kiện, và chỉ khi khách đã hỏi tới tiền. Mở đầu bằng chữ 'compensation' là tự mình đặt chuyện tiền lên bàn — khách vào đây với một lời hứa bị bội ước, đừng biến nó thành cuộc mặc cả. Nêu TRẦN thì được; nêu con số thì không, con số là của quản lý.",
         },
       ],
@@ -21584,7 +21841,7 @@ const GR_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT WAS ACTUALLY PROMISED\nGuest Relations gets the complaints that are not about a thing. Housekeeping hears about a stain; you hear about a promise.\nThat makes the first move different. There is nothing to photograph. What you have instead is a sentence somebody said, and your job is to find out exactly what it was.\nFour things, every time. What was promised. Who promised it. When. And what happened instead.\nAsk for them in that order, and write while the guest talks. 'Shall I put that down, madam?' is the whole of the permission you need. A guest who can see you writing slows down without being asked to.\nDo not start with what you can give. An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.\nDo not name a cause either. 'There must have been a misunderstanding' is a verdict, and nobody has established one yet.\nSome claims are not about a service at all. A preference ignored, an occasion missed, a detail from the file repeated to the wrong person. Those hurt more than a cold breakfast, and they take the same four things.\nEverything goes in the complaint log before anything is offered. The log is what turns a bad afternoon into a case somebody can close.\nSIX SENTENCES THAT STOP HERE\nFrom week twenty-eight: 'If you like, I can arrange a room upgrade.'\n'We can add the missing points.'\n'If you prefer, we will arrange a private dinner instead.'\n'We can extend your late check-out if it happens again.'\n'We will cancel the extra charge as a gesture of apology.'\nFrom week twenty-five: 'We will confirm the upgrade straight away.'\nNotice what a guest in a claim does not hear. They do not hear 'if you like'. They hear the second half, and the second half is a promise. None of the six is yours to make.\nUpdating the file is not on this list. That one stays yours, in a claim as on any other day.\nWeek thirty-five teaches the same shelf inside a prepared negotiation: 'We will ask about your tier if you can confirm today.'\nEvery sentence there asks. None of them promises, and that is the difference.\nTwo rules hold in a negotiation exactly as they hold at this desk. Anything with a figure needs your manager's figure. Tier, points and tier lounge access stay the loyalty office's on every day of the year.",
+        text: "WHAT WAS ACTUALLY PROMISED\nGuest Relations gets the complaints that are not about a thing. Housekeeping hears about a stain; you hear about a promise.\nThat makes the first move different. There is nothing to photograph. What you have instead is a sentence somebody said, and your job is to find out exactly what it was.\nFour things, every time. What was promised. Who promised it. When. And what happened instead.\nAsk for them in that order, and write while the guest talks. 'Shall I put that down, madam?' is the whole of the permission you need. A guest who can see you writing slows down without being asked to.\nDo not start with what you can give. An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.\nDo not name a cause either. 'There must have been a misunderstanding' is a verdict, and nobody has established one yet.\nSome claims are not about a service at all. A preference ignored, an occasion missed, a detail from the file repeated to the wrong person. Those hurt more than a cold breakfast, and they take the same four things.\nEverything goes in the complaint log before anything is offered. The log is what turns a bad afternoon into a case somebody can close.\nSIX SENTENCES THAT STOP HERE\nFrom weeks twenty-eight and thirty: 'If you like, I can arrange a room upgrade.'\n'We can add the missing points.'\n'If you prefer, we will arrange a private dinner instead.'\n'We can extend your late check-out if it happens again.'\n'We will cancel the extra charge as a gesture of apology.'\nFrom week twenty-five: 'We will confirm the upgrade straight away.'\nNotice what a guest in a claim does not hear. They do not hear 'if you like'. They hear the second half, and the second half is a promise. None of the six is yours to make.\nUpdating the file is not on this list. That one stays yours, in a claim as on any other day.\nWeek thirty-five will drill the same shelf inside a prepared negotiation, where a manager has agreed the range before you sit down.\nRead every line there as a request, because that is all it can be here. A negotiation changes who you are talking to. It does not change whose signature it needs.\nTwo rules hold in a negotiation exactly as they hold at this desk. Anything with a figure needs your manager's figure. Tier, points and tier lounge access stay the loyalty office's on every day of the year.",
         questions: [
           {
             q: "Khách mở lời bằng 'lần thứ ba rồi, khách sạn này chẳng ai làm đúng lời'. Làm gì?",
@@ -21594,6 +21851,8 @@ const GR_WEEK_33: WeekContent = {
               "Giải thích rằng có thể đã có hiểu nhầm ở đâu đó",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who can see you writing slows down without being asked to.'",
           },
           {
             q: "Vì sao không được đưa ra đề nghị trước khi có đủ bốn dữ kiện?",
@@ -21603,6 +21862,8 @@ const GR_WEEK_33: WeekContent = {
               "Vì đó là một lời đoán, và đoán sai thì khiếu nại to thêm",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.'",
           },
           {
             q: "Tuần 28 dạy nói 'If you like, I can arrange a room upgrade.' Khách đang khiếu nại nghe thấy gì?",
@@ -21612,6 +21873,30 @@ const GR_WEEK_33: WeekContent = {
               "Nghe thấy một câu từ chối khéo",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'They do not hear \\'if you like\\'. They hear the second half, and the second half is a promise.'",
+          },
+          {
+            q: "Bốn dữ kiện mà một khiếu nại cần là gì?",
+            options: [
+              "Phòng, giờ, tên khách, và số tiền khách đòi",
+              "Hứa gì, ai hứa, khi nào, và thực tế ra sao",
+              "Ai sai, sai ở đâu, thiệt hại bao nhiêu, và bù thế nào",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What was promised. Who promised it. When. And what happened instead.'",
+          },
+          {
+            q: "Ghi vào complaint log lúc nào?",
+            options: [
+              "Trước khi đề nghị bất cứ điều gì",
+              "Sau khi đã thoả thuận xong phần bù",
+              "Cuối ca, khi đã có đủ thông tin",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The log is what turns a bad afternoon into a case somebody can close.'",
           },
         ],
       },
@@ -21708,7 +21993,7 @@ const GR_WEEK_33: WeekContent = {
         {
           guestPrompt: "So what are you going to do about it?",
           targetResponse:
-            "Two things now, sir. Your lounge access goes back on this minute, and the bill goes to the Duty Manager.",
+            "Your booking has the lounge for these nights, sir. I am telling the lounge now, and the bill goes to my Duty Manager.",
           helpTip:
             "Nhìn BOOKING trước khi nói câu này: lounge ghi trong booking cho những đêm này thì bạn trả lại ngay, còn lounge có vì hạng thẻ thì KHÔNG bao giờ bạn tự bật. Rồi bắt đầu bằng phần bạn LÀM ĐƯỢC NGAY và không cần hỏi ai — nó có thật, nó nhanh, và nó chứng minh bạn đang hành động. Đừng mở bằng phần phải xin phép: khách nghe thấy chữ manager đầu tiên sẽ nghĩ mình đang bị đẩy đi. 'Duty' /ˈdjuːti/ — giữ âm /j/, đừng thành /ˈduːti/.",
         },
@@ -21716,13 +22001,13 @@ const GR_WEEK_33: WeekContent = {
           guestPrompt: "Duty Manager. You wanted me at the desk — what is it?",
           speakerRole: "manager",
           targetResponse:
-            "Room 1102, sir. He was promised the lounge until ten and it closed at eight. He wants two nights off the bill.",
+            "Room 1102, sir. Reception promised the lounge until ten on Tuesday; it closed at eight. He wants two nights off.",
           helpTip:
-            "DUTY MANAGER vừa lên tới quầy. Trình bằng đúng bốn dữ kiện của bài 1, theo thứ tự: phòng, cái đã hứa, cái đã xảy ra, cái khách đang đòi. Đừng kể cảm xúc của khách, và đừng nêu con số mình nghĩ là hợp lý — con số là của ông ấy. 'Promised' /ˈprɒmɪst/ — đuôi -ed sau /s/ đọc thành /t/.",
+            "DUTY MANAGER vừa lên tới quầy. Bước sang một bên, ngoài tầm nghe của khách, RỒI mới trình — nói con số khách đang đòi ngay trước mặt họ là neo con số đó lại. Trình đủ bốn dữ kiện của bài 1 (hứa gì, AI hứa, KHI NÀO, thực tế ra sao), rồi cái khách đang đòi. Đừng kể cảm xúc của khách, và đừng nêu con số mình nghĩ là hợp lý — con số là của ông ấy. 'Promised' /ˈprɒmɪst/ — đuôi -ed sau /s/ đọc thành /t/.",
         },
       ],
       reading: {
-        text: "FIVE LEVELS, AND WHICH ONE YOU ARE ON\nFive levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE.\nAn apology, spoken, at the moment it is needed.\nPutting back a benefit the guest already had for this stay. Lounge access promised for these nights, a late check-out they were promised, a table they booked. But tell the front office or the restaurant in the same minute. You are not asking permission. You are telling the desk that owns it, before you give the guest a time.\nLounge access that comes with a membership tier is the loyalty office's, and you never switch that one on.\nHow to tell them apart in ten seconds: look at the booking, not at the guest. Written into the booking for these nights, it is yours to put back. Held because of their card, it is the loyalty office's. If the booking does not tell you inside ten seconds, ask the front office.\nReplacing the thing that failed: a wrong cake goes back to the kitchen at once, and nobody counts that as compensation. And whatever a written house programme already authorises — a postponed tour refunded the same day, and you ask nobody. A written house programme is a sheet with a name and an order on it. If you cannot put your hand on the sheet, you do not have one, and the level above applies.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nMost houses give this desk a small limit of its own: an amenity to the room, a drink in the lounge, one pressed garment. Anything you add on top of a replacement comes out of that limit, or it is your manager's. Ask your Guest Relations Manager what yours is, and what the front office limit is, in figures, in your first week.\nYOUR MANAGER'S.\nAnything the guest was not entitled to before today. A spa credit, a dinner, an upgrade. You propose these; you do not promise them. Your manager says yes, and the front office says which room. The apology letter belongs here too: you draft it, and it goes out over her name.\nTHE FRONT OFFICE'S.\nAny room change, and any late check-out the house does not owe. You ask them, and you never tell a guest which rooms are empty, or that a room will cost nothing.\nTHE DUTY MANAGER'S.\nAny refund at all, any payment to a third party, and anything off the bill above the front office's own limit. You speak to the duty manager yourself, and you never quote a figure.\nA disputed line inside that limit the front office reverses at once — a minibar water, one laundry item. Ask them for it while the guest waits. Nobody should wait for a manager over the price of a bottle of water.\nTHE LOYALTY OFFICE'S.\nTier status and points. Week twenty-four gave those their own rules, and week twenty-six named the team that holds them. This desk promises neither.\nSay which level you are on, out loud. 'That one is my manager's to give' is better than a long silence, and far better than a yes you cannot keep.\nThen open a recovery case. The open recovery case is what keeps a claim alive after your shift ends.",
+        text: "FIVE LEVELS, AND WHICH ONE YOU ARE ON\nFive levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE.\nAn apology, spoken, at the moment it is needed.\nPutting back a benefit the guest already had for this stay. Lounge access promised for these nights, a late check-out they were promised, a table they booked. But tell the front office or the restaurant in the same minute. You are not asking permission. You are telling the desk that owns it, before you give the guest a time.\nLounge access that comes with a membership tier is the loyalty office's, and you never switch that one on.\nHow to tell them apart in ten seconds: look at the booking, not at the guest. Written into the booking for these nights, it is yours to put back. Held because of their card, it is the loyalty office's. If the booking does not tell you inside ten seconds, ask the front office.\nReplacing the thing that failed: a wrong cake goes back to the kitchen at once, and nobody counts that as compensation. And whatever a written house programme already authorises — a postponed tour refunded the same day, and you ask nobody. A written house programme is a sheet with a name and an order on it. If you cannot put your hand on the sheet, you do not have one, and the level above applies.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nMost houses give this desk a small limit of its own: an amenity sent to the room, a drink in the lounge, one pressed garment. Anything you add on top of a replacement comes out of that limit, or it is your manager's. Ask your Guest Relations Manager what yours is, and what the front office limit is, in figures, in your first week.\nYOUR MANAGER'S.\nAnything the guest was not entitled to before today. A spa credit, a dinner, an upgrade. You propose these; you do not promise them. Your manager says yes, and the front office says which room. The apology letter belongs here too: you draft it, and it goes out over her name.\nTHE FRONT OFFICE'S.\nAny room change, and any late check-out the house does not owe. You ask them, and you never tell a guest which rooms are empty, or that a room will cost nothing.\nTHE DUTY MANAGER'S.\nAny refund at all, any payment to a third party, and anything off the bill above the front office's own limit. You speak to the duty manager yourself, and you never quote a figure.\nA disputed line inside that limit the front office reverses at once — a minibar water, one laundry item. Ask them for it while the guest waits. Nobody should wait for a manager over the price of a bottle of water.\nTHE LOYALTY OFFICE'S.\nTier status and points. Week twenty-four gave those their own rules, and week twenty-six named the team that holds them. This desk promises neither.\nSay which level you are on, out loud. 'That one is my manager's to give' is better than a long silence, and far better than a yes you cannot keep.\nThen open a recovery case. The open recovery case is what keeps a claim alive after your shift ends.",
         questions: [
           {
             q: "Khách bị mất quyền vào lounge mà lẽ ra đã có. Trả lại thì gọi là gì?",
@@ -21732,6 +22017,7 @@ const GR_WEEK_33: WeekContent = {
               "Là quyết định của quản lý, nên phải xin phép trước khi trả lại",
             ],
             correct: 1,
+            explanation: "Bài đọc: 'Restoring what somebody was already owed is not a gift.'",
           },
           {
             q: "Khách đòi khôi phục hạng thẻ. Ai quyết?",
@@ -21741,6 +22027,7 @@ const GR_WEEK_33: WeekContent = {
               "Bộ phận khách hàng thân thiết — quầy không hứa hạng thẻ và điểm",
             ],
             correct: 2,
+            explanation: "Bài đọc: 'Tier status and points… This desk promises neither.'",
           },
           {
             q: "Tuần 28 dạy bạn nói 'I can arrange a room upgrade'. Trong một vụ khiếu nại thì sao?",
@@ -21750,6 +22037,30 @@ const GR_WEEK_33: WeekContent = {
               "Không — nâng hạng là của Duty Manager, nên đưa thẳng lên ông ấy",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'You propose these; you do not promise them. Your manager says yes, and the front office says which room.'",
+          },
+          {
+            q: "Khách tranh chấp một chai nước minibar. Ai xoá, và khách có phải chờ quản lý không?",
+            options: [
+              "Front office xoá ngay trong lúc khách đứng chờ",
+              "Duty Manager — mọi khoản trên hoá đơn đều là của ông ấy",
+              "Guest Relations xoá luôn, vì đó là khoản nhỏ",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Nobody should wait for a manager over the price of a bottle of water.'",
+          },
+          {
+            q: "Lounge access ghi trong booking và lounge access theo hạng thẻ — phân biệt bằng gì?",
+            options: [
+              "Hỏi khách xem họ đang giữ hạng nào",
+              "Hỏi Duty Manager cho chắc",
+              "Nhìn booking, không nhìn khách",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'look at the booking, not at the guest… If the booking does not tell you inside ten seconds, ask the front office.'",
           },
         ],
       },
@@ -21865,7 +22176,7 @@ const GR_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "SORRY FOR IT, AND WHAT IS NOT YOURS\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide. It also ends the investigation: nothing found afterwards can be said out loud.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan.\nWhen you do not know, say so: 'I would rather find out than guess' is a better answer than a confident wrong one.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nThere is a third case. When the failure is not in dispute, you may name the failure and only the failure. 'You were promised the lounge until ten, madam, and it closed at eight. That part is ours, and I am sorry.' Name the service, never the person and never the cause. 'That part is ours' names a service. 'That was our mistake' names a person nobody has found yet.\nNever name another team to a guest. Saying so repairs nothing, and it turns one complaint into two. The cause belongs in the complaint log, where a manager can look at it properly.\nNOT YOURS AT ALL\nFive things arrive at this desk that are not complaints, and none of the five levels applies.\nFirst, a guest who accuses a named member of staff of anything — theft, a hand on them, an insult.\nTake them somewhere private, and take a colleague with you. Never sit alone with a guest who is making an allegation: it protects them and it protects you. Leave the door open — a door that is merely unlocked protects nobody, because nobody can see in.\nWrite down the hour, the room, and as much of what they said as you caught. Write it on an incident report form, marked confidential — not in the complaint log. Do not try to write a full statement, and never ask a guest to sign one. The Duty Manager takes the statement, and tells housekeeping that nobody is to enter or clean the room until they say otherwise.\nSay 'I am going to ask my Duty Manager to come to you now, madam'. Your colleague telephones the Duty Manager and security from where they are standing.\nAsk security to save the camera recording for that floor and that hour before anything else. Nobody leaves the room.\nDo not ask them to repeat it. Do not argue any part of it. Do not move them on to what is being put right. And do not say one word to the colleague they named.\nIf the guest says they want the police, that is theirs to decide and never yours to talk them out of. Say 'Of course, madam', and tell the Duty Manager that too.\nSecond, a guest who tells you they were hurt or made ill here.\nHealth first: 'Are you hurt now, madam — do you need a doctor?' Then the Duty Manager, at once.\nNever say it was our fault. Never say we will pay. Never say a figure.\nWrite the incident report in your own shift, and photograph the place before anybody tidies it. The place, never the guest.\nThird, a guest who names a lawyer or the press, or who threatens a review with your name in it. Say one sentence and no more: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.' Then say nothing else — not your name, not your opinion, not 'no comment'. Do not agree to be recorded or photographed, and do not accept a card.\nFourth, a guest who will not accept anything and will not leave the desk. That one is the Duty Manager's the moment it is said.\nAnd anything at all about safety is not a complaint at all.\nA smell of burning, a loose rail, a fire door propped open, a child alone at the pool. Say 'Thank you for telling me, sir', call security first, and the Duty Manager after.\nFifth, and this one is about you. A guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach first. Say 'One moment, sir' and nothing else. Have the nearest colleague call security and the Duty Manager.\nDo not answer him, do not apologise, and do not stay within reach. Nobody at this desk has to stand and take it.",
+        text: "SORRY FOR IT, AND WHAT IS NOT YOURS\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide. It also ends the investigation: nothing found afterwards can be said out loud.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan.\nWhen you do not know, say so: 'I would rather find out than guess' is a better answer than a confident wrong one.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nThere is a third case. When the failure is not in dispute, you may name the failure and only the failure. 'You were promised the lounge until ten, madam, and it closed at eight. That part is ours, and I am sorry.' Name the service, never the person and never the cause. 'That part is ours' names a service. 'That was our mistake' hands out a blame nobody has established yet.\nNever name another team as the cause. Saying so repairs nothing, and it turns one complaint into two. Naming the team that is DOING the next thing is a different sentence, and the guest needs it. The cause belongs in the complaint log, where a manager can look at it properly.\nNOT YOURS AT ALL\nSix things arrive at this desk that are not complaints, and none of the five levels applies.\nFirst, a guest who accuses a named member of staff of anything — theft, a hand on them, an insult.\nIf they say a hand was put on them, ask first.\n'Are you hurt, madam — do you need a doctor?' Everything else waits for that answer.\nTake them somewhere private, and take a colleague with you. Never sit alone with a guest who is making an allegation: it protects them and it protects you. Leave the door open — a door that is merely unlocked protects nobody, because nobody can see in.\nWrite down the hour, the room, and as much of what they said as you caught. Write it on an incident report form, marked confidential — not in the complaint log. Do not try to write a full statement, and never ask a guest to sign one. The Duty Manager takes the statement, and tells housekeeping that nobody is to enter or clean the room until they say otherwise.\nSay 'I am going to ask my Duty Manager to come to you now, madam'. Your colleague telephones the Duty Manager and security from where they are standing.\nAsk security to save the camera recording for that floor and that hour before anything else. Nobody leaves that private room until the Duty Manager arrives.\nDo not ask them to repeat it. Do not argue any part of it. Do not move them on to what is being put right. And do not say one word to the colleague they named.\nIf the guest says they want the police, that is theirs to decide and never yours to talk them out of. Say 'Of course, madam', and tell the Duty Manager that too.\nSecond, a guest who tells you they were hurt or made ill here.\nHealth first: 'Are you hurt now, madam — do you need a doctor?'\nIf they say yes, or if you are not sure, telephone the Duty Manager and say the room number first.\nThen stay with the guest. If they say no, telephone anyway, at once.\nNever say it was our fault. Never say we will pay. Never say a figure.\nWrite the incident report in your own shift, and photograph the place before anybody tidies it. The place, never the guest.\nThird, a guest who names a lawyer or the press, or who threatens a review with your name in it. Say one sentence and no more: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.' Then say nothing else — not your name, not your opinion, not 'no comment'. Do not agree to be recorded or photographed. If they hand you a card, take it with both hands, say nothing more, and give it to your Duty Manager.\nFourth, a guest who will not accept anything and will not leave the desk. That one is the Duty Manager's the moment it is said.\nFifth, anything at all about safety. That is not a complaint at all.\nA smell of burning, a loose rail, a fire door propped open. Ask 'Which floor, sir?' and nothing else, then call security first and the Duty Manager after.\nA child alone at the pool is different. Go to the water yourself and send the nearest colleague to telephone as you go. A call is not a pair of eyes on a child.\nSixth, and this one is about you. A guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach first. Say 'One moment, sir' and nothing else. Have the nearest colleague call security and the Duty Manager.\nDo not answer him, do not apologise, and do not stay within reach. Nobody at this desk has to stand and take it.",
         questions: [
           {
             q: "Vì sao 'that was our mistake' là câu không nên nói?",
@@ -21875,6 +22186,8 @@ const GR_WEEK_33: WeekContent = {
               "Vì chỉ quản lý mới được nói câu đó với khách",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'Once a guest has been told the house was at fault, nothing found afterwards can be said out loud.'",
           },
           {
             q: "Khách nói mình bị thương trong khuôn viên khách sạn. Câu đầu tiên bạn nói là gì?",
@@ -21884,15 +22197,19 @@ const GR_WEEK_33: WeekContent = {
               "Ghi ngay vào complaint log rồi mời khách ngồi chờ quản lý",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'Health first.' Nếu khách nói có, gọi Duty Manager và nói số phòng trước tiên, rồi ở lại với khách.",
           },
           {
             q: "Khách nói một nhân viên có tên đã lấy đồ trong phòng họ. Việc đầu tiên là gì?",
             options: [
               "Ghi lại đầy đủ lời khai rồi mời khách ký xác nhận",
-              "Mời khách sang chỗ riêng CÙNG một đồng nghiệp, ghi giờ và số phòng, và không ai rời phòng",
+              "Hỏi khách có bị thương không, rồi mời sang chỗ riêng CÙNG một đồng nghiệp",
               "Báo ngay cho người bị nêu tên để họ kịp giải thích",
             ],
             correct: 1,
+            explanation:
+              "Bài đọc: 'Never sit alone with a guest who is making an allegation.' Và không nói một lời nào với người bị nêu tên.",
           },
           {
             q: "Khách quát mắng bạn và túm lấy tay bạn ở quầy. Làm gì?",
@@ -21902,6 +22219,19 @@ const GR_WEEK_33: WeekContent = {
               "Lùi ra khỏi tầm tay trước, rồi gọi bảo vệ và Duty Manager",
             ],
             correct: 2,
+            explanation:
+              "Bài đọc: 'Nobody at this desk has to stand and take it.' Lùi ra trước, nói 'One moment, sir', và không trả lời gì thêm.",
+          },
+          {
+            q: "Khách báo có một đứa trẻ đang ở hồ bơi một mình. Làm gì trước?",
+            options: [
+              "Gọi bảo vệ rồi đợi ở quầy",
+              "Tự đi ra hồ ngay, và nhờ đồng nghiệp gọi trong lúc mình đi",
+              "Ghi vào sổ và báo Duty Manager cuối ca",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A call is not a pair of eyes on a child.' Mùi khét hay lan can lỏng thì gọi bảo vệ trước; đứa trẻ dưới nước thì không.",
           },
         ],
       },
@@ -22029,7 +22359,7 @@ const GR_WEEK_33: WeekContent = {
           targetResponse:
             "The front office is taking the minibar line off now, madam. The rest goes to my Duty Manager before you go up.",
           helpTip:
-            "Khoản phụ thu còn sống thì lời xin lỗi chết. Đừng nói 'I will check' — nêu AI quyết, rồi cho MỘT MỐC nằm trong ca của bạn. 'Before' /bɪˈfɔː/ — trọng âm rơi vào âm tiết hai.",
+            "Chỉ nói câu này SAU khi đã xin Lễ tân: nó mô tả việc ĐANG xảy ra, không phải việc bạn định xin. Khoản phụ thu còn sống thì lời xin lỗi chết. Đừng nói 'I will check' — nêu AI quyết, rồi cho MỘT MỐC nằm trong ca của bạn. 'Before' /bɪˈfɔː/ — trọng âm rơi vào âm tiết hai.",
         },
         {
           guestPrompt: "And how do I know any of this will actually happen?",
@@ -22050,6 +22380,7 @@ const GR_WEEK_33: WeekContent = {
               "Khi chính khách nói rằng đã ổn",
             ],
             correct: 2,
+            explanation: "Bài đọc: 'You may think it is finished; only they can say so.'",
           },
           {
             q: "Vì sao điều đã thoả thuận phải ra giấy trước khi khách rời quầy?",
@@ -22059,6 +22390,40 @@ const GR_WEEK_33: WeekContent = {
               "Vì ca sau sẽ không biết phải làm gì nếu không có giấy",
             ],
             correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who has been let down once will not accept a second promise made only out loud.'",
+          },
+          {
+            q: "Thư xin lỗi đi ra dưới tên ai?",
+            options: [
+              "Tên bạn, vì bạn là người xử lý vụ này",
+              "Tên quản lý — bạn soạn, thư đi dưới tên bà ấy",
+              "Không cần tên ai, chỉ cần tên khách sạn",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'An apology letter goes out over a manager's name, not yours.'",
+          },
+          {
+            q: "Thư xin lỗi viết ba thứ. KHÔNG được viết gì?",
+            options: [
+              "Cái đã hứa với khách",
+              "Mốc thời gian",
+              "Nguyên nhân, tên bộ phận, tên đồng nghiệp và con số",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'No cause, no department, no colleague's name, and no figure.' Con số là của Duty Manager và nằm trên dòng bà ấy ký.",
+          },
+          {
+            q: "Hết ca mà việc chưa xong. Bàn giao thế nào?",
+            options: [
+              "Bàn giao theo tên và giờ",
+              "Nói với ca tối là có việc này",
+              "Để lại một ghi chú ở quầy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''I told the evening shift' is not a handover. A job with no name against it belongs to nobody.'",
           },
         ],
       },

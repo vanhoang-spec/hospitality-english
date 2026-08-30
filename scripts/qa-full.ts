@@ -594,15 +594,16 @@ const slugify = (t: string) =>
 
     // --- ReadingSuite
     for (const l of wk.lessons) {
-      // Two is the norm; a passage over 400 words may carry up to four. Two
-      // questions on a 700-word safety reading measure almost none of it.
-      // Mastery is 80%, so a 4-question passage is pass-perfectly-or-fail (3/4 = 75%).
-      // Five makes 4/5 = 80% reachable, and a 700-word passage needs the coverage.
-      const qMax = words(l.reading.text).length > 400 ? 5 : 2;
+      // Mastery is 80% and the bar is ceil(0.8 * n), so 2/2, 3/3 and 4/4 all demand a
+      // perfect run: two questions on a passage is pass-perfectly-or-fail. Only five
+      // gives a learner one wrong answer (4/5 = 80%), which is why the ceiling is five
+      // everywhere rather than only on long passages. Two remains the floor, so the
+      // generated spine is untouched.
+      const qMax = 5;
       if (l.reading.questions.length < 2 || l.reading.questions.length > qMax)
         fail(
           "T5",
-          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2${qMax > 2 ? "-5" : ""})`,
+          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2-5)`,
         );
       if (words(l.reading.text).length < 12)
         warn("T5", `${key} Reading: ${l.lessonId} passage is very short`);
