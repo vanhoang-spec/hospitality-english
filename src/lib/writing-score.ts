@@ -20,6 +20,8 @@ export type ScoreInput = {
   ideas: RequiredIdea[];
   minWords: number;
   minSentences: number;
+  /** Phrases that block the answer outright, however complete it is. */
+  avoid?: string[];
 };
 
 export type ScoreResult = {
@@ -63,7 +65,13 @@ function containsExpression(haystack: string, expression: string): boolean {
   );
 }
 
-export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInput): ScoreResult {
+export function scoreFreeText({
+  draft,
+  ideas,
+  minWords,
+  minSentences,
+  avoid,
+}: ScoreInput): ScoreResult {
   const tokens = words(draft);
   const wordCount = tokens.length;
   const sentenceCount = draft
@@ -84,6 +92,12 @@ export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInp
   else if (distinctRatio < MIN_DISTINCT_RATIO)
     blockedByVi =
       "Bài viết lặp lại quá nhiều từ giống nhau — hãy viết thành câu tự nhiên, đừng liệt kê từ khoá.";
+  else {
+    // A forbidden phrase blocks the answer outright. Coverage cannot buy its way
+    // past this: a public reply that admits fault is wrong however complete it is.
+    const banned = (avoid ?? []).find((expr) => containsExpression(draft, expr));
+    if (banned) blockedByVi = `Phản hồi công khai không được viết: "${banned}".`;
+  }
 
   // A blocked answer still shows its coverage so the learner can see which
   // ideas landed, but it is capped below the pass mark.

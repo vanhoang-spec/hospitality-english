@@ -2974,6 +2974,22 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         ],
       },
     ],
+    mustAvoid: [
+      "our mistake",
+      "our fault",
+      "we got it wrong",
+      "we were wrong",
+      "front office",
+      "reception",
+      "housekeeping",
+      "night shift",
+      "evening shift",
+      "Diamond",
+      "Platinum",
+      "Gold member",
+      "VND",
+      "refund of",
+    ],
     modelReply:
       "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
