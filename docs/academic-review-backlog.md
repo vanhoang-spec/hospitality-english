@@ -561,3 +561,29 @@ Phần còn lại không sửa được bằng biên tập. Tuần này chở n�
 gas, sơ tán, bão, mất điện, ngập). Mỗi quy tắc trong đó do một phát hiện kiểm định cụ thể đặt
 vào qua chín vòng. Muốn xuống 400–550 từ/bài như chuẩn band đòi thì phải **tách thành hai
 tuần** — tức đánh số lại lịch 40 tuần. Đó là quyết định của chủ dự án, không phải của biên tập.
+
+### HK-X · Tuần 40 mang tải từ vựng MỚI đầy đủ ở đúng tuần checkpoint — CHẶN BỞI ENGINE
+
+Kiểm định vòng 5 (Academic, V8) đo được: HK-40 có **16 headword hoàn toàn mới** cộng 8
+`reviewWords` — cùng tỉ lệ với HK-35/36/38 vốn không phải checkpoint. Ma trận
+(`docs/curriculum-level-matrix.md`) đòi tuần checkpoint "gồm ≥50% ngữ liệu tái sử dụng".
+Chín trong mười sáu thẻ là cả mệnh đề chứ không phải đơn vị từ vựng: `"That is where I stop"`,
+`"Never in front of a guest"`, `"Hold on — hands off that one"`, `"Could you write it down"`,
+`"Nobody taught me"`, `"On my own now"`, `"Beyond what I know"`, `"No shame in asking"`,
+`"Show them once"`.
+
+Đề xuất của auditor — chuyển 8 thẻ của HK_40_3 và HK_40_4 thành thẻ ÔN lấy từ tuần 31–38
+(`Leave it as found`, `Put it forward`, `Docket`, `Propose`, `Recovery position`,
+`Out of order`…) — **không thực hiện được**: GATE 1b (`verify-content.ts:387`) cấm một bộ phận
+dạy cùng một headword hai lần, nên những cụm đó chỉ được phép nằm ở `reviewWords`. Đó cũng
+chính là lý do chúng đang nằm ở đó.
+
+Muốn tuần checkpoint thật sự "đo lại thay vì bồi thêm" thì phải đổi một trong hai thứ, và cả
+hai đều là quyết định chương trình:
+1. Cho phép thẻ `vocabulary` kiểu ÔN (một trường `review: true` chẳng hạn) được miễn GATE 1b
+   và không tính vào tổng từ chủ động; hoặc
+2. Hạ hạn ngạch headword mới của riêng tuần checkpoint (16–18 → 6–8) và chấp nhận tổng từ
+   chủ động của mọi bộ phận giảm khoảng 8–10 từ — HK sẽ tụt từ 517 xuống ~509, tức dưới mục
+   tiêu 510 nhưng vẫn trên sàn 500.
+
+Áp cho cả sáu bộ phận ở tuần 40, không riêng HK.
