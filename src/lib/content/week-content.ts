@@ -22477,10 +22477,10 @@ const GR_WEEK_35: WeekContent = {
   reviewWords: [
     "Policy allows",
     "The loyalty office decides",
-    "You mentioned",
-    "Would that suit you",
+    "Already yours",
+    "Arrange the transfer myself",
     "Shall I put that down",
-    "Based on that",
+    "Off the bill",
     "Not mine to open",
     "My manager's to give",
   ],
@@ -22531,8 +22531,8 @@ const GR_WEEK_35: WeekContent = {
       grammar: [
         {
           rude: "No. We cannot do that price.",
-          polite: "What if we look at the dates instead, sir? That part I can move.",
-          rule: "'What if we…?' mở ra một hướng khác thay vì đóng cửa. Đóng bằng 'no' thì việc duy nhất khách còn làm được là đòi gặp quản lý. Nhưng chỉ mở hướng bạn THẬT SỰ đi được — 'that part I can move' là một lời hứa, và tuần 33 đã dạy giá của một lời hứa không giữ được.",
+          polite: "What if we look at the dates instead, sir? That part I can do.",
+          rule: "'What if we…?' mở ra một hướng khác thay vì đóng cửa. Đóng bằng 'no' thì việc duy nhất khách còn làm được là đòi gặp quản lý. Nhưng chỉ mở hướng bạn THẬT SỰ đi được — 'that part I can do' là một lời hứa, và tuần 33 đã dạy giá của một lời hứa không giữ được.",
         },
         {
           rude: "I will see how much I can give you.",
@@ -22544,7 +22544,7 @@ const GR_WEEK_35: WeekContent = {
         {
           guestPrompt: "Your best rate is still too high for us.",
           targetResponse:
-            "I understand, sir. What if we look at the dates instead? That part I can move today.",
+            "I understand, sir. What if we look at the dates instead? That part I can do today.",
           helpTip:
             "Đừng đáp một con số bằng một con số — tuần 33 cấm nêu con số và tuần này không gỡ lệnh đó. Đổi TRỤC: khách đang nói về giá, bạn mở sang ngày. Và chỉ mở sang thứ bạn thật sự chuyển được. 'Instead' /ɪnˈsted/ — trọng âm ở âm tiết hai, đừng đọc thành /ˈɪnsted/.",
         },
@@ -22553,7 +22553,7 @@ const GR_WEEK_35: WeekContent = {
             "Guest Relations. Mr Pham wants to talk about his bill at four. Just go and see him.",
           speakerRole: "colleague",
           targetResponse:
-            "Before we sit down, I need a range from our manager. I will not guess it.",
+            "Before we sit down, I need a range. Money off a bill is my Duty Manager's to set.",
           helpTip:
             "Đồng nghiệp đang đẩy bạn vào bàn đàm phán tay không. Từ chối đúng cách không phải là từ chối gặp khách, mà là từ chối gặp khách KHI CHƯA CÓ KHUNG — bốn giờ thì vẫn còn kịp đi hỏi. 'Range' /reɪndʒ/ — /eɪ/ là nguyên âm đôi, và đuôi /dʒ/ phải bật ra.",
         },
@@ -22581,7 +22581,7 @@ const GR_WEEK_35: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Not without the range — and if he is shouting, that is the Duty Manager's.",
+              text: "Not without the range. If he is shouting at you, that is security's first.",
               correct: true,
             },
             {
@@ -22596,7 +22596,7 @@ const GR_WEEK_35: WeekContent = {
         },
       ],
       reading: {
-        text: "THE RANGE COMES FIRST\nA negotiation is not a conversation you win. It is a conversation you were sent into with something to give.\nWhat you were given is called the range. It has a top and it has a bottom, and your manager sets both before you sit down.\nGetting it is your job, not hers. You go to her with the four things from week thirty-three — what was promised, who promised it, when, and what happened instead. Then you ask three questions.\nWhat may I offer. What may I not offer. Who signs it.\nWrite the answers down. A range you are carrying in your head at four o'clock is a range you will stretch by half past.\nThe range is yours to work inside, and it is never yours to say out loud. Week thirty-three holds here too: you do not quote a figure. You say there is room, and you say where.\n'What if we look at the dates instead?' moves the talk onto ground you were given. 'No' moves it upstairs, to somebody who was not in the room.\nSo open a door rather than close one. But open only doors you can walk through: name nothing you have not been given.\nSome things stay outside the range whatever your manager says, because they were never hers to give.\nWhich room you actually move into is the front office's, and so is a late check-out the house does not owe.\nTier, points and tier lounge access are the loyalty office's, on every day of the year.\nMoney off the bill, above the front office's own small limit, is the Duty Manager's.\nAn upgrade is the one that splits: you put it to your manager, she says yes, and the front office says which room.\nWeek thirty-three named all of them, and a negotiation does not rename them.\nThe levels here are this house's. Ask your Guest Relations Manager for your own limit, and the front office's, in figures, in your first week.\nAnd when a guest asks for something outside what you were given, say so in the room. 'That is outside what I was given, madam, and I will put it to my manager' is a real answer. Going quiet and hoping is not.\nYou will be back within the hour, with her answer or with where it has got to.\nSay the hour, and make it your hour, not hers.",
+        text: "THE RANGE COMES FIRST\nA negotiation is not a conversation you win. It is a conversation you were sent into with something to give.\nWhat you were given is called the range. It has a top and it has a bottom, and your manager sets both before you sit down.\nGetting it is your job, not hers. You go to her with the four things from week thirty-three — what was promised, who promised it, when, and what happened instead. Then you ask three questions.\nWhat may I offer. What may I not offer. Who signs it.\nWrite the answers down. A range you are carrying in your head at four o'clock is a range you will stretch by half past.\nThe range is yours to work inside, and it is never yours to say out loud. Week thirty-three holds here too: you do not quote a figure. You say there is room, and you say where.\n'What if we look at the dates instead?' moves the talk onto ground you were given. 'No' moves it upstairs, to somebody who was not in the room.\nSo open a door rather than close one. But open only doors you can walk through: name nothing you have not been given.\nSome things stay outside the range whatever your manager says, because they were never hers to give.\nWhich room the guest actually moves into is the front office's, and so is a late check-out the house does not owe.\nTier, points and tier lounge access are the loyalty office's, on every day of the year.\nMoney off the bill, above the front office's own small limit, is the Duty Manager's.\nAn upgrade is the one that splits: you put it to your manager, she says yes, and the front office says which room.\nWeek thirty-three named all of them, and a negotiation does not rename them.\nThe levels here are this house's. Ask your Guest Relations Manager for your own limit, and the front office's, in figures, in your first week.\nAnd when a guest asks for something outside what you were given, say so in the room.\nIf it is your manager's to give, say so and say when.\n'That is outside what I was given, madam, and I will put it to my manager' is a real answer.\nIf it was never hers — the tier, the room, the money off the bill — name the desk that owns it instead.\nGoing quiet and hoping is not an answer either way.\nYou will be back within the hour, with her answer or with where it has got to.\nSay the hour, and make it your hour, not hers.",
         questions: [
           {
             q: "Khung (the range) do ai đặt, và đặt lúc nào?",
@@ -22629,7 +22629,7 @@ const GR_WEEK_35: WeekContent = {
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'open only doors you can walk through: if you cannot move the room type, do not name the room type.' Và tuần 33 vẫn nguyên hiệu lực: không nêu con số.",
+              "Bài đọc: 'open only doors you can walk through: name nothing you have not been given.' Và tuần 33 vẫn nguyên hiệu lực: không nêu con số.",
           },
           {
             q: "Những thứ nào nằm ngoài khung, dù quản lý có nói gì?",
@@ -22640,18 +22640,18 @@ const GR_WEEK_35: WeekContent = {
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'Which room you actually move into is the front office's… Tier, points and tier lounge access are the loyalty office's… Money off the bill… is the Duty Manager's.' Đàm phán đổi được điều kiện, không đổi được ai sở hữu cái gì.",
+              "Bài đọc: 'Which room you actually move into is the front office's… Tier, points and tier lounge access are the loyalty office's… Money off the bill, above the front office's own small limit, is the Duty Manager's.' Đàm phán đổi được điều kiện, không đổi được ai sở hữu cái gì.",
           },
           {
             q: "Khách đòi một thứ ngoài khung. Làm gì ngay tại chỗ?",
             options: [
-              "Im lặng cho qua rồi tính sau, đừng làm hỏng không khí buổi nói chuyện",
-              "Nói thẳng là ngoài khung, sẽ trình quản lý, và hẹn giờ quay lại",
+              "Im lặng cho qua rồi tính sau, đừng làm hỏng không khí của buổi nói chuyện đang tốt",
+              "Nói thẳng là ngoài khung, nói rõ nó thuộc quyền ai, rồi hẹn giờ quay lại",
               "Nhận lời trước cho êm, rồi về xin quản lý duyệt lại sau",
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'Going quiet and hoping is not.' và 'Say the hour, and make it your hour, not hers.'",
+              "Bài đọc: 'If it was never hers — the tier, the room, the money off the bill — name the desk that owns it instead.' và 'Say the hour, and make it your hour, not hers.'",
           },
         ],
       },
@@ -22700,13 +22700,13 @@ const GR_WEEK_35: WeekContent = {
       ],
       grammar: [
         {
-          rude: "Of course, madam, I will arrange the transfer for you.",
+          rude: "Of course, sir, I will arrange the transfer for you.",
           polite: "In exchange for the longer stay, I can ask about the transfer, sir.",
           rule: "Một nhượng bộ đi một mình là một nhượng bộ sẽ bị đòi thêm. Gắn mỗi thứ bạn đưa ra với một thứ khách đưa lại — và thứ khách đưa lại phải là thứ họ trao được thật: ngày ở, số đêm, một xác nhận hôm nay. 'Thiện chí' không phải một điều kiện.",
         },
         {
           rude: "Confirm today and I will get it done for you.",
-          polite: "If you can confirm today, madam, I will put it to my manager this afternoon.",
+          polite: "If you can confirm today, madam, I will put it to my manager before four.",
           rule: "Câu điều kiện loại 1: điều kiện đứng trước, việc của bạn đứng sau — và việc của bạn là ĐỀ XUẤT, không phải kết quả. 'I will put it to my manager' thì hứa được; 'I will get it for you' thì không, vì tuần 33 đã đặt chữ ký ở chỗ khác.",
         },
       ],
@@ -22715,28 +22715,28 @@ const GR_WEEK_35: WeekContent = {
           guestPrompt:
             "Fine, I will take the two extra nights — but I want the airport transfer thrown in.",
           targetResponse:
-            "In exchange for the two extra nights, I can ask about the transfer, sir.",
+            "In exchange for the two extra nights, I can ask my Duty Manager about the transfer, sir.",
           helpTip:
             "Khách vừa xin thêm một thứ. Đừng gật, đừng lắc — GẮN nó với thứ khách vừa đưa ra. Và chú ý động từ — bạn XIN HỎI về xe, bạn không SẮP XẾP xe. Xe khách tự trả thì concierge desk đặt — tuần 32 đã dạy bạn XIN họ đặt hộ chứ không tự đặt. Xe được thêm vào trong đàm phán thì khác — đó là tiền trả cho bên thứ ba, tức việc của Duty Manager. 'Exchange' /ɪksˈtʃeɪndʒ/ — trọng âm ở âm tiết hai.",
         },
         {
           guestPrompt: "I can probably stay through to Sunday, if you can help me with the fee.",
           targetResponse:
-            "Provided the dates hold, madam, I can put the cancellation fee to my Duty Manager.",
+            "Provided you can stay through to Sunday, madam, I can put the cancellation fee to my Duty Manager.",
           helpTip:
             "Khách vừa đưa điều kiện — nhận nó bằng 'provided', bằng chính chữ của họ, rồi mới nói phần của mình. Chữ probably của khách chưa phải một cam kết, nên phần bạn đưa lại cũng phải mềm tương ứng. 'Provided' /prəˈvaɪdɪd/ — đuôi -ed sau /d/ đọc thành /ɪd/, thành ba âm tiết.",
         },
       ],
       game: [
         {
-          prompt: "Could you throw in breakfast as well?",
+          prompt: "We will take the two extra nights. Could you throw in breakfast as well?",
           options: [
             {
               text: "Of course, madam — breakfast is included from tomorrow for the rest of your stay.",
               correct: false,
             },
             {
-              text: "If you can confirm today, madam, I will put breakfast to my manager as well.",
+              text: "In exchange for the extra nights, madam, I will put breakfast to my manager.",
               correct: true,
             },
             {
@@ -22759,14 +22759,14 @@ const GR_WEEK_35: WeekContent = {
               correct: false,
             },
             {
-              text: "The dinner was never in the range. It goes to the manager before it goes in writing.",
+              text: "On one condition — the dinner goes to the manager before it goes in writing.",
               correct: true,
             },
           ],
         },
       ],
       reading: {
-        text: "WHAT YOU GIVE, AND WHAT COMES BACK\nEvery concession has two halves. A concession with only one half is not a negotiation. It is a gift, and a gift teaches the guest to ask again.\nSo say both halves in one breath. 'In exchange for the longer stay, I can ask about the transfer.' The guest hears the two together, and neither half stands alone.\nWhat comes back must be something the guest can actually hand over. Dates. Nights. A confirmation today. A signature this afternoon.\nGoodwill is not a condition. 'If you are happy with that' gives you nothing you can write down, and nothing you can carry back to your manager.\nWatch the verb on your own half. 'I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise, and week thirty-three showed you whose signature that needs.\nThe difference is one verb. A guest who is told 'arrange' and then hears 'my manager said no' has been let down twice by the same person.\nWeek twenty-five taught 'I will arrange the transfer myself'. That was a promise you could keep when nothing was being traded. At this table it is not yours to make.\nTake the guest's condition in their own words before you answer. 'Provided the dates hold' repeats back exactly what they offered, so nobody remembers it differently at six o'clock.\nAnd when the guest's half is soft, keep your half soft to match. They said 'probably Sunday'. So you say 'I can put it to my manager', not 'it is done'.\nMatch soft with soft, and firm with firm. That is the whole of it.\nOne thing never trades, whatever else moves. You do not trade away something the guest was already owed. Restoring what should have happened is not a concession, and week thirty-three said not to count it.\nCounting it twice is how a recovery turns into a second complaint.",
+        text: "WHAT YOU GIVE, AND WHAT COMES BACK\nEvery concession has two halves. A concession with only one half is not a negotiation. It is a gift, and a gift teaches the guest to ask again.\nSo say both halves in one breath. 'In exchange for the longer stay, I can ask about the transfer.' The guest hears the two together, and neither half stands alone.\nWhat comes back must be something the guest can actually hand over. Dates. Nights. A confirmation today. A signature this afternoon.\nGoodwill is not a condition. 'If you are happy with that' gives you nothing you can write down, and nothing you can carry back to your manager.\nWatch the verb on your own half. 'I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise, and week thirty-three showed you whose signature that needs.\nThe difference is one verb. A guest who is told 'arrange' and then hears 'my manager said no' has been let down twice by the same person.\nWeek twenty-five taught 'I will arrange the transfer myself'. That was a promise you could keep while the guest was paying for the car.\nThe moment the house pays for the car, that is a payment to a third party, and week thirty-three put those with the Duty Manager.\nTake the guest's condition in their own words before you answer. 'Provided the dates hold' repeats back exactly what they offered, so nobody remembers it differently at six o'clock.\nAnd when the guest's half is soft, keep your half soft to match. They said 'probably Sunday'. So you say 'I can put it to my manager', not 'it is done'.\nMatch soft with soft, and firm with firm. That is the whole of it.\nOne thing never trades, whatever else moves. You do not trade away something the guest was already owed. Restoring what should have happened is not a concession, and week thirty-three said not to count it.\nCounting it twice is how a recovery turns into a second complaint.",
         questions: [
           {
             q: "Vì sao một nhượng bộ không kèm điều kiện lại nguy hiểm?",
@@ -22798,7 +22798,7 @@ const GR_WEEK_35: WeekContent = {
             ],
             correct: 1,
             explanation:
-              "Bài đọc: ''I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise.'",
+              "Bài đọc: 'I can ask about the transfer' là đề xuất; 'I will arrange the transfer' là lời hứa.",
           },
           {
             q: "Khách nói 'probably Sunday'. Phần của bạn nên chắc tới đâu?",
@@ -22862,13 +22862,13 @@ const GR_WEEK_35: WeekContent = {
       ],
       grammar: [
         {
-          rude: "Although the rate is fixed, but I will see what I can do.",
+          rude: "The rate is fixed, but I will see what I can do about the check-out.",
           polite:
             "I can ask the front office about the late check-out; however, the rate cannot change, sir.",
           rule: "'However' nối hai vế ngược nhau trang trọng hơn 'but', và nó buộc bạn nói vế CÓ trước. Nói vế không được trước thì khách đã đứng dậy trước khi nghe hết câu. 'However' đứng sau dấu chấm phẩy hoặc mở một câu mới, rồi theo sau là dấu phẩy hoặc dấu gạch ngang.",
         },
         {
-          rude: "The dates are difficult, but we will try our best for you.",
+          rude: "Although the dates are difficult, but we will try our best for you.",
           polite: "Although the dates are tight, madam, I can put the suite to my manager.",
           rule: "Mệnh đề nhượng bộ 'Although…' đặt cái khó lên trước rồi mới đưa ra cái làm được — mệnh đề nhượng bộ đứng trước mệnh đề chính, bậc trên của trần hai mệnh đề ở P4. Và đừng dùng 'although' rồi lại thêm 'but' ở vế sau: tiếng Việt cho phép 'tuy… nhưng…', tiếng Anh chỉ được một.",
         },
@@ -22896,11 +22896,11 @@ const GR_WEEK_35: WeekContent = {
           prompt: "Everything we asked for, then? Yes or no.",
           options: [
             {
-              text: "Yes to all of it, madam — I will confirm the whole thing in writing tonight.",
+              text: "Yes to all of it, madam — I will confirm the whole thing in writing for you tonight.",
               correct: false,
             },
             {
-              text: "The suite I can put to my manager; however, the rate is fixed, madam.",
+              text: "The suite I can put to my manager; however, the rate is the part I cannot move.",
               correct: true,
             },
             {
@@ -22929,7 +22929,7 @@ const GR_WEEK_35: WeekContent = {
         },
       ],
       reading: {
-        text: "THE HALF THAT MOVES, AND THE HALF THAT DOES NOT\nA guest in a negotiation will gather everything into one question and ask for one word back. 'So you can do all of that?' There is no honest yes.\nAnswer in two halves, and put the half that moves first. 'I can put the suite to my manager; however, the rate cannot change.'\nThe order matters more than the words. A guest who hears the refusal first stops listening, and the part you could have given dies in their ear.\n'However' is the hinge. It is more formal than 'but', and it belongs in this kind of conversation.\nIt opens a new clause, with a comma or a dash after it: 'However — what if we moved the dates?'\n'Although' does the same work from the front. Put the difficulty first and the offer last, which is where a guest remembers it.\nA difficulty is not a refusal. 'The dates are tight' is a difficulty, and it may go first. 'The rate cannot change' is a refusal, and it goes second.\n'Although the dates are tight, I can put the suite to my manager.'\nOne warning for us. Vietnamese lets you say tuy and nhưng in the same sentence. English does not. 'Although the rate is fixed, but we will try' is one word too many, and it is the commonest sentence in this room.\nPick one hinge and stop.\nNow the harder half. Some things are not fixed by your manager at all, because they were never hers.\nWhich room you move into is the front office's. Tier, points and tier lounge access are the loyalty office's.\nA refund the written house programme does not already cover is the Duty Manager's.\nAn upgrade you put to your manager; she says yes, and the front office says which room.\nSay which, and say it plainly. 'Your tier is not mine to trade' tells the guest who owns it, and it does not pretend the door is shut. It is open. It is just not your door.\nAnd say only one refusal at a time. Three refusals in one breath sound like a policy. One sounds like a person.",
+        text: "THE HALF THAT MOVES, AND THE HALF THAT DOES NOT\nA guest in a negotiation will gather everything into one question and ask for one word back. 'So you can do all of that?' There is no honest yes.\nAnswer in two halves, and put the half that moves first. 'I can put the suite to my manager; however, the rate cannot change.'\nThe order matters more than the words. A guest who hears the refusal first stops listening, and the part you could have given dies in their ear.\n'However' is the hinge. It is more formal than 'but', and it belongs in this kind of conversation.\nIt opens a new clause, with a comma or a dash after it: 'However — what if we look at the dates?'\n'Although' does the same work from the front. Put the difficulty first and the offer last, which is where a guest remembers it.\nA difficulty is not a refusal. 'The dates are tight' is a difficulty, and it may go first. 'The rate cannot change' is a refusal, and it goes second.\n'Although the dates are tight, I can put the suite to my manager.'\nOne warning for us. Vietnamese lets you say tuy and nhưng in the same sentence. English does not. 'Although the rate is fixed, but we will try' is one word too many, and it is the commonest sentence in this room.\nPick one hinge and stop.\nNow the harder half. Some things are not fixed by your manager at all, because they were never hers.\nWhich room the guest moves into is the front office's. Tier, points and tier lounge access are the loyalty office's.\nA refund the written house programme does not already cover is the Duty Manager's.\nAn upgrade you put to your manager; she says yes, and the front office says which room.\nSay which, and say it plainly. 'Your tier is not mine to trade' tells the guest who owns it, and it does not pretend the door is shut. It is open. It is just not your door.\nAnd say only one refusal at a time. Three refusals in one breath sound like a policy. One sounds like a person.",
         questions: [
           {
             q: "Khách gộp mọi thứ vào một câu hỏi. Trả lời thế nào?",
@@ -23004,7 +23004,7 @@ const GR_WEEK_35: WeekContent = {
           word: "Once you agree",
           phonetic: "/wʌns ju əˈɡriː/",
           definition: "Khi anh/chị đồng ý — nói rõ điều gì kích hoạt việc của bạn",
-          context: "Once you agree, I will put it to my manager this afternoon.",
+          context: "Once you agree, I will put it to my manager before four.",
           icon: "▶️",
         },
         {
@@ -23018,13 +23018,13 @@ const GR_WEEK_35: WeekContent = {
           word: "Back to my manager",
           phonetic: "/ˌbæk tə maɪ ˈmænɪdʒə/",
           definition: "Quay lại chỗ quản lý — dành cho thứ xin thêm ở phút chót",
-          context: "Anything above that goes back to my manager, madam.",
+          context: "Anything above the range goes back to my manager, madam.",
           icon: "↩️",
         },
       ],
       grammar: [
         {
-          rude: "Right, that is everything agreed then, madam.",
+          rude: "Right, that is everything agreed then, sir.",
           polite: "Shall we agree on those two, sir? Then I will write them down now.",
           rule: "'Shall we…?' mời khách chốt CÙNG PHÍA với bạn, khác hẳn 'Do you accept?' — câu kia đặt hai người ở hai đầu bàn. Và chỉ chốt đúng phần đã thoả thuận: đọc lại hai thứ, đừng gộp cả thứ còn treo vào cho gọn.",
         },
@@ -23088,7 +23088,7 @@ const GR_WEEK_35: WeekContent = {
         },
       ],
       reading: {
-        text: "CLOSING WITHOUT LOSING IT\nA negotiation that ends in the air ends twice. Once at the desk, and again on the telephone tomorrow, from the beginning.\nSo close it out loud. 'Shall we agree on those two?' invites the guest to finish it with you, on the same side of the desk. 'Do you accept?' puts you on opposite sides, and there is nothing to gain there.\nClose only what is actually agreed. Name the two things. Leave the third where it is, and say out loud that it is still open.\nThen write it before they stand up. Everything agreed goes on paper at the desk, two copies, and the guest keeps one. Week thirty-three set that rule for complaints, and it holds harder here, because a negotiation has more moving parts than a complaint does.\nWrite what was agreed, who agreed it, and when it happens. Counts and times go on the paper: two nights, a two o'clock check-out.\nNo price. A price goes on the line a manager signs, and where it comes off a bill that manager is the Duty Manager.\nExpect the last request. It arrives after the handshake, when you want to be finished, and it is always small. 'And the spa as well?'\nThis is the moment ranges get stretched. Do not stretch it to get home. 'That goes back to my manager, madam, and I will come back to you before six' costs you nothing and keeps the paper true.\nSay the hour every time. A promise with no hour on it is the promise week thirty-three spent four lessons taking away from you.\nAnd the case stays open until the guest says it is closed. Not when they sign. Not when the manager answers. When the guest says so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who negotiates with you and not with the internet.",
+        text: "CLOSING WITHOUT LOSING IT\nA negotiation that ends in the air ends twice. Once at the desk, and again on the telephone tomorrow, from the beginning.\nSo close it out loud. 'Shall we agree on those two?' invites the guest to finish it with you, on the same side of the desk. 'Do you accept?' puts you on opposite sides, and there is nothing to gain there.\nClose only what is actually agreed. Name the two things. Leave the third where it is, and say out loud that it is still open.\nThen write it before they stand up. Everything agreed goes on paper at the desk, two copies, and the guest keeps one. Week thirty-three set that rule for complaints, and it holds harder here, because a negotiation has more moving parts than a complaint does.\nWrite what was agreed, who agreed it, and when it happens. Counts and times go on the paper: two nights, a six o'clock dinner.\nNothing goes on that paper that the desk which owns it has not agreed to first.\nNo price. A price goes on the line a manager signs, and above the front office's own limit that manager is the Duty Manager.\nExpect the last request. It arrives after the handshake, when you want to be finished, and it is always small. 'And the spa as well?'\nThis is the moment ranges get stretched. Do not stretch it to get home. 'That goes back to my manager, madam, and I will come back to you before six' costs you nothing and keeps the paper true.\nSay the hour every time. A promise with no hour on it is the promise week thirty-three spent four lessons taking away from you.\nAnd the case stays open until the guest says it is closed. Not when they sign. Not when the manager answers. When the guest says so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who negotiates with you and not with the internet.",
         questions: [
           {
             q: "'Shall we agree on those two?' khác 'Do you accept?' ở chỗ nào?",

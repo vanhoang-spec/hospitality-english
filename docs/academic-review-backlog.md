@@ -1049,3 +1049,39 @@ chạy HM lập luận rằng khách nghe "chính sách cho phép" là đã tin 
 quản lý **không kèm mốc** — trong khi chính bộ tài liệu này dạy ba lần rằng bàn giao phải có giờ
 (`"Handing on needs a time, or it is only pointing"`). Một lần chạy trên sáu, và cụm đã qua cổng,
 nên chưa sửa. Đáng xem lại vì câu này còn được ôn lại ở deck GR-35.
+
+### GR-U · Tuần 39 trả lại công thức của tuần 35 ở dạng vô nghĩa
+
+Bốn lần chạy kiểm định khác nhau, ở hai vòng, cùng chỉ ra một chỗ: bộ sinh Phase 4 nhét headword
+`Put the night to my manager` vào chính khuôn _"put it to my manager that…"_, nên GR-39 sinh ra
+
+> "May I put it to my manager that we **put the night to my manager**?"
+> "Our policy allows compensation, however my manager decides whether we **put the night to my manager**."
+
+Câu thứ hai còn là comma splice với `however` — đúng thứ GR-35 vừa dạy là sai. Nguồn:
+`phase4.ts:2305`, và template đó áp cho **mọi bộ phận**, nên SW-39 và BO-39 cũng dính.
+
+Tuần 35 dành cả bốn bài rèn đúng một công thức; tuần tổng duyệt trả lại nó hỏng. Đóng khi soạn
+tay GR-39.
+
+### GR-V · FO-35 dạy đổi nhượng bộ lấy đánh giá
+
+Một lần chạy Hotel Manager đối chiếu FO-35 và thấy: _"Ask for something back whenever you can —
+a Sunday night, a direct booking next time, **a review**."_ Đổi một nhượng bộ lấy một bài đánh giá
+là thứ đang bị các nền tảng phạt. GR-35 không có mục này trong danh sách thứ-khách-đưa-lại
+(_"Dates. Nights. A confirmation today. A signature this afternoon."_) — nên đây là việc của FO-35,
+không phải của GR. Ghi lại vì không auditor nào của FO sẽ đọc báo cáo GR.
+
+### GR-W · Layer K đọc chỉ số lưu trữ, không đọc chỉ số hiển thị
+
+`ReadingSuite.tsx` xáo phương án bằng Fisher–Yates có seed từ chuỗi `q`, nên **vị trí học viên
+nhìn thấy khác vị trí lưu trong file**. Layer K của `lint-content.ts` đo chỉ số lưu trữ, nên nó mù
+với thiên lệch thật. Đo lại GR-35 vòng 1 trên thứ tự hiển thị: một bài có 4/5 đáp án rơi vào cùng
+một ô, tức "luôn bấm nút giữa" được đúng 80% — bằng ngưỡng mastery.
+
+Cùng loại: `verify:content` GATE 6 cộng gộp 1978 câu toàn khoá (75% dài-nhất), nên một bài lẻ đạt
+5/5 chìm nghỉm. GR-35 vòng 1 có đúng một bài như thế.
+
+Đề xuất (chưa làm, vì cần ratchet cho 200 dep-week đang có): một lớp lint đo **theo từng bài đọc**
+trên thứ tự sau `permute` — dài-nhất ≤60%, một-vị-trí ≤60%. Hàm xáo đã có sẵn, chi phí là một vòng
+lặp. Hiện tôi đo bằng script ngoài repo trước mỗi lần giao cho auditor.
