@@ -580,6 +580,7 @@ chính là lý do chúng đang nằm ở đó.
 
 Muốn tuần checkpoint thật sự "đo lại thay vì bồi thêm" thì phải đổi một trong hai thứ, và cả
 hai đều là quyết định chương trình:
+
 1. Cho phép thẻ `vocabulary` kiểu ÔN (một trường `review: true` chẳng hạn) được miễn GATE 1b
    và không tính vào tổng từ chủ động; hoặc
 2. Hạ hạn ngạch headword mới của riêng tuần checkpoint (16–18 → 6–8) và chấp nhận tổng từ
@@ -587,3 +588,27 @@ hai đều là quyết định chương trình:
    tiêu 510 nhưng vẫn trên sàn 500.
 
 Áp cho cả sáu bộ phận ở tuần 40, không riêng HK.
+
+### HK-Y · HK-34 chấm ĐÚNG một câu mà HK-35 sẽ đảo lại một tuần sau — CHƯA SỬA
+
+Kiểm định vòng 6 (Academic, V-3) bắt được, và nó nằm ngoài cụm 39/40 nên chưa đụng tới.
+
+`HK_34_3.game[3]`, prompt `"Just pull the door to while you finish — I don't want her seeing it
+from the corridor."` — tức khách XIN ĐÓNG CỬA. Đáp án được chấm ĐÚNG là
+`"I have to keep the door open while I work, sir — that is our rule for every room."` — đứng lại,
+dẫn quy định, làm tiếp.
+
+Một tuần sau, `HK_35_1.reading` chốt: *"A guest who asks you to close it, or who crosses the line
+with you — hands or words — is not yours to handle alone: you step out, and your supervisor
+comes."* Theo tuần 35, đáp án được chấm đúng ở tuần 34 là đáp án sai.
+
+Đọc theo hướng lũy tiến thì hợp lệ — tuần 34 dạy phát biểu quy tắc, tuần 35 thêm bậc rút lui.
+Nhưng vòng game tuần 34 vẫn chấm sau khi học viên đã học tuần 35, và không có dòng nào nói rằng
+nó đã bị thay thế. HK-39 hiện đã nói rõ ranh giới trong bài đọc (*"A guest who asks WHY the door
+is open hears the rule, and you keep working. A guest who asks you to CLOSE it — asks, not
+insists — is week thirty-five"*), nên người học tới tuần 39 sẽ gỡ được. Người dừng ở tuần 34 thì
+không.
+
+Sửa đúng cách là đổi prompt của `HK_34_3.game[3]` sang câu khách hỏi VÌ SAO cửa mở, để đáp án
+hiện tại đúng với cả hai tuần. Việc này chạm một tuần đã qua kiểm định, nên cần một vòng thẩm
+định riêng cho HK-34 chứ không gộp vào đợt này.
