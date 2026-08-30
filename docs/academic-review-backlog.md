@@ -618,17 +618,18 @@ hiện tại đúng với cả hai tuần. Việc này chạm một tuần đã 
 Cả hai luồng kiểm vòng 1 của cụm GR-31/32 đều bắt được, độc lập.
 
 `GR_34_1.reading` — GUEST PROFILE NOTE, GR OBSERVATION LOG:
+
 > "Observation: Guest mentioned "first anniversary trip" during check-in small talk.
 > **Guests wearing matching rings**, asked concierge about rose petal options."
 
 và câu hỏi đọc của bài chấm ĐÚNG cho việc ghi nhận đó vào hồ sơ.
 
-GR-32 (soạn mới) chốt ngược lại: *"Three things never belong on it. An opinion about the
+GR-32 (soạn mới) chốt ngược lại: _"Three things never belong on it. An opinion about the
 guest. A guess about their health, their money, or their religion. And **anything at all about
-who they arrived with**."*
+who they arrived with**."_
 
-GR-32 nay đã nói rõ ranh giới — *"Noticing is not the problem. Noticing is permission to ASK.
-What goes on the file is the guest's answer, never the thing you saw."* — nên học viên đi
+GR-32 nay đã nói rõ ranh giới — _"Noticing is not the problem. Noticing is permission to ASK.
+What goes on the file is the guest's answer, never the thing you saw."_ — nên học viên đi
 tuần 32 rồi tới tuần 34 có cơ sở để gỡ. Nhưng dòng `"Guests wearing matching rings"` vẫn là
 một quan sát về **thân thể** và về **người đi cùng** được ghi thẳng vào hồ sơ, và tuần 34 vẫn
 chấm nó là đúng.
@@ -640,12 +641,13 @@ vòng thẩm định riêng cho GR-34, không gộp vào đợt này.
 ### GR-B · GR-27 dạy ghi hồ sơ KHÔNG xin phép, GR-32 lật lại — CHƯA ĐỒNG BỘ
 
 `GR_27_4` có ba câu mẫu ĐÚNG đều ghi hồ sơ rồi báo khách sau:
+
 > grammar: "It has been noted that the guest prefers a firm pillow for future stays."
 > good: "Let's make sure to record his coffee preference in the guest profile for future visits."
 > game **correct: true**: "How wonderful, madam. It has been noted in your profile for your next stay."
 
 GR-32 chốt: hỏi trước, mỗi lần. Bản GR-32 hiện tại đã nói thẳng rằng luật đã đổi
-(*"This replaces what week twenty-seven taught…"*), nên học viên không bị bỏ lại giữa hai luật.
+(_"This replaces what week twenty-seven taught…"_), nên học viên không bị bỏ lại giữa hai luật.
 Nhưng ba câu mẫu của tuần 27 vẫn đang được chấm là đúng trong app.
 
 Sửa đúng cách là đổi `GR_27_4` sang dạng xin phép (`"May I note that in your profile, sir?"`).
