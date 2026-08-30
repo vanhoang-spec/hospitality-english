@@ -1111,3 +1111,25 @@ tương tự cho học thuyết vận hành — cùng số tuần, khác bộ ph
 `assembly point`, `refuge area`, `who dials 114`) — sẽ chặn được ba trong số đó tự động.
 
 Chưa làm vì cần ratchet cho 200 dep-week hiện có. Ghi lại kèm ca chứng minh.
+
+### GR-Z · GR-37 và GR-38 yếu hơn hẳn ở hai trục đo được
+
+Một auditor Academic đo cả track GR khi đối chiếu với tuần 36 và báo hai tuần liền kề:
+
+- **GR-38**: chọn phương án dài nhất thắng **88%** câu đọc — bấm cái dài nhất được 7/8 điểm mà không
+  cần đọc chữ nào. **GR-37**: 75%. (GR-36 sau khi cân là 25%.)
+- Cả hai chỉ có **2 câu hỏi mỗi bài đọc**, mà ngưỡng mastery P4 là 80% và `ReadingSuite` bắt từng
+  bài qua riêng — nên 2 câu nghĩa là **phải đúng tuyệt đối**, không được sai một câu nào.
+- Câu đích vượt trần 22 từ: GR-37 chạm 26, GR-38 chạm 25.
+
+Hai tuần này đã ship từ trước và chưa qua cổng 3-lần-chạy. Nên đưa vào hàng đợi thẩm định.
+
+**Và một lỗ hổng nội dung cụ thể ở GR-37:** HK-36 coi là tuyệt đối rằng _"A guest who is NOT
+BREATHING does not wait for an inside line at all: 115 first."_ GR-37 xếp 115 ở vị trí thứ ba, sau
+Duty Manager, và không có ngoại lệ nào. GR-36 nay đã chèn tạm ngoại lệ đó vào câu bàn giao, nhưng
+chỗ ở đúng của luật là GR-37.
+
+### GR-AA · Không tuần GR nào có sơ tán phi-cháy
+
+Quét GR-1→40: không có một dòng nào về đe doạ bom, gói khả nghi, hay phong toả an ninh. Đây là lỗ
+hổng cấp giáo trình, không cấp tuần — ghi lại để quyết khi soạn phần còn lại.

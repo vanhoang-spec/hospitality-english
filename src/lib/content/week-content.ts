@@ -23170,10 +23170,11 @@ const GR_WEEK_36: WeekContent = {
       titleVi: "Danh sách chỉ mình bạn có",
       vocabulary: [
         {
-          word: "Who is not in the building",
-          phonetic: "/ˌhuː ɪz nɒt ɪn ðə ˈbɪldɪŋ/",
-          definition: "Ai đang KHÔNG ở trong toà nhà — phần danh sách chỉ Guest Relations có",
-          context: "The Duty Manager needs to know who is not in the building.",
+          word: "Not on the room list",
+          phonetic: "/ˌnɒt ɒn ðə ˈruːm lɪst/",
+          definition:
+            "Không nằm trong danh sách phòng — có người ở ngoài nhà (tour, thuyền), có người vẫn trong nhà mà không ở phòng (ballroom, spa)",
+          context: "The Duty Manager needs to know who is not on the room list.",
           icon: "📋",
         },
         {
@@ -23185,7 +23186,7 @@ const GR_WEEK_36: WeekContent = {
         },
         {
           word: "Which floor and whereabouts",
-          phonetic: "/wɪtʃ ˈflɔːr ənd ˈweərəbaʊts/",
+          phonetic: "/wɪtʃ ˈflɔː ənd ˌweərəˈbaʊts/",
           definition: "Tầng mấy và chỗ nào trên tầng đó — hai dữ kiện, không phải một",
           context: "Which floor and whereabouts on it, madam?",
           icon: "📍",
@@ -23222,15 +23223,15 @@ const GR_WEEK_36: WeekContent = {
           guestPrompt: "Duty Manager here. The alarm is real. What have you got?",
           speakerRole: "manager",
           targetResponse:
-            "Nine guests are on the tour until four, sir, and twelve are in the ballroom.",
+            "Nine on the tour, twelve in the ballroom, two on the boat, one in the spa, sir.",
           helpTip:
-            "Quản lý không hỏi bạn về toà nhà — Lễ tân có danh sách phòng. Cái chỉ bạn có là danh sách người ĐANG Ở NGOÀI hoặc đang ở chỗ danh sách phòng không phủ tới: tour, sự kiện, thuyền, spa. Nói con số và nói ở đâu, không nói gì thêm. 'Ballroom' /ˈbɔːlruːm/ — /ɔː/ dài, đừng thành /ˈbɒlrʊm/.",
+            "Quản lý không hỏi bạn về toà nhà — Lễ tân có danh sách phòng. Cái chỉ bạn có là danh sách người ĐANG Ở NGOÀI hoặc đang ở chỗ danh sách phòng không phủ tới: tour, sự kiện, thuyền, spa. Liệt kê hết các nhóm rồi dừng — bỏ nhóm nào là nhóm đó không có ai đi tìm. 'Ballroom' /ˈbɔːlruːm/ — /ɔː/ dài, đừng thành /ˈbɒlrʊm/.",
         },
         {
           guestPrompt: "There's smoke coming out somewhere upstairs — I saw it from the garden.",
           targetResponse: "Which floor and whereabouts on it, madam? I am calling security now.",
           helpTip:
-            "Hỏi đúng hai dữ kiện rồi dừng, và nói ngay rằng bạn đang chuyển tin — khách cần biết việc đã bắt đầu. Đừng hỏi lại xem khách có chắc không, và đừng tự đi xem trước: xác minh là việc của bảo vệ, chuyển tin là việc của bạn. 'Whereabouts' /ˈweərəbaʊts/ — trọng âm ở âm tiết đầu.",
+            "Hỏi đúng hai dữ kiện rồi dừng, và nói ngay rằng bạn đang chuyển tin — khách cần biết việc đã bắt đầu. Đừng hỏi lại xem khách có chắc không, và đừng tự đi xem trước: xác minh là việc của bảo vệ, chuyển tin là việc của bạn. 'Whereabouts' /ˌweərəˈbaʊts/ — hỏi chỗ thì trọng âm rơi vào âm tiết CUỐI, khác dạng danh từ /ˈweərəbaʊts/.",
         },
       ],
       game: [
@@ -23271,7 +23272,7 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LIST ONLY YOU HAVE\nWhen an alarm is real, three desks start counting at once, and each one counts something different.\nThe front office counts rooms. Housekeeping counts floors. You count the people you placed somewhere.\nThe front office already knows they are not in their rooms; that list says 'not accounted for' and stops there.\nOnly you know where they are instead. Nine on the tour until four. Twelve in the ballroom. Two on the boat. One in the spa who booked through you at eleven.\nNone of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.\nSo the first call is not to the lobby. It is to the Duty Manager, and it is one sentence: who is not in the building, and where they are instead.\nEvery number you give must have a source. 'I think about nine' sends a team looking for a number you invented.\nSay the number you wrote down, and say when you wrote it. 'Nine on the tour. I wrote it down at nine, when they left.'\nWeek thirty-one taught the reason for it — 'I would rather find out than guess'.\nIn a crisis there is no time to find out, so guessing is all that is left.\nThat is why you write things down before there is a crisis.\nSeparate what you saw from what you were told. 'That is what I saw myself. The rest I was told by the lounge.' Both are useful. Only one of them is yours.\nWhen a guest brings you the emergency, take two facts and stop. Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.\nWeek thirty-three gave you one question for a smell of burning at the desk, and told you to stop there.\nA bell that is already ringing buys you the second question, and no more. What has not changed is who you ring: security first, the Duty Manager after.\nDo not ask a third question, and do not go and look. Verifying is security's work.\nCarrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.\nAnd the guest who asks whether her husband is safe upstairs gets week thirty-one's answer, not a kind one. You do not confirm who is in this house, even now. Take his name for the Duty Manager instead.",
+        text: "THE LIST ONLY YOU HAVE\nWhen an alarm is real, three desks start counting at once, and each one counts something different.\nThe front office counts rooms. Housekeeping walks floors and reports which doors answered. You count the people you placed somewhere.\nThe front office already knows they are not in their rooms; that list says 'not accounted for' and stops there.\nOnly you know where they are instead. Nine on the tour until four. Twelve in the ballroom. Two on the boat. One in the spa who booked through you at eleven.\nNone of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.\nSo the first call about your list is not to the lobby. It is to the Duty Manager, and it is one sentence: who is not on the room list.\nThen where each of them is instead — inside this building, or away from it.\nEvery number you give must have a source. 'I think about nine' sends a team looking for a number you invented.\nSay the number you wrote down, and say when you wrote it. 'Nine on the tour. I wrote it down at nine, when they left.'\nWeek thirty-one taught the reason for it — 'I would rather find out than guess'.\nIn a crisis there is no time to find out, so guessing is all that is left.\nThat is why you write things down before there is a crisis.\nSeparate what you saw from what you were told. 'That is what I saw myself. The rest I was told by the lounge.' Both are useful. Only one of them is yours.\nWhen a guest brings you the emergency, take two facts and stop. Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.\nWeek thirty-three gave you one question for a smell of burning at the desk, and told you to stop there.\nA bell that is already ringing buys you the second question, and no more. When a guest hands you a hazard the order is different, and it has not changed: security first, the Duty Manager after.\nDo not ask a third question, and do not go and look. Verifying is security's work.\nCarrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.\nIf security does not answer inside thirty seconds, ring the operator, and then dial 114 yourself. Two calls cost nothing.\nAnd the guest who asks whether her husband is safe upstairs gets week thirty-one's answer, not a kind one. You do not confirm who is in this house, even now. Take his name and her room number for the Duty Manager instead.\nThat rule is for guests and for callers. The Duty Manager and the fire officer are not the public: they get the whole list, and they get it first.\nA name without a room makes the fire team open twenty doors.",
         questions: [
           {
             q: "Danh sách mà chỉ Guest Relations có là danh sách gì?",
@@ -23339,7 +23340,7 @@ const GR_WEEK_36: WeekContent = {
       vocabulary: [
         {
           word: "Please move to",
-          phonetic: "/ˌpliːz ˈmuːv tuː/",
+          phonetic: "/ˌpliːz ˈmuːv tə/",
           definition: "Mời anh/chị di chuyển sang — một câu lệnh, không phải một lời trấn an",
           context: "Please move to the front garden, madam.",
           icon: "➡️",
@@ -23388,11 +23389,11 @@ const GR_WEEK_36: WeekContent = {
       ],
       speaking: [
         {
-          guestPrompt: "What is going on? Is it serious?",
+          guestPrompt: "What's going on? Is it serious?",
           targetResponse:
             "I do not know that yet, madam. Please move to the front garden — I will speak again at ten past.",
           helpTip:
-            "Ba vế, đúng thứ tự: điều bạn chưa biết, việc khách cần làm, và mốc giờ. Đừng đảo — nếu mở bằng 'I do not know' rồi dừng, đám đông sẽ tự điền vào chỗ trống. Mốc giờ là phần giữ họ lại. 'Garden' /ˈɡɑːdn/ — đuôi -den nuốt thành âm mũi, đừng đọc rõ thành /den/.",
+            "Ba vế, đúng thứ tự: điều bạn chưa biết, việc khách cần làm, và mốc giờ. Đừng đảo — nếu mở bằng 'I do not know' rồi dừng, đám đông sẽ tự điền vào chỗ trống. Mốc giờ là phần giữ họ lại. 'Garden' /ˈɡɑːdn/ — đuôi -den nuốt thành âm mũi, đừng đọc rõ thành /den/. Và 'front garden' là điểm tập kết của MỘT khách sạn: khi luyện cứ nói theo để lấy nhịp câu, khi vào ca thì thay bằng tên chỗ thật của nhà mình.",
         },
         {
           guestPrompt: "Somebody said there's a fire in the kitchen. Is that true?",
@@ -23516,7 +23517,7 @@ const GR_WEEK_36: WeekContent = {
           word: "Do not go back",
           phonetic: "/ˌduː nɒt ɡəʊ ˈbæk/",
           definition: "Đừng quay lại — lệnh cấm kèm sẵn phương án thay thế",
-          context: "Do not go back up, sir. I will have it brought down.",
+          context: "Do not go back up, sir. We go back for it when we are cleared.",
           icon: "⛔",
         },
         {
@@ -23542,7 +23543,8 @@ const GR_WEEK_36: WeekContent = {
         },
         {
           rude: "You cannot go back up there. It is not allowed during an evacuation.",
-          polite: "Do not go back up, sir. I will have it brought down to you outside.",
+          polite:
+            "Do not go back up, sir. Your door is locked, and we go back for it when we are cleared.",
           rule: "Một lệnh cấm không kèm phương án thì khách sẽ tự đi tìm phương án — và phương án của họ là chạy lên cầu thang. Cấm rồi đưa ngay cái thay thế. Tuần 31 đã dạy đừng nói 'you cannot'; ở đây vẫn thế, chỉ khác là bạn không có thời gian để nói dài.",
         },
       ],
@@ -23550,9 +23552,9 @@ const GR_WEEK_36: WeekContent = {
         {
           guestPrompt: "I just need two minutes to run up for my passport.",
           targetResponse:
-            "Do not go back up, sir. Leave it and come with me — I will have it brought down.",
+            "Do not go back up, sir. Leave it and come with me — we go back for it when we are cleared.",
           helpTip:
-            "Đây là câu bạn sẽ phải nói thật, và khách sẽ đi qua bạn nếu bạn ngập ngừng. Cấm, rồi đưa phương án, trong cùng một hơi. Đừng giải thích quy định — không ai đứng nghe quy định khi chuông đang kêu. 'Brought' /brɔːt/ — /ɔː/ dài, và -gh- hoàn toàn câm.",
+            "Đây là câu bạn sẽ phải nói thật, và khách sẽ đi qua bạn nếu bạn ngập ngừng. Cấm, rồi đưa phương án, trong cùng một hơi. Đừng giải thích quy định — không ai đứng nghe quy định khi chuông đang kêu. 'Cleared' /klɪəd/ — 'ear' ở đây là /ɪə/, và đuôi -ed đọc gọn thành /d/.",
         },
         {
           guestPrompt: "Where are we supposed to go? Nobody has told us anything.",
@@ -23589,7 +23591,7 @@ const GR_WEEK_36: WeekContent = {
               correct: false,
             },
             {
-              text: "Her room number, madam? I am giving the Duty Manager 'cannot manage the stairs' now.",
+              text: "Her room number, madam? Telephone her to shut her door — I am telling the Duty Manager now.",
               correct: true,
             },
             {
@@ -23600,7 +23602,7 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "INSTRUCTIONS PEOPLE FOLLOW\nAn instruction people follow is short, has one action in it, and puts the reason first.\n'Because of the alarm, please use the stairs. The lifts are out of use.'\nThat is two sentences and one thing to do. Everything else can wait.\nThe polite English of week sixteen is the wrong English here. Week sixteen taught 'Would you like a late check-out, sir?' — an offer, and an offer can be declined.\nPeople hesitate, and hesitation is the thing you are trying to remove. Week nineteen gave you the shape you want instead: 'If there is a fire, please use the exit.'\nBeing brief is not being rude. Say please, say it once, and say the action.\nA prohibition on its own does not work either. Tell a guest they cannot go back up and they will go and find their own way back up.\nSo every 'do not' carries an 'instead'. 'Do not go back up. Leave it and come with me — I will have it brought down to you outside.'\nThe passport is the one they argue about, every time. The answer is not the rule. Nobody stands in a stairwell listening to a rule. The answer is the alternative, said fast.\nName the place, not the term. 'The assembly point' is a phrase from a plan on a wall. A garden is somewhere a guest can picture.\nFOUR ANSWERS ONLY YOUR OWN HOUSE CAN GIVE YOU. Ask your Guest Relations Manager this week, not on the night.\nWhere is our assembly point for a fire, and where for a storm? Who gives the all-clear here? Do we have a refuge area, and on which floor? Who dials one-one-four, and from which telephone?\nThe garden on this page is one hotel's, and it changes with the emergency. A fire sends people out. Week thirty-eight will show you a storm, which keeps them in.\nSay both, in that order, and the guest who speaks little English still hears a garden.\nTwo people are not yours to move alone. The guest who will not stand up, and the guest who cannot manage the stairs.\nFor the first, ask twice, calmly, and then stop. Do not argue, and never take hold of a guest who has said no.\nTell Security the place, how many, and that they have declined — then go out with everybody else.\nAn argument keeps two people inside instead of one, and the second one is you.\nFor the second, the floor is not yours and the stairs are not yours. Do not send them to a lift, and do not go up for them.\nGive the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.\nWhere they wait is the floor team's call, not this desk's.\nA refuge area if this house has one, and a room with the door shut if it has not.\nThe front desk stays at the desk with the list. Your job is the people in front of you, and the message that reaches the right floor.\nAnd anything medical stops being this week's problem. That is week thirty-seven, and it starts with the Duty Manager and the room number.",
+        text: "INSTRUCTIONS PEOPLE FOLLOW\nAn instruction people follow is short, has one action in it, and puts the reason first.\n'Because of the alarm, please use the stairs. The lifts are out of use.'\nThat is two sentences and one thing to do. Everything else can wait.\nThe polite English of week sixteen is the wrong English here. Week sixteen taught 'Would you like a late check-out, sir?' — an offer, and an offer can be declined.\nPeople hesitate, and hesitation is the thing you are trying to remove. Week nineteen gave you the shape you want instead: 'If there is a fire, please use the exit.'\nBeing brief is not being rude. Say please, say it once, and say the action.\nA prohibition on its own does not work either. Tell a guest they cannot go back up and they will go and find their own way back up.\nSo every 'do not' carries an 'instead'. 'Do not go back up. Leave it and come with me — we go back for it the moment we are cleared.'\nThe 'instead' is never a promise that somebody goes up for it. Nobody goes back in, and that includes you.\nThe passport is the one they argue about, every time. The answer is not the rule. Nobody stands in a stairwell listening to a rule. The answer is the alternative, said fast.\nName the place, not the term. 'The assembly point' is a phrase from a plan on a wall. A garden is somewhere a guest can picture.\nAnd keep them off the drive. The engines need that road, and a hundred people standing on it cost the brigade the minutes they came for.\nFOUR ANSWERS ONLY YOUR OWN HOUSE CAN GIVE YOU. Ask your Guest Relations Manager this week, not on the night.\nWhere is our assembly point for a fire, and where for a storm? Who brings the fire officer's all-clear to this desk? Do we have a refuge area — a protected room built to wait in — and on which floor? Who dials 114 (the fire brigade), and from which telephone?\nThe garden on this page is one hotel's, and it changes with the emergency. A fire sends people out. Week thirty-eight will show you a storm, which keeps them in.\nSay the term and then the place, never the term alone, and the guest who speaks little English still hears a garden.\nTwo people are not yours to move alone. The guest who will not stand up, and the guest who cannot manage the stairs.\nFor the first, ask twice, calmly, and then stop. Do not argue, and never take hold of a guest who has said no. An arm offered and taken is not that.\nTell Security the place, how many, and that they have declined — then go out with everybody else.\nAn argument keeps two people inside instead of one, and the second one is you.\nFor the second, the floor is not yours and the stairs are not yours. Do not send them to a lift, and do not go up for them.\nGive the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.\nNot across the lobby. Say it on the desk telephone, or say it to his face.\nA room number spoken where guests can hear is the thing week thirty-one still forbids tonight.\nWhere they wait is the floor's call and Security's, not this desk's.\nA refuge area if this house has one.\nIf it has not, a room with the door shut, and only while the floor says the corridor is clear.\nThe room list is the front desk's, not yours. Your job is the people in front of you, and the message that reaches the right floor.\nAnd anything medical stops being this week's problem. That is week thirty-seven, and it starts with the Duty Manager and the room number.\nOne exception, and it is not week thirty-seven's to soften: a guest who is not breathing waits for no inside line. That one is 115, first.",
         questions: [
           {
             q: "Một câu lệnh khẩn được cấu tạo thế nào?",
@@ -23644,14 +23646,14 @@ const GR_WEEK_36: WeekContent = {
             ],
             correct: 0,
             explanation:
-              "Bài đọc: 'Say both, in that order, and the guest who speaks little English still hears a garden.'",
+              "Bài đọc: 'Say the term and then the place, never the term alone, and the guest who speaks little English still hears a garden.'",
           },
           {
             q: "Khách không đi nổi cầu thang. Làm gì?",
             options: [
               "Đưa khách vào thang máy vì lúc đó thang vẫn còn chạy được",
               "Cõng khách xuống và bảo những người khác chờ ở ngoài",
-              "Cho Duty Manager số phòng và chữ 'cannot manage the stairs'",
+              "Số phòng, chữ 'cannot manage the stairs', và ai đang ở cùng bà ấy",
             ],
             correct: 2,
             explanation:
@@ -23766,7 +23768,7 @@ const GR_WEEK_36: WeekContent = {
         },
       ],
       reading: {
-        text: "STANDING DOWN, AND WHAT GOES ON PAPER\nThe bell stopping is not the all-clear. It is only the bell stopping.\nGuests know the difference and ignore it anyway, because standing in a garden is dull and a room is upstairs.\nSo do not block them with a flat no. Tell them who gives the all-clear, and tell them you are asking now. Two facts, both true, and they buy you the two minutes it takes.\nWhile the brigade is here, the fire officer stands this house down, and the Duty Manager is who brings you that word.\nNot the bell, and not you — even if you can see that it is over.\nThen go back to your own list. The nine on the tour are still on the tour, and nobody has told them anything.\nBring them back inside yourself, and count the same people you reported out. A number that goes out and does not come back in is the whole reason anybody counted.\nNow the paper. Week thirty-three gave you two books, and they are not interchangeable.\nThe complaint log is for a guest who is unhappy. The incident report is for a thing that happened.\nAn evacuation is a thing that happened, so it is a report, and it is written in your own shift. The next shift did not see what you saw.\nWrite what happened and when. Do not write why, because nobody has established why yet. Do not write what anybody was like.\n'The lady in the lounge would not stand up' belongs on the report. 'The lady in the lounge was rude to me' does not.\nAnd then the part nobody warns you about. An hour after it is over, somebody arrives with a phone or a microphone.\nWeek thirty-three already wrote your line: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nOne sentence, then nothing — not your name, not your opinion, and not 'no comment'.\nAnd before any of the paper, one guest at a time. The people who were frightened are not settled by an explanation.\nThey are settled by somebody standing near them for ten minutes. 'That was frightening, madam. Sit here with me — I will bring something warm.'\nLast, hand it over by name and hour. A tour party still out at six o'clock belongs to somebody by six o'clock, and that somebody has a name.",
+        text: "STANDING DOWN, AND WHAT GOES ON PAPER\nThe bell stopping is not the all-clear. It is only the bell stopping.\nGuests know the difference and ignore it anyway, because standing in a garden is dull and a room is upstairs.\nSo do not block them with a flat no. Tell them who gives the all-clear, and tell them you are asking now. Two facts, both true, and they buy you the two minutes it takes.\nWhile the brigade is here, the fire officer stands this house down, and the Duty Manager is who brings you that word.\nNot the bell, and not you — even if you can see that it is over.\nOnce that word comes, go back to your own list. The nine on the tour are still on the tour, and nobody has told them anything.\nBring them back inside yourself, and count the same people you reported out. A number that goes out and does not come back in is the whole reason anybody counted.\nNow the paper. Week thirty-three gave you two books, and they are not interchangeable.\nThe complaint log is for a guest who is unhappy. The incident report is for a thing that happened.\nAn evacuation is a thing that happened, so it is a report, and it is written in your own shift. The next shift did not see what you saw.\nWrite what happened and when. Do not write why, because nobody has established why yet. Do not write what anybody was like.\n'The lady in the lounge would not stand up' belongs on the report. 'The lady in the lounge was rude to me' does not.\nAnd then the part nobody warns you about. An hour after it is over, somebody arrives with a phone or a microphone.\nWeek thirty-three already wrote your line: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nOne sentence, then nothing — not your name, not your opinion, and not 'no comment'.\nAnd before any of the paper, one guest at a time. The people who were frightened are not settled by an explanation.\nThey are settled by somebody standing near them for ten minutes. 'That was frightening, madam. Sit here with me — I will bring something warm.'\nLast, hand it over by name and hour. A tour party still out at six o'clock belongs to somebody by six o'clock, and that somebody has a name.",
         questions: [
           {
             q: "Chuông tắt có nghĩa là gì?",
