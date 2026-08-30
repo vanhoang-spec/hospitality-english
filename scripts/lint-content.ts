@@ -1578,6 +1578,131 @@ function collectSentences(node: unknown, where: string, out: { where: string; te
   }
 }
 
+// ── Layer J · sàn lượng sản sinh theo phase ────────────────────────────────
+// Hai auditor mù, độc lập, cùng bắt được một điều mà không lớp nào ở trên nhìn
+// thấy: tuần củng cố và tuần khép khoá của HK có 4 lượt nói, trong khi mọi tuần
+// Phase 4 khác có 8–9, và ma trận ghi sàn 6–8 cho P4. Không lớp nào ĐẾM, nên
+// hai tuần mỏng nhất lại đúng là hai tuần đáng lẽ dày nhất. Ratchet, không phải
+// cổng cứng: phần lớn tuần dưới sàn hiện nay là tuần sinh tự động.
+const VOLUME_BASELINE = new URL("./_speaking-volume-baseline.json", import.meta.url);
+const SPEAKING_FLOOR: Record<string, number> = { P0: 4, P1: 4, P2: 4, P3: 6, P4: 6 };
+const phaseOfWeek = (w: number) =>
+  w <= 6 ? "P0" : w <= 14 ? "P1" : w <= 22 ? "P2" : w <= 30 ? "P3" : "P4";
+
+async function lintSpeakingVolume() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const n = week.lessons.reduce((a, l) => a + l.speaking.length, 0);
+    const phase = phaseOfWeek(week.weekNumber);
+    if (n < SPEAKING_FLOOR[phase])
+      offenders.push(`${key}: ${n} (${phase} floor ${SPEAKING_FLOOR[phase]})`);
+  }
+
+  const file = Bun.file(VOLUME_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).belowFloor as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      VOLUME_BASELINE,
+      JSON.stringify(
+        {
+          belowFloor: n,
+          floors: SPEAKING_FLOOR,
+          note: "Ratchet only — a week below the matrix speaking floor rehearses less than its phase requires.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Weeks below the speaking floor: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[J speaking-volume] ${offenders.length} weeks sit below the matrix speaking floor, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Weeks below the speaking floor: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Weeks below the speaking floor: ${offenders.length} (ratchet holds).`);
+}
+
+// ── Layer K · đáp án đúng dồn về một vị trí ────────────────────────────────
+// Trong HK-39/40, cả 24 đáp án đúng — bài đọc lẫn game — đều nằm ở chỉ số 1.
+// Mọi suite đều xáo phương án lúc render, nên đây không phải lỗ đo trong app
+// đang chạy; nhưng một cụm đồng nhất tuyệt đối là dấu hiệu phương án nhiễu được
+// viết cho đủ ba, không phải như lựa chọn thật. Ngưỡng 60%, tuần từ 6 mục trở lên.
+const SKEW_BASELINE = new URL("./_answer-skew-baseline.json", import.meta.url);
+const SKEW_MAX = 0.6;
+
+async function lintAnswerPositionSkew() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const idx: number[] = [];
+    for (const lesson of week.lessons) {
+      for (const q of lesson.reading.questions) idx.push(q.correct);
+      for (const g of lesson.game) idx.push(g.options.findIndex((o) => o.correct));
+    }
+    if (idx.length < 6) continue;
+    const counts = [0, 1, 2].map((i) => idx.filter((x) => x === i).length);
+    const top = Math.max(...counts) / idx.length;
+    if (top > SKEW_MAX)
+      offenders.push(`${key}: ${Math.round(top * 100)}% of ${idx.length} at one index`);
+  }
+
+  const file = Bun.file(SKEW_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).skewedWeeks as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      SKEW_BASELINE,
+      JSON.stringify(
+        {
+          skewedWeeks: n,
+          max: SKEW_MAX,
+          note: "Ratchet only — a week with over 60% of its correct answers at one index is not offering three real choices.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Weeks with skewed answer positions: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[K answer-skew] ${offenders.length} weeks put over ${Math.round(SKEW_MAX * 100)}% of their correct answers at one index, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Weeks with skewed answer positions: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Weeks with skewed answer positions: ${offenders.length} (ratchet holds).`);
+}
+
 // ============================================================
 // Run
 // ============================================================
@@ -1591,6 +1716,8 @@ await lintDeadArcadeField();
 await lintHelpTipQuotes();
 await lintReadingSentenceLength();
 lintClinicalClashes();
+await lintSpeakingVolume();
+await lintAnswerPositionSkew();
 reportStaleDebt();
 
 let sentenceCount = 0;
