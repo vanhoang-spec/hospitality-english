@@ -826,3 +826,81 @@ trỏ đúng thứ tự, tiếng Anh đúng, nhưng **nội dung trái ngược*
 (`"We will cancel the extra charge as a gesture of apology."` trong tuần nói chỉ Duty Manager mới
 được). Đó là mâu thuẫn ngữ nghĩa xuyên tuần — không lớp lint nào bắt được, và đó là lý do hai
 luồng kiểm định người vẫn là cổng duy nhất cho lớp lỗi này.
+
+---
+
+## Vòng 5 — trạng thái các mục cũ, và ba mục mới
+
+### GR-F (tuần 25/28 dạy ngược tuần 33) — ĐÃ VÁ MỘT NỬA
+
+GR-33 nay thu hồi **bảy** câu chứ không phải bốn, và thu hồi thành một danh sách đọc quét được:
+
+> SEVEN SENTENCES THAT STOP HERE
+> From week twenty-eight: 'I can arrange a room upgrade.' / 'We can add the missing points.' /
+> 'We will arrange a private dinner.' / 'We can extend your late check-out.' /
+> 'We will cancel the extra charge.'
+> From week twenty-five: 'We will confirm the upgrade straight away.' / 'I will update your guest file.'
+
+**Còn lại y nguyên:** tuần 25 và 28 vẫn dạy và vẫn **chấm ĐÚNG** cho cả bảy câu, năm tuần trước khi
+học viên tới tuần 33. Sửa đúng cách vẫn là tách khung câu spine theo bộ phận, hoặc soạn tay GR-28.
+
+### GR-G (tuần 35) — ĐÃ ĐẶT BIỂN BÁO, CHỜ SOẠN GR-35
+
+GR-33 nay gọi tên tuần 35 và nói trước nó sẽ dạy gì:
+
+> "Week thirty-five will teach you 'we will restore your tier status' and 'what if we write off the
+> night'. That is a prepared negotiation with a manager's figure agreed beforehand. It is not this
+> desk, in a claim, with the guest in front of you."
+
+Đây là **trích tuần xuôi có chủ đích** — khác hẳn loại trích xuôi bị bắt ở vòng 3, vốn lấy tuần
+chưa học làm THẨM QUYỀN. Self-check đã được sửa để phân biệt hai loại: một tham chiếu xuôi ở thì
+tương lai là biển báo, không có thì tương lai là bằng chứng học viên không kiểm được.
+
+Tuần 35 vẫn chưa tự nhận mình là cuộc đàm phán có chuẩn bị. Tan khi soạn tay GR-35.
+
+### GR-H (hai quầy, hai lịch sử toà nhà) — ĐÃ SỬA (a) và (c), CÒN (b)
+
+**(a) ĐÃ SỬA.** GR-31 nay dùng đúng ngôi nhà của FO-31: mở cửa **1925**, trước đó là **nhà một
+thương gia**, cầu thang phục dựng **2019**. Năm chỗ đổi, gồm cả đáp án game bị đóng đinh. Và
+FO-31 nay mang đúng câu miễn trừ mà GR-31 có: _"The three dates below are one hotel's. Ask your
+Front Office Manager for your own, and write them over these."_
+
+**(c) ĐÃ SỬA** ở vòng 4 (đường đi folio nhỏ sang front office).
+
+**(b) CÒN NGUYÊN.** FO-32 vẫn dạy ghi sở thích thẳng từ small talk, không xin phép, trong khi
+GR-32 chốt _"the guest says yes first, every time"_. Cần một quyết định chung cho cả nhà.
+
+### GR-J · Tuần 39 phát lại nguyên văn những câu tuần 33 vừa thu hồi — CHƯA SỬA
+
+Kiểm định Academic vòng 5. `GR-39.reviewWords` chứa `Extend your late check-out`,
+`Arrange a private dinner`, `Cancel the extra charge`. Vì thẻ ôn kéo lại thẻ dạy gốc, học viên ở
+tuần 39 nhìn thấy đúng ba câu tuần 33 vừa cấm — cơ chế ôn xoáy vòng đang **hoàn tác** cuộc thu hồi.
+
+Đã giảm nhẹ ở vòng 5: GR-33 nói trước điều đó — _"You will meet them again on a review card, and a
+card cannot tell you which level you are standing on."_
+
+Sửa tận gốc cần một thay đổi engine: thêm trường `supersededBy` cho `VocabItem` để
+`resolveReviewVocab` in kèm cảnh báo. Chưa làm vì nó chạm cả sáu bộ phận và cả suite từ vựng.
+
+Cùng mục này: `phase4.ts` tuần 39 dùng `Our policy allows compensation` cho **mọi** bộ phận, trong
+khi GR chưa từng gặp cấu trúc đó — vì ma trận giao nó cho tuần 33 và tuần 33 của GR là override.
+**Đã sửa ở vòng 5:** GR-33 nay dạy headword `Policy allows` và một cặp grammar cho nó. Và luật của
+tuần 39 thôi trích tuần 33 làm căn cứ cho việc tuần 33 cấm.
+
+### GR-K · Tải đọc của GR-33 là câu hỏi CẤU TRÚC, không phải câu hỏi nội dung — CẦN QUYẾT
+
+Số đo sau vòng 5: **GR-31 1.151 từ · GR-32 1.323 · GR-33 1.710.** Đối chiếu cùng tuần 33:
+FO 654 · FB 632 · HK 179 · SW 166 · BO 165. Và các tuần GR liền kề: W30 = 162, W34 = 196.
+
+Ba vòng liên tiếp tôi cắt và ba vòng liên tiếp con số tăng, vì mỗi vòng kiểm định lại yêu cầu thêm
+nội dung — và mọi yêu cầu đều đúng: quy trình cáo buộc, quy trình thương tích, dòng về công an,
+đường đi folio, bảy câu thu hồi, biển báo tuần 35, headword `Policy allows`, bước Thank.
+
+Vòng 5 đã làm hết phần có thể làm bằng biên tập: khối thu hồi thành danh sách một câu một dòng,
+bỏ ba câu thừa. Kết quả 1.768 → 1.710. **Gọt tiếp sẽ phải cắt vào thứ hai luồng kiểm định vừa
+yêu cầu.**
+
+Kết luận thành thật: đây là hơn một tuần nội dung. Lối thoát là một quyết định chương trình —
+cho GR **hai tuần** cho khiếu nại (ví dụ 33 xử lý "ai quyết cái gì" và một tuần nữa xử lý "việc
+không phải của bạn" + đóng hồ sơ), thay vì nhồi cả hai vào tuần 33. Việc đó đổi bản đồ 40 tuần,
+nên nó không phải quyết định của người soạn nội dung.

@@ -2299,7 +2299,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         g(
           `Sorry. Here money. Bye.`,
           `I am very sorry about the ${lo(d1)}. What if we ${lo(t1)} instead?`,
-          "Thứ tự đúng: thừa nhận trước (tuần 33), đề nghị sau (tuần 35). Đảo lại là mua chuộc.",
+          "Thứ tự đúng: thừa nhận trước, đề nghị sau — đảo lại là mua chuộc. Nhưng con số là của quản lý: tuần 33 đặt mọi khoản khỏi hoá đơn dưới Duty Manager, nên ở đây bạn ĐỀ XUẤT chứ không hứa.",
         ),
         g(
           `Policy say no more.`,
@@ -2936,12 +2936,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Thừa nhận quyền lợi đã hứa không được thực hiện",
-        any: ["promised", "promise", "guaranteed", "assured", "should have been"],
+        labelVi: "Nêu quyền lợi hội viên được kỳ vọng, không xác nhận trách nhiệm",
+        any: ["lounge access", "loyalty", "member", "expect", "entitled"],
       },
       {
-        labelVi: "Nêu rằng quản lý đã xem xét sự việc",
-        any: ["manager", "reviewed", "looked into", "duty manager", "personally"],
+        labelVi: "Nêu mốc thời gian sẽ liên hệ lại",
+        any: ["within", "by ", "today", "48 hours", "forty-eight"],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
@@ -2949,9 +2949,9 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
     ],
     modelReply:
-      "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. That part is ours, and it should not have happened. Our Duty Manager has reviewed what was promised and what happened on the night. Please contact me directly so I can put right what you missed on this stay.",
+      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
-      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy — tuần 33 nói rõ apology letter đi ra dưới tên quản lý. Và đừng hứa phần bù trước công chúng: quầy ĐỀ XUẤT, quản lý mới quyết. Cũng đừng công bố với cả internet rằng nhà có hồ sơ về người vừa đánh giá.",
+      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Ba điều KHÔNG viết ra chỗ công khai: đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
   },
   BO: {
     reviewMeta: "✉️ Email khiếu nại từ đối tác lữ hành · ABC Travel",
