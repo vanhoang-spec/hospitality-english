@@ -613,7 +613,7 @@ Sửa đúng cách là đổi prompt của `HK_34_3.game[3]` sang câu khách h�
 hiện tại đúng với cả hai tuần. Việc này chạm một tuần đã qua kiểm định, nên cần một vòng thẩm
 định riêng cho HK-34 chứ không gộp vào đợt này.
 
-### GR-A · GR-34 ghi vào hồ sơ một quan sát về NGƯỜI ĐI CÙNG khách — CHƯA SỬA
+### GR-A · GR-34 ghi vào hồ sơ một quan sát về NGƯỜI ĐI CÙNG khách — ĐÃ SỬA
 
 Cả hai luồng kiểm vòng 1 của cụm GR-31/32 đều bắt được, độc lập.
 
@@ -634,9 +634,14 @@ tuần 32 rồi tới tuần 34 có cơ sở để gỡ. Nhưng dòng `"Guests w
 một quan sát về **thân thể** và về **người đi cùng** được ghi thẳng vào hồ sơ, và tuần 34 vẫn
 chấm nó là đúng.
 
-Sửa đúng cách là đổi dòng đó thành `"Guest asked the concierge about rose petal options."` —
-giữ nguyên hành động, bỏ phần quan sát. Việc này chạm một tuần đã qua kiểm định nên cần một
-vòng thẩm định riêng cho GR-34, không gộp vào đợt này.
+**Đã sửa ở vòng Academic 3 của cụm GR-31/32/33.** Dòng quan sát nay là
+`"Guest asked concierge about rose petal options."` — giữ nguyên hành động, bỏ phần quan sát
+về thân thể. Cả hai câu hỏi đọc của GR-34 vẫn đúng: đáp án 1 là câu khách tự nói ra
+(_"first anniversary trip"_), đáp án 2 là hành động gắn cờ hồ sơ.
+
+Lý do không chờ vòng thẩm định riêng nữa: GR-32 đã phát biểu luật thành một mệnh lệnh tuyệt
+đối, nên để nguyên dòng đó là để hai tuần cách nhau hai tuần dạy ngược nhau — và tuần sau là
+tuần chấm điểm dòng vi phạm ấy là ĐÚNG. Phần còn lại của GR-34 không đụng tới.
 
 ### GR-B · GR-27 dạy ghi hồ sơ KHÔNG xin phép, GR-32 lật lại — CHƯA ĐỒNG BỘ
 
@@ -677,3 +682,49 @@ ngữ liệu spine bằng ngữ liệu nghề. Cần quyết một lần:
 2. Bổ sung ngữ liệu spine vào từng tuần override.
 
 Không xử lý trong đợt này vì nó chạm cả sáu bộ phận và cả tài liệu chuẩn.
+
+### GR-D · Tuần 39 diễn tập bằng từ ngân hàng mà bộ phận chưa từng gặp — CHƯA SỬA
+
+Kiểm định Academic vòng 3 của cụm GR-31/32/33 bắt được.
+
+Tuần 39 (`phase4.ts` `week39`) là tuần ôn: theo thiết kế nó **không** dạy từ mới, mà lấy lại
+từ của tuần 31–38. Nhưng nó đọc thẳng từ ngân hàng:
+
+> `const s1 = lx.bank.story[0];` … `p1 = lx.bank.preferences[0]` … `d1 = lx.bank.disputes[0]` … `o1 = lx.bank.occasions[0]`
+
+Với một bộ phận có tuần soạn tay ở 31–34, ngân hàng ấy không còn là thứ đã dạy. Render thật của
+GR-39: `Founding story · Founding family · Preferred newspaper · Seating habit · Broken commitment ·
+Ignored preference · Proposal set-up · Milestone anniversary` — **cả tám xuất hiện 0 lần** trong
+`week-content.ts`. Học viên gặp chúng lần đầu ở một tuần ôn.
+
+Repo đã vá đúng lỗi này một lần, cho tuần 37–38, bằng `taughtIn()` — và comment ngay trên hàm
+mô tả chính xác triệu chứng. Guard chỉ phủ 37–38.
+
+**Vì sao chưa mở rộng `taughtIn()` sang 31–34.** Hàm lấy hai từ vựng đầu tiên của tuần soạn tay
+và ghép vào khung câu của tuần 39. Với 37/38 nó chạy được vì `proposal`/`terms` là cụm danh từ và
+các tuần override cũng mở bằng cụm danh từ. Với 31–34 thì không: từ đầu của GR-31 là `"Opened in"`,
+nên khung `The ${s1} is what makes this place special` sinh ra _"The opened in is what makes this
+place special."_ Vá theo đề xuất sẽ đổi một lỗi chương trình lấy một lỗi ngữ pháp trong câu học
+viên phải nói ra.
+
+**Đường sửa đã chọn:** soạn tay GR-39 (và GR-40) — đã nằm trong hàng đợi của chính đợt GR này.
+Một tuần override làm cả vấn đề biến mất tại gốc cho GR, và tám ô ngân hàng chết theo sẽ được xoá
+trong cùng lần đó.
+
+**Còn lại cho bộ phận khác:** FB (override tuần 31) và HK (override tuần 33) mang đúng lỗi này ở
+tuần 39 của họ. Cần một quyết định riêng — hoặc soạn tay tuần 39 cho từng bộ phận, hoặc viết một
+`taughtIn()` biết chọn cụm danh từ thay vì lấy hai ô đầu.
+
+### GR-E · GR-34 còn nợ đo lường và nợ dung lượng của chính nó — CHƯA SỬA
+
+Self-check chạy trên GR-34 sau khi sửa GR-A:
+
+- **4 lượt speaking** — sàn Phase 4 của ma trận là 6–8.
+- **Đáp án đúng dồn 8/4/0 trên 12 câu (67%)** — vượt ngưỡng Layer K 60%.
+- **Phương án dài nhất thắng 11/12 câu.** Nửa đọc hiểu của tuần này gần như không chứng nhận gì:
+  đoán theo độ dài là qua.
+- **4 lượt sản sinh vượt trần 22 từ**, dài nhất 27 từ.
+
+Cả bốn đều đã được tính vào các ratchet toàn corpus, nên build không đỏ. Nhưng GR-34 là tuần
+nằm ngay giữa cụm vừa soạn, và vòng thẩm định kế tiếp của GR sẽ đọc tới nó. Xử lý cùng lúc với
+GR-B (GR-27) trong một đợt riêng cho các tuần GR cũ.
