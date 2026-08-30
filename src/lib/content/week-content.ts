@@ -20410,7 +20410,7 @@ const GR_WEEK_31: WeekContent = {
     "Show around",
     "Something local",
     "Souvenir",
-    "Roof top",
+    "Speak to the duty manager",
     "Thoughtful",
   ],
   lessons: [
@@ -20421,10 +20421,10 @@ const GR_WEEK_31: WeekContent = {
       titleVi: "Ba dữ kiện, và chỗ chứa phần còn lại",
       vocabulary: [
         {
-          word: "Founding year",
-          phonetic: "/ˈfaʊndɪŋ jɪə/",
-          definition: "Năm khách sạn mở cửa — con số bạn phải thuộc",
-          context: "The founding year is nineteen twenty-nine, sir.",
+          word: "Opened in",
+          phonetic: "/ˈəʊpənd ɪn/",
+          definition: "Mở cửa vào năm — cách nói năm thành lập với khách",
+          context: "The hotel opened in nineteen twenty-nine, sir.",
           icon: "📅",
         },
         {
@@ -20438,63 +20438,64 @@ const GR_WEEK_31: WeekContent = {
           word: "As far as I know",
           phonetic: "/əz ˌfɑːr əz aɪ ˈnəʊ/",
           definition: "Theo chỗ tôi biết — câu rào khi mình chưa chắc",
-          context: "As far as I know it is original, madam.",
+          context: "As far as I know, it is original, madam.",
           icon: "🤔",
         },
         {
-          word: "Look it up",
-          phonetic: "/ˌlʊk ɪt ˈʌp/",
-          definition: "Tra lại cho chắc rồi quay lại trả lời",
-          context: "I will look it up and leave you a note at the desk.",
-          icon: "🔎",
+          word: "The house file",
+          phonetic: "/ðə ˈhaʊs faɪl/",
+          definition: "Tập lịch sử ngắn của khách sạn, giữ ở quầy lounge",
+          context: "The house file at the desk has the dates, sir.",
+          icon: "🗂️",
         },
       ],
       grammar: [
         {
           rude: "I think it was built about a hundred years ago.",
-          polite: "The founding year is nineteen twenty-nine, sir. That one I am sure of.",
-          rule: "Đừng đoán số. Nói dữ kiện mình CHẮC, và nói rõ là mình chắc — 'That one I am sure of' cho khách biết phần còn lại thì bạn sẽ tra chứ không bịa.",
+          polite:
+            "The hotel opened in nineteen twenty-nine, sir. The east wing was restored in two thousand and four.",
+          rule: "Đừng đoán số. Nói dữ kiện mình CHẮC, và nói rõ là mình chắc — 'I am sure of that one' cho khách biết phần còn lại thì bạn sẽ tra chứ không bịa.",
         },
         {
           rude: "Yes, a famous actor stayed in your room.",
-          polite: "I am not able to say who has stayed here, madam. May I show you the guest book?",
-          rule: "Tên của khách khác KHÔNG BAO GIỜ là một phần câu chuyện — kể cả khách đã trả phòng từ lâu. Tuần 27 gọi đó là guest privacy rule, và nó không hết hạn. Đưa cuốn sổ khách ra là cách nói không mà vẫn cho khách một thứ.",
+          polite: "I am not able to say who has stayed here, madam. May I show you the house file?",
+          rule: "Tên của khách khác KHÔNG BAO GIỜ là một phần câu chuyện — kể cả khách đã trả phòng từ lâu, và kể cả khi chính khách kia đã kể ở đâu đó. Đưa the house file ra là cách nói không mà vẫn cho khách một thứ. Cuốn guest book thì KHÔNG đưa: nó có chữ ký và tên của khách khác.",
         },
       ],
       speaking: [
         {
           guestPrompt: "How old is this building? It looks colonial.",
           targetResponse:
-            "The founding year is nineteen twenty-nine, sir. The east wing was restored in two thousand and four.",
+            "The hotel opened in nineteen twenty-nine, sir. The building was a bank before that.",
           helpTip:
-            "Hai dữ kiện, hai con số, hết. Đừng thêm 'I think', và cũng đừng thêm 'maybe' — khách hỏi tuổi toà nhà thì muốn một con số, không muốn một phỏng đoán. 'Restored' /rɪˈstɔːd/ — đuôi -ed sau /ɔː/ đọc thành /d/, không thêm âm tiết.",
+            "Khách hỏi tuổi TOÀ NHÀ, không hỏi tuổi khách sạn — hai dữ kiện khác nhau, và bài đọc tách rõ. Trả lời cả hai, hết. Đừng thêm 'I think', và cũng đừng thêm 'maybe' — khách hỏi tuổi toà nhà thì muốn một con số, không muốn một phỏng đoán. 'Opened' /ˈəʊpənd/ — đuôi -ed sau /n/ đọc thành /d/, không thêm âm tiết.",
         },
         {
           guestPrompt: "And the painting by the lift — is it an original?",
           targetResponse:
-            "As far as I know it is, madam. I will look it up and leave you a note at the desk.",
+            "As far as I know, it is, madam. I will check the house file and tell you this evening.",
           helpTip:
-            "'As far as I know' là câu thật thà, không phải câu yếu: nó tách phần bạn biết khỏi phần bạn sẽ tra. Rồi phải tra THẬT và để lại lời nhắn — hứa gì thì quay lại đúng thế. 'Know' /nəʊ/ — chữ k câm.",
+            "'As far as I know' là câu thật thà, không phải câu yếu: nó tách phần bạn biết khỏi phần bạn sẽ tra. Rồi phải tra THẬT và quay lại — đừng để lời nhắn ở quầy, vì lời nhắn ở quầy là lời nhắn không ai nhận. 'Know' /nəʊ/ — chữ k câm.",
         },
       ],
       reading: {
-        text: "THREE FACTS, AND WHERE THE REST LIVES\nGuest Relations sits with a guest longer than any other desk. That is why the story falls to you, and why the story has a shape.\nKnow three facts about this house and know them exactly. The founding year. What the building was before it was a hotel. One thing that was restored, and when.\nThree is enough. A guest who wants more will ask, and then you have somewhere to send them.\nAnything you are not sure of gets the same sentence: 'as far as I know'. It costs you nothing and it protects the house.\nThen look it up. The guest book at the lounge desk holds the dates, and the library keeps the rest. The guest book is not a souvenir — it is the record.\nOne thing is never part of the story. Who else has stayed here. Not a name, not a room, not a year. Week twenty-seven calls that the guest privacy rule, and it does not expire when a guest checks out.\nA guest who asks anyway is offered the guest book. It says what the house is willing to say, and nothing more.",
+        text: "THREE FACTS, AND WHERE THE REST LIVES\nGuest Relations sits with a guest longer than any other desk. That is why the story falls to you, and why the story has a shape.\nKnow three facts about this house and know them exactly. The year it opened. What the building was before it was a hotel. One thing that was restored, and when.\nThose three you say plainly, with no hedge in front of them. A guest who hears 'as far as I know' about the founding year is hearing that nobody here was taught it.\nAnything beyond the three gets that sentence instead. It costs you nothing and it protects the house.\nThen check the house file. It sits at the lounge desk, it holds the dates, and the library has the rest. The house file is not a souvenir — it is the record.\nThe guest book is a different thing. Guests sign it. It has their names in it, so it is never the answer to a question about who has stayed here.\nAnd that question has one answer only. Not a name, not a room, not a year. This is the guest privacy rule, and it does not expire when a guest checks out.\nA guest who presses twice is no longer only curious. Speak to the duty manager, and say what was asked and what you did not confirm.",
         questions: [
           {
-            q: "Khách hỏi một chi tiết bạn không chắc. Nói gì?",
+            q: "Khách hỏi một chi tiết ngoài ba dữ kiện, và bạn không chắc. Nói gì?",
             options: [
-              "Nói 'as far as I know', rồi tra lại và quay lại trả lời",
-              "Đoán một con số gần đúng, vì khách chỉ muốn nghe một câu chuyện hay",
+              "Nói 'as far as I know', rồi tra the house file và quay lại trả lời",
+              "Đoán một con số gần đúng, vì khách chỉ muốn nghe một câu chuyện cho hay",
               "Nói mình không biết rồi chuyển sang chuyện khác cho đỡ ngượng",
             ],
             correct: 0,
           },
           {
-            q: "Khách hỏi có người nổi tiếng nào từng ở phòng này không. Làm gì?",
+            q: "Một người hỏi tới lần thứ hai xem khách nào đã ở phòng nào. Làm gì?",
             options: [
-              "Kể tên nếu người đó đã trả phòng từ lâu rồi",
-              "Nói là có, nhưng không nói tên cụ thể ra",
-              "Không nói tên ai, và mời khách xem cuốn sổ khách",
+              "Đưa cuốn guest book ra cho họ tự xem, vì đó là sổ công khai",
+              "Nói là có khách nổi tiếng nhưng không nói tên cụ thể ra",
+              "Không xác nhận gì, và báo duty manager là đã có người hỏi",
             ],
             correct: 2,
           },
@@ -20505,15 +20506,15 @@ const GR_WEEK_31: WeekContent = {
           prompt: "Come on, you can tell me. Which suite did the film crew take last month?",
           options: [
             {
-              text: "The film crew were in the top-floor suites, madam, but I should not say more.",
+              text: "The film crew were in the top-floor suites, madam, but I really should not say more.",
               correct: false,
             },
             {
-              text: "I am not able to say who has stayed here, madam. The guest book is at the desk.",
+              text: "I am not able to say who has stayed here, madam. May I help with anything else?",
               correct: true,
             },
             {
-              text: "I was not on duty that week, madam, so I honestly could not tell you.",
+              text: "I was not on duty that week, madam, so I honestly could not tell you anything.",
               correct: false,
             },
           ],
@@ -20522,7 +20523,7 @@ const GR_WEEK_31: WeekContent = {
           prompt: "Was this place a French bank before? My guidebook says so.",
           options: [
             {
-              text: "That is right, madam — it was a bank, and the old vault is still downstairs.",
+              text: "As far as I know, it was, madam. I will check and come back to you on that.",
               correct: false,
             },
             {
@@ -20530,7 +20531,7 @@ const GR_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "As far as I know it was, madam. I will check and leave you a note.",
+              text: "It was, madam — a bank until nineteen twenty-nine. Your guidebook has that one right.",
               correct: true,
             },
           ],
@@ -20545,16 +20546,16 @@ const GR_WEEK_31: WeekContent = {
       vocabulary: [
         {
           word: "The short version",
-          phonetic: "/ðə ˈʃɔːt ˈvɜːʃn/",
+          phonetic: "/ðə ˈʃɔːt ˌvɜːʃn/",
           definition: "Bản kể ngắn — cách hỏi khách muốn nghe bao nhiêu",
           context: "Would you like the short version, sir?",
           icon: "⏱️",
         },
         {
-          word: "Say when",
-          phonetic: "/ˌseɪ ˈwen/",
-          definition: "Bảo tôi dừng lúc nào — trao nút dừng cho khách",
-          context: "Say when, madam, and I will stop there.",
+          word: "Do stop me",
+          phonetic: "/duː ˈstɒp miː/",
+          definition: "Cứ ngắt lời tôi — trao nút dừng cho khách trước",
+          context: "Do stop me whenever you like, madam.",
           icon: "✋",
         },
         {
@@ -20568,7 +20569,7 @@ const GR_WEEK_31: WeekContent = {
           word: "Another time",
           phonetic: "/əˌnʌðə ˈtaɪm/",
           definition: "Để dịp khác — cách hoãn mà không đóng cửa",
-          context: "Another time, then, madam — the ballroom is not going anywhere.",
+          context: "Another time, then, madam. It will still be here.",
           icon: "↩️",
         },
       ],
@@ -20580,15 +20581,15 @@ const GR_WEEK_31: WeekContent = {
         },
         {
           rude: "And then in nineteen fifty-four the family sold it, and after that the army took it, and…",
-          polite: "Say when, madam, and I will stop there.",
-          rule: "Trao cái nút dừng cho khách trước khi khách cần tới nó. Người kể giỏi ở bộ phận này không phải người kể lâu nhất — là người dừng đúng lúc mà khách không phải ngắt lời.",
+          polite: "Do stop me whenever you like, madam. There is a great deal of it.",
+          rule: "Trao cái nút dừng cho khách TRƯỚC khi khách cần tới nó. Người kể giỏi ở bộ phận này không phải người kể lâu nhất — là người dừng đúng lúc mà khách không phải ngắt lời.",
         },
       ],
       speaking: [
         {
           guestPrompt: "It's a beautiful room. Has it always looked like this?",
           targetResponse:
-            "Not always, madam. Would you like the short version, or shall I leave you to your book?",
+            "Not always, madam. Would you like the short version, or shall I leave you to it?",
           helpTip:
             "Trả lời câu hỏi TRƯỚC — 'not always' là đủ — rồi mới hỏi khách muốn nghe bao nhiêu. Hỏi ngược lại trước khi trả lời thì nghe như né. 'Short version' — trọng âm rơi vào SHORT.",
         },
@@ -20597,25 +20598,25 @@ const GR_WEEK_31: WeekContent = {
             "The couple in the lounge look bored. Should I go and tell them about the building?",
           speakerRole: "colleague",
           targetResponse:
-            "Offer it, do not start it. Ask if they would like the short version, and take no for an answer.",
+            "Offer it, do not start it. Ask if they would like the short version, and let them say no.",
           helpTip:
-            "ĐỒNG NGHIỆP MỚI hỏi. Hai mệnh lệnh ngắn rồi một câu về thái độ. 'Take no for an answer' nghĩa là chấp nhận lời từ chối — ở đây nói dạng khẳng định cho rõ nghĩa, chứ không 'will not take no for an answer'. 'Answer' /ˈɑːnsə/ — chữ w câm.",
+            "ĐỒNG NGHIỆP MỚI hỏi. Hai mệnh lệnh ngắn rồi một câu về thái độ. 'Let them say no' — lời từ chối phải dễ nói ra, vì khách trong lounge không muốn phải xua tay hai lần. 'Offer' /ˈɒfə/ — trọng âm rơi vào âm tiết đầu.",
         },
       ],
       reading: {
-        text: "OFFERED, NOT DELIVERED\nA story a guest did not ask for is an interruption with good manners on.\nSo the story is offered. 'Would you like the short version?' — six words, and the guest decides.\nThe short version is three sentences. The whole of it runs about four minutes, and four minutes is long to a guest with a cold coffee.\nWatch two things while you talk. Whether they are looking at you, and whether they are still asking. If both stop, the story is over.\nGive them the stop button before they need it. 'Say when' means they never have to interrupt you, and a guest who interrupts remembers doing it.\nStopping before you are asked to stop is the most thoughtful thing this desk does.\nNo is a complete answer. 'Another time, then' costs the guest nothing and keeps the door open.\nA guest reading, eating, or on the telephone is not a guest waiting for a story. Leave them to it. You are at the desk, and they know where the desk is.\nAnd a guest who wants something local is a question for the concierge desk, not a story about the house.",
+        text: "OFFERED, NOT DELIVERED\nA story a guest did not ask for is still an interruption, however politely it starts.\nSo the story is offered. 'Would you like the short version?' — six words, and the guest decides.\nThe short version is three sentences. The whole of it runs about four minutes, and four minutes is long to a guest with a cold coffee.\nWatch two things while you talk. Whether they are looking at you, and whether they are still asking. If both stop, the story is over.\nGive them the stop button before they need it. 'Do stop me whenever you like' means they never have to interrupt you, and a guest who interrupts remembers doing it.\nStopping before you are asked to stop is the most thoughtful thing this desk does.\nNo is a complete answer. 'Another time, then' costs the guest nothing and keeps the door open.\nA guest reading, eating, or on the telephone is not a guest waiting for a story. Leave them to it. You are at the desk, and they know where the desk is.\nThen tell the lounge team that table is not to be approached again tonight. A guest should have to say no once, not four times.\nAnd a guest who wants something local is a question for the concierge desk, not a story about the house.",
         questions: [
           {
             q: "Khách đang đọc sách trong lounge. Làm gì?",
             options: [
-              "Kể bản ngắn thôi, vì kể xong khách sẽ thấy thú vị",
-              "Để khách yên, và cho khách biết mình ở quầy",
-              "Đợi khách gấp sách lại rồi mới bắt đầu kể",
+              "Kể bản ngắn thôi, vì kể xong thì khách nào cũng thấy thú vị hơn hẳn",
+              "Để khách yên, cho khách biết mình ở quầy, và báo tổ lounge đừng tới bàn đó nữa",
+              "Đợi khách gấp sách lại rồi mới bắt đầu kể phần mở đầu cho khách nghe",
             ],
             correct: 1,
           },
           {
-            q: "Vì sao phải nói 'say when' trước khi kể dài?",
+            q: "Vì sao phải trao câu 'do stop me' trước khi kể dài?",
             options: [
               "Để mình có cớ dừng khi bận việc khác",
               "Để khách biết trước là câu chuyện sẽ dài",
@@ -20630,11 +20631,11 @@ const GR_WEEK_31: WeekContent = {
           prompt: "That's fascinating. Go on.",
           options: [
             {
-              text: "There is more, madam — say when, and I will stop there.",
+              text: "There is more, madam — do stop me whenever you like.",
               correct: true,
             },
             {
-              text: "There is a great deal more, madam. Shall I start again from the founding year?",
+              text: "There is a great deal more, madam. Shall I start again from the beginning?",
               correct: false,
             },
             {
@@ -20649,15 +20650,15 @@ const GR_WEEK_31: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Ask him again once his drink arrives — most guests warm up.",
+              text: "Ask him again once his drink arrives — most guests warm up after a while.",
               correct: false,
             },
             {
-              text: "No. He said no, and no is a complete answer. Leave him to it.",
+              text: "No. Leave him to it, and tell the lounge team not to approach that table again.",
               correct: true,
             },
             {
-              text: "Tell the lounge attendant to keep an eye on that table.",
+              text: "Ask the lounge attendant to go and find out what the gentleman is here for.",
               correct: false,
             },
           ],
@@ -20685,67 +20686,66 @@ const GR_WEEK_31: WeekContent = {
           icon: "🚧",
         },
         {
-          word: "A private floor",
-          phonetic: "/ə ˈpraɪvət ˈflɔː/",
-          definition: "Tầng riêng — chỉ khách ở tầng đó mới lên được",
-          context: "The club floor is a private floor, sir, and your card opens it.",
+          word: "Not mine to open",
+          phonetic: "/ˌnɒt ˈmaɪn tʊ ˈəʊpn/",
+          definition: "Không thuộc quyền mở của tôi — phòng do bộ phận khác giữ chìa",
+          context: "The ballroom is not mine to open, sir.",
           icon: "🔐",
         },
         {
           word: "Best seen at",
-          phonetic: "/ˈbest ˈsiːn ət/",
+          phonetic: "/ˌbest ˈsiːn ət/",
           definition: "Đẹp nhất vào lúc — cách hẹn giờ cho một điểm ngắm",
-          context: "The courtyard is best seen at six, when they light the lamps.",
+          context: "The courtyard is best seen at six, when we light the lamps.",
           icon: "🌇",
         },
       ],
       grammar: [
         {
           rude: "You cannot go up there.",
-          polite:
-            "The club floor is a private floor, sir. Your card opens it, and I can take you up.",
-          rule: "Đừng nói 'you cannot'. Nói khu vực đó LÀ GÌ, rồi nói ngay phần khách ĐƯỢC — thẻ của khách mở được tầng nào. Với khách thì tránh chữ nghiệp vụ; 'private floor' khách hiểu, 'access level' thì không.",
+          polite: "I can ring the room from the desk for you, madam. Shall I try?",
+          rule: "Đừng nói 'you cannot', và cũng đừng nói tầng nào — nói số tầng là đã xác nhận phòng đó có thật và ai đang ở đó. Chuyển thẳng sang thứ bạn LÀM ĐƯỢC: gọi lên phòng.",
         },
         {
           rude: "The kitchen is staff only.",
-          polite: "The kitchen is not open to guests, madam, but the chef comes out at seven.",
-          rule: "Mỗi lời từ chối đi kèm một cánh cửa khác trong cùng một hơi. 'Staff only' là chữ trên biển báo, không phải câu người ta nói với nhau.",
+          polite: "The kitchen is not open to guests, madam, but I can ask the chef to come out.",
+          rule: "Mỗi lời từ chối đi kèm một cánh cửa khác trong cùng một hơi. Nhưng chỉ hứa phần bạn LÀM được — bạn XIN bếp trưởng ra chào, bạn không hẹn giờ thay ông ấy. 'Staff only' là chữ trên biển báo, không phải câu người ta nói.",
         },
       ],
       speaking: [
         {
           guestPrompt: "Is there anything worth seeing before dinner?",
           targetResponse:
-            "The courtyard is best seen at six, madam, when they light the lamps. It is two minutes away.",
+            "The courtyard is best seen at six, madam, when we light the lamps. It is two minutes away.",
           helpTip:
-            "Cho MỘT chỗ và MỘT giờ, đừng cho danh sách. Khách hỏi trước bữa tối thì đang có mười lăm phút, không có cả buổi chiều. 'Courtyard' /ˈkɔːtjɑːd/ — trọng âm rơi vào âm tiết đầu.",
+            "Cho MỘT chỗ và MỘT giờ, đừng cho danh sách. Khách hỏi trước bữa tối thì đang có mười lăm phút, không có cả buổi chiều. Nói 'we', đừng nói 'they' — trước mặt khách thì cả nhà là một. 'Courtyard' /ˈkɔːtjɑːd/ — trọng âm rơi vào âm tiết đầu.",
         },
         {
-          guestPrompt: "My friend is in 1802 — can I go up and knock?",
+          guestPrompt: "My friend is in 1806 — can I go up and knock?",
           targetResponse:
-            "That is a private floor, madam. May I ring the room for you from the desk?",
+            "Let me try the room from the desk for you, madam. What name shall I give?",
           helpTip:
-            "Không xác nhận có ai ở phòng đó, và cũng không xác nhận rằng mình biết — tuần 27, guest privacy rule. Chuyển sang thứ bạn LÀM ĐƯỢC: gọi lên phòng. Khách vẫn tới được bạn mình mà không ai bị lộ. 'Private' /ˈpraɪvət/ — trọng âm âm tiết đầu.",
+            "Đừng xác nhận có ai ở phòng đó, và đừng nói số tầng — cả hai đều là tiết lộ. Chuyển sang thứ bạn LÀM ĐƯỢC: khách vẫn tới được bạn mình mà không ai bị lộ. Nếu người đó hỏi tiếp hoặc ép, báo duty manager. 'Desk' /desk/ — đuôi /sk/ nghe rõ cả hai phụ âm.",
         },
       ],
       reading: {
-        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nSome of this house is yours to show around. Some of it you may only describe, and the difference is not about beauty.\nOpen to any guest: the lobby, the courtyard, the old staircase, the library, the roof top at dusk, and the ballroom when it is empty.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the plant room. These are not secrets. They are simply not safe and not tidy.\nA private floor is a third thing. The club floor is open to the guests who sleep on it, and their cards open the lift. Yours does not open it for a visitor.\nA guest who wants to reach a friend upstairs is offered the telephone, never the lift. You do not say whether that friend is in the house at all. Week twenty-seven calls that the guest privacy rule.\nThe ballroom belongs to whoever booked it. An empty ballroom is a room you may show. A ballroom being set for a wedding is somebody else's day, and you show it from the door.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
+        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nSome of this house is yours to show around. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the plant room. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. Banquet holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask Banquet, or show it from the door.\nThe roof top belongs to the bar that runs it, and their dress code applies at their hours, not yours.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
         questions: [
           {
-            q: "Khách muốn lên tầng 1802 tìm bạn. Làm gì?",
+            q: "Khách muốn lên phòng 1806 tìm bạn. Làm gì?",
             options: [
-              "Mời khách gọi lên phòng từ quầy, và không xác nhận người đó có ở đây không",
-              "Nói phòng đó ở tầng riêng, rồi hỏi tên người bạn để kiểm tra giúp",
+              "Mời gọi lên phòng từ quầy, không nói tầng, và báo duty manager nếu người đó ép",
+              "Nói phòng đó nằm ở tầng club, rồi hỏi tên người bạn để mình kiểm tra giúp",
               "Đưa khách lên, vì khách biết số phòng nên chắc là bạn thật",
             ],
             correct: 0,
           },
           {
-            q: "Phòng khiêu vũ đang được dựng cho một đám cưới. Làm gì?",
+            q: "Khách muốn xem phòng khiêu vũ. Ai quyết?",
             options: [
-              "Đưa khách vào xem nhanh, vì phòng vẫn chưa có ai ngồi",
-              "Cho khách xem từ ngoài cửa, vì hôm đó là ngày của người khác",
-              "Chụp ảnh giúp khách rồi cho khách xem, đỡ phải vào tận nơi",
+              "Guest Relations, vì phòng đang trống thì có ai dùng tới đâu",
+              "Banquet giữ chìa — hỏi họ, hoặc cho khách xem từ ngoài cửa",
+              "Duty Manager, vì mọi khu vực chung đều thuộc quyền ông ấy",
             ],
             correct: 1,
           },
@@ -20764,7 +20764,7 @@ const GR_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "It is staff only, madam, and I am afraid there is nothing I can do.",
+              text: "It is staff only, madam, and I am afraid there is nothing at all I can do.",
               correct: false,
             },
           ],
@@ -20779,11 +20779,11 @@ const GR_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "Tell him it is closed today and offer him the courtyard instead.",
+              text: "Show him from the door — the couple will not mind him having a quick look.",
               correct: false,
             },
             {
-              text: "Show him from the door. The room belongs to whoever booked it today.",
+              text: "It is not ours to open. Offer the courtyard, and ask Banquet if he presses.",
               correct: true,
             },
           ],
@@ -20797,84 +20797,84 @@ const GR_WEEK_31: WeekContent = {
       titleVi: "Câu trả lời bạn không có",
       vocabulary: [
         {
-          word: "Nobody has asked me that",
-          phonetic: "/ˈnəʊbədi həz ˈɑːskt miː ðæt/",
-          definition: "Chưa ai hỏi tôi câu đó — cách mở lời thật thà khi mình không biết",
-          context: "Nobody has asked me that before, madam.",
-          icon: "❓",
+          word: "I would rather find out",
+          phonetic: "/aɪd ˌrɑːðə ˈfaɪnd aʊt/",
+          definition: "Tôi muốn tra cho chắc hơn là đoán",
+          context: "I would rather find out than guess, sir.",
+          icon: "🔎",
         },
         {
           word: "The right person for that",
           phonetic: "/ðə ˈraɪt ˈpɜːsn fə ðæt/",
           definition: "Người đúng để hỏi việc đó",
-          context: "The right person for that is our resident historian, sir.",
+          context: "The right person for that is our Guest Relations Manager, madam.",
           icon: "👤",
         },
         {
-          word: "Resident historian",
-          phonetic: "/ˌrezɪdənt hɪˈstɔːriən/",
-          definition: "Người phụ trách phần lịch sử của khách sạn",
-          context: "Our resident historian walks the lobby on Thursdays.",
-          icon: "📖",
+          word: "By this evening",
+          phonetic: "/baɪ ðɪs ˈiːvnɪŋ/",
+          definition: "Trước tối nay — mốc giờ gắn vào lời hứa tra cứu",
+          context: "I will have it for you by this evening, sir.",
+          icon: "🕕",
         },
         {
-          word: "I will find out",
-          phonetic: "/aɪ wɪl ˈfaɪnd ˈaʊt/",
-          definition: "Tôi sẽ tìm hiểu — lời hứa phải đi kèm chỗ nhận câu trả lời",
-          context: "I will find out and leave the answer at the desk.",
-          icon: "📝",
+          word: "Made up",
+          phonetic: "/ˌmeɪd ˈʌp/",
+          definition: "Bịa ra — thứ tuyệt đối không làm với dữ kiện của nhà",
+          context: "A made up date is worse than no date at all.",
+          icon: "🚫",
         },
       ],
       grammar: [
         {
-          rude: "I don't know.",
+          rude: "It is probably from the French period.",
           polite:
-            "Nobody has asked me that before, madam. I will find out and leave the answer at the desk.",
-          rule: "'I don't know' đóng chuyện lại. Cùng một sự thật đó, cộng việc bạn SẼ LÀM và chỗ khách nhận được câu trả lời, thì thành một lời hứa giữ được.",
+            "I would rather find out than guess, madam. I will have it for you by this evening.",
+          rule: "Đừng lấp chỗ trống bằng một phỏng đoán nghe hay. Nói thẳng rằng mình muốn tra, rồi gắn MỘT MỐC — chuyển việc mà không có mốc thì chỉ là đẩy đi.",
         },
         {
-          rude: "It's probably from the French period.",
+          rude: "I do not know, sorry.",
           polite:
-            "The right person for that is our resident historian, sir. She walks the lobby on Thursdays.",
-          rule: "Đừng lấp chỗ trống bằng một phỏng đoán nghe hay. Chuyển cho người đúng, và cho khách một mốc gặp được — chuyển mà không có mốc thì chỉ là đẩy đi.",
+            "The right person for that is our Guest Relations Manager, sir. I will ask her today.",
+          rule: "'I do not know' đóng chuyện lại. Cùng sự thật đó, cộng TÊN CHỨC DANH và việc bạn sẽ làm, thì thành một đường đi. Chỉ chuyển cho người có thật và chức danh khách hỏi lại được.",
         },
       ],
       speaking: [
         {
           guestPrompt: "Who carved the panels in the ballroom? They look Chinese.",
           targetResponse:
-            "Nobody has asked me that before, sir. The right person for that is our resident historian.",
+            "I would rather find out than guess, sir. The right person for that is our Guest Relations Manager.",
           helpTip:
-            "Thật thà trước, chuyển tiếp sau. Đừng nói 'probably', và đừng nói 'I think it is' về đồ vật trong nhà — một câu đoán sai về đồ cổ sẽ được khách kể lại ở chỗ khác. 'Historian' /hɪˈstɔːriən/ — trọng âm rơi vào âm tiết hai.",
+            "Thật thà trước, chuyển tiếp sau. Đừng nói 'probably', và đừng nói 'I think it is' về đồ vật trong nhà — một câu đoán sai về đồ cổ sẽ được khách kể lại ở chỗ khác. 'Rather' /ˈrɑːðə/ — /ɑː/ dài.",
         },
         {
           guestPrompt:
             "Guest Relations. A guest told me the tower was built by the French. Can I use that?",
           speakerRole: "colleague",
           targetResponse:
-            "Not until it is in the guest book. What a guest tells us is not yet a fact about the house.",
+            "Not until somebody has checked it. Write it down, thank her, and give it to the manager.",
           helpTip:
-            "ĐỒNG NGHIỆP hỏi. Chuyện khách kể cho mình là một món quà, không phải một nguồn — nó chỉ thành dữ kiện của nhà sau khi vào sổ khách. Đây là chiều ngược lại của luật tuần này: bạn không bịa, và cũng không mượn lời khách để khỏi phải tra. 'Fact' /fækt/ — đuôi /kt/ nghe rõ cả hai phụ âm.",
+            "ĐỒNG NGHIỆP hỏi. Chuyện khách kể cho mình là một món quà, không phải một nguồn — và chép nó vào giấy cũng không biến nó thành dữ kiện. Phải có người kiểm. Đây là chiều ngược lại của luật tuần này: bạn không bịa, và cũng không mượn lời khách để khỏi phải tra. 'Checked' /tʃekt/ — đuôi -ed sau /k/ đọc thành /t/.",
         },
       ],
       reading: {
-        text: "THE ANSWER YOU DO NOT HAVE\nThree facts are enough because the fourth question always comes, and it is meant to.\nA guest who asks a fourth question is enjoying themselves. The wrong move is to reward that with a guess.\nA made-up date is worse than no date. It travels: the guest repeats it at dinner, another officer hears it, and in a month the house has a fact nobody can find.\nSo say the true thing. 'Nobody has asked me that before' is not a weak sentence. It tells the guest their question was a good one.\nThen hand it on. The resident historian walks the lobby on Thursdays. The executive chef will talk about the kitchen garden. The concierge desk knows the town better than any of us.\nHanding on needs a time, or it is only pointing. 'Thursday at eleven' is a hand-over; 'ask the historian' is a shrug.\nAnd what a guest tells YOU is not a fact yet. Guests are generous with history and often wrong. Write it down, thank them, and let the guest book decide.\nThat is the whole shape of it. Three facts you are sure of, one honest sentence for everything else, and a name and an hour for the rest.",
+        text: "THE ANSWER YOU DO NOT HAVE\nThree facts are enough because the fourth question always comes, and it is meant to.\nA guest who asks a fourth question is enjoying themselves. The wrong move is to reward that with a guess.\nA made up date is worse than no date. It travels: the guest repeats it at dinner, another officer hears it, and in a month the house has a fact nobody can find.\nSo say the true thing. 'I would rather find out than guess' tells the guest their question was a good one, and it commits you to going and looking.\nThen hand it on, to somebody who exists. The Guest Relations Manager keeps the house file. The executive chef will talk about the kitchen garden. The concierge desk knows the town better than any of us.\nHanding on needs a time, or it is only pointing. 'By this evening' is a hand-over. 'Ask somebody else' is not.\nAnd what a guest tells YOU is not a fact yet. Guests are generous with history and often wrong. Write it down, thank them, and give it to the manager — writing something down does not make it true.\nThat is the whole shape of it. Three facts you are sure of, one honest sentence for everything else, and a name and an hour for the rest.",
         questions: [
           {
             q: "Vì sao một cái ngày bịa lại tệ hơn là không có ngày nào?",
             options: [
-              "Vì khách sẽ nhận ra ngay là mình đang đoán",
+              "Vì khách sẽ nhận ra ngay từ giọng nói là mình đang đoán",
               "Vì quản lý sẽ hỏi lại mình lấy con số đó ở đâu",
               "Vì nó lan ra, và sau một tháng thành dữ kiện không ai tra được",
             ],
             correct: 2,
           },
           {
-            q: "Chuyển câu hỏi cho người khác thì cần thêm gì?",
+            q: "Khách kể cho bạn một chi tiết lịch sử. Làm gì với nó?",
             options: [
-              "Một mốc giờ, nếu không thì mới chỉ là chỉ tay",
-              "Một cái tên là đủ, khách sẽ tự tìm được",
-              "Một lời xin lỗi vì mình không biết câu trả lời",
+              "Ghi lại, cảm ơn khách, và đưa cho quản lý kiểm",
+              "Ghi vào the house file, vì như thế là đã có nguồn",
+              "Dùng luôn trong bài giới thiệu, vì chính khách nói ra",
             ],
             correct: 0,
           },
@@ -20889,11 +20889,11 @@ const GR_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "I would rather find out than guess, sir. Our historian walks the lobby on Thursday.",
+              text: "I would rather find out than guess, sir. I will have it for you by this evening.",
               correct: true,
             },
             {
-              text: "The panels are not something I have ever been told about, sir.",
+              text: "The panels are not something anybody here has ever been told about, sir.",
               correct: false,
             },
           ],
@@ -20904,15 +20904,15 @@ const GR_WEEK_31: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "No. Say the founding year, which we know, and hand the tower to the historian.",
+              text: "No. Say the year it opened — that one we know — and take the question to the manager.",
               correct: true,
             },
             {
-              text: "Yes, roughly is fine for a welcome talk — nobody ever checks it.",
+              text: "Yes, roughly is fine for a welcome talk — nobody has ever checked one of those.",
               correct: false,
             },
             {
-              text: "Say it is very old, and change the subject if the guest pushes.",
+              text: "Say it is very old, and change the subject if the guest pushes you on it.",
               correct: false,
             },
           ],
@@ -20935,7 +20935,7 @@ const GR_WEEK_32: WeekContent = {
     "Guest privacy rule",
     "Coffee preference",
     "Pillow type",
-    "Update your guest file",
+    "Take a note",
   ],
   lessons: [
     {
@@ -20960,7 +20960,7 @@ const GR_WEEK_32: WeekContent = {
         },
         {
           word: "Would that suit you",
-          phonetic: "/wʊd ˈðæt ˈsuːt juː/",
+          phonetic: "/wʊd ðæt ˈsuːt juː/",
           definition: "Như thế có hợp với anh/chị không",
           context: "Would that suit you, sir, or shall I look again?",
           icon: "🤝",
@@ -20990,29 +20990,29 @@ const GR_WEEK_32: WeekContent = {
         {
           guestPrompt: "We've got one free afternoon. What would you do?",
           targetResponse:
-            "You mentioned the children are small, madam. Based on that, I would take the two o'clock river boat.",
+            "You mentioned your children are small, madam. Based on that, I would take the two o'clock boat.",
           helpTip:
             "Đừng bắt đầu bằng gợi ý — bắt đầu bằng lời khách. Một dữ kiện khách đã cho, rồi một gợi ý, rồi dừng. Đừng liệt kê ba lựa chọn: khách hỏi what would you do là đang xin một câu trả lời, không xin một thực đơn. 'Mentioned' /ˈmenʃnd/ — đuôi -ed sau /n/ đọc thành /d/.",
         },
         {
           guestPrompt: "Black, no sugar. And I'll be down at six every morning.",
           targetResponse:
-            "Thank you, sir. Shall I put that down, so the lounge has it ready at six?",
+            "Thank you, sir. Shall I put that down? The lounge opens at seven, so yours goes up at six.",
           helpTip:
-            "Khách vừa cho bạn hai dữ kiện. XIN PHÉP trước khi ghi — 'shall I put that down' — vì hồ sơ khách là của khách, không phải của mình. Tuần 27 gọi đó là guest privacy rule. 'Ready' /ˈredi/ — /e/ ngắn, đừng kéo thành /iː/.",
+            "Khách vừa cho bạn hai dữ kiện. XIN PHÉP trước khi ghi — 'shall I put that down' — vì hồ sơ khách là của khách, không phải của mình. Đây là guest privacy rule của bộ phận: hồ sơ là của khách, không phải của mình. 'Ready' /ˈredi/ — /e/ ngắn, đừng kéo thành /iː/.",
         },
       ],
       reading: {
-        text: "WHERE THE ADVICE COMES FROM\nEvery desk in this house gives advice. What makes Guest Relations different is that you have time, and time is how you learn things nobody wrote down.\nAdvice has exactly three sources. What the guest told you. What is on the guest preference file, put there with permission. And what the house knows about tomorrow — the tide, the market day, the road that closes at five.\nThere is a fourth source, and it is the one that gets people into trouble. What you noticed about the guest. Their age, their money, their body, their religion, who they came with.\nNone of that is advice. It is a guess wearing a uniform.\nSo open with their own words. 'You mentioned the children are small.' The guest hears that you listened, and you never have to guess.\nThen one suggestion, not a list. A guest who asks what you would do is asking for an answer, not a menu.\nThen give the decision back. 'Would that suit you, or shall I look again?' costs four seconds and makes a no easy to say.\nAnd a coffee preference is worth writing down. Ask first, every time.",
+        text: "WHERE THE ADVICE COMES FROM\nEvery desk in this house gives advice. What makes Guest Relations different is that you have time, and time is how you learn things nobody wrote down.\nAdvice has exactly three sources. What the guest told you. What is on the guest preference file, put there with permission. And what the house knows about tomorrow — the tide, the market day, the road that closes at five.\nThere is a fourth source, and it is the one that gets people into trouble. What you noticed about the guest. Their age, their money, their body, their religion, who they came with.\nNone of that is advice. It is a guess, however politely you say it.\nNoticing is not the problem. Noticing is permission to ASK. What goes on the file is the guest's answer, never the thing you saw.\nSo open with their own words. 'You mentioned the children are small.' The guest hears that you listened, and you never have to guess.\nThen one suggestion, not a list. A guest who asks what you would do is asking for an answer, not a menu.\nThen give the decision back. 'Would that suit you, or shall I look again?' costs four seconds and makes a no easy to say.\nAnd a coffee preference is worth writing down. Ask first, every time.",
         questions: [
           {
             q: "Gợi ý được phép mọc ra từ những nguồn nào?",
             options: [
-              "Từ hồ sơ khách và từ kinh nghiệm của mình với khách cùng quốc tịch trước đây",
               "Từ điều khách nói, hồ sơ có xin phép, và điều nhà biết về ngày mai",
+              "Từ hồ sơ khách và từ kinh nghiệm của mình với khách cùng quốc tịch trước đây",
               "Từ điều khách nói và từ những gì mình quan sát được ở khách",
             ],
-            correct: 1,
+            correct: 0,
           },
           {
             q: "Khách hỏi 'anh/chị sẽ làm gì?'. Trả lời thế nào?",
@@ -21030,12 +21030,12 @@ const GR_WEEK_32: WeekContent = {
           prompt: "Any advice for tomorrow? We're free all day.",
           options: [
             {
-              text: "You mentioned markets, sir. Based on that — tomorrow is market day in the old town.",
-              correct: true,
-            },
-            {
               text: "There is the market, the museum, the beach, and a cooking class, sir — take your pick.",
               correct: false,
+            },
+            {
+              text: "You mentioned markets, sir. Based on that, I would go tomorrow — it is market day.",
+              correct: true,
             },
             {
               text: "Most guests of your age enjoy the museum, sir, so I would start there.",
@@ -21053,12 +21053,12 @@ const GR_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "Not from looking at her. Ask what she has planned, then build on the answer.",
-              correct: true,
+              text: "Put it on her file as a suggestion for next time.",
+              correct: false,
             },
             {
-              text: "Put it on her profile as a suggestion for next time.",
-              correct: false,
+              text: "Not from looking at her. Ask what she has planned, then build on the answer.",
+              correct: true,
             },
           ],
         },
@@ -21103,8 +21103,8 @@ const GR_WEEK_32: WeekContent = {
         {
           rude: "I will note that you are diabetic.",
           polite:
-            "May I put the allergy on your file, madam? It goes there only with your permission.",
-          rule: "Bất cứ điều gì thuộc về SỨC KHOẺ chỉ vào hồ sơ sau khi khách đồng ý — hỏi, rồi mới ghi. Và ghi đúng chữ khách dùng, đừng đổi thành chẩn đoán của mình. Tuần 37 đánh dấu hồ sơ khách là CONFIDENTIAL đúng vì lý do này.",
+            "May I put that on your file in your own words, madam? It goes there only with your permission.",
+          rule: "Bất cứ điều gì thuộc về SỨC KHOẺ chỉ vào hồ sơ sau khi khách đồng ý — hỏi, rồi mới ghi. Và ghi đúng chữ khách dùng, đừng đổi thành chẩn đoán của mình. Hồ sơ có ghi sức khoẻ là hồ sơ mật.",
         },
         {
           rude: "Guest is difficult and complains a lot.",
@@ -21132,25 +21132,25 @@ const GR_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A service fact: what was promised, by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact. Ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nA photograph needs the consent form. A preference needs only a spoken yes, asked at the time.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nWeek twenty-seven calls all of this the guest privacy rule, and week thirty-seven marks the file CONFIDENTIAL. Both mean the same thing: somebody will read this who was not there.\nNote the preference, and stop at the preference.",
+        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A service fact: what was promised, by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact. Ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nA photograph kept on a file needs the consent form. A preference needs a spoken yes, and you write the date and your own name beside it.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nAll of this is the guest privacy rule, and the reason is simple: somebody will read this file who was not there. A file that carries health goes down as confidential.\nThis replaces what week twenty-seven taught. That week noted a preference and told the guest afterwards. From now on the guest says yes first, every time.\nNote the preference, and stop at the preference.",
         questions: [
           {
             q: "Khách nói 'tôi không ăn được hải sản'. Ghi thế nào?",
             options: [
               "Ghi ngay vào hồ sơ vì đây là thông tin an toàn, không cần hỏi",
-              "Ghi là khách dị ứng hải sản, vì đó là cách viết gọn nhất",
               "Xin phép trước, rồi ghi đúng lời khách nói",
+              "Ghi là khách dị ứng hải sản, vì đó là cách viết gọn nhất",
             ],
-            correct: 2,
+            correct: 1,
           },
           {
             q: "Khách không muốn nói lý do xin tầng yên tĩnh. Hồ sơ ghi gì?",
             options: [
-              "Ghi yêu cầu, và để trống phần lý do",
               "Không ghi gì cả, vì thiếu lý do thì hồ sơ không dùng được",
               "Ghi thêm phỏng đoán của mình để ca sau hiểu hoàn cảnh",
+              "Ghi yêu cầu, và để trống phần lý do",
             ],
-            correct: 0,
+            correct: 2,
           },
         ],
       },
@@ -21161,16 +21161,16 @@ const GR_WEEK_32: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Write it, but put it in the internal notes rather than the profile.",
-              correct: false,
-            },
-            {
-              text: "Say it to the evening shift at handover instead of writing it.",
-              correct: false,
-            },
-            {
-              text: "Write what she asked for and how many times — that is the fact.",
+              text: "Write what the guest asked for and how many times — that is the fact.",
               correct: true,
+            },
+            {
+              text: "Write 'demanding guest' in the internal notes — nobody outside the team reads those.",
+              correct: false,
+            },
+            {
+              text: "Write nothing, and let the evening shift find out for themselves.",
+              correct: false,
             },
           ],
         },
@@ -21182,7 +21182,7 @@ const GR_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "Of course, madam. A photograph needs the consent form, and I will bring it now.",
+              text: "With pleasure, madam. Keeping a copy on your file needs the consent form — shall I bring it?",
               correct: true,
             },
             {
@@ -21222,7 +21222,7 @@ const GR_WEEK_32: WeekContent = {
         },
         {
           word: "Still the same",
-          phonetic: "/ˈstɪl ðə ˈseɪm/",
+          phonetic: "/ˌstɪl ðə ˈseɪm/",
           definition: "Vẫn như cũ chứ ạ",
           context: "Still the same, madam, or shall I change it?",
           icon: "⚖️",
@@ -21258,25 +21258,25 @@ const GR_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "THE GUEST WHO CAME BACK\nA returning guest is the easiest guest to get wrong, because you already have an answer and you stop asking the question.\nThe file says corner table, firm pillow, black coffee at six. That was true in March. It is a question now, not an instruction.\nPeople change between stays. They come with somebody new, or without somebody. They stop drinking coffee. They are here for work this time, not for a holiday.\nSo offer it back. 'Your usual table, madam, or somewhere different tonight?' The guest hears that you remembered and that you did not decide.\nOpen with one question, not with a display of memory. 'Has anything changed since your last stay?' does more work than any list of remembered details.\nReciting a guest's own preferences at them is not service. It is a performance, and it leaves them nowhere to go but yes.\nWhen they answer, write the answer. A pillow type from two years ago that nobody checked is worse than an empty field, because the evening shift will act on it.\nSame guest, same file, new stay. Ask every time.",
+        text: "THE GUEST WHO CAME BACK\nA returning guest is the easiest guest to get wrong, because you already have an answer and you stop asking the question.\nThe file says corner table, firm pillow, black coffee sent up at six. That was true in March. It is a question now, not an instruction.\nPeople change between stays. They come with somebody new, or without somebody. They stop drinking coffee. They are here for work this time, not for a holiday.\nSo offer it back. 'Your usual table, madam, or somewhere different tonight?' The guest hears that you remembered and that you did not decide.\nOpen with one question, not with a display of memory. 'Has anything changed since your last stay?' does more work than any list of remembered details.\nReciting a guest's own preferences at them is not service. It is a performance, and it leaves them nowhere to go but yes.\nWhen they answer, write the answer. A pillow type from two years ago that nobody checked is worse than an empty field, because the evening shift will act on it.\nSame guest, same file, new stay. Ask every time.",
         questions: [
           {
             q: "Khách quay lại lần thứ ba. Mở lời thế nào?",
             options: [
+              "Chào mừng, rồi hỏi có gì thay đổi không",
               "Đọc lại các sở thích trong hồ sơ để khách thấy mình được nhớ",
               "Dựng sẵn mọi thứ như lần trước rồi báo cho khách biết",
-              "Chào mừng, rồi hỏi có gì thay đổi không",
             ],
-            correct: 2,
+            correct: 0,
           },
           {
             q: "Vì sao một dòng pillow type hai năm không ai kiểm lại tệ hơn ô trống?",
             options: [
-              "Vì ca tối sẽ làm theo đúng dòng đó",
               "Vì hồ sơ trông thiếu chuyên nghiệp khi để dòng cũ",
+              "Vì ca tối sẽ làm theo đúng dòng đó",
               "Vì khách sẽ nghĩ mình không chịu cập nhật hồ sơ",
             ],
-            correct: 0,
+            correct: 1,
           },
         ],
       },
@@ -21285,16 +21285,16 @@ const GR_WEEK_32: WeekContent = {
           prompt: "I assume my details are still on the system?",
           options: [
             {
-              text: "We do, sir — corner table, firm pillow, coffee at six. All set.",
+              text: "They are, sir. Has anything changed, or shall I keep it the same?",
+              correct: true,
+            },
+            {
+              text: "They are, sir — corner table, firm pillow, coffee at six. All set.",
               correct: false,
             },
             {
               text: "I will check the file and come back to you, sir.",
               correct: false,
-            },
-            {
-              text: "We do, sir. Has anything changed, or shall I keep it the same?",
-              correct: true,
             },
           ],
         },
@@ -21308,12 +21308,12 @@ const GR_WEEK_32: WeekContent = {
               correct: false,
             },
             {
-              text: "Not yet. Check she is with the same person, and ask before anything is ordered.",
-              correct: true,
-            },
-            {
               text: "Ask the Duty Manager whether the anniversary note is still valid.",
               correct: false,
+            },
+            {
+              text: "Not yet. Ask her on arrival whether she is celebrating, and order nothing before that.",
+              correct: true,
             },
           ],
         },
@@ -21334,14 +21334,14 @@ const GR_WEEK_32: WeekContent = {
         },
         {
           word: "One question",
-          phonetic: "/ˈwʌn ˈkwestʃən/",
+          phonetic: "/ˌwʌn ˈkwestʃən/",
           definition: "Một câu hỏi — đủ để bắt đầu, đừng thành cuộc phỏng vấn",
           context: "May I ask you one question before you go up, sir?",
           icon: "1️⃣",
         },
         {
           word: "Somebody will know",
-          phonetic: "/ˈsʌmbədi wɪl ˈnəʊ/",
+          phonetic: "/ˌsʌmbədi wɪl ˈnəʊ/",
           definition: "Sẽ có người biết — cách chuyển việc mình không biết",
           context: "Somebody will know, madam, and I will have it by six.",
           icon: "🧭",
@@ -21379,31 +21379,31 @@ const GR_WEEK_32: WeekContent = {
             "Guest Relations. The couple in 908 told me a lot at breakfast. Shall I write it up after my shift?",
           speakerRole: "colleague",
           targetResponse:
-            "Write it while you remember, and update your guest file before you leave the lounge.",
+            "Only the part they said we could keep. Write that now, before you leave the lounge.",
           helpTip:
-            "ĐỒNG NGHIỆP hỏi. Ghi cuối ca là ghi lại một bản đã mờ — tên sai, giờ sai, và phần khách nói khẽ thì rơi mất trước tiên. Ghi ngay, và chỉ ghi phần khách cho phép ghi. 'Remember' /rɪˈmembə/ — trọng âm rơi vào âm tiết hai.",
+            "ĐỒNG NGHIỆP hỏi. Ghi cuối ca là ghi lại một bản đã mờ — tên sai, giờ sai, và phần khách nói khẽ thì rơi mất trước tiên. Ghi ngay, và chỉ ghi phần khách cho phép ghi. 'Lounge' /laʊndʒ/ — /aʊ/ là nguyên âm đôi, đuôi /dʒ/ nghe rõ.",
         },
       ],
       reading: {
-        text: "THE EMPTY FILE\nA new guest arrives with nothing on file, and that is not a problem to hide. It is the most honest half hour you will have with them.\nSay it. 'I have nothing on file for you yet.' The guest is not disappointed; they are new, and they know it.\nThen ask one question. One. 'Beach or town?' takes two seconds and gives you enough to work with all week.\nFive questions is an interview. A guest who has just come off a flight will answer them politely and remember none of it fondly.\nWrite the answer while you remember. At the end of a shift the names blur, the hours move, and the thing they said quietly is the first thing to go.\nUpdate your guest file before you leave the lounge, not after.\nAnd when you do not know something at all, say who will. 'Somebody will know' needs an hour attached, or it is only a kind noise.\nThe concierge desk, the lounge team, the executive chef — this house is full of people who each know one thing extremely well. Your job is to know which one.",
+        text: "THE EMPTY FILE\nA new guest arrives with nothing on file, and that is not a problem to hide. It is the most honest half hour you will have with them.\nSay it. 'I have nothing on file for you yet.' The guest is not disappointed; they are new, and they know it.\nThen ask one question. One. 'Beach or town?' takes two seconds and gives you enough to work with all week.\nFive questions is an interview. A guest who has just come off a flight will answer them politely and remember none of it fondly.\nTake a note while you remember. At the end of a shift the names blur, the hours move, and the thing they said quietly is the first thing to go.\nUpdate the guest's file before you leave the lounge, not after.\nAnd when you do not know something at all, say who will. 'Somebody will know' needs an hour attached, or it is only a kind noise.\nThe concierge desk, the lounge team, the executive chef — this house is full of people who each know one thing extremely well. Your job is to know which one.",
         questions: [
           {
             q: "Khách mới, hồ sơ trống. Mở lời thế nào?",
             options: [
               "Hỏi năm câu để dựng hồ sơ cho đầy đủ ngay từ đầu",
-              "Nói thẳng là hồ sơ chưa có gì, rồi xin hỏi một câu",
               "Gợi ý những thứ khách nào cũng thích rồi xem phản ứng",
+              "Nói thẳng là hồ sơ chưa có gì, rồi xin hỏi một câu",
             ],
-            correct: 1,
+            correct: 2,
           },
           {
             q: "Vì sao phải ghi ngay chứ không để cuối ca?",
             options: [
+              "Vì cuối ca thì tên, giờ và phần khách nói khẽ sẽ rơi mất",
               "Vì hệ thống sẽ khoá lại và không cho sửa hồ sơ sau giờ làm",
               "Vì quản lý kiểm tra hồ sơ vào cuối mỗi ca",
-              "Vì cuối ca thì tên, giờ và phần khách nói khẽ sẽ rơi mất",
             ],
-            correct: 2,
+            correct: 0,
           },
         ],
       },
@@ -21420,7 +21420,7 @@ const GR_WEEK_32: WeekContent = {
               correct: true,
             },
             {
-              text: "I have nothing on file for you, madam, so it is hard to say.",
+              text: "Most first-time guests just book the city tour, madam, so I would do that.",
               correct: false,
             },
           ],
@@ -21431,15 +21431,15 @@ const GR_WEEK_32: WeekContent = {
           speakerRole: "colleague",
           options: [
             {
-              text: "Tell them it usually does — the timetable rarely changes here.",
-              correct: false,
-            },
-            {
               text: "Say somebody will know, and give them an hour you can keep.",
               correct: true,
             },
             {
-              text: "Send them to the concierge desk and let them ask there.",
+              text: "Tell them it usually does — the timetable rarely changes here.",
+              correct: false,
+            },
+            {
+              text: "Point at the concierge desk and let them work it out themselves.",
               correct: false,
             },
           ],

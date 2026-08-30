@@ -949,12 +949,6 @@ const GR_BANK: P4Bank = {
       definition: "Gia đình đã sáng lập nơi này",
       icon: "👪",
     },
-    {
-      word: "Resident historian",
-      phonetic: "/ˈrezɪdənt hɪˈstɔːriən/",
-      definition: "Người kể sử của khách sạn",
-      icon: "🎓",
-    },
   ],
   preferences: [
     {
