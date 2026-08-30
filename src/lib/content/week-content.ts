@@ -21449,6 +21449,530 @@ const GR_WEEK_32: WeekContent = {
   ],
 };
 
+const GR_WEEK_33: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 33,
+  weekTitleEn: "The Promise That Was Not Kept",
+  weekTitleVi: "Lời hứa đã không được giữ",
+  reviewWords: [
+    "Complaint log",
+    "Send a written apology",
+    "Update the record",
+    "Apology letter",
+    "Speak to the duty manager",
+    "Loyalty office",
+    "Cancel the extra charge",
+    "Follow up",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_33_1",
+      lessonOrder: 1,
+      titleEn: "What Was Actually Promised",
+      titleVi: "Rốt cuộc đã hứa những gì",
+      vocabulary: [
+        {
+          word: "What were you promised",
+          phonetic: "/wɒt wə juː ˈprɒmɪst/",
+          definition: "Anh/chị đã được hứa những gì — câu mở của mọi khiếu nại",
+          context: "What were you promised, madam, and by whom?",
+          icon: "📜",
+        },
+        {
+          word: "What happened instead",
+          phonetic: "/wɒt ˈhæpənd ɪnˈsted/",
+          definition: "Thực tế đã xảy ra thế nào — vế thứ hai của sự việc",
+          context: "And what happened instead, sir?",
+          icon: "↔️",
+        },
+        {
+          word: "From the beginning",
+          phonetic: "/frəm ðə bɪˈɡɪnɪŋ/",
+          definition: "Kể lại từ đầu — lời mời khách nói hết một lượt",
+          context: "Take me through it from the beginning, madam.",
+          icon: "⏮️",
+        },
+        {
+          word: "Four things",
+          phonetic: "/ˈfɔː ˈθɪŋz/",
+          definition: "Bốn dữ kiện một khiếu nại cần: hứa gì, ai hứa, khi nào, và thực tế ra sao",
+          context: "I need four things for the log, madam, and then I can act.",
+          icon: "4️⃣",
+        },
+      ],
+      grammar: [
+        {
+          rude: "What is the problem?",
+          polite: "Take me through it from the beginning, madam. What were you promised?",
+          rule: "'What is the problem?' bắt khách tóm tắt hộ bạn, và khách đang giận thì tóm tắt bằng cảm xúc. Mời khách kể từ đầu, rồi hỏi đúng vế ĐÃ HỨA — đó là vế kiểm được.",
+        },
+        {
+          rude: "I am sure there was a misunderstanding.",
+          polite: "And what happened instead, sir? I will write both down before I say anything.",
+          rule: "Đừng gọi tên nguyên nhân khi chưa có dữ kiện. Ghi cả hai vế — cái đã hứa và cái đã xảy ra — rồi mới nói. Ghi trước, kết luận sau.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "This is the third time. Nobody in this hotel does what they say.",
+          targetResponse:
+            "I am sorry, madam. Take me through it from the beginning, and I will write it down.",
+          helpTip:
+            "Khách mở bằng một lời khái quát về cả khách sạn. Đừng cãi lại vế khái quát đó và cũng đừng nhận nó — kéo về SỰ VIỆC bằng cách mời khách kể từ đầu. Cây bút là thứ hạ nhiệt nhanh nhất: khách thấy mình đang ghi là thấy mình đang được nghe. 'Beginning' /bɪˈɡɪnɪŋ/ — trọng âm rơi vào âm tiết hai.",
+        },
+        {
+          guestPrompt: "Guest Relations. Room 1102 is furious about the lounge. Where do I start?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Four things before anything else. What was promised, who promised it, when, and what happened instead.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Đừng bắt đầu bằng việc nghĩ xem cho khách cái gì — bắt đầu bằng bốn dữ kiện. Không có bốn dữ kiện thì mọi lời đề nghị sau đó đều là đoán, và một lời đề nghị sai làm khiếu nại to thêm. 'Promised' /ˈprɒmɪst/ — đuôi -ed sau /s/ đọc thành /t/.",
+        },
+      ],
+      reading: {
+        text: "THE FOUR THINGS A CLAIM NEEDS\nGuest Relations gets the complaints that are not about a thing. Housekeeping hears about a stain; you hear about a promise.\nThat makes the first move different. There is nothing to photograph. What you have instead is a sentence somebody said, and your job is to find out exactly what it was.\nFour things, every time. What was promised. Who promised it. When. And what happened instead.\nAsk for them in that order, and write while the guest talks. A guest who can see you writing slows down without being asked to.\nDo not start with what you can give. An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.\nDo not name a cause either. 'There must have been a misunderstanding' is a verdict, and nobody has established one yet.\nSome claims are not about a service at all. A preference ignored, an occasion missed, a detail from the file repeated to the wrong person. Those hurt more than a cold breakfast, and they take the same four things.\nEverything goes in the complaint log before anything is offered. The log is what turns a bad afternoon into a case somebody can close.",
+        questions: [
+          {
+            q: "Khách mở lời bằng 'lần thứ ba rồi, khách sạn này chẳng ai làm đúng lời'. Làm gì?",
+            options: [
+              "Mời khách kể lại từ đầu, và bắt đầu ghi",
+              "Xin lỗi thay cho cả khách sạn rồi hỏi khách muốn được bù gì",
+              "Giải thích rằng có thể đã có hiểu nhầm ở đâu đó",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không được đưa ra đề nghị trước khi có đủ bốn dữ kiện?",
+            options: [
+              "Vì quản lý phải duyệt trước mọi lời đề nghị",
+              "Vì khách sẽ đòi thêm nếu thấy mình đề nghị sớm",
+              "Vì đó là một lời đoán, và đoán sai thì khiếu nại to thêm",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Your colleague told me the lounge was open until ten. It closed at eight.",
+          options: [
+            {
+              text: "I am very sorry, madam. Let me arrange something to make up for it right away.",
+              correct: false,
+            },
+            {
+              text: "Do you remember which colleague it was, madam, and when they told you?",
+              correct: true,
+            },
+            {
+              text: "The lounge has closed at eight since April, madam — there must be a mistake.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Shall I offer 1102 a spa credit to calm him down first?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes, offer it now and get the details from him afterwards.",
+              correct: false,
+            },
+            {
+              text: "Ask the Duty Manager what he thinks we should offer this guest.",
+              correct: false,
+            },
+            {
+              text: "Get the four things first. An offer before that is a guess.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_2",
+      lessonOrder: 2,
+      titleEn: "Yours, Your Manager's, and Nobody's",
+      titleVi: "Phần của bạn, của quản lý, và của không ai cả",
+      vocabulary: [
+        {
+          word: "Already yours",
+          phonetic: "/ɔːlˈredi ˈjɔːz/",
+          definition: "Vốn đã thuộc quyền lợi của khách — trả lại thì không tính là bồi thường",
+          context: "The lounge access was already yours, sir, and I am restoring it now.",
+          icon: "↩️",
+        },
+        {
+          word: "My manager's to give",
+          phonetic: "/maɪ ˈmænɪdʒəz tə ˈɡɪv/",
+          definition: "Thuộc quyền cho của quản lý, không phải của tôi",
+          context: "A spa credit is my manager's to give, madam.",
+          icon: "🔑",
+        },
+        {
+          word: "Off the bill",
+          phonetic: "/ˌɒf ðə ˈbɪl/",
+          definition: "Bỏ khỏi hoá đơn — chỉ Duty Manager mới quyết",
+          context: "Anything off the bill is the Duty Manager's, sir.",
+          icon: "🧾",
+        },
+        {
+          word: "The loyalty office decides",
+          phonetic: "/ðə ˈlɔɪəlti ˈɒfɪs dɪˈsaɪdz/",
+          definition: "Việc của bộ phận khách hàng thân thiết — hạng thẻ và điểm",
+          context: "Tier and points — the loyalty office decides, madam.",
+          icon: "🏅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will give you the lounge access back as compensation.",
+          polite:
+            "The lounge access was already yours, sir. I am restoring it now, not offering it.",
+          rule: "Trả lại thứ khách VỐN ĐÃ có quyền không phải là bồi thường — đó là việc lẽ ra đã phải làm. Làm ngay, và đừng đếm nó vào phần bù. Gọi nó là quà tặng thì khách nghe ra là mình đang mua sự im lặng.",
+        },
+        {
+          rude: "I can restore your tier status for you.",
+          polite:
+            "Tier and points are not decided here, madam. The loyalty office decides, and I will write today.",
+          rule: "Hạng thẻ và điểm KHÔNG BAO GIỜ được hứa ở quầy — tuần 27 đặt chúng dưới membership tier rule và points expiry rule, và cả hai đều thuộc loyalty office. Hứa hộ họ là tạo ra khiếu nại thứ hai.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So what are you going to do about it?",
+          targetResponse:
+            "Two things now, sir. Your lounge access was already yours, and I am restoring it this minute.",
+          helpTip:
+            "Bắt đầu bằng phần bạn LÀM ĐƯỢC NGAY và không cần hỏi ai — nó có thật, nó nhanh, và nó chứng minh bạn đang hành động. Đừng mở bằng phần phải xin phép: khách nghe thấy chữ manager đầu tiên sẽ nghĩ mình đang bị đẩy đi. 'Restoring' /rɪˈstɔːrɪŋ/ — trọng âm rơi vào âm tiết hai.",
+        },
+        {
+          guestPrompt: "And I want the two nights taken off my bill.",
+          targetResponse:
+            "Anything off the bill is the Duty Manager's, madam. I will take it to him and come back by six.",
+          helpTip:
+            "Khoản trên hoá đơn thuộc Duty Manager ngay từ đồng đầu tiên — đừng thương lượng con số, và đừng nói 'có thể được'. Nêu AI quyết, rồi cho MỘT MỐC của chính ca bạn. 'Bill' /bɪl/ — với khách thì nói bill, đừng nói folio: folio là chữ trong tổ.",
+        },
+      ],
+      reading: {
+        text: "WHAT YOU MAY GIVE, AND WHO OWNS THE REST\nFour levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE. An apology. An apology letter. Putting back a benefit the guest already had — lounge access, the late check-out they were promised, the table they booked. And replacing the thing that failed: week thirty-four replaced a wrong cake in ten minutes and did not call it compensation.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nYOUR MANAGER'S. Anything the guest was not entitled to before today. A spa credit, a dinner, an upgrade, a late check-out where the house has no obligation. You propose these; you do not promise them.\nTHE DUTY MANAGER'S. Anything that comes off the bill, from the first dong. You speak to the duty manager yourself, and you never quote a figure.\nTHE LOYALTY OFFICE'S. Tier status and points. Week twenty-seven puts both under rules the desk does not hold, so the desk does not promise them.\nSay which level you are on, out loud. 'That one is my manager's to give' is a better sentence than a long silence. It is far better than a yes you cannot keep.\nThen open a recovery case, whatever level it sits on. A claim with no case number is a claim that ends when your shift does.",
+        questions: [
+          {
+            q: "Khách bị mất quyền vào lounge mà lẽ ra đã có. Trả lại thì gọi là gì?",
+            options: [
+              "Là phần bồi thường đầu tiên, nên ghi vào hồ sơ như một khoản đã bù",
+              "Là việc lẽ ra đã phải làm — làm ngay và không tính vào phần bù",
+              "Là quyết định của quản lý, nên phải xin phép trước khi trả lại",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách đòi khôi phục hạng thẻ. Ai quyết?",
+            options: [
+              "Duty Manager, vì mọi thứ liên quan tới quyền lợi đều qua ông ấy",
+              "Quản lý GR, vì hạng thẻ thuộc chương trình khách quen",
+              "Loyalty office — quầy không hứa hạng thẻ và điểm",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "The least you can do is give us dinner tonight.",
+          options: [
+            {
+              text: "Dinner is my manager's to give, sir. I will put it to her and come back by six.",
+              correct: true,
+            },
+            {
+              text: "I can certainly arrange dinner for you tonight, sir, after all that has happened.",
+              correct: false,
+            },
+            {
+              text: "Dinner is not something we would normally offer in a case like this, sir.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. He wants his points back as well. Can I just log that as agreed?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Log it as agreed — the loyalty office almost always says yes to these.",
+              correct: false,
+            },
+            {
+              text: "Log it as requested, not as agreed. The loyalty office decides that one.",
+              correct: true,
+            },
+            {
+              text: "Leave the points out of the log and deal with them separately later on.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_3",
+      lessonOrder: 3,
+      titleEn: "Sorry for the Thing That Happened",
+      titleVi: "Xin lỗi về việc đã xảy ra",
+      vocabulary: [
+        {
+          word: "I am sorry that happened",
+          phonetic: "/aɪ əm ˈsɒri ðæt ˈhæpənd/",
+          definition: "Xin lỗi về SỰ VIỆC — không nhận một lỗi chưa ai xác lập",
+          context: "I am sorry that happened, madam, and I am looking into it now.",
+          icon: "🙏",
+        },
+        {
+          word: "What I can put right",
+          phonetic: "/wɒt aɪ kən ˌpʊt ˈraɪt/",
+          definition: "Phần tôi sửa được — vế mở ngay sau lời xin lỗi",
+          context: "What I can put right today is the table and the lounge, sir.",
+          icon: "🔧",
+        },
+        {
+          word: "I only know what I saw",
+          phonetic: "/aɪ ˈəʊnli ˈnəʊ wɒt aɪ ˈsɔː/",
+          definition: "Tôi chỉ biết phần tôi thấy — ranh giới của lời kể",
+          context: "I only know what I saw, madam, and I will not guess at the rest.",
+          icon: "👁️",
+        },
+        {
+          word: "Nobody has established that",
+          phonetic: "/ˈnəʊbədi həz ɪˈstæblɪʃt ðæt/",
+          definition: "Chưa ai xác lập điều đó — câu chặn một kết luận vội",
+          context: "Nobody has established that yet, sir, so I would rather not say it.",
+          icon: "⚖️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I am sorry, that was our mistake.",
+          polite:
+            "I am sorry that happened, madam. What I can put right today is the table and the lounge.",
+          rule: "Xin lỗi về SỰ VIỆC thì luôn đúng; nhận một LỖI mà chưa ai xác lập thì không phải việc của bạn, và nó khoá luôn phần điều tra sau đó. Xin lỗi rồi mở ngay phần sửa được trong cùng một hơi.",
+        },
+        {
+          rude: "The reception team must have forgotten to pass it on.",
+          polite:
+            "I only know what I saw, sir. Nobody has established that yet, and I would rather not guess.",
+          rule: "Đừng đổ cho bộ phận khác trước mặt khách — kể cả khi bạn đoán đúng. Câu đó không sửa được gì cho khách, và nó biến một khiếu nại thành một vụ trong nhà.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Somebody clearly dropped the ball here. Who was it?",
+          targetResponse:
+            "I only know what I saw, sir. What I can put right today is the lounge and your table tonight.",
+          helpTip:
+            "Khách đang hỏi TÊN một người. Đừng cho, và cũng đừng nói 'tôi không được phép nói' — nghe như đang giấu. Nói ranh giới của chính mình rồi chuyển ngay sang phần sửa được. 'Saw' /sɔː/ — nguyên âm dài, đừng thành /səʊ/.",
+        },
+        {
+          guestPrompt: "Guest Relations. Should I tell him the kitchen never got the slip?",
+          speakerRole: "colleague",
+          targetResponse: "No. Say what we are putting right, and keep the kitchen out of it.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Nguyên nhân bên trong là việc của biên bản, không phải việc của khách. Khách cần hai thứ: một lời xin lỗi về sự việc, và một việc sắp được sửa. Tên bộ phận không nằm trong hai thứ đó. 'Right' /raɪt/ — /aɪ/ là nguyên âm đôi.",
+        },
+      ],
+      reading: {
+        text: "THE APOLOGY THAT DOES NOT DECIDE ANYTHING\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide.\nThe second one also ends the investigation. Once a guest has been told the house was at fault, nothing anybody finds afterwards can be said out loud without looking like a retreat.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan while the guest is still listening.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nNever hand another team to a guest. The kitchen, the front desk, the night shift — whoever it was, saying so does not repair anything and it turns one complaint into two.\nThe cause belongs in the complaint log, where a manager can look at it properly. It does not belong in the lobby.",
+        questions: [
+          {
+            q: "Vì sao 'that was our mistake' là câu không nên nói?",
+            options: [
+              "Vì nó là một phán quyết, và nó khoá luôn phần điều tra sau đó",
+              "Vì khách sẽ đòi bồi thường nhiều hơn khi nghe thấy chữ mistake",
+              "Vì chỉ quản lý mới được nói câu đó với khách",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khách hỏi ai là người làm sai. Trả lời thế nào?",
+            options: [
+              "Nói thật tên bộ phận, vì khách có quyền được biết sự thật",
+              "Nói mình chỉ biết phần mình thấy, rồi chuyển sang phần sửa được",
+              "Nói rằng mình không được phép tiết lộ chuyện nội bộ",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Just admit the hotel got it wrong. That's all I want to hear.",
+          options: [
+            {
+              text: "I am sorry that happened, madam. What I can put right today is your table and the lounge.",
+              correct: true,
+            },
+            {
+              text: "You are right, madam, we got it wrong, and I am sorry for that.",
+              correct: false,
+            },
+            {
+              text: "I am not able to comment on whose fault it was, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. He keeps asking which of us took the booking. What do I say?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Tell him it was the evening shift — it is the truth and he will drop it.",
+              correct: false,
+            },
+            {
+              text: "Say the booking system lost it, so nobody on the team is at fault.",
+              correct: false,
+            },
+            {
+              text: "Say you only know what you saw, and move him on to what is being put right.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_4",
+      lessonOrder: 4,
+      titleEn: "Closing It So It Stays Closed",
+      titleVi: "Đóng lại sao cho nó ở yên",
+      vocabulary: [
+        {
+          word: "In writing",
+          phonetic: "/ɪn ˈraɪtɪŋ/",
+          definition: "Bằng văn bản — điều đã thoả thuận phải có bản viết",
+          context: "You will have it in writing before you go up, madam.",
+          icon: "✍️",
+        },
+        {
+          word: "A copy for you",
+          phonetic: "/ə ˈkɒpi fə juː/",
+          definition: "Một bản cho khách giữ",
+          context: "A copy for you, sir, and one on the file.",
+          icon: "📄",
+        },
+        {
+          word: "By name and hour",
+          phonetic: "/baɪ ˈneɪm ənd ˈaʊə/",
+          definition: "Ghi rõ tên người và giờ — cách một việc còn sống qua ca sau",
+          context: "I have handed it over by name and hour, madam.",
+          icon: "🕐",
+        },
+        {
+          word: "Close the case",
+          phonetic: "/ˌkləʊz ðə ˈkeɪs/",
+          definition: "Đóng hồ sơ — chỉ sau khi khách nói là đã ổn",
+          context: "I will not close the case until you tell me it is right, sir.",
+          icon: "✅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will remember to sort it out for you.",
+          polite:
+            "That goes on paper now, madam, not into my memory. You will have a copy before you go up.",
+          rule: "Trí nhớ không phải một cam kết. Bất cứ điều gì đã thoả thuận với khách đều phải ra giấy TRƯỚC KHI khách rời quầy — và khách giữ một bản, vì bản của khách mới là bản khách kiểm được.",
+        },
+        {
+          rude: "I told the evening shift about it.",
+          polite:
+            "I have handed it over by name and hour, sir, and the case stays open until you are happy.",
+          rule: "'Tôi đã nói với ca tối' không phải bàn giao — không có tên thì không có ai chịu trách nhiệm. Và hồ sơ chỉ đóng khi KHÁCH nói là đã ổn, không phải khi bạn nghĩ là xong.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "And how do I know any of this will actually happen?",
+          targetResponse:
+            "You will have it in writing before you go up, madam — a copy for you and one on the file.",
+          helpTip:
+            "Khách vừa nói thẳng rằng khách không tin lời nói nữa. Đừng hứa thêm bằng lời — đưa ra thứ khách cầm được. Giấy là câu trả lời duy nhất cho câu hỏi này. 'Writing' /ˈraɪtɪŋ/ — /aɪ/ là nguyên âm đôi.",
+        },
+        {
+          guestPrompt: "Guest Relations. The case is sorted — shall I close it before I go home?",
+          speakerRole: "colleague",
+          targetResponse: "Not until she says it is right. Hand it over by name and hour instead.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Hồ sơ đóng theo lời KHÁCH, không theo lời mình. Đóng sớm thì khiếu nại thứ hai sẽ mở lại từ đầu, và lần đó khách sẽ nhắc rằng lần trước cũng đã xong rồi. 'Hour' /ˈaʊə/ — chữ h câm.",
+        },
+      ],
+      reading: {
+        text: "CLOSING IT SO IT STAYS CLOSED\nA complaint is not finished when the guest stops talking. It is finished when the guest says it is right.\nEverything agreed goes in writing before the guest leaves the desk. Not later, not by email tonight. A guest who has been let down once will not accept a second promise made only out loud.\nTwo copies. One for the guest, one on the file. The guest's copy is the one that matters, because it is the one they can hold up.\nWrite what was agreed, who agreed it, and when it will happen. An apology letter goes out over a manager's name, not yours. If the guest has left before it is settled, we send a written apology and update the record the same day.\nIf your shift ends before it is done, hand it over by name and hour. 'I told the evening shift' is not a handover. A job with no name against it belongs to nobody.\nThe recovery case stays open until the guest confirms. You may think it is finished; only they can say so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who believes you the next time something is.\nAnd cancel the extra charge before the guest has to ask twice. A charge that survives the apology undoes the apology.",
+        questions: [
+          {
+            q: "Khi nào được đóng hồ sơ khiếu nại?",
+            options: [
+              "Khi việc đã làm xong và quản lý đã ký duyệt",
+              "Khi hết ca, để bàn giao lại cho ca sau xử lý tiếp",
+              "Khi chính khách nói rằng đã ổn",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Vì sao điều đã thoả thuận phải ra giấy trước khi khách rời quầy?",
+            options: [
+              "Vì khách đã bị thất hứa một lần, nên không nhận lời hứa miệng lần hai",
+              "Vì quy định yêu cầu mọi khiếu nại phải có văn bản kèm theo",
+              "Vì ca sau sẽ không biết phải làm gì nếu không có giấy",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "You'll email me the details, will you? Like last time?",
+          options: [
+            {
+              text: "I will email you tonight, madam, as soon as I am back at my computer.",
+              correct: false,
+            },
+            {
+              text: "In writing now, madam — a copy for you before you go up, and one on the file.",
+              correct: true,
+            },
+            {
+              text: "I understand your frustration, madam, and I promise this time is different.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. The cake was replaced and the guest seemed pleased. Log it as closed?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Seemed pleased is not said so. Ask her, then close it.",
+              correct: true,
+            },
+            {
+              text: "Yes, log it as closed and add a note that she seemed satisfied.",
+              correct: false,
+            },
+            {
+              text: "Leave it open for a week in case she raises it again with somebody else.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
@@ -21470,6 +21994,7 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "HK-40": HK_WEEK_40,
   "GR-31": GR_WEEK_31,
   "GR-32": GR_WEEK_32,
+  "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
@@ -21524,6 +22049,7 @@ const REGISTRY: Record<string, WeekContent> = {
   "SW-19": SW_WEEK_19,
   "GR-31": GR_WEEK_31,
   "GR-32": GR_WEEK_32,
+  "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
