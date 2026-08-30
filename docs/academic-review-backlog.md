@@ -652,3 +652,28 @@ Nhưng ba câu mẫu của tuần 27 vẫn đang được chấm là đúng tron
 
 Sửa đúng cách là đổi `GR_27_4` sang dạng xin phép (`"May I note that in your profile, sir?"`).
 Cùng lý do như GR-A: cần vòng thẩm định riêng cho GR-27.
+
+### GR-C · Ma trận giao tuần 33 một bộ ngữ liệu mà không tuần soạn tay nào dùng — VẤN ĐỀ HỆ THỐNG
+
+Kiểm định Academic vòng 2 của cụm GR bắt được, và nó không phải lỗi riêng của GR.
+
+`docs/curriculum-level-matrix.md` dòng 33 giao:
+
+> `| 33 | Tranh chấp & bồi thường (LAST đầy đủ) | Policy allows…; up to…; Let me check with my supervisor |`
+
+Grep toàn repo: chuỗi `Policy allows` **chỉ tồn tại trong `src/lib/content/phase4.ts`** — tức xương
+sống sinh tự động. Không một tuần 33 soạn tay nào dùng nó, kể cả HK-33 và GR-33. Cấu trúc
+`up to…` để nêu trần bồi thường cũng vắng mặt.
+
+Nặng hơn, GR-33 dạy gần như trái dấu: _"You speak to the duty manager yourself, and you never
+quote a figure."_ Nếu các bộ phận còn chạy spine vẫn dùng `Policy allows… up to…` ở tuần 33 thì
+hai nhóm học viên cùng tuần đang học hai luật khác nhau, và bài weektest dùng chung sẽ lệch.
+
+Đây là vấn đề của **mọi tuần override Phase 4**, không riêng GR — các tuần soạn tay đều thay
+ngữ liệu spine bằng ngữ liệu nghề. Cần quyết một lần:
+
+1. Sửa các dòng Phase 4 của ma trận cho khớp thực tế đã soạn (ví dụ dòng 33 thành
+   _"Ai quyết cái gì; my manager's to give; never quote a figure"_), hoặc
+2. Bổ sung ngữ liệu spine vào từng tuần override.
+
+Không xử lý trong đợt này vì nó chạm cả sáu bộ phận và cả tài liệu chuẩn.
