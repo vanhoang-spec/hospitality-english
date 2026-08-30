@@ -1703,6 +1703,99 @@ async function lintAnswerPositionSkew() {
   console.log(`  Weeks with skewed answer positions: ${offenders.length} (ratchet holds).`);
 }
 
+// ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
+// Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
+// reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
+// một reviewWord không trỏ vào đâu cả thì không hiện gì. resolveReviewVocab
+// quét toàn bộ tuần của bộ phận, kể cả tuần sau, nên nó không thể tự bắt lỗi
+// này. Toàn corpus hiện sạch, nên đây là cổng cứng chứ không phải ratchet.
+function lintReviewWordOrder() {
+  const firstTaught = new Map<string, number>();
+  for (const week of Object.values(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      for (const item of lesson.vocabulary) {
+        const k = `${week.departmentId}|${item.word.toLowerCase()}`;
+        const prev = firstTaught.get(k);
+        if (prev === undefined || week.weekNumber < prev) firstTaught.set(k, week.weekNumber);
+      }
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const rw of week.reviewWords ?? []) {
+      const taught = firstTaught.get(`${week.departmentId}|${rw.toLowerCase()}`);
+      if (taught === undefined)
+        errors.push(
+          `[L review-order] ${key}: reviewWord "${rw}" is not a ${week.departmentId} headword anywhere — the review card resolves to nothing`,
+        );
+      else if (taught >= week.weekNumber)
+        errors.push(
+          `[L review-order] ${key}: reviewWord "${rw}" is first taught at week ${taught} — a review card must show a card the learner has already met`,
+        );
+    }
+}
+
+// ── Layer M · thẻ dạy bị khung câu nhét vào sai chỗ ───────────────────────
+// Thẻ ôn kéo lại câu ví dụ của thẻ dạy gốc, nên một câu vỡ ở tuần 15 vẫn hiện
+// ra nguyên vẹn trong một tuần soạn tay ở Phase 4. Dấu hiệu bắt được chắc tay
+// nhất: headword tự nó đã mang một mạo từ bên trong ("Note the preference"),
+// và khung câu lại nhét thêm một mạo từ nữa ngay trước nó — "The note the
+// preference comes last." Khoảng một phần ba số hit là dương tính giả ("The
+// cocktail of the day is also available today." đúng ngữ pháp), nên đây là
+// ratchet chứ không phải cổng cứng: giá trị của nó là chặn cái MỚI.
+const SLOT_BASELINE = new URL("./_slotted-headword-baseline.json", import.meta.url);
+const ARTICLE = /\b(?:the|a|an|your|our)\b/;
+
+async function lintSlottedHeadwords() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      for (const item of lesson.vocabulary) {
+        const head = item.word.toLowerCase();
+        const tail = head.split(" ").slice(1).join(" ");
+        if (!tail || !ARTICLE.test(tail)) continue;
+        const esc = head.replace(/[.*+?^${}()|[\]\\]/g, (m) => "\\" + m);
+        if (new RegExp(`\\b(?:the|a|an|your|our) ${esc}\\b`).test(item.context.toLowerCase()))
+          offenders.push(`${key}: "${item.word}" → "${item.context}"`);
+      }
+
+  const file = Bun.file(SLOT_BASELINE);
+  const known = await file.exists();
+  const baseline = known ? JSON.parse(await file.text()).slottedCards : offenders.length;
+  const write = (n) =>
+    Bun.write(
+      SLOT_BASELINE,
+      JSON.stringify(
+        {
+          slottedCards: n,
+          note: "Ratchet only — a headword that already carries an article must not be slotted after another one.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  Headwords slotted after a second article: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[M slotted-headword] ${offenders.length} vocabulary cards slot an article-bearing headword after a second article, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Headwords slotted after a second article: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Headwords slotted after a second article: ${offenders.length} (ratchet holds).`);
+}
+
 // ============================================================
 // Run
 // ============================================================
@@ -1718,6 +1811,8 @@ await lintReadingSentenceLength();
 lintClinicalClashes();
 await lintSpeakingVolume();
 await lintAnswerPositionSkew();
+lintReviewWordOrder();
+await lintSlottedHeadwords();
 reportStaleDebt();
 
 let sentenceCount = 0;

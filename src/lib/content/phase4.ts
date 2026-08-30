@@ -2932,7 +2932,7 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không nêu nguyên nhân, không nêu tên bộ phận, không nêu con số.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
@@ -2940,18 +2940,18 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         any: ["promised", "promise", "guaranteed", "assured", "should have been"],
       },
       {
-        labelVi: "Sẽ ghi vào hồ sơ khách cho lần sau",
-        any: ["profile", "record", "account", "guest history", "noted"],
+        labelVi: "Nêu rằng quản lý đã xem xét sự việc",
+        any: ["manager", "reviewed", "looked into", "duty manager", "personally"],
       },
       {
-        labelVi: "Mời khách liên hệ để sắp xếp bù đắp",
+        labelVi: "Mời khách liên hệ trực tiếp",
         any: ["contact", "get in touch", "reach out", "call us", "email us"],
       },
     ],
     modelReply:
-      "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. We have noted this in your guest profile so it never happens again. Please contact our Guest Relations team directly so we can arrange a benefit to make up for what you missed.",
+      "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. That part is ours, and it should not have happened. Our Duty Manager has reviewed what was promised and what happened on the night. Please contact me directly so I can put right what you missed on this stay.",
     explanationVi:
-      "Khách hạng cao kỳ vọng được ghi nhớ — phản hồi phải nhắc tới việc lưu hồ sơ (profile) để chứng minh khách sạn thực sự cải thiện, không chỉ xin lỗi cho qua.",
+      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy — tuần 33 nói rõ apology letter đi ra dưới tên quản lý. Và đừng hứa phần bù trước công chúng: quầy ĐỀ XUẤT, quản lý mới quyết. Cũng đừng công bố với cả internet rằng nhà có hồ sơ về người vừa đánh giá.",
   },
   BO: {
     reviewMeta: "✉️ Email khiếu nại từ đối tác lữ hành · ABC Travel",

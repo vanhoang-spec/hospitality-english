@@ -20408,8 +20408,8 @@ const GR_WEEK_31: WeekContent = {
     "Library",
     "Concierge desk",
     "Duty manager",
-    "Something local",
-    "Souvenir",
+    "Guest history",
+    "Confidential",
     "Speak to the duty manager",
     "Thoughtful",
   ],
@@ -20428,6 +20428,20 @@ const GR_WEEK_31: WeekContent = {
           icon: "📅",
         },
         {
+          word: "Proud of",
+          phonetic: "/ˈpraʊd əv/",
+          definition: "Tự hào về — cách nói về nhà mình mà không thành khoe",
+          context: "We are proud of the old staircase, madam.",
+          icon: "🏛️",
+        },
+        {
+          word: "Curious",
+          phonetic: "/ˈkjʊəriəs/",
+          definition: "Tò mò — trạng thái của vị khách hỏi thêm, và là điều đáng mừng",
+          context: "Guests are often curious about the courtyard, sir.",
+          icon: "🧐",
+        },
+        {
           word: "Restored",
           phonetic: "/rɪˈstɔːd/",
           definition: "Được phục dựng lại như nguyên bản",
@@ -20442,10 +20456,10 @@ const GR_WEEK_31: WeekContent = {
           icon: "🤔",
         },
         {
-          word: "The house file",
-          phonetic: "/ðə ˈhaʊs faɪl/",
+          word: "The history folder",
+          phonetic: "/ðə ˈhɪstri ˌfəʊldə/",
           definition: "Tập lịch sử ngắn của khách sạn, giữ ở quầy lounge",
-          context: "The house file is at the lounge desk, sir — the dates are in it.",
+          context: "The history folder is at the lounge desk, sir — the dates are in it.",
           icon: "🗂️",
         },
       ],
@@ -20458,8 +20472,9 @@ const GR_WEEK_31: WeekContent = {
         },
         {
           rude: "Yes, a famous actor stayed in your room.",
-          polite: "I am not able to say who has stayed here, madam. May I show you the house file?",
-          rule: "Tên của khách khác KHÔNG BAO GIỜ là một phần câu chuyện — kể cả khách đã trả phòng từ lâu, và kể cả khi chính khách kia đã kể ở đâu đó. Đưa the house file ra là cách nói không mà vẫn cho khách một thứ. Cuốn guest book thì KHÔNG đưa: nó có chữ ký và tên của khách khác.",
+          polite:
+            "I am not able to say who has stayed here, madam. May I show you the history folder?",
+          rule: "Tên của khách khác KHÔNG BAO GIỜ là một phần câu chuyện — kể cả khách đã trả phòng từ lâu, và kể cả khi chính khách kia đã kể ở đâu đó. Đưa the history folder ra là cách nói không mà vẫn cho khách một thứ. Cuốn guest book thì KHÔNG đưa: nó có chữ ký và tên của khách khác.",
         },
       ],
       speaking: [
@@ -20473,20 +20488,20 @@ const GR_WEEK_31: WeekContent = {
         {
           guestPrompt: "And the painting by the lift — is it an original?",
           targetResponse:
-            "As far as I know, it is, madam. I will check the house file and tell you this evening.",
+            "As far as I know, it is, madam. I will check the history folder and tell you this evening.",
           helpTip:
             "'As far as I know' là câu thật thà, không phải câu yếu: nó tách phần bạn biết khỏi phần bạn sẽ tra. Rồi phải tra THẬT và quay lại — đừng để lời nhắn ở quầy, vì lời nhắn ở quầy là lời nhắn không ai nhận. 'Know' /nəʊ/ — chữ k câm.",
         },
       ],
       reading: {
-        text: "THREE FACTS, AND WHERE THE REST LIVES\nGuest Relations sits with a guest longer than any other desk. That is why the story falls to you, and why the story has a shape.\nKnow three facts about this house and know them exactly. The year it opened. What the building was before it was a hotel. One thing that was restored, and when.\nThose three you say plainly, with no hedge in front of them. A guest who hears 'as far as I know' about the founding year hears that nobody here was taught it.\nAnything beyond the three gets that sentence instead. It costs you nothing and it protects the house.\nThen check the house file. It sits at the lounge desk, it holds the dates, and the library has the rest. The house file is not a souvenir — it is the record.\nThe guest book is a different thing. Guests sign it. It has their names in it, so it is never the answer to a question about who has stayed here.\nAnd that question has one answer only. Not a name, not a room, not a year. This is the guest privacy rule, and it does not expire when a guest checks out.\nA curious guest asks twice and then moves on. What is not curiosity is a person asking about a guest by name. Or about a guest who is here now. Or asking anything at all with a camera in their hand. Speak to the duty manager, and to security. Say what was asked and what you did not confirm, and let them decide.",
+        text: "THREE FACTS, AND WHERE THE REST LIVES\nGuest Relations sits with a guest longer than any other desk. We call this hotel the house, and we call this team the desk. That is why the story falls to you, and why the story has a shape.\nKnow three facts about this house and know them exactly. The year it opened. What the building was before it was a hotel. One thing that was restored, and when.\nThe three facts printed in this week are one hotel's. Yours will be different. Ask your Guest Relations Manager in your first week for your own three, and learn those. A wrong year said with total confidence is the worst answer on this page.\nWhichever three are yours, you say them plainly, with no hedge in front of them. You may be proud of them out loud — that is part of the job. A guest who hears 'as far as I know' about the founding year hears that nobody here was taught it.\nAnything beyond the three gets that sentence instead. It costs you nothing and it protects the house.\nThen check the history folder. It sits at the lounge desk, it holds the dates, and the library has the rest. The history folder is the building's record, not a souvenir.\nA guest history is a different file. It has a guest's name on it, and it is never the answer to a question about who has stayed here. Nor is the guest book, which guests sign themselves.\nAnd that question has one answer only. Not a name, not a room, not a year. Everything this desk knows about a guest is confidential, and it does not expire when they check out. This is the guest privacy rule.\nA curious guest asks twice and then moves on. What is not curiosity is a person asking about a guest by name. Or about a guest who is here now. Or asking anything at all with a camera in their hand. Speak to the duty manager, and to security. Say what was asked and what you did not confirm, and let them decide.",
         questions: [
           {
-            q: "Khách hỏi một chi tiết ngoài ba dữ kiện, và bạn không chắc. Nói gì?",
+            q: "Khách hỏi năm khách sạn khai trương. Đó là một trong ba dữ kiện và bạn biết chắc. Nói thế nào?",
             options: [
-              "Nói 'as far as I know', rồi tra the house file và quay lại trả lời",
-              "Đoán một con số gần đúng, vì khách chỉ muốn nghe một câu chuyện cho hay",
-              "Nói mình không biết rồi chuyển sang chuyện khác cho đỡ ngượng",
+              "Nói thẳng con số, không rào đón gì phía trước",
+              "Nói 'as far as I know' rồi mới nêu con số, cho khiêm tốn",
+              "Nêu con số rồi hẹn tra lại the history folder cho chắc",
             ],
             correct: 0,
           },
@@ -20560,7 +20575,7 @@ const GR_WEEK_31: WeekContent = {
         },
         {
           word: "Leave you to it",
-          phonetic: "/ˌliːv juː ˈtuː ɪt/",
+          phonetic: "/ˌliːv juː tu ˈɪt/",
           definition: "Để khách được yên, mình lui ra",
           context: "I will leave you to it, sir. I am at the desk.",
           icon: "🚶",
@@ -20577,12 +20592,12 @@ const GR_WEEK_31: WeekContent = {
         {
           rude: "Let me tell you about the history of this hotel.",
           polite: "Would you like the short version, sir, or shall I leave you to your coffee?",
-          rule: "Đừng mở bằng lời tuyên bố sẽ kể. Hỏi khách muốn nghe bao nhiêu, và cho sẵn một lối ra lịch sự — khách gật thì bạn kể, khách chọn cà phê thì bạn vẫn đúng.",
+          rule: "Đừng mở bằng lời tuyên bố sẽ kể. Hỏi khách muốn nghe bao nhiêu, và cho sẵn một lối ra lịch sự — khách gật thì bạn kể, khách chọn cà phê thì bạn vẫn đúng. Với khách chưa quen tiếng Anh, bản trơn cũng đúng y như vậy: 'or shall I let you enjoy your coffee?'",
         },
         {
           rude: "And then in nineteen fifty-four the family sold it, and after that the army took it, and…",
           polite: "Do stop me whenever you like, madam. There is a great deal of it.",
-          rule: "Trao cái nút dừng cho khách TRƯỚC khi khách cần tới nó. Người kể giỏi ở bộ phận này không phải người kể lâu nhất — là người dừng đúng lúc mà khách không phải ngắt lời.",
+          rule: "Trao cái nút dừng cho khách TRƯỚC khi khách cần tới nó. Người kể giỏi ở bộ phận này không phải người kể lâu nhất — là người dừng đúng lúc mà khách không phải ngắt lời. 'Do stop me' là tiếng Anh Anh; với khách Nga, Hàn, Trung thì nói 'please stop me any time, madam' cho chắc.",
         },
       ],
       speaking: [
@@ -20607,11 +20622,11 @@ const GR_WEEK_31: WeekContent = {
         text: "OFFERED, NOT DELIVERED\nA story a guest did not ask for is still an interruption, however politely it starts.\nSo the story is offered. 'Would you like the short version?' — six words, and the guest decides.\nThe short version is three sentences. The whole of it runs about four minutes, and four minutes is long to a guest with a cold coffee.\nWatch two things while you talk. Whether they are looking at you, and whether they are still asking. If both stop, the story is over.\nGive them the stop button before they need it. 'Do stop me whenever you like' means they never have to interrupt you, and a guest who interrupts remembers doing it.\nStopping before you are asked to stop is the most thoughtful thing this desk does.\nNo is a complete answer. 'Another time, then' costs the guest nothing and keeps the door open.\nA guest reading, eating, or on the telephone is not a guest waiting for a story. Leave them to it. You are at the desk, and they know where the desk is.\nThen ask the lounge team to keep away from that table for the evening — service as normal, no conversation. A guest should have to say no once, not four times.\nAnd a guest who wants something local is a question for the concierge desk, not a story about the house.",
         questions: [
           {
-            q: "Khách đang đọc sách trong lounge. Làm gì?",
+            q: "Khách đang đọc sách trong lounge, và bạn đã để khách yên. Còn phải làm gì nữa không?",
             options: [
-              "Kể bản ngắn thôi, vì kể xong thì khách nào cũng thấy thú vị hơn hẳn",
-              "Để khách yên, cho khách biết mình ở quầy, và nhờ tổ lounge phục vụ bình thường nhưng đừng bắt chuyện",
-              "Đợi khách gấp sách lại rồi mới bắt đầu kể phần mở đầu cho khách nghe",
+              "Không còn gì nữa — để khách yên là đã đủ",
+              "Nhờ tổ lounge phục vụ bình thường nhưng đừng bắt chuyện với bàn đó",
+              "Ghi vào hồ sơ rằng vị khách này không thích trò chuyện",
             ],
             correct: 1,
           },
@@ -20729,7 +20744,7 @@ const GR_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nSome of this house you may show a guest around. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the staff areas. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask them, or show it from the door.\nThe rooftop belongs to the bar that runs it, and its dress code applies during its hours, not ours.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
+        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nSome of this house you may show a guest around. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the staff areas. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask them, or show it from the door.\nThe rooftop belongs to the bar that runs it, and its dress code applies during its hours, not ours.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nDial from the desk telephone yourself. Never hand the receiver to somebody you do not know.\nIf nobody answers, or the guest upstairs says no, say the same sentence.\n'I am afraid I have not been able to reach anyone, madam.'\nNever say that somebody does not want to see them — that answer confirms they are here.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
         questions: [
           {
             q: "Khách muốn lên phòng 1806 tìm bạn. Làm gì?",
@@ -20820,8 +20835,9 @@ const GR_WEEK_31: WeekContent = {
         {
           word: "Made up",
           phonetic: "/ˌmeɪd ˈʌp/",
-          definition: "Bịa ra — thứ tuyệt đối không làm với dữ kiện của nhà",
-          context: "I would rather find out than give you a made up date, sir.",
+          definition:
+            "Bịa ra — thứ tuyệt đối không làm với dữ kiện của nhà. Đứng trước danh từ thì có gạch nối: a made-up date",
+          context: "A date I made up would be worse than no date, sir.",
           icon: "🚫",
         },
       ],
@@ -20858,7 +20874,7 @@ const GR_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "THE ANSWER YOU DO NOT HAVE\nThree facts are enough because the fourth question always comes, and it is meant to.\nA guest who asks a fourth question is enjoying themselves. The wrong move is to reward that with a guess.\nA made up date is worse than no date. It travels. The guest repeats it at dinner, another colleague hears it, and in a month the house has a fact nobody can find.\nSo say the true thing. 'I would rather find out than guess' tells the guest their question was a good one, and it commits you to going and looking.\nThen hand it on, to somebody who exists. The Guest Relations Manager wrote the house file and is the one who adds to it. The executive chef will talk about the kitchen garden. The concierge desk knows the town better than any of us.\nHanding on needs a time, or it is only pointing. 'By this evening' is a hand-over. 'Ask somebody else' is not.\nAnd what a guest tells YOU is not a fact yet. Guests are generous with history and often wrong. Write it down, thank them, and give it to the manager — writing something down does not make it true.\nThat is the whole shape of it. Three facts you are sure of, one honest sentence for everything else, and a name and an hour for the rest.",
+        text: "THE ANSWER YOU DO NOT HAVE\nThree facts are enough because the fourth question always comes, and it is meant to.\nA guest who asks a fourth question is enjoying themselves. The wrong move is to reward that with a guess.\nA made-up date is worse than no date. It travels. The guest repeats it at dinner, another colleague hears it, and in a month the house has a fact nobody can find.\nSo say the true thing. 'I would rather find out than guess' tells the guest their question was a good one, and it commits you to going and looking.\nThen hand it on, to somebody who exists. The Guest Relations Manager wrote the history folder and is the one who adds to it. The executive chef will talk about the kitchen garden. The concierge desk knows the town better than any of us.\nHanding on needs a time, or it is only pointing. 'By this evening' is a hand-over. 'Ask somebody else' is not.\nAnd what a guest tells YOU is not a fact yet. Guests are generous with history and often wrong. Write it down, thank them, and give it to the manager — writing something down does not make it true.\nThat is the whole shape of it. Three facts you are sure of, one honest sentence for everything else, and a name and an hour for the rest.",
         questions: [
           {
             q: "Vì sao một cái ngày bịa lại tệ hơn là không có ngày nào?",
@@ -20873,7 +20889,7 @@ const GR_WEEK_31: WeekContent = {
             q: "Khách kể cho bạn một chi tiết lịch sử. Làm gì với nó?",
             options: [
               "Ghi lại, cảm ơn khách, và đưa cho quản lý kiểm",
-              "Ghi vào the house file, vì như thế là đã có nguồn",
+              "Ghi vào the history folder, vì như thế là đã có nguồn",
               "Dùng luôn trong bài giới thiệu, vì chính khách nói ra",
             ],
             correct: 0,
@@ -20889,7 +20905,7 @@ const GR_WEEK_31: WeekContent = {
               correct: false,
             },
             {
-              text: "I would not want to give you a made up date, sir. I will have it by this evening.",
+              text: "I would not want to give you a made-up date, sir. I will have it by this evening.",
               correct: true,
             },
             {
@@ -20929,10 +20945,10 @@ const GR_WEEK_32: WeekContent = {
   weekTitleVi: "Gợi ý dựng trên điều khách đã nói",
   reviewWords: [
     "Guest preference file",
-    "Note the preference",
-    "Returning guest",
+    "Allergy",
+    "Prefer",
     "Consent form",
-    "Guest privacy rule",
+    "Special request",
     "Coffee preference",
     "Pillow type",
     "Take a note",
@@ -20999,11 +21015,11 @@ const GR_WEEK_32: WeekContent = {
           targetResponse:
             "Thank you, sir. Shall I put that down? Six is before the lounge opens, so let me speak to them.",
           helpTip:
-            "Khách vừa cho bạn hai dữ kiện. XIN PHÉP trước khi ghi — 'shall I put that down' — vì hồ sơ khách là của khách, không phải của mình. Và đừng chốt hộ một bộ phận khác: sáu giờ là trước giờ lounge mở, nên bạn XIN họ sắp xếp chứ không hứa thay họ. 'Arrange' /əˈreɪndʒ/ — trọng âm rơi vào âm tiết hai.",
+            "Khách vừa cho bạn hai dữ kiện. XIN PHÉP trước khi ghi — 'shall I put that down' — vì hồ sơ khách là của khách, không phải của mình. Và đừng chốt hộ một bộ phận khác: sáu giờ là trước giờ lounge mở, nên bạn XIN họ sắp xếp chứ không hứa thay họ. 'Opens' /ˈəʊpənz/ — đuôi -s sau /n/ đọc thành /z/, đừng nuốt mất.",
         },
       ],
       reading: {
-        text: "WHERE THE ADVICE COMES FROM\nEvery desk in this house gives advice. What makes Guest Relations different is that you have time, and time is how you learn things nobody wrote down.\nAdvice has exactly three sources. What the guest told you. What is on the guest preference file, put there with permission. And what the house knows about tomorrow — the tide, the market day, the road that closes at five.\nThere is a fourth source, and it is the one that gets people into trouble. What you noticed about the guest. Their age, their money, their body, their religion, who they came with.\nNone of that is advice. It is a guess, however politely you say it.\nNoticing is not the problem. Noticing is permission to ASK. What goes on the file is the guest's answer, never the thing you saw.\nSo open with their own words. 'You mentioned the children are small.' The guest hears that you listened, and you never have to guess.\nThen one suggestion, not a list. A guest who asks what you would do is asking for an answer, not a menu.\nThen give the decision back. 'Would that suit you, or shall I look again?' costs four seconds and makes a no easy to say.\nAnd a coffee preference is worth writing down. Ask first, every time.",
+        text: "WHERE THE ADVICE COMES FROM\nEvery desk in this house gives advice. What makes Guest Relations different is that you have time, and time is how you learn things nobody wrote down.\nAdvice has exactly three sources. What the guest told you. What is on the guest preference file, put there with permission. And what the house knows about tomorrow — the tide, the market day, the road that closes at five.\nThere is a fourth source, and it is the one that gets people into trouble. What you noticed about the guest. Their age, their money, their body, their religion, who they came with.\nNone of that is advice. It is a guess, however politely you say it.\nNoticing is not the problem. Noticing is permission to ASK. What goes on the file is the guest's answer, never the thing you saw.\nSo open with their own words. 'You mentioned the children are small.' The guest hears that you listened, and you never have to guess.\nThen one suggestion, not a list. A guest who asks what you would do is asking for an answer, not a menu.\nThen give the decision back. 'Would that suit you, or shall I look again?' costs four seconds and makes a no easy to say.\nAnd when a preference falls outside another team's hours, give the guest the part that is yours in the same breath. Six is before the lounge opens; a flask at the desk is yours to promise, and the lounge is not.\nAnd a coffee preference is worth writing down. Ask first, every time.",
         questions: [
           {
             q: "Gợi ý được phép mọc ra từ những nguồn nào?",
@@ -21132,7 +21148,7 @@ const GR_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A service fact: what was promised, by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact. Ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nConsent decides the file, not the kitchen. A food allergy reaches the kitchen the moment you hear it, whether or not it goes on the file.\nBut consent governs the preference file only. It does not govern an incident report. When something happens to a guest — a fall, an ambulance, a doctor — you write what was seen and what was done. Nobody has to be asked first. That record is the incident report, it is marked confidential, and it is a different piece of paper from this one.\nA photograph kept on a file needs the consent form. A preference needs a spoken yes, and you write the date and your own name beside it.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nEvery line above is the other half of the guest privacy rule you met in week twenty-four. Week thirty-one was the first half. The reason is the same: somebody will read this file who was not there. A file that holds anything about health is marked confidential.\nThis replaces what week twenty-seven taught. That week noted a preference and told the guest afterwards. From now on the guest says yes first, every time.\nThe same rule covers anything you only noticed. A ring, a bouquet, who somebody walked in with — none of that goes on a file by itself. Notice it, ask about it, and write only the answer.\nNote the preference, and stop at the preference.\nAnd a confidential file is not read out, not even to a colleague. Somebody who needs to act needs the action, not the reason.",
+        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A special request they made, and what was promised back: by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact. Ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nConsent decides the file, not the kitchen. A food allergy reaches every kitchen in the house the moment you hear it, whether or not it goes on the file.\nBut consent governs the preference file only. It does not govern an incident report. When something happens to a guest — a fall, an ambulance, a doctor — you write what was seen and what was done. Nobody has to be asked first. That record is the incident report, it is marked confidential, and it is a different piece of paper from this one.\nA photograph kept on a file needs the consent form. A preference needs a spoken yes, and you write the date and your own name beside it.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nWeek twenty-four gave this rule its name. Week thirty-one gave it its first half: not a name, not a room, not a year. Every line above is the other half. The reason is the same: somebody will read this file who was not there. A file that holds anything about health is marked confidential.\nThis replaces what weeks twenty-five and twenty-seven taught. Those weeks noted a preference and told the guest afterwards. From now on the guest says yes first, every time.\nYou will see other desks in this house still working the old way, writing a preference straight from small talk. That was the standard here and it is being changed. A preference the guest did not say yes to is not a preference — it is a note about a person.\nThe same rule covers anything you only noticed. A ring, a bouquet, who somebody walked in with — none of that goes on a file by itself. Notice it, ask about it, and write only the answer.\nNote the preference, and stop at the preference.\nAnd a confidential file is not read out, not even to a colleague. Somebody who needs to act needs the action, not the reason.",
         questions: [
           {
             q: "Khách nói 'tôi không ăn được hải sản'. Ghi thế nào?",
@@ -21259,7 +21275,7 @@ const GR_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "THE GUEST WHO CAME BACK\nA returning guest is the easiest guest to get wrong, because you already have an answer and you stop asking the question.\nThe file says corner table, firm pillow, black coffee at seven. That was true in March. It is a question now, not an instruction.\nPeople change between stays. They come with somebody new, or without somebody. They stop drinking coffee. They are here for work this time, not for a holiday.\nSo offer it back. 'Your usual table, madam, or somewhere different tonight?' The guest hears that you remembered and that you did not decide.\nOpen with one question, not with a display of memory. 'Has anything changed since your last stay?' does more work than any list of remembered details.\nReciting a guest's own preferences at them is not service. It is a performance, and it leaves them nowhere to go but yes.\nWhen they answer, write the answer. A pillow type from two years ago that nobody checked is worse than an empty field, because the evening shift will act on it.\nSame guest, same file, new stay. Ask every time.\nOne exception, and only one. An occasion the guest told us about themselves may be prepared quietly in advance. First somebody checks two things: that the date still falls in this stay, and that they are arriving with the same person. Everything else on the file is a question, not an instruction.",
+        text: "THE GUEST WHO CAME BACK\nA returning guest is the easiest guest to get wrong, because you already have an answer and you stop asking the question.\nThe file says corner table, firm pillow, black coffee at seven. That was true in March. It is a question now, not an instruction.\nPeople change between stays. They come with somebody new, or without somebody. They stop drinking coffee. They are here for work this time, not for a holiday.\nSo offer it back. 'Your usual table, madam, or somewhere different tonight?' The guest hears that you remembered and that you did not decide.\nAsk what they prefer now. What they preferred in March is a fact about March.\nOpen with one question, not with a display of memory. 'Has anything changed since your last stay?' does more work than any list of remembered details.\nReciting a guest's own preferences at them is not service. It is a performance, and it leaves them nowhere to go but yes.\nWhen they answer, write the answer. A pillow type from two years ago that nobody checked is worse than an empty field, because the evening shift will act on it.\nSame guest, same file, new stay. Ask every time.\nOne exception, and only one. An occasion the guest told us about themselves may be prepared quietly in advance. It went on the file when they told us, and they said yes then. First check two things on the booking, not on the file. That the date still falls inside this stay, and that the accompanying name is the same. A companion's name lives on the booking. It is never copied across to the preference file. Everything else on the file is a question, not an instruction.",
         questions: [
           {
             q: "Khách quay lại lần thứ ba. Mở lời thế nào?",
@@ -21457,12 +21473,12 @@ const GR_WEEK_33: WeekContent = {
   weekTitleVi: "Lời hứa đã không được giữ",
   reviewWords: [
     "Complaint log",
-    "Send a written apology",
+    "Bring the manager to you",
     "Update the record",
-    "Apology letter",
+    "Open recovery case",
     "Speak to the duty manager",
     "Loyalty office",
-    "Cancel the extra charge",
+    "Front office",
     "Follow up",
   ],
   writing: WEEK33_WRITING_TASKS.GR,
@@ -21650,13 +21666,6 @@ const GR_WEEK_33: WeekContent = {
             "Bắt đầu bằng phần bạn LÀM ĐƯỢC NGAY và không cần hỏi ai — nó có thật, nó nhanh, và nó chứng minh bạn đang hành động. Đừng mở bằng phần phải xin phép: khách nghe thấy chữ manager đầu tiên sẽ nghĩ mình đang bị đẩy đi. 'Duty' /ˈdjuːti/ — giữ âm /j/, đừng thành /ˈduːti/.",
         },
         {
-          guestPrompt: "And I want the two nights taken off my bill.",
-          targetResponse:
-            "Anything off the bill is the Duty Manager's, madam. I will take it to him and come back by six.",
-          helpTip:
-            "Khoản trên hoá đơn thuộc Duty Manager ngay từ đồng đầu tiên — đừng thương lượng con số, và đừng nói 'có thể được'. Nêu AI quyết, rồi cho MỘT MỐC của chính ca bạn. 'Bill' /bɪl/ — với khách thì nói bill, đừng nói folio: folio là chữ trong tổ.",
-        },
-        {
           guestPrompt: "Duty Manager. You wanted me at the desk — what is it?",
           speakerRole: "manager",
           targetResponse:
@@ -21666,7 +21675,7 @@ const GR_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT YOU MAY GIVE, AND WHO OWNS THE REST\nFive levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE. An apology, spoken, at the moment it is needed. Putting back a benefit the guest already had. Lounge access you switch back on yourself. A late check-out they were promised, and a table they booked, you also put back. But you tell the Front Desk or the restaurant in the same minute: they hold the room and they hold the covers. You are not asking permission. You are telling the desk that owns it, before you give the guest a time. Replacing the thing that failed: a wrong cake goes back to the kitchen at once, and nobody counts that as compensation. Anything you add on top of the replacement comes out of the desk limit below, or it is your manager's. And whatever a written house programme has already authorised — a postponed tour refunded the same day — asks nobody.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nMost houses give this desk a small limit of its own: an amenity to the room, a drink in the lounge, one pressed garment. Ask your Guest Relations Manager what yours is, in figures, in your first week. A limit you have to guess at is one you will either never use or use once too often.\nYOUR MANAGER'S. Anything the guest was not entitled to before today. A spa credit, a dinner, an upgrade. You propose these; you do not promise them. The apology letter belongs here too: you draft it, and it goes out over her name.\nTHE FRONT DESK'S. Any room change, and any late check-out the house does not owe. They hold the rooms and they know tomorrow's arrivals. You ask them, and you never tell a guest a room is free.\nTHE DUTY MANAGER'S. Anything that comes off the bill, from the first dong. You speak to the duty manager yourself, and you never quote a figure.\nTHE LOYALTY OFFICE'S. Tier status and points. Week twenty-four gives those their own rules, and week twenty-six calls the team that holds them the loyalty office. This desk promises neither.\nSay which level you are on, out loud. 'That one is my manager's to give' is a better sentence than a long silence. It is far better than a yes you cannot keep.\nOne thing is not a complaint at all. A guest who accuses a named member of staff of anything — theft, a hand on them, an insult — is not yours. Write their words down exactly as they said them, say 'I am taking this to the Duty Manager now, madam', and go. Do not ask them to repeat it. Do not argue any part of it, and do not move them on to what is being put right.\nFour more go to the duty manager the moment they are said, whatever level they sit on. A guest who mentions a lawyer. A guest who mentions the press, or a review with your name in it. A guest who will not accept anything and will not leave the desk. And anything at all about safety.\nOne of them is about you, not the guest. A guest who shouts at you, swears at you, or puts a hand on you is a duty manager matter from the first word. You may say 'I am going to ask my Duty Manager to come, madam' and step away. Nobody at this desk has to stand and take it.\nThen open a recovery case, whatever level it sits on. A claim with no case behind it is a claim that ends when your shift does.",
+        text: "WHAT YOU MAY GIVE, AND WHO OWNS THE REST\nFive levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE. An apology, spoken, at the moment it is needed. Putting back a benefit the guest already had: lounge access you switch on yourself, a late check-out they were promised, a table they booked. But tell the front office or the restaurant in the same minute. You are not asking permission; you are telling the desk that owns it, before you give the guest a time. Replacing the thing that failed: a wrong cake goes back to the kitchen at once, and nobody counts that as compensation. And whatever a written house programme has already authorised.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nMost houses give this desk a small limit of its own: an amenity to the room, a drink in the lounge, one pressed garment. Anything you add on top of a replacement comes out of that limit, or it is your manager's. Ask your Guest Relations Manager what yours is, in figures, in your first week.\nYOUR MANAGER'S. Anything the guest was not entitled to before today. A spa credit, a dinner, an upgrade. You propose these; you do not promise them. Your manager says yes, and the front office says which room. The apology letter belongs here too: you draft it, and it goes out over her name.\nTHE FRONT OFFICE'S. Any room change, and any late check-out the house does not owe. You ask them, and you never tell a guest a room is free.\nTHE DUTY MANAGER'S. Anything off the bill that you cannot explain, and any refund at all. You speak to the duty manager yourself, and you never quote a figure. One kind of line is different: a small folio charge you can see is wrong — a minibar water, one laundry item. Ask the front office to reverse it from their own limit while the guest waits. Nobody should wait for a manager over sixty thousand dong.\nTHE LOYALTY OFFICE'S. Tier status and points. Week twenty-four gave those their own rules, and week twenty-six named the team that holds them. This desk promises neither. One door stays open: a prepared negotiation, where a manager agreed the range beforehand. At this desk, in a claim, it is never yours to offer.\nFour sentences from week twenty-eight stop here. That week had you say 'I can arrange a room upgrade' and 'We can add the missing points'. It had you say 'We will arrange a private dinner' and 'We can extend your late check-out'. Those were offers on a calm day; in a claim they are promises, and none of the four is yours to make.\nSay which level you are on, out loud. 'That one is my manager's to give' is better than a long silence, and far better than a yes you cannot keep.\nThen open a recovery case. The open recovery case is what keeps a claim alive after your shift ends.",
         questions: [
           {
             q: "Khách bị mất quyền vào lounge mà lẽ ra đã có. Trả lại thì gọi là gì?",
@@ -21685,6 +21694,15 @@ const GR_WEEK_33: WeekContent = {
               "Bộ phận khách hàng thân thiết — quầy không hứa hạng thẻ và điểm",
             ],
             correct: 2,
+          },
+          {
+            q: "Tuần 28 dạy bạn nói 'I can arrange a room upgrade'. Trong một vụ khiếu nại thì sao?",
+            options: [
+              "Vẫn nói được — đó là câu đã học, và khách đang cần được xoa dịu",
+              "Không — nâng hạng là của quản lý; bạn ĐỀ XUẤT chứ không hứa",
+              "Không — nâng hạng là của Duty Manager, nên đưa thẳng lên ông ấy",
+            ],
+            correct: 1,
           },
         ],
       },
@@ -21730,8 +21748,8 @@ const GR_WEEK_33: WeekContent = {
     {
       lessonId: "GR_33_3",
       lessonOrder: 3,
-      titleEn: "Sorry for the Thing That Happened",
-      titleVi: "Xin lỗi về việc đã xảy ra",
+      titleEn: "Sorry for It, and What Is Not Yours",
+      titleVi: "Xin lỗi về việc đã xảy ra, và việc không phải của bạn",
       vocabulary: [
         {
           word: "I am sorry that happened",
@@ -21760,6 +21778,13 @@ const GR_WEEK_33: WeekContent = {
           definition: "Chưa ai xác lập điều đó — câu chặn một kết luận vội",
           context: "Nobody has established that yet, so I would rather not put it in the log.",
           icon: "⚖️",
+        },
+        {
+          word: "Not mine to handle",
+          phonetic: "/ˌnɒt ˈmaɪn tə ˌhændl/",
+          definition: "Việc này không thuộc quầy tôi — câu chuyển thẳng lên Duty Manager",
+          context: "That is not mine to handle, madam. I am asking my Duty Manager to come now.",
+          icon: "🛑",
         },
       ],
       grammar: [
@@ -21793,7 +21818,7 @@ const GR_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "THE APOLOGY THAT DOES NOT DECIDE ANYTHING\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide.\nThe second one also ends the investigation. Once a guest has been told the house was at fault, nothing found afterwards can be said out loud.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan while the guest is still listening.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nThere is a third case. When the failure is not in dispute, you may name the failure and only the failure. A charge taken twice. A written confirmation we did not honour. 'You were promised the lounge until ten, madam, and it closed at eight. That part is ours, and I am sorry.' Name the service, never the person and never the cause.\nNone of this applies when a guest is accusing a person rather than a service. Then you take the name, you take the words, and you take it upstairs.\nNever name another team to a guest. The kitchen, the front desk, the night shift — whoever it was, saying so does not repair anything and it turns one complaint into two.\nThe cause belongs in the complaint log, where a manager can look at it properly. It does not belong in the lobby.",
+        text: "THE APOLOGY THAT DOES NOT DECIDE ANYTHING\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide. It also ends the investigation: nothing found afterwards can be said out loud.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nThere is a third case. When the failure is not in dispute, you may name the failure and only the failure. 'You were promised the lounge until ten, madam, and it closed at eight. That part is ours, and I am sorry.' Name the service, never the person and never the cause.\nNever name another team to a guest. Saying so repairs nothing, and it turns one complaint into two. The cause belongs in the complaint log, where a manager can look at it properly.\nNOT YOURS AT ALL\nFour things arrive at this desk that are not complaints, and none of the five levels applies.\nFirst, a guest who accuses a named member of staff of anything — theft, a hand on them, an insult. Take them somewhere private before they say another word. Write their words down exactly as they said them. Say 'I am going to ask my Duty Manager to come to you now, madam'. Send a colleague to fetch the Duty Manager, and do not leave the guest alone. Do not ask them to repeat it. Do not argue any part of it. Do not move them on to what is being put right. And do not say one word to the colleague they named.\nSecond, a guest who tells you they were hurt or made ill here. Health first: 'Are you hurt now, madam — do you need a doctor?' Then the Duty Manager, at once. Never say it was our fault. Never say we will pay. Never say a figure. Write the incident report in your own shift, and photograph the place before anybody tidies it.\nThird, a guest who names a lawyer, or the press, or a review with your name in it. A guest who will not accept anything and will not leave the desk. And anything at all about safety. All of those go straight to the Duty Manager the moment they are said.\nFourth, and this one is about you. A guest who shouts at you, swears at you, or puts a hand on you is a Duty Manager matter from the first word. You may bring the manager to you and step away. Nobody at this desk has to stand and take it.",
         questions: [
           {
             q: "Vì sao 'that was our mistake' là câu không nên nói?",
@@ -21812,6 +21837,24 @@ const GR_WEEK_33: WeekContent = {
               "Nói rằng mình không được phép tiết lộ chuyện nội bộ",
             ],
             correct: 1,
+          },
+          {
+            q: "Khách nói một nhân viên có tên đã lấy đồ trong phòng họ. Việc đầu tiên là gì?",
+            options: [
+              "Hỏi lại khách một lần nữa cho chắc, rồi ghi vào complaint log",
+              "Mời khách sang chỗ riêng, ghi đúng nguyên văn lời khách, và ở lại với khách",
+              "Báo ngay cho người bị nêu tên để họ kịp giải thích",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách quát mắng bạn và túm lấy tay bạn ở quầy. Làm gì?",
+            options: [
+              "Xin lỗi rồi cố xử lý cho xong việc của khách",
+              "Ghi vào complaint log rồi báo lại lúc cuối ca",
+              "Mời Duty Manager tới, rồi lùi ra — không ai ở quầy phải chịu việc đó",
+            ],
+            correct: 2,
           },
         ],
       },
@@ -21848,6 +21891,23 @@ const GR_WEEK_33: WeekContent = {
             {
               text: "Say you only know what you saw, and move him on to what is being put right.",
               correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "Your night man went through my bag. I want him out here now.",
+          options: [
+            {
+              text: "I will call him to the desk now, sir, so you can tell him yourself.",
+              correct: false,
+            },
+            {
+              text: "That is not mine to handle, sir. I am asking my Duty Manager to come to you now.",
+              correct: true,
+            },
+            {
+              text: "I am sure there has been a misunderstanding, sir — nothing goes missing here.",
+              correct: false,
             },
           ],
         },
@@ -21904,6 +21964,13 @@ const GR_WEEK_33: WeekContent = {
       ],
       speaking: [
         {
+          guestPrompt: "And that extra charge — is it still on my bill?",
+          targetResponse:
+            "I am taking it to the Duty Manager now, madam, and I will come back before you go up.",
+          helpTip:
+            "Khoản phụ thu còn sống thì lời xin lỗi chết. Đừng nói 'I will check' — nêu AI quyết, rồi cho MỘT MỐC nằm trong ca của bạn. 'Before' /bɪˈfɔː/ — trọng âm rơi vào âm tiết hai.",
+        },
+        {
           guestPrompt: "And how do I know any of this will actually happen?",
           targetResponse:
             "You will have it in writing before you go up, madam — a copy for you and one on the file.",
@@ -21912,7 +21979,7 @@ const GR_WEEK_33: WeekContent = {
         },
       ],
       reading: {
-        text: "CLOSING IT SO IT STAYS CLOSED\nA complaint is not finished when the guest stops talking. It is finished when the guest says it is right.\nEverything agreed goes in writing before the guest leaves the desk. Not later, not by email tonight. A guest who has been let down once will not accept a second promise made only out loud.\nTwo copies. One for the guest, one on the file. The guest's copy is the one that matters, because it is the one they can hold up.\nWrite what was agreed, who agreed it, and when it will happen. An apology letter goes out over a manager's name, not yours. If the guest has left before it is settled, we send a written apology and update the record the same day.\nA letter is not a conversation. Draft it with three things and nothing else: what the guest was promised, what we are doing, and by when. No cause, no department, no colleague's name, and no figure — the figure is the Duty Manager's and it goes on a line he signs. Never write that the hotel was at fault; write what failed.\nIf your shift ends before it is done, hand it over by name and hour. 'I told the evening shift' is not a handover. A job with no name against it belongs to nobody.\nThe recovery case stays open until the guest confirms. You may think it is finished; only they can say so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who believes you the next time something is.\nAnd the extra charge must go before the guest has to ask twice. Only the Duty Manager can cancel the extra charge, so ask him in the same shift. A charge that survives the apology undoes the apology.",
+        text: "CLOSING IT SO IT STAYS CLOSED\nA complaint is not finished when the guest stops talking. It is finished when the guest says it is right.\nEverything agreed goes in writing before the guest leaves the desk. Not later, not by email tonight. A guest who has been let down once will not accept a second promise made only out loud.\nTwo copies. One for the guest, one on the file. The guest's copy is the one that matters, because it is the one they can hold up.\nWrite what was agreed, who agreed it, and when it will happen. An apology letter goes out over a manager's name, not yours. If the guest has left before it is settled, we send a written apology and update the record the same day.\nA letter is not a conversation. Draft it with three things and nothing else: what the guest was promised, what we are doing, and by when. No cause, no department, no colleague's name, and no figure — the figure is the Duty Manager's and it goes on a line they sign. Never write that the hotel was at fault; write what failed.\nIf your shift ends before it is done, hand it over by name and hour. 'I told the evening shift' is not a handover. A job with no name against it belongs to nobody.\nThe recovery case stays open until the guest confirms. You may think it is finished; only they can say so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who believes you the next time something is.\nAnd the extra charge must go before the guest has to ask twice. Only the Duty Manager can cancel the extra charge, so ask them in the same shift. A charge that survives the apology undoes the apology.",
         questions: [
           {
             q: "Khi nào được đóng hồ sơ khiếu nại?",

@@ -728,3 +728,101 @@ Self-check chạy trên GR-34 sau khi sửa GR-A:
 Cả bốn đều đã được tính vào các ratchet toàn corpus, nên build không đỏ. Nhưng GR-34 là tuần
 nằm ngay giữa cụm vừa soạn, và vòng thẩm định kế tiếp của GR sẽ đọc tới nó. Xử lý cùng lúc với
 GR-B (GR-27) trong một đợt riêng cho các tuần GR cũ.
+
+### GR-F · Tuần 25, 28, 30 vẫn chấm ĐÚNG cho những câu tuần 33 vừa thu hồi — CHƯA SỬA
+
+Cả hai luồng kiểm vòng 4 đều bắt được, độc lập, và cùng gọi đây là mục kéo điểm nặng nhất.
+
+GR-33 dựng bảng năm tầng thẩm quyền. Các tuần sinh tự động trước đó dạy học viên nói ngược lại,
+và những câu ấy vẫn là **đáp án đúng** trong app:
+
+| Tuần  | Câu được chấm ĐÚNG                                                                        | Nguồn                                       |
+| ----- | ----------------------------------------------------------------------------------------- | ------------------------------------------- |
+| GR-25 | "We will confirm the upgrade straight away."                                              | `phase3.ts:568` × `phase3-lexicon.ts:2438`  |
+| GR-28 | "If you like, I can arrange a room upgrade, madam."                                       | `phase3.ts:1320` × `phase3-lexicon.ts:2641` |
+| GR-28 | "We can add the missing points. If you prefer, we will arrange a private dinner instead." | `phase3.ts:1368`                            |
+| GR-28 | "We can extend your late check-out if it happens again."                                  | `phase3.ts:1420`                            |
+| GR-28 | "We will cancel the extra charge as a gesture of apology."                                | `phase3.ts:1478`                            |
+| GR-30 | "I am very sorry, and if you like, I can arrange a room upgrade."                         | render GR-30 bài 3                          |
+
+**Đã làm ở vòng 4:** GR-33 nay gọi đích danh và thu hồi bốn câu của tuần 28, y như cách GR-32 đã
+làm với tuần 27 — _"Four sentences from week twenty-eight stop here… none of the four is yours to
+make."_ Và ba thẻ ôn của GR-33 từng hiện ra chính những câu đó (`Cancel the extra charge`,
+`Send a written apology`, `Apology letter`) đã được thay bằng thẻ không mâu thuẫn.
+
+**Còn lại:** bản thân tuần 25/28/30 vẫn dạy và vẫn chấm đúng. Học viên đi tuần 28 trước khi tới
+tuần 33, nên trong năm tuần họ đang luyện một phản xạ sai. Sửa đúng cách là chuyển khung câu của
+tuần 28 từ _hứa_ sang _đề xuất_ — nhưng đó là spine sinh tự động dùng chung cho cả sáu bộ phận, và
+với FO thì "cancel the extra charge" là việc hợp lệ của quầy (FO-33 cho lễ tân hạn mức 500.000đ).
+Cần một quyết định riêng: hoặc tách khung theo bộ phận, hoặc soạn tay GR-28.
+
+### GR-G · Tuần 35 hứa chắc sáu thứ tuần 33 nói là của người khác — SỬA KHI SOẠN GR-35
+
+`phase4-lexicon.ts:997–1051` cho GR sáu headword tuần 35, và khung câu `phase4.ts` biến chúng
+thành lời hứa chắc:
+
+> "We will restore your tier status if you can confirm today." · "I can double your bonus points
+> for you, madam." · "What if we write off the night instead, sir?" · "We could waive the
+> cancellation fee provided the dates stay fixed." · "We can cover your dinner bill; however, the
+> dates cannot change." · "I can upgrade the whole stay in exchange for a longer stay, madam."
+
+Câu đầu tiên chính là câu GR-33 đánh dấu `rude`.
+
+**Đã làm ở vòng 4:** GR-33 mở sẵn một cửa trong bài đọc — _"One door stays open: a prepared
+negotiation, where a manager agreed the range beforehand. At this desk, in a claim, it is never
+yours to offer."_ Đó là băng dán, không phải thuốc.
+
+**Còn lại:** tuần 35 không tự nhận mình là cuộc thương lượng đó — prompt của nó là
+_"Your price is simply too high for us"_, nghe hệt một vị khách ở quầy. GR-35 (Negotiating) đang
+nằm ngay trong hàng đợi soạn tay của đợt GR này. Khi soạn, tuần 35 phải mở bằng một câu đóng
+khung: đây là đàm phán có chuẩn bị với khách đoàn / đại lý / công ty, mọi con số đã được duyệt
+trước khi ngồi xuống, và ở quầy thì năm tầng của tuần 33 vẫn nguyên hiệu lực.
+
+### GR-H · Hai quầy trong một sảnh dạy hai lịch sử toà nhà và hai chuẩn đồng ý — CHƯA SỬA
+
+**(a) Năm xây dựng.** GR-31 dạy _"The hotel opened in nineteen twenty-nine… The building was a
+bank before that."_ FO-31 (`FO_31_1.reading`, "FRONT DESK — HOUSE HISTORY CARD") dạy
+_"1925: built as a merchant residence. The courtyard was the family garden."_ Cả hai tuần đều bảo
+nhân viên nói TRƠN, không rào đón. Đây đúng là hỏng hóc mà chính GR-31 cảnh báo:
+_"in a month the house has a fact nobody can find."_
+
+Đã giảm nhẹ ở vòng 4: GR-31 nay nói rõ ba dữ kiện in trong bài là của MỘT khách sạn, và bảo học
+viên hỏi quản lý dữ kiện của nhà mình. FO-31 chưa có dòng tương đương.
+
+**(b) Chuẩn đồng ý.** GR-32 chốt: _"A preference needs a spoken yes."_ FO-32 cùng tuần dạy ngược:
+_"A preference is anything the guest says about how they want to stay, even in passing… Write it
+in the profile the same shift."_ — không xin phép ai. GR-32 nay đã nói thẳng rằng các quầy khác
+còn làm theo lối cũ và lối đó đang được đổi, nhưng FO-32 vẫn chấm đúng cho lối cũ.
+
+**(c) Hạn mức hoá đơn.** FO-33 cho lễ tân 500.000đ tự quyết; GR-33 trước vòng 4 cho quầy GR đúng
+0đ. Đã sửa một nửa ở vòng 4: GR-33 nay chỉ đường sang front office cho các dòng folio nhỏ
+("Nobody should wait for a manager over sixty thousand dong"). Phần hạn mức riêng của quầy GR vẫn
+chờ con số thật của từng nhà.
+
+### GR-I · Headword dài bằng cả mệnh đề, và GATE 5 đang được chống bằng chúng — CHƯA SỬA
+
+Kiểm định Academic vòng 4. `VocabSuite` rút 3 mục nghe-và-gõ mỗi bài, ưu tiên tuần hiện tại, và từ
+A2.1 trở đi chính tả phải khớp tuyệt đối. Ở GR-31/32/33 thì 47/48 headword đủ điều kiện, trong đó
+có `"Nobody has established that"`, `"As this is your first stay"`, `"I only know what I saw"`.
+Đó không còn là bài từ vựng — là bài chép chính tả nguyên mệnh đề, chấm nhị phân. Đồng thời đầu
+trắc nghiệm lại quá dễ vì phương án nhiễu rút từ cùng bộ.
+
+Liên đới: GR đang ở 508/510 từ chủ động, và con số đó được đỡ bởi những "từ" dài như trên.
+
+Không sửa ở vòng 4 vì rút gọn headword sẽ đụng vào chính những cụm là xương sống của ba tuần, và
+lợi ích thấp hơn rủi ro. Cần một quyết định thiết kế chung cho Phase 4, không phải một bản vá GR.
+
+### Hai lớp lint mới thêm ở vòng 4
+
+- **Layer L · review-order** (cổng cứng, toàn corpus hiện sạch): một `reviewWord` phải trỏ về một
+  headword của chính bộ phận đó, và phải được dạy ở tuần TRƯỚC. `resolveReviewVocab` quét cả tuần
+  tương lai nên không thể tự bắt lỗi này.
+- **Layer M · slotted-headword** (ratchet, baseline 10): headword tự nó đã mang mạo từ mà khung câu
+  còn nhét thêm một mạo từ nữa — _"The note the preference comes last."_ Khoảng một phần ba số hit
+  là dương tính giả, nên nó là ratchet: giá trị nằm ở chỗ chặn cái mới.
+
+**Điều cả hai lớp KHÔNG bắt được**, và cần nói thẳng: lỗi thực sự tìm ra ở vòng 4 là một thẻ ôn
+trỏ đúng thứ tự, tiếng Anh đúng, nhưng **nội dung trái ngược** với tuần đang dạy nó
+(`"We will cancel the extra charge as a gesture of apology."` trong tuần nói chỉ Duty Manager mới
+được). Đó là mâu thuẫn ngữ nghĩa xuyên tuần — không lớp lint nào bắt được, và đó là lý do hai
+luồng kiểm định người vẫn là cổng duy nhất cho lớp lỗi này.
