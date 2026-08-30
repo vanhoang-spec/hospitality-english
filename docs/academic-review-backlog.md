@@ -1003,3 +1003,49 @@ dời khối "sáu câu dừng lại" sang bài 1, nâng trần câu hỏi lên 
 
 Phần còn lại là quyết định chương trình, không phải quyết định biên tập — hoặc công bố ba tuần này
 là tuần hai buổi, hoặc chuyển khối "NOT YOURS AT ALL" sang GR-36 khi soạn tay tuần đó. Xem GR-K.
+
+### GR-R · Bốn tuần phía sau gỡ lại luật thẩm quyền của tuần 33
+
+Sáu lần chạy kiểm định vòng 11 (ba Hotel Manager, ba Academic, mù với nhau) tìm ra cùng một họ lỗi:
+tuần 33 dựng xong bảng năm tầng thẩm quyền, rồi các tuần sau tháo nó ra. Tất cả đều **ngoài phạm vi
+ba tuần được duyệt**, nên chưa sửa; ghi lại để soạn tới tuần nào thì đóng tuần đó.
+
+- **GR-34** (đã soạn tay) — `GR_34_4` vocab `"Apologize"` context _"Please allow me to sincerely
+  apologize for this mistake."_ và grammar polite _"there has been a mix-up with your cake"_. Tuần 33
+  dạy `'I am sorry, that was our mistake' is a verdict… it is not yours to decide` và cấm gọi tên
+  nguyên nhân khi chưa có dữ kiện. `"this mistake"` và `"a mix-up"` đều là gọi tên nguyên nhân.
+- **GR-38** (tuần sinh tự động) — `week-content.ts:6706` _"I have kept your room at the same rate"_
+  và `:6713` _"We will hold the same rate you booked, sir, and breakfast stays included for as long
+  as you are with us."_ Tuần 33 giao phòng cho Lễ tân và cấm nói giá. Ngoài ra `:6598` _"If not, I
+  will refund it in full today."_ và `:6641` _"I would like to offer you the cooking class as our
+  guest."_ — hoàn tiền là của Duty Manager, và quầy ĐỀ XUẤT chứ không tặng.
+  _Lưu ý ngược lại:_ chương trình bão của GR-38 (`STORM PROGRAMME — GUEST RELATIONS`, có tên và có
+  thứ tự) **đúng là** tờ "written house programme" mà tuần 33 cấp phép trước. Phần đó khớp; phần
+  giá phòng và lớp học nấu ăn thì không.
+- **GR-39** (tuần sinh tự động) — bài 3 nói thẳng với KHÁCH _"There is a guest collapse at the
+  property."_ Tuần 31 cấm xác nhận bất cứ điều gì về một vị khách với người khác.
+- **GR-40** (tuần sinh tự động, tuần đánh giá cuối) — `GR_40_1` _"I can explain the compensation
+  amount to anyone who asks."_ Đây đúng là thứ tuần 33 cấm (`you never quote a figure`), và nó nằm
+  ở tuần cuối khoá, tức là điều cuối cùng học viên gặp.
+- **GR-36** (tuần sinh tự động) — `"Control room. What is the situation?"` và `"Reception, this is
+security."` đều render nhãn "Khách nói" vì thiếu `speakerRole`. Cùng tuần, _"we are handling the
+  lost passport. There is no danger."_ dùng hộ chiếu thất lạc làm khủng hoảng trong bài dạy sơ tán.
+
+### GR-S · Tải bài đọc GR-33: việc còn lại là cắt, không phải viết
+
+Năm trong sáu lần chạy vòng 11 nêu `GR_33_3` (959 từ, 6 quy trình khẩn, 5 câu hỏi). T1/T7 chốt cứng
+4 bài mỗi tuần nên không thêm được bài thứ năm, **nhưng cân lại giữa bài 3 và bài 4 thì được**:
+`GR_33_4` mới 391 từ. Đề xuất trùng nhau của nhiều lần chạy: chuyển ba nhóm ít rủi ro tính mạng
+(báo chí & luật sư · khách không rời quầy · an toàn hiện trường) sang GR_33_4 và dời câu hỏi theo,
+để GR_33_3 còn ~600 từ và mỗi quy trình còn lại có ít nhất một câu hỏi. Không đổi một chữ nội dung.
+
+Cụm GR-31/32/33 đã **qua cổng** (HM 8,33 · Academic 7,90 trên mốc 7,7), nên đây là việc nâng chất,
+không phải việc chặn.
+
+### GR-T · "Our policy allows for this" chưa có mốc giờ
+
+`GR_33_1` dạy _"Our policy allows for this, madam, and my manager decides what we can do."_ Một lần
+chạy HM lập luận rằng khách nghe "chính sách cho phép" là đã tin sẽ có bù, và câu chuyển việc lên
+quản lý **không kèm mốc** — trong khi chính bộ tài liệu này dạy ba lần rằng bàn giao phải có giờ
+(`"Handing on needs a time, or it is only pointing"`). Một lần chạy trên sáu, và cụm đã qua cổng,
+nên chưa sửa. Đáng xem lại vì câu này còn được ôn lại ở deck GR-35.
