@@ -164,9 +164,15 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
   const flatSpeaking = content.lessons.flatMap((l) => l.speaking);
   const speaking = flatSpeaking.find((s) => slugify(s.guestPrompt) === ref);
   if (!speaking) return null;
-  // Prefer the game round authored for this prompt (its wrong options
-  // are purpose-built rude distractors); otherwise fall back to other
-  // target responses from the same week.
+  // Wrong options must be sentences that are WRONG. The old fallback took other
+  // lessons' targetResponse — the week's own model answers — and marked them
+  // incorrect: measured across the app, "The hotel opened in nineteen fifty-four,
+  // sir." was the wrong answer on seven of week 31's eight cards, and the branch
+  // above never fired once in 1364 cards because no game prompt is written to
+  // match a speaking prompt. Take distractors from text authored to be wrong:
+  // a matching game round first, then any game's wrong options, then the rude
+  // half of a grammar pair. Only if a week has none of those fall back to
+  // another target response.
   const matchingRound = content.lessons
     .flatMap((l) => l.game)
     .find((g) => g.prompt === speaking.guestPrompt);
@@ -174,10 +180,18 @@ export function resolveReviewItem(row: ReviewItemRow): ResolvedReviewItem | null
   if (matchingRound) {
     options = matchingRound.options.map((o) => ({ text: o.text, correct: o.correct }));
   } else {
-    const others = flatSpeaking.filter((s) => s !== speaking).map((s) => s.targetResponse);
+    const authoredWrong = [
+      ...content.lessons.flatMap((l) => l.game).flatMap((g) => g.options),
+      ...content.lessons.flatMap((l) => l.grammar).map((g) => ({ text: g.rude, correct: false })),
+    ]
+      .filter((o) => !o.correct && o.text !== speaking.targetResponse)
+      .map((o) => o.text);
+    const distractors = authoredWrong.length
+      ? authoredWrong
+      : flatSpeaking.filter((s) => s !== speaking).map((s) => s.targetResponse);
     options = [
       { text: speaking.targetResponse, correct: true },
-      ...others.slice(0, 2).map((text) => ({ text, correct: false })),
+      ...distractors.slice(0, 2).map((text) => ({ text, correct: false })),
     ];
   }
   return { kind: "speaking", row, speaking, options };

@@ -1899,7 +1899,7 @@ function week22(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Overall", "/ˌəʊvərˈɔːl/", "Nhìn chung", "Overall, the day went well.", "🌐"),
         bw(w4, `We can always ${lo(w4)}.`),
-        bw(w6, `That was ${lo(w6)} by the team.`),
+        bw(w6, `That was ${lo(w6)} of the team.`),
         bw(w10, `${w10.word} at the end of the day.`),
       ],
       grammar: [
@@ -1910,7 +1910,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         g(
           `Team do well yesterday.`,
-          `That was ${lo(w6)} by the team.`,
+          `That was ${lo(w6)} of the team.`,
           "Ôn tuần 21: câu bị động quá khứ đơn giản.",
         ),
       ],

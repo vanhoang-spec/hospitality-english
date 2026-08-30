@@ -2933,7 +2933,7 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
     promptVi:
-      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không nêu nguyên nhân, không nêu tên bộ phận, không nêu con số.",
+      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. BỐN điều không được viết ra chỗ công khai: không nhận lỗi, không nêu nguyên nhân hay tên bộ phận, không hứa phần bù và không nêu con số, và không xác nhận hạng thẻ của khách — kể cả khi chính khách đã tự nêu.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
@@ -2974,21 +2974,62 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         ],
       },
     ],
+    // Four prohibitions, and each needs several phrasings: a reply that says
+    // "we accept full responsibility" breaks the same rule as one that says
+    // "our mistake". Anything added here must also appear in promptVi — a
+    // learner cannot be failed for a rule the task never gave them.
     mustAvoid: [
+      // admitting fault
       "our mistake",
       "our fault",
       "we got it wrong",
       "we were wrong",
+      "we failed",
+      "our failure",
+      "we let you down",
+      "accept responsibility",
+      "responsibility for",
+      "our error",
+      "our oversight",
+      "at fault",
+      "on our side",
+      // naming a cause, a department or a colleague
       "front office",
-      "reception",
+      "front desk",
       "housekeeping",
       "night shift",
       "evening shift",
+      "night team",
+      "lounge team",
+      "banquet team",
+      "loyalty office",
+      "overbooked",
+      "my colleague",
+      "our colleague",
+      // promising the compensation in public
+      "free night",
+      "free nights",
+      "complimentary",
+      "spa credit",
+      "room upgrade",
+      "upgrade you",
+      "voucher",
+      "credit you",
+      "restore your tier",
+      "bonus points",
+      "missing points",
+      // a figure, in any currency
+      "VND",
+      "USD",
+      "dollars",
+      "dong",
+      // confirming the guest's tier back to them in public
       "Diamond",
       "Platinum",
       "Gold member",
-      "VND",
-      "refund of",
+      "your tier",
+      "your status",
+      "entitled to",
     ],
     modelReply:
       "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",

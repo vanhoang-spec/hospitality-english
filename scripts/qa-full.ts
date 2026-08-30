@@ -596,11 +596,13 @@ const slugify = (t: string) =>
     for (const l of wk.lessons) {
       // Two is the norm; a passage over 400 words may carry up to four. Two
       // questions on a 700-word safety reading measure almost none of it.
-      const qMax = words(l.reading.text).length > 400 ? 4 : 2;
+      // Mastery is 80%, so a 4-question passage is pass-perfectly-or-fail (3/4 = 75%).
+      // Five makes 4/5 = 80% reachable, and a 700-word passage needs the coverage.
+      const qMax = words(l.reading.text).length > 400 ? 5 : 2;
       if (l.reading.questions.length < 2 || l.reading.questions.length > qMax)
         fail(
           "T5",
-          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2${qMax > 2 ? "-4" : ""})`,
+          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2${qMax > 2 ? "-5" : ""})`,
         );
       if (words(l.reading.text).length < 12)
         warn("T5", `${key} Reading: ${l.lessonId} passage is very short`);

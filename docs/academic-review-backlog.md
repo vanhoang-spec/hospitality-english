@@ -959,3 +959,47 @@ Không phải lỗi của ba tuần này — viết headword dạng cụm là đ
 - **FO-32 / GR-32 về khách quay lại**: FO xác nhận ba sở thích trong một câu, GR gọi đó là "a
   performance". Cả hai đều kết bằng "anything different?" nên sống được, nhưng nên thêm một dòng
   giải thích vì sao hai quầy làm khác nhau.
+
+---
+
+## Vòng 9 — sáu lần chạy song song (3 Academic × 3 Hotel Manager)
+
+**Điểm:** HM 8,07 · 8,20 · 8,20 → **8,16**. Academic 7,92 · 7,67 · 7,13 → **7,57**. Mốc 7,7.
+
+Sáu lần chạy mù cho một bản đồ đồng thuận đáng tin hơn bất kỳ vòng đơn nào. Mục nào từ hai lần
+chạy trở lên cùng chỉ ra đều đã sửa. Ba mục còn mở, ghi lại đây.
+
+### GR-O · `scoreFreeText` không đọc được ý, và điều đó phải được nói ra chứ không che đi
+
+Bài viết tuần 33 nay có `mustAvoid` phủ bốn điều cấm với nhiều cách diễn đạt, và `promptVi` nêu đủ
+bốn điều đó trước khi chấm — trước đây nó chấm trượt một bài đúng vì chữ `Diamond`, một luật chỉ
+tồn tại trong `mustAvoid` chứ không có trong đề. Bảy trên tám bài tấn công nay bị chặn.
+
+**Bài còn lọt:** _"our loyalty members are told to expect lounge access only when they book it
+correctly, which you did not do."_ — đổ lỗi cho khách. Không vi phạm chuỗi nào; vi phạm giọng điệu.
+Một bộ khớp từ khoá không bắt được loại này, và thêm chuỗi kiểu `"you did not"` sẽ báo giả nhiều
+hơn bắt đúng. Ghi nhận là **giới hạn cố hữu**, không giả vờ đã chặn.
+
+### GR-P · Thẻ ôn speaking đã được sửa ở tầng engine — 1.364 thẻ
+
+`resolveReviewItem` (`src/lib/review.ts`) lấy phương án sai từ `targetResponse` của bài khác trong
+tuần — tức là **câu mẫu đúng của chính tuần đó bị đánh dấu SAI**. Đo được: nhánh ưu tiên game round
+trùng prompt **chưa từng chạy một lần nào trong 1.364 thẻ**, vì game prompt không bao giờ được viết
+trùng prompt của speaking.
+
+Ở tuần 31, câu `"The hotel opened in nineteen fifty-four, sir."` — câu cả tuần tồn tại để dạy —
+là đáp án SAI trên **7/8 thẻ**.
+
+**Đã sửa:** thứ tự nguồn phương án sai nay là game round trùng prompt → phương án sai của bất kỳ
+game nào trong tuần → vế `rude` của cặp ngữ pháp → và chỉ cùng đường mới dùng target của bài khác.
+Đo lại: **0/1.364 thẻ còn hiện câu mẫu làm đáp án sai.**
+
+### GR-Q · Tải bài đọc vẫn trên chuẩn của chính bộ phận
+
+GR-37 và GR-38 (cũng soạn tay) chốt ở ~350 từ bài đọc mỗi tuần. GR-31/32/33 ở 1.275 / 1.580 / 2.132.
+Mọi lần chạy đều nêu. Vòng 9 đã làm phần biên tập làm được: tách đoạn 99 từ và 90 từ, bỏ câu lặp,
+dời khối "sáu câu dừng lại" sang bài 1, nâng trần câu hỏi lên 5 (vì mastery 80% với 4 câu là
+"đúng tuyệt đối hoặc trượt": 3/4 = 75%).
+
+Phần còn lại là quyết định chương trình, không phải quyết định biên tập — hoặc công bố ba tuần này
+là tuần hai buổi, hoặc chuyển khối "NOT YOURS AT ALL" sang GR-36 khi soạn tay tuần đó. Xem GR-K.
