@@ -2365,11 +2365,11 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         g(
           `Problem everywhere, help!`,
           `There is a ${lo(e1)} at the property. Please come immediately.`,
-          "Dưới áp lực, câu càng phải ngắn và rõ. Đây là khung câu của tuần 36.",
+          "Dưới áp lực, câu càng phải ngắn và rõ: một việc để làm, không phải một cảm giác để có. Đây là khung câu của tuần 36.",
         ),
         g(
           `Guest angry, party broken, I stop.`,
-          `Please stay calm — we are handling it, and the ${lo(o1)} will still go ahead.`,
+          `We are handling it now, and the ${lo(o1)} will still go ahead.`,
           "Xử lý hai việc cùng lúc: trấn an sự cố và giữ lời hứa về dịp đặc biệt.",
         ),
       ],
@@ -2384,7 +2384,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
           // an emergency without naming one, so the department's own
           // incident is the right answer.
           "Something has happened downstairs and our guests are panicking!",
-          `There is a ${lo(e1)} at the property. Please stay calm and follow me.`,
+          `There is a ${lo(e1)} at the property. Please follow me now.`,
           "Bài kiểm tra khó nhất: báo cáo và trấn an trong cùng một hơi thở.",
         ),
       ],

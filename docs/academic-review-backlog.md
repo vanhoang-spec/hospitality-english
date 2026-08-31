@@ -1133,3 +1133,20 @@ chỗ ở đúng của luật là GR-37.
 
 Quét GR-1→40: không có một dòng nào về đe doạ bom, gói khả nghi, hay phong toả an ninh. Đây là lỗ
 hổng cấp giáo trình, không cấp tuần — ghi lại để quyết khi soạn phần còn lại.
+
+### GR-AB · GR-37 thiếu ngoại lệ "không thở → 115 trước"
+
+Bốn auditor của GR-36 cùng nêu. `GR_37_1` là một thẻ quy trình ĐÁNH SỐ:
+
+> "1. Send help first, ask questions second. Call ext. 8888 (Duty Manager) and state the room
+> number. … 3. Ambulance: dial 115."
+
+Không có ngoại lệ nào. HK-36 coi là tuyệt đối: _"A guest who is NOT BREATHING does not wait for an
+inside line at all: 115 first."_ GR-36 nay có câu đó, nhưng nó nằm ở tuần **trước**, chìm giữa một
+bài đọc về sơ tán — học viên đi tuần tự sẽ mang thẻ tuần 37 ra ca trực.
+
+Sửa: thêm vào `GR_37_1` sau mục 3 — _"Exception: a guest who is not breathing — 115 before ext.
+8888."_ Và GR-37 cũng chưa dạy nội dung cuộc gọi ra ngoài (tên và địa chỉ khách sạn trước), thứ
+HK-36 và GR-36 đều có.
+
+GR-37 đã ship từ trước và chưa qua cổng 3-lần-chạy. Xem thêm GR-Z.
