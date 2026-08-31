@@ -159,11 +159,14 @@ function buildPaper(dep: string, week: string): Question[] {
   const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
   const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
     const others = shuffle(grammarPool.filter((o) => o.polite !== g.polite)).slice(0, 2);
-    const options = shuffle([g.polite, g.rude, ...others.map((o) => o.rude)].slice(0, 3));
+    // Nhiễu lấy từ vế `polite` của cặp khác, KHÔNG lấy `g.rude` — câu đó đang
+    // được trích nguyên văn trong đề nên nó là một loại trừ miễn phí, và vế
+    // polite luôn dài hơn vế rude nên "chọn câu dài nhất" thắng 85,8%.
+    const options = shuffle([g.polite, ...others.map((o) => o.polite)]);
     return {
       kind: "grammar" as const,
       key: `g:${g.rude}`,
-      prompt: `Câu nào là cách nói lịch sự chuẩn 5 sao thay cho "${g.rude}"?`,
+      prompt: `Câu nào là cách xử lý chuẩn 5 sao thay cho "${g.rude}"?`,
       options,
       correctIdx: options.indexOf(g.polite),
       note: g.rule,
