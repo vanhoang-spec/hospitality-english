@@ -948,92 +948,9 @@ const GR_BANK: P4Bank = {
   ],
   terms: [],
   proposal: [],
-  wrapUp: [
-    {
-      word: "Preference update",
-      phonetic: "/ˈprefrəns ˈʌpdeɪt/",
-      definition: "Lần cập nhật sở thích của khách",
-      icon: "📝",
-    },
-    {
-      word: "Celebration date",
-      phonetic: "/ˌselɪˈbreɪʃn deɪt/",
-      definition: "Ngày diễn ra dịp kỷ niệm",
-      icon: "🎉",
-    },
-    {
-      word: "Escalation contact",
-      phonetic: "/ˌeskəˈleɪʃn ˈkɒntækt/",
-      definition: "Đầu mối chuyển việc lên cấp trên",
-      icon: "☎️",
-    },
-    {
-      word: "Compensation amount",
-      phonetic: "/ˌkɒmpenˈseɪʃn əˈmaʊnt/",
-      definition: "Mức bồi thường cho khách",
-      icon: "💰",
-    },
-    {
-      word: "Tier expiry date",
-      phonetic: "/tɪə ɪkˈspaɪəri deɪt/",
-      definition: "Ngày hết hạn của cấp hạng",
-      icon: "⌛",
-    },
-    {
-      word: "Consent status",
-      phonetic: "/kənˈsent ˈsteɪtəs/",
-      definition: "Tình trạng đồng ý của quý khách",
-      icon: "✍️",
-    },
-    {
-      word: "Incident report number",
-      phonetic: "/ˈɪnsɪdənt rɪˈpɔːt ˈnʌmbə/",
-      definition: "Số hiệu biên bản sự cố",
-      icon: "🚨",
-    },
-    {
-      word: "Transfer pick-up point",
-      phonetic: "/ˈtrænsfɜː ˈpɪk ʌp pɔɪnt/",
-      definition: "Điểm đón của xe đưa rước",
-      icon: "🚙",
-    },
-    {
-      word: "Voucher validity",
-      phonetic: "/ˈvaʊtʃə vəˈlɪdəti/",
-      definition: "Thời hạn sử dụng của phiếu",
-      icon: "🎟️",
-    },
-    {
-      word: "Decoration timing",
-      phonetic: "/ˌdekəˈreɪʃn ˈtaɪmɪŋ/",
-      definition: "Giờ hoàn tất phần trang trí",
-      icon: "🕐",
-    },
-    {
-      word: "Dietary note",
-      phonetic: "/ˈdaɪətəri nəʊt/",
-      definition: "Ghi chú về chế độ ăn của khách",
-      icon: "🥗",
-    },
-    {
-      word: "Flower delivery time",
-      phonetic: "/ˈflaʊə dɪˈlɪvəri taɪm/",
-      definition: "Giờ đưa hoa lên phòng",
-      icon: "💐",
-    },
-    {
-      word: "Preferred title",
-      phonetic: "/prɪˈfɜːd ˈtaɪtl/",
-      definition: "Danh xưng khách muốn được gọi",
-      icon: "🎩",
-    },
-    {
-      word: "Departure gift note",
-      phonetic: "/dɪˈpɑːtʃə ɡɪft nəʊt/",
-      definition: "Thiệp kèm quà tiễn khách",
-      icon: "🎁",
-    },
-  ],
+  // GR-40 soạn tay (P4_OVERRIDES) nên spine không dựng tuần 40 của GR nữa;
+  // 14 mục danh-từ-trường-dữ-liệu ở đây không tuần nào của GR dạy. Xem lintDeadBankEntries.
+  wrapUp: [],
 };
 
 const BO_BANK: P4Bank = {

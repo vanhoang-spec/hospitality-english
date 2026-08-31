@@ -24529,6 +24529,705 @@ const GR_WEEK_39: WeekContent = {
   ],
 };
 
+const GR_WEEK_40: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 40,
+  weekTitleEn: "Forty Weeks, and What This Desk Remembers",
+  weekTitleVi: "Bốn mươi tuần, và những gì quầy này còn nhớ",
+  reviewWords: [
+    "I would rather find out",
+    "Only with your permission",
+    "My manager's to give",
+    "Occasion",
+    "The part I cannot move",
+    "Not the person to speak about that",
+    "Conscious",
+    "Rain check",
+    "I am asking, not promising",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_40_1",
+      lessonOrder: 1,
+      titleEn: "The Shape You Reach For Now",
+      titleVi: "Cái khuôn giờ bạn với tay tới",
+      vocabulary: [
+        {
+          word: "Used to write it out first",
+          phonetic: "/ˌjuːst tə ˈraɪt ɪt aʊt ˈfɜːst/",
+          definition: "Trước đây phải viết ra giấy rồi mới dám nói",
+          context: "I used to write it out first, sir, and now I do not.",
+          icon: "📝",
+        },
+        {
+          word: "Without reaching for it",
+          phonetic: "/wɪˌðaʊt ˈriːtʃɪŋ fər ɪt/",
+          definition: "Nói ra được ngay, không phải đi tìm câu",
+          context: "The owner's name comes out without reaching for it now.",
+          icon: "💬",
+        },
+        {
+          word: "The shape not the sentence",
+          phonetic: "/ðə ˈʃeɪp nɒt ðə ˈsentəns/",
+          definition: "Thứ bạn học được là một KHUÔN sáu bước, không phải một câu thuộc lòng",
+          context: "What forty weeks gave me is the shape, not the sentence.",
+          icon: "🧩",
+        },
+        {
+          word: "I know who owns it",
+          phonetic: "/aɪ ˌnəʊ huː ˈəʊnz ɪt/",
+          definition:
+            "Biết việc đó thuộc quầy nào — bước đi được ngay cả khi chưa biết câu trả lời",
+          context: "I do not know the answer yet, madam, but I know who owns it.",
+          icon: "🗝️",
+        },
+        {
+          word: "An hour of my own",
+          phonetic: "/ən ˈaʊər əv maɪ ˈəʊn/",
+          definition: "Mốc giờ do CHÍNH BẠN đặt, không phải giờ mượn của quầy khác",
+          context: "I am giving you an hour of my own, sir: half past four.",
+          icon: "⏰",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I do not know, madam. You will have to ask somebody else about that one.",
+          polite:
+            "I do not know the answer yet, madam, but I know who owns it. I am asking them now.",
+          rule: "'Tôi không biết' là chỗ dừng. 'Tôi chưa biết câu trả lời, nhưng tôi biết việc này thuộc quầy nào' là một bước đi. Bốn mươi tuần trước bạn đi tìm CÂU; giờ bạn đi tìm CHỦ SỞ HỮU, và câu chữ đến sau. Chú ý 'yet' — nó nói rằng việc chưa xong, chứ không phải bạn không làm được.",
+        },
+        {
+          rude: "Somebody will get back to you at some point today, sir.",
+          polite: "I am coming back to you at half past four, sir, whatever the answer is.",
+          rule: "Một mốc giờ mơ hồ là một lời từ chối nói khéo. Tuần 35 đã chốt: nói giờ ra, và phải là giờ CỦA BẠN. 'Whatever the answer is' mới là nửa đắt nhất của câu — nó hứa bạn sẽ quay lại kể cả khi câu trả lời là không, và đó chính là chỗ phần lớn nhân viên biến mất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I have a question I doubt anybody at this desk has ever been asked before.",
+          targetResponse:
+            "Try me, madam. If I do not know the answer, I will know who owns it, and I will come back to you.",
+          helpTip:
+            "Đừng hứa biết. Hứa cái bạn thật sự làm được — tìm ra chủ sở hữu rồi quay lại. Đây là khuôn của cả bốn mươi tuần rút gọn thành một câu. 'owns' /əʊnz/ — đuôi /z/ hữu thanh, đừng đóng thành /s/; và /əʊ/ là nguyên âm đôi, không phải 'ô' ngắn.",
+        },
+        {
+          guestPrompt:
+            "Duty Manager. Forty weeks in — what can you do now that you could not do in week one?",
+          speakerRole: "manager",
+          targetResponse:
+            "The shape not the sentence, sir. I used to write it out first; now I name the owner and give an hour of my own.",
+          helpTip:
+            "Cấp trên hỏi thì trả lời bằng VIỆC LÀM ĐƯỢC, đừng trả lời bằng cảm giác. Ba động từ, ba bước, không hình dung từ nào. 'used to' /ˈjuːst tə/ — đọc là 'giuxt tơ', /s/ vô thanh chứ không phải /z/ như trong 'use'.",
+        },
+      ],
+      reading: {
+        text: "FORTY WEEKS AGO\nForty weeks ago you could greet a guest by the time of day and spell a name back to them.\nThat was week one, and it was not nothing. A name spelled wrong at this desk follows a guest for four days.\nBy week fourteen you could take a request, put one small thing right, and close the conversation.\nBy week twenty-two you could run the paperwork, the payment and a full shift report in English.\nBy week thirty you could offer, promise, coordinate with another desk, and apologise when it did not arrive.\nWhat changed after that is not the number of words you know.\nWhat changed is that you stopped hunting for a sentence and started reaching for a shape.\nThe shape is six moves, and it fits almost everything that arrives at this desk.\nListen to the end. A guest who is interrupted starts again from the beginning, and you lose the minute you saved.\nName the owner. 'The restaurant's', 'the front office's', 'my manager's' — a named owner is not a refusal.\nSay what you can do while you wait. A request with nothing attached is a wait, and a wait feels like a no.\nPut an hour on it, and make it your hour. Week thirty-five settled that, and week thirty-nine put it in an order.\nWrite it down. The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.\nCome back at your hour even when the answer is no. Especially when the answer is no.\nNobody could teach you the shape in week one. You did not yet have the words to carry it.\nNow the words are small and the shape is large, and that is the right way round.\nTest it on yourself. A guest asks for something nobody has ever asked for here.\nForty weeks ago you looked for the sentence and found nothing.\nToday you look for the owner, and the sentence comes after it.",
+        questions: [
+          {
+            q: "Theo bài đọc, thứ đã thay đổi sau tuần 30 là gì?",
+            options: [
+              "Số lượng từ vựng bạn thuộc",
+              "Việc bạn thôi đi tìm một câu và bắt đầu với tay tới một khuôn",
+              "Tốc độ nói của bạn khi khách đứng trước mặt",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What changed is that you stopped hunting for a sentence and started reaching for a shape.'",
+          },
+          {
+            q: "Vì sao 'nghe hết' là bước đầu tiên, chứ không phải bước lịch sự cho có?",
+            options: [
+              "Vì cắt lời khiến khách kể lại từ đầu, và bạn mất đúng cái phút vừa tiết kiệm",
+              "Vì nếu quản lý đứng gần đó nghe thấy bạn cắt lời khách thì ca sau sẽ bị nhắc nhở",
+              "Vì khách sẽ phàn nàn nếu bị ngắt giữa chừng",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who is interrupted starts again from the beginning, and you lose the minute you saved.'",
+          },
+          {
+            q: "Nói ra tên quầy sở hữu có phải là một cách từ chối không?",
+            options: [
+              "Có, vì khách nghe thấy tên một quầy khác là hiểu ngay bạn đang đẩy việc đi chỗ khác",
+              "Chỉ khi quầy đó đã đóng cửa",
+              "Không — bài đọc nói một chủ sở hữu có tên không phải là một lời từ chối",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'a named owner is not a refusal.' Kèm theo là nửa thứ hai: bạn làm được gì trong lúc chờ.",
+          },
+          {
+            q: "Bốn thứ tuần 33 đòi ghi lại là gì?",
+            options: [
+              "Tên khách, số phòng, giờ, và bộ phận liên quan",
+              "Đã hứa gì, ai hứa, hứa khi nào, và thực tế xảy ra ra sao",
+              "Vấn đề, nguyên nhân, người chịu trách nhiệm, và chi phí",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.'",
+          },
+          {
+            q: "Khi nào thì việc quay lại đúng mốc giờ là quan trọng NHẤT?",
+            options: [
+              "Khi bạn xin được điều khách muốn",
+              "Khi khách là khách quen của khách sạn",
+              "Khi câu trả lời là không",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Come back at your hour even when the answer is no. Especially when the answer is no.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Is there a temple near here that is open before six in the morning?",
+          options: [
+            {
+              text: "I am afraid that is not really something we would have any information about here, madam.",
+              correct: false,
+            },
+            {
+              text: "I do not know that yet, madam, but the concierge does. Ten minutes, and I will come to you.",
+              correct: true,
+            },
+            {
+              text: "I think so, madam — there is usually one open early somewhere in that direction.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Duty Manager. Which sentence comes out now without you reaching for it?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "Most of them, sir, although I do still look things up when a guest asks me something unusual.",
+              correct: false,
+            },
+            {
+              text: "I could not name one, sir. It depends quite a lot on what the guest in front of me is like.",
+              correct: false,
+            },
+            {
+              text: "The owner, sir. 'That one is the restaurant's' — it comes out without reaching for it now.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_2",
+      lessonOrder: 2,
+      titleEn: "The Line This Desk Does Not Cross",
+      titleVi: "Lằn ranh quầy này không bước qua",
+      vocabulary: [
+        {
+          word: "Never mine to give",
+          phonetic: "/ˌnevə ˈmaɪn tə ˈɡɪv/",
+          definition: "Chưa bao giờ thuộc quyền tôi — kể cả quản lý cũng không cho được",
+          context: "That one was never mine to give, madam, and it is not my manager's either.",
+          icon: "🚫",
+        },
+        {
+          word: "Not read out",
+          phonetic: "/nɒt ˈred aʊt/",
+          definition: "Hồ sơ mật thì không đọc lên thành tiếng — kể cả cho đồng nghiệp",
+          context: "A confidential file is not read out, sir, not even to a colleague.",
+          icon: "🔒",
+        },
+        {
+          word: "Past the first call",
+          phonetic: "/ˌpɑːst ðə ˈfɜːst ˈkɔːl/",
+          definition: "Quá cuộc gọi đầu tiên — y tế thì sau cuộc gọi đó không còn là việc của bạn",
+          context: "Anything medical past the first call is not mine, madam.",
+          icon: "🚑",
+        },
+        {
+          word: "Only the guest closes it",
+          phonetic: "/ˌəʊnli ðə ˈɡest ˈkləʊzɪz ɪt/",
+          definition: "Chỉ khách mới đóng được hồ sơ — khách thôi hỏi không có nghĩa là xong",
+          context: "It stays open, sir. Only the guest closes it.",
+          icon: "📂",
+        },
+        {
+          word: "In English now",
+          phonetic: "/ɪn ˈɪŋɡlɪʃ naʊ/",
+          definition: "Bàn giao được bằng tiếng Anh — đó mới là thứ bốn mươi tuần đã đổi",
+          context: "I hand the four things over in English now, sir.",
+          icon: "🗣️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I can explain how we work out the compensation figure if you would like, madam.",
+          polite:
+            "The figure was never mine to give, madam. My manager decides it, and I am asking her now.",
+          rule: "Con số là lằn ranh cứng nhất của quầy này. Tuần 33 cho câu để nói: việc đó là của quản lý. Tuần 35 đi xa hơn — có những thứ nằm ngoài khung dù quản lý nói gì, vì chúng chưa bao giờ thuộc quyền bà ấy. Giải thích CÁCH tính ra con số cũng là cho con số đó rồi.",
+        },
+        {
+          rude: "He is not in his room right now, madam, and I do not think he wants to be disturbed.",
+          polite:
+            "I am not able to say who is staying here, madam. May I take a message for the room?",
+          rule: "Tuần 31 tuyệt đối: nói 'người ta không muốn gặp' là đã xác nhận người ta ở đây. Câu an toàn không nhắc tới người, chỉ nhắc tới việc bạn làm được. Và tuần 31 nói rõ luật này KHÔNG hết hiệu lực khi khách trả phòng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Just tell me roughly what the hotel usually pays in a case like mine.",
+          targetResponse:
+            "That figure was never mine to give, madam. I am putting the four things to my manager now.",
+          helpTip:
+            "'Khoảng bao nhiêu' vẫn là một con số. Nói rõ nó chưa bao giờ thuộc quyền bạn, rồi nói ngay việc bạn ĐANG làm — nếu không, câu chỉ còn là lời từ chối. 'figure' /ˈfɪɡə/ — trọng âm ở âm tiết đầu, và đuôi không bật /r/ theo giọng Anh-Anh.",
+        },
+        {
+          guestPrompt: "Guest Relations. Can you read me what her file says about the anniversary?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A confidential file is not read out, not even to a colleague. Tell me what you need, and I will do it.",
+          helpTip:
+            "Tuần 32 viết luật này cho đúng tình huống này: người hỏi là ĐỒNG NGHIỆP. Từ chối đọc hồ sơ nhưng đừng từ chối giúp — nửa sau của câu mới là nửa giữ được quan hệ trong ca. 'colleague' /ˈkɒliːɡ/ — hai âm tiết, trọng âm đầu, đuôi /ɡ/ phải bật.",
+        },
+      ],
+      reading: {
+        text: "SIX THINGS THAT ARE STILL NOT YOURS\nForty weeks have made you faster. They have not moved the line.\nSix things stay on the far side of it, and saying so is a professional answer, not a failure.\nA figure is the first. A compensation amount, a rate, a night taken off a bill.\nWeek thirty-three gave you the sentence: 'That one is my manager's to give' is better than a long silence.\nWeek thirty-five went further. Some things stay outside the range whatever your manager says, because they were never hers to give.\nSecond, who is in this house, and anything at all on a file.\nWeek thirty-one: everything this desk knows about a guest is confidential, and it does not expire when they check out.\nWeek thirty-two: a confidential file is not read out, not even to a colleague.\nAnd week thirty-one again, the line people get wrong. Never say that somebody does not want to see them — that answer confirms they are here.\nThird, anything medical past the first call. Week thirty-seven: send help first, ask questions second.\nThen stop. Do not move the guest and do not give any medicine, including painkillers.\nFourth, naming a colleague or another desk as the cause of what went wrong.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it.\nFifth, closing a case. Week thirty-five: it stays open until the guest says it is closed.\nA guest who has stopped asking has not closed anything.\nSixth, lawyers, the press, the police and insurance. One sentence, and then nothing at all.\nNone of those six is new. What is new is that you can hand every one of them over in English.\nWeek thirty-three gave you the four things to carry up: what was promised, who promised it, when, and what happened instead.\nForty weeks ago somebody had to translate that for you. Now you write it, and you say it out loud, by name.\nThat is the whole change. The line is where it always was; you are the one who can now say why.",
+        questions: [
+          {
+            q: "Giải thích CÁCH khách sạn tính ra con số bồi thường thì có được không?",
+            options: [
+              "Được, miễn là bạn nói rõ đó chỉ là cách tính chung chứ không phải con số cho trường hợp này",
+              "Được, nếu khách đã hỏi đến lần thứ hai",
+              "Không — giải thích cách tính cũng là đã cho con số rồi; đó là việc của quản lý",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A figure is the first.' Tuần 35: 'Some things stay outside the range whatever your manager says, because they were never hers to give.'",
+          },
+          {
+            q: "Luật bảo mật về khách hết hiệu lực khi nào?",
+            options: [
+              "Không hết — bài đọc nói nó không hết hiệu lực khi khách trả phòng",
+              "Khi khách đã trả phòng và thanh toán xong",
+              "Khi thông tin đó đã có sẵn trên hệ thống của một bộ phận khác trong khách sạn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'everything this desk knows about a guest is confidential, and it does not expire when they check out.'",
+          },
+          {
+            q: "Vì sao câu 'ông ấy không muốn gặp bà' là một câu sai?",
+            options: [
+              "Vì nghe thiếu lịch sự với người đang đứng trước mặt",
+              "Vì chính câu đó đã xác nhận người kia đang ở trong khách sạn",
+              "Vì bạn không thể biết chắc ý muốn của khách trong phòng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Never say that somebody does not want to see them — that answer confirms they are here.'",
+          },
+          {
+            q: "Sau cuộc gọi đầu tiên trong một ca y tế, bạn làm gì?",
+            options: [
+              "Đưa khách tới chỗ thoáng hơn và hỏi kỹ triệu chứng",
+              "Dừng lại: không di chuyển khách, không đưa bất kỳ thuốc nào, kể cả thuốc giảm đau",
+              "Ghi lại triệu chứng vào sổ rồi đứng chờ cùng khách",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Then stop. Do not move the guest and do not give any medicine, including painkillers.'",
+          },
+          {
+            q: "Khách đã thôi hỏi về vụ việc của mình. Hồ sơ đó coi như thế nào?",
+            options: [
+              "Vẫn mở — chỉ khách mới đóng được, và thôi hỏi không phải là đóng",
+              "Đóng được, vì khách đã không còn nhu cầu",
+              "Đóng được, sau khi bạn ghi một dòng vào sổ bàn giao để ca sau còn nắm được",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'it stays open until the guest says it is closed. A guest who has stopped asking has not closed anything.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "A journalist is asking me about the accident last night. What do I say?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Tell him it is being looked into and that nobody was seriously hurt in the end.",
+              correct: false,
+            },
+            {
+              text: "One sentence: not the person to speak about that. Then nothing at all.",
+              correct: true,
+            },
+            {
+              text: "Say no comment and walk away — that way we have not actually told him anything.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. She has not mentioned the lounge since Tuesday. Shall I close it off?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes, close it. If it still mattered to her she would have come back to the desk about it.",
+              correct: false,
+            },
+            {
+              text: "Only the guest closes it. She has stopped asking, and that is not the same thing.",
+              correct: true,
+            },
+            {
+              text: "Leave it another week, and if she says nothing more then we can quietly write it off.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_3",
+      lessonOrder: 3,
+      titleEn: "The One Who Sits Here Next Month",
+      titleVi: "Người sẽ ngồi chỗ này tháng sau",
+      vocabulary: [
+        {
+          word: "Stand beside, not in front",
+          phonetic: "/ˌstænd bɪˈsaɪd nɒt ɪn ˈfrʌnt/",
+          definition: "Đứng CẠNH người mới trước mặt khách, đừng đứng chắn trước họ",
+          context: "Stand beside, not in front — the guest must still see her.",
+          icon: "🤝",
+        },
+        {
+          word: "Give her the phrase",
+          phonetic: "/ˌɡɪv hə ðə ˈfreɪz/",
+          definition: "Cho người mới CÂU nói được ngay, đừng cho một điều luật",
+          context: "Give her the phrase, not the rule — she can use a phrase tonight.",
+          icon: "🎁",
+        },
+        {
+          word: "What I got wrong",
+          phonetic: "/ˌwɒt aɪ ɡɒt ˈrɒŋ/",
+          definition: "Cái chính bạn từng làm sai — kể ra thì người mới mới dám hỏi",
+          context: "Let me tell you what I got wrong in my first month.",
+          icon: "🪞",
+        },
+        {
+          word: "Stop it that second",
+          phonetic: "/ˈstɒp ɪt ðæt ˈsekənd/",
+          definition: "Việc nguy hiểm hoặc lộ hồ sơ thì chặn NGAY GIÂY ĐÓ, không đợi hết ca",
+          context: "A file read out loud you stop it that second, whoever is listening.",
+          icon: "✋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No, not like that — you do not promise a table, you have to ask the restaurant first.",
+          polite:
+            "May I take this one, madam? Then Linh and I will go through it together after the shift.",
+          rule: "Sửa người mới TRƯỚC MẶT KHÁCH thì hỏng hai thứ cùng lúc: khách mất lòng tin vào cả quầy, và người mới thôi dám mở miệng. Cầm lấy lượt đó bằng một câu lịch sự, rồi để lại phần sửa cho sau ca. Ngoại lệ duy nhất là nguy hiểm và hồ sơ mật — hai thứ đó chặn ngay giây đó.",
+        },
+        {
+          rude: "You promised her the corner table. That was wrong and you cannot do that.",
+          polite:
+            "You handled the apology well. One thing for next time: 'I am asking, not promising.'",
+          rule: "Khuôn của nhà: một điều họ làm TỐT, rồi ĐÚNG MỘT điều sửa, và sửa bằng cách đưa CÂU chứ không đưa luật. 'Đừng hứa' là một điều luật, nghe xong vẫn không biết nói gì. 'I am asking, not promising' là một câu dùng được ngay trong ca tối nay.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Guest Relations. The new girl just read the guest's anniversary date off the file to her friend.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Stop it that second, please. That one does not wait for the end of the shift — I am coming over now.",
+          helpTip:
+            "Đây là ngoại lệ của luật 'sửa sau ca'. Hồ sơ mật bị đọc lên và mọi thứ nguy hiểm thì chặn ngay, không đợi. Nói ra chữ 'ngay giây đó' để người nghe hiểu đây không phải một góp ý. 'second' /ˈsekənd/ — trọng âm âm tiết đầu, và /s/ đầu từ chứ không phải /ʃ/.",
+        },
+        {
+          guestPrompt:
+            "Duty Manager. She starts on Monday. What is the first thing you will give her?",
+          speakerRole: "manager",
+          targetResponse:
+            "A phrase, sir, not a rule. I give her the phrase she can say tonight: 'I am asking, not promising.'",
+          helpTip:
+            "Cấp trên hỏi thì đưa ra thứ CỤ THỂ. Một điều luật phải dịch ra thành hành động mới dùng được; một câu thì dùng được ngay tối nay. 'phrase' /freɪz/ — /fr/ đọc liền không chèn nguyên âm, và đuôi /z/ hữu thanh.",
+        },
+      ],
+      reading: {
+        text: "THE ONE WHO SITS HERE NEXT MONTH\nSomebody will start at this desk in a few weeks, and she will be where you were in week one.\nShe will make three mistakes that belong to this desk in particular, and you already know all three.\nShe will read the file out loud. It is the fastest way to look useful, and it is the one thing that cannot be taken back.\nShe will promise instead of asking. A guest smiles when you promise, and the smile is why it happens.\nAnd she will say no where the house says something better: what I can do meanwhile.\nSo here is how this house teaches, and none of it is about being kind.\nNever correct her in front of a guest. Two things break at once: the guest stops trusting the desk, and she stops speaking.\nTake the turn yourself instead. 'May I take this one, madam' is enough, and nobody in the lobby learns anything about it.\nStand beside her, not in front of her. A guest who cannot see the new person learns to wait for you, and then you have two problems.\nAfter the shift, give her one thing she did well and one correction. One, not four.\nFour corrections is a list, and a list is what people stop listening to.\nGive her the phrase, not the rule. 'Do not over-promise' is a rule, and she still has nothing to say.\n'I am asking, not promising' is a phrase, and she can use it on her first evening.\nThen tell her what you got wrong in your own first month. She will not ask you a question until you do.\nThere is one exception, and it does not wait for the end of the shift.\nAnything dangerous, and anything confidential said out loud, you stop it that second.\nA file read to a friend, a corridor named to a stranger, a hand on a guest who is unwell.\nYou do not wait, you do not soften it, and you explain it afterwards.\nEverything else keeps until you are both off the floor.",
+        questions: [
+          {
+            q: "Vì sao không sửa người mới trước mặt khách?",
+            options: [
+              "Vì khách đang đứng đó sẽ phải chờ thêm trong lúc hai người trao đổi với nhau về cách làm",
+              "Vì hỏng hai thứ cùng lúc: khách mất lòng tin vào quầy, và người mới thôi dám nói",
+              "Vì đó là việc của giám sát chứ không phải của bạn",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Two things break at once: the guest stops trusting the desk, and she stops speaking.'",
+          },
+          {
+            q: "Đứng cạnh chứ không đứng trước — vì sao?",
+            options: [
+              "Vì khách không nhìn thấy người mới sẽ học cách chờ bạn, và thế là bạn có hai vấn đề",
+              "Vì đứng chắn phía trước khiến người mới không nghe rõ khách nói gì, rồi lại phải hỏi lại",
+              "Vì quy định về khoảng cách khi tiếp khách tại quầy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who cannot see the new person learns to wait for you, and then you have two problems.'",
+          },
+          {
+            q: "Sau ca, bạn đưa cho người mới bao nhiêu điều cần sửa?",
+            options: [
+              "Càng nhiều càng tốt, để họ tiến nhanh hơn",
+              "Ba tới bốn điều, chia theo từng tình huống trong ca",
+              "Đúng một, kèm một điều họ đã làm tốt",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'give her one thing she did well and one correction. One, not four.'",
+          },
+          {
+            q: "Vì sao cho CÂU tốt hơn cho LUẬT?",
+            options: [
+              "Vì luật thì phải học thuộc còn câu thì không",
+              "Vì nghe xong một điều luật, người mới vẫn chưa có gì để nói ra",
+              "Vì luật của mỗi khách sạn một khác, nên dạy luật thì sang nhà khác lại phải học lại",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: \"'Do not over-promise' is a rule, and she still has nothing to say. 'I am asking, not promising' is a phrase, and she can use it on her first evening.\"",
+          },
+          {
+            q: "Việc gì KHÔNG được đợi tới cuối ca?",
+            options: [
+              "Một lời hứa quá tay với khách quen",
+              "Một câu tiếng Anh sai ngữ pháp nói trước mặt khách",
+              "Việc nguy hiểm, và hồ sơ mật bị nói ra thành tiếng",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Anything dangerous, and anything confidential said out loud, you stop it that second.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Guest Relations. She just told 1204 the spa would definitely fit her in at six.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Go and tell her now, before she says the same thing to the next guest at the desk.",
+              correct: false,
+            },
+            {
+              text: "Leave it — the spa will probably fit the guest in anyway, so nothing is really lost.",
+              correct: false,
+            },
+            {
+              text: "After the shift. One thing she did well, and one phrase she can use tonight.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "Duty Manager. How did her first evening go?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "She was quite nervous, sir, but I think she will get there in a few weeks with practice.",
+              correct: false,
+            },
+            {
+              text: "Her apology was good, sir. After the shift: stand beside, not in front, and what I got wrong.",
+              correct: true,
+            },
+            {
+              text: "There were a few things to fix, sir, so I went through the whole list with her at the desk.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_4",
+      lessonOrder: 4,
+      titleEn: "What Forty Weeks Did Not Give You",
+      titleVi: "Điều bốn mươi tuần chưa cho bạn",
+      vocabulary: [
+        {
+          word: "My house's figures",
+          phonetic: "/maɪ ˈhaʊsɪz ˈfɪɡəz/",
+          definition: "Con số của CHÍNH khách sạn bạn — khoá học không có, phải đi hỏi",
+          context: "The course gave me the shape; my house's figures I had to ask for.",
+          icon: "🏨",
+        },
+        {
+          word: "Fits no page in this book",
+          phonetic: "/ˌfɪts nəʊ ˈpeɪdʒ ɪn ðɪs ˈbʊk/",
+          definition: "Vị khách không khớp trang nào — và cách làm thì vẫn y nguyên",
+          context: "She fits no page in this book, and the shape still works.",
+          icon: "📖",
+        },
+        {
+          word: "A phrase used twice",
+          phonetic: "/ə ˈfreɪz ˌjuːzd ˈtwaɪs/",
+          definition: "Câu nào khách dùng tới hai lần thì ghi lại — đó là tiếng Anh thật của nghề",
+          context: "A phrase used twice by two guests goes in my notebook.",
+          icon: "✍️",
+        },
+        {
+          word: "After the shift, not during",
+          phonetic: "/ˌɑːftə ðə ˈʃɪft nɒt ˈdjʊərɪŋ/",
+          definition: "Hỏi đồng nghiệp SAU ca, không hỏi giữa ca trước mặt khách",
+          context: "I ask her after the shift, not during, and she has time to answer.",
+          icon: "🕕",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The compensation limit for a case like this is around two nights, madam.",
+          polite:
+            "I do not have that limit by heart, madam. I am asking my Duty Manager, and I will be back at six.",
+          rule: "Trần bồi thường, bảng hạng thẻ, số máy lẻ Duty Manager lúc ba giờ sáng, điểm tập kết thật của toà nhà — bốn mươi tuần KHÔNG dạy bạn mấy thứ đó, vì mỗi khách sạn một khác. Đoán một con số nội bộ là lỗi nặng hơn nói 'tôi chưa thuộc'. Hỏi trong tuần đầu, và ghi vào sổ của chính bạn.",
+        },
+        {
+          rude: "Nobody has ever asked me anything like that before, sir. I really would not know.",
+          polite:
+            "That is a new one for me, sir. I know who owns it, and I will be back to you by four.",
+          rule: "Vị khách không khớp trang nào là chuyện chắc chắn xảy ra, không phải rủi ro. Khi nó xảy ra thì khuôn vẫn chạy: nghe hết, gọi tên chủ sở hữu, nói làm được gì, đặt một mốc giờ của bạn. 'That is a new one for me' thành thật mà không tự hạ thấp mình.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "What is the most your hotel would ever refund for something like this?",
+          targetResponse:
+            "I do not have my house's figures by heart, madam. My manager does, and I am asking her now.",
+          helpTip:
+            "Đừng đoán con số nội bộ, và cũng đừng xin lỗi vì không thuộc. Nói ai giữ con số đó rồi nói việc bạn đang làm. 'figures' /ˈfɪɡəz/ — trọng âm âm tiết đầu, đuôi /z/ hữu thanh chứ không phải /s/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. How do you still get better once the forty weeks are over?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A phrase used twice goes in my notebook. And I ask you after the shift, not during.",
+          helpTip:
+            "Hai thói quen, nói gọn thành hai câu. Cái thứ nhất lấy tiếng Anh từ chính khách; cái thứ hai giữ cho đồng nghiệp còn thời gian trả lời tử tế. 'notebook' /ˈnəʊtbʊk/ — /t/ ở giữa gần như nuốt, và /ʊ/ ngắn chứ không phải /uː/.",
+        },
+      ],
+      reading: {
+        text: "WHAT FORTY WEEKS DID NOT GIVE YOU\nThis book stops here. Your desk does not.\nThree things are missing from it on purpose, and knowing which three is the last lesson.\nThe first is your own house's figures.\nThe compensation limit your Duty Manager works to. Where the tier table actually sits. The extension that reaches him at three in the morning. Whether this building has a refuge area or only an assembly point.\nEvery week in this book that carried a number said the same thing next to it: that is one house's number, ask what yours is.\nGuessing an internal figure is worse than saying you do not know it yet. A guess becomes a promise the moment a guest repeats it.\nAsk for all four in your first week back, and write them where you can reach them at three in the morning.\nThe second thing missing is the guest who fits no page in this book.\nShe will arrive. Not often, but she will arrive, and the request will be one nobody wrote down.\nWhen she does, nothing changes. Listen to the end, name the owner, say what you can do meanwhile, put an hour on it, write it down, come back.\nThe shape was never about the situations. It was about what to do when you have run out of them.\nThe third thing missing is the English you have not met yet, and there is a lot of it.\nThree habits keep it growing after this book closes.\nWrite down any phrase you hear two different guests use. Two guests is not a coincidence; it is the language of the job.\nAsk a colleague after the shift, not during. In the middle of a shift you get half an answer, and she gets a worse one.\nAnd listen to how guests build the request, not only to what they are asking for. The shape of their sentence is the one you will need back.\nThere is no lesson for week forty-one. There is a shift.\nWhat this desk remembers is not the forty weeks. It is what you do on the Tuesday after them.",
+        questions: [
+          {
+            q: "Ba thứ khoá học cố tình không dạy là gì?",
+            options: [
+              "Ngữ pháp nâng cao, từ vựng chuyên ngành, và cách viết email",
+              "Con số của chính khách sạn bạn, vị khách không khớp trang nào, và phần tiếng Anh bạn chưa gặp",
+              "Cách xử lý khiếu nại lớn, cách thương lượng, và cách đào tạo người mới",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The first is your own house's figures.' · 'the guest who fits no page in this book' · 'the English you have not met yet'.",
+          },
+          {
+            q: "Vì sao đoán một con số nội bộ còn tệ hơn nói 'tôi chưa thuộc'?",
+            options: [
+              "Vì con số đoán sẽ thành một lời hứa ngay khi khách nhắc lại nó",
+              "Vì hôm sau quản lý sẽ phải ngồi giải thích lại với khách vì sao con số thật lại khác",
+              "Vì khách thường kiểm tra lại con số đó trên mạng",
+            ],
+            correct: 0,
+            explanation: "Bài đọc: 'A guess becomes a promise the moment a guest repeats it.'",
+          },
+          {
+            q: "Gặp vị khách không khớp trang nào thì làm gì?",
+            options: [
+              "Chuyển ngay cho Duty Manager vì tình huống nằm ngoài đào tạo",
+              "Không đổi gì cả: nghe hết, gọi tên chủ sở hữu, nói làm được gì, đặt mốc giờ, ghi lại, quay lại",
+              "Hỏi đồng nghiệp có kinh nghiệm ngay tại quầy trước khi trả lời",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'When she does, nothing changes. Listen to the end, name the owner, say what you can do meanwhile, put an hour on it, write it down, come back.'",
+          },
+          {
+            q: "Vì sao một câu mà HAI khách khác nhau cùng dùng thì đáng ghi lại?",
+            options: [
+              "Vì một câu đã có hai khách cùng dùng thì chắc chắn nó cũng có trong sách giáo trình",
+              "Vì hai người dùng thì dễ nhớ hơn",
+              "Vì hai khách không phải là trùng hợp — đó là tiếng Anh thật của nghề này",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Two guests is not a coincidence; it is the language of the job.'",
+          },
+          {
+            q: "Vì sao hỏi đồng nghiệp sau ca chứ không hỏi giữa ca?",
+            options: [
+              "Vì giữa ca bạn nhận được nửa câu trả lời, còn đồng nghiệp thì nhận phần tệ hơn",
+              "Vì hỏi giữa ca là vi phạm quy định của quầy",
+              "Vì sau ca thì cả hai đều rảnh tay hơn và bạn còn có thời gian ghi chép lại cho cẩn thận",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'In the middle of a shift you get half an answer, and she gets a worse one.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Guest Relations. What is our compensation ceiling? A guest is waiting at the desk.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "I think it is about two nights, but check with the Duty Manager before you say anything.",
+              correct: false,
+            },
+            {
+              text: "I do not have it by heart. Ask the Duty Manager — a guessed figure becomes a promise.",
+              correct: true,
+            },
+            {
+              text: "Whatever you decide is fine, as long as the guest signs something before she leaves.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "My mother's ashes are in my case and the airline has lost it. I do not know who to ask.",
+          options: [
+            {
+              text: "I am so sorry, madam. I am afraid the airline is really the only place that can help with that.",
+              correct: false,
+            },
+            {
+              text: "Let me give you the number for the airport office, madam, and they will take it from there.",
+              correct: false,
+            },
+            {
+              text: "I am so sorry, madam. Tell me the whole of it, and I will name who I am ringing.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
@@ -24555,6 +25254,7 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "GR-35": GR_WEEK_35,
   "GR-36": GR_WEEK_36,
   "GR-39": GR_WEEK_39,
+  "GR-40": GR_WEEK_40,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
@@ -24613,6 +25313,7 @@ const REGISTRY: Record<string, WeekContent> = {
   "GR-35": GR_WEEK_35,
   "GR-36": GR_WEEK_36,
   "GR-39": GR_WEEK_39,
+  "GR-40": GR_WEEK_40,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
   "FO-38": FO_WEEK_38,
