@@ -219,12 +219,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Khách đã thanh toán phòng bằng cách nào?",
-            options: ["A. Paid online via Agoda", "B. Pay later at front desk", "C. Cash"],
+            options: ["Paid online via Agoda", "Pay later at front desk", "Cash"],
             correct: 0,
           },
           {
             q: "David Green đã đặt loại phòng nào?",
-            options: ["A. Standard Room", "B. Superior City View", "C. Deluxe Ocean View"],
+            options: ["Standard Room", "Superior City View", "Deluxe Ocean View"],
             correct: 2,
           },
         ],
@@ -307,12 +307,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Khách quốc tế phải xuất trình giấy tờ gì khi nhận phòng?",
-            options: ["A. Credit card", "B. Original passport", "C. Flight ticket"],
+            options: ["Credit card", "Original passport", "Flight ticket"],
             correct: 1,
           },
           {
             q: "Lễ tân phải tải bản scan hộ chiếu lên khi nào?",
-            options: ["A. Next morning", "B. Before 11:00 PM", "C. After check-out"],
+            options: ["Next morning", "Before 11:00 PM", "After check-out"],
             correct: 1,
           },
         ],
@@ -419,15 +419,15 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Tiền đặt cọc được hoàn khi nào?",
-            options: ["A. At check-out time", "B. Two weeks later", "C. At dinner time"],
+            options: ["At check-out time", "Two weeks later", "At dinner time"],
             correct: 0,
           },
           {
             q: "Khi thẻ của khách không thanh toán được, tuyệt đối KHÔNG được làm gì?",
             options: [
-              "A. Ask the guest about their bank or their balance",
-              "B. Offer the other terminal",
-              "C. Ask quietly for another card",
+              "Ask the guest about their bank or their balance",
+              "Offer the other terminal",
+              "Ask quietly for another card",
             ],
             correct: 0,
           },
@@ -532,12 +532,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Hồ bơi nằm ở đâu?",
-            options: ["A. First floor", "B. On the rooftop", "C. Room 512"],
+            options: ["First floor", "On the rooftop", "Room 512"],
             correct: 1,
           },
           {
             q: "Buffet sáng miễn phí đóng lúc mấy giờ?",
-            options: ["A. 9:00 AM", "B. 10:00 AM", "C. 11:00 AM"],
+            options: ["9:00 AM", "10:00 AM", "11:00 AM"],
             correct: 1,
           },
         ],
@@ -634,19 +634,15 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khách nào KHÔNG được kèm bữa sáng?",
-            options: [
-              "A. Mr. David Green in Room 512",
-              "B. Ms. Lisa Tran in Room 608",
-              "C. Both guests",
-            ],
+            options: ["Mr. David Green in Room 512", "Ms. Lisa Tran in Room 608", "Both guests"],
             correct: 1,
           },
           {
             q: "'B&B' nghĩa là gì với khách phòng 512?",
             options: [
-              "A. Bed and Breakfast included",
-              "B. Bed only, no meals",
-              "C. Breakfast paid separately",
+              "Bed and Breakfast included",
+              "Bed only, no meals",
+              "Breakfast paid separately",
             ],
             correct: 0,
           },
@@ -734,15 +730,15 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khung giờ nào nhà hàng thường kín bàn?",
-            options: ["A. 6:00 - 7:00 AM", "B. 8:00 - 9:30 AM", "C. 10:00 - 11:00 AM"],
+            options: ["6:00 - 7:00 AM", "8:00 - 9:30 AM", "10:00 - 11:00 AM"],
             correct: 1,
           },
           {
             q: "Nên mời khách đang chờ sang đâu?",
             options: [
-              "A. Near the buffet line",
-              "B. To another restaurant",
-              "C. To the waiting area near the entrance",
+              "Near the buffet line",
+              "To another restaurant",
+              "To the waiting area near the entrance",
             ],
             correct: 2,
           },
@@ -829,12 +825,12 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Quầy bánh nằm ở đâu?",
-            options: ["A. Center", "B. Left wall", "C. Near the windows"],
+            options: ["Center", "Left wall", "Near the windows"],
             correct: 1,
           },
           {
             q: "Khách gọi được món gì ở quầy chế biến tại chỗ?",
-            options: ["A. Only bread and jam", "B. Only coffee", "C. Phở and made-to-order eggs"],
+            options: ["Only bread and jam", "Only coffee", "Phở and made-to-order eggs"],
             correct: 2,
           },
         ],
@@ -922,18 +918,18 @@ export const FB_WEEK_15: WeekContent = {
           {
             q: "Khi nào nhân viên KHÔNG được dọn đĩa?",
             options: [
-              "A. When it is empty",
-              "B. While the guest is still using cutlery on it",
-              "C. After the guest leaves",
+              "When it is empty",
+              "While the guest is still using cutlery on it",
+              "After the guest leaves",
             ],
             correct: 1,
           },
           {
             q: "Trong bữa ăn, nhân viên nên hỏi câu gì?",
             options: [
-              "A. 'Is everything to your liking?'",
-              "B. 'Are you finished?'",
-              "C. 'How much did you eat?'",
+              "'Is everything to your liking?'",
+              "'Are you finished?'",
+              "'How much did you eat?'",
             ],
             correct: 0,
           },
@@ -1040,12 +1036,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khi gõ cửa, nhân viên phải nói gì?",
-            options: ["A. Room service", "B. Housekeeping", "C. Reception"],
+            options: ["Room service", "Housekeeping", "Reception"],
             correct: 1,
           },
           {
             q: "Sau khi gõ cửa, phải chờ phản hồi bao lâu?",
-            options: ["A. At least 10 seconds", "B. 1 minute", "C. No need to wait"],
+            options: ["At least 10 seconds", "1 minute", "No need to wait"],
             correct: 0,
           },
         ],
@@ -1129,12 +1125,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khách phòng 812 xin mấy chiếc khăn tắm?",
-            options: ["A. One", "B. Two", "C. Three"],
+            options: ["One", "Two", "Three"],
             correct: 1,
           },
           {
             q: "Yêu cầu đồ dùng phải giao trong bao lâu?",
-            options: ["A. Within 15 minutes", "B. Within 1 hour", "C. Next morning"],
+            options: ["Within 15 minutes", "Within 1 hour", "Next morning"],
             correct: 0,
           },
         ],
@@ -1218,12 +1214,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Giường phụ giá bao nhiêu một đêm?",
-            options: ["A. Free", "B. 300,000 VND", "C. 500,000 VND"],
+            options: ["Free", "300,000 VND", "500,000 VND"],
             correct: 1,
           },
           {
             q: "Khách cần báo trước bao lâu để xin giường phụ?",
-            options: ["A. 2 hours", "B. 1 day", "C. No need to request"],
+            options: ["2 hours", "1 day", "No need to request"],
             correct: 0,
           },
         ],
@@ -1313,15 +1309,15 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
-            options: ["A. Past 2:00 PM", "B. Past 6:00 PM", "C. Immediately in the morning"],
+            options: ["Past 2:00 PM", "Past 6:00 PM", "Immediately in the morning"],
             correct: 0,
           },
           {
             q: "Nếu gọi điện không ai bắt máy, nhân viên phải làm gì?",
             options: [
-              "A. Enter the room anyway",
-              "B. Leave a voicemail and slip a note under the door",
-              "C. Ignore the room",
+              "Enter the room anyway",
+              "Leave a voicemail and slip a note under the door",
+              "Ignore the room",
             ],
             correct: 1,
           },
@@ -1433,16 +1429,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Trong lúc xoa bóp, kỹ thuật viên phải tránh vùng nào?",
-            options: [
-              "A. The guest's arms",
-              "B. The guest's lower back",
-              "C. The guest's shoulders",
-            ],
+            options: ["The guest's arms", "The guest's lower back", "The guest's shoulders"],
             correct: 1,
           },
           {
             q: "Khách bị dị ứng gì?",
-            options: ["A. Peanut oil", "B. Lavender", "C. Nuts and dairy"],
+            options: ["Peanut oil", "Lavender", "Nuts and dairy"],
             correct: 0,
           },
         ],
@@ -1529,15 +1521,15 @@ export const SW_WEEK_23: WeekContent = {
           {
             q: "Liệu trình nào dùng đá bazan làm nóng?",
             options: [
-              "A. Traditional Vietnamese Massage",
-              "B. Hot Stone Massage",
-              "C. Herbal Steam Therapy",
+              "Traditional Vietnamese Massage",
+              "Hot Stone Massage",
+              "Herbal Steam Therapy",
             ],
             correct: 1,
           },
           {
             q: "Liệu trình xông thảo mộc kéo dài bao lâu?",
-            options: ["A. 30 minutes", "B. 60 minutes", "C. 75 minutes"],
+            options: ["30 minutes", "60 minutes", "75 minutes"],
             correct: 0,
           },
         ],
@@ -1627,12 +1619,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Gói Couple's Combo tặng kèm những gì?",
-            options: ["A. Herbal tea for two", "B. A free foot scrub", "C. A discount voucher"],
+            options: ["Herbal tea for two", "A free foot scrub", "A discount voucher"],
             correct: 0,
           },
           {
             q: "Gói Family Care có hiệu lực bao lâu?",
-            options: ["A. 1 month", "B. 3 months", "C. 1 year"],
+            options: ["1 month", "3 months", "1 year"],
             correct: 1,
           },
         ],
@@ -1723,20 +1715,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Sản phẩm nào hợp nhất với da nhạy cảm, bị nắng?",
-            options: [
-              "A. Lavender Essential Oil",
-              "B. Ginger Body Scrub",
-              "C. Aloe Vera Moisturizer",
-            ],
+            options: ["Lavender Essential Oil", "Ginger Body Scrub", "Aloe Vera Moisturizer"],
             correct: 2,
           },
           {
             q: "Tinh dầu oải hương dùng để làm gì?",
-            options: [
-              "A. Improves circulation",
-              "B. Relaxation and sleep support",
-              "C. Sun protection",
-            ],
+            options: ["Improves circulation", "Relaxation and sleep support", "Sun protection"],
             correct: 1,
           },
         ],
@@ -1844,16 +1828,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Executive Lounge đóng cửa lúc mấy giờ?",
-            options: ["A. 8:00 PM", "B. 10:00 PM", "C. 2:00 PM"],
+            options: ["8:00 PM", "10:00 PM", "2:00 PM"],
             correct: 1,
           },
           {
             q: "Ngoài bữa sáng và đồ uống còn kèm gì?",
-            options: [
-              "A. Free spa treatment",
-              "B. Free garment pressing",
-              "C. Free airport transfer",
-            ],
+            options: ["Free spa treatment", "Free garment pressing", "Free airport transfer"],
             correct: 1,
           },
         ],
@@ -1944,15 +1924,15 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Khách dùng trà chiều được vào khung giờ nào?",
-            options: ["A. 7:00 - 10:30 AM", "B. 3:00 - 5:00 PM", "C. 6:00 - 8:00 PM"],
+            options: ["7:00 - 10:30 AM", "3:00 - 5:00 PM", "6:00 - 8:00 PM"],
             correct: 1,
           },
           {
             q: "Quy định độ tuổi vào phòng chờ là gì?",
             options: [
-              "A. No children allowed at all",
-              "B. Children under 12 welcome only before 6:00 PM",
-              "C. Children must be accompanied after 8:00 PM",
+              "No children allowed at all",
+              "Children under 12 welcome only before 6:00 PM",
+              "Children must be accompanied after 8:00 PM",
             ],
             correct: 1,
           },
@@ -2046,12 +2026,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Khách cần bao nhiêu bản sao tài liệu?",
-            options: ["A. 1 copy", "B. 5 copies", "C. 10 copies"],
+            options: ["1 copy", "5 copies", "10 copies"],
             correct: 1,
           },
           {
             q: "Tài liệu đang in là loại gì?",
-            options: ["A. Confidential", "B. Public", "C. Marketing material"],
+            options: ["Confidential", "Public", "Marketing material"],
             correct: 0,
           },
         ],
@@ -2142,16 +2122,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Ông Carter thích uống cà phê thế nào?",
-            options: ["A. Black, no sugar", "B. With milk and sugar", "C. Black with sugar"],
+            options: ["Black, no sugar", "With milk and sugar", "Black with sugar"],
             correct: 0,
           },
           {
             q: "Cần chuẩn bị riêng điều gì cho ông Carter?",
-            options: [
-              "A. Airport pickup",
-              "B. A small cake for his anniversary",
-              "C. Extra towels",
-            ],
+            options: ["Airport pickup", "A small cake for his anniversary", "Extra towels"],
             correct: 1,
           },
         ],
@@ -2262,16 +2238,12 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Mức giá doanh nghiệp này đòi sản lượng tối thiểu bao nhiêu?",
-            options: [
-              "A. 100 room-nights/month",
-              "B. 150 room-nights/month",
-              "C. 200 room-nights/month",
-            ],
+            options: ["100 room-nights/month", "150 room-nights/month", "200 room-nights/month"],
             correct: 1,
           },
           {
             q: "Hợp đồng có thời hạn bao lâu?",
-            options: ["A. 6 months", "B. 12 months", "C. 24 months"],
+            options: ["6 months", "12 months", "24 months"],
             correct: 1,
           },
         ],
@@ -2359,15 +2331,15 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Khách sạn giữ bao nhiêu phòng mỗi đêm cho đối tác?",
-            options: ["A. 5 rooms", "B. 10 rooms", "C. 15 rooms"],
+            options: ["5 rooms", "10 rooms", "15 rooms"],
             correct: 1,
           },
           {
             q: "Phòng không được xác nhận trong hạn giữ chỗ sẽ ra sao?",
             options: [
-              "A. They are held for another week",
-              "B. They are released back to general inventory",
-              "C. They are given a discount",
+              "They are held for another week",
+              "They are released back to general inventory",
+              "They are given a discount",
             ],
             correct: 1,
           },
@@ -2459,12 +2431,12 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Dịp lễ nào bị liệt vào ngày không áp dụng giá?",
-            options: ["A. Christmas", "B. Tet Holiday", "C. National Day"],
+            options: ["Christmas", "Tet Holiday", "National Day"],
             correct: 1,
           },
           {
             q: "Hủy dưới 14 ngày trước ngày đến thì bị phạt thế nào?",
-            options: ["A. No penalty", "B. One night's rate", "C. Full stay charge"],
+            options: ["No penalty", "One night's rate", "Full stay charge"],
             correct: 1,
           },
         ],
@@ -2558,15 +2530,15 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Khách sạn đối thủ chào mức hoa hồng bao nhiêu?",
-            options: ["A. 10%", "B. 12%", "C. 15%"],
+            options: ["10%", "12%", "15%"],
             correct: 2,
           },
           {
             q: "Đối tác nói điều gì có thể xảy ra nếu không theo được mức giá đó?",
             options: [
-              "A. They will end the partnership immediately",
-              "B. They may shift allocation next quarter",
-              "C. They will sue the hotel",
+              "They will end the partnership immediately",
+              "They may shift allocation next quarter",
+              "They will sue the hotel",
             ],
             correct: 1,
           },
@@ -2682,12 +2654,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Trong đoàn có bao nhiêu phòng cần giường phụ?",
-            options: ["A. 20", "B. 5", "C. 2"],
+            options: ["20", "5", "2"],
             correct: 1,
           },
           {
             q: "Hai khách có ghi chú yêu cầu đặc biệt gì?",
-            options: ["A. Early check-in", "B. Extra pillows", "C. Low floor rooms"],
+            options: ["Early check-in", "Extra pillows", "Low floor rooms"],
             correct: 2,
           },
         ],
@@ -2779,12 +2751,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Trước khi đoàn đến phải chuẩn bị gì?",
-            options: ["A. Key packets", "B. Luggage tags only", "C. Nothing"],
+            options: ["Key packets", "Luggage tags only", "Nothing"],
             correct: 0,
           },
           {
             q: "Ai đưa hành lý thẳng lên phòng?",
-            options: ["A. Front desk staff", "B. The bellman team", "C. The tour leader"],
+            options: ["Front desk staff", "The bellman team", "The tour leader"],
             correct: 1,
           },
         ],
@@ -2876,12 +2848,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Ông Trần và ông Lê yêu cầu gì về phòng của họ?",
-            options: ["A. To swap rooms", "B. To upgrade rooms", "C. To cancel their rooms"],
+            options: ["To swap rooms", "To upgrade rooms", "To cancel their rooms"],
             correct: 0,
           },
           {
             q: "Khách yêu cầu đổi gì trong cách xuất hóa đơn?",
-            options: ["A. One combined bill", "B. Separate folios", "C. No bill needed"],
+            options: ["One combined bill", "Separate folios", "No bill needed"],
             correct: 1,
           },
         ],
@@ -2973,12 +2945,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Đoàn sẽ ăn sáng ở đâu?",
-            options: ["A. Lotus Private Hall", "B. Main Lobby", "C. Rooftop Restaurant"],
+            options: ["Lotus Private Hall", "Main Lobby", "Rooftop Restaurant"],
             correct: 0,
           },
           {
             q: "Xe đưa đón khởi hành lúc mấy giờ?",
-            options: ["A. 07:00 AM", "B. 07:55 AM", "C. 08:00 AM"],
+            options: ["07:00 AM", "07:55 AM", "08:00 AM"],
             correct: 2,
           },
         ],
@@ -3080,16 +3052,12 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Nước dùng bò được ninh trong bao lâu?",
-            options: ["A. 2 hours", "B. 8 hours", "C. 1 hour"],
+            options: ["2 hours", "8 hours", "1 hour"],
             correct: 1,
           },
           {
             q: "Theo lời bếp trưởng, khi nào mới cho rau thơm vào?",
-            options: [
-              "A. While the broth is simmering",
-              "B. Just before eating",
-              "C. The night before",
-            ],
+            options: ["While the broth is simmering", "Just before eating", "The night before"],
             correct: 1,
           },
         ],
@@ -3179,15 +3147,15 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Pha phin truyền thống mất bao lâu?",
-            options: ["A. 4-5 minutes", "B. 30 seconds", "C. 1 hour"],
+            options: ["4-5 minutes", "30 seconds", "1 hour"],
             correct: 0,
           },
           {
             q: "What makes Bạc Sỉu different from Cà Phê Sữa Đá?",
             options: [
-              "A. It has no coffee at all",
-              "B. It has a higher ratio of condensed milk",
-              "C. It is always served hot",
+              "It has no coffee at all",
+              "It has a higher ratio of condensed milk",
+              "It is always served hot",
             ],
             correct: 1,
           },
@@ -3280,15 +3248,15 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Bà Carter bị dị ứng gì?",
-            options: ["A. Peanut allergy", "B. Seafood allergy", "C. Dairy allergy"],
+            options: ["Peanut allergy", "Seafood allergy", "Dairy allergy"],
             correct: 0,
           },
           {
             q: "Theo ghi chú, bếp phải làm gì trước khi phục vụ?",
             options: [
-              "A. Nothing special",
-              "B. Confirm all sauces and use a separate pan",
-              "C. Add extra peanut oil",
+              "Nothing special",
+              "Confirm all sauces and use a separate pan",
+              "Add extra peanut oil",
             ],
             correct: 1,
           },
@@ -3380,15 +3348,15 @@ export const FB_WEEK_31: WeekContent = {
           {
             q: "Món nào được gợi ý cho khách thích ăn cay?",
             options: [
-              "A. Stir-Fried Morning Glory",
-              "B. Grilled Squid with Chili Lime Sauce",
-              "C. Grilled Lemongrass Beef",
+              "Stir-Fried Morning Glory",
+              "Grilled Squid with Chili Lime Sauce",
+              "Grilled Lemongrass Beef",
             ],
             correct: 1,
           },
           {
             q: "Món bò nướng sả hợp với món gì?",
-            options: ["A. Red wine", "B. Iced coffee", "C. Green tea"],
+            options: ["Red wine", "Iced coffee", "Green tea"],
             correct: 0,
           },
         ],
@@ -3499,12 +3467,12 @@ export const HK_WEEK_33: WeekContent = {
         questions: [
           {
             q: "Khách gửi giặt mấy chiếc quần?",
-            options: ["A. 1", "B. 2", "C. 3"],
+            options: ["1", "2", "3"],
             correct: 1,
           },
           {
             q: "Trước khi nhận đồ đã ghi nhận tình trạng gì?",
-            options: ["A. A missing button", "B. A torn sleeve", "C. A small stain on the collar"],
+            options: ["A missing button", "A torn sleeve", "A small stain on the collar"],
             correct: 2,
           },
         ],
@@ -3592,15 +3560,15 @@ export const HK_WEEK_33: WeekContent = {
         questions: [
           {
             q: "Giặt khô tính phụ thu bao nhiêu?",
-            options: ["A. +50%", "B. +30%", "C. No extra charge"],
+            options: ["+50%", "+30%", "No extra charge"],
             correct: 1,
           },
           {
             q: "Đơn giặt nhanh đặt sau 18h thì sao?",
             options: [
-              "A. It is cancelled",
-              "B. It is delivered within 4 hours anyway",
-              "C. It is delivered the next morning",
+              "It is cancelled",
+              "It is delivered within 4 hours anyway",
+              "It is delivered the next morning",
             ],
             correct: 2,
           },
@@ -3695,18 +3663,18 @@ export const HK_WEEK_33: WeekContent = {
           {
             q: "Khách phản ánh hai vấn đề gì?",
             options: [
-              "A. Faded color and missing button",
-              "B. Torn sleeve and wrong size",
-              "C. Wrong item returned",
+              "Faded color and missing button",
+              "Torn sleeve and wrong size",
+              "Wrong item returned",
             ],
             correct: 0,
           },
           {
             q: "Sự việc được báo lên ai?",
             options: [
-              "A. The Front Office Manager",
-              "B. The Housekeeping Supervisor",
-              "C. The Laundry Vendor directly",
+              "The Front Office Manager",
+              "The Housekeeping Supervisor",
+              "The Laundry Vendor directly",
             ],
             correct: 1,
           },
@@ -3800,16 +3768,12 @@ export const HK_WEEK_33: WeekContent = {
         questions: [
           {
             q: "Hư hỏng nhẹ như vết ố được bồi thường thế nào?",
-            options: ["A. Cash refund", "B. Free re-cleaning", "C. 10x the laundry fee"],
+            options: ["Cash refund", "Free re-cleaning", "10x the laundry fee"],
             correct: 1,
           },
           {
             q: "Bồi thường trên 1.200.000 đồng cần điều kiện gì?",
-            options: [
-              "A. Guest signature only",
-              "B. Duty Manager sign-off",
-              "C. No approval needed",
-            ],
+            options: ["Guest signature only", "Duty Manager sign-off", "No approval needed"],
             correct: 1,
           },
         ],
@@ -3921,12 +3885,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Khách cần gì để dùng tủ khóa?",
-            options: ["A. A separate rental fee", "B. Their room key card", "C. A signed form"],
+            options: ["A separate rental fee", "Their room key card", "A signed form"],
             correct: 1,
           },
           {
             q: "Cần đặt chòi riêng trước bao lâu?",
-            options: ["A. At least 30 minutes", "B. At least 2 hours", "C. One full day"],
+            options: ["At least 30 minutes", "At least 2 hours", "One full day"],
             correct: 1,
           },
         ],
@@ -4017,12 +3981,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Theo nội quy, trẻ dưới 12 tuổi xuống hồ phải có ai đi kèm?",
-            options: ["A. A swimming certificate", "B. An adult", "C. A pool pass"],
+            options: ["A swimming certificate", "An adult", "A pool pass"],
             correct: 1,
           },
           {
             q: "Ở khu nước nông không được làm gì?",
-            options: ["A. Diving", "B. Floating", "C. Standing"],
+            options: ["Diving", "Floating", "Standing"],
             correct: 0,
           },
         ],
@@ -4112,16 +4076,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Cờ đỏ cảnh báo cấm điều gì?",
-            options: [
-              "A. Swimming in the ocean",
-              "B. Sitting on the beach deck",
-              "C. Using the pool",
-            ],
+            options: ["Swimming in the ocean", "Sitting on the beach deck", "Using the pool"],
             correct: 0,
           },
           {
             q: "Trong lúc có cảnh báo, khu nào vẫn mở?",
-            options: ["A. The beach shoreline", "B. The pool", "C. The private cabanas"],
+            options: ["The beach shoreline", "The pool", "The private cabanas"],
             correct: 1,
           },
         ],
@@ -4211,16 +4171,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Gặp khách bị say nắng, việc đầu tiên phải làm là gì?",
-            options: [
-              "A. Give them coffee",
-              "B. Move them to the shade",
-              "C. Ask them to keep swimming",
-            ],
+            options: ["Give them coffee", "Move them to the shade", "Ask them to keep swimming"],
             correct: 1,
           },
           {
             q: "Ca nặng thì gọi số máy lẻ nào?",
-            options: ["A. Ext. 100", "B. Ext. 115", "C. Ext. 911"],
+            options: ["Ext. 100", "Ext. 115", "Ext. 911"],
             correct: 1,
           },
         ],
@@ -4333,17 +4289,17 @@ export const GR_WEEK_34: WeekContent = {
             q: "Dấu hiệu nào khiến nhân viên đoán khách đang có dịp đặc biệt?",
             options: [
               'A. They mentioned a "first anniversary trip"',
-              "B. They asked for extra towels",
-              "C. They requested a late checkout",
+              "They asked for extra towels",
+              "They requested a late checkout",
             ],
             correct: 0,
           },
           {
             q: "Sau khi nhận ra điều đó, nhân viên nên làm gì?",
             options: [
-              "A. Ignore it and continue as normal",
-              "B. Ask the guest first, then flag the profile and notify the GR Manager",
-              "C. Ask the guests to confirm in writing",
+              "Ignore it and continue as normal",
+              "Ask the guest first, then flag the profile and notify the GR Manager",
+              "Ask the guests to confirm in writing",
             ],
             correct: 1,
           },
@@ -4437,12 +4393,12 @@ export const GR_WEEK_34: WeekContent = {
         questions: [
           {
             q: "Buồng phòng phải trang trí xong trước mấy giờ?",
-            options: ["A. 6:15 PM", "B. 6:30 PM", "C. 6:45 PM"],
+            options: ["6:15 PM", "6:30 PM", "6:45 PM"],
             correct: 1,
           },
           {
             q: "GR phải xác nhận điều gì trước 18h15?",
-            options: ["A. Room access with the guest", "B. The cake flavor", "C. The petal color"],
+            options: ["Room access with the guest", "The cake flavor", "The petal color"],
             correct: 0,
           },
         ],
@@ -4536,16 +4492,12 @@ export const GR_WEEK_34: WeekContent = {
         questions: [
           {
             q: "Khi bưng bánh hoặc quà vào phòng, phải cầm thế nào?",
-            options: ["A. With both hands", "B. Behind their back", "C. On a rolling cart only"],
+            options: ["With both hands", "Behind their back", "On a rolling cart only"],
             correct: 0,
           },
           {
             q: "Bước 2 trong checklist là gì?",
-            options: [
-              "A. Offer photo assistance",
-              "B. Knock and announce politely",
-              "C. Exit the room",
-            ],
+            options: ["Offer photo assistance", "Knock and announce politely", "Exit the room"],
             correct: 1,
           },
         ],
@@ -4640,19 +4592,15 @@ export const GR_WEEK_34: WeekContent = {
           {
             q: "Sự cố này mô tả lỗi gì?",
             options: [
-              "A. Wrong cake flavor and a misspelled name",
-              "B. Late delivery only",
-              "C. Wrong room number",
+              "Wrong cake flavor and a misspelled name",
+              "Late delivery only",
+              "Wrong room number",
             ],
             correct: 0,
           },
           {
             q: "GR đã tặng khách gì để bày tỏ thiện chí?",
-            options: [
-              "A. A room discount",
-              "B. A complimentary bottle of wine",
-              "C. A free extra night",
-            ],
+            options: ["A room discount", "A complimentary bottle of wine", "A free extra night"],
             correct: 1,
           },
         ],
@@ -4764,12 +4712,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Hội nghị có bao nhiêu đại biểu tham dự?",
-            options: ["A. 15", "B. 200", "C. 20"],
+            options: ["15", "200", "20"],
             correct: 1,
           },
           {
             q: "Hạn nộp đề xuất là khi nào?",
-            options: ["A. 15 October", "B. 17 October", "C. 25 July"],
+            options: ["15 October", "17 October", "25 July"],
             correct: 2,
           },
         ],
@@ -4857,16 +4805,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Ballroom B kê kiểu lớp học chứa được bao nhiêu khách?",
-            options: ["A. 250", "B. 150", "C. 180"],
+            options: ["250", "150", "180"],
             correct: 1,
           },
           {
             q: "Ballroom B có ánh sáng tự nhiên không?",
-            options: [
-              "A. No windows at all",
-              "B. Yes, with blackout curtains",
-              "C. Only in the evening",
-            ],
+            options: ["No windows at all", "Yes, with blackout curtains", "Only in the evening"],
             correct: 1,
           },
         ],
@@ -4955,12 +4899,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Màn hình LED tính thêm bao nhiêu?",
-            options: ["A. $300", "B. $400", "C. Free of charge"],
+            options: ["$300", "$400", "Free of charge"],
             correct: 0,
           },
           {
             q: "Trước sự kiện cần bao nhiêu thời gian dựng?",
-            options: ["A. 1 hour", "B. 3 hours", "C. 30 minutes"],
+            options: ["1 hour", "3 hours", "30 minutes"],
             correct: 1,
           },
         ],
@@ -5050,16 +4994,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Khi nào phải chốt số khách cuối cùng?",
-            options: [
-              "A. On the event day",
-              "B. 3 days before the event",
-              "C. 1 week after signing",
-            ],
+            options: ["On the event day", "3 days before the event", "1 week after signing"],
             correct: 1,
           },
           {
             q: "BEO hiện đang ở trạng thái nào?",
-            options: ["A. Confirmed and paid", "B. Cancelled", "C. Pending client sign-off"],
+            options: ["Confirmed and paid", "Cancelled", "Pending client sign-off"],
             correct: 2,
           },
         ],
@@ -5183,15 +5123,15 @@ export const FO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Bảo tàng thành phố đóng cửa vào ngày nào?",
-            options: ["A. Sundays", "B. Mondays", "C. It never closes"],
+            options: ["Sundays", "Mondays", "It never closes"],
             correct: 1,
           },
           {
             q: "Theo ghi chú, mùa mưa thì nhân viên nên làm gì trước khi khách rời quầy?",
             options: [
-              "A. Offer the guest an umbrella from the desk",
-              "B. Tell the guest to stay in the hotel",
-              "C. Cancel the guest's plan",
+              "Offer the guest an umbrella from the desk",
+              "Tell the guest to stay in the hotel",
+              "Cancel the guest's plan",
             ],
             correct: 0,
           },
@@ -5283,12 +5223,12 @@ export const FO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Đi sân bay vào giờ cao điểm mất bao lâu?",
-            options: ["A. 40 minutes", "B. 60-70 minutes", "C. 8 minutes"],
+            options: ["40 minutes", "60-70 minutes", "8 minutes"],
             correct: 1,
           },
           {
             q: "Chuyến nửa ngày về khách sạn lúc mấy giờ?",
-            options: ["A. 12:30", "B. 17:00", "C. 18:00"],
+            options: ["12:30", "17:00", "18:00"],
             correct: 0,
           },
         ],
@@ -5388,18 +5328,18 @@ export const FO_WEEK_37: WeekContent = {
           {
             q: "Vì sao không nên gợi ý chùa trên đồi cho gia đình có trẻ nhỏ?",
             options: [
-              "A. It is too expensive",
-              "B. There are 200 steps and no stroller access",
-              "C. It closes early",
+              "It is too expensive",
+              "There are 200 steps and no stroller access",
+              "It closes early",
             ],
             correct: 1,
           },
           {
             q: "Khách không nói được tiếng Việt và ít thời gian thì hợp với lựa chọn nào?",
             options: [
-              "A. The walking map on their own",
-              "B. The boat route",
-              "C. A guided tour with an English-speaking guide",
+              "The walking map on their own",
+              "The boat route",
+              "A guided tour with an English-speaking guide",
             ],
             correct: 2,
           },
@@ -5496,18 +5436,18 @@ export const FO_WEEK_37: WeekContent = {
           {
             q: "Nhân viên đã làm gì sau khi biết du thuyền hết chỗ?",
             options: [
-              "A. Told the guest to try again another time",
-              "B. Held two seats for the next evening and offered a walk tonight",
-              "C. Asked the guest to pay a deposit",
+              "Told the guest to try again another time",
+              "Held two seats for the next evening and offered a walk tonight",
+              "Asked the guest to pay a deposit",
             ],
             correct: 1,
           },
           {
             q: "Ngày hôm sau phải làm gì lúc 17h?",
             options: [
-              "A. Follow up to reconfirm the cruise pick-up",
-              "B. Cancel the booking",
-              "C. Send the guest a new map",
+              "Follow up to reconfirm the cruise pick-up",
+              "Cancel the booking",
+              "Send the guest a new map",
             ],
             correct: 0,
           },
@@ -5618,15 +5558,15 @@ export const FO_WEEK_38: WeekContent = {
           {
             q: "Khách được đón lúc mấy giờ và ở đâu?",
             options: [
-              "A. 08:00 at the car park",
-              "B. 07:45 at the main lobby door",
-              "C. 06:45 in the restaurant",
+              "08:00 at the car park",
+              "07:45 at the main lobby door",
+              "06:45 in the restaurant",
             ],
             correct: 1,
           },
           {
             q: "Quầy phải xác nhận lại với công ty tour vào lúc nào?",
-            options: ["A. Thursday 08:00", "B. Wednesday 18:00", "C. Thursday 07:45"],
+            options: ["Thursday 08:00", "Wednesday 18:00", "Thursday 07:45"],
             correct: 1,
           },
         ],
@@ -5719,15 +5659,15 @@ export const FO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Xe khách sạn đi sân bay có giá bao nhiêu?",
-            options: ["A. 380,000 VND", "B. 450,000 VND fixed", "C. It depends on the meter"],
+            options: ["380,000 VND", "450,000 VND fixed", "It depends on the meter"],
             correct: 1,
           },
           {
             q: "Nếu khách quay lại phàn nàn về giá cước thì phải làm gì?",
             options: [
-              "A. Log the plate number and amount, then inform the Duty Manager",
-              "B. Pay the difference from the desk float",
-              "C. Ask the guest to call the taxi company",
+              "Log the plate number and amount, then inform the Duty Manager",
+              "Pay the difference from the desk float",
+              "Ask the guest to call the taxi company",
             ],
             correct: 0,
           },
@@ -5827,15 +5767,15 @@ export const FO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Nhà hàng nào phù hợp nhất cho khách ăn chay?",
-            options: ["A. Riverside Terrace", "B. Street Kitchen", "C. Lotus Vegetarian"],
+            options: ["Riverside Terrace", "Street Kitchen", "Lotus Vegetarian"],
             correct: 2,
           },
           {
             q: "Khi gọi điện đặt bàn, phải cung cấp những thông tin nào?",
             options: [
-              "A. Only the guest's room number",
-              "B. Name, head count, time, and any dietary requirement",
-              "C. The guest's passport number",
+              "Only the guest's room number",
+              "Name, head count, time, and any dietary requirement",
+              "The guest's passport number",
             ],
             correct: 1,
           },
@@ -5930,15 +5870,15 @@ export const FO_WEEK_38: WeekContent = {
           {
             q: "Nếu khách làm mất phiếu nhận hành lý thì phải làm gì?",
             options: [
-              "A. Give the bag anyway if the guest describes it",
-              "B. Check photo ID against the log and call the Duty Manager",
-              "C. Keep the bag until the next day",
+              "Give the bag anyway if the guest describes it",
+              "Check photo ID against the log and call the Duty Manager",
+              "Keep the bag until the next day",
             ],
             correct: 1,
           },
           {
             q: "Khách đã trả phòng dùng được phòng tắm ban ngày tới mấy giờ?",
-            options: ["A. 12:00", "B. 18:00", "C. 21:00"],
+            options: ["12:00", "18:00", "21:00"],
             correct: 1,
           },
         ],
@@ -6057,18 +5997,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Theo thẻ quy trình, việc đầu tiên phải làm là gì?",
             options: [
-              "A. Ask the guest for details first",
-              "B. Send help first and ask questions second",
-              "C. Find the guest's insurance card",
+              "Ask the guest for details first",
+              "Send help first and ask questions second",
+              "Find the guest's insurance card",
             ],
             correct: 1,
           },
           {
             q: "Hai điều tuyệt đối KHÔNG được làm là gì?",
             options: [
-              "A. Move the guest and give any medicine",
-              "B. Call the Duty Manager and the doctor",
-              "C. Ask about allergies and symptoms",
+              "Move the guest and give any medicine",
+              "Call the Duty Manager and the doctor",
+              "Ask about allergies and symptoms",
             ],
             correct: 0,
           },
@@ -6171,18 +6111,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Vì sao không được tự rời đi lấy đồ?",
             options: [
-              "A. Because a colleague should be sent instead and the guest is never left alone",
-              "B. Because the equipment is locked away",
-              "C. Because the manager has to approve it",
+              "Because a colleague should be sent instead and the guest is never left alone",
+              "Because the equipment is locked away",
+              "Because the manager has to approve it",
             ],
             correct: 0,
           },
           {
             q: "Với khách bị dị ứng, nhân viên được phép làm gì?",
             options: [
-              "A. Choose a suitable medicine from the first aid box",
-              "B. Help the guest reach their own medicine, but not choose or give any",
-              "C. Give water and wait",
+              "Choose a suitable medicine from the first aid box",
+              "Help the guest reach their own medicine, but not choose or give any",
+              "Give water and wait",
             ],
             correct: 1,
           },
@@ -6276,18 +6216,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải xin giấy khám bệnh bằng tiếng Anh?",
             options: [
-              "A. Because the hotel needs a copy for its records",
-              "B. Because without it the guest's insurance claim will be refused at home",
-              "C. Because the clinic charges less for it",
+              "Because the hotel needs a copy for its records",
+              "Because without it the guest's insurance claim will be refused at home",
+              "Because the clinic charges less for it",
             ],
             correct: 1,
           },
           {
             q: "Nơi nào nhận cấp cứu 24 giờ và thanh toán trực tiếp với bảo hiểm?",
             options: [
-              "A. The Provincial Hospital",
-              "B. The dental emergency clinic",
-              "C. The International Clinic",
+              "The Provincial Hospital",
+              "The dental emergency clinic",
+              "The International Clinic",
             ],
             correct: 2,
           },
@@ -6381,18 +6321,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Biên bản sự việc được phép ghi những gì?",
             options: [
-              "A. Facts only — time, room, what was observed and done, who was called",
-              "B. The staff member's opinion on what caused it",
-              "C. A diagnosis from the hotel nurse",
+              "Facts only — time, room, what was observed and done, who was called",
+              "The staff member's opinion on what caused it",
+              "A diagnosis from the hotel nurse",
             ],
             correct: 0,
           },
           {
             q: "Sau khi khách từ bệnh viện về, buồng phòng được dặn điều gì?",
             options: [
-              "A. To clean the room early in the morning",
-              "B. Not to knock in the morning",
-              "C. To ask the guest about the hospital",
+              "To clean the room early in the morning",
+              "Not to knock in the morning",
+              "To ask the guest about the hospital",
             ],
             correct: 1,
           },
@@ -6505,15 +6445,15 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Trong thời gian có cảnh báo, khu vực nào vẫn mở bình thường?",
             options: [
-              "A. The beach and the outdoor pool",
-              "B. The spa, the gym and the kids club",
-              "C. The rooftop bar",
+              "The beach and the outdoor pool",
+              "The spa, the gym and the kids club",
+              "The rooftop bar",
             ],
             correct: 1,
           },
           {
             q: "Thông báo mới được cập nhật bao lâu một lần?",
-            options: ["A. Every hour", "B. Every three hours", "C. Once a day"],
+            options: ["Every hour", "Every three hours", "Once a day"],
             correct: 1,
           },
         ],
@@ -6606,18 +6546,18 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Thứ tự phương án được đưa ra cho khách là gì?",
             options: [
-              "A. Refund, then rain check, then a new date",
-              "B. A new date, then a rain check, then a full refund",
-              "C. Only a full refund",
+              "Refund, then rain check, then a new date",
+              "A new date, then a rain check, then a full refund",
+              "Only a full refund",
             ],
             correct: 1,
           },
           {
             q: "Vì sao phải gọi trước cho nhóm khách rời đi sớm?",
             options: [
-              "A. Because they can only be offered a refund",
-              "B. Because they booked the most expensive tour",
-              "C. Because they are lounge members",
+              "Because they can only be offered a refund",
+              "Because they booked the most expensive tour",
+              "Because they are lounge members",
             ],
             correct: 0,
           },
@@ -6721,18 +6661,18 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Khách bị mắc kẹt được tính giá phòng thế nào?",
             options: [
-              "A. The walk-in rate for the extra nights",
-              "B. The same rate the guest already booked",
-              "C. Half the normal rate",
+              "The walk-in rate for the extra nights",
+              "The same rate the guest already booked",
+              "Half the normal rate",
             ],
             correct: 1,
           },
           {
             q: "Khách cần chứng từ cho bảo hiểm thì khách sạn cấp gì?",
             options: [
-              "A. A letter confirming the dates and the reason for the extension",
-              "B. A copy of the weather warning",
-              "C. A new booking confirmation only",
+              "A letter confirming the dates and the reason for the extension",
+              "A copy of the weather warning",
+              "A new booking confirmation only",
             ],
             correct: 0,
           },
@@ -6826,15 +6766,15 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Máy phát điện KHÔNG cấp điện cho thứ gì?",
             options: [
-              "A. The corridors and the lifts",
-              "B. Room air-conditioning and the minibar fridge",
-              "C. The fire systems",
+              "The corridors and the lifts",
+              "Room air-conditioning and the minibar fridge",
+              "The fire systems",
             ],
             correct: 1,
           },
           {
             q: "Trong bão, điểm tập trung là ở đâu?",
-            options: ["A. The garden", "B. The car park", "C. The main ballroom"],
+            options: ["The garden", "The car park", "The main ballroom"],
             correct: 2,
           },
         ],
@@ -6953,18 +6893,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Món của trẻ được phục vụ vào lúc nào?",
             options: [
-              "A. At the same time as the adults' food",
-              "B. First, before the adults' food",
-              "C. After the adults have finished",
+              "At the same time as the adults' food",
+              "First, before the adults' food",
+              "After the adults have finished",
             ],
             correct: 1,
           },
           {
             q: "Trong vòng 3 phút sau khi gia đình ngồi xuống, phải mang gì ra bàn?",
             options: [
-              "A. Bread, fruit or plain rice, without waiting for the order",
-              "B. The bill folder",
-              "C. The wine list",
+              "Bread, fruit or plain rice, without waiting for the order",
+              "The bill folder",
+              "The wine list",
             ],
             correct: 0,
           },
@@ -7066,15 +7006,15 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Nhà hàng phải làm gì để yêu cầu Halal được bếp chấp nhận?",
             options: [
-              "A. Tell the kitchen staff verbally",
-              "B. Write HALAL on the order slip",
-              "C. Ask the guest to speak to the chef",
+              "Tell the kitchen staff verbally",
+              "Write HALAL on the order slip",
+              "Ask the guest to speak to the chef",
             ],
             correct: 1,
           },
           {
             q: "Món nào KHÔNG có chứng nhận Halal?",
-            options: ["A. The beef", "B. The chicken", "C. The seafood"],
+            options: ["The beef", "The chicken", "The seafood"],
             correct: 2,
           },
         ],
@@ -7168,18 +7108,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Điều gì nhân viên KHÔNG được phép khẳng định?",
             options: [
-              "A. That a dish contains no pork",
-              "B. That there is no chance of cross-contamination at a shared buffet",
-              "C. That a dish is made to order in a clean pan",
+              "That a dish contains no pork",
+              "That there is no chance of cross-contamination at a shared buffet",
+              "That a dish is made to order in a clean pan",
             ],
             correct: 1,
           },
           {
             q: "Khách dị ứng nặng thì được đề xuất gì?",
             options: [
-              "A. A made-to-order dish from the kitchen at no extra charge",
-              "B. The safest corner of the buffet",
-              "C. A written warning to sign",
+              "A made-to-order dish from the kitchen at no extra charge",
+              "The safest corner of the buffet",
+              "A written warning to sign",
             ],
             correct: 0,
           },
@@ -7272,18 +7212,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Khi khách làm đổ đồ ăn, nhân viên xử lý thế nào?",
             options: [
-              "A. Clear it without comment and without looking at the parents",
-              "B. Politely ask the parents to be more careful",
-              "C. Wait until the family has left",
+              "Clear it without comment and without looking at the parents",
+              "Politely ask the parents to be more careful",
+              "Wait until the family has left",
             ],
             correct: 0,
           },
           {
             q: "Việc hâm bình sữa cho em bé được tính phí thế nào?",
             options: [
-              "A. A small service charge applies",
-              "B. It is never refused and never charged",
-              "C. Only for in-house guests",
+              "A small service charge applies",
+              "It is never refused and never charged",
+              "Only for in-house guests",
             ],
             correct: 1,
           },
@@ -7395,18 +7335,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Với khách đi theo cặp, phải hỏi thế nào?",
             options: [
-              "A. Ask them together at the desk",
-              "B. Ask each person separately and quietly",
-              "C. Ask only the person who is paying",
+              "Ask them together at the desk",
+              "Ask each person separately and quietly",
+              "Ask only the person who is paying",
             ],
             correct: 1,
           },
           {
             q: "Nếu kỹ thuật viên khách muốn không có, phải báo khi nào?",
             options: [
-              "A. At the time of booking",
-              "B. At the treatment room door",
-              "C. After the treatment",
+              "At the time of booking",
+              "At the treatment room door",
+              "After the treatment",
             ],
             correct: 0,
           },
@@ -7500,18 +7440,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải báo cho khách càng sớm càng tốt?",
             options: [
-              "A. Because the guest at the treatment room door has already undressed and prepared",
-              "B. Because the price changes later in the day",
-              "C. Because the roster is fixed in the morning",
+              "Because the guest at the treatment room door has already undressed and prepared",
+              "Because the price changes later in the day",
+              "Because the roster is fixed in the morning",
             ],
             correct: 0,
           },
           {
             q: "Phương án thứ hai được đưa ra là gì?",
             options: [
-              "A. Full cancellation at no charge",
-              "B. The next day with thirty free minutes added",
-              "C. A different therapist immediately",
+              "Full cancellation at no charge",
+              "The next day with thirty free minutes added",
+              "A different therapist immediately",
             ],
             correct: 1,
           },
@@ -7619,18 +7559,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Nếu khách đưa tiền mặt trực tiếp cho kỹ thuật viên thì phải làm gì?",
             options: [
-              "A. Keep it, as it was given personally",
-              "B. Accept graciously and place it in the team box before the shift ends",
-              "C. Refuse it politely",
+              "Keep it, as it was given personally",
+              "Accept graciously and place it in the team box before the shift ends",
+              "Refuse it politely",
             ],
             correct: 1,
           },
           {
             q: "Khi khách hỏi mức tip thông thường là bao nhiêu, phải trả lời sao?",
             options: [
-              "A. Say there is no usual amount",
-              "B. Suggest ten percent",
-              "C. Say it depends on the treatment",
+              "Say there is no usual amount",
+              "Suggest ten percent",
+              "Say it depends on the treatment",
             ],
             correct: 0,
           },
@@ -7724,18 +7664,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Trước khi trị liệu, phải hỏi khách điều gì?",
             options: [
-              "A. Whether any area should be avoided",
-              "B. How much they will tip",
-              "C. Which therapist they had last time",
+              "Whether any area should be avoided",
+              "How much they will tip",
+              "Which therapist they had last time",
             ],
             correct: 0,
           },
           {
             q: "Trong lúc trị liệu, phải kiểm tra lực xoa bóp bao lâu một lần?",
             options: [
-              "A. Only at the beginning",
-              "B. After five minutes, then every fifteen minutes",
-              "C. Only if the guest says something",
+              "Only at the beginning",
+              "After five minutes, then every fifteen minutes",
+              "Only if the guest says something",
             ],
             correct: 1,
           },
@@ -7847,19 +7787,15 @@ export const HK_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Phải có mặt tại phòng khách trong bao lâu?",
-            options: [
-              "A. Within 5 minutes",
-              "B. Within one hour",
-              "C. Before the end of the shift",
-            ],
+            options: ["Within 5 minutes", "Within one hour", "Before the end of the shift"],
             correct: 0,
           },
           {
             q: "Khi nào tuyệt đối không được xịt thuốc diệt côn trùng?",
             options: [
-              "A. While the guest or their belongings are in the room",
-              "B. During the morning shift",
-              "C. When the window is open",
+              "While the guest or their belongings are in the room",
+              "During the morning shift",
+              "When the window is open",
             ],
             correct: 0,
           },
@@ -7952,15 +7888,15 @@ export const HK_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Sau khi xử lý, phòng phải được thông gió tối thiểu bao lâu?",
-            options: ["A. Thirty minutes", "B. Two hours", "C. Until the next morning"],
+            options: ["Thirty minutes", "Two hours", "Until the next morning"],
             correct: 1,
           },
           {
             q: "Nếu khách báo bị côn trùng cắn thì việc đó được xử lý thế nào?",
             options: [
-              "A. As a cleaning matter for the next shift",
-              "B. As a medical matter, reported to the Duty Manager the same shift",
-              "C. As a laundry matter",
+              "As a cleaning matter for the next shift",
+              "As a medical matter, reported to the Duty Manager the same shift",
+              "As a laundry matter",
             ],
             correct: 1,
           },
@@ -8054,15 +7990,15 @@ export const HK_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Đồ có giá trị được cất giữ trong bao lâu?",
-            options: ["A. Three months", "B. Six months", "C. One year"],
+            options: ["Three months", "Six months", "One year"],
             correct: 1,
           },
           {
             q: "Ai là người quyết định một món đồ là bỏ đi?",
             options: [
-              "A. The room attendant who found it",
-              "B. The Executive Housekeeper",
-              "C. The guest's next room attendant",
+              "The room attendant who found it",
+              "The Executive Housekeeper",
+              "The guest's next room attendant",
             ],
             correct: 1,
           },
@@ -8156,19 +8092,15 @@ export const HK_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải để khách mô tả món đồ trước?",
             options: [
-              "A. Because the item must not be shown first and then asked about",
-              "B. Because the log needs a longer entry",
-              "C. Because the guest may want a different item",
+              "Because the item must not be shown first and then asked about",
+              "Because the log needs a longer entry",
+              "Because the guest may want a different item",
             ],
             correct: 0,
           },
           {
             q: "Món nào tuyệt đối không được gửi qua chuyển phát?",
-            options: [
-              "A. Clothes and books",
-              "B. Cash, passports and medicine",
-              "C. Cameras and chargers",
-            ],
+            options: ["Clothes and books", "Cash, passports and medicine", "Cameras and chargers"],
             correct: 1,
           },
         ],
@@ -8294,18 +8226,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Cầu thang được phục dựng dựa trên cái gì?",
             options: [
-              "A. Ảnh chụp tư liệu từ năm 1954",
-              "B. Bộ bản vẽ gốc năm 1925",
-              "C. Bản thiết kế của người chủ hiện nay",
+              "Ảnh chụp tư liệu từ năm 1954",
+              "Bộ bản vẽ gốc năm 1925",
+              "Bản thiết kế của người chủ hiện nay",
             ],
             correct: 1,
           },
           {
             q: "Nếu khách hỏi điều bạn không biết thì phải làm gì?",
             options: [
-              "A. Nói thật là chưa chắc, và mời khách xem cuốn sổ tư liệu ở quầy",
-              "B. Đưa câu trả lời nhiều khả năng đúng nhất để khách khỏi chờ",
-              "C. Mời khách tự tra cứu trên mạng vì ở đó thông tin đầy đủ hơn",
+              "Nói thật là chưa chắc, và mời khách xem cuốn sổ tư liệu ở quầy",
+              "Đưa câu trả lời nhiều khả năng đúng nhất để khách khỏi chờ",
+              "Mời khách tự tra cứu trên mạng vì ở đó thông tin đầy đủ hơn",
             ],
             correct: 0,
           },
@@ -8398,18 +8330,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Theo hướng dẫn, phải mở đầu bằng gì?",
             options: [
-              "A. Mức chênh lệch giá giữa hai hạng phòng, cho khách cân nhắc từ đầu",
-              "B. Một điều khách sẽ tự cảm nhận được, rồi mời khách lên xem phòng",
-              "C. Danh sách đầy đủ mọi ưu điểm của căn phòng, càng nhiều càng tốt",
+              "Mức chênh lệch giá giữa hai hạng phòng, cho khách cân nhắc từ đầu",
+              "Một điều khách sẽ tự cảm nhận được, rồi mời khách lên xem phòng",
+              "Danh sách đầy đủ mọi ưu điểm của căn phòng, càng nhiều càng tốt",
             ],
             correct: 1,
           },
           {
             q: "Khi khách từ chối nâng cấp thì làm gì?",
             options: [
-              "A. Ghi nhận lại và không nhắc chuyện nâng hạng nữa trong kỳ ở",
-              "B. Chờ tới lúc khách trả phòng rồi khéo léo đề nghị lần nữa",
-              "C. Đề nghị lại ngay với mức giảm giá sâu hơn để khách đổi ý",
+              "Ghi nhận lại và không nhắc chuyện nâng hạng nữa trong kỳ ở",
+              "Chờ tới lúc khách trả phòng rồi khéo léo đề nghị lần nữa",
+              "Đề nghị lại ngay với mức giảm giá sâu hơn để khách đổi ý",
             ],
             correct: 0,
           },
@@ -8511,18 +8443,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Khi nào KHÔNG nên kể chuyện toà nhà?",
             options: [
-              "A. Khi khách đang đứng ngắm quanh sảnh",
-              "B. Khi khách vừa xuống chuyến bay đêm, hoặc đang có hàng chờ",
-              "C. Khi khách nhắc tới chuyện chụp ảnh",
+              "Khi khách đang đứng ngắm quanh sảnh",
+              "Khi khách vừa xuống chuyến bay đêm, hoặc đang có hàng chờ",
+              "Khi khách nhắc tới chuyện chụp ảnh",
             ],
             correct: 1,
           },
           {
             q: "Nguyên tắc 'một câu trước' nghĩa là gì?",
             options: [
-              "A. Nói một câu; khách hỏi tiếp câu thứ hai thì mới kể tiếp",
-              "B. Nói một câu rồi luôn kể tiếp, vì khách đã tỏ ra quan tâm",
-              "C. Chờ khách nhận phòng xong chừng một phút rồi mới bắt đầu",
+              "Nói một câu; khách hỏi tiếp câu thứ hai thì mới kể tiếp",
+              "Nói một câu rồi luôn kể tiếp, vì khách đã tỏ ra quan tâm",
+              "Chờ khách nhận phòng xong chừng một phút rồi mới bắt đầu",
             ],
             correct: 0,
           },
@@ -8616,18 +8548,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Vì sao phải nói những điều này TRƯỚC khi khách lên phòng?",
             options: [
-              "A. Khách được báo ở quầy sẽ hỏi lại; khách tự phát hiện trên phòng sẽ khiếu nại",
-              "B. Quy định yêu cầu khách ký xác nhận là đã được thông báo trước",
-              "C. Nói trước ở quầy giúp thủ tục trả phòng về sau nhanh hơn nhiều",
+              "Khách được báo ở quầy sẽ hỏi lại; khách tự phát hiện trên phòng sẽ khiếu nại",
+              "Quy định yêu cầu khách ký xác nhận là đã được thông báo trước",
+              "Nói trước ở quầy giúp thủ tục trả phòng về sau nhanh hơn nhiều",
             ],
             correct: 0,
           },
           {
             q: "Việc sửa chữa ở tầng bốn diễn ra vào khung giờ nào?",
             options: [
-              "A. 09:00–16:00 các ngày trong tuần",
-              "B. Cả ngày, tất cả các ngày",
-              "C. Chỉ vào hai ngày cuối tuần",
+              "09:00–16:00 các ngày trong tuần",
+              "Cả ngày, tất cả các ngày",
+              "Chỉ vào hai ngày cuối tuần",
             ],
             correct: 0,
           },
@@ -8740,18 +8672,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Ghi sở thích vào hồ sơ phải theo cách nào?",
             options: [
-              "A. Bằng đúng lời khách nói, ngay trong ca",
-              "B. Tóm tắt lại thành một nhóm khiếu nại",
-              "C. Vào cuối kỳ lưu trú, khi đã đủ thông tin",
+              "Bằng đúng lời khách nói, ngay trong ca",
+              "Tóm tắt lại thành một nhóm khiếu nại",
+              "Vào cuối kỳ lưu trú, khi đã đủ thông tin",
             ],
             correct: 0,
           },
           {
             q: "Với khách, nên nói điều gì?",
             options: [
-              "A. Rằng hệ thống có lưu một ghi chú về họ",
-              "B. Điều bạn đã làm, không phải điều bạn đã ghi",
-              "C. Tên đồng nghiệp nào đã viết ghi chú đó",
+              "Rằng hệ thống có lưu một ghi chú về họ",
+              "Điều bạn đã làm, không phải điều bạn đã ghi",
+              "Tên đồng nghiệp nào đã viết ghi chú đó",
             ],
             correct: 1,
           },
@@ -8844,18 +8776,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Ở quầy, xác nhận sở thích của khách quen thế nào?",
             options: [
-              "A. Hỏi lần lượt thành một danh sách câu hỏi",
-              "B. Gộp trong một câu, rồi hỏi có gì cần đổi không",
-              "C. Chỉ nhắc tới khi khách tự nêu ra trước",
+              "Hỏi lần lượt thành một danh sách câu hỏi",
+              "Gộp trong một câu, rồi hỏi có gì cần đổi không",
+              "Chỉ nhắc tới khi khách tự nêu ra trước",
             ],
             correct: 1,
           },
           {
             q: "Khi nào thì nên nói số lần lưu trú?",
             options: [
-              "A. Mọi lần, ngay từ lần lưu trú đầu tiên",
-              "B. Từ lần lưu trú thứ ba trở lên",
-              "C. Chỉ với khách có thẻ thành viên",
+              "Mọi lần, ngay từ lần lưu trú đầu tiên",
+              "Từ lần lưu trú thứ ba trở lên",
+              "Chỉ với khách có thẻ thành viên",
             ],
             correct: 1,
           },
@@ -8949,18 +8881,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Vì sao phải báo cho khách ngay tại quầy?",
             options: [
-              "A. Để khách không bao giờ tự phát hiện ra trên phòng",
-              "B. Vì hệ thống yêu cầu ghi nhận trước khi giao chìa khoá",
-              "C. Để tiết kiệm giấy tờ đối chiếu về sau",
+              "Để khách không bao giờ tự phát hiện ra trên phòng",
+              "Vì hệ thống yêu cầu ghi nhận trước khi giao chìa khoá",
+              "Để tiết kiệm giấy tờ đối chiếu về sau",
             ],
             correct: 0,
           },
           {
             q: "Ba lần không đáp ứng được cho cùng một khách thì sao?",
             options: [
-              "A. Thành cuộc trao đổi của Duty Manager",
-              "B. Sở thích đó bị xoá khỏi hồ sơ khách",
-              "C. Khách được đề nghị hoàn lại tiền phòng",
+              "Thành cuộc trao đổi của Duty Manager",
+              "Sở thích đó bị xoá khỏi hồ sơ khách",
+              "Khách được đề nghị hoàn lại tiền phòng",
             ],
             correct: 0,
           },
@@ -9054,18 +8986,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Một ghi chú dùng được phải trả lời những gì?",
             options: [
-              "A. Cái gì, số lượng bao nhiêu, và khi nào",
-              "B. Ai đã yêu cầu và ca nào ghi nhận việc đó",
-              "C. Lý do vì sao khách lại muốn như vậy",
+              "Cái gì, số lượng bao nhiêu, và khi nào",
+              "Ai đã yêu cầu và ca nào ghi nhận việc đó",
+              "Lý do vì sao khách lại muốn như vậy",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không bao giờ ghi nhận xét cá nhân về khách?",
             options: [
-              "A. Vì hồ sơ có thể bị đọc to trong một phiên xử lý khiếu nại",
-              "B. Vì trường dữ liệu không đủ chỗ cho nhận xét dài như vậy",
-              "C. Vì hệ thống tự động xoá mọi nhận xét mang tính cá nhân",
+              "Vì hồ sơ có thể bị đọc to trong một phiên xử lý khiếu nại",
+              "Vì trường dữ liệu không đủ chỗ cho nhận xét dài như vậy",
+              "Vì hệ thống tự động xoá mọi nhận xét mang tính cá nhân",
             ],
             correct: 0,
           },
@@ -9181,18 +9113,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Trong lúc khách đang nói, nhân viên KHÔNG được làm gì?",
             options: [
-              "A. Ngắt lời khách, hoặc tra hệ thống trong lúc khách nói",
-              "B. Ghi lại những gì khách đang trình bày",
-              "C. Nhìn thẳng vào khách trong lúc lắng nghe",
+              "Ngắt lời khách, hoặc tra hệ thống trong lúc khách nói",
+              "Ghi lại những gì khách đang trình bày",
+              "Nhìn thẳng vào khách trong lúc lắng nghe",
             ],
             correct: 0,
           },
           {
             q: "Phải xin lỗi về điều gì trước tiên?",
             options: [
-              "A. Về số tiền đã bị tính",
-              "B. Về trải nghiệm khách phải chịu",
-              "C. Về sai sót của ca trực trước đó",
+              "Về số tiền đã bị tính",
+              "Về trải nghiệm khách phải chịu",
+              "Về sai sót của ca trực trước đó",
             ],
             correct: 1,
           },
@@ -9285,18 +9217,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Khoản nào lễ tân được tự duyệt?",
             options: [
-              "A. Một khoản hoàn tiền về thẻ của khách",
-              "B. Khoản minibar dưới 500.000 đồng",
-              "C. Bồi thường cho đồ có giá trị bị mất",
+              "Một khoản hoàn tiền về thẻ của khách",
+              "Khoản minibar dưới 500.000 đồng",
+              "Bồi thường cho đồ có giá trị bị mất",
             ],
             correct: 1,
           },
           {
             q: "Khiếu nại liên quan tới thương tích hoặc mất đồ có giá trị thì xử lý thế nào?",
             options: [
-              "A. Xử lý tại quầy nếu số tiền không lớn",
-              "B. Không bao giờ xử tại quầy — chuyển Duty Manager",
-              "C. Chuyển sang bảo hiểm du lịch của khách",
+              "Xử lý tại quầy nếu số tiền không lớn",
+              "Không bao giờ xử tại quầy — chuyển Duty Manager",
+              "Chuyển sang bảo hiểm du lịch của khách",
             ],
             correct: 1,
           },
@@ -9389,18 +9321,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Với khoản tranh chấp trong hạn mức, thứ tự xử lý là gì?",
             options: [
-              "A. Điều tra trước, hoàn khoản sau",
-              "B. Hoàn khoản trước, điều tra sau",
-              "C. Đề nghị khách cứ thanh toán rồi khiếu nại lại sau",
+              "Điều tra trước, hoàn khoản sau",
+              "Hoàn khoản trước, điều tra sau",
+              "Đề nghị khách cứ thanh toán rồi khiếu nại lại sau",
             ],
             correct: 1,
           },
           {
             q: "Ba lần tranh chấp minibar cùng một tầng trong một tuần nghĩa là gì?",
             options: [
-              "A. Vấn đề kiểm soát kho hàng",
-              "B. Ba vị khách không trung thực",
-              "C. Lỗi hệ thống của phần mềm tính tiền",
+              "Vấn đề kiểm soát kho hàng",
+              "Ba vị khách không trung thực",
+              "Lỗi hệ thống của phần mềm tính tiền",
             ],
             correct: 0,
           },
@@ -9493,18 +9425,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Khách rời đi phải cầm theo ba thứ gì?",
             options: [
-              "A. Hoá đơn kê sạch, xác nhận bằng văn bản, và mã hồ sơ",
-              "B. Biên lai, danh thiếp của quầy, và một phiếu ưu đãi",
-              "C. Thư xin lỗi, khoản hoàn tiền và một đêm miễn phí",
+              "Hoá đơn kê sạch, xác nhận bằng văn bản, và mã hồ sơ",
+              "Biên lai, danh thiếp của quầy, và một phiếu ưu đãi",
+              "Thư xin lỗi, khoản hoàn tiền và một đêm miễn phí",
             ],
             correct: 0,
           },
           {
             q: "Theo tài liệu, hoàn tiền vào thẻ mất bao lâu?",
             options: [
-              "A. Ngay lập tức, giống như hoàn tiền mặt tại quầy",
-              "B. 7–15 ngày làm việc, thẻ nước ngoài có thể tới 30 ngày",
-              "C. Luôn đúng 5 ngày làm việc với mọi loại thẻ",
+              "Ngay lập tức, giống như hoàn tiền mặt tại quầy",
+              "7–15 ngày làm việc, thẻ nước ngoài có thể tới 30 ngày",
+              "Luôn đúng 5 ngày làm việc với mọi loại thẻ",
             ],
             correct: 1,
           },
@@ -9615,18 +9547,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Vì sao phải hỏi ai đã biết trước khi sắp xếp?",
             options: [
-              "A. Vì điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ",
-              "B. Vì bếp cần biết tên khách để viết lên bánh cho đúng chính tả",
-              "C. Vì chính sách yêu cầu hai chữ ký trước khi sắp xếp",
+              "Vì điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ",
+              "Vì bếp cần biết tên khách để viết lên bánh cho đúng chính tả",
+              "Vì chính sách yêu cầu hai chữ ký trước khi sắp xếp",
             ],
             correct: 0,
           },
           {
             q: "Khách nói không có dịp gì đặc biệt thì làm gì?",
             options: [
-              "A. Không ghi gì vào hồ sơ và không bao giờ nhắc lại nữa",
-              "B. Ghi chú là 'đã từ chối' và hỏi lại vào ngày hôm sau",
-              "C. Vẫn cứ chuẩn bị một món nhỏ để tạo bất ngờ cho khách",
+              "Không ghi gì vào hồ sơ và không bao giờ nhắc lại nữa",
+              "Ghi chú là 'đã từ chối' và hỏi lại vào ngày hôm sau",
+              "Vẫn cứ chuẩn bị một món nhỏ để tạo bất ngờ cho khách",
             ],
             correct: 0,
           },
@@ -9722,18 +9654,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Món nào cần báo trước 24 giờ?",
             options: [
-              "A. Một tấm thiệp viết tay",
-              "B. Bóng bay và bánh in ảnh",
-              "C. Cánh hoa hồng rải trên giường",
+              "Một tấm thiệp viết tay",
+              "Bóng bay và bánh in ảnh",
+              "Cánh hoa hồng rải trên giường",
             ],
             correct: 1,
           },
           {
             q: "Với món có tính phí, phải làm gì trước khi sắp xếp?",
             options: [
-              "A. Báo giá cho khách trước khi sắp xếp",
-              "B. Xin chữ ký duyệt của Duty Manager",
-              "C. Cứ tính vào phòng rồi báo khách lúc trả phòng",
+              "Báo giá cho khách trước khi sắp xếp",
+              "Xin chữ ký duyệt của Duty Manager",
+              "Cứ tính vào phòng rồi báo khách lúc trả phòng",
             ],
             correct: 0,
           },
@@ -9826,18 +9758,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Mỗi dòng bàn giao phải có ba thứ gì?",
             options: [
-              "A. Đầu việc, một người có tên, và dấu hiệu bắt đầu",
-              "B. Đầu việc, mức giá, và số phòng của khách",
-              "C. Bộ phận phụ trách, khung giờ, và người quản lý",
+              "Đầu việc, một người có tên, và dấu hiệu bắt đầu",
+              "Đầu việc, mức giá, và số phòng của khách",
+              "Bộ phận phụ trách, khung giờ, và người quản lý",
             ],
             correct: 0,
           },
           {
             q: "Vì sao ghi 'Housekeeping' mà không ghi tên người là chưa đủ?",
             options: [
-              "A. Vì phòng ban không nhớ việc, chỉ con người nhớ việc",
-              "B. Vì buồng phòng thường là bộ phận bận rộn nhất ca",
-              "C. Vì hệ thống cần mã số nhân viên để lưu lại",
+              "Vì phòng ban không nhớ việc, chỉ con người nhớ việc",
+              "Vì buồng phòng thường là bộ phận bận rộn nhất ca",
+              "Vì hệ thống cần mã số nhân viên để lưu lại",
             ],
             correct: 0,
           },
@@ -9932,18 +9864,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
             options: [
-              "A. Người tổ chức, một cách kín đáo",
-              "B. Cả hai vị khách, ngay tại quầy",
-              "C. Người được nhận bất ngờ, ngay trong bữa tối",
+              "Người tổ chức, một cách kín đáo",
+              "Cả hai vị khách, ngay tại quầy",
+              "Người được nhận bất ngờ, ngay trong bữa tối",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không nên đề nghị bồi thường bằng tiền?",
             options: [
-              "A. Vì khách mất một khoảnh khắc, không phải một khoản tiền",
-              "B. Vì quầy lễ tân không có thẩm quyền chi tiền bồi thường",
-              "C. Vì mọi khoản đền bù đều cần quản lý phê duyệt trước",
+              "Vì khách mất một khoảnh khắc, không phải một khoản tiền",
+              "Vì quầy lễ tân không có thẩm quyền chi tiền bồi thường",
+              "Vì mọi khoản đền bù đều cần quản lý phê duyệt trước",
             ],
             correct: 0,
           },
@@ -10060,18 +9992,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Theo tài liệu, giá trên trang bên thứ ba thường là gì?",
             options: [
-              "A. Sai, do trang web hiển thị nhầm",
-              "B. Có thật, nhưng là một sản phẩm khác",
-              "C. Chỉ dành cho khách nước ngoài",
+              "Sai, do trang web hiển thị nhầm",
+              "Có thật, nhưng là một sản phẩm khác",
+              "Chỉ dành cho khách nước ngoài",
             ],
             correct: 1,
           },
           {
             q: "Khách vẫn chọn giá trên mạng thì nên làm gì?",
             options: [
-              "A. Nhận vui vẻ, ghi lại SỰ VIỆC: đã báo giá trực tiếp, khách chọn giá trả trước",
-              "B. Giải thích lại một lần nữa cho tới khi khách hiểu",
-              "C. Báo quản lý để duyệt giá bằng trang web",
+              "Nhận vui vẻ, ghi lại SỰ VIỆC: đã báo giá trực tiếp, khách chọn giá trả trước",
+              "Giải thích lại một lần nữa cho tới khi khách hiểu",
+              "Báo quản lý để duyệt giá bằng trang web",
             ],
             correct: 0,
           },
@@ -10168,18 +10100,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao phải đưa món tặng TRƯỚC khi từ chối giảm giá?",
             options: [
-              "A. Khách nhận món tặng sẽ thôi hỏi giá; bị từ chối trước thì món tặng thành giải khuyến khích",
-              "B. Vì quy trình yêu cầu nêu hết ưu đãi trước khi nói bất kỳ lời từ chối nào",
-              "C. Vì món tặng thường có giá trị cao hơn hẳn khoản giảm giá khách đang đòi",
+              "Khách nhận món tặng sẽ thôi hỏi giá; bị từ chối trước thì món tặng thành giải khuyến khích",
+              "Vì quy trình yêu cầu nêu hết ưu đãi trước khi nói bất kỳ lời từ chối nào",
+              "Vì món tặng thường có giá trị cao hơn hẳn khoản giảm giá khách đang đòi",
             ],
             correct: 0,
           },
           {
             q: "Vì sao nên xin lại một thứ gì đó từ khách?",
             options: [
-              "A. Để bù lại phần chi phí của món tặng mà khách sạn vừa bỏ ra",
-              "B. Vì cuộc đàm phán chỉ một bên cho sẽ dạy khách ép mạnh hơn lần sau",
-              "C. Vì quản lý yêu cầu ghi lại mọi nhượng bộ để tổng kết cuối tháng",
+              "Để bù lại phần chi phí của món tặng mà khách sạn vừa bỏ ra",
+              "Vì cuộc đàm phán chỉ một bên cho sẽ dạy khách ép mạnh hơn lần sau",
+              "Vì quản lý yêu cầu ghi lại mọi nhượng bộ để tổng kết cuối tháng",
             ],
             correct: 1,
           },
@@ -10272,18 +10204,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao KHÔNG được nói 'maybe' khi câu trả lời là không?",
             options: [
-              "A. Vì khách sẽ hỏi lại lúc trả phòng, và lần từ chối thứ hai tốn thiện chí hơn nhiều",
-              "B. Vì quản lý đã cấm nhân viên dùng những từ mơ hồ khi báo giá",
-              "C. Vì khách sẽ nghĩ nhân viên không nắm được bảng giá của khách sạn",
+              "Vì khách sẽ hỏi lại lúc trả phòng, và lần từ chối thứ hai tốn thiện chí hơn nhiều",
+              "Vì quản lý đã cấm nhân viên dùng những từ mơ hồ khi báo giá",
+              "Vì khách sẽ nghĩ nhân viên không nắm được bảng giá của khách sạn",
             ],
             correct: 0,
           },
           {
             q: "Khi khách to tiếng hoặc công kích cá nhân thì phải làm gì?",
             options: [
-              "A. Đề nghị một mức giảm nhỏ để hạ nhiệt",
-              "B. Ngừng đàm phán và gọi Duty Manager",
-              "C. Tiếp tục giải thích cho tới khi khách hiểu",
+              "Đề nghị một mức giảm nhỏ để hạ nhiệt",
+              "Ngừng đàm phán và gọi Duty Manager",
+              "Tiếp tục giải thích cho tới khi khách hiểu",
             ],
             correct: 1,
           },
@@ -10377,18 +10309,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Nên ghi nhượng bộ bằng cách nào?",
             options: [
-              "A. Ghi bằng con số hoặc số lượng, không ghi bằng tính từ",
-              "B. Ghi ngắn gọn bằng tính từ cho dễ đọc",
-              "C. Ghi vào sổ bàn giao ca thay vì vào booking",
+              "Ghi bằng con số hoặc số lượng, không ghi bằng tính từ",
+              "Ghi ngắn gọn bằng tính từ cho dễ đọc",
+              "Ghi vào sổ bàn giao ca thay vì vào booking",
             ],
             correct: 0,
           },
           {
             q: "Vì sao phải nêu cả những thứ KHÔNG bao gồm?",
             options: [
-              "A. Để hoá đơn liệt kê đầy đủ và trông chuyên nghiệp hơn khi in",
-              "B. Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí — đúng cuộc cãi đang phòng ngừa",
-              "C. Vì hệ thống đặt phòng bắt buộc điền đủ mọi trường trước khi lưu",
+              "Để hoá đơn liệt kê đầy đủ và trông chuyên nghiệp hơn khi in",
+              "Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí — đúng cuộc cãi đang phòng ngừa",
+              "Vì hệ thống đặt phòng bắt buộc điền đủ mọi trường trước khi lưu",
             ],
             correct: 1,
           },
@@ -10500,18 +10432,18 @@ export const FO_WEEK_36: WeekContent = {
           {
             q: "Trong hai phút đầu, lễ tân phải làm gì?",
             options: [
-              "A. Rời quầy đi kiểm tra tầng có báo động",
-              "B. Ở lại quầy, xác nhận bảng điều khiển và gọi an ninh",
-              "C. Đi từng phòng gõ cửa báo khách",
+              "Rời quầy đi kiểm tra tầng có báo động",
+              "Ở lại quầy, xác nhận bảng điều khiển và gọi an ninh",
+              "Đi từng phòng gõ cửa báo khách",
             ],
             correct: 1,
           },
           {
             q: "Tài liệu nói tuyệt đối không dẫn khách tới đâu?",
             options: [
-              "A. Tầng hầm, và đường cho xe chữa cháy tiếp cận",
-              "B. Khu vườn phía sau khách sạn",
-              "C. Bãi cỏ đối diện cổng chính",
+              "Tầng hầm, và đường cho xe chữa cháy tiếp cận",
+              "Khu vườn phía sau khách sạn",
+              "Bãi cỏ đối diện cổng chính",
             ],
             correct: 0,
           },
@@ -10605,18 +10537,18 @@ export const FO_WEEK_36: WeekContent = {
           {
             q: "Khách sạn KHÔNG có gian lánh nạn thì khách không đi cầu thang được phải làm gì?",
             options: [
-              "A. Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
-              "B. Chờ ngay bên trong lồng cầu thang, ở chiếu nghỉ gần cửa nhất",
-              "C. Xuống bằng thang máy dịch vụ, có nhân viên trực đi kèm suốt",
+              "Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
+              "Chờ ngay bên trong lồng cầu thang, ở chiếu nghỉ gần cửa nhất",
+              "Xuống bằng thang máy dịch vụ, có nhân viên trực đi kèm suốt",
             ],
             correct: 0,
           },
           {
             q: "Khách từ chối rời phòng được tính là gì?",
             options: [
-              "A. Vẫn còn ở bên trong toà nhà",
-              "B. Đã tự chịu trách nhiệm nên không tính nữa",
-              "C. Đã sơ tán vì đã được thông báo",
+              "Vẫn còn ở bên trong toà nhà",
+              "Đã tự chịu trách nhiệm nên không tính nữa",
+              "Đã sơ tán vì đã được thông báo",
             ],
             correct: 0,
           },
@@ -10717,18 +10649,18 @@ export const FO_WEEK_36: WeekContent = {
           {
             q: "Hỏi hai lần mà khách vẫn không đi thì làm gì?",
             options: [
-              "A. Tiếp tục thuyết phục cho tới khi khách đồng ý",
-              "B. Dừng lại và chuyển việc cho an ninh",
-              "C. Vào phòng đưa khách ra",
+              "Tiếp tục thuyết phục cho tới khi khách đồng ý",
+              "Dừng lại và chuyển việc cho an ninh",
+              "Vào phòng đưa khách ra",
             ],
             correct: 1,
           },
           {
             q: "Vì sao tranh cãi ngoài hành lang là sai?",
             options: [
-              "A. Vì nó giữ hai người ở lại bên trong thay vì một",
-              "B. Vì làm phiền các khách khác",
-              "C. Vì camera hành lang sẽ ghi lại",
+              "Vì nó giữ hai người ở lại bên trong thay vì một",
+              "Vì làm phiền các khách khác",
+              "Vì camera hành lang sẽ ghi lại",
             ],
             correct: 0,
           },
@@ -10820,15 +10752,15 @@ export const FO_WEEK_36: WeekContent = {
         questions: [
           {
             q: "Ai là người cho phép khách vào lại toà nhà?",
-            options: ["A. Duty Manager", "B. Cán bộ phòng cháy chữa cháy", "C. Trưởng ca lễ tân"],
+            options: ["Duty Manager", "Cán bộ phòng cháy chữa cháy", "Trưởng ca lễ tân"],
             correct: 1,
           },
           {
             q: "Khách còn hoảng thì điều gì làm họ bình tâm?",
             options: [
-              "A. Một lời giải thích rõ ràng về nguyên nhân",
-              "B. Có người ở gần họ chừng mười phút",
-              "C. Một khoản bồi thường vào hoá đơn",
+              "Một lời giải thích rõ ràng về nguyên nhân",
+              "Có người ở gần họ chừng mười phút",
+              "Một khoản bồi thường vào hoá đơn",
             ],
             correct: 1,
           },
@@ -10939,15 +10871,15 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Theo tài liệu, việc nào được ưu tiên hơn: điện thoại đang reo hay khách đứng trước mặt?",
             options: [
-              "A. Khách đứng trước mặt — người gọi có thể xin phép giữ máy, khách đứng thì không",
-              "B. Điện thoại — vì người gọi không thấy mình đang chờ ai",
-              "C. Tuỳ ai đến trước",
+              "Khách đứng trước mặt — người gọi có thể xin phép giữ máy, khách đứng thì không",
+              "Điện thoại — vì người gọi không thấy mình đang chờ ai",
+              "Tuỳ ai đến trước",
             ],
             correct: 0,
           },
           {
             q: "Khi hàng chờ tới bao nhiêu người thì gọi thêm đồng nghiệp?",
-            options: ["A. Bốn người", "B. Tám người", "C. Khi khách bắt đầu phàn nàn"],
+            options: ["Bốn người", "Tám người", "Khi khách bắt đầu phàn nàn"],
             correct: 0,
           },
         ],
@@ -11036,18 +10968,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Trả lời theo thứ tự nào?",
             options: [
-              "A. Theo mức độ gấp, không theo thứ tự khách hỏi",
-              "B. Theo đúng thứ tự khách hỏi, cho lịch sự",
-              "C. Việc dễ nhất trước để giải quyết nhanh",
+              "Theo mức độ gấp, không theo thứ tự khách hỏi",
+              "Theo đúng thứ tự khách hỏi, cho lịch sự",
+              "Việc dễ nhất trước để giải quyết nhanh",
             ],
             correct: 0,
           },
           {
             q: "Vì sao phải gọi tên việc mình tạm gác lại?",
             options: [
-              "A. Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
-              "B. Vì hệ thống yêu cầu ghi lại đầy đủ mọi câu khách từng hỏi",
-              "C. Vì khách chắc chắn sẽ quên mất những gì họ vừa hỏi xong",
+              "Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
+              "Vì hệ thống yêu cầu ghi lại đầy đủ mọi câu khách từng hỏi",
+              "Vì khách chắc chắn sẽ quên mất những gì họ vừa hỏi xong",
             ],
             correct: 0,
           },
@@ -11140,18 +11072,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Dòng nào trong bàn giao là quan trọng nhất, theo tài liệu?",
             options: [
-              "A. Phòng 1104 — khách đã thôi hỏi, và đó mới là dấu hiệu xấu",
-              "B. Phòng 508 — vì có mã hồ sơ",
-              "C. Phòng 312 — vì đang ở chỗ Duty Manager",
+              "Phòng 1104 — khách đã thôi hỏi, và đó mới là dấu hiệu xấu",
+              "Phòng 508 — vì có mã hồ sơ",
+              "Phòng 312 — vì đang ở chỗ Duty Manager",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không được bảo ca sau đi hỏi lại khách?",
             options: [
-              "A. Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
-              "B. Vì khách có thể kể lại sai chi tiết so với lần trình bày đầu",
-              "C. Vì hỏi lại làm mất thời gian của cả ca sau lẫn của khách",
+              "Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
+              "Vì khách có thể kể lại sai chi tiết so với lần trình bày đầu",
+              "Vì hỏi lại làm mất thời gian của cả ca sau lẫn của khách",
             ],
             correct: 0,
           },
@@ -11243,18 +11175,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Theo tài liệu, ba phần của câu 'tôi chưa biết' là gì?",
             options: [
-              "A. Nói sẽ kiểm tra, cho một mốc thời gian, hứa quay lại dù kết quả thế nào",
-              "B. Xin lỗi, giải thích lý do, rồi hỏi đồng nghiệp",
-              "C. Nói 'tôi nghĩ là', rồi kiểm tra sau",
+              "Nói sẽ kiểm tra, cho một mốc thời gian, hứa quay lại dù kết quả thế nào",
+              "Xin lỗi, giải thích lý do, rồi hỏi đồng nghiệp",
+              "Nói 'tôi nghĩ là', rồi kiểm tra sau",
             ],
             correct: 0,
           },
           {
             q: "Nhân viên mới nói 'let me check' được khách tin hơn hay kém hơn người trả lời ngay?",
             options: [
-              "A. Tin hơn — sự chắc chắn không đồng nghĩa với năng lực",
-              "B. Kém hơn — khách muốn câu trả lời ngay",
-              "C. Như nhau, miễn là cuối cùng đúng",
+              "Tin hơn — sự chắc chắn không đồng nghĩa với năng lực",
+              "Kém hơn — khách muốn câu trả lời ngay",
+              "Như nhau, miễn là cuối cùng đúng",
             ],
             correct: 0,
           },
@@ -11365,18 +11297,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, điều thay đổi lớn nhất sau 40 tuần là gì?",
             options: [
-              "A. Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
-              "B. Bạn biết nhiều từ vựng chuyên ngành hơn hẳn lúc bắt đầu",
-              "C. Bạn phát âm chuẩn hơn và nghe tự nhiên hơn trước nhiều",
+              "Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
+              "Bạn biết nhiều từ vựng chuyên ngành hơn hẳn lúc bắt đầu",
+              "Bạn phát âm chuẩn hơn và nghe tự nhiên hơn trước nhiều",
             ],
             correct: 0,
           },
           {
             q: "Tuần 30 bạn xử lý phàn nàn bằng cách nào?",
             options: [
-              "A. Bằng một cấu trúc, thay vì bằng một lời xin lỗi",
-              "B. Bằng cách gọi quản lý",
-              "C. Bằng cách xin lỗi thật nhiều lần",
+              "Bằng một cấu trúc, thay vì bằng một lời xin lỗi",
+              "Bằng cách gọi quản lý",
+              "Bằng cách xin lỗi thật nhiều lần",
             ],
             correct: 0,
           },
@@ -11465,18 +11397,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, nhân viên không bao giờ escalate là người thế nào?",
             options: [
-              "A. Là người mà sai sót sẽ đến muộn hơn và lớn hơn",
-              "B. Là người giỏi nhất trong nhóm",
-              "C. Là người tiếng Anh tốt nhất",
+              "Là người mà sai sót sẽ đến muộn hơn và lớn hơn",
+              "Là người giỏi nhất trong nhóm",
+              "Là người tiếng Anh tốt nhất",
             ],
             correct: 0,
           },
           {
             q: "Sau 40 tuần, cái ĐÃ thay đổi khi phải chuyển việc lên cấp trên là gì?",
             options: [
-              "A. Bạn bàn giao được bằng tiếng Anh trong ba câu rõ ràng",
-              "B. Bạn không còn phải chuyển lên nữa",
-              "C. Bạn được tự quyết những việc đó",
+              "Bạn bàn giao được bằng tiếng Anh trong ba câu rõ ràng",
+              "Bạn không còn phải chuyển lên nữa",
+              "Bạn được tự quyết những việc đó",
             ],
             correct: 0,
           },
@@ -11568,18 +11500,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Sau khi đồng nghiệp mới xử lý xong, nên góp ý thế nào?",
             options: [
-              "A. Một lỗi cần sửa và một điều họ làm tốt",
-              "B. Liệt kê đủ mọi lỗi để họ nhớ hết",
-              "C. Chỉ khen, không sửa gì",
+              "Một lỗi cần sửa và một điều họ làm tốt",
+              "Liệt kê đủ mọi lỗi để họ nhớ hết",
+              "Chỉ khen, không sửa gì",
             ],
             correct: 0,
           },
           {
             q: "Vì sao nên kể cho người mới nghe lỗi của chính mình hồi mới vào?",
             options: [
-              "A. Vì họ sẽ dám cầm điện thoại sớm hơn",
-              "B. Vì như vậy lịch sự hơn",
-              "C. Vì quản lý yêu cầu chia sẻ kinh nghiệm",
+              "Vì họ sẽ dám cầm điện thoại sớm hơn",
+              "Vì như vậy lịch sự hơn",
+              "Vì quản lý yêu cầu chia sẻ kinh nghiệm",
             ],
             correct: 0,
           },
@@ -11671,18 +11603,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, việc phần lớn tình huống nghề nghiệp không khớp bài học nào là gì?",
             options: [
-              "A. Đó chính là mục đích của khoá học, không phải thiếu sót",
-              "B. Đó là một lỗ hổng cần bổ sung thêm bài",
-              "C. Đó là lý do phải học lại từ đầu",
+              "Đó chính là mục đích của khoá học, không phải thiếu sót",
+              "Đó là một lỗ hổng cần bổ sung thêm bài",
+              "Đó là lý do phải học lại từ đầu",
             ],
             correct: 0,
           },
           {
             q: "Nên hỏi đồng nghiệp 'anh sẽ nói thế nào' vào lúc nào?",
             options: [
-              "A. Sau ca, không bao giờ trong ca",
-              "B. Ngay lúc đang xử lý khách",
-              "C. Trước khi vào ca",
+              "Sau ca, không bao giờ trong ca",
+              "Ngay lúc đang xử lý khách",
+              "Trước khi vào ca",
             ],
             correct: 0,
           },
@@ -24571,10 +24503,10 @@ const GR_WEEK_40: WeekContent = {
           icon: "👂",
         },
         {
-          word: "The owner before the answer",
-          phonetic: "/ði ˈəʊnə bɪˌfɔː ði ˈɑːnsə/",
+          word: "I will find the owner first",
+          phonetic: "/aɪ wɪl ˌfaɪnd ði ˈəʊnə ˈfɜːst/",
           definition: "Tìm quầy sở hữu trước, câu trả lời đến sau",
-          context: "The owner before the answer, Nam — I will have both by four.",
+          context: "I do not have the answer yet, Nam. I will find the owner first.",
           icon: "🗝️",
         },
         {
@@ -24608,7 +24540,7 @@ const GR_WEEK_40: WeekContent = {
         {
           rude: "Somebody will get back to you at some point today, sir.",
           polite: "I am coming back to you at half past four, sir, whatever the answer is.",
-          rule: "Một mốc giờ mơ hồ là một lời từ chối nói khéo. Tuần 35 đã chốt: nói giờ ra, và phải là giờ CỦA BẠN — trừ đúng một ngoại lệ tuần 39 mở ra, là giờ mà quầy sở hữu ĐÃ đưa cho bạn. 'Whatever the answer is' mới là nửa đắt nhất: nó hứa bạn quay lại kể cả khi câu trả lời là không, và đó là chỗ phần lớn nhân viên biến mất.",
+          rule: "Một mốc giờ mơ hồ là một lời từ chối nói khéo. Tuần 35 đã chốt: nói giờ ra, và phải là giờ CỦA BẠN — trừ đúng một ngoại lệ tuần 39 mở ra, là giờ mà quầy sở hữu ĐÃ đưa cho bạn. 'Whatever the answer is' mới là nửa đắt nhất: nó hứa bạn quay lại kể cả khi câu trả lời là không, và đó là chỗ phần lớn nhân viên biến mất. Và mốc giờ phải rơi TRƯỚC hạn của khách — một mốc đến sau thứ khách cần chỉ là lời từ chối có gắn đồng hồ.",
         },
       ],
       speaking: [
@@ -24616,7 +24548,7 @@ const GR_WEEK_40: WeekContent = {
           guestPrompt:
             "…and then the man at the restaurant said — no, sorry, it was the day before — he said the table was ours, and my sister—",
           targetResponse:
-            "Please go on, madam. I am writing it down, and I will name the desk that owns it when you have finished.",
+            "Please go on, madam. What I can do meanwhile is write it down, and I will name the desk when you have finished.",
           helpTip:
             "Khách đang kể dở và câu chuyện đang rối. Đừng chen vào để hỏi cho nhanh — cắt lời thì khách kể lại từ đầu, và bạn mất đúng cái phút vừa tiết kiệm. 'Please go on' cộng một việc bạn ĐANG làm giữ được cả hai. 'finished' /ˈfɪnɪʃt/ — đuôi -ed sau /ʃ/ đọc thành /t/, đừng thành /ɪd/.",
         },
@@ -24631,7 +24563,7 @@ const GR_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "FORTY WEEKS AGO\nForty weeks ago you could greet a guest by the time of day and spell a name back to them.\nThat was week one, and it mattered. A name spelled wrong at this desk follows a guest for four days.\nBy week fourteen you could take a request, put one small thing right, and close the conversation.\nBy week twenty-two you could run the paperwork, the payment and a full shift report in English.\nBy week thirty you could offer, promise, coordinate with another desk, and apologise when it did not arrive.\nWhat changed after that is not the number of words you know.\nWhat changed is that you stopped hunting for a sentence and started reaching for a shape.\nThe shape is six moves, and it fits almost everything that arrives at this desk.\nAlmost. It does not fit anybody in danger, and it does not fit the seven on the next page. Week thirty-nine settled that order: danger first, and 'first' is an action, not a place in a queue.\nNobody listens to the end of a sentence about a child at the water.\nSo here are the six, for everything else.\nLet the guest finish. Nobody taught you this one, and it is the move the other five rest on.\nA guest who is interrupted starts again from the beginning, and you lose the minute you saved.\nName the owner. 'The restaurant's', 'the front office's', 'my manager's' — a named owner is not a refusal.\nSay what you can do meanwhile. A request with nothing attached is a wait, and a wait feels like a no.\nPut an hour on it, and make it your own hour. Week thirty-five settled that, and week thirty-nine put it in an order.\nPut it before the guest's own hour as well. An hour that lands after the thing she asked for is a no with a time on it.\nWrite it down. The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.\nCome back at your hour even when the answer is no. Especially when the answer is no.\nOne clock sits outside the six. Week thirty-nine: near the end of a shift you open nothing new.\nYou carry it up in person while you are still here, because a case opened at ten to six has no hour on it.\nQuarter to — a quarter of an hour before the hour — was one house's line, and week thirty-nine said so. Ask where your own falls.\nThe shape held all the way through this phase.\nWeek thirty-four gave you an occasion to coordinate, and week thirty-eight gave you a rain check when the weather took the day.\nWeek thirty-six is the other place it does not reach: the assembly point comes before all six, and the bell stopping is not the all-clear.\nNow the words are small and the shape is large, and that is the right way round.\nTest it on yourself. A guest asks for something nobody has ever asked for here.\nForty weeks ago you looked for the sentence and found nothing.\nToday you look for the owner, and the sentence comes after it.",
+        text: "FORTY WEEKS AGO\nForty weeks ago you could greet a guest by the time of day and spell a name back to them.\nThat was week one, and it mattered. A name spelled wrong at this desk follows a guest for four days.\nBy week fourteen you could take a request, put one small thing right, and close the conversation.\nBy week twenty-two you could run the paperwork, the payment and a full shift report in English.\nBy week thirty you could offer, promise, coordinate with another desk, and apologise when it did not arrive.\nWhat changed after that is not the number of words you know.\nWhat changed is that you stopped hunting for a sentence and started reaching for a shape.\nThe shape is six moves, and it fits almost everything that arrives at this desk.\nAlmost. It does not fit anybody in danger.\nOn the seven of the next lesson it still runs — only the owner changes, and two of them stop at one sentence.\nAnd it is a shape for one thing at a time. Week thirty-nine put three at once in an order first: the guest in front of you, then the telephone.\nThen the messages, and never the loudest. Week thirty-nine settled that order: danger first, and 'first' is an action, not a place in a queue.\nNobody listens to the end of a sentence about a child at the water.\nSo here are the six, for everything else.\nLet the guest finish. Nobody taught you this one, and it is the move the other five rest on.\nA guest who is interrupted starts again from the beginning, and you lose the minute you saved.\nName the owner. 'The restaurant's', 'the front office's', 'my manager's' — a named owner is not a refusal.\nSay what you can do meanwhile. A request with nothing attached is a wait, and a wait feels like a no.\nPut an hour on it, and make it your own hour. Week thirty-five settled that, and week thirty-nine put it in an order.\nPut it before the guest's own hour as well. An hour that lands after the thing she asked for is a no with a time on it.\nWrite it down. The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.\nCome back at your hour even when the answer is no. Especially when the answer is no.\nOne clock sits outside the six. Week thirty-nine: near the end of a shift you open nothing new.\nYou carry it up in person while you are still here, because a case opened at ten to six has no hour on it.\nQuarter to — a quarter of an hour before the hour — was one house's line, and week thirty-nine said so. Ask where your own falls.\nThe shape held all the way through this phase.\nWeek thirty-four gave you an occasion to coordinate, and week thirty-eight gave you a rain check when the weather took the day.\nWeek thirty-six is the other place it does not reach: the assembly point comes before all six, and the bell stopping is not the all-clear.\nNow the words are small and the shape is large, and that is the right way round.\nTest it on yourself. A guest asks for something nobody has ever asked for here.\nForty weeks ago you looked for the sentence and found nothing.\nToday you look for the owner, and the sentence comes after it.",
         questions: [
           {
             q: "Theo bài đọc, thứ đã thay đổi sau tuần 30 là gì?",
@@ -24717,7 +24649,7 @@ const GR_WEEK_40: WeekContent = {
               correct: false,
             },
             {
-              text: "The tour is the concierge's, madam. I am asking them now, and I will come to you by four.",
+              text: "Three desks is three too many, madam. I will find the owner first, and tell you which one it is.",
               correct: true,
             },
             {
@@ -24743,7 +24675,7 @@ const GR_WEEK_40: WeekContent = {
         },
         {
           word: "Read aloud",
-          phonetic: "/ˌriːd əˈlaʊd/",
+          phonetic: "/ˌred əˈlaʊd/",
           definition: "Đọc lên thành tiếng — hồ sơ mật thì không, kể cả với đồng nghiệp",
           context: "A confidential file is never read aloud, not even to a colleague.",
           icon: "🔒",
@@ -24781,8 +24713,8 @@ const GR_WEEK_40: WeekContent = {
         {
           rude: "He is not in his room right now, madam, and I do not think he wants to be disturbed.",
           polite:
-            "I am afraid I am not able to connect you, madam. May I have his name and your own? I will ring from this desk.",
-          rule: "Tuần 31 tuyệt đối: nói 'người ta không muốn gặp' là đã xác nhận người ta ở đây. Câu của tuần 31 đúng dù người kia có ở đây hay không — đó chính là lý do nó an toàn. Đừng nhắc tới PHÒNG, và cũng đừng hứa 'sẽ tới đúng người', vì cả hai đều ngụ ý có một người để tới. Tuần 31 cho hẳn quy trình: xin tên hai bên, tự bấm máy từ quầy, và chỉ chuyển máy sau khi người trên phòng đồng ý. Tuần 31 nói rõ luật này KHÔNG hết hiệu lực khi khách trả phòng.",
+            "May I have his name and your own, madam? I will ring the room from this desk, and pass you over once he says yes.",
+          rule: "Tuần 31 tuyệt đối: nói 'người ta không muốn gặp' là đã xác nhận người ta ở đây. Tuần 31 cho hẳn quy trình, và THỨ TỰ của nó mới là chỗ an toàn: xin tên hai bên, TỰ bấm máy từ quầy, nói ai đang hỏi, và chỉ chuyển máy sau khi người trên phòng đồng ý. Đừng nói người kia có ở đây hay không, đừng nói TẦNG hay số phòng. Câu 'I am afraid I am not able to connect you' để dành cho lúc không ai nghe máy hoặc người trên phòng từ chối — nó đúng dù người kia có ở đây hay không. Luật bảo mật này không hết hiệu lực khi khách trả phòng. Tuần 31 nói rõ luật này KHÔNG hết hiệu lực khi khách trả phòng.",
         },
       ],
       speaking: [
@@ -24797,13 +24729,13 @@ const GR_WEEK_40: WeekContent = {
           guestPrompt:
             "Please, somebody — my husband has collapsed in the bathroom and I cannot lift him.",
           targetResponse:
-            "Is he breathing, madam? If he is not, I am dialling 115 now. Please do not move him — I am staying with you.",
+            "Is he breathing, madam? Please do not move him. If he is not, I am dialling 115 — our name and street, then your room. If he is, my Duty Manager, now.",
           helpTip:
-            "Người nhà đang hoảng thì không cần nghe về phận sự của bạn. Sàng lọc TRƯỚC rồi mới hứa: câu hỏi thở quyết định gọi 115 hay đường dây trong nhà, nên đừng nói trợ giúp đang tới khi chưa ai bấm số. Nói rõ CHÍNH BẠN đang bấm — tuần 39: đừng để hai người cùng tưởng người kia gọi rồi. Rồi chặn việc di chuyển khách, thứ tuần 37 in hoa. Và gọi xong KHÔNG phải là xong. 'breathing' /ˈbriːðɪŋ/ — /ð/ hữu thanh, lưỡi giữa hai hàm răng, đừng thành /d/ hay /z/.",
+            "Người nhà đang hoảng thì không cần nghe về phận sự của bạn. Sàng lọc TRƯỚC rồi mới hứa: câu hỏi thở quyết định gọi 115 hay đường dây trong nhà, nên đừng nói trợ giúp đang tới khi chưa ai bấm số. Nói rõ CHÍNH BẠN đang bấm — tuần 39: đừng để hai người cùng tưởng người kia gọi rồi. Chặn việc di chuyển khách ngay, thứ tuần 37 in hoa. Và phải đủ HAI NHÁNH: không thở — hoặc không ai nói chắc được — thì 115, kèm tên và đường của khách sạn TRƯỚC số phòng; còn thở thì Duty Manager và số phòng. Và gọi xong KHÔNG phải là xong. 'breathing' /ˈbriːðɪŋ/ — /ð/ hữu thanh, lưỡi giữa hai hàm răng, đừng thành /d/ hay /z/.",
         },
       ],
       reading: {
-        text: "WHAT IS STILL NOT YOURS TO DECIDE\nForty weeks have made you faster. They have not moved the line.\nWeek thirty-three already named six things that are not complaints at all, and those six have not changed.\nThis page is a different list: the decisions that are still not yours to take.\nA figure is the first. A compensation amount, a rate, a night taken off a bill.\nExplaining how the figure is worked out is giving the figure. That part is my manager's too.\nOne line is not. Week thirty-three: a disputed minibar water or one laundry item goes to the front office and comes off while she waits.\nWeek thirty-three gave you the sentence: 'That one is my manager's to give' is better than a long silence.\nWeek thirty-five went further. Some things stay outside the range whatever your manager says, because they were never hers to give.\nSecond, saying who is staying in this house, or reading out what is on a file. Writing the file is still yours.\nWeek thirty-one: everything this desk knows about a guest is confidential, and it does not expire when they check out.\nWeek thirty-two: a confidential file is never read aloud, not even to a colleague.\nAnd week thirty-one again, the line people get wrong. Never say that somebody does not want to see them — that answer confirms they are here.\nThird, treating anybody. Week thirty-seven: send help first, ask questions second — is she conscious, is she breathing.\nIf nobody can say she is breathing, week thirty-six overrides the inside line.\nThat one is 115 first, and the name and street of this house come before the room.\nThen the deciding stops being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.\nDo not move the guest either, with the one exception week thirty-seven wrote out: out of the sun and into the shade, in the heat.\nWhat does not stop is the guest. Week thirty-seven keeps you there: stay with them, and send a colleague for anything you need.\nDo only what that week wrote out. Loosened clothing, a wet towel at the neck, and their own medicine reached for them.\nAnd nothing at all to eat or drink, because somebody upstairs may have to operate.\nFourth, naming a colleague or another desk as the cause of what went wrong. Week thirty-three: not a name, not a department, not a guess.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it.\nFifth, closing a case. Week thirty-three, and week thirty-five again: it stays open until the guest says it is closed.\nA guest who has stopped asking has not closed anything.\nSixth, a lawyer or the press. Week thirty-three wrote the line and week thirty-six put it through an evacuation: one turn, and then nothing at all.\nThe turn has two halves — you are not the person to speak about it, and your Duty Manager is coming now.\nThe police are not on that list. Week thirty-three: if a guest asks for them, that is theirs to decide, and you say 'Of course, madam'.\nAn insurer is not on it either. Week thirty-seven put the card and the report in English into your hands.\nSeventh, and it is the only one on this page about you. A guest who shouts, swears or puts a hand on you is security's from the first word.\nStep back out of arm's reach, say 'One moment, sir' and nothing else, and the nearest colleague makes both calls.\nNone of those is new. What is new is that you can hand every one of them over in English.\nThe four things, written and said out loud, by name.\nThe line is where it always was. You are the one who can now say why.",
+        text: "WHAT IS STILL NOT YOURS TO DECIDE\nForty weeks have made you faster. They have not moved the line.\nWeek thirty-three already named six things that are not complaints at all, and those six have not changed.\nThis page is a different list: the decisions that are still not yours to take.\nA figure is the first. A compensation amount, a rate, a night taken off a bill.\nExplaining how the figure is worked out is giving the figure. That part is my manager's too.\nOne kind of charge is not. Week thirty-three: a disputed minibar water or one laundry item goes to the front office.\nIt comes off while the guest is still standing there.\nWeek thirty-three gave you the sentence: 'That one is my manager's to give' is better than a long silence.\nWeek thirty-five went further. Some things stay outside the range whatever your manager says, because they were never hers to give.\nSecond, saying who is staying in this house, or reading out what is on a file. Writing the file is still yours.\nWeek thirty-one: everything this desk knows about a guest is confidential, and it does not expire when they check out.\nWeek thirty-two: a confidential file is never read aloud, not even to a colleague.\nAnd week thirty-one again, the line people get wrong. Never say that somebody does not want to see them — that answer confirms they are here.\nThird, treating anybody. Week thirty-seven: send help first, ask questions second — is she conscious, is she breathing.\nIf nobody can say she is breathing, week thirty-six overrides the inside line.\nThat one is 115 first, and the name and street of this house come before the room.\nAfter that call, the decisions stop being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.\nDo not move the guest either, with the one exception week thirty-seven wrote out: out of the sun and into the shade, in the heat.\nWhat does not stop is the guest. Week thirty-seven keeps you there: stay with them, and send a colleague for anything you need.\nDo only what that week wrote out. Loosened clothing, a wet towel at the neck, and their own medicine reached for them.\nAnd nothing at all to eat or drink, because a surgeon may have to operate later.\nFourth, naming a colleague or another desk as the cause. Week thirty-three: not a name, not a department, not a guess.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it.\nFifth, closing a case. It stays open until the guest says it is closed, and a guest who has stopped asking has not closed anything.\nSixth, a lawyer or the press. Week thirty-three wrote the line and week thirty-six put it through an evacuation: one turn, and then nothing at all.\nThe turn has two halves — you are not the person to speak about it, and your Duty Manager is coming now.\nThe police are not on that list. Week thirty-three: if a guest asks for them, that is theirs to decide, and you say 'Of course, madam'.\nThen you tell the Duty Manager in the same minute.\nAn insurer is not on it either. Week thirty-seven put the card and the report in English into your hands.\nSeventh, and it is the only one on this page about you. A guest who shouts, swears or puts a hand on you is security's from the first word.\nAsk him to let go, then step back out of arm's reach.\nSay 'One moment, sir' and nothing else, and the nearest colleague makes both calls.\nNone of those is new. What is new is that you can hand every one of them over in English.\nThe four things, written and said out loud, by name.\nThe line is where it always was. You are the one who can now say why.",
         questions: [
           {
             q: "Giải thích CÁCH khách sạn tính ra con số bồi thường thì có được không?",
@@ -24847,7 +24779,7 @@ const GR_WEEK_40: WeekContent = {
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'Then the deciding stops being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.' Vế không dừng: 'What does not stop is the guest.'",
+              "Bài đọc: 'After that call, the decisions stop being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.' Vế không dừng: 'What does not stop is the guest.'",
           },
           {
             q: "Khách đòi gặp công an. Bạn xử lý thế nào?",
@@ -24883,15 +24815,15 @@ const GR_WEEK_40: WeekContent = {
         },
         {
           prompt:
-            "Guest Relations. She has not mentioned the lounge since Tuesday. Shall I close it off?",
+            "Guest Relations. The boat was off for the weather and she took the rain check. Shall I close it off?",
           speakerRole: "colleague",
           options: [
             {
-              text: "Only the guest closes it. She has stopped asking, and that is not the same thing.",
+              text: "Only the guest closes it. She took the rain check; she has not said the case is closed.",
               correct: true,
             },
             {
-              text: "Yes, close it. If it still mattered to her she would have come back to the desk about it.",
+              text: "Yes, close it. She took what we offered, so there is nothing left of it for anybody to do.",
               correct: false,
             },
             {
@@ -24909,8 +24841,8 @@ const GR_WEEK_40: WeekContent = {
       titleVi: "Người sẽ ngồi chỗ này tháng sau",
       vocabulary: [
         {
-          word: "Stand beside, not in front",
-          phonetic: "/ˌstænd bɪˈsaɪd nɒt ɪn ˈfrʌnt/",
+          word: "Stand beside",
+          phonetic: "/ˌstænd bɪˈsaɪd/",
           definition: "Đứng CẠNH người mới trước mặt khách, đừng đứng chắn trước họ",
           context: "Stand beside, not in front — the guest must still see her.",
           icon: "🤝",
@@ -24959,7 +24891,7 @@ const GR_WEEK_40: WeekContent = {
           targetResponse:
             "A file is never read aloud, and that one does not wait — you stop it that second. I am coming over.",
           helpTip:
-            "Đây là ngoại lệ của luật 'sửa sau ca'. Hồ sơ mật bị đọc lên và mọi thứ nguy hiểm thì chặn ngay, không đợi. 'second' /ˈsekənd/ — trọng âm âm tiết đầu, và cụm /nd/ cuối phải nghe được cả hai âm, đừng dừng ở /n/.",
+            "Đây là ngoại lệ của luật 'sửa sau ca'. Hồ sơ mật bị đọc lên và mọi thứ nguy hiểm thì chặn ngay, không đợi. 'read' ở đây KHÔNG đọc /riːd/ — dạng bị động đọc /red/, cùng mặt chữ khác âm. 'second' /ˈsekənd/ — trọng âm âm tiết đầu, và cụm /nd/ cuối phải nghe được cả hai âm, đừng dừng ở /n/.",
         },
         {
           guestPrompt:
@@ -25077,10 +25009,10 @@ const GR_WEEK_40: WeekContent = {
       titleVi: "Điều bốn mươi tuần chưa cho bạn",
       vocabulary: [
         {
-          word: "My house's figures",
-          phonetic: "/maɪ ˈhaʊsɪz ˈfɪɡəz/",
+          word: "The numbers this house keeps",
+          phonetic: "/ðə ˈnʌmbəz ðɪs ˈhaʊs ˈkiːps/",
           definition: "Con số của CHÍNH khách sạn bạn — phải đi hỏi, không đoán",
-          context: "My house's figures I asked my Duty Manager for in my first week.",
+          context: "I asked my Duty Manager for the numbers this house keeps.",
           icon: "🏨",
         },
         {
@@ -25091,8 +25023,8 @@ const GR_WEEK_40: WeekContent = {
           icon: "📖",
         },
         {
-          word: "A phrase used twice",
-          phonetic: "/ə ˈfreɪz ˌjuːzd ˈtwaɪs/",
+          word: "Used twice",
+          phonetic: "/ˌjuːzd ˈtwaɪs/",
           definition: "Câu nào hai khách khác nhau cùng dùng thì ghi lại",
           context: "A phrase used twice by two guests goes in my notebook.",
           icon: "✍️",
@@ -25109,14 +25041,14 @@ const GR_WEEK_40: WeekContent = {
         {
           rude: "The compensation limit for a case like this is around two nights, madam.",
           polite:
-            "I would rather find out than guess, madam. I am asking my Duty Manager, and I will summarise it for you at six.",
+            "I would rather find out than guess, madam. The numbers this house keeps are my Duty Manager's, and I am back at six.",
           rule: "Trần bồi thường, bảng hạng thẻ, số máy lẻ Duty Manager lúc ba giờ sáng, điểm tập kết thật của toà nhà — mỗi khách sạn một khác. Sách này in số của MỘT nhà: tuần 37 in một số máy lẻ, tuần 38 in một điểm tập kết. Đoán một con số nội bộ là lỗi nặng hơn nói 'tôi chưa thuộc'. Hỏi trong tuần đầu, và ghi vào sổ của chính bạn.",
         },
         {
-          rude: "Nobody has ever asked me anything like that before, sir. I really would not know.",
+          rude: "I cannot do the late check-out but I will try my best about the room for you, sir.",
           polite:
-            "That is a request nobody wrote down, sir. I know who owns it, and I am back to you by four.",
-          rule: "Vị khách không khớp trang nào là chuyện chắc chắn xảy ra, không phải rủi ro. Khi nó xảy ra thì khuôn vẫn chạy: nghe hết, gọi tên chủ sở hữu, nói làm được gì, đặt một mốc giờ của bạn, ghi lại, quay lại. 'A request nobody wrote down' gọi đúng tên tình huống mà không tự hạ thấp mình, và cũng không hứa là biết.",
+            "Although the late check-out is the front office's, sir, I can put the room to my manager.",
+          rule: "Ôn lại bản lề của tuần 35: mệnh đề nhượng bộ đặt cái KHÔNG LÀM ĐƯỢC lên trước, cái LÀM ĐƯỢC xuống sau — vế cuối là vế khách nhớ. Và tiếng Anh chỉ cho MỘT bản lề: 'tuy… nhưng…' của tiếng Việt dịch thành 'although…' HOẶC 'but…', không bao giờ cả hai. Vị khách không khớp trang nào cũng chạy đúng khuôn ấy.",
         },
       ],
       speaking: [
@@ -25139,7 +25071,7 @@ const GR_WEEK_40: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT FORTY WEEKS DID NOT GIVE YOU\nThis book stops here. Your desk does not.\nThree things are missing from it on purpose, and knowing which three is the last lesson.\nThe first is your own house's figures.\nThe compensation limit your Duty Manager works to. Where your house keeps the tier and points rules. The extension that reaches him at three in the morning.\nWhere this house sends people for a fire, and where for a storm — week thirty-six said those are two different places.\nWhether this building has a refuge area, and on which floor. Who brings you the fire officer's all-clear, because the bell will not.\nWho dials 114 for this house, and from which telephone, for the night security does not answer.\nYour own desk's limit and the front office's, in figures — week thirty-five sent you to ask for both.\nHow many waiting before you call for a second pair of hands, and how long that help takes to come.\nAnd where your own shift's line falls, the one week thirty-nine counted as quarter to.\nWhere this book printed a number, it printed one house's number. Some weeks said so beside it; some did not.\nWeek thirty-seven printed an extension and a doctor fifteen minutes away. Week thirty-eight printed a ballroom.\nNeither said whose they were, and you have been carrying them as if they were yours.\nWeek thirty-nine printed a quarter to and did say so. That one you have already been told to go and ask about.\nGuessing an internal figure is worse than saying you do not know it yet. A guess becomes a promise the moment a guest repeats it.\nThat is nine. Ask for all nine in your first week back, and write them where you can reach them at three in the morning.\nThe second thing missing is the guest who fits no page in this book.\nShe will arrive. Not often, but she will arrive, and the request will be one nobody wrote down.\nWhen she does, and nobody is in danger, nothing changes.\nListen to the end, name the owner, say what you can do meanwhile.\nThen your own hour on it, write it down, and come back.\nThe shape was never about the situations. It was about what to do when you have run out of them.\nThe third thing missing is the English you have not met yet. Three habits keep it growing.\nWrite down any phrase you hear two different guests use. Two guests is not a coincidence; it is the language of the job.\nAsk a colleague after the shift, not during. In the middle of a shift you get half an answer, and she gets a worse one.\nAnd listen to how guests build the request, not only to what they are asking for.\nOne last thing about this week itself. It ends with the checkpoint: questions on paper, and five lines spoken aloud.\nThose five are drawn from all ten weeks of this phase, and the model sentence is not on the screen for them.\nWalk the shape on your next shift. Say the five lines the way you drilled them, because the marking listens for those words and for their order.\nYou need fourteen of the twenty, half of every skill block, and three of the five spoken lines. Four of the twenty are heard, not read.\nIf the first sitting falls short, there is another twenty minutes later.\nThere is no lesson for week forty-one. There is a shift.\nWhat this desk remembers is not the forty weeks. It is what you do on the Tuesday after them.",
+        text: "WHAT FORTY WEEKS DID NOT GIVE YOU\nThis book stops here. Your desk does not.\nThree things are missing from it on purpose, and knowing which three is the last lesson.\nThe first is the numbers this house keeps.\nThe compensation limit your Duty Manager works to. Where your house keeps the tier and points rules. The extension that reaches him at three in the morning.\nWhere this house sends people for a fire, and where for a storm — week thirty-six said those are two different places.\nWhether this building has a refuge area, and on which floor. Who brings you the fire officer's all-clear, because the bell will not.\nWho dials 114 for this house, and from which telephone, when security has not answered inside thirty seconds.\nYour own desk's limit and the front office's, in figures — week thirty-five sent you to ask for both.\nHow many waiting before you call for a second pair of hands, and how long that help takes to come.\nAnd where your own shift's line falls, the one week thirty-nine counted as quarter to.\nWhere this book printed a number, it printed one house's number. Some weeks said so beside it; some did not.\nWeek thirty-seven printed an extension and a doctor fifteen minutes away. Week thirty-eight printed a ballroom.\nNeither said whose they were, and you have been carrying them as if they were yours.\nWeek thirty-nine printed a quarter to and did say so. That one you have already been told to go and ask about.\nGuessing an internal figure is worse than saying you do not know it yet. A guess becomes a promise the moment a guest repeats it.\nThat is ten. Ask for all ten in your first week back, and write them where you can reach them at three in the morning.\nThe second thing missing is the guest who fits no page in this book.\nShe will arrive. Not often, but she will arrive, and the request will be one nobody wrote down.\nWhen she does, and nobody is in danger, nothing changes.\nListen to the end, name the owner, say what you can do meanwhile.\nThen your own hour on it, write it down, and come back.\nThe shape was never about the situations. It was about what to do when you have run out of them.\nThe third thing missing is the English you have not met yet. Three habits keep it growing.\nWrite down any phrase you hear two different guests use. Two guests is not a coincidence; it is the language of the job.\nAsk a colleague after the shift, not during. In the middle of a shift you get half an answer, and she gets a worse one.\nAnd listen to how guests build the request, not only to what they are asking for.\nOne last thing about this week itself. It ends with the checkpoint: questions on paper, and five lines spoken aloud.\nThose five are drawn from all ten weeks of this phase, and the model sentence is not on the screen for them.\nWalk the shape on your next shift. Say the five lines the way you drilled them, because the marking listens for those words and for their order.\nYou need fourteen of the twenty, half of every skill block, and three of the five spoken lines. Four of the twenty are heard, not read.\nIf the first sitting falls short, there is another twenty minutes later.\nThere is no lesson for week forty-one. There is a shift.\nWhat this desk remembers is not the forty weeks. It is what you do on the Tuesday after them.",
         questions: [
           {
             q: "Ba thứ khoá học cố tình không dạy là gì?",
@@ -25150,7 +25082,7 @@ const GR_WEEK_40: WeekContent = {
             ],
             correct: 1,
             explanation:
-              "Bài đọc: 'The first is your own house's figures.' · 'the guest who fits no page in this book' · 'the English you have not met yet'.",
+              "Bài đọc: 'The first is the numbers this house keeps.' · 'the guest who fits no page in this book' · 'the English you have not met yet'.",
           },
           {
             q: "Sách này in số máy lẻ ở tuần 37 và điểm tập kết ở tuần 38. Hiểu thế nào cho đúng?",
@@ -25203,7 +25135,7 @@ const GR_WEEK_40: WeekContent = {
             "Just tell me what the most is that you can give me, and I will decide whether it is enough.",
           options: [
             {
-              text: "I do not have that by heart, madam — a guess becomes a promise. My manager does, and I am back at six.",
+              text: "That was never mine to give, madam — a guess becomes a promise. My manager decides it, and I am back at six.",
               correct: true,
             },
             {
