@@ -88,7 +88,14 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
   // and only falls back to the review pool when the week has too few
   // spellable ones. It used to draw from the mixed pool, which at P4 meant
   // the three spelling items were almost always words learned weeks ago.
-  const spellable = (t: Term) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en);
+  // Cụm nhiều từ không phải bài chính tả. Bộ lọc này viết cho từ đơn nhưng
+  // không chặn cụm, nên ở Phase 4 — nơi headword đã thành cụm công thức 4–6
+  // từ — nó bắt học viên gõ khớp tuyệt đối cả một câu, trong khi dung sai gõ
+  // sai đã tắt từ A2.1. Đó là đo tốc độ gõ, không đo từ vựng. Giới hạn 2 từ;
+  // đã kiểm cả 240 dep-week, không tuần nào tụt xuống dưới 3 mục nhờ nguồn
+  // dự phòng reviewWords.
+  const spellable = (t: Term) =>
+    /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en) && t.en.trim().split(/\s+/).length <= 2;
   const dictationTerms = [
     ...shuffle(terms.filter(spellable)),
     ...shuffle(reviewWords.filter(spellable)),

@@ -40,9 +40,13 @@ function ArcadeSuiteInner({
   const poppedRef = useRef<Set<number>>(new Set());
   const rounds: GameRound[] = content.lessons.flatMap((l) => l.game);
 
+  // 18s mỗi vòng: đọc một prompt cộng ba phương án ở A2+ mất khoảng chừng đó.
+  // Sàn 75s giữ nguyên hành vi cũ cho các tuần 4 vòng.
+  const timeBudget = Math.max(75, rounds.length * 18);
+
   const [stage, setStage] = useState<Stage>("rules");
   const [won, setWon] = useState(false);
-  const [time, setTime] = useState(75);
+  const [time, setTime] = useState(timeBudget);
   const [score, setScore] = useState(0);
   const [roundIdx, setRoundIdx] = useState(0);
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
@@ -54,7 +58,7 @@ function ArcadeSuiteInner({
   function startGame() {
     setStage("playing");
     setWon(false);
-    setTime(75);
+    setTime(timeBudget);
     setScore(0);
     setRoundIdx(0);
     setBubbles([]);
@@ -68,7 +72,10 @@ function ArcadeSuiteInner({
     setStage("done");
     const elapsed = (Date.now() - startedRef.current) / 1000;
     patchMetrics({
-      reflex_speed: Math.min(100, Math.max(20, Math.round(finalScore * 6 + (75 - elapsed) * 0.5))),
+      reflex_speed: Math.min(
+        100,
+        Math.max(20, Math.round(finalScore * 6 + (timeBudget - elapsed) * 0.5)),
+      ),
     });
     if (dep && week) {
       const pct = Math.round((finalScore / (rounds.length * 2)) * 100);
@@ -290,7 +297,7 @@ function ArcadeSuiteInner({
             <p className="mt-2 text-sm text-foreground/70">
               {won
                 ? `Đạt chuẩn — xử lý đúng cả ${rounds.length} tình huống với ${score} ⭐`
-                : `Được ${score} ⭐ qua ${Math.min(roundIdx, rounds.length)} vòng — cần xử lý đúng cả ${rounds.length} tình huống trong 75s để đạt chuẩn`}
+                : `Được ${score} ⭐ qua ${Math.min(roundIdx, rounds.length)} vòng — cần xử lý đúng cả ${rounds.length} tình huống trong ${timeBudget}s để đạt chuẩn`}
             </p>
             <button
               onClick={startGame}
