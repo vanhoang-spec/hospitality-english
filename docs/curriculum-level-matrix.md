@@ -351,6 +351,20 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 > chấm là SAI, vì nó bảo người ta cảm thấy một điều thay vì cho họ một việc để làm. Thay vào đó
 > là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
 
+> **Chú thích tuần 39 (cả sáu bộ phận).** Bảng ghi "Tổng duyệt role-play liên tình huống —
+> Kết hợp mọi chức năng". Trên thực tế cả bốn tuần 39 đã soạn tay (FO, FB, HK, GR) đều dạy
+> thêm **hai luật mới** mà không tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến
+> cùng lúc, (2) luật "mười lăm phút cuối ca không mở việc mới".
+>
+> Đó là hai kỹ năng chỉ tồn tại được khi học viên đã có đủ chức năng để mà xếp thứ tự, nên
+> chúng thuộc về đúng chỗ này. Nhưng chúng **là luật mới**, không phải ôn tập: mỗi tuần 39
+> phải dạy chúng đủ một bài có từ vựng, ngữ pháp, luyện nói, game và câu hỏi đọc — không được
+> nhét vào một dòng văn xuôi. Ba lượt kiểm định GR-39 đều nêu đúng chỗ này.
+>
+> Kèm theo, luật ưu tiên phải nói rõ **"nguy hiểm trước" nghĩa là LÀM GÌ**, không chỉ là một
+> chỗ trong hàng chờ: nó dẫn về tuần 37 (y tế) và tuần 33 (an toàn → bảo vệ trước, Duty
+> Manager sau), chứ không phải về tuần 36 — tuần 36 là cảnh sơ tán toàn nhà.
+
 ---
 
 ## Di dời 12 tuần content đã viết (hiện gắn nhãn "tuần 1–2")

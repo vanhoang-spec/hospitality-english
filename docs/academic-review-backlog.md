@@ -1150,3 +1150,67 @@ Sửa: thêm vào `GR_37_1` sau mục 3 — _"Exception: a guest who is not brea
 HK-36 và GR-36 đều có.
 
 GR-37 đã ship từ trước và chưa qua cổng 3-lần-chạy. Xem thêm GR-Z.
+
+## GR-AC — Bài đọc 2 câu hỏi: bấm mù một chữ cái là qua ngưỡng mastery
+
+Phát hiện trong đợt kiểm định GR-39 (2 lượt độc lập), đo lại bằng cách chép nguyên
+`seedOf` + `shuffleOptions` của `ReadingSuite.tsx:30–57` để đo trên **thứ tự học
+viên thật sự nhìn thấy**:
+
+| số câu hỏi/bài | qua được bằng bấm mù một chữ cái |
+| -------------- | -------------------------------- |
+| 2 câu          | **283 / 928 (30%)**              |
+| 3 câu          | 1 / 6                            |
+| 4 câu          | 0 / 2                            |
+| 5 câu          | 1 / 24 (4%) — đã sửa             |
+
+`ReadingSuite` đòi **từng** passage tự đạt `suiteMasteryPct` (P4 = 80%). Với 2 câu
+hỏi thì ngưỡng đó là 2/2 = 100% — nhưng nếu cả hai đáp án rơi vào cùng một vị trí
+sau khi xáo (xác suất 1/3 với 3 phương án), học viên bấm một chữ cái năm lần là qua.
+
+Layer K của `lint-content.ts` mù chuyện này vì nó đọc thứ tự **lưu**, không phải
+thứ tự **hiện**. GATE 6 của `verify-content.ts` thì gộp toàn corpus nên một bài lẻ
+không kéo nổi con số chung.
+
+Nguyên nhân gốc là **2 câu hỏi/bài** — đặc trưng của content sinh tự động. Các tuần
+soạn tay dùng 5 câu và sạch 96%. Hai hướng: (a) nâng số câu hỏi tối thiểu của bản
+sinh lên 3, hoặc (b) thêm một lớp lint đo trên thứ tự sau `shuffleOptions`.
+Script đo: `scratchpad/blindpass.ts` và `scratchpad/blindstat.ts`.
+
+## GR-AD — `speakEN` không chuẩn hoá số, nên nút nghe mẫu đọc sai số phòng
+
+`src/lib/speech.ts` truyền thẳng chuỗi vào `SpeechSynthesisUtterance`, nên
+`"1102 is still open"` được đọc thành _"one thousand one hundred and two"_ — đúng
+thứ mà chính content dạy là sai. `SpeakingSuite.tsx:177` và `GrammarSuite.tsx:227`
+đều phát `targetResponse` / `polite` nguyên văn.
+
+Trớ trêu là bộ **chấm** đã đúng: `speaking-score.ts:25` có `digitToWords()` với đúng
+quy ước khách sạn (`0 = "oh"`, 3 chữ số trở lên thì đọc từng chữ số). Dùng lại hàm
+đó trước khi phát là sửa xong cho cả 40 tuần × 6 bộ phận.
+
+Hiện GR-39 và FO-39 vá tạm bằng một dòng trong `helpTip`; đó là vá content cho một
+lỗi code.
+
+## GR-AE — Trần 5 câu hỏi/bài khiến một luật có con số không được kiểm
+
+`verify-content.ts:299` chặn cứng 2–5 câu hỏi mỗi bài đọc. GR-39 bài 1 đã dùng hết
+5 câu, nên luật _"gọi thêm người khi có bốn người đang chờ"_ — luật định lượng duy
+nhất của bài — không có câu hỏi nào kiểm. Hai lượt kiểm định đều nêu.
+Cân nhắc nâng trần lên 6 cho Phase 4, hoặc chấp nhận và ghi rõ trong quy ước soạn
+bài rằng mỗi bài chỉ được mang **một** luật có con số.
+
+## GR-AF — GR-40 sinh tự động: hai lỗi chặn phát hành
+
+Chưa nằm trong `P4_OVERRIDES`, nên bài đánh giá cuối khoá của GR đang chạy trên
+content sinh tự động:
+
+1. `GR_40_1` — `"I can explain the compensation amount to anyone who asks"` xuất hiện
+   cả trong bài đọc lẫn câu luyện nói. Vừa phá GR-33 (con số bồi thường là của quản
+   lý) vừa phá GR-31 (mọi điều quầy này biết về khách là bảo mật).
+2. `GR_40_4` — `"negotiating a contract in week thirty-seven"`. GR-37 là **cấp cứu
+   y tế**; tuần thương lượng của GR là 35. Đây là câu chung của spine, lấy theo dòng
+   B2B của ma trận vốn không áp dụng cho GR (xem khối ngoại lệ GR 36–38).
+
+Kèm theo: cả 6 câu luyện nói đều đặt `speakerRole: "guest"` cho một cuộc phỏng vấn
+đánh giá nhân sự — khách không hỏi _"How do you feel about your English at work now?"_.
+Và `reviewWords` = 154 (đổ cả khoá), trong khi FO-40/FB-40/HK-40 soạn tay đều dùng 8.
