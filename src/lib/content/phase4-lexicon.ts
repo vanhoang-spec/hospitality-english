@@ -936,92 +936,15 @@ const SW_BANK: P4Bank = {
 };
 
 const GR_BANK: P4Bank = {
-  story: [
-    {
-      word: "Founding story",
-      phonetic: "/ˈfaʊndɪŋ ˈstɔːri/",
-      definition: "Câu chuyện thành lập khách sạn",
-      icon: "📖",
-    },
-    {
-      word: "Founding family",
-      phonetic: "/ˈfaʊndɪŋ ˈfæməli/",
-      definition: "Gia đình đã sáng lập nơi này",
-      icon: "👪",
-    },
-  ],
-  preferences: [
-    {
-      word: "Preferred newspaper",
-      phonetic: "/prɪˈfɜːd ˈnjuːzpeɪpə/",
-      definition: "Tờ báo quý khách thích đọc",
-      icon: "📰",
-    },
-    {
-      word: "Seating habit",
-      phonetic: "/ˈsiːtɪŋ ˈhæbɪt/",
-      definition: "Thói quen chọn chỗ ngồi",
-      icon: "🪑",
-    },
-  ],
-  disputes: [
-    {
-      word: "Broken commitment",
-      phonetic: "/ˈbrəʊkən kəˈmɪtmənt/",
-      definition: "Cam kết không được thực hiện",
-      icon: "💔",
-    },
-    {
-      word: "Ignored preference",
-      phonetic: "/ɪɡˈnɔːd ˈprefrəns/",
-      definition: "Sở thích của khách bị bỏ qua",
-      icon: "🙉",
-    },
-  ],
-  occasions: [
-    {
-      word: "Proposal set-up",
-      phonetic: "/prəˈpəʊzl ˈsetʌp/",
-      definition: "Phần dàn dựng cho màn cầu hôn",
-      icon: "💍",
-    },
-    {
-      word: "Milestone anniversary",
-      phonetic: "/ˈmaɪlstəʊn ˌænɪˈvɜːsəri/",
-      definition: "Dịp kỷ niệm tròn năm quan trọng",
-      icon: "💐",
-    },
-  ],
-  tradeoffs: [
-    {
-      word: "Put the night to my manager",
-      phonetic: "/pʊt ðə ˈnaɪt tə maɪ ˈmænɪdʒə/",
-      definition: "Đưa việc xoá tiền đêm lên quản lý — quầy đề xuất, quản lý quyết",
-      icon: "🧾",
-    },
-    {
-      word: "Ask about a private transfer",
-      phonetic: "/ˌɑːsk əˈbaʊt ə ˌpraɪvət ˈtrænsfɜː/",
-      definition: "Hỏi về xe đưa đón riêng — concierge sắp, không phải quầy",
-      icon: "🚙",
-    },
-  ],
+  story: [],
+  preferences: [],
+  disputes: [],
+  occasions: [],
+  tradeoffs: [],
   emergencies: [
     // Slot order is semantic — see the note on the FO bank above. GR's bank
     // is mostly people and possessions, so two entries were re-authored as
     // physical hazards to fill the slots the crisis frames require.
-    {
-      word: "Guest collapse",
-      phonetic: "/ɡest kəˈlæps/",
-      definition: "Khách bị ngã quỵ",
-      icon: "🚑",
-    },
-    {
-      word: "Missing child",
-      phonetic: "/ˈmɪsɪŋ tʃaɪld/",
-      definition: "Trẻ nhỏ bị lạc",
-      icon: "🧒",
-    },
   ],
   terms: [],
   proposal: [],

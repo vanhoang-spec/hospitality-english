@@ -23832,6 +23832,690 @@ const GR_WEEK_36: WeekContent = {
   ],
 };
 
+const GR_WEEK_39: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 39,
+  weekTitleEn: "The Threads You Are Holding",
+  weekTitleVi: "Những mối bạn đang cầm",
+  reviewWords: [
+    "Guest privacy rule",
+    "Complaint log",
+    "Follow-up note",
+    "I would rather find out",
+    "Shall I put that down",
+    "Four things",
+    "My manager's to give",
+    "Not on the room list",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_39_1",
+      lessonOrder: 1,
+      titleEn: "Three at Once",
+      titleVi: "Ba việc cùng lúc",
+      vocabulary: [
+        {
+          word: "Three at once",
+          phonetic: "/ˌθriː ət ˈwʌns/",
+          definition: "Ba việc cùng lúc — và không việc nào là cấp cứu",
+          context: "Three at once, and none of them is an emergency.",
+          icon: "🧵",
+        },
+        {
+          word: "May I take them in order",
+          phonetic: "/ˌmeɪ aɪ ˈteɪk ðəm ɪn ˈɔːdə/",
+          definition: "Cho tôi làm lần lượt nhé — xin phép trước khi xếp thứ tự",
+          context: "May I take them in order, madam?",
+          icon: "🔢",
+        },
+        {
+          word: "The nearest hour first",
+          phonetic: "/ðə ˌnɪərəst ˈaʊə fɜːst/",
+          definition: "Cái có mốc gần nhất làm trước — không phải cái đến trước",
+          context: "The nearest hour first, madam, and yours is at six.",
+          icon: "⏱️",
+        },
+        {
+          word: "I am coming back to that",
+          phonetic: "/aɪ əm ˈkʌmɪŋ ˌbæk tə ðæt/",
+          definition: "Việc đó tôi quay lại — gọi tên việc mình đang gác lại",
+          context: "I am coming back to that at half past, sir.",
+          icon: "↩️",
+        },
+        {
+          word: "Still open",
+          phonetic: "/ˌstɪl ˈəʊpən/",
+          definition: "Vẫn còn dang dở — chưa phải là đã xong chỉ vì khách thôi nói",
+          context: "Two cases are still open on my list, sir.",
+          icon: "📂",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will deal with whoever is making the most noise first.",
+          polite: "May I take them in order, madam? The nearest hour first, and yours is at six.",
+          rule: "Ba việc cùng lúc thì thứ tự KHÔNG phải ai đến trước. Ai đang nguy hiểm trước — tuần 36 đã đặt luật đó. Rồi tới người đang đứng trước mặt bạn. Rồi tới lời hứa có mốc gần nhất. Phục vụ người to tiếng trước là dạy cả sảnh rằng to tiếng thì được việc.",
+        },
+        {
+          rude: "I will get to the lounge booking at some point this evening.",
+          polite: "I am coming back to that at half past, sir. Your table is the nearer hour.",
+          rule: "Việc bạn gác lại phải được GỌI TÊN và phải có giờ. Một câu hỏi không được nhắc tới thì khách nghe ra là bị bỏ rơi. Tuần 35 đã dạy: mốc giờ là giờ của BẠN, không phải giờ của người khác.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I need a tour changed, a charge looked at, and a table for eight.",
+          targetResponse:
+            "May I take them in order, madam? The table is the nearest hour, so that goes first.",
+          helpTip:
+            "Ba việc trong một hơi là chuyện bình thường, không phải chuyện khó. Xin phép xếp thứ tự, rồi nói THEO MỐC GIỜ chứ không theo thứ tự khách kể. Bàn ăn lúc bảy giờ đi trước cái tour ngày mai, kể cả khi tour được nói ra trước. 'Order' /ˈɔːdə/ — không có âm /r/ cuối trong giọng Anh-Anh.",
+        },
+        {
+          guestPrompt: "Guest Relations. Room 1102 is on the phone again about her cake.",
+          speakerRole: "colleague",
+          targetResponse:
+            "That one is still open. I am coming back to it at half past — tell her that.",
+          helpTip:
+            "Đồng nghiệp đang chuyển cho bạn việc thứ tư. Đừng nhận thêm mà không nói khi nào — và đừng để đồng nghiệp tự bịa một mốc giờ hộ bạn. Nói mốc, và nhờ họ chuyển đúng mốc đó. 'Half past' — /hɑːf/ có /ɑː/ dài, đừng thành /hæf/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "I have been waiting longer than any of these people.",
+          options: [
+            {
+              text: "You have indeed, madam, so let me deal with you before I take the others.",
+              correct: false,
+            },
+            {
+              text: "You have, madam, and you are next. The gentleman's car is at six.",
+              correct: true,
+            },
+            {
+              text: "Everybody here has been waiting, madam, and I am going as fast as I can.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Take the phone — it has been ringing for a while now.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "The lady in front of me first. Ask the caller if I may ring back in five.",
+              correct: true,
+            },
+            {
+              text: "Put it through to me and I will speak to them while she waits here.",
+              correct: false,
+            },
+            {
+              text: "Let it ring — whoever it is will call back if it is genuinely important.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THREE AT ONCE\nBy week thirty-nine nothing on this desk is new. What is new is that three of them arrive together.\nThe order is not first come first served, and it is not loudest first.\nAnyone in danger comes first. Week thirty-six settled that, and nothing on this page moves it.\nThen the person standing in front of you. A caller can be asked to hold; a guest at the desk cannot be asked to stand there unseen.\nThen the promise with the nearest hour on it. Week thirty-five put an hour on every promise you make.\nThis is the week you find out why: an hour is what sorts a list.\nA table at seven beats a tour for tomorrow, even when the tour was mentioned first.\nSay the order out loud. 'You are next' stops a guest counting the seconds. Silence starts them.\nAnd name the one you are parking. 'I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.\nNever serve the loudest first. Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.\nThe hardest of the three is the one that is not urgent and not new: the case from Tuesday that is still open. It has no hour on it because nobody gave it one.\nGive it one now. A case with no hour closes itself, quietly, without the guest agreeing.\nWeek thirty-three said only the guest may close it.\nWhen the list passes four, ask for a second pair of hands. Ask at four, not at eight: help takes three minutes to arrive, and by eight you are three minutes past needing it.",
+        questions: [
+          {
+            q: "Ba việc đến cùng lúc. Thứ tự là gì?",
+            options: [
+              "Ai đến trước làm trước, rồi đến điện thoại, rồi đến việc còn dang dở",
+              "Ai đang nguy hiểm, rồi người đứng trước mặt, rồi lời hứa có mốc gần nhất",
+              "Việc của khách VIP trước, rồi tới các việc còn lại theo thứ tự nhận được",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Anyone in danger comes first… Then the person standing in front of you… Then the promise with the nearest hour on it.'",
+          },
+          {
+            q: "Vì sao mốc giờ lại quyết định thứ tự?",
+            options: [
+              "Vì quản lý chấm công theo số việc mà mỗi người đóng được trong từng giờ của ca",
+              "Vì khách có mốc giờ sớm hơn thường là khách hạng thẻ cao hơn",
+              "Vì một cái hẹn lúc bảy giờ đi trước cái tour ngày mai, dù tour được nói trước",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'an hour is what sorts a list.' Tuần 35 đặt mốc giờ vào mọi lời hứa; tuần này là lúc thấy vì sao.",
+          },
+          {
+            q: "Việc bạn gác lại thì phải làm gì?",
+            options: [
+              "Gọi tên nó ra và cho nó một mốc giờ",
+              "Ghi vào sổ rồi để ca sau xử lý cho gọn",
+              "Chờ khách hỏi lại rồi mới nhắc tới, để khỏi làm khách sốt ruột",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.'",
+          },
+          {
+            q: "Vì sao không phục vụ người to tiếng trước?",
+            options: [
+              "Vì người to tiếng thường là người có ít việc gấp nhất trong sảnh",
+              "Vì làm thế một lần là dạy cả sảnh rằng to tiếng thì được lên trước",
+              "Vì nội quy khách sạn cấm thay đổi thứ tự phục vụ khi đã xếp hàng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.'",
+          },
+          {
+            q: "Việc khó nhất trong ba việc là việc nào?",
+            options: [
+              "Việc của khách đang to tiếng nhất ở sảnh",
+              "Việc mới nhất, vì bạn chưa có một dữ kiện nào trong tay để mà bắt đầu",
+              "Việc cũ còn dang dở, vì không ai gắn cho nó một mốc giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'It has no hour on it because nobody gave it one… A case with no hour closes itself, quietly, without the guest agreeing.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_2",
+      lessonOrder: 2,
+      titleEn: "When the File Says Yes and the Desk Says No",
+      titleVi: "Khi hồ sơ nói có mà quầy kia nói không",
+      vocabulary: [
+        {
+          word: "The file says",
+          phonetic: "/ðə ˈfaɪl sez/",
+          definition: "Hồ sơ ghi là — điều khách đã đồng ý cho ghi, không phải một quyền",
+          context: "The file says a corner table, madam, and I am asking the restaurant now.",
+          icon: "🗂️",
+        },
+        {
+          word: "Theirs to give",
+          phonetic: "/ˈðeəz tə ˌɡɪv/",
+          definition: "Của bên kia cho — nói rõ quầy nào sở hữu, đừng nói chung chung",
+          context: "The table is theirs to give, sir, not mine.",
+          icon: "🎁",
+        },
+        {
+          word: "Neither rule bends",
+          phonetic: "/ˌnaɪðə ˈruːl bendz/",
+          definition: "Không luật nào nhường luật nào — không tự chọn một bên",
+          context: "Neither rule bends, madam. I am asking the desk that owns it.",
+          icon: "⚖️",
+        },
+        {
+          word: "What I can do meanwhile",
+          phonetic: "/ˌwɒt aɪ kən ˈduː ˈmiːnwaɪl/",
+          definition: "Trong lúc chờ thì tôi làm được gì — phần của bạn, làm ngay",
+          context: "What I can do meanwhile is hold the terrace for you.",
+          icon: "🕰️",
+        },
+        {
+          word: "I am asking, not promising",
+          phonetic: "/aɪ əm ˈɑːskɪŋ ˌnɒt ˈprɒmɪsɪŋ/",
+          definition: "Tôi đang XIN, chưa hứa — tách đề xuất khỏi lời hứa",
+          context: "I am asking, madam, not promising.",
+          icon: "🙋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Your file says a corner table, madam, so I will make sure you get one.",
+          polite:
+            "The file says a corner table, madam. It is the restaurant's to give, and I am asking now.",
+          rule: "Hồ sơ ghi lại điều khách ĐÃ NÓI, không cấp cho khách một quyền. Tuần 32 dạy hồ sơ sở thích chỉ ghi câu trả lời của khách; tuần 33 dạy ai sở hữu cái gì. Đọc hồ sơ ra rồi hứa luôn là gộp hai thứ đó lại và hứa hộ một quầy khác.",
+        },
+        {
+          rude: "I am sure they will say yes if I explain that you are a regular guest.",
+          polite:
+            "I am asking, madam, not promising. What I can do meanwhile is hold the terrace for you.",
+          rule: "Hai vế trong một hơi: phần bạn ĐANG XIN, và phần bạn LÀM ĐƯỢC NGAY. Vế thứ hai giữ khách lại trong lúc chờ vế thứ nhất. Đừng đoán hộ bên kia sẽ trả lời thế nào — tuần 33 đã dạy một lời 'chắc là được' không giữ nổi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We always have the corner table. It is in your system, I have seen it.",
+          targetResponse:
+            "The file says a corner table, madam. It is the restaurant's to give, and I am asking now.",
+          helpTip:
+            "Khách nói đúng — hồ sơ có ghi. Đừng cãi phần đó. Điều bạn sửa là chữ mà khách dùng — luôn luôn: hồ sơ ghi một sở thích, không cấp một chỗ ngồi. Nói ai sở hữu cái bàn, rồi nói bạn đang đi xin. 'The' trong 'the restaurant's' /ðə/ — âm /ð/ hữu thanh, đừng thành /d/.",
+        },
+        {
+          guestPrompt: "So can you do it or not? It is a simple question.",
+          targetResponse: "I am asking, sir, not promising. I will come back to you before seven.",
+          helpTip:
+            "Câu 'có hay không' là câu ép bạn hứa. Trả lời bằng đúng hai vế: bạn đang xin, và mấy giờ bạn quay lại. Tuần 35 dạy mốc giờ là giờ của BẠN — bạn không hứa thay nhà hàng. 'Promising' /ˈprɒmɪsɪŋ/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Your colleague last month said we could have the late check-out every time.",
+          options: [
+            {
+              text: "Then that is what we will do, madam — I will put it on your file now.",
+              correct: false,
+            },
+            {
+              text: "A late check-out is the front office's, madam. I am asking them for today.",
+              correct: true,
+            },
+            {
+              text: "I am afraid nobody here would have said that, madam. It is not our policy.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just tell her yes and we will sort the table out afterwards.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Good idea — she will settle down, and the restaurant can always move somebody later on.",
+              correct: false,
+            },
+            {
+              text: "It is the restaurant's to give. I am asking them, and she gets an hour from me.",
+              correct: true,
+            },
+            {
+              text: "I will say yes but keep it vague, so we are not held to anything firm.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "WHEN THE FILE SAYS YES AND THE DESK SAYS NO\nSome requests are allowed by one rule and refused by another, and both rules are right.\nThe preference file says a corner table. The restaurant is full. Neither of those is a mistake.\nWeek thirty-two built the file: it holds what the guest said yes to, in their own words. Week thirty-three built the ladder: it says which desk owns what.\nPut the two together and the file is a record, not a right. It tells you what she likes. It does not hand you a table.\nSo do not argue with the file, and do not read it out as a promise. 'The file says a corner table' is true. 'You always have the corner table' is somebody else's yes.\nName the owner instead. The table is the restaurant's. A room is the front office's. Tier and points are the loyalty office's. None of that changed because a guest is standing in front of you.\nThen say the two halves in one breath: what you are asking for, and what you can do while you wait.\n'I am asking the restaurant now. What I can do meanwhile is hold the terrace for you.'\nThe second half is the one that keeps her sitting down. A request with nothing attached is a wait, and a wait feels like a no.\nWhen a guest quotes a colleague, the same rule holds and one more with it. Do not say the colleague is wrong, and do not say nobody would have said it.\nYou were not there. Week thirty-one taught the honest version: you would rather find out than guess.\nAnd when a colleague asks you to say yes now and sort it out later, that is not help. It is a promise with your name on it and somebody else's signature missing.",
+        questions: [
+          {
+            q: "Hồ sơ sở thích ghi 'bàn góc'. Điều đó nghĩa là gì?",
+            options: [
+              "Nghĩa là khách có quyền với cái bàn đó mỗi lần tới",
+              "Nghĩa là bộ phận nhà hàng đã đồng ý giữ sẵn cái bàn đó cho khách mỗi lần tới",
+              "Nghĩa là khách đã nói thích bàn đó — một ghi chép, không phải một quyền",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'the file is a record, not a right. It tells you what she likes. It does not hand you a table.'",
+          },
+          {
+            q: "Khi hai luật gặp nhau thì luật nào nhường?",
+            options: [
+              "Không luật nào nhường; bạn nói ai sở hữu và đi xin bên đó",
+              "Luật của hồ sơ nhường, vì hồ sơ chỉ là ghi chép nội bộ",
+              "Luật của quầy kia nhường, vì khách đang đứng trước mặt bạn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Some requests are allowed by one rule and refused by another, and both rules are right.' Gọi tên chủ sở hữu, rồi đi xin.",
+          },
+          {
+            q: "Vì sao phải nói kèm 'trong lúc chờ tôi làm được gì'?",
+            options: [
+              "Vì quản lý yêu cầu mỗi lời từ chối phải kèm một phương án bù",
+              "Vì một lời xin không kèm gì thì thành một cuộc chờ, và chờ nghe như từ chối",
+              "Vì như thế khách sẽ quên mất yêu cầu ban đầu của mình",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A request with nothing attached is a wait, and a wait feels like a no.'",
+          },
+          {
+            q: "Khách nói một đồng nghiệp tháng trước đã hứa. Đáp lại thế nào?",
+            options: [
+              "Nói rằng ở đây không ai hứa như vậy được, vì điều đó không nằm trong chính sách nhà",
+              "Không nói đồng nghiệp sai, không nói không ai hứa thế — bạn không có mặt lúc đó",
+              "Ghi ngay vào hồ sơ rằng khách được hưởng điều đó từ nay về sau",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'You were not there.' Tuần 31: 'I would rather find out than guess.'",
+          },
+          {
+            q: "Đồng nghiệp bảo cứ nói có rồi tính sau. Đó là gì?",
+            options: [
+              "Là một lời hứa mang tên bạn mà thiếu chữ ký của người khác",
+              "Là cách xử lý hợp lý khi khách đang chờ ngay trước mặt",
+              "Là việc của quản lý ca, không phải việc bạn cần cân nhắc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'It is a promise with your name on it and somebody else's signature missing.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_3",
+      lessonOrder: 3,
+      titleEn: "The Promise You Cannot Find",
+      titleVi: "Lời hứa không tìm thấy",
+      vocabulary: [
+        {
+          word: "A promise I cannot find",
+          phonetic: "/ə ˈprɒmɪs aɪ ˌkænɒt ˈfaɪnd/",
+          definition: "Lời hứa tôi chưa tìm thấy — nói ra được, và tốt hơn một câu chối",
+          context: "That is a promise I cannot find, madam.",
+          icon: "🔎",
+        },
+        {
+          word: "Who said it and when",
+          phonetic: "/ˌhuː ˈsed ɪt ənd ˈwen/",
+          definition: "Ai nói và nói lúc nào — hai dữ kiện còn thiếu, hỏi thẳng",
+          context: "Who said it and when, madam — those two I still need.",
+          icon: "🕵️",
+        },
+        {
+          word: "Written or spoken",
+          phonetic: "/ˈrɪtn ɔː ˈspəʊkən/",
+          definition: "Ghi ra giấy hay chỉ nói miệng — quyết định tìm ở đâu",
+          context: "Was it written or spoken, sir?",
+          icon: "✍️",
+        },
+        {
+          word: "Not a name, not a team",
+          phonetic: "/ˌnɒt ə ˈneɪm ˌnɒt ə ˈtiːm/",
+          definition: "Không nêu tên người, không nêu tên bộ phận — trước mặt khách",
+          context: "Not a name, not a team, and not a guess.",
+          icon: "🤐",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Nobody on my team would ever have promised you that, madam.",
+          polite:
+            "That is a promise I cannot find, madam. Who said it and when — those two I still need.",
+          rule: "Không tìm thấy KHÔNG có nghĩa là không có. Câu 'không ai hứa thế' là một phán quyết, và tuần 33 đã cấm ra phán quyết khi chưa ai kiểm. Nói thẳng là bạn chưa tìm thấy, rồi xin hai dữ kiện còn thiếu.",
+        },
+        {
+          rude: "It must have been the front office again — they do this every week.",
+          polite: "Was it written or spoken, sir? Either way I am asking my manager to look.",
+          rule: "Không nêu tên người, không nêu tên bộ phận. Tuần 33: 'Never name another team as the cause.' Câu hỏi hữu ích duy nhất là ghi hay nói: ghi thì tìm được trong hồ sơ, nói thì phải hỏi người trực hôm đó.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We were promised a free upgrade when we booked. It was definitely said.",
+          targetResponse:
+            "That is a promise I cannot find, sir. Was it written or spoken, and who said it?",
+          helpTip:
+            "Ba việc trong một câu: không chối, không xác nhận, và xin đúng hai dữ kiện còn thiếu. Tuần 33 đòi bốn dữ kiện cho một khiếu nại; ở đây bạn đã có hai (hứa gì, chuyện gì xảy ra) và đang xin nốt hai cái kia. 'Spoken' /ˈspəʊkən/ — /əʊ/ là nguyên âm đôi.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. She is saying reception promised it. Shall I go and ask them?",
+          speakerRole: "colleague",
+          targetResponse: "Not yet. Written or spoken first — then we know which desk to ask.",
+          helpTip:
+            "Đồng nghiệp đang định đi hỏi trước khi biết phải hỏi ai. Một lời hứa ghi ra giấy thì tra hồ sơ; một lời hứa nói miệng thì phải hỏi đúng người trực hôm đó. Hỏi sai quầy là mất mười phút và mang về một câu 'không phải chúng tôi'. 'Which' /wɪtʃ/ — đuôi /tʃ/ phải bật ra.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Your reception staff told us the spa was included. Are you calling us liars?",
+          options: [
+            {
+              text: "Of course not, madam. I am sure reception simply made an honest mistake there.",
+              correct: false,
+            },
+            {
+              text: "Not at all, madam. I cannot find it yet — was it written on anything?",
+              correct: true,
+            },
+            {
+              text: "Not at all, madam, and I will include the spa now to put this right.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. Just give her the upgrade — it is easier than arguing about it.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "An upgrade is my manager's to give. I am putting the two facts to her now.",
+              correct: true,
+            },
+            {
+              text: "You are right, it is quicker. I will square it with the manager tomorrow.",
+              correct: false,
+            },
+            {
+              text: "Let us split it — half the upgrade now and the rest if she complains again.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE PROMISE YOU CANNOT FIND\nA guest quotes a promise. You look, and it is not there.\nThat is the most common hard minute this desk has, and almost every wrong answer to it sounds reasonable.\n'Nobody would have said that' is a verdict, and week thirty-three took verdicts away from you. You were not on that shift.\n'I am sure it was a misunderstanding' is the same verdict wearing a softer coat.\n'Let me just give it to you' is a third wrong answer, and it is the expensive one. It teaches the guest that a claim nobody can find is worth more than one that is written down.\nWhat you say is what is true: you cannot find it yet.\nThen ask for the two facts you are missing. Week thirty-three wanted four — what was promised, who promised it, when, and what happened instead. A guest quoting a promise has already given you the first and the last.\nSo ask who said it, and ask when. Those two turn a claim into something a manager can check.\nAnd ask one more: was it written or spoken. That question is not a challenge, it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift, and only that person can settle it.\nNo name goes to the guest, and no department either. Week thirty-three: never name another team as the cause. Naming reception in front of a guest turns one complaint into two, and you still have not found the promise.\nWrite the four things in the complaint log before anything is offered. The log is what lets somebody else finish this after you go home.\nAnd whatever it turns out to be, the offer is not yours. An upgrade is your manager's to give. You bring her the facts, not a decision she has to unpick.",
+        questions: [
+          {
+            q: "Khách nhắc một lời hứa mà bạn không tìm thấy. Nói gì?",
+            options: [
+              "Nói rằng chắc có hiểu lầm ở đâu đó, để không làm khách mất mặt",
+              "Nói đúng sự thật: bạn chưa tìm thấy nó",
+              "Nói rằng không ai ở đây hứa như thế, vì hồ sơ không có ghi",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What you say is what is true: you cannot find it yet.' Hai câu kia đều là phán quyết, và tuần 33 đã cấm.",
+          },
+          {
+            q: "Hai dữ kiện còn thiếu là gì?",
+            options: [
+              "Số phòng và hạng thẻ của khách",
+              "Số tiền khách muốn và thời hạn khách chờ",
+              "Ai đã nói, và nói lúc nào",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A guest quoting a promise has already given you the first and the last. So ask who said it, and ask when.'",
+          },
+          {
+            q: "Vì sao phải hỏi 'ghi ra giấy hay nói miệng'?",
+            options: [
+              "Vì lời nói miệng thì khách sạn không có trách nhiệm phải giữ, chỉ giấy tờ mới tính",
+              "Vì nó là tấm bản đồ: ghi thì tra hồ sơ, nói thì phải hỏi đúng người trực hôm đó",
+              "Vì chỉ lời hứa ghi ra giấy mới được đưa vào complaint log",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'That question is not a challenge, it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift.'",
+          },
+          {
+            q: "Vì sao không nêu tên bộ phận trước mặt khách?",
+            options: [
+              "Vì nêu tên biến một khiếu nại thành hai, mà lời hứa thì vẫn chưa tìm ra",
+              "Vì các bộ phận khác sẽ khiếu nại ngược lại Guest Relations",
+              "Vì tên bộ phận là thông tin nội bộ không được tiết lộ ra ngoài",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Naming reception in front of a guest turns one complaint into two, and you still have not found the promise.'",
+          },
+          {
+            q: "Vì sao 'thôi cứ cho khách đi cho nhanh' là câu trả lời đắt nhất?",
+            options: [
+              "Vì quản lý sẽ trừ khoản đó vào hạn mức của quầy trong tháng",
+              "Vì khách sẽ sinh nghi rồi đòi thêm ngay trong cùng buổi hôm đó, và lần sau lại đòi tiếp",
+              "Vì nó dạy khách rằng một lời hứa không ai tìm ra còn đáng giá hơn một lời hứa có ghi",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'It teaches the guest that a claim nobody can find is worth more than one that is written down.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_4",
+      lessonOrder: 4,
+      titleEn: "The Last Fifteen Minutes",
+      titleVi: "Mười lăm phút cuối",
+      vocabulary: [
+        {
+          word: "Nothing new after",
+          phonetic: "/ˌnʌθɪŋ ˈnjuː ˌɑːftə/",
+          definition: "Sau giờ đó không mở việc mới — mở ra là bàn giao một việc dang dở",
+          context: "Nothing new after quarter to, sir, and this one is new.",
+          icon: "🚦",
+        },
+        {
+          word: "Hand it over by name",
+          phonetic: "/ˌhænd ɪt ˈəʊvə baɪ ˈneɪm/",
+          definition: "Bàn giao kèm tên người nhận — việc không có tên là việc của không ai",
+          context: "I hand it over by name, not to the shift.",
+          icon: "🤝",
+        },
+        {
+          word: "What the guest expects next",
+          phonetic: "/wɒt ðə ˈɡest ɪkˈspekts ˌnekst/",
+          definition: "Điều khách đang chờ tiếp theo — dòng quan trọng nhất của bàn giao",
+          context: "What the guest expects next is a call before eight.",
+          icon: "📌",
+        },
+        {
+          word: "Stopped asking",
+          phonetic: "/ˌstɒpt ˈɑːskɪŋ/",
+          definition: "Đã thôi hỏi — không phải đã hết bận tâm",
+          context: "She has stopped asking, sir, and that is the one I am worried about.",
+          icon: "🔇",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will open the case now and the night shift can take it from here.",
+          polite: "Nothing new after quarter to, sir. I am giving this to the Duty Manager myself.",
+          rule: "Mở một hồ sơ mới lúc kém mười lăm là để lại cho ca sau một việc chưa có dữ kiện nào. Hoặc bạn làm xong, hoặc bạn đưa thẳng cho người có quyền — không mở rồi bỏ đó. Tuần 33 đã dạy: một việc không có tên gắn vào là việc của không ai.",
+        },
+        {
+          rude: "I told the evening shift about the lady in 1102 before I left.",
+          polite:
+            "I handed 1102 over by name, sir. Ms Hà has it, and the guest expects a call by eight.",
+          rule: "'Tôi đã nói với ca tối' không phải bàn giao — tuần 33 đã chấm câu đó là sai. Bàn giao cần TÊN người nhận, và cần điều KHÁCH ĐANG CHỜ. Ca sau nhìn được bảng; cái họ không nhìn được là thứ khách đang đợi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Before you go — could you look into the charge on our bill tonight?",
+          targetResponse:
+            "Nothing new after quarter to, madam. I am giving it to the Duty Manager myself now.",
+          helpTip:
+            "Đừng nhận một việc mới rồi để nó chết giữa hai ca. Nói thẳng là bạn không mở việc mới, rồi nói bạn đưa cho AI ngay bây giờ. Đó không phải từ chối — đó là chuyển đúng chỗ trong khi bạn còn ở đây. 'Quarter' /ˈkwɔːtə/ — /ɔː/ dài, không có âm /r/ giữa.",
+        },
+        {
+          guestPrompt: "Guest Relations. Anything I should know before you go?",
+          speakerRole: "colleague",
+          targetResponse:
+            "1102 is still open. She has stopped asking, and she expects a call by eight.",
+          helpTip:
+            "Bàn giao không phải kể lại ca của bạn — là kể những việc CÒN MỞ, và với mỗi việc là điều khách đang chờ. Câu 'đã thôi hỏi' là câu quan trọng nhất trong cả bàn giao: thôi hỏi không phải hết bận tâm. 'Expects' /ɪkˈspekts/ — cụm /kts/ cuối phải nghe ra cả ba âm.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Guest Relations. I am off in ten minutes — anything for the book?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Nothing much — it has been a quiet evening apart from the usual arrivals.",
+              correct: false,
+            },
+            {
+              text: "Two still open. 1102 expects a call by eight; the tour party is not back.",
+              correct: true,
+            },
+            {
+              text: "I will write it all up in the log later so the morning shift can read it.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "You did say somebody would ring me about the cake. That was Tuesday.",
+          options: [
+            {
+              text: "I am so sorry, madam. Let me look into what happened on Tuesday and come back to you.",
+              correct: false,
+            },
+            {
+              text: "You are right, madam, and nobody has. I am ringing you myself before eight.",
+              correct: true,
+            },
+            {
+              text: "It is in the log, madam, so the evening shift will certainly pick it up.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE LAST FIFTEEN MINUTES\nThe last fifteen minutes of a shift are not for opening anything.\nA case opened at ten to six has no facts in it and no hour on it. The next shift inherits a name and a grievance, and the guest has to explain it all again.\nIf a guest brings you something new at that hour, you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.\nWhat the last fifteen minutes are for is the list of what is still open.\nEvery open case needs four lines and no more. The room. What state it is in. What the guest expects next. And the hour.\n  1102 — cake replaced, apology letter with the manager. She expects a call by eight.\n  Tour party — nine out since nine, back by six. Not on the room list until they are.\n  704 — asked twice about the lounge. She has stopped asking.\nThat last line is the one to say out loud. A guest who has stopped asking has not stopped minding, and she is the one who writes the review.\nHand it over by name. Week thirty-three settled this: 'I told the evening shift' is not a handover, because a job with nobody's name against it belongs to nobody.\nAnd say it as well as write it. A promise that lives only in the book waits for somebody to open the book.\nOne last thing, and it is the one people skip. If you promised an hour that falls inside the next shift, that hour is now somebody else's to keep.\nGive them the hour, the room, and the guest's name, out loud, before you leave the desk.",
+        questions: [
+          {
+            q: "Vì sao không mở hồ sơ mới trong mười lăm phút cuối?",
+            options: [
+              "Vì hệ thống khoá sổ vào cuối mỗi ca trực và không nhận thêm hồ sơ mới nào nữa",
+              "Vì ca sau nhận được một cái tên và một nỗi bực, còn khách phải kể lại từ đầu",
+              "Vì quản lý phải duyệt mọi hồ sơ mở sau giờ đó",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A case opened at ten to six has no facts in it and no hour on it. The next shift inherits a name and a grievance.'",
+          },
+          {
+            q: "Khách mang việc mới tới lúc đó. Làm gì?",
+            options: [
+              "Không từ chối, không tự bắt đầu — mang thẳng tới Duty Manager khi còn ở đây",
+              "Ghi vào sổ và dặn ca sau gọi lại cho khách",
+              "Nhận rồi làm cho xong bằng được, dù có phải ở lại thêm nửa tiếng sau khi đã hết ca",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.'",
+          },
+          {
+            q: "Mỗi việc còn mở cần mấy dòng, và gồm những gì?",
+            options: [
+              "Ba dòng: phòng, tên nhân viên xử lý, và giờ",
+              "Năm dòng: phòng, tình trạng, nguyên nhân, khách chờ gì, và giờ",
+              "Bốn dòng: phòng, tình trạng, điều khách đang chờ, và giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Every open case needs four lines and no more. The room. What state it is in. What the guest expects next. And the hour.'",
+          },
+          {
+            q: "Vì sao dòng 'khách đã thôi hỏi' lại quan trọng nhất?",
+            options: [
+              "Vì thôi hỏi nghĩa là khách đã chấp nhận và hồ sơ đóng được",
+              "Vì thôi hỏi không phải là hết bận tâm, và đó là người sẽ viết đánh giá",
+              "Vì ca sau cần biết khách nào không nên chủ động gọi lại",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A guest who has stopped asking has not stopped minding, and she is the one who writes the review.'",
+          },
+          {
+            q: "Vì sao 'tôi đã nói với ca tối' không phải bàn giao?",
+            options: [
+              "Vì ca tối có thể quên nếu không được nhắc lại lần thứ hai",
+              "Vì phải ghi vào sổ thì mới có giá trị, nói miệng thì không",
+              "Vì một việc không có tên ai gắn vào là việc của không ai",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'a job with nobody's name against it belongs to nobody.' Tuần 33 đã chấm câu đó là sai.",
+          },
+        ],
+      },
+    },
+  ],
+};
+
 const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
@@ -23857,6 +24541,7 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "GR-34": GR_WEEK_34,
   "GR-35": GR_WEEK_35,
   "GR-36": GR_WEEK_36,
+  "GR-39": GR_WEEK_39,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
@@ -23914,6 +24599,7 @@ const REGISTRY: Record<string, WeekContent> = {
   "GR-34": GR_WEEK_34,
   "GR-35": GR_WEEK_35,
   "GR-36": GR_WEEK_36,
+  "GR-39": GR_WEEK_39,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
   "FO-38": FO_WEEK_38,
