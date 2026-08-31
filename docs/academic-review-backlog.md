@@ -1214,3 +1214,103 @@ content sinh tự động:
 Kèm theo: cả 6 câu luyện nói đều đặt `speakerRole: "guest"` cho một cuộc phỏng vấn
 đánh giá nhân sự — khách không hỏi _"How do you feel about your English at work now?"_.
 Và `reviewWords` = 154 (đổ cả khoá), trong khi FO-40/FB-40/HK-40 soạn tay đều dùng 8.
+
+## GR-AQ — FO-39 là tuần đáng thẩm định kế tiếp (đo bởi 6 lượt độc lập)
+
+Sáu lượt kiểm định GR-39 đều tự đo FO-39/FB-39/HK-39 để làm mốc so sánh, và cùng
+quy về một kết luận: **FO-39 là tuần yếu nhất trong bốn tuần 39 soạn tay.**
+
+|                                  | FO-39               | FB-39     | HK-39 | GR-39      |
+| -------------------------------- | ------------------- | --------- | ----- | ---------- |
+| Speaking items                   | **4** (sàn P4 là 6) | 8         | 8     | 8          |
+| Câu hỏi đọc                      | 8 (2/bài)           | 8         | 10    | 20 (5/bài) |
+| Bấm mù một vị trí qua ngưỡng 80% | **4/4 bài**         | 2 bài     | 0     | 0          |
+| Đáp án dài nhất thắng (đọc)      | **75%**             | 13%       | 50%   | 35%        |
+| Đáp án dài nhất thắng (game)     | **100%**            | —         | 50%   | 25%        |
+| Dạy luật "mười lăm phút cuối"    | **không**           | **không** | có    | có         |
+| Trường `arcade` chết             | còn 4 bài           | còn 4 bài | 0     | 0          |
+| Cảnh báo T2 của `qa:full`        | **3**               | 0         | 0     | 0          |
+
+Hai dòng đầu là lỗi trần band. Ba dòng giữa cộng lại nghĩa là **học viên qua được
+cửa mastery 80% của FO-39 mà không cần đọc gì** — hai bài chỉ có 2 câu hỏi, và cả
+hai mẹo (vị trí + độ dài) đều thắng 100%. Đó là loại lỗi gate không bao giờ thấy.
+
+## GR-AR — Bộ chấm nói cho qua đúng cặp tối thiểu mà bài học tồn tại để chặn
+
+Đo trực tiếp trên `speaking-score.ts` (bag-of-words + LCS, ngưỡng 80%/0,60):
+
+- GR-39 bài 2 dạy "xin chứ không hứa" và "phần tôi KHÔNG dời được". Học viên nói
+  `"I am promising, sir… the part I can move is who owns the table"` — mắc **cả hai**
+  lỗi mà bài tồn tại để chặn — vẫn **PASS 88% / 0,83**.
+- GR-35 đảo `cannot` thành `can`: **PASS 93%**.
+- GR-39 bài 1: đảo thứ tự nhánh 115 và nhánh Duty Manager: **PASS 100%**.
+
+Đây là lỗi toàn khoá, không phải lỗi tuần. Hệ quả cho việc soạn bài: ở ô mà **cặp
+tối thiểu chính là bài học**, giữ `targetResponse` ngắn (≤12 token) để bộ chấm còn
+phân biệt được — mục tiêu càng dài, một từ đối lập bị lật càng bị pha loãng.
+
+## GR-AS — `resolveReviewItem` gán trùng cặp nhiễu cho hai thẻ cùng một bài
+
+`review.ts:220–228` băm `offset` theo cách khiến hai thẻ speaking của cùng một bài
+nhận **cùng một cặp phương án nhiễu**. Ở GR-39 bài 3, thẻ an toàn thân thể
+(khách nắm tay áo đồng nghiệp) nhận hai nhiễu nói về lời hứa thất lạc — loại trừ
+được bằng chủ đề, không cần biết luật. Chỉ xuất hiện khi một bài có đúng 2 thẻ
+speaking, tức đúng hình dạng chuẩn của Phase 4.
+
+## GR-AT — Gloss dài là điểm cho không trong VocabSuite
+
+`VocabSuite.buildQuiz` lấy chính `definition` làm phương án EN→VI và rút nhiễu từ
+cùng pool, nên "bấm ô dài nhất" thắng theo TỪNG MỤC. Mô phỏng 20.000 lượt trên
+GR-39 (trước khi sửa): `"Nothing new after"` **100%**, `"What I can do meanwhile"`
+89%, `"Not a name, not a team"` 79% — trong khi lệch toàn pool chỉ 24%, tức là
+gate đo tổng thể và không bao giờ nhìn từng mục. Mục đầu đã sửa; hai mục còn lại
+và toàn bộ các tuần khác chưa rà.
+
+Quy ước đề nghị: `definition` dưới ~90 ký tự; mọi phần giải thích thêm chuyển sang
+`rule` hoặc `helpTip`.
+
+## GR-AU — GR-39 không luyện SẢN SINH tuần 34 và tuần 38
+
+GR-39 dẫn chiếu 50 lần và không sai lần nào, nhưng phân bố lệch mạnh: tuần 33
+chiếm 12–22 lần, còn **tuần 34 và tuần 38 mỗi tuần đúng một dòng, 0 ô nói, 0 câu
+hỏi đọc**. Đúng hai tuần đó lại là hai tuần mỏng nhất pha (4–5 speaking, bài đọc
+50–100 từ/bài). Cộng thêm `VocabSuite` chỉ rút **4/10** thẻ ôn mỗi lượt:
+C(8,4)/C(10,4) = **1/3 số lượt chạy không gặp cả `Occasion` lẫn `Stranded`**.
+
+Sửa được mà không cần viết thêm bài: chuyển một ô game bài 4 từ tuần 33 sang tuần
+34, và thêm một câu hỏi đọc cho tuần 38.
+
+## GR-AV — Ngữ pháp đặc trưng Phase 4 không được SẢN SINH ở tuần tổng duyệt
+
+Trong 16 câu học viên phải tự nói ở GR-39, **không câu nào** chứa `however`,
+`although`, `in exchange for`, `provided`, `Based on…` hay `Policy allows… up to…`
+— sáu cấu trúc mà chính ma trận liệt kê là ngôn ngữ mới của tuần 32, 33 và 35.
+`however` **có** trong bài đọc bài 2 kèm câu mẫu, nhưng không ô nào bắt nói nó ra.
+3/16 câu có mệnh đề phụ thật; phần còn lại là câu đơn và câu mệnh lệnh. Độ dài đạt
+band, **cú pháp thì ở A2**. 71% khối dẫn chiếu nằm ở bề mặt học viên chỉ ĐỌC.
+
+Đây là câu hỏi thiết kế cho cả sáu tuần 39, không riêng GR: một tuần tổng duyệt
+nên ôn NGÔN NGỮ hay ôn QUY TRÌNH?
+
+## GR-AW — Các mục nhỏ còn treo của GR-39
+
+- **Khối định tuyến khẩn cấp bài 1** (6 dòng: 114/115, 30 giây, trẻ dưới nước) có
+  **0/5 câu hỏi đọc**. Ngữ liệu rủi ro cao nhất được kiểm ít nhất. GR-37/GR-38 đã
+  có sẵn khuôn **thẻ đánh số** (`MEDICAL EMERGENCY — FIRST RESPONSE CARD`) — đúng
+  khuôn khối này cần.
+- **`Ms Hà` trong ô ghép câu GrammarSuite**: `normalizeSentence` dùng lớp ký tự
+  `\w` không có cờ `/u`, nên "à" bị xoá và đích thành `ms h`; gõ "Ms Ha" không dấu
+  sẽ trượt. Tiền lệ: `Dũng` BO-12, `Phở` FB-15 — lỗi engine, không phải lỗi tuần.
+- **Trùng prop xuyên bộ phận**: `704` dùng ở cả HK-39 (phòng dọn dở) và GR-39
+  (khách chờ lounge); quy tắc 5 của ma trận cấm.
+- **Mùi khét dẫn tới "the book comes later"** (bài 1 game 2) ngầm xác nhận complaint
+  log, trong khi tuần 36 dạy nó thuộc incident report — và `Not the complaint log`
+  là một trong mười thẻ ôn của chính tuần 39.
+- **Tải đọc**: GR-38 355 từ, GR-39 2 448 từ, GR-40 169 từ. Không luật nào bị phá
+  (không có trần độ dài bài đọc), nhưng tuyến 38-39-40 giật rất mạnh. Bài 3 một
+  mình 741 từ sau khi bổ sung ba bước cuối của quy trình tố cáo — đó là đánh đổi
+  có chủ ý: đủ quy trình an toàn đổi lấy độ dài.
+- **Headword dài**: TB 4,2 từ, 16/18 từ ba từ trở lên. `dictationAllowsTypo` tắt từ
+  A2.1, nên bài chính tả là gõ khớp tuyệt đối một mệnh đề sáu từ
+  (`"May I take them in order"`). Học viên vẫn đạt 82% nếu trượt cả ba, nhưng ba
+  mục đó không còn là bài luyện.

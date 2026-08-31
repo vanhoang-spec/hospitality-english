@@ -352,14 +352,20 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 > là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
 
 > **Chú thích tuần 39 (cả sáu bộ phận).** Bảng ghi "Tổng duyệt role-play liên tình huống —
-> Kết hợp mọi chức năng". Trên thực tế cả bốn tuần 39 đã soạn tay (FO, FB, HK, GR) đều dạy
-> thêm **hai luật mới** mà không tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến
-> cùng lúc, (2) luật "mười lăm phút cuối ca không mở việc mới".
+> Kết hợp mọi chức năng". Một tuần 39 đúng nghĩa còn phải dạy thêm **hai luật mới** mà không
+> tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến cùng lúc, (2) luật "mười lăm
+> phút cuối ca không mở việc mới".
 >
 > Đó là hai kỹ năng chỉ tồn tại được khi học viên đã có đủ chức năng để mà xếp thứ tự, nên
 > chúng thuộc về đúng chỗ này. Nhưng chúng **là luật mới**, không phải ôn tập: mỗi tuần 39
 > phải dạy chúng đủ một bài có từ vựng, ngữ pháp, luyện nói, game và câu hỏi đọc — không được
-> nhét vào một dòng văn xuôi. Ba lượt kiểm định GR-39 đều nêu đúng chỗ này.
+> nhét vào một dòng văn xuôi.
+>
+> **Hiện trạng đo được (6 lượt kiểm định độc lập, 2026-09-01), không phải mô tả mong muốn:**
+> chỉ **GR-39 và HK-39** dạy đủ cả hai luật. **FO-39 và FB-39 không có luật "mười lăm phút
+> cuối"** ở bất kỳ đâu — cả sáu lượt đều đo lại và cùng kết luận như nhau. Bản trước của
+> chú thích này khẳng định cả bốn tuần đều đủ; đó là mô tả sai, đã sửa. Xem GR-AQ trong
+> `docs/academic-review-backlog.md`.
 >
 > Kèm theo, luật ưu tiên phải nói rõ **"nguy hiểm trước" nghĩa là LÀM GÌ**, không chỉ là một
 > chỗ trong hàng chờ: nó dẫn về tuần 37 (y tế) và tuần 33 (an toàn → bảo vệ trước, Duty

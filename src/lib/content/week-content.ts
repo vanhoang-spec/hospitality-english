@@ -23874,7 +23874,7 @@ const GR_WEEK_39: WeekContent = {
           word: "The soonest one first",
           phonetic: "/ðə ˈsuːnɪst wʌn ˈfɜːst/",
           definition: "Cái có mốc giờ SỚM NHẤT làm trước — không phải cái khách nhắc trước",
-          context: "The soonest one first, madam, and yours is at six.",
+          context: "The soonest one first, madam, and your table is at seven.",
           icon: "⏱️",
         },
         {
@@ -23895,13 +23895,14 @@ const GR_WEEK_39: WeekContent = {
       grammar: [
         {
           rude: "The tour first then, madam, since that is the one you mentioned first.",
-          polite: "May I take them in order, madam? The soonest one first, and yours is at six.",
+          polite:
+            "May I take them in order, madam? The soonest one first, and your table is at seven.",
           rule: "Ba việc cùng lúc thì thứ tự KHÔNG phải ai đến trước. Ai đang nguy hiểm đi trước, và 'trước' là một VIỆC chứ không phải một chỗ trong hàng: khách bị thương hay ốm là tuần 37 (Duty Manager và số phòng), mối nguy trong nhà là tuần 33 (bảo vệ trước, Duty Manager sau). Rồi tới người đang đứng trước mặt bạn, rồi điện thoại, rồi tin nhắn. Trong phần CÒN LẠI trên danh sách của bạn thì mốc giờ sớm nhất đi trước. Phục vụ người to tiếng trước là dạy cả sảnh rằng to tiếng thì được việc.",
         },
         {
           rude: "I will get to the lounge booking at some point this evening.",
           polite:
-            "I am coming back to that at half past, sir. Your table is the soonest of the two.",
+            "I am coming back to that at half past, sir. Your table is the sooner of the two.",
           rule: "Việc bạn gác lại phải được GỌI TÊN và phải có giờ. Một câu hỏi không được nhắc tới thì khách nghe ra là bị bỏ rơi. Tuần 35 đã dạy: mốc giờ là giờ của BẠN, không phải giờ của người khác. Một ngoại lệ duy nhất, và bài 4 nói kỹ: nếu quầy sở hữu việc đó ĐÃ đưa bạn một giờ, giờ ấy chuyển tiếp được.",
         },
       ],
@@ -23910,18 +23911,18 @@ const GR_WEEK_39: WeekContent = {
           guestPrompt:
             "I need a tour changed for tomorrow, a charge looked at, and a table at seven.",
           targetResponse:
-            "May I take them in order, madam? The table at seven is the soonest, so that first, then the charge, then the tour.",
+            "May I take them in order, madam? The table at seven is the soonest, then the charge by eight, then the tour.",
           helpTip:
-            "Ba việc trong một hơi là chuyện bình thường, không phải chuyện khó. Xin phép xếp thứ tự, rồi nói THEO MỐC GIỜ chứ không theo thứ tự khách kể. Bàn ăn lúc bảy giờ đi trước cái tour ngày mai, kể cả khi tour được nói ra trước. 'order' /ˈɔːdə/ — /ɔː/ dài, và KHÔNG bật /r/ ở cuối: giọng Anh-Anh đóng bằng một âm ơ nhẹ, không phải 'o-đơ-rờ'.",
+            "Ba việc trong một hơi là chuyện bình thường, không phải chuyện khó. Xin phép xếp thứ tự, rồi nói THEO MỐC GIỜ chứ không theo thứ tự khách kể. Bàn ăn lúc bảy giờ đi trước cái tour ngày mai, kể cả khi tour được nói ra trước. Việc chưa có mốc nào thì bạn cho nó một mốc ngay tại đây — khoản phí thành 'by eight' — vì việc không có giờ là việc tự đóng lại. 'order' /ˈɔːdə/ — /ɔː/ dài, và KHÔNG bật /r/ ở cuối: giọng Anh-Anh đóng bằng một âm ơ nhẹ, không phải 'o-đơ-rờ'.",
         },
         {
           guestPrompt:
             "Guest Relations. A lady says her husband has collapsed in 1108, and three people are waiting behind her.",
           speakerRole: "colleague",
           targetResponse:
-            "Is he breathing? If not, 115 first — our name and street, then 1108. If he is, the Duty Manager and 1108, now.",
+            "Ask her if he is breathing. If he is not, dial 115 yourself — our name and street, then 1108. If he is, the Duty Manager and 1108, now.",
           helpTip:
-            "Ba việc đang chờ, và thứ tự vừa bị xoá sạch. Người đang nguy hiểm đi trước tất cả, và 'trước' nghĩa là một VIỆC chứ không phải một chỗ trong hàng. Tuần 37 cho hai thứ phải nói ngay: Duty Manager và số phòng. Tuần 36 thêm đúng một ngoại lệ — không thở thì 115 trước, không qua đường dây trong nhà. 'breathing' /ˈbriːðɪŋ/ — âm /ð/ hữu thanh ở giữa từ, đừng thành /d/.",
+            "Ba việc đang chờ, và thứ tự vừa bị xoá sạch. Người đang nguy hiểm đi trước tất cả, và 'trước' nghĩa là một VIỆC chứ không phải một chỗ trong hàng. Tuần 37 cho hai thứ phải nói ngay: Duty Manager và số phòng. Tuần 36 thêm đúng một ngoại lệ — không thở thì 115 trước, không qua đường dây trong nhà. Người vợ đang đứng trước mặt đồng nghiệp chứ không phải trước mặt bạn, nên câu hỏi đó hỏi chị ấy — và người bấm số phải được gọi tên, đừng để cả hai tưởng người kia gọi rồi. Không ai nói chắc được là khách còn thở hay không thì COI NHƯ KHÔNG THỞ: 115 trước. 'breathing' /ˈbriːðɪŋ/ — âm /ð/ hữu thanh ở giữa từ, đừng thành /d/.",
         },
       ],
       game: [
@@ -23963,7 +23964,7 @@ const GR_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THREE AT ONCE\nBy week thirty-nine nothing on this desk is new. What is new is that three of them arrive together.\nThe order is not first come first served, and it is not loudest first.\nAnyone in danger comes first, and 'first' means an action, not a place in a queue.\nA guest who is hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nA smell of burning, a loose rail and a fire door propped open are week thirty-three's.\nWhich floor, then security first and the Duty Manager after.\nIf security does not answer inside thirty seconds, week thirty-six says ring the operator, then dial 114 yourself.\nNeither 114 nor 115 is an inside line: the hotel's name and its street come first on both.\nOn 114 the floor comes next, then the word 'fire'. On 115 the room number comes straight after the address, because the crew still has to find her.\nA child alone at the water is the exception week thirty-three made. You go to the water yourself, and the nearest colleague telephones as you go.\nWeek thirty-six is what it looks like when the whole house is the emergency. Nothing on this page moves any of them.\nThen the person standing in front of you. A guest at the desk cannot be asked to stand there unseen.\nThen the telephone, and after it the messages. A caller may be asked to hold, or to ring back in five; a guest in front of you may not.\nAnd among everything still on your list, the promise with the soonest hour goes first. Week thirty-one put an hour on a promise; week thirty-five made it your hour, not somebody else's.\nThis is the week you find out why: an hour is what sorts a list.\nA table at seven beats a tour for tomorrow, even when the tour was mentioned first.\nSay the order out loud. A guest who hears 'you are next' stops counting the seconds. A guest who hears nothing starts.\nAnd name the one you are parking. 'I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.\nNever serve the loudest first. Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.\nThe hardest of the three is the one that is not urgent and not new: the case from Tuesday that is still open. It has no hour on it because nobody gave it one.\nGive it one now. A case with no hour closes itself, quietly, without the guest agreeing.\nWeek thirty-three said only the guest may close it.\nWhen four people are waiting at this desk, ask for a second pair of hands. Ask at four, not at eight. Help takes three minutes to come, and at four you still have those three minutes; at eight you do not.\nFour waiting and three minutes are one house's numbers. Ask your Guest Relations Manager what yours are, in your first week.",
+        text: "THREE AT ONCE\nBy week thirty-nine nothing on this desk is new. What is new is that three of them arrive together.\nThe order is not first come first served, and it is not loudest first.\nAnyone in danger comes first, and 'first' means an action, not a place in a queue.\nA guest who is hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nIf nobody there can say whether she is breathing, treat it as not breathing.\nA smell of burning, a loose rail and a fire door propped open are week thirty-three's.\nWhich floor, then security first and the Duty Manager after.\nIf security does not answer inside thirty seconds, week thirty-six says ring the operator, then dial 114 yourself.\nNeither 114 nor 115 is an inside line: the hotel's name and its street come first on both.\nOn 114 the floor comes next, then the word 'fire'. On 115 the room number comes straight after the address, because the crew still has to find her.\nA child alone at the water is the exception week thirty-three made. You go to the water yourself, and the nearest colleague telephones as you go.\nWeek thirty-six is what it looks like when the whole house is the emergency. Nothing on this page moves any of them.\nThen the person standing in front of you. A guest at the desk cannot be asked to stand there unseen.\nThen the telephone, and after it the messages. A caller may be asked to hold, or to ring back in five; a guest in front of you may not.\nAnd among everything still on your list, the promise with the soonest hour goes first. Week thirty-one put an hour on a promise; week thirty-five made it your hour, not somebody else's.\nThis is the week you find out why: an hour is what sorts a list.\nA table at seven beats a tour for tomorrow, even when the tour was mentioned first.\nSay the order out loud. A guest who hears 'you are next' stops counting the seconds. A guest who hears nothing starts.\nAnd name the one you are parking. 'I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.\nNever serve the loudest first. Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.\nThe hardest of the three is the one that is not urgent and not new: the case from Tuesday that is still open. It has no hour on it because nobody gave it one.\nGive it one now. A case with no hour closes itself, quietly, without the guest agreeing.\nWeek thirty-three said only the guest may close it.\nWhen four people are waiting at this desk, ask for a second pair of hands. Ask at four, not at eight. Help takes three minutes to come, and at four you still have those three minutes; at eight you do not.\nFour waiting and three minutes are one house's numbers. Ask your Guest Relations Manager what yours are, in your first week.",
         questions: [
           {
             q: "Ba việc đến cùng lúc. Thứ tự là gì?",
@@ -24078,7 +24079,7 @@ const GR_WEEK_39: WeekContent = {
           rude: "I am sure they will say yes if I explain that you are a regular guest.",
           polite:
             "I am asking, madam, not promising. What I can do meanwhile is come back to you within the half hour.",
-          rule: "'What I can do meanwhile is…' là mệnh đề chẻ (wh-cleft): đẩy phần LÀM ĐƯỢC lên đầu câu để khách nghe thấy nó trước phần phải chờ. Hai vế trong một hơi: phần bạn ĐANG XIN, và phần bạn LÀM ĐƯỢC NGAY. Vế thứ hai giữ khách lại trong lúc chờ vế thứ nhất. Đừng đoán hộ bên kia sẽ trả lời thế nào — tuần 33 đã dạy một lời 'chắc là được' không giữ nổi.",
+          rule: "Tuần 33 đã dạy đúng khuôn này — 'What I can put right today is…'; ở đây chỉ đổi phần bạn làm được. Đó là mệnh đề chẻ (wh-cleft): đẩy phần LÀM ĐƯỢC lên đầu câu để khách nghe thấy nó trước phần phải chờ. Hai vế trong một hơi: phần bạn ĐANG XIN, và phần bạn LÀM ĐƯỢC NGAY. Vế thứ hai giữ khách lại trong lúc chờ vế thứ nhất. Đừng đoán hộ bên kia sẽ trả lời thế nào — tuần 33 đã dạy một lời 'chắc là được' không giữ nổi.",
         },
       ],
       speaking: [
@@ -24124,7 +24125,7 @@ const GR_WEEK_39: WeekContent = {
               correct: false,
             },
             {
-              text: "It is the restaurant's to give. I am asking them, and she gets an hour from me.",
+              text: "It is the restaurant's to give. I am asking them, and she gets my answer by six.",
               correct: true,
             },
             {
@@ -24257,9 +24258,9 @@ const GR_WEEK_39: WeekContent = {
             "Guest Relations. The gentleman at the desk is shouting at me and he has hold of my sleeve.",
           speakerRole: "colleague",
           targetResponse:
-            "Step back out of his reach. Say 'One moment, sir' and nothing else. Security and the Duty Manager, now.",
+            "Ask him to let go of you, and step out of his reach. Say 'One moment, sir' and nothing else — I am calling security and the Duty Manager now.",
           helpTip:
-            "Việc này thôi là khiếu nại rồi. Tuần 33: khách quát mắng, chửi, hay đặt tay lên người bạn là việc của bảo vệ NGAY TỪ CHỮ ĐẦU, và của Duty Manager. Ba bước, đúng thứ tự: lùi ra khỏi tầm tay TRƯỚC, rồi đúng một câu và không thêm gì, rồi mới tới cuộc gọi. Không ai đứng quầy này phải chịu trận. 'reach' /riːtʃ/ — /iː/ dài, và đuôi /tʃ/ phải bật ra thành tiếng.",
+            "Việc này thôi là khiếu nại rồi. Tuần 33: khách quát mắng, chửi, hay đặt tay lên người bạn là việc của bảo vệ NGAY TỪ CHỮ ĐẦU, và của Duty Manager. Ba bước, đúng thứ tự: gỡ tay ra và lùi khỏi tầm tay TRƯỚC, rồi đúng một câu và không thêm gì, rồi mới tới cuộc gọi. Tay đã ở trên người thì không lùi ra được nếu chưa gỡ. Và phải nói RÕ ai gọi, đừng để hai người cùng tưởng người kia đã gọi. Không ai đứng quầy này phải chịu trận. 'reach' /riːtʃ/ — /iː/ dài, và đuôi /tʃ/ phải bật ra thành tiếng.",
         },
       ],
       game: [
@@ -24301,7 +24302,7 @@ const GR_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THE PROMISE YOU CANNOT FIND\nA guest quotes a promise. You look, and it is not there.\nThat is the most common hard minute this desk has, and almost every wrong answer to it sounds reasonable.\n'Nobody would have said that' is a verdict, and week thirty-three took verdicts away from you. You were not on that shift.\n'I am sure it was a misunderstanding' is the same verdict said more gently.\n'Let me just give it to you' is a third wrong answer, and it is the expensive one. It teaches the guest that a claim nobody can find is worth more than one that is written down.\nWhat you say is what is true: you cannot find it yet.\nThen ask for the two facts you are missing. Week thirty-three wanted four — what was promised, who promised it, when, and what happened instead. A guest quoting a promise has already given you the first and the last.\nSo ask who said it, and ask when. Those two turn a claim into something a manager can check.\nAnd ask one more: was it written or spoken. That question is not a challenge; it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift, and only that person can settle it.\nNot a name, not a team, and not a guess. No name goes to the guest as the cause, and no department either. Week thirty-three: never name another team as the cause.\nNaming reception in front of a guest turns one complaint into two, and you still have not found the promise.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it. 'I am asking the restaurant now' is that sentence.\nWrite the four things in the complaint log before anything is offered. The log is what lets somebody else finish this after you go home.\nThat is the book for a promise. A thing that happened — a fall, an ambulance, an accusation against a colleague — is not a promise.\nThat goes on an incident report, not the complaint log, and it is marked confidential.\nAnd some of this stops being yours at all. Week thirty-three named six. Four of them arrive at this desk most.\nA guest who will accept nothing and will not leave the desk gets one sentence and nothing after it.\n'That is not mine to handle, madam. I am asking my Duty Manager to come to you now.'\nA lawyer or the press gets the other sentence, and week thirty-six drilled it too.\n'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nThen nothing — not your name, not your opinion, and not 'no comment'. A card handed to you goes straight to him.\nA guest who accuses a colleague by name gets neither sentence. You open with a question instead.\nAsk her whether she is hurt and whether she needs a doctor. Everything else waits for that answer.\nThen take her somewhere private, with a colleague, and leave the door open.\nYour colleague telephones the Duty Manager and security from where they are standing.\nAsk security to keep the camera recording for that floor and that hour: recordings are written over, and that one cannot wait.\nWrite the hour and the room on a confidential incident report. Do not write a full statement and never ask her to sign one.\nAnd say nothing at all to the colleague she named.\nA guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach, say 'One moment, sir' and nothing else, and have the nearest colleague call them both.\nAnd whatever it turns out to be, the offer is not yours. An upgrade is your manager's to give. You bring her the facts, not a decision she has to take apart again.",
+        text: "THE PROMISE YOU CANNOT FIND\nA guest quotes a promise. You look, and it is not there.\nThat is the most common hard minute this desk has, and almost every wrong answer to it sounds reasonable.\n'Nobody would have said that' is a verdict, and week thirty-three took verdicts away from you. You were not on that shift.\n'I am sure it was a misunderstanding' is the same verdict said more gently.\n'Let me just give it to you' is a third wrong answer, and it is the expensive one. It teaches the guest that a claim nobody can find is worth more than one that is written down.\nWhat you say is what is true: you cannot find it yet.\nThen ask for the two facts you are missing. Week thirty-three wanted four — what was promised, who promised it, when, and what happened instead. A guest quoting a promise has already given you the first and the last.\nSo ask who said it, and ask when. Those two turn a claim into something a manager can check.\nAnd ask one more: was it written or spoken. That question is not a challenge; it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift, and only that person can settle it.\nNot a name, not a team, and not a guess. No name goes to the guest as the cause, and no department either. Week thirty-three: never name another team as the cause.\nNaming reception in front of a guest turns one complaint into two, and you still have not found the promise.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it. 'I am asking the restaurant now' is that sentence.\nWrite the four things in the complaint log before anything is offered. The log is what lets somebody else finish this after you go home.\nThat is the book for a promise. A thing that happened — a fall, an ambulance, an accusation against a colleague — is not a promise.\nThat goes on an incident report, not the complaint log, and it is marked confidential.\nAnd some of this stops being yours at all. Week thirty-three named six. Four of them arrive at this desk most.\nA guest who will accept nothing and will not leave the desk gets one sentence and nothing after it.\n'That is not mine to handle, madam. I am asking my Duty Manager to come to you now.'\nA lawyer or the press gets the other sentence, and week thirty-six drilled it too.\n'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nThen nothing — not your name, not your opinion, and not 'no comment'. A card handed to you goes straight to him.\nA guest who accuses a colleague by name gets neither sentence. You open with a question instead.\nIf she says a hand was put on her, ask first whether she is hurt and whether she needs a doctor. Everything else waits for that answer.\nThen take her somewhere private, with a colleague, and leave the door open.\nYour colleague telephones the Duty Manager and security from where they are standing.\nAsk security to save the camera recording for that floor and that hour: recordings are overwritten, and that one cannot wait.\nWrite the hour and the room on a confidential incident report. Do not write a full statement and never ask her to sign one.\nBoth of you stay with her until the Duty Manager arrives. If she wants to leave, she leaves — walk with her, and tell him where she went.\nDo not ask her to repeat it, and do not argue any part of it. If she says she wants the police, that is hers to decide.\nAnd say nothing at all to the colleague she named.\nA guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach, say 'One moment, sir' and nothing else, and have the nearest colleague call them both.\nAnd whatever it turns out to be, the offer is not yours. An upgrade is your manager's to give. You bring her the facts, not a decision she has to take apart again.",
         questions: [
           {
             q: "Khách nhắc một lời hứa mà bạn không tìm thấy. Nói gì?",
@@ -24337,15 +24338,15 @@ const GR_WEEK_39: WeekContent = {
               "Bài đọc: 'That question is not a challenge; it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift.'",
           },
           {
-            q: "Vì sao không nêu tên bộ phận trước mặt khách?",
+            q: "Khách tố đích danh một đồng nghiệp, và nói có người đặt tay lên mình. Hỏi xong khách có bị thương không thì làm gì tiếp?",
             options: [
-              "Vì nêu tên biến một khiếu nại thành hai, mà lời hứa thì vẫn chưa tìm ra",
-              "Vì các bộ phận khác sẽ khiếu nại ngược lại Guest Relations",
-              "Vì tên bộ phận là thông tin nội bộ không được tiết lộ ra ngoài",
+              "Mời khách sang chỗ riêng cùng một đồng nghiệp, và để cửa mở",
+              "Ghi lời khai đầy đủ rồi mời khách ký xác nhận ngay tại quầy",
+              "Gọi người bị nêu tên xuống để hai bên nói cho rõ",
             ],
             correct: 0,
             explanation:
-              "Bài đọc: 'Naming reception in front of a guest turns one complaint into two, and you still have not found the promise.'",
+              "Bài đọc: 'Then take her somewhere private, with a colleague, and leave the door open.' Tuần 33: không bao giờ ngồi một mình với khách đang tố cáo, và không bao giờ xin khách ký lời khai.",
           },
           {
             q: "Vì sao 'thôi cứ cho khách đi cho nhanh' là câu trả lời đắt nhất?",
@@ -24368,10 +24369,10 @@ const GR_WEEK_39: WeekContent = {
       titleVi: "Mười lăm phút cuối",
       vocabulary: [
         {
-          word: "Nothing new after",
-          phonetic: "/ˌnʌθɪŋ ˈnjuː ˌɑːftə/",
+          word: "Nothing new after quarter to",
+          phonetic: "/ˌnʌθɪŋ ˈnjuː ˌɑːftə ˌkwɔːtə ˈtuː/",
           definition:
-            "Sau giờ kém mười lăm thì không mở việc mới — 'quarter to' là kém mười lăm (5:45 = quarter to six), 'ten to six' là 5 giờ 50; trừ việc khẩn, và luật này nói với đồng nghiệp chứ không nói với khách",
+            "Sau giờ kém mười lăm ('quarter to' = 5:45) thì không mở việc mới — trừ việc khẩn; và câu này nói với đồng nghiệp, không đọc ra cho khách",
           context: "Nothing new after quarter to — I am walking this one down to the Duty Manager.",
           icon: "🚦",
         },
@@ -24414,7 +24415,7 @@ const GR_WEEK_39: WeekContent = {
         {
           guestPrompt: "Before you go — could you look into a refund for last night?",
           targetResponse:
-            "A refund is my Duty Manager's to give, madam. I am taking it to him myself now, so it does not wait.",
+            "A refund with no programme behind it is my Duty Manager's, madam. I am taking it to him myself now.",
           helpTip:
             "Đừng nhận một việc mới rồi để nó chết giữa hai ca. Luật 'kém mười lăm' là luật NỘI BỘ — nói với đồng nghiệp, không đọc ra cho khách nghe. Với khách thì nói việc bạn LÀM: mang thẳng tới người có quyền, ngay bây giờ. 'refund' /ˈriːfʌnd/ — là danh từ thì trọng âm rơi vào âm tiết ĐẦU.",
         },
@@ -24454,7 +24455,7 @@ const GR_WEEK_39: WeekContent = {
               correct: false,
             },
             {
-              text: "You are right, madam, and nobody has. I am giving it to Ms Hà at six, with an hour on it.",
+              text: "You are right, madam, and nobody has. Ms Hà has it at six and will ring you by eight.",
               correct: true,
             },
             {
@@ -24465,7 +24466,7 @@ const GR_WEEK_39: WeekContent = {
         },
       ],
       reading: {
-        text: "THE LAST FIFTEEN MINUTES\nThe last fifteen minutes of a shift are not for opening anything.\nA case opened at ten to six has no facts in it and no hour on it. The next shift inherits a name and a complaint with nothing behind it, and the guest explains it all again.\nIf a guest brings you something new at that hour, you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.\nSome things are not new work, and they never wait for the clock. Anyone hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nA smell of burning or a loose rail is security first, the Duty Manager after. A child alone at the water you go to yourself, and somebody else telephones.\nNone of those stops at quarter to.\nQuarter to is one house's number. Ask your Guest Relations Manager where your shift's line falls, in your first week.\nWhat you carry up is week thirty-three's five levels. The front office reverses a small disputed line at once.\nAnything above their limit, anything paid to a third party, and any refund with no written programme behind it is the Duty Manager's.\nWhat the last fifteen minutes are for is the list of what is still open.\nEvery open case needs four lines at this desk. The room, or the party. What state it is in. What the guest expects next. And the hour.\n· 1102 — cake replaced, apology letter with the manager. She expects a call by eight.\n· Tour party — nine guests out, back by six by road, the boat off for the weather. They expect their keys here, and they are not on the room list until they are back.\n· 704 — asked twice about the lounge, nothing sent. She has stopped asking. The lounge manager has given me nine o'clock, so nine o'clock is what I told her.\nThat last line is the one to say out loud. A guest who has stopped asking has not stopped minding, and she is the one who writes the review.\nThe cake on the first line is an occasion, and that is week thirty-four.\nAn occasion nobody names at handover happens twice or not at all.\nThe boat is week thirty-eight. The programme offers the first clear day, then a rain check, and a refund last.\nA refund today is for the ones leaving before the weather clears — and only if you can put your hand on the sheet.\nAn hour another desk has already given you may be passed on. An hour nobody has given you yet is still your own to promise.\nHand it over by name. Week thirty-three settled this: 'I told the evening shift' is not a handover, because a job with nobody's name against it belongs to nobody.\nAnd say it as well as write it. A promise that lives only in the book waits for somebody to open the book.\nOne last thing, and it is the one people skip. If you promised an hour that falls inside the next shift, that hour is now somebody else's to keep.\nGive them the hour, the room, and the guest's name, out loud, before you leave the desk.\nSay it behind the desk or on the desk telephone, never across the lobby.\nThat is week thirty-one's rule about who is in this house, and week thirty-six put it in these words through an evacuation. A handover does not suspend it either.",
+        text: "THE LAST FIFTEEN MINUTES\nThe last fifteen minutes of a shift are not for opening anything.\nA case opened at ten to six has no facts in it and no hour on it. The next shift inherits a name and a complaint with nothing behind it, and the guest explains it all again.\nIf a guest brings you something new at that hour, you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.\nSome things are not new work, and they never wait for the clock. Anyone hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nA smell of burning or a loose rail is security first, the Duty Manager after. A child alone at the water you go to yourself, and somebody else telephones.\nNone of those stops at quarter to.\nQuarter to is one house's number. Ask your Guest Relations Manager where your shift's line falls, in your first week.\nWhat you carry up is week thirty-three's five levels. The front office reverses a small disputed line at once.\nAnything above their limit is the Duty Manager's. So is anything paid to a third party, and so is any refund with no written programme behind it.\nWhat the last fifteen minutes are for is the list of what is still open.\nEvery open case needs four lines at this desk. The room, or the party. What state it is in. What the guest expects next. And the hour.\n· 1102 — cake replaced, apology letter with the manager. She expects a call by eight.\n· Tour party — nine guests out, back by six by road, the boat off for the weather. They expect their keys here, and they are not on the room list until they are back.\n· 704 — asked twice about the lounge, nothing sent. She has stopped asking. The lounge manager has given me nine o'clock, so nine o'clock is what I told her.\nThat last line is the one to say out loud. A guest who has stopped asking has not stopped minding, and she is the one who writes the review.\nThe cake on the first line is an occasion, and that is week thirty-four.\nAn occasion nobody names at handover happens twice or not at all.\nThe boat is week thirty-eight. The programme offers the first clear day, then a rain check, and a refund last.\nA refund today is for the ones leaving before the weather clears — and only if you can put your hand on the sheet.\nAn hour another desk has already given you may be passed on. An hour nobody has given you yet is still your own to promise.\nHand it over by name. Week thirty-three settled this: 'I told the evening shift' is not a handover, because a job with nobody's name against it belongs to nobody.\nAnd say it as well as write it. A promise that lives only in the book waits for somebody to open the book.\nOne last thing, and it is the one people skip. If you promised an hour that falls inside the next shift, that hour is now somebody else's to keep.\nGive them the hour, the room, and the guest's name, out loud, before you leave the desk.\nSay it behind the desk or on the desk telephone, never across the lobby.\nThat is week thirty-one's rule about who is in this house, and week thirty-six put it in these words through an evacuation. A handover does not suspend it either.",
         questions: [
           {
             q: "Vì sao không mở hồ sơ mới trong mười lăm phút cuối?",
