@@ -104,6 +104,13 @@ export type P0Lexicon = {
     usd: number;
     usdWord: string;
   };
+  /** The department's own SCHEDULABLE service, for week 3's today/tomorrow
+   *  frames. `priced` cannot do this job: it names what the department
+   *  CHARGES for, and half of those are not appointments — "When is my
+   *  Vietnamese coffee?" answered "It is tomorrow" is a service failure, and
+   *  "Your laundry for one shirt is tomorrow." is not a sentence. Kept short
+   *  enough for the 5-word cap: `Is my ${booking} today?` */
+  booking: { en: string; vi: string };
   roomNo: { digits: string; spoken: string };
   floor: { ordinal: string; vi: string };
 };
@@ -150,6 +157,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 20,
       usdWord: "twenty",
     },
+    booking: { en: "airport transfer", vi: "xe đưa đón" },
     roomNo: { digits: "205", spoken: "two-oh-five" },
     floor: { ordinal: "second", vi: "tầng hai" },
   },
@@ -180,6 +188,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 4,
       usdWord: "four",
     },
+    booking: { en: "table booking", vi: "đặt bàn" },
     roomNo: { digits: "310", spoken: "three-one-oh" },
     floor: { ordinal: "third", vi: "tầng ba" },
   },
@@ -208,6 +217,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 3,
       usdWord: "three",
     },
+    booking: { en: "laundry", vi: "đồ giặt" },
     roomNo: { digits: "812", spoken: "eight-one-two" },
     floor: { ordinal: "eighth", vi: "tầng tám" },
   },
@@ -240,6 +250,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 28,
       usdWord: "twenty-eight",
     },
+    booking: { en: "massage", vi: "buổi massage" },
     roomNo: { digits: "104", spoken: "one-oh-four" },
     floor: { ordinal: "first", vi: "tầng một" },
   },
@@ -276,6 +287,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 20,
       usdWord: "twenty",
     },
+    booking: { en: "birthday cake", vi: "bánh sinh nhật" },
     roomNo: { digits: "720", spoken: "seven-two-oh" },
     floor: { ordinal: "seventh", vi: "tầng bảy" },
   },
@@ -304,6 +316,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usd: 40,
       usdWord: "forty",
     },
+    booking: { en: "meeting room", vi: "phòng họp" },
     roomNo: { digits: "415", spoken: "four-one-five" },
     floor: { ordinal: "fourth", vi: "tầng bốn" },
   },
@@ -685,7 +698,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           // hàng chục mà tuần 2 cần dạy.
           "What is the total, please?",
           "Forty-five thousand dong, sir.",
-          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Và 'dollars' kết thúc bằng âm /z/ có rung, không phải /s/.",
+          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Và 'thousand' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên — rồi đóng bằng cụm /nd/, phải nghe được cả hai âm cuối.",
         ),
       ],
       reading: read(
@@ -738,7 +751,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         g(
           `Go floor ${lx.floor.ordinal}.`,
           `Go to the ${lx.floor.ordinal} floor.`,
-          "Cần 'to the' trước tên tầng: go TO THE second floor.",
+          `Cần 'to the' trước tên tầng: go TO THE ${lx.floor.ordinal} floor.`,
         ),
         g(
           "Which floor my room?",
@@ -964,7 +977,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
     lesson(lx, 3, 2, "Days of the Week", "Các ngày trong tuần", {
       vocabulary: [
         v("Today", "/təˈdeɪ/", "Hôm nay", "Today is Monday.", "📅"),
-        v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", `Your ${lx.priced.en} is tomorrow.`, "📆"),
+        v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", `Your ${lx.booking.en} is tomorrow.`, "📆"),
       ],
       grammar: [
         g(
@@ -973,7 +986,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS.",
         ),
         g(
-          `Tomorrow I start at ${lx.service.open}.`,
+          // "Tomorrow I start at two." là tiếng Anh ĐÚNG (hiện tại đơn cho lịch
+          // cố định) và bị gạch làm lỗi — hai auditor nêu, và chính khoá học
+          // dùng đúng cấu trúc đó hai bài sau. Vế rude phải là lỗi L1 thật.
+          `Tomorrow I starting at ${lx.service.open}.`,
           `I will start at ${lx.service.open} tomorrow.`,
           "Việc tương lai dùng 'will' + động từ: I WILL start.",
         ),
@@ -984,19 +1000,22 @@ function week3(lx: P0Lexicon): LessonContent[] {
           // phòng và nhà hàng được dạy xác nhận lịch tour từ trí nhớ, không có
           // quyền tra hệ thống. Bốn auditor nêu. Dùng chính dịch vụ có giá của
           // bộ phận thay thế.
-          `When is my ${lx.priced.en}?`,
+          `When is my ${lx.booking.en}?`,
           `It is tomorrow, madam.`,
           "Nói rõ ngày để khách không nhầm lịch, đừng chỉ gật đầu. 'tomorrow' trọng âm ở giữa: to-MOR-row, ba âm tiết.",
         ),
       ],
       reading: read(
-        `Today is Monday. A guest asks about the ${lx.priced.en}. ${lx.staff} checks and says: "It is tomorrow, madam. Tuesday."`,
+        `Today is Monday. A guest asks about the ${lx.booking.en}. ${lx.staff} checks and says: "It is tomorrow, madam. Tuesday."`,
         [
           {
-            q: "Chuyến tham quan diễn ra ngày nào?",
+            // Bài đọc đã đổi sang dịch vụ của bộ phận, câu hỏi và game thì tôi
+            // bỏ quên — nên bài đọc nói về giặt là còn câu hỏi vẫn hỏi "chuyến
+            // tham quan". Năm auditor nêu. Sửa một khung là sửa ĐỦ BỘ.
+            q: `${capFirst(lx.booking.vi)} diễn ra ngày nào?`,
             options: ["Thứ Ba", "Thứ Hai", "Chủ nhật"],
             correct: 0,
-            explanation: "Hôm nay là thứ Hai, tour là 'tomorrow' — tức thứ Ba.",
+            explanation: `Hôm nay là thứ Hai, ${lx.booking.vi} là 'tomorrow' — tức thứ Ba.`,
           },
           {
             q: "'Tomorrow' nghĩa là gì?",
@@ -1008,10 +1027,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          "Is the tour today?",
+          `Is my ${lx.booking.en} today?`,
           "No, madam. It is tomorrow.",
-          "Tour Monday no.",
-          "Yes, madam. The tour is today at two.",
+          "Monday no, madam.",
+          "Yes, madam. It is today at two.",
         ),
       ],
     }),
@@ -1025,7 +1044,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         g(
           `Open ${lx.service.open}.`,
           `We open at ${lx.service.open}.`,
-          "Cần chủ ngữ 'We' và giới từ 'at' trước giờ: we open AT six.",
+          `Cần chủ ngữ 'We' và giới từ 'at' trước giờ: we open AT ${lx.service.open}.`,
         ),
         g(
           `${capFirst(lx.service.en)} close ${lx.service.close}.`,
@@ -1207,7 +1226,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           {
             q: "Vì sao KHÔNG nói 'dongs'?",
             options: [
-              "Vì 'dong' không bao giờ thêm -s",
+              "Vì 'dong' giữ nguyên khi số nhiều",
               "Vì trong tiếng Việt không có số nhiều",
               "Vì khách là người nước ngoài",
             ],
@@ -1352,7 +1371,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           // Five auditors flagged this pair and its twin in week 6.
           `Total ${lx.priced.vndWord}.`,
           `The total is ${lx.priced.vndWord}.`,
-          "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' không bao giờ thêm -s (tuần 4 bài 1).",
+          "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều (tuần 4 bài 1).",
         ),
         g(
           "You want how many?",
@@ -1566,7 +1585,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} gives the ${i5.word.toLowerCase()} to the guest and says: "Here you are, madam." Then ${lx.staff} says: "This way, please."`,
+        // items[4] không trao tay được ở ba bộ phận — Spa ra "gives the oil",
+        // Quan hệ khách hàng "gives the seat", Back Office "gives the chair".
+        // items[0] trao tay được ở cả sáu, và đây là bài dạy CÔNG THỨC TRAO ĐỒ.
+        `${lx.staff} gives the ${i1.word.toLowerCase()} to the guest and says: "Here you are, madam." Then ${lx.staff} says: "This way, please."`,
         [
           {
             q: "Câu nào nói khi đưa đồ cho khách?",
@@ -1764,7 +1786,9 @@ function week6(lx: P0Lexicon): LessonContent[] {
           // việc thường xuyên nhất ở quầy — bị chấm sai. Bốn auditor nêu. Nay
           // đề nói rõ khách đến sớm, và câu trung thực là ĐÁP ÁN ĐÚNG.
           `I am early. Is my room ready?`,
-          `Not yet, sir. It is ready at ${lx.service.open}.`,
+          // Giờ phòng sẵn sàng là giờ NHẬN PHÒNG, không phải giờ mở cửa của bộ
+          // phận — service.open cho ra "ready at ten" ở Spa, "at six" ở Nhà hàng.
+          `Not yet, sir. It is ready at two.`,
           `Room ready yes.`,
           `Yes, sir. Your room is ready now.`,
         ),
