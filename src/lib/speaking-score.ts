@@ -204,7 +204,13 @@ const FUNCTION_TOKENS = new Set<string>([
  *  covers those is the other half of the fix: the lessons own headwords are
  *  required outright (see lesson() in phase0.ts), so the content word can
  *  never be the thing that goes. */
-const FUNCTION_TOKEN_ALLOWANCE = 1;
+function functionAllowance(count: number): number {
+  // Câu mang đúng một hư từ THÌ hư từ đó là bài học: "At reception, madam."
+  // mất "at", "Thank you" mất "you", "The second floor" mất "the". Ở đó lỡ
+  // miệng và bỏ qua ngữ pháp là một, nên không tha. Từ hai hư từ trở lên,
+  // tha một — micro của trình duyệt nuốt mạo từ cả ngày.
+  return count <= 1 ? 0 : 1;
+}
 
 /** Negation is graded asymmetrically, and deliberately.
  *
@@ -427,17 +433,21 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
   const n = typeof week === "string" ? parseInt(week, 10) : week;
   // Phase 0-1 — a zero-beginner should not have to nail 80% of a four-word
   // utterance to earn a star.
-  if (n <= 14) return { accPct: 60, orderRatio: 0.4 };
+  // orderRatio 0,40 trên một câu năm từ cho qua gần như mọi phép đảo — hai
+  // báo cáo học vụ đo được 42/42 và 57/57 lượt qua khi tráo hai mệnh đề, và
+  // một trong các câu tráo đó ('Here are you') là nearMiss mà khối ngữ pháp
+  // của cùng khoá chấm SAI. Trật tự từ LÀ nội dung đang được dạy ở P0.
+  if (n <= 14) return { accPct: 60, orderRatio: 0.7 };
   // Phase 2 — the step to A2 spread across its eight weeks (65/70/75/80),
   // rather than delivered in one jump at week 15.
   if (n <= 22) {
     const step = Math.floor((n - 15) / 2); // 0,0,1,1,2,2,3,3
     // Rounded: 0.45 + 3 * 0.05 lands on 0.6000000000000001 in binary
     // floating point, which reads as a fall against week 23's flat 0.6.
-    return { accPct: 65 + step * 5, orderRatio: Math.round((0.45 + step * 0.05) * 100) / 100 };
+    return { accPct: 65 + step * 5, orderRatio: Math.round((0.7 + step * 0.05) * 100) / 100 };
   }
   // A2+ and B1.1 — full standard, and it stays there to the last week.
-  return { accPct: 80, orderRatio: 0.6 };
+  return { accPct: 80, orderRatio: 0.85 };
 }
 
 /** One place that decides whether an utterance passed, so the drill and the
@@ -472,6 +482,16 @@ export function utterancePassed(
   // answer for the same missing reason.
   const gated = dayFree ? required.filter((t) => !DAYPART.test(t)) : required;
   const missingRequired = [...new Set(gated)].filter((t) => !spokenSet.has(t));
+  // Có mặt là chưa đủ: các token GIÁ TRỊ phải xuất hiện đúng thứ tự của câu
+  // mẫu, và đúng số lần. "Two keys to room two-oh-five" chứa "two" hai lần vì
+  // hai lần đó nói hai điều khác nhau; đọc "nine keys to room two-oh-five"
+  // vẫn có "two" nên phép kiểm tập hợp cho qua. Dãy con cùng thứ tự bắt được
+  // cả hoán vị lẫn thiếu lượt.
+  const valueSeq = normalize(target).filter((t) => VALUE_TOKENS.has(t));
+  const spokenSeq = normalize(spoken).filter((t) => VALUE_TOKENS.has(t));
+  let vi = 0;
+  for (const t of spokenSeq) if (vi < valueSeq.length && valueSeq[vi] === t) vi++;
+  const valueOrderOk = vi === valueSeq.length;
   // Function words, one life. See FUNCTION_TOKENS.
   const funcNeeded = requiredFunctionTokens(target);
   const missingFunction = funcNeeded.filter((t) => !spokenSet.has(t));
@@ -486,8 +506,13 @@ export function utterancePassed(
     passed:
       Math.round(cmp.accuracy * 100) >= th.accPct &&
       cmp.orderRatio >= th.orderRatio &&
+      // Đúng từng chữ nhưng sai thứ tự thì không phải đọc vấp — đó là chưa
+      // biết trật tự, và trật tự là nội dung của bài. Ngưỡng ở trên tha cho
+      // câu nói thiếu; chỗ này không tha cho câu nói đủ mà xếp sai.
+      !(Math.round(cmp.accuracy * 100) === 100 && cmp.orderRatio < 1) &&
       missingRequired.length === 0 &&
-      missingFunction.length <= FUNCTION_TOKEN_ALLOWANCE &&
+      valueOrderOk &&
+      missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
       inflection.length === 0,
     threshold: th,

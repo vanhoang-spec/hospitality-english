@@ -169,7 +169,9 @@ function buildPaper(dep: string, week: string): Question[] {
     };
   });
 
-  const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
+  const grammarPool = shuffle(
+    phaseLessons.flatMap((l) => l.grammar.map((g) => ({ ...g, lessonId: l.lessonId }))),
+  );
   const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
     // Nhiễu lấy từ vế `polite` của cặp khác, KHÔNG lấy `g.rude` — câu đó đang
     // được trích nguyên văn trong đề nên nó là một loại trừ miễn phí, và vế
@@ -202,8 +204,25 @@ function buildPaper(dep: string, week: string): Question[] {
     // Một nhiễu là nearMiss soạn tay khi có — bản "sửa-trông-đúng-mà-vẫn-sai"
     // của CHÍNH câu trong đề, nên nó trùng từ ngang đáp án và mẹo trùng-từ
     // chết hẳn ở cặp đó. Nhiễu còn lại giữ luật trùng-cao-nhất.
+    // Và rồi lỗ thứ ba, tìm ra một vòng sau: cái câu trùng nhiều từ nhất với
+    // đề THƯỜNG LÀ MỘT ĐÁP ÁN ĐÚNG KHÁC. "Spell please." lấy được cả "How do
+    // you spell that?" lẫn "Could you spell that, please?"; "Wait." lấy được
+    // cả "One moment, please, sir." lẫn "Please wait here, madam." Đo trên
+    // 20.000 đề: 27,4% số đề có một câu như thế Ở NGAY KHỐI NÀY, khối bốn câu
+    // với sàn riêng 50%. Cùng phép lọc đã dùng cho khối nghe: bỏ honorific ra,
+    // rồi loại mọi ứng viên mà tập từ nội dung của nó nằm trong đáp án hoặc
+    // chứa đáp án. Loại luôn các cặp CÙNG BÀI — hai vế polite của một bài dạy
+    // hai nửa của cùng một việc, nên câu này thường trả lời được đề của câu kia.
+    const HON = new Set(["sir", "madam", "maam", "please"]);
+    const core = (s: string) => new Set([...bag(s)].filter((w) => !HON.has(w)));
+    const keyCore = core(g.polite);
+    const saysTheSame = (s: string) => {
+      const c = core(s);
+      if (c.size === 0 || keyCore.size === 0) return true;
+      return [...c].every((w) => keyCore.has(w)) || [...keyCore].every((w) => c.has(w));
+    };
     const others = grammarPool
-      .filter((o) => o.polite !== g.polite)
+      .filter((o) => o.polite !== g.polite && o.lessonId !== g.lessonId && !saysTheSame(o.polite))
       .map((o) => ({ o, score: share(o.polite) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, g.nearMiss ? 1 : 2)
