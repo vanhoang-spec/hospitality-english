@@ -128,6 +128,18 @@ const plural = (w: P1Word) => {
   return parts.join(" ");
 };
 
+/** A routine verb WITH its object. Week 11's frames are intransitive shells
+ *  ("I {v} every day.", "We {v} at {hour}."), and half the routines banks hold
+ *  transitive verbs, so Guest Relations taught "We arrange at seven." six times
+ *  in one lesson — vocabulary context, grammar model, speaking target, reading
+ *  passage and correct game answer. F&B taught "We sometimes refill twice a
+ *  day.", Spa "I usually fold first.", Front Office "We print at two."
+ *
+ *  The object lives on the bank word, not in the headword, so `third()` still
+ *  inflects the head verb: "He prints the bill every day." */
+const act = (w: P1Word) => (w.obj ? `${lower(w)} ${w.obj}` : lower(w));
+const actThird = (w: P1Word) => (w.obj ? `${third(w)} ${w.obj}` : third(w));
+
 /** Comparative form of a bank adjective: "-er" for the short ones, "more …"
  *  for the rest. The week-10 frame hardcoded "more", which is correct for
  *  "important" and wrong for "empty", "bright", "sour" and "tired". */
@@ -1045,10 +1057,10 @@ function week11(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 11, 1, "Every Day at Work", "Công việc hằng ngày", {
       vocabulary: [
-        v("Every day", "/ˈevri deɪ/", "Mỗi ngày", `I ${lower(t1)} every day.`, "📅"),
+        v("Every day", "/ˈevri deɪ/", "Mỗi ngày", `I ${act(t1)} every day.`, "📅"),
         v("Always", "/ˈɔːlweɪz/", "Luôn luôn", "I always check the room.", "🔁"),
-        bw(t1, `I ${lower(t1)} every morning.`),
-        bw(t2, `We ${lower(t2)} after breakfast.`),
+        bw(t1, `I ${act(t1)} every morning.`),
+        bw(t2, `We ${act(t2)} after breakfast.`),
       ],
       grammar: [
         g(
@@ -1056,8 +1068,8 @@ function week11(lx: Ctx): LessonContent[] {
           // bed", "Check in", "Send an email"), so the frame's own object
           // produced "I make the bed it every day." for four of six
           // departments — as the sentence the learner is told is correct.
-          `Every day I ${lower(t1)}.`,
-          `I ${lower(t1)} every day.`,
+          `Every day I ${act(t1)}.`,
+          `I ${act(t1)} every day.`,
           "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … EVERY DAY.",
         ),
         g(
@@ -1069,26 +1081,26 @@ function week11(lx: Ctx): LessonContent[] {
           // day." — all six departments, in the sentence marked correct.
           // third() puts the -s on the head verb; the object stays in the
           // bank word where it belongs.
-          `He ${lower(t1)} every day.`,
-          `He ${third(t1)} every day.`,
+          `He ${act(t1)} every day.`,
+          `He ${actThird(t1)} every day.`,
           "Ngôi thứ ba số ít thêm -s vào ĐỘNG TỪ CHÍNH: he checks in, he makes the bed.",
         ),
       ],
       speaking: [
         sp(
           "What do you do every day?",
-          `I ${lower(t1)} every day.`,
+          `I ${act(t1)} every day.`,
           "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày. Từ 'every' đọc hai âm tiết: EV-ry, không phải e-vơ-ri.",
         ),
       ],
       reading: read(
-        `${lx.staff} explains the daily work: "I ${lower(t1)} every morning. We ${lower(t2)} after breakfast, sir."`,
+        `${lx.staff} explains the daily work: "I ${act(t1)} every morning. We ${act(t2)} after breakfast, sir."`,
         [
           {
             q: "Việc đầu tiên trong ngày là gì?",
             options: [t1.definition, t2.definition, "Nghỉ trưa"],
             correct: 0,
-            explanation: `"I ${lower(t1)} every morning" — việc làm mỗi sáng.`,
+            explanation: `"I ${act(t1)} every morning" — việc làm mỗi sáng.`,
           },
           {
             q: "'Every day' thường đứng ở đâu?",
@@ -1110,13 +1122,13 @@ function week11(lx: Ctx): LessonContent[] {
 
     lesson(lx, 11, 2, "We Start At…", "Nói giờ bắt đầu công việc", {
       vocabulary: [
-        bw(t3, `We ${lower(t3)} at ${lx.service.open}.`),
-        bw(t4, `I ${lower(t4)} before lunch.`),
+        bw(t3, `We ${act(t3)} at ${lx.service.open}.`),
+        bw(t4, `I ${act(t4)} before lunch.`),
       ],
       grammar: [
         g(
-          `We ${lower(t3)} ${lx.service.open}.`,
-          `We ${lower(t3)} at ${lx.service.open}.`,
+          `We ${act(t3)} ${lx.service.open}.`,
+          `We ${act(t3)} at ${lx.service.open}.`,
           "Nhớ 'at' trước giờ — ôn lại quy tắc từ tuần 3.",
         ),
         g(
@@ -1128,18 +1140,18 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "What time do you start?",
-          `We ${lower(t3)} at ${lx.service.open}, madam.`,
+          `We ${act(t3)} at ${lx.service.open}, madam.`,
           `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới. Cụm 'at + giờ' đọc nối liền thành một khối: /t/ không bật rời ra, nhưng cũng không được biến mất.`,
         ),
       ],
       reading: read(
-        `A guest asks about the schedule. ${lx.staff} answers: "We ${lower(t3)} at ${lx.service.open}, sir. I ${lower(t4)} before lunch."`,
+        `A guest asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}, sir. I ${act(t4)} before lunch."`,
         [
           {
             q: "Ca làm bắt đầu lúc mấy giờ?",
             options: [lx.service.open, lx.service.close, "Nửa đêm"],
             correct: 0,
-            explanation: `"We ${lower(t3)} at ${lx.service.open}".`,
+            explanation: `"We ${act(t3)} at ${lx.service.open}".`,
           },
           {
             q: "Giới từ nào đứng trước giờ?",
@@ -1152,40 +1164,40 @@ function week11(lx: Ctx): LessonContent[] {
       game: [
         game(
           "When does your shift begin?",
-          `We ${lower(t3)} at ${lx.service.open}, sir.`,
+          `We ${act(t3)} at ${lx.service.open}, sir.`,
           `${t3.word} ${lx.service.open}.`,
-          `We ${lower(t3)} at ${lx.service.close}, sir.`,
+          `We ${act(t3)} at ${lx.service.close}, sir.`,
         ),
       ],
     }),
 
     lesson(lx, 11, 3, "Sometimes & Usually", "Thỉnh thoảng & thường xuyên", {
       vocabulary: [
-        v("Usually", "/ˈjuːʒuəli/", "Thường thường", `I usually ${lower(t5)} first.`, "📊"),
-        bw(t5, `I usually ${lower(t5)} first.`),
-        bw(t6, `We sometimes ${lower(t6)} twice.`),
+        v("Usually", "/ˈjuːʒuəli/", "Thường thường", `I usually ${act(t5)} first.`, "📊"),
+        bw(t5, `I usually ${act(t5)} first.`),
+        bw(t6, `We sometimes ${act(t6)} twice.`),
       ],
       grammar: [
         g(
-          `I ${lower(t5)} usually.`,
-          `I usually ${lower(t5)} first.`,
+          `I ${act(t5)} usually.`,
+          `I usually ${act(t5)} first.`,
           "Trạng từ tần suất (usually, always, sometimes) đứng TRƯỚC động từ chính.",
         ),
         g(
-          `Sometime we ${lower(t6)}.`,
-          `We sometimes ${lower(t6)} twice.`,
+          `Sometime we ${act(t6)}.`,
+          `We sometimes ${act(t6)} twice.`,
           "Đúng chính tả là 'sometimes' có -s ở cuối.",
         ),
       ],
       speaking: [
         sp(
           "Do you always do that?",
-          `I usually ${lower(t5)} first, sir.`,
+          `I usually ${act(t5)} first, sir.`,
           "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai. Từ 'first' đóng bằng cụm /st/ — cụm khó nhất tuần này, đừng dừng ở 'phơ'.",
         ),
       ],
       reading: read(
-        `${lx.staff} describes the routine: "I usually ${lower(t5)} first. We sometimes ${lower(t6)} twice a day, madam."`,
+        `${lx.staff} describes the routine: "I usually ${act(t5)} first. We sometimes ${act(t6)} twice a day, madam."`,
         [
           {
             q: "Trạng từ 'usually' đứng ở đâu?",
@@ -1204,18 +1216,15 @@ function week11(lx: Ctx): LessonContent[] {
       game: [
         game(
           "How often do you do it?",
-          `We sometimes ${lower(t6)} twice a day.`,
+          `We sometimes ${act(t6)} twice a day.`,
           `Sometime two time.`,
-          `We ${lower(t6)} it once every week, madam.`,
+          `We ${act(t6)} once every week, madam.`,
         ),
       ],
     }),
 
     lesson(lx, 11, 4, "Finishing the Shift", "Kết thúc ca làm", {
-      vocabulary: [
-        bw(t7, `I ${lower(t7)} at the end.`),
-        bw(t8, `Please ${lower(t8)} before you go.`),
-      ],
+      vocabulary: [bw(t7, `I ${act(t7)} at the end.`), bw(t8, `Please ${act(t8)} before you go.`)],
       grammar: [
         g(
           `Finish work I go home.`,
@@ -1223,26 +1232,26 @@ function week11(lx: Ctx): LessonContent[] {
           "Dùng 'after' để nối hai việc: I go home AFTER my shift.",
         ),
         g(
-          `You ${lower(t8)} first.`,
-          `Please ${lower(t8)} before you go.`,
+          `You ${act(t8)} first.`,
+          `Please ${act(t8)} before you go.`,
           "Thêm 'Please' và mốc thời gian 'before you go' cho câu dặn dò lịch sự.",
         ),
       ],
       speaking: [
         sp(
           "What do you do at the end?",
-          `I ${lower(t7)} and go home.`,
+          `I ${act(t7)} and go home.`,
           "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc. Từ 'home' đóng bằng /m/: phải ngậm môi lại, đừng bỏ lửng.",
         ),
       ],
       reading: read(
-        `The shift is over. ${lx.staff} says: "I ${lower(t7)} at the end, then I go home." The supervisor says: "Well done."`,
+        `The shift is over. ${lx.staff} says: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done."`,
         [
           {
             q: "Việc cuối ca là gì?",
             options: [t7.definition, t8.definition, "Ăn tối"],
             correct: 0,
-            explanation: `"I ${lower(t7)} at the end" — việc làm cuối ca.`,
+            explanation: `"I ${act(t7)} at the end" — việc làm cuối ca.`,
           },
           {
             q: "Từ nào dùng để nối hai hành động?",
@@ -1255,7 +1264,7 @@ function week11(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Is your work finished?",
-          `Yes, sir. I ${lower(t7)} and go home.`,
+          `Yes, sir. I ${act(t7)} and go home.`,
           `Finish work go home.`,
           "No, sir. My work is never finished here.",
         ),
