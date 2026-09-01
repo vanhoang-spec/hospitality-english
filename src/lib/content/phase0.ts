@@ -996,9 +996,16 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Yes, two ${i1.word.toLowerCase()}s. One moment.`,
           "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai. Đuôi số nhiều ở đây đọc /z/ CÓ RUNG, không phải /s/ — sau nguyên âm hay phụ âm hữu thanh thì luôn là /z/ (sau âm xuýt thì thành /ɪz/). Người Việt hay nuốt hẳn âm cuối này.",
         ),
+        sp(
+          `Could I have my ${i2.word.toLowerCase()}?`,
+          `Here is your ${i2.word.toLowerCase()}, madam.`,
+          "Trao đồ cho khách thì đưa bằng hai tay và đợi khách cầm chắc rồi mới buông. Câu trao đồ giữ nguyên, chỉ đổi động từ theo số lượng: một cái dùng dạng số ít, từ hai cái trở lên đổi sang dạng số nhiều.",
+          undefined,
+          [i2.word.toLowerCase()],
+        ),
       ],
       reading: read(
-        `A guest from room ${lx.roomNo.spoken} wants two ${i1.word.toLowerCase()}s. ${lx.staff} says: "Good afternoon, madam. Two ${i1.word.toLowerCase()}s. One moment, please." ${lx.staff} comes back and says: "Here is your ${i2.word.toLowerCase()}, madam."`,
+        `A guest from room ${lx.roomNo.spoken} wants two ${i1.word.toLowerCase()}s. ${lx.staff} says: "Good afternoon, madam. Two ${i1.word.toLowerCase()}s. One moment, please." ${lx.staff} comes back and says: "Here are your ${i1.word.toLowerCase()}s, madam."`,
         [
           {
             q: "Khách muốn mấy cái?",
@@ -1305,6 +1312,13 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'. 'open' trọng âm âm tiết đầu: O-pen.",
           undefined,
           ["open"],
+        ),
+        sp(
+          "And what time do you close?",
+          `We close at ${lx.service.close}, madam.`,
+          "Cùng công thức, chỉ đổi động từ. Chú ý 'close' ở đây là ĐỘNG TỪ, đọc /kləʊz/ rung ở cuối — khác hẳn tính từ 'close' /kləʊs/ nghĩa là gần. Người Việt hay đọc cả hai thành /s/.",
+          undefined,
+          ["close"],
         ),
       ],
       reading: read(
@@ -2309,9 +2323,9 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Sorry, could you speak slowly?",
           "Of course, madam. Slowly.",
           "Slow, yes. I speak slow now.",
-          "I am sorry madam, I will speak slowly.",
+          "Of course, madam. I speak more loudly.",
           undefined,
-          "Câu xin lỗi không sai tiếng Anh, nhưng ở đây không có gì để xin lỗi: khách xin bạn nói chậm, không phàn nàn. Nhận lời rồi làm ngay là đủ — xin lỗi thừa làm khách ngại hỏi lại lần sau.",
+          "Nói TO hơn không giúp gì khi khách chưa nghe kịp — âm lượng không phải tốc độ, và nói to còn nghe như mất kiên nhẫn. Khách xin nói chậm thì nhận lời rồi nói chậm lại, giữ nguyên âm lượng.",
         ),
         game(
           // "Of course" không phải câu đáp cho "I did not hear you" — nó nhận
@@ -3482,6 +3496,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Câu sàng lọc phải hỏi TRƯỚC khi khách nằm xuống, không hỏi giữa chừng.",
         ),
+        game(
+          "Is that everything you need to know?",
+          "One more, madam. Are you pregnant?",
+          "Yes, all finish. We start.",
+          "Yes, madam. You look very well.",
+          undefined,
+          "Hỏi đủ ba câu, kể cả câu ngại hỏi nhất. Nhìn mà đoán là cách sai: nhiều liệu trình phải đổi hẳn hoặc phải hoãn khi khách đang mang thai, và ba tháng đầu thì nhìn không ra.",
+        ),
       ],
     }),
 
@@ -3662,6 +3684,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Không nói chuyện giá lúc khách đang nằm. Thắc mắc về giá thì để lễ tân trao đổi trước hoặc sau buổi.",
         ),
+        game(
+          "What is that on my back?",
+          "Careful, madam. The towel is hot.",
+          "Towel, madam. Hot.",
+          "It is a warm towel, madam. Relax.",
+          undefined,
+          "Báo TRƯỚC khi đặt khăn nóng lên người khách, và báo bằng đúng chữ 'hot'. 'Warm' làm khách không chuẩn bị, mà khách nằm sấp thì không nhìn thấy gì đang tới.",
+        ),
       ],
     }),
 
@@ -3761,6 +3791,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Không bao giờ tự bảo lãnh một món là an toàn. Việc của mình là chuyển thông tin cho bếp và mang câu trả lời của bếp ra.",
         ),
+        game(
+          "Is that our soup?",
+          "Careful, sir. The plate is hot.",
+          "Yes, soup. Hot plate, careful.",
+          "Yes, sir. Here is your soup.",
+          undefined,
+          "Đặt đĩa nóng xuống mà không báo là cách làm khách bỏng tay phổ biến nhất. Nói 'Careful' TRƯỚC, rồi mới đặt xuống — không nói sau.",
+        ),
       ],
     }),
 
@@ -3803,9 +3841,16 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Certainly, madam. May I take your order?",
           "Tới bàn trong vòng vài giây khi khách gọi. 'order' trọng âm âm tiết đầu: OR-der.",
         ),
+        sp(
+          "Yes, we are ready to order now.",
+          "Any allergies at the table, madam?",
+          "Ôn tuần 5, dùng thật ở tuần 6: câu này đứng TRƯỚC lúc cầm bút, không phải sau khi ghi xong. Ghi xong mới hỏi thì bếp đã bắt đầu nấu.",
+          undefined,
+          ["allergies"],
+        ),
       ],
       reading: read(
-        `A guest says: "Two coffees and one soup, please." The room is noisy. ${lx.staff} asks: "Could you say that again?" The guest repeats it. ${lx.staff} writes it down and reads it back: "Two coffees, one soup. I understand, madam." Then ${lx.staff} goes to the kitchen.`,
+        `${lx.staff} asks first: "Any allergies at the table, madam?" The guest says: "No, nothing." Then the guest says: "Two coffees and one soup, please." The room is noisy. ${lx.staff} asks: "Could you say that again?" The guest repeats it. ${lx.staff} writes it down and reads it back: "Two coffees, one soup. I understand, madam." Then ${lx.staff} goes to the kitchen.`,
         [
           {
             q: `Vì sao ${lx.staff} hỏi lại khách?`,
@@ -3837,9 +3882,27 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         game(
           "Sorry, I did not hear you.",
-          "Could you say that again?",
+          "Of course, madam. Two coffees, one soup.",
           "Say again.",
           "It is fine, madam. I remember it.",
+          undefined,
+          "Người không nghe rõ ở đây là KHÁCH. Khách xin nghe lại thì đọc lại đúng đơn đã ghi — không bắt khách nói lại, và không bỏ qua.",
+        ),
+        game(
+          "One tea, please. No — two.",
+          "Two teas. I understand, madam.",
+          "One tea and two tea, madam.",
+          "Yes madam, one tea coming.",
+          undefined,
+          "Khách vừa sửa số. Đọc lại con số MỚI — không đọc lại con số đầu tiên, và không cộng cả hai lại.",
+        ),
+        game(
+          "We are ready. Four soups, please.",
+          "Any allergies at the table, madam?",
+          "Four soup, madam. OK.",
+          "Four soups. I will tell the kitchen, madam.",
+          undefined,
+          "Đáp án thứ ba đọc lại đúng đơn và đúng ngữ pháp — nhưng bỏ mất câu hỏi dị ứng, và bếp bắt đầu nấu ngay sau câu đó. Hỏi dị ứng trước, đọc lại đơn sau.",
         ),
       ],
     }),
