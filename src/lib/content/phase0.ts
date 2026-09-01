@@ -2726,6 +2726,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           ["sorry"],
         ),
         sp(
+          "Is my car here yet?",
+          "One moment, madam. I will check.",
+          "Đừng trả lời từ trí nhớ. Xem rồi mới nói — và nói ra là mình đang đi xem, đừng im lặng bỏ đi.",
+          undefined,
+          ["check"],
+        ),
+        sp(
           "This is not good enough.",
           "One moment. I will call my manager.",
           "Khách nói tới mức này thì việc đã vượt bạn. Gọi quản lý ngay, đừng hỏi lý do và đừng tự thanh minh — gọi nhanh là cách hạ nhiệt tốt nhất.",
@@ -3294,6 +3301,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Can I pay you in dollars?",
+          "I am sorry. We take dong, sir.",
+          "Xin lỗi trước rồi mới nói chính sách — từ chối trần trụi nghe như bạn đang chê tiền của khách. Rồi mới chỉ chỗ trả. 'Dong' không thêm -s, giống yen hay baht.",
+          undefined,
+          ["sorry", "dong"],
+        ),
+        sp(
+          "So where do I pay?",
           "Please pay at reception, sir.",
           "Ngoại tệ hay tiền đồng cũng vậy: chỗ trả tiền là lễ tân. Trả lời gọn rồi chỉ chỗ, đừng giải thích dài.",
           undefined,
@@ -3376,6 +3390,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Báo tổng thành tiếng trước khi ghi phiếu — khách nghe rõ ngay tại phòng thì không tranh cãi lúc trả phòng. Âm /l/ CUỐI từ là lỗi nặng nhất của người Việt: total, bill, towel — đầu lưỡi chạm lợi trên và giữ ở đó.",
           undefined,
           ["total"],
+        ),
+        sp(
+          "How much do I owe for the shirts?",
+          "One moment, madam. I will check.",
+          "Giá giặt là tính theo từng món và có bảng riêng — đừng nhẩm trong đầu rồi nói ra. Xin khách chờ, xem bảng, rồi trả lời một con số chắc chắn.",
+          undefined,
+          ["check"],
         ),
         sp(
           "Could I have the bill, please?",
@@ -3667,6 +3688,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "The hot water is cold.",
           "I am very sorry, madam. One moment.",
           "Xin lỗi trước, sửa sau. Khách đang khó chịu thật, đừng giải thích trước khi xin lỗi.",
+        ),
+        sp(
+          "Is someone coming today?",
+          "One moment, madam. I will check.",
+          "Đừng gật cho xong. Xem sổ báo hỏng hoặc gọi kỹ thuật rồi mới trả lời — khách sẽ sắp xếp cả buổi chiều quanh câu trả lời của bạn.",
+          undefined,
+          ["check"],
         ),
         sp(
           "How long will it take?",
@@ -4249,6 +4277,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Nhắc lại số lượng rồi mới đi. Nói 'the lounge' chứ không nói số phòng: nơi giao đồ là nơi khách đang ngồi.",
         ),
         sp(
+          "Is there space for four now?",
+          "One moment, madam. I will check.",
+          "Phòng chờ đầy hay trống là chuyện của phút này, không phải của trí nhớ. Xem rồi mới trả lời.",
+          undefined,
+          ["check"],
+        ),
+        sp(
           "Is the lounge ready?",
           "The lounge is ready. Six guests.",
           "Lượt bàn giao với ĐỒNG NGHIỆP: chỗ nào, mấy khách. Không tên khách, không số phòng — kể cả với đồng nghiệp, và kể cả khi không có ai khác đứng gần.",
@@ -4544,6 +4579,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `Here you are, madam. A ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s.`,
           "Đưa đồ thì nói 'Here you are' và đưa bằng hai tay. Kể luôn thứ đang đưa để khách biết đủ chưa.",
         ),
+        sp(
+          "Do I take the robe off?",
+          "You are covered, madam.",
+          "Khách hỏi câu này là đang lo bị hở. Trả lời bằng SỰ THẬT về tấm khăn phủ, không bằng một lời trấn an chung chung — và nói trước khi khách phải hỏi lần thứ hai.",
+          undefined,
+          ["covered"],
+        ),
+        sp(
+          "I am ready.",
+          "Any area to avoid, madam?",
+          "Hỏi trước khi chạm, mỗi buổi, kể cả với khách quen. Câu này cho khách nói ra chỗ họ không muốn bị chạm mà không phải giải thích lý do.",
+          undefined,
+          ["avoid"],
+        ),
       ],
       reading: read(
         `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "You can keep your underwear on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
@@ -4636,9 +4685,23 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           ["stop"],
         ),
         sp(
-          "Could you do my shoulders?",
+          "Could you bring me some water?",
           "Certainly, madam.",
-          "'Certainly' trang trọng hơn một tiếng vâng suông và không mất thêm giây nào. Trọng âm âm tiết đầu: CER-tain-ly.",
+          "'Certainly' trang trọng hơn một tiếng vâng suông và không mất thêm giây nào. Trọng âm âm tiết đầu: CER-tain-ly. Nhận lời ngay với việc bạn làm được; việc đổi phạm vi liệu trình thì không phải việc bạn nhận.",
+        ),
+        sp(
+          "That feels nice.",
+          "Is the pressure all right?",
+          "Hỏi ít nhất ba lần một buổi: lúc mới bắt đầu, lúc đổi vùng, lúc tăng lực. Khách khen không có nghĩa là đủ nhẹ — nhiều người ngại nói. 'Pressure' trọng âm âm tiết đầu, /ˈpreʃə/, đuôi /ʃə/ nhẹ.",
+          undefined,
+          ["pressure"],
+        ),
+        sp(
+          "Can you go a bit higher?",
+          "Not there, madam. I am sorry.",
+          "Câu này phải bật ra được không cần nghĩ, và nói bằng giọng bình thường — không cười trừ, không im lặng làm tiếp. Từ chối trước, xin lỗi sau; đảo lại thì lời từ chối nghe như đang thương lượng. Sau buổi, báo quản lý.",
+          undefined,
+          ["sorry"],
         ),
         sp(
           "I feel a little dizzy.",
@@ -4715,6 +4778,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         v("Please", "/pliːz/", "Làm ơn, xin mời", "Please tell me, madam.", "🙏"),
         v("Of course", "/əv ˈkɔːs/", "Vâng, dĩ nhiên rồi", "Of course, madam.", "✔️"),
         v("Certainly", "/ˈsɜːtnli/", "Chắc chắn rồi (trang trọng)", "Certainly, sir.", "👍"),
+        v("Allergy", "/ˈælədʒi/", "Dị ứng thức ăn", "Any allergies, madam?", "⚠️"),
       ],
       grammar: [
         g(
@@ -4864,6 +4928,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Excuse me, we are ready to order.",
           "Certainly, madam. May I take your order?",
           "Tới bàn trong vòng vài giây khi khách gọi. 'order' trọng âm âm tiết đầu: OR-der.",
+        ),
+        sp(
+          "You brought the wrong soup.",
+          "I am very sorry, madam. One moment.",
+          "Xin lỗi trước, sửa sau, và đừng giải thích ai ghi sai. Mang sai món là lỗi của nhà hàng, không phải của người bưng.",
+          undefined,
+          ["sorry"],
         ),
         sp(
           "Yes, we are ready to order now.",
