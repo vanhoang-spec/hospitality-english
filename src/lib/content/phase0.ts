@@ -81,7 +81,16 @@ export type P0Lexicon = {
   station: string;
   items: [P0Item, P0Item, P0Item, P0Item, P0Item, P0Item];
   /** A service this department owns, used for opening-hours work in week 3. */
-  service: { en: string; vi: string; open: string; close: string };
+  /** `isEvent` marks a service whose name is an EVENT noun — check-in,
+   *  breakfast, room cleaning. Week 3 lesson 4 asks "What time is {service}?",
+   *  which is idiomatic only for events. Spa, Guest Relations and Back Office
+   *  name a PLACE ("the spa", "the lounge", "the office"), and the frame taught
+   *  them "What time is the lounge?" as the model correct sentence on six
+   *  surfaces — the lesson title, the grammar model, its rule, the graded
+   *  speaking target, the reading passage and a reading answer key. A place
+   *  cannot be a time. Places take do-support instead: "What time does the
+   *  lounge open?" */
+  service: { en: string; vi: string; open: string; close: string; isEvent?: true };
   /** One paid item, used for price work in week 4. */
   /** Giá dịch vụ dùng để dạy số tiền. VND là đơn vị giao dịch thật ở
    *  Việt Nam nên nó dẫn dắt; USD giữ lại cho bài quy đổi (tuần 4 bài 3).
@@ -102,6 +111,15 @@ export type P0Lexicon = {
 /** Chữ cái đầu câu. Số tiền VND hay đứng đầu câu ("Five hundred thousand
  *  dong, sir.") nên khung phải hoa nó lên — 18 câu mẫu từng bắt đầu bằng
  *  chữ thường vì thiếu bước này. */
+/** Title Case cho tên bài — capFirst chỉ hoa chữ đầu chuỗi, nên
+ *  `What Time Is ${capFirst("the spa")}?` ra "The spa" giữa tiêu đề. */
+function titleCase(s: string): string {
+  return s
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 function capFirst(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
@@ -123,7 +141,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Map", phonetic: "/mæp/", definition: "Bản đồ", icon: "🗺️" },
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
-    service: { en: "check-in", vi: "nhận phòng", open: "two", close: "eleven" },
+    service: { en: "check-in", vi: "nhận phòng", open: "two", close: "eleven", isEvent: true },
     priced: {
       en: "airport transfer",
       vi: "xe đưa đón sân bay",
@@ -153,7 +171,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Coffee", phonetic: "/ˈkɒfi/", definition: "Cà phê", icon: "☕", mass: true },
       { word: "Napkin", phonetic: "/ˈnæpkɪn/", definition: "Khăn ăn", icon: "🧻" },
     ],
-    service: { en: "breakfast", vi: "bữa sáng", open: "six", close: "ten" },
+    service: { en: "breakfast", vi: "bữa sáng", open: "six", close: "ten", isEvent: true },
     priced: {
       en: "Vietnamese coffee",
       vi: "cà phê Việt Nam",
@@ -181,7 +199,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Hanger", phonetic: "/ˈhæŋə/", definition: "Móc treo quần áo", icon: "🧥" },
       { word: "Bin", phonetic: "/bɪn/", definition: "Thùng rác", icon: "🗑️" },
     ],
-    service: { en: "room cleaning", vi: "dọn phòng", open: "eight", close: "four" },
+    service: { en: "room cleaning", vi: "dọn phòng", open: "eight", close: "four", isEvent: true },
     priced: {
       en: "laundry for one shirt",
       vi: "giặt là một áo sơ mi",
@@ -1030,56 +1048,85 @@ function week3(lx: P0Lexicon): LessonContent[] {
       ],
     }),
 
-    lesson(lx, 3, 4, `What Time Is ${capFirst(lx.service.en)}?`, "Hỏi giờ dịch vụ", {
-      vocabulary: [
-        v("Start", "/stɑːt/", "Bắt đầu", `It starts at ${lx.service.open}.`, "▶️"),
-        v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", `It finishes at ${lx.service.close}.`, "⏹️"),
-      ],
-      grammar: [
-        g(
-          `What time ${lx.service.en}?`,
-          `What time is ${lx.service.en}?`,
-          `Câu hỏi cần 'is': What time IS ${lx.service.en}?`,
-        ),
-        g(
-          `${capFirst(lx.service.en)} finish ${lx.service.close}.`,
-          `It finishes at ${lx.service.close}.`,
-          "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ.",
-        ),
-      ],
-      speaking: [
-        sp(
-          `What time is ${lx.service.en}?`,
-          `It starts at ${lx.service.open} o'clock.`,
-          "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc. 'starts' kết thúc bằng cụm /ts/ — phải nghe được cả hai âm, đừng dừng ở 'star'.",
-        ),
-      ],
-      reading: read(
-        `A guest asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam."`,
-        [
-          {
-            q: `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en}?"`,
-            options: ["Thiếu động từ 'is'", "Thiếu 'please'", "Thiếu tên khách"],
-            correct: 0,
-            explanation: `Câu hỏi tiếng Anh cần động từ: What time IS ${lx.service.en}?`,
-          },
-          {
-            q: `Dịch vụ kết thúc lúc mấy giờ?`,
-            options: [`${lx.service.close}`, `${lx.service.open}`, "midnight"],
-            correct: 0,
-            explanation: `Nhân viên nói "finishes at ${lx.service.close}".`,
-          },
+    lesson(
+      lx,
+      3,
+      4,
+      lx.service.isEvent
+        ? `What Time Is ${titleCase(lx.service.en)}?`
+        : `What Time Does ${titleCase(lx.service.en)} Open?`,
+      "Hỏi giờ dịch vụ",
+      {
+        vocabulary: [
+          v("Start", "/stɑːt/", "Bắt đầu", `We start at ${lx.service.open}.`, "▶️"),
+          v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", `We finish at ${lx.service.close}.`, "⏹️"),
         ],
-      ),
-      game: [
-        game(
-          `Am I too late?`,
-          `No, madam. We finish at ${lx.service.close}.`,
-          `Finish ${lx.service.close}.`,
-          `Yes, madam. We finished at ${lx.service.open}.`,
+        grammar: [
+          lx.service.isEvent
+            ? g(
+                `What time ${lx.service.en}?`,
+                `What time is ${lx.service.en}?`,
+                `Câu hỏi cần 'is': What time IS ${lx.service.en}?`,
+              )
+            : g(
+                `What time ${lx.service.en} open?`,
+                `What time does ${lx.service.en} open?`,
+                `Với động từ thường, câu hỏi cần 'does': What time DOES ${lx.service.en} open?`,
+              ),
+          g(
+            `${capFirst(lx.service.en)} finish ${lx.service.close}.`,
+            `It finishes at ${lx.service.close}.`,
+            "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ.",
+          ),
+        ],
+        speaking: [
+          sp(
+            lx.service.isEvent
+              ? `What time is ${lx.service.en}?`
+              : `What time does ${lx.service.en} open?`,
+            lx.service.isEvent
+              ? `It starts at ${lx.service.open} o'clock.`
+              : `We start at ${lx.service.open} o'clock.`,
+            lx.service.isEvent
+              ? "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc. 'starts' kết thúc bằng cụm /ts/ — phải nghe được cả hai âm, đừng dừng ở 'star'."
+              : "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc. 'start' đóng bằng /t/ — phải bật ra, đừng dừng lại ở 'sta'.",
+          ),
+        ],
+        reading: read(
+          lx.service.isEvent
+            ? `A guest asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam."`
+            : `A guest asks: "What time does ${lx.service.en} open?" ${lx.staff} answers: "It opens at ${lx.service.open} and closes at ${lx.service.close}, madam."`,
+          [
+            {
+              q: lx.service.isEvent
+                ? `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en}?"`
+                : `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en} open?"`,
+              options: lx.service.isEvent
+                ? ["Thiếu động từ 'is'", "Thiếu 'please'", "Thiếu tên khách"]
+                : ["Thiếu trợ động từ 'does'", "Thiếu 'please'", "Thiếu tên khách"],
+              correct: 0,
+              explanation: lx.service.isEvent
+                ? `Câu hỏi tiếng Anh cần động từ: What time IS ${lx.service.en}?`
+                : `Động từ thường cần trợ động từ: What time DOES ${lx.service.en} open?`,
+            },
+            {
+              q: `Dịch vụ kết thúc lúc mấy giờ?`,
+              options: [`${lx.service.close}`, `${lx.service.open}`, "midnight"],
+              correct: 0,
+              explanation: `Nhân viên nói "finishes at ${lx.service.close}".`,
+            },
+          ],
         ),
-      ],
-    }),
+        game: [
+          game(
+            `Am I too late?`,
+            `No, madam. We finish at ${lx.service.close}.`,
+            `Finish ${lx.service.close}.`,
+            `Yes, madam. We finished at ${lx.service.open}.`,
+          ),
+        ],
+      },
+    ),
   ];
 }
 
