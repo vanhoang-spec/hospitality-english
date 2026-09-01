@@ -43,6 +43,70 @@ export function normalize(s: string) {
     .flatMap((tok) => (/^\d+$/.test(tok) ? digitToWords(tok) : [tok]));
 }
 
+/** The words whose loss changes the MESSAGE, not just the score.
+ *
+ *  At the Phase 0 thresholds (60% accuracy over a 4-6 word target) every
+ *  target had exactly one droppable token, and it was always the value:
+ *  "Room three-oh-five" passed a two-oh-five item, "It is eleven o'clock"
+ *  passed a seven-o'clock item, "Five hundred dong" passed a
+ *  five-hundred-thousand item — wrong by a factor of a thousand, in the
+ *  three of six P0 weeks that exist to teach numbers, times and money.
+ *  An audit ran those exact utterances and every one scored PASS.
+ *
+ *  So value words are not droppable. The list is closed and deliberately
+ *  small — numbers, clock words, ordinals, days, times of day, currencies —
+ *  because a required token that is merely stylistic would punish fluent
+ *  paraphrase. */
+const VALUE_TOKENS = new Set<string>([
+  ...ONES,
+  ...TEENS,
+  ...TENS.filter(Boolean),
+  "oh",
+  "hundred",
+  "thousand",
+  "million",
+  "o'clock",
+  "half",
+  "past",
+  "first",
+  "second",
+  "third",
+  "fourth",
+  "fifth",
+  "sixth",
+  "seventh",
+  "eighth",
+  "ninth",
+  "tenth",
+  "eleventh",
+  "twelfth",
+  "ground",
+  "morning",
+  "afternoon",
+  "evening",
+  "night",
+  "today",
+  "tomorrow",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+  "dong",
+  "dollar",
+  "dollars",
+]);
+
+/** Which value tokens this target carries. An authored override wins so a
+ *  frame can exempt a token that is genuinely formulaic in its sentence
+ *  ("ONE moment" is a chunk, not a count). */
+export function requiredValueTokens(target: string, override?: string[]): string[] {
+  if (override) return override.map((t) => t.toLowerCase());
+  return [...new Set(normalize(target).filter((t) => VALUE_TOKENS.has(t)))];
+}
+
 function lcsLength(a: string[], b: string[]): number {
   const dp: number[] = new Array(b.length + 1).fill(0);
   for (let i = 1; i <= a.length; i++) {
@@ -124,12 +188,28 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
  *  a checkpoint paper mixes weeks, and grading a week-16 line at week-40's
  *  lenient open-role-play threshold would make the final exam the easiest
  *  speaking in the course. */
-export function utterancePassed(spoken: string, target: string, sourceWeek: string | number) {
+export function utterancePassed(
+  spoken: string,
+  target: string,
+  sourceWeek: string | number,
+  requiredTokens?: string[],
+) {
   const th = passThresholds(sourceWeek);
   const cmp = compareWords(spoken, target);
+  // A value token said wrong or not at all fails the utterance regardless of
+  // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
+  // stream, so ASR digits ("205" → two oh five) still count.
+  const spokenSet = new Set(normalize(spoken));
+  const missingRequired = requiredValueTokens(target, requiredTokens).filter(
+    (t) => !spokenSet.has(t),
+  );
   return {
     ...cmp,
-    passed: Math.round(cmp.accuracy * 100) >= th.accPct && cmp.orderRatio >= th.orderRatio,
+    missingRequired,
+    passed:
+      Math.round(cmp.accuracy * 100) >= th.accPct &&
+      cmp.orderRatio >= th.orderRatio &&
+      missingRequired.length === 0,
     threshold: th,
   };
 }

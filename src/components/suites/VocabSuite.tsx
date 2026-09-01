@@ -7,6 +7,7 @@ import {
   dictationMatches,
   headwordRateForWeek,
   listeningRateForWeek,
+  phaseOfWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
@@ -50,17 +51,21 @@ type QuizQuestion =
  *  items, so the new-word share sits near 70% in every phase and the quiz
  *  lengthens slightly in the phases that teach more. */
 const MCQ_NEW_MAX = 10;
+// 4 review items suit an ordinary week; at a CHECKPOINT week the review list
+// spans the whole phase, and 4 of ~20 meant the consolidation week sampled
+// under a tenth of what it exists to consolidate.
 const MCQ_REVIEW = 4;
+const MCQ_REVIEW_CHECKPOINT = 10;
 const MAX_DICTATION = 3;
 
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
 // Distractors are drawn from the same term set so they stay plausible.
-function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
+function buildQuiz(terms: Term[], reviewWords: Term[] = [], atCheckpoint = false): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
   const mcqTerms = shuffle([
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
-    ...shuffle(reviewWords).slice(0, MCQ_REVIEW),
+    ...shuffle(reviewWords).slice(0, atCheckpoint ? MCQ_REVIEW_CHECKPOINT : MCQ_REVIEW),
   ]);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
     const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
@@ -173,7 +178,7 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms, reviewTerms));
+    setQuiz(buildQuiz(terms, reviewTerms, phaseOfWeek(week)?.checkpointWeek === Number(week)));
     setQIdx(0);
     setPicked(null);
     setTyped("");

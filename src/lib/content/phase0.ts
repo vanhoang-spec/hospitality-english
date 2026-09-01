@@ -1933,20 +1933,35 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
       for (const item of l.vocabulary) earlier.push(item.word);
     }
   }
-  // Checkpoint recycles broadly; ordinary weeks take a focused slice
-  // from the two most recent weeks so recall stays fresh, not scattered.
-  if (week === 6) return earlier;
+  // Checkpoint recycles broadly — but as a SAMPLE, not a dump. The full
+  // 47-item list meant VocabSuite's draw covered 8.5% of the phase in the
+  // one week whose job is consolidation; spread() keeps every prior week
+  // represented while the checkpoint's own paper still samples the whole
+  // phase via buildPaper.
+  if (week === 6) return spread(earlier, 20);
   // Every headword of last week, not a six-item slice of it. Six slots cannot
   // cover a nine-item week however they are chosen, and `slice(-6)` chose the
   // literal tail, so lessons 1-2 of every week went to the checkpoint never
   // reviewed. Returning the whole week guarantees each headword one spaced
-  // retrieval at lag 1; VocabSuite draws MCQ_REVIEW=4 from the list anyway, so
-  // a longer list costs nothing at runtime and only widens the sample.
+  // retrieval at lag 1.
   const lastWeek: string[] = [];
   for (const l of WEEK_META[week - 1].build(lx)) {
     for (const item of l.vocabulary) lastWeek.push(item.word);
   }
-  return lastWeek;
+  // Plus a lag-3 visit. The list was strictly lag-1 — a word met in week 1
+  // was not seen again until week 6, and week 5's courtesy formulas reached
+  // the checkpoint with a single spaced retrieval. Three items from three
+  // weeks back put an expanding interval in the schedule; spread() so the
+  // sample crosses lessons instead of taking one lesson's head.
+  const threeBack = week - 3;
+  if (threeBack >= 1) {
+    const src: string[] = [];
+    for (const l of WEEK_META[threeBack].build(lx)) {
+      for (const item of l.vocabulary) src.push(item.word);
+    }
+    lastWeek.push(...spread(src, 3, week % 3));
+  }
+  return [...new Set(lastWeek)];
 }
 
 function buildWeek(lx: P0Lexicon, week: number): WeekContent {

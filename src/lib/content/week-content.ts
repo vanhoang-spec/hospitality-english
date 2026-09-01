@@ -27,11 +27,30 @@ export type VocabItem = {
   context: string;
   icon?: string;
 };
-export type GrammarItem = { rude: string; polite: string; rule: string };
+export type GrammarItem = {
+  rude: string;
+  polite: string;
+  rule: string;
+  /** A repair that LOOKS right and is still wrong ("What is you room
+   *  number?"), for the checkpoint's grammar block. Its stem quotes `rude`
+   *  verbatim and the key is a repair of that very sentence, so the key
+   *  shares nearly every content word with the stem while random distractors
+   *  share none — "pick the option with the most words in common" scored 73%
+   *  in Phase 0 and 81% in Phase 1 with no grammar knowledge. Overlap-matched
+   *  distractor selection got Phase 0 to ~60%; only an authored near-miss
+   *  makes the choice turn on the repair itself. */
+  nearMiss?: string;
+};
 export type SpeakingItem = {
   guestPrompt: string;
   targetResponse: string;
   helpTip: string;
+  /** Overrides the auto-derived value-token requirement in
+   *  `speaking-score.ts` — see VALUE_TOKENS there. Omit for the default
+   *  (numbers, clock words, days, times of day and currencies in the target
+   *  must actually be said); pass `[]` for a sentence whose value word is
+   *  purely formulaic. */
+  requiredTokens?: string[];
   /** Who says `guestPrompt`. Almost always a guest, so it is optional — but a
    *  handful of turns are a supervisor or a colleague, and labelling those
    *  "Khách nói" teaches the learner to say floor words ('lead time', 'cue',

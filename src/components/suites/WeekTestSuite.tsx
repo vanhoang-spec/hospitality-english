@@ -186,17 +186,22 @@ function buildPaper(dep: string, week: string): Question[] {
     // cần soạn tay hai bản-sửa-vẫn-sai cho mỗi cặp, chưa làm.
     // Đã thử và BÁC BỎ: gộp theo tuần (82–86%) và gộp theo bài (không đủ ứng
     // viên — phần lớn bài chỉ có 2 cặp ngữ pháp).
+    // Một nhiễu là nearMiss soạn tay khi có — bản "sửa-trông-đúng-mà-vẫn-sai"
+    // của CHÍNH câu trong đề, nên nó trùng từ ngang đáp án và mẹo trùng-từ
+    // chết hẳn ở cặp đó. Nhiễu còn lại giữ luật trùng-cao-nhất.
     const others = grammarPool
       .filter((o) => o.polite !== g.polite)
       .map((o) => ({ o, score: share(o.polite) }))
       .sort((a, b) => b.score - a.score)
-      .slice(0, 2)
-      .map((x) => x.o);
-    const options = shuffle([g.polite, ...others.map((o) => o.polite)]);
+      .slice(0, g.nearMiss ? 1 : 2)
+      .map((x) => x.o.polite);
+    const options = shuffle([g.polite, ...(g.nearMiss ? [g.nearMiss] : []), ...others]);
     return {
       kind: "grammar" as const,
       key: `g:${g.rude}`,
-      prompt: `Câu nào là cách xử lý chuẩn 5 sao thay cho "${g.rude}"?`,
+      // "cách xử lý chuẩn 5 sao" gọi một câu thiếu động từ là lỗi dịch vụ.
+      // Vế rude là LỖI NGỮ PHÁP của người học, không phải cách hành xử.
+      prompt: `Câu nào là cách nói đúng và lịch sự thay cho "${g.rude}"?`,
       options,
       correctIdx: options.indexOf(g.polite),
       note: g.rule,
@@ -253,6 +258,7 @@ type OralItem = {
   /** The week the sentence was authored for — graded at THAT week's
    *  threshold, not the checkpoint's. */
   sourceWeek: number;
+  requiredTokens?: string[];
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -270,6 +276,7 @@ function buildOral(dep: string, week: string): OralItem[] {
         audioWho: speakerAudioLabel(s),
         target: s.targetResponse,
         tip: s.helpTip,
+        requiredTokens: s.requiredTokens,
         sourceWeek: c.weekNumber,
       })),
     );
@@ -311,7 +318,7 @@ function OralStage({
   const item = items[idx];
 
   function commit(spoken: string) {
-    const verdict = utterancePassed(spoken, item.target, item.sourceWeek);
+    const verdict = utterancePassed(spoken, item.target, item.sourceWeek, item.requiredTokens);
     resultsRef.current = [
       ...resultsRef.current,
       { item, passed: verdict.passed, said: spoken.trim() },
@@ -370,7 +377,10 @@ function OralStage({
         if (next >= 2) setTypedMode(true);
         return;
       }
-      if (utterancePassed(cleaned, item.target, item.sourceWeek).passed || next >= 2) {
+      if (
+        utterancePassed(cleaned, item.target, item.sourceWeek, item.requiredTokens).passed ||
+        next >= 2
+      ) {
         commit(cleaned);
         return;
       }

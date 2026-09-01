@@ -9,7 +9,7 @@ import {
   type WeekContent,
 } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
-import { compareWords, passThresholds } from "@/lib/speaking-score";
+import { passThresholds, utterancePassed } from "@/lib/speaking-score";
 import { listeningRateForWeek } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -46,6 +46,7 @@ function SpeakingSuiteInner({
       complaint: s.guestPrompt,
       target: s.targetResponse,
       tip: s.helpTip,
+      requiredTokens: s.requiredTokens,
       who: speakerLabel(s),
       audioWho: speakerAudioLabel(s),
     })),
@@ -54,7 +55,13 @@ function SpeakingSuiteInner({
   const scenario = scenarios[idx];
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
-  const [result, setResult] = useState<ReturnType<typeof compareWords> | null>(null);
+  const [result, setResult] = useState<ReturnType<typeof utterancePassed> | null>(null);
+  // The model sentence used to sit on screen from the first second, so every
+  // "speaking" rep was reading aloud, never recall — the audit called weekly
+  // speaking read-aloud in so many words. First attempt now hides the text
+  // (the audio stays available; hearing-then-saying is the skill). It reveals
+  // after one scored attempt or on demand, the same pattern OralStage uses.
+  const [revealed, setRevealed] = useState(false);
   const [fireworks, setFireworks] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const recogRef = useRef<SpeechRecognition | null>(null);
@@ -88,11 +95,14 @@ function SpeakingSuiteInner({
       setRecording(false);
       const cleaned = dedupeTranscript(finalRef.current.trim());
       setTranscript(cleaned);
-      const cmp = compareWords(cleaned, scenario.target);
+      // One grader for the drill and the exam — utterancePassed also refuses
+      // a missing value token, so "Room three-oh-five" no longer passes a
+      // two-oh-five item here while failing it on the checkpoint.
+      const cmp = utterancePassed(cleaned, scenario.target, week, scenario.requiredTokens);
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      const passed = acc >= th.accPct && cmp.orderRatio >= th.orderRatio;
+      const passed = cmp.passed;
       bestPctRef.current.set(idx, Math.max(bestPctRef.current.get(idx) ?? 0, acc));
       if (passed && !passedRef.current.has(idx)) {
         passedRef.current.add(idx);
@@ -184,6 +194,7 @@ function SpeakingSuiteInner({
                 setIdx((i) => (i + 1) % scenarios.length);
                 setTranscript("");
                 setResult(null);
+                setRevealed(false);
               }}
               className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
             >
@@ -212,8 +223,15 @@ function SpeakingSuiteInner({
                   {w}
                 </span>
               ))
-            ) : (
+            ) : revealed ? (
               <span className="text-foreground/80">{scenario.target}</span>
+            ) : (
+              <button
+                onClick={() => setRevealed(true)}
+                className="border border-dashed border-primary/40 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/60 hover:border-primary hover:text-foreground"
+              >
+                Ẩn để bạn tự nhớ — nghe rồi nói thử trước, hoặc bấm để xem
+              </button>
             )}
           </div>
           {scenario.tip && (
@@ -270,16 +288,25 @@ function SpeakingSuiteInner({
                   {Math.round(result.accuracy * 100)}%
                 </div>
               </div>
-              {result.accuracy * 100 >= th.accPct && result.orderRatio >= th.orderRatio && (
+              {result.passed && (
                 <div className="text-xs uppercase tracking-[0.25em] text-primary">
                   +5 ⭐ đạt chuẩn
                 </div>
               )}
-              {result.accuracy * 100 >= th.accPct && result.orderRatio < th.orderRatio && (
+              {!result.passed && result.missingRequired.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                  Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
+                  Sai hoặc thiếu từ mang giá trị: {result.missingRequired.join(", ")} — sai số là
+                  sai nghĩa, nói lại cho đúng
                 </div>
               )}
+              {!result.passed &&
+                result.missingRequired.length === 0 &&
+                result.accuracy * 100 >= th.accPct &&
+                result.orderRatio < th.orderRatio && (
+                  <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                    Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
+                  </div>
+                )}
             </div>
           )}
           {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
