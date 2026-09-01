@@ -787,27 +787,35 @@ if (legacyGameDupes.length) {
       `${orphans} headwords never reappear in their own lesson's grammar, speaking, reading or game, up from ${ORPHAN_MAX} — a word the lesson does not use is a flashcard, not a lesson`,
     );
 
-  const GAME_LENGTH_MAX = 0.62; // 652/1053 today
-  let gLong = 0;
+  // Measuring one position was the mistake. The first version of this gate
+  // counted only "the correct option is the longest", so the fix for it
+  // shortened distractors until the correct answer sat in the MIDDLE of the
+  // three by length — and "tap the middle-length bubble" then won 76% in
+  // Phase 0, worse than the 70% pass mark it was supposed to protect. The
+  // honest measure is the best of the three length positions, so no rewrite
+  // can improve one rank by quietly loading another.
+  const GAME_RANK_MAX = 0.64; // 663/1053 today, carried by the untouched P2-P4
+  const rank = [0, 0, 0];
   let gTotal = 0;
   for (const wk of Object.values(ALL_WEEKS))
     for (const lesson of wk.lessons)
       for (const round of lesson.game ?? []) {
-        const ci = round.options.findIndex((o) => o.correct);
-        if (ci < 0) continue;
+        if (round.options.length !== 3) continue;
         gTotal++;
-        const rival = Math.max(
-          ...round.options.filter((_, i) => i !== ci).map((o) => o.text.length),
-        );
-        if (round.options[ci].text.length > rival) gLong++;
+        const at = [...round.options]
+          .sort((a, b) => a.text.length - b.text.length)
+          .findIndex((o) => o.correct);
+        if (at >= 0) rank[at]!++;
       }
-  const gShare = gTotal ? gLong / gTotal : 0;
+  const gShare = gTotal ? Math.max(...rank) / gTotal : 0;
   console.log(
-    `Game answerability — always-longest wins ${(gShare * 100).toFixed(0)}% of ${gTotal} rounds`,
+    `Game answerability — by length the answer is shortest/middle/longest ` +
+      `${rank.map((r) => ((r / gTotal) * 100).toFixed(0) + "%").join(" / ")} of ${gTotal} rounds ` +
+      `(best single strategy ${(gShare * 100).toFixed(0)}%)`,
   );
-  if (gShare > GAME_LENGTH_MAX)
+  if (gShare > GAME_RANK_MAX)
     errors.push(
-      `a learner who always picks the longest option wins ${(gShare * 100).toFixed(0)}% of game rounds — balance the distractor lengths`,
+      `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
     );
 }
 if (warnings.length) {

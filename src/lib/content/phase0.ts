@@ -452,7 +452,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         game(
           "Good evening. I am Mrs Smith.",
           "Good evening, madam.",
-          "Good morning.",
+          "Good morning, madam. Welcome.",
           "Good evening. Do you want a room?",
         ),
       ],
@@ -707,7 +707,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         game(
           "Is my room three-oh-five?",
           "Yes, room three-oh-five, sir.",
-          "Room what?",
+          "Room number what you say, sir?",
           "Yes, room three hundred and five, sir.",
         ),
         game(
@@ -784,9 +784,12 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Từ hai trở lên phải thêm -s: one ${i1.word.toLowerCase()} → two ${i1.word.toLowerCase()}s. Tiếng Việt không đổi từ, tiếng Anh thì có.`,
         ),
         g(
-          `I bring you ${i1.word.toLowerCase()}.`,
-          `I will bring two ${i1.word.toLowerCase()}s.`,
-          "Việc sắp làm dùng 'will': I WILL bring. Và nhớ mạo từ hoặc số trước danh từ.",
+          // Dùng i2 chứ không phải i1: game của bài này đã chuyển sang i1 (đề cũ
+          // hỏi "Can I have one more passport?"), nên i2 mất chỗ dùng và thành
+          // headword dạy xong bỏ đấy ở cả sáu bộ phận.
+          `I bring you ${i2.word.toLowerCase()}.`,
+          `I will bring your ${i2.word.toLowerCase()}.`,
+          "Việc sắp làm dùng 'will': I WILL bring. Và nhớ mạo từ sở hữu trước danh từ.",
         ),
       ],
       speaking: [
@@ -815,10 +818,16 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          `Can I have one more ${i2.word.toLowerCase()}?`,
-          `Of course. One ${i2.word.toLowerCase()}, madam.`,
-          `Yes, one ${i2.word.toLowerCase()}s.`,
-          `I am sorry, madam. We have no more ${i2.word.toLowerCase()} today.`,
+          // Chạy trên i2 nên Lễ tân hỏi "Can I have one more passport?" và đáp
+          // "Of course" — khách sạn không cấp hộ chiếu. i1 đúng cho cả sáu:
+          // key / menu / towel / robe / lounge card / invoice.
+          //
+          // Và nhiễu cũ là câu TRUNG THỰC khi hết hàng, bị chấm sai. Nhiễu
+          // phải sai vì HÌNH THỨC, không phải vì một sự thật không hiển thị.
+          `Can I have one more ${i1.word.toLowerCase()}?`,
+          `Of course. One ${i1.word.toLowerCase()}, madam.`,
+          `Yes, one ${i1.word.toLowerCase()}s.`,
+          `One ${i1.word.toLowerCase()} coming, madam, you wait.`,
         ),
       ],
     }),
@@ -870,7 +879,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `We are four people tonight.`,
           `Four people. Thank you, sir.`,
           `How much people?`,
-          `Yes, sir. A table for five people, then.`,
+          `Four person, thank you sir.`,
         ),
       ],
     }),
@@ -1042,8 +1051,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
         game(
           `Are you open now?`,
           `Yes, sir. We close at ${lx.service.close}.`,
+          // "We are open all night" là câu ĐÚNG với quầy lễ tân 24/24, nên nó
+          // không dùng làm nhiễu được. Nhiễu mới sai vì thì, không vì sự thật.
           `Open ${lx.service.open} yes.`,
-          `Yes, sir. We are open all night.`,
+          `Yes, we opening now, sir.`,
         ),
       ],
     }),
@@ -1122,7 +1133,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
             `Am I too late?`,
             `No, madam. We finish at ${lx.service.close}.`,
             `Finish ${lx.service.close}.`,
-            `Yes, madam. We finished at ${lx.service.open}.`,
+            `Yes, madam. We are finish now.`,
           ),
         ],
       },
@@ -1194,8 +1205,8 @@ function week4(lx: P0Lexicon): LessonContent[] {
         game(
           "Is the water free?",
           "Yes, madam. It is free.",
-          "No, water dong.",
-          "No, madam. The water is fifty thousand.",
+          "Free water yes madam you take.",
+          "Yes, madam, water is a free.",
         ),
       ],
     }),
@@ -1244,9 +1255,11 @@ function week4(lx: P0Lexicon): LessonContent[] {
       game: [
         game(
           "Do you take Visa?",
+          // "No, sir. Cash only." bị chấm SAI trong khi helpTip của chính ô này
+          // dạy đúng câu đó. Năm auditor nêu.
           "Yes, sir. We take cards.",
-          "Visa I no know.",
-          "No, sir. Cash only.",
+          "Visa card I am not knowing, sir.",
+          "Yes, sir. We are taking cards.",
         ),
       ],
     }),
@@ -1303,7 +1316,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Can I pay in dong?",
           "Of course, madam. We take dong.",
           "Dong no good.",
-          "I am sorry, madam. We take dollars only.",
+          "Sorry, dollars only madam.",
         ),
       ],
     }),
@@ -1492,7 +1505,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
           `Is my ${i1.word.toLowerCase()} here yet?`,
           "One moment, please. I will check.",
           "Wait there.",
-          `Your ${i1.word.toLowerCase()} is not here yet, madam. Please wait.`,
+          `Your ${i1.word.toLowerCase()} not here, madam.`,
         ),
       ],
     }),
@@ -1673,8 +1686,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
         game(
           "Good afternoon.",
           "Good afternoon, sir. Welcome.",
-          "Afternoon.",
-          "Good morning, sir.",
+          "Afternoon, you come in please sir.",
+          "Good morning, sir. Welcome to Lotus Bay.",
         ),
       ],
     }),
@@ -1722,10 +1735,13 @@ function week6(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          `Is my room ready?`,
-          `Yes, sir. Room ${lx.roomNo.spoken} is ready.`,
+          // Đề không cho biết mấy giờ, nên câu TRUNG THỰC cho khách đến sớm —
+          // việc thường xuyên nhất ở quầy — bị chấm sai. Bốn auditor nêu. Nay
+          // đề nói rõ khách đến sớm, và câu trung thực là ĐÁP ÁN ĐÚNG.
+          `I am early. Is my room ready?`,
+          `Not yet, sir. It is ready at ${lx.service.open}.`,
           `Room ready yes.`,
-          `No, sir. Your room will be ready at two.`,
+          `Yes, sir. Your room is ready now.`,
         ),
       ],
     }),
