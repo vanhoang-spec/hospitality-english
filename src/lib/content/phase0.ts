@@ -1912,10 +1912,11 @@ function week5(lx: P0Lexicon): LessonContent[] {
         `A guest from room ${lx.roomNo.spoken} asks for the ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes and says: "Here you are, sir."`,
         [
           {
-            q: "Câu nào dùng khi cần khách chờ?",
-            options: ["One moment, please.", "Wait.", "You wait."],
+            q: `${lx.staff} quay lại sau bao lâu?`,
+            options: ["Hai phút", "Hai mươi phút", "Nửa tiếng"],
             correct: 0,
-            explanation: "'One moment, please' vừa lịch sự vừa cho khách biết sẽ không lâu.",
+            explanation:
+              "Bài đọc: \"comes back in two minutes\". Đó là thứ làm câu 'One moment' thành thật — nói xong mà mười lăm phút sau mới quay lại thì lần sau khách không tin nữa.",
           },
           {
             q: "Nên làm gì khi để khách chờ?",
@@ -1992,7 +1993,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         // items[4] không trao tay được ở ba bộ phận — Spa ra "gives the oil",
         // Quan hệ khách hàng "gives the seat", Back Office "gives the chair".
         // items[0] trao tay được ở cả sáu, và đây là bài dạy CÔNG THỨC TRAO ĐỒ.
-        `${lx.staff} gives the ${i1.word.toLowerCase()} to the guest and says: "Here you are, madam." Then ${lx.staff} says: "This way, please."`,
+        `${lx.staff} gives the ${i1.word.toLowerCase()} to the guest and says: "Here you are, madam." The guest says: "Thank you." Then ${lx.staff} says: "This way, please." ${lx.staff} walks in front and shows the way.`,
         [
           {
             q: "Câu nào nói khi đưa đồ cho khách?",
@@ -2001,10 +2002,15 @@ function week5(lx: P0Lexicon): LessonContent[] {
             explanation: "'Here you are' là câu chuẩn khi trao đồ vật cho khách.",
           },
           {
-            q: "Câu nào dùng khi dẫn khách đi?",
-            options: ["This way, please.", "Go there.", "You go."],
+            q: `${lx.staff} nói "This way, please" vào lúc nào?`,
+            options: [
+              "Sau khi đưa đồ và khách đã cảm ơn",
+              "Trước khi đưa đồ",
+              "Trong lúc khách đang nói",
+            ],
             correct: 0,
-            explanation: "'This way, please' kèm cử chỉ tay mở là cách dẫn khách lịch sự.",
+            explanation:
+              "Xong việc trước mắt rồi mới dẫn đi — cắt ngang giữa chừng làm khách phải chọn giữa cầm đồ và bước theo. Và dẫn thì đi TRƯỚC, không chỉ tay rồi đứng yên.",
           },
         ],
       ),
@@ -2154,6 +2160,11 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Good morning, Ms Smith.",
           "Khách vừa xưng tên thì phải dùng lại tên đó: 'Ms' + HỌ, không phải tên gọi. Dùng 'Ms' khi chưa biết tình trạng hôn nhân của khách; đừng đoán bằng Mrs hay Miss. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
         ),
+        sp(
+          `I am Mr Chen. I am in room ${lx.roomNo.spoken}.`,
+          `Thank you, Mr Chen. Room ${lx.roomNo.spoken}.`,
+          "Nối tuần 1 với tuần 2 trong một lượt: gọi khách bằng HỌ, rồi nhắc lại số phòng từng chữ số. Nhắc lại số phòng không phải nói thừa — đó là bước xác nhận, và là chỗ sai đắt nhất ở quầy.",
+        ),
       ],
       reading: read(
         `It is 8 AM. A guest arrives at ${lx.station}. ${lx.staff} says: "Good morning, madam. Welcome to ${RESORT}. May I have your name?"`,
@@ -2220,13 +2231,18 @@ function week6(lx: P0Lexicon): LessonContent[] {
         ),
         sp(
           `Is room ${lx.roomNo.spoken} ready?`,
-          `Yes. Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
+          `Room ${lx.roomNo.spoken} is ready. ${capFirst(lx.floor.ordinal)} floor.`,
           `Đây là lượt BÀN GIAO giữa nhân viên với nhau, không phải lời khách — với khách thì câu trả lời khác hẳn, xem lượt game cuối bài. Số thứ tự của tầng đóng bằng phụ âm khó: ${lx.floor.ordinal} kết bằng ${/th$/.test(lx.floor.ordinal) ? "/θ/ — lưỡi chạm răng" : /d$/.test(lx.floor.ordinal) ? "/d/" : "cụm /st/"}. Nghe kỹ âm cuối rồi bắt chước đúng âm đó.`,
           "colleague",
         ),
+        sp(
+          `Could you bring two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}?`,
+          `Two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}. One moment.`,
+          "Nối hai việc của tuần 2 vào một lượt: nhắc lại SỐ LƯỢNG và nhắc lại SỐ PHÒNG. Đọc số phòng từng chữ số. Nhắc lại cả hai rồi mới đi — sai một trong hai là đi lại hai lần.",
+        ),
       ],
       reading: read(
-        `A colleague asks ${lx.staff}: "Is room ${lx.roomNo.spoken} ready?" ${lx.staff} checks the list and says: "Yes. Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor." Then a guest asks the same question. ${lx.staff} says: "One moment, sir. I will check."`,
+        `A colleague asks ${lx.staff}: "Is room ${lx.roomNo.spoken} ready?" ${lx.staff} checks the list and says: "Room ${lx.roomNo.spoken} is ready. ${capFirst(lx.floor.ordinal)} floor." Then a guest asks the same question. ${lx.staff} says: "One moment, sir. I will check."`,
         [
           {
             q: `Phòng khách ở tầng nào?`,
@@ -2301,6 +2317,13 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Sorry, what time and how much?",
           `We open at ${lx.service.open}. ${capFirst(lx.priced.vndWord)} dong.`,
           "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài. Nghỉ hẳn một nhịp giữa hai câu: chỗ ngắt cũng là một phần của phát âm.",
+        ),
+        sp(
+          "Could you say the price again?",
+          `Of course, madam. ${capFirst(lx.priced.vndWord)} dong.`,
+          "Khách nhờ nhắc lại thì nhận lời trước đã — 'Of course' của tuần 5 — rồi mới đọc lại con số. Đọc chậm hơn lần đầu, và đọc liền cả cụm tiền rồi mới tới 'dong'.",
+          undefined,
+          ["dong"],
         ),
       ],
       reading: read(
@@ -2382,6 +2405,13 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách, và khách nhớ nó lâu hơn mọi câu ở giữa. 'Enjoy' trọng âm ở âm tiết sau: en-JOY, đừng nhấn đều hai âm.",
           undefined,
           ["enjoy"],
+        ),
+        sp(
+          "That was very good, thank you.",
+          "Thank you, madam. Anything else?",
+          "Đây là headword của chính bài, và trước nay nó chỉ nằm trong luật với bài đọc chứ không có lượt nào bắt nói ra. Hỏi câu này SAU khi xong việc, không phải lúc vừa nhận yêu cầu mới. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
+          undefined,
+          ["anything"],
         ),
       ],
       reading: read(
@@ -3529,7 +3559,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Water no good.",
           "One moment. I will call maintenance.",
-          "Buồng phòng không tự sửa, nhưng buồng phòng là mắt của kỹ thuật. Báo NGAY trong ca, và nói cho khách biết bạn đang đi gọi ai — im lặng bỏ đi khiến khách tưởng bị phớt lờ.",
+          "Buồng phòng không tự sửa, nhưng buồng phòng là mắt của kỹ thuật. Báo ngay trong ca, và nói cho khách biết bạn đang đi gọi ai — im lặng bỏ đi khiến khách tưởng bị phớt lờ.",
           "One moment. I will call to maintenance.",
         ),
         g(
