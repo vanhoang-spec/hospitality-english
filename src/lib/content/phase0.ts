@@ -111,7 +111,10 @@ export type P0Lexicon = {
    *  "Your laundry for one shirt is tomorrow." is not a sentence. Kept short
    *  enough for the 5-word cap: `Is my ${booking} today?` */
   booking: { en: string; vi: string };
-  roomNo: { digits: string; spoken: string };
+  /** `cardinal` là cách đọc SAI mà người Việt hay mắc: đọc số phòng như số
+   *  đếm ("two hundred five") thay vì đọc từng chữ số. Vế `rude` phải đọc lên
+   *  được, nên không dùng chữ số ở đó. */
+  roomNo: { digits: string; spoken: string; cardinal: string };
   floor: { ordinal: string; vi: string };
 };
 
@@ -158,7 +161,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "twenty",
     },
     booking: { en: "airport transfer", vi: "xe đưa đón" },
-    roomNo: { digits: "205", spoken: "two-oh-five" },
+    roomNo: { digits: "205", spoken: "two-oh-five", cardinal: "two hundred five" },
     floor: { ordinal: "second", vi: "tầng hai" },
   },
   FB: {
@@ -189,7 +192,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "four",
     },
     booking: { en: "table booking", vi: "đặt bàn" },
-    roomNo: { digits: "310", spoken: "three-one-oh" },
+    roomNo: { digits: "310", spoken: "three-one-oh", cardinal: "three hundred ten" },
     floor: { ordinal: "third", vi: "tầng ba" },
   },
   HK: {
@@ -218,7 +221,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "three",
     },
     booking: { en: "laundry", vi: "đồ giặt" },
-    roomNo: { digits: "812", spoken: "eight-one-two" },
+    roomNo: { digits: "812", spoken: "eight-one-two", cardinal: "eight hundred twelve" },
     floor: { ordinal: "eighth", vi: "tầng tám" },
   },
   SW: {
@@ -251,7 +254,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "twenty-eight",
     },
     booking: { en: "massage", vi: "buổi massage" },
-    roomNo: { digits: "104", spoken: "one-oh-four" },
+    roomNo: { digits: "104", spoken: "one-oh-four", cardinal: "one hundred four" },
     floor: { ordinal: "first", vi: "tầng một" },
   },
   GR: {
@@ -274,7 +277,10 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       },
       { word: "Gift", phonetic: "/ɡɪft/", definition: "Quà tặng", icon: "🎁" },
       { word: "Flower", phonetic: "/ˈflaʊə/", definition: "Hoa", icon: "💐" },
-      { word: "Letter", phonetic: "/ˈletə/", definition: "Thư", icon: "✉️" },
+      // Đổi từ `Letter` vì tuần 1 dạy `Letter` với nghĩa "chữ cái" — cùng một
+      // headword mang hai nghĩa thì lịch ôn tập ghi đè lên nhau (cổng trùng
+      // headword chặn). `Envelope` đúng nghiệp vụ Quan hệ khách hàng hơn.
+      { word: "Envelope", phonetic: "/ˈenvələʊp/", definition: "Phong bì", icon: "✉️" },
       { word: "Seat", phonetic: "/siːt/", definition: "Chỗ ngồi", icon: "💺" },
       { word: "Umbrella", phonetic: "/ʌmˈbrelə/", definition: "Ô, dù", icon: "☂️" },
     ],
@@ -288,7 +294,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "twenty",
     },
     booking: { en: "birthday cake", vi: "bánh sinh nhật" },
-    roomNo: { digits: "720", spoken: "seven-two-oh" },
+    roomNo: { digits: "720", spoken: "seven-two-oh", cardinal: "seven hundred twenty" },
     floor: { ordinal: "seventh", vi: "tầng bảy" },
   },
   BO: {
@@ -317,7 +323,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       usdWord: "forty",
     },
     booking: { en: "meeting room", vi: "phòng họp" },
-    roomNo: { digits: "415", spoken: "four-one-five" },
+    roomNo: { digits: "415", spoken: "four-one-five", cardinal: "four hundred fifteen" },
     floor: { ordinal: "fourth", vi: "tầng bốn" },
   },
 };
@@ -413,13 +419,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Good morning, sir.",
           "🌅",
         ),
-        v(
-          "Good afternoon",
-          "/ɡʊd ˌɑːftəˈnuːn/",
-          "Chào buổi chiều (12h–18h)",
-          "Good afternoon, madam.",
-          "☀️",
-        ),
+        v("Madam", "/ˈmædəm/", "Thưa bà (gọi khách nữ)", "Good afternoon, madam.", "👋"),
         v("Welcome", "/ˈwelkəm/", "Chào mừng, đón chào", `Welcome to ${RESORT}.`, "🙏"),
       ],
       grammar: [
@@ -438,7 +438,12 @@ function week1(lx: P0Lexicon): LessonContent[] {
         sp(
           "Hello!",
           "Good morning, sir. Welcome.",
-          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h). Âm cuối của 'morning' là /ŋ/ — miệng vẫn mở, đừng đóng lưỡi thành /n/. 'Welcome' trọng âm âm tiết đầu: WEL-come.",
+          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h). 'Welcome' trọng âm âm tiết đầu: WEL-come — âm tiết đầu to và dài hơn hẳn, đừng nhấn đều hai âm.",
+        ),
+        sp(
+          "Good afternoon. I am Mrs Lee.",
+          "Good afternoon, madam.",
+          "Khách xưng Mrs nên là nữ: đáp 'madam'. Khách nam thì dùng sir. Chào lại đúng buổi mà khách vừa chào. 'madam' trọng âm âm tiết đầu: MA-dam, đuôi đọc nhẹ.",
         ),
       ],
       reading: read(
@@ -480,7 +485,13 @@ function week1(lx: P0Lexicon): LessonContent[] {
       vocabulary: [
         v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
         v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
-        v("Alphabet", "/ˈælfəbet/", "Bảng chữ cái", "Please say the alphabet slowly.", "🔤"),
+        // Thẻ cũ là `Alphabet` với câu ví dụ "Please say the alphabet slowly."
+        // — câu không lễ tân nào nói, và là headword duy nhất của bài không
+        // bao giờ được dùng lại. Trong khi đó bài này chấm J-A-M-E với J-A-N-E
+        // bằng bộ mã chưa từng dạy: TÊN chữ cái không xuất hiện ở đâu trong
+        // sáu tuần. Bốn báo cáo nêu. Thẻ nay mang chính tên các chữ cái mà
+        // bài dùng, và chỉ những chữ người Việt hay nghe nhầm.
+        v("Letter", "/ˈletə/", "Chữ cái", "A-N-N-A. Four letters.", "🔤"),
       ],
       grammar: [
         g(
@@ -494,26 +505,36 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Muốn khách đánh vần, hỏi trọn câu 'How do you spell that?'.",
         ),
         g(
+          "E? I? Same same.",
+          "Is that E or I, sir?",
+          "E /iː/ và I /aɪ/ nghe rất khác nhau nhưng người Việt hay lẫn vì mặt chữ. Không chắc thì hỏi thẳng từng chữ một, đừng đoán rồi ghi sai tên khách.",
+        ),
+        g(
           "Say it again.",
           "Could you spell that, please?",
-          "Tên khó nghe hoặc có chữ cái dễ nhầm (như E và I), hãy nhờ khách đánh vần từng chữ.",
+          "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Tám tên chữ cái người Việt hay lẫn nhất: A /eɪ/ · E /iː/ · I /aɪ/ · G /dʒiː/ · J /dʒeɪ/ · R /ɑː/ · W /ˈdʌbljuː/ · Y /waɪ/. Nghe không chắc thì hỏi lại từng chữ.",
         ),
       ],
       speaking: [
         sp(
+          // "I-V-Y is correct" đặt lễ tân vào vai người phán xét tên của chính
+          // khách. Công thức đọc-lại chuẩn là nhắc lại rồi cảm ơn.
           "My name is Ivy. I-V-Y.",
-          "Thank you. I-V-Y is correct.",
-          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm. 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank hay sank. 'correct' trọng âm âm tiết sau: co-RRECT.",
+          "Thank you. I-V-Y, madam.",
+          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm. 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank hay sank. Đọc tên chữ cái phải tách rời và đủ độ dài: chữ I là /aɪ/ hai âm, không phải /iː/ một âm.",
         ),
       ],
       reading: read(
         `A guest says: "My name is Anna Smith. A-N-N-A, S-M-I-T-H." ${lx.staff} writes each letter and says: "Thank you. A-N-N-A, S-M-I-T-H."`,
         [
           {
-            q: "Khách đánh vần tên bằng cách nào?",
-            options: ["Nói từng chữ cái một", "Nói cả tên một lần", "Viết ra giấy"],
+            // Đề cũ tự chứa đáp án: "đánh vần" nghĩa là đọc từng chữ cái. Nay
+            // buộc học viên phải ĐỌC được các chữ cái trong bài.
+            q: "Khách tên gì?",
+            options: ["Anna Smith", "Anna Smart", "Hanna Smith"],
             correct: 0,
-            explanation: "'A-N-N-A, S-M-I-T-H' — đọc từng chữ cái, đây là cách đánh vần tên chuẩn.",
+            explanation:
+              "Bài đọc đánh vần A-N-N-A, S-M-I-T-H — không có H đầu, và kết thúc bằng T-H.",
           },
           {
             q: `Vì sao ${lx.staff} nhắc lại từng chữ cái?`,
@@ -659,13 +680,13 @@ function week2(lx: P0Lexicon): LessonContent[] {
       // pattern that builds them. This lesson adds it.
       vocabulary: [
         v("Number", "/ˈnʌmbə/", "Con số", "What is your room number?", "🔢"),
-        v("Zero", "/ˈzɪərəʊ/", "Số 0 (đọc là 'oh' trong số phòng)", "Room two-oh-five.", "0️⃣"),
+        v("Thirteen", "/ˌθɜːˈtiːn/", "Số 13 — trọng âm ở cuối", "Thirteen, sir. One three.", "🔢"),
         v("Room", "/ruːm/", "Phòng", `Room ${lx.roomNo.spoken}, sir.`, "🚪"),
         v("Hundred", "/ˈhʌndrəd/", "Trăm", "One hundred thousand dong.", "💯"),
       ],
       grammar: [
         g(
-          `Room ${lx.roomNo.digits} hundred.`,
+          `Room ${lx.roomNo.cardinal}.`,
           `Room ${lx.roomNo.spoken}, sir.`,
           `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}. Số 0 đọc là 'oh'.`,
         ),
@@ -673,6 +694,16 @@ function week2(lx: P0Lexicon): LessonContent[] {
           "Room number what?",
           "What is your room number?",
           "Câu hỏi cần 'is' và trật tự: What IS your room number?",
+        ),
+        g(
+          "How many, thirty?",
+          "Thirteen or thirty, sir?",
+          "13 và 30 nghe gần giống nhau, khác nhau ở trọng âm: thir-TEEN nhấn cuối và kéo dài; THIR-ty nhấn đầu, đuôi ngắn. Nghe không chắc thì hỏi lại cả hai con số, đừng đoán.",
+        ),
+        g(
+          "Room three zero five.",
+          "Room three-oh-five, sir.",
+          "Chữ số 0 có hai cách đọc: đứng một mình là 'zero', nhưng trong số phòng và số điện thoại thì đọc là 'oh' /əʊ/ — môi tròn lại rồi mới buông.",
         ),
         g(
           "Two ten, right?",
@@ -751,7 +782,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         g(
           `Go floor ${lx.floor.ordinal}.`,
           `Go to the ${lx.floor.ordinal} floor.`,
-          `Cần 'to the' trước tên tầng: go TO THE ${lx.floor.ordinal} floor.`,
+          `Cần 'to the' trước tên tầng: go TO THE ${lx.floor.ordinal} floor. Tầng gọi bằng số thứ tự, không phải số đếm: first · second · third · fourth · fifth · sixth · seventh · eighth · ninth · tenth.`,
         ),
         g(
           "Which floor my room?",
@@ -874,6 +905,11 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
+          `I need thirteen ${i3.word.toLowerCase()}s.`,
+          `Thirteen ${i3.word.toLowerCase()}s. One three, madam.`,
+          "Nhắc lại số rồi đọc lại từng chữ số: one three. Đó là cách duy nhất chắc chắn khách nghe đúng. thir-TEEN nhấn ở cuối.",
+        ),
+        sp(
           `I need three ${i3.word.toLowerCase()}s.`,
           `Three ${i3.word.toLowerCase()}s. Yes, madam.`,
           "Xác nhận lại rồi mới đi lấy. Đừng chỉ gật đầu. 'Three' có /θ/ rồi mới tới /r/ — đọc chậm cả hai âm, đừng để thành tri hay free.",
@@ -899,10 +935,16 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          `We are four people tonight.`,
+          `There are four of us.`,
           `Four people. Thank you, sir.`,
           `How much people?`,
           `Four person, thank you sir.`,
+        ),
+        game(
+          `Where is my ${i4.word.toLowerCase()}?`,
+          `It is here, sir.`,
+          `Here, sir.`,
+          `I do not know, sir. Sorry.`,
         ),
       ],
     }),
@@ -977,13 +1019,20 @@ function week3(lx: P0Lexicon): LessonContent[] {
     lesson(lx, 3, 2, "Days of the Week", "Các ngày trong tuần", {
       vocabulary: [
         v("Today", "/təˈdeɪ/", "Hôm nay", "Today is Monday.", "📅"),
+        v(
+          "Monday",
+          "/ˈmʌndeɪ/",
+          "Thứ Hai (thứ luôn viết hoa)",
+          "Monday, Tuesday, Wednesday.",
+          "🗓️",
+        ),
         v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", `Your ${lx.booking.en} is tomorrow.`, "📆"),
       ],
       grammar: [
         g(
           "Today Monday.",
           "Today is Monday.",
-          "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS.",
+          "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS. Bảy ngày trong tuần, luôn viết hoa chữ đầu: Monday · Tuesday · Wednesday · Thursday · Friday · Saturday · Sunday.",
         ),
         g(
           // "Tomorrow I start at two." là tiếng Anh ĐÚNG (hiện tại đơn cho lịch
