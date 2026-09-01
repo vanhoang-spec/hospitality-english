@@ -306,14 +306,34 @@ export function v(
 export function g(rude: string, polite: string, rule: string): GrammarItem {
   return { rude, polite, rule };
 }
-export function sp(guestPrompt: string, targetResponse: string, helpTip: string): SpeakingItem {
-  return { guestPrompt, targetResponse, helpTip };
+/** `role` marks who says `guestPrompt`. It defaults to the guest, which is
+ *  right for most of the course and was wrong for all 342 speaking items of
+ *  weeks 1-14: the field was never set once, so a room attendant — whose day
+ *  is mostly floor supervisor and linen room — practised fourteen weeks of
+ *  guest talk and never once heard a colleague. Week 7 lesson 4 is titled
+ *  "Asking a Colleague for Help" and its prompt was still a guest's. */
+export function sp(
+  guestPrompt: string,
+  targetResponse: string,
+  helpTip: string,
+  role?: SpeakingItem["speakerRole"],
+): SpeakingItem {
+  return role
+    ? { guestPrompt, targetResponse, helpTip, speakerRole: role }
+    : { guestPrompt, targetResponse, helpTip };
 }
 export function read(text: string, questions: ReadingItem["questions"]): ReadingItem {
   return { text, questions };
 }
-export function game(prompt: string, correct: string, wrongA: string, wrongB: string): GameRound {
+export function game(
+  prompt: string,
+  correct: string,
+  wrongA: string,
+  wrongB: string,
+  role?: GameRound["speakerRole"],
+): GameRound {
   return {
+    ...(role ? { speakerRole: role } : {}),
     prompt,
     options: [
       { text: correct, correct: true },

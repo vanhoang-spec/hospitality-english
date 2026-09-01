@@ -325,7 +325,7 @@ const FB_BANK: P1Bank = {
   routines: [
     { word: "Serve", phonetic: "/sɜːv/", definition: "Phục vụ", icon: "🍽️", obj: "the guests" },
     { word: "Pour", phonetic: "/pɔː/", definition: "Rót", icon: "🫗", obj: "the water" },
-    { word: "Cook", phonetic: "/kʊk/", definition: "Nấu", icon: "🍳" },
+    { word: "Cook", phonetic: "/kʊk/", definition: "Nấu", icon: "🍳", obj: "breakfast" },
     {
       word: "Take an order",
       phonetic: "/teɪk ən ˈɔːdə/",

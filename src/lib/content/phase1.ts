@@ -1087,14 +1087,18 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       speaking: [
+        // A guest does not interview a room attendant about her routine. Week
+        // 11 is the shift, so the person asking is the new colleague being
+        // shown the ropes — and `speakerRole` has existed for that all along.
         sp(
-          "What do you do every day?",
+          "What do you do first?",
           `I ${act(t1)} every day.`,
           "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày. Từ 'every' đọc hai âm tiết: EV-ry, không phải e-vơ-ri.",
+          "colleague",
         ),
       ],
       reading: read(
-        `${lx.staff} explains the daily work: "I ${act(t1)} every morning. We ${act(t2)} after breakfast, sir."`,
+        `${lx.staff} briefs a new colleague: "I ${act(t1)} every morning. We ${act(t2)} after breakfast."`,
         [
           {
             q: "Việc đầu tiên trong ngày là gì?",
@@ -1113,9 +1117,10 @@ function week11(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Do you work on Sunday?",
-          "Yes, sir. I work every day.",
+          "Yes, I work every day.",
           "Every day I work yes.",
           "No, we close on Sunday.",
+          "colleague",
         ),
       ],
     }),
@@ -1138,17 +1143,22 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       speaking: [
+        // The prompt used to be "What time do you start?" and the model answer
+        // named the time of a TASK — "We print the bill at two, madam." — which
+        // does not answer it. Four auditors flagged the pair. Now the question
+        // asks about the task the answer is actually about.
         sp(
-          "What time do you start?",
-          `We ${act(t3)} at ${lx.service.open}, madam.`,
+          `What time do we ${lower(t3)}?`,
+          `We ${act(t3)} at ${lx.service.open}.`,
           `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới. Cụm 'at + giờ' đọc nối liền thành một khối: /t/ không bật rời ra, nhưng cũng không được biến mất.`,
+          "colleague",
         ),
       ],
       reading: read(
-        `A guest asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}, sir. I ${act(t4)} before lunch."`,
+        `A new colleague asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}. I ${act(t4)} before lunch."`,
         [
           {
-            q: "Ca làm bắt đầu lúc mấy giờ?",
+            q: `Việc "${t3.definition.toLowerCase()}" làm lúc mấy giờ?`,
             options: [lx.service.open, lx.service.close, "Nửa đêm"],
             correct: 0,
             explanation: `"We ${act(t3)} at ${lx.service.open}".`,
@@ -1163,10 +1173,11 @@ function week11(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "When does your shift begin?",
-          `We ${act(t3)} at ${lx.service.open}, sir.`,
+          `When do we ${lower(t3)}?`,
+          `We ${act(t3)} at ${lx.service.open}.`,
           `${t3.word} ${lx.service.open}.`,
-          `We ${act(t3)} at ${lx.service.close}, sir.`,
+          `We ${act(t3)} at ${lx.service.close}.`,
+          "colleague",
         ),
       ],
     }),
@@ -1192,12 +1203,13 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Do you always do that?",
-          `I usually ${act(t5)} first, sir.`,
+          `I usually ${act(t5)} first.`,
           "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai. Từ 'first' đóng bằng cụm /st/ — cụm khó nhất tuần này, đừng dừng ở 'phơ'.",
+          "colleague",
         ),
       ],
       reading: read(
-        `${lx.staff} describes the routine: "I usually ${act(t5)} first. We sometimes ${act(t6)} twice a day, madam."`,
+        `${lx.staff} describes the routine to the new colleague: "I usually ${act(t5)} first. We sometimes ${act(t6)} twice a day."`,
         [
           {
             q: "Trạng từ 'usually' đứng ở đâu?",
@@ -1218,7 +1230,8 @@ function week11(lx: Ctx): LessonContent[] {
           "How often do you do it?",
           `We sometimes ${act(t6)} twice a day.`,
           `Sometime two time.`,
-          `We ${act(t6)} once every week, madam.`,
+          `We ${act(t6)} once every week.`,
+          "colleague",
         ),
       ],
     }),
@@ -1240,12 +1253,13 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "What do you do at the end?",
-          `I ${act(t7)} and go home.`,
+          `I ${act(t7)} and go home, madam.`,
           "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc. Từ 'home' đóng bằng /m/: phải ngậm môi lại, đừng bỏ lửng.",
+          "manager",
         ),
       ],
       reading: read(
-        `The shift is over. ${lx.staff} says: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done."`,
+        `The shift is over. The supervisor asks about the handover. ${lx.staff} answers: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done."`,
         [
           {
             q: "Việc cuối ca là gì?",
@@ -1267,6 +1281,7 @@ function week11(lx: Ctx): LessonContent[] {
           `Yes, sir. I ${act(t7)} and go home.`,
           `Finish work go home.`,
           "No, sir. My work is never finished here.",
+          "manager",
         ),
       ],
     }),
