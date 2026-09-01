@@ -1270,10 +1270,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
           // "Tomorrow I start at two." là tiếng Anh ĐÚNG (hiện tại đơn cho lịch
           // cố định) và bị gạch làm lỗi — hai auditor nêu, và chính khoá học
           // dùng đúng cấu trúc đó hai bài sau. Vế rude phải là lỗi L1 thật.
-          `Tomorrow I starting at ${lx.service.open}.`,
-          "Tomorrow I will start, sir.",
-          `Việc tương lai dùng 'will' + động từ nguyên mẫu: I WILL start. Giờ giấc nói ở câu sau — ${lx.service.open} o'clock — chứ đừng dồn hết vào một câu.`,
-          "Tomorrow I will starting, sir.",
+          "Tomorrow I checking, sir.",
+          "I will check tomorrow, sir.",
+          "Việc tương lai dùng 'will' + động từ nguyên mẫu: I WILL check. Trạng ngữ thời gian đứng cuối câu — 'I will check tomorrow', không phải 'Tomorrow I will check'.",
+          "I will checking tomorrow, sir.",
         ),
       ],
       speaking: [
@@ -2202,7 +2202,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Khách quen thì thêm 'back' — hai chữ đó nói rằng bạn nhớ họ. Gọi bằng HỌ kèm Mr, Mrs hoặc Ms, không gọi tên riêng.",
         ),
         sp(
-          "Good morning. I am Anna Smith.",
+          "Good morning. I have a booking. I am Anna Smith.",
           "Good morning, Ms Smith.",
           "Khách vừa xưng tên thì phải dùng lại tên đó: 'Ms' + HỌ, không phải tên gọi. Dùng 'Ms' khi chưa biết tình trạng hôn nhân của khách; đừng đoán bằng Mrs hay Miss. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
         ),
@@ -2705,6 +2705,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Gọi bác sĩ là việc gọi ngay, không phải việc hỏi ý khách. Nói ra để khách biết có người đang lo. 'Doctor' đọc /ˈdɒktə/ — âm cuối là /ə/ nhẹ, đừng thành đốc-tơ.",
           undefined,
           ["doctor"],
+        ),
+        sp(
+          "I have been waiting twenty minutes.",
+          "I am very sorry, madam. One moment.",
+          "Xin lỗi TRƯỚC, giải thích sau — và đừng giải thích gì cả nếu khách chưa hỏi. Khách phàn nàn về thời gian thì thứ họ muốn nghe đầu tiên là bạn biết họ đã chờ.",
+          undefined,
+          ["sorry"],
         ),
         sp(
           "Please stay with me.",
@@ -4054,6 +4061,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu trợ động từ mà cả tuần 2 lẫn tuần 6 đều dạy.",
         ),
+        game(
+          "Can I charge it to my room?",
+          "Of course, sir. Your room number?",
+          "Room? OK sir.",
+          "Of course, sir. No problem.",
+          undefined,
+          "Ghi nợ vào phòng thì phải có số phòng và chữ ký — đó là toàn bộ phần kiểm soát mà nhân viên bàn nắm. 'No problem' nghe dễ chịu nhưng nó bỏ qua đúng bước đó, và hoá đơn sẽ không về được phòng nào cả.",
+        ),
       ],
     }),
 
@@ -4135,6 +4150,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `Yes madam, I bring now.`,
           undefined,
           "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu đúng trợ động từ mà bài này dạy.",
+        ),
+        game(
+          "Can I charge it to my room?",
+          "Of course, madam. Your room number?",
+          "Room? OK madam.",
+          "Of course, madam. No problem.",
+          undefined,
+          "Ghi nợ vào phòng thì phải có số phòng và chữ ký. 'No problem' nghe dễ chịu nhưng bỏ mất đúng bước đó, và khách sẽ bị hỏi lại lúc trả phòng — đúng lúc họ đang vội.",
         ),
       ],
     }),
@@ -4695,10 +4718,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest says: "My son is allergic to milk." ${lx.staff} does not guess. ${lx.staff} says: "Certainly, sir. I will tell the kitchen." ${lx.staff} writes it on the order and tells the chef. The chef changes one dish. ${lx.staff} comes back and says: "The kitchen knows, sir. The chef says it is safe."`,
+        `A guest says: "My son is allergic to milk." ${lx.staff} does not guess. ${lx.staff} says: "Thank you, sir. I will tell the kitchen." ${lx.staff} writes it on the order and tells the chef. The chef changes one dish. ${lx.staff} comes back and says: "The kitchen knows, sir. The chef says it is safe."`,
         [
           {
-            q: `Khách hỏi món có đậu phộng không, ${lx.staff} phải làm gì?`,
+            q: `Khách báo con bị dị ứng sữa, ${lx.staff} phải làm gì?`,
             options: ["Đi hỏi bếp rồi trả lời", "Trả lời là không có", "Bảo khách gọi món khác"],
             correct: 0,
             explanation:
@@ -4978,6 +5001,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Đừng xin lỗi trước khi hỏi. Xem giấy tờ là việc bình thường và khách quen với nó ở mọi khách sạn tốt.",
           undefined,
           ["passport"],
+        ),
+        sp(
+          "Hello? Is that the front desk?",
+          "Front Office. Good morning, madam.",
+          "Nhấc máy trong ba hồi chuông và xưng bộ phận TRƯỚC, chào sau — người gọi cần biết ngay mình bấm đúng số chưa. Nói chậm hơn khi nói qua điện thoại: người nghe không thấy miệng bạn.",
+          undefined,
+          ["office"],
+        ),
+        sp(
+          "My wife is not well.",
+          "One moment, sir. I will get help.",
+          "Không hỏi thêm câu nào, không tự chẩn đoán, không rời quầy để chạy tới xem. Nói ra là mình đang đi gọi người, rồi gọi thật — quầy lễ tân là nơi mọi cuộc gọi khẩn đi ra.",
+          undefined,
+          ["help"],
         ),
         sp(
           "Here you are. My passport.",
