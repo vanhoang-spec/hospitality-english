@@ -158,10 +158,40 @@ function buildPaper(dep: string, week: string): Question[] {
 
   const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
   const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
-    const others = shuffle(grammarPool.filter((o) => o.polite !== g.polite)).slice(0, 2);
     // Nhiễu lấy từ vế `polite` của cặp khác, KHÔNG lấy `g.rude` — câu đó đang
     // được trích nguyên văn trong đề nên nó là một loại trừ miễn phí, và vế
     // polite luôn dài hơn vế rude nên "chọn câu dài nhất" thắng 85,8%.
+    //
+    // Bịt xong lỗ đó thì lộ lỗ anh em: đề trích nguyên văn `rude`, đáp án đúng
+    // là bản MỞ RỘNG của chính câu ấy ("Room number what?" → "What is your
+    // room number?"), còn nhiễu bốc ngẫu nhiên từ cả phase nên chẳng dính chữ
+    // nào. "Chọn câu trùng nhiều từ nhất với đề" thắng 73% ở Phase 0 và 81% ở
+    // Phase 1 — trên mốc qua môn 70%, và không cần biết ngữ pháp. Nay nhiễu
+    // được chọn theo ĐỘ TRÙNG CAO NHẤT với đề, nên độ trùng hết phân biệt
+    // được và học viên buộc phải đọc chỗ SỬA.
+    const bag = (s: string) =>
+      new Set(
+        s
+          .toLowerCase()
+          .replace(/[^a-z0-9 ]/g, " ")
+          .split(/\s+/)
+          .filter((w) => w.length > 2),
+      );
+    const stem = bag(g.rude);
+    const share = (s: string) => [...bag(s)].filter((w) => stem.has(w)).length;
+    // Nhiễu lấy theo ĐỘ TRÙNG CAO NHẤT với đề. Không cào bằng được hoàn toàn —
+    // đáp án đúng là bản SỬA của chính câu trong đề nên nó chia sẻ gần hết từ
+    // nội dung, không câu nào trong phase khớp nổi — nhưng đưa mẹo này từ 73%
+    // xuống ~60% hiệu dụng ở Phase 0, dưới mốc 70%. Phase 1 còn ~73%: bịt hẳn
+    // cần soạn tay hai bản-sửa-vẫn-sai cho mỗi cặp, chưa làm.
+    // Đã thử và BÁC BỎ: gộp theo tuần (82–86%) và gộp theo bài (không đủ ứng
+    // viên — phần lớn bài chỉ có 2 cặp ngữ pháp).
+    const others = grammarPool
+      .filter((o) => o.polite !== g.polite)
+      .map((o) => ({ o, score: share(o.polite) }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 2)
+      .map((x) => x.o);
     const options = shuffle([g.polite, ...others.map((o) => o.polite)]);
     return {
       kind: "grammar" as const,
