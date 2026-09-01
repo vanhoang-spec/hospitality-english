@@ -3517,9 +3517,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       grammar: [
         g(
           "OK, I open.",
-          "I cannot open the door, sir.",
+          "I am sorry, sir. I cannot open the door.",
           "Tên và số phòng KHÔNG phải là quyền vào phòng — người lạ nghe được cả hai chỉ bằng cách đứng gần quầy. Chìa khoá do lễ tân cấp sau khi xem giấy tờ. Bạn không có cách nào kiểm chứng, nên bạn không phải là người quyết định.",
-          "I cannot open a door, sir.",
+          "I am sorry, sir. I cannot open door.",
         ),
         g(
           "Go there.",
@@ -3531,7 +3531,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           "I lost my key. Can you open my room?",
-          "I cannot open the door, sir.",
+          "I am sorry, sir. I cannot open the door.",
           "Nói bằng giọng bình thường, không hạ giọng như đang giấu. Đây là quy định của khách sạn, không phải quyết định của bạn — và khách thật sự sẽ hiểu ngay.",
           undefined,
           ["open", "door"],
@@ -3550,7 +3550,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A man at the door of room ${lx.roomNo.spoken} says: "I lost my key." ${lx.staff} does not open the door. ${lx.staff} does not ask his name. ${lx.staff} says: "I cannot open the door, sir. This way to reception." The man goes to reception. Later a guest asks for a towel and ${lx.staff} says: "Here you are, madam."`,
+        `A man at the door of room ${lx.roomNo.spoken} says: "I lost my key." ${lx.staff} does not open the door. ${lx.staff} does not ask his name. ${lx.staff} says: "I am sorry, sir. I cannot open the door. This way to reception." The man goes to reception. Later a guest asks for a towel and ${lx.staff} says: "Here you are, madam."`,
         [
           {
             q: `Vì sao ${lx.staff} không hỏi tên người đó?`,
@@ -3561,7 +3561,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
             ],
             correct: 0,
             explanation:
-              "Người lạ nghe được tên và số phòng chỉ bằng cách đứng gần quầy. Hỏi tên rồi mở cửa là tự biến mình thành khoá cuối cùng — mà bạn không có cách nào kiểm chứng.",
+              "Xin lỗi rồi mới từ chối, và chỉ ngay lối đi — từ chối suông làm khách thật sự thấy mình bị nghi. Người lạ nghe được tên và số phòng chỉ bằng cách đứng gần quầy. Hỏi tên rồi mở cửa là tự biến mình thành khoá cuối cùng — mà bạn không có cách nào kiểm chứng.",
           },
           {
             q: "Từ chối xong thì làm gì?",
@@ -3574,7 +3574,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "I lost my key. Open the door, please.",
-          "I cannot open the door, sir.",
+          "I am sorry, sir. I cannot open the door.",
           "OK sir, one moment.",
           "What is your name, sir?",
           undefined,
@@ -3600,6 +3600,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       vocabulary: [
         v("Moment", "/ˈməʊmənt/", "Một lát", "One moment, please.", "⏳"),
         v("Wait", "/weɪt/", "Đợi", "Please wait here, sir.", "⏸️"),
+        v("Careful", "/ˈkeəfl/", "Cẩn thận", "Careful, madam. The floor is wet.", "⚠️"),
       ],
       grammar: [
         g(
@@ -3631,9 +3632,16 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "How long will it take?",
           "Please wait here, madam.",
-          "Đừng đoán thời gian sửa — bạn không phải người sửa. Xin khách chờ, rồi để kỹ thuật nói con số.",
+          "Đừng đoán thời gian sửa — bạn không phải người sửa. Xin khách chờ rồi để kỹ thuật nói con số, và nói rõ bạn đang đi gọi họ.",
           undefined,
           ["wait"],
+        ),
+        sp(
+          "Can I walk here?",
+          "Careful, madam. The floor is wet.",
+          "Câu này nói nhiều nhất trong cả ca của bạn: mỗi lần đặt cây lau xuống là một lần phải nói. Nói TRƯỚC khi khách bước, không nói sau. 'Careful' trọng âm âm tiết đầu: CARE-ful.",
+          undefined,
+          ["careful", "wet"],
         ),
       ],
       reading: read(
@@ -3675,6 +3683,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Ten minutes, madam. Maybe fifteen.",
           undefined,
           "Con số nghe cụ thể và trấn an, nhưng bạn không kiểm soát được nó. Hứa thay kỹ thuật là cách chắc chắn nhất để bị trách khi họ tới muộn.",
+        ),
+        game(
+          "Can I come past?",
+          "Careful, madam. The floor is wet.",
+          "Wet, madam. Careful careful.",
+          "Yes madam, please walk here. It is dry.",
+          undefined,
+          "Đáp án thứ ba mời khách đi qua một chỗ bạn vừa lau. Sàn còn ướt thì cảnh báo, không mời — và đừng bảo đảm chỗ nào khô khi bạn chưa sờ vào.",
         ),
       ],
     }),
@@ -4325,6 +4341,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Thank you, madam. One moment, please.",
           "Có thai là trường hợp phải hỏi quản lý, không có ngoại lệ và không tự quyết. Đừng tỏ ra lúng túng: cảm ơn, xin khách chờ, rồi đi hỏi.",
         ),
+        sp(
+          "Nothing at all, thank you.",
+          "Any allergies, madam?",
+          "Hỏi đủ ba câu, đừng dừng ở câu đầu. Dị ứng ở đây là dị ứng với tinh dầu và kem, không phải với đồ ăn — nhiều khách không nghĩ tới, nên phải hỏi thẳng.",
+          undefined,
+          ["allergies"],
+        ),
+        sp(
+          "Is that everything?",
+          "One more, madam. Are you pregnant?",
+          "Câu khó hỏi nhất trong ba câu, và là câu đổi cả liệu trình. Hỏi bằng giọng bình thường như hai câu kia; ngập ngừng mới làm khách thấy kỳ. Ba tháng đầu thì nhìn không ra, nên không bao giờ đoán.",
+          undefined,
+          ["pregnant"],
+        ),
       ],
       reading: read(
         `A guest comes in for a ${lx.priced.en}. ${lx.staff} asks first, before the guest lies down: "Before we start, any injuries?" The guest says: "My back is not good." ${lx.staff} does not start. ${lx.staff} says: "Thank you, madam. I will check with my manager." The manager comes and changes the treatment. Then they start.`,
@@ -4525,6 +4555,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Certainly, madam.",
           "'Certainly' trang trọng hơn một tiếng vâng suông và không mất thêm giây nào. Trọng âm âm tiết đầu: CER-tain-ly.",
         ),
+        sp(
+          "I feel a little dizzy.",
+          "One moment, madam. Please sit.",
+          "Cho khách ngồi TRƯỚC đã, rồi mới đi gọi người — khách choáng mà đứng dậy đi theo bạn là lúc họ ngã. Phòng trị liệu nóng và khách vừa nằm lâu, nên chuyện này xảy ra thật.",
+          undefined,
+          ["sit"],
+        ),
+        sp(
+          "What is that on my back?",
+          "Careful, madam. The towel is hot.",
+          "Báo TRƯỚC khi đặt khăn nóng xuống, và báo bằng đúng chữ 'hot'. Khách nằm sấp thì không nhìn thấy gì đang tới — lời báo là thứ duy nhất họ có.",
+          undefined,
+          ["careful", "hot"],
+        ),
       ],
       reading: read(
         `${lx.staff} starts the ${lx.priced.en} and asks: "Is the pressure all right?" The guest says: "That is a bit strong." ${lx.staff} says: "Of course, madam. Softer." ${lx.staff} asks again after ten minutes. Before the end ${lx.staff} says: "Please tell me if it hurts. I will stop."`,
@@ -4561,12 +4605,12 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Could you do my shoulders too?",
           "Certainly, madam.",
           "No shoulders, madam.",
-          "Yes madam, but the price is more.",
+          "Certainly, madam. Thirty minutes more.",
           undefined,
           "Không nói chuyện giá lúc khách đang nằm. Thắc mắc về giá thì để lễ tân trao đổi trước hoặc sau buổi.",
         ),
         game(
-          "What is that on my back?",
+          "Are we doing the towels now?",
           "Careful, madam. The towel is hot.",
           "Towel, madam. Hot.",
           "It is a warm towel, madam. Relax.",
