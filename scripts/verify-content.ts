@@ -754,6 +754,39 @@ if (legacyGameDupes.length) {
           `${code}: lx.items[${idx}] is "${lx.items[idx].word}", a mass noun, but weeks 2-6 pluralise that slot — move it to index 1, 3, 4 or 5`,
         );
 
+  // A headword the lesson never uses again is a flashcard, not a lesson. The
+  // audit found whole blocks of them: F&B teaches Booking, Reservation, Corner
+  // table, Hold the line and Confirm the table in week 12 and practises none of
+  // them; Spa's entire week 12-14 spa lexicon is decorative. Ratchet, because
+  // 797 of 3151 is too many to fix in one pass — it may fall, never rise.
+  const ORPHAN_MAX = 797;
+  const fold = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let orphans = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons) {
+      const used = fold(
+        [
+          ...lesson.grammar.map((x) => x.polite),
+          ...lesson.speaking.map((x) => x.targetResponse),
+          lesson.reading.text,
+          ...(lesson.game ?? []).flatMap((g) => g.options.map((o) => o.text)),
+        ].join(" || "),
+      );
+      for (const item of lesson.vocabulary) if (!used.includes(fold(item.word))) orphans++;
+    }
+  console.log(
+    `Headwords practised in their own lesson — ${(((3151 - orphans) / 3151) * 100).toFixed(0)}% of 3151 (${orphans} taught and never used again)`,
+  );
+  if (orphans > ORPHAN_MAX)
+    errors.push(
+      `${orphans} headwords never reappear in their own lesson's grammar, speaking, reading or game, up from ${ORPHAN_MAX} — a word the lesson does not use is a flashcard, not a lesson`,
+    );
+
   const GAME_LENGTH_MAX = 0.62; // 652/1053 today
   let gLong = 0;
   let gTotal = 0;
