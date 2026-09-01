@@ -2005,6 +2005,602 @@ export function spread(xs: string[], n: number, offset = 0): string[] {
   return Array.from(new Set(out));
 }
 
+// ============================================================
+// DEPARTMENT LESSONS
+//
+// The spine above is one frame rendered six ways, which is what makes a
+// change to it cheap. What it cannot do is a transaction only one
+// department has: a room attendant who must not take cash, a therapist who
+// must ask about injuries before touching anyone, a server who must not
+// guess about an allergy. Ten audit reports converge on that — the two
+// lowest-scoring modules are the two whose core work the spine cannot
+// express.
+//
+// So a department may REPLACE one spine lesson. Keyed by the lessonId the
+// spine would have produced, so lesson order and week structure are
+// untouched. Back Office is deliberately absent: it keeps the spine
+// everywhere, per the decision to leave it out of this pass.
+//
+// Hard constraint measured before authoring any of these: the replacement
+// must carry the SAME headwords as the lesson it replaces. Weeks 1-3 sit
+// at the 10-word cap, and a headword minted twice inside weeks 1-22 is a
+// blocking error — the review scheduler keys on the word, so a second card
+// silently overwrites the first one's schedule. Department content
+// therefore lives in the grammar, speaking, reading and game, which is
+// where the audits located it anyway: the complaint was never about which
+// words are on the cards, it was about what the staff is shown doing.
+const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
+  // Housekeeping's single most-used sentence in the building, and the spine
+  // has no room for it: the spine's 1.4 is a goodbye at a service counter.
+  // A room attendant's goodbye happens at a door they had to be let through.
+  HK_1_4: (lx) =>
+    lesson(lx, 1, 4, "At the Guest Room Door", "Gõ cửa, xin phép & chào ra", {
+      vocabulary: [
+        v("Thank you", "/ˈθæŋk juː/", "Cảm ơn", "Thank you, madam.", "🙏"),
+        v("Goodbye", "/ˌɡʊdˈbaɪ/", "Tạm biệt", "Goodbye. Have a nice day.", "👋"),
+      ],
+      grammar: [
+        g(
+          "I come in.",
+          "May I come in, madam?",
+          "Vào phòng khách là xin phép, không phải báo trước. Gõ ba tiếng, nói rõ 'Housekeeping', rồi đợi trả lời. Không ai đáp thì gõ lại một lần nữa — vẫn không đáp thì mới mở, và mở xong vẫn phải nói lại một lần.",
+        ),
+        g(
+          "Finish. Bye.",
+          "Thank you, madam. Goodbye.",
+          "Dọn xong phải chào, đừng lặng lẽ đi ra. Khách cần biết trong phòng đã hết người.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Yes? Who is it?",
+          "Housekeeping. May I come in?",
+          "Nói tên bộ phận TRƯỚC rồi mới xin phép — khách sau cánh cửa cần biết ai đang gõ trước khi quyết định mở. 'Housekeeping' trọng âm ở âm tiết đầu: HOUSE-keeping.",
+        ),
+        sp(
+          "Not now, please. Come back later.",
+          "Yes, madam. Thank you.",
+          "Khách từ chối thì cảm ơn rồi đi, không hỏi lại, không nài. Ghi lại phòng để quay lại sau.",
+        ),
+        sp(
+          "I am finished. Thank you!",
+          "Thank you, madam. Goodbye.",
+          "Câu chào ra cửa gồm hai phần: cảm ơn rồi tạm biệt. Âm /θ/ đầu 'Thank' — đầu lưỡi chạm nhẹ răng trên, đừng thành 'tank'.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} knocks three times and says: "Housekeeping." Nobody answers. ${lx.staff} knocks again and waits. The guest opens the door. ${lx.staff} asks: "May I come in, madam?" The guest says: "Not now, please." ${lx.staff} says: "Yes, madam. Thank you." and writes the room number down.`,
+        [
+          {
+            q: `${lx.staff} làm gì khi gõ lần đầu không ai trả lời?`,
+            options: ["Gõ lại rồi đợi", "Mở cửa vào luôn", "Bỏ phòng đó cả ngày"],
+            correct: 0,
+            explanation: `Bài đọc: "Nobody answers. ${lx.staff} knocks again and waits." — gõ lại và đợi, không tự mở.`,
+          },
+          {
+            q: "Khách nói chưa dọn được thì làm gì?",
+            options: ["Cảm ơn, đi ra, ghi lại phòng", "Vẫn vào dọn", "Đứng đợi trước cửa"],
+            correct: 0,
+            explanation:
+              "Ghi lại số phòng để quay lại sau — nếu không sẽ quên và phòng không được dọn.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Not now, please. I am sleeping.",
+          "Yes, madam. I will come later.",
+          "OK I come in now.",
+          "Why? I clean now.",
+        ),
+        game(
+          "Who is at the door?",
+          "Housekeeping, madam.",
+          "Me, madam. Please open the door.",
+          "It is the hotel staff outside.",
+        ),
+        game(
+          "Thank you for cleaning!",
+          "Thank you, madam. Goodbye.",
+          "OK bye bye.",
+          "You are welcome. I clean every day here.",
+        ),
+      ],
+    }),
+
+  // The spine's 4.2 hands every department the same cash-or-card counter
+  // transaction. A room attendant has no till, no receipt book and no way
+  // to prove what was handed over — three Hotel Manager auditors called
+  // taking money in a guest room a control failure, and it is the single
+  // clearest thing this module can teach about money.
+  HK_4_2: (lx) =>
+    lesson(lx, 4, 2, "I Cannot Take Money", "Không nhận tiền trong phòng", {
+      vocabulary: [
+        v("Cash", "/kæʃ/", "Tiền mặt", "I cannot take cash, madam.", "💵"),
+        v("Card", "/kɑːd/", "Thẻ ngân hàng", "Reception takes your card.", "💳"),
+      ],
+      grammar: [
+        g(
+          "Give me money.",
+          "I cannot take cash, madam.",
+          "Nhân viên buồng phòng không thu tiền trong phòng khách: không có hoá đơn, không có máy tính tiền, và mất tiền thì không ai chứng minh được. Mọi khoản đều qua lễ tân.",
+        ),
+        g(
+          "You pay downstairs.",
+          "Please pay at reception, sir.",
+          "Chỉ đường bằng câu mời chứ không bằng câu sai khiến: thêm 'Please' và nói rõ chỗ.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Can I pay you for the laundry?",
+          "I cannot take cash, sir. Please pay at reception.",
+          "Từ chối rồi phải chỉ ngay chỗ trả được — từ chối không kèm lối đi là đẩy việc cho khách. Âm /ʃ/ cuối 'cash': môi hơi tròn, hơi thoát đều.",
+        ),
+        sp(
+          "Where do I pay?",
+          "At reception, madam.",
+          "Trả lời thẳng nơi cần đến. 'reception' trọng âm âm tiết giữa: re-CEP-tion.",
+        ),
+        sp(
+          "Can I pay by card?",
+          "Yes, sir. Reception takes your card.",
+          "Khách hỏi thẻ thì trả lời có, và nói rõ nơi quẹt được — đừng chỉ nói 'yes' rồi để khách tự tìm.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "Here is the money for the laundry." ${lx.staff} says: "I cannot take cash, madam. Please pay at reception." The guest asks: "Can I pay by card?" ${lx.staff} says: "Yes, madam. Reception takes your card." Then ${lx.staff} writes the room number on the laundry list.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} không nhận tiền?`,
+            options: [
+              "Buồng phòng không thu tiền trong phòng khách",
+              "Vì khách đưa thiếu tiền",
+              "Vì hôm nay đã hết ca làm",
+            ],
+            correct: 0,
+            explanation:
+              "Trong phòng khách không có hoá đơn và không có máy tính tiền, nên không chứng minh được đã nhận bao nhiêu. Mọi khoản thu đều qua lễ tân.",
+          },
+          {
+            q: `${lx.staff} chỉ khách đến đâu để trả tiền?`,
+            options: ["Lễ tân", "Nhà hàng", "Phòng giặt"],
+            correct: 0,
+            explanation: `Bài đọc: ${lx.staff} nói "Please pay at reception."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Please take the money for the laundry.",
+          "I cannot take cash, madam.",
+          "OK, thank you very much, madam.",
+          "Yes, madam. I will give it to reception.",
+        ),
+        game(
+          "So where do I pay for this?",
+          "At reception, sir.",
+          "Pay later.",
+          "You can pay me now, sir.",
+        ),
+      ],
+    }),
+
+  // The spine's 3.3 is a counter answering "what time do you open?".
+  // Housekeeping's version of that question is asked the other way round —
+  // the department wants into the room, and the guest decides when. Two
+  // Hotel Manager auditors ranked "ask before you clean" above every
+  // vocabulary item in the module.
+  HK_3_3: (lx) =>
+    lesson(lx, 3, 3, "Now or Later?", "Dọn bây giờ hay lát nữa", {
+      vocabulary: [
+        v("Open", "/ˈəʊpən/", "Mở cửa", "The laundry opens at eight.", "🔓"),
+        v("Close", "/kləʊz/", "Đóng cửa", "The laundry closes at four.", "🔒"),
+      ],
+      grammar: [
+        g(
+          "I clean now.",
+          "May I clean now, madam?",
+          "Khách trả tiền cho căn phòng đó nên khách quyết định lúc nào dọn. Hỏi rồi mới vào; hỏi xong thì làm đúng giờ khách chọn.",
+        ),
+        g(
+          "Later I come.",
+          "I will come back at two.",
+          "Nói rõ GIỜ quay lại, đừng nói 'later' suông — khách còn sắp xếp việc của họ quanh giờ đó.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Could you clean my room?",
+          "Yes, madam. Now or later?",
+          "Đừng chỉ gật rồi vào. Hỏi một câu ngắn để khách chọn giờ — câu này tiết kiệm cho bạn cả lượt quay lại vô ích.",
+        ),
+        sp(
+          "Later, please. At two.",
+          "At two, madam. Thank you.",
+          "Nhắc lại giờ khách vừa nói rồi mới cảm ơn: đó là cách duy nhất chắc chắn bạn nghe đúng giờ.",
+        ),
+        sp(
+          "What time does the laundry open?",
+          "It opens at eight, sir.",
+          "Câu hỏi có 'does' thì câu trả lời thêm -s vào động từ: it OPENS. Cụm /nz/ cuối phải nghe được cả hai âm.",
+        ),
+      ],
+      reading: read(
+        `The laundry opens at eight and closes at four. ${lx.staff} knocks and asks: "May I clean now, madam?" The guest says: "Later, please. At two." ${lx.staff} says: "At two, madam. Thank you." ${lx.staff} writes room ${lx.roomNo.spoken} and two o'clock on the list, and comes back at two.`,
+        [
+          {
+            q: "Khách muốn dọn phòng lúc mấy giờ?",
+            options: ["Hai giờ", "Tám giờ", "Bốn giờ"],
+            correct: 0,
+            explanation: `Bài đọc: khách nói "Later, please. At two." và ${lx.staff} nhắc lại "At two, madam."`,
+          },
+          {
+            q: `Vì sao ${lx.staff} ghi số phòng và giờ ra giấy?`,
+            options: [
+              "Để quay lại đúng giờ khách đã chọn",
+              "Để báo cho lễ tân thu tiền",
+              "Để nhớ đường về phòng đó",
+            ],
+            correct: 0,
+            explanation:
+              "Hỏi giờ rồi quên là tệ hơn không hỏi: khách đã sắp xếp việc quanh giờ đó. Ghi lại là phần bắt buộc của câu hỏi.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Can you come back this afternoon?",
+          "Yes, madam. What time?",
+          "OK, afternoon.",
+          "Yes, madam. I will come at some time.",
+        ),
+        game(
+          "What time does the laundry close?",
+          "It closes at four, madam.",
+          "Four.",
+          "It close at four o'clock, madam.",
+        ),
+      ],
+    }),
+
+  // Lost property. The spine's 5.4 is an apology for handing over the wrong
+  // item; a room attendant's version is finding something that is not theirs
+  // in a room whose guest has gone out. Nothing anywhere in the six weeks
+  // tells them what to do with it, and "put it back where it was" is wrong.
+  HK_5_4: (lx) =>
+    lesson(lx, 5, 4, "I Found Something", "Nhặt được đồ của khách", {
+      vocabulary: [
+        v(
+          "Excuse me",
+          "/ɪkˈskjuːz miː/",
+          "Xin phép, xin lỗi (khi làm phiền)",
+          "Excuse me, sir.",
+          "🙇",
+        ),
+        v("Sorry", "/ˈsɒri/", "Xin lỗi (khi có lỗi)", "I am very sorry, madam.", "😔"),
+      ],
+      grammar: [
+        g(
+          "I keep it.",
+          "I will tell my supervisor now.",
+          "Đồ nhặt trong phòng không bao giờ giữ lại và cũng không cất vào ngăn kéo. Giao cho quản lý ngay trong ca, và nói ra để có người thứ hai biết.",
+        ),
+        g(
+          "Money here, I no see.",
+          "Excuse me, sir. Is this yours?",
+          "Thấy đồ giá trị mà khách còn trong phòng thì hỏi ngay tại chỗ. Im lặng là tự đặt mình vào thế nghi ngờ.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Did you see a watch in my room?",
+          "Yes, madam. It is with my supervisor.",
+          "Trả lời thẳng và nói rõ đồ đang ở đâu. Đừng nói 'maybe' — khách đang lo mất đồ.",
+        ),
+        sp(
+          "Is this my phone?",
+          "Excuse me, madam. Is this yours?",
+          "Không tự khẳng định đồ của ai. Hỏi lại để khách xác nhận. 'yours' kết thúc bằng /z/ có rung.",
+        ),
+        sp(
+          "I am sorry, that is not mine.",
+          "I am very sorry, madam.",
+          "Nhầm thì xin lỗi đầy đủ 'I am very sorry' rồi mang đồ đi giao, đừng chỉ nói 'sorry' cụt.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} cleans room ${lx.roomNo.spoken} and finds a watch under a ${lx.items[2].word.toLowerCase()}. The guest is out. ${lx.staff} does not put it in a drawer. ${lx.staff} tells the supervisor and writes the room number and the time. Later the guest asks: "Did you see a watch?" ${lx.staff} says: "Yes, madam. It is with my supervisor."`,
+        [
+          {
+            q: `${lx.staff} làm gì với chiếc đồng hồ nhặt được?`,
+            options: [
+              "Giao cho quản lý và ghi lại phòng, giờ",
+              "Cất vào ngăn kéo trong phòng",
+              "Giữ đến khi khách hỏi",
+            ],
+            correct: 0,
+            explanation:
+              "Giao ngay trong ca và ghi lại. Cất vào ngăn kéo thì khách tìm không ra và không ai biết ai đã động vào.",
+          },
+          {
+            q: "Vì sao phải báo quản lý ngay?",
+            options: [
+              "Để có người thứ hai biết, không bị nghi ngờ",
+              "Vì quản lý sẽ giữ làm của mình",
+              "Vì nhân viên không được vào phòng",
+            ],
+            correct: 0,
+            explanation:
+              "Một mình biết là một mình chịu ngờ vực. Báo ngay là cách tự bảo vệ, không phải thủ tục hình thức.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "There is money on the table.",
+          "Excuse me, sir. Is this yours?",
+          "I no touch, madam.",
+          "I will put it in the drawer, sir.",
+        ),
+        game(
+          "I lost my ring in the room.",
+          "One moment, madam. I will ask my supervisor.",
+          "Not here, madam.",
+          "Sorry madam, I did not see it.",
+        ),
+      ],
+    }),
+
+  // The one question a therapist must ask before touching anybody, and the
+  // spine has no slot for it: 3.4 is "what time do we start?". Here the
+  // start is the screening. Injury, allergy and pregnancy each change or
+  // cancel a treatment, and none of the six weeks currently says so.
+  SW_3_4: (lx) =>
+    lesson(lx, 3, 4, "Before We Start", "Hỏi trước khi bắt đầu", {
+      vocabulary: [
+        v("Start", "/stɑːt/", "Bắt đầu", "Before we start, madam.", "▶️"),
+        v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", "We finish at eight.", "⏹️"),
+      ],
+      grammar: [
+        g(
+          "You have problem?",
+          "Do you have any injury?",
+          "Hỏi trước khi chạm vào người khách, không hỏi giữa chừng. Ba việc phải hỏi: chấn thương, dị ứng, và có thai. Bất kỳ câu trả lời 'có' nào cũng phải báo quản lý trước khi bắt đầu.",
+        ),
+        g(
+          "I ask my boss.",
+          "I will check with my manager.",
+          "Không tự quyết khi khách nói có chấn thương hay đang mang thai. Nói rõ mình sẽ hỏi ai, rồi đi hỏi thật.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "I am ready. Let us start.",
+          "Before we start, any injury?",
+          "Câu này hỏi TRƯỚC khi khách nằm xuống, không phải sau. 'injury' trọng âm âm tiết đầu: IN-ju-ry.",
+        ),
+        sp(
+          "My back is not good.",
+          "Thank you, madam. I will check.",
+          "Khách nói có vấn đề thì cảm ơn — họ vừa giúp bạn tránh làm họ đau — rồi mới đi hỏi quản lý.",
+        ),
+        sp(
+          "What time do we finish?",
+          "We finish at eight, madam.",
+          "Nói giờ kết thúc để khách còn xếp lịch phần sau của ngày. 'finish' đóng bằng /ʃ/ — môi hơi tròn, hơi thoát đều, đừng thành 'phi-nít'.",
+        ),
+        sp(
+          "I am four months pregnant.",
+          "Thank you, madam. One moment, please.",
+          "Có thai là trường hợp phải hỏi quản lý, không có ngoại lệ và không tự quyết. Đừng tỏ ra lúng túng: cảm ơn, xin khách chờ, rồi đi hỏi.",
+        ),
+      ],
+      reading: read(
+        `A guest lies down for a ${lx.priced.en}. ${lx.staff} asks: "Before we start, any injury?" The guest says: "My back is not good." ${lx.staff} does not start. ${lx.staff} says: "Thank you, madam. I will check with my manager." The manager comes and changes the treatment. Then they start.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} chưa bắt đầu?`,
+            options: [
+              "Khách báo có vấn đề ở lưng",
+              "Vì chưa tới giờ hẹn",
+              "Vì khách chưa trả tiền",
+            ],
+            correct: 0,
+            explanation: `Bài đọc: khách nói "My back is not good." — ${lx.staff} dừng lại và hỏi quản lý trước.`,
+          },
+          {
+            q: "Ba điều phải hỏi trước mỗi liệu trình là gì?",
+            options: [
+              "Chấn thương, dị ứng, có thai",
+              "Tên, số phòng, giờ về",
+              "Giá tiền, cách trả, tiền tip",
+            ],
+            correct: 0,
+            explanation:
+              "Cả ba đều có thể làm liệu trình phải đổi hoặc phải hoãn. Hỏi mất mười giây; không hỏi thì có thể làm khách đau.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I have a bad knee, but it is fine.",
+          "Thank you, madam. I will check.",
+          "OK madam, no problem.",
+          "It is fine, madam. We can start now.",
+        ),
+        game(
+          "Can we start now?",
+          "Before we start, any allergy?",
+          "Yes, start now.",
+          "Yes, lie down now.",
+        ),
+      ],
+    }),
+
+  // Modesty and consent in the changing room. Two auditors put this first
+  // for the module: a guest who does not know whether to undress, and a
+  // therapist with no sentence for it, is the single most common way this
+  // department makes somebody uncomfortable. The spine's 5.3 already hands
+  // something over and shows the way — exactly the two moves needed.
+  SW_5_3: (lx) =>
+    lesson(lx, 5, 3, "The Changing Room", "Phòng thay đồ & áo choàng", {
+      vocabulary: [
+        v(
+          "Here you are",
+          "/hɪə juː ɑː/",
+          "Đây ạ (khi đưa đồ cho khách)",
+          "Here you are, madam.",
+          "🤲",
+        ),
+        v("This way", "/ðɪs weɪ/", "Mời đi lối này", "This way, please.", "➡️"),
+      ],
+      grammar: [
+        g(
+          "You take off clothes.",
+          "You can keep your underwear on.",
+          "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng.",
+        ),
+        g(
+          "Change there.",
+          "This way, please. The changing room.",
+          "Chỉ phòng thay đồ bằng câu mời kèm cử chỉ tay mở, và đi trước dẫn khách chứ không chỉ trỏ.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Where do I change?",
+          "This way, please, madam.",
+          "Dẫn khách đi, đừng chỉ tay rồi đứng yên. 'This' mở đầu bằng /ð/ có rung — lưỡi chạm răng, đừng thành 'đít'.",
+        ),
+        sp(
+          "Do I take everything off?",
+          "You can keep your underwear on.",
+          "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm.",
+        ),
+        sp(
+          "Is there a robe?",
+          `Here you are, madam. A ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s.`,
+          "Đưa đồ thì nói 'Here you are' và đưa bằng hai tay. Kể luôn thứ đang đưa để khách biết đủ chưa.",
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "You can keep your underwear on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
+        [
+          {
+            q: "Khách hỏi có phải cởi hết không, câu trả lời đúng là gì?",
+            options: [
+              "You can keep your underwear on.",
+              "Yes, take everything off.",
+              "Up to you, madam.",
+            ],
+            correct: 0,
+            explanation:
+              "Câu này nói rõ khách được giữ lại gì, nên khách không phải đoán và không phải hỏi lại.",
+          },
+          {
+            q: `${lx.staff} làm gì trong lúc khách thay đồ?`,
+            options: ["Đợi ở ngoài", "Đứng trong phòng chờ", "Đi làm việc khác luôn"],
+            correct: 0,
+            explanation: `Bài đọc: ${lx.staff} "waits outside" — ở ngoài nhưng vẫn gần, để khách gọi được ngay.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Do I wear anything under the robe?",
+          "You can keep your underwear on.",
+          "No, madam. Nothing.",
+          "Up to you, madam.",
+        ),
+        game(
+          "Where can I put my bag?",
+          `In the ${lx.items[1].word.toLowerCase()}, madam.`,
+          "Put your bag on the seat, madam.",
+          "Anywhere, madam. It is safe here.",
+        ),
+      ],
+    }),
+
+  // Checking comfort DURING a treatment. Nothing in the spine has a learner
+  // ask a question they must ask three or four times in one appointment,
+  // and a guest in pain who has no sentence to interrupt with is the injury
+  // this module exists to prevent.
+  SW_5_1: (lx) =>
+    lesson(lx, 5, 1, "Is That All Right?", "Hỏi khách có ổn không", {
+      vocabulary: [
+        v("Please", "/pliːz/", "Làm ơn, xin mời", "Please tell me, madam.", "🙏"),
+        v("Of course", "/əv ˈkɔːs/", "Vâng, dĩ nhiên rồi", "Of course, madam.", "✔️"),
+        v("Certainly", "/ˈsɜːtnli/", "Chắc chắn rồi (trang trọng)", "Certainly, sir.", "👍"),
+      ],
+      grammar: [
+        g(
+          "Good? Yes?",
+          "Is the pressure all right?",
+          "Hỏi bằng câu đủ, không hỏi bằng một chữ. Hỏi ít nhất ba lần một buổi: lúc mới bắt đầu, lúc đổi vùng, và lúc tăng lực.",
+        ),
+        g(
+          "I do soft now.",
+          "Of course, madam. Softer.",
+          "Khách kêu đau thì đổi ngay và nói ra là mình đã đổi. Đừng chỉ im lặng làm nhẹ đi — khách không biết bạn có nghe hay không.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Mmm... that is a bit strong.",
+          "Of course, madam. Softer.",
+          "Đổi ngay lập tức và nói một tiếng. Câu này ngắn có lý do: đang giữa liệu trình, khách không muốn nghe giải thích dài.",
+        ),
+        sp(
+          "Is it going to hurt?",
+          "Please tell me, madam. I will stop.",
+          "Cho khách một câu để dừng bạn lại. Khách nào biết mình dừng được thì mới thả lỏng ra được.",
+        ),
+        sp(
+          "Could you do my shoulders?",
+          "Certainly, madam.",
+          "'Certainly' trang trọng hơn một tiếng vâng suông và không mất thêm giây nào. Trọng âm âm tiết đầu: CER-tain-ly.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} starts the ${lx.priced.en} and asks: "Is the pressure all right?" The guest says: "That is a bit strong." ${lx.staff} says: "Of course, madam. Softer." ${lx.staff} asks again after ten minutes. Before the end ${lx.staff} says: "Please tell me if it hurts. I will stop."`,
+        [
+          {
+            q: `${lx.staff} hỏi khách về lực bấm mấy lần?`,
+            options: ["Nhiều lần trong buổi", "Một lần lúc đầu", "Chỉ khi khách kêu"],
+            correct: 0,
+            explanation: `Bài đọc: hỏi lúc bắt đầu, rồi "asks again after ten minutes" — hỏi lại là việc bình thường, không phải làm phiền.`,
+          },
+          {
+            q: "Khách nói mạnh quá thì đáp thế nào?",
+            options: [
+              "Of course, madam. Softer.",
+              "It is normal, madam.",
+              "OK, five minutes more.",
+            ],
+            correct: 0,
+            explanation:
+              "Đổi ngay và nói ra là đã đổi. Khách nằm sấp không nhìn thấy bạn, nên im lặng làm nhẹ đi thì khách không biết.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "That is too strong for me.",
+          "Of course, madam. Softer.",
+          "Strong is good, madam.",
+          "Sorry madam, five minutes more only.",
+        ),
+        game(
+          "Could you do my shoulders too?",
+          "Certainly, madam.",
+          "No shoulders, madam.",
+          "Yes madam, but the price is more.",
+        ),
+      ],
+    }),
+};
+
 function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   if (week === 1) return undefined;
   const earlier: string[] = [];
@@ -2051,7 +2647,10 @@ function buildWeek(lx: P0Lexicon, week: number): WeekContent {
     weekNumber: week,
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
-    lessons: meta.build(lx),
+    // A department lesson replaces the spine lesson at the same id, so the
+    // week keeps its four lessons in the same order and every id downstream
+    // — progress records, review keys, deep links — stays valid.
+    lessons: meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
     reviewWords: reviewWordsFor(lx, week),
   };
 }
@@ -2068,8 +2667,11 @@ export const PHASE0_WEEKS: Record<string, WeekContent> = Object.fromEntries(
 export const PHASE0_WORDS_BY_DEP: Record<string, string[]> = Object.fromEntries(
   Object.values(LEXICONS).map((lx) => [
     lx.code,
+    // Reads through buildWeek, not WEEK_META directly: a department lesson
+    // that replaced a spine one must contribute ITS headwords here, or the
+    // Phase 1 recycling pool would carry words the learner never saw.
     [1, 2, 3, 4, 5, 6].flatMap((w) =>
-      WEEK_META[w].build(lx).flatMap((l) => l.vocabulary.map((i) => i.word)),
+      buildWeek(lx, w).lessons.flatMap((l) => l.vocabulary.map((i) => i.word)),
     ),
   ]),
 );
