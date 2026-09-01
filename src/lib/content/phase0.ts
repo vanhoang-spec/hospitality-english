@@ -556,13 +556,19 @@ function week1(lx: P0Lexicon): LessonContent[] {
 
     lesson(lx, 1, 3, "I Work Here", "Tôi làm ở bộ phận nào", {
       vocabulary: [
-        v(lx.deptEn, lx.deptPhonetic, `Bộ phận ${lx.deptVi}`, `I am from ${lx.deptEn}.`, "🏢"),
+        v(
+          lx.deptEn,
+          lx.deptPhonetic,
+          `Bộ phận ${lx.deptVi}`,
+          `My name is ${lx.staff}. I am from ${lx.deptEn}.`,
+          "🏢",
+        ),
         v("Help", "/help/", "Giúp đỡ", "May I help you?", "🤝"),
       ],
       grammar: [
         g(
           `I ${lx.deptEn}.`,
-          `I am from ${lx.deptEn}.`,
+          `My name is ${lx.staff}. I am from ${lx.deptEn}.`,
           "Tiếng Việt bỏ được động từ 'là', tiếng Anh thì không. Luôn có 'am/is/are': I AM from…",
         ),
         g(
@@ -574,18 +580,18 @@ function week1(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "Excuse me, who are you?",
-          `I am from ${lx.deptEn}.`,
-          "Giới thiệu bộ phận giúp khách biết bạn giúp được việc gì. Cụm /fr/ đầu từ 'from' phải bật cả hai âm — bỏ /r/ thì thành 'phôm'.",
+          `My name is ${lx.staff}. I am from ${lx.deptEn}.`,
+          "Nói tên rồi mới nói bộ phận: khách nhớ được người đã giúp mình thì mới khen đúng tên. Cụm /fr/ đầu từ 'from' phải bật cả hai âm — bỏ /r/ thì thành 'phôm'.",
         ),
       ],
       reading: read(
-        `${lx.staff} works at ${lx.station}. ${lx.staff} says: "Good afternoon, madam. I am from ${lx.deptEn}. May I help you?"`,
+        `${lx.staff} works at ${lx.station}. ${lx.staff} says: "Good afternoon, madam. My name is ${lx.staff}. I am from ${lx.deptEn}. May I help you?"`,
         [
           {
             q: `${lx.staff} làm ở bộ phận nào?`,
             options: [lx.deptVi, "Bếp", "Bảo vệ"],
             correct: 0,
-            explanation: `${lx.staff} nói "I am from ${lx.deptEn}" — tức bộ phận ${lx.deptVi}.`,
+            explanation: `${lx.staff} nói "My name is ${lx.staff}. I am from ${lx.deptEn}" — tức bộ phận ${lx.deptVi}.`,
           },
           {
             q: "Câu nào dùng để mời khách cho mình giúp?",
@@ -810,10 +816,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
             explanation: `${lx.staff} nói "The ${lx.floor.ordinal} floor" — tức ${lx.floor.vi}.`,
           },
           {
-            q: "'Lift' nghĩa là gì?",
+            q: `${lx.staff} chỉ tay về phía nào?`,
             options: ["Thang máy", "Cầu thang bộ", "Cửa ra vào"],
             correct: 0,
-            explanation: "'Lift' (Anh–Anh) = 'elevator' (Anh–Mỹ) = thang máy.",
+            explanation: `Bài đọc: ${lx.staff} points to the lift — 'lift' (Anh–Anh) = 'elevator' (Anh–Mỹ) = thang máy.`,
           },
         ],
       ),
@@ -844,7 +850,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           // headword dạy xong bỏ đấy ở cả sáu bộ phận.
           `I bring you ${i2.word.toLowerCase()}.`,
           `I will bring your ${i2.word.toLowerCase()}.`,
-          "Việc sắp làm dùng 'will': I WILL bring. Và nhớ mạo từ sở hữu trước danh từ.",
+          "Việc sắp làm dùng 'will': I WILL bring. Và nhớ tính từ sở hữu 'your' trước danh từ — a, an, the mới là mạo từ.",
         ),
       ],
       speaking: [
@@ -1068,10 +1074,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
             explanation: `Hôm nay là thứ Hai, ${lx.booking.vi} là 'tomorrow' — tức thứ Ba.`,
           },
           {
-            q: "'Tomorrow' nghĩa là gì?",
-            options: ["Ngày mai", "Hôm nay", "Hôm qua"],
+            q: "Khách ở phòng nào?",
+            options: [lx.roomNo.spoken, lx.roomNo.cardinal, "room number"],
             correct: 0,
-            explanation: "today = hôm nay, tomorrow = ngày mai.",
+            explanation: `Bài đọc mở đầu: "A guest from room ${lx.roomNo.spoken}" — số phòng đọc từng chữ số.`,
           },
         ],
       ),
@@ -1261,7 +1267,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         sp(
           "How much is it?",
           `${capFirst(lx.priced.vndWord)} dong, sir.`,
-          "Đọc số tiền thành cụm liền, đừng ngắt từng chữ. Và giữ âm /ŋ/ cuối 'dong' — đừng đọc thành 'đon'.",
+          "Đọc số tiền thành cụm liền, đừng ngắt từng chữ — ngắt từng chữ khách phải cộng nhẩm lại.",
         ),
       ],
       reading: read(
@@ -1317,7 +1323,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         sp(
           "Can I pay by card?",
           "Yes, card is fine, sir.",
-          "Đáp ngắn và rõ. Nếu chỉ nhận tiền mặt: 'Cash only, please.' Từ 'card' có /d/ cuối — đừng đọc thành 'ca'.",
+          "Đáp ngắn và rõ. Câu hỏi chọn một trong hai lên giọng ở vế đầu rồi xuống ở vế sau: Cash ↗ or card ↘? — đọc bằng một giọng đều thì khách nghe ra câu kể chứ không ra câu hỏi. Từ 'card' có /d/ cuối, đừng đọc thành ca.",
         ),
       ],
       reading: read(
@@ -1432,8 +1438,8 @@ function week4(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "The total, please.",
-          `${capFirst(lx.priced.vndWord)} dong, sir.`,
-          "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn. 'thousand' mở đầu bằng /θ/: đầu lưỡi chạm nhẹ răng trên.",
+          `${capFirst(lx.priced.vndWord)} dong, sir. Here is your bill.`,
+          "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn. Âm /l/ CUỐI từ là lỗi nặng nhất của người Việt: total, bill, towel — đầu lưỡi phải chạm lợi trên và giữ ở đó, đừng buông thành tô-tồ hay biu.",
         ),
       ],
       reading: read(
@@ -1527,10 +1533,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
             explanation: "'Please have a seat' là câu mời ngồi lịch sự chuẩn trong khách sạn.",
           },
           {
-            q: "'Of course' dùng để làm gì?",
-            options: ["Nhận lời giúp khách", "Từ chối khách", "Hỏi giá"],
+            q: `${lx.staff} mời khách làm gì?`,
+            options: ["Ngồi xuống", "Đợi ở ngoài", "Quay lại sau"],
             correct: 0,
-            explanation: "'Of course' = 'Vâng, dĩ nhiên rồi' — dùng khi vui vẻ nhận lời.",
+            explanation: `Bài đọc: ${lx.staff} nói "Please have a seat" — mời khách ngồi.`,
           },
         ],
       ),
