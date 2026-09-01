@@ -442,8 +442,60 @@ function lesson(
     titleEn,
     titleVi,
     ...parts,
+    // A speaking item may not be passed by dropping the word the lesson is
+    // about. Five academic reviews measured the same hole from five modules:
+    // strip the content and the grader still passed the answer, because only
+    // 73 of 259 frames had bothered to declare requiredTokens by hand. The
+    // lesson already knows which words it teaches — so every headword of this
+    // lesson that actually appears in a target is required in that target,
+    // automatically, in all six departments and every week.
+    //
+    // Function words inside a multi-word headword ("Here YOU ARE", "OF
+    // course") are left to the function-word allowance; locking them here
+    // would fail an honest answer for the reason that allowance exists.
+    speaking: parts.speaking.map((sp) => {
+      const heads = parts.vocabulary
+        .flatMap((v) => v.word.toLowerCase().split(/\s+/))
+        .filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w));
+      const said = new Set(
+        sp.targetResponse
+          .toLowerCase()
+          .replace(/[^a-z0-9 -]/g, " ")
+          .split(/\s+/),
+      );
+      const add = heads.filter((w) => said.has(w));
+      return add.length
+        ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
+        : sp;
+    }),
   };
 }
+
+/** Headwords the automatic lock must NOT touch.
+ *
+ *  Two kinds. Function words inside a multi-word headword ("Here YOU ARE",
+ *  "half PAST") belong to the function-word allowance, not to the hard list.
+ *  And sir/madam/the day-part are headwords that the grader frees ON PURPOSE
+ *  — the guest line usually fixes neither the gender nor the hour, so both
+ *  are coin-flips and honorificIsFree()/greetingIsFree() exist to say so.
+ *  Locking them here quietly undid that: measured, dropping "madam" went from
+ *  97.8% forgiven to 85.5%. */
+const HEADWORD_FUNCTION_WORDS = new Set([
+  "you",
+  "are",
+  "here",
+  "the",
+  "and",
+  "else",
+  "past",
+  "sir",
+  "madam",
+  "maam",
+  "good",
+  "morning",
+  "afternoon",
+  "evening",
+]);
 
 // ============================================================
 // WEEK 1 — Alphabet, Names & Greetings
@@ -4645,6 +4697,39 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   return [...new Set(lastWeek)];
 }
 
+/** Widen the per-lesson headword lock (see lesson()) to the whole week.
+ *
+ *  Lesson 3.4 recycles lesson 3.1s clock words and 2.1s room numbers; those
+ *  are words this learner has been taught and is being asked to say, so they
+ *  are not droppable either. Done here rather than in lesson() because this
+ *  is the first point that can see all four lessons at once, department
+ *  overrides included. */
+function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
+  const heads = [
+    ...new Set(
+      lessons
+        .flatMap((l) => l.vocabulary)
+        .flatMap((v) => v.word.toLowerCase().split(/\s+/))
+        .filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w)),
+    ),
+  ];
+  return lessons.map((l) => ({
+    ...l,
+    speaking: l.speaking.map((sp) => {
+      const said = new Set(
+        sp.targetResponse
+          .toLowerCase()
+          .replace(/[^a-z0-9 -]/g, " ")
+          .split(/\s+/),
+      );
+      const add = heads.filter((w) => said.has(w));
+      return add.length
+        ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
+        : sp;
+    }),
+  }));
+}
+
 function buildWeek(lx: P0Lexicon, week: number): WeekContent {
   const meta = WEEK_META[week];
   return {
@@ -4655,7 +4740,7 @@ function buildWeek(lx: P0Lexicon, week: number): WeekContent {
     // A department lesson replaces the spine lesson at the same id, so the
     // week keeps its four lessons in the same order and every id downstream
     // — progress records, review keys, deep links — stays valid.
-    lessons: meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
+    lessons: lockWeekHeadwords(meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l)),
     reviewWords: reviewWordsFor(lx, week),
   };
 }

@@ -9,7 +9,7 @@ import {
   speakerLabel,
   type VocabItem,
 } from "@/lib/content/week-content";
-import { speakEN, dedupeTranscript } from "@/lib/speech";
+import { speakEN, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
 import { utterancePassed } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
@@ -233,6 +233,9 @@ function buildPaper(dep: string, week: string): Question[] {
   // block is named after — you have to understand what was said to pick the
   // reply that answers it.
   const speakPool = shuffle(phaseLessons.flatMap((l) => l.speaking));
+  // Sir/madam is a coin-flip tag, not content: two replies that differ only by
+  // it are the same reply. The speaking grader already treats it that way.
+  const HONORIFIC_WORDS = new Set(["sir", "madam", "maam"]);
   const bagOf = (s: string) =>
     new Set(
       s
@@ -245,11 +248,44 @@ function buildPaper(dep: string, week: string): Question[] {
     // Distractors are the replies that share the most words with the correct
     // one, for the same reason the grammar block picks its distractors that
     // way: an unrelated reply is eliminable without hearing anything.
+    //
+    // But "most words in common" walked straight into the failure mode it was
+    // supposed to avoid: the nearest reply in the bank is often ANOTHER RIGHT
+    // ANSWER. Four academic reports measured it independently and agreed on
+    // the shape — 13.9% of papers in F&B, 30.1% in Guest Relations, 33.5% in
+    // Housekeeping, 41.1% in Spa. The worst pairs were containments:
+    //
+    //     key  "I cannot take cash, sir. Please pay at reception."
+    //     lure "Please pay at reception, sir."          <- also correct
+    //     key  "The total is seventy thousand dong."
+    //     lure "Seventy thousand dong, sir."            <- also correct
+    //     key  "It starts at eight o'clock."
+    //     lure "It starts at eight, madam."             <- also correct
+    //
+    // Every reported pair is one content set inside the other, so that is what
+    // gets rejected here: strip the honorifics, and if either side's content
+    // words are a subset of the other's, the two sentences say the same thing
+    // and only one of them can be on the paper. Replies to the SAME guest
+    // prompt go too — a different lesson answering the same question is a
+    // second right answer by construction.
     const correct = bagOf(s.targetResponse);
     const share = (t: string) => [...bagOf(t)].filter((w) => correct.has(w)).length;
+    const content = (t: string) => new Set([...bagOf(t)].filter((w) => !HONORIFIC_WORDS.has(w)));
+    const keyContent = content(s.targetResponse);
+    const saysTheSame = (t: string) => {
+      const c = content(t);
+      if (c.size === 0 || keyContent.size === 0) return true;
+      const inKey = [...c].every((w) => keyContent.has(w));
+      const inLure = [...keyContent].every((w) => c.has(w));
+      return inKey || inLure;
+    };
+    const sameQuestion = new Set(
+      speakPool.filter((o) => o.guestPrompt === s.guestPrompt).map((o) => o.targetResponse),
+    );
     const others = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
     ]
+      .filter((t) => !sameQuestion.has(t) && !saysTheSame(t))
       .map((t) => ({ t, score: share(t) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 2)
@@ -570,7 +606,17 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // capability, not a render-time probe: Chrome returns an empty getVoices()
   // until `voiceschanged` fires, so checking at mount would drop the
   // listening floor for everyone on first paint.
-  const sawEnVoiceRef = useRef(false);
+  // Whether the DEVICE can speak English, asked of the device. This used to
+  // be a ref set inside the 🔊 buttons onClick, so skipping the button waived
+  // the listening floor entirely.
+  const [enVoice, setEnVoice] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const read = () => setEnVoice(hasEnglishVoice());
+    read();
+    window.speechSynthesis.addEventListener?.("voiceschanged", read);
+    return () => window.speechSynthesis.removeEventListener?.("voiceschanged", read);
+  }, []);
 
   if (!week || paper.length < TOTAL_QUESTIONS) return <SuiteComingSoon />;
 
@@ -607,7 +653,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             construct,
             correct: items.filter((r) => r.given === r.question.correctIdx).length,
             total: items.length,
-            deliverable: construct === "listening" ? sawEnVoiceRef.current : true,
+            deliverable: construct === "listening" ? enVoice : true,
           };
         },
       );
@@ -925,7 +971,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             </p>
             <button
               onClick={() => {
-                if (speakVaried(q.audio, week!)) sawEnVoiceRef.current = true;
+                speakVaried(q.audio, week!);
               }}
               className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >

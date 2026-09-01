@@ -143,6 +143,69 @@ const VALUE_TOKENS = new Set<string>([
  *  a dropped copula from a mumbled noun. This list can. */
 const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will"]);
 
+/** The rest of the function words, graded with one life.
+ *
+ *  The list above closed the copula hole and left the wider one open. Four
+ *  more reports measured what stayed open, in four modules: strip EVERY
+ *  function word and every plural -s — the whole Vietnamese-speaker error
+ *  profile — and the answer still passed 37.8% (GR), 47.4% (FO), 50.8% (HK)
+ *  and 53.4% (SW) of speaking items. "Please pay reception sir" passed
+ *  "Please pay at reception, sir." in the lesson whose rule is the preposition.
+ *
+ *  Adding these to the hard list was the obvious move and it costs too much:
+ *  measured, it takes the sloppy profile from 50.8% down to 32.8% but also
+ *  drops an HONEST learner who fluffs one word from 58.7% to 50.8%. ASR eats
+ *  articles for breakfast; a course cannot fail people for its own microphone.
+ *
+ *  So these are required with a tolerance of one. Losing a single "the" is a
+ *  slip. Losing two or more function words is not an accident, it is the
+ *  error profile — and the profile is what every rude/polite pair in P0 is
+ *  built to erase. */
+const FUNCTION_TOKENS = new Set<string>([
+  "a",
+  "an",
+  "the",
+  "my",
+  "your",
+  "our",
+  "i",
+  "we",
+  "you",
+  "it",
+  "at",
+  "in",
+  "on",
+  "to",
+  "of",
+  "for",
+  "do",
+  "does",
+  "did",
+  "may",
+  "can",
+  "could",
+  "would",
+  "shall",
+  "have",
+  "has",
+]);
+/** One function word may go missing, however many the target has.
+ *
+ *  Scaling the allowance by length was tried first and measured worse in the
+ *  direction that matters least: it took the sloppy profile to 0.4% but also
+ *  failed an HONEST learner who lost a single "the" 91% of the time, and a
+ *  browser microphone loses "the" all day. A course cannot fail people for
+ *  its own ASR.
+ *
+ *  One life, flat, kills the profile on every target carrying two or more
+ *  function words. On a target carrying exactly one — "At reception, madam."
+ *  — dropping it and slipping on it are literally the same utterance, so no
+ *  scoring rule can separate them, and this one does not pretend to. What
+ *  covers those is the other half of the fix: the lessons own headwords are
+ *  required outright (see lesson() in phase0.ts), so the content word can
+ *  never be the thing that goes. */
+const FUNCTION_TOKEN_ALLOWANCE = 1;
+
 /** Negation is graded asymmetrically, and deliberately.
  *
  *  Four reports proposed adding "yes"/"no" to the required list. That breaks
@@ -190,6 +253,12 @@ export function requiredValueTokens(target: string, override?: string[]): string
     ...(override ?? []).map((t) => t.toLowerCase()),
     ...titleAndSurname(target),
   ];
+}
+
+/** The function words this target actually contains. Graded separately from
+ *  requiredValueTokens because these get an allowance and those do not. */
+export function requiredFunctionTokens(target: string): string[] {
+  return [...new Set(normalize(target).filter((t) => FUNCTION_TOKENS.has(t)))];
 }
 
 /** A title plus the name it belongs to: "Ms Smith", "Mr Chen".
@@ -403,17 +472,22 @@ export function utterancePassed(
   // answer for the same missing reason.
   const gated = dayFree ? required.filter((t) => !DAYPART.test(t)) : required;
   const missingRequired = [...new Set(gated)].filter((t) => !spokenSet.has(t));
+  // Function words, one life. See FUNCTION_TOKENS.
+  const funcNeeded = requiredFunctionTokens(target);
+  const missingFunction = funcNeeded.filter((t) => !spokenSet.has(t));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
     ...cmp,
     missingRequired,
+    missingFunction,
     addedNegation: added,
     inflectionErrors: inflection,
     passed:
       Math.round(cmp.accuracy * 100) >= th.accPct &&
       cmp.orderRatio >= th.orderRatio &&
       missingRequired.length === 0 &&
+      missingFunction.length <= FUNCTION_TOKEN_ALLOWANCE &&
       added.length === 0 &&
       inflection.length === 0,
     threshold: th,
