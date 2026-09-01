@@ -15,6 +15,7 @@
 //     same course and keep vocabulary actually coming back.
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
+import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 
@@ -738,6 +739,21 @@ if (legacyGameDupes.length) {
   // clipped pidgin. Weeks 1–14 are fixed; weeks 15–40 still carry it, so this is
   // a ratchet like the reading one. No position check — ArcadeSuite and
   // BoardGameSuite reshuffle on every render, so only length can leak.
+  // Week 2 lessons 3 and 4 pluralise lx.items[0] and lx.items[2] — "Two {i1}s,
+  // please.", "How many {i3}s, sir?" — and lesson 4 IS the countable/uncountable
+  // lesson, keying its reading answer to "{i3} đếm được". Front Office shipped
+  // `Luggage` at index 2 and F&B shipped `Water`, so both drilled "Three
+  // luggages, sir." and "How many waters, sir?" as the model answer with a false
+  // rule attached, in a lesson whose own rule uses water as its uncountable
+  // example. Two auditors called it blocking. The slots are structural, so
+  // guard the slots rather than the strings.
+  for (const [code, lx] of Object.entries(LEXICONS))
+    for (const idx of [0, 2])
+      if (lx.items[idx]?.mass)
+        errors.push(
+          `${code}: lx.items[${idx}] is "${lx.items[idx].word}", a mass noun, but weeks 2-6 pluralise that slot — move it to index 1, 3, 4 or 5`,
+        );
+
   const GAME_LENGTH_MAX = 0.62; // 652/1053 today
   let gLong = 0;
   let gTotal = 0;

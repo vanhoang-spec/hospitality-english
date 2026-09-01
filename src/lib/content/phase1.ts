@@ -978,9 +978,9 @@ function week10(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Are these two the same?",
-          "No, sir. This one is better.",
+          "They are the same, madam.",
           "Same same, sir.",
-          "Yes, they are the same.",
+          "Yes, sir. This one is much better.",
         ),
       ],
     }),
@@ -1129,7 +1129,7 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           "What time do you start?",
           `We ${lower(t3)} at ${lx.service.open}, madam.`,
-          `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới. Giới từ 'at' vẫn phải bật /t/ khi đứng trước giờ — đừng nuốt thành 'a'.`,
+          `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới. Cụm 'at + giờ' đọc nối liền thành một khối: /t/ không bật rời ra, nhưng cũng không được biến mất.`,
         ),
       ],
       reading: read(
@@ -1827,7 +1827,7 @@ function week14(lx: Ctx): LessonContent[] {
             options: ["Số lượng khách cần", "Số phòng để mang lên tận nơi", "Tên khách"],
             correct: 0,
             explanation:
-              "Hỏi số lượng trước để không phải đi lại nhiều lần. Số phòng thì không cần hỏi — khách đang đứng ngay trước mặt.",
+              "Hỏi số lượng trước để không phải đi lại nhiều lần. Nhưng nếu là chìa khoá hay đồ giao tận phòng thì luôn phải xác nhận số phòng trước.",
           },
           {
             q: "'Of course' thể hiện điều gì?",
@@ -1881,7 +1881,11 @@ function week14(lx: Ctx): LessonContent[] {
             q: "Sau bao lâu thì xong việc?",
             options: ["Mười phút", "Một ngày", "Không xong"],
             correct: 0,
-            explanation: "'Ten minutes later the work is done.'",
+            // Quoted "…the work is done." while the passage says "…is
+            // ${lower(c3)}" — correct / clean / spotless / tidy / wonderful /
+            // finalised, one per department. A learner checking the answer
+            // against the text found a sentence that was not there, in all six.
+            explanation: `Bài đọc: "Ten minutes later the work is ${lower(c3)}."`,
           },
         ],
       ),

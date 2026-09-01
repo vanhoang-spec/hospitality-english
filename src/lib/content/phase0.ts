@@ -49,7 +49,21 @@ const RESORT = "Lotus Bay";
 // ------------------------------------------------------------
 // Department lexicons — the only per-department variation in P0.
 // ------------------------------------------------------------
-type P0Item = { word: string; phonetic: string; definition: string; icon: string };
+/** `mass: true` marks an uncountable noun. Week 2 lesson 4 IS the countable
+ *  vs uncountable lesson: it renders `How many {items[2]}s?` and keys its
+ *  reading answer to "{word} đếm được". Front Office had `Luggage` there and
+ *  F&B had `Water`, so both departments drilled `"Three luggages, sir."` /
+ *  `"How many waters, sir?"` five times as the model, with `"Vì luggage đếm
+ *  được"` as the answer key — while the rule in the SAME lesson used water as
+ *  its example of an uncountable noun. verify-content now refuses a mass noun
+ *  at index 0 or 2, the two slots the plural frames read. */
+type P0Item = {
+  word: string;
+  phonetic: string;
+  definition: string;
+  icon: string;
+  mass?: true;
+};
 
 export type P0Lexicon = {
   code: string;
@@ -104,8 +118,8 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     items: [
       { word: "Key", phonetic: "/kiː/", definition: "Chìa khóa phòng", icon: "🔑" },
       { word: "Passport", phonetic: "/ˈpɑːspɔːt/", definition: "Hộ chiếu", icon: "🛂" },
-      { word: "Luggage", phonetic: "/ˈlʌɡɪdʒ/", definition: "Hành lý", icon: "🧳" },
       { word: "Form", phonetic: "/fɔːm/", definition: "Tờ khai, biểu mẫu", icon: "📋" },
+      { word: "Luggage", phonetic: "/ˈlʌɡɪdʒ/", definition: "Hành lý", icon: "🧳", mass: true },
       { word: "Map", phonetic: "/mæp/", definition: "Bản đồ", icon: "🗺️" },
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
@@ -132,9 +146,11 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     items: [
       { word: "Menu", phonetic: "/ˈmenjuː/", definition: "Thực đơn", icon: "📋" },
       { word: "Table", phonetic: "/ˈteɪbl/", definition: "Bàn ăn", icon: "🪑" },
-      { word: "Water", phonetic: "/ˈwɔːtə/", definition: "Nước lọc", icon: "💧" },
-      { word: "Coffee", phonetic: "/ˈkɒfi/", definition: "Cà phê", icon: "☕" },
       { word: "Spoon", phonetic: "/spuːn/", definition: "Thìa", icon: "🥄" },
+      // Index 4 is NOT taught as a headword — only 0-3 get a v() card — and
+      // FB-36 reviews "Water", so parking it there orphaned that review card.
+      { word: "Water", phonetic: "/ˈwɔːtə/", definition: "Nước lọc", icon: "💧", mass: true },
+      { word: "Coffee", phonetic: "/ˈkɒfi/", definition: "Cà phê", icon: "☕", mass: true },
       { word: "Napkin", phonetic: "/ˈnæpkɪn/", definition: "Khăn ăn", icon: "🧻" },
     ],
     service: { en: "breakfast", vi: "bữa sáng", open: "six", close: "ten" },
@@ -159,7 +175,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     station: "the guest room door",
     items: [
       { word: "Towel", phonetic: "/ˈtaʊəl/", definition: "Khăn tắm", icon: "🧺" },
-      { word: "Soap", phonetic: "/səʊp/", definition: "Xà phòng", icon: "🧼" },
+      { word: "Soap", phonetic: "/səʊp/", definition: "Xà phòng", icon: "🧼", mass: true },
       { word: "Pillow", phonetic: "/ˈpɪləʊ/", definition: "Gối", icon: "🛏️" },
       { word: "Blanket", phonetic: "/ˈblæŋkɪt/", definition: "Chăn", icon: "🛌" },
       { word: "Hanger", phonetic: "/ˈhæŋə/", definition: "Móc treo quần áo", icon: "🧥" },
@@ -190,8 +206,8 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Locker", phonetic: "/ˈlɒkə/", definition: "Tủ khóa", icon: "🔒" },
       { word: "Slipper", phonetic: "/ˈslɪpə/", definition: "Dép đi trong spa", icon: "🩴" },
       // "Trà", not "Trà thảo mộc" — herbal tea is its own SW week-9 headword.
-      { word: "Tea", phonetic: "/tiː/", definition: "Trà", icon: "🍵" },
-      { word: "Oil", phonetic: "/ɔɪl/", definition: "Tinh dầu", icon: "🫗" },
+      { word: "Tea", phonetic: "/tiː/", definition: "Trà", icon: "🍵", mass: true },
+      { word: "Oil", phonetic: "/ɔɪl/", definition: "Tinh dầu", icon: "🫗", mass: true },
       { word: "Candle", phonetic: "/ˈkændl/", definition: "Nến thơm", icon: "🕯️" },
     ],
     // Open and close must differ — the week-3 reading questions offer both
@@ -391,7 +407,17 @@ function week1(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Good evening.", "Good evening, madam.", "Good morning.", "Good evening, sir.")],
+      game: [
+        // Đề cũ chỉ là "Good evening." và chấm "Good evening, sir." là SAI — không có
+        // dữ kiện giới tính nào, nên một đáp án đúng bị chấm sai. Ba auditor độc
+        // lập cùng bắt, ở đúng vòng game ĐẦU TIÊN của cả khoá.
+        game(
+          "Good evening. I am Mrs Smith.",
+          "Good evening, madam.",
+          "Good morning.",
+          "Good evening. Do you want a room?",
+        ),
+      ],
     }),
 
     lesson(lx, 1, 2, "Spelling a Name", "Đánh vần tên khách", {
@@ -715,7 +741,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           `Two ${i1.word.toLowerCase()}s, please.`,
           `Yes, two ${i1.word.toLowerCase()}s. One moment.`,
-          "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai. Âm /s/ cuối của số nhiều phải nghe được: đây là âm người Việt nuốt nhiều nhất.",
+          "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai. Đuôi số nhiều ở đây đọc /z/ CÓ RUNG, không phải /s/ — sau nguyên âm hay phụ âm hữu thanh thì luôn là /z/ (sau âm xuýt thì thành /ɪz/). Người Việt hay nuốt hẳn âm cuối này.",
         ),
       ],
       reading: read(
@@ -1392,7 +1418,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           `Here is my ${i1.word.toLowerCase()}.`,
           "Thank you. Here you are.",
-          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. Âm /h/ đầu 'Here' phải bật ra — bỏ nó đi thì âm đầu biến mất và khách không hiểu.",
+          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. 'Here you are' đọc nối liền thành một cụm, trọng âm rơi vào 'are' — tách rời từng từ nghe như đang đánh vần.",
         ),
       ],
       reading: read(
@@ -1565,7 +1591,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           "Which room and floor?",
           `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
-          "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng. Số thứ tự của tầng kết thúc bằng cụm phụ âm khó — âm cuối phải nghe được, đừng dừng ở nguyên âm.",
+          "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng. Số thứ tự của tầng đóng bằng phụ âm khó, và mỗi từ một kiểu: có từ kết bằng /d/, có từ kết bằng /θ/ (lưỡi chạm răng), có từ kết bằng cụm /st/. Nghe kỹ âm cuối trong mẫu rồi bắt chước đúng âm đó.",
         ),
       ],
       reading: read(

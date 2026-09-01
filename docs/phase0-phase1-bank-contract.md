@@ -18,14 +18,14 @@ Read this before changing any word in `LEXICONS` (P0) or `P1_BANKS` (P1).
 
 Every rule below was written after a defect, not before one.
 
-| What shipped                                                    | Why the check that existed did not catch it              |
-| --------------------------------------------------------------- | -------------------------------------------------------- |
-| "I need some taxi." · "I need some toothbrush." (5 of 6 depts)  | part of speech was right — noun. Countability was not.   |
-| "This one is better. It is more expensive." (BO)                | part of speech and countability both right. Polarity was not. |
-| "He check ins every day." (all 6)                               | the frame concatenated instead of inflecting the head verb. |
-| "This one is more empty." (FO) · "more bright." (HK)            | the frame hardcoded "more" instead of reading `cmp`.     |
-| "Can I have the fork?" for a first mention (all 6)              | Vietnamese has no articles, so the frame drilled the wrong one. |
-| Female personas narrated as "He" in 25 passages                 | the frame hardcoded a pronoun instead of reading `lx.pron`. |
+| What shipped                                                   | Why the check that existed did not catch it                     |
+| -------------------------------------------------------------- | --------------------------------------------------------------- |
+| "I need some taxi." · "I need some toothbrush." (5 of 6 depts) | part of speech was right — noun. Countability was not.          |
+| "This one is better. It is more expensive." (BO)               | part of speech and countability both right. Polarity was not.   |
+| "He check ins every day." (all 6)                              | the frame concatenated instead of inflecting the head verb.     |
+| "This one is more empty." (FO) · "more bright." (HK)           | the frame hardcoded "more" instead of reading `cmp`.            |
+| "Can I have the fork?" for a first mention (all 6)             | Vietnamese has no articles, so the frame drilled the wrong one. |
+| Female personas narrated as "He" in 25 passages                | the frame hardcoded a pronoun instead of reading `lx.pron`.     |
 
 The pattern: **the frame and the bank each looked correct on their own.** Only
 rendering all six departments showed the mismatch. Do that before you commit.
@@ -35,16 +35,16 @@ rendering all six departments showed the mismatch. Do that before you commit.
 One lexicon per department. These are not free-text fields; each is consumed
 by frames that assume a specific shape.
 
-| Field           | Shape required                                            | Consumed by                                                              |
-| --------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `staff`         | one given name, no title                                  | narrates every reading passage: `${lx.staff} says: "…"`                  |
-| `pron`          | must match `staff`'s gender                               | any frame referring back to `staff`. Never hardcode a pronoun.           |
-| `station`       | lowercase noun phrase **with its article**: "the front desk" | `A guest arrives at ${lx.station}.` — the frame supplies no article.    |
-| `items[6]`      | **countable, singular, capitalised**; a physical object staff hand over | `Two ${i1}s`, `the wrong ${i1}`, `Here is my ${i1}.` The plural is formed by appending `s`, so no irregular plurals. |
-| `service`       | `en` names the department's own service; `open` ≠ `close`, both spelled out as words | week 3's opening-hours frames. Identical open/close gives a reading question two identical options and no answer. |
-| `priced.vndWord`| the amount **in words, ≤ 3 words** ("five hundred thousand") | week 4. The pre-A1 cap is 5 words per sentence and the amount is most of one. |
-| `roomNo.spoken` | digit-by-digit with hyphens, 0 as "oh": "two-oh-five"      | week 2 teaches room numbers as digits, not as a whole number.            |
-| `floor.ordinal` | bare ordinal, no "the": "second"                          | `The ${lx.floor.ordinal} floor, madam.`                                  |
+| Field            | Shape required                                                                       | Consumed by                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `staff`          | one given name, no title                                                             | narrates every reading passage: `${lx.staff} says: "…"`                                                              |
+| `pron`           | must match `staff`'s gender                                                          | any frame referring back to `staff`. Never hardcode a pronoun.                                                       |
+| `station`        | lowercase noun phrase **with its article**: "the front desk"                         | `A guest arrives at ${lx.station}.` — the frame supplies no article.                                                 |
+| `items[6]`       | **countable, singular, capitalised**; a physical object staff hand over              | `Two ${i1}s`, `the wrong ${i1}`, `Here is my ${i1}.` The plural is formed by appending `s`, so no irregular plurals. |
+| `service`        | `en` names the department's own service; `open` ≠ `close`, both spelled out as words | week 3's opening-hours frames. Identical open/close gives a reading question two identical options and no answer.    |
+| `priced.vndWord` | the amount **in words, ≤ 3 words** ("five hundred thousand")                         | week 4. The pre-A1 cap is 5 words per sentence and the amount is most of one.                                        |
+| `roomNo.spoken`  | digit-by-digit with hyphens, 0 as "oh": "two-oh-five"                                | week 2 teaches room numbers as digits, not as a whole number.                                                        |
+| `floor.ordinal`  | bare ordinal, no "the": "second"                                                     | `The ${lx.floor.ordinal} floor, madam.`                                                                              |
 
 **`items` is the strictest.** Frames put it after "the wrong", after "my",
 and in a bare plural. A mass noun there ("Luggage" is a real one, and FO
@@ -55,16 +55,16 @@ frame first.
 
 Eight slots × 8 words per department, one slot per week.
 
-| Slot        | Week | Part of speech                    | Countability / form                            | Representative frames                                                       |
-| ----------- | ---- | --------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------- |
-| `roles`     | 7    | **noun phrase, a job title**      | singular, takes "our"                           | `This is our {w}, sir.` · `Our {w} is on duty, madam.` · `I will ask our {w}.` |
-| `places`    | 8    | **noun, a place in the hotel**    | singular, takes "the" and "a"                   | `The {w} is on the left.` · `Is there a {w} here?` · `It is next to the {w}.` |
-| `requests`  | 9    | **noun, something a guest asks for** | countable unless it declares `art: "some"`   | `Can I have {a/an w}?` · `I need some {plural}.` · `Would you like the {w}?` |
-| `states`    | 10   | **adjective**                     | gradable; declares `cmp` if it takes "-er"      | `It is very {w}, madam.` · `This is too {w}.` · `That one is {cmp}.`         |
-| `routines`  | 11   | **bare verb phrase**              | head verb first, so `third()` can inflect it    | `I {w} every day.` · `We {w} at {hour}.` · `Please {w} before you go.`        |
-| `phone`     | 12   | **mixed — see per-index table**   | —                                               | see below                                                                     |
-| `problems`  | 13   | **adjective or past participle**  | describes a fault, never a thing                | `The {item} is {w}.` · `It is {w}, sir.`                                      |
-| `closing`   | 14   | **mixed — see per-index table**   | —                                               | see below                                                                     |
+| Slot       | Week | Part of speech                       | Countability / form                          | Representative frames                                                          |
+| ---------- | ---- | ------------------------------------ | -------------------------------------------- | ------------------------------------------------------------------------------ |
+| `roles`    | 7    | **noun phrase, a job title**         | singular, takes "our"                        | `This is our {w}, sir.` · `Our {w} is on duty, madam.` · `I will ask our {w}.` |
+| `places`   | 8    | **noun, a place in the hotel**       | singular, takes "the" and "a"                | `The {w} is on the left.` · `Is there a {w} here?` · `It is next to the {w}.`  |
+| `requests` | 9    | **noun, something a guest asks for** | countable unless it declares `art: "some"`   | `Can I have {a/an w}?` · `I need some {plural}.` · `Would you like the {w}?`   |
+| `states`   | 10   | **adjective**                        | gradable; declares `cmp` if it takes "-er"   | `It is very {w}, madam.` · `This is too {w}.` · `That one is {cmp}.`           |
+| `routines` | 11   | **bare verb phrase**                 | head verb first, so `third()` can inflect it | `I {w} every day.` · `We {w} at {hour}.` · `Please {w} before you go.`         |
+| `phone`    | 12   | **mixed — see per-index table**      | —                                            | see below                                                                      |
+| `problems` | 13   | **adjective or past participle**     | describes a fault, never a thing             | `The {item} is {w}.` · `It is {w}, sir.`                                       |
+| `closing`  | 14   | **mixed — see per-index table**      | —                                            | see below                                                                      |
 
 ### The two slots that are not uniform
 
@@ -72,16 +72,16 @@ Eight slots × 8 words per department, one slot per week.
 easiest way to break weeks 12 and 14, because the slot name suggests one
 category and the frames want six.
 
-| Index | `phone` (week 12)                        | `closing` (week 14)                       |
-| ----- | ---------------------------------------- | ----------------------------------------- |
-| 1     | noun — the desk you answer as            | noun — a thing handed over                |
-| 2     | noun — what you take from the caller     | noun — a thing left behind                |
-| 3     | **adverbial of time** — "in five minutes"| **adjective** — "spotless", "correct"     |
-| 4     | **bare verb** — "transfer the call"      | noun — a period wished well: `Have a good {w}` |
-| 5     | noun — what is ready                     | noun — a thing offered                    |
-| 6     | **bare verb** — "note down"              | noun — a thing that is ready              |
-| 7     | **bare verb** — "call you back"          | noun — a thing to check                   |
-| 8     | **bare verb, imperative** — "call us"    | *(unused — the slot holds 7)*             |
+| Index | `phone` (week 12)                         | `closing` (week 14)                            |
+| ----- | ----------------------------------------- | ---------------------------------------------- |
+| 1     | noun — the desk you answer as             | noun — a thing handed over                     |
+| 2     | noun — what you take from the caller      | noun — a thing left behind                     |
+| 3     | **adverbial of time** — "in five minutes" | **adjective** — "spotless", "correct"          |
+| 4     | **bare verb** — "transfer the call"       | noun — a period wished well: `Have a good {w}` |
+| 5     | noun — what is ready                      | noun — a thing offered                         |
+| 6     | **bare verb** — "note down"               | noun — a thing that is ready                   |
+| 7     | **bare verb** — "call you back"           | noun — a thing to check                        |
+| 8     | **bare verb, imperative** — "call us"     | _(unused — the slot holds 7)_                  |
 
 ### Polarity: the column Phase 4 does not need
 
