@@ -540,13 +540,13 @@ function week1(lx: P0Lexicon): LessonContent[] {
       vocabulary: [
         v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
         v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
-        // Thẻ cũ là `Alphabet` với câu ví dụ "Please say the alphabet slowly."
-        // — câu không lễ tân nào nói, và là headword duy nhất của bài không
-        // bao giờ được dùng lại. Trong khi đó bài này chấm J-A-M-E với J-A-N-E
-        // bằng bộ mã chưa từng dạy: TÊN chữ cái không xuất hiện ở đâu trong
-        // sáu tuần. Bốn báo cáo nêu. Thẻ nay mang chính tên các chữ cái mà
-        // bài dùng, và chỉ những chữ người Việt hay nghe nhầm.
-        v("Letter", "/ˈletə/", "Chữ cái", "A-N-N-A. Four letters.", "🔤"),
+        // Ô thẻ này đã hai lần đổi chủ. Đầu tiên là `Alphabet` — headword duy
+        // nhất của bài không bao giờ được nói ra. Rồi `Letter`, và nó cũng thế:
+        // nhân viên nói TÊN các chữ cái, không nói chữ "letter". Tên 26 chữ cái
+        // vẫn nằm đủ trong luật của cặp ngữ pháp thứ tư ngay dưới đây, nên
+        // không mất gì. Chỗ này nay thuộc về `Sir`, từ mà học viên phải nói từ
+        // câu đầu tiên của tuần 1 và trước nay chỉ được dạy ở tuần 6.
+        v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Is that E or I, sir?", "🎩"),
       ],
       grammar: [
         g(
@@ -1108,7 +1108,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         ),
         game(
           `Where is my ${i4.word.toLowerCase()}?`,
-          `It is here, sir.`,
+          `Your ${i4.word.toLowerCase()} is here, sir.`,
           `Here, sir. You take.`,
           `I do not know, sir. Sorry.`,
           undefined,
@@ -1819,7 +1819,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "Could you carry this for me?",
           "Certainly. I will call the bellman.",
-          "Hành lý là việc của bộ phận hành lý, và cũng là cách tự bảo vệ: đồ trong vali hỏng hay mất sau khi bạn cầm vào thì không có phiếu giao nhận nào chứng minh. Nhận lời trước rồi mới gọi — 'Certainly' trọng âm âm tiết đầu: CER-tain-ly.",
+          "Hành lý là việc của bộ phận hành lý, và cũng là cách tự bảo vệ: đồ trong vali hỏng hay mất sau khi bạn cầm vào thì không có phiếu giao nhận nào chứng minh. Nhận lời trước rồi mới gọi — 'Certainly' trọng âm âm tiết đầu: CER-tain-ly. 'Bellman' /ˈbelmæn/ là nhân viên khuân hành lý, nhiều khách sạn gọi là porter; nhấn âm đầu BELL-man.",
           undefined,
           ["bellman"],
         ),
@@ -1898,7 +1898,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "I want to speak to the manager.",
           "One moment. I will call my manager.",
-          "Khách đòi gặp quản lý thì gọi ngay, đừng hỏi lý do và đừng tự thanh minh. Gọi nhanh là cách hạ nhiệt tốt nhất.",
+          "Khách đòi gặp quản lý thì gọi ngay, đừng hỏi lý do và đừng tự thanh minh. Gọi nhanh là cách hạ nhiệt tốt nhất. 'Manager' đọc /ˈmænɪdʒə/ — nhấn âm đầu MAN, đuôi -ger là /dʒə/ như trong village, không phải /ɡə/.",
           undefined,
           ["manager"],
         ),
@@ -2118,7 +2118,13 @@ function week6(lx: P0Lexicon): LessonContent[] {
     lesson(lx, 6, 1, "Welcome & Name", "Đón khách & hỏi tên", {
       vocabulary: [
         v("Guest", "/ɡest/", "Khách", "The guest is at the door.", "🧳"),
-        v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Good morning, sir.", "🎩"),
+        v(
+          "Ms",
+          "/mɪz/",
+          "Cô/Bà (khi chưa rõ khách đã lập gia đình hay chưa)",
+          "Good morning, Ms Smith.",
+          "🪪",
+        ),
       ],
       grammar: [
         g(
@@ -2620,7 +2626,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "I am not well at all.",
           "One moment. I will call a doctor.",
-          "Gọi bác sĩ là việc gọi ngay, không phải việc hỏi ý khách. Nói ra để khách biết có người đang lo.",
+          "Gọi bác sĩ là việc gọi ngay, không phải việc hỏi ý khách. Nói ra để khách biết có người đang lo. 'Doctor' đọc /ˈdɒktə/ — âm cuối là /ə/ nhẹ, đừng thành đốc-tơ.",
           undefined,
           ["doctor"],
         ),
@@ -2683,7 +2689,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       vocabulary: [
         v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
         v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
-        v("Letter", "/ˈletə/", "Chữ cái", "S-M-I-T-H. Five letters.", "🔡"),
+        v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Thank you. S-M-I-T-H, sir.", "🎩"),
       ],
       grammar: [
         g(
@@ -2811,7 +2817,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Can I stay until two?",
           "One moment. I will ask my manager.",
-          "Trả phòng muộn là quyết định của quản lý, không phải của bạn. Đừng hứa, cũng đừng từ chối thẳng — đi hỏi.",
+          "Trả phòng muộn là quyết định của quản lý, không phải của bạn. Đừng hứa, cũng đừng từ chối thẳng — đi hỏi. 'Manager' đọc /ˈmænɪdʒə/, nhấn âm đầu MAN.",
           undefined,
           ["manager"],
         ),
@@ -3343,7 +3349,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Did you see a watch in my room?",
           "Yes, madam. It is with my supervisor.",
-          "Trả lời thẳng và nói rõ đồ đang ở đâu. Đừng nói 'maybe' — khách đang lo mất đồ.",
+          "Trả lời thẳng và nói rõ đồ đang ở đâu. Đừng nói 'maybe' — khách đang lo mất đồ. 'Supervisor' /ˈsuːpəvaɪzə/ là tổ trưởng ca của bạn; nhấn âm ĐẦU: SU-per-vi-sor.",
           undefined,
           ["supervisor"],
         ),
@@ -3869,6 +3875,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Không bao giờ bảo đảm an toàn cho đồ để hớ hênh. Chỉ đúng chỗ cất có khoá.",
         ),
+        game(
+          "Yes? Who is that?",
+          "It is me, madam. Are you ready?",
+          "Me, madam. I come in.",
+          "It is me, madam. I will wait outside.",
+          undefined,
+          "Đáp án thứ ba lịch sự và an toàn, nhưng nó bỏ khách lại một mình mà không ai biết phải chờ bao lâu. Xưng mình rồi HỎI — câu hỏi trả quyền mở cửa về cho khách.",
+        ),
       ],
     }),
 
@@ -4309,7 +4323,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "I want to speak to the manager.",
           "One moment. I will call my manager.",
-          "Khách đòi gặp quản lý thì gọi ngay, đừng hỏi lý do và đừng tự thanh minh. Gọi nhanh là cách hạ nhiệt tốt nhất.",
+          "Khách đòi gặp quản lý thì gọi ngay, đừng hỏi lý do và đừng tự thanh minh. Gọi nhanh là cách hạ nhiệt tốt nhất. 'Manager' đọc /ˈmænɪdʒə/ — nhấn âm đầu MAN, đuôi -ger là /dʒə/ như trong village, không phải /ɡə/.",
           undefined,
           ["manager"],
         ),
@@ -4381,7 +4395,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       vocabulary: [
         v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
         v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
-        v("Letter", "/ˈletə/", "Chữ cái", "C-H-E-N. Four letters.", "🔡"),
+        v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Your family name, sir. Mr Chen.", "🎩"),
       ],
       grammar: [
         g(
