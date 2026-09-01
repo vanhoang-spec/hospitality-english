@@ -700,7 +700,9 @@ if (legacyGameDupes.length) {
   // strategy for the whole course. The course sits at 0.77 today — inherited from
   // generated content, worst in weeks 5, 9, 17 and 24 where it is 100%. Until that
   // is fixed batch by batch, this is a ratchet: it may fall, never rise.
-  const LENGTH_MAX = 0.771; // 1482/1923 today
+  // Weeks 1–14 are done: P0 is at 0.43, P1 at 0.36, and weeks 5 and 9 are no
+  // longer 100%. Weeks 17 and 24 are still open.
+  const LENGTH_MAX = 0.661; // 1330/2014 today
   const pos = [0, 0, 0, 0];
   let longest = 0;
   let total = 0;
@@ -728,6 +730,35 @@ if (legacyGameDupes.length) {
   if (longShare > LENGTH_MAX)
     errors.push(
       `a learner who always picks the longest option scores ${(longShare * 100).toFixed(0)}% on reading — balance the distractor lengths`,
+    );
+
+  // Games had the same hole and nothing measured it: every one of the 285 rounds
+  // in weeks 1–14 had the correct answer as the longest option, because the model
+  // answer was always a full polite sentence and both distractors were always
+  // clipped pidgin. Weeks 1–14 are fixed; weeks 15–40 still carry it, so this is
+  // a ratchet like the reading one. No position check — ArcadeSuite and
+  // BoardGameSuite reshuffle on every render, so only length can leak.
+  const GAME_LENGTH_MAX = 0.62; // 652/1053 today
+  let gLong = 0;
+  let gTotal = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        const ci = round.options.findIndex((o) => o.correct);
+        if (ci < 0) continue;
+        gTotal++;
+        const rival = Math.max(
+          ...round.options.filter((_, i) => i !== ci).map((o) => o.text.length),
+        );
+        if (round.options[ci].text.length > rival) gLong++;
+      }
+  const gShare = gTotal ? gLong / gTotal : 0;
+  console.log(
+    `Game answerability — always-longest wins ${(gShare * 100).toFixed(0)}% of ${gTotal} rounds`,
+  );
+  if (gShare > GAME_LENGTH_MAX)
+    errors.push(
+      `a learner who always picks the longest option wins ${(gShare * 100).toFixed(0)}% of game rounds — balance the distractor lengths`,
     );
 }
 if (warnings.length) {
