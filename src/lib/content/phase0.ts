@@ -370,7 +370,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         sp(
           "Hello!",
           "Good morning, sir. Welcome.",
-          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h).",
+          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h). Âm cuối của 'morning' là /ŋ/ — miệng vẫn mở, đừng đóng lưỡi thành /n/. 'Welcome' trọng âm âm tiết đầu: WEL-come.",
         ),
       ],
       reading: read(
@@ -425,7 +425,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         sp(
           "My name is Ivy. I-V-Y.",
           "Thank you. I-V-Y is correct.",
-          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm.",
+          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm. 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank hay sank. 'correct' trọng âm âm tiết sau: co-RRECT.",
         ),
       ],
       reading: read(
@@ -476,7 +476,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         sp(
           "Excuse me, who are you?",
           `I am from ${lx.deptEn}.`,
-          "Giới thiệu bộ phận giúp khách biết bạn giúp được việc gì.",
+          "Giới thiệu bộ phận giúp khách biết bạn giúp được việc gì. Cụm /fr/ đầu từ 'from' phải bật cả hai âm — bỏ /r/ thì thành 'phôm'.",
         ),
       ],
       reading: read(
@@ -527,7 +527,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         sp(
           "Thank you for your help!",
           "You are welcome, madam.",
-          "Khi khách cảm ơn, đáp 'You are welcome' — không im lặng hoặc chỉ gật đầu.",
+          "Khi khách cảm ơn, đáp 'You are welcome' — không im lặng hoặc chỉ gật đầu. 'madam' trọng âm âm tiết đầu: MA-dam, không phải ma-DAM.",
         ),
       ],
       reading: read(
@@ -600,12 +600,12 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           "What is my room number?",
           `Your room is ${lx.roomNo.spoken}.`,
-          `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}".`,
+          `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
         ),
         sp(
           "What is the total, please?",
           "It is forty-five dollars, sir.",
-          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'.",
+          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Và 'dollars' kết thúc bằng âm /z/ có rung, không phải /s/.",
         ),
       ],
       reading: read(
@@ -663,7 +663,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           "Which floor, please?",
           `The ${lx.floor.ordinal} floor, madam.`,
-          "Trả lời ngắn gọn: 'The + số thứ tự + floor'. Không cần cả câu dài.",
+          "Trả lời ngắn gọn: 'The + số thứ tự + floor'. Không cần cả câu dài. 'The' mở đầu bằng /ð/ — lưỡi chạm răng VÀ có rung, đừng thành 'đờ' hay 'zờ'.",
         ),
       ],
       reading: read(
@@ -714,7 +714,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           `Two ${i1.word.toLowerCase()}s, please.`,
           `Yes, two ${i1.word.toLowerCase()}s. One moment.`,
-          "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai.",
+          "Nhắc lại số lượng khách yêu cầu để xác nhận — tránh mang sai. Âm /s/ cuối của số nhiều phải nghe được: đây là âm người Việt nuốt nhiều nhất.",
         ),
       ],
       reading: read(
@@ -765,7 +765,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           `I need three ${i3.word.toLowerCase()}s.`,
           `Three ${i3.word.toLowerCase()}s. Yes, madam.`,
-          "Xác nhận lại rồi mới đi lấy. Đừng chỉ gật đầu.",
+          "Xác nhận lại rồi mới đi lấy. Đừng chỉ gật đầu. 'Three' có /θ/ rồi mới tới /r/ — đọc chậm cả hai âm, đừng để thành tri hay free.",
         ),
       ],
       reading: read(
@@ -833,7 +833,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         sp(
           "Excuse me, what time is it?",
           "It is seven o'clock, sir.",
-          "Giờ đúng thì thêm 'o'clock'. 7:30 nói 'half past seven'.",
+          "Giờ đúng thì thêm 'o'clock'. 7:30 nói 'half past seven'. Trọng âm rơi vào CLOCK, và âm /k/ cuối phải bật ra.",
         ),
       ],
       reading: read(
@@ -884,7 +884,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         sp(
           "When is my city tour?",
           "Your tour is tomorrow, madam.",
-          "Nói rõ 'today' hay 'tomorrow' để khách không nhầm lịch.",
+          "Nói rõ 'today' hay 'tomorrow' để khách không nhầm lịch. 'tomorrow' trọng âm ở giữa: to-MOR-row, ba âm tiết.",
         ),
       ],
       reading: read(
@@ -935,7 +935,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         sp(
           "What time do you open?",
           `We open at ${lx.service.open}, madam.`,
-          "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'.",
+          "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'. 'open' trọng âm âm tiết đầu: O-pen.",
         ),
       ],
       reading: read(
@@ -986,7 +986,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         sp(
           `What time is ${lx.service.en}?`,
           `It starts at ${lx.service.open} o'clock.`,
-          "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc.",
+          "Trả lời cả giờ bắt đầu; nếu khách cần, nói thêm giờ kết thúc. 'starts' kết thúc bằng cụm /ts/ — phải nghe được cả hai âm, đừng dừng ở 'star'.",
         ),
       ],
       reading: read(
@@ -1109,7 +1109,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         sp(
           "Can I pay by card?",
           "Yes, card is fine, sir.",
-          "Đáp ngắn và rõ. Nếu chỉ nhận tiền mặt: 'Cash only, please.'",
+          "Đáp ngắn và rõ. Nếu chỉ nhận tiền mặt: 'Cash only, please.' Từ 'card' có /d/ cuối — đừng đọc thành 'ca'.",
         ),
       ],
       reading: read(
@@ -1162,7 +1162,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         sp(
           "How much is that in dollars?",
           `It is about ${lx.priced.usdWord} dollars, sir.`,
-          "Giữ 'about' — nói một con số đô chính xác là hứa một tỷ giá bạn không kiểm soát được.",
+          "Giữ 'about' — nói một con số đô chính xác là hứa một tỷ giá bạn không kiểm soát được. Từ này trọng âm ở âm tiết sau: a-BOUT, và /t/ cuối phải bật.",
         ),
       ],
       reading: read(
@@ -1217,7 +1217,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         sp(
           "Two coffees, please.",
           "Two coffees. Ninety thousand dong, please.",
-          "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn.",
+          "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn. 'thousand' mở đầu bằng /θ/: đầu lưỡi chạm nhẹ răng trên.",
         ),
       ],
       reading: read(
@@ -1279,7 +1279,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "Could you help me, please?",
           "Of course, madam. Certainly.",
-          "'Of course' và 'Certainly' là hai cách nhận lời lịch sự nhất.",
+          "'Of course' và 'Certainly' là hai cách nhận lời lịch sự nhất. 'Certainly' có ba âm tiết, trọng âm ở đầu: CER-tain-ly.",
         ),
       ],
       reading: read(
@@ -1330,7 +1330,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "Can I have my key, please?",
           "One moment, please, sir.",
-          "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp.",
+          "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp. 'please' kết thúc bằng /z/ có rung — không phải /s/, và đừng cụt thành pli.",
         ),
       ],
       reading: read(
@@ -1391,7 +1391,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "Here is my passport.",
           "Thank you. Here you are.",
-          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'.",
+          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. Âm /h/ đầu 'Here' phải bật ra — bỏ nó đi thì âm đầu biến mất và khách không hiểu.",
         ),
       ],
       reading: read(
@@ -1448,7 +1448,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           "This is the wrong key.",
           "I am very sorry, madam.",
-          "Xin lỗi trước, sửa sau. 'Excuse me' dùng khi làm phiền; 'Sorry' dùng khi mình sai.",
+          "Xin lỗi trước, sửa sau. 'Excuse me' dùng khi làm phiền; 'Sorry' dùng khi mình sai. Từ 'very' mở đầu bằng /v/ — răng trên chạm môi dưới, đừng thành 'be-ry'.",
         ),
       ],
       reading: read(
@@ -1512,7 +1512,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           "Good morning. I am Anna Smith.",
           "Good morning, madam. Welcome.",
-          "Chào lại đúng buổi, xưng hô đúng giới tính, rồi mới sang bước tiếp.",
+          "Chào lại đúng buổi, xưng hô đúng giới tính, rồi mới sang bước tiếp. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
         ),
       ],
       reading: read(
@@ -1564,7 +1564,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           "Which room and floor?",
           `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
-          "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng.",
+          "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng. Số thứ tự của tầng kết thúc bằng cụm phụ âm khó — âm cuối phải nghe được, đừng dừng ở nguyên âm.",
         ),
       ],
       reading: read(
@@ -1615,7 +1615,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           "Sorry, what time and how much?",
           `We open at ${lx.service.open}. ${capFirst(lx.priced.vndWord)} dong.`,
-          "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài.",
+          "Khi khách hỏi hai thông tin, trả lời tách thành hai câu ngắn — dễ nghe hơn một câu dài. Nghỉ hẳn một nhịp giữa hai câu: chỗ ngắt cũng là một phần của phát âm.",
         ),
       ],
       reading: read(
@@ -1667,7 +1667,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           `Thank you. That is all.`,
           `Thank you, madam. Enjoy your stay.`,
-          "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách.",
+          "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách. 'Enjoy' trọng âm ở âm tiết sau: en-JOY; cụm /st/ đầu 'stay' phải bật cả hai âm.",
         ),
       ],
       reading: read(

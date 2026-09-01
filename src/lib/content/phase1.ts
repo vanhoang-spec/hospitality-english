@@ -142,7 +142,7 @@ function week7(lx: Ctx): LessonContent[] {
         sp(
           "Who is this, please?",
           `This is our ${lower(r1)}, sir.`,
-          `Công thức: "This is our + chức danh". Thay ${lower(r1)} bằng chức danh bất kỳ để tự luyện ở nhà.`,
+          `Công thức: "This is our + chức danh". Thay ${lower(r1)} bằng chức danh bất kỳ để tự luyện ở nhà. 'This' mở đầu bằng /ð/ (lưỡi chạm răng, có rung) và đóng lại bằng /s/ — người Việt hay bỏ mất cả hai đầu.`,
         ),
       ],
       reading: read(
@@ -194,7 +194,7 @@ function week7(lx: Ctx): LessonContent[] {
         sp(
           "Who is on duty now?",
           `Our ${lower(r3)} is on duty, madam.`,
-          "Mẫu 'Our + chức danh + is on duty' dùng được cho mọi ca trực.",
+          "Mẫu 'Our + chức danh + is on duty' dùng được cho mọi ca trực. 'duty' trọng âm âm tiết đầu: DU-ty.",
         ),
       ],
       reading: read(
@@ -249,7 +249,7 @@ function week7(lx: Ctx): LessonContent[] {
         sp(
           "Which department are you in?",
           `I work in ${lx.deptEn}, sir.`,
-          "Câu này dùng hằng ngày khi khách hỏi. Học thuộc như một khối.",
+          "Câu này dùng hằng ngày khi khách hỏi. Học thuộc như một khối. Âm /k/ cuối của 'work' phải bật ra — đừng dừng lại ở nguyên âm.",
         ),
       ],
       reading: read(
@@ -304,7 +304,7 @@ function week7(lx: Ctx): LessonContent[] {
         sp(
           "Can you help me with this?",
           `I am not sure. I will ask our ${lower(r7)}.`,
-          "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách.",
+          "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách. Từ 'ask' kết thúc bằng cụm /sk/: nghe được cả hai âm, đừng thành 'át'.",
         ),
       ],
       reading: read(
@@ -372,7 +372,7 @@ function week8(lx: Ctx): LessonContent[] {
         sp(
           `Excuse me, where is the ${lower(p1)}?`,
           `The ${lower(p1)} is on the left, sir.`,
-          "Khung câu vàng của tuần này. Thay tên nơi chốn để tự luyện tại nhà.",
+          "Khung câu vàng của tuần này. Thay tên nơi chốn để tự luyện tại nhà. Từ 'left' đóng bằng cụm /ft/ — phải nghe cả /f/ lẫn /t/, đừng thành 'lép'.",
         ),
       ],
       reading: read(
@@ -424,7 +424,7 @@ function week8(lx: Ctx): LessonContent[] {
         sp(
           `Is there a ${lower(p4)} here?`,
           `Yes, there is one near the lift.`,
-          "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này.",
+          "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này. 'there' mở đầu bằng /ð/ — lưỡi chạm răng và có rung, đừng để thành de hay ze.",
         ),
       ],
       reading: read(
@@ -476,7 +476,7 @@ function week8(lx: Ctx): LessonContent[] {
         sp(
           `Where is the ${lower(p6)}?`,
           `It is downstairs, near the lobby.`,
-          "Trả lời hai lớp thông tin: tầng nào + gần cái gì. Khách dễ hình dung hơn.",
+          "Trả lời hai lớp thông tin: tầng nào + gần cái gì. Khách dễ hình dung hơn. Từ 'downstairs' trọng âm rơi vào STAIRS, và âm /z/ cuối phải rung.",
         ),
       ],
       reading: read(
@@ -527,7 +527,7 @@ function week8(lx: Ctx): LessonContent[] {
         sp(
           `Could you take me there?`,
           `Of course. Let me show you.`,
-          "Khách nhờ dẫn đường thì đi cùng, đừng chỉ tay rồi thôi.",
+          "Khách nhờ dẫn đường thì đi cùng, đừng chỉ tay rồi thôi. Từ 'course' đóng bằng /s/ — đừng nuốt mất âm cuối.",
         ),
       ],
       reading: read(
@@ -590,7 +590,7 @@ function week9(lx: Ctx): LessonContent[] {
         sp(
           `Can I have ${wa(q1)}, please?`,
           `Of course. I will bring one.`,
-          "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin.",
+          "Câu đáp vạn năng của tuần này — dùng được với mọi món khách xin. Từ 'bring' có cụm /br/ ở đầu và /ŋ/ ở cuối: miệng vẫn mở khi kết thúc.",
         ),
       ],
       reading: read(
@@ -642,7 +642,7 @@ function week9(lx: Ctx): LessonContent[] {
         sp(
           `I need some ${lower(q3)}.`,
           `How many do you need, madam?`,
-          "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần.",
+          "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần. Từ 'need' có /d/ cuối; bỏ nó đi thì thành knee, nghĩa khác hẳn.",
         ),
       ],
       reading: read(
@@ -690,7 +690,7 @@ function week9(lx: Ctx): LessonContent[] {
         sp(
           `How long will it take?`,
           `In five minutes, madam.`,
-          "Luôn cho khách một mốc thời gian cụ thể, đừng nói 'soon' chung chung.",
+          "Luôn cho khách một mốc thời gian cụ thể, đừng nói 'soon' chung chung. Từ 'minutes' trọng âm ở đầu và đóng bằng cụm /ts/: MI-nits, không phải mi-NÚT.",
         ),
       ],
       reading: read(
@@ -741,7 +741,7 @@ function week9(lx: Ctx): LessonContent[] {
         sp(
           `Do you have the ${lower(q7)}?`,
           `I am sorry. Would you like the ${lower(q8)}?`,
-          "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'.",
+          "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'. Cụm 'Would you' nối liền thành /ˈwʊdʒu/ — người bản xứ không đọc tách rời từng từ.",
         ),
       ],
       reading: read(
@@ -809,7 +809,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp(
           "How is the room today?",
           `It is very ${lower(s1)}, madam.`,
-          "Khung câu vàng: 'It is very + tính từ'. Thay tính từ khác để tự luyện.",
+          "Khung câu vàng: 'It is very + tính từ'. Thay tính từ khác để tự luyện. Từ 'very' mở đầu bằng /v/ — răng trên chạm môi dưới, đừng thành 'be-ry'.",
         ),
       ],
       reading: read(
@@ -861,7 +861,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp(
           `This is too ${lower(s4)}.`,
           `I am sorry. I will change it.`,
-          "Nghe 'too + tính từ' là khách đang phàn nàn — phải xin lỗi và hành động ngay.",
+          "Nghe 'too + tính từ' là khách đang phàn nàn — phải xin lỗi và hành động ngay. Từ 'change' mở bằng /tʃ/ và đóng bằng /dʒ/: hai âm khác nhau, đừng cụt thành 'chen'.",
         ),
       ],
       reading: read(
@@ -923,7 +923,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp(
           "Which one is better?",
           `This one is better, madam.`,
-          "Trả lời dứt khoát rồi mới giải thích — khách cần lời khuyên, không cần vòng vo.",
+          "Trả lời dứt khoát rồi mới giải thích — khách cần lời khuyên, không cần vòng vo. Từ 'better' trọng âm âm tiết đầu: BET-ter.",
         ),
       ],
       reading: read(
@@ -971,7 +971,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp(
           "Is it safe here?",
           `Please be careful. It is ${lower(s8)}.`,
-          "Cảnh báo an toàn phải nói trước, giải thích sau — an toàn khách là ưu tiên số một.",
+          "Cảnh báo an toàn phải nói trước, giải thích sau — an toàn khách là ưu tiên số một. Từ 'careful' trọng âm ở đầu: CARE-ful, và âm /l/ cuối phải chạm lưỡi lên vòm.",
         ),
       ],
       reading: read(
@@ -1050,7 +1050,7 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           "What do you do every day?",
           `I ${lower(t1)} every day.`,
-          "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày.",
+          "Mẫu 'I + động từ + tân ngữ + every day' — khung mô tả công việc thường ngày. Từ 'every' đọc hai âm tiết: EV-ry, không phải e-vơ-ri.",
         ),
       ],
       reading: read(
@@ -1101,7 +1101,7 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           "What time do you start?",
           `We ${lower(t3)} at ${lx.service.open}, madam.`,
-          `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới.`,
+          `Ôn lại 'at + giờ' của tuần 3, ghép với động từ công việc mới. Giới từ 'at' vẫn phải bật /t/ khi đứng trước giờ — đừng nuốt thành 'a'.`,
         ),
       ],
       reading: read(
@@ -1153,7 +1153,7 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           "Do you always do that?",
           `I usually ${lower(t5)} first, sir.`,
-          "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai.",
+          "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai. Từ 'first' đóng bằng cụm /st/ — cụm khó nhất tuần này, đừng dừng ở 'phơ'.",
         ),
       ],
       reading: read(
@@ -1204,7 +1204,7 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           "What do you do at the end?",
           `I ${lower(t7)} and go home.`,
-          "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc.",
+          "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc. Từ 'home' đóng bằng /m/: phải ngậm môi lại, đừng bỏ lửng.",
         ),
       ],
       reading: read(
@@ -1273,7 +1273,7 @@ function week12(lx: Ctx): LessonContent[] {
         sp(
           "Hello, is this the front desk?",
           `Hello, ${lx.deptEn}. ${lx.staff} speaking.`,
-          "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi.",
+          "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi. Từ 'speaking' có cụm /sp/ ở đầu và /ŋ/ ở cuối, trọng âm ở SPEA.",
         ),
       ],
       reading: read(
@@ -1325,7 +1325,7 @@ function week12(lx: Ctx): LessonContent[] {
         sp(
           "Could you tell him I called?",
           "Of course. May I take a message?",
-          "Chủ động xin ghi lời nhắn thay vì để khách phải yêu cầu.",
+          "Chủ động xin ghi lời nhắn thay vì để khách phải yêu cầu. Từ 'message' trọng âm âm tiết đầu: MES-sage, âm cuối là /dʒ/.",
         ),
       ],
       reading: read(
@@ -1373,7 +1373,7 @@ function week12(lx: Ctx): LessonContent[] {
         sp(
           "Can I speak to the manager?",
           "One moment. I will transfer you.",
-          "Báo trước rồi mới chuyển máy — đừng chuyển im lặng khiến khách tưởng bị cắt.",
+          "Báo trước rồi mới chuyển máy — đừng chuyển im lặng khiến khách tưởng bị cắt. Là động từ, 'transfer' trọng âm ở âm tiết sau: trans-FER.",
         ),
       ],
       reading: read(
@@ -1424,7 +1424,7 @@ function week12(lx: Ctx): LessonContent[] {
         sp(
           "That is all, thank you.",
           "Thank you for calling. Goodbye.",
-          "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại.",
+          "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại. Từ 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank.",
         ),
       ],
       reading: read(
@@ -1493,7 +1493,7 @@ function week13(lx: Ctx): LessonContent[] {
         sp(
           `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
           "I am sorry. I will fix it now.",
-          "Công thức vàng khi khách báo sự cố: xin lỗi + hứa hành động ngay.",
+          "Công thức vàng khi khách báo sự cố: xin lỗi + hứa hành động ngay. Từ 'fix' đóng bằng cụm /ks/ — phải nghe cả hai âm, đừng thành 'phích'.",
         ),
       ],
       reading: read(
@@ -1554,7 +1554,7 @@ function week13(lx: Ctx): LessonContent[] {
         sp(
           "This is really not acceptable.",
           "I am very sorry. I will help now.",
-          "Khách bức xúc thì xin lỗi ngắn gọn rồi hành động — đừng biện minh.",
+          "Khách bức xúc thì xin lỗi ngắn gọn rồi hành động — đừng biện minh. Từ 'help' đóng bằng cụm /lp/: lưỡi chạm vòm rồi mới ngậm môi.",
         ),
       ],
       reading: read(
@@ -1609,7 +1609,7 @@ function week13(lx: Ctx): LessonContent[] {
         sp(
           "Can you do something about it?",
           "I will check and come back.",
-          "Hứa cụ thể và PHẢI quay lại đúng hẹn — lời hứa không giữ còn tệ hơn không hứa.",
+          "Hứa cụ thể và PHẢI quay lại đúng hẹn — lời hứa không giữ còn tệ hơn không hứa. Cả 'check' lẫn 'back' đều đóng bằng /k/ — đây là âm cuối người Việt nuốt nhiều nhất.",
         ),
       ],
       reading: read(
@@ -1665,7 +1665,7 @@ function week13(lx: Ctx): LessonContent[] {
         sp(
           "Is it fixed now?",
           "Yes. Is everything all right now?",
-          "Xử lý xong phải hỏi lại khách — bước này quyết định khách có hài lòng thật không.",
+          "Xử lý xong phải hỏi lại khách — bước này quyết định khách có hài lòng thật không. Từ 'everything' có /θ/ ở giữa và /ŋ/ ở cuối, trọng âm ở đầu: EV-ry-thing.",
         ),
       ],
       reading: read(
@@ -1736,7 +1736,7 @@ function week14(lx: Ctx): LessonContent[] {
         sp(
           "Good morning. Are you free?",
           "Good morning, sir. How may I help you?",
-          "Chuỗi hai bước: chào theo buổi + mời giúp. Đây là mở đầu mọi ca làm.",
+          "Chuỗi hai bước: chào theo buổi + mời giúp. Đây là mở đầu mọi ca làm. Âm cuối của 'morning' là /ŋ/ — miệng vẫn mở, đừng đóng lưỡi thành /n/.",
         ),
       ],
       reading: read(
@@ -1788,7 +1788,7 @@ function week14(lx: Ctx): LessonContent[] {
         sp(
           `Can I have ${wa(q1)}?`,
           "Of course. I will bring one.",
-          "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca.",
+          "Ôn khung tuần 9. Đây là câu bạn dùng nhiều nhất mỗi ca. Từ 'one' đọc là /wʌn/ — mở đầu bằng âm /w/, không phải 'ôn'.",
         ),
       ],
       reading: read(
@@ -1837,7 +1837,7 @@ function week14(lx: Ctx): LessonContent[] {
         sp(
           "There is a problem in my room.",
           "I am sorry. I will check now.",
-          "Ôn khung tuần 13 — xin lỗi rồi hành động, không biện minh.",
+          "Ôn khung tuần 13 — xin lỗi rồi hành động, không biện minh. Từ 'sorry' trọng âm âm tiết đầu: SOR-ry, và âm /r/ ở giữa phải cong lưỡi.",
         ),
       ],
       reading: read(
@@ -1888,7 +1888,7 @@ function week14(lx: Ctx): LessonContent[] {
         sp(
           "No, that is all. Thank you.",
           "Thank you, sir. Enjoy your stay.",
-          "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối.",
+          "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối. Từ 'Enjoy' trọng âm ở âm tiết sau: en-JOY; cụm /st/ đầu 'stay' phải bật cả hai âm.",
         ),
       ],
       reading: read(
