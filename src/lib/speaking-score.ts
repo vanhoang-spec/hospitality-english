@@ -162,11 +162,10 @@ const NEGATION_TOKENS = new Set<string>([
   "cannot",
 ]);
 
-/** Which value tokens this target carries. An authored override wins so a
- *  frame can exempt a token that is genuinely formulaic in its sentence
- *  ("ONE moment" is a chunk, not a count). */
+/** Every token this target cannot lose: the ones derived from the closed
+ *  lists above, plus anything the frame author names, plus any title+surname
+ *  the model uses. */
 export function requiredValueTokens(target: string, override?: string[]): string[] {
-  if (override) return override.map((t) => t.toLowerCase());
   const toks = normalize(target);
   return [
     ...new Set(
@@ -182,7 +181,31 @@ export function requiredValueTokens(target: string, override?: string[]): string
         return VALUE_TOKENS.has(t) || GRAMMAR_TOKENS.has(t) || NEGATION_TOKENS.has(t);
       }),
     ),
+    // An authored list ADDS to the derived one; it does not replace it. The
+    // old contract was "override wins", and an audit proved what that would
+    // have cost: declaring `requiredTokens: ["room"]` made "Room NINE-one-two"
+    // pass a two-oh-five item, because naming one content word switched the
+    // number lock off. No frame had used the field yet — and all five reports
+    // that call it the highest-leverage fix left would have walked into that.
+    ...(override ?? []).map((t) => t.toLowerCase()),
+    ...titleAndSurname(target),
   ];
+}
+
+/** A title plus the name it belongs to: "Ms Smith", "Mr Chen".
+ *
+ *  This is NOT the sir/madam coin-flip. The guest has just said their own
+ *  name out loud, so the title AND the surname are both determined — and
+ *  choosing Ms over Mrs, or Chen over Wei, is the entire subject of the
+ *  lessons built on these frames. Measured before this: "Welcome, Mr Wei."
+ *  passed a "Welcome, Mr Chen." item at 67%, and "Thank you, Mrs Smith."
+ *  passed "Thank you, Ms Smith." at 75% — in the module whose own rule reads
+ *  "Gọi 'Mr Wei' là gọi bằng tên riêng". */
+function titleAndSurname(target: string): string[] {
+  const out: string[] = [];
+  for (const m of target.matchAll(/\b(mr|mrs|ms|miss)\.?\s+([a-z][a-z'-]+)/gi))
+    out.push(m[1].toLowerCase(), m[2].toLowerCase());
+  return out;
 }
 
 /** Dropping the -s — plural or third person — is the single most-taught point
@@ -225,15 +248,43 @@ export function addedNegation(spoken: string, target: string): string[] {
  *
  *  Where the prompt DOES fix the gender ("I am Mrs Lee.", "his room"), the
  *  tag is determined and stays graded: that is the case worth teaching. */
-const GENDER_CUE = /\b(mr|mrs|ms|miss|sir|madam|ma'am|he|she|his|her|him|lady|gentleman)\b/i;
+// FIRST PERSON only. The old pattern matched any mention of a title, so
+// "Which room is Mr Chen in?" counted as a cue — but Mr Chen is the person
+// being ASKED ABOUT, and the speaker's own gender is still unknown. That
+// turned an honest "I am sorry, madam." into a FAIL, on the one frame whose
+// whole subject is refusing to discuss another guest. Exactly the coin-flip
+// this helper exists to prevent, arriving through the back door.
+const GENDER_CUE =
+  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\b|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister)\b|\b(sir|madam|ma'am)\b/i;
 const HONORIFIC = /^(sir|madam|ma'am|maam)$/;
 
 export function honorificIsFree(guestPrompt?: string): boolean {
   return !guestPrompt || !GENDER_CUE.test(guestPrompt);
 }
 
+/** The same problem on the time axis, and the very first utterance of the
+ *  course had it: the guest says "Hello!" and the model answers "Good
+ *  morning, sir." — so "Good afternoon, sir." failed on a missing `morning`,
+ *  for a choice the prompt never gave the learner any way to make.
+ *
+ *  Deliberately narrow. It frees the three greeting words only when the
+ *  target OPENS with one, i.e. when they are a courtesy formula. In a
+ *  statement of fact — "We open at six in the morning." — the time of day is
+ *  the information, and it stays locked. */
+const TIME_CUE =
+  /\b(morning|afternoon|evening|night|midnight|noon|breakfast|lunch|dinner|a\.?m|p\.?m|o'clock|arrived)\b/i;
+const GREETING_OPENS = /^good\s+(morning|afternoon|evening)\b/i;
+const DAYPART = /^(morning|afternoon|evening)$/;
+
+export function greetingIsFree(target: string, guestPrompt?: string): boolean {
+  return GREETING_OPENS.test(target.trim()) && (!guestPrompt || !TIME_CUE.test(guestPrompt));
+}
+
 const canonHonorific = (toks: string[], free: boolean) =>
   free ? toks.map((t) => (HONORIFIC.test(t) ? "sir" : t)) : toks;
+
+const canonDaypart = (toks: string[], free: boolean) =>
+  free ? toks.map((t) => (DAYPART.test(t) ? "morning" : t)) : toks;
 
 function lcsLength(a: string[], b: string[]): number {
   const dp: number[] = new Array(b.length + 1).fill(0);
@@ -248,9 +299,14 @@ function lcsLength(a: string[], b: string[]): number {
   return dp[b.length];
 }
 
-export function compareWords(spoken: string, target: string, honorificFree = false) {
-  const a = canonHonorific(normalize(spoken), honorificFree);
-  const b = canonHonorific(normalize(target), honorificFree);
+export function compareWords(
+  spoken: string,
+  target: string,
+  honorificFree = false,
+  daypartFree = false,
+) {
+  const a = canonDaypart(canonHonorific(normalize(spoken), honorificFree), daypartFree);
+  const b = canonDaypart(canonHonorific(normalize(target), honorificFree), daypartFree);
   const used = new Set<number>();
   const correctIdx = new Set<number>();
   for (let i = 0; i < b.length; i++) {
@@ -329,20 +385,24 @@ export function utterancePassed(
 ) {
   const th = passThresholds(sourceWeek);
   const free = honorificIsFree(guestPrompt);
-  const cmp = compareWords(spoken, target, free);
+  const dayFree = greetingIsFree(target, guestPrompt);
+  const cmp = compareWords(spoken, target, free, dayFree);
   // A value token said wrong or not at all fails the utterance regardless of
   // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
   // stream, so ASR digits ("205" → two oh five) still count.
   const spokenSet = new Set(normalize(spoken));
   const required = requiredValueTokens(target, requiredTokens);
-  // When the guest's line DOES fix the gender, the honorific stops being a
-  // coin-flip and becomes the thing the lesson teaches — so grade it. Only
-  // two Phase 0 frames are in this position, and both are the frames whose
-  // whole subject is how to address a guest.
-  if (!free)
-    for (const t of ["sir", "madam", "mr", "mrs", "ms"])
-      if (normalize(target).includes(t)) required.push(t);
-  const missingRequired = [...new Set(required)].filter((t) => !spokenSet.has(t));
+  // When the guest's line DOES fix the gender, a bare honorific stops being a
+  // coin-flip and becomes the thing the lesson teaches — so grade it. Titles
+  // that carry a surname are handled by titleAndSurname() and need no cue:
+  // the guest said the name, so nothing is left to guess.
+  if (!free) for (const t of ["sir", "madam"]) if (normalize(target).includes(t)) required.push(t);
+  // And drop the day-part from the required list when the greeting is free —
+  // canonicalising it inside compareWords fixes the percentage but leaves the
+  // token lock still demanding the exact word, which fails the same honest
+  // answer for the same missing reason.
+  const gated = dayFree ? required.filter((t) => !DAYPART.test(t)) : required;
+  const missingRequired = [...new Set(gated)].filter((t) => !spokenSet.has(t));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
