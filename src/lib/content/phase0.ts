@@ -213,8 +213,8 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     ],
     service: { en: "room cleaning", vi: "dọn phòng", open: "eight", close: "four", isEvent: true },
     priced: {
-      en: "laundry for one shirt",
-      vi: "giặt là một áo sơ mi",
+      en: "shirt laundry",
+      vi: "giặt là áo sơ mi",
       vnd: 70000,
       vndWord: "seventy thousand",
       usd: 3,
@@ -591,8 +591,8 @@ function week1(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Excuse me, can you help me?",
-          "Yes, madam. May I help you?",
+          "Excuse me, are you busy?",
+          "No, madam. May I help you?",
           "Khách hỏi giúp thì nhận lời trước rồi mới hỏi việc gì — đừng hỏi ngược lại 'what?'. 'help' có /h/ đầu và /p/ cuối, phải bật cả hai.",
         ),
         sp(
@@ -728,7 +728,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         g(
           `Room ${lx.roomNo.cardinal}.`,
           `Room ${lx.roomNo.spoken}, sir.`,
-          `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}. Số 0 đọc là 'oh'.`,
+          `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}, chứ không phải ${lx.roomNo.cardinal}.`,
         ),
         g(
           "Room number what?",
@@ -757,9 +757,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
           // buồng phòng hay nhà hàng không đọc số phòng khách cho khách nghe.
           // "Which room, please?" đúng cho cả sáu: phòng khách, phòng đang dọn,
           // phòng trị liệu, phòng ăn riêng, phòng họp.
-          "Which room, please?",
-          `Room ${lx.roomNo.spoken}, sir.`,
-          `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
+          `I am in room ${lx.roomNo.spoken}.`,
+          `Room ${lx.roomNo.spoken}. Thank you, sir.`,
+          `Đọc lại số phòng khách vừa nói là cách duy nhất chắc chắn nghe đúng. ${lx.roomNo.digits} đọc từng chữ số: "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
         ),
         sp(
           // Tuần 2 dạy tổng tiền bằng ĐÔ, rồi tuần 4 dạy rằng nói một con số đô
@@ -864,10 +864,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          "Excuse me, I cannot find the lift.",
-          "The lift is over there, madam.",
-          "Lift there.",
-          "It is near, madam.",
+          `Is my room on the ${lx.floor.ordinal} floor?`,
+          `Yes, madam. The ${lx.floor.ordinal} floor.`,
+          "Yes, floor yes madam.",
+          `No madam, go to the ${lx.floor.ordinal} floor.`,
         ),
         game(
           "Where is the lift?",
@@ -900,7 +900,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          `One ${i1.word.toLowerCase()}, please.`,
+          "I need one, not two.",
           `One ${i1.word.toLowerCase()}, madam. One moment.`,
           "Nhắc lại số lượng rồi mới đi lấy — im lặng quay đi làm khách tưởng bạn chưa nghe. Một và hai khác nhau ở đuôi -s: nghe kỹ đuôi.",
         ),
@@ -1382,7 +1382,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "Tên tiền tệ này không đếm được trong tiếng Anh: 'five hundred thousand dong'. Lý do nằm ở tiếng Anh, không phải ở tiếng Việt.",
+              "'Dong' đếm được nhưng có dạng số nhiều bất biến, giống yen hay baht: một dong, năm trăm nghìn dong — không bao giờ 'dongs'.",
           },
         ],
       ),
@@ -1470,13 +1470,13 @@ function week4(lx: P0Lexicon): LessonContent[] {
     // vị trí của nó: một bài quy đổi, không phải đơn vị mặc định của khách sạn.
     lesson(lx, 4, 3, "When a Guest Asks in Dollars", "Khi khách hỏi giá bằng đô", {
       vocabulary: [
-        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usd} dollars.`, "💵"),
+        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usdWord} dollars.`, "💵"),
         v("Change", "/tʃeɪndʒ/", "Tiền thối lại", "Here is your change.", "🪙"),
       ],
       grammar: [
         g(
-          `${lx.priced.usd} dollar.`,
-          `It is about ${lx.priced.usd} dollars.`,
+          `${capFirst(lx.priced.usdWord)} dollar.`,
+          `It is about ${lx.priced.usdWord} dollars.`,
           "Hai điều: từ 2 đô trở lên phải có -s, và thêm 'about' vì tỷ giá thay đổi hằng ngày.",
         ),
         g(
@@ -1716,7 +1716,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          `Could I have my ${i1.word.toLowerCase()}, please?`,
+          `Could you bring me ${/^[aeiou]/i.test(i1.word) ? "an" : "a"} ${i1.word.toLowerCase()}?`,
           "One moment, please, sir.",
           "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp. 'please' kết thúc bằng /z/ có rung — không phải /s/, và đừng cụt thành pli.",
         ),
@@ -1996,8 +1996,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Nghe số phòng thì trả lời đúng tầng của số đó. Tầng gọi bằng số thứ tự, không bằng số đếm.",
         ),
         sp(
-          "Which room and floor?",
-          `Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
+          `Is room ${lx.roomNo.spoken} ready?`,
+          `Yes. Room ${lx.roomNo.spoken}, ${lx.floor.ordinal} floor.`,
           "Trả lời gọn hai thông tin khách cần nhất: số phòng và tầng. Số thứ tự của tầng đóng bằng phụ âm khó, và mỗi từ một kiểu: có từ kết bằng /d/, có từ kết bằng /θ/ (lưỡi chạm răng), có từ kết bằng cụm /st/. Nghe kỹ âm cuối trong mẫu rồi bắt chước đúng âm đó.",
         ),
       ],
@@ -2470,6 +2470,155 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "It closes at four, madam.",
           "Four.",
           "It close at four o'clock, madam.",
+        ),
+      ],
+    }),
+
+  // Reading the whole module end to end found week 4 contradicting itself:
+  // 4.2 now teaches "I cannot take cash", and then 4.3 has the same person
+  // take a payment and hand back change, and 4.4 hand over a bill. A learner
+  // who reads the week in order is told the rule and shown it broken twice,
+  // in the two lessons right after it. Both lessons keep their headwords and
+  // their subject — quoting a price in dollars, saying a total — and lose
+  // only the part where Housekeeping becomes a cashier.
+  HK_4_3: (lx) =>
+    lesson(lx, 4, 3, "When a Guest Asks in Dollars", "Khi khách hỏi giá bằng đô", {
+      vocabulary: [
+        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usdWord} dollars.`, "💵"),
+        v("Change", "/tʃeɪndʒ/", "Tiền thối", "Reception gives your change.", "🪙"),
+      ],
+      grammar: [
+        g(
+          `${capFirst(lx.priced.usdWord)} dollar.`,
+          `It is about ${lx.priced.usdWord} dollars.`,
+          "Hai điều: từ 2 đô trở lên phải có -s, và luôn thêm 'about' vì tỷ giá đổi hằng ngày. Nói một con số đô chính xác là hứa một tỷ giá bạn không quyết định.",
+        ),
+        g(
+          "Give me the money.",
+          "Please pay at reception, sir.",
+          "Báo giá được, nhận tiền thì không. Câu báo giá luôn đi kèm câu chỉ chỗ trả, nếu không khách sẽ đưa tiền ngay tại chỗ.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "How much is that in dollars?",
+          `It is about ${lx.priced.usdWord} dollars, sir.`,
+          "Giữ 'about' — nói một con số đô chính xác là hứa một tỷ giá bạn không kiểm soát được. Từ này trọng âm ở âm tiết sau: a-BOUT, và /t/ cuối phải bật.",
+        ),
+        sp(
+          "Can I pay you in dollars?",
+          "Please pay at reception, sir.",
+          "Ngoại tệ hay tiền đồng cũng vậy: chỗ trả tiền là lễ tân. Trả lời gọn rồi chỉ chỗ, đừng giải thích dài.",
+        ),
+        sp(
+          "Who gives me my change?",
+          "Reception gives your change, madam.",
+          "Ai thu tiền thì người đó thối tiền. 'change' mở đầu và kết thúc đều bằng /tʃ/ và /dʒ/ — hai âm khác nhau, đừng đọc thành 'chen'.",
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff} the price in dollars. ${lx.staff} says: "It is about ${lx.priced.usdWord} dollars, madam. We take dong." The guest takes out money. ${lx.staff} says: "Please pay at reception, madam. Reception gives your change." The guest says: "Thank you."`,
+        [
+          {
+            q: `Vì sao ${lx.staff} nói 'about'?`,
+            options: [
+              "Vì tỷ giá thay đổi hằng ngày",
+              "Vì khách sạn muốn khách trả bằng đô la",
+              "Vì chưa biết giá",
+            ],
+            correct: 0,
+            explanation: "Nói con số đô chính xác là hứa một tỷ giá khách sạn không quyết định.",
+          },
+          {
+            q: `Khách đưa tiền ra, ${lx.staff} làm gì?`,
+            options: ["Chỉ khách xuống lễ tân", "Nhận tiền rồi thối lại", "Bảo khách trả sau"],
+            correct: 0,
+            explanation:
+              "Bài 2 của tuần này đã nói: buồng phòng không thu tiền. Báo giá thì được, cầm tiền thì không — kể cả khi khách đã cầm sẵn trên tay.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Do you take dollars here?",
+          "We take dong, sir.",
+          "Dollar no good here, sir.",
+          "Yes sir, dollars are fine here too.",
+        ),
+        game(
+          "Here, take the money.",
+          "Please pay at reception, madam.",
+          "OK, thank you.",
+          "Yes madam, I will take it for you.",
+        ),
+      ],
+    }),
+
+  HK_4_4: (lx) =>
+    lesson(lx, 4, 4, "The Laundry Total", "Tổng tiền đồ giặt", {
+      vocabulary: [
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
+        v("Bill", "/bɪl/", "Hóa đơn", "Reception has your bill.", "🧾"),
+      ],
+      grammar: [
+        g(
+          `Total ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord}.`,
+          "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều (tuần 4 bài 1).",
+        ),
+        g(
+          "Bill here.",
+          "Reception has your bill, sir.",
+          "Buồng phòng ghi phiếu, lễ tân giữ hoá đơn. Nói rõ hoá đơn ở đâu thì khách không phải đi hỏi vòng.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "How much for the laundry?",
+          `The total is ${lx.priced.vndWord} dong.`,
+          "Báo tổng thành tiếng trước khi ghi phiếu — khách nghe rõ ngay tại phòng thì không tranh cãi lúc trả phòng. Âm /l/ CUỐI từ là lỗi nặng nhất của người Việt: total, bill, towel — đầu lưỡi chạm lợi trên và giữ ở đó.",
+        ),
+        sp(
+          "Could I have the bill, please?",
+          "Reception has your bill, madam.",
+          "Không hứa mang hoá đơn lên phòng. Nói đúng nơi có hoá đơn, và nói ngay lần đầu.",
+        ),
+        sp(
+          "Is the laundry on my bill?",
+          "Yes, madam. On your bill.",
+          "Trả lời có ngay từ đầu câu rồi mới nhắc lại chỗ. Khách hỏi câu này là đang kiểm tra chi phí, không phải đang trách.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} counts the laundry and says: "The total is ${lx.priced.vndWord} dong, madam." ${lx.staff} writes it on the list. The guest asks: "Could I have the bill?" ${lx.staff} says: "Reception has your bill, madam." The guest says: "Thank you." ${lx.staff} says: "Goodbye, madam."`,
+        [
+          {
+            q: "Tổng tiền là bao nhiêu?",
+            options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
+            correct: 0,
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
+          },
+          {
+            q: "Khách xin hoá đơn thì nói gì?",
+            options: ["Hoá đơn ở lễ tân", "Mang hoá đơn lên phòng", "Hẹn khách hôm sau"],
+            correct: 0,
+            explanation:
+              "Buồng phòng ghi phiếu, lễ tân giữ hoá đơn. Hứa mang lên phòng là hứa một việc mình không làm được.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "How much is the laundry?",
+          `The total is ${lx.priced.vndWord} dong.`,
+          `Total ${lx.priced.vndWord}.`,
+          "I do not know, madam. Ask reception.",
+        ),
+        game(
+          "Can you bring my bill here?",
+          "Reception has your bill, sir.",
+          "Bill no here.",
+          "Yes sir, I will bring it to your room.",
         ),
       ],
     }),
@@ -3062,7 +3211,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ],
       speaking: [
         sp(
-          "I lost my key. Room two-oh-five.",
+          "I lost my key.",
           "May I see your passport, sir?",
           "Đừng xin lỗi trước khi hỏi. Xem giấy tờ là việc bình thường và khách quen với nó ở mọi khách sạn tốt.",
         ),
