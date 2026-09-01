@@ -106,6 +106,27 @@ const third = (w: P1Word) => {
   return [stem + s, ...rest].join(" ");
 };
 
+/** Plural of a bank NOUN phrase, for the frames that quantify it: "I need
+ *  some taxis." The -s goes on the LAST word, the opposite of `third()`,
+ *  so "Sun bed" → "sun beds" and not "suns bed". Words already declaring
+ *  `art: "some"` are mass nouns and stay bare — "some papers" means
+ *  something else.
+ *
+ *  Week 9's three "some" frames read `lower()` and so taught "I need some
+ *  taxi.", "I need some toothbrush." and "I need some balloon." as the
+ *  GUEST's line in the request drill, in five of six departments. The
+ *  answer they drill against — "How many do you need, madam?" — only makes
+ *  sense after a plural, so the frame had wanted this all along. */
+const plural = (w: P1Word) => {
+  const bare = lower(w);
+  if (w.art === "some") return bare;
+  const parts = bare.split(" ");
+  const last = parts[parts.length - 1]!;
+  const suffix = /(s|sh|ch|x|z)$/.test(last) ? "es" : /[^aeiou]y$/.test(last) ? "ies" : "s";
+  parts[parts.length - 1] = (suffix === "ies" ? last.slice(0, -1) : last) + suffix;
+  return parts.join(" ");
+};
+
 /** Comparative form of a bank adjective: "-er" for the short ones, "more …"
  *  for the rest. The week-10 frame hardcoded "more", which is correct for
  *  "important" and wrong for "empty", "bright", "sour" and "tired". */
@@ -625,7 +646,7 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 2, "How Many Do You Need?", "Hỏi khách cần bao nhiêu", {
-      vocabulary: [bw(q3, `Some ${lower(q3)}, please.`), bw(q4, `Do you need the ${lower(q4)}?`)],
+      vocabulary: [bw(q3, `Some ${plural(q3)}, please.`), bw(q4, `Do you need the ${lower(q4)}?`)],
       grammar: [
         g(
           "How many?",
@@ -640,13 +661,13 @@ function week9(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          `I need some ${lower(q3)}.`,
+          `I need some ${plural(q3)}.`,
           `How many do you need, madam?`,
           "Luôn hỏi rõ số lượng trước khi đi lấy — tránh phải đi lại hai lần. Từ 'need' có /d/ cuối; bỏ nó đi thì thành knee, nghĩa khác hẳn.",
         ),
       ],
       reading: read(
-        `The guest asks for ${lower(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
+        `The guest asks for ${plural(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
         [
           {
             q: "Khách cần mấy cái?",
