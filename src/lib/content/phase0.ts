@@ -623,7 +623,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Say it again.",
           "Could you spell that, please?",
           "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/. Tám chữ người Việt hay lẫn nhất: A · E · I · G · J · R · W · Y.",
-          "Can you spell that?",
+          "Could you spelling that, please?",
         ),
       ],
       speaking: [
@@ -689,7 +689,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           `I ${lx.deptEn}.`,
           `My name is ${lx.staff}. I am from ${lx.deptEn}.`,
           "Tiếng Việt bỏ được động từ 'là', tiếng Anh thì không. Luôn có 'am/is/are': I AM from…",
-          `My name is ${lx.staff}. I am from the ${lx.deptEn}.`,
+          `My name is ${lx.staff}. I from ${lx.deptEn}.`,
         ),
         g(
           "You are from where?",
@@ -1181,14 +1181,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
     lesson(lx, 3, 1, "Telling the Time", "Nói giờ", {
       vocabulary: [
         v("Time", "/taɪm/", "Thời gian, giờ", "What time is it?", "⏰"),
-        v("O'clock", "/əˈklɒk/", "Giờ đúng (7:00 = seven o'clock)", "It is seven o'clock.", "🕖"),
-        v(
-          "Half past",
-          "/hɑːf pɑːst/",
-          "Rưỡi (7:30 = half past seven)",
-          "It is half past seven.",
-          "🕢",
-        ),
+        v("O'clock", "/əˈklɒk/", "Giờ chẵn, ví dụ 7:00", "It is seven o'clock.", "🕖"),
+        v("Half past", "/hɑːf pɑːst/", "Rưỡi, ví dụ 7:30", "It is half past seven.", "🕢"),
       ],
       grammar: [
         g(
@@ -1930,7 +1924,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         g(
           "Wait.",
           "One moment, please, sir.",
-          "Bảo khách 'Wait' rất thô. Câu chuẩn là 'One moment, please'.",
+          "Bảo khách 'Wait' rất thô. Câu chuẩn là 'One moment, please' — 'One minute' hứa đúng sáu mươi giây và khách sẽ bấm giờ, còn 'moment' thì không hứa con số nào.",
           "One minute, please, sir.",
         ),
         g(
@@ -2203,7 +2197,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           // The guest gives her name and the model answer threw it away. Using
           // the surname is the cheapest upgrade in hospitality English and the
           // course never taught it once in fourteen weeks.
-          "Good afternoon. I am Mr Chen.",
+          "Good afternoon. I am Mr Chen. I stayed here in May.",
           "Welcome back, Mr Chen.",
           "Khách quen thì thêm 'back' — hai chữ đó nói rằng bạn nhớ họ. Gọi bằng HỌ kèm Mr, Mrs hoặc Ms, không gọi tên riêng.",
         ),
@@ -2288,8 +2282,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "colleague",
         ),
         sp(
-          `Could you bring two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}?`,
-          `Two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}. One moment.`,
+          `Could you bring six ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}?`,
+          `Six ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}. One moment.`,
           "Nối hai việc của tuần 2 vào một lượt: nhắc lại SỐ LƯỢNG và nhắc lại SỐ PHÒNG. Đọc số phòng từng chữ số. Nhắc lại cả hai rồi mới đi — sai một trong hai là đi lại hai lần.",
         ),
       ],
@@ -2362,7 +2356,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "Sorry, I did not understand.",
-          "I am sorry, madam. Slowly again.",
+          "I am sorry, madam. I will say it again.",
           "Khách chưa hiểu thì nhắc lại CHẬM HƠN, đừng nhắc lại to hơn. Nói ra là mình sẽ nói chậm lại thì khách yên tâm hỏi tiếp.",
         ),
         sp(
@@ -2615,7 +2609,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Where do I walk?",
           "Careful, madam. The floor is wet.",
-          "Cảnh báo sàn ướt là câu nói nhiều nhất trong ca của bạn. 'wet' kết thúc bằng /t/ phải bật ra thành tiếng. Nuốt đuôi thì khách chỉ nghe được một nguyên âm, và câu cảnh báo mất hết tác dụng.",
+          "'Careful' /ˈkeəfl/ là 'cẩn thận', 'wet' /wet/ là 'ướt' — hai từ này không có thẻ riêng nhưng phải nói được ngay. Cảnh báo sàn ướt là câu nói nhiều nhất trong ca của bạn. 'wet' kết thúc bằng /t/ phải bật ra thành tiếng. Nuốt đuôi thì khách chỉ nghe được một nguyên âm, và câu cảnh báo mất hết tác dụng.",
           undefined,
           ["careful", "wet"],
         ),
@@ -2694,7 +2688,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I call doctor you wait.",
           "One moment. I will call a doctor.",
           "Nói ra là mình đang đi gọi, rồi đi gọi thật. Đừng tự đoán bệnh, đừng cho khách uống gì, và đừng bỏ khách một mình.",
-          "One moment. I will call the doctor.",
+          "One moment. I call a doctor.",
         ),
       ],
       speaking: [
@@ -3268,7 +3262,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Who gives me my change?",
-          "Reception gives your change, madam.",
+          "Your change is at reception, madam.",
           "Ai thu tiền thì người đó thối tiền. 'change' mở đầu và kết thúc đều bằng /tʃ/ và /dʒ/ — hai âm khác nhau, đừng đọc thành 'chen'.",
           undefined,
           ["reception", "change"],
@@ -3418,7 +3412,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I keep it.",
           "I will tell my supervisor.",
           "Đồ nhặt trong phòng không bao giờ giữ lại và cũng không cất vào ngăn kéo. Giao cho quản lý ngay trong ca, và nói ra để có người thứ hai biết.",
-          "I will tell my supervisor later.",
+          "I will tell to my supervisor.",
         ),
         g(
           "Money here, I no see.",
@@ -3989,8 +3983,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "I do soft now.",
           "Of course, madam. Softer.",
-          "Khách kêu đau thì đổi ngay và nói ra là mình đã đổi. Đừng chỉ im lặng làm nhẹ đi — khách không biết bạn có nghe hay không.",
-          "Of course, madam.",
+          "Khách kêu đau thì đổi ngay và nói ra là mình đã đổi. Đừng chỉ im lặng làm nhẹ đi — khách không biết bạn có nghe hay không. 'Softer' là 'soft' + đuôi so sánh -er: nhẹ HƠN mức đang làm.",
+          "Of course, madam. More soft.",
         ),
       ],
       speaking: [
@@ -4374,7 +4368,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Room number? OK, here.",
           "May I see your passport, sir?",
           "Số phòng không phải bằng chứng — ai đứng cạnh quầy cũng nghe được. Chìa khoá chỉ đưa sau khi xem giấy tờ, không có ngoại lệ, kể cả khách quen.",
-          "Can I see your room key, sir?",
+          "May I to see your passport, sir?",
         ),
         g(
           "I no can do.",
@@ -4386,7 +4380,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "You wait.",
           "One moment, please. I will check.",
           "Xin khách chờ bằng câu mời, và nói rõ bạn đang làm gì trong lúc đó.",
-          "One moment, please.",
+          "One moment, please. I checking.",
         ),
       ],
       speaking: [
@@ -4632,14 +4626,18 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         game(
           "Is Mr Tran in room seven-two-oh?",
           "I am sorry, sir. I cannot say.",
-          "No, madam.",
+          "No, sir.",
           "One moment, sir. I will look in the computer.",
+          undefined,
+          "Cả hai đáp án kia đều đã trả lời. 'No' nói rằng ông Trần KHÔNG ở phòng đó — tức là xác nhận có danh sách và bạn đang đọc nó. Còn mở máy tra giúp thì đúng là đang tra thật. Không xác nhận, không phủ nhận, không tra: câu duy nhất an toàn là câu không nói gì về khách.",
         ),
         game(
           "Please just give her this bag.",
           "One moment. I will call my manager.",
           "Room seven-two-oh.",
           "She is in the lounge.",
+          undefined,
+          "Nói khách đang ở sảnh nghe như từ chối nhận đồ, nhưng nó vừa xác nhận khách có ở đây vừa chỉ chỗ tìm — với đúng người vừa bị từ chối một lần. Người không bỏ đi sau lần từ chối đầu là việc của quản lý, không phải của bạn.",
         ),
       ],
     }),
