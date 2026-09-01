@@ -1522,7 +1522,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           `${capFirst(lx.priced.vndWord)} dong, sir.`,
           "🇻🇳",
         ),
-        v("Free", "/friː/", "Miễn phí", "The water is free, sir.", "🆓"),
+        v("Free", "/friː/", "Miễn phí", "The wifi is free, sir.", "🆓"),
       ],
       grammar: [
         g(
@@ -1578,7 +1578,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Cả hai câu 'Yes' đều đúng ngữ pháp. Ở trình độ này chọn câu NGẮN hơn: khách chỉ cần biết bạn đã nghe và sẽ đi lấy. Câu dài dễ vấp, mà vấp giữa chừng thì mất cả câu.",
         ),
         game(
-          "Is the water free?",
+          "Is the wifi free?",
           "Yes, madam. It is free.",
           "Free water yes madam you take.",
           "Yes, madam, water is a free.",
@@ -2989,7 +2989,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `${lx.staff} knocks three times and says: "Housekeeping." Nobody answers. ${lx.staff} knocks again and waits. The guest opens the door. ${lx.staff} asks: "May I come in, madam?" The guest says: "Not now, please." ${lx.staff} says: "Yes, madam. Thank you." and writes the room number down.`,
+        `The sign on room ${lx.roomNo.spoken} says "Do Not Disturb". ${lx.staff} does not knock and walks on. The next sign says "Make Up Room". ${lx.staff} knocks three times and says: "Housekeeping." Nobody answers. ${lx.staff} knocks again and waits. The guest opens the door. ${lx.staff} asks: "May I come in, madam?" The guest says: "Not now, please." ${lx.staff} says: "Yes, madam. Thank you." and writes the room number down.`,
         [
           {
             q: `${lx.staff} làm gì khi gõ lần đầu không ai trả lời?`,
@@ -3174,6 +3174,18 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "What time does the laundry open?",
           "It opens at eight, sir.",
           "Trong câu hỏi, chữ does đã mang dấu ngôi ba số ít nên động từ để nguyên: does it open. Trong câu trả lời không còn does nữa, nên chính động từ phải mang đuôi -s: it opens. Cụm /nz/ cuối phải nghe được cả hai âm.",
+        ),
+        sp(
+          "Yes? Who is it?",
+          "Housekeeping. May I clean now, madam?",
+          "Câu bạn nói nhiều nhất trong cả toà nhà, và nó có hai nửa: xưng bộ phận, rồi XIN PHÉP. Bỏ nửa sau là tự cho mình quyền vào phòng người khác.",
+          undefined,
+          ["housekeeping", "clean"],
+        ),
+        sp(
+          "Oh — you are still here.",
+          "Good morning, madam. Shall I come back?",
+          "Khách về giữa lúc bạn đang dọn dở thì phòng là của họ, không phải của bạn. Chào, rồi hỏi có nên quay lại sau không — đừng vừa lau vừa nói chuyện.",
         ),
       ],
       reading: read(
@@ -4655,8 +4667,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "My son is allergic to milk.",
-          "Certainly, sir. I will tell the kitchen.",
-          "Nghe xong phải nói ra là sẽ báo bếp — khách cần biết thông tin đã đi tới nơi cần tới.",
+          "Thank you, sir. I will tell the kitchen.",
+          "Khách đang BÁO một việc, không nhờ một việc — nên cảm ơn, đừng nhận lời. 'Certainly' ở đây nghe như đang đồng ý với một yêu cầu, và nó bỏ mất lời cảm ơn dành cho người vừa giúp bạn tránh làm hại họ.",
           undefined,
           ["kitchen"],
         ),
@@ -4666,6 +4678,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Xin khách chờ rồi đi hỏi thật. Chờ ba mươi giây tốt hơn một câu đoán.",
           undefined,
           ["wait", "ask"],
+        ),
+        sp(
+          "Oh, is that ours?",
+          "Careful, sir. The plate is hot.",
+          "Nói TRƯỚC khi đặt đĩa xuống, không nói sau. Đây là câu bạn lặp lại nhiều lần mỗi ca, nên phải bật ra không cần nghĩ. 'Careful' trọng âm âm tiết đầu: CARE-ful.",
+          undefined,
+          ["careful", "hot"],
+        ),
+        sp(
+          "Two more beers, please.",
+          "One moment. I will ask my manager.",
+          "Rượu bia không phải việc bạn tự quyết: khách đã uống bao nhiêu, khách bao nhiêu tuổi, và có phải dừng lại không — cả ba đều là quyết định của quản lý ca. Nhận lời rồi rót thêm là chỗ nhân viên mới hay bị kỷ luật nhất.",
+          undefined,
+          ["manager"],
         ),
       ],
       reading: read(
@@ -4753,7 +4779,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           "Two coffees and one soup, please.",
-          "Two coffees, one soup. I understand, madam.",
+          "Table ten. Two coffees, one soup.",
           "Đọc lại nguyên đơn hàng rồi mới rời bàn. Đọc lại số lượng trước, tên món sau — đúng thứ tự khách vừa nói.",
         ),
         sp(
@@ -4967,10 +4993,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Which room is Mr Chen in?",
-          "I am sorry, sir. Please wait here.",
-          "Không nói số phòng của khách khác cho bất kỳ ai. Mời người hỏi chờ rồi báo quản lý.",
+          "I am sorry, sir. I cannot say.",
+          "Không xác nhận, không phủ nhận. Mời người hỏi ngồi chờ nghe như đã từ chối, nhưng nó đã nói rằng có người tên đó ở đây — chỉ còn thiếu số phòng. Nói mình không nói được, bằng giọng bình thường, rồi báo quản lý.",
           undefined,
-          ["sorry", "wait"],
+          ["sorry"],
         ),
       ],
       reading: read(
