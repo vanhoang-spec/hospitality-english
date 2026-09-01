@@ -307,8 +307,23 @@ function SpeakingSuiteInner({
                   sai nghĩa, nói lại cho đúng
                 </div>
               )}
+              {/* Ba lý do trượt dưới đây đều là "đủ điểm phần trăm nhưng sai điều
+                  bài đang dạy". Không nói ra thì học viên chỉ thấy một con số và
+                  không biết phải sửa gì. */}
+              {!result.passed && result.addedNegation.length > 0 && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Câu mẫu không có {result.addedNegation.join(", ")} — bạn vừa nói ngược nghĩa
+                </div>
+              )}
+              {!result.passed && result.inflectionErrors.length > 0 && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Thiếu đuôi -s: {result.inflectionErrors.join(", ")} — nghe kỹ âm cuối rồi nói lại
+                </div>
+              )}
               {!result.passed &&
                 result.missingRequired.length === 0 &&
+                result.addedNegation.length === 0 &&
+                result.inflectionErrors.length === 0 &&
                 result.accuracy * 100 >= th.accPct &&
                 result.orderRatio < th.orderRatio && (
                   <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">

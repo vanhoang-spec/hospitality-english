@@ -34,9 +34,36 @@ function digitToWords(tok: string): string[] {
   return [...tok].map((d) => (d === "0" ? "oh" : ONES[Number(d)]));
 }
 
+/** Contractions expand before anything else looks at the stream. A learner who
+ *  says "It's seven o'clock" has produced the copula the lesson is teaching,
+ *  and ASR transcribes contractions as contractions — so a grammar word that
+ *  is required (see GRAMMAR_TOKENS) must not be counted missing just because
+ *  the speaker was fluent enough to contract it. */
+const CONTRACTIONS: [RegExp, string][] = [
+  [/\bit's\b/g, "it is"],
+  [/\bhe's\b/g, "he is"],
+  [/\bshe's\b/g, "she is"],
+  [/\bthat's\b/g, "that is"],
+  [/\bthere's\b/g, "there is"],
+  [/\bwhat's\b/g, "what is"],
+  [/\bi'm\b/g, "i am"],
+  [/\byou're\b/g, "you are"],
+  [/\bwe're\b/g, "we are"],
+  [/\bthey're\b/g, "they are"],
+  [/\bi'll\b/g, "i will"],
+  [/\bwe'll\b/g, "we will"],
+  [/\bcan't\b/g, "cannot"],
+  [/\bdon't\b/g, "do not"],
+  [/\bdoesn't\b/g, "does not"],
+  [/\bisn't\b/g, "is not"],
+  [/\baren't\b/g, "are not"],
+  [/\bwon't\b/g, "will not"],
+];
+
 export function normalize(s: string) {
-  return s
-    .toLowerCase()
+  let t = ` ${s.toLowerCase()} `;
+  for (const [re, full] of CONTRACTIONS) t = t.replace(re, full);
+  return t
     .replace(/[^\w\s']/g, " ")
     .split(/\s+/)
     .filter(Boolean)
@@ -99,12 +126,84 @@ const VALUE_TOKENS = new Set<string>([
   "dollars",
 ]);
 
+/** The grammar words Phase 0 exists to install, and whose loss is the exact
+ *  L1 error every rude/polite pair is built around: the copula, the future
+ *  auxiliary, and negation.
+ *
+ *  VALUE_TOKENS closed the numeric hole; this closes the grammatical one.
+ *  Measured over all 249 Phase 0 targets: a learner who drops every function
+ *  word and every plural -s — the complete Vietnamese-speaker error profile,
+ *  and precisely what each lesson's `rule` warns against — passed 89% of
+ *  items. Five audit reports found this independently, in five modules.
+ *
+ *  Raising the pass threshold does NOT fix it, and I measured that before
+ *  believing the recommendation to: at 75% the sloppy version still passes
+ *  65% of items, and at 80% it still passes 52% while honest answers that
+ *  drop a single word start failing 41% of the time. A threshold cannot tell
+ *  a dropped copula from a mumbled noun. This list can. */
+const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will"]);
+
+/** Negation is graded asymmetrically, and deliberately.
+ *
+ *  Four reports proposed adding "yes"/"no" to the required list. That breaks
+ *  honest answers: "The second floor, madam." is a correct reply to "Is my
+ *  room on the second floor?" even though the model opens with "Yes". So an
+ *  affirmative is never required. A NEGATION is, in both directions — losing
+ *  one reverses the message ("We never close" → "We close"), and adding one
+ *  reverses it just as hard ("Yes, someone is here" → "No, nobody is here").
+ *  Both passed before this: 60% and 86%. */
+const NEGATION_TOKENS = new Set<string>([
+  "no",
+  "not",
+  "never",
+  "nobody",
+  "none",
+  "nothing",
+  "cannot",
+]);
+
 /** Which value tokens this target carries. An authored override wins so a
  *  frame can exempt a token that is genuinely formulaic in its sentence
  *  ("ONE moment" is a chunk, not a count). */
 export function requiredValueTokens(target: string, override?: string[]): string[] {
   if (override) return override.map((t) => t.toLowerCase());
-  return [...new Set(normalize(target).filter((t) => VALUE_TOKENS.has(t)))];
+  const toks = normalize(target);
+  return [
+    ...new Set(
+      toks.filter((t) => VALUE_TOKENS.has(t) || GRAMMAR_TOKENS.has(t) || NEGATION_TOKENS.has(t)),
+    ),
+  ];
+}
+
+/** Dropping the -s — plural or third person — is the single most-taught point
+ *  in Phase 0 ("Two towel." → "Two towels, please."; "It finish at four." →
+ *  "It finishes at four.") and the one the token lists cannot catch, because
+ *  "start" and "starts" are simply different words: the learner loses 20% of
+ *  a five-word target and still clears 60%.
+ *
+ *  It fires only when the learner actually said the STEM, so a target word
+ *  that merely ends in s is safe — nobody says "pleas" for "please". The
+ *  3-letter stem floor keeps "is"/"yes"/"us" out, and -ss words are skipped. */
+export function inflectionErrors(spoken: string, target: string): string[] {
+  const said = new Set(normalize(spoken));
+  return [
+    ...new Set(
+      normalize(target).filter((w) => {
+        if (!w.endsWith("s") || w.endsWith("ss")) return false;
+        const stem = w.slice(0, -1);
+        return stem.length >= 3 && !said.has(w) && said.has(stem);
+      }),
+    ),
+  ];
+}
+
+/** A negation the learner ADDED that the model never had. Checked separately
+ *  from the missing-token list because it is the opposite failure: nothing is
+ *  absent, something contradictory is present. */
+export function addedNegation(spoken: string, target: string): string[] {
+  const t = new Set(normalize(target));
+  if ([...t].some((w) => NEGATION_TOKENS.has(w))) return [];
+  return [...new Set(normalize(spoken).filter((w) => NEGATION_TOKENS.has(w)))];
 }
 
 /** A guest line that carries no clue to the guest's gender leaves BOTH "sir"
@@ -219,21 +318,34 @@ export function utterancePassed(
   guestPrompt?: string,
 ) {
   const th = passThresholds(sourceWeek);
-  const cmp = compareWords(spoken, target, honorificIsFree(guestPrompt));
+  const free = honorificIsFree(guestPrompt);
+  const cmp = compareWords(spoken, target, free);
   // A value token said wrong or not at all fails the utterance regardless of
   // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
   // stream, so ASR digits ("205" → two oh five) still count.
   const spokenSet = new Set(normalize(spoken));
-  const missingRequired = requiredValueTokens(target, requiredTokens).filter(
-    (t) => !spokenSet.has(t),
-  );
+  const required = requiredValueTokens(target, requiredTokens);
+  // When the guest's line DOES fix the gender, the honorific stops being a
+  // coin-flip and becomes the thing the lesson teaches — so grade it. Only
+  // two Phase 0 frames are in this position, and both are the frames whose
+  // whole subject is how to address a guest.
+  if (!free)
+    for (const t of ["sir", "madam", "mr", "mrs", "ms"])
+      if (normalize(target).includes(t)) required.push(t);
+  const missingRequired = [...new Set(required)].filter((t) => !spokenSet.has(t));
+  const added = addedNegation(spoken, target);
+  const inflection = inflectionErrors(spoken, target);
   return {
     ...cmp,
     missingRequired,
+    addedNegation: added,
+    inflectionErrors: inflection,
     passed:
       Math.round(cmp.accuracy * 100) >= th.accPct &&
       cmp.orderRatio >= th.orderRatio &&
-      missingRequired.length === 0,
+      missingRequired.length === 0 &&
+      added.length === 0 &&
+      inflection.length === 0,
     threshold: th,
   };
 }
