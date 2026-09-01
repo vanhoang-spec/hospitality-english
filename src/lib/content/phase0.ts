@@ -19,7 +19,8 @@
 // from one spine guarantees every department gets the same CEFR
 // ladder, and a pedagogical fix lands in one place instead of six.
 //
-// HARD CONSTRAINTS honoured throughout (verified by scripts/verify-phase0.mjs):
+// HARD CONSTRAINTS honoured throughout (gated by scripts/verify-content.ts;
+// the bank contract is docs/phase0-phase1-bank-contract.md):
 //  · Target sentences ≤ 5 words, single clause (P0 cap in the matrix).
 //  · Every `targetResponse` contains ≥ 2 words of ≥ 4 letters —
 //    below that, ListeningSuite silently drops the cloze task.

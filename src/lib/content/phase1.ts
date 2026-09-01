@@ -24,7 +24,8 @@
 // The P0 lexicon (staff name, station, department name, service hours)
 // is imported rather than restated.
 //
-// HARD CONSTRAINTS (gated by scripts/verify-content.mjs):
+// HARD CONSTRAINTS (gated by scripts/verify-content.ts; the bank contract
+// is docs/phase0-phase1-bank-contract.md):
 //  · Target sentences ≤ 8 words, still ONE clause (P1 row of the matrix).
 //  · Every `targetResponse` keeps ≥ 2 words of ≥ 4 letters, or
 //    ListeningSuite silently drops its cloze task.
@@ -947,8 +948,14 @@ function week10(lx: Ctx): LessonContent[] {
           "Trả lời dứt khoát rồi mới giải thích — khách cần lời khuyên, không cần vòng vo. Từ 'better' trọng âm âm tiết đầu: BET-ter.",
         ),
       ],
+      // The comparative belongs to the GUEST, not to the recommendation. It
+      // read `"This one is better, madam. It is ${cmpOf(s6)}."`, which asserts
+      // that more of s6 is what makes a thing better — true for "brighter",
+      // false for "more sour" (FB), "more expensive" (BO) and meaningless for
+      // "more important" (GR). The slot has no declared polarity and cannot
+      // have one, so no frame may lean on it.
       reading: read(
-        `A guest compares two things. ${lx.staff} says: "This one is better, madam. It is ${cmpOf(s6)}." The guest chooses it.`,
+        `A guest compares two things. ${lx.staff} says: "This one is better, madam." The guest looks and says: "That one is ${cmpOf(s6)}." The guest chooses the first one.`,
         [
           {
             q: "Nhân viên khuyên chọn cái nào?",
