@@ -1126,7 +1126,13 @@ async function lintReadingSentenceLength() {
   const offenders: string[] = [];
   for (const [key, week] of Object.entries(ALL_WEEKS))
     for (const lesson of week.lessons)
-      for (const sentence of lesson.reading.text.split(/(?<=[.!?])\s+|\n/)) {
+      // The lookbehind used to be a bare `[.!?]`, which never fires on a
+      // sentence that ends inside quoted speech — `…, sir." The guest says:`
+      // puts a quote mark between the full stop and the space. Every passage
+      // built out of dialogue therefore measured as ONE sentence spanning all
+      // its turns, and this gate was reporting the length of the passage, not
+      // of any sentence in it. Closing quotes now end a sentence too.
+      for (const sentence of lesson.reading.text.split(/(?<=[.!?]["'”’]?)\s+|\n/)) {
         const n = sentence.trim().split(/\s+/).filter(Boolean).length;
         if (n > READ_SENT_MAX)
           offenders.push(

@@ -98,7 +98,15 @@ function SpeakingSuiteInner({
       // One grader for the drill and the exam — utterancePassed also refuses
       // a missing value token, so "Room three-oh-five" no longer passes a
       // two-oh-five item here while failing it on the checkpoint.
-      const cmp = utterancePassed(cleaned, scenario.target, week, scenario.requiredTokens);
+      const cmp = utterancePassed(
+        cleaned,
+        scenario.target,
+        week,
+        scenario.requiredTokens,
+        // The guest's own line is what decides whether sir/madam was
+        // answerable in the first place.
+        scenario.complaint,
+      );
       setResult(cmp);
       const acc = Math.round(cmp.accuracy * 100);
       patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });

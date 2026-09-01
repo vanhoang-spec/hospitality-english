@@ -727,9 +727,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
           // đơn tính bằng tiền đồng. Sáu auditor nêu: học viên luyện thói quen
           // sai hai tuần trước khi được dạy đó là sai. "Forty-five" vẫn là số
           // hàng chục mà tuần 2 cần dạy.
-          "What is the total, please?",
-          "Forty-five thousand dong, sir.",
-          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Và 'thousand' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên — rồi đóng bằng cụm /nd/, phải nghe được cả hai âm cuối.",
+          "How many guests today?",
+          "Forty-five guests, sir.",
+          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Trọng âm rơi vào phần sau: forty-FIVE.",
+          "manager",
         ),
       ],
       reading: read(
@@ -738,7 +739,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         // Three Hotel Manager auditors called it a control failure: a room
         // attendant, a server and a spa therapist hand over no keys and take no
         // money. The item and the price now come from the department.
-        `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your ${i1.word.toLowerCase()}."`,
+        `${lx.staff} says: "Good morning, sir." The guest says: "I am in room ${lx.roomNo.spoken}." ${lx.staff} writes the number and reads it back: "Room ${lx.roomNo.spoken}. Thank you, sir." Then ${lx.staff} says: "Here is your ${i1.word.toLowerCase()}."`,
         [
           {
             q: `Số phòng ${lx.roomNo.digits} đọc thế nào?`,
@@ -765,10 +766,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
         game(
           // Đề hỏi bằng tiền đồng, đáp án trả lời bằng đô, không có cầu nối quy
           // đổi nào — học viên không thể suy ra. Giữ nguyên một đơn vị.
-          "Is the total thirty thousand?",
-          "No, sir. Forty-five thousand dong.",
-          "Dollar forty is.",
-          "Yes, sir. It is four hundred thousand.",
+          "Is that forty guests?",
+          "No, sir. Forty-five guests.",
+          "Forty guest yes.",
+          "Yes, sir. It is forty guests today.",
         ),
       ],
     }),
@@ -798,7 +799,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest asks: "Which floor is my room on?" ${lx.staff} points to the lift and says: "The ${lx.floor.ordinal} floor, madam."`,
+        `The guest says: "I am in room ${lx.roomNo.spoken}. Which floor is that?" ${lx.staff} points to the lift and says: "The ${lx.floor.ordinal} floor, madam." The guest says: "Thank you."`,
         [
           {
             q: "Phòng khách ở tầng mấy?",
@@ -854,7 +855,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest wants two ${i1.word.toLowerCase()}s. ${lx.staff} says: "Yes, madam. Two ${i1.word.toLowerCase()}s. One moment, please."`,
+        `A guest from room ${lx.roomNo.spoken} wants two ${i1.word.toLowerCase()}s. ${lx.staff} says: "Good afternoon, madam. Two ${i1.word.toLowerCase()}s. One moment, please."`,
         [
           {
             q: "Khách muốn mấy cái?",
@@ -990,7 +991,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks ${lx.staff} the time. ${lx.staff} looks at the clock and says: "It is half past seven, sir."`,
+        `${lx.staff} says: "Good morning, madam. Welcome." The guest asks the time. ${lx.staff} looks at the clock and says: "It is half past seven, madam." The guest says: "Thank you."`,
         [
           {
             q: "Bây giờ là mấy giờ?",
@@ -1055,7 +1056,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `Today is Monday. A guest asks about the ${lx.booking.en}. ${lx.staff} checks and says: "It is tomorrow, madam. Tuesday."`,
+        `Today is Monday. A guest from room ${lx.roomNo.spoken} asks about the ${lx.booking.en}. ${lx.staff} checks and says: "It is tomorrow, madam. Tuesday." The guest says: "Thank you." ${lx.staff} says: "Goodbye, madam."`,
         [
           {
             // Bài đọc đã đổi sang dịch vụ của bộ phận, câu hỏi và game thì tôi
@@ -1109,7 +1110,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about ${lx.service.en}. ${lx.staff} says: "We open at ${lx.service.open} and close at ${lx.service.close}, sir."`,
+        `A guest at the lift asks about ${lx.service.en}. ${lx.staff} says: "Good morning, sir. We open at ${lx.service.open} and close at ${lx.service.close}." The guest says: "Thank you."`,
         [
           {
             // Was `${lx.service.vi} mở lúc mấy giờ?` — service.vi already began
@@ -1187,8 +1188,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ],
         reading: read(
           lx.service.isEvent
-            ? `A guest asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam."`
-            : `A guest asks: "What time does ${lx.service.en} open?" ${lx.staff} answers: "It opens at ${lx.service.open} and closes at ${lx.service.close}, madam."`,
+            ? `A guest from room ${lx.roomNo.spoken} asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam." The guest says: "Thank you." ${lx.staff} says: "You are welcome."`
+            : `A guest from room ${lx.roomNo.spoken} asks: "What time does ${lx.service.en} open?" ${lx.staff} answers: "It opens at ${lx.service.open} and closes at ${lx.service.close}, madam." The guest says: "Thank you." ${lx.staff} says: "You are welcome."`,
           [
             {
               q: lx.service.isEvent
@@ -1264,7 +1265,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine."`,
+        `${lx.staff} says: "Welcome, sir." The guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine. Thank you."`,
         [
           {
             q: `${capFirst(lx.priced.vi)} giá bao nhiêu?`,
@@ -1320,7 +1321,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} asks: "Cash or card, sir?" The guest gives a card. ${lx.staff} says: "Thank you. Card is fine."`,
+        `A guest from room ${lx.roomNo.spoken} asks for the bill. ${lx.staff} asks: "Cash or card, sir?" The guest gives a card. ${lx.staff} says: "Thank you. Card is fine."`,
         [
           {
             q: "Khách trả tiền bằng gì?",
@@ -1375,7 +1376,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks the price in dollars. ${lx.staff} says: "It is about ${lx.priced.usd} dollars, sir. We take dong." The guest pays and gets change.`,
+        `A guest at ${lx.station} asks the price in dollars. ${lx.staff} says: "Good afternoon, sir. It is about ${lx.priced.usdWord} dollars. We take dong." The guest pays, gets change and says: "Thank you."`,
         [
           {
             q: "Vì sao nhân viên nói 'about'?",
@@ -1440,7 +1441,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         // in lesson 1, 90,000 for TWO in this lesson's speaking, and eight dollars
         // for two here — in the week whose subject is money. And coffee is F&B's
         // item, hardcoded into all six departments. Both now read the lexicon.
-        `The guest asks for the bill. ${lx.staff} says: "The total is ${lx.priced.vndWord} dong, sir. Here is your bill."`,
+        `The guest from room ${lx.roomNo.spoken} asks for the bill. ${lx.staff} says: "The total is ${lx.priced.vndWord} dong, sir. Here is your bill." The guest says: "Thank you." ${lx.staff} says: "Goodbye, sir."`,
         [
           {
             q: "Tổng tiền là bao nhiêu?",
@@ -1517,7 +1518,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest needs help at ${lx.station}. ${lx.staff} smiles and says: "Of course, madam. Please have a seat."`,
+        `A guest needs help at ${lx.station}. ${lx.staff} smiles and says: "Good morning, madam. Of course. Please have a seat." The guest says: "Thank you."`,
         [
           {
             q: "Câu nào dùng để mời khách ngồi?",
@@ -1565,13 +1566,13 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Can I have my key, please?",
+          `Could I have my ${i1.word.toLowerCase()}, please?`,
           "One moment, please, sir.",
           "Luôn báo khách phải chờ, đừng im lặng bỏ đi. Chờ lâu thì quay lại báo tiếp. 'please' kết thúc bằng /z/ có rung — không phải /s/, và đừng cụt thành pli.",
         ),
       ],
       reading: read(
-        `The guest asks for the ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes.`,
+        `A guest from room ${lx.roomNo.spoken} asks for the ${i1.word.toLowerCase()}. ${lx.staff} says: "One moment, please, sir." ${lx.staff} comes back in two minutes and says: "Here you are, sir."`,
         [
           {
             q: "Câu nào dùng khi cần khách chờ?",
@@ -1628,9 +1629,9 @@ function week5(lx: P0Lexicon): LessonContent[] {
         sp(
           // Khách ĐƯA đồ, còn "Here you are" là công thức TRAO đồ — tôi đổi đề
           // sáng nay và làm lệch cặp. Nay khách xin, nhân viên trao.
-          `Could I have ${/^[aeiou]/i.test(i1.word) ? "an" : "a"} ${i1.word.toLowerCase()}, please?`,
+          `Is that my ${i1.word.toLowerCase()}?`,
           "Here you are, madam.",
-          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. 'Here you are' đọc nối liền thành một cụm, trọng âm rơi vào 'are' — tách rời từng từ nghe như đang đánh vần.",
+          "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. Cụm này đọc nối liền, trọng âm rơi vào HERE chứ không phải 'are' — tách rời từng từ nghe như đang đánh vần.",
         ),
       ],
       reading: read(
@@ -1694,7 +1695,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} gives the wrong ${i1.word.toLowerCase()}. The guest says: "This is wrong." ${lx.staff} says: "I am very sorry, madam. One moment."`,
+        `${lx.staff} gives the wrong ${i1.word.toLowerCase()}. The guest says: "Excuse me, this is wrong." ${lx.staff} says: "I am very sorry, madam. One moment." ${lx.staff} comes back and says: "Here you are. Thank you for waiting."`,
         [
           {
             q: "Khi mình làm sai thì nói gì?",

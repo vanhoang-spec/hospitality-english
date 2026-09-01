@@ -107,6 +107,25 @@ export function requiredValueTokens(target: string, override?: string[]): string
   return [...new Set(normalize(target).filter((t) => VALUE_TOKENS.has(t)))];
 }
 
+/** A guest line that carries no clue to the guest's gender leaves BOTH "sir"
+ *  and "madam" correct. The model sentence had to pick one; the student, on
+ *  the floor, picks from the guest in front of them. 20 of the 24 Phase 0
+ *  speaking frames are in exactly that position — measured, not guessed —
+ *  so grading the coin-flip marks people wrong for the course's omission,
+ *  and every audit read it as an unanswerable question.
+ *
+ *  Where the prompt DOES fix the gender ("I am Mrs Lee.", "his room"), the
+ *  tag is determined and stays graded: that is the case worth teaching. */
+const GENDER_CUE = /\b(mr|mrs|ms|miss|sir|madam|ma'am|he|she|his|her|him|lady|gentleman)\b/i;
+const HONORIFIC = /^(sir|madam|ma'am|maam)$/;
+
+export function honorificIsFree(guestPrompt?: string): boolean {
+  return !guestPrompt || !GENDER_CUE.test(guestPrompt);
+}
+
+const canonHonorific = (toks: string[], free: boolean) =>
+  free ? toks.map((t) => (HONORIFIC.test(t) ? "sir" : t)) : toks;
+
 function lcsLength(a: string[], b: string[]): number {
   const dp: number[] = new Array(b.length + 1).fill(0);
   for (let i = 1; i <= a.length; i++) {
@@ -120,9 +139,9 @@ function lcsLength(a: string[], b: string[]): number {
   return dp[b.length];
 }
 
-export function compareWords(spoken: string, target: string) {
-  const a = normalize(spoken);
-  const b = normalize(target);
+export function compareWords(spoken: string, target: string, honorificFree = false) {
+  const a = canonHonorific(normalize(spoken), honorificFree);
+  const b = canonHonorific(normalize(target), honorificFree);
   const used = new Set<number>();
   const correctIdx = new Set<number>();
   for (let i = 0; i < b.length; i++) {
@@ -140,7 +159,11 @@ export function compareWords(spoken: string, target: string) {
   // be gamed by reciting the right words in any order — real speech has
   // to follow the sentence's word order too.
   const orderRatio = b.length === 0 ? 0 : lcsLength(a, b) / b.length;
-  return { correctIdx, accuracy, orderRatio, words: b };
+  // `words` is what the UI renders back to the learner, so it must be the
+  // target as authored — not the canonicalised stream, which would print
+  // "sir" over a model sentence that says "madam". Same length, so the
+  // correctIdx positions still line up.
+  return { correctIdx, accuracy, orderRatio, words: normalize(target) };
 }
 
 /** How closely a spoken answer must match the model, by week.
@@ -193,9 +216,10 @@ export function utterancePassed(
   target: string,
   sourceWeek: string | number,
   requiredTokens?: string[],
+  guestPrompt?: string,
 ) {
   const th = passThresholds(sourceWeek);
-  const cmp = compareWords(spoken, target);
+  const cmp = compareWords(spoken, target, honorificIsFree(guestPrompt));
   // A value token said wrong or not at all fails the utterance regardless of
   // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
   // stream, so ASR digits ("205" → two oh five) still count.

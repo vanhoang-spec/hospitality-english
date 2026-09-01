@@ -130,31 +130,44 @@ function buildPaper(dep: string, week: string): Question[] {
   const unique = [...byWord.values()];
   if (unique.length < MIX.vocab) return [];
 
-  const vocabQs: Question[] = shuffle(unique)
-    .slice(0, MIX.vocab)
-    .map((v, i) => {
-      const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
-      if (i % 2 === 0) {
-        const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
-        return {
-          kind: "vocab" as const,
-          key: `v:${v.word}`,
-          prompt: `Nghĩa của "${v.word}" là gì?`,
-          options,
-          correctIdx: options.indexOf(v.definition),
-          note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
-        };
-      }
-      const options = shuffle([v.word, ...distractors.map((d) => d.word)]);
+  // The line above used to be `shuffle(unique).slice(0, MIX.vocab)`, which
+  // gave the recycled words no preference whatsoever — putting reviewVocab
+  // first in `pool` decides nothing once the whole array is shuffled. The
+  // comment described an intent the code never carried out. Spacing is the
+  // one thing a checkpoint measures that a lesson cannot, so at least half
+  // the vocabulary block now comes from weeks the student saw earlier, and
+  // the rest is topped up from the phase at large.
+  const reviewFirst = shuffle(unique.filter((v) => reviewVocab.some((r) => r.word === v.word)));
+  const restPool = shuffle(unique.filter((v) => !reviewFirst.includes(v)));
+  const halfFromReview = Math.min(reviewFirst.length, Math.ceil(MIX.vocab / 2));
+  const vocabPicks = shuffle([
+    ...reviewFirst.slice(0, halfFromReview),
+    ...restPool.slice(0, MIX.vocab - halfFromReview),
+  ]);
+
+  const vocabQs: Question[] = vocabPicks.slice(0, MIX.vocab).map((v, i) => {
+    const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
+    if (i % 2 === 0) {
+      const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
       return {
         kind: "vocab" as const,
         key: `v:${v.word}`,
-        prompt: `Từ tiếng Anh nào có nghĩa: "${v.definition}"?`,
+        prompt: `Nghĩa của "${v.word}" là gì?`,
         options,
-        correctIdx: options.indexOf(v.word),
+        correctIdx: options.indexOf(v.definition),
         note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
       };
-    });
+    }
+    const options = shuffle([v.word, ...distractors.map((d) => d.word)]);
+    return {
+      kind: "vocab" as const,
+      key: `v:${v.word}`,
+      prompt: `Từ tiếng Anh nào có nghĩa: "${v.definition}"?`,
+      options,
+      correctIdx: options.indexOf(v.word),
+      note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
+    };
+  });
 
   const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
   const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
@@ -318,7 +331,13 @@ function OralStage({
   const item = items[idx];
 
   function commit(spoken: string) {
-    const verdict = utterancePassed(spoken, item.target, item.sourceWeek, item.requiredTokens);
+    const verdict = utterancePassed(
+      spoken,
+      item.target,
+      item.sourceWeek,
+      item.requiredTokens,
+      item.guestPrompt,
+    );
     resultsRef.current = [
       ...resultsRef.current,
       { item, passed: verdict.passed, said: spoken.trim() },
@@ -378,7 +397,13 @@ function OralStage({
         return;
       }
       if (
-        utterancePassed(cleaned, item.target, item.sourceWeek, item.requiredTokens).passed ||
+        utterancePassed(
+          cleaned,
+          item.target,
+          item.sourceWeek,
+          item.requiredTokens,
+          item.guestPrompt,
+        ).passed ||
         next >= 2
       ) {
         commit(cleaned);
