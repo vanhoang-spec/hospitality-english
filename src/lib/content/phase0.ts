@@ -454,9 +454,21 @@ function lesson(
     // course") are left to the function-word allowance; locking them here
     // would fail an honest answer for the reason that allowance exists.
     speaking: parts.speaking.map((sp) => {
-      const heads = parts.vocabulary
-        .flatMap((v) => v.word.toLowerCase().split(/\s+/))
-        .filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w));
+      // Headword nhiều từ khoá theo CỤM: nếu cả cụm có mặt trong câu mẫu thì
+      // mọi từ của nó đều bắt buộc, kể cả hư từ. 'Thank you' mất 'you' là lỗi
+      // mà tuần 1 bài 4 tồn tại để sửa; loại 'you' khỏi danh sách để cứu 'Here
+      // you are' đã vô tình mở luôn cửa đó.
+      const said0 = new Set(
+        sp.targetResponse
+          .toLowerCase()
+          .replace(/[^a-z0-9 -]/g, " ")
+          .split(/\s+/),
+      );
+      const heads = parts.vocabulary.flatMap((v) => {
+        const parts_ = v.word.toLowerCase().split(/\s+/);
+        if (parts_.length > 1 && parts_.every((w) => said0.has(w))) return parts_;
+        return parts_.filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w));
+      });
       const said = new Set(
         sp.targetResponse
           .toLowerCase()
@@ -3255,7 +3267,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
     lesson(lx, 4, 3, "When a Guest Asks in Dollars", "Khi khách hỏi giá bằng đô", {
       vocabulary: [
         v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usdWord} dollars.`, "💵"),
-        v("Change", "/tʃeɪndʒ/", "Tiền thối", "Reception gives your change.", "🪙"),
+        v("Reception", "/rɪˈsepʃn/", "Quầy lễ tân", "Please pay at reception, sir.", "🛎️"),
+        v("Change", "/tʃeɪndʒ/", "Tiền thối", "Your change is at reception.", "🪙"),
       ],
       grammar: [
         g(
@@ -4503,7 +4516,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "You take off clothes.",
           "Keep your underwear on, madam.",
-          "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng.",
+          "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng. 'Underwear' /ˈʌndəweə/ là đồ lót; từ này không có thẻ riêng nhưng phải nói được ngay và nói bằng giọng bình thường.",
           "Keep your underwear, madam.",
         ),
         g(
@@ -5089,10 +5102,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           },
           {
             q: "Người lạ hỏi số phòng của khách khác thì làm gì?",
-            options: ["Không nói, mời chờ rồi báo quản lý", "Nói số phòng", "Bảo họ tự lên tìm"],
+            options: [
+              "Nói mình không nói được, rồi báo quản lý",
+              "Mời họ ngồi chờ ở sảnh",
+              "Nói số phòng",
+            ],
             correct: 0,
             explanation:
-              "Số phòng của khách là thông tin riêng tư. Người hỏi có thể có lý do chính đáng, nhưng người quyết định không phải là bạn.",
+              "Mời ngồi chờ nghe như đã từ chối, nhưng nó xác nhận có người tên đó ở đây. Câu duy nhất không lộ gì là câu nói rằng bạn không nói được — rồi để quản lý quyết.",
           },
         ],
       ),
@@ -5115,11 +5132,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         game(
           "Which room is Mrs Chen in?",
-          "I am sorry, madam. Please wait here.",
+          "I am sorry, madam. I cannot say.",
           "Room seven-two-oh.",
-          "She is upstairs, madam. Second floor.",
+          "I am sorry, madam. Please wait here.",
           undefined,
-          "Không tiết lộ khách ở đâu, kể cả nói mập mờ 'trên lầu'. Người đứng hỏi có thể là bất cứ ai.",
+          "Đáp án thứ ba nghe như đã từ chối, và đó là chỗ bẫy: mời người hỏi ngồi chờ đã nói rằng CÓ một người tên đó ở đây — chỉ còn thiếu số phòng. Không xác nhận, không phủ nhận, rồi báo quản lý.",
         ),
       ],
     }),

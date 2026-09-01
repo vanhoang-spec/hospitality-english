@@ -258,6 +258,33 @@ export function requiredValueTokens(target: string, override?: string[]): string
     // that call it the highest-leverage fix left would have walked into that.
     ...(override ?? []).map((t) => t.toLowerCase()),
     ...titleAndSurname(target),
+    ...fixedPhraseTokens(target),
+  ];
+}
+
+/** Set phrases that are all-or-nothing.
+ *
+ *  Two academic reviews measured "Thank" — no "you" — passing targets whose
+ *  own lesson rule is "Phải có 'you': THANK YOU." Locking the lesson's
+ *  headwords caught it in week 1 lesson 4 and nowhere else, because that is
+ *  the only lesson where the phrase is a headword. It is a property of the
+ *  phrase, so it belongs here: if the target says it, the learner says all of
+ *  it. Day-parts are deliberately absent — greetingIsFree() exists because the
+ *  guest's line usually does not fix the hour. */
+const FIXED_PHRASES = [
+  "thank you",
+  "here you are",
+  "of course",
+  "excuse me",
+  "anything else",
+  "half past",
+  "one moment",
+  "this way",
+];
+function fixedPhraseTokens(target: string): string[] {
+  const t = " " + normalize(target).join(" ") + " ";
+  return [
+    ...new Set(FIXED_PHRASES.filter((p) => t.includes(" " + p + " ")).flatMap((p) => p.split(" "))),
   ];
 }
 
