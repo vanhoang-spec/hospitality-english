@@ -574,11 +574,11 @@ function week1(lx: P0Lexicon): LessonContent[] {
         ),
         game(
           "Good evening. I am Mrs Smith.",
+          "Good evening, Mrs Smith.",
           "Good evening, madam.",
-          "Good morning, madam. Welcome.",
           "Good evening. Do you want a room?",
           undefined,
-          "Khách vừa tự xưng tên thì chào lại đúng buổi và đúng danh xưng. Hỏi 'Do you want a room?' vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
+          "Khách vừa nói tên mình ra. 'Good evening, madam.' không sai câu nào, nhưng nó bỏ đi thứ khách vừa đưa cho bạn — dùng HỌ khách là nâng cấp rẻ nhất trong nghề, và lùi về 'madam' là quay lại mức phục vụ cho người lạ. Câu thứ ba thì vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
         ),
       ],
     }),
@@ -1347,8 +1347,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
         g(
           `${capFirst(lx.service.en)} close ${lx.service.close}.`,
           `We close at ${lx.service.close}, sir.`,
-          "Động từ phải chia và có 'at' trước giờ. Nói ngắn gọn với chủ ngữ 'We'.",
-          `We closes at ${lx.service.close}, sir.`,
+          "Với 'we' thì động từ giữ NGUYÊN: we close. Chỉ he/she/it mới thêm -s (it closes). Và luôn có 'at' trước giờ.",
+          `We close ${lx.service.close}, sir.`,
         ),
       ],
       speaking: [
@@ -1573,15 +1573,15 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Is there a price list?",
           "Yes, sir. One moment.",
           "Price list no have, sir.",
-          "Yes sir, I will bring the price list.",
+          "Yes sir, price list I bring you.",
           undefined,
           "Cả hai câu 'Yes' đều đúng ngữ pháp. Ở trình độ này chọn câu NGẮN hơn: khách chỉ cần biết bạn đã nghe và sẽ đi lấy. Câu dài dễ vấp, mà vấp giữa chừng thì mất cả câu.",
         ),
         game(
           "Is the wifi free?",
           "Yes, madam. It is free.",
-          "Free water yes madam you take.",
-          "Yes, madam, water is a free.",
+          "Free wifi yes madam you take.",
+          "Yes, madam, the wifi is a free.",
           undefined,
           "'Free' là tính từ, không đi kèm mạo từ 'a'.",
         ),
@@ -2282,8 +2282,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "colleague",
         ),
         sp(
-          `Could you bring six ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}?`,
-          `Six ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}. One moment.`,
+          `Could you bring two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}?`,
+          `Two ${i1.word.toLowerCase()}s to room ${lx.roomNo.spoken}. One moment.`,
           "Nối hai việc của tuần 2 vào một lượt: nhắc lại SỐ LƯỢNG và nhắc lại SỐ PHÒNG. Đọc số phòng từng chữ số. Nhắc lại cả hai rồi mới đi — sai một trong hai là đi lại hai lần.",
         ),
       ],
@@ -2455,7 +2455,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           "That was very good, thank you.",
           "Thank you, madam. Anything else?",
-          "Đây là headword của chính bài, và trước nay nó chỉ nằm trong luật với bài đọc chứ không có lượt nào bắt nói ra. Hỏi câu này SAU khi xong việc, không phải lúc vừa nhận yêu cầu mới. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
+          "Hỏi câu này SAU khi xong việc, không phải lúc vừa nhận yêu cầu mới. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
           undefined,
           ["anything"],
         ),
@@ -2712,6 +2712,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Xin lỗi TRƯỚC, giải thích sau — và đừng giải thích gì cả nếu khách chưa hỏi. Khách phàn nàn về thời gian thì thứ họ muốn nghe đầu tiên là bạn biết họ đã chờ.",
           undefined,
           ["sorry"],
+        ),
+        sp(
+          "This is not good enough.",
+          "One moment. I will call my manager.",
+          "Khách nói tới mức này thì việc đã vượt bạn. Gọi quản lý ngay, đừng hỏi lý do và đừng tự thanh minh — gọi nhanh là cách hạ nhiệt tốt nhất.",
+          undefined,
+          ["manager"],
         ),
         sp(
           "Please stay with me.",
@@ -3042,7 +3049,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Thank you for cleaning!",
           "Thank you, madam. Goodbye.",
           "OK bye bye.",
-          "You are welcome. I clean every day here.",
+          "You welcome, madam. Come again.",
           undefined,
           "Câu đó kéo dài cuộc nói chuyện ngay trong phòng khách. Nhận lời cảm ơn rồi chào và ra.",
         ),
@@ -3704,6 +3711,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Con số nghe cụ thể và trấn an, nhưng bạn không kiểm soát được nó. Hứa thay kỹ thuật là cách chắc chắn nhất để bị trách khi họ tới muộn.",
         ),
         game(
+          "You did not clean my room today.",
+          "I am very sorry, madam. I will call my manager.",
+          "Not me, madam. Other people clean.",
+          "I am very sorry, madam. I will clean it now.",
+          undefined,
+          "Đáp án thứ ba nghe rất tận tình và vẫn sai: khách đang phàn nàn về cả ca làm, không phải đang xin dọn phòng. Việc này lên quản lý — và đáp án thứ hai thì đổ cho đồng nghiệp ngay trước mặt khách.",
+        ),
+        game(
           "Can I come past?",
           "Careful, madam. The floor is wet.",
           "Wet, madam. Careful careful.",
@@ -3742,7 +3757,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ],
       speaking: [
         sp(
-          "Could you bring two more towels?",
+          "Could you clean the bathroom first?",
           "Certainly, madam. Right away.",
           "'Certainly' là lời nhận việc trang trọng nhất, và không mất thêm giây nào so với cách nói cộc. Trọng âm âm tiết đầu: CER-tain-ly.",
           undefined,
@@ -3781,10 +3796,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ),
       game: [
         game(
-          "Could you bring one more pillow?",
+          "Could you empty the bin, please?",
           "Certainly, madam. Right away.",
-          "Pillow? OK.",
-          "Of course madam, I will bring it some time today.",
+          "Bin? OK.",
+          "Of course madam, I will do it some time today.",
           undefined,
           "'Some time today' nghe như đang nhận lời nhưng thực ra là một lời hứa không có mốc. Khách sẽ tự đặt mốc, và bạn sẽ trễ so với mốc đó.",
         ),
@@ -4017,13 +4032,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "colleague",
         ),
         sp(
-          `Could you bring six ${lx.items[0].word.toLowerCase()}s to table ten?`,
-          `Six ${lx.items[0].word.toLowerCase()}s to table ten. One moment.`,
+          `Could you bring two ${lx.items[0].word.toLowerCase()}s to table ten?`,
+          `Two ${lx.items[0].word.toLowerCase()}s to table ten. One moment.`,
           "Nhắc lại SỐ LƯỢNG và SỐ BÀN rồi mới đi. Sai một trong hai là đi lại hai lần, và bàn bên cạnh phải chờ thêm.",
         ),
       ],
       reading: read(
-        `A colleague asks ${lx.staff}: "Is table ten ready?" ${lx.staff} looks at the table and says: "Table ten is ready. Two guests." Then two guests arrive. ${lx.staff} says: "Good evening. Your table is ready, madam." One guest asks for six ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to table ten. One moment."`,
+        `A colleague asks ${lx.staff}: "Is table ten ready?" ${lx.staff} looks at the table and says: "Table ten is ready. Two guests." Then two guests arrive. ${lx.staff} says: "Good evening. Your table is ready, madam." One guest asks for two ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Two ${lx.items[0].word.toLowerCase()}s to table ten. One moment."`,
         [
           {
             q: `${lx.staff} nói gì với ĐỒNG NGHIỆP?`,
@@ -4054,12 +4069,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Nhà hàng không xếp phòng cho khách. Đáp án thứ ba đúng ngữ pháp nhưng thuộc về lễ tân — và khách đang đứng ở cửa phòng ăn sẽ không hiểu bạn nói gì.",
         ),
         game(
-          `Could you bring six ${lx.items[0].word.toLowerCase()}s?`,
-          `Six ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
+          `Could you bring two ${lx.items[0].word.toLowerCase()}s?`,
+          `Two ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
           `Six ${lx.items[0].word.toLowerCase()}.`,
           `Yes madam, I bring now.`,
           undefined,
           "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu trợ động từ mà cả tuần 2 lẫn tuần 6 đều dạy.",
+        ),
+        game(
+          "Is table ten free now?",
+          "One moment, sir. I will check.",
+          "Table ten free yes.",
+          "Yes, sir. Table ten is free.",
+          undefined,
+          "Đáp án thứ ba đúng ngữ pháp nhưng hứa một cái bàn mà chưa nhìn sổ. Bàn trống trên sổ và bàn trống ngoài phòng ăn là hai chuyện — khách đã ngồi xuống rồi mà phải đứng lên là mất cả bữa.",
         ),
         game(
           "Can I charge it to my room?",
@@ -4111,13 +4134,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "colleague",
         ),
         sp(
-          `Could you bring six ${lx.items[0].word.toLowerCase()}s to room one?`,
-          `Six ${lx.items[0].word.toLowerCase()}s to room one. One moment.`,
+          `Could you bring two ${lx.items[0].word.toLowerCase()}s to room one?`,
+          `Two ${lx.items[0].word.toLowerCase()}s to room one. One moment.`,
           "Nhắc lại số lượng và số phòng rồi mới đi. Trong khu trị liệu, đi lại hai lần nghĩa là mở cửa phòng hai lần.",
         ),
       ],
       reading: read(
-        `A guest arrives at ${lx.station} for a ${lx.booking.en}. A colleague asks: "Is room one ready?" ${lx.staff} says: "Room one is ready. One guest." Then ${lx.staff} says to the guest: "Good afternoon. The room is ready, madam. This way, please." The guest asks for six ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to room one. One moment."`,
+        `A guest arrives at ${lx.station} for a ${lx.booking.en}. A colleague asks: "Is room one ready?" ${lx.staff} says: "Room one is ready. One guest." Then ${lx.staff} says to the guest: "Good afternoon. The room is ready, madam. This way, please." The guest asks for two ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Two ${lx.items[0].word.toLowerCase()}s to room one. One moment."`,
         [
           {
             q: `${lx.staff} nói gì với khách vừa tới?`,
@@ -4144,12 +4167,20 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Đáp án thứ ba là câu của lễ tân: nó chỉ khách lên phòng ngủ. Spa không xếp phòng ngủ, và khách đang đứng ở quầy spa.",
         ),
         game(
-          `Could you bring six ${lx.items[0].word.toLowerCase()}s?`,
-          `Six ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
+          `Could you bring two ${lx.items[0].word.toLowerCase()}s?`,
+          `Two ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
           `Six ${lx.items[0].word.toLowerCase()}.`,
           `Yes madam, I bring now.`,
           undefined,
           "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu đúng trợ động từ mà bài này dạy.",
+        ),
+        game(
+          "I am early. Is the room ready?",
+          "One moment, madam. I will check.",
+          "Room ready yes.",
+          "Yes, madam. The room is ready.",
+          undefined,
+          "Đáp án thứ ba hứa một phòng chưa ai xem. Phòng trị liệu phải được dọn, thay khăn và chỉnh nhiệt giữa hai khách — khách vào sớm mà phòng chưa xong thì họ ngồi chờ trong phòng chờ, không phải trên bàn.",
         ),
         game(
           "Can I charge it to my room?",
@@ -4197,27 +4228,33 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           `I am in room ${lx.roomNo.spoken}. Can I come in?`,
           `May I see your card, madam?`,
-          "Đừng nhắc lại số phòng khách vừa nói to — cả phòng chờ đang nghe. Xin xem thẻ, và nếu phải ghi thì ghi ra giấy chứ không đọc lên.",
+          "Ở phòng chờ, xin xem THẺ chứ đừng hỏi lại số phòng — người lạ ngồi sát ngay đó. Vẫn nhắc lại số phòng để xác nhận như tuần 2 đã dạy, nhưng hạ giọng, và ghi ra giấy nếu phải ghi.",
         ),
         sp(
-          `Could you bring six ${lx.items[0].word.toLowerCase()}s to the lounge?`,
-          `Six ${lx.items[0].word.toLowerCase()}s to the lounge. One moment.`,
+          `Could you bring two ${lx.items[0].word.toLowerCase()}s to the lounge?`,
+          `Two ${lx.items[0].word.toLowerCase()}s to the lounge. One moment.`,
           "Nhắc lại số lượng rồi mới đi. Nói 'the lounge' chứ không nói số phòng: nơi giao đồ là nơi khách đang ngồi.",
+        ),
+        sp(
+          "Is the lounge ready?",
+          "The lounge is ready. Six guests.",
+          "Lượt bàn giao với ĐỒNG NGHIỆP: chỗ nào, mấy khách. Không tên khách, không số phòng — kể cả với đồng nghiệp, và kể cả khi không có ai khác đứng gần.",
+          "colleague",
         ),
       ],
       reading: read(
-        `A guest comes to ${lx.station} and says: "I am in room ${lx.roomNo.spoken}." ${lx.staff} does not say the room number again. ${lx.staff} says: "May I see your card, madam?" The guest shows it. ${lx.staff} says: "Thank you. Your seat is ready." Later ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to the lounge. One moment."`,
+        `A guest comes to ${lx.station} and says: "I am in room ${lx.roomNo.spoken}." ${lx.staff} does not say the room number again. ${lx.staff} says: "May I see your card, madam?" The guest shows it. ${lx.staff} says: "Thank you. Your seat is ready." Later ${lx.staff} says: "Two ${lx.items[0].word.toLowerCase()}s to the lounge. One moment."`,
         [
           {
-            q: `Vì sao ${lx.staff} không nhắc lại số phòng?`,
+            q: `Vì sao ${lx.staff} xin xem thẻ thay vì hỏi lại số phòng?`,
             options: [
-              "Vì người khác trong phòng chờ nghe được",
+              "Vì thẻ kiểm được mà không phải nói to",
               "Vì số phòng không quan trọng",
               "Vì khách đã nói rồi nên thừa",
             ],
             correct: 0,
             explanation:
-              "Phòng chờ là chỗ đông người lạ ngồi sát nhau. Số phòng đọc to một lần là ai cũng biết khách ở đâu — nhắc lại để xác nhận là thói quen đúng của tuần 2, nhưng chỉ đúng khi không có ai khác nghe.",
+              "Phòng chờ là chỗ đông người lạ ngồi sát nhau. Kiểm bằng một vật thì không ai nghe được gì; hỏi lại bằng lời thì cả phòng nghe. Đây không phải là bỏ bước nhắc lại của tuần 2 — chỉ là đổi cách kiểm cho hợp chỗ đứng.",
           },
           {
             q: "Kiểm tra khách bằng cách nào?",
@@ -4232,9 +4269,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `I am in room ${lx.roomNo.spoken}.`,
           `May I see your card, madam?`,
           `Room ${lx.roomNo.cardinal}? OK.`,
-          `Room ${lx.roomNo.spoken}. Yes madam, please come in.`,
+          `Yes madam, please come in.`,
           undefined,
-          "Đáp án thứ ba lịch sự và đúng ngữ pháp, nhưng nó vừa đọc to số phòng của khách trong một căn phòng đầy người lạ, vừa cho vào mà chưa kiểm gì.",
+          "Đáp án thứ ba cho khách vào mà chưa kiểm gì. Ở phòng chờ, cái kiểm được là tấm thẻ — nó xác nhận quyền vào mà không cần nói to điều gì về khách.",
         ),
         game(
           "Is there a seat for me?",
