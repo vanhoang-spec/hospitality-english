@@ -476,6 +476,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Hey, come in.",
           `Welcome to ${RESORT}.`,
           "Không dùng 'Hey' với khách. Câu đón chuẩn là 'Welcome to' + tên khách sạn.",
+          "Welcome, come in.",
         ),
       ],
       speaking: [
@@ -564,11 +565,13 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "E? I? Same same.",
           "Is that E or I, sir?",
           "E /iː/ và I /aɪ/ nghe rất khác nhau nhưng người Việt hay lẫn vì mặt chữ. Không chắc thì hỏi thẳng từng chữ một, đừng đoán rồi ghi sai tên khách.",
+          "Is that a E or a I, sir?",
         ),
         g(
           "Say it again.",
           "Could you spell that, please?",
           "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/. Tám chữ người Việt hay lẫn nhất: A · E · I · G · J · R · W · Y.",
+          "Can you spell that?",
         ),
       ],
       speaking: [
@@ -1292,6 +1295,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
           `${capFirst(lx.service.en)} close ${lx.service.close}.`,
           `We close at ${lx.service.close}, sir.`,
           "Động từ phải chia và có 'at' trước giờ. Nói ngắn gọn với chủ ngữ 'We'.",
+          `We closes at ${lx.service.close}, sir.`,
         ),
       ],
       speaking: [
@@ -1375,6 +1379,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
             `${capFirst(lx.service.en)} finish ${lx.service.close}.`,
             `It finishes at ${lx.service.close}.`,
             "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ.",
+            `It finishes in ${lx.service.close}.`,
           ),
         ],
         speaking: [
@@ -2846,6 +2851,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I come in.",
           "May I come in, madam?",
           "Vào phòng khách là xin phép, không phải báo trước. Gõ ba tiếng, nói rõ 'Housekeeping', rồi đợi trả lời. Không ai đáp thì gõ lại một lần nữa — vẫn không đáp thì mới mở, và mở xong vẫn phải nói lại một lần.",
+          "I may come in, madam?",
         ),
         g(
           "Sign there, I clean.",
@@ -2857,6 +2863,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Finish. Bye.",
           "Thank you, madam. Goodbye.",
           "Dọn xong phải chào, đừng lặng lẽ đi ra. Khách cần biết trong phòng đã hết người.",
+          "Thank you, madam. Bye bye.",
         ),
       ],
       speaking: [
@@ -2955,11 +2962,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Give me money.",
           "I cannot take cash, madam.",
           "Nhân viên buồng phòng không thu tiền trong phòng khách: không có hoá đơn, không có máy tính tiền, và mất tiền thì không ai chứng minh được. Mọi khoản đều qua lễ tân.",
+          "I cannot take the cash, madam.",
         ),
         g(
           "You pay downstairs.",
           "Please pay at reception, sir.",
           "Chỉ đường bằng câu mời chứ không bằng câu sai khiến: thêm 'Please' và nói rõ chỗ.",
+          "Please pay in reception, sir.",
         ),
       ],
       speaking: [
@@ -3043,11 +3052,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I clean now.",
           "May I clean now, madam?",
           "Khách trả tiền cho căn phòng đó nên khách quyết định lúc nào dọn. Hỏi rồi mới vào; hỏi xong thì làm đúng giờ khách chọn.",
+          "May I to clean now, madam?",
         ),
         g(
           "Later I come.",
           "I will come back. At two, madam.",
           "Nói rõ GIỜ quay lại, đừng nói 'later' suông — khách còn sắp xếp việc của họ quanh giờ đó.",
+          "I will come back at later, madam.",
         ),
       ],
       speaking: [
@@ -3129,11 +3140,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `${capFirst(lx.priced.usdWord)} dollar.`,
           `It is about ${lx.priced.usdWord} dollars.`,
           "Hai điều: từ 2 đô trở lên phải có -s, và luôn thêm 'about' vì tỷ giá đổi hằng ngày. Nói một con số đô chính xác là hứa một tỷ giá bạn không quyết định.",
+          `It is ${lx.priced.usdWord} dollars.`,
         ),
         g(
           "Give me the money.",
           "Please pay at reception, sir.",
           "Báo giá được, nhận tiền thì không. Câu báo giá luôn đi kèm câu chỉ chỗ trả, nếu không khách sẽ đưa tiền ngay tại chỗ.",
+          "Please give the money at reception, sir.",
         ),
       ],
       speaking: [
@@ -3218,6 +3231,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Bill here.",
           "Reception has your bill, sir.",
           "Buồng phòng ghi phiếu, lễ tân giữ hoá đơn. Nói rõ hoá đơn ở đâu thì khách không phải đi hỏi vòng.",
+          "Reception have your bill, sir.",
         ),
       ],
       speaking: [
@@ -3302,11 +3316,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I keep it.",
           "I will tell my supervisor.",
           "Đồ nhặt trong phòng không bao giờ giữ lại và cũng không cất vào ngăn kéo. Giao cho quản lý ngay trong ca, và nói ra để có người thứ hai biết.",
+          "I will tell my supervisor later.",
         ),
         g(
           "Money here, I no see.",
           "Excuse me, sir. Is this yours?",
           "Thấy đồ giá trị mà khách còn trong phòng thì hỏi ngay tại chỗ. Im lặng là tự đặt mình vào thế nghi ngờ.",
+          "Excuse me, sir. Is this your?",
         ),
       ],
       speaking: [
@@ -3390,11 +3406,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "You have problem?",
           "Do you have any injuries?",
           "Hỏi trước khi chạm vào người khách, không hỏi giữa chừng. Ba việc phải hỏi: chấn thương, dị ứng, và có thai. Bất kỳ câu trả lời 'có' nào cũng phải báo quản lý trước khi bắt đầu.",
+          "Do you have any injury?",
         ),
         g(
           "I ask my boss.",
           "I will ask my manager, madam.",
           "Không tự quyết khi khách nói có chấn thương hay đang mang thai. Nói rõ mình sẽ hỏi ai, rồi đi hỏi thật.",
+          "I will ask to my manager, madam.",
         ),
       ],
       speaking: [
@@ -3489,11 +3507,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "You take off clothes.",
           "Keep your underwear on, madam.",
           "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng.",
+          "Keep your underwear, madam.",
         ),
         g(
           "Change there.",
           "This way, please. The changing room.",
           "Chỉ phòng thay đồ bằng câu mời kèm cử chỉ tay mở, và đi trước dẫn khách chứ không chỉ trỏ.",
+          "This way, please. Changing room.",
         ),
       ],
       speaking: [
@@ -3573,11 +3593,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Good? Yes?",
           "Is the pressure all right?",
           "Hỏi bằng câu đủ, không hỏi bằng một chữ. Hỏi ít nhất ba lần một buổi: lúc mới bắt đầu, lúc đổi vùng, và lúc tăng lực.",
+          "Is the pressure all right, yes?",
         ),
         g(
           "I do soft now.",
           "Of course, madam. Softer.",
           "Khách kêu đau thì đổi ngay và nói ra là mình đã đổi. Đừng chỉ im lặng làm nhẹ đi — khách không biết bạn có nghe hay không.",
+          "Of course, madam.",
         ),
       ],
       speaking: [
@@ -3659,11 +3681,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "No problem, no nuts.",
           "One moment. I will ask the kitchen.",
           "Không bao giờ tự khẳng định món có gì. Bạn không nấu món đó và công thức đổi theo ngày. Câu duy nhất đúng là đi hỏi bếp rồi quay lại trả lời.",
+          "One moment. I think there are no nuts.",
         ),
         g(
           "You allergy?",
           "Any allergies, madam? Please tell me.",
           "Hỏi dị ứng bằng câu đủ, hỏi mọi bàn, và hỏi TRƯỚC khi nhận gọi món chứ không phải lúc bưng ra.",
+          "Do you have allergy, madam?",
         ),
       ],
       speaking: [
@@ -3754,11 +3778,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "What you want?",
           "May I take your order?",
           "Câu mở đầu nhận gọi món là một lời mời, không phải một câu hỏi trống. Cầm bút sẵn rồi mới hỏi.",
+          "May I take your orders?",
         ),
         g(
           "Yes yes, I know.",
           "Could you say that again?",
           "Nghe không rõ thì hỏi lại ngay tại bàn. Gật cho qua rồi mang sai món ra thì mất gấp đôi thời gian và mất cả bữa ăn của khách.",
+          "Could you say again, please?",
         ),
       ],
       speaking: [
@@ -3833,11 +3859,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "We close eleven.",
           "The desk never closes, sir.",
           "Quầy lễ tân không đóng. Nói giờ đóng cửa là đuổi khách có việc lúc hai giờ sáng khỏi chỗ duy nhất còn người trực.",
+          "The desk never close, sir.",
         ),
         g(
           "Night no people.",
           "Someone is here all night.",
           "Khách hỏi ban đêm có ai không là đang lo. Trả lời rõ ràng là có người, đừng trả lời bằng giờ giấc.",
+          "Someone are here all night.",
         ),
       ],
       speaking: [
@@ -3914,6 +3942,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Room number? OK, here.",
           "May I see your passport, sir?",
           "Số phòng không phải bằng chứng — ai đứng cạnh quầy cũng nghe được. Chìa khoá chỉ đưa sau khi xem giấy tờ, không có ngoại lệ, kể cả khách quen.",
+          "Can I see your room key, sir?",
         ),
         g(
           "I no can do.",
@@ -3925,6 +3954,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "You wait.",
           "One moment, please. I will check.",
           "Xin khách chờ bằng câu mời, và nói rõ bạn đang làm gì trong lúc đó.",
+          "One moment, please.",
         ),
       ],
       speaking: [
