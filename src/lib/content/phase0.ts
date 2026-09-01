@@ -546,7 +546,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
         g(
           "Say it again.",
           "Could you spell that, please?",
-          "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Tám tên chữ cái người Việt hay lẫn nhất: A /eɪ/ · E /iː/ · I /aɪ/ · G /dʒiː/ · J /dʒeɪ/ · R /ɑː/ · W /ˈdʌbljuː/ · Y /waɪ/. Nghe không chắc thì hỏi lại từng chữ.",
+          "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/. Tám chữ người Việt hay lẫn nhất: A · E · I · G · J · R · W · Y.",
         ),
       ],
       speaking: [
@@ -784,7 +784,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         g(
           "Two ten, right?",
           "It is twenty, sir.",
-          "Hàng chục: TWENTY (20), THIRTY (30), FORTY (40) … NINETY (90). Ghép thêm số cuối để có số lớn hơn: 20 + 5 = twenty-five.",
+          "Một tới mười hai: one · two · three · four · five · six · seven · eight · nine · ten · eleven · twelve. Hàng chục: twenty (20) · thirty (30) · forty (40) · fifty · sixty · seventy · eighty · ninety. Ghép hàng chục với số lẻ bằng gạch ngang: 20 + 5 = twenty-five.",
           "It is twenties, sir.",
         ),
       ],
@@ -806,7 +806,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           // hàng chục mà tuần 2 cần dạy.
           "How many guests today?",
           "Forty-five guests, sir.",
-          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Trọng âm rơi vào phần sau: forty-FIVE.",
+          "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Trọng âm dịch chuyển: đứng một mình thì forty-FIVE, nhưng có danh từ theo sau thì dồn về đầu — FOR-ty-five guests.",
           "manager",
         ),
       ],
@@ -1099,7 +1099,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         sp(
           "Excuse me, what time is it?",
           "It is seven o'clock, sir.",
-          "Giờ đúng thì thêm 'o'clock'. 7:30 nói 'half past seven'. Trọng âm rơi vào CLOCK, và âm /k/ cuối phải bật ra.",
+          "Giờ đúng thì thêm o'clock. Giờ rưỡi thì nói half past — 7:30 là half past seven. Trọng âm rơi vào CLOCK, và âm /k/ cuối phải bật ra.",
         ),
       ],
       reading: read(
@@ -1263,6 +1263,12 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "Are you open on Monday?",
+          "Yes, madam. Every day.",
+          "Monday open, madam, yes yes.",
+          "Yes madam, we are open all week long.",
+        ),
         game(
           `Are you open now?`,
           `Yes, sir. We close at ${lx.service.close}.`,
@@ -2321,6 +2327,342 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
   // Housekeeping's single most-used sentence in the building, and the spine
   // has no room for it: the spine's 1.4 is a goodbye at a service counter.
   // A room attendant's goodbye happens at a door they had to be let through.
+  // Wet floors and hot towels. Both were zero across all 24 spa lessons —
+  // `wet`, `slippery`, `hot`, `careful` — in a department built around steam
+  // rooms, showers and oil. Slipping is a spa's largest liability, and the
+  // sentence that prevents it fits inside the five-word cap.
+  //
+  // The same lesson repairs a defect the noun substitution created: the spine
+  // counts items[2] one by one ("Thirteen slippers.") and Spa's items[2] is
+  // Slipper, which is issued in PAIRS. Nobody hands out 6.5 pairs. Counting
+  // moves to the robe, which is issued singly, and the slipper card keeps its
+  // slot as a receptive word.
+  SW_2_4: (lx) =>
+    lesson(lx, 2, 4, "Slippers, Tea and a Wet Floor", "Dép, trà & sàn ướt", {
+      vocabulary: [
+        v("Slipper", "/ˈslɪpə/", "Dép spa (đi theo đôi)", "Your slippers, madam.", "🩴"),
+        v("Tea", "/tiː/", "Trà", "Some tea after, madam?", "🍵"),
+      ],
+      grammar: [
+        g(
+          "How much robes?",
+          "How many robes, madam?",
+          "Đếm được thì dùng 'How many'; không đếm được mới dùng 'How much'. Áo choàng đếm từng cái, còn dép thì đếm theo ĐÔI — không ai đưa khách mười ba chiếc dép.",
+          "How many robe, madam?",
+        ),
+        g(
+          "Floor wet, careful.",
+          "Careful, madam. The floor is wet.",
+          "Sàn spa lúc nào cũng có nước. Nói TRƯỚC khi khách bước, không phải sau khi khách trượt — và nói cả khi bạn nghĩ khách đã thấy.",
+          "Careful, madam. The floor is wets.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "I need two robes.",
+          "Two robes. Yes, madam.",
+          "Xác nhận lại số lượng rồi mới đi lấy. Đuôi số nhiều ở đây đọc /z/ có rung, không phải /s/.",
+        ),
+        sp(
+          "Where do I walk?",
+          "Careful, madam. The floor is wet.",
+          "Cảnh báo sàn ướt là câu nói nhiều nhất trong ca của bạn. 'wet' kết thúc bằng /t/ phải bật ra thành tiếng. Nuốt đuôi thì khách chỉ nghe được một nguyên âm, và câu cảnh báo mất hết tác dụng.",
+        ),
+        sp(
+          "That was very relaxing.",
+          "Some tea after, madam?",
+          "Mời nước hoặc trà sau liệu trình vừa là chuẩn 5 sao vừa là yêu cầu sức khoẻ — mô vừa được tác động cần bù nước.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} gives the guest a robe and slippers. The floor near the shower is wet. ${lx.staff} says: "Careful, madam. The floor is wet." After the treatment ${lx.staff} asks: "Some tea after, madam?" The guest says: "Yes, please."`,
+        [
+          {
+            q: "Sàn ướt thì nói câu nào?",
+            options: [
+              "Careful, madam. The floor is wet.",
+              "Floor wet, careful.",
+              "Please walk slowly.",
+            ],
+            correct: 0,
+            explanation:
+              "Nói trước khi khách bước, bằng câu đủ. Trượt ngã ở khu ướt là rủi ro trách nhiệm lớn nhất của một spa.",
+          },
+          {
+            q: "Vì sao mời trà sau liệu trình?",
+            options: [
+              "Vừa là chuẩn dịch vụ vừa để bù nước",
+              "Để khách ở lại lâu hơn",
+              "Để tính thêm tiền",
+            ],
+            correct: 0,
+            explanation:
+              "Mô vừa được tác động cần bù nước. Đây là bước chăm sóc, không phải bước bán thêm.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is the floor slippery here?",
+          "Careful, madam. The floor is wet.",
+          "Yes wet, careful.",
+          "It is fine, madam. Please walk here.",
+        ),
+        game(
+          "Do I get slippers too?",
+          "Your slippers, madam.",
+          "Slipper yes.",
+          "One slipper now, madam. One after.",
+        ),
+      ],
+    }),
+
+  // Somebody unwell in the lounge. `doctor`, `emergency`, `ambulance` and
+  // `sick` were all zero across the module, and a Guest Relations officer at
+  // a resort lounge door is the first person to see a guest faint in the
+  // heat. The spine's 5.2 owns "one moment" and "wait" — which is exactly
+  // what you say while help is coming.
+  GR_5_2: (lx) =>
+    lesson(lx, 5, 2, "When Someone Is Unwell", "Khi khách không khoẻ", {
+      vocabulary: [
+        v("Moment", "/ˈməʊmənt/", "Một lát", "One moment, please.", "⏳"),
+        v("Wait", "/weɪt/", "Đợi", "Please wait here, sir.", "⏸️"),
+      ],
+      grammar: [
+        g(
+          "You sick? Sit.",
+          "Are you all right, madam?",
+          "Hỏi trước khi chạm vào khách, và hỏi bằng câu đủ. Khách đang choáng cần nghe một câu bình tĩnh, không phải một mệnh lệnh.",
+          "Are you all right, the madam?",
+        ),
+        g(
+          "I call doctor you wait.",
+          "One moment. I will call a doctor.",
+          "Nói ra là mình đang đi gọi, rồi đi gọi thật. Đừng tự đoán bệnh, đừng cho khách uống gì, và đừng bỏ khách một mình.",
+          "One moment. I will call the doctor.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "I feel dizzy.",
+          "Please sit down here, madam.",
+          "Mời khách ngồi TRƯỚC khi làm gì khác — người choáng ngã rất nhanh. Câu này ngắn có lý do.",
+        ),
+        sp(
+          "I am not well at all.",
+          "One moment. I will call a doctor.",
+          "Gọi bác sĩ là việc gọi ngay, không phải việc hỏi ý khách. Nói ra để khách biết có người đang lo.",
+        ),
+        sp(
+          "Please stay with me.",
+          "Of course. Please wait here, madam.",
+          "Ở lại với khách cho tới khi có người tới. Bỏ đi lấy nước cũng là bỏ khách một mình.",
+        ),
+      ],
+      reading: read(
+        `A guest at ${lx.station} looks unwell. ${lx.staff} asks: "Are you all right, madam?" The guest says: "I feel dizzy." ${lx.staff} says: "Please sit down here." ${lx.staff} does not give the guest anything to drink. ${lx.staff} says: "One moment. I will call a doctor." and stays with the guest.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} không cho khách uống gì?`,
+            options: [
+              "Chưa biết khách bị gì — để bác sĩ quyết",
+              "Vì nước ở xa quá",
+              "Vì khách chưa xin",
+            ],
+            correct: 0,
+            explanation:
+              "Cho uống nhầm có thể làm nặng thêm, và người choáng có thể sặc. Chỉ y tế mới quyết được.",
+          },
+          {
+            q: "Việc đầu tiên phải làm là gì?",
+            options: ["Mời khách ngồi xuống", "Chạy đi gọi bác sĩ ngay", "Hỏi số phòng khách"],
+            correct: 0,
+            explanation:
+              "Người choáng ngã rất nhanh. Cho ngồi trước rồi mới gọi — và gọi mà vẫn đứng cạnh khách.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I do not feel well.",
+          "Please sit down here, madam.",
+          "You sit.",
+          "Do you want some water, madam?",
+        ),
+        game(
+          "My husband has fallen down.",
+          "One moment. I will call a doctor.",
+          "He OK? He stand up?",
+          "Please help him up, madam. I will get water.",
+        ),
+      ],
+    }),
+
+  // Taking a table booking. `reservation` was zero across all 24 F&B lessons,
+  // and "Do you have a reservation?" is the second sentence of every service.
+  // The spine's 1.2 already spells a guest's name — for a restaurant that IS
+  // the booking, so the same three headwords carry a real transaction instead
+  // of a front-desk one.
+  FB_1_2: (lx) =>
+    lesson(lx, 1, 2, "Taking a Table Booking", "Nhận đặt bàn", {
+      vocabulary: [
+        v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
+        v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
+        v("Letter", "/ˈletə/", "Chữ cái", "S-M-I-T-H. Five letters.", "🔡"),
+      ],
+      grammar: [
+        g(
+          "You book table?",
+          "Do you have a booking, madam?",
+          "Câu đầu tiên khi khách tới cửa nhà hàng là hỏi đã đặt bàn chưa — trước cả khi hỏi mấy người. Có đặt thì tra tên, chưa đặt thì mới xếp chỗ.",
+          "Do you have booking, madam?",
+        ),
+        g(
+          "What your name?",
+          "May I have your name?",
+          "Tiếng Anh cần động từ. Câu hỏi tên lịch sự là 'May I have your name?' — không nói 'What your name?'.",
+          "May I have you name?",
+        ),
+        g(
+          "Spell please.",
+          "How do you spell that?",
+          "Tên ghi sai thì tìm không ra phiếu đặt bàn. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/.",
+          "How do you spelling that?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Good evening. We have a booking.",
+          "May I have your name, sir?",
+          "Khách nói đã đặt bàn thì hỏi tên ngay, đừng hỏi mấy người trước — tên mở ra cả phiếu đặt.",
+        ),
+        sp(
+          "It is Smith. S-M-I-T-H.",
+          "Thank you. S-M-I-T-H, sir.",
+          "Đọc lại từng chữ cái khách vừa đánh vần. Sai một chữ là tra không ra phiếu, và khách phải đứng chờ ở cửa.",
+        ),
+        sp(
+          "No, we do not have a booking.",
+          "One moment. I will check, madam.",
+          "Chưa đặt bàn thì đừng nói ngay là hết chỗ. Xin khách chờ rồi đi xem sơ đồ bàn.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "Good evening. We have a booking." ${lx.staff} asks: "May I have your name, sir?" The guest says: "Smith. S-M-I-T-H." ${lx.staff} writes each letter, reads it back, and finds the booking. Then ${lx.staff} says: "This way, please."`,
+        [
+          {
+            q: `Vì sao ${lx.staff} hỏi tên trước khi hỏi mấy người?`,
+            options: [
+              "Vì tên mở ra cả phiếu đặt bàn",
+              "Vì khách sạn cần tên để tính tiền",
+              "Vì đó là phép lịch sự",
+            ],
+            correct: 0,
+            explanation:
+              "Phiếu đặt bàn đã có số người, giờ và yêu cầu đặc biệt. Hỏi tên là lấy được tất cả cùng lúc.",
+          },
+          {
+            q: "Khách đánh vần tên, nhân viên làm gì?",
+            options: ["Ghi từng chữ rồi đọc lại", "Ghi rồi đi luôn", "Nhớ trong đầu"],
+            correct: 0,
+            explanation: `Bài đọc: "${lx.staff} writes each letter, reads it back" — sai một chữ là tra không ra phiếu.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Good evening. Table for two.",
+          "Do you have a booking, madam?",
+          "Two? OK.",
+          "Yes madam, please sit anywhere you like.",
+        ),
+        game(
+          "The booking is under Chen.",
+          "Thank you. How do you spell that?",
+          "Chen, OK.",
+          "Chen? I do not see it, madam.",
+        ),
+      ],
+    }),
+
+  // Check-out. Five Hotel Manager reports counted it at zero occurrences
+  // across all 24 lessons, and it is half of a front desk's day. It also
+  // resolves a contradiction the spine created: FO's `service.close` is
+  // "eleven", so the shared 3.4 frame rendered "check-in finishes at eleven"
+  // one lesson after 3.4's neighbour taught that the desk never closes. No
+  // hotel closes check-in; eleven was the CHECK-OUT hour wearing the wrong
+  // label. Same two headwords, so the vocabulary budget is untouched.
+  FO_3_4: (lx) =>
+    lesson(lx, 3, 4, "Check-in and Check-out", "Giờ nhận phòng & trả phòng", {
+      vocabulary: [
+        v("Start", "/stɑːt/", "Bắt đầu", "Check-in starts at two.", "▶️"),
+        v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", "Please finish by twelve.", "⏹️"),
+      ],
+      grammar: [
+        g(
+          "What time check-in?",
+          "What time is check-in?",
+          "Câu hỏi cần 'is': What time IS check-in?",
+          "What time it is check-in?",
+        ),
+        g(
+          "Check-out eleven.",
+          "Check-out is at twelve.",
+          "Nhận phòng có giờ BẮT ĐẦU, trả phòng có giờ KẾT THÚC — hai con số khác nhau, đừng gộp. Và quầy thì không có giờ đóng: khách đến hai giờ sáng vẫn nhận phòng được.",
+          "Check-out is at twelfth.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "What time is check-in?",
+          "It starts at two, madam.",
+          "Trả lời giờ bắt đầu trước. Khách đến sớm thì mới cần nói thêm, đừng dồn hết vào một câu.",
+        ),
+        sp(
+          "What time must I leave the room?",
+          "Check-out is at twelve, madam.",
+          "Nói giờ trả phòng thành tiếng ngay lúc nhận phòng thì sáng hôm sau không ai bất ngờ. 'twelve' có /v/ giữa — răng trên chạm môi dưới.",
+        ),
+        sp(
+          "Can I stay until two?",
+          "One moment. I will ask my manager.",
+          "Trả phòng muộn là quyết định của quản lý, không phải của bạn. Đừng hứa, cũng đừng từ chối thẳng — đi hỏi.",
+        ),
+      ],
+      reading: read(
+        `A guest asks: "What time is check-in?" ${lx.staff} says: "It starts at two, madam." The guest asks about leaving. ${lx.staff} says: "Check-out is at twelve." The guest asks to stay until two. ${lx.staff} does not promise. ${lx.staff} says: "One moment. I will ask my manager."`,
+        [
+          {
+            q: "Trả phòng lúc mấy giờ?",
+            options: ["Mười hai giờ", "Hai giờ", "Mười một giờ"],
+            correct: 0,
+            explanation: `Bài đọc: "Check-out is at twelve." Nhận phòng từ hai giờ, trả phòng trước mười hai giờ — hai con số khác nhau.`,
+          },
+          {
+            q: "Khách xin ở thêm tới hai giờ chiều thì làm gì?",
+            options: ["Hỏi quản lý rồi mới trả lời", "Đồng ý ngay", "Từ chối ngay"],
+            correct: 0,
+            explanation:
+              "Trả phòng muộn phụ thuộc phòng hôm đó đã kín chưa — chỉ quản lý biết. Hứa liều thì khách mất chỗ, từ chối liều thì khách sạn mất doanh thu.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "What time can I check in?",
+          "From two, madam.",
+          "Two, yes yes madam.",
+          "Any time, madam. The desk is open.",
+        ),
+        game(
+          "Is check-out at eleven?",
+          "No, sir. Twelve.",
+          "Eleven yes sir, correct.",
+          "Yes sir, eleven o'clock in the morning.",
+        ),
+      ],
+    }),
+
   HK_1_4: (lx) =>
     lesson(lx, 1, 4, "At the Guest Room Door", "Gõ cửa, xin phép & chào ra", {
       vocabulary: [
@@ -2332,6 +2674,12 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I come in.",
           "May I come in, madam?",
           "Vào phòng khách là xin phép, không phải báo trước. Gõ ba tiếng, nói rõ 'Housekeeping', rồi đợi trả lời. Không ai đáp thì gõ lại một lần nữa — vẫn không đáp thì mới mở, và mở xong vẫn phải nói lại một lần.",
+        ),
+        g(
+          "Sign there, I clean.",
+          "I will come back later.",
+          "Cửa treo biển Do Not Disturb thì KHÔNG gõ, không gọi, không mở — kể cả khi đã muộn và phòng đó là phòng cuối trong ca. Ghi lại số phòng, báo giám sát, quay lại sau.",
+          "I will coming back later.",
         ),
         g(
           "Finish. Bye.",
@@ -2349,6 +2697,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Not now, please. Come back later.",
           "Yes, madam. Thank you.",
           "Khách từ chối thì cảm ơn rồi đi, không hỏi lại, không nài. Ghi lại phòng để quay lại sau.",
+        ),
+        sp(
+          "There is a sign on my door.",
+          "Yes, madam. I will come back later.",
+          "Biển Do Not Disturb là câu trả lời cuối cùng, không phải lời mời hỏi lại. Không gõ, không gọi qua cửa. Ghi phòng lại rồi đi.",
         ),
         sp(
           "I am finished. Thank you!",
@@ -2386,6 +2739,12 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Housekeeping, madam.",
           "Me, madam. Please open the door.",
           "It is the hotel staff outside.",
+        ),
+        game(
+          "Did you see the sign on my door?",
+          "Yes, madam. I did not knock.",
+          "Sign? No, madam.",
+          "Yes madam, but I knocked one time only.",
         ),
         game(
           "Thank you for cleaning!",
@@ -2511,7 +2870,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "What time does the laundry open?",
           "It opens at eight, sir.",
-          "Câu hỏi có 'does' thì câu trả lời thêm -s vào động từ: it OPENS. Cụm /nz/ cuối phải nghe được cả hai âm.",
+          "Trong câu hỏi, chữ does đã mang dấu ngôi ba số ít nên động từ để nguyên: does it open. Trong câu trả lời không còn does nữa, nên chính động từ phải mang đuôi -s: it opens. Cụm /nz/ cuối phải nghe được cả hai âm.",
         ),
       ],
       reading: read(
@@ -3387,7 +3746,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Spell please.",
           "How do you spell that?",
-          "Muốn khách đánh vần, hỏi trọn câu. Tám tên chữ cái người Việt hay lẫn nhất: A /eɪ/ · E /iː/ · I /aɪ/ · G /dʒiː/ · J /dʒeɪ/ · R /ɑː/ · W /ˈdʌbljuː/ · Y /waɪ/.",
+          "Muốn khách đánh vần, hỏi trọn câu. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/. Tám chữ hay lẫn nhất: A · E · I · G · J · R · W · Y.",
           "How do you spelling that?",
         ),
         g(
@@ -3488,12 +3847,12 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Can you give her this letter?",
-          "Certainly, sir. I will try.",
-          "Nhận thư thì được, vì việc đó không tiết lộ gì. Nói 'I will try' chứ đừng hứa là sẽ chuyển tới tay.",
+          "One moment. I will call my manager.",
+          "Người đã bị từ chối mà không bỏ đi, lại chuyển sang gửi đồ — đó là lúc việc này thôi thuộc về bạn. Nhận đồ nghe như vô hại nhưng nó đưa một vật vào khách sạn không ai kiểm, và biến bạn thành kênh liên lạc cho người mà khách có thể đang tránh. Gọi quản lý.",
         ),
       ],
       reading: read(
-        `A man asks ${lx.staff}: "Is Mrs Chen staying here?" ${lx.staff} says: "I am sorry, sir. I cannot say." The man says: "I am her husband." ${lx.staff} does not change the answer. ${lx.staff} says: "Excuse me, sir. One moment, please." and calls the manager. The manager comes and talks to the man.`,
+        `A man asks ${lx.staff}: "Is Mrs Chen staying here?" ${lx.staff} says: "I am sorry, sir. I cannot say." The man says: "I am her husband." ${lx.staff} does not change the answer. ${lx.staff} says: "Excuse me, sir. One moment, please." The man then asks ${lx.staff} to pass on a letter. ${lx.staff} does not take it. ${lx.staff} says: "One moment. I will call my manager." The manager comes and talks to the man.`,
         [
           {
             q: `Người hỏi nói mình là chồng khách, ${lx.staff} có nói không?`,
@@ -3507,15 +3866,15 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
               "Người xưng là người nhà thì càng phải cẩn thận. Bạn không có cách nào kiểm chứng, nên không phải bạn là người quyết định.",
           },
           {
-            q: "Vì sao chỉ nói 'có' thôi cũng đã là sai?",
+            q: "Người đó nhờ chuyển một lá thư, nên làm gì?",
             options: [
-              "Nói 'có' là đã cho biết khách đang ở đây",
-              "Vì câu đó không lịch sự",
-              "Vì phải hỏi tên trước",
+              "Không nhận, gọi quản lý",
+              "Nhận thư vì việc đó không tiết lộ gì",
+              "Nhận rồi bỏ vào hộp thư",
             ],
             correct: 0,
             explanation:
-              "Người tìm khách chỉ cần biết đúng một điều: người đó có ở đây không. Nói 'có' là đã trao đi thứ họ cần.",
+              "Người đã bị từ chối mà chuyển sang gửi đồ thì việc này thôi thuộc thẩm quyền tuyến đầu. Và chỉ cần nhận thư là bạn đã xác nhận rằng có ai đó ở đây để mà nhận.",
           },
         ],
       ),
@@ -3527,8 +3886,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "One moment, sir. I will look in the computer.",
         ),
         game(
-          "I am her sister. Which room?",
-          "Excuse me, madam. One moment.",
+          "Please just give her this bag.",
+          "One moment. I will call my manager.",
           "Room seven-two-oh.",
           "She is in the lounge.",
         ),
