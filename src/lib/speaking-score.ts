@@ -170,7 +170,17 @@ export function requiredValueTokens(target: string, override?: string[]): string
   const toks = normalize(target);
   return [
     ...new Set(
-      toks.filter((t) => VALUE_TOKENS.has(t) || GRAMMAR_TOKENS.has(t) || NEGATION_TOKENS.has(t)),
+      toks.filter((t, i) => {
+        // "ONE moment" is a chunk, not a count — the comment above promised an
+        // override for exactly this and no frame ever wrote one, so "Certainly,
+        // madam. A moment." failed on a missing digit. Three audit reports hit
+        // it. Handled here instead of in 20 hand-written overrides, because it
+        // is a property of the phrase, not of any one lesson. A "one" that is
+        // counting something ("One three, madam" — reading digits back) keeps
+        // its status: only the immediate `one moment` pair is formulaic.
+        if (t === "one" && toks[i + 1] === "moment") return false;
+        return VALUE_TOKENS.has(t) || GRAMMAR_TOKENS.has(t) || NEGATION_TOKENS.has(t);
+      }),
     ),
   ];
 }

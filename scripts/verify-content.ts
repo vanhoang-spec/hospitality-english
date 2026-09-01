@@ -117,8 +117,63 @@ const words = (s: string) =>
     .filter(Boolean);
 
 /** The cap is per sentence — a checkpoint utterance may chain two short ones. */
+/** The `+1` this cap is granted everywhere was documented as "for a sir/madam
+ *  tag", but the check was `n > wordCap + 1` with no look at whether the
+ *  sentence actually carries one — so the allowance was silently spent on
+ *  content words instead. Four audit reports counted five or six such lines
+ *  per module. The tag now has to be there to buy the extra word.
+ *
+ *  And a multi-word name out of the lexicon counts as ONE word, because it is
+ *  one referent: "Food and Beverage", "lounge card", "five hundred thousand".
+ *  The cap exists to bound how much syntax a pre-A1 learner assembles, and a
+ *  department is not three decisions. Without this, the cap penalises a
+ *  department for the length of its own name — Housekeeping passes and Spa
+ *  and Wellness fails on the identical frame. */
+const HONORIFIC_TAG = /\b(sir|madam|mr|mrs|ms)\b[.,!?]*\s*$/i;
+const lexicalUnits = (): string[] => {
+  const out = new Set<string>();
+  for (const lx of Object.values(LEXICONS)) {
+    for (const s of [lx.deptEn, lx.service.en, lx.priced.en, lx.priced.vndWord, lx.booking.en])
+      if (s && s.includes(" ")) out.add(s.toLowerCase());
+    for (const it of lx.items) if (it.word.includes(" ")) out.add(it.word.toLowerCase());
+  }
+  // Longest first so "five hundred thousand" collapses before "five hundred".
+  return [...out].sort((a, b) => b.length - a.length);
+};
+const UNITS = lexicalUnits();
+const collapseUnits = (s: string) => {
+  let out = s.toLowerCase();
+  for (const u of UNITS) out = out.split(u).join(u.replace(/ /g, "⁠"));
+  return out;
+};
+
 const maxSentenceLen = (s: string) =>
-  Math.max(0, ...s.split(/[.!?]+/).map((part) => words(part).length));
+  Math.max(
+    0,
+    ...collapseUnits(s)
+      .split(/[.!?]+/)
+      .map((part) => words(part).length),
+  );
+
+/** Effective cap for one sentence: the base, plus one only if the sentence
+ *  ends in the honorific the allowance was written for.
+ *
+ *  STRICT only for the generated phases (weeks 1-14). The hand-authored A2-B1
+ *  weeks were written against the loose reading, where the spare word buys a
+ *  subordinate clause rather than a tag, and 12 of their sentences sit on it.
+ *  Rewriting those is a separate pass over separate content; pretending the
+ *  debt is gone by exempting it silently would be worse than naming it. */
+const capFor = (sentence: string, wordCap: number, strict: boolean) =>
+  !strict || HONORIFIC_TAG.test(sentence.trim()) ? wordCap + 1 : wordCap;
+
+const overCap = (s: string, phase: Phase): number | null => {
+  const strict = phase.to <= 14;
+  for (const part of collapseUnits(s).split(/[.!?]+/)) {
+    const n = words(part).length;
+    if (n > capFor(part, phase.wordCap, strict)) return n;
+  }
+  return null;
+};
 
 const longWords = (s: string) =>
   words(s)
@@ -237,20 +292,20 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
     for (const gr of lesson.grammar) {
       if (!gr.rule) errors.push(`${where}: grammar "${gr.polite}" missing rule`);
       if (phase) {
-        const n = maxSentenceLen(gr.polite);
-        if (n > phase.wordCap + 1)
+        const n = overCap(gr.polite, phase);
+        if (n !== null)
           errors.push(
-            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
     }
 
     for (const s of lesson.speaking) {
       if (phase) {
-        const n = maxSentenceLen(s.targetResponse);
-        if (n > phase.wordCap + 1)
+        const n = overCap(s.targetResponse, phase);
+        if (n !== null)
           errors.push(
-            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
       // The cap covered only grammar.polite and speaking.targetResponse. A
@@ -261,10 +316,10 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
       for (const g of lesson.game) {
         const right = g.options.find((o) => o.correct);
         if (!right) continue;
-        const n = maxSentenceLen(right.text);
-        if (n > phase.wordCap + 1)
+        const n = overCap(right.text, phase);
+        if (n !== null)
           errors.push(
-            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.

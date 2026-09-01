@@ -119,7 +119,9 @@ export type P0Lexicon = {
    *  đếm ("two hundred five") thay vì đọc từng chữ số. Vế `rude` phải đọc lên
    *  được, nên không dùng chữ số ở đó. */
   roomNo: { digits: string; spoken: string; cardinal: string };
-  floor: { ordinal: string; vi: string };
+  /** `cardinal` chỉ dùng cho nhiễu và cho vế sai: "the eight floor" thay vì
+   *  "the eighth floor" là lỗi số đếm/số thứ tự phổ biến nhất. */
+  floor: { ordinal: string; cardinal: string; vi: string };
 };
 
 /** Chữ cái đầu câu. Số tiền VND hay đứng đầu câu ("Five hundred thousand
@@ -167,7 +169,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "airport transfer", vi: "xe đưa đón" },
     closing: { en: "stay", vi: "kỳ nghỉ" },
     roomNo: { digits: "205", spoken: "two-oh-five", cardinal: "two hundred five" },
-    floor: { ordinal: "second", vi: "tầng hai" },
+    floor: { ordinal: "second", cardinal: "two", vi: "tầng hai" },
   },
   FB: {
     code: "FB",
@@ -199,7 +201,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "table booking", vi: "đặt bàn" },
     closing: { en: "meal", vi: "bữa ăn" },
     roomNo: { digits: "310", spoken: "three-one-oh", cardinal: "three hundred ten" },
-    floor: { ordinal: "third", vi: "tầng ba" },
+    floor: { ordinal: "third", cardinal: "three", vi: "tầng ba" },
   },
   HK: {
     code: "HK",
@@ -229,7 +231,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "laundry", vi: "đồ giặt" },
     closing: { en: "stay", vi: "kỳ nghỉ" },
     roomNo: { digits: "812", spoken: "eight-one-two", cardinal: "eight hundred twelve" },
-    floor: { ordinal: "eighth", vi: "tầng tám" },
+    floor: { ordinal: "eighth", cardinal: "eight", vi: "tầng tám" },
   },
   SW: {
     code: "SW",
@@ -263,7 +265,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "massage", vi: "buổi massage" },
     closing: { en: "treatment", vi: "buổi trị liệu" },
     roomNo: { digits: "104", spoken: "one-oh-four", cardinal: "one hundred four" },
-    floor: { ordinal: "first", vi: "tầng một" },
+    floor: { ordinal: "first", cardinal: "one", vi: "tầng một" },
   },
   GR: {
     code: "GR",
@@ -304,7 +306,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "birthday cake", vi: "bánh sinh nhật" },
     closing: { en: "stay", vi: "kỳ nghỉ" },
     roomNo: { digits: "720", spoken: "seven-two-oh", cardinal: "seven hundred twenty" },
-    floor: { ordinal: "seventh", vi: "tầng bảy" },
+    floor: { ordinal: "seventh", cardinal: "seven", vi: "tầng bảy" },
   },
   BO: {
     code: "BO",
@@ -334,7 +336,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     booking: { en: "meeting room", vi: "phòng họp" },
     closing: { en: "day", vi: "một ngày tốt lành" },
     roomNo: { digits: "415", spoken: "four-one-five", cardinal: "four hundred fifteen" },
-    floor: { ordinal: "fourth", vi: "tầng bốn" },
+    floor: { ordinal: "fourth", cardinal: "four", vi: "tầng bốn" },
   },
 };
 
@@ -862,10 +864,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Go to ${lx.floor.ordinal} floor.`,
         ),
         g(
-          "Which floor my room?",
-          "Which floor is my room on?",
-          "Câu hỏi cần động từ 'is'. Đây là câu khách hay hỏi — nghe hiểu được là đủ.",
-          "Which floor is my room?",
+          `Room ${lx.floor.ordinal} floor.`,
+          `On the ${lx.floor.ordinal} floor, madam.`,
+          `Trả lời tầng cần 'on the' trước số thứ tự. Khách hỏi "Which floor is my room on?" — câu đó bạn chỉ cần nghe hiểu, còn câu phải nói ra là câu trả lời.`,
+          `On the ${lx.floor.cardinal} floor, madam.`,
         ),
       ],
       speaking: [
@@ -1157,8 +1159,9 @@ function week3(lx: P0Lexicon): LessonContent[] {
           // cố định) và bị gạch làm lỗi — hai auditor nêu, và chính khoá học
           // dùng đúng cấu trúc đó hai bài sau. Vế rude phải là lỗi L1 thật.
           `Tomorrow I starting at ${lx.service.open}.`,
-          `I will start at ${lx.service.open} tomorrow.`,
-          "Việc tương lai dùng 'will' + động từ: I WILL start.",
+          "Tomorrow I will start, sir.",
+          `Việc tương lai dùng 'will' + động từ nguyên mẫu: I WILL start. Giờ giấc nói ở câu sau — ${lx.service.open} o'clock — chứ đừng dồn hết vào một câu.`,
+          "Tomorrow I will starting, sir.",
         ),
       ],
       speaking: [
@@ -2490,7 +2493,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         g(
           "Later I come.",
-          "I will come back at two.",
+          "I will come back. At two, madam.",
           "Nói rõ GIỜ quay lại, đừng nói 'later' suông — khách còn sắp xếp việc của họ quanh giờ đó.",
         ),
       ],
@@ -2718,7 +2721,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       grammar: [
         g(
           "I keep it.",
-          "I will tell my supervisor now.",
+          "I will tell my supervisor.",
           "Đồ nhặt trong phòng không bao giờ giữ lại và cũng không cất vào ngăn kéo. Giao cho quản lý ngay trong ca, và nói ra để có người thứ hai biết.",
         ),
         g(
@@ -2805,7 +2808,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         g(
           "I ask my boss.",
-          "I will check with my manager.",
+          "I will ask my manager, madam.",
           "Không tự quyết khi khách nói có chấn thương hay đang mang thai. Nói rõ mình sẽ hỏi ai, rồi đi hỏi thật.",
         ),
       ],
@@ -2893,7 +2896,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       grammar: [
         g(
           "You take off clothes.",
-          "You can keep your underwear on.",
+          "Keep your underwear on, madam.",
           "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng.",
         ),
         g(
@@ -2910,7 +2913,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Do I take everything off?",
-          "You can keep your underwear on.",
+          "Keep your underwear on, madam.",
           "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm.",
         ),
         sp(
@@ -2925,7 +2928,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           {
             q: "Khách hỏi có phải cởi hết không, câu trả lời đúng là gì?",
             options: [
-              "You can keep your underwear on.",
+              "Keep your underwear on, madam.",
               "Yes, take everything off.",
               "Up to you, madam.",
             ],
@@ -2944,7 +2947,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "Do I wear anything under the robe?",
-          "You can keep your underwear on.",
+          "Keep your underwear on, madam.",
           "No, madam. Nothing.",
           "Up to you, madam.",
         ),
@@ -3054,7 +3057,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         g(
           "You allergy?",
-          "Please tell me about any allergy.",
+          "Any allergy, madam? Please tell me.",
           "Hỏi dị ứng bằng câu đủ, hỏi mọi bàn, và hỏi TRƯỚC khi nhận gọi món chứ không phải lúc bưng ra.",
         ),
       ],
@@ -3209,7 +3212,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       grammar: [
         g(
           "We close eleven.",
-          "The desk is open twenty-four hours.",
+          "The desk never closes, sir.",
           "Quầy lễ tân không đóng. Nói giờ đóng cửa là đuổi khách có việc lúc hai giờ sáng khỏi chỗ duy nhất còn người trực.",
         ),
         g(
@@ -3546,7 +3549,20 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   // one week whose job is consolidation; spread() keeps every prior week
   // represented while the checkpoint's own paper still samples the whole
   // phase via buildPaper.
-  if (week === 6) return spread(earlier, 20);
+  //
+  // Week 5 is taken WHOLE first, then the rest is sampled. Sampling the
+  // combined list evenly gave week 5 about three slots, so six of its nine
+  // headwords — Please, Certainly, Moment, Here you are, Excuse me, Sorry,
+  // the courtesy formulas the job runs on — reached the checkpoint having
+  // never been recycled once. Four audit reports counted it independently.
+  // Recency argues the other way too: week 5 is the week the checkpoint sits
+  // next to, so it is the one a spaced-retrieval schedule should not skip.
+  if (week === 6) {
+    const w5: string[] = [];
+    for (const l of WEEK_META[5].build(lx)) for (const item of l.vocabulary) w5.push(item.word);
+    const before5 = earlier.filter((w) => !w5.includes(w));
+    return [...new Set([...w5, ...spread(before5, 20 - w5.length)])];
+  }
   // Every headword of last week, not a six-item slice of it. Six slots cannot
   // cover a nine-item week however they are chosen, and `slice(-6)` chose the
   // literal tail, so lessons 1-2 of every week went to the checkpoint never
