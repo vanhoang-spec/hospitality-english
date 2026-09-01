@@ -825,11 +825,10 @@ function week2(lx: P0Lexicon): LessonContent[] {
             explanation: `Trong khách sạn, số phòng đọc từng chữ số: ${lx.roomNo.spoken}.`,
           },
           {
-            q: "Số 0 trong số phòng đọc là gì?",
-            options: ["oh", "zero", "nothing"],
+            q: "Nhân viên làm gì sau khi nghe số phòng?",
+            options: ["Ghi lại rồi đọc lại cho khách nghe", "Đi lấy đồ ngay", "Hỏi lại tên khách"],
             correct: 0,
-            explanation:
-              "Khi đọc số phòng, người Anh–Mỹ đọc số 0 là 'oh' (ví dụ 205 = two-oh-five).",
+            explanation: `Bài đọc: ${lx.staff} "writes the number and reads it back" — ghi rồi đọc lại là cách duy nhất chắc chắn nghe đúng.`,
           },
         ],
       ),
@@ -1025,11 +1024,14 @@ function week2(lx: P0Lexicon): LessonContent[] {
         `${lx.staff} asks: "How many ${i3.word.toLowerCase()}s, sir?" The guest says: "Three, please." ${lx.staff} says: "Three ${i3.word.toLowerCase()}s. One moment."`,
         [
           {
-            q: `Vì sao dùng "How many" chứ không phải "How much"?`,
-            options: [`Vì ${i3.word.toLowerCase()} đếm được`, "Vì hỏi giá tiền", "Vì khách là nam"],
+            q: "Nhân viên nhắc lại yêu cầu vào lúc nào?",
+            options: [
+              "Ngay sau khi khách trả lời",
+              "Sau khi đã mang đồ tới",
+              "Không nhắc lại lần nào",
+            ],
             correct: 0,
-            explanation:
-              "'How many' dùng cho danh từ đếm được; 'How much' dùng cho tiền hoặc thứ không đếm được.",
+            explanation: `Bài đọc: khách nói "Three, please." rồi ${lx.staff} nhắc lại ngay "Three ${i3.word.toLowerCase()}s." — nhắc lại trước khi đi lấy, không phải lúc quay về.`,
           },
           {
             q: "Khách cần mấy cái?",
@@ -1112,10 +1114,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
             explanation: "'Half past seven' nghĩa là 7 giờ rưỡi (7:30).",
           },
           {
-            q: "'O'clock' dùng khi nào?",
-            options: ["Khi giờ đúng, không có phút lẻ", "Khi giờ rưỡi", "Khi hỏi giá"],
+            q: "Nhân viên nhìn vào đâu trước khi trả lời?",
+            options: ["Đồng hồ", "Điện thoại của khách", "Sổ ghi chép"],
             correct: 0,
-            explanation: "'O'clock' chỉ dùng cho giờ tròn: five o'clock, nine o'clock.",
+            explanation: `Bài đọc: ${lx.staff} "looks at the clock" — nhìn đồng hồ rồi mới nói giờ, đừng đoán.`,
           },
         ],
       ),
@@ -1335,16 +1337,11 @@ function week3(lx: P0Lexicon): LessonContent[] {
             : `A guest from room ${lx.roomNo.spoken} asks: "What time does ${lx.service.en} open?" ${lx.staff} answers: "It opens at ${lx.service.open} and closes at ${lx.service.close}, madam." The guest says: "Thank you." ${lx.staff} says: "You are welcome."`,
           [
             {
-              q: lx.service.isEvent
-                ? `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en}?"`
-                : `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en} open?"`,
-              options: lx.service.isEvent
-                ? ["Thiếu động từ 'is'", "Thiếu 'please'", "Thiếu tên khách"]
-                : ["Thiếu trợ động từ 'does'", "Thiếu 'please'", "Thiếu tên khách"],
+              q: "Nhân viên đáp lại lời cảm ơn bằng câu gì?",
+              options: ["You are welcome.", "Thank you.", "Goodbye."],
               correct: 0,
-              explanation: lx.service.isEvent
-                ? `Câu hỏi tiếng Anh cần động từ: What time IS ${lx.service.en}?`
-                : `Động từ thường cần trợ động từ: What time DOES ${lx.service.en} open?`,
+              explanation:
+                "Bài đọc kết bằng đúng cặp đó: khách cảm ơn, nhân viên đáp 'You are welcome.' — im lặng hoặc chỉ gật đầu là bỏ mất nửa sau của phép lịch sự.",
             },
             {
               q: `Dịch vụ kết thúc lúc mấy giờ?`,
@@ -1429,15 +1426,11 @@ function week4(lx: P0Lexicon): LessonContent[] {
             explanation: `Nhân viên nói "${lx.priced.vndWord} dong".`,
           },
           {
-            q: "Vì sao KHÔNG nói 'dongs'?",
-            options: [
-              "Vì 'dong' giữ nguyên khi số nhiều",
-              "Vì trong tiếng Việt không có số nhiều",
-              "Vì khách là người nước ngoài",
-            ],
+            q: "Khách phản ứng thế nào khi nghe giá?",
+            options: ["Đồng ý luôn", "Chê đắt", "Hỏi xin giảm giá"],
             correct: 0,
             explanation:
-              "'Dong' đếm được nhưng có dạng số nhiều bất biến, giống yen hay baht: một dong, năm trăm nghìn dong — không bao giờ 'dongs'.",
+              'Bài đọc: khách nói "That is fine. Thank you." — báo giá rõ ràng ngay từ đầu thì hiếm khi phải mặc cả.',
           },
         ],
       ),
@@ -1722,10 +1715,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
         `A guest needs help at ${lx.station}. ${lx.staff} smiles and says: "Good morning, madam. Of course. Please have a seat." The guest says: "Thank you."`,
         [
           {
-            q: "Câu nào dùng để mời khách ngồi?",
-            options: ["Please have a seat.", "Please stand over there.", "You sit."],
+            q: `${lx.staff} làm gì trước khi nói?`,
+            options: ["Mỉm cười", "Nhìn đồng hồ", "Gọi quản lý"],
             correct: 0,
-            explanation: "'Please have a seat' là câu mời ngồi lịch sự chuẩn trong khách sạn.",
+            explanation: `Bài đọc: ${lx.staff} "smiles and says" — nét mặt tới trước lời nói, và khách thấy nó trước.`,
           },
           {
             q: `${lx.staff} mời khách làm gì?`,
