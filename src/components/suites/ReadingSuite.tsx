@@ -113,7 +113,14 @@ function ReadingSuiteInner({
       earned.current += gained;
     }
     const pct = Math.round((score / total) * 100);
-    bestPctRef.current.set(pIdx, Math.max(bestPctRef.current.get(pIdx) ?? 0, pct));
+    // FIRST submit only. Submitting reveals the right answer AND the
+    // explanation, and moving to another passage and back resets `picks` and
+    // `submitted` — so `Math.max` over repeated attempts meant the mastery
+    // flag could be farmed by reading the answers and coming back. That made
+    // the reading flag a measure of patience, not of comprehension. An audit
+    // walked the exact loop. A retry still shows feedback and still teaches;
+    // it just no longer rewrites what the learner scored cold.
+    if (!bestPctRef.current.has(pIdx)) bestPctRef.current.set(pIdx, pct);
     if (dep && week) {
       const sumPct = passages.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
       const avgPct = Math.round(sumPct / passages.length);
