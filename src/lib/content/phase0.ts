@@ -2252,7 +2252,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         game(
           "Can you come back this afternoon?",
           "Yes, madam. What time?",
-          "OK, afternoon.",
+          "OK madam, this afternoon is fine.",
           "Yes, madam. I will come at some time.",
         ),
         game(
@@ -2341,7 +2341,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "There is money on the table.",
           "Excuse me, sir. Is this yours?",
           "I no touch, madam.",
-          "I will put it in the drawer, sir.",
+          "I will put it away, sir.",
         ),
         game(
           "I lost my ring in the room.",
@@ -2427,7 +2427,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I have a bad knee, but it is fine.",
           "Thank you, madam. I will check.",
           "OK madam, no problem.",
-          "It is fine, madam. We can start now.",
+          "It is fine, madam.",
         ),
         game(
           "Can we start now?",
@@ -2596,6 +2596,479 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Certainly, madam.",
           "No shoulders, madam.",
           "Yes madam, but the price is more.",
+        ),
+      ],
+    }),
+
+  // The one F&B question with a fatal wrong answer, and the spine's 5.1 —
+  // "of course, certainly" — is the exact slot for it: the polite reflex
+  // "Yes madam, it is fine" is what kills people. Four auditors ranked this
+  // first for the module.
+  FB_5_1: (lx) =>
+    lesson(lx, 5, 1, "Any Allergies?", "Hỏi dị ứng", {
+      vocabulary: [
+        v("Please", "/pliːz/", "Làm ơn, xin mời", "Please tell me, madam.", "🙏"),
+        v("Of course", "/əv ˈkɔːs/", "Vâng, dĩ nhiên rồi", "Of course, madam.", "✔️"),
+        v("Certainly", "/ˈsɜːtnli/", "Chắc chắn rồi (trang trọng)", "Certainly, sir.", "👍"),
+      ],
+      grammar: [
+        g(
+          "No problem, no nuts.",
+          "Of course, madam. I will check.",
+          "Không bao giờ tự khẳng định món có gì. Bạn không nấu món đó và công thức đổi theo ngày. Câu duy nhất đúng là đi hỏi bếp rồi quay lại trả lời.",
+        ),
+        g(
+          "You allergy?",
+          "Please tell me about any allergy.",
+          "Hỏi dị ứng bằng câu đủ, hỏi mọi bàn, và hỏi TRƯỚC khi nhận gọi món chứ không phải lúc bưng ra.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Does this have peanuts?",
+          "Of course, madam. I will check.",
+          "Đừng đoán, dù chắc đến mấy. 'Of course' ở đây nghĩa là 'dĩ nhiên tôi sẽ đi hỏi', không phải 'dĩ nhiên là không có'.",
+        ),
+        sp(
+          "My son is allergic to milk.",
+          "Certainly, sir. I will tell the kitchen.",
+          "Nghe xong phải nói ra là sẽ báo bếp — khách cần biết thông tin đã đi tới nơi cần tới.",
+        ),
+        sp(
+          "Is there anything with nuts?",
+          "Please wait, madam. I will ask.",
+          "Xin khách chờ rồi đi hỏi thật. Chờ ba mươi giây tốt hơn một câu đoán.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "My son is allergic to milk." ${lx.staff} does not guess. ${lx.staff} says: "Certainly, sir. I will tell the kitchen." ${lx.staff} writes it on the order and tells the chef. The chef changes one dish. ${lx.staff} comes back and says: "The kitchen knows, sir."`,
+        [
+          {
+            q: `Khách hỏi món có đậu phộng không, ${lx.staff} phải làm gì?`,
+            options: ["Đi hỏi bếp rồi trả lời", "Trả lời là không có", "Bảo khách gọi món khác"],
+            correct: 0,
+            explanation:
+              "Người phục vụ không nấu món đó và công thức đổi theo ngày. Đoán đúng chín lần vẫn không bù được lần thứ mười.",
+          },
+          {
+            q: `Vì sao ${lx.staff} ghi vào phiếu gọi món?`,
+            options: [
+              "Để bếp biết chắc chắn, không phụ thuộc trí nhớ",
+              "Để tính thêm tiền",
+              "Để nhớ bàn nào đã gọi",
+            ],
+            correct: 0,
+            explanation:
+              "Nói miệng qua ba người thì mất. Viết ra là cách duy nhất chắc chắn tới bếp.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is there milk in this soup?",
+          "Of course, madam. I will check.",
+          "No milk, madam.",
+          "I think no milk, madam.",
+        ),
+        game(
+          "I am allergic to seafood.",
+          "Certainly, sir. I will tell the kitchen.",
+          "OK, no seafood.",
+          "No problem, sir. Everything here is safe.",
+        ),
+      ],
+    }),
+
+  // Reading an order back. The spine's 6.3 already owns "again" and
+  // "understand"; in a restaurant those two words ARE the read-back, and
+  // the module currently teaches a server to nod at a four-item order.
+  FB_6_3: (lx) =>
+    lesson(lx, 6, 3, "Taking the Order", "Nhận gọi món & đọc lại", {
+      vocabulary: [
+        v("Again", "/əˈɡen/", "Lại, lần nữa", "Could you say that again?", "🔁"),
+        v("Understand", "/ˌʌndəˈstænd/", "Hiểu", "I understand, madam.", "💡"),
+      ],
+      grammar: [
+        g(
+          "What you want?",
+          "May I take your order?",
+          "Câu mở đầu nhận gọi món là một lời mời, không phải một câu hỏi trống. Cầm bút sẵn rồi mới hỏi.",
+        ),
+        g(
+          "Yes yes, I know.",
+          "Could you say that again?",
+          "Nghe không rõ thì hỏi lại ngay tại bàn. Gật cho qua rồi mang sai món ra thì mất gấp đôi thời gian và mất cả bữa ăn của khách.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Two coffees and one soup, please.",
+          "Two coffees, one soup. I understand, madam.",
+          "Đọc lại nguyên đơn hàng rồi mới rời bàn. Đọc lại số lượng trước, tên món sau — đúng thứ tự khách vừa nói.",
+        ),
+        sp(
+          "Sorry, could you repeat that?",
+          "Of course. Two coffees, one soup.",
+          "Khách hỏi lại thì đọc lại đúng những gì đã ghi, đừng nói lại theo trí nhớ.",
+        ),
+        sp(
+          "Excuse me, we are ready to order.",
+          "Certainly, madam. May I take your order?",
+          "Tới bàn trong vòng vài giây khi khách gọi. 'order' trọng âm âm tiết đầu: OR-der.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "Two coffees and one soup, please." The room is noisy. ${lx.staff} asks: "Could you say that again?" The guest repeats it. ${lx.staff} writes it down and reads it back: "Two coffees, one soup. I understand, madam." Then ${lx.staff} goes to the kitchen.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} hỏi lại khách?`,
+            options: ["Vì phòng ăn ồn, nghe không chắc", "Vì khách nói sai", "Vì món đó đã hết"],
+            correct: 0,
+            explanation: `Bài đọc: "The room is noisy." — nghe không chắc thì hỏi lại ngay tại bàn.`,
+          },
+          {
+            q: "Sau khi ghi xong phải làm gì?",
+            options: [
+              "Đọc lại cả đơn cho khách nghe",
+              "Đi thẳng vào bếp",
+              "Hỏi khách trả tiền thế nào",
+            ],
+            correct: 0,
+            explanation:
+              "Đọc lại là lần duy nhất khách sửa được trước khi bếp nấu. Bỏ bước này là để khách phát hiện lỗi lúc món đã ra.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Three teas, please.",
+          "Three teas. I understand, sir.",
+          "OK three.",
+          "Yes sir, three teas now.",
+        ),
+        game(
+          "Sorry, I did not hear you.",
+          "Could you say that again?",
+          "Say again.",
+          "It is fine, madam. I remember it.",
+        ),
+      ],
+    }),
+
+  // The desk that never closes. The spine's 3.3 teaches every department to
+  // say "we close at eleven" — for a front desk that sentence is false, and
+  // two auditors flagged it as the answer that sends a guest with a problem
+  // at 2 a.m. away from the only staffed counter in the building.
+  FO_3_3: (lx) =>
+    lesson(lx, 3, 3, "The Desk Never Closes", "Quầy trực 24 giờ", {
+      vocabulary: [
+        v("Open", "/ˈəʊpən/", "Mở cửa", "The desk is open all day.", "🔓"),
+        v("Close", "/kləʊz/", "Đóng cửa", "The restaurant closes at ten.", "🔒"),
+      ],
+      grammar: [
+        g(
+          "We close eleven.",
+          "The desk is open twenty-four hours.",
+          "Quầy lễ tân không đóng. Nói giờ đóng cửa là đuổi khách có việc lúc hai giờ sáng khỏi chỗ duy nhất còn người trực.",
+        ),
+        g(
+          "Night no people.",
+          "Someone is here all night.",
+          "Khách hỏi ban đêm có ai không là đang lo. Trả lời rõ ràng là có người, đừng trả lời bằng giờ giấc.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "What time do you close?",
+          "We never close, sir. Twenty-four hours.",
+          "Đừng nhận câu hỏi rồi trả lời bằng một con số. Câu hỏi này có tiền đề sai, và việc của bạn là sửa tiền đề đó.",
+        ),
+        sp(
+          "Is anyone here at midnight?",
+          "Yes, madam. Someone is here.",
+          "Trả lời 'yes' ngay từ đầu câu. Khách hỏi lúc nửa đêm không có kiên nhẫn nghe vòng vo.",
+        ),
+        sp(
+          "What time does the restaurant close?",
+          "It closes at ten, madam.",
+          "Giờ đóng cửa của BỘ PHẬN KHÁC thì trả lời bình thường. Chỉ quầy lễ tân là không có giờ đóng.",
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff}: "What time do you close?" ${lx.staff} says: "The desk is open twenty-four hours, sir. Someone is here all night." The guest asks about the restaurant. ${lx.staff} says: "It closes at ten, sir." The guest says: "Thank you." ${lx.staff} says: "You are welcome."`,
+        [
+          {
+            q: "Quầy lễ tân đóng cửa lúc mấy giờ?",
+            options: ["Không đóng cửa", "Mười một giờ đêm", "Mười giờ tối"],
+            correct: 0,
+            explanation: `Bài đọc: "The desk is open twenty-four hours." — luôn có người trực.`,
+          },
+          {
+            q: "Nhà hàng đóng cửa lúc mấy giờ?",
+            options: ["Mười giờ", "Không đóng cửa", "Hai giờ"],
+            correct: 0,
+            explanation:
+              "Bộ phận khác vẫn có giờ đóng cửa bình thường — chỉ riêng quầy lễ tân là không.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is the front desk open at 3 a.m.?",
+          "Yes, sir. Someone is here.",
+          "Night closed, sir.",
+          "Yes sir, but please come back in the morning.",
+        ),
+        game(
+          "What time does the front desk close?",
+          "It does not close, madam. Twenty-four hours.",
+          "Eleven, madam.",
+          "Ten o'clock, madam.",
+        ),
+      ],
+    }),
+
+  // A key handed to whoever asks for it is the failure this department is
+  // built to prevent, and the spine's 5.2 — one moment, please wait — is
+  // where the pause belongs. Two auditors put verification first for the
+  // module; nothing in six weeks asks a guest to prove who they are.
+  FO_5_2: (lx) =>
+    lesson(lx, 5, 2, "May I See Your Passport?", "Xác minh trước khi đưa chìa", {
+      vocabulary: [
+        v("Moment", "/ˈməʊmənt/", "Một lát", "One moment, please.", "⏳"),
+        v("Wait", "/weɪt/", "Đợi", "Please wait here, sir.", "⏸️"),
+      ],
+      grammar: [
+        g(
+          "Room number? OK, here.",
+          "May I see your passport, sir?",
+          "Số phòng không phải bằng chứng — ai đứng cạnh quầy cũng nghe được. Chìa khoá chỉ đưa sau khi xem giấy tờ, không có ngoại lệ, kể cả khách quen.",
+        ),
+        g(
+          "You wait.",
+          "One moment, please. I will check.",
+          "Xin khách chờ bằng câu mời, và nói rõ bạn đang làm gì trong lúc đó.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "I lost my key. Room two-oh-five.",
+          "May I see your passport, sir?",
+          "Đừng xin lỗi trước khi hỏi. Xem giấy tờ là việc bình thường và khách quen với nó ở mọi khách sạn tốt.",
+        ),
+        sp(
+          "Here you are. My passport.",
+          "Thank you, sir. One moment, please.",
+          "Cầm giấy tờ thì cảm ơn rồi xin khách chờ trong lúc đối chiếu. Đừng vừa xem vừa im lặng.",
+        ),
+        sp(
+          "Which room is Mr Chen in?",
+          "I am sorry, sir. Please wait here.",
+          "Không nói số phòng của khách khác cho bất kỳ ai. Mời người hỏi chờ rồi báo quản lý.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "I lost my key. Room ${lx.roomNo.spoken}." ${lx.staff} says: "May I see your passport, sir?" The guest gives it. ${lx.staff} says: "Thank you, sir. One moment, please." ${lx.staff} checks the name against the room, then gives a new ${lx.items[0].word.toLowerCase()} and says: "Here you are, sir."`,
+        [
+          {
+            q: `Vì sao ${lx.staff} xem hộ chiếu trước khi đưa chìa?`,
+            options: [
+              "Số phòng ai đứng cạnh quầy cũng nghe được",
+              "Vì khách chưa trả tiền phòng",
+              "Vì đó là thủ tục nhận phòng",
+            ],
+            correct: 0,
+            explanation:
+              "Biết số phòng không chứng minh được đó là phòng của mình. Chỉ giấy tờ mới nối được tên với phòng.",
+          },
+          {
+            q: "Người lạ hỏi số phòng của khách khác thì làm gì?",
+            options: ["Không nói, mời chờ rồi báo quản lý", "Nói số phòng", "Bảo họ tự lên tìm"],
+            correct: 0,
+            explanation:
+              "Số phòng của khách là thông tin riêng tư. Người hỏi có thể có lý do chính đáng, nhưng người quyết định không phải là bạn.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "My key does not work.",
+          "May I see your passport, sir?",
+          "OK, one key, sir.",
+          "Of course, sir. Here.",
+        ),
+        game(
+          "Which room is Mrs Chen in?",
+          "I am sorry, madam. Please wait here.",
+          "Room seven-two-oh.",
+          "She is upstairs, madam. Second floor.",
+        ),
+      ],
+    }),
+
+  // The guest's own name, and the two ways this department gets it wrong:
+  // reading a family name as a given name, and using a first name at all.
+  // The spine's 1.2 already teaches spelling a name — for Guest Relations
+  // that is the smaller half of the job.
+  GR_1_2: (lx) =>
+    lesson(lx, 1, 2, "The Guest's Name", "Tên khách & cách gọi", {
+      vocabulary: [
+        v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
+        v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
+        v("Letter", "/ˈletə/", "Chữ cái", "C-H-E-N. Four letters.", "🔡"),
+      ],
+      grammar: [
+        g(
+          "Hello Anna.",
+          "Good morning, Ms Smith.",
+          "Gọi khách bằng HỌ kèm Mr, Mrs hoặc Ms — không gọi tên riêng, dù khách trẻ. Không chắc là bà hay cô thì dùng Ms.",
+        ),
+        g(
+          "Spell please.",
+          "How do you spell that?",
+          "Muốn khách đánh vần, hỏi trọn câu. Tám tên chữ cái người Việt hay lẫn nhất: A /eɪ/ · E /iː/ · I /aɪ/ · G /dʒiː/ · J /dʒeɪ/ · R /ɑː/ · W /ˈdʌbljuː/ · Y /waɪ/.",
+        ),
+        g(
+          "Mr Wei, welcome.",
+          "Welcome, Mr Chen.",
+          "Tên Trung, Hàn, Việt viết HỌ TRƯỚC: Chen Wei thì họ là Chen. Gọi 'Mr Wei' là gọi bằng tên riêng. Không chắc thì hỏi: which is your family name?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "My name is Chen Wei.",
+          "Welcome, Mr Chen.",
+          "Họ đứng trước ở tên Trung, Hàn, Việt. Nghe 'Chen Wei' thì gọi Mr Chen, không phải Mr Wei.",
+        ),
+        sp(
+          "I am Anna Smith. A-N-N-A.",
+          "Thank you, Ms Smith.",
+          "Nhắc lại HỌ để khách biết bạn nghe đúng. Không chắc bà hay cô thì Ms là an toàn nhất.",
+        ),
+        sp(
+          "Sorry, which name do you use?",
+          "Your family name, sir. Mr Chen.",
+          "Hỏi thẳng còn hơn gọi sai suốt kỳ nghỉ. Câu hỏi này lịch sự ở mọi nền văn hoá.",
+        ),
+      ],
+      reading: read(
+        `A guest says: "My name is Chen Wei." ${lx.staff} does not say "Mr Wei". ${lx.staff} says: "Welcome, Mr Chen." Another guest says: "I am Anna Smith. A-N-N-A, S-M-I-T-H." ${lx.staff} writes each letter and says: "Thank you, Ms Smith."`,
+        [
+          {
+            q: "Khách tên Chen Wei thì gọi là gì?",
+            options: ["Mr Chen", "Mr Wei", "Mr Chen Wei"],
+            correct: 0,
+            explanation:
+              "Tên Trung, Hàn, Việt viết họ trước: Chen là họ. Gọi 'Mr Wei' là gọi bằng tên riêng.",
+          },
+          {
+            q: "Không biết khách đã lập gia đình chưa thì dùng gì?",
+            options: ["Ms", "Mrs", "Miss"],
+            correct: 0,
+            explanation:
+              "'Ms' dùng được cho mọi phụ nữ và không hỏi gì về đời tư. 'Mrs' và 'Miss' đều là đoán.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I am Kim Min-jun.",
+          "Welcome, Mr Kim.",
+          "Hello Min-jun, welcome here.",
+          "Welcome, Mr Min-jun. This way, please.",
+        ),
+        game(
+          "My name is Anna Smith.",
+          "Thank you, Ms Smith.",
+          "Hello Anna.",
+          "Thank you, Mrs Anna. Please come in.",
+        ),
+      ],
+    }),
+
+  // Confirming that a named guest is staying is the commonest way a hotel
+  // hands a stranger what they came for. The spine's 5.4 owns sorry and
+  // excuse me; a refusal is exactly what those two words are for here.
+  GR_5_4: (lx) =>
+    lesson(lx, 5, 4, "I Cannot Say", "Từ chối tiết lộ thông tin khách", {
+      vocabulary: [
+        v(
+          "Excuse me",
+          "/ɪkˈskjuːz miː/",
+          "Xin phép, xin lỗi (khi làm phiền)",
+          "Excuse me, sir.",
+          "🙇",
+        ),
+        v("Sorry", "/ˈsɒri/", "Xin lỗi (khi có lỗi)", "I am sorry, madam.", "😔"),
+      ],
+      grammar: [
+        g(
+          "Yes, she is here.",
+          "I am sorry, sir. I cannot say.",
+          "Không xác nhận một người có ở khách sạn hay không, với bất kỳ ai. Chỉ cần nói 'có' là đã trao đi thứ người hỏi cần.",
+        ),
+        g(
+          "You go find her.",
+          "Excuse me, sir. One moment.",
+          "Từ chối rồi vẫn phải lịch sự và vẫn phải giúp: mời người hỏi chờ, rồi báo quản lý xử lý.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Is Mrs Chen staying here?",
+          "I am sorry, sir. I cannot say.",
+          "Câu này nói bằng giọng bình thường, không hạ giọng như đang giấu. Đây là quy định, không phải chuyện riêng của bạn.",
+        ),
+        sp(
+          "I am her husband. Just tell me.",
+          "Excuse me, sir. One moment, please.",
+          "Người hỏi nói là người nhà cũng không đổi gì — bạn không kiểm chứng được. Mời chờ rồi gọi quản lý.",
+        ),
+        sp(
+          "Can you give her this letter?",
+          "Certainly, sir. I will try.",
+          "Nhận thư thì được, vì việc đó không tiết lộ gì. Nói 'I will try' chứ đừng hứa là sẽ chuyển tới tay.",
+        ),
+      ],
+      reading: read(
+        `A man asks ${lx.staff}: "Is Mrs Chen staying here?" ${lx.staff} says: "I am sorry, sir. I cannot say." The man says: "I am her husband." ${lx.staff} does not change the answer. ${lx.staff} says: "Excuse me, sir. One moment, please." and calls the manager. The manager comes and talks to the man.`,
+        [
+          {
+            q: `Người hỏi nói mình là chồng khách, ${lx.staff} có nói không?`,
+            options: [
+              "Không — không kiểm chứng được, và gọi quản lý",
+              "Có, vì đó là người nhà",
+              "Có, nhưng chỉ nói số tầng",
+            ],
+            correct: 0,
+            explanation:
+              "Người xưng là người nhà thì càng phải cẩn thận. Bạn không có cách nào kiểm chứng, nên không phải bạn là người quyết định.",
+          },
+          {
+            q: "Vì sao chỉ nói 'có' thôi cũng đã là sai?",
+            options: [
+              "Nói 'có' là đã cho biết khách đang ở đây",
+              "Vì câu đó không lịch sự",
+              "Vì phải hỏi tên trước",
+            ],
+            correct: 0,
+            explanation:
+              "Người tìm khách chỉ cần biết đúng một điều: người đó có ở đây không. Nói 'có' là đã trao đi thứ họ cần.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is Mr Tran in room seven-two-oh?",
+          "I am sorry, sir. I cannot say.",
+          "No, madam.",
+          "One moment, sir. I will look in the computer.",
+        ),
+        game(
+          "I am her sister. Which room?",
+          "Excuse me, madam. One moment.",
+          "Room seven-two-oh.",
+          "She is in the lounge.",
         ),
       ],
     }),
