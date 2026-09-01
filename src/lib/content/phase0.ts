@@ -875,9 +875,9 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS.",
         ),
         g(
-          "Tomorrow I clean.",
-          "I will clean tomorrow.",
-          "Việc tương lai dùng 'will' + động từ: I WILL clean.",
+          `Tomorrow I start at ${lx.service.open}.`,
+          `I will start at ${lx.service.open} tomorrow.`,
+          "Việc tương lai dùng 'will' + động từ: I WILL start.",
         ),
       ],
       speaking: [
@@ -1356,10 +1356,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          "Is my table ready?",
+          `Is my ${i1.word.toLowerCase()} here yet?`,
           "One moment, please. I will check.",
           "Wait there.",
-          "Your table is not ready, madam. Please wait.",
+          `Your ${i1.word.toLowerCase()} is not here yet, madam. Please wait.`,
         ),
       ],
     }),
@@ -1389,7 +1389,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Here is my passport.",
+          `Here is my ${i1.word.toLowerCase()}.`,
           "Thank you. Here you are.",
           "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. Âm /h/ đầu 'Here' phải bật ra — bỏ nó đi thì âm đầu biến mất và khách không hiểu.",
         ),
@@ -1472,7 +1472,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
-          "You gave me the wrong bill.",
+          `You gave me the wrong ${i1.word.toLowerCase()}.`,
           "I am very sorry, sir.",
           "Sorry sorry.",
           "That is not my mistake, sir. I am sorry.",
