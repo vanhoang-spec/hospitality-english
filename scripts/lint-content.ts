@@ -1362,8 +1362,20 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     // frames were fixed. A genuinely definite request ("Can I have the bill,
     // please?" — unique in its situation) would trip this; author it with the
     // article inside the headword, or narrow this rule then.
+    //
+    // Narrowed, as that note said to. Some referents are unique in the
+    // guest's own situation the moment they speak: there is exactly one
+    // bill for their table, one total, one manager on duty. "Can I have the
+    // bill, please?" is the most-said sentence in a restaurant, and forcing
+    // "a bill" to satisfy a lint would teach the wrong article far more
+    // often than the rule teaches the right one. The list stays short and
+    // holds only nouns that are unique BY THE SITUATION, not merely
+    // familiar — "the key" and "the towel" are not on it, because a guest
+    // requesting either has not established which one.
     name: "definite-article-on-first-mention",
-    test: (s) => /\b(can|could|may) i have the\b|\bi (need|will bring) the\b/i.test(s),
+    test: (s) =>
+      /\b(can|could|may) i have the\b|\bi (need|will bring) the\b/i.test(s) &&
+      !/\bthe (bill|total|change|manager|receipt|time)\b/i.test(s),
     why: 'a first request takes "a"/"an"/"some", not "the" — the guest has not mentioned it yet',
   },
   {
