@@ -390,7 +390,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Good evening.", "Good evening, madam.", "Good morning.", "Bye bye.")],
+      game: [game("Good evening.", "Good evening, madam.", "Good morning.", "Good evening, sir.")],
     }),
 
     lesson(lx, 1, 2, "Spelling a Name", "Đánh vần tên khách", {
@@ -445,7 +445,14 @@ function week1(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("It is spelled J-A-N-E.", "J-A-N-E. Thank you.", "Jane, okay.", "J-A-M-E.")],
+      game: [
+        game(
+          "It is spelled J-A-N-E.",
+          "J-A-N-E. Thank you.",
+          "Jane, okay.",
+          "J-A-M-E. Thank you very much, madam.",
+        ),
+      ],
     }),
 
     lesson(lx, 1, 3, "I Work Here", "Tôi làm ở bộ phận nào", {
@@ -493,8 +500,8 @@ function week1(lx: P0Lexicon): LessonContent[] {
         game(
           "Are you the manager?",
           `No, madam. I am from ${lx.deptEn}.`,
-          "Yes yes.",
           "I no manager.",
+          `Yes, madam. I am the manager of ${lx.deptEn}.`,
         ),
       ],
     }),
@@ -542,7 +549,12 @@ function week1(lx: P0Lexicon): LessonContent[] {
         ],
       ),
       game: [
-        game("See you tomorrow.", "Goodbye, sir. Have a nice day.", "OK bye.", "Yes, tomorrow."),
+        game(
+          "See you tomorrow.",
+          "Goodbye, sir. Have a nice day.",
+          "OK bye.",
+          "Yes. Tomorrow I am not working here.",
+        ),
       ],
     }),
   ].map((l) => l);
@@ -618,14 +630,14 @@ function week2(lx: P0Lexicon): LessonContent[] {
         game(
           "Is my room three-oh-five?",
           "Yes, room three-oh-five, sir.",
-          "Yes, room 305 hundred.",
           "Room what?",
+          "Yes, room three hundred and five, sir.",
         ),
         game(
           "Is the total four hundred thousand?",
           "No, sir. It is forty dollars.",
-          "Thirty yes, sir.",
           "Dollar forty is.",
+          "Yes, sir. It is four hundred thousand.",
         ),
       ],
     }),
@@ -672,7 +684,12 @@ function week2(lx: P0Lexicon): LessonContent[] {
         ],
       ),
       game: [
-        game("Where is the lift?", "The lift is over there, sir.", "Lift there.", "I don't know."),
+        game(
+          "Where is the lift?",
+          "The lift is over there, sir.",
+          "Lift there.",
+          "I do not know, sir.",
+        ),
       ],
     }),
 
@@ -722,7 +739,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Can I have one more ${i2.word.toLowerCase()}?`,
           `Of course. One ${i2.word.toLowerCase()}, madam.`,
           `Yes, one ${i2.word.toLowerCase()}s.`,
-          "No more.",
+          `I am sorry, madam. We have no more ${i2.word.toLowerCase()} today.`,
         ),
       ],
     }),
@@ -774,7 +791,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `We are four people tonight.`,
           `Four people. Thank you, sir.`,
           `How much people?`,
-          `Four person.`,
+          `Yes, sir. A table for five people, then.`,
         ),
       ],
     }),
@@ -840,8 +857,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
         game(
           "Is it eight o'clock now?",
           "No, sir. It is half past seven.",
-          "Yes, now eight.",
           "Time eight.",
+          "Yes, it is eight, sir.",
         ),
       ],
     }),
@@ -891,8 +908,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
         game(
           "Is the tour today?",
           "No, madam. It is tomorrow.",
-          "Yes, today tour.",
           "Tour Monday no.",
+          "Yes, madam. The tour is today at two.",
         ),
       ],
     }),
@@ -943,7 +960,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
           `Are you open now?`,
           `Yes, sir. We close at ${lx.service.close}.`,
           `Open ${lx.service.open} yes.`,
-          `We close ${lx.service.close}.`,
+          `No, sir. We are closed until ${lx.service.open}.`,
         ),
       ],
     }),
@@ -993,8 +1010,8 @@ function week3(lx: P0Lexicon): LessonContent[] {
         game(
           `Am I too late?`,
           `No, madam. We finish at ${lx.service.close}.`,
-          `Yes, too late now.`,
           `Finish ${lx.service.close}.`,
+          `Yes, madam. We finished at ${lx.service.open}.`,
         ),
       ],
     }),
@@ -1052,16 +1069,23 @@ function week4(lx: P0Lexicon): LessonContent[] {
             q: "Vì sao KHÔNG nói 'dongs'?",
             options: [
               "Vì 'dong' không bao giờ thêm -s",
-              "Vì số tiền còn nhỏ",
+              "Vì trong tiếng Việt không có số nhiều",
               "Vì khách là người nước ngoài",
             ],
             correct: 0,
             explanation:
-              "Tên tiền tệ này không đếm được trong tiếng Anh: 'five hundred thousand dong'.",
+              "Tên tiền tệ này không đếm được trong tiếng Anh: 'five hundred thousand dong'. Lý do nằm ở tiếng Anh, không phải ở tiếng Việt.",
           },
         ],
       ),
-      game: [game("Is the water free?", "Yes, madam. It is free.", "No, water dong.", "Free no.")],
+      game: [
+        game(
+          "Is the water free?",
+          "Yes, madam. It is free.",
+          "No, water dong.",
+          "No, madam. The water is fifty thousand.",
+        ),
+      ],
     }),
 
     lesson(lx, 4, 2, "Cash or Card?", "Tiền mặt hay thẻ", {
@@ -1106,7 +1130,12 @@ function week4(lx: P0Lexicon): LessonContent[] {
         ],
       ),
       game: [
-        game("Do you take Visa?", "Yes, sir. We take cards.", "Visa I no know.", "Cash only yes."),
+        game(
+          "Do you take Visa?",
+          "Yes, sir. We take cards.",
+          "Visa I no know.",
+          "No, sir. Cash only.",
+        ),
       ],
     }),
 
@@ -1141,7 +1170,11 @@ function week4(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: "Vì sao nhân viên nói 'about'?",
-            options: ["Vì tỷ giá thay đổi hằng ngày", "Vì chưa biết giá", "Vì đang giảm giá"],
+            options: [
+              "Vì tỷ giá thay đổi hằng ngày",
+              "Vì khách sạn muốn khách trả bằng đô la",
+              "Vì chưa biết giá",
+            ],
             correct: 0,
             explanation: "Nói con số đô chính xác là hứa một tỷ giá khách sạn không quyết định.",
           },
@@ -1158,7 +1191,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Can I pay in dong?",
           "Of course, madam. We take dong.",
           "Dong no good.",
-          "Yes, dong five hundred.",
+          "I am sorry, madam. We take dollars only.",
         ),
       ],
     }),
@@ -1209,7 +1242,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Here is five hundred thousand.",
           "Thank you, sir. Your change, please.",
           "Fifty dollar OK.",
-          "Total fifty yes.",
+          "Thank you, sir. There is no change today.",
         ),
       ],
     }),
@@ -1254,7 +1287,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: "Câu nào dùng để mời khách ngồi?",
-            options: ["Please have a seat.", "Sit down now.", "You sit."],
+            options: ["Please have a seat.", "Please stand over there.", "You sit."],
             correct: 0,
             explanation: "'Please have a seat' là câu mời ngồi lịch sự chuẩn trong khách sạn.",
           },
@@ -1267,7 +1300,12 @@ function week5(lx: P0Lexicon): LessonContent[] {
         ],
       ),
       game: [
-        game("May I sit here?", "Of course, sir. Please have a seat.", "Yes sit.", "Here no sit."),
+        game(
+          "May I sit here?",
+          "Of course, sir. Please have a seat.",
+          "Yes sit.",
+          "One moment, sir. I must ask my manager.",
+        ),
       ],
     }),
 
@@ -1306,7 +1344,11 @@ function week5(lx: P0Lexicon): LessonContent[] {
           },
           {
             q: "Nên làm gì khi để khách chờ?",
-            options: ["Báo khách rồi quay lại sớm", "Im lặng bỏ đi", "Nói khách tự tìm"],
+            options: [
+              "Báo khách rồi quay lại sớm",
+              "Đi làm việc khác, không nói gì với khách",
+              "Nói khách tự tìm",
+            ],
             correct: 0,
             explanation: "Báo trước và quay lại đúng hẹn là nguyên tắc dịch vụ cơ bản.",
           },
@@ -1317,7 +1359,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
           "Is my table ready?",
           "One moment, please. I will check.",
           "Wait there.",
-          "Table no ready.",
+          "Your table is not ready, madam. Please wait.",
         ),
       ],
     }),
@@ -1357,7 +1399,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: "Câu nào nói khi đưa đồ cho khách?",
-            options: ["Here you are.", "Take it.", "This is."],
+            options: ["Here you are.", "Put it on the table there.", "This is."],
             correct: 0,
             explanation: "'Here you are' là câu chuẩn khi trao đồ vật cho khách.",
           },
@@ -1369,7 +1411,14 @@ function week5(lx: P0Lexicon): LessonContent[] {
           },
         ],
       ),
-      game: [game("Where is the lounge?", "This way, please, sir.", "Go there.", "Lounge that.")],
+      game: [
+        game(
+          "Where is the lounge?",
+          "This way, please, sir.",
+          "Go there.",
+          "Ask at the desk, sir.",
+        ),
+      ],
     }),
 
     lesson(lx, 5, 4, "Excuse Me & I Am Sorry", "Xin lỗi & Xin thứ lỗi", {
@@ -1407,10 +1456,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: "Khi mình làm sai thì nói gì?",
-            options: ["I am very sorry.", "Excuse me.", "Of course."],
+            options: ["I am very sorry.", "Excuse me, that is not my fault.", "Of course."],
             correct: 0,
             explanation:
-              "'Sorry' dùng khi mình có lỗi; 'Excuse me' dùng khi làm phiền hoặc xin phép.",
+              "'Sorry' dùng khi mình có lỗi. Phương án kia mở đầu bằng 'Excuse me' nghe rất lịch sự, nhưng vế sau chối trách nhiệm — câu dài và êm tai vẫn có thể là câu sai.",
           },
           {
             q: `Sau khi xin lỗi, ${lx.staff} làm gì?`,
@@ -1425,8 +1474,8 @@ function week5(lx: P0Lexicon): LessonContent[] {
         game(
           "You gave me the wrong bill.",
           "I am very sorry, sir.",
-          "No, bill correct.",
           "Sorry sorry.",
+          "That is not my mistake, sir. I am sorry.",
         ),
       ],
     }),
@@ -1488,8 +1537,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
         game(
           "Good afternoon.",
           "Good afternoon, sir. Welcome.",
-          "Good morning, sir.",
           "Afternoon.",
+          "Good morning, sir.",
         ),
       ],
     }),
@@ -1540,7 +1589,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           `Is my room ready?`,
           `Yes, sir. Room ${lx.roomNo.spoken} is ready.`,
           `Room ready yes.`,
-          `Room ${lx.roomNo.digits} hundred.`,
+          `No, sir. Your room will be ready at two.`,
         ),
       ],
     }),
@@ -1591,8 +1640,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
         game(
           `Sorry, I did not hear you.`,
           `Of course, sir. We open at ${lx.service.open}.`,
-          `I say again no.`,
           `You no hear.`,
+          `Please listen carefully, sir. I said ${lx.service.open}.`,
         ),
       ],
     }),
@@ -1644,7 +1693,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "No, that is all. Thank you.",
           "Thank you, sir. Enjoy your stay.",
           "OK finish.",
-          "Nothing more no.",
+          "Thank you. Goodbye now.",
         ),
       ],
     }),
