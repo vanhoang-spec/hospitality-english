@@ -599,7 +599,10 @@ function week1(lx: P0Lexicon): LessonContent[] {
         // "The guest leaves the guest room door." — Housekeeping's station is a
         // doorway, and you cannot leave a door. Say goodbye AT the station and
         // the frame reads for all six.
-        `The guest says goodbye at ${lx.station}. ${lx.staff} smiles: "Thank you, sir. Goodbye. Have a nice day."`,
+        // Câu hỏi 1 hỏi nhân viên đáp thế nào khi khách CẢM ƠN, nhưng trong bài
+        // đọc chính nhân viên mới là người cảm ơn, và "You are welcome" không
+        // xuất hiện. Hai auditor nêu. Nay bài đọc chứa đúng cặp thoại đó.
+        `The guest says goodbye at ${lx.station}: "Thank you!" ${lx.staff} smiles: "You are welcome, sir. Goodbye. Have a nice day."`,
         [
           {
             q: "Khách cảm ơn thì nhân viên đáp thế nào?",
@@ -645,7 +648,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         v("Number", "/ˈnʌmbə/", "Con số", "What is your room number?", "🔢"),
         v("Zero", "/ˈzɪərəʊ/", "Số 0 (đọc là 'oh' trong số phòng)", "Room two-oh-five.", "0️⃣"),
         v("Room", "/ruːm/", "Phòng", `Room ${lx.roomNo.spoken}, sir.`, "🚪"),
-        v("Hundred", "/ˈhʌndrəd/", "Trăm", "One hundred dollars.", "💯"),
+        v("Hundred", "/ˈhʌndrəd/", "Trăm", "One hundred thousand dong.", "💯"),
       ],
       grammar: [
         g(
@@ -675,8 +678,13 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
         ),
         sp(
+          // Tuần 2 dạy tổng tiền bằng ĐÔ, rồi tuần 4 dạy rằng nói một con số đô
+          // chính xác là hứa một tỷ giá khách sạn không quyết định — và rằng hoá
+          // đơn tính bằng tiền đồng. Sáu auditor nêu: học viên luyện thói quen
+          // sai hai tuần trước khi được dạy đó là sai. "Forty-five" vẫn là số
+          // hàng chục mà tuần 2 cần dạy.
           "What is the total, please?",
-          "It is forty-five dollars, sir.",
+          "Forty-five thousand dong, sir.",
           "Số hàng chục ghép số lẻ có dấu gạch ngang, không có khoảng trắng: forty-five, không phải 'forty five'. Và 'dollars' kết thúc bằng âm /z/ có rung, không phải /s/.",
         ),
       ],
@@ -713,8 +721,8 @@ function week2(lx: P0Lexicon): LessonContent[] {
         game(
           // Đề hỏi bằng tiền đồng, đáp án trả lời bằng đô, không có cầu nối quy
           // đổi nào — học viên không thể suy ra. Giữ nguyên một đơn vị.
-          "Is the total thirty dollars?",
-          "No, sir. It is forty dollars.",
+          "Is the total thirty thousand?",
+          "No, sir. Forty-five thousand dong.",
           "Dollar forty is.",
           "Yes, sir. It is four hundred thousand.",
         ),
@@ -750,7 +758,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: "Phòng khách ở tầng mấy?",
-            options: [lx.floor.vi, "Tầng trệt", "Tầng mười"],
+            // Đáp án đúng là phương án DUY NHẤT viết thường, và mẹo chính tả ấy
+            // sống sót qua Fisher–Yates. 24 câu hỏi ở Phase 0 dính lỗi này.
+            options: [capFirst(lx.floor.vi), "Tầng trệt", "Tầng mười"],
             correct: 0,
             explanation: `${lx.staff} nói "The ${lx.floor.ordinal} floor" — tức ${lx.floor.vi}.`,
           },
@@ -954,7 +964,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
     lesson(lx, 3, 2, "Days of the Week", "Các ngày trong tuần", {
       vocabulary: [
         v("Today", "/təˈdeɪ/", "Hôm nay", "Today is Monday.", "📅"),
-        v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", "Your tour is tomorrow.", "📆"),
+        v("Tomorrow", "/təˈmɒrəʊ/", "Ngày mai", `Your ${lx.priced.en} is tomorrow.`, "📆"),
       ],
       grammar: [
         g(
@@ -970,13 +980,17 @@ function week3(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "When is my city tour?",
-          "Your tour is tomorrow, madam.",
-          "Nói rõ 'today' hay 'tomorrow' để khách không nhầm lịch. 'tomorrow' trọng âm ở giữa: to-MOR-row, ba âm tiết.",
+          // "City tour" là việc của Quan hệ khách hàng. Nhân viên spa, buồng
+          // phòng và nhà hàng được dạy xác nhận lịch tour từ trí nhớ, không có
+          // quyền tra hệ thống. Bốn auditor nêu. Dùng chính dịch vụ có giá của
+          // bộ phận thay thế.
+          `When is my ${lx.priced.en}?`,
+          `It is tomorrow, madam.`,
+          "Nói rõ ngày để khách không nhầm lịch, đừng chỉ gật đầu. 'tomorrow' trọng âm ở giữa: to-MOR-row, ba âm tiết.",
         ),
       ],
       reading: read(
-        `Today is Monday. A guest asks about the city tour. ${lx.staff} checks and says: "Your tour is tomorrow, madam. Tuesday."`,
+        `Today is Monday. A guest asks about the ${lx.priced.en}. ${lx.staff} checks and says: "It is tomorrow, madam. Tuesday."`,
         [
           {
             q: "Chuyến tham quan diễn ra ngày nào?",
@@ -1124,7 +1138,9 @@ function week3(lx: P0Lexicon): LessonContent[] {
               q: `Dịch vụ kết thúc lúc mấy giờ?`,
               options: [`${lx.service.close}`, `${lx.service.open}`, "midnight"],
               correct: 0,
-              explanation: `Nhân viên nói "finishes at ${lx.service.close}".`,
+              explanation: lx.service.isEvent
+                ? `Nhân viên nói "finishes at ${lx.service.close}".`
+                : `Nhân viên nói "closes at ${lx.service.close}".`,
             },
           ],
         ),
@@ -1184,7 +1200,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: `${capFirst(lx.priced.vi)} giá bao nhiêu?`,
-            options: [`${lx.priced.vndWord} đồng`, "Miễn phí", "Chưa nói giá"],
+            options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Miễn phí", "Chưa nói giá"],
             correct: 0,
             explanation: `Nhân viên nói "${lx.priced.vndWord} dong".`,
           },
@@ -1411,9 +1427,13 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ],
       grammar: [
         g(
-          "Give me your bag.",
-          "May I take your bag?",
-          "Câu xin phép dùng 'May I…?'. 'Give me' nghe như ra lệnh.",
+          // "May I take your bag?" là việc của bell-boy, và ba auditor nêu nó ở
+          // các bộ phận không khuân đồ. "May I help you?" dạy đúng cấu trúc
+          // 'May I…?' và là câu quầy nào cũng dùng nhiều nhất — trước đây nó chỉ
+          // nằm trong thẻ từ vựng, chưa lần nào là câu học viên phải nói ra.
+          "Wait, I help you.",
+          "May I help you, sir?",
+          "Câu xin phép dùng 'May I…?'. Nói trống không nghe như ra lệnh.",
         ),
         g(
           "Sit.",
@@ -1424,8 +1444,8 @@ function week5(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "Could you help me, please?",
-          "Of course, madam. Certainly.",
-          "'Of course' và 'Certainly' là hai cách nhận lời lịch sự nhất. 'Certainly' có ba âm tiết, trọng âm ở đầu: CER-tain-ly.",
+          "Of course, madam. How may I help?",
+          "'Of course' là cách nhận lời lịch sự nhất, và nối ngay bằng một câu hỏi mở thì nghe chủ động hơn là dừng lại. 'course' đóng bằng /s/ — đừng nuốt mất âm cuối.",
         ),
       ],
       reading: read(
@@ -1447,10 +1467,13 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
+          // Nhiễu cũ là câu XIN PHÉP CẤP TRÊN — đúng nghiệp vụ ở phòng chờ có
+          // kiểm soát thẻ — bị chấm sai, trong khi tuần 5 bài 2 lại chấm ĐÚNG
+          // cho "One moment, please. I will check." Ba auditor nêu mâu thuẫn.
           "May I sit here?",
-          "Of course, sir. Please have a seat.",
+          "Certainly, sir. Please have a seat.",
           "Yes sit.",
-          "One moment, sir. I must ask my manager.",
+          "Of course, sir. You can to sit down here.",
         ),
       ],
     }),
@@ -1535,8 +1558,10 @@ function week5(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          `Here is my ${i1.word.toLowerCase()}.`,
-          "Thank you. Here you are.",
+          // Khách ĐƯA đồ, còn "Here you are" là công thức TRAO đồ — tôi đổi đề
+          // sáng nay và làm lệch cặp. Nay khách xin, nhân viên trao.
+          `Could I have ${/^[aeiou]/i.test(i1.word) ? "an" : "a"} ${i1.word.toLowerCase()}, please?`,
+          "Here you are, madam.",
           "Nhận đồ thì cảm ơn; đưa trả đồ thì nói 'Here you are'. 'Here you are' đọc nối liền thành một cụm, trọng âm rơi vào 'are' — tách rời từng từ nghe như đang đánh vần.",
         ),
       ],
@@ -1593,7 +1618,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
       speaking: [
         sp(
           "This is the wrong key.",
-          "I am very sorry, madam.",
+          "I am very sorry, madam. One moment.",
           "Xin lỗi trước, sửa sau. 'Excuse me' dùng khi làm phiền; 'Sorry' dùng khi mình sai. Từ 'very' mở đầu bằng /v/ — răng trên chạm môi dưới, đừng thành 'be-ry'.",
         ),
       ],
@@ -1660,8 +1685,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           // the surname is the cheapest upgrade in hospitality English and the
           // course never taught it once in fourteen weeks.
           "Good morning. I am Anna Smith.",
-          "Good morning, Mrs Smith.",
-          "Khách vừa xưng tên thì phải dùng lại tên đó: 'Mrs' + HỌ, không phải tên gọi. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
+          "Good morning, Ms Smith.",
+          "Khách vừa xưng tên thì phải dùng lại tên đó: 'Ms' + HỌ, không phải tên gọi. Dùng 'Ms' khi chưa biết tình trạng hôn nhân của khách; đừng đoán bằng Mrs hay Miss. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
         ),
       ],
       reading: read(
@@ -1721,7 +1746,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         [
           {
             q: `Phòng khách ở tầng nào?`,
-            options: [lx.floor.vi, "Tầng trệt", "Tầng hai mươi"],
+            options: [capFirst(lx.floor.vi), "Tầng trệt", "Tầng hai mươi"],
             correct: 0,
             explanation: `Nhân viên nói "${lx.floor.ordinal} floor" — tức ${lx.floor.vi}.`,
           },
@@ -1771,7 +1796,10 @@ function week6(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about ${lx.service.en} and the ${lx.priced.en}. ${lx.staff} says: "We open at ${lx.service.open}, madam. The ${lx.priced.en} is ${lx.priced.vndWord} dong."`,
+        // Cả hai câu hỏi của bài này đều không có neo trong chính bài đọc — ba
+        // auditor nêu, và bài đọc đi kèm câu hỏi cả trong đề checkpoint, nên học
+        // viên đọc kỹ vẫn không trả lời được. Nay lời nhờ nhắc lại nằm trong bài.
+        `A guest asks about ${lx.service.en} and the ${lx.priced.en}. The guest says: "Sorry, could you say that again?" ${lx.staff} answers twice: "We open at ${lx.service.open}, madam. The ${lx.priced.en} is ${lx.priced.vndWord} dong."`,
         [
           {
             q: "Khi không nghe rõ, nên nói câu nào?",
