@@ -393,9 +393,11 @@ export function game(
   wrongA: string,
   wrongB: string,
   role?: GameRound["speakerRole"],
+  explanation?: string,
 ): GameRound {
   return {
     ...(role ? { speakerRole: role } : {}),
+    ...(explanation ? { explanation } : {}),
     prompt,
     options: [
       { text: correct, correct: true },
@@ -725,6 +727,8 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Thank you very much, madam.",
           "OK.",
           "You are welcome, madam.",
+          undefined,
+          "'You are welcome' là câu đáp lời CẢM ƠN. Ở đây khách đang KHEN, và lời khen thì đáp bằng lời cảm ơn. Đáp nhầm nghe như bạn không nghe rõ khách vừa nói gì.",
         ),
         game(
           "See you tomorrow.",
@@ -906,6 +910,8 @@ function week2(lx: P0Lexicon): LessonContent[] {
           `Yes, madam. The ${lx.floor.ordinal} floor.`,
           "Yes, floor yes madam.",
           `No madam, go to the ${lx.floor.ordinal} floor.`,
+          undefined,
+          `Câu kia mở đầu bằng 'No' rồi lại chỉ đúng tầng khách vừa hỏi — khách nghe chữ đầu tiên là 'No' và sẽ đi tìm tầng khác. Trả lời câu hỏi có/không thì chữ đầu tiên phải đúng.`,
         ),
         game(
           "Where is the lift?",
@@ -1440,6 +1446,8 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Yes, sir. One moment.",
           "Price list no have, sir.",
           "Yes sir, I will bring the price list.",
+          undefined,
+          "Cả hai câu 'Yes' đều đúng ngữ pháp. Ở trình độ này chọn câu NGẮN hơn: khách chỉ cần biết bạn đã nghe và sẽ đi lấy. Câu dài dễ vấp, mà vấp giữa chừng thì mất cả câu.",
         ),
         game(
           "Is the water free?",
@@ -1651,6 +1659,8 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Certainly, sir. One moment.",
           "Bill? OK, I go and bring now.",
           "Yes sir, I will bring it very soon.",
+          undefined,
+          "'Very soon' là một lời hứa không có mốc thời gian — khách sẽ tự đặt mốc, và bạn sẽ trễ so với mốc đó. 'One moment' hứa đúng thứ bạn kiểm soát được.",
         ),
         game(
           // "Your change, please." ASKS THE GUEST for change. Three auditors.
@@ -1734,6 +1744,8 @@ function week5(lx: P0Lexicon): LessonContent[] {
           "I will call the bellman, madam.",
           "Bag heavy, madam.",
           "Of course madam, I will take it up for you.",
+          undefined,
+          "Nhận lời khiêng hành lý nghe rất tận tình, nhưng hành lý là việc của bộ phận hành lý — và là cách tự bảo vệ: đồ hỏng hay mất sau khi bạn cầm vào thì không có phiếu giao nhận nào chứng minh.",
         ),
         game(
           // Nhiễu cũ là câu XIN PHÉP CẤP TRÊN — đúng nghiệp vụ ở phòng chờ có
@@ -2029,6 +2041,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Welcome back, Mr Chen.",
           "Hello Chen, welcome back.",
           "Welcome back, sir. Nice to see you.",
+          undefined,
+          "Câu kia lịch sự và đúng ngữ pháp, nhưng khách vừa nói tên mình ra. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề — bỏ qua nó rồi gọi 'sir' là quay về mức phục vụ cho người lạ.",
         ),
         game(
           "Good afternoon.",
@@ -2169,6 +2183,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Of course, madam. Slowly.",
           "Slow, yes. I speak slow now.",
           "I am sorry madam, I will speak slowly.",
+          undefined,
+          "Câu xin lỗi không sai tiếng Anh, nhưng ở đây không có gì để xin lỗi: khách xin bạn nói chậm, không phàn nàn. Nhận lời rồi làm ngay là đủ — xin lỗi thừa làm khách ngại hỏi lại lần sau.",
         ),
         game(
           // "Of course" không phải câu đáp cho "I did not hear you" — nó nhận

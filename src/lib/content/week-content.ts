@@ -84,6 +84,13 @@ export type GameOption = { text: string; correct: boolean };
 export type GameRound = {
   prompt: string;
   options: GameOption[];
+  /** Why the wrong options are wrong. ReadingSuite renders an explanation for
+   *  all 48 of its questions; the arcade said only "Chưa đúng — thử bong bóng
+   *  khác nhé." for all 48 of its rounds. That gap is worst exactly where the
+   *  distractor is correct English and loses on register or on length, which
+   *  three audit reports listed round by round: the learner is marked wrong
+   *  and given no way to work out the criterion. */
+  explanation?: string;
   /** Who says `prompt` — same contract as SpeakingItem.speakerRole. A week
    *  that trains reporting UPWARD (a crisis, a proposal) has rounds whose
    *  prompt is a manager's, and labelling those "Khách nói" teaches the

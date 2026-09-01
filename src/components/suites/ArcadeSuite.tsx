@@ -151,8 +151,14 @@ function ArcadeSuiteInner({
         }
       }, 900);
     } else {
-      setFeedback({ ok: false, text: "Chưa đúng — thử bong bóng khác nhé." });
-      setTimeout(() => setFeedback(null), 1000);
+      // A round whose distractor is correct English — losing only on register
+      // or on length — teaches nothing without a reason, and the learner has
+      // no way to infer the criterion from a generic "try another bubble".
+      // Held twice as long as the bare message, because there is now something
+      // to read.
+      const why = rounds[roundIdx % rounds.length]?.explanation;
+      setFeedback({ ok: false, text: why ?? "Chưa đúng — thử bong bóng khác nhé." });
+      setTimeout(() => setFeedback(null), why ? 3200 : 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
     }
   }

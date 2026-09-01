@@ -221,17 +221,48 @@ function buildPaper(dep: string, week: string): Question[] {
     };
   });
 
-  const gamePool = shuffle(phaseLessons.flatMap((l) => l.game));
-  const listeningQs: Question[] = gamePool.slice(0, MIX.listening).map((round) => {
-    const options = shuffle(round.options.map((o) => ({ ...o })));
+  // The listening block used to be `gamePool.slice(0, MIX.listening)` — the
+  // same rounds as the arcade, with the same three options word for word. A
+  // learner who had played the arcade had already seen every listening answer,
+  // so the 50% per-block floor — added precisely to stop somebody passing
+  // "having understood nothing they heard" — was measuring arcade memory.
+  // Three audit reports found it independently.
+  //
+  // It now draws from the SPEAKING items: the audio is the guest's line and
+  // the options are staff replies. Different bank, and it tests the thing the
+  // block is named after — you have to understand what was said to pick the
+  // reply that answers it.
+  const speakPool = shuffle(phaseLessons.flatMap((l) => l.speaking));
+  const bagOf = (s: string) =>
+    new Set(
+      s
+        .toLowerCase()
+        .replace(/[^a-z0-9 ]/g, " ")
+        .split(/\s+/)
+        .filter((w) => w.length > 2),
+    );
+  const listeningQs: Question[] = speakPool.slice(0, MIX.listening).map((s) => {
+    // Distractors are the replies that share the most words with the correct
+    // one, for the same reason the grammar block picks its distractors that
+    // way: an unrelated reply is eliminable without hearing anything.
+    const correct = bagOf(s.targetResponse);
+    const share = (t: string) => [...bagOf(t)].filter((w) => correct.has(w)).length;
+    const others = [
+      ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
+    ]
+      .map((t) => ({ t, score: share(t) }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 2)
+      .map((x) => x.t);
+    const options = shuffle([s.targetResponse, ...others]);
     return {
       kind: "listening" as const,
-      key: `l:${round.prompt}`,
-      audio: round.prompt,
-      options: options.map((o) => o.text),
-      correctIdx: options.findIndex((o) => o.correct),
-      note: `${speakerLabel(round)}: "${round.prompt}"`,
-      audioWho: speakerAudioLabel(round),
+      key: `l:${s.guestPrompt}`,
+      audio: s.guestPrompt,
+      options,
+      correctIdx: options.indexOf(s.targetResponse),
+      note: `${speakerLabel(s)}: "${s.guestPrompt}"`,
+      audioWho: speakerAudioLabel(s),
     };
   });
 
