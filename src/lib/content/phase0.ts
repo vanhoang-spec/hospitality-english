@@ -123,7 +123,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Map", phonetic: "/mæp/", definition: "Bản đồ", icon: "🗺️" },
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
-    service: { en: "check-in", vi: "giờ nhận phòng", open: "two", close: "eleven" },
+    service: { en: "check-in", vi: "nhận phòng", open: "two", close: "eleven" },
     priced: {
       en: "airport transfer",
       vi: "xe đưa đón sân bay",
@@ -181,7 +181,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Hanger", phonetic: "/ˈhæŋə/", definition: "Móc treo quần áo", icon: "🧥" },
       { word: "Bin", phonetic: "/bɪn/", definition: "Thùng rác", icon: "🗑️" },
     ],
-    service: { en: "room cleaning", vi: "giờ dọn phòng", open: "eight", close: "four" },
+    service: { en: "room cleaning", vi: "dọn phòng", open: "eight", close: "four" },
     priced: {
       en: "laundry for one shirt",
       vi: "giặt là một áo sơ mi",
@@ -213,7 +213,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     // Open and close must differ — the week-3 reading questions offer both
     // as answer options, so identical values give the learner two identical
     // choices and no correct answer to pick.
-    service: { en: "the spa", vi: "giờ mở cửa spa", open: "ten", close: "eight" },
+    service: { en: "the spa", vi: "spa", open: "ten", close: "eight" },
     priced: {
       en: "foot massage",
       vi: "massage chân",
@@ -249,7 +249,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Seat", phonetic: "/siːt/", definition: "Chỗ ngồi", icon: "💺" },
       { word: "Umbrella", phonetic: "/ʌmˈbrelə/", definition: "Ô, dù", icon: "☂️" },
     ],
-    service: { en: "the lounge", vi: "giờ mở cửa phòng chờ", open: "seven", close: "ten" },
+    service: { en: "the lounge", vi: "phòng chờ", open: "seven", close: "ten" },
     priced: {
       en: "birthday cake",
       vi: "bánh sinh nhật",
@@ -277,7 +277,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
       { word: "Chair", phonetic: "/tʃeə/", definition: "Ghế", icon: "🪑" },
       { word: "Pen", phonetic: "/pen/", definition: "Bút", icon: "🖊️" },
     ],
-    service: { en: "the office", vi: "giờ làm việc văn phòng", open: "eight", close: "five" },
+    service: { en: "the office", vi: "văn phòng", open: "eight", close: "five" },
     priced: {
       en: "meeting room for one hour",
       vi: "phòng họp một giờ",
@@ -566,8 +566,8 @@ function week1(lx: P0Lexicon): LessonContent[] {
         ),
         g(
           "Bye.",
-          "Goodbye, sir. Good night.",
-          "'Bye' quá thân mật với khách. Dùng 'Goodbye' kèm 'sir/madam'.",
+          "Goodbye, sir. Have a nice day.",
+          "'Bye' quá thân mật với khách. Dùng 'Goodbye' kèm 'sir/madam'. Đừng dùng 'Good night' ở đây — nó chỉ dành cho buổi tối lúc khách đi ngủ.",
         ),
       ],
       speaking: [
@@ -578,7 +578,10 @@ function week1(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest leaves ${lx.station}. ${lx.staff} smiles and says: "Thank you, sir. Goodbye. Have a nice day."`,
+        // "The guest leaves the guest room door." — Housekeeping's station is a
+        // doorway, and you cannot leave a door. Say goodbye AT the station and
+        // the frame reads for all six.
+        `The guest says goodbye at ${lx.station}. ${lx.staff} smiles: "Thank you, sir. Goodbye. Have a nice day."`,
         [
           {
             q: "Khách cảm ơn thì nhân viên đáp thế nào?",
@@ -645,8 +648,12 @@ function week2(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "What is my room number?",
-          `Your room is ${lx.roomNo.spoken}.`,
+          // "What is my room number?" là câu khách hỏi LỄ TÂN. Nhân viên spa,
+          // buồng phòng hay nhà hàng không đọc số phòng khách cho khách nghe.
+          // "Which room, please?" đúng cho cả sáu: phòng khách, phòng đang dọn,
+          // phòng trị liệu, phòng ăn riêng, phòng họp.
+          "Which room, please?",
+          `Room ${lx.roomNo.spoken}, sir.`,
           `Đọc rõ từng chữ số. ${lx.roomNo.digits} đọc là "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
         ),
         sp(
@@ -656,7 +663,12 @@ function week2(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your key. The total today is forty-five dollars."`,
+        // Was "Here is your key. The total today is forty-five dollars." — a key
+        // handover and a cash transaction, hardcoded into all six departments.
+        // Three Hotel Manager auditors called it a control failure: a room
+        // attendant, a server and a spa therapist hand over no keys and take no
+        // money. The item and the price now come from the department.
+        `A guest asks about the room number. ${lx.staff} looks and says: "Your room is ${lx.roomNo.spoken}, sir. Here is your ${i1.word.toLowerCase()}."`,
         [
           {
             q: `Số phòng ${lx.roomNo.digits} đọc thế nào?`,
@@ -681,7 +693,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
           "Yes, room three hundred and five, sir.",
         ),
         game(
-          "Is the total four hundred thousand?",
+          // Đề hỏi bằng tiền đồng, đáp án trả lời bằng đô, không có cầu nối quy
+          // đổi nào — học viên không thể suy ra. Giữ nguyên một đơn vị.
+          "Is the total thirty dollars?",
           "No, sir. It is forty dollars.",
           "Dollar forty is.",
           "Yes, sir. It is four hundred thousand.",
@@ -973,7 +987,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Cần chủ ngữ 'We' và giới từ 'at' trước giờ: we open AT six.",
         ),
         g(
-          `${lx.service.en} close ${lx.service.close}.`,
+          `${capFirst(lx.service.en)} close ${lx.service.close}.`,
           `We close at ${lx.service.close}, sir.`,
           "Động từ phải chia và có 'at' trước giờ. Nói ngắn gọn với chủ ngữ 'We'.",
         ),
@@ -989,8 +1003,12 @@ function week3(lx: P0Lexicon): LessonContent[] {
         `A guest asks about ${lx.service.en}. ${lx.staff} says: "We open at ${lx.service.open} and close at ${lx.service.close}, sir."`,
         [
           {
-            q: `${lx.service.vi} mở lúc mấy giờ?`,
-            options: [`${lx.service.open}`, `${lx.service.close}`, "Cả ngày"],
+            // Was `${lx.service.vi} mở lúc mấy giờ?` — service.vi already began
+            // with "giờ" for four departments, so it read "giờ mở cửa spa mở lúc
+            // mấy giờ?". And "Cả ngày" was the only Vietnamese option among two
+            // English ones, which makes it eliminable without reading.
+            q: `${capFirst(lx.service.vi)} phục vụ từ mấy giờ?`,
+            options: [`${lx.service.open}`, `${lx.service.close}`, "all day"],
             correct: 0,
             explanation: `${lx.staff} nói "We open at ${lx.service.open}".`,
           },
@@ -1007,12 +1025,12 @@ function week3(lx: P0Lexicon): LessonContent[] {
           `Are you open now?`,
           `Yes, sir. We close at ${lx.service.close}.`,
           `Open ${lx.service.open} yes.`,
-          `No, sir. We are closed until ${lx.service.open}.`,
+          `Yes, sir. We are open all night.`,
         ),
       ],
     }),
 
-    lesson(lx, 3, 4, "What Time Is Breakfast?", "Hỏi giờ dịch vụ", {
+    lesson(lx, 3, 4, `What Time Is ${capFirst(lx.service.en)}?`, "Hỏi giờ dịch vụ", {
       vocabulary: [
         v("Start", "/stɑːt/", "Bắt đầu", `It starts at ${lx.service.open}.`, "▶️"),
         v("Finish", "/ˈfɪnɪʃ/", "Kết thúc", `It finishes at ${lx.service.close}.`, "⏹️"),
@@ -1021,10 +1039,10 @@ function week3(lx: P0Lexicon): LessonContent[] {
         g(
           `What time ${lx.service.en}?`,
           `What time is ${lx.service.en}?`,
-          "Câu hỏi cần 'is': What time IS breakfast?",
+          `Câu hỏi cần 'is': What time IS ${lx.service.en}?`,
         ),
         g(
-          `${lx.service.en} finish ${lx.service.close}.`,
+          `${capFirst(lx.service.en)} finish ${lx.service.close}.`,
           `It finishes at ${lx.service.close}.`,
           "Chủ ngữ 'It' + động từ thêm -s (finishes) + 'at' trước giờ.",
         ),
@@ -1040,14 +1058,14 @@ function week3(lx: P0Lexicon): LessonContent[] {
         `A guest asks: "What time is ${lx.service.en}?" ${lx.staff} answers: "It starts at ${lx.service.open} and finishes at ${lx.service.close}, madam."`,
         [
           {
-            q: "Câu hỏi của khách thiếu gì nếu nói 'What time breakfast?'",
+            q: `Câu hỏi của khách thiếu gì nếu nói "What time ${lx.service.en}?"`,
             options: ["Thiếu động từ 'is'", "Thiếu 'please'", "Thiếu tên khách"],
             correct: 0,
-            explanation: "Câu hỏi tiếng Anh cần động từ: What time IS breakfast?",
+            explanation: `Câu hỏi tiếng Anh cần động từ: What time IS ${lx.service.en}?`,
           },
           {
             q: `Dịch vụ kết thúc lúc mấy giờ?`,
-            options: [`${lx.service.close}`, `${lx.service.open}`, "Nửa đêm"],
+            options: [`${lx.service.close}`, `${lx.service.open}`, "midnight"],
             correct: 0,
             explanation: `Nhân viên nói "finishes at ${lx.service.close}".`,
           },
@@ -1107,7 +1125,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         `A guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine."`,
         [
           {
-            q: `${lx.priced.vi} giá bao nhiêu?`,
+            q: `${capFirst(lx.priced.vi)} giá bao nhiêu?`,
             options: [`${lx.priced.vndWord} đồng`, "Miễn phí", "Chưa nói giá"],
             correct: 0,
             explanation: `Nhân viên nói "${lx.priced.vndWord} dong".`,
@@ -1245,14 +1263,20 @@ function week4(lx: P0Lexicon): LessonContent[] {
 
     lesson(lx, 4, 4, "Confirming the Total", "Xác nhận tổng tiền", {
       vocabulary: [
-        v("Total", "/ˈtəʊtl/", "Tổng cộng", "The total is four hundred thousand.", "🧮"),
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
         v("Bill", "/bɪl/", "Hóa đơn", "Here is your bill, sir.", "🧾"),
       ],
       grammar: [
         g(
-          "Total thirty.",
-          "The total is four hundred thousand.",
-          "Cần mạo từ 'The', động từ 'is' và đơn vị tiền: THE total IS thirty DOLLARS.",
+          // The rule demanded a currency unit — "THE total IS thirty DOLLARS" —
+          // over a model that has none, and named dollars in a lesson whose own
+          // week teaches that the bill is in dong. GrammarSuite makes the learner
+          // rebuild `polite` from chips while reading `rule`, so a rule that
+          // disagrees with its model is a wrong instruction at the moment of use.
+          // Five auditors flagged this pair and its twin in week 6.
+          `Total ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord}.`,
+          "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' không bao giờ thêm -s (tuần 4 bài 1).",
         ),
         g(
           "You want how many?",
@@ -1262,32 +1286,47 @@ function week4(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Two coffees, please.",
-          "Two coffees. Ninety thousand dong, please.",
+          "The total, please.",
+          `${capFirst(lx.priced.vndWord)} dong, sir.`,
           "Nhắc lại món và nói tổng tiền — khách nghe rõ, tránh tranh cãi hóa đơn. 'thousand' mở đầu bằng /θ/: đầu lưỡi chạm nhẹ răng trên.",
         ),
       ],
       reading: read(
-        `The guest orders two coffees. ${lx.staff} says: "Two coffees. The total is eight dollars, sir. Here is your bill."`,
+        // Week 4 gave three prices for the same two coffees: 90,000 dong for ONE
+        // in lesson 1, 90,000 for TWO in this lesson's speaking, and eight dollars
+        // for two here — in the week whose subject is money. And coffee is F&B's
+        // item, hardcoded into all six departments. Both now read the lexicon.
+        `The guest asks for the bill. ${lx.staff} says: "The total is ${lx.priced.vndWord} dong, sir. Here is your bill."`,
         [
           {
             q: "Tổng tiền là bao nhiêu?",
-            options: ["8 đô", "2 đô", "18 đô"],
+            options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
             correct: 0,
-            explanation: "Nhân viên nói 'The total is eight dollars.'",
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
           },
           {
-            q: `Vì sao ${lx.staff} nhắc lại "Two coffees"?`,
-            options: ["Để xác nhận đúng món khách gọi", "Vì quên", "Để bán thêm"],
+            q: `Vì sao ${lx.staff} nhắc lại tổng tiền trước khi đưa hoá đơn?`,
+            options: [
+              "Để khách nghe rõ trước khi trả tiền",
+              "Vì khách thường không nhớ giá đã báo",
+              "Để bán thêm",
+            ],
             correct: 0,
-            explanation: "Nhắc lại đơn hàng trước khi báo giá là quy trình chuẩn, tránh nhầm lẫn.",
+            explanation:
+              "Báo tổng tiền thành tiếng trước khi đưa hoá đơn là cách tránh tranh cãi ngay tại quầy.",
           },
         ],
       ),
       game: [
         game(
-          "Here is five hundred thousand.",
-          "Thank you, sir. Your change, please.",
+          // "Your change, please." ASKS THE GUEST for change. Three auditors.
+          // The lesson's own vocabulary card one lesson earlier has the right
+          // form: "Here is your change."
+          // The note has to cover every department's total: the Spa bill is
+          // seven hundred thousand, so handing over five hundred thousand left
+          // "Here is your change." as the answer to an underpayment.
+          "Here is two million.",
+          "Thank you, sir. Here is your change.",
           "Fifty dollar OK.",
           "Thank you, sir. There is no change today.",
         ),
@@ -1557,9 +1596,12 @@ function week6(lx: P0Lexicon): LessonContent[] {
       ],
       speaking: [
         sp(
+          // The guest gives her name and the model answer threw it away. Using
+          // the surname is the cheapest upgrade in hospitality English and the
+          // course never taught it once in fourteen weeks.
           "Good morning. I am Anna Smith.",
-          "Good morning, madam. Welcome.",
-          "Chào lại đúng buổi, xưng hô đúng giới tính, rồi mới sang bước tiếp. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
+          "Good morning, Mrs Smith.",
+          "Khách vừa xưng tên thì phải dùng lại tên đó: 'Mrs' + HỌ, không phải tên gọi. Dùng đúng họ khách là nâng cấp rẻ nhất trong nghề. 'Good' có /d/ cuối — đừng dừng lại ở 'gút'.",
         ),
       ],
       reading: read(
@@ -1648,9 +1690,9 @@ function week6(lx: P0Lexicon): LessonContent[] {
       ],
       grammar: [
         g(
-          `${lx.service.en} open ${lx.service.open}, price ${lx.priced.vndWord} dong.`,
+          `${capFirst(lx.service.en)} open ${lx.service.open}, price ${lx.priced.vndWord} dong.`,
           `We open at ${lx.service.open}. ${capFirst(lx.priced.vndWord)} dong.`,
-          "Ôn tuần 3 và 4: 'at' trước giờ, 'It is' trước giá, và -s ở 'dollars'.",
+          "Ôn tuần 3 và 4: 'at' đứng trước giờ, và số tiền đọc liền cả cụm rồi mới tới 'dong' — không thêm -s.",
         ),
         g(
           "I no understand.",
@@ -1685,8 +1727,10 @@ function week6(lx: P0Lexicon): LessonContent[] {
       ),
       game: [
         game(
+          // "Of course" không phải câu đáp cho "I did not hear you" — nó nhận
+          // lời, còn ở đây phải xin lỗi rồi nhắc lại.
           `Sorry, I did not hear you.`,
-          `Of course, sir. We open at ${lx.service.open}.`,
+          `I am sorry, sir. We open at ${lx.service.open}.`,
           `You no hear.`,
           `Please listen carefully, sir. I said ${lx.service.open}.`,
         ),
