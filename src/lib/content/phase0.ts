@@ -2209,7 +2209,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         sp(
           `I am Mr Chen. I am in room ${lx.roomNo.spoken}.`,
           `Thank you, Mr Chen. Room ${lx.roomNo.spoken}.`,
-          "Nối tuần 1 với tuần 2 trong một lượt: gọi khách bằng HỌ, rồi nhắc lại số phòng từng chữ số. Nhắc lại số phòng không phải nói thừa — đó là bước xác nhận, và là chỗ sai đắt nhất ở quầy.",
+          "Nối tuần 1 với tuần 2 trong một lượt: gọi khách bằng HỌ, rồi nhắc lại số phòng từng chữ số. Nhắc lại số phòng không phải nói thừa — đó là bước xác nhận, và số phòng là chỗ sai đắt nhất trong cả ca.",
         ),
       ],
       reading: read(
@@ -2226,7 +2226,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
             q: "Gọi khách nữ bằng từ nào?",
             options: ["Madam", "Sir", "Mister"],
             correct: 0,
-            explanation: "sir = khách nam, madam = khách nữ. Gọi sai là lỗi lễ tân cơ bản.",
+            explanation: "sir = khách nam, madam = khách nữ. Gọi sai là lỗi cơ bản ở mọi bộ phận.",
           },
         ],
       ),
@@ -2329,7 +2329,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           `Room ready yes.`,
           `Yes, sir. Your room is ready now.`,
           undefined,
-          "Hứa phòng đã sẵn sàng mà chưa hỏi buồng phòng. Khách lên tới nơi gặp phòng chưa dọn là hỏng cả lần nhận phòng.",
+          "Hứa phòng đã sẵn sàng mà chưa kiểm danh sách. Khách lên tới nơi gặp phòng chưa dọn là hỏng cả lần nhận phòng.",
         ),
       ],
     }),
@@ -3760,6 +3760,524 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Of course, madam. I will bring towels.",
           undefined,
           "Đáp án thứ ba nghe chủ động, nhưng khách chưa nói cần gì. Đoán rồi mang sai đồ là mất hai lượt đi lại và khách phải nhờ lại từ đầu.",
+        ),
+      ],
+    }),
+
+  // Week 6 lesson 1 rendered for Housekeeping put a room attendant at a guest
+  // room door, welcoming an arriving guest and asking their name — the first
+  // half of exactly the sequence HK_5_3 exists to stop, sitting in the last
+  // week before the checkpoint. The Hotel Manager review called it the
+  // module's blocker. Same headwords, same function (greet, use the name),
+  // moved to the corridor where this department actually meets people: after
+  // check-in, from a list that already has the name on it.
+  HK_6_1: (lx) =>
+    lesson(lx, 6, 1, "Meeting a Guest", "Gặp khách ở hành lang", {
+      vocabulary: [
+        v("Guest", "/ɡest/", "Khách", "The guest is out, madam.", "🧳"),
+        v(
+          "Ms",
+          "/mɪz/",
+          "Cô/Bà (khi chưa rõ khách đã lập gia đình hay chưa)",
+          "Good morning, Ms Smith.",
+          "🪪",
+        ),
+      ],
+      grammar: [
+        g(
+          "Morning. You Missus Smith?",
+          "Good morning, Ms Smith.",
+          "Tên khách nằm trên danh sách phòng của bạn — đọc ở đó, đừng hỏi khách ở cửa. Gọi bằng HỌ kèm Ms; hỏi tên tại cửa phòng chính là nửa đầu của chuỗi mà bài 5.3 dạy bạn chặn.",
+          "Good morning, Ms Anna.",
+        ),
+        g(
+          `The guest want ${lx.items[0].word.toLowerCase()}.`,
+          `The guest is out. Room ${lx.roomNo.spoken}.`,
+          "Báo đồng nghiệp thì báo bằng SỐ PHÒNG, không bằng tên khách. Và 'guest' số ít đi với 'is'.",
+          `The guest out. Room ${lx.roomNo.spoken}.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          `Good morning. I am Anna Smith, room ${lx.roomNo.spoken}.`,
+          "Good morning, Ms Smith.",
+          "Khách tự xưng tên thì dùng lại HỌ ngay. Danh xưng ở đây đọc /mɪz/, có rung ở âm cuối — cách đọc /mɪs/ là một từ khác hẳn. Không chắc khách đã lập gia đình chưa thì luôn dùng dạng có rung.",
+        ),
+        sp(
+          "Hello. Are you cleaning my room now?",
+          "Yes, madam. May I come in?",
+          "Gặp khách ngay tại cửa thì vẫn xin phép, dù bạn đang đứng sẵn ở đó với xe đẩy. Khách là người quyết định lúc nào bạn vào.",
+        ),
+        sp(
+          `Is anyone in ${lx.roomNo.spoken}?`,
+          "The guest is out, madam.",
+          "Đây là lượt nói với ĐỒNG NGHIỆP, không phải với khách — và ngay cả với đồng nghiệp cũng chỉ nói phòng có người hay không, không nói khách đi đâu.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} is in the corridor with the trolley. A guest says: "Good morning. I am Anna Smith, room ${lx.roomNo.spoken}." ${lx.staff} does not ask for the name again and says: "Good morning, Ms Smith. May I clean now?" The guest says: "Yes, please." Later a colleague asks about room ${lx.roomNo.spoken} and ${lx.staff} says: "The guest is out, madam."`,
+        [
+          {
+            q: `Vì sao ${lx.staff} không hỏi lại tên khách?`,
+            options: [
+              "Vì khách vừa tự nói tên rồi",
+              "Vì hỏi tên là bất lịch sự",
+              "Vì buồng phòng không cần biết tên",
+            ],
+            correct: 0,
+            explanation:
+              "Khách vừa nói ra tên và số phòng. Hỏi lại là bắt khách nói hai lần — và ở cửa phòng, hỏi tên còn là bước đầu của chuỗi mà bài 5.3 dạy bạn dừng lại.",
+          },
+          {
+            q: "Với đồng nghiệp thì nói gì về phòng đó?",
+            options: ["Khách đang ra ngoài", "Tên khách và giờ khách về", "Không nói gì cả"],
+            correct: 0,
+            explanation: `Bài đọc: "The guest is out, madam." — đủ để đồng nghiệp biết vào dọn được, và không lộ gì thêm về khách.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Good morning. I am Anna Smith.",
+          "Good morning, Ms Smith.",
+          "Hello Anna.",
+          "Good morning, madam. Welcome to Lotus Bay. May I have your name?",
+          undefined,
+          "Đáp án thứ ba là lời chào của LỄ TÂN, dành cho khách vừa tới. Buồng phòng gặp khách đã nhận phòng từ hôm trước — và hỏi tên ngay tại cửa phòng là việc bài 5.3 dạy bạn không làm.",
+        ),
+        game(
+          "Which room is Mrs Chen in?",
+          "I am sorry, madam. Please ask at reception.",
+          `Room ${lx.roomNo.spoken}.`,
+          `She is on the ${lx.floor.ordinal} floor, madam.`,
+          undefined,
+          "Nói tầng nghe như đã giữ kín số phòng, nhưng nó xác nhận khách đang ở đây và thu hẹp còn một hành lang. Người cầm chìa tầng thì không trả lời câu hỏi kiểu này.",
+        ),
+      ],
+    }),
+
+  // The front desk never closes — FO_3_3 is a whole lesson saying so — and
+  // then week 6 lesson 3 rendered "We open at two" for Front Office five
+  // times in one lesson, because the spine reads service.open and for this
+  // department that field is the CHECK-IN hour. The last lesson but one
+  // before the checkpoint, contradicting the safety lesson three weeks back.
+  FO_6_3: (lx) =>
+    lesson(lx, 6, 3, "Time & Price Together", "Giờ giấc & giá tiền", {
+      vocabulary: [
+        v("Again", "/əˈɡen/", "Lại, lần nữa", "Could you say that again?", "🔁"),
+        v("Understand", "/ˌʌndəˈstænd/", "Hiểu", "I understand, madam.", "💡"),
+      ],
+      grammar: [
+        g(
+          `Check-in two, price ${lx.priced.vndWord} dong.`,
+          `Check-in starts at two. ${capFirst(lx.priced.vndWord)} dong.`,
+          "Ôn tuần 3 và tuần 4 trong một câu. Chú ý cái được nói ra là GIỜ NHẬN PHÒNG, không phải giờ mở cửa: quầy lễ tân không có giờ mở cửa.",
+          `Check-in start at two. ${capFirst(lx.priced.vndWord)} dong.`,
+        ),
+        g(
+          "I no understand.",
+          "Sorry, I do not understand.",
+          "Phủ định cần trợ động từ: I DO NOT understand. Xin lỗi trước rồi nhờ khách nhắc lại.",
+          "Sorry, I do not understanding.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Sorry, I did not understand.",
+          "I am sorry, madam. I will say it again.",
+          "Khách chưa hiểu thì nhắc lại CHẬM HƠN, đừng nhắc lại to hơn. Nói ra là mình sẽ nhắc lại thì khách yên tâm hỏi tiếp.",
+        ),
+        sp(
+          "Sorry, what time and how much?",
+          `Check-in starts at two. ${capFirst(lx.priced.vndWord)} dong.`,
+          "Khách hỏi hai thông tin thì trả lời tách thành hai câu ngắn, nghỉ hẳn một nhịp giữa hai câu.",
+        ),
+        sp(
+          "Is the desk open at midnight?",
+          "Yes, sir. We never close.",
+          "Ôn tuần 3: quầy trực suốt đêm. Đừng bao giờ nói ra một giờ đóng cửa — khách có việc lúc hai giờ sáng sẽ không xuống nữa.",
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff} about check-in and the ${lx.priced.en}. ${lx.staff} says: "Check-in starts at two, madam. ${capFirst(lx.priced.vndWord)} dong." The guest says: "Sorry, could you say that again?" ${lx.staff} says it again, slowly. Then the guest asks about the night and ${lx.staff} says: "We never close, madam."`,
+        [
+          {
+            q: "Khách nhận phòng được từ mấy giờ?",
+            options: ["Hai giờ", "Nửa đêm", "Sáu giờ"],
+            correct: 0,
+            explanation: `Bài đọc: "Check-in starts at two." — đó là giờ NHẬN PHÒNG, khác với giờ trực của quầy.`,
+          },
+          {
+            q: "Ban đêm quầy lễ tân thế nào?",
+            options: ["Luôn có người", "Đóng lúc mười một giờ", "Chỉ mở khi có khách gọi"],
+            correct: 0,
+            explanation: `Bài đọc: "We never close." — quầy trực 24 giờ, và đó là điểm khác biệt của bộ phận này.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Sorry, could you speak slowly?",
+          "Of course, madam. Slowly.",
+          "Slow, yes. I speak slow now.",
+          "Of course, madam. I speak more loudly.",
+          undefined,
+          "Nói TO hơn không giúp gì khi khách chưa nghe kịp — âm lượng không phải tốc độ, và nói to còn nghe như mất kiên nhẫn.",
+        ),
+        game(
+          "What time do you open?",
+          "We never close, sir. Check-in starts at two.",
+          "Two, sir.",
+          "We open at two, sir.",
+          undefined,
+          "Câu hỏi trộn hai thứ vào một. Quầy không có giờ mở cửa; cái có giờ là việc nhận phòng. Trả lời 'We open at two' là dạy khách rằng trước hai giờ không có ai ở quầy.",
+        ),
+      ],
+    }),
+
+  // Week 6 lesson 2 is the spine's "Room, Floor & Items", and it hands every
+  // department a Front Office job: read the room list, hand a room number to a
+  // colleague, tell a guest whether their ROOM is ready. Four Hotel Manager
+  // reviews flagged it separately — a waiter, a spa therapist and a lounge
+  // host do not do that. Same two headwords (Ready, Bring), same two moves
+  // (confirm a place, promise to fetch), pointed at what each department
+  // actually has: a table, a treatment room, a lounge seat.
+  FB_6_2: (lx) =>
+    lesson(lx, 6, 2, "Table & Order Together", "Bàn & đồ mang tới", {
+      vocabulary: [
+        v("Ready", "/ˈredi/", "Đã sẵn sàng", "Your table is ready.", "✅"),
+        v(
+          "Bring",
+          "/brɪŋ/",
+          "Mang tới",
+          `I will bring two ${lx.items[0].word.toLowerCase()}s.`,
+          "🛎️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Table ten ready.",
+          "Table ten is ready, madam.",
+          "Ôn tuần 2 và tuần 5: câu cần 'is', và số bàn đọc như số đếm bình thường — khác số phòng, vốn đọc từng chữ số.",
+          "Table ten ready, madam.",
+        ),
+        g(
+          `I bring two ${lx.items[0].word.toLowerCase()}.`,
+          `I will bring two ${lx.items[0].word.toLowerCase()}s.`,
+          "Ôn hai lỗi cùng lúc: thiếu 'will' cho việc sắp làm, và thiếu -s số nhiều.",
+          `I will bring two ${lx.items[0].word.toLowerCase()}.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "We have a booking. Is our table ready?",
+          "Your table is ready, madam.",
+          "Trả lời thẳng vào cái khách hỏi. Nói 'your table' chứ không nói 'the table' — khách cần biết đó là bàn của họ.",
+        ),
+        sp(
+          "Is table ten ready?",
+          "Table ten is ready. Two guests.",
+          "Đây là lượt bàn giao với ĐỒNG NGHIỆP: nói số bàn rồi nói số khách, đúng thứ tự đó. Với khách thì câu trả lời khác hẳn.",
+          "colleague",
+        ),
+        sp(
+          `Could you bring six ${lx.items[0].word.toLowerCase()}s to table ten?`,
+          `Six ${lx.items[0].word.toLowerCase()}s to table ten. One moment.`,
+          "Nhắc lại SỐ LƯỢNG và SỐ BÀN rồi mới đi. Sai một trong hai là đi lại hai lần, và bàn bên cạnh phải chờ thêm.",
+        ),
+      ],
+      reading: read(
+        `A colleague asks ${lx.staff}: "Is table ten ready?" ${lx.staff} looks at the table and says: "Table ten is ready. Two guests." Then two guests arrive. ${lx.staff} says: "Good evening. Your table is ready, madam." One guest asks for six ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to table ten. One moment."`,
+        [
+          {
+            q: `${lx.staff} nói gì với ĐỒNG NGHIỆP?`,
+            options: ["Số bàn và số khách", "Tên khách", "Món khách sẽ gọi"],
+            correct: 0,
+            explanation: `Bài đọc: "Table ten is ready. Two guests." — bàn giao giữa nhân viên chỉ cần hai con số đó.`,
+          },
+          {
+            q: "Vì sao nhắc lại yêu cầu trước khi đi lấy?",
+            options: [
+              "Để khách sửa ngay nếu mình nghe sai",
+              "Để khách biết mình lịch sự",
+              "Vì bếp yêu cầu như vậy",
+            ],
+            correct: 0,
+            explanation:
+              "Nhắc lại là lần duy nhất khách sửa được trước khi bạn rời bàn. Bỏ bước này thì lỗi chỉ lộ ra lúc đồ đã bưng tới.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is our table ready?",
+          "Your table is ready, madam.",
+          "Table ready.",
+          "Your room is ready, madam.",
+          undefined,
+          "Nhà hàng không xếp phòng cho khách. Đáp án thứ ba đúng ngữ pháp nhưng thuộc về lễ tân — và khách đang đứng ở cửa phòng ăn sẽ không hiểu bạn nói gì.",
+        ),
+        game(
+          `Could you bring six ${lx.items[0].word.toLowerCase()}s?`,
+          `Six ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
+          `Six ${lx.items[0].word.toLowerCase()}.`,
+          `Yes madam, I bring now.`,
+          undefined,
+          "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu trợ động từ mà cả tuần 2 lẫn tuần 6 đều dạy.",
+        ),
+      ],
+    }),
+
+  SW_6_2: (lx) =>
+    lesson(lx, 6, 2, "The Room & the Time", "Phòng trị liệu & giờ hẹn", {
+      vocabulary: [
+        v("Ready", "/ˈredi/", "Đã sẵn sàng", "The room is ready, madam.", "✅"),
+        v(
+          "Bring",
+          "/brɪŋ/",
+          "Mang tới",
+          `I will bring two ${lx.items[0].word.toLowerCase()}s.`,
+          "🛎️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Room ready. You come.",
+          "The room is ready, madam.",
+          "Ôn tuần 5: câu cần 'is', và mời khách bằng một câu thông báo chứ không bằng mệnh lệnh. Đây là phòng trị liệu, không phải phòng ngủ của khách.",
+          "Room is ready, madam.",
+        ),
+        g(
+          `I bring two ${lx.items[0].word.toLowerCase()}.`,
+          `I will bring two ${lx.items[0].word.toLowerCase()}s.`,
+          "Ôn hai lỗi cùng lúc: thiếu 'will' cho việc sắp làm, và thiếu -s số nhiều.",
+          `I will bring two ${lx.items[0].word.toLowerCase()}.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "I am here for my massage.",
+          "The room is ready, madam.",
+          "Khách tới đúng hẹn thì câu đầu tiên là phòng đã sẵn sàng — đừng để khách phải hỏi. 'Ready' trọng âm âm tiết đầu: REA-dy.",
+        ),
+        sp(
+          "Is room one ready?",
+          "Room one is ready. One guest.",
+          "Lượt bàn giao với ĐỒNG NGHIỆP: phòng nào, mấy khách. Không nói tên khách, không nói khách làm liệu trình gì.",
+          "colleague",
+        ),
+        sp(
+          `Could you bring six ${lx.items[0].word.toLowerCase()}s to room one?`,
+          `Six ${lx.items[0].word.toLowerCase()}s to room one. One moment.`,
+          "Nhắc lại số lượng và số phòng rồi mới đi. Trong khu trị liệu, đi lại hai lần nghĩa là mở cửa phòng hai lần.",
+        ),
+      ],
+      reading: read(
+        `A guest arrives at ${lx.station} for a ${lx.booking.en}. A colleague asks: "Is room one ready?" ${lx.staff} says: "Room one is ready. One guest." Then ${lx.staff} says to the guest: "Good afternoon. The room is ready, madam. This way, please." The guest asks for six ${lx.items[0].word.toLowerCase()}s and ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to room one. One moment."`,
+        [
+          {
+            q: `${lx.staff} nói gì với khách vừa tới?`,
+            options: ["Phòng đã sẵn sàng", "Hỏi khách tên gì", "Hỏi khách trả tiền thế nào"],
+            correct: 0,
+            explanation: `Bài đọc: "The room is ready, madam." — khách tới đúng hẹn thì không phải hỏi câu nào.`,
+          },
+          {
+            q: "Với đồng nghiệp thì báo những gì?",
+            options: ["Số phòng và số khách", "Tên khách và liệu trình", "Giá tiền"],
+            correct: 0,
+            explanation:
+              "Bàn giao chỉ cần đủ để người kia làm việc. Tên khách và liệu trình là thông tin riêng, không nói ra ở khu vực có người qua lại.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I have a booking at four.",
+          "The room is ready, madam.",
+          "Room ready, yes.",
+          "Your room is ready, madam. The eighth floor.",
+          undefined,
+          "Đáp án thứ ba là câu của lễ tân: nó chỉ khách lên phòng ngủ. Spa không xếp phòng ngủ, và khách đang đứng ở quầy spa.",
+        ),
+        game(
+          `Could you bring six ${lx.items[0].word.toLowerCase()}s?`,
+          `Six ${lx.items[0].word.toLowerCase()}s. One moment, madam.`,
+          `Six ${lx.items[0].word.toLowerCase()}.`,
+          `Yes madam, I bring now.`,
+          undefined,
+          "Nhắc lại con số rồi mới đi. Và việc sắp làm cần 'will': 'I bring now' thiếu đúng trợ động từ mà bài này dạy.",
+        ),
+      ],
+    }),
+
+  GR_6_2: (lx) =>
+    lesson(lx, 6, 2, "The Lounge & the Card", "Phòng chờ & thẻ khách", {
+      vocabulary: [
+        v("Ready", "/ˈredi/", "Đã sẵn sàng", "Your seat is ready, madam.", "✅"),
+        v(
+          "Bring",
+          "/brɪŋ/",
+          "Mang tới",
+          `I will bring two ${lx.items[0].word.toLowerCase()}s.`,
+          "🛎️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Seat ready. Sit there.",
+          "Your seat is ready, madam.",
+          "Ôn tuần 5: câu cần 'is', và mời khách ngồi bằng một câu thông báo kèm cử chỉ tay mở, không bằng mệnh lệnh.",
+          "Your seat ready, madam.",
+        ),
+        g(
+          `Room ${lx.roomNo.cardinal}? OK.`,
+          `May I see your card, madam?`,
+          "Ở phòng chờ có người lạ ngồi ngay bên cạnh, nên đừng đọc to số phòng của khách. Xin xem thẻ là cách kiểm tra không phát thanh gì cả.",
+          `May I see your card?`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "Good afternoon. Is the lounge open?",
+          "Your seat is ready, madam.",
+          "Khách bước vào phòng chờ thì câu đầu tiên là chỗ ngồi đã sẵn sàng. 'Ready' trọng âm âm tiết đầu: REA-dy.",
+        ),
+        sp(
+          `I am in room ${lx.roomNo.spoken}. Can I come in?`,
+          `May I see your card, madam?`,
+          "Đừng nhắc lại số phòng khách vừa nói to — cả phòng chờ đang nghe. Xin xem thẻ, và nếu phải ghi thì ghi ra giấy chứ không đọc lên.",
+        ),
+        sp(
+          `Could you bring six ${lx.items[0].word.toLowerCase()}s to the lounge?`,
+          `Six ${lx.items[0].word.toLowerCase()}s to the lounge. One moment.`,
+          "Nhắc lại số lượng rồi mới đi. Nói 'the lounge' chứ không nói số phòng: nơi giao đồ là nơi khách đang ngồi.",
+        ),
+      ],
+      reading: read(
+        `A guest comes to ${lx.station} and says: "I am in room ${lx.roomNo.spoken}." ${lx.staff} does not say the room number again. ${lx.staff} says: "May I see your card, madam?" The guest shows it. ${lx.staff} says: "Thank you. Your seat is ready." Later ${lx.staff} says: "Six ${lx.items[0].word.toLowerCase()}s to the lounge. One moment."`,
+        [
+          {
+            q: `Vì sao ${lx.staff} không nhắc lại số phòng?`,
+            options: [
+              "Vì người khác trong phòng chờ nghe được",
+              "Vì số phòng không quan trọng",
+              "Vì khách đã nói rồi nên thừa",
+            ],
+            correct: 0,
+            explanation:
+              "Phòng chờ là chỗ đông người lạ ngồi sát nhau. Số phòng đọc to một lần là ai cũng biết khách ở đâu — nhắc lại để xác nhận là thói quen đúng của tuần 2, nhưng chỉ đúng khi không có ai khác nghe.",
+          },
+          {
+            q: "Kiểm tra khách bằng cách nào?",
+            options: ["Xin xem thẻ khách", "Hỏi to số phòng", "Hỏi tên khách"],
+            correct: 0,
+            explanation: `Bài đọc: "May I see your card, madam?" — kiểm tra bằng vật, không bằng lời nói to.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          `I am in room ${lx.roomNo.spoken}.`,
+          `May I see your card, madam?`,
+          `Room ${lx.roomNo.cardinal}? OK.`,
+          `Room ${lx.roomNo.spoken}. Yes madam, please come in.`,
+          undefined,
+          "Đáp án thứ ba lịch sự và đúng ngữ pháp, nhưng nó vừa đọc to số phòng của khách trong một căn phòng đầy người lạ, vừa cho vào mà chưa kiểm gì.",
+        ),
+        game(
+          "Is there a seat for me?",
+          "Your seat is ready, madam.",
+          "Seat ready.",
+          "Your room is ready, madam.",
+          undefined,
+          "Phòng chờ không xếp phòng ngủ. Đáp án thứ ba là câu của lễ tân, và nó trả lời một câu hỏi khách không hỏi.",
+        ),
+      ],
+    }),
+
+  // "Enjoy your meal" as the guest is handed the MENU. The spine's closing
+  // chain works for a department that finishes when the guest leaves; a
+  // restaurant finishes when the food arrives, and the review found the wish
+  // landing three steps early.
+  FB_6_4: (lx) =>
+    lesson(lx, 6, 4, "The Full Service Chain", "Chuỗi phục vụ hoàn chỉnh", {
+      vocabulary: [
+        v("Enjoy", "/ɪnˈdʒɔɪ/", "Tận hưởng", "Enjoy your meal, sir.", "😊"),
+        v("Anything else", "/ˈeniθɪŋ els/", "Còn gì nữa không ạ", "Anything else, madam?", "➕"),
+      ],
+      grammar: [
+        g(
+          "You want more?",
+          "Anything else, madam?",
+          "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, hỏi SAU khi đã ghi xong đơn.",
+          "Anything else you want, madam?",
+        ),
+        g(
+          "Go enjoy.",
+          "Enjoy your meal, sir.",
+          "Câu chúc này đi kèm ĐỒ ĂN, không đi kèm thực đơn. Nói lúc đặt đĩa xuống bàn; nói lúc đưa menu là chúc khách ngon miệng với tờ giấy.",
+          "Enjoy your meal now, sir.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Could I have one more menu?",
+          "One moment. I will check, madam.",
+          "Thứ cấp thêm thì kiểm trước rồi mới hứa. Câu hỏi còn-gì-nữa-không để dành cho lúc đã ghi xong đơn, không phải lúc vừa nhận một yêu cầu mới.",
+          undefined,
+          ["check"],
+        ),
+        sp(
+          "That is everything, thank you.",
+          "Thank you, madam. Anything else?",
+          "Hỏi câu này ngay sau khi đọc lại đơn — đó là lần cuối khách thêm được món trước khi bạn vào bếp. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
+          undefined,
+          ["anything"],
+        ),
+        sp(
+          "Oh, that looks good.",
+          "Enjoy your meal, sir.",
+          "Nói đúng lúc đặt đĩa xuống bàn, không nói lúc đưa thực đơn. 'Enjoy' trọng âm ở âm tiết sau: en-JOY.",
+          undefined,
+          ["enjoy"],
+        ),
+      ],
+      reading: read(
+        `${lx.staff} brings the ${lx.items[0].word.toLowerCase()} and takes the order. Then ${lx.staff} reads it back and asks: "Anything else, madam?" The guest says: "No, thank you." ${lx.staff} goes to the kitchen. Later ${lx.staff} brings the food, puts it down and says: "Enjoy your meal."`,
+        [
+          {
+            q: `${lx.staff} nói "Enjoy your meal" vào lúc nào?`,
+            options: ["Lúc đặt đồ ăn xuống bàn", "Lúc đưa thực đơn", "Lúc khách bước vào"],
+            correct: 0,
+            explanation:
+              "Câu chúc đi kèm đồ ăn. Nói lúc đưa thực đơn thì khách còn chưa gọi món, và tới lúc món ra thì không còn gì để nói nữa.",
+          },
+          {
+            q: '"Anything else?" hỏi vào lúc nào?',
+            options: ["Sau khi đọc lại đơn", "Trước khi đưa thực đơn", "Lúc khách đang ăn"],
+            correct: 0,
+            explanation:
+              "Đó là lần cuối khách thêm được món trước khi bếp bắt đầu. Hỏi lúc khách đang ăn là cắt ngang bữa.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Here is your food.",
+          "Enjoy your meal, madam.",
+          "Eat, madam.",
+          "Enjoy your stay, madam.",
+          undefined,
+          "Câu chúc phải hợp với việc vừa xong. 'Enjoy your stay' là câu của lễ tân tiễn khách lên phòng — ở bàn ăn nó nghe như bạn nhầm bộ phận.",
+        ),
+        game(
+          "Yes, one more thing please.",
+          "Certainly, madam. What is it?",
+          "More thing? OK, you tell me madam.",
+          "Anything else, madam? Please tell me now.",
+          undefined,
+          "Khách vừa nói là còn một việc; hỏi lại 'anything else' là hỏi đúng câu vừa được trả lời. 'Now' còn nghe như giục khách.",
         ),
       ],
     }),
