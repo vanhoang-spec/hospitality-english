@@ -4261,7 +4261,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "You want more?",
           "Anything else, madam?",
-          "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, hỏi SAU khi đã ghi xong đơn.",
+          "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, và hỏi sau khi đã ghi xong đơn chứ không phải trước.",
           "Anything else you want, madam?",
         ),
         g(
