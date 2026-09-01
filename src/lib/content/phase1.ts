@@ -39,7 +39,7 @@
 // ============================================================
 
 import type { LessonContent, WeekContent } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon } from "./phase0";
+import { LEXICONS, game, g, read, sp, spread, v, type P0Lexicon } from "./phase0";
 import { P1_BANKS, type P1Bank, type P1Word } from "./phase1-lexicon";
 
 type Ctx = P0Lexicon & { bank: P1Bank };
@@ -2005,12 +2005,32 @@ function reviewWordsFor(lx: Ctx, week: number, phase0Words: string[]): string[] 
   const out: string[] = [];
 
   // 1-back — consolidate last week while it is still fresh.
+  //
+  // These two were `.slice(0, 4)` and `.slice(0, 3)`. Headwords are authored
+  // lesson by lesson, so both slices returned lesson 1's words — and returned
+  // the SAME words, since [0..3] contains [0..2]. A week therefore had four of
+  // its ~11 headwords recycled, twice, and the other seven never. Measured
+  // across all six departments: 51 of 75 Phase 1 headwords arrived at the
+  // week-14 checkpoint having never appeared in a weekly review list.
+  //
+  // Now the +1 visit takes a spread across all four lessons and the +3 visit
+  // takes a spread of what +1 did not, so the two visits are disjoint and
+  // together cover roughly seven of eleven.
   const oneBack = week - 1;
-  if (oneBack >= 7) out.push(...headwordsOf(lx, oneBack).slice(0, 4));
+  if (oneBack >= 7) out.push(...headwordsOf(lx, oneBack));
 
   // 3-back — the medium interval.
   const threeBack = week - 3;
-  if (threeBack >= 7) out.push(...headwordsOf(lx, threeBack).slice(0, 3));
+  if (threeBack >= 7) {
+    const src = headwordsOf(lx, threeBack);
+    const alreadySeen = new Set(src);
+    out.push(
+      ...spread(
+        src.filter((w) => !alreadySeen.has(w)),
+        3,
+      ),
+    );
+  }
 
   // Long interval: walk the whole Phase 0 list across weeks 7-13 so every
   // pre-A1 headword is retrieved at least once instead of the same handful

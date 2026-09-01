@@ -1753,6 +1753,23 @@ const WEEK_META: Record<
 /** Headwords recycled into a week's quizzes, drawn from earlier weeks of
  *  the same department. Quota per the matrix: ≥3 items from week 2 on,
  *  and a heavy sweep at the week-6 checkpoint. */
+/** `n` items spread evenly across `xs` rather than taken off one end.
+ *
+ *  Both phases used to sample the review list by position — Phase 0 took the
+ *  literal tail, Phase 1 took the literal head — and headwords are authored
+ *  lesson by lesson, so "position" means "lesson". Phase 0 therefore only ever
+ *  recycled lessons 3-4 and Phase 1 only ever lesson 1. Measured: 14 of the 38
+ *  pre-A1 headwords reached the week-6 checkpoint having never appeared in a
+ *  single review list, and they were the survival ones — Good morning, Welcome,
+ *  Name, Number, Room, Time, Price, Free. */
+export function spread(xs: string[], n: number, offset = 0): string[] {
+  if (xs.length <= n) return xs;
+  const step = xs.length / n;
+  const out: string[] = [];
+  for (let k = 0; k < n; k++) out.push(xs[Math.floor(offset + k * step) % xs.length]!);
+  return Array.from(new Set(out));
+}
+
 function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   if (week === 1) return undefined;
   const earlier: string[] = [];
@@ -1764,7 +1781,17 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   // Checkpoint recycles broadly; ordinary weeks take a focused slice
   // from the two most recent weeks so recall stays fresh, not scattered.
   if (week === 6) return earlier;
-  return earlier.slice(-6);
+  // Every headword of last week, not a six-item slice of it. Six slots cannot
+  // cover a nine-item week however they are chosen, and `slice(-6)` chose the
+  // literal tail, so lessons 1-2 of every week went to the checkpoint never
+  // reviewed. Returning the whole week guarantees each headword one spaced
+  // retrieval at lag 1; VocabSuite draws MCQ_REVIEW=4 from the list anyway, so
+  // a longer list costs nothing at runtime and only widens the sample.
+  const lastWeek: string[] = [];
+  for (const l of WEEK_META[week - 1].build(lx)) {
+    for (const item of l.vocabulary) lastWeek.push(item.word);
+  }
+  return lastWeek;
 }
 
 function buildWeek(lx: P0Lexicon, week: number): WeekContent {
