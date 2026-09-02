@@ -4834,7 +4834,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "What your name?",
           "May I have your name?",
-          "Hỏi tên khi có PHIẾU cần ghi — phiếu giặt là ghi sai tên là áo trả nhầm phòng. Còn ở cửa phòng thì KHÔNG hỏi tên: tên nằm sẵn trên danh sách của bạn (xem bài 5.3). Câu hỏi cần động từ: May I HAVE your name?",
+          "Hỏi tên khi có phiếu cần ghi — phiếu giặt là ghi sai tên là áo trả nhầm phòng. Còn ở cửa phòng thì KHÔNG hỏi tên: tên nằm sẵn trên danh sách của bạn (xem bài 5.3). Câu hỏi cần động từ: May I HAVE your name?",
           "May I have you name?",
         ),
         g(
