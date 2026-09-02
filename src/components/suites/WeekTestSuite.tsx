@@ -387,7 +387,24 @@ function buildOral(dep: string, week: string): OralItem[] {
       })),
     );
   });
-  return shuffle(items).slice(0, CHECKPOINT_ORAL_ITEMS);
+  // Stratified by week, not a pure lottery. Safety language clusters in two
+  // or three weeks of a phase, and a flat draw of five can miss all of them
+  // at once — measured for Spa: 29.1% of passing learners had never spoken a
+  // single safety line. One item per week first (weeks shuffled, items
+  // within a week shuffled), then random fill if the phase has fewer weeks
+  // than slots. Every week of the phase now has a voice in the oral half.
+  const byWeek = new Map<number, typeof items>();
+  for (const it of shuffle(items)) {
+    if (!byWeek.has(it.sourceWeek)) byWeek.set(it.sourceWeek, []);
+    byWeek.get(it.sourceWeek)!.push(it);
+  }
+  const picked: typeof items = [];
+  for (const wk of shuffle([...byWeek.keys()])) {
+    if (picked.length >= CHECKPOINT_ORAL_ITEMS) break;
+    picked.push(byWeek.get(wk)![0]);
+  }
+  const rest = items.filter((it) => !picked.includes(it));
+  return [...picked, ...shuffle(rest)].slice(0, CHECKPOINT_ORAL_ITEMS);
 }
 
 /** The oral half. Deliberately does NOT show the target sentence: an earlier

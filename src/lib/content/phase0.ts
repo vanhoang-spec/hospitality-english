@@ -2473,7 +2473,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
           ["enjoy"],
         ),
         sp(
-          "That was very good, thank you.",
+          "First, some water, please.",
           "Thank you, madam. Anything else?",
           "Hỏi câu này SAU khi xong việc, không phải lúc vừa nhận yêu cầu mới. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
           undefined,
