@@ -289,19 +289,28 @@ export function buildPaper(dep: string, week: string): Question[] {
     // A pair whose own rude half is this rude half is teaching the same repair,
     // so its polite half answers this stem too.
     const sameStem = (o: { rude: string }) => sameAnswer(o.rude, g.rude);
-    const others = grammarPool
-      .filter(
-        (o) =>
-          o.polite !== g.polite &&
-          o.lessonId !== g.lessonId &&
-          !saysTheSame(o.polite) &&
-          !sameStem(o),
-      )
+    // The pool can hold a sentence identical to this pair's own nearMiss —
+    // two lessons teaching the same repair, one of them hand-written as the
+    // near miss of the other — and the paper then printed it twice with one
+    // copy keyed wrong. Two departments had a live pair; the checkpoint gate
+    // found it on a shuffle the run before caught nothing.
+    // Built as a SET, and filled by walking the ranked list rather than taking
+    // a fixed slice, because two sources of duplicates hid behind the old
+    // code: a pool sentence identical to this pair's hand-written nearMiss,
+    // and two different lessons whose polite halves are the same string. Both
+    // put one option on the paper twice with a copy keyed wrong; the second
+    // survived a first fix and showed up once in 7,500 generated papers.
+    const chosen = new Set([g.polite, ...(g.nearMiss ? [g.nearMiss] : [])]);
+    const want = 3;
+    const ranked = grammarPool
+      .filter((o) => o.lessonId !== g.lessonId && !saysTheSame(o.polite) && !sameStem(o))
       .map((o) => ({ o, score: share(o.polite) }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, g.nearMiss ? 1 : 2)
-      .map((x) => x.o.polite);
-    const options = shuffle([g.polite, ...(g.nearMiss ? [g.nearMiss] : []), ...others]);
+      .sort((a, b) => b.score - a.score);
+    for (const { o } of ranked) {
+      if (chosen.size >= want) break;
+      chosen.add(o.polite);
+    }
+    const options = shuffle([...chosen]);
     return {
       kind: "grammar" as const,
       key: `g:${g.rude}`,

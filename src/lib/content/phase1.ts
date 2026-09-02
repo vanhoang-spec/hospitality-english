@@ -186,6 +186,16 @@ function week7(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Are you the manager?",
+          `No, madam. I am ${wa(r1)}.`,
+          "Trả lời 'no' rồi nói NGAY chức danh thật của mình, để khách không phải hỏi thêm một lượt nữa.",
+        ),
+        sp(
+          "Who is with you today?",
+          "This is my colleague, Hoa.",
+          "Giới thiệu đồng nghiệp bằng tên riêng — khách nhớ tên thì lần sau tìm đúng người. Chữ 'colleague' trọng âm ở đầu: COLL-eague.",
+        ),
+        sp(
           "Who is this, please?",
           `This is our ${lower(r1)}, sir.`,
           `Công thức: "This is our + chức danh". Thay ${lower(r1)} bằng chức danh bất kỳ để tự luyện ở nhà. 'This' mở đầu bằng /ð/ (lưỡi chạm răng, có rung) và đóng lại bằng /s/ — người Việt hay bỏ mất cả hai đầu.`,
@@ -209,6 +219,14 @@ function week7(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "Is this your manager?",
+          "No, sir. This is my colleague.",
+          "No, colleague.",
+          "Yes, sir. He is the owner here.",
+          undefined,
+          "Đúng ngữ pháp và bịa ra một chức danh không có thật. Khách tin là đã gặp người quyết định cao nhất, rồi phát hiện không phải — và lần sau họ không tin điều gì bạn nói nữa.",
+        ),
         game(
           "Is she the manager?",
           `No, sir. She is our ${lower(r1)}.`,
@@ -242,6 +260,17 @@ function week7(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `What time does the ${lower(r4)} start?`,
+          `The ${lower(r4)} starts at eight.`,
+          "Đồng nghiệp hỏi nên không kính ngữ. Ngôi thứ ba số ít thêm -s: startS.",
+          "colleague",
+        ),
+        sp(
+          "Is anybody here tonight?",
+          `Yes, sir. The ${lower(r5)} is here.`,
+          "Khách hỏi có ai trực không là đang cần người giúp — nói tên chức danh ra thì họ biết tìm ai.",
+        ),
+        sp(
           "Who is on duty now?",
           `Our ${lower(r3)} is on duty, madam.`,
           "Mẫu 'Our + chức danh + is on duty' dùng được cho mọi ca trực. 'duty' trọng âm âm tiết đầu: DU-ty.",
@@ -269,6 +298,14 @@ function week7(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Is the ${lower(r4)} here yet?`,
+          `Not yet, madam. ${roleSubj(r4)} starts at eight.`,
+          `${r4.word} eight.`,
+          `Yes, madam. ${roleSubj(r4)} is here all day.`,
+          undefined,
+          "Đúng ngữ pháp, sai ca trực. Khách sẽ đi tìm một người chưa vào ca, và quay lại quầy lần thứ hai — nói đúng giờ bắt đầu thì họ chỉ phải hỏi một lần.",
+        ),
         game(
           "Is anyone here from your team?",
           `Yes, madam. Our ${lower(r5)} is here.`,
@@ -301,6 +338,16 @@ function week7(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `Does the ${lower(r6)} work here too?`,
+          `Yes, sir. ${roleSubj(r6)} works here too.`,
+          "Ngôi thứ ba số ít thì động từ thêm -s: workS. Đây là lỗi người Việt hay quên nhất.",
+        ),
+        sp(
+          "Where can I find you?",
+          `I am at ${lx.station} today, sir.`,
+          "Nói rõ chỗ đứng của mình để khách quay lại được. Ôn lại tên vị trí đã học từ tuần 1.",
+        ),
+        sp(
           "Which department are you in?",
           `I work in ${lx.deptEn}, sir.`,
           "Câu này dùng hằng ngày khi khách hỏi. Học thuộc như một khối. Âm /k/ cuối của 'work' phải bật ra — đừng dừng lại ở nguyên âm.",
@@ -328,6 +375,14 @@ function week7(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Is the ${lower(r6)} in your team?`,
+          `Yes, sir. ${roleSubj(r6)} works with me.`,
+          "Yes, work me.",
+          "No, sir. I do not know that person.",
+          undefined,
+          "Đúng ngữ pháp và nó chối bỏ một đồng nghiệp trước mặt khách. Khách nghe xong sẽ nghĩ khu nghỉ này ai làm việc nấy, không ai biết ai — đó là ấn tượng khó gỡ nhất.",
+        ),
         game(
           "Do you work in the kitchen?",
           `No, sir. I work in ${lx.deptEn}.`,
@@ -360,6 +415,18 @@ function week7(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "I cannot find the key.",
+          `Please ask our ${lower(r7)}.`,
+          "Chỉ đồng nghiệp sang đúng người, nói gọn và không kính ngữ.",
+          "colleague",
+        ),
+        sp(
+          `When does the ${lower(r8)} finish?`,
+          `The ${lower(r8)} finishes at ten.`,
+          "Động từ kết thúc bằng -sh thì ngôi thứ ba thêm -es: finishES.",
+          "colleague",
+        ),
+        sp(
           "Can you help me with this?",
           `I am not sure. I will ask our ${lower(r7)}.`,
           "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách. Từ 'ask' kết thúc bằng cụm /sk/: nghe được cả hai âm, đừng thành 'át'.",
@@ -388,6 +455,14 @@ function week7(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Can the ${lower(r7)} come now?`,
+          "One moment, sir. I will ask.",
+          `${r7.word} come now?`,
+          `No, sir. ${roleSubj(r7)} is too busy.`,
+          undefined,
+          "Câu đó đúng ngữ pháp và từ chối thay cho một người bạn chưa hỏi. Bạn không biết lịch của họ, và nếu họ rảnh thật thì bạn vừa làm mất một lần phục vụ vì ngại đi hỏi.",
+        ),
         game(
           "I have a special request.",
           `One moment. I will ask our ${lower(r8)}.`,
@@ -432,6 +507,16 @@ function week8(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `Excuse me, where is the ${lower(p2)}?`,
+          `The ${lower(p2)} is on the right, madam.`,
+          "Đủ ba phần: THE + nơi chốn + IS ON THE + hướng. Cụm 'on the right' đọc nối liền.",
+        ),
+        sp(
+          "Is it far from here?",
+          "No, sir. It is very near.",
+          "Trả lời gọn rồi trấn an. Chữ 'near' có /ɪə/ — đừng đọc thành 'nia' cụt.",
+        ),
+        sp(
           `Excuse me, where is the ${lower(p1)}?`,
           `The ${lower(p1)} is on the left, sir.`,
           "Khung câu vàng của tuần này. Thay tên nơi chốn để tự luyện tại nhà. Từ 'left' đóng bằng cụm /ft/ — phải nghe cả /f/ lẫn /t/, đừng thành 'lép'.",
@@ -455,6 +540,14 @@ function week8(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Which way is the ${lower(p1)}?`,
+          "It is on the left, sir.",
+          `${p1.word} left.`,
+          "It is on the right, sir.",
+          undefined,
+          "Đúng ngữ pháp, ngược hướng. Chỉ sai đường cho khách đang xách hành lý là lỗi họ nhớ lâu hơn mọi lời xin lỗi sau đó.",
+        ),
         game(
           `Is the ${lower(p2)} this way?`,
           `Yes, madam. It is on the right.`,
@@ -488,6 +581,16 @@ function week8(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `Is the ${lower(p4)} near here?`,
+          `Yes, madam. It is next to the lift.`,
+          "Giới từ chỉ vị trí luôn đi với 'the': next to THE lift.",
+        ),
+        sp(
+          `Where is the ${lower(p3)}?`,
+          `The ${lower(p3)} is near the lift, sir.`,
+          "Nói mốc quen thuộc nhất làm điểm tựa — thang máy ai cũng tìm được.",
+        ),
+        sp(
           `Is there a ${lower(p4)} here?`,
           `Yes, there is one near the lift.`,
           "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này. 'there' mở đầu bằng /ð/ — lưỡi chạm răng và có rung, đừng để thành de hay ze.",
@@ -511,6 +614,14 @@ function week8(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Is there a ${lower(p4)} on this floor?`,
+          "Yes, sir. It is next to the lift.",
+          `Have ${lower(p4)} yes.`,
+          "No, sir. There is none in this building.",
+          undefined,
+          "Đúng ngữ pháp và nó nói toà nhà không có thứ đang có. Khách sẽ đi ra ngoài tìm, và khi biết sự thật thì họ hỏi vì sao nhân viên không biết chỗ mình làm.",
+        ),
         game(
           "Excuse me, is there a lift near here?",
           `Yes, sir. It is next to the ${lower(p3)}.`,
@@ -544,6 +655,16 @@ function week8(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `Where is the ${lower(p5)}?`,
+          `The ${lower(p5)} is upstairs, madam.`,
+          "'Upstairs' đã đủ nghĩa tầng trên, không cần thêm chữ nào phía sau.",
+        ),
+        sp(
+          `Is the ${lower(p6)} downstairs?`,
+          "Yes, sir. It is downstairs, near the lift.",
+          "Xác nhận ngắn gọn. Cụm 'downstairs' trọng âm rơi vào STAIRS.",
+        ),
+        sp(
           `Where is the ${lower(p6)}?`,
           `It is downstairs, near the lobby.`,
           "Trả lời hai lớp thông tin: tầng nào + gần cái gì. Khách dễ hình dung hơn. Từ 'downstairs' trọng âm rơi vào STAIRS, và âm /z/ cuối phải rung.",
@@ -567,6 +688,14 @@ function week8(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Is the ${lower(p6)} upstairs?`,
+          "No, madam. It is downstairs.",
+          "No, down floor.",
+          "Yes, madam. It is upstairs.",
+          undefined,
+          "Đúng ngữ pháp, sai tầng. Khách lên nhầm tầng rồi phải xuống, và lần sau họ hỏi người khác chứ không hỏi bạn.",
+        ),
         game(
           `Is the ${lower(p5)} on this floor?`,
           "No, madam. It is upstairs.",
@@ -593,11 +722,21 @@ function week8(lx: Ctx): LessonContent[] {
         g(
           `${p8.word} there.`,
           `The ${lower(p8)} is over there.`,
-          "'Over there' = đằng kia. Vẫn cần 'The … is' ở đầu câu.",
+          "Cụm 'over there' nghĩa là đằng kia. Vẫn phải mở đầu bằng THE + nơi chốn + IS, đừng nói trống không.",
           `The ${lower(p8)} it is over there.`,
         ),
       ],
       speaking: [
+        sp(
+          `Can you take me to the ${lower(p7)}?`,
+          "Of course. Let me show you.",
+          "Dẫn khách đi là câu ghi điểm nhất tuần này, và nó ngắn hơn mọi lời chỉ đường.",
+        ),
+        sp(
+          `Where is the ${lower(p8)}?`,
+          `The ${lower(p8)} is over there, sir.`,
+          "Cụm 'over there' nghĩa là đằng kia. Vẫn phải mở đầu bằng THE + nơi chốn + IS, đừng nói trống không.",
+        ),
         sp(
           `Could you take me there?`,
           `Of course. Let me show you.`,
@@ -622,6 +761,14 @@ function week8(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `I cannot find the ${lower(p7)}.`,
+          `Let me show you the ${lower(p7)}, madam.`,
+          `${p7.word} there.`,
+          "It is over there, madam. You will find it.",
+          undefined,
+          "Câu đó lịch sự và nó bỏ khách lại đúng chỗ họ vừa nói là không tìm được. Khách đã hỏi lần thứ hai nghĩa là chỉ tay không còn đủ — dẫn đi.",
+        ),
         game(
           "I am lost. Can you help?",
           "Of course, sir. Let me show you.",
@@ -2684,7 +2831,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Chữ 'staircase' trọng âm ở đầu: STAIR-case, và có /st/ bật rõ ở đầu từ.",
         ),
         sp(
-          "Where is the linen room?",
+          "Which floor is the linen room on?",
           "Upstairs, next to the staircase.",
           "Lượt này là đồng nghiệp hỏi nên nói gọn, không kính ngữ.",
           "colleague",
