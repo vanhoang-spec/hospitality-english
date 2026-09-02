@@ -871,9 +871,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
           </div>
           {undeliverable.length > 0 && (
             <p className="mt-4 text-xs leading-relaxed text-foreground/60">
-              Thiết bị của bạn chưa có giọng đọc tiếng Anh — phần nghe hiểu vẫn được tính điểm nhưng
-              không tính vào sàn tối thiểu từng kỹ năng. Hãy dùng Chrome hoặc Edge để luyện nghe đầy
-              đủ.
+              Thiết bị của bạn chưa có giọng đọc tiếng Anh, nên phần nghe hiểu chưa đo được. Điểm
+              các phần khác vẫn được ghi và bạn không bị trừ vì chuyện này — nhưng giai đoạn tiếp
+              theo chỉ mở khi có đủ cả phần nghe. Hãy làm lại trên Chrome hoặc Edge.
             </p>
           )}
           {oralResults.length > 0 && (

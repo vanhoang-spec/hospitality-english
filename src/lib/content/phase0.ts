@@ -1359,7 +1359,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         g(
           `${capFirst(lx.service.en)} close ${lx.service.close}.`,
           `We close at ${lx.service.close}, sir.`,
-          "Với 'we' thì động từ giữ NGUYÊN: we close. Chỉ he/she/it mới thêm -s (it closes). Và luôn có 'at' trước giờ.",
+          "Chủ ngữ 'we' thì động từ giữ nguyên dạng: we close. Chỉ he, she, it mới thêm -s: it closes. Và luôn có 'at' trước giờ.",
           `We close ${lx.service.close}, sir.`,
         ),
       ],
@@ -5288,7 +5288,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Khách hỏi lại thì đọc lại đúng những gì đã ghi, đừng nói lại theo trí nhớ.",
         ),
         sp(
-          "Excuse me, we are ready to order.",
+          "No allergies. We are ready to order.",
           "Certainly, madam. May I take your order?",
           "Tới bàn trong vòng vài giây khi khách gọi. 'order' trọng âm âm tiết đầu: OR-der.",
         ),

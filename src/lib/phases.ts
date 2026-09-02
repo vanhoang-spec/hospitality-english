@@ -103,7 +103,17 @@ export function blockCleared(t: ConstructTally): boolean {
 /** The whole pass rule in one place: the overall mark AND every deliverable
  *  block's floor. */
 export function checkpointPassed(scorePct: number, tallies: readonly ConstructTally[]): boolean {
-  return scorePct >= CHECKPOINT_PASS_PCT && tallies.every(blockCleared);
+  return (
+    scorePct >= CHECKPOINT_PASS_PCT &&
+    tallies.every(blockCleared) &&
+    // A block the device could not deliver is forgiven its floor — nobody is
+    // locked out by their own phone — but it cannot be signed off either. An
+    // academic review measured what the silent waiver was worth: a learner who
+    // understands no spoken English at all passed 100% of the time by simply
+    // having no English voice installed. Forgiving the floor and certifying
+    // the skill are two different things, and only the first one is kind.
+    tallies.every((t) => t.deliverable)
+  );
 }
 
 /** The oral half of a checkpoint.
