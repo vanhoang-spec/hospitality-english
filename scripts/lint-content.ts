@@ -445,6 +445,7 @@ const ADJS = new Set([
   // "crushed" joined them in the P1 fix: "The item is crushed." for a Guest
   // Relations gift box, where the slot used to hold "Rainy".
   "crushed",
+  "humid",
   "crowded",
   "cool",
   "warm",

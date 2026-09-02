@@ -596,7 +596,7 @@ function week8(lx: Ctx): LessonContent[] {
           `${p3.word} near lift.`,
           `The ${lower(p3)} is near the lift.`,
           "Giới từ chỉ vị trí luôn đi với 'the': near THE lift, next to THE door.",
-          `The ${lower(p3)} is near to the lift.`,
+          `The ${lower(p3)} is near at the lift.`,
         ),
         g(
           `Have a ${lower(p4)} here.`,
@@ -661,7 +661,10 @@ function week8(lx: Ctx): LessonContent[] {
 
     lesson(lx, 8, 3, "Upstairs & Downstairs", "Tầng trên & tầng dưới", {
       vocabulary: [
-        v("Upstairs", "/ˌʌpˈsteəz/", "Tầng trên", "The gym is upstairs.", "⬆️"),
+        // Was hardcoded "The gym is upstairs." — and the very next card in this
+        // lesson renders `p6`, which is Gym in the Spa bank, as "downstairs".
+        // One lesson, two floors, and the arcade marked the true one wrong.
+        v("Upstairs", "/ˌʌpˈsteəz/", "Tầng trên", `The ${lower(p5)} is upstairs.`, "⬆️"),
         bw(p5, `The ${lower(p5)} is upstairs.`),
         bw(p6, `The ${lower(p6)} is downstairs.`),
       ],
@@ -1040,7 +1043,7 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 4, "Sorry, We Do Not Have It", "Khi không có thứ khách cần", {
-      vocabulary: [bw(q7, `We have no ${lower(q7)} today.`), bw(q8, `Would you like ${wa(q8)}?`)],
+      vocabulary: [bw(q7, `We have no ${plural(q7)} today.`), bw(q8, `Would you like ${wa(q8)}?`)],
       grammar: [
         g(
           `No have.`,
@@ -1063,7 +1066,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
         sp(
           `Can I have ${wa(q7)}?`,
-          `I am sorry. We have no ${lower(q7)} today.`,
+          `I am sorry. We have no ${plural(q7)} today.`,
           "Hết hàng nói đủ câu và có chữ 'today' — nó cho khách biết mai vẫn có.",
         ),
         sp(
@@ -1073,7 +1076,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `We have no ${lower(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please."`,
+        `We have no ${plural(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please."`,
         [
           {
             q: "Khi hết đồ khách cần, nên làm gì?",
@@ -1229,7 +1232,7 @@ function week10(lx: Ctx): LessonContent[] {
           "Khách nói giảm đi cho lịch sự, nhưng đó vẫn là một lời phàn nàn thật — vẫn phải đi kiểm.",
         ),
         sp(
-          `It is too ${lower(s4)} in here.`,
+          `It is too ${lower(s4)}, sir.`,
           "I am sorry. I will tell my manager.",
           "Việc vượt quyền mình thì chuyển lên trên, đừng hứa tự xử lý.",
         ),
@@ -1274,7 +1277,7 @@ function week10(lx: Ctx): LessonContent[] {
           "Đúng ngữ pháp và nó nói với khách rằng thứ làm họ khó chịu là chuyện bình thường ở đây, tức là sẽ không đổi. Đó chính là câu người ta trích lại trong bài đánh giá.",
         ),
         game(
-          `The room is too ${lower(s4)} for me.`,
+          `This is too ${lower(s4)} for me.`,
           "I am sorry, madam. I will check it.",
           `Too ${lower(s4)} yes.`,
           "That is normal here, madam. Everybody says so.",
@@ -1383,7 +1386,7 @@ function week10(lx: Ctx): LessonContent[] {
           "Not good this.",
           "This is not good, sir.",
           "Trật tự đúng: chủ ngữ + is not + tính từ.",
-          "This is no good, sir.",
+          "This is not good it, sir.",
         ),
       ],
       speaking: [
@@ -1502,7 +1505,8 @@ function week11(lx: Ctx): LessonContent[] {
         sp(
           `When do you ${lower(t2)}?`,
           `We ${act(t2)} after breakfast.`,
-          "Mốc thời gian đứng cuối câu. Chữ 'after' nối liền với từ sau nó.",
+          "Đồng nghiệp hỏi lịch việc trong ca nên không kính ngữ. Mốc thời gian đứng cuối câu.",
+          "colleague",
         ),
         // A guest does not interview a room attendant about her routine. Week
         // 11 is the shift, so the person asking is the new colleague being
@@ -1574,8 +1578,9 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `When do you ${lower(t4)}?`,
-          `I ${act(t4)} before lunch, sir.`,
-          "'Before' + mốc thời gian, đặt ở cuối câu.",
+          `I ${act(t4)} before lunch.`,
+          "Đồng nghiệp hỏi thì bỏ kính ngữ. 'Before' + mốc thời gian, đặt ở cuối câu.",
+          "colleague",
         ),
         sp(
           "What time does your shift start?",
@@ -1654,8 +1659,9 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `How often do you ${lower(t6)}?`,
-          `We sometimes ${act(t6)} twice.`,
-          "Đúng chính tả là 'sometimes' có -s ở cuối, và nó đứng trước động từ.",
+          `We sometimes ${act(t6)} twice a day.`,
+          "Đúng chính tả là 'sometimes' có -s ở cuối, và nó đứng trước động từ. Nói rõ chu kỳ: twice A DAY.",
+          "colleague",
         ),
         sp(
           "What is the first thing you do?",
@@ -1726,8 +1732,9 @@ function week11(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "What do you do before you go?",
-          `I ${act(t8)} before I go, madam.`,
-          "Hai việc nối bằng 'before': việc làm trước đứng ở vế đầu.",
+          `I ${act(t8)} before I go.`,
+          "Đồng nghiệp hỏi thì bỏ kính ngữ. Hai việc nối bằng 'before': việc làm trước đứng ở vế đầu.",
+          "colleague",
         ),
         sp(
           "Is your shift finished?",
@@ -1962,8 +1969,8 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          `I booked the ${lower(f5)}.`,
-          `Of course. The ${lower(f5)} is ready.`,
+          `Is the ${lower(f5)} ready?`,
+          `Yes, sir. The ${lower(f5)} is ready.`,
           "Nhận lời rồi xác nhận thứ khách hỏi đã sẵn sàng.",
         ),
         sp(
@@ -2120,7 +2127,7 @@ function week13(lx: Ctx): LessonContent[] {
           `${i1.word} ${lower(b1)}.`,
           `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
           "Mẫu câu lõi tuần này: THE + đồ vật + IS + tình trạng hỏng.",
-          `The ${i1.word.toLowerCase()} has ${lower(b1)}.`,
+          `The ${i1.word.toLowerCase()} it is ${lower(b1)}.`,
         ),
         g(
           "Manager I tell.",
@@ -2491,7 +2498,7 @@ function week14(lx: Ctx): LessonContent[] {
           `I ${lx.deptEn} work.`,
           `I work in ${lx.deptEn}.`,
           "Ôn tuần 7: 'work IN + bộ phận'.",
-          `I work at ${lx.deptEn}.`,
+          `I work in the ${lx.deptEn}.`,
         ),
       ],
       speaking: [
