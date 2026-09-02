@@ -405,6 +405,12 @@ const DISFLUENCY = new Set<string>(["uh", "um", "er", "ah", "eh", "hmm", "mm", "
  *  wrong. An added auxiliary, pronoun or preposition can, and those are not
  *  here. */
 const COURTESY_EXTRAS = new Set<string>([
+  // "yes" is here because the negation docstring in this file already says an
+  // affirmative is never required, and the content rule below was requiring it:
+  // "sir. The bartender is here." scored 83% against "Yes, sir. The bartender
+  // is here." and failed. Twelve of fifteen Yes-opening F&B items failed that
+  // way, and 13-15 of 16 in the other four departments.
+  "yes",
   "please",
   "very",
   "now",
@@ -791,7 +797,13 @@ export function utterancePassed(
     if (left > 0) contentTally.set(t, left - 1);
     else missingContent.push(t);
   }
-  const contentAllowance = targetContent.length >= 5 ? 1 : 0;
+  // Was >= 5, which meant 88% of Phase 1 targets had no allowance at all and
+  // the published 60% threshold became 100% in practice: an honest learner who
+  // dropped one non-required word passed 17% of items at 80-88% accuracy. At
+  // >= 4 the short models still hold every word — "The cleaner starts at
+  // eight." has three, and "starts" is the lesson — while the longer ones get
+  // the single slip the threshold was always meant to allow.
+  const contentAllowance = targetContent.length >= 4 ? 1 : 0;
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
