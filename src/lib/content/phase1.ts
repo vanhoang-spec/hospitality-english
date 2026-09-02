@@ -1832,7 +1832,7 @@ function week11(lx: Ctx): LessonContent[] {
           "How often do you do it?",
           `We sometimes ${act(t6)} twice a day.`,
           `Sometime two time.`,
-          `We only ${act(t6)} once every week, madam.`,
+          `We only ${act(t6)} once every week.`,
           "colleague",
           "Đúng ngữ pháp, sai tần suất — mà tần suất chính là thứ 'How often' hỏi. Một tuần một lần và một ngày hai lần là hai quy trình khác hẳn nhau, và người nghe sẽ làm theo con số bạn nói.",
         ),
@@ -2012,7 +2012,7 @@ function week12(lx: Ctx): LessonContent[] {
             options: ["Hai lần", "Một lần", "Ba lần"],
             correct: 0,
             explanation:
-              "Bài đọc ghi rõ nói hai lần và nói chậm. Nhờ vậy khách không phải nhờ đánh vần.",
+              "Bài đọc ghi rõ: nói chậm, rồi nhắc lại thêm một lần. Nhờ vậy khách không phải nhờ đánh vần.",
           },
         ],
       ),
@@ -2919,7 +2919,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Ôn tuần 11: tự giới thiệu việc mình làm. Mẫu 'I + động từ + tân ngữ + every day'.",
         ),
         sp(
-          "Is anything broken?",
+          "Is anything wrong?",
           `No. Nothing is ${back(lx.bank.problems, 6)} now.`,
           "Ôn tuần 13: gọi tên sự cố. Trả lời 'No' rồi mới nói rõ — khách cần câu trả lời trước, chi tiết sau.",
         ),
@@ -2996,7 +2996,7 @@ function week14(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Is everything done?",
-          `Yes, sir. The work is ${lower(c3)}.`,
+          "Yes, sir. The room is ready for you.",
           "Báo hoàn thành bằng cả câu, có chủ ngữ rõ ràng.",
         ),
         sp(
@@ -3520,7 +3520,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       grammar: [
         g(
           "Table not ready, wait.",
-          "The table is not ready yet, sir.",
+          "I am sorry. It is not ready yet, sir.",
           "Báo chưa xong nói đủ câu: THE + vật + IS NOT READY + yet. Chữ 'yet' cho biết sắp xong.",
           "The table is not ready already, sir.",
         ),
@@ -4125,9 +4125,9 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       grammar: [
         g(
           "No ice have.",
-          "I am sorry. We have no ice.",
-          "Báo hết hàng nói đủ câu: xin lỗi rồi 'we have no' + món. Nói cụt nghe như đang gắt với khách.",
-          "I am sorry. We are no ice.",
+          "One moment, sir. I will ask the kitchen.",
+          "Hết hàng ở quầy thì hỏi bếp trước, đừng tuyên bố với khách. Một lời từ chối đứng một mình vẫn là một lời từ chối.",
+          "One moment, sir. I will ask to the kitchen.",
         ),
         g(
           "Straw you want?",
@@ -4440,6 +4440,308 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "But your room is not clean, madam.",
           undefined,
           "Đúng ngữ pháp, và nó cãi lại khách về chính căn phòng khách đang trả tiền để ở. Nhận lời rồi ghi lại phòng — giám sát ca sẽ sắp xếp, đó không phải việc bạn phải thuyết phục tại cửa.",
+        ),
+      ],
+    }),
+
+  // Seating a walk-in is the first thing that happens in a restaurant and the
+  // course never does it: "how many people" and "table for two" appear zero
+  // times in all forty weeks. The spine's week-9 lesson drills "How many do
+  // you need?" over glasses; the same frame counts people, which is what a
+  // host counts. Same two headwords as the spine lesson it replaces.
+  FB_9_2: (lx) =>
+    lesson(lx, 9, 2, "A Table for How Many?", "Xếp bàn cho khách vãng lai", {
+      vocabulary: [
+        v("Glass", "/ɡlɑːs/", "Ly, cốc", "Four glasses, madam?", "🥛"),
+        v("High chair", "/ˈhaɪ tʃeə/", "Ghế em bé", "I will bring a high chair.", "🪑"),
+      ],
+      grammar: [
+        g(
+          "How many you?",
+          "How many, please?",
+          "Câu hỏi số lượng ngắn nhất và lịch sự nhất ở cửa nhà hàng. Thêm 'please' là đủ, không cần cả câu dài.",
+          "How many people you are?",
+        ),
+        g(
+          "Come come, this way.",
+          "This way, please, madam.",
+          "Mời khách đi theo bằng một câu, rồi đi TRƯỚC khách nửa bước. Cụm 'this way' đọc liền.",
+          "This way, please you, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Good evening. Do you have a table?",
+          "Good evening, madam. How many, please?",
+          "Chào rồi hỏi số người ngay — bàn trống nào cũng phụ thuộc con số đó.",
+        ),
+        sp(
+          "Four people, and one baby.",
+          "This way, please, madam.",
+          "Nghe xong thì dẫn đi luôn, đừng đứng tính trước mặt khách.",
+        ),
+        sp(
+          "Do you have a high chair?",
+          "Of course. I will bring a high chair.",
+          "Ghế em bé là thứ bồi bàn xách tay mang tới bàn, nên đáp bằng 'bring'. Cụm 'high chair' trọng âm ở HIGH.",
+        ),
+        sp(
+          "Can we have some water?",
+          "Of course. Four glasses, madam?",
+          "Đọc lại con số khách vừa cho — bốn người thì bốn ly, và hỏi lại một tiếng để chắc.",
+        ),
+        sp(
+          "Table six is free now.",
+          "Thank you. I will seat four people.",
+          "Nói với đồng nghiệp thì bỏ kính ngữ và nói đủ số bàn với số khách.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `Two guests come to the restaurant door without a booking. ${lx.staff} says: "Good evening. How many, please?" They answer: "Four, and one baby." ${lx.staff} looks at the floor plan, finds a table for four, and says: "This way, please." ${lx.staff} brings a high chair before anybody asks for one, and puts four glasses on the table.`,
+        [
+          {
+            q: "Câu hỏi đầu tiên ở cửa nhà hàng là gì?",
+            options: [
+              "How many, please?",
+              "Do you have a booking, sir?",
+              "Would you like a drink first?",
+            ],
+            correct: 0,
+            explanation:
+              "Số người quyết định cái bàn. Hỏi đặt chỗ trước thì khách vãng lai nghe như bị từ chối ngay ở cửa.",
+          },
+          {
+            q: "Ghế em bé được mang ra lúc nào?",
+            options: ["Trước khi khách hỏi", "Khi khách hỏi xin", "Sau khi gọi món"],
+            correct: 0,
+            explanation:
+              "Khách vừa nói có em bé. Mang trước là mức phục vụ trên chuẩn, và ghế em bé thì miễn phí nên không phải xin phép ai.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "We do not have a booking.",
+          "That is all right, madam. How many, please?",
+          "No booking? How many you?",
+          "I am sorry, madam. We take bookings only.",
+          undefined,
+          "Câu đó đúng ngữ pháp và nó quay lưng với một bàn khách đang đứng trước mặt. Nhà hàng còn bàn thì nhận; hết bàn thì cho một mốc giờ, đừng nói một quy định.",
+        ),
+        game(
+          "The baby needs a chair.",
+          "Of course. I will bring a high chair.",
+          "Baby chair I take.",
+          "Of course, madam. I will do that now.",
+          undefined,
+          "Câu đó lịch sự nhưng 'do that' không chỉ vào cái gì cả. Ghế em bé là vật mình xách tới — nói rõ mình mang gì.",
+        ),
+      ],
+    }),
+
+  // The spine's week-10 opener is "It is + adjective", and for Guest Relations
+  // its four turns come out as "It is very elegant", "It is very beautiful" —
+  // the least-used function this department has. Meanwhile the transaction it
+  // runs more than any other, checking a guest in at the lounge door, is
+  // nowhere in the phase, and "lounge card" exists only as a thing that gets
+  // misspelled or forgotten. Same three headwords as the spine lesson.
+  GR_10_1: (lx) =>
+    lesson(lx, 10, 1, "Welcome to the Lounge", "Đón khách ở cửa phòng chờ", {
+      vocabulary: [
+        v("Very", "/ˈveri/", "Rất", "It is very elegant.", "⬆️"),
+        v("Elegant", "/ˈelɪɡənt/", "Sang trọng", "It is very elegant.", "✨"),
+        v("Special", "/ˈspeʃl/", "Đặc biệt", "This one is very special, madam.", "🌟"),
+        v("Beautiful", "/ˈbjuːtɪfl/", "Đẹp", "The garden is beautiful today.", "🌸"),
+      ],
+      grammar: [
+        g(
+          "Room number what?",
+          "May I have your room number, madam?",
+          "Vào phòng chờ phải có phòng trong danh sách. Hỏi số phòng là bước kiểm, không phải câu xã giao.",
+          "May I have your room number, madam.",
+        ),
+        g(
+          "Very much elegant here.",
+          "It is very elegant, madam.",
+          "'Very' đứng ngay trước tính từ. Không nói 'very much' với tính từ.",
+          "It is very much elegant, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Good evening. Is this the lounge?",
+          "Yes, madam. May I have your room number?",
+          "Chào trước, hỏi sau. Số phòng là thứ quyết định khách có được vào hay không, nên hỏi ngay câu thứ hai.",
+        ),
+        sp(
+          `We are in room ${lx.roomNo.spoken}.`,
+          "Thank you. Please come in, madam.",
+          "Kiểm xong thì mời vào ngay, đừng để khách đứng ở cửa trong lúc bạn tra.",
+        ),
+        sp(
+          "Is there a table by the window?",
+          "Yes. This one is very special, madam.",
+          "Mời chỗ ngồi bằng một lý do, đừng chỉ tay. Chữ 'special' có /ʃ/ ở giữa: SPE-shul.",
+        ),
+        sp(
+          "What a beautiful room.",
+          "Thank you, madam. It is very elegant.",
+          "Khách khen thì cảm ơn rồi nói thêm một câu — im lặng gật đầu là bỏ lỡ một lượt trò chuyện.",
+        ),
+        sp(
+          `Is room ${lx.roomNo.spoken} on the list?`,
+          "Yes. Mr Chen can use the lounge.",
+          "Xác nhận quyền vào phòng chờ bằng TÊN và SỐ PHÒNG, đừng trả lời mỗi 'yes'.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest stops at the lounge door. ${lx.staff} smiles: "Good evening, madam. May I have your room number?" The guest says the number. ${lx.staff} checks the list, finds the name, and says: "Please come in, Mrs Chen." ${lx.staff} shows her a table by the window and says it is very special. The guest says the room is beautiful.`,
+        [
+          {
+            q: "Nhân viên hỏi gì trước khi mời khách vào?",
+            options: [
+              "May I have your room number?",
+              "May I have your name, madam?",
+              "Would you like a drink, madam?",
+            ],
+            correct: 0,
+            explanation:
+              "Số phòng là thứ tra được trên danh sách. Hỏi tên trước thì vẫn phải hỏi số phòng sau, và khách phải trả lời hai lần.",
+          },
+          {
+            q: "Sau khi tra danh sách, nhân viên gọi khách bằng gì?",
+            options: ["Bằng họ, kèm Mrs", "Bằng số phòng", "Không gọi tên"],
+            correct: 0,
+            explanation:
+              "Danh sách vừa cho bạn cái tên — dùng nó ngay. Đây là khác biệt giữa một phòng chờ và một quầy kiểm vé.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "We are staying here. Can we come in?",
+          "Of course. May I have your room number?",
+          "Room number you say?",
+          "Of course, madam. Please come in.",
+          undefined,
+          "Câu đó hiếu khách và nó mở phòng chờ cho bất kỳ ai đi ngang. Phòng chờ là dịch vụ có tính tiền vào giá phòng; cho vào nhầm một lượt là một dòng khiếu nại từ vị khách đã trả tiền cho nó.",
+        ),
+        game(
+          "Your lounge is beautiful.",
+          "Thank you, madam. It is very elegant.",
+          "Yes, beautiful very.",
+          "Yes, it is the best lounge in the city.",
+          undefined,
+          "Câu đó đúng ngữ pháp và nó là một lời quảng cáo. Khách khen thì nhận lời khen rồi nói về CĂN PHÒNG, đừng so sánh với khách sạn khác.",
+        ),
+      ],
+    }),
+
+  // Week 13's frame is "a fault you may not touch", and the escalation turns
+  // now sit on the lift and the air conditioner, which is right. But a front
+  // desk's commonest fault of all is a key card that will not open the door,
+  // and that one IS the desk's to fix: check the ID, cut a new card, twenty
+  // seconds. Across eight weeks "key" only ever appeared as something a guest
+  // asks for and something that breaks. A lost card also has a step nothing
+  // in the phase teaches — cancel the old one before making a new one — and
+  // it is the only remaining safety gap a manager review named.
+  //
+  // Same four headwords as the spine lesson it replaces.
+  FO_13_1: (lx) =>
+    lesson(lx, 13, 1, "The Key Card Is Mine to Fix", "Thẻ khoá: việc của quầy", {
+      vocabulary: [
+        v("Problem", "/ˈprɒbləm/", "Sự cố, vấn đề", "There is a problem, sir.", "⚠️"),
+        v("Fix", "/fɪks/", "Sửa (việc của bộ phận kỹ thuật)", "I cannot fix it, sir.", "🔧"),
+        v("Broken", "/ˈbrəʊkən/", "Bị hỏng", "The key is broken.", "🔑"),
+        v("Lost", "/lɒst/", "Bị mất", "The key is lost.", "❓"),
+      ],
+      grammar: [
+        g(
+          "Key no work. New one?",
+          "May I see your passport, sir?",
+          "Thẻ mới thì phải kiểm giấy tờ trước — không phải vì nghi ngờ khách, mà vì thẻ đó mở đúng một cánh cửa có người đang ngủ sau nó.",
+          "May I see your passport for, sir?",
+        ),
+        g(
+          "Old key I stop it.",
+          "I will cancel the old key first.",
+          "Trật tự đúng: CANCEL trước, làm thẻ mới sau. Từ 'cancel' trọng âm ở đầu: CAN-cel.",
+          "I will cancel the old key firstly.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "My key is broken. It does not open.",
+          "May I see your passport, sir?",
+          "Câu đầu tiên luôn là kiểm giấy tờ, kể cả khi khách đang vội. Đây là bước không bỏ được.",
+        ),
+        sp(
+          "Here is my passport.",
+          "Thank you, sir. I will make a new key.",
+          "Kiểm xong thì nói rõ mình sắp làm gì. Cắt thẻ mới là việc của quầy, không phải việc phải đi báo ai.",
+        ),
+        sp(
+          "I think my key is lost.",
+          "I will cancel the old key first, madam.",
+          "Mất thẻ thì huỷ thẻ cũ TRƯỚC — một cái thẻ đang nằm đâu đó ngoài kia vẫn mở được phòng của khách.",
+        ),
+        sp(
+          "The lift is not working.",
+          "I am sorry, sir. I cannot fix it.",
+          "Đây mới là thứ bạn không được đụng. Ranh giới của bài: thẻ khoá thì làm, thang máy thì báo.",
+        ),
+        sp(
+          "Which room was it?",
+          `Room ${lx.roomNo.spoken}. The key is lost.`,
+          "Báo cho đồng nghiệp thì số phòng đi trước, sự cố đi sau.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest says: "My key is broken." ${lx.staff} does not send the guest anywhere. ${lx.staff} says: "May I see your passport, sir?" and checks the name on the form. Then ${lx.staff} makes a new key at the desk. When a key is lost, ${lx.staff} cancels the old one first, because the old key still opens that door.`,
+        [
+          {
+            q: "Nhân viên nói câu nào đầu tiên?",
+            options: [
+              "May I see your passport, sir?",
+              "I am sorry, sir. I cannot fix it.",
+              "One moment, sir. I will tell my manager.",
+            ],
+            correct: 0,
+            explanation:
+              "Thẻ khoá là việc của quầy, không phải việc đi báo. Nhưng làm thẻ mới thì bắt đầu bằng giấy tờ — cái thẻ đó mở một cánh cửa có người sau nó.",
+          },
+          {
+            q: "Khi khách báo MẤT thẻ, bước đầu tiên là gì?",
+            options: [
+              "Huỷ thẻ cũ trước",
+              "Làm thẻ mới trước cho khách đỡ chờ",
+              "Ghi lại rồi báo ca sau",
+            ],
+            correct: 0,
+            explanation:
+              "Thẻ cũ đang nằm ở đâu đó và vẫn mở được phòng. Huỷ nó mất năm giây; không huỷ thì cả đêm phòng đó không khoá.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I lost my key. Can I have another one?",
+          "Of course. May I see your passport, madam?",
+          "Passport you have?",
+          "Of course, madam. Here is a new key.",
+          undefined,
+          "Câu đó nhanh và chiều khách, và nó đưa chìa khoá một căn phòng cho một người bạn chưa xác minh. Đây là lỗi mất đồ phổ biến nhất ở quầy lễ tân, và nó luôn bắt đầu bằng một nhân viên muốn giúp nhanh.",
+        ),
+        game(
+          "The air conditioner is not working.",
+          "I am sorry, sir. I will tell my manager.",
+          "Air conditioner no good, sorry.",
+          "I am sorry, sir. I will fix it now.",
+          undefined,
+          "Câu đó nhận một việc bạn không được phép làm. Ranh giới của bài này: thẻ khoá thì bạn làm, máy móc trong phòng thì bạn báo.",
         ),
       ],
     }),
@@ -5213,7 +5515,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         game(
           "Can you get me a car at eight?",
-          "Of course. Let me arrange a car.",
+          "Of course. The car at eight, sir?",
           "Car eight, you wait.",
           "Please call a taxi yourself, sir.",
           undefined,
