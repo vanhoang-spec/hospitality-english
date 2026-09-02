@@ -1866,7 +1866,7 @@ function week11(lx: Ctx): LessonContent[] {
         // Phase 0 (`roomNo.spoken`); no frame read it.
         sp(
           "Which room is not finished?",
-          `Mr Chen in room ${lx.roomNo.spoken} is not finished.`,
+          `Room ${lx.roomNo.spoken} is not finished.`,
           "Bàn giao là nói ra số phòng, không nói 'that room'. Đọc từng chữ số một, nghỉ nhẹ giữa các chữ số.",
           "colleague",
         ),
@@ -1948,7 +1948,7 @@ function week12(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Can you take a message?",
-          "Of course. May I have your room number, sir?",
+          "Of course. May I have your name, sir?",
           "Nhận lời rồi hỏi ngay thứ mình cần để ghi lại. Mẫu xin thông tin luôn mở bằng một câu hỏi lịch sự, không hỏi trống không.",
         ),
         sp(
@@ -2058,7 +2058,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Which room is the note for?",
-          `The note is for room ${lx.roomNo.spoken}.`,
+          `The note is for Mr Chen, room ${lx.roomNo.spoken}.`,
           "Nhận lời nhắn xong phải nói được nó của phòng nào. Đọc số phòng từng chữ số, không đọc thành số đếm.",
           "colleague",
         ),
@@ -2174,10 +2174,10 @@ function week12(lx: Ctx): LessonContent[] {
           "Đúng ngữ pháp và nó trả việc lại cho khách đang cầm điện thoại gọi tới bạn. Họ gọi chính là để khỏi phải tự lo, và câu đó nói rằng họ vẫn phải tự lo.",
         ),
         game(
-          "I need to speak to housekeeping.",
-          "You are through to Housekeeping, madam.",
+          "I need to speak to the manager.",
+          "One moment, madam. I will transfer you.",
           "I give you other people.",
-          "Please call housekeeping directly, madam.",
+          "Please call the manager directly, madam.",
           undefined,
           "Câu đó đúng ngữ pháp nhưng bắt khách gọi thêm một lần nữa, và họ chưa chắc có số. Khi khách đã gọi tới được bạn, việc của bạn là nối máy chứ không phải trả cuộc gọi lại cho khách.",
         ),
@@ -2322,8 +2322,8 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is there a problem?",
-          `Yes, madam. The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
-          "Nói rõ CÁI GÌ hỏng, đừng nói chung chung. Mẫu: THE + đồ vật + IS + tình trạng.",
+          `Yes. I will bring a new ${i1.word.toLowerCase()}, madam.`,
+          "Nói ra sự cố rồi phải kèm việc mình làm. Đồ trong tầm tay thì THAY NGAY — báo cấp trên để dành cho thứ bạn không được đụng.",
         ),
         sp(
           "The air conditioner is too cold.",
@@ -2344,8 +2344,8 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Why must I wait here?",
-          "Please wait here because the manager is coming.",
-          "Mệnh đề lý do bắt đầu bằng 'because' và đứng SAU mệnh đề chính. Khách chờ mà biết lý do thì chờ dễ hơn nhiều.",
+          "Please take a seat, madam. Ten minutes.",
+          "Mời khách ngồi rồi mới cho mốc giờ — đứng chờ và ngồi chờ là hai trải nghiệm khác hẳn nhau.",
         ),
       ],
       reading: read(
@@ -2445,8 +2445,8 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Can you help me now?",
-          "I will help you when I finish this.",
-          "Mệnh đề thời gian bắt đầu bằng 'when'. Nói rõ mình đang dở việc gì thì lời hẹn mới có nghĩa.",
+          "Of course. I will help you in five minutes.",
+          "Khách hỏi ngay bây giờ thì trả lời bằng một CON SỐ, đừng trả lời bằng một điều kiện — hẹn theo lúc mình rảnh là đặt việc của khách sau việc của bạn, ngay trước mặt họ.",
         ),
       ],
       reading: read(
@@ -2553,8 +2553,8 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Why do you need five minutes?",
-          "I need five minutes because I must check.",
-          "Lời hứa có kèm lý do thì khách tin. Chữ 'because' trọng âm ở âm sau: be-CAUSE.",
+          "I need five minutes because I check everything.",
+          "Lời hứa có kèm lý do thì khách tin. Mệnh đề lý do bắt đầu bằng 'because'; chữ này trọng âm ở âm sau: be-CAUSE.",
         ),
       ],
       reading: read(
@@ -2773,7 +2773,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest arrives at ${lx.station}. ${lx.staff} greets him: "Good morning, sir. I work in ${lx.deptEn}. How may I help you?" The guest is tired after a long trip. ${lx.staff} speaks slowly and does not hurry him. The guest sits down, and after a minute starts to smile. ${lx.staff} writes the arrival time down before lunch.`,
+        `A guest arrives at ${lx.station}. ${lx.staff} greets him: "Good morning, sir. How may I help you?" The guest is tired after a long trip. ${lx.staff} speaks slowly and does not hurry him. The guest sits down, and after a minute starts to smile. ${lx.staff} writes the arrival time down before lunch.`,
         [
           {
             q: "Lời chào gồm mấy bước?",
@@ -2899,7 +2899,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Name what?",
           "Yes, sir. Your room is ready for you now.",
           undefined,
-          "Câu đó lịch sự và nói một điều bạn chưa kiểm. Hỏi tên rồi tra mất hai giây; nói nhầm phòng mất một lần dọn lại và một lời xin lỗi.",
+          "Câu đó lịch sự và nói một điều bạn chưa kiểm — và đặt phòng không phải sổ của bạn. Hỏi lễ tân mất hai giây; nói nhầm phòng mất một lần dọn lại và một lời xin lỗi.",
         ),
         game(
           "Can you bring it fast?",
@@ -2964,8 +2964,8 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "When will somebody come?",
-          "Somebody will come when the manager calls.",
-          "Mệnh đề thời gian với 'when' — nói rõ mốc phụ thuộc vào cái gì, đừng để trống.",
+          `Our ${back(lx.bank.roles, 6)} will come in ten minutes.`,
+          "Gọi tên chức danh và cho một mốc giờ, đừng nói 'somebody' — đó là chữ khách sẽ kể lại nguyên văn khi phàn nàn.",
         ),
       ],
       reading: read(
@@ -3067,8 +3067,8 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Why do you write that down?",
-          "I write it down because I must remember.",
-          "Mệnh đề lý do với 'because'. Ghi lại là thói quen của ca sau, không phải của trí nhớ bạn.",
+          "I write it down because the shift changes.",
+          "Mệnh đề lý do với 'because'. Ghi lại là để ca sau đọc được, không phải để trí nhớ bạn đỡ mệt.",
         ),
       ],
       reading: read(
@@ -4182,7 +4182,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "Can we pay by card?",
           "Of course, sir. I will bring a card machine.",
-          "Đọc lại cả hai lựa chọn để khách chọn nhanh. Lượt thanh toán là mắt xích cuối và là chỗ khách nhớ lâu nhất.",
+          "Khách đã chọn rồi thì đừng hỏi lại, và đừng gợi tiền mặt sau khi khách đưa thẻ. Nhận lời rồi nói mình đi lấy gì.",
           undefined,
           ["card"],
         ),
