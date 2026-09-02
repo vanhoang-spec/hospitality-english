@@ -213,16 +213,18 @@ function buildPaper(dep: string, week: string): Question[] {
     // rồi loại mọi ứng viên mà tập từ nội dung của nó nằm trong đáp án hoặc
     // chứa đáp án. Loại luôn các cặp CÙNG BÀI — hai vế polite của một bài dạy
     // hai nửa của cùng một việc, nên câu này thường trả lời được đề của câu kia.
-    const HON = new Set(["sir", "madam", "maam", "please"]);
-    const core = (s: string) => new Set([...bag(s)].filter((w) => !HON.has(w)));
-    const keyCore = core(g.polite);
-    const saysTheSame = (s: string) => {
-      const c = core(s);
-      if (c.size === 0 || keyCore.size === 0) return true;
-      return [...c].every((w) => keyCore.has(w)) || [...keyCore].every((w) => c.has(w));
-    };
+    const saysTheSame = (s: string) => sameAnswer(s, g.polite);
+    // A pair whose own rude half is this rude half is teaching the same repair,
+    // so its polite half answers this stem too.
+    const sameStem = (o: { rude: string }) => sameAnswer(o.rude, g.rude);
     const others = grammarPool
-      .filter((o) => o.polite !== g.polite && o.lessonId !== g.lessonId && !saysTheSame(o.polite))
+      .filter(
+        (o) =>
+          o.polite !== g.polite &&
+          o.lessonId !== g.lessonId &&
+          !saysTheSame(o.polite) &&
+          !sameStem(o),
+      )
       .map((o) => ({ o, score: share(o.polite) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, g.nearMiss ? 1 : 2)
@@ -263,6 +265,86 @@ function buildPaper(dep: string, week: string): Question[] {
         .split(/\s+/)
         .filter((w) => w.length > 2),
     );
+
+  // Politeness scaffolding and grammatical glue. Two replies that differ only
+  // in these say the same thing to a guest: "Certainly, madam. One moment."
+  // and "One moment, please, sir." are one answer wearing two hats, and a
+  // paper that keys one and marks the other wrong is failing the learner for
+  // knowing the course.
+  const SCAFFOLD = new Set([
+    "one",
+    "please",
+    "certainly",
+    "course",
+    "yes",
+    "thank",
+    "sorry",
+    "excuse",
+    "the",
+    "are",
+    "you",
+    "your",
+    "will",
+    "and",
+    "for",
+    "this",
+    "that",
+    "with",
+    "have",
+    "has",
+    "may",
+    "can",
+    "could",
+    "would",
+  ]);
+  // Words the curriculum itself treats as interchangeable in an answer. A spa
+  // that CLOSES at eight also FINISHES at eight; a lounge that is READY is
+  // also FREE. Four reviews hit pairs from this list.
+  const SYNONYM: Record<string, string> = {
+    finish: "close",
+    finishes: "close",
+    closes: "close",
+    closed: "close",
+    start: "open",
+    starts: "open",
+    opens: "open",
+    begin: "open",
+    begins: "open",
+    free: "ready",
+    available: "ready",
+    tell: "say",
+    says: "say",
+    said: "say",
+    repeat: "say",
+    again: "say",
+    guests: "guest",
+    rooms: "room",
+    tables: "table",
+  };
+  // The content of an utterance: strip the honorific, strip the scaffolding,
+  // fold the synonyms. What is left is the thing the sentence actually says.
+  const coreOf = (s: string) =>
+    new Set(
+      [...bagOf(s)]
+        .filter((w) => !HONORIFIC_WORDS.has(w) && !SCAFFOLD.has(w))
+        .map((w) => SYNONYM[w] ?? w),
+    );
+  // Same content, or one inside the other, means only one of them belongs on
+  // the paper. Empty on either side counts as the same — a reply made only of
+  // scaffolding cannot be told apart from any other by its content.
+  const sameAnswer = (a: string, b: string) => {
+    let x = coreOf(a);
+    let y = coreOf(b);
+    // A sentence whose content strips to nothing — a spelled-out name, a bare
+    // "Certainly, madam." — is not the same as every other sentence. Fall back
+    // to the honorific-only comparison, which still catches containment.
+    if (x.size === 0 || y.size === 0) {
+      x = new Set([...bagOf(a)].filter((w) => !HONORIFIC_WORDS.has(w)));
+      y = new Set([...bagOf(b)].filter((w) => !HONORIFIC_WORDS.has(w)));
+      if (x.size === 0 || y.size === 0) return false;
+    }
+    return [...x].every((w) => y.has(w)) || [...y].every((w) => x.has(w));
+  };
   const listeningQs: Question[] = speakPool.slice(0, MIX.listening).map((s) => {
     // Distractors are the replies that share the most words with the correct
     // one, for the same reason the grammar block picks its distractors that
@@ -289,15 +371,7 @@ function buildPaper(dep: string, week: string): Question[] {
     // second right answer by construction.
     const correct = bagOf(s.targetResponse);
     const share = (t: string) => [...bagOf(t)].filter((w) => correct.has(w)).length;
-    const content = (t: string) => new Set([...bagOf(t)].filter((w) => !HONORIFIC_WORDS.has(w)));
-    const keyContent = content(s.targetResponse);
-    const saysTheSame = (t: string) => {
-      const c = content(t);
-      if (c.size === 0 || keyContent.size === 0) return true;
-      const inKey = [...c].every((w) => keyContent.has(w));
-      const inLure = [...keyContent].every((w) => c.has(w));
-      return inKey || inLure;
-    };
+    const saysTheSame = (t: string) => sameAnswer(t, s.targetResponse);
     const sameQuestion = new Set(
       speakPool.filter((o) => o.guestPrompt === s.guestPrompt).map((o) => o.targetResponse),
     );
@@ -308,14 +382,30 @@ function buildPaper(dep: string, week: string): Question[] {
     // vọng đề thì độ vọng hết phân biệt được, và học viên phải NGHE.
     const promptBag = bagOf(s.guestPrompt);
     const echo = (t: string) => [...bagOf(t)].filter((w) => promptBag.has(w)).length;
-    const others = [
+    const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
-    ]
-      .filter((t) => !sameQuestion.has(t) && !saysTheSame(t))
-      .map((t) => ({ t, score: share(t) + echo(t) * 2 }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 2)
-      .map((x) => x.t);
+    ].filter((t) => !sameQuestion.has(t));
+    const ranked = (list: string[]) =>
+      list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
+    // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
+    const widened = [
+      ...pool,
+      ...new Set(
+        phaseLessons
+          .flatMap((l) => l.grammar.map((gr) => gr.polite))
+          .filter((t) => t !== s.targetResponse && !sameQuestion.has(t)),
+      ),
+    ];
+    const clean = ranked(widened.filter((t) => !saysTheSame(t))).slice(0, 2);
+    // If the strict rule leaves fewer than two, top up from what it rejected —
+    // taking the LEAST similar first, so the filler is the least likely of the
+    // rejects to read as a second right answer. Three options beats a pure
+    // strict rule that hands the learner a coin toss.
+    const filler = ranked(pool.filter((t) => saysTheSame(t)))
+      .reverse()
+      .filter((x) => !clean.some((c) => c.t === x.t))
+      .slice(0, 2 - clean.length);
+    const others = [...clean, ...filler].map((x) => x.t);
     const options = shuffle([s.targetResponse, ...others]);
     return {
       kind: "listening" as const,
@@ -573,7 +663,10 @@ function OralStage({
             </button>
           )}
         </div>
-        {item.tip && (
+        {/* Gợi ý chỉ hiện SAU khi đã nói. Trong lúc chờ nói, nó là đáp án:
+            một tip in trọn con số bị khoá ("forty-five") biến ô nói thành ô
+            đọc-lại, đúng thứ mà việc giấu câu mẫu sinh ra để chặn. */}
+        {item.tip && said && (
           <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
             💡 {item.tip}
           </p>

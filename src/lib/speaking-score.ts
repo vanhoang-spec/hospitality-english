@@ -278,14 +278,30 @@ const FIXED_PHRASES = [
   "excuse me",
   "anything else",
   "half past",
-  "one moment",
   "this way",
+  // "one moment" KHÔNG nằm ở đây, và đó là chủ ý. Cụm này đã có miễn trừ
+  // riêng ở requiredValueTokens (chữ 'one' đứng ngay trước 'moment' không
+  // tính là số đếm), vì "Certainly, madam. A moment." là câu đúng. Đưa nó
+  // vào đây khoá luôn chữ 'one' và đánh trượt chính câu đó — đo được, và là
+  // lỗi tôi tự gây ra khi thêm lớp bảo vệ mới mà không kiểm lớp cũ.
 ];
 function fixedPhraseTokens(target: string): string[] {
   const t = " " + normalize(target).join(" ") + " ";
   return [
     ...new Set(FIXED_PHRASES.filter((p) => t.includes(" " + p + " ")).flatMap((p) => p.split(" "))),
   ];
+}
+
+/** The value tokens of an utterance, in order, with the formulaic "one" of
+ *  "one moment" removed.
+ *
+ *  That exemption exists in requiredValueTokens too, and the two must agree:
+ *  "Certainly, madam. A moment." is a correct answer, and a round of patching
+ *  broke it twice in one file — once by adding "one moment" to FIXED_PHRASES,
+ *  once by counting its "one" here. One helper now, used by both, so the next
+ *  edit cannot fix half of it. */
+function valueTokenSequence(toks: string[]): string[] {
+  return toks.filter((t, i) => VALUE_TOKENS.has(t) && !(t === "one" && toks[i + 1] === "moment"));
 }
 
 /** The function words this target actually contains. Graded separately from
@@ -525,8 +541,8 @@ export function utterancePassed(
   // hai lần đó nói hai điều khác nhau; đọc "nine keys to room two-oh-five"
   // vẫn có "two" nên phép kiểm tập hợp cho qua. Dãy con cùng thứ tự bắt được
   // cả hoán vị lẫn thiếu lượt.
-  const valueSeq = normalize(target).filter((t) => VALUE_TOKENS.has(t));
-  const spokenSeq = normalize(spoken).filter((t) => VALUE_TOKENS.has(t));
+  const valueSeq = valueTokenSequence(normalize(target));
+  const spokenSeq = valueTokenSequence(normalize(spoken));
   let vi = 0;
   for (const t of spokenSeq) if (vi < valueSeq.length && valueSeq[vi] === t) vi++;
   const valueOrderOk = vi === valueSeq.length;

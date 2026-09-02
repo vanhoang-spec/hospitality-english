@@ -3932,7 +3932,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           `Is anyone in ${lx.roomNo.spoken}?`,
-          "Nobody inside. The guest is out.",
+          "Nobody is inside. The guest is out.",
           "Đây là lượt nói với ĐỒNG NGHIỆP, không phải với khách — và ngay cả với đồng nghiệp cũng chỉ nói phòng có người hay không, không nói khách đi đâu.",
           "colleague",
         ),
