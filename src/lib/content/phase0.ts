@@ -2604,7 +2604,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
     lesson(lx, 2, 4, "Slippers, Tea and a Wet Floor", "Dép, trà & sàn ướt", {
       vocabulary: [
         v("Slipper", "/ˈslɪpə/", "Dép spa (đi theo đôi)", "Your slippers, madam.", "🩴"),
-        v("Tea", "/tiː/", "Trà", "Some tea, madam?", "🍵"),
+        v("Careful", "/ˈkeəfl/", "Cẩn thận", "Careful, madam. The floor is wet.", "⚠️"),
       ],
       grammar: [
         g(
@@ -2622,9 +2622,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ],
       speaking: [
         sp(
-          "I need two robes.",
-          "Two robes. Yes, madam.",
-          "Xác nhận lại số lượng rồi mới đi lấy. Đuôi số nhiều ở đây đọc /z/ có rung, không phải /s/.",
+          "Do I need slippers?",
+          "Your slippers, madam.",
+          "Đưa cả đôi và đặt xuống sàn cho khách xỏ — đừng đưa lên tay. Đuôi số nhiều đọc /z/ có rung, không phải /s/.",
         ),
         sp(
           "Where do I walk?",
@@ -4095,7 +4095,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "We have a booking. Is our table ready?",
           "Your table is ready, madam.",
-          "Trả lời thẳng vào cái khách hỏi. Nói 'your table' chứ không nói 'the table' — khách cần biết đó là bàn của họ.",
+          "Lượt này diễn ra SAU khi đồng nghiệp vừa xác nhận bàn (lượt bàn giao ngay dưới) — chưa ai kiểm thì câu đúng là xin khách chờ để đi xem. Trả lời thẳng vào cái khách hỏi, và nói 'your table' chứ không nói 'the table'.",
         ),
         sp(
           "Is table ten ready?",
@@ -4401,6 +4401,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Hỏi câu này ngay sau khi đọc lại đơn — đó là lần cuối khách thêm được món trước khi bạn vào bếp. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
           undefined,
           ["anything"],
+        ),
+        sp(
+          "Mmm, this is very good.",
+          "Is everything all right, madam?",
+          "Ghé lại sau miếng đầu tiên, một câu, rồi đi — đừng đứng chờ khách khen tiếp. Khách chê ngay lúc này thì còn sửa được; để tới lúc tính tiền thì chỉ còn xin lỗi.",
         ),
         sp(
           "Oh, that looks good.",
@@ -5192,7 +5197,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Does this have peanuts?",
           "One moment. I will ask the kitchen.",
-          "Đừng đoán, dù chắc đến mấy. Và đừng mở đầu bằng 'Of course' — đáp một câu hỏi có/không bằng 'Of course' thì người Anh nghe ra là 'dĩ nhiên là CÓ'. Câu an toàn chỉ nói bạn sẽ đi hỏi ai.",
+          "Đừng đoán, dù chắc đến mấy. Và đừng mở đầu bằng 'Of course' — đáp một câu hỏi có/không bằng 'Of course' thì người Anh nghe ra là 'dĩ nhiên là CÓ'. Câu an toàn chỉ nói bạn sẽ đi hỏi ai. 'Kitchen' /ˈkɪtʃɪn/ là gian bếp — không có thẻ riêng nhưng phải nói được ngay, trọng âm âm tiết đầu.",
           undefined,
           ["kitchen"],
         ),
@@ -5220,7 +5225,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Two more beers, please.",
           "One moment. I will ask my manager.",
-          "Khách đã uống bao nhiêu và có nên dừng không là quyết định của quản lý ca — nhận lời rồi rót thêm là chỗ nhân viên mới hay bị kỷ luật nhất. Riêng TUỔI thì người rót tự kiểm: chưa đủ mười tám là không phục vụ, không có ngoại lệ.",
+          "Khách đã uống bao nhiêu và có nên dừng không là quyết định của quản lý ca — nhận lời rồi rót thêm là chỗ nhân viên mới hay bị kỷ luật nhất. Riêng TUỔI thì người rót tự kiểm: chưa đủ mười tám là không phục vụ, không có ngoại lệ. 'Manager' /ˈmænɪdʒə/, nhấn âm đầu MAN.",
           undefined,
           ["manager"],
         ),
@@ -5281,6 +5286,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           undefined,
           "Đặt đĩa nóng xuống mà không báo là cách làm khách bỏng tay phổ biến nhất. Nói 'Careful' TRƯỚC, rồi mới đặt xuống — không nói sau.",
         ),
+        game(
+          "Excuse me, my spoon fell.",
+          "One moment, sir. A new spoon.",
+          "Spoon OK, sir. Please use.",
+          "Yes sir, I will pick it up.",
+          undefined,
+          "Đồ rơi xuống sàn là thay, không nhặt lên lau rồi dùng tiếp — và nhặt lên TRƯỚC MẶT khách rồi mang đi cũng chưa đủ: phải nói rõ sẽ mang cái MỚI ra. Vệ sinh là thứ khách nhìn thấy, không phải thứ khách tin.",
+        ),
       ],
     }),
 
@@ -5329,6 +5342,18 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Xin lỗi trước, sửa sau, và đừng giải thích ai ghi sai. Mang sai món là lỗi của nhà hàng, không phải của người bưng.",
           undefined,
           ["sorry"],
+        ),
+        sp(
+          "Just two waters for now, please.",
+          "Two waters. I understand, madam.",
+          "Đồ uống cũng đọc lại như món ăn — sai hai ly nước không ai giận, nhưng thói quen đọc lại thì phải đều tay từ thứ nhỏ nhất.",
+        ),
+        sp(
+          "One soup, please.",
+          "I am sorry. The soup is finished.",
+          "Món hết thì nói ngay khi khách gọi, đừng để bếp trả ngược ra sau mười phút. Nói xong gợi ý món khác — im lặng là bắt khách tự làm lại từ đầu.",
+          undefined,
+          ["finished"],
         ),
         sp(
           "Yes, we are ready to order now.",
@@ -5730,6 +5755,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "I am her husband. Just tell me.",
           "Excuse me, sir. One moment, please.",
           "Người hỏi nói là người nhà cũng không đổi gì — bạn không kiểm chứng được. Mời chờ rồi gọi quản lý.",
+        ),
+        sp(
+          "Delivery. This is for room seven-two-oh.",
+          "One moment, sir. Reception takes it.",
+          "Giao hàng hợp lệ vẫn không đi thẳng lên phòng: mọi món đồ vào khách sạn đều qua lễ tân để có người ghi nhận. Khác với người lạ gửi đồ cho KHÁCH CỤ THỂ — ca đó gọi quản lý (lượt dưới).",
+          undefined,
+          ["reception"],
         ),
         sp(
           "Can you give her this letter?",
