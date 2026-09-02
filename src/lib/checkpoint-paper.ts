@@ -112,12 +112,19 @@ export function buildPaper(dep: string, week: string): Question[] {
   // one thing a checkpoint measures that a lesson cannot, so at least half
   // the vocabulary block now comes from weeks the student saw earlier, and
   // the rest is topped up from the phase at large.
+  //
+  // "At least half" turned out to be exactly half, every time, because
+  // `Math.ceil(MIX.vocab / 2)` was a CAP on the recycled half rather than a
+  // floor. Measured on 9,000 questions: the checkpoint week supplied 50.0% of
+  // the vocabulary block on its own and the seven weeks it is meant to
+  // certify supplied about 7% each. The cap belongs on the current week, not
+  // on the review.
   const reviewFirst = shuffle(unique.filter((v) => reviewVocab.some((r) => r.word === v.word)));
   const restPool = shuffle(unique.filter((v) => !reviewFirst.includes(v)));
-  const halfFromReview = Math.min(reviewFirst.length, Math.ceil(MIX.vocab / 2));
+  const fromRest = Math.min(restPool.length, Math.max(MIX.vocab - reviewFirst.length, 2));
   const vocabPicks = shuffle([
-    ...reviewFirst.slice(0, halfFromReview),
-    ...restPool.slice(0, MIX.vocab - halfFromReview),
+    ...reviewFirst.slice(0, MIX.vocab - fromRest),
+    ...restPool.slice(0, fromRest),
   ]);
 
   const vocabQs: Question[] = vocabPicks.slice(0, MIX.vocab).map((v, i) => {

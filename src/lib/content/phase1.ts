@@ -1100,7 +1100,7 @@ function week9(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `Do you have ${wa(q8)}?`,
-          "Yes, madam. I will bring it now.",
+          `Yes, madam. I will bring ${q8.art === "some" ? "some" : "one"} now.`,
           "Có thì nói có ngay, rồi hứa hành động. Đừng để khách phải hỏi lần hai.",
         ),
         sp(
@@ -1396,7 +1396,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Where can I find it?",
-          `It is next to the ${back(lx.bank.places, 4)}.`,
+          `It is next to the ${back(lx.bank.places, 7)}.`,
           "Ôn tuần 8: chỉ đường bằng mốc. 'Next to' đọc liền, /t/ cuối 'next' nuốt vào 'to'.",
         ),
       ],
@@ -1929,7 +1929,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         v("Hold on", "/həʊld ˈɒn/", "Xin giữ máy", "Hold on, please.", "⏸️"),
         bw(f1, `Hello, ${lower(f1)}. ${lx.staff} speaking.`),
-        bw(f2, `May I take your ${lower(f2)}?`),
+        bw(f2, `Can I write your ${lower(f2)} down?`),
       ],
       grammar: [
         g(
@@ -2482,7 +2482,7 @@ function week13(lx: Ctx): LessonContent[] {
         game(
           "Who is responsible for this?",
           "I am very sorry, madam. I will help.",
-          "Not my problem, madam.",
+          "Sorry, not me problem.",
           "The night shift did that, madam. Not me.",
           undefined,
           "Đúng ngữ pháp và có thể đúng sự thật — nhưng khách không hỏi để biết tên người sai, họ hỏi để có người sửa. Đổ cho ca khác trước mặt khách làm hỏng hình ảnh cả khách sạn, không riêng gì bạn.",
@@ -2758,12 +2758,13 @@ function week14(lx: Ctx): LessonContent[] {
           {
             q: "Lời chào gồm mấy bước?",
             options: [
-              "Ba: chào, giới thiệu, mời giúp",
-              "Hai: chào rồi hỏi khách cần gì",
+              "Hai: chào đúng buổi rồi mời giúp",
+              "Ba: chào, xưng tên mình, rồi mời giúp",
               "Một: chào",
             ],
             correct: 0,
-            explanation: "Chào theo buổi + xưng bộ phận + mời giúp là chuỗi mở đầu chuẩn.",
+            explanation:
+              "Chào đúng buổi + mời giúp. Hai bước, và đó cũng đúng là hai bước mọi câu mẫu của bài này dạy.",
           },
           {
             q: "Nhân viên nói thế nào với khách đang mệt?",
@@ -3062,7 +3063,7 @@ function week14(lx: Ctx): LessonContent[] {
         game(
           "Thank you very much.",
           "My pleasure, sir.",
-          "OK, no problem for me sir.",
+          "No problem have, sir.",
           "You are welcome. That is only my job.",
           undefined,
           "Đúng ngữ pháp và nó hạ việc vừa làm xuống thành nghĩa vụ. Khách cảm ơn là đang ghi nhận một người, và câu đó trả lời rằng đó chỉ là công việc.",
@@ -3253,6 +3254,13 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Are we nearly finished?",
           "Two minutes, sir. I will do it quickly.",
           "Đưa con số trước, rồi mới hứa nhanh. Con số làm khách yên tâm hơn lời hứa.",
+        ),
+        sp(
+          "And the key?",
+          "Here is your key, madam.",
+          "Trao chìa khoá là bước chốt của cả lượt nhận phòng — và bài đọc của chính bài này nói rõ vì sao số phòng thì CHỈ VÀO chỗ đã ghi chứ không đọc to giữa sảnh.",
+          undefined,
+          ["key"],
         ),
       ],
       reading: read(
@@ -3465,7 +3473,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Table six is waiting.",
-          "The table is clean now. I will call them.",
+          "Table six is clean now. I will call them.",
           "Lượt này là đồng nghiệp nói nên không kính ngữ. Báo lại đúng số bàn.",
           "colleague",
         ),
@@ -4143,7 +4151,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Can we pay by card?",
-          "Of course, sir. Card or cash?",
+          "Of course, sir. I will bring a card machine.",
           "Đọc lại cả hai lựa chọn để khách chọn nhanh. Lượt thanh toán là mắt xích cuối và là chỗ khách nhớ lâu nhất.",
           undefined,
           ["card"],
@@ -4162,6 +4170,28 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Can you bring it soon?",
           "Of course. I will do it quickly.",
           "Trạng từ chỉ cách thức đứng cuối câu: … QUICKLY.",
+        ),
+        // Ba lượt lời F&B thiếu hẳn trong tám tuần, đo trên toàn corpus:
+        // câu sàng lọc dị ứng CHỦ ĐỘNG (P0 tuần 5 dạy rồi, P1 mất sạch: chuỗi
+        // "allerg" xuất hiện 0 lần), câu chúc ngon miệng ("enjoy your meal"
+        // không có ở đâu trong cả 40 tuần), và một câu nói THẲNG với bếp —
+        // 36 lượt nội bộ mà
+        // không lượt nào nói với đối tác nội bộ số một của nhà hàng.
+        sp(
+          "We are ready. Nothing else.",
+          "Any allergies at the table, madam?",
+          "Hỏi trước khi đơn xuống bếp, đừng chờ khách tự khai. Một câu sáu chữ ở đây rẻ hơn mọi thứ xảy ra sau đó.",
+        ),
+        sp(
+          "Thank you, that looks lovely.",
+          "Enjoy your meal, madam.",
+          "Câu chốt của mọi lượt đặt món xuống bàn. Chữ 'Enjoy' trọng âm ở âm sau: en-JOY.",
+        ),
+        sp(
+          "Order for table six, please.",
+          "Chef, two coffees for table six.",
+          "Nói với bếp thì bỏ kính ngữ, nói đủ MÓN và SỐ BÀN — bếp không nhìn thấy bàn nào đang chờ.",
+          "colleague",
         ),
         sp(
           "Can we have the bill now?",
