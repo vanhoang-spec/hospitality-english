@@ -462,9 +462,9 @@ function week7(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "Can you answer this for me now?",
-          `I am not sure. I will ask our ${lower(r7)}.`,
-          "Không biết thì nói thật rồi hứa hành động — đừng đoán bừa với khách. Từ 'ask' kết thúc bằng cụm /sk/: nghe được cả hai âm, đừng thành 'át'.",
+          "Who can answer this?",
+          `Our ${lower(r7)} can answer that, sir.`,
+          "Chỉ khách tới đúng người thay vì nhận một việc mình không biết. Gọi tên chức danh ra — khách cần biết ai, không cần biết bạn sẽ đi đâu.",
         ),
       ],
       reading: read(
@@ -544,7 +544,7 @@ function week8(lx: Ctx): LessonContent[] {
           `${p1.word} left.`,
           `The ${lower(p1)} is on the left.`,
           "Đủ ba phần: THE + nơi chốn + IS ON THE + hướng. Thiếu 'the' hoặc 'is' là câu sai.",
-          `The ${lower(p1)} is on left.`,
+          `The ${lower(p1)} is in the left.`,
         ),
         g(
           "Go straight there.",
@@ -1313,6 +1313,12 @@ function week10(lx: Ctx): LessonContent[] {
           "I am sorry. I will tell my manager.",
           "Nghe 'too + tính từ' là khách đang phàn nàn thật: xin lỗi rồi báo lên trên. Việc vượt quyền mình thì đừng hứa tự xử lý. Từ 'manager' trọng âm ở đầu: MAN-a-ger, hai âm sau đọc lướt.",
         ),
+        sp(
+          "Who is on duty now?",
+          `Our ${back(lx.bank.roles, 0)} is on duty now.`,
+          "Ôn tuần 7: chức danh. 'On duty' là đang trong ca, không phải đang có mặt.",
+          "colleague",
+        ),
       ],
       reading: read(
         `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will tell my manager now." ${lx.staff} writes it down and goes to the office. The guest says: "Thank you for listening." The manager comes ten minutes later.`,
@@ -1398,6 +1404,11 @@ function week10(lx: Ctx): LessonContent[] {
           "Where can I find it?",
           `It is next to the ${back(lx.bank.places, 7)}.`,
           "Ôn tuần 8: chỉ đường bằng mốc. 'Next to' đọc liền, /t/ cuối 'next' nuốt vào 'to'.",
+        ),
+        sp(
+          "Where do I find it?",
+          `You will find it in the ${back(lx.bank.places, 1)}.`,
+          "Ôn tuần 8: nơi chốn. Mẫu 'find it IN THE + nơi chốn' — đừng bỏ giới từ.",
         ),
       ],
       // The comparative belongs to the GUEST, not to the recommendation. It
@@ -1689,6 +1700,11 @@ function week11(lx: Ctx): LessonContent[] {
           "Ôn tuần 9: xin đồ với đồng nghiệp cũng phải có 'please'. Mạo từ a/an đứng trước đồ đếm được.",
           "colleague",
         ),
+        sp(
+          "Where do I wait, please?",
+          `The ${back(lx.bank.places, 5)} is over there, madam.`,
+          "Ôn tuần 8: chỉ chỗ ngồi chờ bằng một mốc nhìn thấy được, đừng nói 'over there' suông.",
+        ),
       ],
       reading: read(
         `A new colleague asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}. I ${act(t4)} before lunch." At eight ${lx.station} is quiet. ${lx.staff} starts at the same time every day, and the next shift knows when to come.`,
@@ -1774,6 +1790,11 @@ function week11(lx: Ctx): LessonContent[] {
           `I go to the ${back(lx.bank.places, 7)} first.`,
           "Ôn tuần 8: 'go TO THE + nơi chốn'. Bỏ 'to' là lỗi người Việt hay mắc nhất ở mẫu này.",
           "colleague",
+        ),
+        sp(
+          "Can you arrange that for tonight?",
+          `Of course. I will arrange ${wa(lx.bank.requests[3])}.`,
+          "Ôn tuần 9: thứ khách sạn kê sẵn hoặc hẹn giờ thì nhận lời bằng 'arrange' — không ai cầm tay mang một cuộc gọi báo thức tới.",
         ),
       ],
       reading: read(
@@ -1967,6 +1988,11 @@ function week12(lx: Ctx): LessonContent[] {
           "Ôn tuần 9: thuật lại yêu cầu của khách cho đồng nghiệp. Chủ ngữ số nhiều thì 'want' không có -s.",
           "colleague",
         ),
+        sp(
+          "Do you have any left?",
+          `Yes. We have ${wa(lx.bank.requests[6])}, madam.`,
+          "Ôn tuần 9: còn hàng thì nói rõ còn thứ gì, đừng chỉ nói 'yes'.",
+        ),
       ],
       reading: read(
         `The phone rings. ${lx.staff} answers: "Hello, ${lower(f1)}. ${lx.staff} speaking. How may I help you?" ${lx.staff} says the name slowly, then says it once more. The guest hears it and says: "Thank you. That is very clear." If a name is difficult, ${lx.staff} spells it letter by letter.`,
@@ -2141,6 +2167,12 @@ function week12(lx: Ctx): LessonContent[] {
           "Do you have one?",
           `Yes. I will bring ${wa(lx.bank.requests[2])} now.`,
           "Ôn tuần 9: nhận lời rồi nói rõ mình mang gì, đừng chỉ nói 'yes'.",
+        ),
+        sp(
+          "What do you do at nine?",
+          `I ${act(lx.bank.routines[2])} at nine.`,
+          "Ôn tuần 11: việc trong ca kèm mốc giờ ở cuối câu.",
+          "colleague",
         ),
       ],
       reading: read(
@@ -2344,8 +2376,8 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Why must I wait here?",
-          "Please take a seat, madam. Ten minutes.",
-          "Mời khách ngồi rồi mới cho mốc giờ — đứng chờ và ngồi chờ là hai trải nghiệm khác hẳn nhau.",
+          "Please take a seat, madam. I will check.",
+          "Mời khách ngồi trước rồi mới đi kiểm — đứng chờ và ngồi chờ là hai trải nghiệm khác hẳn nhau.",
         ),
       ],
       reading: read(
@@ -2448,6 +2480,11 @@ function week13(lx: Ctx): LessonContent[] {
           "Of course. I will help you in five minutes.",
           "Khách hỏi ngay bây giờ thì trả lời bằng một CON SỐ, đừng trả lời bằng một điều kiện — hẹn theo lúc mình rảnh là đặt việc của khách sau việc của bạn, ngay trước mặt họ.",
         ),
+        sp(
+          "Is it open now?",
+          `Yes. The ${back(lx.bank.places, 6)} is open, sir.`,
+          "Ôn tuần 8: gọi tên nơi chốn ra, đừng đáp mỗi 'yes' rồi để khách đoán bạn đang nói chỗ nào.",
+        ),
       ],
       reading: read(
         `The guest is unhappy. ${lx.staff} does not argue. ${lx.staff} says: "I am very sorry, sir. I will help you now." ${lx.staff} does not say whose fault it is, and does not say it happens often. The guest is angry for one minute, then quiet, then says thank you.`,
@@ -2510,6 +2547,15 @@ function week13(lx: Ctx): LessonContent[] {
         bw(b6, `It is ${lower(b6)} today.`),
       ],
       grammar: [
+        // Ba câu đích của tuần 13-14 dùng mệnh đề lý do, và bốn báo cáo học
+        // thuật đếm được 0 cặp ngữ pháp nào trong cả phase trình bày nó. Một
+        // cấu trúc phải được DẠY trước khi bị đòi nói ra.
+        g(
+          "Five minutes. I check everything.",
+          "I need five minutes because I check everything.",
+          "Nối lý do bằng 'because': mệnh đề chính trước, lý do sau. Đây là lần đầu khoá học ghép hai mệnh đề vào một câu — nói liền một hơi, đừng nghỉ giữa hai vế.",
+          "I need five minutes because of I check everything.",
+        ),
         g(
           "I check come back.",
           "I will check and come back.",
@@ -2654,9 +2700,14 @@ function week13(lx: Ctx): LessonContent[] {
           "Please tell me when you are ready, madam.",
           "Trả quyền quyết định lại cho khách, và nói rõ mình chờ. Mệnh đề 'when you are ready' đứng cuối câu.",
         ),
+        sp(
+          "Can you note that?",
+          `Yes. I have your ${back(lx.bank.phone, 1)}, madam.`,
+          "Ôn tuần 12: xác nhận đã ghi bằng cách gọi tên đúng thứ mình vừa ghi.",
+        ),
       ],
       reading: read(
-        `${lx.staff} says: "I am sorry for the wait, madam." and brings a new one. Then ${lx.staff} asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much." The guest says it is fine now, and nothing is ${back(lx.bank.problems, 0)} any more. ${lx.staff} brings ${wa(lx.bank.requests[1])} and ${wa(lx.bank.requests[0])} without being asked.`,
+        `${lx.staff} says, "I am sorry for the wait, madam," and brings a new one. Then ${lx.staff} asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much." The guest says it is fine now, and nothing is ${back(lx.bank.problems, 0)} any more. ${lx.staff} brings ${wa(lx.bank.requests[1])} and ${wa(lx.bank.requests[0])} without being asked.`,
         [
           {
             q: "Sau khi mang cái mới, nhân viên hỏi câu nào?",
@@ -2872,6 +2923,12 @@ function week14(lx: Ctx): LessonContent[] {
           `No. Nothing is ${back(lx.bank.problems, 6)} now.`,
           "Ôn tuần 13: gọi tên sự cố. Trả lời 'No' rồi mới nói rõ — khách cần câu trả lời trước, chi tiết sau.",
         ),
+        sp(
+          "Who is at the door?",
+          `Our ${back(lx.bank.roles, 3)} is at the door.`,
+          "Ôn tuần 7: chức danh đồng nghiệp. Trả lời bằng tên chức danh, không nói 'somebody'.",
+          "colleague",
+        ),
       ],
       reading: read(
         `The guest asks for something. ${lx.staff} answers: "Of course, sir. How many do you need? I will bring them now." ${lx.staff} repeats the number once more before going. Then ${lx.staff} comes back before the guest has to ask a second time, and says: "Here you are, sir." One thing is still ${back(lx.bank.problems, 2)}, and the manager knows.`,
@@ -2963,7 +3020,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Ôn tuần 12: mốc thời gian. Hẹn một mốc cụ thể rồi giữ đúng mốc đó — hứa suông tệ hơn không hứa.",
         ),
         sp(
-          "When will somebody come?",
+          "When will your manager come?",
           `Our ${back(lx.bank.roles, 6)} will come in ten minutes.`,
           "Gọi tên chức danh và cho một mốc giờ, đừng nói 'somebody' — đó là chữ khách sẽ kể lại nguyên văn khi phàn nàn.",
         ),
