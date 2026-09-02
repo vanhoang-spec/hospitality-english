@@ -123,7 +123,14 @@ const FO_BANK: P1Bank = {
   ],
   places: [
     { word: "Lobby", phonetic: "/ˈlɒbi/", definition: "Sảnh khách sạn", icon: "🏨" },
-    { word: "Reception", phonetic: "/rɪˈsepʃn/", definition: "Quầy lễ tân", icon: "🛎️" },
+    // The phone bank answers with `Reception`, so the place card names the
+    // area rather than the counter — two cards, two glosses, one referent.
+    {
+      word: "Reception area",
+      phonetic: "/rɪˈsepʃn ˈeəriə/",
+      definition: "Khu vực lễ tân",
+      icon: "🛎️",
+    },
     { word: "Car park", phonetic: "/kɑː pɑːk/", definition: "Bãi đỗ xe", icon: "🅿️" },
     {
       word: "Luggage room",
@@ -205,7 +212,8 @@ const FO_BANK: P1Bank = {
     { word: "Update", phonetic: "/ʌpˈdeɪt/", definition: "Cập nhật", icon: "🔄", obj: "the file" },
   ],
   phone: [
-    { word: "Extension", phonetic: "/ɪkˈstenʃn/", definition: "Số máy lẻ", icon: "☎️" },
+    // Was `Extension`, which made the answering line "Hello, extension."
+    { word: "Reception", phonetic: "/rɪˈsepʃn/", definition: "Lễ tân (khi bắt máy)", icon: "🛎️" },
     { word: "Message", phonetic: "/ˈmesɪdʒ/", definition: "Lời nhắn", icon: "📝" },
     { word: "In a moment", phonetic: "/ɪn ə ˈməʊmənt/", definition: "Trong chốc lát", icon: "🔜" },
     {
@@ -361,7 +369,13 @@ const FB_BANK: P1Bank = {
     { word: "Wash", phonetic: "/wɒʃ/", definition: "Rửa", icon: "🧽", obj: "the plates" },
   ],
   phone: [
-    { word: "Booking", phonetic: "/ˈbʊkɪŋ/", definition: "Việc đặt bàn", icon: "📒" },
+    // Was `Booking`, which made the answering line "Hello, booking."
+    {
+      word: "Restaurant desk",
+      phonetic: "/ˈrestrɒnt desk/",
+      definition: "Quầy nhà hàng",
+      icon: "🍽️",
+    },
     { word: "Reservation", phonetic: "/ˌrezəˈveɪʃn/", definition: "Đơn đặt bàn", icon: "✅" },
     { word: "Before noon", phonetic: "/bɪˈfɔː nuːn/", definition: "Trước buổi trưa", icon: "🕛" },
     { word: "Cancel", phonetic: "/ˈkænsl/", definition: "Hủy", icon: "🚫" },
@@ -671,17 +685,17 @@ const SW_BANK: P1Bank = {
   states: [
     { word: "Relaxing", phonetic: "/rɪˈlæksɪŋ/", definition: "Thư giãn", icon: "😌" },
     { word: "Gentle", phonetic: "/ˈdʒentl/", definition: "Nhẹ nhàng", icon: "🕊️" },
-    { word: "Strong", phonetic: "/strɒŋ/", definition: "Mạnh", icon: "💪" },
-    // Slot 4 feeds "It is too ___ now" / "The room is too ___ for me" —
-    // a room can be too stuffy, never "too painful" (pain describes the
-    // massage pressure, not the space). "Stuffy" is the real spa
-    // complaint word for a warm treatment/sauna room.
-    { word: "Stuffy", phonetic: "/ˈstʌfi/", definition: "Ngột ngạt, bí hơi", icon: "😖" },
     // Slot 4 = a mild complaint ("It is a little {w}."), slot 5 = a thing
     // being compared ("This one is {cmp}."). "Calm" made the complaint frame
     // praise the room, and "Tired" made the comparison describe a towel as
     // tired. Cool/Warm is the temperature pair a spa actually argues about.
     { word: "Cool", phonetic: "/kuːl/", definition: "Hơi lạnh", icon: "🌬️" },
+    // Slot 4 feeds "It is too ___ now" / "The room is too ___ for me" —
+    // a room can be too stuffy, never "too painful" (pain describes the
+    // massage pressure, not the space). "Stuffy" is the real spa
+    // complaint word for a warm treatment/sauna room.
+    { word: "Stuffy", phonetic: "/ˈstʌfi/", definition: "Ngột ngạt, bí hơi", icon: "😖" },
+    { word: "Strong", phonetic: "/strɒŋ/", definition: "Mạnh", icon: "💪" },
     { word: "Warm", phonetic: "/wɔːm/", definition: "Ấm", icon: "🔆", cmp: "warmer" },
     { word: "Deep", phonetic: "/diːp/", definition: "Sâu", icon: "🌊" },
     { word: "Slippery", phonetic: "/ˈslɪpəri/", definition: "Trơn trượt", icon: "⚠️" },

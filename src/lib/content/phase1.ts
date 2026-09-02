@@ -926,12 +926,15 @@ function week10(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "How is the weather today?",
+          // Was "How is the weather today?", and states[2] is the bank of
+          // adjectives for the department's own things: Spa answered it with
+          // "It is very strong, sir."
+          "How is it here today?",
           `It is very ${lower(s3)}, sir.`,
           `Very much ${lower(s3)}.`,
-          `I do not know, sir. Please look outside.`,
+          `I do not know, sir. I only work here.`,
           undefined,
-          "Đúng ngữ pháp, nhưng bảo khách tự ra ngoài xem là đẩy việc lại cho họ. Thời tiết là câu xã giao rẻ nhất trong nghề — một câu bằng đúng tính từ tuần này là đủ, và nó mở ra cả cuộc trò chuyện.",
+          "Đúng ngữ pháp, và nghe như một câu vô hại — nhưng câu ấy nói với khách rằng bạn không định trả lời. Khách hỏi han về chỗ mình đang đứng là đang bắt chuyện; một câu bằng đúng tính từ tuần này là đủ, và nó mở ra cả cuộc trò chuyện.",
         ),
       ],
     }),
@@ -1142,10 +1145,15 @@ function week11(lx: Ctx): LessonContent[] {
           // bed", "Check in", "Send an email"), so the frame's own object
           // produced "I make the bed it every day." for four of six
           // departments — as the sentence the learner is told is correct.
-          `Every day I ${act(t1)}.`,
+          // The rude half used to be `Every day I …`, which is correct English —
+          // a fronted time adverbial — and the paper marked it wrong, then the
+          // reading question marked "sentence-initial" wrong too, and the
+          // handbook printed it in red. The real error a Vietnamese learner
+          // makes here is the one-word adjective for the two-word adverbial.
+          `I ${act(t1)} everyday.`,
           `I ${act(t1)} every day.`,
-          "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … EVERY DAY.",
-          `I every day ${act(t1)}.`,
+          "Hai chữ 'every day' = mỗi ngày (trạng ngữ). Một chữ 'everyday' = thường ngày (tính từ), không dùng thay được.",
+          `I everyday ${act(t1)}.`,
         ),
         g(
           // Same trap as the pair above, twice over: the -s was concatenated
@@ -1183,10 +1191,11 @@ function week11(lx: Ctx): LessonContent[] {
             explanation: `"I ${act(t1)} every morning" — việc làm mỗi sáng.`,
           },
           {
-            q: "'Every day' thường đứng ở đâu?",
-            options: ["Cuối câu", "Đầu câu", "Giữa câu"],
+            q: "Viết 'mỗi ngày' thế nào cho đúng?",
+            options: ["every day — hai chữ", "everyday — một chữ", "everydays — một chữ, có -s"],
             correct: 0,
-            explanation: "Tiếng Anh đặt trạng ngữ thời gian ở cuối: I work here every day.",
+            explanation:
+              "Hai chữ là trạng ngữ chỉ thời gian. Một chữ 'everyday' là tính từ, nghĩa 'thường ngày' — 'everyday English' thì được, 'I work everyday' thì sai.",
           },
         ],
       ),
@@ -1392,7 +1401,7 @@ function week12(lx: Ctx): LessonContent[] {
           "📞",
         ),
         v("Hold on", "/həʊld ɒn/", "Xin giữ máy", "Hold on, please.", "⏸️"),
-        bw(f1, `Hello, ${lower(f1)}.`),
+        bw(f1, `Hello, ${lower(f1)}. ${lx.staff} speaking.`),
         bw(f2, `May I take your ${lower(f2)}?`),
       ],
       grammar: [

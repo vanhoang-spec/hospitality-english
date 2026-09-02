@@ -597,7 +597,7 @@ export const FB_WEEK_15: WeekContent = {
   weekNumber: 15,
   weekTitleEn: "Breakfast Buffet Welcoming & Station Mapping",
   weekTitleVi: "Điều Phối & Đón Tiếp Tại Nhà Hàng Buffet Sáng",
-  reviewWords: ["Menu", "Table", "Serve", "Plate", "Fresh", "Booking", "Dining room", "Glass"],
+  reviewWords: ["Menu", "Table", "Serve", "Plate", "Fresh", "Reservation", "Dining room", "Glass"],
   lessons: [
     {
       lessonId: "FB_15_1",
@@ -12687,7 +12687,7 @@ export const FB_WEEK_34: WeekContent = {
     "Private dining room",
     "Dessert",
     "Terrace",
-    "Booking",
+    "Reservation",
     "Chef's table",
   ],
   lessons: [
