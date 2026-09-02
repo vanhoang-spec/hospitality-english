@@ -144,7 +144,12 @@ const FO_BANK: P1Bank = {
   requests: [
     { word: "Extra key", phonetic: "/ˈekstrə kiː/", definition: "Chìa khóa dự phòng", icon: "🔑" },
     { word: "City map", phonetic: "/ˈsɪti mæp/", definition: "Bản đồ thành phố", icon: "🗺️" },
-    { word: "Taxi", phonetic: "/ˈtæksi/", definition: "Xe taxi", icon: "🚕" },
+    {
+      word: "Taxi",
+      phonetic: "/ˈtæksi/",
+      definition: "Xe chở khách theo chuyến, tính tiền theo đồng hồ",
+      icon: "🚕",
+    },
     {
       word: "Wake-up call",
       phonetic: "/ˈweɪk ʌp kɔːl/",
@@ -293,7 +298,12 @@ const FB_BANK: P1Bank = {
   places: [
     { word: "Dining room", phonetic: "/ˈdaɪnɪŋ ruːm/", definition: "Phòng ăn", icon: "🍽️" },
     { word: "Kitchen", phonetic: "/ˈkɪtʃɪn/", definition: "Nhà bếp", icon: "🍳" },
-    { word: "Bar", phonetic: "/bɑː/", definition: "Quầy bar", icon: "🍹" },
+    {
+      word: "Bar",
+      phonetic: "/bɑː/",
+      definition: "Quầy phục vụ đồ uống, khách ngồi uống ngay tại chỗ",
+      icon: "🍹",
+    },
     { word: "Buffet line", phonetic: "/ˈbʊfeɪ laɪn/", definition: "Dãy quầy buffet", icon: "🥗" },
     { word: "Terrace", phonetic: "/ˈterəs/", definition: "Sân hiên ngoài trời", icon: "🌤️" },
     { word: "Counter", phonetic: "/ˈkaʊntə/", definition: "Quầy", icon: "🧱" },

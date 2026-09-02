@@ -1563,7 +1563,7 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          "That is all, thank you.",
+          "That is all. I will call again tomorrow.",
           "Thank you for calling. Goodbye.",
           "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại. Từ 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank.",
         ),
@@ -1592,7 +1592,7 @@ function week12(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          "Nothing else, thank you.",
+          "Nothing else. I will ring again later.",
           "Thank you for calling. Goodbye, madam.",
           "OK finish bye.",
           "All right, madam. I will hang up now.",
@@ -2061,7 +2061,7 @@ function week14(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          "No, that is all. Thank you.",
+          "No, that is all. I am going up now.",
           "Thank you, sir. Enjoy your stay.",
           "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối. Từ 'Enjoy' trọng âm ở âm tiết sau: en-JOY; cụm /st/ đầu 'stay' phải bật cả hai âm.",
         ),
