@@ -180,12 +180,14 @@ const FO_BANK: P1Bank = {
     // COMPLAINT, so a positive word inverts it. "Safe" gave "It is a little
     // safe.", which is not a thing anyone says.
     { word: "Crowded", phonetic: "/ˈkraʊdɪd/", definition: "Đông người", icon: "👥" },
-    { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜" },
+    { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃" },
     { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
     { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
     // Khe 5 chạy qua cmpOf(): "Which one is emptier?" so sánh một tính từ
-    // tuyệt đối. "Busy" so sánh được và vẫn là chữ của quầy lễ tân.
-    { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃", cmp: "busier" },
+    // tuyệt đối. Khe 2 thì chạy qua khung "It is very ___ today" nói VỚI KHÁCH,
+    // nên không nhét "Empty" vào đó được: một khách sạn 5 sao không khoe mình
+    // vắng. Cả hai khe cần tính từ có thang độ.
+    { word: "Bright", phonetic: "/braɪt/", definition: "Sáng sủa", icon: "💡", cmp: "brighter" },
     { word: "Full", phonetic: "/fʊl/", definition: "Kín phòng, đầy", icon: "🈵" },
     // Slot 8 feeds "Careful, the floor is ___" — a floor cannot be
     // "crowded"; a marble lobby floor after rain genuinely is slippery.
@@ -783,7 +785,7 @@ const SW_BANK: P1Bank = {
     },
   ],
   phone: [
-    { word: "Spa line", phonetic: "/ˈspɑː laɪn/", definition: "Đường dây spa", icon: "☎️" },
+    { word: "Spa desk", phonetic: "/ˈspɑː desk/", definition: "Quầy spa", icon: "☎️" },
     {
       word: "Preferred time",
       phonetic: "/prɪˈfɜːd taɪm/",
@@ -814,7 +816,7 @@ const SW_BANK: P1Bank = {
     // other five banks hold `call us`, `call room service`, `call housekeeping`,
     // `call back` — and the frame is "Please ___ any time", which turned it
     // into "Please confirm any time, sir."
-    { word: "Call the spa", phonetic: "/kɔːl ðə ˈspɑː/", definition: "Gọi cho spa", icon: "📞" },
+    { word: "Call reception", phonetic: "/kɔːl rɪˈsepʃn/", definition: "Gọi lễ tân", icon: "📞" },
   ],
   problems: [
     { word: "Too hot", phonetic: "/tuː ˈhɒt/", definition: "Quá nóng", icon: "🥵" },
