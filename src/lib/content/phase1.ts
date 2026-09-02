@@ -910,7 +910,7 @@ function week9(lx: Ctx): LessonContent[] {
           "Another yes.",
           "Yes, madam. That is one more charge.",
           undefined,
-          "Đúng ngữ pháp và nó biến một yêu cầu nhỏ thành chuyện tiền ngay tại bàn. Nhận lời trước; chuyện tính tiền là việc của hoá đơn, không phải của câu trả lời đầu tiên.",
+          "Đúng ngữ pháp và nó biến một yêu cầu nhỏ MIỄN PHÍ thành chuyện tiền ngay tại bàn. Món trong bài này không tính thêm đồng nào, nên nhận lời trước. Thứ CÓ tính tiền thì lại phải nói rõ trước khi mang tới.",
         ),
         game(
           "Could I get another one, please?",
@@ -918,7 +918,7 @@ function week9(lx: Ctx): LessonContent[] {
           "Yes, another you.",
           "Yes, madam. That is one extra charge.",
           undefined,
-          "Câu đó biến một yêu cầu nhỏ thành chuyện tiền nong ngay lập tức, và cụt đến mức nghe như từ chối. Nhận lời trước rồi xin một chút thời gian; chuyện tính thêm tiền là việc của hoá đơn, không phải của câu này.",
+          "Câu đó biến một yêu cầu nhỏ MIỄN PHÍ thành chuyện tiền nong, và cụt đến mức nghe như từ chối. Món này không tính thêm đồng nào. Thứ CÓ tính tiền thì phải nói giá trước khi mang tới, chứ không để khách gặp nó trên hoá đơn.",
         ),
       ],
     }),
@@ -1869,9 +1869,9 @@ function week11(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "What do you do at the end?",
-          `I ${act(t7)} and go home, madam.`,
-          "Nối hai hành động bằng 'and' — cấu trúc đơn giản nhất để kể chuỗi việc. Từ 'home' đóng bằng /m/: phải ngậm môi lại, đừng bỏ lửng.",
+          "Anything to report?",
+          `I ${act(t7)} and report one problem, madam.`,
+          "Cấp trên hỏi có gì báo không thì đừng trả lời bằng lịch làm việc của mình. Nối hai việc bằng 'and', và việc thứ hai mới là thứ họ đang hỏi.",
           "manager",
         ),
         sp(
@@ -3238,7 +3238,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "I feel a little hot in there.",
           "Please come out and drink some water.",
-          "Hai việc, đúng thứ tự: RA NGOÀI trước, uống nước sau. Đừng hỏi thêm câu nào.",
+          "Hai việc, đúng thứ tự: RA NGOÀI trước, uống nước sau. Đừng hỏi thêm câu nào — và sau đó báo quản lý, vì mọi lượt khách thấy khó chịu trong phòng xông đều phải vào sổ.",
           undefined,
           ["water"],
         ),
@@ -5048,7 +5048,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
     lesson(lx, 8, 3, "Upstairs, and Not In Here", "Tầng trên, và chỗ không dành cho khách", {
       vocabulary: [
         v("Upstairs", "/ˌʌpˈsteəz/", "Tầng trên", "The gym is upstairs, madam.", "⬆️"),
-        v("Store room", "/stɔː ruːm/", "Kho chứa đồ", "The store room is for staff.", "📦"),
+        v("Store room", "/ˈstɔː ruːm/", "Kho chứa đồ", "The store room is for staff.", "📦"),
         v("Staircase", "/ˈsteəkeɪs/", "Cầu thang bộ", "The staircase is next to the lift.", "🪜"),
       ],
       grammar: [
@@ -5377,8 +5377,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "All right, four o'clock then.",
-          "Thank you. Would you like some music?",
-          "Chốt xong mới mời thêm — mời trước khi giải quyết xong nghe như đang bán hàng.",
+          "Thank you. May I have your room number?",
+          "Chốt giờ xong là lấy số phòng ngay. Một lịch spa không có số phòng thì không tính tiền được và không tìm lại được khi khách tới cửa.",
         ),
       ],
       reading: read(
