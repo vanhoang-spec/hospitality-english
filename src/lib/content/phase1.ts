@@ -186,6 +186,11 @@ function week7(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Who is that at the door?",
+          `That is our ${lower(r2)}, madam.`,
+          "Giới thiệu người thứ ba bằng 'That is our + chức danh'.",
+        ),
+        sp(
           "Are you the manager?",
           `No, madam. I am ${wa(r1)}.`,
           "Trả lời 'no' rồi nói NGAY chức danh thật của mình, để khách không phải hỏi thêm một lượt nữa.",
@@ -339,7 +344,7 @@ function week7(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `Does the ${lower(r6)} work here too?`,
-          `Yes, sir. ${roleSubj(r6)} works here too.`,
+          `Yes, sir. Our ${lower(r6)} works here too.`,
           "Ngôi thứ ba số ít thì động từ thêm -s: workS. Đây là lỗi người Việt hay quên nhất.",
         ),
         sp(
@@ -862,7 +867,7 @@ function week9(lx: Ctx): LessonContent[] {
           "Could I get another one, please?",
           `Certainly, madam. One moment.`,
           "Yes, another you.",
-          "Yes, that is extra.",
+          "Yes, madam. That is one extra charge.",
           undefined,
           "Câu đó biến một yêu cầu nhỏ thành chuyện tiền nong ngay lập tức, và cụt đến mức nghe như từ chối. Nhận lời trước rồi xin một chút thời gian; chuyện tính thêm tiền là việc của hoá đơn, không phải của câu này.",
         ),
@@ -888,7 +893,7 @@ function week9(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `Can I have two ${plural(q3)}?`,
-          "Of course. I will bring two.",
+          `Of course. I will bring two ${plural(q3)}.`,
           "Nhắc lại đúng con số khách vừa nói — đó là cách rẻ nhất chứng minh mình nghe đúng.",
         ),
         sp(
@@ -1158,7 +1163,7 @@ function week10(lx: Ctx): LessonContent[] {
           `Is it ${lower(s3)} outside?`,
           `Yes, sir. It is very ${lower(s3)} today.`,
           `${s3.word} yes today.`,
-          "I do not go outside, sir.",
+          "I never go outside during my shift, sir.",
           undefined,
           "Đúng ngữ pháp và nó đóng cửa cuộc trò chuyện bằng một câu về bản thân. Khách hỏi chuyện ngoài trời là đang bắt chuyện với bạn, không phải đang khảo sát lịch làm việc.",
         ),
@@ -1283,7 +1288,7 @@ function week10(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `Which one is ${cmpOf(s6)}?`,
-          `This one is ${cmpOf(s6)}, madam.`,
+          `This one is ${cmpOf(s6)}. That one is ${lower(s6)}.`,
           "So sánh hơn: tính từ ngắn thì thêm đuôi -er, tính từ dài thì thêm một chữ đứng trước. Nghe kỹ dạng nào bài này dùng.",
         ),
         sp(
@@ -1353,7 +1358,12 @@ function week10(lx: Ctx): LessonContent[] {
           "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do.",
           `Please careful. It is ${lower(s8)}.`,
         ),
-        g("Not good this.", "This is not good, sir.", "Trật tự đúng: chủ ngữ + is not + tính từ."),
+        g(
+          "Not good this.",
+          "This is not good, sir.",
+          "Trật tự đúng: chủ ngữ + is not + tính từ.",
+          "This is no good, sir.",
+        ),
       ],
       speaking: [
         sp(
@@ -1462,6 +1472,17 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       speaking: [
+        sp(
+          "Do you ever forget a step?",
+          "No. I always check first.",
+          "Trạng từ tần suất đứng TRƯỚC động từ chính: I ALWAYS check.",
+          "colleague",
+        ),
+        sp(
+          `When do you ${lower(t2)}?`,
+          `We ${act(t2)} after breakfast.`,
+          "Mốc thời gian đứng cuối câu. Chữ 'after' nối liền với từ sau nó.",
+        ),
         // A guest does not interview a room attendant about her routine. Week
         // 11 is the shift, so the person asking is the new colleague being
         // shown the ropes — and `speakerRole` has existed for that all along.
@@ -1491,6 +1512,14 @@ function week11(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Do you ${lower(t2)} every day?`,
+          `Yes, sir. We ${act(t2)} after breakfast.`,
+          `${t2.word} yes every day.`,
+          "No, sir. We only do that on Monday morning.",
+          undefined,
+          "Đúng ngữ pháp và nó thu một việc hằng ngày xuống còn một ngày trong tuần. Khách nghe xong sẽ không hỏi lại vào hôm khác, và họ mất một dịch vụ vẫn luôn có.",
+        ),
         game(
           "Do you work on Sunday?",
           "Yes, I work every day.",
@@ -1522,6 +1551,17 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       speaking: [
+        sp(
+          `When do you ${lower(t4)}?`,
+          `I ${act(t4)} before lunch, sir.`,
+          "'Before' + mốc thời gian, đặt ở cuối câu.",
+        ),
+        sp(
+          "What time does your shift start?",
+          "Our shift starts at eight.",
+          "Chủ ngữ đầy đủ + động từ chia đúng: our shift STARTS at eight.",
+          "colleague",
+        ),
         // The prompt used to be "What time do you start?" and the model answer
         // named the time of a TASK — "We print the bill at two, madam." — which
         // does not answer it. Four auditors flagged the pair. Now the question
@@ -1551,6 +1591,14 @@ function week11(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Do you ${lower(t4)} in the morning?`,
+          `Yes, sir. I ${act(t4)} before lunch.`,
+          `${t4.word} morning yes.`,
+          "No, sir. We never do that in this department.",
+          undefined,
+          "Đúng ngữ pháp và nó chối một việc bộ phận vẫn làm mỗi ngày. Chữ 'never' là chữ đắt nhất trong nghề — nói ra là khách tin, và họ sẽ kể lại đúng như thế.",
+        ),
         game(
           `When do we ${lower(t3)}?`,
           `We ${act(t3)} at ${lx.service.open}.`,
@@ -1584,6 +1632,17 @@ function week11(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `How often do you ${lower(t6)}?`,
+          `We sometimes ${act(t6)} twice.`,
+          "Đúng chính tả là 'sometimes' có -s ở cuối, và nó đứng trước động từ.",
+        ),
+        sp(
+          "What is the first thing you do?",
+          `I usually ${act(t5)} first.`,
+          "Trạng từ tần suất đứng trước động từ chính, còn 'first' đứng cuối.",
+          "colleague",
+        ),
+        sp(
           "Do you always do that?",
           `I usually ${act(t5)} first.`,
           "Trạng từ tần suất đứng trước động từ — vị trí này người Việt hay đặt sai. Từ 'first' đóng bằng cụm /st/ — cụm khó nhất tuần này, đừng dừng ở 'phơ'.",
@@ -1609,10 +1668,18 @@ function week11(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          `Do you always ${lower(t5)} first?`,
+          `I usually ${act(t5)} first, sir.`,
+          "Usually first yes.",
+          "Yes, sir. Always, without exception.",
+          undefined,
+          "Đúng ngữ pháp và nó hứa một điều tuyệt đối. Ca bận thì thứ tự đổi, và khách đã nghe 'always' sẽ coi lần đổi đó là một lời hứa bị phá.",
+        ),
+        game(
           "How often do you do it?",
           `We sometimes ${act(t6)} twice a day.`,
           `Sometime two time.`,
-          `We ${act(t6)} once every week.`,
+          `We only ${act(t6)} once every week, madam.`,
           "colleague",
           "Đúng ngữ pháp, sai tần suất — mà tần suất chính là thứ 'How often' hỏi. Một tuần một lần và một ngày hai lần là hai quy trình khác hẳn nhau, và người nghe sẽ làm theo con số bạn nói.",
         ),
@@ -1636,6 +1703,17 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       speaking: [
+        sp(
+          "What do you do before you go?",
+          `I ${act(t8)} before I go, madam.`,
+          "Hai việc nối bằng 'before': việc làm trước đứng ở vế đầu.",
+        ),
+        sp(
+          "Is your shift finished?",
+          `Yes. I ${act(t7)} and go home.`,
+          "Nối hai việc bằng 'and', chia động từ giống nhau ở cả hai vế.",
+          "colleague",
+        ),
         sp(
           "What do you do at the end?",
           `I ${act(t7)} and go home, madam.`,
@@ -1661,6 +1739,14 @@ function week11(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Do you ${lower(t8)} at the end?`,
+          "Yes, madam. Always before I go.",
+          `${t8.word} end yes.`,
+          "No, madam. The next shift does it.",
+          undefined,
+          "Đúng ngữ pháp và nó đẩy một bước bàn giao sang ca sau trước mặt khách. Ca sau không biết việc đó chưa xong, nên thứ khách vừa hỏi sẽ không ai làm.",
+        ),
         game(
           "Is your work finished?",
           `Yes, sir. I ${act(t7)} and go home.`,
@@ -1711,8 +1797,18 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Can you take a message?",
+          `Of course. May I have your ${lower(f2)}?`,
+          "Nhận lời rồi hỏi ngay thứ mình cần để ghi lại. Mẫu xin thông tin luôn mở bằng một câu hỏi lịch sự, không hỏi trống không.",
+        ),
+        sp(
+          "I need to check something.",
+          "Of course, sir. Hold on, please.",
+          "Bảo khách chờ trên điện thoại nói 'Hold on, please', đọc nối liền hai chữ đầu.",
+        ),
+        sp(
           "Hello, is this the front desk?",
-          `Hello, ${lx.deptEn}. ${lx.staff} speaking.`,
+          `Hello, ${lower(f1)}. ${lx.staff} speaking.`,
           "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi. Từ 'speaking' có cụm /sp/ ở đầu và /ŋ/ ở cuối, trọng âm ở SPEA.",
         ),
       ],
@@ -1738,6 +1834,14 @@ function week12(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Hello? Is that ${lx.deptEn}?`,
+          `Yes, madam. ${lx.staff} speaking.`,
+          "Yes, and who you are please?",
+          "Yes. What is it that you want?",
+          undefined,
+          "Đúng ngữ pháp và cộc lốc. Trên điện thoại khách không thấy mặt bạn, nên giọng và câu chữ là toàn bộ ấn tượng — 'What do you want?' nghe như đang bị làm phiền.",
+        ),
         game(
           "Hello? Can you hear me?",
           `Yes, madam. ${lx.staff} speaking.`,
@@ -1767,6 +1871,16 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "When can you do it?",
+          `${cap(lower(f3))}, sir. I will call you.`,
+          "Trả lời bằng một mốc thời gian cụ thể, không nói chung chung.",
+        ),
+        sp(
+          `Can you ${lower(f4)} for me?`,
+          `Of course. Let me ${lower(f4)} for you.`,
+          "'Let me + động từ' là cách nhận việc lịch sự nhất trên điện thoại.",
+        ),
+        sp(
           "Could you tell him I called?",
           "Of course. May I take a message?",
           "Chủ động xin ghi lời nhắn thay vì để khách phải yêu cầu. Từ 'message' trọng âm âm tiết đầu: MES-sage, âm cuối là /dʒ/.",
@@ -1790,6 +1904,14 @@ function week12(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "When will you call me back?",
+          `${cap(lower(f3))}, madam. I will call you.`,
+          `${f3.word} yes.`,
+          "I really do not know that, madam. Sorry.",
+          undefined,
+          "Đúng ngữ pháp và nó để khách không có gì để chờ. Chưa chắc thì hứa đi kiểm rồi gọi lại — nói không biết rồi thôi là kết thúc cuộc gọi mà không giải quyết gì.",
+        ),
         game(
           "Please tell her to call me.",
           "Certainly, madam. May I take a message?",
@@ -1819,6 +1941,16 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          `I booked the ${lower(f5)}.`,
+          `Of course. The ${lower(f5)} is ready.`,
+          "Nhận lời rồi xác nhận thứ khách hỏi đã sẵn sàng.",
+        ),
+        sp(
+          `Can you ${lower(f6)} for me?`,
+          `Of course, sir. I will ${lower(f6)} now.`,
+          "Nhận lời rồi làm ngay, và nhắc lại đúng việc khách vừa nhờ để họ biết mình nghe đúng.",
+        ),
+        sp(
           "Can I speak to the manager?",
           "One moment. I will transfer you.",
           "Báo trước rồi mới chuyển máy — đừng chuyển im lặng khiến khách tưởng bị cắt. Là động từ, 'transfer' trọng âm ở âm tiết sau: trans-FER.",
@@ -1842,6 +1974,14 @@ function week12(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Can you arrange the ${lower(f5)}?`,
+          "Of course, sir. One moment.",
+          `${f5.word} yes can.`,
+          "Please call them yourself, sir.",
+          undefined,
+          "Đúng ngữ pháp và nó trả việc lại cho khách đang cầm điện thoại gọi tới bạn. Họ gọi chính là để khỏi phải tự lo, và câu đó nói rằng họ vẫn phải tự lo.",
+        ),
         game(
           "I need to speak to housekeeping.",
           "One moment, madam. I will transfer you.",
@@ -1874,6 +2014,16 @@ function week12(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "When will I hear from you?",
+          `I will ${lower(f7)} soon, sir.`,
+          "Hứa một hành động cụ thể bằng 'will', đừng hứa chung chung.",
+        ),
+        sp(
+          "How do I reach you again?",
+          `Please ${lower(f8)} any time, sir.`,
+          "Mời khách gọi lại là câu chốt ấm nhất của một cuộc gọi.",
+        ),
+        sp(
           "That is all. I will call again tomorrow.",
           "Thank you for calling. Goodbye.",
           "Luôn để khách gác máy trước — đó là chuẩn lễ nghi điện thoại. Từ 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank.",
@@ -1903,10 +2053,18 @@ function week12(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "How do I contact you again?",
+          `Please ${lower(f8)} any time, madam.`,
+          "You call again yes.",
+          "I will call you every hour, madam.",
+          undefined,
+          "Đúng ngữ pháp và nó hứa một việc phiền khách. Mời khách chủ động gọi lại thì quyền nằm ở họ; tự hứa gọi mỗi giờ là biến dịch vụ thành làm phiền.",
+        ),
+        game(
           "Nothing else. I will ring again later.",
           "Thank you for calling. Goodbye, madam.",
           "OK finish bye.",
-          "All right, madam. I will hang up now.",
+          "All right, madam. I will hang up the phone now.",
           undefined,
           "Câu đó đúng ngữ pháp nhưng nói ra cái việc người ta chỉ làm chứ không thông báo — 'I will hang up now' nghe như bạn đang sốt ruột muốn cúp. Kết thúc chuẩn là cảm ơn đã gọi rồi mới chào.",
         ),
@@ -1952,6 +2110,22 @@ function week13(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Tell me what you saw.",
+          `There is a problem. The ${i1.word.toLowerCase()} is ${lower(b2)}.`,
+          "Báo cho cấp trên thì nói đủ hai phần: có sự cố, và hỏng ở đâu.",
+          "manager",
+        ),
+        sp(
+          `Look at this. It is ${lower(b2)}.`,
+          "I am sorry, sir. I will tell my manager.",
+          "Xin lỗi rồi báo lên trên — đó là việc bạn làm được ngay, và là việc đúng.",
+        ),
+        sp(
+          "Is there a problem?",
+          `Yes, madam. The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
+          "Nói rõ CÁI GÌ hỏng, đừng nói chung chung. Mẫu: THE + đồ vật + IS + tình trạng.",
+        ),
+        sp(
           `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
           "I am sorry. I will tell my manager.",
           "Công thức vàng khi khách báo sự cố: xin lỗi + việc bạn THẬT SỰ sẽ làm. Đừng hứa sửa — hứa báo. Từ 'manager' trọng âm ở đầu: MAN-a-ger, hai âm sau đọc lướt.",
@@ -1985,6 +2159,14 @@ function week13(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `The ${i1.word.toLowerCase()} is ${lower(b2)}.`,
+          "I am sorry, madam. I will tell my manager.",
+          `${i1.word} ${lower(b2)} yes.`,
+          "I am sorry, madam. I will fix it for you now.",
+          undefined,
+          "Câu đó lễ phép và nhận trách nhiệm sửa một thứ bạn không được phép sửa. Hỏng nặng thêm thì lỗi thành của bạn, mà khách vẫn phải chờ đúng người tới.",
+        ),
         game(
           "Excuse me, something is not working.",
           "I am sorry, sir. I will tell my manager.",
@@ -2023,6 +2205,22 @@ function week13(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "What is wrong with it?",
+          `It is ${lower(b3)} and a little ${lower(b4)}.`,
+          "Nối hai tình trạng bằng 'and'. Đồng nghiệp hỏi nên không kính ngữ.",
+          "colleague",
+        ),
+        sp(
+          `This is ${lower(b3)}!`,
+          "I am very sorry, sir. I will help.",
+          "Khách gắt thì xin lỗi đủ câu rồi nhận việc, không giải thích trước.",
+        ),
+        sp(
+          `It is a little ${lower(b4)}.`,
+          "I am sorry, madam. I will check it.",
+          "Khách nói giảm đi cho lịch sự, nhưng vẫn phải đi kiểm như một lời phàn nàn thật.",
+        ),
+        sp(
           "This is really not acceptable.",
           "I am very sorry. I will help now.",
           "Khách bức xúc thì xin lỗi ngắn gọn rồi hành động — đừng biện minh. Từ 'help' đóng bằng cụm /lp/: lưỡi chạm vòm rồi mới ngậm môi.",
@@ -2046,6 +2244,14 @@ function week13(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `Why is it ${lower(b3)}?`,
+          "I am very sorry, sir. I will help.",
+          `Sorry, ${lower(b3)} yes.`,
+          "That happens every day here, sir.",
+          undefined,
+          "Đúng ngữ pháp và nó nói với khách rằng sự cố này là chuyện thường ngày ở đây. Khách nghe xong không còn hỏi vì sao nữa — họ chuyển sang viết đánh giá.",
+        ),
         game(
           "Who is responsible for this?",
           "I am very sorry, madam. I will help.",
@@ -2082,6 +2288,22 @@ function week13(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "What did you find?",
+          `It is ${lower(b5)}, and still ${lower(b6)}.`,
+          "Báo lại đúng hai điều mình thấy, không thêm phán đoán.",
+          "colleague",
+        ),
+        sp(
+          `It is ${lower(b5)} now.`,
+          "I will check and come back, sir.",
+          "Nối hai việc bằng 'and': I will check AND come back.",
+        ),
+        sp(
+          `Is it still ${lower(b6)}?`,
+          "I will check it now, madam.",
+          "Hứa hành động ngay bằng 'will' + 'now', đừng để mốc thời gian trống.",
+        ),
+        sp(
           "Can you do something about it?",
           "I will check and come back.",
           "Hứa cụ thể và PHẢI quay lại đúng hẹn — lời hứa không giữ còn tệ hơn không hứa. Cả 'check' lẫn 'back' đều đóng bằng /k/ — đây là âm cuối người Việt nuốt nhiều nhất.",
@@ -2114,6 +2336,14 @@ function week13(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "Can you check it now?",
+          "Of course. I will come back in five minutes.",
+          "Check now yes.",
+          "I will check when I have time, sir.",
+          undefined,
+          "Đúng ngữ pháp và nó đặt việc của khách sau việc của bạn, ngay trước mặt họ. Bận thật thì nói một mốc giờ, đừng nói khi nào rảnh.",
+        ),
+        game(
           "How long will this take?",
           "I will come back in five minutes.",
           "Five minute I come.",
@@ -2142,6 +2372,22 @@ function week13(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "What shall I tell the manager?",
+          `The item is ${lower(b7)}. The service is ${lower(b8)}.`,
+          "Hai câu ngắn rõ ràng hơn một câu dài. Mỗi câu một sự việc.",
+          "colleague",
+        ),
+        sp(
+          `The item is ${lower(b7)}.`,
+          "I am sorry. I will bring a new one.",
+          "Đổi cái mới nói đủ mạo từ: A NEW ONE.",
+        ),
+        sp(
+          `The service is ${lower(b8)}.`,
+          "I am very sorry, sir. I will check.",
+          "Sự cố về dịch vụ thì xin lỗi nặng hơn một bậc rồi mới đi kiểm.",
+        ),
+        sp(
           "Is it fixed now?",
           "Yes. Is everything all right now?",
           "Xử lý xong phải hỏi lại khách — bước này quyết định khách có hài lòng thật không. Từ 'everything' có /θ/ ở giữa và /ŋ/ ở cuối, trọng âm ở đầu: EV-ry-thing.",
@@ -2169,6 +2415,14 @@ function week13(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          `This one is ${lower(b7)} too.`,
+          "I am sorry, madam. I will bring a new one.",
+          "New one, yes.",
+          "They are all like that, madam.",
+          undefined,
+          "Đúng ngữ pháp và nó nói cả kho đều hỏng như nhau. Khách vừa mất niềm tin vào món đó, và vào mọi món khác bạn sẽ mang ra sau.",
+        ),
         game(
           "Thank you, that is much better.",
           "You are welcome. Is everything all right?",
@@ -2212,9 +2466,29 @@ function week14(lx: Ctx): LessonContent[] {
           "Nối tuần 7: chào đúng buổi rồi mời giúp bằng câu chuẩn.",
           "Good morning. How may I helping you?",
         ),
-        g(`I ${lx.deptEn} work.`, `I work in ${lx.deptEn}.`, "Ôn tuần 7: 'work IN + bộ phận'."),
+        g(
+          `I ${lx.deptEn} work.`,
+          `I work in ${lx.deptEn}.`,
+          "Ôn tuần 7: 'work IN + bộ phận'.",
+          `I work at ${lx.deptEn}.`,
+        ),
       ],
       speaking: [
+        sp(
+          "Good afternoon.",
+          "Good afternoon, sir. How may I help?",
+          "Chào đúng buổi rồi mời giúp — hai bước, không bỏ bước nào.",
+        ),
+        sp(
+          "Is this mine?",
+          `Yes, madam. Here is your ${lower(c1)}.`,
+          "Xác nhận rồi trao kèm lời, đừng đưa im lặng.",
+        ),
+        sp(
+          "What is this for?",
+          `Please take the ${lower(c5)}, sir.`,
+          "Mời khách nhận bằng 'Please take', nhẹ hơn hẳn so với ra lệnh.",
+        ),
         sp(
           "Good morning. Are you free?",
           "Good morning, sir. How may I help you?",
@@ -2244,6 +2518,14 @@ function week14(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "Good evening. Can you help me?",
+          "Good evening, madam. How may I help?",
+          "Evening. What you want?",
+          "Yes, madam. I am very busy now.",
+          undefined,
+          "Đúng ngữ pháp, và đúng sự thật — nhưng khách vừa hỏi bạn có giúp được không. Trả lời bằng độ bận của mình là đóng cửa với người vừa định nhờ.",
+        ),
+        game(
           "Good afternoon. Are you busy?",
           "Good afternoon, madam. How may I help?",
           "Afternoon. What you want?",
@@ -2270,9 +2552,29 @@ function week14(lx: Ctx): LessonContent[] {
           "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'",
           `Would you like to ${wa(q1)}?`,
         ),
-        g("How many you need?", "How many do you need, sir?", "Ôn tuần 9: câu hỏi cần 'do you'."),
+        g(
+          "How many you need?",
+          "How many do you need, sir?",
+          "Ôn tuần 9: câu hỏi cần 'do you'.",
+          "How many do you needs, sir?",
+        ),
       ],
       speaking: [
+        sp(
+          "Is that for me?",
+          `Yes, madam. Your ${lower(c6)} is here.`,
+          "Xác nhận rồi nói rõ thứ đang trao, đừng chỉ gật đầu.",
+        ),
+        sp(
+          "Can you do it now?",
+          "Of course. I will do it quickly.",
+          "Trạng từ chỉ cách thức đứng cuối câu: … QUICKLY.",
+        ),
+        sp(
+          "Where do I put this?",
+          `Please leave the ${lower(c2)} here, sir.`,
+          "Chỉ chỗ cụ thể bằng 'here', đừng chỉ tay không nói gì.",
+        ),
         sp(
           `Can I have ${wa(q1)}?`,
           "Of course. I will bring one.",
@@ -2298,6 +2600,14 @@ function week14(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "Can you bring it fast?",
+          "Of course, madam. I will do it quickly.",
+          "Fast yes I bring.",
+          "I will try, madam. Maybe later.",
+          undefined,
+          "Đúng ngữ pháp và nó biến một lời nhận việc thành một lời hẹn mơ hồ. 'Maybe later' để khách tự đoán, và họ luôn đoán ngắn hơn thực tế rồi thất vọng.",
+        ),
         game(
           "I need two, please.",
           "Certainly, madam. I will bring two.",
@@ -2327,6 +2637,16 @@ function week14(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Is everything done?",
+          `Yes, sir. The work is ${lower(c3)}.`,
+          "Báo hoàn thành bằng cả câu, có chủ ngữ rõ ràng.",
+        ),
+        sp(
+          "Can you check that again?",
+          `Of course. I will check the ${lower(c7)}.`,
+          "Nhắc lại đúng thứ khách vừa nhờ, để họ biết bạn nghe đúng.",
+        ),
+        sp(
           "There is a problem in my room.",
           "I am sorry. I will check now.",
           "Ôn khung tuần 13 — xin lỗi rồi hành động, không biện minh. Từ 'sorry' trọng âm âm tiết đầu: SOR-ry, và âm /r/ ở giữa phải cong lưỡi.",
@@ -2354,6 +2674,14 @@ function week14(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "Is the room ready now?",
+          `Yes, madam. Everything is ${lower(c3)}.`,
+          "Ready yes ready.",
+          "Almost, madam. Please wait outside.",
+          undefined,
+          "Đúng ngữ pháp và nó bắt khách đứng chờ ngoài hành lang mà không nói bao lâu. Chưa xong thì nói còn thiếu gì và mấy phút nữa, đừng chỉ đẩy họ ra.",
+        ),
         game(
           "My room is not ready yet.",
           "I am sorry, sir. I will check now.",
@@ -2386,6 +2714,16 @@ function week14(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Thank you for your help.",
+          "My pleasure, madam.",
+          "Câu đáp lời cảm ơn sang nhất trong nghề. Chữ 'pleasure' đọc /ˈpleʒə/, âm giữa là /ʒ/ chứ không phải /z/.",
+        ),
+        sp(
+          "We are leaving tomorrow.",
+          `Have a good ${lower(c4)}, sir.`,
+          "Lời chúc lúc tiễn khách. Mẫu cố định: HAVE A GOOD + danh từ.",
+        ),
+        sp(
           "No, that is all. I am going up now.",
           "Thank you, sir. Enjoy your stay.",
           "Kết thúc luôn ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối. Từ 'Enjoy' trọng âm ở âm tiết sau: en-JOY; cụm /st/ đầu 'stay' phải bật cả hai âm.",
@@ -2414,6 +2752,14 @@ function week14(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "Thank you very much.",
+          "My pleasure, sir.",
+          "OK, no problem for me sir.",
+          "You are welcome. That is only my job.",
+          undefined,
+          "Đúng ngữ pháp và nó hạ việc vừa làm xuống thành nghĩa vụ. Khách cảm ơn là đang ghi nhận một người, và câu đó trả lời rằng đó chỉ là công việc.",
+        ),
         game(
           "That is everything, thank you.",
           "Thank you, madam. Enjoy your stay.",
@@ -2775,6 +3121,16 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Đọc lại đơn là bước rẻ nhất để bắt lỗi nghe. Chữ 'repeat' trọng âm ở âm sau: re-PEAT.",
         ),
         sp(
+          "Where do I put the tray?",
+          "Please leave the tray outside, sir.",
+          "Khay đồ ăn để ngoài cửa, không mang ngược vào phòng. Chữ 'tray' có /tr/ bật rõ ở đầu.",
+        ),
+        sp(
+          "Can you bring it soon?",
+          "Of course. I will do it quickly.",
+          "Trạng từ chỉ cách thức đứng cuối câu: … QUICKLY.",
+        ),
+        sp(
           "Can we have the bill now?",
           "Of course. I will bring the bill folder.",
           "Hoá đơn luôn đi trong bìa, không đưa tờ giấy trần. Cụm 'bill folder' trọng âm ở BILL.",
@@ -2878,6 +3234,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Come in. The room is a mess.",
           "Good morning. How may I help?",
           "Vào rồi vẫn chào, và tuyệt đối không bình luận về tình trạng phòng.",
+        ),
+        sp(
+          "The vase in my room is empty.",
+          "I will bring fresh flowers, madam.",
+          "Nhận việc rồi nói rõ mình sẽ mang gì tới, đừng chỉ nói sẽ xử lý.",
         ),
         sp(
           "Is room eight-one-two finished?",
@@ -3165,6 +3526,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "It is fine now, thank you.",
           "Please tell me if it is too hot.",
           "Dặn lại một lần nữa sau khi xử lý, vì khách hay ngại kêu lần thứ hai. Thêm 'Please' cho câu thành lời mời, không thành mệnh lệnh.",
+        ),
+        sp(
+          "Is it warm enough in here?",
+          "Tell me if it is too cold, madam.",
+          "Mời khách nói ra cảm giác của họ, vì bạn không cảm thấy thay được.",
         ),
         sp(
           "Can you fix the heater?",
