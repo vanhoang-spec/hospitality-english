@@ -663,31 +663,41 @@ const slugify = (t: string) =>
       const key = `${dep}-${w}`;
       // A department still being written has no weeks to draw a paper from.
       if (!getWeekContent(dep, String(w))) continue;
-      let paper: ReturnType<typeof buildPaper>;
-      try {
-        paper = buildPaper(dep, String(w));
-      } catch (e) {
-        fail("T5b", `${key} checkpoint paper THREW: ${(e as Error).message}`);
-        continue;
+      // The builder shuffles, so one paper proves almost nothing: the pairs
+      // that made a bad option collide sit in the tail of the draw. Twenty-five
+      // sittings per department-week is what it took for the duplicate-option
+      // defect to show on every affected pair rather than four of six.
+      for (let attempt = 0; attempt < 25; attempt++) {
+        let paper: ReturnType<typeof buildPaper>;
+        try {
+          paper = buildPaper(dep, String(w));
+        } catch (e) {
+          fail("T5b", `${key} checkpoint paper THREW: ${(e as Error).message}`);
+          break;
+        }
+        papers++;
+        if (paper.length !== TOTAL_QUESTIONS) {
+          fail(
+            "T5b",
+            `${key} checkpoint paper has ${paper.length} questions, want ${TOTAL_QUESTIONS}`,
+          );
+          continue;
+        }
+        for (const q of paper) {
+          if (q.options.length < 2) fail("T5b", `${key} ${q.kind} question has <2 options`);
+          if (q.correctIdx < 0 || q.correctIdx >= q.options.length)
+            fail("T5b", `${key} ${q.kind} question has no correct option in its list`);
+          if (new Set(q.options).size !== q.options.length)
+            fail("T5b", `${key} ${q.kind} question repeats an option: "${q.options.join(" / ")}"`);
+          // A listening option that IS the sentence just played is not a
+          // distractor, it is the prompt handed back with a tick next to it.
+          if (q.kind === "listening" && q.options.some((o) => o === q.audio))
+            fail("T5b", `${key} listening option repeats the audio: "${q.audio}"`);
+        }
+        for (const kind of ["vocab", "grammar", "listening", "reading"] as const)
+          if (!paper.some((q) => q.kind === kind))
+            fail("T5b", `${key} checkpoint paper has no ${kind} question at all`);
       }
-      papers++;
-      if (paper.length !== TOTAL_QUESTIONS) {
-        fail(
-          "T5b",
-          `${key} checkpoint paper has ${paper.length} questions, want ${TOTAL_QUESTIONS}`,
-        );
-        continue;
-      }
-      for (const q of paper) {
-        if (q.options.length < 2) fail("T5b", `${key} ${q.kind} question has <2 options`);
-        if (q.correctIdx < 0 || q.correctIdx >= q.options.length)
-          fail("T5b", `${key} ${q.kind} question has no correct option in its list`);
-        if (new Set(q.options).size !== q.options.length)
-          fail("T5b", `${key} ${q.kind} question repeats an option: "${q.options.join(" / ")}"`);
-      }
-      for (const kind of ["vocab", "grammar", "listening", "reading"] as const)
-        if (!paper.some((q) => q.kind === kind))
-          fail("T5b", `${key} checkpoint paper has no ${kind} question at all`);
     }
   }
   console.log(`T5b checkpoint papers — ${papers} checkpoint built and shape-checked`);

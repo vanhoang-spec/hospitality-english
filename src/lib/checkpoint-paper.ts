@@ -357,9 +357,17 @@ export function buildPaper(dep: string, week: string): Question[] {
     // vọng đề thì độ vọng hết phân biệt được, và học viên phải NGHE.
     const promptBag = bagOf(s.guestPrompt);
     const echo = (t: string) => [...bagOf(t)].filter((w) => promptBag.has(w)).length;
+    // And the option cannot BE the audio. Widening the pool with grammar
+    // polites pulled in the questions themselves — "Can I have an extra bed?"
+    // is a week 9 polite and also the guest line of the week 9 speaking item —
+    // so the paper played a sentence and offered that same sentence as a reply
+    // to it. Two audits measured it at 47.3% of Housekeeping papers. Anything
+    // that says what the prompt says is out, by the same content test used for
+    // the answer.
+    const isThePrompt = (t: string) => sameAnswer(t, s.guestPrompt);
     const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
-    ].filter((t) => !sameQuestion.has(t));
+    ].filter((t) => !sameQuestion.has(t) && !isThePrompt(t));
     const ranked = (list: string[]) =>
       list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
@@ -374,7 +382,7 @@ export function buildPaper(dep: string, week: string): Question[] {
         ...pool,
         ...phaseLessons
           .flatMap((l) => l.grammar.map((gr) => gr.polite))
-          .filter((t) => t !== s.targetResponse && !sameQuestion.has(t)),
+          .filter((t) => t !== s.targetResponse && !sameQuestion.has(t) && !isThePrompt(t)),
       ]),
     ];
     const clean = ranked(widened.filter((t) => !saysTheSame(t))).slice(0, 2);
