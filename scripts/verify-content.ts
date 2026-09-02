@@ -106,6 +106,8 @@ function phaseOf(week: number): Phase | null {
 }
 
 const errors: string[] = [];
+/** `dep|phase|gloss` -> the first card that claimed that Vietnamese gloss. */
+const glossOwner = new Map<string, string>();
 const warnings: string[] = [];
 /** Known pre-matrix debt in the hand-authored A2-B1 weeks (see content audit). */
 const legacyGameDupes: string[] = [];
@@ -287,6 +289,15 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
     for (const item of lesson.vocabulary) {
       if (!item.word || !item.phonetic || !item.definition || !item.context)
         errors.push(`${where}: vocab "${item.word}" has an empty field`);
+      // Two cards with one gloss make an unanswerable checkpoint question: the
+      // paper prints the same Vietnamese twice and keys one of them.
+      const glossKey = `${week.departmentId}|${phase?.name ?? week.weekNumber}|${item.definition.trim().toLowerCase()}`;
+      const owner = glossOwner.get(glossKey);
+      if (owner && owner !== item.word)
+        errors.push(
+          `${where}: vocab "${item.word}" repeats the gloss of "${owner}" — "${item.definition}"`,
+        );
+      else glossOwner.set(glossKey, item.word);
     }
 
     for (const gr of lesson.grammar) {

@@ -120,7 +120,13 @@ export function buildPaper(dep: string, week: string): Question[] {
   ]);
 
   const vocabQs: Question[] = vocabPicks.slice(0, MIX.vocab).map((v, i) => {
-    const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
+    // Unique by WORD is not enough: the paper asks for a meaning, so two cards
+    // that share a Vietnamese gloss print the same option twice and mark one
+    // of them wrong. Back Office taught Invoice and Bill as "Hóa đơn" three
+    // weeks apart and week 6 asked a learner to choose between them.
+    const distractors = shuffle(
+      unique.filter((o) => o.word !== v.word && o.definition !== v.definition),
+    ).slice(0, 3);
     if (i % 2 === 0) {
       const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
       return {

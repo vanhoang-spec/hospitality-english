@@ -347,7 +347,7 @@ function week32(lx: Ctx): LessonContent[] {
     lesson(lx, 32, 1, "Based on What You Told Me", "Tư vấn dựa trên thông tin khách", {
       vocabulary: [
         v("Based on", "/beɪst ɒn/", "Dựa trên", "Based on your needs, I suggest this.", "🧭"),
-        v("Suggest", "/səˈdʒest/", "Đề xuất", "May I suggest another option?", "💡"),
+        v("Suggest", "/səˈdʒest/", "Gợi ý (khách tự quyết)", "May I suggest another option?", "💡"),
         // The advice "a quieter option" was hardcoded to a light-sleeper
         // scenario, but preferences[0] is a department preference — spice
         // tolerance, preferred billing cycle, preferred newspaper. Four of
@@ -1933,7 +1933,7 @@ function week38(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 38, 1, "Opening the Pitch", "Mở đầu bài trình bày", {
       vocabulary: [
-        v("Propose", "/prəˈpəʊz/", "Đề xuất", "May I propose a solution?", "📊"),
+        v("Propose", "/prəˈpəʊz/", "Đề xuất phương án cụ thể", "May I propose a solution?", "📊"),
         v("Overview", "/ˈəʊvəvjuː/", "Tổng quan", "Here is a short overview.", "🗒️"),
         bw(r1, `The ${lo(r1)} is included in this offer.`),
         bw(r2, `I have attached the ${lo(r2)} for your review.`),

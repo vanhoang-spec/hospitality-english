@@ -1626,7 +1626,12 @@ function week13(lx: Ctx): LessonContent[] {
     lesson(lx, 13, 1, "Something Is Wrong", "Có thứ gì đó không ổn", {
       vocabulary: [
         v("Problem", "/ˈprɒbləm/", "Vấn đề, sự cố", "There is a problem, sir.", "⚠️"),
-        v("Fix", "/fɪks/", "Sửa", "I will fix it now.", "🔧"),
+        // Not "I will fix it now." — Phase 0 puts that exact sentence on the
+        // WRONG option and explains why: you are not the electrician, and the
+        // moment you promise a repair the fault becomes yours. The card keeps
+        // the word, because guests say it; the lesson stops modelling it as
+        // the staff line.
+        v("Fix", "/fɪks/", "Sửa (việc của bộ phận kỹ thuật)", "I cannot fix it, sir.", "🔧"),
         bw(b1, `The ${i1.word.toLowerCase()} is ${lower(b1)}.`),
         bw(b2, `It is ${lower(b2)}, sir.`),
       ],
@@ -1638,48 +1643,54 @@ function week13(lx: Ctx): LessonContent[] {
           `The ${i1.word.toLowerCase()} has ${lower(b1)}.`,
         ),
         g(
-          "I fix now you wait.",
-          "I will fix it now, sir.",
-          "Hứa hành động dùng 'will': I WILL fix it now.",
-          "I will fix now, sir.",
+          "Manager I tell.",
+          "I will tell my manager now.",
+          "Báo lên trên: CHỦ NGỮ + WILL TELL + người. Tiếng Việt đảo được tân ngữ lên đầu, tiếng Anh thì không.",
+          "I will tell to my manager now.",
         ),
       ],
       speaking: [
         sp(
           `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
-          "I am sorry. I will fix it now.",
-          "Công thức vàng khi khách báo sự cố: xin lỗi + hứa hành động ngay. Từ 'fix' đóng bằng cụm /ks/ — phải nghe cả hai âm, đừng thành 'phích'.",
+          "I am sorry. I will tell my manager.",
+          "Công thức vàng khi khách báo sự cố: xin lỗi + việc bạn THẬT SỰ sẽ làm. Đừng hứa sửa — hứa báo. Từ 'manager' trọng âm ở đầu: MAN-a-ger, hai âm sau đọc lướt.",
         ),
       ],
       reading: read(
-        `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I will fix it now."`,
+        `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I cannot fix it. I will tell my manager." ${lx.staff} writes the room number down.`,
         [
           {
             q: "Nhân viên phản ứng thế nào?",
             options: [
-              "Xin lỗi rồi hứa sửa ngay",
-              "Giải thích vì sao chuyện đó xảy ra trước",
+              "Xin lỗi, nói rõ mình không sửa được, rồi báo cấp trên",
+              "Xin lỗi rồi tự sửa ngay tại chỗ",
               "Bảo khách chờ mai",
             ],
             correct: 0,
-            explanation: "Xin lỗi + hành động ngay là công thức xử lý sự cố cơ bản.",
+            explanation:
+              "Xin lỗi + việc mình thật sự làm được. Nhận sửa nghe tận tình nhưng sai nghề: hỏng thêm thì trách nhiệm sang bạn, mà khách vẫn phải chờ đúng người.",
           },
           {
-            q: "Câu 'I will fix it' diễn tả điều gì?",
-            options: ["Việc sắp làm ngay", "Việc đã làm xong", "Việc không làm"],
+            q: "Vì sao nhân viên ghi lại số phòng?",
+            options: [
+              "Để cấp trên biết sự cố ở đâu",
+              "Để tính thêm tiền vào phòng đó",
+              "Để nhớ tên khách",
+            ],
             correct: 0,
-            explanation: "'will + động từ' diễn tả hành động sắp thực hiện.",
+            explanation:
+              "Báo sự cố mà thiếu số phòng thì người đến sửa không biết đi đâu. Ghi lại trước khi rời khách là một bước của quy trình, không phải thói quen cá nhân.",
           },
         ],
       ),
       game: [
         game(
           "Excuse me, something is not working.",
-          "I am sorry, sir. I will check it now.",
+          "I am sorry, sir. I will tell my manager.",
           "Not working yes.",
-          "I am sorry. It is always so.",
+          "I am sorry, sir. I will fix it now.",
           undefined,
-          "Có xin lỗi, nhưng ngay sau đó nói hỏng là chuyện thường ngày — nghĩa là sẽ không ai sửa. Lời xin lỗi phải đi kèm một hành động, và ở trình độ này hành động đó luôn là đi kiểm ngay.",
+          "Câu đó lễ phép, đúng ngữ pháp, và là câu nguy hiểm nhất bài: bạn vừa nhận trách nhiệm sửa một thứ bạn không được phép sửa. Hỏng nặng thêm thì lỗi thành của bạn, và khách vẫn phải chờ đúng người ấy tới. Xin lỗi rồi báo lên trên — đó mới là việc bạn làm được ngay.",
         ),
       ],
     }),

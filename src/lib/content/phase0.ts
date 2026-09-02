@@ -317,7 +317,14 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     pron: { subj: "he", obj: "him", poss: "his", refl: "himself" },
     station: "the office door",
     items: [
-      { word: "Invoice", phonetic: "/ˈɪnvɔɪs/", definition: "Hóa đơn", icon: "🧾" },
+      // "Hóa đơn" bare collided with the Bill card three weeks later, and the
+      // vocabulary paper printed both as options with one of them marked wrong.
+      {
+        word: "Invoice",
+        phonetic: "/ˈɪnvɔɪs/",
+        definition: "Hóa đơn công ty (thanh toán sau)",
+        icon: "🧾",
+      },
       { word: "Email", phonetic: "/ˈiːmeɪl/", definition: "Thư điện tử", icon: "📧" },
       { word: "Folder", phonetic: "/ˈfəʊldə/", definition: "Tập hồ sơ", icon: "📁" },
       { word: "Printer", phonetic: "/ˈprɪntə/", definition: "Máy in", icon: "🖨️" },
