@@ -544,7 +544,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Hey, come in.",
           `Welcome to ${RESORT}.`,
           "Không dùng 'Hey' với khách. Câu đón chuẩn là 'Welcome to' + tên khách sạn.",
-          "Welcome, come in.",
+          "Welcome at Lotus Bay.",
         ),
       ],
       speaking: [
@@ -969,9 +969,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
       grammar: [
         g(
           `Go floor ${lx.floor.ordinal}.`,
-          `Go to the ${lx.floor.ordinal} floor.`,
-          `Cần 'to the' trước tên tầng: go TO THE ${lx.floor.ordinal} floor. Tầng gọi bằng số thứ tự, không phải số đếm: first · second · third · fourth · fifth · sixth · seventh · eighth · ninth · tenth.`,
-          `Go to ${lx.floor.ordinal} floor.`,
+          `Go to the ${lx.floor.ordinal} floor, madam.`,
+          `Kèm 'madam/sir' ở cuối — chỉ đường không tag nghe như ra lệnh, và tuần 5 sẽ gọi đúng kiểu đó là thô. Cần 'to the' trước tên tầng: go TO THE ${lx.floor.ordinal} floor. Tầng gọi bằng số thứ tự: first · second · third · fourth · fifth · sixth · seventh · eighth · ninth · tenth.`,
+          `Go to ${lx.floor.ordinal} floor, madam.`,
         ),
         g(
           `Room ${lx.floor.ordinal} floor.`,
@@ -1067,7 +1067,7 @@ function week2(lx: P0Lexicon): LessonContent[] {
         sp(
           `Could I have my ${i2.word.toLowerCase()}?`,
           `Here is your ${i2.word.toLowerCase()}, madam.`,
-          "Trao đồ cho khách thì đưa bằng hai tay và đợi khách cầm chắc rồi mới buông. Câu trao đồ giữ nguyên, chỉ đổi động từ theo số lượng: một cái dùng dạng số ít, từ hai cái trở lên đổi sang dạng số nhiều.",
+          "Đồ cầm được thì trao bằng hai tay và đợi khách cầm chắc; thứ không trao tay được — cái bàn, cái tủ — thì mở bàn tay chỉ về phía nó. Câu nói giữ nguyên, chỉ đổi động từ theo số lượng: một cái dạng số ít, từ hai trở lên đổi sang số nhiều.",
           undefined,
           [i2.word.toLowerCase()],
         ),
@@ -1095,6 +1095,8 @@ function week2(lx: P0Lexicon): LessonContent[] {
           "Two, madam. One moment.",
           "Three, madam.",
           "Yes, madam. Three.",
+          undefined,
+          "Khách vừa sửa lại số lượng. Nhắc lại con số MỚI rồi mới đi lấy — hai đáp án kia đều lặp lại con số khách vừa bác bỏ.",
         ),
         game(
           // Chạy trên i2 nên Lễ tân hỏi "Can I have one more passport?" và đáp
@@ -1280,7 +1282,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Today Monday.",
           "Today is Monday.",
           "Lại là động từ 'is'. Tiếng Việt nói 'Hôm nay thứ Hai', tiếng Anh phải có IS. Bảy ngày trong tuần, luôn viết hoa chữ đầu: Monday · Tuesday · Wednesday · Thursday · Friday · Saturday · Sunday.",
-          "Today it is Monday.",
+          "Today are Monday.",
         ),
         g(
           // "Tomorrow I start at two." là tiếng Anh ĐÚNG (hiện tại đơn cho lịch
@@ -1411,7 +1413,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
           "Monday open, madam, yes yes.",
           "Yes madam, we are open all week long.",
           undefined,
-          "'All week long' là giọng quảng cáo. Ở quầy, trả lời gọn 'Every day' để khách nhớ được ngay.",
+          "Khách hỏi đúng MỘT ngày. 'Every day' trả lời thẳng câu đó và còn cho khách biết thêm; câu kia dài hơn mà không thêm được thông tin nào.",
         ),
         game(
           `Are you open now?`,
@@ -2448,7 +2450,7 @@ function week6(lx: P0Lexicon): LessonContent[] {
         g(
           "Go enjoy.",
           `Enjoy your ${lx.closing.en}, sir.`,
-          `Câu chúc khi tiễn khách phải hợp với việc vừa xong: lễ tân tiễn một kỳ nghỉ, nhà hàng tiễn một bữa ăn, spa tiễn một buổi trị liệu. Ở bộ phận này là ${lx.closing.vi} — 'Enjoy your ${lx.closing.en}'. Khách rời khách sạn hẳn thì dùng 'Have a nice day'.`,
+          `Câu chúc khi tiễn khách phải hợp với việc vừa xong: lễ tân tiễn một kỳ nghỉ, nhà hàng tiễn một bữa ăn, spa tiễn một buổi trị liệu. Ở bộ phận này là ${lx.closing.vi} — 'Enjoy your ${lx.closing.en}'. Còn 'Have a nice day' là lời chúc khi khách RỜI ĐI — ra phố hay trả phòng — nên tuần 1 dạy nó ở lượt tạm biệt là đúng; ở đây khách vừa dùng xong dịch vụ, chúc theo dịch vụ.`,
           `Enjoying your ${lx.closing.en}, sir.`,
         ),
       ],
@@ -3097,13 +3099,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Give me money.",
           "I cannot take cash, madam.",
           "Nhân viên buồng phòng không thu tiền trong phòng khách: không có hoá đơn, không có máy tính tiền, và mất tiền thì không ai chứng minh được. Mọi khoản đều qua lễ tân.",
-          "I cannot take the cash, madam.",
+          "I do not can take cash, madam.",
         ),
         g(
           "You pay downstairs.",
           "Please pay at reception, sir.",
           "Chỉ đường bằng câu mời chứ không bằng câu sai khiến: thêm 'Please' và nói rõ chỗ.",
-          "Please pay in reception, sir.",
+          "Please to pay at reception, sir.",
         ),
       ],
       speaking: [
@@ -3223,7 +3225,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Oh — you are still here.",
-          "Good morning, madam. Shall I come back?",
+          "Good morning, madam. May I come back?",
           "Khách về giữa lúc bạn đang dọn dở thì phòng là của họ, không phải của bạn. Chào, rồi hỏi có nên quay lại sau không — đừng vừa lau vừa nói chuyện.",
         ),
       ],
@@ -3288,7 +3290,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `${capFirst(lx.priced.usdWord)} dollar.`,
           `It is about ${lx.priced.usdWord} dollars.`,
           "Hai điều: từ 2 đô trở lên phải có -s, và luôn thêm 'about' vì tỷ giá đổi hằng ngày. Nói một con số đô chính xác là hứa một tỷ giá bạn không quyết định.",
-          `It is ${lx.priced.usdWord} dollars.`,
+          `It is about ${lx.priced.usdWord} dollar.`,
         ),
         g(
           "Give me the money.",
@@ -3535,6 +3537,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ),
       game: [
         game(
+          "This is for you. Thank you.",
+          "Thank you very much, madam.",
+          "No no, madam.",
+          "I cannot take cash, madam.",
+          undefined,
+          "Tiền BOA khác tiền THANH TOÁN: khách tự nguyện đưa cho bạn thì nhận bằng lời cảm ơn và xử theo quy định boa của khách sạn. Đáp án thứ ba là câu cho tiền giặt là — dùng nhầm ở đây là từ chối một món quà.",
+        ),
+        game(
           "There is money on the table.",
           "Excuse me, sir. Is this yours?",
           "I no touch, madam.",
@@ -3612,7 +3622,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Could I have a clean towel?",
           "Here you are, madam.",
-          "Việc bạn LÀM được thì làm ngay và làm vui vẻ. Từ chối một việc không có nghĩa là từ chối cả người.",
+          "Việc bạn LÀM được thì làm ngay và làm vui vẻ — khăn sạch có sẵn trên xe đẩy nên trao được liền, không cần bước đi kiểm. Đồ phải đi lấy ở kho thì mới kiểm trước rồi hứa sau (tuần 2 bài 3). Từ chối một việc không có nghĩa là từ chối cả người.",
         ),
       ],
       reading: read(
@@ -3645,6 +3655,14 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "What is your name, sir?",
           undefined,
           "Hỏi tên nghe rất hợp lý, và đó chính là chỗ nguy hiểm: tên đúng không chứng minh được gì, nhưng hỏi xong thì bạn đã tự đặt mình vào thế phải quyết định. Câu duy nhất an toàn là không mở, và chỉ lối xuống lễ tân.",
+        ),
+        game(
+          "Can I borrow your key?",
+          "I am sorry, sir. I cannot.",
+          "OK, but quickly, sir.",
+          "My key is only for cleaning, sir.",
+          undefined,
+          "Chìa tầng mở được nhiều phòng — nó không rời tay bạn, không cho mượn, không có ngoại lệ. Đáp án thứ ba giải thích đúng mà vẫn sai: giải thích xong người ta sẽ mặc cả, còn lời từ chối gọn thì không mở cửa cho cuộc mặc cả nào.",
         ),
         game(
           "So where do I go?",
@@ -3708,6 +3726,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Đừng đoán thời gian sửa — bạn không phải người sửa. Xin khách chờ rồi để kỹ thuật nói con số, và nói rõ bạn đang đi gọi họ.",
           undefined,
           ["wait"],
+        ),
+        sp(
+          "My son is by your trolley.",
+          "Careful, madam. One moment.",
+          "Trên xe đẩy có hoá chất và đồ nặng. Cảnh báo trước, rồi tự tay đẩy xe ra xa — đừng chờ khách gọi con lại. 'Trolley' là xe đẩy của bạn; từ này không có thẻ riêng nhưng nghe được là phải hiểu.",
+          undefined,
+          ["careful"],
         ),
         sp(
           "Can I walk here?",
@@ -4133,7 +4158,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         game(
           "Can I charge it to my room?",
-          "Of course, sir. Your room number?",
+          "Of course. Your name and room, sir?",
           "Room? OK sir.",
           "Of course, sir. No problem.",
           undefined,
@@ -4359,7 +4384,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Go enjoy.",
           "Enjoy your meal, sir.",
           "Câu chúc này đi kèm ĐỒ ĂN, không đi kèm thực đơn. Nói lúc đặt đĩa xuống bàn; nói lúc đưa menu là chúc khách ngon miệng với tờ giấy.",
-          "Enjoy your meal now, sir.",
+          "Enjoy you meal, sir.",
         ),
       ],
       speaking: [
@@ -4406,7 +4431,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ),
       game: [
         game(
-          "Here is your food.",
+          "Oh, that looks lovely.",
           "Enjoy your meal, madam.",
           "Eat, madam.",
           "Enjoy your stay, madam.",
@@ -4535,13 +4560,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Give me money.",
           "I cannot take cash, madam.",
           "Phòng chờ không có két, không có máy in hoá đơn, và không có người thứ hai đứng cạnh. Mất tiền thì không ai chứng minh được điều gì — nên mọi khoản đều đi qua lễ tân, kể cả khoản nhỏ.",
-          "I cannot take the cash, madam.",
+          "I do not can take cash, madam.",
         ),
         g(
           "You pay downstairs.",
           "Please pay at reception, sir.",
           "Từ chối rồi phải chỉ ngay chỗ trả. Chỉ đường bằng câu mời, không bằng câu sai khiến: thêm 'Please' và nói rõ nơi đến.",
-          "Please pay in reception, sir.",
+          "Please to pay at reception, sir.",
         ),
       ],
       speaking: [
@@ -4620,7 +4645,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `${capFirst(lx.priced.usdWord)} dollar.`,
           `It is about ${lx.priced.usdWord} dollars.`,
           "Hai điều: từ 2 đô trở lên phải có -s, và luôn thêm 'about' vì tỷ giá đổi hằng ngày. Nói một con số đô chính xác là hứa một tỷ giá bạn không quyết định.",
-          `It is ${lx.priced.usdWord} dollars.`,
+          `It is about ${lx.priced.usdWord} dollar.`,
         ),
         g(
           "Give me the money.",
@@ -5154,7 +5179,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "No problem, no nuts.",
           "One moment. I will ask the kitchen.",
           "Không bao giờ tự khẳng định món có gì. Bạn không nấu món đó và công thức đổi theo ngày. Câu duy nhất đúng là đi hỏi bếp rồi quay lại trả lời.",
-          "One moment. I think there are no nuts.",
+          "One moment. I will ask to the kitchen.",
         ),
         g(
           "You allergy?",
