@@ -471,15 +471,23 @@ function week7(lx: Ctx): LessonContent[] {
         `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you." ${lx.staff} does not guess. ${lx.staff} says: "Please wait here, sir. I will come back."`,
         [
           {
-            q: "Khi chưa biết câu trả lời, nên làm gì?",
+            // Was a service-judgement question whose wrong options were "guess
+            // so the guest does not wait" and "walk away in silence" — nobody
+            // needs the passage, or any English, to reject those. Three
+            // academic reviews measured 40-48% of reading questions answerable
+            // by professional common sense. A retrieval question with three
+            // English sentences one word apart cannot be answered without
+            // reading, and it puts the model sentence in front of the learner
+            // three times.
+            q: "Khi chưa biết câu trả lời, nhân viên nói câu nào?",
             options: [
-              "Nói chưa chắc và đi hỏi người phụ trách",
-              "Trả lời theo phỏng đoán cho khách khỏi phải chờ",
-              "Im lặng bỏ đi",
+              `I am not sure, sir. I will ask our ${lower(r7)}.`,
+              `I am not sure, sir. Please ask our ${lower(r7)}.`,
+              `I am sure, sir. I will ask our ${lower(r7)}.`,
             ],
             correct: 0,
             explanation:
-              "Nói thật và hứa hành động giữ được uy tín; đoán bừa gây sai thông tin cho khách.",
+              "Ba câu khác nhau một chữ. Câu thứ hai đẩy việc sang khách; câu thứ ba nói mình chắc, trong khi cả bài dạy điều ngược lại.",
           },
           {
             q: "Nhân viên bảo khách làm gì trong lúc chờ?",
@@ -786,10 +794,15 @@ function week8(lx: Ctx): LessonContent[] {
         `The guest cannot find the way. ${lx.staff} smiles: "Let me show you, sir. The ${lower(p8)} is over there." They walk together. Our ${back(lx.bank.roles, 6)} opens the door for them. The guest says: "Thank you very much." Our ${back(lx.bank.roles, 4)} is at the door, and our ${back(lx.bank.roles, 7)} comes at six.`,
         [
           {
-            q: "Nhân viên làm gì để giúp khách?",
-            options: ["Dẫn khách đi cùng", "Chỉ tay rồi quay đi", "Bảo khách tự tìm"],
+            q: "Nhân viên nói câu nào để dẫn khách đi?",
+            options: [
+              `Let me show you, sir. The ${lower(p8)} is over there.`,
+              `Let me tell you, sir. The ${lower(p8)} is over there.`,
+              `Let me show you, sir. The ${lower(p8)} is over here.`,
+            ],
             correct: 0,
-            explanation: "'Let me show you' kèm việc đi cùng khách là chuẩn dịch vụ.",
+            explanation:
+              "'Show' là dẫn đi cùng, 'tell' chỉ là nói cho biết — và bài đọc viết tiếp 'They walk together'. 'Over here' là chỗ đang đứng, không phải chỗ khách cần tới.",
           },
           {
             q: "Mấy giờ ca sau tới?",
@@ -1101,14 +1114,15 @@ function week9(lx: Ctx): LessonContent[] {
         `We have no ${plural(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please." ${lx.staff} does not stop there. ${lx.staff} asks the manager, and the manager says the guest can have it tomorrow morning. The ${back(lx.bank.places, 4)} and the ${back(lx.bank.places, 5)} are both open today.`,
         [
           {
-            q: "Khi hết đồ khách cần, nên làm gì?",
+            q: "Khi hết đồ khách cần, nhân viên nói câu nào?",
             options: [
-              "Xin lỗi và đề xuất phương án khác",
-              "Nói hết rồi và để khách tự tìm chỗ khác",
-              "Bỏ đi",
+              `I am sorry, sir. Would you like ${wa(q8)}?`,
+              `I am sorry, sir. We have no ${plural(q8)}.`,
+              `I am sorry, sir. Would you like ${wa(q7)}?`,
             ],
             correct: 0,
-            explanation: "Xin lỗi + đề xuất thay thế giữ được trải nghiệm của khách.",
+            explanation:
+              "Hết thứ này thì mời thứ khác. Câu thứ hai chỉ báo hết thêm một lần nữa; câu thứ ba mời lại đúng thứ vừa hết.",
           },
           {
             q: "Khi nào khách có thể nhận được thứ mình xin?",
@@ -2283,15 +2297,15 @@ function week13(lx: Ctx): LessonContent[] {
         `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I cannot fix it. I will tell my manager." ${lx.staff} writes the room number down. Ten minutes later the manager comes. ${lx.staff} shows the room number on the note, so the guest does not have to explain it again.`,
         [
           {
-            q: "Nhân viên phản ứng thế nào?",
+            q: "Nhân viên nói câu nào với khách?",
             options: [
-              "Xin lỗi, nói rõ mình không sửa được, rồi báo cấp trên",
-              "Xin lỗi rồi tự sửa ngay tại chỗ",
-              "Bảo khách chờ mai",
+              "I am sorry, madam. I cannot fix it. I will tell my manager.",
+              "I am sorry, madam. I can fix it. I will tell my manager.",
+              "I am sorry, madam. I cannot fix it. Please tell my manager.",
             ],
             correct: 0,
             explanation:
-              "Xin lỗi + việc mình thật sự làm được. Nhận sửa nghe tận tình nhưng sai nghề: hỏng thêm thì trách nhiệm sang bạn, mà khách vẫn phải chờ đúng người.",
+              "Ba câu khác nhau một chữ. Câu hai hứa tự sửa — nghe tận tình nhưng sai nghề: hỏng thêm thì trách nhiệm sang bạn. Câu ba bắt khách đi báo hộ.",
           },
           {
             q: "Quản lý tới sau bao lâu?",
@@ -2379,10 +2393,15 @@ function week13(lx: Ctx): LessonContent[] {
         `The guest is unhappy. ${lx.staff} does not argue. ${lx.staff} says: "I am very sorry, sir. I will help you now." ${lx.staff} does not say whose fault it is, and does not say it happens often. The guest is angry for one minute, then quiet, then says thank you.`,
         [
           {
-            q: "Khi khách bức xúc, nên tránh điều gì?",
-            options: ["Biện minh và tranh cãi", "Xin lỗi", "Hành động ngay"],
+            q: "Nhân viên nói câu nào với khách đang bức xúc?",
+            options: [
+              "I am very sorry, sir. I will help you now.",
+              "I am very sorry, sir. It happens every day.",
+              "I am very sorry, sir. It is not my fault.",
+            ],
             correct: 0,
-            explanation: "Tranh cãi làm tình huống xấu đi; xin lỗi và hành động mới xoa dịu được.",
+            explanation:
+              "Bài đọc nói rõ nhân viên KHÔNG nói lỗi của ai và KHÔNG nói chuyện này xảy ra thường xuyên — hai câu kia là đúng hai điều đó.",
           },
           {
             q: "Cuối cùng khách làm gì?",
@@ -2554,14 +2573,15 @@ function week13(lx: Ctx): LessonContent[] {
         `${lx.staff} brings a new one and asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much." The new one is ready. ${lx.staff} says: "I am sorry for the wait, madam." The guest says it is fine now, and nothing is ${back(lx.bank.problems, 0)} any more. ${lx.staff} brings ${wa(lx.bank.requests[1])} and ${wa(lx.bank.requests[0])} without being asked.`,
         [
           {
-            q: "Sau khi khắc phục nên làm gì?",
+            q: "Sau khi mang cái mới, nhân viên hỏi câu nào?",
             options: [
-              "Hỏi lại khách đã ổn chưa",
-              "Chờ khách gọi lại nếu vẫn còn vấn đề",
-              "Bỏ đi ngay",
+              "Is everything all right now, madam?",
+              "Is anything wrong now, madam?",
+              "You are happy now, madam?",
             ],
             correct: 0,
-            explanation: "Hỏi lại là bước xác nhận khách thực sự hài lòng.",
+            explanation:
+              "Hỏi lại là bước xác nhận khách thực sự hài lòng. Câu hai mời khách đi tìm thêm lỗi; câu ba sai ngữ pháp câu hỏi và ép khách phải nói 'vâng'.",
           },
           {
             q: "Nhân viên mang thêm thứ gì mà khách không phải xin?",
@@ -2852,10 +2872,15 @@ function week14(lx: Ctx): LessonContent[] {
         `A guest reports a problem. ${lx.staff} says: "I am very sorry, madam. I will check now." Ten minutes later the work is ${lower(c3)}. ${lx.staff} tells the manager, and the manager comes at once. Nothing is ${back(lx.bank.problems, 0)} now, and the guest can rest before dinner. Every day we ${act(lx.bank.routines[5])} and ${act(lx.bank.routines[7])}. ${lx.staff} checks the ${back(lx.bank.places, 3)} once more.`,
         [
           {
-            q: "Nhân viên phản ứng ra sao?",
-            options: ["Xin lỗi và đi kiểm tra ngay", "Tranh cãi", "Bỏ qua"],
+            q: "Nhân viên nói câu nào khi khách báo sự cố?",
+            options: [
+              "I am very sorry, madam. I will check now.",
+              "I am very sorry, madam. I will check later.",
+              "I am very sorry, madam. Please check now.",
+            ],
             correct: 0,
-            explanation: "Xin lỗi + hành động ngay là công thức của tuần 13.",
+            explanation:
+              "Xin lỗi + hành động ngay là công thức của tuần 13. Ba câu khác nhau một chữ: một chữ đẩy việc sang lúc khác, một chữ đẩy việc sang khách.",
           },
           {
             q: "Quản lý tới lúc nào?",
@@ -3574,15 +3599,15 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
               "Khách hỏi giờ CỦA HỌ, không hỏi lịch làm việc của bạn. Trả lời sai con số này là khách bị tính thêm tiền mà không biết trước.",
           },
           {
-            q: "Khách xin ở thêm thì sao?",
+            q: "Khách xin ở thêm — nhân viên nói câu nào?",
             options: [
-              "Xin một chút thời gian rồi hỏi quản lý",
-              "Đồng ý ngay cho khách vui",
-              "Từ chối luôn vì đã có quy định",
+              "One moment. I will ask my manager.",
+              "One moment. I will ask my colleague.",
+              "No problem. I will ask my manager.",
             ],
             correct: 0,
             explanation:
-              "Trả phòng muộn phụ thuộc phòng có khách mới hay chưa, và đó là việc quản lý nắm. Hứa liều ở quầy là hứa thay người khác.",
+              "Trả phòng muộn phụ thuộc phòng có khách mới hay chưa, và đó là việc quản lý nắm. Đồng nghiệp cùng ca không quyết được, và 'No problem' là đã hứa xong trước khi đi hỏi.",
           },
         ],
       ),
