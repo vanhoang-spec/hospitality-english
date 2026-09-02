@@ -166,6 +166,7 @@ const slugify = (t: string) =>
           [`${l.lessonId}.rude`, g.rude],
           [`${l.lessonId}.polite`, g.polite],
           [`${l.lessonId}.rule`, g.rule],
+          ...(g.nearMiss ? ([[`${l.lessonId}.nearMiss`, g.nearMiss]] as [string, string][]) : []),
         );
       for (const s of l.speaking)
         texts.push(
@@ -173,6 +174,14 @@ const slugify = (t: string) =>
           [`${l.lessonId}.target`, s.targetResponse],
           [`${l.lessonId}.helpTip`, s.helpTip],
         );
+      // The game block was never inspected here: 28,706 fields checked and not
+      // one of them was a round the learner actually plays. An unexpanded
+      // template placeholder in a game option ships as literal source text.
+      for (const r of l.game ?? []) {
+        texts.push([`${l.lessonId}.game.prompt`, r.prompt]);
+        for (const o of r.options) texts.push([`${l.lessonId}.game.option`, o.text]);
+        if (r.explanation) texts.push([`${l.lessonId}.game.explanation`, r.explanation]);
+      }
       texts.push([`${l.lessonId}.reading`, l.reading.text]);
       for (const q of l.reading.questions) texts.push([`${l.lessonId}.q`, q.q]);
     }

@@ -3547,7 +3547,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         game(
           "There is money on the table.",
           "Excuse me, sir. Is this yours?",
-          "I no touch, madam.",
+          "I no touch, sir.",
           "I will put it away, sir.",
           undefined,
           "Không tự cất tiền của khách đi đâu cả. Hỏi ngay tại chỗ, trước mặt khách.",
