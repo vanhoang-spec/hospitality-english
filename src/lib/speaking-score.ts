@@ -141,7 +141,55 @@ const VALUE_TOKENS = new Set<string>([
  *  65% of items, and at 80% it still passes 52% while honest answers that
  *  drop a single word start failing 41% of the time. A threshold cannot tell
  *  a dropped copula from a mumbled noun. This list can. */
-const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will"]);
+// "be" joined them after a review found "Yes, sir. Please be." and "Please
+// careful. It is slippery." both passing the wet-floor safety item — the bare
+// infinitive after an imperative is the same copula this list exists for.
+const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will", "be"]);
+
+/** The verbs a service sentence is a PROMISE about — check, tell, change,
+ *  bring. Swapping one for another leaves the percentage untouched and
+ *  reverses what the learner has just committed the hotel to.
+ *
+ *  It lived in the content layer, where it could only reach the weeks that
+ *  call `lockWeekHeadwords`. Here it reaches every utterance in the course,
+ *  including the twenty-six hand-authored weeks and every grammar model. */
+export const PROMISE_VERBS = new Set<string>([
+  "ask",
+  "arrange",
+  "bring",
+  "call",
+  "change",
+  "check",
+  "help",
+  "repeat",
+  "report",
+  "show",
+  "sign",
+  "stop",
+  "tell",
+  "transfer",
+  "wait",
+]);
+
+/** Words whose absence inverts the outcome rather than blurring it. A wet
+ *  floor warned about without "careful" is not a warning; a treatment
+ *  described without "hot" is not a caution. A review found seven such
+ *  utterances passing while missing exactly this word. */
+const SAFETY_TOKENS = new Set<string>([
+  "careful",
+  "carefully",
+  "slowly",
+  "hot",
+  "wet",
+  "slippery",
+  "allergy",
+  "allergic",
+  "doctor",
+  "emergency",
+  "fire",
+  "smoke",
+  "danger",
+]);
 
 /** The rest of the function words, graded with one life.
  *
@@ -250,7 +298,13 @@ export function requiredValueTokens(target: string, override?: string[]): string
         // counting something ("One three, madam" — reading digits back) keeps
         // its status: only the immediate `one moment` pair is formulaic.
         if (t === "one" && toks[i + 1] === "moment") return false;
-        return VALUE_TOKENS.has(t) || GRAMMAR_TOKENS.has(t) || NEGATION_TOKENS.has(t);
+        return (
+          VALUE_TOKENS.has(t) ||
+          GRAMMAR_TOKENS.has(t) ||
+          NEGATION_TOKENS.has(t) ||
+          PROMISE_VERBS.has(t) ||
+          SAFETY_TOKENS.has(t)
+        );
       }),
     ),
     // An authored list ADDS to the derived one; it does not replace it. The
@@ -320,6 +374,10 @@ function valueTokenSequence(toks: string[]): string[] {
  *  A dropped preposition, pronoun or auxiliary changes the structure the
  *  lesson is teaching. A dropped article is a slip. */
 const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "your", "our"]);
+
+/** Noise a microphone adds and no lesson ever teaches. Exempt from the
+ *  inserted-word check below, along with articles and honorifics. */
+const DISFLUENCY = new Set<string>(["uh", "um", "er", "ah", "eh", "hmm", "mm", "ok", "okay"]);
 
 /** The function words this target actually contains, WITH REPETITION.
  *
@@ -540,6 +598,10 @@ export function utterancePassed(
   const free = honorificIsFree(guestPrompt);
   const dayFree = greetingIsFree(target, guestPrompt);
   const cmp = compareWords(spoken, target, free, dayFree);
+  // The same canonicalisation compareWords applies, so an honorific or a
+  // day-part the item has freed is not counted as an inserted word below.
+  const canonSpoken = canonDaypart(canonHonorific(normalize(spoken), free), dayFree);
+  const canonSpokenTarget = canonDaypart(canonHonorific(normalize(target), free), dayFree);
   // A value token said wrong or not at all fails the utterance regardless of
   // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
   // stream, so ASR digits ("205" → two oh five) still count.
@@ -583,12 +645,49 @@ export function utterancePassed(
   // A missing preposition, pronoun or auxiliary is never covered by the
   // allowance — only a missing article is.
   const unforgivable = missingFunction.filter((t) => !FORGIVABLE_FUNCTION_TOKENS.has(t));
+  // WORDS THAT WERE NOT IN THE MODEL.
+  //
+  // Both `accuracy` and `orderRatio` divide by the TARGET, so nothing the
+  // learner adds can lower either one. Measured on the whole of Phase 1:
+  // wrapping every model sentence in nonsense — "Banana I work in Guest
+  // Relations sir banana banana." — passed 632 of 632 items at accuracy 100
+  // and orderRatio 1.00, and 204 of the 320 `nearMiss` strings the course
+  // itself prints as the WRONG answer passed the oral item they belong to.
+  // Almost every one of them is an insertion: "He is works here every day.",
+  // "Please you ask our duty manager.", "The car park is near at the lift."
+  //
+  // Counted by occurrence against the canonicalised target, so a repeated
+  // word is only free as often as the model says it. Honorifics and "please"
+  // are never counted — over-politeness is not an error — and neither is a
+  // spare article, which is the one thing a microphone really does add.
+  const targetTally = new Map<string, number>();
+  for (const t of canonSpokenTarget) targetTally.set(t, (targetTally.get(t) ?? 0) + 1);
+  const extra: string[] = [];
+  for (const t of canonSpoken) {
+    const left = targetTally.get(t) ?? 0;
+    if (left > 0) targetTally.set(t, left - 1);
+    else extra.push(t);
+  }
+  const inserted = extra.filter(
+    (t) =>
+      !HONORIFIC.test(t) &&
+      t !== "please" &&
+      !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
+      !DISFLUENCY.has(t),
+  );
+  // One is already one too many. The grader has always failed a single
+  // missing preposition; a single ADDED one is the same error seen from the
+  // other side, and the near-miss column is full of them. What a microphone
+  // really adds — an article, a filler, an extra "sir" — is exempted above,
+  // so what is left was said on purpose.
+  const insertionFails = inserted.length > 0;
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
     ...cmp,
     missingRequired,
     missingFunction,
+    insertedWords: inserted,
     addedNegation: added,
     inflectionErrors: inflection,
     passed:
@@ -601,6 +700,7 @@ export function utterancePassed(
       missingRequired.length === 0 &&
       valueOrderOk &&
       unforgivable.length === 0 &&
+      !insertionFails &&
       missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
       inflection.length === 0,

@@ -34,7 +34,7 @@
 // the useful contrast is broken-English vs. correct-English.
 // ============================================================
 
-import { normalize } from "@/lib/speaking-score";
+import { normalize, PROMISE_VERBS } from "@/lib/speaking-score";
 import type {
   GameRound,
   GrammarItem,
@@ -6177,36 +6177,11 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
  *  measured the same hole independently — a Phase 1 target stripped of its
  *  headword passed 96.2% of the time against 2.3% in Phase 0, and a simulated
  *  oral checkpoint cleared 100% of sittings saying "This is our , sir."  */
-/** The verbs a service sentence is a PROMISE about.
- *
- *  The headword lock covers the word a week teaches. It does not cover the
- *  verb the sentence commits to, because that verb is usually not a headword
- *  anywhere — and the accuracy threshold is deliberately loose enough at A1
- *  to let exactly one word go. Three audits found the same thing from three
- *  departments: "I am sorry. I will stop now." passed an item whose target is
- *  "I am sorry, madam. I will check it.", which is the whole distinction week
- *  13 exists to teach; and a target survived having its verb replaced with a
- *  nonsense word in 66% of the phase.
- *
- *  Only verbs that name a DIFFERENT action from each other are here. Words a
- *  learner could reasonably paraphrase are not. */
-export const PROMISE_VERBS = new Set([
-  "ask",
-  "arrange",
-  "bring",
-  "call",
-  "change",
-  "check",
-  "help",
-  "repeat",
-  "report",
-  "show",
-  "sign",
-  "stop",
-  "tell",
-  "transfer",
-  "wait",
-]);
+/** Re-exported so the content layer keeps one name for it. The list itself
+ *  lives in the grader, where it also reaches the twenty-six hand-authored
+ *  weeks and every grammar model, not only the weeks that call
+ *  lockWeekHeadwords(). */
+export { PROMISE_VERBS };
 
 export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
   const heads = [
