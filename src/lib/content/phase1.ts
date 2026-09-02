@@ -147,8 +147,29 @@ const plural = (w: P1Word) => {
  *
  *  The object lives on the bank word, not in the headword, so `third()` still
  *  inflects the head verb: "He prints the bill every day." */
-const act = (w: P1Word) => (w.obj ? `${lower(w)} ${w.obj}` : lower(w));
-const actThird = (w: P1Word) => (w.obj ? `${third(w)} ${w.obj}` : third(w));
+/** Separable particles. "Show around" takes its object BETWEEN the verb and
+ *  the particle — "show our guests around", never "show around our guests" —
+ *  and the naive join produced the wrong order five times in one Guest
+ *  Relations lesson, with the headword lock making the CORRECT sentence fail
+ *  the grader while the wrong one passed.
+ *
+ *  "in" and "on" are deliberately absent: "check in the guests" is as natural
+ *  as "check the guests in", so leaving them alone changes nothing. */
+const PARTICLES = new Set(["around", "up", "down", "out", "off", "over", "away", "back"]);
+const splitParticle = (w: P1Word) => {
+  const parts = lower(w).split(" ");
+  return parts.length === 2 && PARTICLES.has(parts[1]!) ? parts : null;
+};
+const act = (w: P1Word) => {
+  if (!w.obj) return lower(w);
+  const p = splitParticle(w);
+  return p ? `${p[0]} ${w.obj} ${p[1]}` : `${lower(w)} ${w.obj}`;
+};
+const actThird = (w: P1Word) => {
+  if (!w.obj) return third(w);
+  const p = splitParticle(w);
+  return p ? `${third(w).split(" ")[0]} ${w.obj} ${p[1]}` : `${third(w)} ${w.obj}`;
+};
 
 /** Comparative form of a bank adjective: "-er" for the short ones, "more …"
  *  for the rest. The week-10 frame hardcoded "more", which is correct for

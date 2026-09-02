@@ -424,9 +424,12 @@ export function game(
     ...(explanation ? { explanation } : {}),
     prompt,
     options: [
-      { text: correct, correct: true },
-      { text: wrongA, correct: false },
-      { text: wrongB, correct: false },
+      { text: correct, correct: true, kind: "answer" as const },
+      // wrongA is the broken-English option by the contract of this helper,
+      // wrongB the one that is correct English and wrong for the job. Tagging
+      // them lets the arcade explain the one the learner actually popped.
+      { text: wrongA, correct: false, kind: "form" as const },
+      { text: wrongB, correct: false, kind: "register" as const },
     ],
   };
 }

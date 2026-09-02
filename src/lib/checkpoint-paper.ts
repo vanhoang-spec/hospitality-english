@@ -124,8 +124,25 @@ export function buildPaper(dep: string, week: string): Question[] {
     // that share a Vietnamese gloss print the same option twice and mark one
     // of them wrong. Back Office taught Invoice and Bill as "Hóa đơn" three
     // weeks apart and week 6 asked a learner to choose between them.
+    // Nested glosses are as unanswerable as identical ones when the question
+    // asks for a meaning: "Hold on" keyed "Xin giữ máy" printed beside "Giữ
+    // máy", the gloss of "Hold the line", and both are right. Rejected here
+    // rather than in the content gate, because most nested pairs in the course
+    // are legitimate distinct words ("Budget" / "Event budget") and only
+    // collide when they land on one paper.
+    const glossKey = (s: string) =>
+      ` ${s
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N} ]/gu, " ")
+        .replace(/\s+/g, " ")
+        .trim()} `;
+    const vGloss = glossKey(v.definition);
     const distractors = shuffle(
-      unique.filter((o) => o.word !== v.word && o.definition !== v.definition),
+      unique.filter((o) => {
+        if (o.word === v.word || o.definition === v.definition) return false;
+        const g = glossKey(o.definition);
+        return !vGloss.includes(g) && !g.includes(vGloss);
+      }),
     ).slice(0, 3);
     if (i % 2 === 0) {
       const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
@@ -241,6 +258,27 @@ export function buildPaper(dep: string, week: string): Question[] {
     return [...x].every((w) => y.has(w)) || [...y].every((w) => x.has(w));
   };
 
+  /** Containment misses the commonest collision of all: two replies that differ
+   *  by exactly one content word each way. "I am sorry, madam. I will check."
+   *  and "I am sorry, madam. I will help." strip to {sorry, check} and {sorry,
+   *  help} — neither contains the other, and both are correct answers to the
+   *  same complaint. An audit measured five such pairs carrying 10.9% of Spa's
+   *  listening questions and 50.7% of its papers.
+   *
+   *  Kept separate from sameAnswer because it is deliberately looser: the
+   *  grammar block wants containment only, where a near miss written by hand
+   *  is SUPPOSED to sit one word away from the answer. */
+  const nearlySameAnswer = (a: string, b: string) => {
+    if (sameAnswer(a, b)) return true;
+    const x = coreOf(a);
+    const y = coreOf(b);
+    if (x.size === 0 || y.size === 0) return false;
+    const onlyX = [...x].filter((w) => !y.has(w)).length;
+    const onlyY = [...y].filter((w) => !x.has(w)).length;
+    const shared = x.size - onlyX;
+    return shared >= 1 && onlyX <= 1 && onlyY <= 1;
+  };
+
   const grammarPool = shuffle(
     phaseLessons.flatMap((l) => l.grammar.map((g) => ({ ...g, lessonId: l.lessonId }))),
   );
@@ -334,7 +372,14 @@ export function buildPaper(dep: string, week: string): Question[] {
   // the options are staff replies. Different bank, and it tests the thing the
   // block is named after — you have to understand what was said to pick the
   // reply that answers it.
-  const speakPool = shuffle(phaseLessons.flatMap((l) => l.speaking));
+  // Carrying lessonId is the whole point: the grammar block has excluded
+  // same-lesson candidates since the round before, and the listening block
+  // dropped the field on the way in, so 21.7% of its questions took a
+  // distractor from the very lesson the answer came from — two halves of one
+  // exchange, both correct.
+  const speakPool = shuffle(
+    phaseLessons.flatMap((l) => l.speaking.map((s) => ({ ...s, lessonId: l.lessonId }))),
+  );
   const listeningQs: Question[] = speakPool.slice(0, MIX.listening).map((s) => {
     // Distractors are the replies that share the most words with the correct
     // one, for the same reason the grammar block picks its distractors that
@@ -362,8 +407,17 @@ export function buildPaper(dep: string, week: string): Question[] {
     const correct = bagOf(s.targetResponse);
     const share = (t: string) => [...bagOf(t)].filter((w) => correct.has(w)).length;
     const saysTheSame = (t: string) => sameAnswer(t, s.targetResponse);
+    // Was `o.guestPrompt === s.guestPrompt`, an exact string match, so "Do you
+    // have some shampoo?" happily took the reply written for "Can I have some
+    // shampoo?" in the same lesson. Same question, same answer, one of them
+    // marked wrong.
     const sameQuestion = new Set(
-      speakPool.filter((o) => o.guestPrompt === s.guestPrompt).map((o) => o.targetResponse),
+      speakPool
+        .filter((o) => sameAnswer(o.guestPrompt, s.guestPrompt))
+        .map((o) => o.targetResponse),
+    );
+    const sameLesson = new Set(
+      speakPool.filter((o) => o.lessonId === s.lessonId).map((o) => o.targetResponse),
     );
     // Điểm chọn nhiễu = giống ĐÁP ÁN + vọng lại từ của ĐỀ. Vế thứ hai là vì
     // đáp án đúng thường vọng đề ("What time do you open?" → "We open at…"),
@@ -382,7 +436,7 @@ export function buildPaper(dep: string, week: string): Question[] {
     const isThePrompt = (t: string) => sameAnswer(t, s.guestPrompt);
     const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
-    ].filter((t) => !sameQuestion.has(t) && !isThePrompt(t));
+    ].filter((t) => !sameQuestion.has(t) && !sameLesson.has(t) && !isThePrompt(t));
     const ranked = (list: string[]) =>
       list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
@@ -397,17 +451,35 @@ export function buildPaper(dep: string, week: string): Question[] {
         ...pool,
         ...phaseLessons
           .flatMap((l) => l.grammar.map((gr) => gr.polite))
-          .filter((t) => t !== s.targetResponse && !sameQuestion.has(t) && !isThePrompt(t)),
+          .filter(
+            (t) =>
+              t !== s.targetResponse &&
+              !sameQuestion.has(t) &&
+              !sameLesson.has(t) &&
+              !isThePrompt(t),
+          ),
       ]),
     ];
-    const clean = ranked(widened.filter((t) => !saysTheSame(t))).slice(0, 2);
+    // nearlySameAnswer, not sameAnswer: see the note on the helper.
+    const strict = ranked(widened.filter((t) => !nearlySameAnswer(t, s.targetResponse)));
+    // And the two distractors must differ from EACH OTHER. The old rule
+    // compared every candidate to the key and never to its neighbour, so a
+    // paper could offer "This one is better, madam." against "This one is
+    // better, sir." — three options, two of them one word apart. Measured at
+    // 9-34% of papers depending on the department.
+    const clean: { t: string; score: number }[] = [];
+    for (const c of strict) {
+      if (clean.length >= 2) break;
+      if (clean.some((k) => nearlySameAnswer(k.t, c.t))) continue;
+      clean.push(c);
+    }
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the
     // rejects to read as a second right answer. Three options beats a pure
     // strict rule that hands the learner a coin toss.
     const filler = ranked(pool.filter((t) => saysTheSame(t)))
       .reverse()
-      .filter((x) => !clean.some((c) => c.t === x.t))
+      .filter((x) => !clean.some((c) => c.t === x.t || nearlySameAnswer(c.t, x.t)))
       .slice(0, 2 - clean.length);
     const others = [...clean, ...filler].map((x) => x.t);
     const options = shuffle([s.targetResponse, ...others]);

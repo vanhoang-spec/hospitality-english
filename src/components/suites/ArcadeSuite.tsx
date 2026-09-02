@@ -6,6 +6,7 @@ import {
   type GameRound,
   type WeekContent,
   speakerLabel,
+  type GameOptionKind,
 } from "@/lib/content/week-content";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -13,6 +14,7 @@ type Bubble = {
   id: number;
   text: string;
   correct: boolean;
+  kind?: GameOptionKind;
   y: number;
   speed: number;
   popped?: boolean;
@@ -119,6 +121,7 @@ function ArcadeSuiteInner({
             id: ++idRef.current,
             text: opt.text,
             correct: opt.correct,
+            kind: opt.kind,
             y: 20 + Math.random() * 50,
             speed: 14 + Math.random() * 4, // slow: 14-18s across the screen
           },
@@ -156,7 +159,14 @@ function ArcadeSuiteInner({
       // no way to infer the criterion from a generic "try another bubble".
       // Held twice as long as the bare message, because there is now something
       // to read.
-      const why = rounds[roundIdx % rounds.length]?.explanation;
+      // The authored explanation is about the option that is correct English
+      // and wrong for the job. Showing it over a broken-English bubble told
+      // the learner their sentence was grammatical when it was not.
+      const authored = rounds[roundIdx % rounds.length]?.explanation;
+      const why =
+        b.kind === "form"
+          ? "Câu đó thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được. Nghe lại đề rồi chọn câu có đủ chủ ngữ và động từ."
+          : authored;
       setFeedback({ ok: false, text: why ?? "Chưa đúng — thử bong bóng khác nhé." });
       setTimeout(() => setFeedback(null), why ? 3200 : 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);

@@ -80,7 +80,20 @@ export type ReadingQuestion = {
 };
 export type ReadingItem = { text: string; questions: ReadingQuestion[] };
 export type ArcadeItem = { bad: string; good: string };
-export type GameOption = { text: string; correct: boolean };
+/** Which KIND of wrong an option is.
+ *
+ *  `game()` fixes the shape of a round: one right answer, one broken-English
+ *  option, one that is correct English and wrong for the job. The arcade used
+ *  to show the same `explanation` whichever wrong bubble was popped, and every
+ *  explanation is written about the second kind — so a learner who popped
+ *  "Cleaner eight." was told the sentence they chose was grammatically fine.
+ *  Four audits counted it: 61/64 rounds in Housekeeping, 63/64 in Guest
+ *  Relations, 59/64 in F&B, 54/64 in Spa.
+ *
+ *  Optional, because the hand-authored weeks build their options inline and
+ *  the arcade falls back to the old behaviour for them. */
+export type GameOptionKind = "answer" | "form" | "register";
+export type GameOption = { text: string; correct: boolean; kind?: GameOptionKind };
 export type GameRound = {
   prompt: string;
   options: GameOption[];

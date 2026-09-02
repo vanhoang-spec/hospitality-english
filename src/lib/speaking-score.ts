@@ -209,6 +209,9 @@ function functionAllowance(count: number): number {
   // mất "at", "Thank you" mất "you", "The second floor" mất "the". Ở đó lỡ
   // miệng và bỏ qua ngữ pháp là một, nên không tha. Từ hai hư từ trở lên,
   // tha một — micro của trình duyệt nuốt mạo từ cả ngày.
+  //
+  // Và chỉ tha cho MẠO TỪ: xem FORGIVABLE_FUNCTION_TOKENS. Suất tha này từng
+  // ăn vào giới từ, tức ăn vào đúng cấu trúc mà bài đang dạy.
   return count <= 1 ? 0 : 1;
 }
 
@@ -304,10 +307,27 @@ function valueTokenSequence(toks: string[]): string[] {
   return toks.filter((t, i) => VALUE_TOKENS.has(t) && !(t === "one" && toks[i + 1] === "moment"));
 }
 
-/** The function words this target actually contains. Graded separately from
- *  requiredValueTokens because these get an allowance and those do not. */
+/** The only function words the allowance may spend itself on.
+ *
+ *  The allowance exists because a browser microphone swallows articles all day
+ *  long. It was never meant to cover a preposition, and covering one made the
+ *  grader pass "I work Housekeeping, sir." against "I work in Housekeeping,
+ *  sir." — the exact string that lesson prints as the learner's ERROR, with a
+ *  rule that reads "you need the preposition 'in' before the department". Two
+ *  more from the same audit: "The wardrobe is the left, sir." and "Of course.
+ *  staircase is next to lift."
+ *
+ *  A dropped preposition, pronoun or auxiliary changes the structure the
+ *  lesson is teaching. A dropped article is a slip. */
+const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "your", "our"]);
+
+/** The function words this target actually contains, WITH REPETITION.
+ *
+ *  Deduplicating them hid every second occurrence: "The lobby is on the left,
+ *  sir." reduced to [the, on], so a learner could drop one of its two "the"s
+ *  and the grader saw nothing missing at all. */
 export function requiredFunctionTokens(target: string): string[] {
-  return [...new Set(normalize(target).filter((t) => FUNCTION_TOKENS.has(t)))];
+  return normalize(target).filter((t) => FUNCTION_TOKENS.has(t));
 }
 
 /** A title plus the name it belongs to: "Ms Smith", "Mr Chen".
@@ -547,8 +567,22 @@ export function utterancePassed(
   for (const t of spokenSeq) if (vi < valueSeq.length && valueSeq[vi] === t) vi++;
   const valueOrderOk = vi === valueSeq.length;
   // Function words, one life. See FUNCTION_TOKENS.
+  //
+  // Counted by OCCURRENCE on both sides: the target's list repeats, and each
+  // occurrence needs its own match in what was said, so dropping the second
+  // "the" of "on the left" now registers.
   const funcNeeded = requiredFunctionTokens(target);
-  const missingFunction = funcNeeded.filter((t) => !spokenSet.has(t));
+  const spokenTally = new Map<string, number>();
+  for (const t of normalize(spoken)) spokenTally.set(t, (spokenTally.get(t) ?? 0) + 1);
+  const missingFunction: string[] = [];
+  for (const t of funcNeeded) {
+    const left = spokenTally.get(t) ?? 0;
+    if (left > 0) spokenTally.set(t, left - 1);
+    else missingFunction.push(t);
+  }
+  // A missing preposition, pronoun or auxiliary is never covered by the
+  // allowance — only a missing article is.
+  const unforgivable = missingFunction.filter((t) => !FORGIVABLE_FUNCTION_TOKENS.has(t));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
@@ -566,6 +600,7 @@ export function utterancePassed(
       !(Math.round(cmp.accuracy * 100) === 100 && cmp.orderRatio < 1) &&
       missingRequired.length === 0 &&
       valueOrderOk &&
+      unforgivable.length === 0 &&
       missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
       inflection.length === 0,
