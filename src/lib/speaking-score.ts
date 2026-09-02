@@ -144,7 +144,10 @@ const VALUE_TOKENS = new Set<string>([
 // "be" joined them after a review found "Yes, sir. Please be." and "Please
 // careful. It is slippery." both passing the wet-floor safety item — the bare
 // infinitive after an imperative is the same copula this list exists for.
-const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will", "be"]);
+// "there" is here as the existential subject, not as a place word: week 8
+// calls "There is one near the lift." the most important structure it teaches,
+// and dropping it left the sentence passing at 86%.
+const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will", "be", "there"]);
 
 /** The verbs a service sentence is a PROMISE about — check, tell, change,
  *  bring. Swapping one for another leaves the percentage untouched and
@@ -234,6 +237,10 @@ const FUNCTION_TOKENS = new Set<string>([
   "could",
   "would",
   "shall",
+  // "if" arrived after a review found the near-miss "Tell me it is too hot."
+  // passing its own model "Please tell me if it is too hot." — the conjunction
+  // was the whole difference and nothing was watching it.
+  "if",
   "have",
   "has",
 ]);
@@ -286,7 +293,7 @@ const NEGATION_TOKENS = new Set<string>([
  *  lists above, plus anything the frame author names, plus any title+surname
  *  the model uses. */
 export function requiredValueTokens(target: string, override?: string[]): string[] {
-  const toks = normalize(target);
+  const toks = foldCourtesy(normalize(target));
   return [
     ...new Set(
       toks.filter((t, i) => {
@@ -331,7 +338,10 @@ export function requiredValueTokens(target: string, override?: string[]): string
 const FIXED_PHRASES = [
   "thank you",
   "here you are",
-  "of course",
+  // "of course" left this list when foldCourtesy arrived: the pair is folded
+  // to one token with "certainly" before anything counts it, so locking both
+  // halves here made every model that opens with it reject the synonym the
+  // course itself prints as an arcade key.
   "excuse me",
   "anything else",
   "half past",
@@ -379,13 +389,49 @@ const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "you
  *  inserted-word check below, along with articles and honorifics. */
 const DISFLUENCY = new Set<string>(["uh", "um", "er", "ah", "eh", "hmm", "mm", "ok", "okay"]);
 
+/** Words the course itself teaches as an UPGRADE to a model sentence, and
+ *  which therefore must never fail one.
+ *
+ *  The inserted-word rule was written to stop "He is works here every day."
+ *  and "The car park is near at the lift." from passing, and it does. But it
+ *  counted by number rather than by kind, so it also failed "I am VERY sorry,
+ *  madam. I will check it." at accuracy 100 and orderRatio 1.00 — while week
+ *  13 of the same department prints "I am very sorry, sir." as its own model.
+ *  Measured: "Certainly" for "Of course" failed 16 of 16 items whose own
+ *  arcade key is "Certainly, madam. One moment."; a grammatical "now" failed
+ *  130 of 130.
+ *
+ *  An added intensifier or courtesy marker cannot make a service sentence
+ *  wrong. An added auxiliary, pronoun or preposition can, and those are not
+ *  here. */
+const COURTESY_EXTRAS = new Set<string>([
+  "please",
+  "very",
+  "now",
+  "certainly",
+  "just",
+  "really",
+  "kindly",
+  "so",
+]);
+
+/** What is left of a model sentence once the grammar and the courtesy are
+ *  taken out: the words that carry what it says. */
+const isContentToken = (t: string) =>
+  t.length >= 3 &&
+  !FUNCTION_TOKENS.has(t) &&
+  !GRAMMAR_TOKENS.has(t) &&
+  !COURTESY_EXTRAS.has(t) &&
+  !DISFLUENCY.has(t) &&
+  !HONORIFIC.test(t);
+
 /** The function words this target actually contains, WITH REPETITION.
  *
  *  Deduplicating them hid every second occurrence: "The lobby is on the left,
  *  sir." reduced to [the, on], so a learner could drop one of its two "the"s
  *  and the grader saw nothing missing at all. */
 export function requiredFunctionTokens(target: string): string[] {
-  return normalize(target).filter((t) => FUNCTION_TOKENS.has(t));
+  return foldCourtesy(normalize(target)).filter((t) => FUNCTION_TOKENS.has(t));
 }
 
 /** A title plus the name it belongs to: "Ms Smith", "Mr Chen".
@@ -482,6 +528,33 @@ const canonHonorific = (toks: string[], free: boolean) =>
 const canonDaypart = (toks: string[], free: boolean) =>
   free ? toks.map((t) => (DAYPART.test(t) ? "morning" : t)) : toks;
 
+/** "Of course" and "Certainly" are the same move, and the course prints both
+ *  as models — "Of course, madam. I will bring one." in one week, "Certainly,
+ *  madam. One moment." as an arcade key in another. Graded apart, saying the
+ *  second one failed all 81 items that model the first: accuracy fell to 33%
+ *  because two of three target words went missing at once. Folded to one
+ *  token before anything is counted. */
+function foldCourtesy(toks: string[]) {
+  const out: string[] = [];
+  for (let i = 0; i < toks.length; i++) {
+    if (toks[i] === "of" && toks[i + 1] === "course") {
+      out.push("certainly");
+      i++;
+      continue;
+    }
+    // "One moment" and "a moment" are the same wait. The required-token layer
+    // has exempted the formulaic "one" for a long time, but the percentage and
+    // the order ratio still counted it, so the sentence the exemption exists
+    // for — "Certainly, madam. A moment." — failed anyway, at 40% accuracy.
+    if (toks[i] === "one" && toks[i + 1] === "moment") {
+      out.push("a");
+      continue;
+    }
+    out.push(toks[i]!);
+  }
+  return out;
+}
+
 function lcsLength(a: string[], b: string[]): number {
   const dp: number[] = new Array(b.length + 1).fill(0);
   for (let i = 1; i <= a.length; i++) {
@@ -501,8 +574,12 @@ export function compareWords(
   honorificFree = false,
   daypartFree = false,
 ) {
-  const a = canonDaypart(canonHonorific(normalize(spoken), honorificFree), daypartFree);
-  const b = canonDaypart(canonHonorific(normalize(target), honorificFree), daypartFree);
+  const a = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(spoken), honorificFree), daypartFree),
+  );
+  const b = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(target), honorificFree), daypartFree),
+  );
   const used = new Set<number>();
   const correctIdx = new Set<number>();
   for (let i = 0; i < b.length; i++) {
@@ -600,12 +677,14 @@ export function utterancePassed(
   const cmp = compareWords(spoken, target, free, dayFree);
   // The same canonicalisation compareWords applies, so an honorific or a
   // day-part the item has freed is not counted as an inserted word below.
-  const canonSpoken = canonDaypart(canonHonorific(normalize(spoken), free), dayFree);
-  const canonSpokenTarget = canonDaypart(canonHonorific(normalize(target), free), dayFree);
+  const canonSpoken = foldCourtesy(canonDaypart(canonHonorific(normalize(spoken), free), dayFree));
+  const canonSpokenTarget = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(target), free), dayFree),
+  );
   // A value token said wrong or not at all fails the utterance regardless of
   // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
   // stream, so ASR digits ("205" → two oh five) still count.
-  const spokenSet = new Set(normalize(spoken));
+  const spokenSet = new Set(foldCourtesy(normalize(spoken)));
   const required = requiredValueTokens(target, requiredTokens);
   // When the guest's line DOES fix the gender, a bare honorific stops being a
   // coin-flip and becomes the thing the lesson teaches — so grade it. Titles
@@ -635,7 +714,8 @@ export function utterancePassed(
   // "the" of "on the left" now registers.
   const funcNeeded = requiredFunctionTokens(target);
   const spokenTally = new Map<string, number>();
-  for (const t of normalize(spoken)) spokenTally.set(t, (spokenTally.get(t) ?? 0) + 1);
+  for (const t of foldCourtesy(normalize(spoken)))
+    spokenTally.set(t, (spokenTally.get(t) ?? 0) + 1);
   const missingFunction: string[] = [];
   for (const t of funcNeeded) {
     const left = spokenTally.get(t) ?? 0;
@@ -671,7 +751,7 @@ export function utterancePassed(
   const inserted = extra.filter(
     (t) =>
       !HONORIFIC.test(t) &&
-      t !== "please" &&
+      !COURTESY_EXTRAS.has(t) &&
       !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
       !DISFLUENCY.has(t),
   );
@@ -679,14 +759,46 @@ export function utterancePassed(
   // missing preposition; a single ADDED one is the same error seen from the
   // other side, and the near-miss column is full of them. What a microphone
   // really adds — an article, a filler, an extra "sir" — is exempted above,
-  // so what is left was said on purpose.
+  // and so is a word the course itself teaches as an upgrade, so what is left
+  // was said on purpose.
   const insertionFails = inserted.length > 0;
+  // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
+  //
+  // The percentage threshold is 60% at A1, which is generous on purpose — but
+  // generous per WORD, so a four-word model loses its only verb and still
+  // scores 75%. Two reviews measured the same hole from two departments:
+  // "The cleaner at eight." passed "The cleaner starts at eight." whose own
+  // helpTip is "third person singular takes -s: startS"; "Yes, is one near
+  // the lift." passed "Yes, there is one near the lift." whose helpTip calls
+  // "there is" the most important structure of the week; "Our linen attendant
+  // is on madam." passed while dropping "duty". Across the phase, 36-41% of
+  // single-content-word deletions passed.
+  //
+  // requiredValueTokens cannot cover this: it locks numbers, promises, safety
+  // words and whatever a frame names, and the words above are none of those —
+  // they are simply the sentence. So the content of the model is graded as
+  // content: a short model may lose nothing, a long one may lose one word.
+  const contentTally = new Map<string, number>();
+  for (const t of canonSpoken) contentTally.set(t, (contentTally.get(t) ?? 0) + 1);
+  // Same exemption the required-token layer makes: the "one" of "one moment"
+  // is formulaic, and "Certainly, madam. A moment." is a correct answer.
+  const targetContent = canonSpokenTarget.filter(
+    (t, i) => isContentToken(t) && !(t === "one" && canonSpokenTarget[i + 1] === "moment"),
+  );
+  const missingContent: string[] = [];
+  for (const t of targetContent) {
+    const left = contentTally.get(t) ?? 0;
+    if (left > 0) contentTally.set(t, left - 1);
+    else missingContent.push(t);
+  }
+  const contentAllowance = targetContent.length >= 5 ? 1 : 0;
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
     ...cmp,
     missingRequired,
     missingFunction,
+    missingContent,
     insertedWords: inserted,
     addedNegation: added,
     inflectionErrors: inflection,
@@ -701,6 +813,7 @@ export function utterancePassed(
       valueOrderOk &&
       unforgivable.length === 0 &&
       !insertionFails &&
+      missingContent.length <= contentAllowance &&
       missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
       inflection.length === 0,

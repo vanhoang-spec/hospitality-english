@@ -315,6 +315,11 @@ function SpeakingSuiteInner({
                   Câu mẫu không có {result.addedNegation.join(", ")} — bạn vừa nói ngược nghĩa
                 </div>
               )}
+              {!result.passed && result.missingContent.length > 0 && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Thiếu {result.missingContent.join(", ")} — đó là chữ mang nghĩa của câu
+                </div>
+              )}
               {!result.passed && result.insertedWords.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
                   Câu mẫu không có {result.insertedWords.join(", ")} — thừa một chữ cũng là sai câu
@@ -329,6 +334,7 @@ function SpeakingSuiteInner({
                 result.missingRequired.length === 0 &&
                 result.addedNegation.length === 0 &&
                 result.insertedWords.length === 0 &&
+                result.missingContent.length === 0 &&
                 result.inflectionErrors.length === 0 &&
                 result.accuracy * 100 >= th.accPct &&
                 result.orderRatio < th.orderRatio && (
