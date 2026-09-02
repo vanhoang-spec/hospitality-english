@@ -1798,7 +1798,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
             q: "Tổng tiền là bao nhiêu?",
             options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
             correct: 0,
-            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord}." — hoá đơn tính bằng tiền đồng, không phải đô.`,
           },
           {
             q: `Vì sao ${lx.staff} nhắc lại tổng tiền trước khi đưa hoá đơn?`,
@@ -3386,7 +3386,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           "How much for the laundry?",
-          `The total is ${lx.priced.vndWord} dong.`,
+          `The total is ${lx.priced.vndWord}.`,
           "Báo tổng thành tiếng trước khi ghi phiếu — khách nghe rõ ngay tại phòng thì không tranh cãi lúc trả phòng. Âm /l/ CUỐI từ là lỗi nặng nhất của người Việt: total, bill, towel — đầu lưỡi chạm lợi trên và giữ ở đó.",
           undefined,
           ["total"],
@@ -3420,7 +3420,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
             q: "Tổng tiền là bao nhiêu?",
             options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
             correct: 0,
-            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord}." — hoá đơn tính bằng tiền đồng, không phải đô.`,
           },
           {
             q: "Khách xin hoá đơn thì nói gì?",
@@ -3434,7 +3434,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "How much is the laundry?",
-          `The total is ${lx.priced.vndWord} dong.`,
+          `The total is ${lx.priced.vndWord}.`,
           `Total ${lx.priced.vndWord}.`,
           "I do not know, madam. Ask reception.",
           undefined,
@@ -4503,6 +4503,280 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Thank you very much, madam.",
           undefined,
           "Đáp án thứ ba đáp lời cảm ơn bằng một lời cảm ơn khác — nghe như bạn không nghe rõ khách vừa nói gì. Lời cảm ơn thì đáp bằng 'You are welcome'.",
+        ),
+      ],
+    }),
+
+  // Week 4 rendered for Guest Relations puts a lounge host behind a till:
+  // taking cash, taking cards, handing over a bill and counting change out of
+  // two million dong. The Hotel Manager review made it blocker one and pointed
+  // at the precedent already in this file — Housekeeping refuses money in
+  // three lessons for exactly the same reason, and the reason is not politeness
+  // but control: no till, no receipt, no second person, and nothing to prove
+  // anything with if the money goes missing. Guest Relations stands at a
+  // lounge door with no drawer either.
+  //
+  // Same headwords in all three lessons, so the vocabulary budget and the
+  // review scheduler are untouched.
+  GR_4_2: (lx) =>
+    lesson(lx, 4, 2, "I Cannot Take Money", "Không thu tiền ở phòng chờ", {
+      vocabulary: [
+        v("Cash", "/kæʃ/", "Tiền mặt", "I cannot take cash, sir.", "💵"),
+        v("Card", "/kɑːd/", "Thẻ ngân hàng", "Reception takes your card.", "💳"),
+      ],
+      grammar: [
+        g(
+          "Give me money.",
+          "I cannot take cash, madam.",
+          "Phòng chờ không có két, không có máy in hoá đơn, và không có người thứ hai đứng cạnh. Mất tiền thì không ai chứng minh được điều gì — nên mọi khoản đều đi qua lễ tân, kể cả khoản nhỏ.",
+          "I cannot take the cash, madam.",
+        ),
+        g(
+          "You pay downstairs.",
+          "Please pay at reception, sir.",
+          "Từ chối rồi phải chỉ ngay chỗ trả. Chỉ đường bằng câu mời, không bằng câu sai khiến: thêm 'Please' và nói rõ nơi đến.",
+          "Please pay in reception, sir.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Here, take the money for the drinks.",
+          "I cannot take cash, madam.",
+          "Nói bằng giọng bình thường, không ngại. Đây là quy định của khách sạn, không phải bạn đang chê tiền của khách — và khách quen với việc này ở mọi khách sạn tốt.",
+          undefined,
+          ["cash"],
+        ),
+        sp(
+          "So where do I pay for this?",
+          "Please pay at reception, sir.",
+          "Từ chối xong là chỉ đường ngay, trong cùng một hơi. Từ chối suông thì khách phải tự đi hỏi, và họ sẽ hỏi người dễ tính hơn.",
+          undefined,
+          ["reception"],
+        ),
+        sp(
+          "Can I use my card here?",
+          "Reception takes your card, madam.",
+          "Nói ai làm được việc đó, đừng chỉ nói bạn không làm được. 'Card' có /d/ cuối — đừng đọc thành 'ca'.",
+          undefined,
+          ["reception", "card"],
+        ),
+      ],
+      reading: read(
+        `A guest at ${lx.station} gives ${lx.staff} some money for the drinks. ${lx.staff} does not take it. ${lx.staff} says: "I cannot take cash, madam. Please pay at reception." The guest asks about a card. ${lx.staff} says: "Reception takes your card, madam." Then ${lx.staff} shows the guest the way.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} không cầm tiền?`,
+            options: [
+              "Vì ở đây không có hoá đơn và không có két",
+              "Vì khách trả thiếu",
+              "Vì khách phải trả bằng thẻ",
+            ],
+            correct: 0,
+            explanation:
+              "Không có hoá đơn thì không có bằng chứng đã nhận bao nhiêu, và không có người thứ hai thì không ai xác nhận được. Đây là chuyện kiểm soát, không phải chuyện lịch sự.",
+          },
+          {
+            q: "Từ chối xong thì làm gì?",
+            options: ["Chỉ khách xuống lễ tân", "Đứng im", "Bảo khách hỏi người khác"],
+            correct: 0,
+            explanation: `Bài đọc: "Please pay at reception." — từ chối suông là đẩy việc cho khách.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Please just take it for the drinks.",
+          "I cannot take cash, madam.",
+          "OK, thank you very much, madam.",
+          "Yes, madam. I will give it to reception.",
+          undefined,
+          "Đáp án thứ ba nghe như đúng quy trình nhưng vẫn là cầm tiền của khách — và giữa quầy phòng chờ với lễ tân thì không có phiếu giao nhận nào cả.",
+        ),
+        game(
+          "Where do I pay, then?",
+          "Please pay at reception, madam.",
+          "Pay later.",
+          "You can pay me now, madam.",
+          undefined,
+          "Sai quy trình thu tiền: mọi khoản đều thanh toán ở lễ tân, nơi có két và có hoá đơn.",
+        ),
+      ],
+    }),
+
+  GR_4_3: (lx) =>
+    lesson(lx, 4, 3, "When a Guest Asks in Dollars", "Khi khách hỏi giá bằng đô", {
+      vocabulary: [
+        v("Dollar", "/ˈdɒlə/", "Đô la Mỹ", `It is about ${lx.priced.usdWord} dollars.`, "💵"),
+        v("Change", "/tʃeɪndʒ/", "Tiền thối", "Your change is at reception.", "🪙"),
+      ],
+      grammar: [
+        g(
+          `${capFirst(lx.priced.usdWord)} dollar.`,
+          `It is about ${lx.priced.usdWord} dollars.`,
+          "Hai điều: từ 2 đô trở lên phải có -s, và luôn thêm 'about' vì tỷ giá đổi hằng ngày. Nói một con số đô chính xác là hứa một tỷ giá bạn không quyết định.",
+          `It is ${lx.priced.usdWord} dollars.`,
+        ),
+        g(
+          "Give me the money.",
+          "Please pay at reception, sir.",
+          "Báo giá thì được, nhận tiền thì không. Câu báo giá luôn đi kèm câu chỉ chỗ trả — nếu không, khách sẽ rút ví ra ngay tại chỗ.",
+          "Please give the money at reception, sir.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "How much is that in dollars?",
+          `It is about ${lx.priced.usdWord} dollars, sir.`,
+          "Luôn có 'about'. Tỷ giá đổi hằng ngày và bạn không phải là người quyết định nó — nói một con số chính xác là hứa thay lễ tân.",
+          undefined,
+          ["about"],
+        ),
+        sp(
+          "Can I pay you in dollars?",
+          "I am sorry. We take dong, madam.",
+          "Xin lỗi trước rồi mới nói chính sách — từ chối trần trụi nghe như bạn đang chê tiền của khách. 'Dong' không thêm -s, giống yen hay baht.",
+          undefined,
+          ["sorry", "dong"],
+        ),
+        sp(
+          "Who gives me my change?",
+          "Your change is at reception, madam.",
+          "Nói rõ tiền thối ở đâu chứ đừng chỉ nói bạn không có. Khách vừa đưa tiền ra thì thứ họ cần nghe là chỗ lấy lại, không phải lời từ chối.",
+          undefined,
+          ["reception"],
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff}: "How much is that in dollars?" ${lx.staff} says: "It is about ${lx.priced.usdWord} dollars, madam." The guest takes out some dollars. ${lx.staff} says: "I am sorry. We take dong, madam. Please pay at reception." ${lx.staff} does not take the money.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} nói "about"?`,
+            options: [
+              "Vì tỷ giá đổi hằng ngày",
+              "Vì không nhớ giá chính xác",
+              "Vì khách chưa quyết định",
+            ],
+            correct: 0,
+            explanation:
+              "Nói một con số đô chính xác là hứa một tỷ giá mà bạn không quyết định. 'About' để câu đúng mà vẫn giúp được khách hình dung.",
+          },
+          {
+            q: "Khách đưa đô la thì làm gì?",
+            options: [
+              "Xin lỗi, nói nhận tiền đồng, chỉ xuống lễ tân",
+              "Cầm rồi đưa lễ tân",
+              "Nhận",
+            ],
+            correct: 0,
+            explanation:
+              "Cầm hộ vẫn là cầm tiền. Xin lỗi trước, nói chính sách, rồi chỉ chỗ trả — đủ ba nhịp trong một lượt.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Do you take dollars here?",
+          "I am sorry. We take dong, madam.",
+          "Dollar no good here, madam.",
+          "Yes madam, dollars are fine here too.",
+          undefined,
+          "Sai thực tế: khách sạn thu tiền đồng. Hứa nhận đô rồi lễ tân từ chối là khách mất mặt hai lần.",
+        ),
+        game(
+          "Here, take the dollars.",
+          "Please pay at reception, madam.",
+          "OK, thank you.",
+          "Yes madam, I will take it for you.",
+          undefined,
+          "Vẫn là cầm tiền của khách. Chỉ đường tới lễ tân, không cầm hộ — kể cả khi khách nài.",
+        ),
+      ],
+    }),
+
+  GR_4_4: (lx) =>
+    lesson(lx, 4, 4, "The Bill Is at Reception", "Hoá đơn ở lễ tân", {
+      vocabulary: [
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
+        v("Bill", "/bɪl/", "Hóa đơn", "Reception has your bill, sir.", "🧾"),
+      ],
+      grammar: [
+        g(
+          `Total ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord}.`,
+          "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều.",
+          `The total are ${lx.priced.vndWord} dong.`,
+        ),
+        g(
+          "Bill here.",
+          "Reception has your bill, madam.",
+          "Phòng chờ ghi phiếu, lễ tân giữ hoá đơn. Nói rõ hoá đơn ở đâu thì khách không phải đi hỏi vòng.",
+          "Reception have your bill, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          `How much for the ${lx.booking.en}?`,
+          `The total is ${lx.priced.vndWord}.`,
+          "Biết giá dịch vụ của chính bộ phận mình. Đẩy sang lễ tân ở chỗ này là bắt khách đi thêm một vòng vô ích.",
+          undefined,
+          ["total"],
+        ),
+        sp(
+          "Could I have the bill, please?",
+          "Reception has your bill, madam.",
+          "Nói ai giữ hoá đơn, đừng chỉ nói bạn không có. 'Bill' có /l/ cuối — lưỡi chạm lợi trên và giữ lại, đừng nuốt mất.",
+          undefined,
+          ["reception", "bill"],
+        ),
+        sp(
+          "Can you check my bill for me?",
+          "One moment, madam. I will check.",
+          "Xem phiếu rồi mới trả lời, đừng nói từ trí nhớ. Nói ra là mình đang đi xem — im lặng bỏ đi khiến khách tưởng bị phớt lờ.",
+          undefined,
+          ["check"],
+        ),
+        sp(
+          "Is the lounge on my bill?",
+          "Yes, madam. On your bill.",
+          "Xác nhận ngắn rồi dừng. Khách hỏi có được ghi nợ không thì chỉ cần biết có, không cần nghe giải thích quy trình.",
+          undefined,
+          ["bill"],
+        ),
+      ],
+      reading: read(
+        `A guest asks ${lx.staff}: "How much for the ${lx.booking.en}?" ${lx.staff} says: "The total is ${lx.priced.vndWord} dong, madam." The guest asks for the bill. ${lx.staff} says: "Reception has your bill, madam." ${lx.staff} writes the room number on a slip and gives it to reception.`,
+        [
+          {
+            q: `${lx.staff} có giữ hoá đơn không?`,
+            options: ["Không — lễ tân giữ", "Có", "Không ai giữ"],
+            correct: 0,
+            explanation: `Bài đọc: "Reception has your bill." — phòng chờ ghi phiếu, lễ tân giữ hoá đơn và thu tiền.`,
+          },
+          {
+            q: "Khách hỏi giá dịch vụ của chính bộ phận mình thì sao?",
+            options: ["Trả lời ngay", "Bảo khách hỏi lễ tân", "Bảo khách đợi quản lý"],
+            correct: 0,
+            explanation:
+              "Giá dịch vụ của bộ phận mình thì phải thuộc. Chỉ chuyển sang lễ tân ở khâu THU TIỀN, không phải ở khâu báo giá.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          `How much is the ${lx.booking.en}?`,
+          `The total is ${lx.priced.vndWord}.`,
+          `Total ${lx.priced.vndWord}.`,
+          "I do not know, madam. Ask reception.",
+          undefined,
+          "Giá dịch vụ của chính bộ phận mình thì phải biết. Đẩy sang lễ tân ở đây là để khách đi thêm một vòng vô ích.",
+        ),
+        game(
+          "Can you bring my bill here?",
+          "Reception has your bill, sir.",
+          "Bill no here.",
+          "Yes sir, I will bring it to you.",
+          undefined,
+          "Hoá đơn do lễ tân giữ. Hứa mang tới là hứa một việc bạn không làm được, và khách sẽ ngồi chờ một tờ giấy không tới.",
         ),
       ],
     }),
