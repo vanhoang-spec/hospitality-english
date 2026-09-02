@@ -4817,6 +4817,287 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       ],
     }),
 
+  // Week 1 lesson 2 taught Housekeeping to ask a guest's name with no anchor,
+  // and weeks 5-6 then teach that collecting a name at a room door is the
+  // first half of the sequence that opens doors for strangers. The Hotel
+  // Manager review made the pair its second blocker. Same three headwords;
+  // the name-asking now has the one legitimate anchor this department owns —
+  // the laundry slip, which needs a name in writing.
+  HK_1_2: (lx) =>
+    lesson(lx, 1, 2, "The Name on the Laundry Slip", "Tên trên phiếu giặt là", {
+      vocabulary: [
+        v("Name", "/neɪm/", "Tên", "May I have your name?", "📛"),
+        v("Spell", "/spel/", "Đánh vần", "How do you spell that?", "🔤"),
+        v("Sir", "/sɜː/", "Thưa ông (gọi khách nam)", "Thank you. R-Y-A-N, sir.", "🎩"),
+      ],
+      grammar: [
+        g(
+          "What your name?",
+          "May I have your name?",
+          "Hỏi tên khi có PHIẾU cần ghi — phiếu giặt là ghi sai tên là áo trả nhầm phòng. Còn ở cửa phòng thì KHÔNG hỏi tên: tên nằm sẵn trên danh sách của bạn (xem bài 5.3). Câu hỏi cần động từ: May I HAVE your name?",
+          "May I have you name?",
+        ),
+        g(
+          "Say it again.",
+          "Could you spell that, please?",
+          "Tên có chữ dễ nhầm thì nhờ khách đánh vần. Đủ 26 tên chữ cái: A /eɪ/ B /biː/ C /siː/ D /diː/ E /iː/ F /ef/ G /dʒiː/ H /eɪtʃ/ I /aɪ/ J /dʒeɪ/ K /keɪ/ L /el/ M /em/ N /en/ O /əʊ/ P /piː/ Q /kjuː/ R /ɑː/ S /es/ T /tiː/ U /juː/ V /viː/ W /ˈdʌbljuː/ X /eks/ Y /waɪ/ Z /zed/. Tám chữ người Việt hay lẫn nhất: A · E · I · G · J · R · W · Y.",
+          "Could you spelling that, please?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "It is Ryan. R-Y-A-N.",
+          "Thank you. R-Y-A-N, sir.",
+          "Nhắc lại đúng thứ tự từng chữ để phiếu ghi đúng, không nhắc lại cả tên. R /ɑː/ và Y /waɪ/ đều nằm trong tám tên chữ cái người Việt hay lẫn — đọc tách rời, đừng nối liền.",
+        ),
+        sp(
+          "My name is Ivy. I-V-Y.",
+          "Thank you. I-V-Y, madam.",
+          "Nhắc lại từng chữ cái khách vừa đánh vần để xác nhận không nghe nhầm. 'Thank' mở đầu bằng /θ/ — đầu lưỡi chạm nhẹ răng trên, đừng để thành tank hay sank. Chữ I là /aɪ/ hai âm, không phải /iː/ một âm.",
+        ),
+      ],
+      reading: read(
+        `A guest gives ${lx.staff} two shirts for laundry. ${lx.staff} takes the slip and asks: "May I have your name?" The guest says: "Ryan. R-Y-A-N." ${lx.staff} writes each letter and says: "Thank you. R-Y-A-N, sir." The name goes on the slip, and the shirts come back to the right room.`,
+        [
+          {
+            q: `Vì sao ${lx.staff} hỏi tên ở đây?`,
+            options: [
+              "Vì phiếu giặt là cần ghi tên",
+              "Vì muốn làm quen với khách",
+              "Vì khách gõ nhầm cửa",
+            ],
+            correct: 0,
+            explanation:
+              "Tên đi theo phiếu để áo về đúng phòng. Đây là chỗ DUY NHẤT buồng phòng hỏi tên — ở cửa phòng thì tên đã nằm trên danh sách của bạn.",
+          },
+          {
+            q: `Vì sao ${lx.staff} nhắc lại từng chữ cái?`,
+            options: ["Để xác nhận không nghe nhầm", "Để khách chờ lâu", "Vì không hiểu tên khách"],
+            correct: 0,
+            explanation: "Nhắc lại từng chữ cái là cách xác nhận chính xác nhất khi ghi tên khách.",
+          },
+        ],
+      ),
+      game: [
+        game("My name is Ryan.", "How do you spell that?", "Spell please.", "Ryan. OK, thank you."),
+        game(
+          "It is spelled J-A-N-E.",
+          "J-A-N-E. Thank you.",
+          "Jane, okay. Thank you madam.",
+          "J-A-M-E. Thank you very much, madam.",
+          undefined,
+          "Câu đó dài và lịch sự hơn, nhưng đánh vần sai một chữ: N thành M. Nhắc lại để xác nhận mà nhắc sai còn tệ hơn không nhắc.",
+        ),
+      ],
+    }),
+
+  // Hundred was a dead card in Housekeeping: the price here is seventy
+  // thousand, so outside its own card the word appeared only in sentences
+  // marked WRONG. The academic review proposed the one-for-one swap — Bin is
+  // in this department's lexicon, appears in its arcade prompts, and was a
+  // headword nowhere in HK's forty weeks. The review schedule follows
+  // automatically now that it reads the real lessons. The manager turn also
+  // counts ROOMS, not guests — a floor supervisor asks a room attendant how
+  // many rooms, never how many guests.
+  HK_2_1: (lx) =>
+    lesson(lx, 2, 1, "Numbers Zero to One Hundred", "Số đếm 0 đến 100", {
+      vocabulary: [
+        v("Number", "/ˈnʌmbə/", "Con số", "What is your room number?", "🔢"),
+        v("Thirteen", "/ˌθɜːˈtiːn/", "Số 13 — trọng âm ở cuối", "Thirteen, sir. One three.", "🔢"),
+        v("Room", "/ruːm/", "Phòng", `Room ${lx.roomNo.spoken}, sir.`, "🚪"),
+        v("Bin", "/bɪn/", "Thùng rác", "Two bins in your room.", "🗑️"),
+      ],
+      grammar: [
+        g(
+          `Room ${lx.roomNo.cardinal}.`,
+          `Room ${lx.roomNo.spoken}, sir.`,
+          `Số phòng đọc từng chữ số, không đọc như số đếm: ${lx.roomNo.digits} = ${lx.roomNo.spoken}, chứ không phải ${lx.roomNo.cardinal}.`,
+          `The room ${lx.roomNo.spoken}, sir.`,
+        ),
+        g(
+          "Room number what?",
+          "What is your room number?",
+          "Câu hỏi cần 'is' và trật tự: What IS your room number?",
+          "What is you room number?",
+        ),
+        g(
+          "How many, thirty?",
+          "Thirteen or thirty, sir?",
+          "13 và 30 nghe gần giống nhau, khác nhau ở trọng âm: thir-TEEN nhấn cuối và kéo dài; THIR-ty nhấn đầu, đuôi ngắn. Nghe không chắc thì hỏi lại cả hai con số, đừng đoán.",
+          "Thirteen or thirty, the sir?",
+        ),
+        g(
+          "Room three zero five.",
+          "Room three-oh-five, sir.",
+          "Chữ số 0 có hai cách đọc: đứng một mình là 'zero', nhưng trong số phòng và số điện thoại thì đọc là 'oh' /əʊ/ — môi tròn lại rồi mới buông.",
+          "Room thirty-oh-five, sir.",
+        ),
+        g(
+          "Two ten, right?",
+          "It is twenty, sir.",
+          "Một tới mười hai: one · two · three · four · five · six · seven · eight · nine · ten · eleven · twelve. Hàng chục: twenty (20) · thirty (30) · forty (40) · fifty · sixty · seventy · eighty · ninety. Ghép hàng chục với số lẻ bằng gạch ngang: 20 + 5 = twenty-five.",
+          "It is twenties, sir.",
+        ),
+      ],
+      speaking: [
+        sp(
+          `I am in room ${lx.roomNo.spoken}.`,
+          `Room ${lx.roomNo.spoken}. Thank you, sir.`,
+          `Đọc lại số phòng khách vừa nói là cách duy nhất chắc chắn nghe đúng. ${lx.roomNo.digits} đọc từng chữ số: "${lx.roomNo.spoken}". Số 0 trong số phòng đọc thành âm /əʊ/, môi tròn lại rồi mới buông.`,
+        ),
+        sp(
+          "How many rooms today?",
+          "Forty-five rooms, sir.",
+          "Tổ trưởng giao ca hỏi số PHÒNG, và bạn báo số phòng — buồng phòng đếm phòng, không đếm khách. Số hàng chục ghép số lẻ có gạch ngang: forty-five. Trọng âm dịch chuyển khi có danh từ theo sau: FOR-ty-five rooms.",
+          "manager",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} says: "Good morning, sir." The guest says: "I am in room ${lx.roomNo.spoken}." ${lx.staff} writes the number and reads it back: "Room ${lx.roomNo.spoken}. Thank you, sir." Then ${lx.staff} says: "Here is your ${lx.items[0].word.toLowerCase()}."`,
+        [
+          {
+            q: `Số phòng ${lx.roomNo.digits} đọc thế nào?`,
+            options: [lx.roomNo.spoken, `${lx.roomNo.digits} hundred`, "room number"],
+            correct: 0,
+            explanation: `Trong khách sạn, số phòng đọc từng chữ số: ${lx.roomNo.spoken}.`,
+          },
+          {
+            q: `${lx.staff} làm gì sau khi nghe số phòng?`,
+            options: ["Ghi lại rồi đọc lại cho khách nghe", "Gật đầu rồi đi", "Hỏi tên khách"],
+            correct: 0,
+            explanation:
+              "Ghi rồi đọc lại là bước xác nhận — nghe nhầm một chữ số là mang đồ tới nhầm phòng.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is my room three-oh-five?",
+          "Yes, room three-oh-five, sir.",
+          "Room number what you say, sir?",
+          "Yes, room three hundred and five, sir.",
+          undefined,
+          "Số phòng đọc từng chữ số: three-oh-five. Đọc thành 'three hundred and five' là cách đọc số lượng, khách rất dễ nghe nhầm sang phòng khác.",
+        ),
+        game(
+          "Is that forty rooms?",
+          "No, sir. Forty-five rooms.",
+          "Forty room yes.",
+          "Yes, sir. It is forty rooms today.",
+          "manager",
+          "Từ đầu tiên của câu trả lời có/không phải đúng. Bốn mươi lăm phòng chứ không phải bốn mươi, nên phải mở đầu bằng 'No' — báo sai số phòng cho tổ trưởng là cả ca chia việc sai.",
+        ),
+        game(
+          "Is there a second bin?",
+          "Yes, madam. Two bins.",
+          "Bin one only.",
+          "Yes madam, one bin is enough.",
+          undefined,
+          "Khách hỏi có thùng thứ hai không — trả lời bằng CON SỐ thật trong phòng. Đáp án thứ ba đúng ngữ pháp nhưng cãi lại nhu cầu của khách thay vì trả lời câu hỏi.",
+        ),
+      ],
+    }),
+
+  // The full-service-chain lesson, pointed at what Guest Relations actually
+  // chains: receiving a request and arranging it. Four weeks of this module
+  // priced, dated and billed a birthday cake without ever teaching the turn
+  // that ACCEPTS the arrangement — the department's defining move, per its
+  // Hotel Manager review. Same two headwords as the spine frame.
+  GR_6_4: (lx) =>
+    lesson(lx, 6, 4, "The Full Service Chain", "Chuỗi phục vụ hoàn chỉnh", {
+      vocabulary: [
+        v("Enjoy", "/ɪnˈdʒɔɪ/", "Tận hưởng", "Enjoy your stay, sir.", "😊"),
+        v("Anything else", "/ˈeniθɪŋ els/", "Còn gì nữa không ạ", "Anything else, madam?", "➕"),
+      ],
+      grammar: [
+        g(
+          "You want more?",
+          "Anything else, madam?",
+          "Câu hỏi thêm nhu cầu chuẩn là 'Anything else?' — ngắn, lịch sự, và hỏi sau khi đã ghi xong yêu cầu chứ không phải trước.",
+          "Anything else you want, madam?",
+        ),
+        g(
+          "Go enjoy.",
+          "Enjoy your stay, sir.",
+          "Câu chúc khi tiễn khách phải hợp với việc vừa xong. Ở phòng chờ, khách quay về kỳ nghỉ của họ — 'Enjoy your stay'. Còn 'Have a nice day' là lời chúc khi khách RỜI ĐI, nên tuần 1 dạy nó ở lượt tạm biệt là đúng.",
+          "Enjoying your stay, sir.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Could you bring flowers to the lounge?",
+          "Of course, madam. I will bring them.",
+          "Đây là nước cờ định danh của bộ phận: NHẬN một yêu cầu sắp xếp — nhận rõ ràng, nói mình sẽ làm gì. Việc vượt quyền mới phải hỏi quản lý; hoa cho phòng chờ là việc của bạn.",
+        ),
+        sp(
+          "First, some water, please.",
+          "Thank you, madam. Anything else?",
+          "Khách đang mở một DANH SÁCH — hỏi 'Anything else?' ngay sau món đầu để nhận trọn danh sách một lần, đỡ cho khách phải gọi lại. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
+          undefined,
+          ["anything"],
+        ),
+        sp(
+          "Could I have one more lounge card?",
+          "One moment. I will check, madam.",
+          "Thứ cấp thêm thì kiểm trước rồi mới hứa — thẻ phòng chờ có hạn mức theo phòng.",
+          undefined,
+          ["check"],
+        ),
+        sp(
+          "That was very good, thank you.",
+          "Thank you very much, madam.",
+          "Lời KHEN thì đáp bằng lời cảm ơn — đúng như tuần 1 đã dạy. Đáp bằng câu giao dịch là không nghe ra khách vừa nói gì.",
+        ),
+        sp(
+          "Thank you. That is all.",
+          "Thank you, madam. Enjoy your stay.",
+          "Kết thúc luôn có ba phần: cảm ơn – lời chúc – nụ cười. Đây là ấn tượng cuối của khách. 'Enjoy' trọng âm ở âm tiết sau: en-JOY.",
+          undefined,
+          ["enjoy"],
+        ),
+      ],
+      reading: read(
+        `A guest at ${lx.station} says: "Could you bring flowers to the lounge?" ${lx.staff} says: "Of course, madam. I will bring them." Then: "Anything else?" The guest asks for one more lounge card. ${lx.staff} says: "One moment. I will check, madam." Later the guest says: "That was very good, thank you." ${lx.staff} says: "Thank you very much, madam. Enjoy your stay."`,
+        [
+          {
+            q: "Yêu cầu về hoa và yêu cầu về thẻ khác nhau chỗ nào?",
+            options: [
+              "Hoa nhận ngay, thẻ phải kiểm rồi mới hứa",
+              "Cả hai đều phải hỏi quản lý",
+              "Cả hai đều nhận ngay",
+            ],
+            correct: 0,
+            explanation:
+              "Hoa cho phòng chờ là việc trong tay bạn — nhận ngay. Thẻ phòng chờ có hạn mức, nên kiểm trước rồi mới hứa. Biết việc nào thuộc loại nào chính là nghề.",
+          },
+          {
+            q: "Khách khen thì đáp thế nào?",
+            options: ["Cảm ơn khách", "Hỏi khách cần gì nữa", "Chúc khách lên đường"],
+            correct: 0,
+            explanation: `Bài đọc: "Thank you very much, madam." — lời khen thì đáp bằng lời cảm ơn, như tuần 1 đã dạy.`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Yes, one more thing please.",
+          "Certainly, madam. What is it?",
+          "More thing? OK, you tell me madam.",
+          "Anything else, madam? Please tell me now.",
+          undefined,
+          "Khách vừa nói là còn một việc; hỏi lại 'anything else' là hỏi đúng câu vừa được trả lời. 'Now' còn nghe như giục khách.",
+        ),
+        game(
+          "No, that is all. Thank you.",
+          "Thank you, madam. Enjoy your stay.",
+          "OK finish.",
+          "Thank you. Goodbye now.",
+          undefined,
+          "Không sai, nhưng lượt chào cuối là chỗ chúc khách một câu. 'Goodbye now' cụt và nghe như muốn kết thúc gấp.",
+        ),
+      ],
+    }),
+
   SW_3_4: (lx) =>
     lesson(lx, 3, 4, "Before We Start", "Hỏi trước khi bắt đầu", {
       vocabulary: [
