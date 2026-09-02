@@ -165,11 +165,13 @@ function week7(lx: Ctx): LessonContent[] {
           "This my colleague.",
           "This is my colleague, Hoa.",
           "Tiếng Anh cần động từ 'is': THIS IS my colleague. Tiếng Việt bỏ được 'là', tiếng Anh thì không.",
+          "This is my colleague, her name Hoa.",
         ),
         g(
           `She our ${lower(r1)}.`,
           `She is our ${lower(r1)}.`,
-          "Chủ ngữ + IS + chức danh. Nhớ mạo từ sở hữu 'our' trước tên chức danh.",
+          "Chủ ngữ + IS + chức danh. Nhớ tính từ sở hữu 'our' trước tên chức danh.",
+          `She are our ${lower(r1)}.`,
         ),
       ],
       speaking: [
@@ -217,11 +219,13 @@ function week7(lx: Ctx): LessonContent[] {
           `Today ${lower(r3)} not here.`,
           `The ${lower(r3)} is not here today.`,
           "Phủ định cần 'is not': THE + chức danh + IS NOT + here. Không nói 'not here' trống không.",
+          `The ${lower(r3)} is no here today.`,
         ),
         g(
           `Who ${lower(r4)}?`,
           `Who is the ${lower(r4)}?`,
           "Câu hỏi với 'Who' cũng cần 'is': WHO IS the …?",
+          `Who the ${lower(r4)} is?`,
         ),
       ],
       speaking: [
@@ -272,11 +276,13 @@ function week7(lx: Ctx): LessonContent[] {
           `I work ${lx.deptEn}.`,
           `I work in ${lx.deptEn}.`,
           "Cần giới từ 'in' trước tên bộ phận: I work IN Housekeeping.",
+          `I work on ${lx.deptEn}.`,
         ),
         g(
           "He work here.",
           "He works here every day.",
           "Ngôi thứ ba số ít (he/she) thì động từ thêm -s: he WORKS.",
+          "He is works here every day.",
         ),
       ],
       speaking: [
@@ -327,11 +333,13 @@ function week7(lx: Ctx): LessonContent[] {
           `You ask ${lower(r7)}.`,
           `Please ask our ${lower(r7)}.`,
           "Thêm 'Please' để câu thành lời nhờ, không thành mệnh lệnh.",
+          `Please you ask our ${lower(r7)}.`,
         ),
         g(
           "I no know.",
           "I am not sure, sir.",
           "Không nói 'I no know'. Câu lịch sự khi chưa rõ là 'I am not sure' rồi hứa đi hỏi.",
+          "I am no sure, sir.",
         ),
       ],
       speaking: [
@@ -395,11 +403,13 @@ function week8(lx: Ctx): LessonContent[] {
           `${p1.word} left.`,
           `The ${lower(p1)} is on the left.`,
           "Đủ ba phần: THE + nơi chốn + IS ON THE + hướng. Thiếu 'the' hoặc 'is' là câu sai.",
+          `The ${lower(p1)} is on left.`,
         ),
         g(
           "Go straight there.",
           "Please go straight ahead.",
           "Chỉ đường đi thẳng nói 'go straight ahead', thêm 'Please' cho lịch sự.",
+          "Please go to straight ahead.",
         ),
       ],
       speaking: [
@@ -447,11 +457,13 @@ function week8(lx: Ctx): LessonContent[] {
           `${p3.word} near lift.`,
           `The ${lower(p3)} is near the lift.`,
           "Giới từ chỉ vị trí luôn đi với 'the': near THE lift, next to THE door.",
+          `The ${lower(p3)} is near to the lift.`,
         ),
         g(
           `Have a ${lower(p4)} here.`,
           `There is a ${lower(p4)} here.`,
           "Nói 'có một cái gì đó' dùng 'There is', không dùng 'Have'.",
+          `There have a ${lower(p4)} here.`,
         ),
       ],
       speaking: [
@@ -499,11 +511,13 @@ function week8(lx: Ctx): LessonContent[] {
           `${p5.word} up floor.`,
           `The ${lower(p5)} is upstairs.`,
           "'Upstairs' và 'downstairs' đã đủ nghĩa, không cần thêm 'floor' phía sau.",
+          `The ${lower(p5)} is upstairs floor.`,
         ),
         g(
           `Where ${lower(p6)}?`,
           `Where is the ${lower(p6)}?`,
           "Câu hỏi 'Where' cần 'is' và 'the': WHERE IS THE …?",
+          `Where is ${lower(p6)}?`,
         ),
       ],
       speaking: [
@@ -550,11 +564,13 @@ function week8(lx: Ctx): LessonContent[] {
           `I bring you ${lower(p7)}.`,
           `Let me show you the ${lower(p7)}.`,
           "Dẫn khách đi dùng 'Let me show you' — lịch sự và chuẩn mực hơn 'I bring you'.",
+          `Let me to show you the ${lower(p7)}.`,
         ),
         g(
           `${p8.word} there.`,
           `The ${lower(p8)} is over there.`,
           "'Over there' = đằng kia. Vẫn cần 'The … is' ở đầu câu.",
+          `The ${lower(p8)} it is over there.`,
         ),
       ],
       speaking: [
@@ -613,11 +629,13 @@ function week9(lx: Ctx): LessonContent[] {
           `I want ${lower(q1)}.`,
           `Can I have ${wa(q1)}?`,
           "Khách lịch sự hỏi 'Can I have…?'. Nhân viên cần NGHE HIỂU mẫu này để đáp đúng.",
+          `Can I to have ${wa(q1)}?`,
         ),
         g(
           `I bring ${lower(q1)}.`,
           `Of course. I will bring one.`,
           "Nhận lời dùng 'Of course' + hứa hành động với 'will'.",
+          "Of course. I will bringing one.",
         ),
       ],
       speaking: [
@@ -665,11 +683,13 @@ function week9(lx: Ctx): LessonContent[] {
           "How many?",
           "How many do you need, sir?",
           "Câu hỏi đầy đủ cần 'do you need'. Hỏi cụt 'How many?' nghe thiếu tôn trọng.",
+          "How many you need, sir?",
         ),
         g(
           `You need ${lower(q4)}?`,
           `Do you need the ${lower(q4)}, sir?`,
           "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu.",
+          `Do you needs the ${lower(q4)}, sir?`,
         ),
       ],
       speaking: [
@@ -713,11 +733,13 @@ function week9(lx: Ctx): LessonContent[] {
           `Five minute.`,
           `In five minutes, sir.`,
           "Cần 'In' trước khoảng thời gian và -s ở 'minutes': IN five minuteS.",
+          "In five minute, sir.",
         ),
         g(
           `It come now.`,
           `It is coming now, madam.`,
           "Việc đang xảy ra dùng 'is coming' (hiện tại tiếp diễn).",
+          "It is come now, madam.",
         ),
       ],
       speaking: [
@@ -764,11 +786,13 @@ function week9(lx: Ctx): LessonContent[] {
           `No have.`,
           `I am sorry, we do not have it.`,
           "Phủ định lịch sự: xin lỗi trước, rồi 'we do not have it'. Không nói cụt 'No have'.",
+          "I am sorry, we do not have.",
         ),
         g(
           `You want ${lower(q8)}?`,
           `Would you like the ${lower(q8)}?`,
           "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'.",
+          `Do you would like the ${lower(q8)}?`,
         ),
       ],
       speaking: [
@@ -832,11 +856,13 @@ function week10(lx: Ctx): LessonContent[] {
           `Room ${lower(s1)}.`,
           `The room is ${lower(s1)}.`,
           "Cần 'The' và 'is': THE room IS + tính từ. Đây là mẫu câu lõi của tuần.",
+          `The room has ${lower(s1)}.`,
         ),
         g(
           `Very much ${lower(s1)}.`,
           `It is very ${lower(s1)}.`,
           "'Very' đứng ngay trước tính từ: very clean, very busy. Không nói 'very much + tính từ'.",
+          `It is very much ${lower(s1)}.`,
         ),
       ],
       speaking: [
@@ -884,11 +910,13 @@ function week10(lx: Ctx): LessonContent[] {
           `Very very ${lower(s4)}.`,
           `It is too ${lower(s4)}, sir.`,
           "'Too' mang nghĩa quá mức gây khó chịu; 'very' chỉ là nhấn mạnh. Khách phàn nàn thường dùng 'too'.",
+          `It is too much ${lower(s4)}, sir.`,
         ),
         g(
           `Little bit ${lower(s5)}.`,
           `It is a little ${lower(s5)}.`,
           "Đúng cụm là 'a little' + tính từ.",
+          `It is little ${lower(s5)}.`,
         ),
       ],
       speaking: [
@@ -946,11 +974,13 @@ function week10(lx: Ctx): LessonContent[] {
           `This good, that no good.`,
           `This one is better, sir.`,
           "So sánh dùng 'better' (tốt hơn). Không ghép 'good/no good' theo lối tiếng Việt.",
+          "This one is more better, sir.",
         ),
         g(
           `Same same.`,
           `They are the same, madam.`,
           "'Same same' không phải tiếng Anh. Câu đúng là 'They are the same'.",
+          "They are same, madam.",
         ),
       ],
       speaking: [
@@ -1004,6 +1034,7 @@ function week10(lx: Ctx): LessonContent[] {
           `Careful ${lower(s8)}!`,
           `Please be careful. It is ${lower(s8)}.`,
           "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do.",
+          `Please careful. It is ${lower(s8)}.`,
         ),
         g("Not good this.", "This is not good, sir.", "Trật tự đúng: chủ ngữ + is not + tính từ."),
       ],
@@ -1071,6 +1102,7 @@ function week11(lx: Ctx): LessonContent[] {
           `Every day I ${act(t1)}.`,
           `I ${act(t1)} every day.`,
           "Trạng ngữ thời gian thường đứng CUỐI câu trong tiếng Anh: I … EVERY DAY.",
+          `I every day ${act(t1)}.`,
         ),
         g(
           // Same trap as the pair above, twice over: the -s was concatenated
@@ -1084,6 +1116,7 @@ function week11(lx: Ctx): LessonContent[] {
           `He ${act(t1)} every day.`,
           `He ${actThird(t1)} every day.`,
           "Ngôi thứ ba số ít thêm -s vào ĐỘNG TỪ CHÍNH: he checks in, he makes the bed.",
+          `He is ${act(t1)} every day.`,
         ),
       ],
       speaking: [
@@ -1135,11 +1168,13 @@ function week11(lx: Ctx): LessonContent[] {
           `We ${act(t3)} ${lx.service.open}.`,
           `We ${act(t3)} at ${lx.service.open}.`,
           "Nhớ 'at' trước giờ — ôn lại quy tắc từ tuần 3.",
+          `We ${act(t3)} in ${lx.service.open}.`,
         ),
         g(
           `Work start eight.`,
           `Our shift starts at eight.`,
           "Chủ ngữ đầy đủ + động từ chia đúng: our shift STARTS at eight.",
+          "Our shift start at eight.",
         ),
       ],
       speaking: [
@@ -1193,11 +1228,13 @@ function week11(lx: Ctx): LessonContent[] {
           `I ${act(t5)} usually.`,
           `I usually ${act(t5)} first.`,
           "Trạng từ tần suất (usually, always, sometimes) đứng TRƯỚC động từ chính.",
+          `I am usually ${act(t5)} first.`,
         ),
         g(
           `Sometime we ${act(t6)}.`,
           `We sometimes ${act(t6)} twice.`,
           "Đúng chính tả là 'sometimes' có -s ở cuối.",
+          `We sometime ${act(t6)} twice.`,
         ),
       ],
       speaking: [
@@ -1243,11 +1280,13 @@ function week11(lx: Ctx): LessonContent[] {
           `Finish work I go home.`,
           `I go home after my shift.`,
           "Dùng 'after' để nối hai việc: I go home AFTER my shift.",
+          "After my shift I go to home.",
         ),
         g(
           `You ${act(t8)} first.`,
           `Please ${act(t8)} before you go.`,
           "Thêm 'Please' và mốc thời gian 'before you go' cho câu dặn dò lịch sự.",
+          `Please ${act(t8)} before you will go.`,
         ),
       ],
       speaking: [
@@ -1314,11 +1353,13 @@ function week12(lx: Ctx): LessonContent[] {
           "Hello? Who?",
           `Hello, ${lx.deptEn}. ${lx.staff} speaking.`,
           "Bắt máy phải xưng bộ phận và tên: 'Hello, + bộ phận. + Tên + speaking.'",
+          `Hello, ${lx.deptEn}. I am ${lx.staff} speaking.`,
         ),
         g(
           "Wait wait.",
           "Hold on, please.",
           "Bảo khách chờ trên điện thoại nói 'Hold on, please' — không nói 'Wait'.",
+          "Hold on you, please.",
         ),
       ],
       speaking: [
@@ -1366,11 +1407,13 @@ function week12(lx: Ctx): LessonContent[] {
           "I write your say.",
           "May I take a message?",
           "Xin ghi lời nhắn nói 'May I take a message?' — mẫu cố định.",
+          "May I taking a message?",
         ),
         g(
           `I ${lower(f4)} you.`,
           `Let me ${lower(f4)} for you.`,
           "'Let me + động từ' là cách đề nghị giúp đỡ lịch sự trên điện thoại.",
+          `Let I ${lower(f4)} for you.`,
         ),
       ],
       speaking: [
@@ -1414,11 +1457,13 @@ function week12(lx: Ctx): LessonContent[] {
           "I give you other people.",
           "I will transfer your call.",
           "Chuyển máy nói 'I will transfer your call', không dịch từng chữ từ tiếng Việt.",
+          "I will transfer your call. Wait.",
         ),
         g(
           "Wrong number you.",
           "I am sorry, wrong number.",
           "Báo nhầm số cần xin lỗi trước: 'I am sorry, wrong number.'",
+          "I am sorry, you wrong number.",
         ),
       ],
       speaking: [
@@ -1465,11 +1510,13 @@ function week12(lx: Ctx): LessonContent[] {
           "Finish, bye.",
           "Thank you for calling. Goodbye.",
           "Kết thúc cuộc gọi chuẩn: cảm ơn đã gọi rồi mới chào tạm biệt.",
+          "Thank you for call. Goodbye.",
         ),
         g(
           "Something more?",
           "Is there anything else, madam?",
           "Câu hỏi đầy đủ: 'Is there anything else?' — ôn lại 'Anything else' từ tuần 6.",
+          "There is anything else, madam?",
         ),
       ],
       speaking: [
@@ -1534,11 +1581,13 @@ function week13(lx: Ctx): LessonContent[] {
           `${i1.word} ${lower(b1)}.`,
           `The ${i1.word.toLowerCase()} is ${lower(b1)}.`,
           "Mẫu câu lõi tuần này: THE + đồ vật + IS + tình trạng hỏng.",
+          `The ${i1.word.toLowerCase()} has ${lower(b1)}.`,
         ),
         g(
           "I fix now you wait.",
           "I will fix it now, sir.",
           "Hứa hành động dùng 'will': I WILL fix it now.",
+          "I will fix now, sir.",
         ),
       ],
       speaking: [
@@ -1595,11 +1644,13 @@ function week13(lx: Ctx): LessonContent[] {
           "Sorry you.",
           "I am very sorry, sir.",
           "Câu xin lỗi đủ là 'I am very sorry' — ôn lại từ tuần 5, giờ ghép với sự cố cụ thể.",
+          "I very sorry, sir.",
         ),
         g(
           "Not my problem.",
           "I will help you now.",
           "Tuyệt đối không nói 'Not my problem'. Luôn nhận trách nhiệm giúp khách.",
+          "I will help for you now.",
         ),
       ],
       speaking: [
@@ -1650,11 +1701,13 @@ function week13(lx: Ctx): LessonContent[] {
           "I check come back.",
           "I will check and come back.",
           "Nối hai việc bằng 'and': I will check AND come back.",
+          "I will check and coming back.",
         ),
         g(
           "Five minute I come.",
           "I will come back in five minutes.",
           "Cần 'in' trước khoảng thời gian và -s ở 'minutes'.",
+          "I will come back in five minute.",
         ),
       ],
       speaking: [
@@ -1706,11 +1759,13 @@ function week13(lx: Ctx): LessonContent[] {
           "I change new one you.",
           "I will bring a new one.",
           "Câu đúng: I will bring A NEW ONE. Không xếp tân ngữ lộn xộn.",
+          "I will bring new one.",
         ),
         g(
           "Problem finish now?",
           "Is everything all right now?",
           "Hỏi lại sau khi xử lý: 'Is everything all right now?'",
+          "Is everything are all right now?",
         ),
       ],
       speaking: [
@@ -1781,6 +1836,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Hello, what you want?",
           "Good morning. How may I help you?",
           "Nối tuần 7: chào đúng buổi rồi mời giúp bằng câu chuẩn.",
+          "Good morning. How may I helping you?",
         ),
         g(`I ${lx.deptEn} work.`, `I work in ${lx.deptEn}.`, "Ôn tuần 7: 'work IN + bộ phận'."),
       ],
@@ -1833,6 +1889,7 @@ function week14(lx: Ctx): LessonContent[] {
           `You want ${lower(q1)}?`,
           `Would you like the ${lower(q1)}?`,
           "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'",
+          `Would you like to the ${lower(q1)}?`,
         ),
         g("How many you need?", "How many do you need, sir?", "Ôn tuần 9: câu hỏi cần 'do you'."),
       ],
@@ -1878,11 +1935,13 @@ function week14(lx: Ctx): LessonContent[] {
           "Sorry, I check.",
           "I am sorry. I will check now.",
           "Ôn tuần 13: xin lỗi đủ câu + hứa hành động bằng 'will'.",
+          "I am sorry. I will checking now.",
         ),
         g(
           `Room ${lower(s1)} no.`,
           `The room is not ${lower(s1)}.`,
           "Ôn tuần 10: phủ định là 'is not + tính từ'.",
+          `The room not is ${lower(s1)}.`,
         ),
       ],
       speaking: [
@@ -1933,11 +1992,13 @@ function week14(lx: Ctx): LessonContent[] {
           "Finish? Bye.",
           "Is there anything else, sir?",
           "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ.",
+          "Is it anything else, sir?",
         ),
         g(
           "You go good.",
           "Enjoy your stay, madam.",
           "Ôn tuần 6: câu chúc chuẩn khi tiễn khách còn lưu trú.",
+          "Enjoy with your stay, madam.",
         ),
       ],
       speaking: [

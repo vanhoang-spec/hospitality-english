@@ -291,6 +291,12 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
 
     for (const gr of lesson.grammar) {
       if (!gr.rule) errors.push(`${where}: grammar "${gr.polite}" missing rule`);
+      // A nearMiss goes onto the checkpoint paper as a DISTRACTOR without
+      // passing through the same-answer filter the other two options do, so it
+      // is the one option nothing else can catch. If it equals either half of
+      // its own pair, the paper ships a duplicate option or a second right one.
+      if (gr.nearMiss && (gr.nearMiss === gr.polite || gr.nearMiss === gr.rude))
+        errors.push(`${where}: grammar nearMiss "${gr.nearMiss}" repeats its own rude/polite half`);
       if (phase) {
         const n = overCap(gr.polite, phase);
         if (n !== null)
