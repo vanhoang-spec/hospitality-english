@@ -176,7 +176,7 @@ const FO_BANK: P1Bank = {
   ],
   states: [
     { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃" },
-    { word: "Full", phonetic: "/fʊl/", definition: "Kín phòng, đầy", icon: "🈵" },
+    { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
     { word: "Quiet", phonetic: "/ˈkwaɪət/", definition: "Yên tĩnh", icon: "🤫" },
     { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
     // Slot 4 sits in "It is a little {w}." — a frame that softens a mild
@@ -184,7 +184,7 @@ const FO_BANK: P1Bank = {
     // safe.", which is not a thing anyone says.
     { word: "Crowded", phonetic: "/ˈkraʊdɪd/", definition: "Đông người", icon: "👥" },
     { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜", cmp: "emptier" },
-    { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
+    { word: "Full", phonetic: "/fʊl/", definition: "Kín phòng, đầy", icon: "🈵" },
     // Slot 8 feeds "Careful, the floor is ___" — a floor cannot be
     // "crowded"; a marble lobby floor after rain genuinely is slippery.
     { word: "Slippery", phonetic: "/ˈslɪpəri/", definition: "Trơn trượt", icon: "⚠️" },
