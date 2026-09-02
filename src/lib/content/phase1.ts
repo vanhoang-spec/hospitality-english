@@ -1859,6 +1859,17 @@ function week11(lx: Ctx): LessonContent[] {
           "Ôn tuần 7: bàn giao thì nói rõ người nhận. 'Give it TO + người'.",
           "colleague",
         ),
+        // Two hundred and thirty-four sentences the learner has to say across
+        // the phase, and not one of them contained a room number — the number
+        // only ever appeared in the COLLEAGUE's line, so the learner heard it
+        // and never produced it. The data has been on the lexicon since
+        // Phase 0 (`roomNo.spoken`); no frame read it.
+        sp(
+          "Which room is not finished?",
+          `Room ${lx.roomNo.spoken} is not finished.`,
+          "Bàn giao là nói ra số phòng, không nói 'that room'. Đọc từng chữ số một, nghỉ nhẹ giữa các chữ số.",
+          "colleague",
+        ),
       ],
       reading: read(
         `The shift is over. The supervisor asks about the handover. ${lx.staff} answers: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done." Before ${lx.staff} goes home, our ${back(lx.bank.roles, 1)} takes over. The next shift can start without asking one question. The ${back(lx.bank.places, 4)} is ready for the next shift.`,
@@ -2043,6 +2054,12 @@ function week12(lx: Ctx): LessonContent[] {
           "Where should I bring it?",
           `Please bring it to the ${back(lx.bank.places, 0)}.`,
           "Ôn tuần 8: nơi nhận đồ. Mẫu: BRING IT TO THE + nơi chốn.",
+          "colleague",
+        ),
+        sp(
+          "Which room is the note for?",
+          `The note is for room ${lx.roomNo.spoken}.`,
+          "Nhận lời nhắn xong phải nói được nó của phòng nào. Đọc số phòng từng chữ số, không đọc thành số đếm.",
           "colleague",
         ),
       ],
@@ -2318,6 +2335,12 @@ function week13(lx: Ctx): LessonContent[] {
           `I ${act(lx.bank.routines[4])} every morning.`,
           "Ôn tuần 11: việc thường ngày. Từ 'every' đọc hai âm tiết: EV-ry.",
           "colleague",
+        ),
+        sp(
+          "Which room is it?",
+          `The problem is in room ${lx.roomNo.spoken}.`,
+          "Báo sự cố cho cấp trên thì câu đầu tiên phải có số phòng — thiếu nó thì người nhận tin không đi được. Đọc từng chữ số một.",
+          "manager",
         ),
       ],
       reading: read(
