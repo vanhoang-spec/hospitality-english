@@ -26,7 +26,7 @@
 // ============================================================
 
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon } from "./phase0";
+import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
@@ -2273,7 +2273,9 @@ function buildWeek(
     weekNumber: week,
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
-    lessons: meta.build(lx),
+    // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
+    // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
+    lessons: lockWeekHeadwords(meta.build(lx)),
     reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
     mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
   };

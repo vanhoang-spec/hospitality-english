@@ -6166,7 +6166,13 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
  *  are not droppable either. Done here rather than in lesson() because this
  *  is the first point that can see all four lessons at once, department
  *  overrides included. */
-function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
+/** Locks every headword a WEEK teaches into the requiredTokens of any target
+ *  that already says it, so the grader cannot pass an answer with the lesson
+ *  word deleted. Exported because Phase 1 shipped without it: three audits
+ *  measured the same hole independently — a Phase 1 target stripped of its
+ *  headword passed 96.2% of the time against 2.3% in Phase 0, and a simulated
+ *  oral checkpoint cleared 100% of sittings saying "This is our , sir."  */
+export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
   const heads = [
     ...new Set(
       lessons

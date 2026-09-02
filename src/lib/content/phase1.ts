@@ -39,7 +39,17 @@
 // ============================================================
 
 import type { LessonContent, WeekContent } from "./week-content";
-import { LEXICONS, game, g, read, sp, spread, v, type P0Lexicon } from "./phase0";
+import {
+  LEXICONS,
+  game,
+  g,
+  lockWeekHeadwords,
+  read,
+  sp,
+  spread,
+  v,
+  type P0Lexicon,
+} from "./phase0";
 import { P1_BANKS, type P1Bank, type P1Word } from "./phase1-lexicon";
 
 type Ctx = P0Lexicon & { bank: P1Bank };
@@ -2195,7 +2205,10 @@ function buildWeek(lx: Ctx, week: number, phase0Words: string[]): WeekContent {
     weekNumber: week,
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
-    lessons: meta.build(lx),
+    // Phase 0 locks its headwords into the grader here and Phase 1 did not,
+    // so eight weeks of speaking could be passed without saying the word the
+    // lesson exists to teach.
+    lessons: lockWeekHeadwords(meta.build(lx)),
     reviewWords: reviewWordsFor(lx, week, phase0Words),
   };
 }

@@ -3,7 +3,7 @@
 // is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
-import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
+import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP, lockWeekHeadwords } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
 import { buildPhase3, phase3WordsByDep, WEEK26_MEDIATION_TASKS } from "./phase3";
@@ -25292,6 +25292,16 @@ const REGISTRY: Record<string, WeekContent> = {
   "SW-37": SW_WEEK_37,
   "HK-37": HK_WEEK_37,
 };
+
+// Every phase builder locks its own headwords into the speaking grader, and
+// the 26 hand-authored weeks above are spread LAST, so they arrived past all
+// of them: none of their targets required the word its lesson exists to teach.
+// Locking here, on the assembled registry, is the only place that catches both
+// kinds of week. The pass merges into whatever a target already declares, so
+// running it over the spine weeks a second time changes nothing.
+for (const key of Object.keys(REGISTRY)) {
+  REGISTRY[key] = { ...REGISTRY[key], lessons: lockWeekHeadwords(REGISTRY[key].lessons) };
+}
 
 /** Every registered dep-week, keyed `${DEP}-${week}`. Exposed for the
  *  content QA gate (scripts/verify-content.ts); app code should use

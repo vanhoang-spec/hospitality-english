@@ -23,7 +23,10 @@ import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
 import { passThresholds } from "../src/lib/speaking-score";
 import { MAX_CHIPS } from "../src/components/suites/GrammarSuite";
+import { buildPaper } from "../src/lib/checkpoint-paper";
 import {
+  CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
+  CHECKPOINT_WEEKS,
   LISTENING_RATE_CEILING,
   LISTENING_RATE_FLOOR,
   PHASES as PHASES_APP,
@@ -643,6 +646,51 @@ const slugify = (t: string) =>
       }
   }
   console.log(`T5 suites — 6 suites simulated across ${sims} dep-weeks`);
+
+  // ── T5b · the checkpoint paper, built by THE REAL BUILDER ────────────
+  //
+  // Everything above walks the content and re-derives what a suite would do
+  // with it. That is not the same as running the suite, and the difference
+  // shipped: buildPaper threw a ReferenceError on all six departments at
+  // every checkpoint week — weeks 6, 14, 22, 30, 40, each of them the gate
+  // into the next phase — while this file printed six green layers. The
+  // builder now lives in src/lib/checkpoint-paper.ts precisely so this can
+  // call it, and calling it is the point: a paper that does not build is not
+  // a content defect this script can reason about, it is a dead course.
+  let papers = 0;
+  for (const dep of DEPS) {
+    for (const w of CHECKPOINT_WEEKS) {
+      const key = `${dep}-${w}`;
+      // A department still being written has no weeks to draw a paper from.
+      if (!getWeekContent(dep, String(w))) continue;
+      let paper: ReturnType<typeof buildPaper>;
+      try {
+        paper = buildPaper(dep, String(w));
+      } catch (e) {
+        fail("T5b", `${key} checkpoint paper THREW: ${(e as Error).message}`);
+        continue;
+      }
+      papers++;
+      if (paper.length !== TOTAL_QUESTIONS) {
+        fail(
+          "T5b",
+          `${key} checkpoint paper has ${paper.length} questions, want ${TOTAL_QUESTIONS}`,
+        );
+        continue;
+      }
+      for (const q of paper) {
+        if (q.options.length < 2) fail("T5b", `${key} ${q.kind} question has <2 options`);
+        if (q.correctIdx < 0 || q.correctIdx >= q.options.length)
+          fail("T5b", `${key} ${q.kind} question has no correct option in its list`);
+        if (new Set(q.options).size !== q.options.length)
+          fail("T5b", `${key} ${q.kind} question repeats an option: "${q.options.join(" / ")}"`);
+      }
+      for (const kind of ["vocab", "grammar", "listening", "reading"] as const)
+        if (!paper.some((q) => q.kind === kind))
+          fail("T5b", `${key} checkpoint paper has no ${kind} question at all`);
+    }
+  }
+  console.log(`T5b checkpoint papers — ${papers} checkpoint built and shape-checked`);
 }
 
 // ============================================================
