@@ -243,7 +243,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. ${roleSubj(r2)} is our ${lower(r2)}." The guest says: "Thank you." ${lx.staff} answers: "You are welcome, madam."`,
+        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. ${roleSubj(r2)} is our ${lower(r2)}." The guest says: "Thank you." ${lx.staff} answers: "You are welcome, sir."`,
         [
           {
             q: "Người thứ hai làm chức danh gì?",
@@ -253,7 +253,7 @@ function week7(lx: Ctx): LessonContent[] {
           },
           {
             q: "Nhân viên đáp lại lời cảm ơn bằng câu nào?",
-            options: ["You are welcome, madam.", "That is my job, madam.", "No problem."],
+            options: ["You are welcome, sir.", "That is my job, sir.", "No problem."],
             correct: 0,
             explanation:
               "Đọc lại câu cuối bài: nhân viên đáp đúng mẫu 'You are welcome'. Hai câu kia nghe thân mật quá mức so với chuẩn 5 sao.",
@@ -468,7 +468,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you." ${lx.staff} does not guess. ${lx.staff} says: "Please wait here, madam. I will come back."`,
+        `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you." ${lx.staff} does not guess. ${lx.staff} says: "Please wait here, sir. I will come back."`,
         [
           {
             q: "Khi chưa biết câu trả lời, nên làm gì?",
@@ -710,7 +710,7 @@ function week8(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest cannot find the ${lower(p5)}. ${lx.staff} says: "It is upstairs, madam. The ${lower(p6)} is downstairs." ${lx.staff} says: "Please take the lift, sir." Our ${back(lx.bank.roles, 2)} works upstairs today too. Our ${back(lx.bank.roles, 0)} and our ${back(lx.bank.roles, 3)} both work on this floor.`,
+        `A guest cannot find the ${lower(p5)}. ${lx.staff} says: "It is upstairs, sir. The ${lower(p6)} is downstairs." ${lx.staff} says: "Please take the lift, sir." Our ${back(lx.bank.roles, 2)} works upstairs today too. Our ${back(lx.bank.roles, 0)} and our ${back(lx.bank.roles, 3)} both work on this floor.`,
         [
           {
             q: `${p5.definition} ở tầng nào?`,
@@ -869,7 +869,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest needs something. He asks: "Can I have ${wa(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one." ${lx.staff} walks to ${lx.station} and comes back in two minutes. The guest says: "That was quick. Thank you, madam."`,
+        `A guest needs something. He asks: "Can I have ${wa(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one." ${lx.staff} walks to ${lx.station} and comes back in two minutes. The guest says: "That was quick. Thank you."`,
         [
           {
             q: "Khách xin cái gì?",
@@ -1019,16 +1019,20 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest wants a ${lower(q5)}. ${lx.staff} says: "Of course, madam. In five minutes." The ${lower(q5)} arrives on time. The guest waits at ${lx.station}. ${lx.staff} comes back on time and says: "Here you are, sir. Sorry for the wait." The ${back(lx.bank.places, 1)} is near the ${back(lx.bank.places, 2)}, so the walk is short.`,
+        // Was: the item "arrives on time", and then an apology for the wait
+        // three words later. And "Here you are, sir." handed over whatever
+        // slot 4 holds — which is a taxi at the front desk. "Your ___ is
+        // ready" fits all six.
+        `A guest wants ${wa(q5)}. ${lx.staff} says: "Of course, sir. In five minutes." The guest waits at ${lx.station}. ${lx.staff} comes back on time and says: "Your ${lower(q5)} is ready, sir." The ${back(lx.bank.places, 1)} is near the ${back(lx.bank.places, 2)}, so the walk is short.`,
         [
           {
-            q: "Bao lâu thì đồ được mang tới?",
+            q: "Nhân viên hẹn bao lâu?",
             options: ["Năm phút", "Một giờ", "Ngày mai"],
             correct: 0,
             explanation: `Nhân viên nói "In five minutes."`,
           },
           {
-            q: `${lx.bank.places[1].word} nằm gần chỗ nào?`,
+            q: `${lx.bank.places[1].definition} nằm gần chỗ nào?`,
             options: [lx.bank.places[2].definition, lx.bank.places[4].definition, "Thang máy"],
             correct: 0,
             explanation: `Bài đọc nêu đúng cặp vị trí này, và đó là lý do đường đi ngắn.`,
@@ -2005,7 +2009,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest wants to leave a message. ${lx.staff} says: "Of course, sir. May I take a message? I will send it ${lower(f3)}." ${lx.staff} reads the note back to the guest before saying goodbye. Nothing is wrong, so ${lx.staff} says: "Thank you for calling, madam."`,
+        `The guest wants to leave a message. ${lx.staff} says: "Of course, sir. May I take a message? I will send it ${lower(f3)}." ${lx.staff} reads the note back to the guest before saying goodbye. Nothing is wrong, so ${lx.staff} says: "Thank you for calling, sir."`,
         [
           {
             q: "Nhân viên đề nghị làm gì?",
@@ -2470,7 +2474,7 @@ function week13(lx: Ctx): LessonContent[] {
             explanation: `"I will check and come back in five minutes."`,
           },
           {
-            q: `${lx.bank.places[3].word} nằm cạnh chỗ nào?`,
+            q: `${lx.bank.places[3].definition} nằm cạnh chỗ nào?`,
             options: [lx.bank.places[4].definition, lx.bank.places[1].definition, "Thang máy"],
             correct: 0,
             explanation: `Bài đọc nêu đúng cặp vị trí này, và đó là lý do không ai phải đi xa.`,
@@ -3134,7 +3138,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest arrives late in the evening. ${lx.staff} says: "Welcome, sir. May I see your passport?" The guest has a booking for two nights. ${lx.staff} says: "Please sign here, madam." and points at the line. Then ${lx.staff} says: "Please leave the suitcase here." and shows the guest a lobby seat. The whole thing takes two minutes, and ${lx.staff} does not read the room number out loud.`,
+        `A guest arrives late in the evening. ${lx.staff} says: "Welcome, sir. May I see your passport?" The guest has a booking for two nights. ${lx.staff} says: "Please sign here, sir." and points at the line. Then ${lx.staff} says: "Please leave the suitcase here." and shows the guest a lobby seat. The whole thing takes two minutes, and ${lx.staff} does not read the room number out loud.`,
         [
           {
             q: "Bước đầu tiên khi khách tới nhận phòng?",
@@ -3343,7 +3347,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
       ],
       reading: read(
-        `Guests arrive early. ${lx.staff} says: "The table is not ready yet, sir. Five minutes, please." ${lx.staff} shows them a seat and comes back in four minutes. A guest asks about nuts in a dish. ${lx.staff} does not answer from memory and says: "I will ask about the recipe, madam." The kitchen answers, and only then does ${lx.staff} answer the guest.`,
+        `Guests arrive early. ${lx.staff} says: "The table is not ready yet, sir. Five minutes, please." ${lx.staff} shows them a seat and comes back in four minutes. A guest asks about nuts in a dish. ${lx.staff} does not answer from memory and says: "I will ask about the recipe, sir." The kitchen answers, and only then does ${lx.staff} answer the guest.`,
         [
           {
             q: "Khách tới sớm, nhân viên làm gì?",

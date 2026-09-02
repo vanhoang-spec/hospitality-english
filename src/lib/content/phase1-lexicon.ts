@@ -216,7 +216,10 @@ const FO_BANK: P1Bank = {
       phonetic: "/ˈredʒɪstə/",
       definition: "Đăng ký",
       icon: "📖",
-      obj: "a guest",
+      // "We sometimes register A GUEST twice a day." is a duplicate PMS
+      // record, which is the one thing a receptionist must never do. The
+      // routine frames are about the shift, so the object is the plural.
+      obj: "the guests",
     },
     {
       word: "Deliver",

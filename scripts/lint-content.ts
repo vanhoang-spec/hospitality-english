@@ -1733,6 +1733,62 @@ async function lintAnswerPositionSkew() {
   console.log(`  Weeks with skewed answer positions: ${offenders.length} (ratchet holds).`);
 }
 
+// ── Layer M · một bài đọc, một kính ngữ ───────────────────────────────────
+// Tuần 1 dạy "thêm 'sir' (nam) hoặc 'madam' (nữ)". Rồi 24 bài đọc của pha 1
+// gọi cùng một vị khách bằng cả hai, và một bài để KHÁCH gọi nhân viên là
+// "madam". Học viên đọc mẫu nhiều hơn đọc luật, nên mẫu tự mâu thuẫn là mẫu
+// dạy ngược. Ratchet, không phải cổng cứng: vài bài ở tuần 33-40 có nhiều
+// khách trong cùng một cảnh và dùng hai kính ngữ hợp lệ.
+const HON_BASELINE = new URL("./_honorific-baseline.json", import.meta.url);
+async function lintOneHonorificPerReading() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons) {
+      const t = lesson.reading.text;
+      if (/\bsir\b/i.test(t) && /\b(madam|ma'am)\b/i.test(t))
+        offenders.push(`${key}/${lesson.lessonId}`);
+    }
+
+  const file = Bun.file(HON_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).mixed as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      HON_BASELINE,
+      JSON.stringify(
+        {
+          mixed: n,
+          note: "Ratchet only — a passage that calls one guest both sir and madam teaches against week 1.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Readings mixing sir and madam: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[M one-honorific] ${offenders.length} readings call one guest both sir and madam, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Readings mixing sir and madam: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Readings mixing sir and madam: ${offenders.length} (ratchet holds).`);
+}
+
 // ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
 // Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
 // reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
@@ -1842,6 +1898,7 @@ lintClinicalClashes();
 await lintSpeakingVolume();
 await lintAnswerPositionSkew();
 lintReviewWordOrder();
+await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
 reportStaleDebt();
 
