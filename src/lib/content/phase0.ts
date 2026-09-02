@@ -6190,7 +6190,7 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
  *
  *  Only verbs that name a DIFFERENT action from each other are here. Words a
  *  learner could reasonably paraphrase are not. */
-const PROMISE_VERBS = new Set([
+export const PROMISE_VERBS = new Set([
   "ask",
   "arrange",
   "bring",

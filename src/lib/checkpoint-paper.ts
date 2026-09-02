@@ -13,6 +13,7 @@
 // It is a pure function of the content, so it belongs here where a script can
 // call THE REAL ONE. qa-full now does exactly that (layer T5b).
 // ============================================================
+import { PROMISE_VERBS } from "@/lib/content/phase0";
 import {
   getWeekContent,
   resolveReviewVocab,
@@ -137,13 +138,20 @@ export function buildPaper(dep: string, week: string): Question[] {
         .replace(/\s+/g, " ")
         .trim()} `;
     const vGloss = glossKey(v.definition);
-    const distractors = shuffle(
-      unique.filter((o) => {
-        if (o.word === v.word || o.definition === v.definition) return false;
-        const g = glossKey(o.definition);
-        return !vGloss.includes(g) && !g.includes(vGloss);
-      }),
-    ).slice(0, 3);
+    const nested = (a: string, b: string) => a.includes(b) || b.includes(a);
+    // Compared against the KEY only, so two distractors could still nest in
+    // each other: F&B printed "Lạnh" beside "Đá lạnh", and "Rót" beside "Rót
+    // thêm, châm đầy", whenever the key was a third card. Same shape as the
+    // pairwise rule the listening block already runs on its distractors.
+    const distractors: VocabItem[] = [];
+    for (const o of shuffle(unique)) {
+      if (distractors.length >= 3) break;
+      if (o.word === v.word || o.definition === v.definition) continue;
+      const g = glossKey(o.definition);
+      if (nested(vGloss, g)) continue;
+      if (distractors.some((d) => nested(glossKey(d.definition), g))) continue;
+      distractors.push(o);
+    }
     if (i % 2 === 0) {
       const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
       return {
@@ -208,6 +216,16 @@ export function buildPaper(dep: string, week: string): Question[] {
     "can",
     "could",
     "would",
+    // Intensifiers and the bare time-marker carry no content a learner could
+    // hear the difference of. Leaving them in kept "I will check now." apart
+    // from "I am very sorry. I will help now." — two correct answers to the
+    // same complaint, measured on 45.2% of Spa papers.
+    "very",
+    "quite",
+    "really",
+    "right",
+    "all",
+    "now",
   ]);
   // Words the curriculum itself treats as interchangeable in an answer. A spa
   // that CLOSES at eight also FINISHES at eight; a lounge that is READY is
@@ -258,6 +276,26 @@ export function buildPaper(dep: string, week: string): Question[] {
     return [...x].every((w) => y.has(w)) || [...y].every((w) => x.has(w));
   };
 
+  /** An apology plus a promise is ONE answer, whichever verb the promise
+   *  names. The audio of a listening item is a bare complaint — "This is too
+   *  dry.", "There is a problem in my room." — and every apology-plus-promise
+   *  the course teaches answers it correctly. The word-count rule above cannot
+   *  see this: "I am sorry. I will tell my manager." and "I am sorry. I will
+   *  change it." strip to {say, manager} and {change}, which share nothing, so
+   *  the pair looked maximally different to a rule that only counts overlap.
+   *
+   *  All five round-3 academic reviews measured this, each from its own
+   *  department and each with a different pair. Two of the pairs were written
+   *  into the SAME lesson, four weeks apart from any other, so no filter that
+   *  works on lesson identity would have caught them either.
+   *
+   *  This does not touch the grammar block, where a hand-written near miss is
+   *  supposed to sit one word from the answer. */
+  const APOLOGY = /\b(sorry|apologise|apologize)\b/i;
+  const promisesIn = (s: string) => [...bagOf(s)].filter((w) => PROMISE_VERBS.has(w));
+  const sameApologyPromise = (a: string, b: string) =>
+    APOLOGY.test(a) && APOLOGY.test(b) && promisesIn(a).length > 0 && promisesIn(b).length > 0;
+
   /** Containment misses the commonest collision of all: two replies that differ
    *  by exactly one content word each way. "I am sorry, madam. I will check."
    *  and "I am sorry, madam. I will help." strip to {sorry, check} and {sorry,
@@ -270,6 +308,7 @@ export function buildPaper(dep: string, week: string): Question[] {
    *  is SUPPOSED to sit one word away from the answer. */
   const nearlySameAnswer = (a: string, b: string) => {
     if (sameAnswer(a, b)) return true;
+    if (sameApologyPromise(a, b)) return true;
     const x = coreOf(a);
     const y = coreOf(b);
     if (x.size === 0 || y.size === 0) return false;
@@ -434,9 +473,18 @@ export function buildPaper(dep: string, week: string): Question[] {
     // that says what the prompt says is out, by the same content test used for
     // the answer.
     const isThePrompt = (t: string) => sameAnswer(t, s.guestPrompt);
+    // A distractor shaped unlike the key is a free elimination: the learner
+    // sees two statements and a question, and drops the question without
+    // hearing anything. Measured across three departments at 29.3%, 30.8% and
+    // 85.3% of listening questions. The rule runs both ways, so an item whose
+    // key IS a question ("Is everything all right now?") gets question
+    // distractors and keeps its own shape secret.
+    const askShape = (t: string) => /\?\s*$/.test(t.trim());
+    const keyShape = askShape(s.targetResponse);
+    const sameShape = (t: string) => askShape(t) === keyShape;
     const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
-    ].filter((t) => !sameQuestion.has(t) && !sameLesson.has(t) && !isThePrompt(t));
+    ].filter((t) => !sameQuestion.has(t) && !sameLesson.has(t) && !isThePrompt(t) && sameShape(t));
     const ranked = (list: string[]) =>
       list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
@@ -449,14 +497,21 @@ export function buildPaper(dep: string, week: string): Question[] {
     const widened = [
       ...new Set([
         ...pool,
+        // `sameLesson` is a set of targetResponses, so it never held the
+        // grammar polites of the lesson being tested — and a lesson that
+        // teaches two ways to answer the phone shipped one as the key and the
+        // other as the distractor. F&B measured it on 5.7% of its papers with
+        // the two standards four lines apart in the source.
         ...phaseLessons
+          .filter((l) => l.lessonId !== s.lessonId)
           .flatMap((l) => l.grammar.map((gr) => gr.polite))
           .filter(
             (t) =>
               t !== s.targetResponse &&
               !sameQuestion.has(t) &&
               !sameLesson.has(t) &&
-              !isThePrompt(t),
+              !isThePrompt(t) &&
+              sameShape(t),
           ),
       ]),
     ];
@@ -480,6 +535,14 @@ export function buildPaper(dep: string, week: string): Question[] {
     const filler = ranked(pool.filter((t) => saysTheSame(t)))
       .reverse()
       .filter((x) => !clean.some((c) => c.t === x.t || nearlySameAnswer(c.t, x.t)))
+      // Stable sort, so within each group the reverse order above survives:
+      // if the strict rule left a gap, fill it with something that is not
+      // another apology-plus-promise before falling back to one.
+      .sort(
+        (a, b) =>
+          Number(sameApologyPromise(a.t, s.targetResponse)) -
+          Number(sameApologyPromise(b.t, s.targetResponse)),
+      )
       .slice(0, 2 - clean.length);
     const others = [...clean, ...filler].map((x) => x.t);
     const options = shuffle([s.targetResponse, ...others]);
