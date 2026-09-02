@@ -254,7 +254,7 @@ export const LEXICONS: Record<string, P0Lexicon> = {
     // Open and close must differ — the week-3 reading questions offer both
     // as answer options, so identical values give the learner two identical
     // choices and no correct answer to pick.
-    service: { en: "the spa", vi: "spa", open: "ten", close: "eight" },
+    service: { en: "the spa", vi: "spa", open: "ten", close: "nine" },
     priced: {
       en: "foot massage",
       vi: "massage chân",

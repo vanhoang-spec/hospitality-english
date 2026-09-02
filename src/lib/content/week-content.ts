@@ -2210,7 +2210,7 @@ export const BO_WEEK_37: WeekContent = {
     "Company name",
     "Reply by email",
     "Check the order",
-    "Deadline",
+    "Printout",
     "Agreed",
     "Volume discount",
     "Deposit policy",

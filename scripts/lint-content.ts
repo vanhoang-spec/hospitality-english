@@ -453,6 +453,7 @@ const ADJS = new Set([
   "interrupted",
   "suspended",
   "scratched",
+  "chipped",
   "humid",
   "crowded",
   "cool",

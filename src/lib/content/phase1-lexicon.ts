@@ -139,13 +139,13 @@ const FO_BANK: P1Bank = {
       icon: "🧳",
     },
     {
-      word: "Business centre",
-      phonetic: "/ˈbɪznəs ˈsentə/",
-      definition: "Trung tâm thương vụ",
-      icon: "💼",
+      word: "Swimming pool",
+      phonetic: "/ˈswɪmɪŋ puːl/",
+      definition: "Hồ bơi",
+      icon: "🏊",
     },
     { word: "Rest room", phonetic: "/ˈrest ruːm/", definition: "Nhà vệ sinh", icon: "🚻" },
-    { word: "Corridor", phonetic: "/ˈkɒrɪdɔː/", definition: "Hành lang", icon: "🚶" },
+    { word: "Restaurant", phonetic: "/ˈrestrɒnt/", definition: "Nhà hàng", icon: "🍽️" },
     { word: "Main door", phonetic: "/ˈmeɪn dɔː/", definition: "Cửa chính", icon: "🚪" },
   ],
   requests: [
@@ -180,10 +180,12 @@ const FO_BANK: P1Bank = {
     // COMPLAINT, so a positive word inverts it. "Safe" gave "It is a little
     // safe.", which is not a thing anyone says.
     { word: "Crowded", phonetic: "/ˈkraʊdɪd/", definition: "Đông người", icon: "👥" },
-    { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃" },
+    { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜" },
     { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
     { word: "Late", phonetic: "/leɪt/", definition: "Muộn, trễ", icon: "🕐" },
-    { word: "Empty", phonetic: "/ˈempti/", definition: "Trống, rỗng", icon: "⬜", cmp: "emptier" },
+    // Khe 5 chạy qua cmpOf(): "Which one is emptier?" so sánh một tính từ
+    // tuyệt đối. "Busy" so sánh được và vẫn là chữ của quầy lễ tân.
+    { word: "Busy", phonetic: "/ˈbɪzi/", definition: "Bận, đông khách", icon: "🏃", cmp: "busier" },
     { word: "Full", phonetic: "/fʊl/", definition: "Kín phòng, đầy", icon: "🈵" },
     // Slot 8 feeds "Careful, the floor is ___" — a floor cannot be
     // "crowded"; a marble lobby floor after rain genuinely is slippery.
@@ -331,7 +333,7 @@ const FB_BANK: P1Bank = {
     {
       word: "Bar",
       phonetic: "/bɑː/",
-      definition: "Quầy phục vụ đồ uống, khách ngồi uống ngay tại chỗ",
+      definition: "Quầy đồ uống",
       icon: "🍹",
     },
     { word: "Kitchen", phonetic: "/ˈkɪtʃɪn/", definition: "Nhà bếp", icon: "🍳" },
@@ -356,11 +358,11 @@ const FB_BANK: P1Bank = {
   ],
   states: [
     { word: "Hot", phonetic: "/hɒt/", definition: "Nóng", icon: "🔥" },
-    { word: "Fresh", phonetic: "/freʃ/", definition: "Tươi mới", icon: "🥬" },
     { word: "Cold", phonetic: "/kəʊld/", definition: "Lạnh", icon: "❄️" },
+    { word: "Fresh", phonetic: "/freʃ/", definition: "Tươi mới", icon: "🥬" },
     { word: "Sweet", phonetic: "/swiːt/", definition: "Ngọt", icon: "🍬" },
     { word: "Salty", phonetic: "/ˈsɔːlti/", definition: "Mặn", icon: "🧂" },
-    { word: "Sour", phonetic: "/ˈsaʊə/", definition: "Chua", icon: "🍋" },
+    { word: "Sour", phonetic: "/ˈsaʊə/", definition: "Chua", icon: "🍋", cmp: "sourer" },
     { word: "Delicious", phonetic: "/dɪˈlɪʃəs/", definition: "Ngon", icon: "😋" },
     // Slot 8 feeds "Careful, the floor is ___" — a floor isn't "sharp";
     // a dining/kitchen floor with spilled food genuinely is greasy.
@@ -410,7 +412,7 @@ const FB_BANK: P1Bank = {
       definition: "Bàn ở góc phòng",
       icon: "🍽️",
     },
-    { word: "Hold the line", phonetic: "/həʊld ðə ˈlaɪn/", definition: "Giữ máy", icon: "📞" },
+    { word: "Write it down", phonetic: "/raɪt ɪt ˈdaʊn/", definition: "Ghi lại", icon: "✍️" },
     {
       word: "Confirm the table",
       phonetic: "/kənˈfɜːm ðə ˈteɪbl/",
@@ -444,7 +446,7 @@ const FB_BANK: P1Bank = {
     // moving it could not save it.
     { word: "Tray", phonetic: "/treɪ/", definition: "Khay phục vụ", icon: "🍽️" },
     { word: "Clean", phonetic: "/kliːn/", definition: "Sạch sẽ", icon: "🧼" },
-    { word: "Meal", phonetic: "/miːl/", definition: "Bữa ăn", icon: "🍲" },
+    { word: "Evening", phonetic: "/ˈiːvnɪŋ/", definition: "Buổi tối", icon: "🌆" },
     { word: "Toothpick", phonetic: "/ˈtuːθpɪk/", definition: "Tăm xỉa răng", icon: "🦷" },
     { word: "Bill folder", phonetic: "/bɪl ˈfəʊldə/", definition: "Bìa đựng hóa đơn", icon: "📁" },
     { word: "Recipe", phonetic: "/ˈresəpi/", definition: "Công thức nấu ăn", icon: "📜" },
@@ -489,10 +491,10 @@ const HK_BANK: P1Bank = {
       icon: "🏛️",
     },
     {
-      word: "Laundry staff",
-      phonetic: "/ˈlɔːndri stɑːf/",
-      definition: "Nhân viên giặt là",
-      icon: "👕",
+      word: "Housekeeping manager",
+      phonetic: "/ˈhaʊskiːpɪŋ ˈmænɪdʒə/",
+      definition: "Quản lý buồng phòng",
+      icon: "👔",
     },
     { word: "Morning shift", phonetic: "/ˈmɔːnɪŋ ʃɪft/", definition: "Ca sáng", icon: "🌅" },
   ],
@@ -635,7 +637,7 @@ const HK_BANK: P1Bank = {
     { word: "Smelly", phonetic: "/ˈsmeli/", definition: "Có mùi hôi", icon: "👃" },
     { word: "Not working", phonetic: "/nɒt ˈwɜːkɪŋ/", definition: "Không hoạt động", icon: "⚠️" },
     { word: "Damaged", phonetic: "/ˈdæmɪdʒd/", definition: "Bị hư hại", icon: "🔨" },
-    { word: "Burnt out", phonetic: "/bɜːnt ˈaʊt/", definition: "Bóng đèn cháy", icon: "💡" },
+    { word: "Chipped", phonetic: "/tʃɪpt/", definition: "Bị sứt mẻ", icon: "🍵" },
     {
       // Slot 7 is the SERVICE attribute — the frame is "The service is ___",
       // and the other five banks hold delayed / slow / double-booked /
@@ -724,7 +726,7 @@ const SW_BANK: P1Bank = {
     { word: "Bath towel", phonetic: "/ˈbɑːθ ˌtaʊəl/", definition: "Khăn tắm lớn", icon: "🧺" },
     { word: "Hair cap", phonetic: "/ˈheə kæp/", definition: "Mũ trùm tóc", icon: "🧢" },
     { word: "Blanket", phonetic: "/ˈblæŋkɪt/", definition: "Chăn đắp", icon: "🛌" },
-    { word: "Sun bed", phonetic: "/ˈsʌn bed/", definition: "Ghế tắm nắng", icon: "🏖️" },
+    { word: "Sun lounger", phonetic: "/ˈsʌn ˌlaʊndʒə/", definition: "Ghế tắm nắng", icon: "🏖️" },
     { word: "Water glass", phonetic: "/ˈwɔːtə ɡlɑːs/", definition: "Ly nước", icon: "🥛" },
     {
       word: "Herbal tea",
@@ -781,7 +783,7 @@ const SW_BANK: P1Bank = {
     },
   ],
   phone: [
-    { word: "Spa desk", phonetic: "/ˈspɑː desk/", definition: "Quầy spa", icon: "☎️" },
+    { word: "Spa line", phonetic: "/ˈspɑː laɪn/", definition: "Đường dây spa", icon: "☎️" },
     {
       word: "Preferred time",
       phonetic: "/prɪˈfɜːd taɪm/",
@@ -842,12 +844,11 @@ const SW_BANK: P1Bank = {
     { word: "Evening", phonetic: "/ˈiːvnɪŋ/", definition: "Buổi tối", icon: "🌙" },
     // Was `Warm shower`, which rendered "Please take the warm shower."
     { word: "Foot towel", phonetic: "/ˈfʊt ˌtaʊəl/", definition: "Khăn lau chân", icon: "🧻" },
-    {
-      word: "Quiet time",
-      phonetic: "/ˈkwaɪət taɪm/",
-      definition: "Thời gian nghỉ tĩnh",
-      icon: "🤫",
-    },
+    // Slot 5 is a THING the guest is handed at the end — checklist, welcome
+    // note, guest book. "Quiet time" is not one, so the frame rendered "Yes,
+    // madam. Your quiet time is here." and the card read "Your quiet time,
+    // sir." — a fragment.
+    { word: "Spa bag", phonetic: "/ˈspɑː bæɡ/", definition: "Túi đồ spa", icon: "👜" },
     // Was `Wellness tip`, which rendered "I will check the wellness tip."
     { word: "Spa menu", phonetic: "/ˈspɑː ˌmenjuː/", definition: "Bảng dịch vụ spa", icon: "📋" },
   ],
@@ -900,10 +901,14 @@ const GR_BANK: P1Bank = {
   ],
   requests: [
     { word: "Postcard", phonetic: "/ˈpəʊstkɑːd/", definition: "Bưu thiếp", icon: "📮" },
-    { word: "Wheelchair", phonetic: "/ˈwiːltʃeə/", definition: "Xe lăn", icon: "♿" },
+    // Slot 1 is what the frame BRINGS UNASKED ("brings a receipt and a
+    // newspaper without being asked"); slot 4 is a thing handed over on
+    // request. A wheelchair pushed at a guest who never asked for one says
+    // you have decided they cannot walk. Swapped with the fruit basket.
+    { word: "Fruit basket", phonetic: "/ˈfruːt ˌbɑːskɪt/", definition: "Giỏ trái cây", icon: "🧺" },
     { word: "Candle", phonetic: "/ˈkændl/", definition: "Nến", icon: "🕯️" },
     { word: "Baby cot", phonetic: "/ˈbeɪbi kɒt/", definition: "Nôi em bé", icon: "🍼" },
-    { word: "Fruit basket", phonetic: "/ˈfruːt ˌbɑːskɪt/", definition: "Giỏ trái cây", icon: "🧺" },
+    { word: "Wheelchair", phonetic: "/ˈwiːltʃeə/", definition: "Xe lăn", icon: "♿" },
     {
       word: "Birthday cake",
       phonetic: "/ˈbɜːθdeɪ keɪk/",
@@ -1055,7 +1060,7 @@ const BO_BANK: P1Bank = {
       definition: "Tổng giám đốc",
       icon: "🏅",
     },
-    { word: "Office hours", phonetic: "/ˈɒfɪs ˈaʊəz/", definition: "Giờ hành chính", icon: "🕘" },
+    { word: "Late shift", phonetic: "/ˈleɪt ʃɪft/", definition: "Ca muộn", icon: "🕘" },
   ],
   places: [
     { word: "Office", phonetic: "/ˈɒfɪs/", definition: "Văn phòng", icon: "🏢" },
@@ -1200,12 +1205,12 @@ const BO_BANK: P1Bank = {
     { word: "Suspended", phonetic: "/səˈspendɪd/", definition: "Bị tạm ngưng", icon: "🔕" },
   ],
   closing: [
-    { word: "Deadline", phonetic: "/ˈdedlaɪn/", definition: "Hạn chót", icon: "⌛" },
-    { word: "Team", phonetic: "/tiːm/", definition: "Đội nhóm", icon: "🤝" },
+    { word: "Printout", phonetic: "/ˈprɪntaʊt/", definition: "Bản in", icon: "📄" },
+    { word: "Name badge", phonetic: "/ˈneɪm bædʒ/", definition: "Thẻ tên", icon: "🪪" },
     { word: "Finalised", phonetic: "/ˈfaɪnəlaɪzd/", definition: "Đã hoàn tất", icon: "🏁" },
     { word: "Week", phonetic: "/wiːk/", definition: "Tuần", icon: "📅" },
     { word: "Summary", phonetic: "/ˈsʌməri/", definition: "Bản tóm tắt", icon: "📄" },
-    { word: "Progress", phonetic: "/ˈprəʊɡres/", definition: "Tiến độ", icon: "📈" },
+    { word: "Desk diary", phonetic: "/ˈdesk ˌdaɪəri/", definition: "Sổ tay để bàn", icon: "📔" },
     { word: "Handover", phonetic: "/ˈhændəʊvə/", definition: "Bàn giao ca", icon: "🔄" },
   ],
 };
