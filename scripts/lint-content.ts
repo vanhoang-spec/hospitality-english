@@ -444,7 +444,15 @@ const ADJS = new Set([
   // ("It is a little safe.", "The machine is unhappy.").
   // "crushed" joined them in the P1 fix: "The item is crushed." for a Guest
   // Relations gift box, where the slot used to hold "Rainy".
+  // "lukewarm", "interrupted" and "suspended" joined in the round-3 fix, when
+  // Spa's fault slots held "Unheated", "Overdue" and "Double-booked" — three
+  // administrative words in frames that read "It is ___" and "The service is
+  // ___", and the learner was locked to say all three.
   "crushed",
+  "lukewarm",
+  "interrupted",
+  "suspended",
+  "scratched",
   "humid",
   "crowded",
   "cool",

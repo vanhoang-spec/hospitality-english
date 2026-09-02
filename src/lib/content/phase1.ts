@@ -1836,7 +1836,7 @@ function week12(lx: Ctx): LessonContent[] {
           `${lx.staff} speaking.`,
           "📞",
         ),
-        v("Hold on", "/həʊld ɒn/", "Xin giữ máy", "Hold on, please.", "⏸️"),
+        v("Hold on", "/həʊld ˈɒn/", "Xin giữ máy", "Hold on, please.", "⏸️"),
         bw(f1, `Hello, ${lower(f1)}. ${lx.staff} speaking.`),
         bw(f2, `May I take your ${lower(f2)}?`),
       ],
@@ -2512,7 +2512,7 @@ function week14(lx: Ctx): LessonContent[] {
       vocabulary: [
         v(
           "How may I help",
-          "/haʊ meɪ aɪ help/",
+          "/haʊ meɪ aɪ ˈhelp/",
           "Tôi có thể giúp gì ạ",
           "How may I help you?",
           "🤝",
@@ -3963,7 +3963,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       vocabulary: [
         v(
           "How may I help",
-          "/haʊ meɪ aɪ help/",
+          "/haʊ meɪ aɪ ˈhelp/",
           "Tôi có thể giúp gì ạ",
           "Good morning. How may I help?",
           "🤝",
@@ -4170,7 +4170,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         v("In the morning", "/ɪn ðə ˈmɔːnɪŋ/", "Vào buổi sáng", "Ten in the morning, madam?", "🌅"),
         v(
           "Change the time",
-          "/tʃeɪndʒ ðə taɪm/",
+          "/tʃeɪndʒ ðə ˈtaɪm/",
           "Đổi giờ hẹn",
           "I can change the time, madam.",
           "🔄",
@@ -4264,8 +4264,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       vocabulary: [
         v("Problem", "/ˈprɒbləm/", "Vấn đề, sự cố", "Is there a problem, madam?", "⚠️"),
         v("Fix", "/fɪks/", "Sửa (việc của bộ phận kỹ thuật)", "I cannot fix it, madam.", "🔧"),
-        v("Too hot", "/tuː hɒt/", "Quá nóng", "Tell me if it is too hot.", "🥵"),
-        v("Too cold", "/tuː kəʊld/", "Quá lạnh", "Is the room too cold, madam?", "🥶"),
+        v("Too hot", "/tuː ˈhɒt/", "Quá nóng", "Tell me if it is too hot.", "🥵"),
+        v("Too cold", "/tuː ˈkəʊld/", "Quá lạnh", "Is the room too cold, madam?", "🥶"),
       ],
       grammar: [
         g(
