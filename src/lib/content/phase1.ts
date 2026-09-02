@@ -1958,7 +1958,10 @@ function week14(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Quickly", "/ˈkwɪkli/", "Nhanh chóng", "I will do it quickly.", "⚡"),
         bw(c2, `Please leave the ${lower(c2)} here.`),
-        bw(c6, `The ${lower(c6)} is ready, sir.`),
+        // "The X is ready, sir." demands a thing that gets prepared, and three
+        // of six banks hold something abstract at this slot: "The quiet time is
+        // ready, sir." Handing it over works for both.
+        bw(c6, `Your ${lower(c6)}, sir.`),
       ],
       grammar: [
         g(
@@ -2127,6 +2130,21 @@ function week14(lx: Ctx): LessonContent[] {
 // ------------------------------------------------------------
 // Week assembly + graduated spaced recycling.
 // ------------------------------------------------------------
+// ============================================================
+// DEPARTMENT LESSONS
+//
+// A department lesson replaces the shared frame lesson at the SAME slot, and
+// keeps the SAME headwords: the review scheduler keys on the word, so a swap
+// that changes the card set leaves it pointing at something nobody taught.
+// Everything else — grammar, speaking, reading, arcade — is the department’s
+// own, which is where every operational audit said the gap was. Phase 0 has
+// thirty-five of these and its lowest-scoring module climbed from 4.0 to 8.0
+// as they landed; Phase 1 shipped with none, and all five operational reviews
+// named that as the reason their score could not clear the bar by string
+// edits alone.
+// ============================================================
+const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {};
+
 const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => LessonContent[] }> = {
   7: {
     en: "People & Jobs in the Hotel",
@@ -2147,8 +2165,17 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
 };
 
 /** Headwords taught in a given Phase 1 week, for recycling lookups. */
+/** The lessons a department actually gets for a week: the shared frame with
+ *  any department lesson swapped in at the same slot. Every reader of Phase 1
+ *  content goes through here, the review scheduler included — Phase 0 learned
+ *  that the hard way when an override changed a headword and the scheduler
+ *  went on pointing at a card nobody taught. */
+function lessonsFor(lx: Ctx, week: number): LessonContent[] {
+  return WEEK_META[week].build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l);
+}
+
 function headwordsOf(lx: Ctx, week: number): string[] {
-  return WEEK_META[week].build(lx).flatMap((l) => l.vocabulary.map((item) => item.word));
+  return lessonsFor(lx, week).flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
 /**
@@ -2220,7 +2247,7 @@ function buildWeek(lx: Ctx, week: number, phase0Words: string[]): WeekContent {
     // Phase 0 locks its headwords into the grader here and Phase 1 did not,
     // so eight weeks of speaking could be passed without saying the word the
     // lesson exists to teach.
-    lessons: lockWeekHeadwords(meta.build(lx)),
+    lessons: lockWeekHeadwords(lessonsFor(lx, week)),
     reviewWords: reviewWordsFor(lx, week, phase0Words),
   };
 }

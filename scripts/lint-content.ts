@@ -442,6 +442,9 @@ const ADJS = new Set([
   // Replacements from the P0 content fix: the words that took over slots
   // where the old filler was the wrong semantic class for its frame
   // ("It is a little safe.", "The machine is unhappy.").
+  // "crushed" joined them in the P1 fix: "The item is crushed." for a Guest
+  // Relations gift box, where the slot used to hold "Rainy".
+  "crushed",
   "crowded",
   "cool",
   "warm",

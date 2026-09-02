@@ -228,25 +228,26 @@ const FO_BANK: P1Bank = {
     { word: "Broken", phonetic: "/ˈbrəʊkən/", definition: "Bị hỏng", icon: "🔧" },
     { word: "Lost", phonetic: "/lɒst/", definition: "Bị mất", icon: "🔍" },
     { word: "Wrong", phonetic: "/rɒŋ/", definition: "Sai, nhầm", icon: "❌" },
-    { word: "Delayed", phonetic: "/dɪˈleɪd/", definition: "Bị chậm trễ", icon: "⏳" },
+    { word: "Locked", phonetic: "/lɒkt/", definition: "Bị khóa", icon: "🔒" },
     { word: "Faulty", phonetic: "/ˈfɔːlti/", definition: "Bị lỗi kỹ thuật", icon: "⚠️" },
     { word: "Missing", phonetic: "/ˈmɪsɪŋ/", definition: "Thiếu, không thấy", icon: "🕳️" },
     { word: "Stuck", phonetic: "/stʌk/", definition: "Bị kẹt", icon: "🚧" },
-    { word: "Locked", phonetic: "/lɒkt/", definition: "Bị khóa", icon: "🔒" },
+    { word: "Delayed", phonetic: "/dɪˈleɪd/", definition: "Bị chậm trễ", icon: "⏳" },
   ],
   closing: [
-    { word: "Signature", phonetic: "/ˈsɪɡnətʃə/", definition: "Chữ ký", icon: "🖋️" },
-    { word: "Suitcase", phonetic: "/ˈsuːtkeɪs/", definition: "Va li", icon: "🧳" },
-    { word: "Correct", phonetic: "/kəˈrekt/", definition: "Chính xác, đúng", icon: "✅" },
-    { word: "Trip", phonetic: "/trɪp/", definition: "Chuyến đi", icon: "🚗" },
-    { word: "Farewell", phonetic: "/ˌfeəˈwel/", definition: "Lời tiễn biệt", icon: "👋" },
     {
       word: "Boarding pass",
       phonetic: "/ˈbɔːdɪŋ pɑːs/",
       definition: "Thẻ lên máy bay",
       icon: "🎫",
     },
+    { word: "Suitcase", phonetic: "/ˈsuːtkeɪs/", definition: "Va li", icon: "🧳" },
+    { word: "Correct", phonetic: "/kəˈrekt/", definition: "Chính xác, đúng", icon: "✅" },
+    { word: "Trip", phonetic: "/trɪp/", definition: "Chuyến đi", icon: "🚗" },
+    // Was `Farewell`, which rendered "Please take the farewell."
+    { word: "Taxi voucher", phonetic: "/ˈtæksi ˈvaʊtʃə/", definition: "Phiếu đi taxi", icon: "🎟️" },
     { word: "Lobby seat", phonetic: "/ˈlɒbi siːt/", definition: "Ghế chờ ở sảnh", icon: "💺" },
+    { word: "Signature", phonetic: "/ˈsɪɡnətʃə/", definition: "Chữ ký", icon: "🖋️" },
   ],
 };
 
@@ -392,17 +393,21 @@ const FB_BANK: P1Bank = {
     // Every problems frame describes a THING ("It is {w}."), so a
     // person-adjective here shipped as "The machine is unhappy."
     { word: "Burnt", phonetic: "/bɜːnt/", definition: "Bị cháy khét", icon: "🔥" },
-    { word: "Slow", phonetic: "/sləʊ/", definition: "Chậm", icon: "🐢" },
-    { word: "Cracked", phonetic: "/krækt/", definition: "Bị nứt, mẻ", icon: "💔" },
     { word: "Sold out", phonetic: "/səʊld aʊt/", definition: "Đã hết món", icon: "🚷" },
+    { word: "Cracked", phonetic: "/krækt/", definition: "Bị nứt, mẻ", icon: "💔" },
+    { word: "Slow", phonetic: "/sləʊ/", definition: "Chậm", icon: "🐢" },
   ],
   closing: [
     { word: "Dessert", phonetic: "/dɪˈzɜːt/", definition: "Món tráng miệng", icon: "🍰" },
-    { word: "Tip", phonetic: "/tɪp/", definition: "Tiền boa", icon: "💵" },
+    // Was `Tip`. Its only model sentence was "Please leave the tip here." — a
+    // waiter telling a guest where to put money, in a resort that already adds
+    // a 5% service charge. Every slot in this bank renders a staff line, so
+    // moving it could not save it.
+    { word: "Tray", phonetic: "/treɪ/", definition: "Khay phục vụ", icon: "🍽️" },
     { word: "Clean", phonetic: "/kliːn/", definition: "Sạch sẽ", icon: "🧼" },
     { word: "Meal", phonetic: "/miːl/", definition: "Bữa ăn", icon: "🍲" },
-    { word: "Bill folder", phonetic: "/bɪl ˈfəʊldə/", definition: "Bìa đựng hóa đơn", icon: "📁" },
     { word: "Toothpick", phonetic: "/ˈtuːθpɪk/", definition: "Tăm xỉa răng", icon: "🦷" },
+    { word: "Bill folder", phonetic: "/bɪl ˈfəʊldə/", definition: "Bìa đựng hóa đơn", icon: "📁" },
     { word: "Recipe", phonetic: "/ˈresəpi/", definition: "Công thức nấu ăn", icon: "📜" },
   ],
 };
@@ -566,18 +571,18 @@ const HK_BANK: P1Bank = {
     { word: "Blocked", phonetic: "/blɒkt/", definition: "Bị tắc", icon: "🚱" },
     { word: "Smelly", phonetic: "/ˈsmeli/", definition: "Có mùi hôi", icon: "👃" },
     { word: "Not working", phonetic: "/nɒt ˈwɜːkɪŋ/", definition: "Không hoạt động", icon: "⚠️" },
+    { word: "Damaged", phonetic: "/ˈdæmɪdʒd/", definition: "Bị hư hại", icon: "🔨" },
+    { word: "Burnt out", phonetic: "/bɜːnt aʊt/", definition: "Bóng đèn cháy", icon: "💡" },
     {
       word: "Out of order",
       phonetic: "/aʊt əv ˈɔːdə/",
       definition: "Hỏng, ngừng dùng",
       icon: "🚧",
     },
-    { word: "Burnt out", phonetic: "/bɜːnt aʊt/", definition: "Bóng đèn cháy", icon: "💡" },
-    { word: "Damaged", phonetic: "/ˈdæmɪdʒd/", definition: "Bị hư hại", icon: "🔨" },
   ],
   closing: [
-    { word: "Bin bag", phonetic: "/bɪn bæɡ/", definition: "Túi rác", icon: "🗑️" },
     { word: "Checklist", phonetic: "/ˈtʃeklɪst/", definition: "Bảng kiểm tra", icon: "☑️" },
+    { word: "Bin bag", phonetic: "/bɪn bæɡ/", definition: "Túi rác", icon: "🗑️" },
     { word: "Spotless", phonetic: "/ˈspɒtləs/", definition: "Sạch bong không vết", icon: "✨" },
     { word: "Rest", phonetic: "/rest/", definition: "Giấc nghỉ ngơi", icon: "😴" },
     { word: "Fresh flowers", phonetic: "/freʃ ˈflaʊəz/", definition: "Hoa tươi", icon: "💐" },
@@ -740,12 +745,12 @@ const SW_BANK: P1Bank = {
   problems: [
     { word: "Too hot", phonetic: "/tuː hɒt/", definition: "Quá nóng", icon: "🥵" },
     { word: "Too cold", phonetic: "/tuː kəʊld/", definition: "Quá lạnh", icon: "🥶" },
-    { word: "Uncomfortable", phonetic: "/ʌnˈkʌmftəbl/", definition: "Không thoải mái", icon: "😖" },
+    { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
     { word: "Cloudy", phonetic: "/ˈklaʊdi/", definition: "Đục (nước)", icon: "🌫️" },
     { word: "Unheated", phonetic: "/ʌnˈhiːtɪd/", definition: "Không được làm nóng", icon: "🚿" },
     { word: "Overdue", phonetic: "/ˌəʊvəˈdjuː/", definition: "Quá giờ hẹn", icon: "⏰" },
+    { word: "Uncomfortable", phonetic: "/ʌnˈkʌmftəbl/", definition: "Không thoải mái", icon: "😖" },
     { word: "Double-booked", phonetic: "/ˈdʌbl bʊkt/", definition: "Bị trùng lịch", icon: "⚠️" },
-    { word: "Noisy", phonetic: "/ˈnɔɪzi/", definition: "Ồn ào", icon: "🔊" },
   ],
   closing: [
     {
@@ -754,22 +759,20 @@ const SW_BANK: P1Bank = {
       definition: "Thẻ chăm sóc sức khoẻ",
       icon: "💳",
     },
-    { word: "Next visit", phonetic: "/nekst ˈvɪzɪt/", definition: "Lần đến tiếp theo", icon: "📅" },
+    // Was `Next visit`, which rendered "Please leave the next visit here."
+    { word: "Locker key", phonetic: "/ˈlɒkə kiː/", definition: "Chìa khoá tủ đồ", icon: "🔑" },
     { word: "Tidy", phonetic: "/ˈtaɪdi/", definition: "Gọn gàng", icon: "🧹" },
     { word: "Evening", phonetic: "/ˈiːvnɪŋ/", definition: "Buổi tối", icon: "🌙" },
-    { word: "Warm shower", phonetic: "/wɔːm ˈʃaʊə/", definition: "Tắm nước ấm", icon: "🚿" },
+    // Was `Warm shower`, which rendered "Please take the warm shower."
+    { word: "Foot towel", phonetic: "/fʊt ˈtaʊəl/", definition: "Khăn lau chân", icon: "🧻" },
     {
       word: "Quiet time",
       phonetic: "/ˈkwaɪət taɪm/",
       definition: "Thời gian nghỉ tĩnh",
       icon: "🤫",
     },
-    {
-      word: "Wellness tip",
-      phonetic: "/ˈwelnəs tɪp/",
-      definition: "Lời khuyên sức khỏe",
-      icon: "🌿",
-    },
+    // Was `Wellness tip`, which rendered "I will check the wellness tip."
+    { word: "Spa menu", phonetic: "/spɑː ˈmenjuː/", definition: "Bảng dịch vụ spa", icon: "📋" },
   ],
 };
 
@@ -907,13 +910,18 @@ const GR_BANK: P1Bank = {
     // about a thing, and "Disappointed" describes a person.
     { word: "Wilted", phonetic: "/ˈwɪltɪd/", definition: "Bị héo (hoa)", icon: "🥀" },
     { word: "Melted", phonetic: "/ˈmeltɪd/", definition: "Bị chảy (bánh, kem)", icon: "🫠" },
-    { word: "Mistimed", phonetic: "/ˌmɪsˈtaɪmd/", definition: "Sai thời điểm", icon: "📅" },
+    // `Rainy` moved here from index 6, where the frame is "The item is …".
+    // GR-38 (storms) reviews it, so it stays a headword; `Mistimed` gave up
+    // the slot because "It is mistimed today." is not a sentence anyone says.
     { word: "Rainy", phonetic: "/ˈreɪni/", definition: "Có mưa", icon: "🌧️" },
+    // Was `Rainy`, the only word in six banks that made "The item is rainy."
+    { word: "Crushed", phonetic: "/krʌʃt/", definition: "Bị bẹp, bị dập", icon: "📦" },
     { word: "Cancelled", phonetic: "/ˈkænsld/", definition: "Bị hủy", icon: "🚫" },
   ],
   closing: [
     { word: "Photo", phonetic: "/ˈfəʊtəʊ/", definition: "Ảnh chụp", icon: "📸" },
-    { word: "Memory", phonetic: "/ˈmeməri/", definition: "Kỷ niệm", icon: "💭" },
+    // Was `Memory`, which rendered "Please leave the memory here."
+    { word: "Name card", phonetic: "/neɪm kɑːd/", definition: "Danh thiếp", icon: "💳" },
     { word: "Wonderful", phonetic: "/ˈwʌndəfl/", definition: "Tuyệt vời", icon: "🤩" },
     { word: "Stay", phonetic: "/steɪ/", definition: "Kỳ nghỉ", icon: "🏨" },
     {
