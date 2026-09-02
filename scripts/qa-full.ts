@@ -41,8 +41,16 @@ const warns: string[] = [];
 const fail = (t: string, m: string) => fails.push(`[${t}] ${m}`);
 const warn = (t: string, m: string) => warns.push(`[${t}] ${m}`);
 
+const NUMBER_WORD =
+  "zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million";
+const NUMBER_RUN = new RegExp(`\\b(?:${NUMBER_WORD})(?:[ -](?:${NUMBER_WORD}))*\\b`, "gi");
 const words = (s: string) =>
   s
+    // "five hundred thousand" is one lexicon unit, not three words — same
+    // convention verify-content's capFor applies. Two gates disagreeing on
+    // arithmetic left the priced sentences with no legal way to carry their
+    // currency unit.
+    .replace(NUMBER_RUN, "N")
     .replace(/[.,!?…—–]/g, " ")
     .split(/\s+/)
     .filter(Boolean);

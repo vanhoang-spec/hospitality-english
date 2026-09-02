@@ -1227,7 +1227,7 @@ function week3(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} says: "Good morning, madam. Welcome." The guest asks the time. ${lx.staff} looks at the clock and says: "It is half past seven, madam." The guest says: "Thank you."`,
+        `${lx.staff} says: "Good morning, madam." The guest asks the time. ${lx.staff} looks at the clock and says: "It is half past seven, madam." The guest says: "Thank you."`,
         [
           {
             q: "Bây giờ là mấy giờ?",
@@ -1567,7 +1567,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} says: "Welcome, sir." The guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine. Thank you."`,
+        `${lx.staff} says: "Good morning, sir." The guest asks about the ${lx.priced.en}. ${lx.staff} says: "${capFirst(lx.priced.vndWord)} dong, sir." The guest says: "That is fine. Thank you."`,
         [
           {
             q: `${capFirst(lx.priced.vi)} giá bao nhiêu?`,
@@ -1754,7 +1754,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
 
     lesson(lx, 4, 4, "Confirming the Total", "Xác nhận tổng tiền", {
       vocabulary: [
-        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord} dong.`, "🧮"),
         v("Bill", "/bɪl/", "Hóa đơn", "Here is your bill, sir.", "🧾"),
       ],
       grammar: [
@@ -1766,7 +1766,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           // disagrees with its model is a wrong instruction at the moment of use.
           // Five auditors flagged this pair and its twin in week 6.
           `Total ${lx.priced.vndWord}.`,
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều (tuần 4 bài 1).",
           `The total are ${lx.priced.vndWord}.`,
         ),
@@ -1802,7 +1802,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
             q: "Tổng tiền là bao nhiêu?",
             options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
             correct: 0,
-            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord}." — hoá đơn tính bằng tiền đồng, không phải đô.`,
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
           },
           {
             q: `Vì sao ${lx.staff} nhắc lại tổng tiền trước khi đưa hoá đơn?`,
@@ -3372,13 +3372,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
   HK_4_4: (lx) =>
     lesson(lx, 4, 4, "The Laundry Total", "Tổng tiền đồ giặt", {
       vocabulary: [
-        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord} dong.`, "🧮"),
         v("Bill", "/bɪl/", "Hóa đơn", "Reception has your bill.", "🧾"),
       ],
       grammar: [
         g(
           `Total ${lx.priced.vndWord}.`,
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều (tuần 4 bài 1).",
           `The total are ${lx.priced.vndWord}.`,
         ),
@@ -3426,7 +3426,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
             q: "Tổng tiền là bao nhiêu?",
             options: [`${lx.priced.vnd.toLocaleString("vi-VN")} đồng`, "Tám đô", "Chưa nói giá"],
             correct: 0,
-            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord}." — hoá đơn tính bằng tiền đồng, không phải đô.`,
+            explanation: `Nhân viên nói "The total is ${lx.priced.vndWord} dong." — hoá đơn tính bằng tiền đồng, không phải đô.`,
           },
           {
             q: "Khách xin hoá đơn thì nói gì?",
@@ -3440,7 +3440,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "How much is the laundry?",
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           `Total ${lx.priced.vndWord}.`,
           "I do not know, madam. Ask reception.",
           undefined,
@@ -4702,13 +4702,13 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
   GR_4_4: (lx) =>
     lesson(lx, 4, 4, "The Bill Is at Reception", "Hoá đơn ở lễ tân", {
       vocabulary: [
-        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord}.`, "🧮"),
+        v("Total", "/ˈtəʊtl/", "Tổng cộng", `The total is ${lx.priced.vndWord} dong.`, "🧮"),
         v("Bill", "/bɪl/", "Hóa đơn", "Reception has your bill, sir.", "🧾"),
       ],
       grammar: [
         g(
           `Total ${lx.priced.vndWord}.`,
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           "Cần mạo từ 'The' và động từ 'is': THE total IS … Số tiền đọc liền cả cụm, và 'dong' giữ nguyên khi số nhiều.",
           `The total are ${lx.priced.vndWord} dong.`,
         ),
@@ -4722,7 +4722,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           `How much for the ${lx.booking.en}?`,
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           "Biết giá dịch vụ của chính bộ phận mình. Đẩy sang lễ tân ở chỗ này là bắt khách đi thêm một vòng vô ích.",
           undefined,
           ["total"],
@@ -4770,7 +4770,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           `How much is the ${lx.booking.en}?`,
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           `Total ${lx.priced.vndWord}.`,
           "I do not know, madam. Ask reception.",
           undefined,
