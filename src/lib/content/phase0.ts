@@ -34,6 +34,7 @@
 // the useful contrast is broken-English vs. correct-English.
 // ============================================================
 
+import { normalize } from "@/lib/speaking-score";
 import type {
   GameRound,
   GrammarItem,
@@ -465,23 +466,16 @@ function lesson(
       // mọi từ của nó đều bắt buộc, kể cả hư từ. 'Thank you' mất 'you' là lỗi
       // mà tuần 1 bài 4 tồn tại để sửa; loại 'you' khỏi danh sách để cứu 'Here
       // you are' đã vô tình mở luôn cửa đó.
-      const said0 = new Set(
-        sp.targetResponse
-          .toLowerCase()
-          .replace(/[^a-z0-9 -]/g, " ")
-          .split(/\s+/),
-      );
+      // Tokenised by the grader's own normalize() on BOTH sides. They used to
+      // differ by one character — this kept the hyphen, the grader splits on
+      // it — so a headword like "Wake-up call" locked a token the grader can
+      // never see, and the target failed when read back word for word.
+      const said = new Set(normalize(sp.targetResponse));
       const heads = parts.vocabulary.flatMap((v) => {
-        const parts_ = v.word.toLowerCase().split(/\s+/);
-        if (parts_.length > 1 && parts_.every((w) => said0.has(w))) return parts_;
+        const parts_ = normalize(v.word);
+        if (parts_.length > 1 && parts_.every((w) => said.has(w))) return parts_;
         return parts_.filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w));
       });
-      const said = new Set(
-        sp.targetResponse
-          .toLowerCase()
-          .replace(/[^a-z0-9 -]/g, " ")
-          .split(/\s+/),
-      );
       const add = heads
         .map((w) =>
           said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
@@ -6184,19 +6178,14 @@ export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
     ...new Set(
       lessons
         .flatMap((l) => l.vocabulary)
-        .flatMap((v) => v.word.toLowerCase().split(/\s+/))
+        .flatMap((v) => normalize(v.word))
         .filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w)),
     ),
   ];
   return lessons.map((l) => ({
     ...l,
     speaking: l.speaking.map((sp) => {
-      const said = new Set(
-        sp.targetResponse
-          .toLowerCase()
-          .replace(/[^a-z0-9 -]/g, " ")
-          .split(/\s+/),
-      );
+      const said = new Set(normalize(sp.targetResponse));
       const add = heads
         .map((w) =>
           said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
