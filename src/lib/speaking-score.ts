@@ -174,6 +174,36 @@ export const PROMISE_VERBS = new Set<string>([
   "wait",
 ]);
 
+/** Words a lesson is ABOUT, which the one-word allowance must never spend
+ *  itself on. The allowance says a long model may lose one word; it did not
+ *  say WHICH, so a review found ten items where the droppable word was the
+ *  point: "Please change here. I will wait." passed a model ending "…I will
+ *  wait outside." in the lesson whose rule is "say where they change and say
+ *  that you leave — two halves, neither missing"; "because" fell out of both
+ *  reason clauses; "sometimes" and "twice" fell out of the frequency frames;
+ *  "some" fell out of four requests. */
+const STRUCTURE_TOKENS = new Set<string>([
+  "because",
+  "when",
+  "while",
+  "after",
+  "before",
+  "until",
+  "always",
+  "usually",
+  "sometimes",
+  "often",
+  "never",
+  "twice",
+  "another",
+  "some",
+  "more",
+  "outside",
+  "inside",
+  "upstairs",
+  "downstairs",
+]);
+
 /** Words whose absence inverts the outcome rather than blurring it. A wet
  *  floor warned about without "careful" is not a warning; a treatment
  *  described without "hot" is not a caution. A review found seven such
@@ -305,12 +335,18 @@ export function requiredValueTokens(target: string, override?: string[]): string
         // counting something ("One three, madam" — reading digits back) keeps
         // its status: only the immediate `one moment` pair is formulaic.
         if (t === "one" && toks[i + 1] === "moment") return false;
+        // A comparative standing beside its own base form is the whole lesson
+        // of week 10: "This one is warmer. That one is warm." Dropping the
+        // "-er" left the pair passing at 88%.
+        if (t.endsWith("er") && (toks.includes(t.slice(0, -2)) || toks.includes(t.slice(0, -1))))
+          return true;
         return (
           VALUE_TOKENS.has(t) ||
           GRAMMAR_TOKENS.has(t) ||
           NEGATION_TOKENS.has(t) ||
           PROMISE_VERBS.has(t) ||
-          SAFETY_TOKENS.has(t)
+          SAFETY_TOKENS.has(t) ||
+          STRUCTURE_TOKENS.has(t)
         );
       }),
     ),

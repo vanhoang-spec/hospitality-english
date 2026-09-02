@@ -1026,7 +1026,7 @@ function week9(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           `When will my ${lower(q6)} be ready?`,
-          `I will bring ${wa(q6)} at six.`,
+          `I will bring your ${lower(q6)} at six.`,
           "Hứa bằng một mốc giờ cụ thể, không hứa chung chung. 'Will' cho việc sắp làm.",
         ),
         sp(
@@ -2440,7 +2440,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           `Can you bring ${lx.bank.requests[5].art === "some" ? "some more" : "another"} ${lower(lx.bank.requests[5])}?`,
-          `Of course. I will bring ${wa(lx.bank.requests[5])}.`,
+          `Of course. I will bring ${lx.bank.requests[5].art === "some" ? "some more" : "another"} ${lower(lx.bank.requests[5])}.`,
           "Ôn tuần 9: đổi cái mới phải nói rõ cái gì. 'Of course' mở lời nhận việc.",
         ),
         sp(
@@ -4849,13 +4849,13 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           {
             q: "Khách xin đổi giờ thì sao?",
             options: [
-              "Nhận lời và ghi lại giờ mới ngay",
-              "Đề nghị khách giữ đúng giờ cũ",
+              "Kiểm lịch trước rồi mới nhận lời",
+              "Nhận lời ngay rồi tra sau",
               "Bảo khách gọi lại sau khi biết chắc",
             ],
             correct: 0,
             explanation:
-              "Đổi giờ là việc bình thường của spa. Làm khó ở đây là mất luôn cả lượt khách đó.",
+              "Đổi giờ là việc bình thường của spa, nhưng khung giờ mới có thể đã kín và có thể có phí. Tra ba giây rồi nhận lời, đừng nhận lời rồi mới tra.",
           },
         ],
       ),
@@ -4870,8 +4870,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         game(
           "Something came up. Can we move it?",
-          "No problem. I can change the time.",
-          "Change no problem yes.",
+          "One moment. I will check for you.",
+          "Change time can no problem.",
           "I am sorry, madam. It is too late now.",
           undefined,
           "Câu đó đúng ngữ pháp nhưng phạt khách vì một việc chưa xảy ra. Nếu có quy định phí đổi lịch thì đó là việc của quản lý nói, không phải câu đầu tiên khách nghe.",
