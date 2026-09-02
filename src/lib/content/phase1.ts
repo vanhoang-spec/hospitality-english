@@ -508,9 +508,13 @@ function week7(lx: Ctx): LessonContent[] {
           "Câu đó đúng ngữ pháp và từ chối thay cho một người bạn chưa hỏi. Bạn không biết lịch của họ, và nếu họ rảnh thật thì bạn vừa làm mất một lần phục vụ vì ngại đi hỏi.",
         ),
         game(
+          // Slot 7 holds a SHIFT in four of the six banks — night shift,
+          // morning shift, evening shift, office hours — and nobody asks a
+          // shift for a special request. Slot 6 is the person with authority,
+          // which is what this whole lesson escalates to.
           "I have a special request.",
-          `One moment. I will ask our ${lower(r8)}.`,
-          `I ask ${lower(r8)}.`,
+          `One moment. I will ask our ${lower(r7)}.`,
+          `I ask ${lower(r7)}.`,
           "I am sorry, madam. We do not do that here.",
           undefined,
           "Câu đó lịch sự nhưng từ chối một yêu cầu bạn còn chưa nghe hết. Ở trình độ này, câu an toàn luôn là hoãn lại và hỏi người có quyền quyết — 'I will ask…' giữ cửa mở mà chưa hứa gì.",
@@ -1187,7 +1191,9 @@ function week10(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          `Is the room ${lower(s2)}?`,
+          // "Is the room crowded?" of a guest room, "Is the room gentle?" of a
+          // treatment. Slot 1 describes the department's day, not its room.
+          `Is it ${lower(s2)} today?`,
           `Yes, madam. It is quite ${lower(s2)}.`,
           "Chữ 'quite' chỉ mức vừa phải, nhẹ hơn hẳn mức nhấn mạnh. Đừng nói quá lên so với thực tế.",
         ),
@@ -1209,7 +1215,12 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. It is quite ${lower(s2)} too." Later the guest asks for ${wa(lx.bank.requests[0])}. ${lx.staff} brings one and says: "Here you are, madam. Please tell me if you need more."`,
+        // The second adjective used to describe the same room as the first —
+        // "It is very quiet, madam. It is quite crowded too." — and moving it
+        // onto a place only moved the problem: slot 1 describes what the
+        // department handles, not where it stands, so Spa got "The treatment
+        // room is quite gentle today." One adjective, one thing.
+        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam." Later the guest asks for ${wa(lx.bank.requests[0])}. ${lx.staff} brings one and says: "Here you are, madam. Please tell me if you need more."`,
         [
           {
             q: "Phòng được mô tả thế nào?",
@@ -1970,6 +1981,14 @@ function week12(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "Sorry, I cannot hear you.",
+          "I am sorry, sir. I will speak slowly.",
+          "Speak slow now.",
+          "I am sorry, sir. Please call again later.",
+          undefined,
+          "Câu đó lịch sự nhưng đẩy khách gọi lại vì một lỗi đường truyền không phải của họ. Nói chậm lại là việc bạn làm được ngay, trong chính cuộc gọi này.",
+        ),
+        game(
           `Hello? Is that ${lx.deptEn}?`,
           `Yes, madam. ${lx.staff} speaking.`,
           "Yes, and who you are please?",
@@ -2209,6 +2228,14 @@ function week12(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "That is all for now.",
+          "Thank you for calling, sir. Goodbye.",
+          "OK bye you.",
+          "Thank you, sir. Please hang up when you are ready.",
+          undefined,
+          "Câu đó đúng ngữ pháp và bảo khách cúp máy. Lễ nghi điện thoại là để khách gác trước — bạn chỉ chào và chờ.",
+        ),
+        game(
           "How do I contact you again?",
           `Please ${lower(f8)} any time, madam.`,
           "You call again yes.",
@@ -2414,6 +2441,14 @@ function week13(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "I want to speak to your manager.",
+          "Of course, madam. One moment, please.",
+          "Manager? Why you want?",
+          "I can help you, madam. There is no need.",
+          undefined,
+          "Khách xin gặp quản lý thì không thương lượng. Câu thứ hai nghe tự tin nhưng nó chặn một yêu cầu chính đáng, và đó đúng là câu khách sẽ kể lại.",
+        ),
+        game(
           `Why is it ${lower(b3)}?`,
           "I am very sorry, sir. I will help.",
           `Sorry, ${lower(b3)} yes.`,
@@ -2506,6 +2541,14 @@ function week13(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "You said five minutes.",
+          "I am very sorry, sir. Two more minutes.",
+          "Two minute more.",
+          "I am very sorry, sir. I will come back soon.",
+          undefined,
+          "'Soon' không phải một mốc. Khách đã chờ quá hẹn một lần rồi; lần thứ hai bắt buộc phải là một con số.",
+        ),
         game(
           "Can you check it now?",
           "Of course. I will come back in five minutes.",
@@ -2807,6 +2850,14 @@ function week14(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
+          "Do you have my booking?",
+          "One moment, sir. May I have your name?",
+          "Name what?",
+          "Yes, sir. Your room is ready for you now.",
+          undefined,
+          "Câu đó lịch sự và nói một điều bạn chưa kiểm. Hỏi tên rồi tra mất hai giây; nói nhầm phòng mất một lần dọn lại và một lời xin lỗi.",
+        ),
+        game(
           "Can you bring it fast?",
           "Of course, madam. I will do it quickly.",
           "Fast yes I bring.",
@@ -2891,6 +2942,14 @@ function week14(lx: Ctx): LessonContent[] {
         ],
       ),
       game: [
+        game(
+          "How long must I wait?",
+          "Ten minutes, madam. I will call you.",
+          "Wait ten minute.",
+          "Not long, madam. Please wait here for me.",
+          undefined,
+          "'Not long' không phải một mốc và khách không có gì để đối chiếu. Một con số cộng lời hứa gọi lại là thứ khách tin được.",
+        ),
         game(
           "Is the room ready now?",
           `Yes, madam. Everything is ${lower(c3)}.`,
