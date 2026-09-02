@@ -705,7 +705,7 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 2, "How Many Do You Need?", "Hỏi khách cần bao nhiêu", {
-      vocabulary: [bw(q3, `Some ${plural(q3)}, please.`), bw(q4, `Do you need the ${lower(q4)}?`)],
+      vocabulary: [bw(q3, `Some ${plural(q3)}, please.`), bw(q4, `Do you need ${wa(q4)}?`)],
       grammar: [
         g(
           "How many?",
@@ -715,9 +715,9 @@ function week9(lx: Ctx): LessonContent[] {
         ),
         g(
           `You need ${lower(q4)}?`,
-          `Do you need the ${lower(q4)}, sir?`,
+          `Do you need ${wa(q4)}, sir?`,
           "Câu hỏi Yes/No bắt đầu bằng 'Do you…?', không chỉ lên giọng cuối câu.",
-          `Do you needs the ${lower(q4)}, sir?`,
+          `Do you needs ${wa(q4)}, sir?`,
         ),
       ],
       speaking: [
@@ -746,9 +746,13 @@ function week9(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          `Do you have the ${lower(q4)}?`,
-          `Yes, sir. I will bring it now.`,
-          `Yes, have ${lower(q4)}.`,
+          // q4 is the slot for what the hotel SETS UP on request — a wake-up
+          // call, an extra bed, a baby cot. "I will bring it now" is not what
+          // you do with any of them, so this round asks about q1, the slot the
+          // bank contract reserves for something you can carry in one hand.
+          `Do you have ${wa(q1)}?`,
+          `Yes, sir. I will bring one now.`,
+          `Yes, have ${lower(q1)}.`,
           `Yes, sir. You can come and get it yourself.`,
           undefined,
           "Đúng ngữ pháp, sai nghề. Khách hỏi 'bạn có không' là đang nhờ mang tới. Đẩy khách tự đi lấy là bỏ đúng phần việc của mình — câu đúng nhận lời rồi hứa hành động bằng 'will'.",
@@ -809,10 +813,7 @@ function week9(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 9, 4, "Sorry, We Do Not Have It", "Khi không có thứ khách cần", {
-      vocabulary: [
-        bw(q7, `We have no ${lower(q7)} today.`),
-        bw(q8, `Would you like the ${lower(q8)}?`),
-      ],
+      vocabulary: [bw(q7, `We have no ${lower(q7)} today.`), bw(q8, `Would you like ${wa(q8)}?`)],
       grammar: [
         g(
           `No have.`,
@@ -822,20 +823,20 @@ function week9(lx: Ctx): LessonContent[] {
         ),
         g(
           `You want ${lower(q8)}?`,
-          `Would you like the ${lower(q8)}?`,
+          `Would you like ${wa(q8)}?`,
           "Đề nghị lịch sự dùng 'Would you like…?' thay cho 'You want…?'.",
-          `Do you would like the ${lower(q8)}?`,
+          `Do you would like ${wa(q8)}?`,
         ),
       ],
       speaking: [
         sp(
-          `Do you have the ${lower(q7)}?`,
-          `I am sorry. Would you like the ${lower(q8)}?`,
+          `Do you have ${wa(q7)}?`,
+          `I am sorry. Would you like ${wa(q8)}?`,
           "Hết đồ thì xin lỗi và đề xuất phương án thay thế — đừng chỉ nói 'không có'. Cụm 'Would you' nối liền thành /ˈwʊdʒu/ — người bản xứ không đọc tách rời từng từ.",
         ),
       ],
       reading: read(
-        `The ${lower(q7)} is finished today. ${lx.staff} says: "I am sorry, sir. Would you like the ${lower(q8)}?" The guest says: "Yes, please."`,
+        `We have no ${lower(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please."`,
         [
           {
             q: "Khi hết đồ khách cần, nên làm gì?",
@@ -857,7 +858,7 @@ function week9(lx: Ctx): LessonContent[] {
       ),
       game: [
         game(
-          `I would like the ${lower(q7)}.`,
+          `I would like ${wa(q7)}.`,
           `I am sorry, madam. We have none today.`,
           `No ${lower(q7)} have.`,
           "I am sorry, madam. Please ask somebody else.",
@@ -1962,9 +1963,9 @@ function week14(lx: Ctx): LessonContent[] {
       grammar: [
         g(
           `You want ${lower(q1)}?`,
-          `Would you like the ${lower(q1)}?`,
+          `Would you like ${wa(q1)}?`,
           "Ôn tuần 9: đề nghị lịch sự dùng 'Would you like…?'",
-          `Would you like to the ${lower(q1)}?`,
+          `Would you like to ${wa(q1)}?`,
         ),
         g("How many you need?", "How many do you need, sir?", "Ôn tuần 9: câu hỏi cần 'do you'."),
       ],
