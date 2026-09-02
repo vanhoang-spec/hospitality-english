@@ -925,7 +925,7 @@ function week9(lx: Ctx): LessonContent[] {
         sp(
           `Do you have ${wa(q4)}?`,
           "Of course, madam. I will do that now.",
-          "Ô này là thứ khách sạn BỐ TRÍ chứ không cầm tay mang tới, nên đáp bằng 'I will do that', đừng nói 'bring'.",
+          "Những thứ khách sạn KÊ SẴN hoặc HẸN GIỜ — giường phụ, ghế trẻ em, cuộc gọi báo thức — thì không ai cầm tay mang tới, nên đừng đáp bằng 'bring'.",
         ),
         sp(
           `I need some ${plural(q3)}.`,
@@ -3085,7 +3085,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "Can you check that for me?",
           "One moment, please, sir.",
-          "Bài khung ở ô này dạy xin khách chờ. Cụm 'one moment' đọc liền, đừng tách rời.",
+          "Xin khách chờ trước khi đi tra cứu, đừng để khách nghe im lặng. Cụm 'one moment' đọc liền, đừng tách rời.",
         ),
         sp(
           "My mother needs a wheelchair.",
@@ -3188,7 +3188,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "There is a problem with my dish.",
           "I am sorry, sir. I will check now.",
-          "Xin lỗi rồi đi kiểm — bài khung ở ô này dạy đúng hai bước đó, và bài riêng giữ lại cả hai.",
+          "Xin lỗi rồi đi kiểm: hai bước, đúng thứ tự đó. Xin lỗi mà không đi kiểm thì khách vẫn ngồi với đúng vấn đề cũ.",
           undefined,
           ["check"],
         ),
@@ -3693,7 +3693,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "Can you check that for me?",
           "One moment, sir. Please hold on.",
-          "Bài khung ở ô này dạy xin khách chờ, và bài riêng phải giữ lại chức năng đó. Cụm 'hold on' đọc nối thành một hơi.",
+          "Trước khi rời máy đi làm việc gì, luôn xin khách giữ máy — im lặng đột ngột làm khách tưởng mất kết nối. Cụm 'hold on' đọc nối thành một hơi.",
         ),
         sp(
           "I need a car to the airport.",
