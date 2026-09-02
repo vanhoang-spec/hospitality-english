@@ -1866,7 +1866,7 @@ function week11(lx: Ctx): LessonContent[] {
         // Phase 0 (`roomNo.spoken`); no frame read it.
         sp(
           "Which room is not finished?",
-          `Room ${lx.roomNo.spoken} is not finished.`,
+          `Mr Chen in room ${lx.roomNo.spoken} is not finished.`,
           "Bàn giao là nói ra số phòng, không nói 'that room'. Đọc từng chữ số một, nghỉ nhẹ giữa các chữ số.",
           "colleague",
         ),
@@ -2342,6 +2342,11 @@ function week13(lx: Ctx): LessonContent[] {
           "Báo sự cố cho cấp trên thì câu đầu tiên phải có số phòng — thiếu nó thì người nhận tin không đi được. Đọc từng chữ số một.",
           "manager",
         ),
+        sp(
+          "Why must I wait here?",
+          "Please wait here because the manager is coming.",
+          "Mệnh đề lý do bắt đầu bằng 'because' và đứng SAU mệnh đề chính. Khách chờ mà biết lý do thì chờ dễ hơn nhiều.",
+        ),
       ],
       reading: read(
         `A guest reports a fault: "The air conditioner is not working." ${lx.staff} answers: "I am sorry, madam. I cannot fix it. I will tell my manager." ${lx.staff} writes the room number down. Ten minutes later the manager comes. ${lx.staff} shows the room number on the note, so the guest does not have to explain it again.`,
@@ -2437,6 +2442,11 @@ function week13(lx: Ctx): LessonContent[] {
           `Can you bring ${lx.bank.requests[5].art === "some" ? "some more" : "another"} ${lower(lx.bank.requests[5])}?`,
           `Of course. I will bring ${wa(lx.bank.requests[5])}.`,
           "Ôn tuần 9: đổi cái mới phải nói rõ cái gì. 'Of course' mở lời nhận việc.",
+        ),
+        sp(
+          "Can you help me now?",
+          "I will help you when I finish this.",
+          "Mệnh đề thời gian bắt đầu bằng 'when'. Nói rõ mình đang dở việc gì thì lời hẹn mới có nghĩa.",
         ),
       ],
       reading: read(
@@ -2541,6 +2551,11 @@ function week13(lx: Ctx): LessonContent[] {
           "Ôn tuần 11: việc còn lại trong ca, kèm mốc giờ ở cuối câu.",
           "colleague",
         ),
+        sp(
+          "Why do you need five minutes?",
+          "I need five minutes because I must check.",
+          "Lời hứa có kèm lý do thì khách tin. Chữ 'because' trọng âm ở âm sau: be-CAUSE.",
+        ),
       ],
       reading: read(
         `${lx.staff} cannot fix it alone. ${lx.staff} says: "I will check and come back in five minutes, sir." ${lx.staff} comes back in five minutes, as promised. The guest looks at the clock, smiles, and says: "You came back. Thank you." The ${back(lx.bank.places, 3)} is next to the ${back(lx.bank.places, 4)}, so nobody walks far.`,
@@ -2633,6 +2648,11 @@ function week13(lx: Ctx): LessonContent[] {
           "Who should I call?",
           `Please call the ${back(lx.bank.phone, 0)}.`,
           "Ôn tuần 12: định tuyến cuộc gọi bằng tên nơi nhận máy, không nói 'call somebody'.",
+        ),
+        sp(
+          "I am not ready yet.",
+          "Please tell me when you are ready, madam.",
+          "Trả quyền quyết định lại cho khách, và nói rõ mình chờ. Mệnh đề 'when you are ready' đứng cuối câu.",
         ),
       ],
       reading: read(
@@ -2942,6 +2962,11 @@ function week14(lx: Ctx): LessonContent[] {
           `It will be ready ${back(lx.bank.phone, 2)}.`,
           "Ôn tuần 12: mốc thời gian. Hẹn một mốc cụ thể rồi giữ đúng mốc đó — hứa suông tệ hơn không hứa.",
         ),
+        sp(
+          "When will somebody come?",
+          "Somebody will come when the manager calls.",
+          "Mệnh đề thời gian với 'when' — nói rõ mốc phụ thuộc vào cái gì, đừng để trống.",
+        ),
       ],
       reading: read(
         `A guest reports a problem. ${lx.staff} says: "I am very sorry, madam. I will check now." Ten minutes later the work is ${lower(c3)}. ${lx.staff} tells the manager, and the manager comes at once. Nothing is ${back(lx.bank.problems, 0)} now, and the guest can rest before dinner. Every day we ${act(lx.bank.routines[5])} and ${act(lx.bank.routines[7])}. ${lx.staff} checks the ${back(lx.bank.places, 3)} once more.`,
@@ -3039,6 +3064,11 @@ function week14(lx: Ctx): LessonContent[] {
           `One thing is ${back(lx.bank.problems, 1)}. Please check.`,
           "Ôn tuần 13: bàn giao là nói ra thứ CHƯA xong, không phải thứ đã xong.",
           "colleague",
+        ),
+        sp(
+          "Why do you write that down?",
+          "I write it down because I must remember.",
+          "Mệnh đề lý do với 'because'. Ghi lại là thói quen của ca sau, không phải của trí nhớ bạn.",
         ),
       ],
       reading: read(
@@ -4357,6 +4387,111 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       ],
     }),
 
+  // Spa teaches changing the pressure from week 10 and hands on a guest's skin
+  // from week 13, and the language for a closed door — knock, ask, step
+  // outside while they undress — sits at week 37. Housekeeping has had that
+  // lesson since week 1 and gets it again at HK_14_1: "Housekeeping. May I
+  // come in?", and "Huy does not walk in first." Across all of Spa's weeks
+  // 7-14 the strings "may I come in", "knock" and "step outside" appear zero
+  // times. Same three headwords as the spine lesson it replaces.
+  SW_14_1: (lx) =>
+    lesson(lx, 14, 1, "May I Come In?", "Xin phép trước khi vào phòng", {
+      vocabulary: [
+        v(
+          "How may I help",
+          "/haʊ meɪ aɪ ˈhelp/",
+          "Tôi có thể giúp gì ạ",
+          "How may I help you?",
+          "🤝",
+        ),
+        v("Wellness card", "/ˈwelnəs kɑːd/", "Phiếu chăm sóc", "Here is your wellness card.", "💳"),
+        v("Foot towel", "/ˈfʊt ˌtaʊəl/", "Khăn lau chân", "Please take the foot towel.", "🧻"),
+      ],
+      grammar: [
+        g(
+          "I come in now?",
+          "Spa service. May I come in?",
+          "Xưng bộ phận rồi mới xin phép, và chờ nghe tiếng khách. Cửa phòng trị liệu là cửa đóng — thẻ từ mở được nó, đó chính là lý do phải hỏi.",
+          "Spa service. May I coming in?",
+        ),
+        g(
+          "You change clothes now.",
+          "Please change here. I will wait outside.",
+          "Nói chỗ thay đồ rồi nói mình đi ra — hai vế, không thiếu vế nào. Chữ 'outside' trọng âm ở âm sau: out-SIDE.",
+          "Please change here. I will wait outside for you to take off your clothes.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Yes, come in.",
+          "Good morning. How may I help?",
+          "Vào rồi vẫn chào trước, đừng bắt tay vào việc ngay. Cụm 'how may I help' đọc liền một hơi.",
+        ),
+        sp(
+          "Where do I change?",
+          "Please change here. I will wait outside.",
+          "Đừng đứng lại trong phòng trong lúc khách thay đồ, kể cả khi quay mặt đi. Ra ngoài và đóng cửa.",
+        ),
+        sp(
+          "I am ready now.",
+          "Thank you. Here is your wellness card.",
+          "Vào lại thì cảm ơn trước. Phiếu chăm sóc trao tận tay, không để trên giường.",
+        ),
+        sp(
+          "My feet are cold.",
+          "Please take the foot towel, madam.",
+          "Khách nói lạnh thì đưa đồ ngay, đừng hỏi lại. Cụm 'foot towel' trọng âm ở chữ đầu: FOOT towel.",
+        ),
+        sp(
+          "Is Mrs Lee ready?",
+          "I will knock and ask first.",
+          "Không bao giờ trả lời thay khách đang ở trong phòng kín. Đi hỏi rồi báo lại.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} stands at the treatment room door and knocks three times. ${lx.staff} says: "Spa service. May I come in?" and waits. The guest says: "Yes, come in." ${lx.staff} says: "Please change here. I will wait outside." and closes the door. ${lx.staff} comes back only when the guest says she is ready.`,
+        [
+          {
+            q: "Sau khi gõ cửa, nhân viên nói câu nào?",
+            options: [
+              "Spa service. May I come in?",
+              "Spa service. I come in now.",
+              "Spa service. Please open the door.",
+            ],
+            correct: 0,
+            explanation:
+              "Gõ ba tiếng, xưng bộ phận, rồi XIN PHÉP — và chờ. Hai câu kia đều thông báo chứ không hỏi, và cửa phòng trị liệu thì bạn có thẻ mở được.",
+          },
+          {
+            q: "Trong lúc khách thay đồ, nhân viên ở đâu?",
+            options: ["Ngoài cửa, cửa đã đóng", "Trong phòng nhưng quay mặt đi", "Ở quầy lễ tân"],
+            correct: 0,
+            explanation:
+              "Quay mặt đi vẫn là ở trong phòng. Ra ngoài và đóng cửa là ranh giới duy nhất khách nhìn thấy được.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Come in, I am changing.",
+          "I will wait outside, madam.",
+          "I wait outside now.",
+          "Of course, madam. I will not look.",
+          undefined,
+          "Câu đó lịch sự và nó vẫn đặt bạn trong phòng với một vị khách đang cởi đồ. Lời hứa không nhìn không thay được một cánh cửa đóng.",
+        ),
+        game(
+          "Can you start now?",
+          "One moment. Are you ready, madam?",
+          "Start now can?",
+          "Of course, madam. I will start now.",
+          undefined,
+          "Câu đó nghe nhanh nhẹn và nó bỏ qua bước hỏi. Khách nằm sấp dưới tấm phủ không kịp nói 'chờ đã' — hỏi một câu trước khi chạm là bước không được bỏ.",
+        ),
+      ],
+    }),
+
   // Guest Relations' whole request bank is chargeable — wheelchair, baby cot,
   // fruit basket, birthday cake — and the spine has the learner accept every
   // one of them on the spot. Across eight weeks the strings `charge`, `price`
@@ -4686,6 +4821,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Đổi lịch có thể có phí và có thể kín chỗ — hai thứ bạn phải tra trước khi hứa. Chữ 'check' đóng bằng /k/, đừng nuốt.",
         ),
         sp(
+          "Ten is fine. Book it, please.",
+          "May I have your room number, madam?",
+          "Một lịch spa không có số phòng thì không tính tiền được và không tìm lại được khi khách tới cửa. Hỏi ngay khi vừa chốt giờ.",
+        ),
+        sp(
           "Is Mrs Lee booked for ten?",
           "Yes. She comes in the morning.",
           "Đồng nghiệp hỏi thì trả lời gọn, không kính ngữ. Cụm 'in the morning' đọc liền một hơi.",
@@ -4693,7 +4833,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest calls the spa. ${lx.staff} asks: "Ten in the morning, madam?" The guest says yes. Later the guest calls again. ${lx.staff} says: "No problem. I can change the time." ${lx.staff} writes the new time down.`,
+        `A guest calls the spa. ${lx.staff} asks: "Ten in the morning, madam?" The guest says yes. ${lx.staff} asks for the room number and writes it down with the name. Later the guest calls again. ${lx.staff} says: "One moment. I will check for you." ${lx.staff} writes the new time down.`,
         [
           {
             q: "Nhân viên làm gì trước khi chốt lịch?",
