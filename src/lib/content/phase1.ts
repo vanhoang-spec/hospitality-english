@@ -1948,7 +1948,7 @@ function week12(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Can you take a message?",
-          "Of course. May I have your name, sir?",
+          "Of course. May I have your room number, sir?",
           "Nhận lời rồi hỏi ngay thứ mình cần để ghi lại. Mẫu xin thông tin luôn mở bằng một câu hỏi lịch sự, không hỏi trống không.",
         ),
         sp(
@@ -2175,7 +2175,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         game(
           "I need to speak to housekeeping.",
-          "One moment, madam. I will transfer you.",
+          "You are through to Housekeeping, madam.",
           "I give you other people.",
           "Please call housekeeping directly, madam.",
           undefined,
@@ -2848,7 +2848,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is anything broken?",
-          `No. Nothing is ${back(lx.bank.problems, 3)} now.`,
+          `No. Nothing is ${back(lx.bank.problems, 6)} now.`,
           "Ôn tuần 13: gọi tên sự cố. Trả lời 'No' rồi mới nói rõ — khách cần câu trả lời trước, chi tiết sau.",
         ),
       ],
@@ -2874,7 +2874,7 @@ function week14(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Do you have my booking?",
-          "One moment, sir. May I have your name?",
+          "One moment, sir. I will ask reception.",
           "Name what?",
           "Yes, sir. Your room is ready for you now.",
           undefined,
@@ -3662,11 +3662,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "When can we get the room?",
-          "I check in the guests at two.",
-          "Giờ nhận phòng cũng là một con số cố định. Nói ra ngay để khách còn tính đường đi chơi.",
+          "Check-in is at two, madam.",
+          "Giờ nhận phòng là giờ CỦA KHÁCH SẠN, không phải giờ ca trực của bạn. Nói ra ngay để khách còn tính đường đi chơi.",
         ),
         sp(
-          "How many rooms today?",
+          "How often do you check in guests?",
           "I check in guests every day.",
           "Đồng nghiệp hỏi thì bỏ kính ngữ. Trạng ngữ thời gian đứng cuối câu.",
           "colleague",
@@ -3917,11 +3917,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         game(
           "My wife will collect the key later.",
-          "She can show her passport, sir.",
+          "Is her name on the form, sir?",
           "Wife come, key ready.",
-          "No problem, sir. I will leave it here.",
+          "No problem, sir. She can show her passport.",
           undefined,
-          "Nghe rất chiều khách, và nó bỏ chìa khoá phòng ở quầy cho bất kỳ ai nói mình là vợ khách. Quy tắc không đổi theo quan hệ gia đình: ai lấy chìa khoá, người đó xuất trình giấy tờ.",
+          "Nghe rất chặt chẽ, và nó vẫn mở cửa phòng. Hộ chiếu chứng minh người đó LÀ AI, không chứng minh họ ở phòng nào — thứ duy nhất làm được việc đó là tên trên phiếu đăng ký.",
         ),
       ],
     }),
@@ -3968,8 +3968,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "I need a car to the airport.",
-          "Of course, sir. The airport car at six?",
-          "Đọc lại giờ và lên giọng cuối câu để khách xác nhận. Ba chữ 'airport car at six' đọc liền một hơi.",
+          "Of course, sir. What time is your flight?",
+          "Khách chưa nói giờ nào, nên đừng bịa ra một giờ để khách gật. Hỏi giờ bay rồi tính ngược — xe sân bay sai giờ là một chuyến bay bị lỡ. Chữ 'flight' có cụm /fl/ ở đầu, bật cả hai âm.",
         ),
       ],
       reading: read(
@@ -4010,9 +4010,9 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         game(
           "I am her husband. Just tell me.",
-          "I can take a message, madam.",
+          "I can take a message, sir.",
           "Husband OK, no problem.",
-          "For family it is all right, madam.",
+          "For family it is all right, sir.",
           undefined,
           "Người gọi tự xưng là ai thì bạn không kiểm được, và người nguy hiểm nhất với một vị khách thường tự xưng đúng như thế. Quan hệ gia đình không mở được quy tắc này.",
         ),
@@ -4652,8 +4652,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Sorry, I will be late.",
-          "No problem. I can change the time.",
-          "Khách xin đổi giờ thì trấn an trước. Chữ 'change' có /tʃ/ ở đầu và /dʒ/ ở cuối — hai âm khác nhau.",
+          "One moment. I will check for you.",
+          "Đổi lịch có thể có phí và có thể kín chỗ — hai thứ bạn phải tra trước khi hứa. Chữ 'check' đóng bằng /k/, đừng nuốt.",
         ),
         sp(
           "Is Mrs Lee booked for ten?",
@@ -4942,10 +4942,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "I need a car at eight.",
-          "Of course. Let me arrange a car.",
-          "Nhận việc về mình bằng 'Let me', đừng bảo khách tự gọi. Chữ 'arrange' trọng âm ở âm sau: a-RRANGE.",
+          "Of course. The car at eight, sir?",
+          "Đọc lại con số khách vừa nói TRƯỚC khi nhận việc — sai giờ xe là lỡ chuyến bay. Chữ 'eight' bắt đầu bằng nguyên âm, đọc nối với 'at'.",
           undefined,
-          ["arrange"],
+          ["eight"],
         ),
       ],
       reading: read(
