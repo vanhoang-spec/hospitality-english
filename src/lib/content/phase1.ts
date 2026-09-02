@@ -462,9 +462,9 @@ function week7(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "Who can answer this?",
-          `Our ${lower(r7)} can answer that, sir.`,
-          "Chỉ khách tới đúng người thay vì nhận một việc mình không biết. Gọi tên chức danh ra — khách cần biết ai, không cần biết bạn sẽ đi đâu.",
+          "Can you answer this for me now?",
+          `I am not sure. I will ask our ${lower(r7)}.`,
+          "Không biết thì nói thật rồi NHẬN việc đi hỏi — đừng đoán bừa, và cũng đừng đẩy việc sang khách. Từ 'ask' đóng bằng cụm /sk/: nghe được cả hai âm.",
         ),
       ],
       reading: read(
@@ -1701,9 +1701,9 @@ function week11(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "Where do I wait, please?",
-          `The ${back(lx.bank.places, 5)} is over there, madam.`,
-          "Ôn tuần 8: chỉ chỗ ngồi chờ bằng một mốc nhìn thấy được, đừng nói 'over there' suông.",
+          "What is over there?",
+          `That is the ${back(lx.bank.places, 5)}, madam.`,
+          "Ôn tuần 8: khách chỉ tay hỏi thì gọi tên chỗ đó ra. Mẫu: THAT IS THE + nơi chốn.",
         ),
       ],
       reading: read(
@@ -1741,7 +1741,7 @@ function week11(lx: Ctx): LessonContent[] {
           `${t3.word} ${lx.service.open}.`,
           `We ${act(t3)} at ${lx.service.close}.`,
           "colleague",
-          "Câu đó đúng ngữ pháp từng chữ và sai đúng một con số. Đồng nghiệp hỏi giờ BẮT ĐẦU, bạn đọc ra giờ đóng cửa — cả ca sau sẽ vào muộn vì một câu trả lời nghe rất trôi chảy.",
+          "Câu đó đúng ngữ pháp từng chữ và sai đúng một con số. Đồng nghiệp hỏi giờ của một việc trong ca, và một con số sai ở đây kéo theo cả chuỗi việc sau nó.",
         ),
       ],
     }),
@@ -1792,9 +1792,9 @@ function week11(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "Can you arrange that for tonight?",
-          `Of course. I will arrange ${wa(lx.bank.requests[3])}.`,
-          "Ôn tuần 9: thứ khách sạn kê sẵn hoặc hẹn giờ thì nhận lời bằng 'arrange' — không ai cầm tay mang một cuộc gọi báo thức tới.",
+          "Where do you keep them?",
+          `We keep them in the ${back(lx.bank.places, 2)}.`,
+          "Ôn tuần 8: nơi cất đồ của bộ phận. Mẫu: KEEP THEM IN THE + nơi chốn.",
         ),
       ],
       reading: read(
@@ -1870,8 +1870,8 @@ function week11(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Anything to report?",
-          `I ${act(t7)} and report one problem, madam.`,
-          "Cấp trên hỏi có gì báo không thì đừng trả lời bằng lịch làm việc của mình. Nối hai việc bằng 'and', và việc thứ hai mới là thứ họ đang hỏi.",
+          "One guest is not happy, madam.",
+          "Cấp trên hỏi có gì báo không thì nói ngay sự việc, đừng trả lời bằng lịch làm việc của mình.",
           "manager",
         ),
         sp(
@@ -1979,8 +1979,8 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Hello, is this the front desk?",
-          `Hello, ${lower(f1)}. ${lx.staff} speaking.`,
-          "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi. Từ 'speaking' có cụm /sp/ ở đầu và /ŋ/ ở cuối, trọng âm ở SPEA.",
+          `Hello, ${lower(f1)}. Let me transfer you.`,
+          "Khách gọi nhầm số thì báo họ đang gọi vào đâu RỒI nối máy sang đúng chỗ — đừng chỉ xưng bộ phận và chờ họ tự hiểu.",
         ),
         sp(
           "What do they want in room five?",
@@ -1990,8 +1990,8 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Do you have any left?",
-          `Yes. We have ${wa(lx.bank.requests[6])}, madam.`,
-          "Ôn tuần 9: còn hàng thì nói rõ còn thứ gì, đừng chỉ nói 'yes'.",
+          `Yes. We have ${plural(lx.bank.requests[6])}, madam.`,
+          "Ôn tuần 9: câu hỏi ở số nhiều thì câu đáp cũng số nhiều. Còn hàng thì nói rõ còn thứ gì, đừng chỉ nói yes.",
         ),
       ],
       reading: read(
@@ -2084,7 +2084,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Which room is the note for?",
-          `The note is for Mr Chen, room ${lx.roomNo.spoken}.`,
+          `The note is for room ${lx.roomNo.spoken}, sir.`,
           "Nhận lời nhắn xong phải nói được nó của phòng nào. Đọc số phòng từng chữ số, không đọc thành số đếm.",
           "colleague",
         ),
@@ -2169,9 +2169,9 @@ function week12(lx: Ctx): LessonContent[] {
           "Ôn tuần 9: nhận lời rồi nói rõ mình mang gì, đừng chỉ nói 'yes'.",
         ),
         sp(
-          "What do you do at nine?",
-          `I ${act(lx.bank.routines[2])} at nine.`,
-          "Ôn tuần 11: việc trong ca kèm mốc giờ ở cuối câu.",
+          "What is your first job?",
+          `I ${act(lx.bank.routines[2])} first, madam.`,
+          "Ôn tuần 11: việc đầu ca. Trạng từ thứ tự đứng cuối câu.",
           "colleague",
         ),
       ],
@@ -2482,7 +2482,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is it open now?",
-          `Yes. The ${back(lx.bank.places, 6)} is open, sir.`,
+          `Yes, sir. The ${back(lx.bank.places, 2)} is open now.`,
           "Ôn tuần 8: gọi tên nơi chốn ra, đừng đáp mỗi 'yes' rồi để khách đoán bạn đang nói chỗ nào.",
         ),
       ],
@@ -3058,7 +3058,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         game(
           "Is the room ready now?",
-          `Yes, madam. Everything is ${lower(c3)}.`,
+          "Yes, madam. The room is ready for you.",
           "Ready yes ready.",
           "Almost, madam. Please wait outside.",
           undefined,
@@ -4486,12 +4486,12 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Ghế em bé là thứ bồi bàn xách tay mang tới bàn, nên đáp bằng 'bring'. Cụm 'high chair' trọng âm ở HIGH.",
         ),
         sp(
-          "Can we have some water?",
+          "Can we have water for the four of us?",
           "Of course. Four glasses, madam?",
           "Đọc lại con số khách vừa cho — bốn người thì bốn ly, và hỏi lại một tiếng để chắc.",
         ),
         sp(
-          "Table six is free now.",
+          "Table six is free — the party of four.",
           "Thank you. I will seat four people.",
           "Nói với đồng nghiệp thì bỏ kính ngữ và nói đủ số bàn với số khách.",
           "colleague",
@@ -4659,7 +4659,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       ],
       grammar: [
         g(
-          "Key no work. New one?",
+          "Passport? You give me.",
           "May I see your passport, sir?",
           "Thẻ mới thì phải kiểm giấy tờ trước — không phải vì nghi ngờ khách, mà vì thẻ đó mở đúng một cánh cửa có người đang ngủ sau nó.",
           "May I see your passport for, sir?",

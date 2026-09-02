@@ -737,7 +737,16 @@ const SW_BANK: P1Bank = {
       icon: "🍵",
       art: "some",
     },
-    { word: "Appointment", phonetic: "/əˈpɔɪntmənt/", definition: "Lịch hẹn", icon: "📅" },
+    // Khe 6 là HÀNG TIÊU HAO (city map / ice / shampoo / balloon / paper clip):
+    // khung hỏi "còn hàng không". Một lịch hẹn không phải hàng tồn, nên SW
+    // render ra "We have appointments, madam." cho câu hỏi còn đồ hay không.
+    {
+      word: "Ear plugs",
+      phonetic: "/ˈɪə plʌɡz/",
+      definition: "Nút bịt tai",
+      icon: "🎧",
+      art: "some",
+    },
     { word: "Music", phonetic: "/ˈmjuːzɪk/", definition: "Nhạc", icon: "🎵", art: "some" },
   ],
   states: [

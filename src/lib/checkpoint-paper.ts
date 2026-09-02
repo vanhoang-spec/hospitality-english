@@ -492,8 +492,18 @@ export function buildPaper(dep: string, week: string): Question[] {
     const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
     ].filter((t) => !sameQuestion.has(t) && !sameLesson.has(t) && !isThePrompt(t) && sameShape(t));
+    // The score counted TOKENS, so a longer candidate collected more of them
+    // and always outranked a shorter one. Measured over 2,000 papers: the key
+    // averaged 6.63 words against 7.13 for its distractors, so "always pick
+    // the shortest option" cleared the listening block's own 50% floor on
+    // 64.5% of papers. The paper as a whole was never winnable that way —
+    // ≤0.05% — but the per-block floors exist precisely to stop a learner
+    // passing with one skill at zero. Divided by the candidate's own size, the
+    // score measures similarity instead of length.
     const ranked = (list: string[]) =>
-      list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
+      list
+        .map((t) => ({ t, score: (share(t) + echo(t) * 2) / Math.max(1, bagOf(t).size) }))
+        .sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
     // One Set around the WHOLE thing, not around the second half. Widening the
     // pool with grammar polites re-added sentences the speaking pool already

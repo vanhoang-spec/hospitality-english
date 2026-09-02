@@ -174,6 +174,26 @@ export const PROMISE_VERBS = new Set<string>([
   "wait",
 ]);
 
+/** Finite verbs, in both the bare and the third-person form. The one-word
+ *  allowance may never be spent on one: a sentence without its verb is not a
+ *  slip, it is a different utterance, and the -s that marks the third person
+ *  is the single most-taught point of the phase. */
+const FINITE_VERBS = new Set<string>(
+  (
+    "work works start starts finish finishes come comes go goes open opens close closes " +
+    "clean cleans bring brings check checks make makes take takes give gives need needs " +
+    "want wants say says tell tells call calls keep keeps stay stays send sends write writes " +
+    "read reads ask asks help helps wait waits serve serves pour pours cook cooks vacuum vacuums " +
+    "collect collects print prints sign signs greet greets register registers deliver delivers " +
+    "update updates refill refills prepare prepares wash washes fold folds rest rests " +
+    "invite invites decorate decorates remember remembers arrange arranges book books " +
+    "massage massages warm warms light lights meet meets show shows count counts file files " +
+    "pay pays save saves attend attends mop mops dust dusts change changes report reports " +
+    "transfer transfers cancel cancels dial dials email emails confirm confirms hold holds " +
+    "welcome welcomes order orders repeat repeats stop stops fix fixes seat seats spell spells"
+  ).split(" "),
+);
+
 /** Words a lesson is ABOUT, which the one-word allowance must never spend
  *  itself on. The allowance says a long model may lose one word; it did not
  *  say WHICH, so a review found ten items where the droppable word was the
@@ -839,7 +859,19 @@ export function utterancePassed(
   // >= 4 the short models still hold every word — "The cleaner starts at
   // eight." has three, and "starts" is the lesson — while the longer ones get
   // the single slip the threshold was always meant to allow.
-  const contentAllowance = targetContent.length >= 4 ? 1 : 0;
+  // Two reviews pulled this in opposite directions and both were right. At >=5
+  // then >=4, 88% then 68% of Phase 1 models had no allowance at all, so the
+  // published 60% threshold was 100% in practice and an honest learner who
+  // dropped one ordinary word failed at 80-89% accuracy. But widening it let
+  // the MAIN VERB go: "The morning shift at ten." passed "The morning shift
+  // finishes at ten." — in the item whose helpTip is "a verb ending in -sh
+  // takes -es: finishES".
+  //
+  // The answer was never the threshold. A verb is not an ordinary word: the
+  // sentence stops being a sentence without it. So the allowance opens at
+  // three content words, and never spends itself on a verb.
+  const contentAllowance = targetContent.length >= 3 ? 1 : 0;
+  const missingVerb = missingContent.some((t) => FINITE_VERBS.has(t));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
@@ -862,6 +894,7 @@ export function utterancePassed(
       unforgivable.length === 0 &&
       !insertionFails &&
       missingContent.length <= contentAllowance &&
+      !missingVerb &&
       missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
       inflection.length === 0,
