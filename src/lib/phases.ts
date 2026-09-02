@@ -62,7 +62,7 @@ export const CHECKPOINT_PASS_PCT = 70;
 /** The checkpoint paper's fixed composition. Lives here rather than in the
  *  suite because the pass RULE below is written against it, and a mix that
  *  drifts from its floors silently changes what passing means. */
-export const CHECKPOINT_MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
+export const CHECKPOINT_MIX = { vocab: 6, grammar: 4, listening: 6, reading: 4 } as const;
 export type CheckpointConstruct = keyof typeof CHECKPOINT_MIX;
 export const CHECKPOINT_TOTAL_QUESTIONS = Object.values(CHECKPOINT_MIX).reduce((a, b) => a + b, 0);
 

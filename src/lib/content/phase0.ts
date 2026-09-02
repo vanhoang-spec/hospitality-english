@@ -5764,9 +5764,16 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
 
 function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   if (week === 1) return undefined;
+  // The review list must be built from the lessons the learner actually
+  // gets — department override first, spine as fallback — or the two drift:
+  // a headword added by an override (F&B's Allergy, week 5) never entered
+  // the review schedule, and a headword swapped out by one would have left
+  // the schedule pointing at a card that no longer exists.
+  const realWeek = (w: number) =>
+    WEEK_META[w].build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l);
   const earlier: string[] = [];
   for (let w = 1; w < week; w++) {
-    for (const l of WEEK_META[w].build(lx)) {
+    for (const l of realWeek(w)) {
       for (const item of l.vocabulary) earlier.push(item.word);
     }
   }
@@ -5785,7 +5792,7 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   // next to, so it is the one a spaced-retrieval schedule should not skip.
   if (week === 6) {
     const w5: string[] = [];
-    for (const l of WEEK_META[5].build(lx)) for (const item of l.vocabulary) w5.push(item.word);
+    for (const l of realWeek(5)) for (const item of l.vocabulary) w5.push(item.word);
     const before5 = earlier.filter((w) => !w5.includes(w));
     return [...new Set([...w5, ...spread(before5, 20 - w5.length)])];
   }
@@ -5795,7 +5802,7 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
   // reviewed. Returning the whole week guarantees each headword one spaced
   // retrieval at lag 1.
   const lastWeek: string[] = [];
-  for (const l of WEEK_META[week - 1].build(lx)) {
+  for (const l of realWeek(week - 1)) {
     for (const item of l.vocabulary) lastWeek.push(item.word);
   }
   // Plus a lag-3 visit. The list was strictly lag-1 — a word met in week 1

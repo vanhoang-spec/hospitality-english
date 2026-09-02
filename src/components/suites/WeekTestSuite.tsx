@@ -301,11 +301,18 @@ function buildPaper(dep: string, week: string): Question[] {
     const sameQuestion = new Set(
       speakPool.filter((o) => o.guestPrompt === s.guestPrompt).map((o) => o.targetResponse),
     );
+    // Điểm chọn nhiễu = giống ĐÁP ÁN + vọng lại từ của ĐỀ. Vế thứ hai là vì
+    // đáp án đúng thường vọng đề ("What time do you open?" → "We open at…"),
+    // nên nhiễu không vọng đề thì mẹo "chọn câu trùng lời khách nhiều nhất"
+    // thắng 53-72% khối này — một báo cáo đo trên 20.000 lượt. Nhiễu cũng
+    // vọng đề thì độ vọng hết phân biệt được, và học viên phải NGHE.
+    const promptBag = bagOf(s.guestPrompt);
+    const echo = (t: string) => [...bagOf(t)].filter((w) => promptBag.has(w)).length;
     const others = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
     ]
       .filter((t) => !sameQuestion.has(t) && !saysTheSame(t))
-      .map((t) => ({ t, score: share(t) }))
+      .map((t) => ({ t, score: share(t) + echo(t) * 2 }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 2)
       .map((x) => x.t);
