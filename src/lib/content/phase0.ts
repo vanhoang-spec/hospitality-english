@@ -484,6 +484,7 @@ function lesson(
           said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
         )
         .filter((w): w is string => w !== null);
+      for (const v of said) if (PROMISE_VERBS.has(v)) add.push(v);
       return add.length
         ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
         : sp;
@@ -6176,6 +6177,37 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
  *  measured the same hole independently — a Phase 1 target stripped of its
  *  headword passed 96.2% of the time against 2.3% in Phase 0, and a simulated
  *  oral checkpoint cleared 100% of sittings saying "This is our , sir."  */
+/** The verbs a service sentence is a PROMISE about.
+ *
+ *  The headword lock covers the word a week teaches. It does not cover the
+ *  verb the sentence commits to, because that verb is usually not a headword
+ *  anywhere — and the accuracy threshold is deliberately loose enough at A1
+ *  to let exactly one word go. Three audits found the same thing from three
+ *  departments: "I am sorry. I will stop now." passed an item whose target is
+ *  "I am sorry, madam. I will check it.", which is the whole distinction week
+ *  13 exists to teach; and a target survived having its verb replaced with a
+ *  nonsense word in 66% of the phase.
+ *
+ *  Only verbs that name a DIFFERENT action from each other are here. Words a
+ *  learner could reasonably paraphrase are not. */
+const PROMISE_VERBS = new Set([
+  "ask",
+  "arrange",
+  "bring",
+  "call",
+  "change",
+  "check",
+  "help",
+  "repeat",
+  "report",
+  "show",
+  "sign",
+  "stop",
+  "tell",
+  "transfer",
+  "wait",
+]);
+
 export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
   const heads = [
     ...new Set(
@@ -6194,6 +6226,7 @@ export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
           said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
         )
         .filter((w): w is string => w !== null);
+      for (const v of said) if (PROMISE_VERBS.has(v)) add.push(v);
       return add.length
         ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
         : sp;
