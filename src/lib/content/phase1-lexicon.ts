@@ -825,7 +825,11 @@ const SW_BANK: P1Bank = {
     // other five banks hold `call us`, `call room service`, `call housekeeping`,
     // `call back` — and the frame is "Please ___ any time", which turned it
     // into "Please confirm any time, sir."
-    { word: "Call reception", phonetic: "/kɔːl rɪˈsepʃn/", definition: "Gọi lễ tân", icon: "📞" },
+    // Bốn bộ phận kia đều tự xưng mình ở khe này (call us / call room service
+    // / call housekeeping / call back); chỉ SW từng bị đổi thành chỉ khách sang
+    // bộ phận khác. Cặp trùng đáp án với khe 0 nay do bộ lọc "please call" của
+    // checkpoint-paper xử lý, không phải bằng cách đổi nội dung.
+    { word: "Call the spa", phonetic: "/kɔːl ðə ˈspɑː/", definition: "Gọi cho spa", icon: "📞" },
   ],
   problems: [
     { word: "Too hot", phonetic: "/tuː ˈhɒt/", definition: "Quá nóng", icon: "🥵" },

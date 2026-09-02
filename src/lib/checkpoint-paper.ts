@@ -181,6 +181,8 @@ export function buildPaper(dep: string, week: string): Question[] {
     };
   });
 
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+
   // Sir/madam is a coin-flip tag, not content: two replies that differ only by
   // it are the same reply. The speaking grader already treats it that way.
   const HONORIFIC_WORDS = new Set(["sir", "madam", "maam"]);
@@ -316,6 +318,19 @@ export function buildPaper(dep: string, week: string): Question[] {
   const nearlySameAnswer = (a: string, b: string) => {
     if (sameAnswer(a, b)) return true;
     if (sameApologyPromise(a, b)) return true;
+    // "Please call the spa desk." and "Please call reception any time, sir." are
+    // one routing instruction wearing two hats: whichever the paper keys, the
+    // other is also a correct thing to tell that guest. Measured at 4.2% of
+    // Spa papers across three rounds.
+    const routes = (t: string) => /^please call( |$)/i.test(t.trim());
+    if (routes(a) && routes(b)) return true;
+    // "I am not sure. I will ask our lounge manager." and "Let me ask the
+    // manager for you." are one move. The content has to stay as it is — two
+    // manager reviews showed that naming the person and stopping is the wrong
+    // service answer — so the paper is what has to keep them apart, and it
+    // cannot do it by content. They go on different papers instead.
+    const goesToAsk = (t: string) => /(i will ask|let me ask|i will check with)/i.test(t);
+    if (goesToAsk(a) && goesToAsk(b)) return true;
     const x = coreOf(a);
     const y = coreOf(b);
     if (x.size === 0 || y.size === 0) return false;
@@ -492,18 +507,23 @@ export function buildPaper(dep: string, week: string): Question[] {
     const pool = [
       ...new Set(speakPool.map((o) => o.targetResponse).filter((t) => t !== s.targetResponse)),
     ].filter((t) => !sameQuestion.has(t) && !sameLesson.has(t) && !isThePrompt(t) && sameShape(t));
-    // The score counted TOKENS, so a longer candidate collected more of them
-    // and always outranked a shorter one. Measured over 2,000 papers: the key
-    // averaged 6.63 words against 7.13 for its distractors, so "always pick
-    // the shortest option" cleared the listening block's own 50% floor on
+    // The score counts TOKENS, so a longer candidate collects more of them and
+    // outranks a shorter one on length alone. Measured over 2,000 papers: the
+    // key averaged 6.63 words against 7.13 for its distractors, so "always
+    // pick the shortest option" cleared the listening block's own 50% floor on
     // 64.5% of papers. The paper as a whole was never winnable that way —
     // ≤0.05% — but the per-block floors exist precisely to stop a learner
-    // passing with one skill at zero. Divided by the candidate's own size, the
-    // score measures similarity instead of length.
+    // passing with one skill at zero.
+    //
+    // Dividing the score by the candidate's size inverts the bias rather than
+    // removing it: measured, "longest wins" then went to 57.5% of listening
+    // questions. Length has to leave the comparison, not change sign — so
+    // candidates are drawn from a band around the key's own length, and the
+    // original similarity score ranks what is left.
+    const keyLen = wordsOf(s.targetResponse);
+    const inBand = (t: string) => Math.abs(wordsOf(t) - keyLen) <= 2;
     const ranked = (list: string[]) =>
-      list
-        .map((t) => ({ t, score: (share(t) + echo(t) * 2) / Math.max(1, bagOf(t).size) }))
-        .sort((a, b) => b.score - a.score);
+      list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
     // One Set around the WHOLE thing, not around the second half. Widening the
     // pool with grammar polites re-added sentences the speaking pool already
@@ -533,7 +553,9 @@ export function buildPaper(dep: string, week: string): Question[] {
       ]),
     ];
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
-    const strict = ranked(widened.filter((t) => !nearlySameAnswer(t, s.targetResponse)));
+    const usable = widened.filter((t) => !nearlySameAnswer(t, s.targetResponse));
+    const banded = usable.filter(inBand);
+    const strict = ranked(banded.length >= 2 ? banded : usable);
     // And the two distractors must differ from EACH OTHER. The old rule
     // compared every candidate to the key and never to its neighbour, so a
     // paper could offer "This one is better, madam." against "This one is

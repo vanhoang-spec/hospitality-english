@@ -643,6 +643,12 @@ function week8(lx: Ctx): LessonContent[] {
           `Yes, there is one near the lift.`,
           "'There is' = 'có'. Đây là cấu trúc quan trọng nhất tuần này. 'there' mở đầu bằng /ð/ — lưỡi chạm răng và có rung, đừng để thành de hay ze.",
         ),
+        sp(
+          "Where do the new staff go?",
+          "Please show them the staff door.",
+          "Chỉ đường cho đồng nghiệp mới thì bỏ kính ngữ. Mẫu: SHOW + người + nơi chốn.",
+          "colleague",
+        ),
       ],
       reading: read(
         `${lx.staff} explains the area: "There is a ${lower(p4)} near the lift, sir. The ${lower(p3)} is next to it." The guest walks to the lift. Our ${back(lx.bank.roles, 5)} waits there and says: "Good morning, sir."`,
@@ -1310,7 +1316,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
         sp(
           `This is too ${lower(s4)}.`,
-          "I am sorry. I will tell my manager.",
+          "I am very sorry. I will check it now.",
           "Nghe 'too + tính từ' là khách đang phàn nàn thật: xin lỗi rồi báo lên trên. Việc vượt quyền mình thì đừng hứa tự xử lý. Từ 'manager' trọng âm ở đầu: MAN-a-ger, hai âm sau đọc lướt.",
         ),
         sp(
@@ -1321,7 +1327,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will tell my manager now." ${lx.staff} writes it down and goes to the office. The guest says: "Thank you for listening." The manager comes ten minutes later.`,
+        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will check it now." ${lx.staff} writes it down and goes to look. The guest says: "Thank you for listening." The manager comes ten minutes later.`,
         [
           {
             q: "'Too' khác 'very' ở điểm nào?",
@@ -1971,6 +1977,12 @@ function week12(lx: Ctx): LessonContent[] {
           "Can you take a message?",
           "Of course. May I have your name, sir?",
           "Nhận lời rồi hỏi ngay thứ mình cần để ghi lại. Mẫu xin thông tin luôn mở bằng một câu hỏi lịch sự, không hỏi trống không.",
+        ),
+
+        sp(
+          `It is for room ${lx.roomNo.spoken}.`,
+          `Thank you. Room ${lx.roomNo.spoken}, sir?`,
+          "Đọc lại số phòng ngay khi vừa nghe — buồng phòng, phục vụ phòng và lễ tân đều chạy theo con số đó, và nghe nhầm một chữ số là giao nhầm một căn phòng.",
         ),
         sp(
           "I need to check something.",
@@ -3127,6 +3139,12 @@ function week14(lx: Ctx): LessonContent[] {
           "I write it down because the shift changes.",
           "Mệnh đề lý do với 'because'. Ghi lại là để ca sau đọc được, không phải để trí nhớ bạn đỡ mệt.",
         ),
+        sp(
+          "Is Mrs Lee finished?",
+          "Yes. Please prepare her bill.",
+          "Bàn giao cuối lượt khách: xác nhận xong rồi chuyển việc tiếp theo cho đúng người. Không kính ngữ khi nói với đồng nghiệp.",
+          "colleague",
+        ),
       ],
       reading: read(
         `Everything is finished. ${lx.staff} asks: "Is there anything else, madam?" She says: "No, thank you." ${lx.staff} smiles: "Enjoy your stay." The guest is leaving in the morning. ${lx.staff} remembers the name, says it once more at the door, and wishes her a good night. Nothing is ${back(lx.bank.problems, 1)} and nothing is ${back(lx.bank.problems, 0)} now. Tomorrow ${lx.staff} will ${act(lx.bank.routines[3])} again.`,
@@ -3246,6 +3264,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Is my treatment room ready?",
           "Yes, madam. It is on the right.",
           "Xác nhận rồi chỉ hướng ngay trong một hơi.",
+        ),
+        sp(
+          "Should I tell anyone?",
+          "I will tell my manager, madam.",
+          "Mọi lượt khách thấy khó chịu trong phòng xông đều phải vào sổ. Nói ra câu này trước mặt khách cũng là cách cho họ biết việc đã được ghi nhận.",
         ),
       ],
       reading: read(
@@ -3534,8 +3557,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       speaking: [
         sp(
           "We booked a table for eight.",
-          "The table is not ready yet, sir.",
-          "Nói thật là chưa xong, rồi mới nói bao lâu. Giấu một phút là mất cả buổi tối.",
+          "I am sorry. It is not ready yet, sir.",
+          "Khách đã đặt bàn thì lời đầu tiên là xin lỗi, rồi mới nói tình trạng. Giấu một phút là mất cả buổi tối.",
           undefined,
           ["ready"],
         ),
@@ -4139,10 +4162,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       speaking: [
         sp(
           "Can I have more ice, please?",
-          "I am sorry. We have no ice.",
-          "Nói thẳng là hết, đừng vòng vo. Chữ 'ice' mở bằng /aɪ/ và đóng bằng /s/ — nghe rõ cả đuôi.",
-          undefined,
-          ["ice"],
+          "One moment, sir. I will ask the kitchen.",
+          "Quầy hết đá thì hỏi bếp trước, đừng tuyên bố với khách. Một lời từ chối đứng một mình vẫn là một lời từ chối.",
         ),
         sp(
           "So what can you do?",
@@ -4270,8 +4291,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Hỏi trước khi đơn xuống bếp, đừng chờ khách tự khai. Một câu sáu chữ ở đây rẻ hơn mọi thứ xảy ra sau đó.",
         ),
         sp(
-          "Thank you, that looks lovely.",
-          "Enjoy your meal, madam.",
+          "Thank you, the dessert looks lovely.",
+          "Enjoy your dessert, madam.",
           "Câu chốt của mọi lượt đặt món xuống bàn. Chữ 'Enjoy' trọng âm ở âm sau: en-JOY.",
         ),
         sp(
@@ -4559,7 +4580,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Room number what?",
           "May I have your room number, madam?",
           "Vào phòng chờ phải có phòng trong danh sách. Hỏi số phòng là bước kiểm, không phải câu xã giao.",
-          "May I have your room number, madam.",
+          "May I to have your room number, madam?",
         ),
         g(
           "Very much elegant here.",
@@ -4697,6 +4718,12 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           `Room ${lx.roomNo.spoken}. The key is lost.`,
           "Báo cho đồng nghiệp thì số phòng đi trước, sự cố đi sau.",
           "colleague",
+        ),
+        sp(
+          "Anything for the logbook?",
+          "One key is lost, madam.",
+          "Thẻ mất là sự cố an ninh, không phải chuyện vặt: huỷ thẻ xong vẫn phải ghi sổ và báo cấp trên trong ca.",
+          "manager",
         ),
       ],
       reading: read(
