@@ -4321,6 +4321,197 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       ],
     }),
 
+  // Guest Relations' whole request bank is chargeable — wheelchair, baby cot,
+  // fruit basket, birthday cake — and the spine has the learner accept every
+  // one of them on the spot. Across eight weeks the strings `charge`, `price`
+  // and `free` appear zero times in anything Guest Relations says, so nothing
+  // in the phase separates what you may hand over from what somebody has to
+  // approve. Housekeeping already has this lesson (HK_9_2); this is its
+  // Guest Relations twin, on the same two headwords as the spine.
+  GR_9_2: (lx) =>
+    lesson(lx, 9, 2, "Free, or Not Mine to Give", "Miễn phí, hay không do mình quyết", {
+      vocabulary: [
+        v("Candle", "/ˈkændl/", "Nến", "Some candles, please.", "🕯️"),
+        v(
+          "Baby cot",
+          "/ˈbeɪbi kɒt/",
+          "Nôi em bé",
+          "I will ask reception about the baby cot.",
+          "🛏️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Baby cot OK I bring.",
+          "I will ask reception, madam.",
+          "Nôi em bé có tính tiền và có giới hạn số lượng — quầy lễ tân duyệt, không phải bộ phận chăm sóc khách.",
+          "I will ask to reception, madam.",
+        ),
+        g(
+          "Candle free yes.",
+          "The candles are free, madam.",
+          "Chủ ngữ số nhiều đi với 'are': the candles ARE free. 'Free' ở đây nghĩa là không mất tiền.",
+          "The candles is free, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Can I have two candles?",
+          "Of course. I will bring two candles.",
+          "Thứ miễn phí thì nhận lời ngay và nhắc lại đúng con số khách vừa nói.",
+        ),
+        sp(
+          "Can we have a baby cot tonight?",
+          "I will ask reception, madam.",
+          "Thứ có tính tiền thì không nhận lời tại chỗ. Câu này không phải từ chối — nó là hoãn lại đúng chỗ có quyền quyết.",
+        ),
+        sp(
+          "Is there a price for that?",
+          "I will check the price for you, sir.",
+          "Không bao giờ đoán giá. Nói mình đi kiểm rồi báo lại — sai giá một lần là mất lòng tin cả kỳ nghỉ.",
+        ),
+        sp(
+          `Room ${lx.roomNo.spoken} wants a baby cot.`,
+          "I will tell reception now.",
+          "Chuyển yêu cầu cho đúng nơi, và nói ngay chứ không để tới cuối ca.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A family asks for a baby cot. ${lx.staff} does not say yes and does not say no. ${lx.staff} says: "I will ask reception, madam." Reception knows the price and knows how many people the room may hold. ${lx.staff} then brings two candles, which are free and need nobody's permission.`,
+        [
+          {
+            q: "Vì sao nhân viên không nhận lời ngay?",
+            options: [
+              "Nôi em bé có tính tiền và có giới hạn số người trong phòng",
+              "Vì kho đang hết nôi em bé",
+              "Vì khách chưa nói rõ mấy giờ cần",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc nêu đúng hai lý do: giá, và số người phòng được chứa. Cả hai đều nằm ở quầy lễ tân, không nằm ở bạn.",
+          },
+          {
+            q: "Thứ nào nhân viên mang được ngay?",
+            options: ["Nến", "Nôi em bé", "Cả hai"],
+            correct: 0,
+            explanation:
+              "Nến miễn phí và không cần ai duyệt. Ranh giới của bài này là: miễn phí thì mang, tính tiền thì hỏi.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Just bring the cot, it is only one night.",
+          "I will ask reception now, madam.",
+          "One night only, I bring.",
+          "Of course, madam. I will bring it now.",
+          undefined,
+          "Câu đó lịch sự và làm khách vui trong ba giây. Nhưng bạn vừa hứa một thứ có tính tiền và có giới hạn phòng cháy — người phải rút lời hứa lại là đồng nghiệp ca sau.",
+        ),
+        game(
+          "How much is the baby cot?",
+          "I will check the price for you, madam.",
+          "Price I not know.",
+          "It is free, madam.",
+          undefined,
+          "Câu đó ngắn gọn và dễ chịu, và nó là một con số bạn chưa tra. Nếu hoá đơn cuối kỳ có dòng đó, khách sẽ nhớ đúng người đã nói 'free'.",
+        ),
+      ],
+    }),
+
+  // Housekeeping is the department that MAKES the floor wet, and the spine
+  // teaches it to warn the guest and then send for somebody else: "Then Huy
+  // tells the manager, and the manager sends somebody." Across all eight
+  // weeks the strings `sign`, `clean it`, `dry it` and `mop it` appear zero
+  // times in anything Housekeeping says. A room attendant standing next to
+  // her own trolley does not send for somebody.
+  //
+  // Same headword as the spine lesson it replaces (Wet); `Dry` comes back
+  // from week 10 lesson 2 in the same week that taught it.
+  HK_10_4: (lx) =>
+    lesson(lx, 10, 4, "The Wet Floor Is Mine", "Sàn ướt là việc của mình", {
+      vocabulary: [bw(lx.bank.states[7]!, "Careful, the floor is wet.")],
+      grammar: [
+        g(
+          "Careful wet!",
+          "Please be careful. The floor is wet.",
+          "Cảnh báo lịch sự: 'Please be careful' rồi mới nói lý do. Nói đủ 'the floor' để khách biết nhìn xuống đâu.",
+          "Please careful. The floor is wet.",
+        ),
+        g(
+          "I clean now it.",
+          "I will clean it now, madam.",
+          "Tân ngữ đứng ngay sau động từ, mốc thời gian đứng cuối: CLEAN IT NOW. Từ 'clean' đóng bằng /n/, phải ngậm lưỡi lại.",
+          "I will clean now it, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "The floor is wet here.",
+          "I am sorry, madam. I will clean it now.",
+          "Xin lỗi rồi nhận việc. Sàn ướt là việc của buồng phòng — đây là một trong số ít lần lời hứa tự làm là lời hứa đúng.",
+        ),
+        sp(
+          "Can I walk here?",
+          "Please wait one moment, sir.",
+          "Chặn khách lại trước, giải thích sau. Một giây chờ rẻ hơn một cú ngã.",
+        ),
+        sp(
+          "Is it safe now?",
+          "Yes, madam. The floor is dry.",
+          "Chỉ nói an toàn khi đã thật sự xong. Ôn tuần này: 'dry' là từ ngược nghĩa với ướt.",
+        ),
+        sp(
+          "Which room is wet?",
+          `The floor is wet in room ${lx.roomNo.spoken}.`,
+          "Báo cho đồng nghiệp thì nói rõ phòng nào. Đọc số phòng từng chữ số một.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest points at the floor. ${lx.staff} says: "I am sorry, madam. I will clean it now." ${lx.staff} does not walk away to find somebody. ${lx.staff} brings a mop, cleans the floor, and stays there until it is dry. Then ${lx.staff} tells the floor supervisor, so the next shift knows.`,
+        [
+          {
+            q: "Nhân viên nói câu nào với khách?",
+            options: [
+              "I am sorry, madam. I will clean it now.",
+              "I am sorry, madam. I will tell my manager.",
+              "I am sorry, madam. Please be careful.",
+            ],
+            correct: 0,
+            explanation:
+              "Cả ba câu đều lịch sự. Nhưng lau sàn là việc của buồng phòng: báo cấp trên hoặc chỉ cảnh báo là để nguyên chỗ nguy hiểm đó cho người đi sau.",
+          },
+          {
+            q: "Nhân viên đứng lại tới lúc nào?",
+            options: ["Tới khi sàn khô", "Tới khi quản lý tới", "Không đứng lại"],
+            correct: 0,
+            explanation:
+              "Cảnh báo chỉ có tác dụng khi có người đứng đó. Đi khỏi trước lúc sàn khô là bỏ lại đúng cái nguy hiểm mình vừa cảnh báo.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Can you tell somebody?",
+          "I will do it myself, madam.",
+          "Somebody I tell.",
+          "Of course, madam. I will tell the manager.",
+          undefined,
+          "Câu đó lịch sự và đúng ngữ pháp, nhưng nó biến một việc năm phút thành một việc chờ người khác — và chỗ ướt vẫn nằm đó suốt thời gian chờ.",
+        ),
+        game(
+          "Is it finished?",
+          "Not yet, madam. Please use the other side.",
+          "No finish. Other side.",
+          "Yes, madam. It is finished.",
+          undefined,
+          "Nói xong khi chưa xong là câu nguy hiểm nhất bài này: khách tin bạn và bước lên chỗ vẫn còn ướt.",
+        ),
+      ],
+    }),
+
   // The spine sent a guest looking for the store room. A store room holds
   // chemicals and clean linen, and no department lets a guest walk into one.
   HK_8_3: (lx) =>
