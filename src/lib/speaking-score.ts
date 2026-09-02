@@ -425,7 +425,18 @@ export function compareWords(
   // streams, as a fraction of the target length. Bag-matching alone can
   // be gamed by reciting the right words in any order — real speech has
   // to follow the sentence's word order too.
-  const orderRatio = b.length === 0 ? 0 : lcsLength(a, b) / b.length;
+  //
+  // Computed on honorific-stripped streams. "Thank you, madam. Goodbye."
+  // and "Thank you. Goodbye, madam." are the same sentence with the tag in
+  // the other natural slot — the review that caught this measured 21/21
+  // mid-sentence-honorific items failing at accuracy 100 when the tag
+  // moved, and two authored orderings of one line failing each other
+  // inside the same oral pool. Presence of the tag is still graded by the
+  // required-token layer; its POSITION was never the lesson.
+  const HON_ORDER_FREE = new Set(["sir", "madam", "maam"]);
+  const ao = a.filter((w) => !HON_ORDER_FREE.has(w));
+  const bo = b.filter((w) => !HON_ORDER_FREE.has(w));
+  const orderRatio = bo.length === 0 ? (b.length === 0 ? 0 : 1) : lcsLength(ao, bo) / bo.length;
   // `words` is what the UI renders back to the learner, so it must be the
   // target as authored — not the canonicalised stream, which would print
   // "sir" over a model sentence that says "madam". Same length, so the

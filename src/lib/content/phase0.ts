@@ -475,7 +475,11 @@ function lesson(
           .replace(/[^a-z0-9 -]/g, " ")
           .split(/\s+/),
       );
-      const add = heads.filter((w) => said.has(w));
+      const add = heads
+        .map((w) =>
+          said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
+        )
+        .filter((w): w is string => w !== null);
       return add.length
         ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
         : sp;
@@ -1369,14 +1373,14 @@ function week3(lx: P0Lexicon): LessonContent[] {
           `We open at ${lx.service.open}, madam.`,
           "Công thức: 'We open at + giờ'. Đóng cửa thì 'We close at + giờ'. 'open' trọng âm âm tiết đầu: O-pen.",
           undefined,
-          ["open"],
+          ["open", "at"],
         ),
         sp(
           "And what time do you close?",
           `We close at ${lx.service.close}, madam.`,
           "Cùng công thức, chỉ đổi động từ. Chú ý 'close' ở đây là ĐỘNG TỪ, đọc /kləʊz/ rung ở cuối — khác hẳn tính từ 'close' /kləʊs/ nghĩa là gần. Người Việt hay đọc cả hai thành /s/.",
           undefined,
-          ["close"],
+          ["close", "at"],
         ),
       ],
       reading: read(
@@ -1587,7 +1591,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Price list no have, sir.",
           "Yes sir, price list I bring you.",
           undefined,
-          "Cả hai câu 'Yes' đều đúng ngữ pháp. Ở trình độ này chọn câu NGẮN hơn: khách chỉ cần biết bạn đã nghe và sẽ đi lấy. Câu dài dễ vấp, mà vấp giữa chừng thì mất cả câu.",
+          "Câu thứ ba đảo tân ngữ lên trước theo trật tự tiếng Việt và thiếu mạo từ — tiếng Anh là chủ ngữ–động từ–tân ngữ: 'I will bring you the price list.' Đây đúng là lỗi mà tuần 2 bài 3 dạy bạn bỏ.",
         ),
         game(
           "Is the wifi free?",
@@ -2212,6 +2216,8 @@ function week6(lx: P0Lexicon): LessonContent[] {
           "Good afternoon. I am Mr Chen. I stayed here in May.",
           "Welcome back, Mr Chen.",
           "Khách quen thì thêm 'back' — hai chữ đó nói rằng bạn nhớ họ. Gọi bằng HỌ kèm Mr, Mrs hoặc Ms, không gọi tên riêng.",
+          undefined,
+          ["back"],
         ),
         sp(
           "Good morning. I have a booking. I am Anna Smith.",
@@ -3209,7 +3215,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Trong câu hỏi, chữ does đã mang dấu ngôi ba số ít nên động từ để nguyên: does it open. Trong câu trả lời không còn does nữa, nên chính động từ phải mang đuôi -s: it opens. Cụm /nz/ cuối phải nghe được cả hai âm.",
         ),
         sp(
-          "Yes? Who is it?",
+          "Yes? Is that housekeeping?",
           "Housekeeping. May I clean now, madam?",
           "Câu bạn nói nhiều nhất trong cả toà nhà, và nó có hai nửa: xưng bộ phận, rồi XIN PHÉP. Bỏ nửa sau là tự cho mình quyền vào phòng người khác.",
           undefined,
@@ -3346,7 +3352,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "Do you take dollars here?",
-          "We take dong, sir.",
+          "I am sorry. We take dong, sir.",
           "Dollar no good here, sir.",
           "Yes sir, dollars are fine here too.",
           undefined,
@@ -3386,7 +3392,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           "How much for the laundry?",
-          `The total is ${lx.priced.vndWord}.`,
+          `The total is ${lx.priced.vndWord} dong.`,
           "Báo tổng thành tiếng trước khi ghi phiếu — khách nghe rõ ngay tại phòng thì không tranh cãi lúc trả phòng. Âm /l/ CUỐI từ là lỗi nặng nhất của người Việt: total, bill, towel — đầu lưỡi chạm lợi trên và giữ ở đó.",
           undefined,
           ["total"],
@@ -3818,7 +3824,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest opens the door and says: "I need something for the room." ${lx.staff} stays by the trolley and says: "Please tell me, madam." The guest asks for two more towels. ${lx.staff} says: "Certainly, madam. Right away." ${lx.staff} writes room ${lx.roomNo.spoken} on the list and brings them.`,
+        `A guest opens the door and says: "I need something for the room." ${lx.staff} stays by the trolley and says: "Please tell me, madam." The guest asks: "Could you clean the bathroom first?" ${lx.staff} says: "Certainly, madam. Right away." Then the guest asks for two more towels. ${lx.staff} says: "One moment, madam. I will check."`,
         [
           {
             q: `Khách nói mơ hồ, ${lx.staff} làm gì?`,
@@ -3901,7 +3907,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           `Is anyone in ${lx.roomNo.spoken}?`,
-          "The guest is out, madam.",
+          "Nobody inside. The guest is out.",
           "Đây là lượt nói với ĐỒNG NGHIỆP, không phải với khách — và ngay cả với đồng nghiệp cũng chỉ nói phòng có người hay không, không nói khách đi đâu.",
           "colleague",
         ),
@@ -4269,7 +4275,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           `I am in room ${lx.roomNo.spoken}. Can I come in?`,
           `May I see your card, madam?`,
-          "Ở phòng chờ, xin xem THẺ chứ đừng hỏi lại số phòng — người lạ ngồi sát ngay đó. Vẫn nhắc lại số phòng để xác nhận như tuần 2 đã dạy, nhưng hạ giọng, và ghi ra giấy nếu phải ghi.",
+          "Tuần 2 dạy nhắc lại số phòng để xác nhận — ở quầy vắng thì đúng. Ở phòng chờ đông người lạ thì ĐỔI CÁCH xác nhận: xin xem thẻ, và nếu phải ghi thì ghi ra giấy. Vẫn là bước xác nhận đó, đổi hình thức cho hợp chỗ đứng.",
         ),
         sp(
           `Could you bring two ${lx.items[0].word.toLowerCase()}s to the lounge?`,
@@ -4286,7 +4292,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Is the lounge ready?",
           "The lounge is ready. Six guests.",
-          "Lượt bàn giao với ĐỒNG NGHIỆP: chỗ nào, mấy khách. Không tên khách, không số phòng — kể cả với đồng nghiệp, và kể cả khi không có ai khác đứng gần.",
+          "Lượt bàn giao với ĐỒNG NGHIỆP: trạng thái thì gọn thế này là đủ. Còn bàn giao HỒ SƠ khách thì phải đủ tên và số phòng — thiếu là ca sau làm sai. Chỉ cần hạ giọng và không bàn giao ở chỗ khách nghe được.",
           "colleague",
         ),
       ],
@@ -4365,7 +4371,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           ["check"],
         ),
         sp(
-          "That is everything, thank you.",
+          "And one orange juice, please.",
           "Thank you, madam. Anything else?",
           "Hỏi câu này ngay sau khi đọc lại đơn — đó là lần cuối khách thêm được món trước khi bạn vào bếp. 'Anything' đọc liền một hơi, trọng âm ở A đầu.",
           undefined,
@@ -4436,7 +4442,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "🌅",
         ),
         v("Madam", "/ˈmædəm/", "Thưa bà (gọi khách nữ)", "Good afternoon, madam.", "👋"),
-        v("Welcome", "/ˈwelkəm/", "Chào mừng, đón chào", "You are welcome, madam.", "🙏"),
+        v("Welcome", "/ˈwelkəm/", "Không có gì (đáp lời cảm ơn)", "You are welcome, madam.", "🙏"),
       ],
       grammar: [
         g(
@@ -4807,7 +4813,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Before we start, any injuries?",
           "Câu này hỏi TRƯỚC khi khách nằm xuống, không phải sau. 'injury' trọng âm âm tiết đầu: IN-ju-ry.",
           undefined,
-          ["injuries"],
+          ["injuries", "before"],
         ),
         sp(
           "My back is not good.",
@@ -4815,7 +4821,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Khách nói có vấn đề thì cảm ơn — họ vừa giúp bạn tránh làm họ đau — rồi mới đi hỏi quản lý.",
         ),
         sp(
-          "What time do we finish?",
+          "What time does the spa close today?",
           "We finish at eight, madam.",
           "Nói giờ kết thúc để khách còn xếp lịch phần sau của ngày. 'finish' đóng bằng /ʃ/ — môi hơi tròn, hơi thoát đều, đừng thành 'phi-nít'.",
         ),
@@ -4935,7 +4941,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Keep your underwear on, madam.",
           "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm.",
           undefined,
-          ["underwear"],
+          ["underwear", "on"],
         ),
         sp(
           "Is there a robe?",
@@ -5114,11 +5120,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         game(
           "Could you do my shoulders too?",
-          "Certainly, madam.",
+          "One moment. I will ask my manager.",
           "No shoulders, madam.",
-          "Certainly, madam. Thirty minutes more.",
+          "Certainly, madam.",
           undefined,
-          "Không nói chuyện giá lúc khách đang nằm. Thắc mắc về giá thì để lễ tân trao đổi trước hoặc sau buổi.",
+          "Nhận lời nghe chiều khách, nhưng đổi phạm vi liệu trình giữa buổi không phải việc bạn tự quyết — liệu trình đã sàng lọc theo đúng vùng đã hẹn. Hỏi quản lý, và câu từ chối thẳng thì thô.",
         ),
         game(
           "Are we doing the towels now?",
@@ -5189,7 +5195,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         sp(
           "Two more beers, please.",
           "One moment. I will ask my manager.",
-          "Rượu bia không phải việc bạn tự quyết: khách đã uống bao nhiêu, khách bao nhiêu tuổi, và có phải dừng lại không — cả ba đều là quyết định của quản lý ca. Nhận lời rồi rót thêm là chỗ nhân viên mới hay bị kỷ luật nhất.",
+          "Khách đã uống bao nhiêu và có nên dừng không là quyết định của quản lý ca — nhận lời rồi rót thêm là chỗ nhân viên mới hay bị kỷ luật nhất. Riêng TUỔI thì người rót tự kiểm: chưa đủ mười tám là không phục vụ, không có ngoại lệ.",
           undefined,
           ["manager"],
         ),
@@ -5236,7 +5242,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         game(
           "I am allergic to seafood.",
-          "Certainly, sir. I will tell the kitchen.",
+          "Thank you, sir. I will tell the kitchen.",
           "OK, no seafood.",
           "No problem, sir. Everything here is safe.",
           undefined,
@@ -5833,7 +5839,11 @@ function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
           .replace(/[^a-z0-9 -]/g, " ")
           .split(/\s+/),
       );
-      const add = heads.filter((w) => said.has(w));
+      const add = heads
+        .map((w) =>
+          said.has(w) ? w : said.has(w + "s") ? w + "s" : said.has(w + "es") ? w + "es" : null,
+        )
+        .filter((w): w is string => w !== null);
       return add.length
         ? { ...sp, requiredTokens: [...new Set([...(sp.requiredTokens ?? []), ...add])] }
         : sp;
