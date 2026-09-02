@@ -929,9 +929,14 @@ function week9(lx: Ctx): LessonContent[] {
           "Nhắc lại đúng con số khách vừa nói — đó là cách rẻ nhất chứng minh mình nghe đúng.",
         ),
         sp(
-          `Do you have ${wa(q4)}?`,
+          // Was "Do you have …?", which asks about stock and is answered by
+          // "I will do that now." only if the thing is a service. F&B's slot
+          // holds a high chair, which a waiter carries to the table, so the
+          // reply had no antecedent for "that". Naming the action in the
+          // guest's line makes the slot's class explicit instead of implied.
+          `Can you arrange ${wa(q4)}?`,
           "Of course, madam. I will do that now.",
-          "Những thứ khách sạn KÊ SẴN hoặc HẸN GIỜ — giường phụ, ghế trẻ em, cuộc gọi báo thức — thì không ai cầm tay mang tới, nên đừng đáp bằng 'bring'.",
+          "Những thứ khách sạn KÊ SẴN hoặc HẸN GIỜ — giường phụ, ghế trẻ em, cuộc gọi báo thức — thì không ai cầm tay mang tới, nên đáp bằng 'do that', đừng đáp bằng 'bring'.",
         ),
         sp(
           `I need some ${plural(q3)}.`,
@@ -2956,12 +2961,18 @@ function week14(lx: Ctx): LessonContent[] {
           "Đúng ngữ pháp và nó hạ việc vừa làm xuống thành nghĩa vụ. Khách cảm ơn là đang ghi nhận một người, và câu đó trả lời rằng đó chỉ là công việc.",
         ),
         game(
-          "That is everything, thank you.",
+          // The prompt was "That is everything, thank you." and the
+          // explanation read "'Goodbye' is for check-out" — a rule the course
+          // breaks in week 1, where a room attendant leaving the room is
+          // REQUIRED to say "Thank you, madam. Goodbye." (requiredTokens
+          // ["goodbye"]). The guest now says when they will next be seen, so
+          // the round turns on the situation instead of on a false rule.
+          "That is everything. See you at breakfast.",
           "Thank you, madam. Enjoy your stay.",
           "Finish? Bye.",
           "Thank you, madam. Goodbye.",
           undefined,
-          "Câu đó không sai ngữ pháp nhưng là câu tiễn khách RỜI ĐI. Khách này còn ở lại, nên chúc họ có kỳ nghỉ vui mới đúng; 'Goodbye' để dành cho lúc trả phòng.",
+          "Đúng ngữ pháp, nhưng khách vừa nói sáng mai gặp lại. 'Goodbye' là câu chia tay hẳn — đúng khi bạn ra khỏi phòng khách hoặc khi khách trả phòng, không đúng khi hai bên còn gặp nhau sáng mai.",
         ),
       ],
     }),

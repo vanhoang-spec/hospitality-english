@@ -525,7 +525,17 @@ const HK_BANK: P1Bank = {
     { word: "Water bottle", phonetic: "/ˈwɔːtə ˈbɒtl/", definition: "Chai nước", icon: "💧" },
     { word: "Bed sheet", phonetic: "/ˈbed ʃiːt/", definition: "Ga trải giường", icon: "🛏️" },
     { word: "Shampoo", phonetic: "/ʃæmˈpuː/", definition: "Dầu gội", icon: "🧴", art: "some" },
-    { word: "Tissue", phonetic: "/ˈtɪʃuː/", definition: "Khăn giấy", icon: "🧻" },
+    // Slots 6 and 7 are a SUBSTITUTE PAIR: the week-9 frame runs "We have no
+    // ___ today. Would you like ___?" City map/directions and balloon/ribbon
+    // are substitutes; shampoo and a tissue are not, so Housekeeping shipped
+    // "Do you have some shampoo?" → "I am sorry. Would you like a tissue?"
+    {
+      word: "Shower gel",
+      phonetic: "/ˈʃaʊə dʒel/",
+      definition: "Sữa tắm",
+      icon: "🧴",
+      art: "some",
+    },
   ],
   states: [
     { word: "Clean", phonetic: "/kliːn/", definition: "Sạch", icon: "✨" },
@@ -1083,13 +1093,16 @@ const BO_BANK: P1Bank = {
     { word: "Envelope", phonetic: "/ˈenvələʊp/", definition: "Phong bì", icon: "✉️" },
     { word: "Notebook", phonetic: "/ˈnəʊtbʊk/", definition: "Sổ tay", icon: "📓" },
     { word: "Paper", phonetic: "/ˈpeɪpə/", definition: "Giấy", icon: "📄", art: "some" },
-    { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
+    // Slot 3 is the thing the hotel SETS UP or SCHEDULES — wake-up call,
+    // extra bed, baby cot, sun bed — answered with "I will do that now."
+    // Nobody arranges a stapler.
+    { word: "Extra chair", phonetic: "/ˈekstrə tʃeə/", definition: "Ghế phụ", icon: "🪑" },
     { word: "Calculator", phonetic: "/ˈkælkjuleɪtə/", definition: "Máy tính bỏ túi", icon: "🧮" },
     { word: "Charger", phonetic: "/ˈtʃɑːdʒə/", definition: "Bộ sạc", icon: "🔌" },
-    { word: "Name tag", phonetic: "/ˈneɪm tæɡ/", definition: "Bảng tên", icon: "🏷️" },
+    { word: "Paper clip", phonetic: "/ˈpeɪpə klɪp/", definition: "Kẹp giấy", icon: "🖇️" },
     // "a uniform", not "an" — /juː/ is a consonant sound, and the by-spelling
     // default would get this one wrong.
-    { word: "Uniform", phonetic: "/ˈjuːnɪfɔːm/", definition: "Đồng phục", icon: "👔", art: "a" },
+    { word: "Stapler", phonetic: "/ˈsteɪplə/", definition: "Dập ghim", icon: "📎" },
   ],
   states: [
     { word: "Detailed", phonetic: "/ˈdiːteɪld/", definition: "Chi tiết", icon: "✔️" },
