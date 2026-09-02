@@ -176,6 +176,15 @@ const actThird = (w: P1Word) => {
  *  "important" and wrong for "empty", "bright", "sour" and "tired". */
 const cmpOf = (w: P1Word) => w.cmp ?? `more ${lower(w)}`;
 
+/** A bank word from a slot this week does not otherwise touch, lower-cased.
+ *
+ *  Every reading passage now closes with one sentence that reuses a word from
+ *  an EARLIER week. Five audits reported the same hole from five departments:
+ *  45 to 76 headwords per department were never met again in English after the
+ *  week that taught them, because reviewWords only ever reaches a multiple
+ *  choice card. A passage is the cheapest place to meet a word again. */
+const back = (list: P1Word[], i: number) => list[i]!.word.toLowerCase();
+
 // ============================================================
 // WEEK 7 — People & Jobs in the Hotel
 // FRAMES · "This is {name}. He/She is our {role}."
@@ -228,7 +237,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. ${roleSubj(r2)} is our ${lower(r2)}."`,
+        `A guest meets two staff at ${lx.station}. ${lx.staff} says: "Good morning, sir. This is my colleague. ${roleSubj(r2)} is our ${lower(r2)}." The guest says: "Thank you." ${lx.staff} answers: "You are welcome, madam."`,
         [
           {
             q: "Người thứ hai làm chức danh gì?",
@@ -303,7 +312,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `It is Monday. The ${lower(r4)} begins work early. ${lx.staff} says: "Our ${lower(r3)} is on duty today, madam."`,
+        `It is Monday. The ${lower(r4)} begins work early. ${lx.staff} says: "Our ${lower(r3)} is on duty today, madam." ${lx.staff} adds: "Our ${lower(r3)} starts at eight, madam. Please come back then."`,
         [
           {
             q: "Hôm nay ai đang trực?",
@@ -380,7 +389,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A new guest asks about the team. ${lx.staff} answers: "I work in ${lx.deptEn}. Our ${lower(r6)} works here too."`,
+        `A new guest asks about the team. ${lx.staff} answers: "I work in ${lx.deptEn}. Our ${lower(r6)} works here too." The guest asks about the kitchen. ${lx.staff} says: "One moment, sir. I will ask."`,
         [
           {
             q: `${lx.staff} làm ở bộ phận nào?`,
@@ -459,7 +468,7 @@ function week7(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you."`,
+        `A guest asks a difficult question. ${lx.staff} says: "I am not sure, sir. I will ask our ${lower(r7)}." The guest says: "Thank you." ${lx.staff} does not guess. ${lx.staff} says: "Please wait here, madam. I will come back."`,
         [
           {
             q: "Khi chưa biết câu trả lời, nên làm gì?",
@@ -549,7 +558,7 @@ function week8(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest looks for the ${lower(p1)}. ${lx.staff} points and says: "The ${lower(p1)} is on the left, madam. Please go straight ahead."`,
+        `A guest looks for the ${lower(p1)}. ${lx.staff} points and says: "The ${lower(p1)} is on the left, madam. Please go straight ahead." ${lx.staff} adds: "Our ${back(lx.bank.roles, 1)} is at the main door, madam." The guest says thank you.`,
         [
           {
             q: `${p1.definition} nằm ở phía nào?`,
@@ -623,7 +632,7 @@ function week8(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} explains the area: "There is a ${lower(p4)} near the lift, sir. The ${lower(p3)} is next to it."`,
+        `${lx.staff} explains the area: "There is a ${lower(p4)} near the lift, sir. The ${lower(p3)} is next to it." The guest walks to the lift. Our ${back(lx.bank.roles, 5)} waits there and says: "Good morning, sir."`,
         [
           {
             q: `${p3.definition} nằm ở đâu?`,
@@ -700,7 +709,7 @@ function week8(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest cannot find the ${lower(p5)}. ${lx.staff} says: "It is upstairs, madam. The ${lower(p6)} is downstairs."`,
+        `A guest cannot find the ${lower(p5)}. ${lx.staff} says: "It is upstairs, madam. The ${lower(p6)} is downstairs." ${lx.staff} says: "Please take the lift, sir." Our ${back(lx.bank.roles, 2)} works upstairs today too. Our ${back(lx.bank.roles, 0)} and our ${back(lx.bank.roles, 3)} both work on this floor.`,
         [
           {
             q: `${p5.definition} ở tầng nào?`,
@@ -773,7 +782,7 @@ function week8(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest cannot find the way. ${lx.staff} smiles: "Let me show you, sir. The ${lower(p8)} is over there." They walk together.`,
+        `The guest cannot find the way. ${lx.staff} smiles: "Let me show you, sir. The ${lower(p8)} is over there." They walk together. Our ${back(lx.bank.roles, 6)} opens the door for them. The guest says: "Thank you very much." Our ${back(lx.bank.roles, 4)} is at the door, and our ${back(lx.bank.roles, 7)} comes at six.`,
         [
           {
             q: "Nhân viên làm gì để giúp khách?",
@@ -858,7 +867,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest needs something. He asks: "Can I have ${wa(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one."`,
+        `A guest needs something. He asks: "Can I have ${wa(q1)}?" ${lx.staff} answers: "Of course, sir. I will bring one." ${lx.staff} walks to ${lx.station} and comes back in two minutes. The guest says: "That was quick. Thank you, madam."`,
         [
           {
             q: "Khách xin cái gì?",
@@ -932,7 +941,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest asks for ${plural(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please."`,
+        `The guest asks for ${plural(q3)}. ${lx.staff} asks: "How many do you need, madam?" She answers: "Two, please." ${lx.staff} writes the number down and reads it back. The guest says: "Yes, that is right." Nobody has to ask twice.`,
         [
           {
             q: "Khách cần mấy cái?",
@@ -1006,7 +1015,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest wants a ${lower(q5)}. ${lx.staff} says: "Of course, madam. In five minutes." The ${lower(q5)} arrives on time.`,
+        `A guest wants a ${lower(q5)}. ${lx.staff} says: "Of course, madam. In five minutes." The ${lower(q5)} arrives on time. The guest waits at ${lx.station}. ${lx.staff} comes back on time and says: "Here you are, sir. Sorry for the wait." The ${back(lx.bank.places, 1)} is near the ${back(lx.bank.places, 2)}, so the walk is short.`,
         [
           {
             q: "Bao lâu thì đồ được mang tới?",
@@ -1076,7 +1085,7 @@ function week9(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `We have no ${plural(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please."`,
+        `We have no ${plural(q7)} today. ${lx.staff} says: "I am sorry, sir. Would you like ${wa(q8)}?" The guest says: "Yes, please." ${lx.staff} does not stop there. ${lx.staff} asks the manager, and the manager says the guest can have it tomorrow morning. The ${back(lx.bank.places, 4)} and the ${back(lx.bank.places, 5)} are both open today.`,
         [
           {
             q: "Khi hết đồ khách cần, nên làm gì?",
@@ -1166,7 +1175,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. It is quite ${lower(s2)} too."`,
+        `A guest asks about the room. ${lx.staff} answers: "It is very ${lower(s1)}, madam. It is quite ${lower(s2)} too." Later the guest asks for ${wa(lx.bank.requests[0])}. ${lx.staff} brings one and says: "Here you are, madam. Please tell me if you need more."`,
         [
           {
             q: "Phòng được mô tả thế nào?",
@@ -1243,7 +1252,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will change it now."`,
+        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will change it now." ${lx.staff} writes it down and tells the manager. The guest says: "Thank you for listening." The manager comes ten minutes later.`,
         [
           {
             q: "'Too' khác 'very' ở điểm nào?",
@@ -1333,7 +1342,7 @@ function week10(lx: Ctx): LessonContent[] {
       // "more important" (GR). The slot has no declared polarity and cannot
       // have one, so no frame may lean on it.
       reading: read(
-        `A guest compares two things. ${lx.staff} says: "This one is better, madam." The guest looks and says: "That one is ${cmpOf(s6)}." The guest chooses the first one.`,
+        `A guest compares two things. ${lx.staff} says: "This one is better, madam." The guest looks and says: "That one is ${cmpOf(s6)}." The guest chooses the first one. The guest takes the first one. ${lx.staff} brings ${wa(lx.bank.requests[1])} as well, and does not say which one is better. Some guests ask for ${wa(lx.bank.requests[2])}; some ask for ${wa(lx.bank.requests[3])}.`,
         [
           {
             q: "Nhân viên khuyên chọn cái nào?",
@@ -1407,7 +1416,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} sees a risk and warns the guest: "Please be careful, madam. It is ${lower(s8)}." The guest walks slowly.`,
+        `${lx.staff} sees a risk and warns the guest: "Please be careful, madam. It is ${lower(s8)}." The guest walks slowly. ${lx.staff} stays with the guest until they are past it. Then ${lx.staff} tells the manager, and the manager sends somebody. ${lx.staff} keeps ${wa(lx.bank.requests[4])} and ${wa(lx.bank.requests[5])} ready every morning.`,
         [
           {
             q: "Nhân viên cảnh báo điều gì?",
@@ -1519,7 +1528,7 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} briefs a new colleague: "I ${act(t1)} every morning. We ${act(t2)} after breakfast."`,
+        `${lx.staff} briefs a new colleague: "I ${act(t1)} every morning. We ${act(t2)} after breakfast." The room is ${back(lx.bank.states, 0)} every morning because somebody does this before the guests wake up. Our ${back(lx.bank.roles, 5)} checks it and writes the time down.`,
         [
           {
             q: "Việc đầu tiên trong ngày là gì?",
@@ -1600,7 +1609,7 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A new colleague asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}. I ${act(t4)} before lunch."`,
+        `A new colleague asks about the schedule. ${lx.staff} answers: "We ${act(t3)} at ${lx.service.open}. I ${act(t4)} before lunch." At eight ${lx.station} is quiet. ${lx.staff} starts at the same time every day, and the next shift knows when to come.`,
         [
           {
             q: `Việc "${t3.definition.toLowerCase()}" làm lúc mấy giờ?`,
@@ -1677,7 +1686,7 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} describes the routine to the new colleague: "I usually ${act(t5)} first. We sometimes ${act(t6)} twice a day."`,
+        `${lx.staff} describes the routine to the new colleague: "I usually ${act(t5)} first. We sometimes ${act(t6)} twice a day." Some days are busy and some are not. ${lx.staff} does the same steps every time, so nothing is forgotten on a busy day. The ${back(lx.bank.places, 6)} and the ${back(lx.bank.places, 7)} are ready before nine.`,
         [
           {
             q: "Trạng từ 'usually' đứng ở đâu?",
@@ -1750,7 +1759,7 @@ function week11(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The shift is over. The supervisor asks about the handover. ${lx.staff} answers: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done."`,
+        `The shift is over. The supervisor asks about the handover. ${lx.staff} answers: "I ${act(t7)} at the end, then I go home." The supervisor says: "Well done." Before ${lx.staff} goes home, everything is ${back(lx.bank.states, 0)} again. The next shift can start without asking one question. We have no ${plural(lx.bank.requests[6])} today, but we still have ${wa(lx.bank.requests[7])}.`,
         [
           {
             q: "Việc cuối ca là gì?",
@@ -1841,7 +1850,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The phone rings. ${lx.staff} answers: "Hello, ${lx.deptEn}. ${lx.staff} speaking. How may I help you?"`,
+        `The phone rings. ${lx.staff} answers: "Hello, ${lx.deptEn}. ${lx.staff} speaking. How may I help you?" ${lx.staff} says the name slowly, and says it twice. The guest hears it and says: "Thank you. That is very clear." Nobody has to spell anything.`,
         [
           {
             q: "Bắt máy cần nói những gì?",
@@ -1915,7 +1924,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest wants to leave a message. ${lx.staff} says: "Of course, sir. May I take a message? I will send it ${lower(f3)}."`,
+        `The guest wants to leave a message. ${lx.staff} says: "Of course, sir. May I take a message? I will send it ${lower(f3)}." ${lx.staff} reads the note back to the guest before saying goodbye. Nothing is wrong, so ${lx.staff} says: "Thank you for calling, madam."`,
         [
           {
             q: "Nhân viên đề nghị làm gì?",
@@ -1985,7 +1994,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks for another department. ${lx.staff} says: "One moment, sir. I will transfer your call." The line connects.`,
+        `A guest asks for another department. ${lx.staff} says: "One moment, sir. I will transfer your call." The line connects. ${lx.staff} waits on the line until somebody answers, and only then says goodbye. The guest does not have to call a second time. Our team will ${act(lx.bank.routines[1])} and ${act(lx.bank.routines[3])} after lunch.`,
         [
           {
             q: "Trước khi chuyển máy nên làm gì?",
@@ -2058,7 +2067,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The call is finished. ${lx.staff} says: "Is there anything else, sir? Thank you for calling. Goodbye." The guest hangs up first.`,
+        `The call is finished. ${lx.staff} says: "Is there anything else, sir? Thank you for calling. Goodbye." The guest hangs up first. ${lx.staff} writes the time of the call down before the next one comes in. The next shift can read it and finish the work. The room is ${back(lx.bank.states, 0)} and very ${back(lx.bank.states, 2)} today.`,
         [
           {
             q: "Ai nên gác máy trước?",
@@ -2160,7 +2169,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I cannot fix it. I will tell my manager." ${lx.staff} writes the room number down.`,
+        `A guest reports a fault: "The ${i1.word.toLowerCase()} is ${lower(b1)}." ${lx.staff} answers: "I am sorry, madam. I cannot fix it. I will tell my manager." ${lx.staff} writes the room number down. Ten minutes later the manager comes. ${lx.staff} shows the room number on the note, so the guest does not have to explain it again.`,
         [
           {
             q: "Nhân viên phản ứng thế nào?",
@@ -2255,7 +2264,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest is unhappy. ${lx.staff} does not argue. ${lx.staff} says: "I am very sorry, sir. I will help you now."`,
+        `The guest is unhappy. ${lx.staff} does not argue. ${lx.staff} says: "I am very sorry, sir. I will help you now." ${lx.staff} does not say whose fault it is, and does not say it happens often. The guest is angry for one minute, then quiet, then says thank you.`,
         [
           {
             q: "Khi khách bức xúc, nên tránh điều gì?",
@@ -2338,7 +2347,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} cannot fix it alone. ${lx.staff} says: "I will check and come back in five minutes, sir." ${lx.staff} returns on time.`,
+        `${lx.staff} cannot fix it alone. ${lx.staff} says: "I will check and come back in five minutes, sir." ${lx.staff} returns on time. ${lx.staff} comes back in five minutes, as promised. The guest looks at the clock, smiles, and says: "You came back. Thank you." The ${back(lx.bank.places, 3)} is next to the ${back(lx.bank.places, 4)}, so nobody walks far.`,
         [
           {
             q: "Nhân viên hứa gì?",
@@ -2422,7 +2431,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} brings a new one and asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much."`,
+        `${lx.staff} brings a new one and asks: "Is everything all right now, madam?" The guest smiles: "Yes, thank you very much." The new one is ready. ${lx.staff} says: "I am sorry for the wait, madam." The guest says it is fine now, and nothing is ${back(lx.bank.problems, 0)} any more. ${lx.staff} brings ${wa(lx.bank.requests[1])} and ${wa(lx.bank.requests[3])} without being asked.`,
         [
           {
             q: "Sau khi khắc phục nên làm gì?",
@@ -2524,7 +2533,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest arrives at ${lx.station}. ${lx.staff} greets him: "Good morning, sir. I work in ${lx.deptEn}. How may I help you?"`,
+        `A guest arrives at ${lx.station}. ${lx.staff} greets him: "Good morning, sir. I work in ${lx.deptEn}. How may I help you?" The guest is tired after a long trip. ${lx.staff} speaks slowly and does not hurry them. The guest sits down, and after a minute starts to smile.`,
         [
           {
             q: "Lời chào gồm mấy bước?",
@@ -2610,7 +2619,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest asks for something. ${lx.staff} answers: "Of course, sir. How many do you need? I will bring them now."`,
+        `The guest asks for something. ${lx.staff} answers: "Of course, sir. How many do you need? I will bring them now." ${lx.staff} repeats the number once more before going. Then ${lx.staff} comes back before the guest has to ask a second time, and says: "Here you are, sir."`,
         [
           {
             q: "Nhân viên hỏi gì trước khi đi lấy?",
@@ -2681,7 +2690,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest reports a problem. ${lx.staff} says: "I am very sorry, madam. I will check now." Ten minutes later the work is ${lower(c3)}.`,
+        `A guest reports a problem. ${lx.staff} says: "I am very sorry, madam. I will check now." Ten minutes later the work is ${lower(c3)}. ${lx.staff} tells the manager, and the manager comes at once. Nothing is ${back(lx.bank.problems, 0)} now, and the guest can rest before dinner. Every day we ${act(lx.bank.routines[5])} and ${act(lx.bank.routines[7])}.`,
         [
           {
             q: "Nhân viên phản ứng ra sao?",
@@ -2758,7 +2767,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `Everything is finished. ${lx.staff} asks: "Is there anything else, madam?" She says: "No, thank you." ${lx.staff} smiles: "Enjoy your stay."`,
+        `Everything is finished. ${lx.staff} asks: "Is there anything else, madam?" She says: "No, thank you." ${lx.staff} smiles: "Enjoy your stay." The guest is leaving in the morning. ${lx.staff} remembers the name, says it once more at the door, and wishes them a good night. Nothing is ${back(lx.bank.problems, 2)} and nothing is ${back(lx.bank.problems, 4)} now.`,
         [
           {
             q: "Câu nào chốt nhu cầu của khách?",
