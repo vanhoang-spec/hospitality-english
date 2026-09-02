@@ -1610,7 +1610,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "You pay money how?",
           "Cash or card, sir?",
           "Câu hỏi ngắn, lịch sự: 'Cash or card?' — dễ hiểu hơn câu dịch từng chữ từ tiếng Việt.",
-          "How do you pay the money, sir?",
+          "Cash or the card, sir?",
         ),
         g(
           "I no take card.",
@@ -1937,7 +1937,7 @@ function week5(lx: P0Lexicon): LessonContent[] {
           "Wait.",
           "One moment, please, sir.",
           "Bảo khách 'Wait' rất thô. Câu chuẩn là 'One moment, please' — 'One minute' hứa đúng sáu mươi giây và khách sẽ bấm giờ, còn 'moment' thì không hứa con số nào.",
-          "One minute, please, sir.",
+          "One moment, please, the sir.",
         ),
         g(
           "I no can do.",
@@ -4257,7 +4257,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           `Room ${lx.roomNo.cardinal}? OK.`,
           `May I see your card, madam?`,
           "Ở phòng chờ có người lạ ngồi ngay bên cạnh, nên đừng đọc to số phòng của khách. Xin xem thẻ là cách kiểm tra không phát thanh gì cả.",
-          `May I see your card?`,
+          "May I to see your card, madam?",
         ),
       ],
       speaking: [
@@ -4414,6 +4414,95 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Anything else, madam? Please tell me now.",
           undefined,
           "Khách vừa nói là còn một việc; hỏi lại 'anything else' là hỏi đúng câu vừa được trả lời. 'Now' còn nghe như giục khách.",
+        ),
+      ],
+    }),
+
+  // The first lesson of the course, rendered for Housekeeping, had a room
+  // attendant standing at a guest room door saying "Welcome to Lotus Bay" to
+  // someone who has just arrived. HK_6_1 — five weeks later — teaches that
+  // exact line as the front desk's, and marks it wrong here. The Hotel Manager
+  // review made it blocker three. Same three headwords, same teaching point
+  // (greet by the hour, use the name when the guest gives it), moved to the
+  // corridor of a floor whose guests checked in yesterday.
+  HK_1_1: (lx) =>
+    lesson(lx, 1, 1, "Greeting in the Corridor", "Chào khách ở hành lang", {
+      vocabulary: [
+        v(
+          "Good morning",
+          "/ɡʊd ˈmɔːnɪŋ/",
+          "Chào buổi sáng (trước 12h)",
+          "Good morning, sir.",
+          "🌅",
+        ),
+        v("Madam", "/ˈmædəm/", "Thưa bà (gọi khách nữ)", "Good afternoon, madam.", "👋"),
+        v("Welcome", "/ˈwelkəm/", "Chào mừng, đón chào", "You are welcome, madam.", "🙏"),
+      ],
+      grammar: [
+        g(
+          "Morning.",
+          "Good morning, sir.",
+          "Không nói cụt 'Morning'. Với khách luôn nói đủ 'Good morning' và thêm 'sir' (nam) hoặc 'madam' (nữ). Gặp khách ở hành lang thì vẫn chào, dù tay đang đẩy xe.",
+          "Good morning, mister.",
+        ),
+        g(
+          "OK, no problem.",
+          "You are welcome, madam.",
+          "Khách cảm ơn thì đáp 'You are welcome' — đủ câu, có 'are'. Buồng phòng được cảm ơn nhiều lần mỗi ca, nên câu này phải bật ra không cần nghĩ.",
+          "You welcome, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Good morning!",
+          "Good morning, madam.",
+          "Chào theo buổi: morning (trước 12h), afternoon (12h–18h), evening (sau 18h). Chào trước khi khách chào bạn — người đẩy xe trong hành lang là người chào trước.",
+        ),
+        sp(
+          "Good afternoon. I am Mrs Lee.",
+          "Good afternoon, Mrs Lee.",
+          "Khách vừa nói tên mình ra thì dùng tên, đừng lùi về 'madam' — gọi đúng họ khách là nâng cấp rẻ nhất trong nghề. Chào lại đúng buổi khách vừa chào.",
+        ),
+        sp(
+          "Thank you for the extra towels.",
+          "You are welcome, madam.",
+          "Đáp đủ câu, đừng chỉ gật hay nói 'no problem'. 'Welcome' trọng âm âm tiết đầu: WEL-come.",
+        ),
+      ],
+      reading: read(
+        `It is 9 AM. ${lx.staff} is in the corridor with the trolley. A guest comes out of room ${lx.roomNo.spoken}. ${lx.staff} says: "Good morning, madam." The guest says: "Good morning. Thank you for the extra towels." ${lx.staff} says: "You are welcome, madam."`,
+        [
+          {
+            q: `${lx.staff} chào khách vào buổi nào?`,
+            options: ["Buổi sáng", "Buổi chiều", "Buổi tối"],
+            correct: 0,
+            explanation: "9 AM là buổi sáng, nên dùng 'Good morning'.",
+          },
+          {
+            q: "Khách cảm ơn thì đáp bằng câu nào?",
+            options: ["You are welcome, madam.", "No problem.", "OK, madam."],
+            correct: 0,
+            explanation:
+              "Đáp đủ câu. 'No problem' nghe như việc đó vốn là phiền phức mà bạn đang bỏ qua; 'You are welcome' thì không mang nghĩa đó.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Good evening. We just arrived.",
+          "Good evening, madam.",
+          "Evening. Come in.",
+          "Good evening. Welcome to Lotus Bay.",
+          undefined,
+          "Đáp án thứ ba là lời đón của LỄ TÂN, nói ở cửa chính lúc khách xuống xe. Buồng phòng gặp khách trong hành lang, sau khi họ đã nhận phòng — chào theo buổi là đủ, và đón khách vào khách sạn không phải việc của bạn.",
+        ),
+        game(
+          "Thank you so much for this.",
+          "You are welcome, madam.",
+          "OK madam, no problem.",
+          "Thank you very much, madam.",
+          undefined,
+          "Đáp án thứ ba đáp lời cảm ơn bằng một lời cảm ơn khác — nghe như bạn không nghe rõ khách vừa nói gì. Lời cảm ơn thì đáp bằng 'You are welcome'.",
         ),
       ],
     }),
@@ -4916,7 +5005,7 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       speaking: [
         sp(
           "Two coffees and one soup, please.",
-          "Table ten. Two coffees, one soup.",
+          "Two coffees, one soup. I understand, madam.",
           "Đọc lại nguyên đơn hàng rồi mới rời bàn. Đọc lại số lượng trước, tên món sau — đúng thứ tự khách vừa nói.",
         ),
         sp(
