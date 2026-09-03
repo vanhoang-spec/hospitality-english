@@ -84,12 +84,29 @@ export type P1Bank = {
   /** W14 — closing/wrap-up words for the checkpoint week. Seven, so the
    *  checkpoint still clears the 70% department-specific floor. */
   closing: P1Word[];
+  /** The unit this department hands over BY NAME — the data field that makes
+   *  an internal report actionable instead of decorative. Three manager
+   *  reviews measured the same gap from three sides: F&B was handing over
+   *  room numbers when a restaurant hands over tables, spa was handing over
+   *  room numbers when a spa hands over treatment rooms, and five Guest
+   *  Relations handover lines carried no field at all. `label` is the bare
+   *  noun a question needs ("Which TABLE is not finished?"), `spoken` the
+   *  named unit its answer gives back, and `handed` what this department
+   *  actually DOES once a guest leaves it — two manager reviews asked for
+   *  opposite lines at the same slot and both were right about their own
+   *  floor: housekeeping does not prepare bills, a spa reception does. */
+  station: { label: string; spoken: string; handed: string };
 };
 
 // ------------------------------------------------------------
 // FRONT OFFICE — the desk, the keys, the arrivals and departures.
 // ------------------------------------------------------------
 const FO_BANK: P1Bank = {
+  station: {
+    label: "room",
+    spoken: "Room two-oh-five",
+    handed: "Please give the key back to reception.",
+  },
   roles: [
     {
       word: "Receptionist",
@@ -289,6 +306,7 @@ const FO_BANK: P1Bank = {
 // FOOD & BEVERAGE — the floor, the table, the plate.
 // ------------------------------------------------------------
 const FB_BANK: P1Bank = {
+  station: { label: "table", spoken: "Table six", handed: "Please prepare the bill now." },
   roles: [
     // Slot 0 is the persona's OWN role and slot 1 the colleague's, so the
     // female-marked word has to come first here: F&B's persona is Linh.
@@ -461,6 +479,11 @@ const FB_BANK: P1Bank = {
 //  Occupied, Razor, Iron, Stain, Policy, Apologize, Compensation.)
 // ------------------------------------------------------------
 const HK_BANK: P1Bank = {
+  station: {
+    label: "room",
+    spoken: "Room eight-one-two",
+    handed: "Room eight-one-two is ready for the next guest.",
+  },
   roles: [
     {
       word: "Room attendant",
@@ -669,6 +692,11 @@ const HK_BANK: P1Bank = {
 //  Swimwear, Consultation, Allergy, Pressure, Package, Feedback.)
 // ------------------------------------------------------------
 const SW_BANK: P1Bank = {
+  station: {
+    label: "treatment room",
+    spoken: "Treatment room two",
+    handed: "Please prepare the bill now.",
+  },
   roles: [
     {
       word: "Therapist",
@@ -879,6 +907,11 @@ const SW_BANK: P1Bank = {
 //  Anniversary, Occasion, Milestone, Amenity, Apologize, Resolve.)
 // ------------------------------------------------------------
 const GR_BANK: P1Bank = {
+  station: {
+    label: "room",
+    spoken: "Room seven-two-oh",
+    handed: "Room seven-two-oh is ready for the next guest.",
+  },
   roles: [
     {
       word: "Guest relations officer",
@@ -1053,6 +1086,11 @@ const GR_BANK: P1Bank = {
 //  Allotment, Confirm, Blackout dates, Budget, Capacity, Deposit.)
 // ------------------------------------------------------------
 const BO_BANK: P1Bank = {
+  station: {
+    label: "office",
+    spoken: "Office four-one-five",
+    handed: "Please file the handover now.",
+  },
   roles: [
     { word: "Accountant", phonetic: "/əˈkaʊntənt/", definition: "Kế toán", icon: "🧮" },
     {
