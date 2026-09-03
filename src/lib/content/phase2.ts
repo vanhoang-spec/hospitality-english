@@ -682,7 +682,7 @@ function week17(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `${lx.staff} repeats the information carefully. "Let me read that back to you. Please ${lo(d7)} if I am wrong." The guest confirms everything is ${lo(d9)}.`,
+        `${lx.staff} repeats the information carefully. "Let me read that back to you. Please correct me if I am wrong." The guest confirms that the ${lo(d9)} is right.`,
         [
           {
             q: "Vì sao phải đọc lại thông tin cho khách?",

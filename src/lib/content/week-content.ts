@@ -1433,7 +1433,7 @@ export const SW_WEEK_23: WeekContent = {
     "Appointment",
     "Relaxing",
     "Massage",
-    "Health condition",
+    "Health form",
     "Included",
     "Popular choice",
     "Skin type",
@@ -6897,7 +6897,7 @@ export const FB_WEEK_37: WeekContent = {
   reviewWords: [
     "High chair",
     "Dietary need",
-    "Nut allergy",
+    "Allergy detail",
     "Set lunch",
     "Kitchen team",
     "Prepare a nut-free dish",
@@ -16228,7 +16228,7 @@ export const HK_WEEK_32: WeekContent = {
   reviewWords: [
     "Guest preference",
     "Pillow choice",
-    "Dust allergy",
+    "Allergy note",
     "Preferred time",
     "Feather pillow",
     "Room note",

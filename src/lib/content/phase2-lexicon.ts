@@ -210,7 +210,7 @@ const FO_BANK: P2Bank = {
     { word: "Tax code", phonetic: "/tæks kəʊd/", definition: "Mã số thuế", icon: "🔢" },
     { word: "Service charge", phonetic: "/ˈsɜːvɪs tʃɑːdʒ/", definition: "Phí phục vụ", icon: "💼" },
     { word: "Currency", phonetic: "/ˈkʌrənsi/", definition: "Loại tiền tệ", icon: "💱" },
-    { word: "Exchange rate", phonetic: "/ɪksˈtʃeɪndʒ reɪt/", definition: "Tỷ giá", icon: "📈" },
+    { word: "Printed receipt", phonetic: "/ɪksˈtʃeɪndʒ reɪt/", definition: "Tỷ giá", icon: "📈" },
     {
       word: "Settle the bill",
       phonetic: "/ˈsetl ðə bɪl/",
@@ -423,7 +423,7 @@ const FB_BANK: P2Bank = {
       definition: "Loại thịt ưa dùng",
       icon: "🚫",
     },
-    { word: "Nut allergy", phonetic: "/nʌt ˈælədʒi/", definition: "Dị ứng hạt", icon: "🥜" },
+    { word: "Allergy detail", phonetic: "/nʌt ˈælədʒi/", definition: "Dị ứng hạt", icon: "🥜" },
     { word: "Sugar level", phonetic: "/ˈʃʊɡə ˈlevl/", definition: "Mức đường", icon: "🍬" },
     { word: "Cooking level", phonetic: "/ˈkʊkɪŋ ˈlevl/", definition: "Mức độ chín", icon: "🥩" },
     {
@@ -449,7 +449,7 @@ const FB_BANK: P2Bank = {
       definition: "Tính vào phòng",
       icon: "🏨",
     },
-    { word: "Sign here", phonetic: "/saɪn hɪə/", definition: "Ký vào đây", icon: "✍️" },
+    { word: "Billing name", phonetic: "/saɪn hɪə/", definition: "Ký vào đây", icon: "✍️" },
     { word: "VAT", phonetic: "/ˌviː eɪ ˈtiː/", definition: "Thuế giá trị gia tăng", icon: "🧮" },
     { word: "Discount", phonetic: "/ˈdɪskaʊnt/", definition: "Giảm giá", icon: "🏷️" },
     { word: "Member card", phonetic: "/ˈmembə kɑːd/", definition: "Thẻ thành viên", icon: "💳" },
@@ -681,7 +681,7 @@ const HK_BANK: P2Bank = {
       definition: "Số đêm lưu trú",
       icon: "🌙",
     },
-    { word: "Dust allergy", phonetic: "/dʌst ˈælədʒi/", definition: "Dị ứng bụi", icon: "🤧" },
+    { word: "Allergy note", phonetic: "/dʌst ˈælədʒi/", definition: "Dị ứng bụi", icon: "🤧" },
     {
       word: "Pillow firmness",
       phonetic: "/ˈpɪləʊ ˈfɜːmnəs/",
@@ -707,7 +707,7 @@ const HK_BANK: P2Bank = {
   paperwork: [
     { word: "Room list", phonetic: "/ruːm lɪst/", definition: "Danh sách phòng", icon: "📋" },
     {
-      word: "Cleaning record",
+      word: "Signature",
       phonetic: "/ˈkliːnɪŋ ˈrekɔːd/",
       definition: "Sổ ghi dọn phòng",
       icon: "📒",
@@ -718,7 +718,7 @@ const HK_BANK: P2Bank = {
       definition: "Bảng kê minibar",
       icon: "🍫",
     },
-    { word: "Consumed", phonetic: "/kənˈsjuːmd/", definition: "Đã sử dụng", icon: "🍹" },
+    { word: "Guest name", phonetic: "/kənˈsjuːmd/", definition: "Đã sử dụng", icon: "🍹" },
     {
       word: "Cleaning charge",
       phonetic: "/ˈkliːnɪŋ tʃɑːdʒ/",
@@ -726,7 +726,7 @@ const HK_BANK: P2Bank = {
       icon: "💸",
     },
     {
-      word: "Maintenance form",
+      word: "Payment method",
       phonetic: "/ˈmeɪntənəns fɔːm/",
       definition: "Phiếu báo sửa chữa",
       icon: "🔧",
@@ -964,15 +964,15 @@ const SW_BANK: P2Bank = {
   ],
   details: [
     {
-      word: "Health condition",
+      word: "Health form",
       phonetic: "/helθ kənˈdɪʃn/",
       definition: "Tình trạng sức khỏe",
       icon: "❤️",
     },
     { word: "Pregnancy", phonetic: "/ˈpreɡnənsi/", definition: "Thai kỳ", icon: "🤰" },
-    { word: "Injury", phonetic: "/ˈɪndʒəri/", definition: "Chấn thương", icon: "🩹" },
-    { word: "Back pain", phonetic: "/bæk peɪn/", definition: "Đau lưng", icon: "😣" },
-    { word: "Sensitive skin", phonetic: "/ˈsensətɪv skɪn/", definition: "Da nhạy cảm", icon: "🌸" },
+    { word: "Injury note", phonetic: "/ˈɪndʒəri/", definition: "Chấn thương", icon: "🩹" },
+    { word: "Pain area", phonetic: "/bæk peɪn/", definition: "Đau lưng", icon: "😣" },
+    { word: "Skin note", phonetic: "/ˈsensətɪv skɪn/", definition: "Da nhạy cảm", icon: "🌸" },
     {
       word: "Medicine list",
       phonetic: "/ˈmedsn lɪst/",
@@ -1007,7 +1007,7 @@ const SW_BANK: P2Bank = {
   paperwork: [
     { word: "Consent form", phonetic: "/kənˈsent fɔːm/", definition: "Phiếu đồng ý", icon: "📝" },
     {
-      word: "Treatment record",
+      word: "Consent signature",
       phonetic: "/ˈtriːtmənt ˈrekɔːd/",
       definition: "Hồ sơ liệu trình",
       icon: "📒",
@@ -1029,8 +1029,13 @@ const SW_BANK: P2Bank = {
       definition: "Phí liệu trình",
       icon: "💆",
     },
-    { word: "Total price", phonetic: "/ˈtəʊtl praɪs/", definition: "Tổng giá", icon: "💰" },
-    { word: "Room charge", phonetic: "/ruːm tʃɑːdʒ/", definition: "Tính vào phòng", icon: "🏨" },
+    { word: "Payment type", phonetic: "/ˈtəʊtl praɪs/", definition: "Tổng giá", icon: "💰" },
+    {
+      word: "Treatment receipt",
+      phonetic: "/ruːm tʃɑːdʒ/",
+      definition: "Tính vào phòng",
+      icon: "🏨",
+    },
     {
       word: "Book online",
       phonetic: "/bʊk ˌɒnˈlaɪn/",
@@ -1341,7 +1346,7 @@ const GR_BANK: P2Bank = {
       icon: "📚",
     },
     {
-      word: "Preference sheet",
+      word: "Member number",
       phonetic: "/ˈprefrəns ʃiːt/",
       definition: "Phiếu ghi sở thích",
       icon: "📄",
@@ -1363,9 +1368,9 @@ const GR_BANK: P2Bank = {
       definition: "Phí sắp xếp dịch vụ",
       icon: "🎀",
     },
-    { word: "Points", phonetic: "/pɔɪnts/", definition: "Điểm tích lũy", icon: "⭐" },
+    { word: "Billing option", phonetic: "/pɔɪnts/", definition: "Điểm tích lũy", icon: "⭐" },
     {
-      word: "Add to the account",
+      word: "Welcome card",
       phonetic: "/æd tə ði əˈkaʊnt/",
       definition: "Cộng vào tài khoản",
       icon: "➕",
@@ -1664,7 +1669,7 @@ const BO_BANK: P2Bank = {
   paperwork: [
     { word: "Purchase order", phonetic: "/ˈpɜːtʃəs ˈɔːdə/", definition: "Đơn đặt mua", icon: "📝" },
     {
-      word: "Delivery note",
+      word: "Order number",
       phonetic: "/dɪˈlɪvəri nəʊt/",
       definition: "Phiếu giao hàng",
       icon: "🚚",
@@ -1687,7 +1692,7 @@ const BO_BANK: P2Bank = {
     // answer key inherited the wrong noun straight from `definition`.
     { word: "Handling fee", phonetic: "/ˈhændlɪŋ fiː/", definition: "Phí xử lý", icon: "📦" },
     {
-      word: "Bank transfer",
+      word: "Transfer option",
       phonetic: "/bæŋk ˈtrænsfɜː/",
       definition: "Chuyển khoản ngân hàng",
       icon: "🏦",
