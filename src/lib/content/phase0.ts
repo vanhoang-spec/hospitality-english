@@ -399,6 +399,7 @@ export function sp(
   helpTip: string,
   role?: SpeakingItem["speakerRole"],
   must?: string[],
+  follows?: string,
 ): SpeakingItem {
   return {
     guestPrompt,
@@ -406,6 +407,7 @@ export function sp(
     helpTip,
     ...(role ? { speakerRole: role } : {}),
     ...(must ? { requiredTokens: must } : {}),
+    ...(follows ? { follows } : {}),
   };
 }
 export function read(text: string, questions: ReadingItem["questions"]): ReadingItem {

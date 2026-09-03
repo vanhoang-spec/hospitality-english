@@ -490,11 +490,15 @@ function week7(lx: Ctx): LessonContent[] {
               "Ba câu khác nhau một chữ. Câu thứ hai đẩy việc sang khách; câu thứ ba nói mình chắc, trong khi cả bài dạy điều ngược lại.",
           },
           {
-            q: "Nhân viên bảo khách làm gì trong lúc chờ?",
-            options: ["Chờ ngay tại chỗ", "Đi theo mình", "Quay lại vào ngày mai"],
+            q: "Nhân viên mời khách chờ bằng câu nào?",
+            options: [
+              "Please wait here, sir. I will come back.",
+              "Please wait here, sir. I will call you.",
+              "Please come back here, sir. I will wait.",
+            ],
             correct: 0,
             explanation:
-              "Bài đọc ghi rõ: mời khách chờ tại chỗ rồi mình đi hỏi. Bảo khách quay lại hôm sau là đẩy việc đi.",
+              "Ba câu dùng đúng bốn chữ như nhau, đảo chỗ thì đổi hẳn việc: ai chờ, ai quay lại. Bài đọc mời khách chờ TẠI CHỖ rồi mình đi hỏi.",
           },
         ],
       ),
@@ -1512,15 +1516,15 @@ function week10(lx: Ctx): LessonContent[] {
             explanation: `"It is ${lower(s8)}" — cảnh báo về ${s8.definition.toLowerCase()}.`,
           },
           {
-            q: "Nhân viên làm gì khi khách đi qua chỗ nguy hiểm?",
+            q: "Nhân viên cảnh báo bằng câu nào?",
             options: [
-              "Đi cùng cho tới khi khách qua hẳn",
-              "Đứng nhìn từ xa",
-              "Gọi bảo vệ rồi đi tiếp",
+              `Please be careful, madam. It is ${lower(s8)}.`,
+              `Please careful, madam. It is ${lower(s8)}.`,
+              `Please be careful, madam. It is not ${lower(s8)}.`,
             ],
             correct: 0,
             explanation:
-              "Bài đọc mô tả đúng việc đó, rồi mới báo quản lý. Cảnh báo suông không gỡ được rủi ro.",
+              "Câu hai rơi mất 'be'; câu ba phủ định đúng cái nguy hiểm vừa cảnh báo. Và bài đọc còn cho biết nhân viên ĐI CÙNG khách qua chỗ đó — cảnh báo suông không gỡ được rủi ro.",
           },
         ],
       ),
@@ -1813,15 +1817,15 @@ function week11(lx: Ctx): LessonContent[] {
             explanation: "I USUALLY start… — trạng từ tần suất đứng trước động từ.",
           },
           {
-            q: "Vì sao ngày bận vẫn không sót việc?",
+            q: "Nhân viên mô tả việc thường ngày bằng câu nào?",
             options: [
-              "Vì làm đúng các bước như mọi ngày",
-              "Vì có thêm người",
-              "Vì bỏ bớt vài bước",
+              `I usually ${act(t5)} first.`,
+              `I usually ${act(t5)} the first.`,
+              `I am usually ${act(t5)} first.`,
             ],
             correct: 0,
             explanation:
-              "Bài đọc nói rõ: cùng một trình tự mỗi ngày. Đó là toàn bộ lý do bài này tồn tại.",
+              "Trạng từ tần suất đứng TRƯỚC động từ chính và sau chủ ngữ. Hai câu kia thêm một chữ không có chỗ đứng.",
           },
         ],
       ),
@@ -2111,15 +2115,15 @@ function week12(lx: Ctx): LessonContent[] {
             explanation: `"May I take a message?" — xin ghi lời nhắn.`,
           },
           {
-            q: "Trước khi chào tạm biệt, nhân viên làm gì?",
+            q: "Nhân viên nhận lời nhắn bằng câu nào?",
             options: [
-              "Đọc lại lời nhắn cho khách nghe",
-              "Cúp máy ngay",
-              "Chuyển máy sang bộ phận khác",
+              "Of course, sir. May I take a message?",
+              "Of course, sir. May I take your message?",
+              "Of course, sir. Can I taking a message?",
             ],
             correct: 0,
             explanation:
-              "Đọc lại là bước bắt lỗi nghe, và bài đọc cho thấy nhờ vậy không có gì sai.",
+              "Cụm cố định là 'take A message', không phải 'take YOUR message'. Và bài đọc cho thấy nhân viên còn đọc lại lời nhắn trước khi chào — bước bắt lỗi nghe.",
           },
         ],
       ),
@@ -2619,14 +2623,15 @@ function week13(lx: Ctx): LessonContent[] {
         `${lx.staff} cannot fix it alone. ${lx.staff} says: "I will check and come back in five minutes, sir." ${lx.staff} comes back in five minutes, as promised. The guest looks at the clock, smiles, and says: "You came back. Thank you." The ${back(lx.bank.places, 3)} is next to the ${back(lx.bank.places, 4)}, so nobody walks far.`,
         [
           {
-            q: "Nhân viên hứa gì?",
+            q: "Nhân viên hứa bằng câu nào?",
             options: [
-              "Kiểm tra và quay lại sau 5 phút",
-              "Chuyển việc cho người khác rồi đi làm việc khác",
-              "Không làm gì",
+              "I will check and come back in five minutes, sir.",
+              "I will check and come back soon, sir.",
+              "I will check and call you in five minutes, sir.",
             ],
             correct: 0,
-            explanation: `"I will check and come back in five minutes."`,
+            explanation:
+              "Một lời hứa cần một CON SỐ, và cần đúng việc mình sẽ làm. 'Soon' không phải mốc giờ; 'call you' là một việc khác.",
           },
           {
             q: `${lx.bank.places[3].definition} nằm cạnh chỗ nào?`,
@@ -2850,14 +2855,15 @@ function week14(lx: Ctx): LessonContent[] {
               "Chào đúng buổi + mời giúp. Hai bước, và đó cũng đúng là hai bước mọi câu mẫu của bài này dạy.",
           },
           {
-            q: "Nhân viên nói thế nào với khách đang mệt?",
+            q: "Nhân viên chào bằng câu nào?",
             options: [
-              "Nói chậm và không giục khách",
-              "Nói nhanh cho xong việc",
-              "Không nói gì, chỉ đưa giấy tờ",
+              "Good morning, sir. How may I help you?",
+              "Good morning, sir. How can I helping you?",
+              "Good morning, sir. What do you want?",
             ],
             correct: 0,
-            explanation: "Bài đọc mô tả đúng điều đó, và một phút sau khách bắt đầu cười.",
+            explanation:
+              "Bài đọc còn cho biết nhân viên nói CHẬM và không giục vị khách vừa đi đường xa — một phút sau khách bắt đầu cười.",
           },
         ],
       ),
@@ -3144,6 +3150,32 @@ function week14(lx: Ctx): LessonContent[] {
           "Yes. Please prepare her bill.",
           "Bàn giao cuối lượt khách: xác nhận xong rồi chuyển việc tiếp theo cho đúng người. Không kính ngữ khi nói với đồng nghiệp.",
           "colleague",
+        ),
+        // Ma trận hứa can-do tuần 14 là "Hội thoại 3 lượt: chào - tiếp nhận - kết
+        // thúc", và năm báo cáo học vụ cùng đếm được 0 mục đa lượt trong cả pha:
+        // mọi lượt đều là một câu khách, một câu đáp. Ba lượt dưới đây nối nhau qua
+        // trường "follows", nên lượt hai và lượt ba được trả lời trong ánh
+        // sáng của thứ học viên vừa hứa ở lượt trước.
+        sp(
+          "Excuse me, are you free?",
+          "Yes, madam. How may I help?",
+          "Lượt 1 của 3 — mở đầu. Nhận lời trước, hỏi việc sau; khách chưa nói cần gì thì đừng đoán.",
+        ),
+        sp(
+          "Is everything ready for tomorrow?",
+          "Yes, madam. Everything is ready.",
+          "Lượt 2 của 3 — tiếp nhận. Trả lời đúng câu vừa hỏi, đừng mở thêm chuyện mới ở giữa cuộc.",
+          undefined,
+          undefined,
+          "Yes, madam. How may I help?",
+        ),
+        sp(
+          "Thank you. Good night.",
+          `Good night, madam. Enjoy your ${lower(c4)}.`,
+          "Lượt 3 của 3 — kết thúc. Chào lại rồi thêm một lời chúc; đây là câu cuối khách nghe trong ngày.",
+          undefined,
+          undefined,
+          "Yes, madam. Everything is ready.",
         ),
       ],
       reading: read(

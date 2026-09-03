@@ -56,6 +56,17 @@ export type SpeakingItem = {
    *  "Khách nói" teaches the learner to say floor words ('lead time', 'cue',
    *  'service window') straight into a guest's face. */
   speakerRole?: "guest" | "colleague" | "manager";
+  /** What the LEARNER said one turn earlier, when this item continues an
+   *  exchange rather than starting one.
+   *
+   *  The curriculum matrix promises a three-turn conversation at week 14 —
+   *  greet, take the request, close — and five academic reviews reported the
+   *  same thing: all ~140 speaking items in the phase are a single guest line
+   *  answered by a single reply, so nothing in the data could hold a
+   *  conversation together. The suite prints this above the prompt, so turns
+   *  two and three are answered in the light of what the learner has already
+   *  committed to. */
+  follows?: string;
 };
 /** The label every suite prints above the prompt. "manager" exists because a
  *  week that trains reporting UPWARD is a week about register, and calling a

@@ -47,6 +47,7 @@ function SpeakingSuiteInner({
       target: s.targetResponse,
       tip: s.helpTip,
       requiredTokens: s.requiredTokens,
+      follows: s.follows,
       who: speakerLabel(s),
       audioWho: speakerAudioLabel(s),
     })),
@@ -182,6 +183,11 @@ function SpeakingSuiteInner({
           animate={{ opacity: 1, y: 0 }}
           className="border border-primary/30 bg-card p-6 shadow-xl"
         >
+          {scenario.follows && (
+            <div className="mb-4 border-l-2 border-muted pl-3 text-sm italic text-muted-foreground">
+              Bạn vừa nói: "{scenario.follows}"
+            </div>
+          )}
           <div className="text-xs uppercase tracking-[0.3em] text-primary">{scenario.who}</div>
           <p className="mt-4 font-display text-2xl leading-snug">"{scenario.complaint}"</p>
           <div className="mt-5 flex flex-wrap gap-3">

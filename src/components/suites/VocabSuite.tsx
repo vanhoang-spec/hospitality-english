@@ -54,7 +54,11 @@ const MCQ_NEW_MAX = 10;
 // 4 review items suit an ordinary week; at a CHECKPOINT week the review list
 // spans the whole phase, and 4 of ~20 meant the consolidation week sampled
 // under a tenth of what it exists to consolidate.
-const MCQ_REVIEW = 4;
+// Four of a week's ~20 recycled words is a 19% chance any one of them is even
+// shown, and two academic reviews measured the consequence from opposite ends:
+// most of a department's vocabulary comes back only as recognition, and only a
+// fifth of that recognition actually happens.
+const MCQ_REVIEW = 6;
 const MCQ_REVIEW_CHECKPOINT = 10;
 const MAX_DICTATION = 3;
 
