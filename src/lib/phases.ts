@@ -133,8 +133,12 @@ export const CHECKPOINT_ORAL_ITEMS = 5;
  *  a learner could fail four of seven and still clear the oral half. An
  *  academic review measured the effective pass mark at 48.1%. */
 export const CHECKPOINT_ORAL_PASS_SHARE = 0.6;
+/** Rounded, not ceilinged: ceil(7 x 0.6) = 5 made a seven-utterance sitting
+ *  a 71.4% bar against 60.0% for a five-utterance one, so two learners faced
+ *  gates 11.4 points apart depending only on whether the three-turn exchange
+ *  happened to be drawn. */
 export const oralPassMin = (drawn: number) =>
-  Math.max(1, Math.ceil(drawn * CHECKPOINT_ORAL_PASS_SHARE));
+  Math.max(1, Math.round(drawn * CHECKPOINT_ORAL_PASS_SHARE));
 
 /** How long a learner waits after a FAILED checkpoint sitting.
  *

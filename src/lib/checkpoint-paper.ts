@@ -605,8 +605,21 @@ export function buildPaper(dep: string, week: string): Question[] {
     ];
     const moveIdx = (t: string) => MOVES.findIndex((r) => r.test(t.trim()));
     const keyMove = moveIdx(s.targetResponse);
+    /** Two replies that hand the job to the SAME person are one move, whatever
+     *  verb they use to say so: "I am not sure. I will ask our lounge
+     *  manager." and "I will call our lounge manager now, sir." were offered
+     *  together on 3.6% of papers because the move list matches verb strings
+     *  and `ask` is not `call`. The recipient is the thing the guest actually
+     *  gets, so that is what decides. */
+    const RECIPIENTS = /\b(manager|reception|receptionist|kitchen|chef|supervisor|desk|doctor)\b/gi;
+    const handsOffTo = (t: string) =>
+      new Set((t.toLowerCase().match(RECIPIENTS) ?? []).map((w) => w));
+    const keyHands = handsOffTo(s.targetResponse);
+    const sameRecipient = (t: string) =>
+      keyHands.size > 0 && [...handsOffTo(t)].some((w) => keyHands.has(w));
     const secondRightAnswer = (t: string) =>
-      pullsAway(t) || (!discriminated(t) && keyMove >= 0 && moveIdx(t) === keyMove);
+      pullsAway(t) ||
+      (!discriminated(t) && ((keyMove >= 0 && moveIdx(t) === keyMove) || sameRecipient(t)));
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
     const usable = widened.filter(
       (t) => !nearlySameAnswer(t, s.targetResponse) && !secondRightAnswer(t),
@@ -640,6 +653,22 @@ export function buildPaper(dep: string, week: string): Question[] {
     // listening questions — through the block's own 50% floor on 54.9% of
     // papers. Overlap has to stay useless, so it is repaired here rather than
     // by weakening the rules that made it useful again.
+    // And at least one distractor must be about the key's own length. The band
+    // filter allows +/-2 words, which was wide enough for "always pick the
+    // shortest option" to reach 41.9% of listening questions and through the
+    // block floor on 48.9% of papers — the length bias the reading block just
+    // lost, reappearing one block over.
+    // At least one distractor no LONGER than the key. "Within a word or two"
+    // is not enough: a five-word key beside two six-word distractors is still
+    // the unique shortest option, which is the whole trick. It has to be
+    // possible to be wrong by picking the shortest.
+    if (clean.length === 2 && !clean.some((c) => wordsOf(c.t) <= keyLen)) {
+      const near = strict.find(
+        (c) =>
+          wordsOf(c.t) <= keyLen && !clean.some((k) => k.t === c.t || nearlySameAnswer(k.t, c.t)),
+      );
+      if (near) clean[1] = near;
+    }
     const keyEcho = echo(s.targetResponse);
     if (clean.length === 2 && !clean.some((c) => echo(c.t) >= keyEcho)) {
       const loud = strict.find(

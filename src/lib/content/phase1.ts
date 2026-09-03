@@ -2677,9 +2677,9 @@ function week13(lx: Ctx): LessonContent[] {
         // cấu trúc phải được DẠY trước khi bị đòi nói ra.
         g(
           "Five minutes. I check.",
-          "I need five minutes because I must check.",
+          "I need five minutes because I check everything.",
           "Nối lý do bằng 'because': mệnh đề chính trước, lý do sau. Đây là lần đầu khoá học ghép hai mệnh đề vào một câu — nói liền một hơi, đừng nghỉ giữa hai vế.",
-          "I need five minutes because of I must check.",
+          "I need five minutes because of I check everything.",
         ),
         g(
           "I check come back.",
@@ -2734,7 +2734,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Why do you need five minutes?",
-          "I need five minutes because I must check.",
+          "I need five minutes because I check everything.",
           "Lời hứa có kèm lý do thì khách tin. Mệnh đề lý do bắt đầu bằng 'because'; chữ này trọng âm ở âm sau: be-CAUSE.",
         ),
         sp(
@@ -3201,7 +3201,12 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "When will it be ready?",
-          "It will be ready when I finish, madam.",
+          // Was "…when I finish, madam." — a promise with no clock in it,
+          // under a tip that says to give a concrete time, in a lesson whose
+          // own arcade round marks "Not long, madam." wrong for exactly that.
+          // Five reviews named it in one round. `when` is taught in week 13
+          // and produced at 13_4, which is where it belongs.
+          `It will be ready ${back(lx.bank.phone, 2)}.`,
           "Ôn tuần 12: mốc thời gian. Hẹn một mốc cụ thể rồi giữ đúng mốc đó — hứa suông tệ hơn không hứa.",
         ),
         sp(
@@ -3226,7 +3231,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Which one needs a look tonight?",
-          `Yes, madam. Please check ${lx.bank.station.spoken.toLowerCase()} before you go.`,
+          `${lx.bank.station.spoken}, madam. Please check it before you go.`,
           "Bàn giao cho ca sau: nói rõ chỗ cần kiểm. 'Please check' nói với cấp trên vẫn lịch sự vì đó là đề nghị công việc, không phải ra lệnh.",
           "manager",
         ),
@@ -3369,7 +3374,9 @@ function week14(lx: Ctx): LessonContent[] {
           // in it at all. Two manager reviews named it. The middle turn is
           // now what the matrix calls it: taking a request.
           `I would like ${wa(lx.bank.requests[0])}, please.`,
-          "Of course, madam. I will bring it now.",
+          // "one", not "it": the guest has just introduced the thing, and week
+          // 9 teaches this exact substitution.
+          "Of course, madam. I will bring one now.",
           "Lượt 2 của 3 — tiếp nhận. Nhận lời rồi nói ngay việc mình làm; đừng bảo đảm chung chung cho cả ngày mai.",
           undefined,
           undefined,
@@ -3838,7 +3845,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Which one needs a look tonight?",
-          `Yes, madam. Please check ${lx.bank.station.spoken.toLowerCase()} before you go.`,
+          `${lx.bank.station.spoken}, madam. Please check it before you go.`,
           "Bàn giao cho ca sau: nói rõ chỗ cần kiểm. 'Please check' nói với cấp trên vẫn lịch sự vì đó là đề nghị công việc.",
           "manager",
         ),
@@ -4441,8 +4448,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Ống hút chỉ đưa khi khách hỏi — nhưng khách hỏi rồi thì gọi tên món ra, đừng đáp mỗi 'here you are'.",
         ),
         sp(
-          "Is there ice in it?",
-          "Yes, sir. I will bring more ice.",
+          // Not "Is there ice in it?" — this lesson is called When the Bar Runs
+          // Out and its grammar, model and passage all settle that there is no
+          // ice today. Tomorrow is a different shift.
+          "Can I have ice tomorrow?",
+          "Of course, sir. I will bring more ice.",
           "Đá là danh từ không đếm được: MORE ICE, không phải 'more ices'. Chữ 'ice' bắt đầu bằng nguyên âm đôi /aɪ/.",
         ),
       ],
@@ -4809,7 +4819,9 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         sp(
           "A party of four is waiting.",
           "Thank you. I will seat four people.",
-          "Nói với đồng nghiệp thì bỏ kính ngữ và nói đủ số bàn với số khách.",
+          // The tip still asked for a table number after the prompt changed
+          // and the answer stopped carrying one.
+          "Nói với đồng nghiệp thì bỏ kính ngữ, và đọc lại con số vừa nghe để xác nhận mình nghe đúng.",
           "colleague",
         ),
       ],
