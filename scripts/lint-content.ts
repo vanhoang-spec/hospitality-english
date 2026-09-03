@@ -1790,6 +1790,36 @@ async function lintOneHonorificPerReading() {
   console.log(`  Readings mixing sir and madam: ${offenders.length} (ratchet holds).`);
 }
 
+// ── Layer M · lượt nội bộ không được xưng kính ngữ ────────────────────────
+// `speakerRole` tồn tại vì một tuần dạy báo cáo LÊN TRÊN là một tuần về
+// register, và gọi một Duty Manager là ngang hàng là điều duy nhất tuần đó
+// không được làm. Chiều ngược lại cũng vậy: gọi đồng nghiệp cùng ca là "sir"
+// hay "madam" dạy học viên nói câu đó với cả sàn.
+//
+// Đây là gate do một quản lý bộ phận đề nghị sau khi bắt được lỗi này hai
+// vòng liên tiếp — cả hai lần đều ở những lượt vừa được thêm vào để chữa một
+// phát hiện khác. Cổng cứng: toàn corpus hiện sạch.
+function lintColleagueHonorific() {
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      for (const item of lesson.speaking) {
+        if (item.speakerRole !== "colleague") continue;
+        // An honorific inside quotation marks is the colleague being COACHED
+        // on what to say to a guest — week 39 of Guest Relations tells a
+        // colleague to say 'One moment, sir' and nothing else. That is
+        // reported speech, not a colleague being called sir.
+        const outsideQuotes = item.targetResponse.replace(/['"“”‘’][^'"“”‘’]*['"“”‘’]/g, " ");
+        const hit = outsideQuotes.match(/\b(sir|madam|ma'am)\b/i);
+        if (hit)
+          errors.push(
+            `[M colleague-honorific] ${key}/${lesson.lessonId}: lượt đồng nghiệp nói "${hit[0]}" — ` +
+              `"${item.targetResponse}"`,
+          );
+      }
+    }
+  }
+}
+
 // ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
 // Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
 // reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
@@ -1899,6 +1929,7 @@ lintClinicalClashes();
 await lintSpeakingVolume();
 await lintAnswerPositionSkew();
 lintReviewWordOrder();
+lintColleagueHonorific();
 await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
 reportStaleDebt();

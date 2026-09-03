@@ -741,11 +741,15 @@ const SW_BANK: P1Bank = {
     // khung hỏi "còn hàng không". Một lịch hẹn không phải hàng tồn, nên SW
     // render ra "We have appointments, madam." cho câu hỏi còn đồ hay không.
     {
-      word: "Ear plugs",
-      phonetic: "/ˈɪə plʌɡz/",
-      definition: "Nút bịt tai",
-      icon: "🎧",
-      art: "some",
+      // Was briefly "Ear plugs", to stop the stock frame rendering "We have an
+      // appointment, madam." for a guest asking what is left. But Spa's week-9
+      // lesson 4 is hand-written and teaches Appointment and Music, so slot 6
+      // never got a card and the learner met a word the course never taught.
+      // The stock frame moved to slot 5 instead.
+      word: "Appointment",
+      phonetic: "/əˈpɔɪntmənt/",
+      definition: "Lịch hẹn",
+      icon: "📅",
     },
     { word: "Music", phonetic: "/ˈmjuːzɪk/", definition: "Nhạc", icon: "🎵", art: "some" },
   ],

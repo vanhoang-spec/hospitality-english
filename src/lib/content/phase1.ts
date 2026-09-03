@@ -649,8 +649,8 @@ function week8(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Where do the new staff go?",
-          "Please show them the staff door.",
-          "Chỉ đường cho đồng nghiệp mới thì bỏ kính ngữ. Mẫu: SHOW + người + nơi chốn.",
+          "Please take them to the manager first.",
+          "Người mới thì đưa tới quản lý trước, đừng chỉ tay rồi thôi. Nói với đồng nghiệp nên bỏ kính ngữ.",
           "colleague",
         ),
       ],
@@ -1321,7 +1321,7 @@ function week10(lx: Ctx): LessonContent[] {
         sp(
           `This is too ${lower(s4)}.`,
           "I am very sorry. I will check it now.",
-          "Nghe 'too + tính từ' là khách đang phàn nàn thật: xin lỗi rồi báo lên trên. Việc vượt quyền mình thì đừng hứa tự xử lý. Từ 'manager' trọng âm ở đầu: MAN-a-ger, hai âm sau đọc lướt.",
+          "Nghe 'too + tính từ' là khách đang phàn nàn thật: xin lỗi rồi ĐI KIỂM NGAY. Đây là thứ bạn xử lý được — báo lên trên để dành cho việc vượt quyền mình, và tuần 13 sẽ dạy phân biệt hai loại đó. Chữ 'check' đóng bằng /k/, đừng nuốt.",
         ),
         sp(
           "Who is on duty now?",
@@ -1331,7 +1331,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will check it now." ${lx.staff} writes it down and goes to look. The guest says: "Thank you for listening." The manager comes ten minutes later.`,
+        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will check it now." ${lx.staff} writes it down and goes to look at once. The guest says: "Thank you for listening." The room is right ten minutes later.`,
         [
           {
             q: "'Too' khác 'very' ở điểm nào?",
@@ -1348,7 +1348,7 @@ function week10(lx: Ctx): LessonContent[] {
             options: ["Mười phút", "Một tiếng", "Ngày hôm sau"],
             correct: 0,
             explanation:
-              "Bài đọc ghi rõ mười phút. Ghi lại lời phàn nàn rồi báo lên trên là cách duy nhất để con số đó xảy ra.",
+              "Bài đọc ghi rõ mười phút. Ghi lại lời phàn nàn rồi đi kiểm ngay là cách duy nhất để con số đó xảy ra.",
           },
         ],
       ),
@@ -1802,9 +1802,9 @@ function week11(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
-          "Where do you keep them?",
-          `We keep them in the ${back(lx.bank.places, 2)}.`,
-          "Ôn tuần 8: nơi cất đồ của bộ phận. Mẫu: KEEP THEM IN THE + nơi chốn.",
+          `Is the ${back(lx.bank.places, 2)} far?`,
+          `No, madam. The ${back(lx.bank.places, 2)} is very near.`,
+          "Ôn tuần 8: nhắc lại tên nơi chốn trong câu đáp, đừng chỉ nói no.",
         ),
       ],
       reading: read(
@@ -1994,9 +1994,15 @@ function week12(lx: Ctx): LessonContent[] {
           "Bảo khách chờ trên điện thoại nói 'Hold on, please', đọc nối liền hai chữ đầu.",
         ),
         sp(
-          "Hello, is this the front desk?",
-          `Hello, ${lower(f1)}. Let me transfer you.`,
-          "Khách gọi nhầm số thì báo họ đang gọi vào đâu RỒI nối máy sang đúng chỗ — đừng chỉ xưng bộ phận và chờ họ tự hiểu.",
+          "Hello? Who is this?",
+          `Hello, ${lower(f1)}. ${lx.staff} speaking.`,
+          "Câu bắt máy chuẩn — học thuộc nguyên khối, dùng mọi cuộc gọi. Từ 'speaking' có cụm /sp/ ở đầu và /ŋ/ ở cuối, trọng âm ở SPEA.",
+        ),
+
+        sp(
+          "Sorry, I think I have the wrong number.",
+          "No problem, madam. Let me transfer you.",
+          "Gọi nhầm số thì đừng bảo khách gọi lại — nối máy giúp họ. Cụm 'transfer you' đọc liền, trọng âm ở TRANS-fer khi là động từ thì rơi vào âm sau: trans-FER.",
         ),
         sp(
           "What do they want in room five?",
@@ -2006,7 +2012,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Do you have any left?",
-          `Yes. We have ${plural(lx.bank.requests[6])}, madam.`,
+          `Yes. We have ${plural(lx.bank.requests[5])}, madam.`,
           "Ôn tuần 9: câu hỏi ở số nhiều thì câu đáp cũng số nhiều. Còn hàng thì nói rõ còn thứ gì, đừng chỉ nói yes.",
         ),
       ],
@@ -2100,7 +2106,7 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Which room is the note for?",
-          `The note is for room ${lx.roomNo.spoken}, sir.`,
+          `The note is for room ${lx.roomNo.spoken}.`,
           "Nhận lời nhắn xong phải nói được nó của phòng nào. Đọc số phòng từng chữ số, không đọc thành số đếm.",
           "colleague",
         ),
@@ -2186,8 +2192,8 @@ function week12(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What is your first job?",
-          `I ${act(lx.bank.routines[2])} first, madam.`,
-          "Ôn tuần 11: việc đầu ca. Trạng từ thứ tự đứng cuối câu.",
+          `I ${act(lx.bank.routines[1])} first.`,
+          "Ôn tuần 11: việc đầu ca. Nói với đồng nghiệp thì bỏ kính ngữ, và trạng từ thứ tự đứng cuối câu.",
           "colleague",
         ),
       ],
@@ -3147,8 +3153,8 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is Mrs Lee finished?",
-          "Yes. Please prepare her bill.",
-          "Bàn giao cuối lượt khách: xác nhận xong rồi chuyển việc tiếp theo cho đúng người. Không kính ngữ khi nói với đồng nghiệp.",
+          "Yes. Everything is ready for the next guest.",
+          "Bàn giao cuối lượt khách: xác nhận xong VÀ nói rõ chỗ đó đã sẵn sàng cho ai. Không kính ngữ khi nói với đồng nghiệp.",
           "colleague",
         ),
         // Ma trận hứa can-do tuần 14 là "Hội thoại 3 lượt: chào - tiếp nhận - kết
@@ -4323,8 +4329,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Hỏi trước khi đơn xuống bếp, đừng chờ khách tự khai. Một câu sáu chữ ở đây rẻ hơn mọi thứ xảy ra sau đó.",
         ),
         sp(
-          "Thank you, the dessert looks lovely.",
-          "Enjoy your dessert, madam.",
+          "Thank you, that looks lovely.",
+          "Enjoy your meal, madam.",
           "Câu chốt của mọi lượt đặt món xuống bàn. Chữ 'Enjoy' trọng âm ở âm sau: en-JOY.",
         ),
         sp(
