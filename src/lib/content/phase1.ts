@@ -2676,7 +2676,7 @@ function week13(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 13, 4, "Making It Right", "Khắc phục cho khách hài lòng", {
-      vocabulary: [bw(b7, `The item is ${lower(b7)}.`), bw(b8, `The service is ${lower(b8)}.`)],
+      vocabulary: [bw(b7, `This one is ${lower(b7)}.`), bw(b8, `The service is ${lower(b8)}.`)],
       grammar: [
         g(
           "I change new one you.",
@@ -4215,7 +4215,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
       ],
       reading: read(
-        `The pool bar has no ice. ${lx.staff} says: "I am sorry, sir. We have no ice." Then ${lx.staff} says: "I will bring cold water." A straw comes only when a guest asks for one.`,
+        `The pool bar has no ice. ${lx.staff} says: "One moment, sir. I will ask the kitchen." The kitchen has none either, so ${lx.staff} says: "I will bring cold water." A straw comes only when a guest asks for one.`,
         [
           {
             q: "Nhân viên làm gì ngay sau khi báo hết đá?",
@@ -4244,11 +4244,11 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       game: [
         game(
           "Two cold drinks, plenty of ice.",
-          "I am sorry, sir. We have no ice.",
+          "One moment, sir. I will ask the kitchen.",
           "Ice no have sorry.",
-          "Of course, sir. Two drinks with ice.",
+          "I am sorry, sir. We have no ice.",
           undefined,
-          "Câu đó đúng ngữ pháp và hứa một thứ trong quầy không có. Khách sẽ phát hiện khi ly được mang ra, và lúc đó bạn vừa mất đá vừa mất lòng tin — nói thật ngay từ đầu rẻ hơn nhiều.",
+          "Câu đó đúng ngữ pháp và nó tuyên bố hết hàng trước khi hỏi ai. Bếp có thể còn — và kể cả không còn, một lời từ chối đứng một mình vẫn là một lời từ chối. Hỏi trước, rồi mới nói.",
         ),
         game(
           "Can I have a straw for my child?",
@@ -4550,7 +4550,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Đọc lại con số khách vừa cho — bốn người thì bốn ly, và hỏi lại một tiếng để chắc.",
         ),
         sp(
-          "Table six is free — the party of four.",
+          "How many at table six?",
           "Thank you. I will seat four people.",
           "Nói với đồng nghiệp thì bỏ kính ngữ và nói đủ số bàn với số khách.",
           "colleague",
@@ -5213,7 +5213,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Change the time",
           "/tʃeɪndʒ ðə ˈtaɪm/",
           "Đổi giờ hẹn",
-          "I can change the time, madam.",
+          "I will check the time for you, madam.",
           "🔄",
         ),
       ],
@@ -5225,10 +5225,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Ten at the morning, madam?",
         ),
         g(
-          "Time change can.",
-          "I can change the time, madam.",
-          "Chủ ngữ + CAN + động từ nguyên thể. Tiếng Việt bỏ chủ ngữ được, tiếng Anh thì không.",
-          "I can to change the time, madam.",
+          "Time change I check.",
+          "I will check the time for you, madam.",
+          "Chủ ngữ + WILL + động từ nguyên thể. Tiếng Việt bỏ chủ ngữ được, tiếng Anh thì không — và tra lịch trước rồi mới hứa đổi giờ.",
+          "I will to check the time for you, madam.",
         ),
       ],
       speaking: [
@@ -5506,7 +5506,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         g(
           "Mrs Chen room three-one-two.",
           "I am sorry. I cannot say.",
-          "Không xác nhận khách nào đang lưu trú, kể cả nói 'không có'. Xin lỗi rồi từ chối, không thêm gì.",
+          "Không xác nhận khách nào đang lưu trú HAY Ở PHÒNG NÀO, kể cả nói 'không có'. Xin lỗi rồi từ chối, không thêm gì.",
           "I am sorry. I cannot to say.",
         ),
         g(

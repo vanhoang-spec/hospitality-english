@@ -67,6 +67,13 @@ type OralItem = {
    *  threshold, not the checkpoint's. */
   sourceWeek: number;
   requiredTokens?: string[];
+  /** What the learner said one turn earlier, for the chained items of a
+   *  multi-turn exchange. Dropping it here is how the phase's only three-turn
+   *  conversation reached the checkpoint as three unrelated sentences — and
+   *  worse: measured over 20,000 draws, 4.7% of oral halves served turn two or
+   *  three with no opener at all, asking a learner to answer "Thank you. Good
+   *  night." out of nowhere. */
+  follows?: string;
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -85,6 +92,7 @@ function buildOral(dep: string, week: string): OralItem[] {
         target: s.targetResponse,
         tip: s.helpTip,
         requiredTokens: s.requiredTokens,
+        follows: s.follows,
         sourceWeek: c.weekNumber,
       })),
     );
@@ -247,6 +255,11 @@ function OralStage({
           </span>
           <span className="text-foreground/50">Cần đạt {CHECKPOINT_ORAL_PASS_MIN} câu</span>
         </div>
+        {item.follows && (
+          <div className="mb-4 border-l-2 border-muted pl-3 text-sm italic text-muted-foreground">
+            Bạn vừa nói: "{item.follows}"
+          </div>
+        )}
         <p className="font-display mt-4 text-2xl leading-snug">"{item.guestPrompt}"</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <button
