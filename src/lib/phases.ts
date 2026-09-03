@@ -126,7 +126,15 @@ export function checkpointPassed(scorePct: number, tallies: readonly ConstructTa
  *  and the oral half is there to make the claim "can speak" true at all,
  *  not to become the hardest gate in the course. */
 export const CHECKPOINT_ORAL_ITEMS = 5;
-export const CHECKPOINT_ORAL_PASS_MIN = 3;
+/** The share of drawn utterances that must pass. Was a flat 3, which was the
+ *  same 60% while every sitting drew exactly five — and stopped being 60% the
+ *  moment a three-turn exchange started arriving as one draw: 62.2% of
+ *  sittings then held seven utterances against an unchanged bar of three, so
+ *  a learner could fail four of seven and still clear the oral half. An
+ *  academic review measured the effective pass mark at 48.1%. */
+export const CHECKPOINT_ORAL_PASS_SHARE = 0.6;
+export const oralPassMin = (drawn: number) =>
+  Math.max(1, Math.ceil(drawn * CHECKPOINT_ORAL_PASS_SHARE));
 
 /** How long a learner waits after a FAILED checkpoint sitting.
  *

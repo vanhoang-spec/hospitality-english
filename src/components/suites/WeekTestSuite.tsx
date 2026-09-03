@@ -14,7 +14,8 @@ import { utterancePassed } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
   CHECKPOINT_ORAL_ITEMS,
-  CHECKPOINT_ORAL_PASS_MIN,
+  oralPassMin,
+  CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
@@ -298,7 +299,7 @@ function OralStage({
           <span>
             Phần nói · câu {idx + 1}/{items.length}
           </span>
-          <span className="text-foreground/50">Cần đạt {CHECKPOINT_ORAL_PASS_MIN} câu</span>
+          <span className="text-foreground/50">Cần đạt {oralPassMin(items.length)} câu</span>
         </div>
         {item.follows && (
           <div className="mb-4 border-l-2 border-muted pl-3 text-sm italic text-muted-foreground">
@@ -491,7 +492,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   ) {
     const oralPassed = results.filter((r) => r.passed).length;
     const writtenOk = checkpointPassed(pct, tallied);
-    const ok = writtenOk && (results.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN);
+    const ok = writtenOk && (results.length === 0 || oralPassed >= oralPassMin(results.length));
     setOralResults(results);
     if (ok && !awardedRef.current) {
       awardedRef.current = true;
@@ -554,10 +555,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               kỹ năng bị bỏ trống.
             </p>
             <p>
-              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} câu nói</strong> lấy từ khắp
-              giai đoạn — cần đạt <strong>{CHECKPOINT_ORAL_PASS_MIN} câu</strong>. Câu mẫu chỉ hiện
-              ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn được
-              tính.
+              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} lượt nói</strong> lấy từ khắp
+              giai đoạn — một hội thoại nhiều lượt tính là một lượt — và cần đạt{" "}
+              <strong>{Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%</strong> số câu. Câu mẫu chỉ
+              hiện ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn
+              được tính.
             </p>
           </div>
           {cooldownMsLeft > 0 ? (
@@ -593,7 +595,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
 
   if (stage === "done") {
     const oralPassed = oralResults.filter((r) => r.passed).length;
-    const oralOk = oralResults.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN;
+    const oralOk = oralResults.length === 0 || oralPassed >= oralPassMin(oralResults.length);
     const passed = checkpointPassed(scorePct, tallies) && oralOk;
     const shortfall = tallies.filter((t) => !blockCleared(t));
     const undeliverable = tallies.filter((t) => !t.deliverable);
@@ -618,7 +620,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
               : !oralOk && checkpointPassed(scorePct, tallies)
-                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${CHECKPOINT_ORAL_PASS_MIN}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${oralPassMin(oralResults.length)}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
                 : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
                   ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
                       .map(
@@ -668,7 +670,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em]">
                 <span className="text-foreground/60">Phần nói</span>
                 <span className={oralOk ? "text-foreground/60" : "text-primary"}>
-                  {oralPassed}/{oralResults.length} · cần {CHECKPOINT_ORAL_PASS_MIN}
+                  {oralPassed}/{oralResults.length} · cần {oralPassMin(oralResults.length)}
                 </span>
               </div>
               {/* Targets are revealed only here — during the oral stage they

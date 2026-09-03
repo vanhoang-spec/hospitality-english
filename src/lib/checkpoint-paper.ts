@@ -623,6 +623,24 @@ export function buildPaper(dep: string, week: string): Question[] {
       if (clean.some((k) => nearlySameAnswer(k.t, c.t))) continue;
       clean.push(c);
     }
+    // At least one distractor must echo the audio as hard as the key does.
+    // The score already weights `echo` for this reason, but narrowing the
+    // candidate pool with the second-right-answer rules above filtered out
+    // the high-echo candidates as a side effect, and "pick the option sharing
+    // most words with what you heard" climbed from 36.9% to 44.1% of
+    // listening questions — through the block's own 50% floor on 54.9% of
+    // papers. Overlap has to stay useless, so it is repaired here rather than
+    // by weakening the rules that made it useful again.
+    const keyEcho = echo(s.targetResponse);
+    if (clean.length === 2 && !clean.some((c) => echo(c.t) >= keyEcho)) {
+      const loud = strict.find(
+        (c) =>
+          echo(c.t) >= keyEcho &&
+          !clean.some((k) => k.t === c.t || nearlySameAnswer(k.t, c.t)) &&
+          !nearlySameAnswer(c.t, s.targetResponse),
+      );
+      if (loud) clean[1] = loud;
+    }
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the
     // rejects to read as a second right answer. Three options beats a pure

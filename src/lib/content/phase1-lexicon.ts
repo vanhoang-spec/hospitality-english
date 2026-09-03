@@ -95,7 +95,7 @@ export type P1Bank = {
    *  actually DOES once a guest leaves it — two manager reviews asked for
    *  opposite lines at the same slot and both were right about their own
    *  floor: housekeeping does not prepare bills, a spa reception does. */
-  station: { label: string; spoken: string; handed: string };
+  station: { label: string; spoken: string; prep: string; handed: string };
 };
 
 // ------------------------------------------------------------
@@ -105,6 +105,7 @@ const FO_BANK: P1Bank = {
   station: {
     label: "room",
     spoken: "Room two-oh-five",
+    prep: "in",
     handed: "Please give the key back to reception.",
   },
   roles: [
@@ -306,7 +307,12 @@ const FO_BANK: P1Bank = {
 // FOOD & BEVERAGE — the floor, the table, the plate.
 // ------------------------------------------------------------
 const FB_BANK: P1Bank = {
-  station: { label: "table", spoken: "Table six", handed: "Please prepare the bill now." },
+  station: {
+    label: "table",
+    spoken: "Table six",
+    prep: "at",
+    handed: "Please prepare the bill now.",
+  },
   roles: [
     // Slot 0 is the persona's OWN role and slot 1 the colleague's, so the
     // female-marked word has to come first here: F&B's persona is Linh.
@@ -315,14 +321,14 @@ const FB_BANK: P1Bank = {
     {
       word: "Waitress",
       phonetic: "/ˈweɪtrəs/",
-      definition: "Nhân viên phục vụ (nữ)",
+      definition: "Phục vụ nữ",
       icon: "👩‍🍳",
       gender: "f",
     },
     {
       word: "Waiter",
       phonetic: "/ˈweɪtə/",
-      definition: "Nhân viên phục vụ (nam)",
+      definition: "Phục vụ nam",
       icon: "🧑‍🍳",
       gender: "m",
     },
@@ -330,16 +336,16 @@ const FB_BANK: P1Bank = {
     {
       word: "Barista",
       phonetic: "/bəˈriːstə/",
-      definition: "Nhân viên pha chế cà phê",
+      definition: "Pha chế cà phê",
       icon: "☕",
     },
     {
       word: "Bartender",
       phonetic: "/ˈbɑːtendə/",
-      definition: "Nhân viên pha chế quầy bar",
+      definition: "Pha chế quầy bar",
       icon: "🍸",
     },
-    { word: "Host", phonetic: "/həʊst/", definition: "Nhân viên đón khách nhà hàng", icon: "🤵" },
+    { word: "Host", phonetic: "/həʊst/", definition: "Đón khách nhà hàng", icon: "🤵" },
     { word: "Kitchen staff", phonetic: "/ˈkɪtʃɪn stɑːf/", definition: "Nhân viên bếp", icon: "🍳" },
     {
       word: "Head waiter",
@@ -482,6 +488,7 @@ const HK_BANK: P1Bank = {
   station: {
     label: "room",
     spoken: "Room eight-one-two",
+    prep: "in",
     handed: "Room eight-one-two is ready for the next guest.",
   },
   roles: [
@@ -695,6 +702,7 @@ const SW_BANK: P1Bank = {
   station: {
     label: "treatment room",
     spoken: "Treatment room two",
+    prep: "in",
     handed: "Please prepare the bill now.",
   },
   roles: [
@@ -910,6 +918,7 @@ const GR_BANK: P1Bank = {
   station: {
     label: "room",
     spoken: "Room seven-two-oh",
+    prep: "in",
     handed: "Room seven-two-oh is ready for the next guest.",
   },
   roles: [
@@ -1089,6 +1098,7 @@ const BO_BANK: P1Bank = {
   station: {
     label: "office",
     spoken: "Office four-one-five",
+    prep: "in",
     handed: "Please file the handover now.",
   },
   roles: [
