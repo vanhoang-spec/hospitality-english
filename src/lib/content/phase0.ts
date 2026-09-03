@@ -6185,12 +6185,24 @@ function reviewWordsFor(lx: P0Lexicon, week: number): string[] | undefined {
  *  lockWeekHeadwords(). */
 export { PROMISE_VERBS };
 
-export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
+export function lockWeekHeadwords(
+  lessons: LessonContent[],
+  reviewWords: string[] = [],
+): LessonContent[] {
   const heads = [
     ...new Set(
-      lessons
-        .flatMap((l) => l.vocabulary)
-        .flatMap((v) => normalize(v.word))
+      [
+        ...lessons.flatMap((l) => l.vocabulary).map((v) => v.word),
+        // The week's REVIEW list too. This scanned only the cards a week
+        // teaches, so every "Ôn tuần N" item — the entire retrieval half of
+        // the course — was ungraded on the word it exists to retrieve: an
+        // audit measured 64 of 316 drop-one-content-word passes landing
+        // exactly on a previous week's headword. "Our pool attendant works
+        // with me." passed as "Our pool works with me"; "The steam room is
+        // next to it." passed as "The steam is next to it."
+        ...reviewWords,
+      ]
+        .flatMap((w) => normalize(w))
         .filter((w) => w.length > 2 && !HEADWORD_FUNCTION_WORDS.has(w)),
     ),
   ];
@@ -6213,6 +6225,7 @@ export function lockWeekHeadwords(lessons: LessonContent[]): LessonContent[] {
 
 function buildWeek(lx: P0Lexicon, week: number): WeekContent {
   const meta = WEEK_META[week];
+  const review = reviewWordsFor(lx, week);
   return {
     departmentId: lx.code,
     weekNumber: week,
@@ -6221,8 +6234,11 @@ function buildWeek(lx: P0Lexicon, week: number): WeekContent {
     // A department lesson replaces the spine lesson at the same id, so the
     // week keeps its four lessons in the same order and every id downstream
     // — progress records, review keys, deep links — stays valid.
-    lessons: lockWeekHeadwords(meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l)),
-    reviewWords: reviewWordsFor(lx, week),
+    lessons: lockWeekHeadwords(
+      meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
+      review,
+    ),
+    reviewWords: review,
   };
 }
 

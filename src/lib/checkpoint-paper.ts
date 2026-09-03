@@ -467,7 +467,6 @@ export function buildPaper(dep: string, week: string): Question[] {
     // second right answer by construction.
     const correct = bagOf(s.targetResponse);
     const share = (t: string) => [...bagOf(t)].filter((w) => correct.has(w)).length;
-    const saysTheSame = (t: string) => sameAnswer(t, s.targetResponse);
     // Was `o.guestPrompt === s.guestPrompt`, an exact string match, so "Do you
     // have some shampoo?" happily took the reply written for "Can I have some
     // shampoo?" in the same lesson. Same question, same answer, one of them
@@ -552,10 +551,67 @@ export function buildPaper(dep: string, week: string): Question[] {
           ),
       ]),
     ];
+    // A SECOND RIGHT ANSWER is a distractor the audio gives the learner no
+    // reason to reject. Every previous fix for this named the colliding pair —
+    // "Table six is free", the apology-plus-promise list, the routing list —
+    // so each new batch of content reopened the hole: one review round added
+    // three fresh pairs and took Guest Relations from 0.00% to 11.20% of
+    // papers in a single commit. These three rules are shapes instead, and a
+    // pair has to be authored around them rather than merely away from a list.
+    const audioCore = coreOf(s.guestPrompt);
+    const keyCore = coreOf(s.targetResponse);
+    const pointsAt = (c: Set<string>) => [...c].filter((w) => audioCore.has(w)).length;
+    const keyPull = pointsAt(keyCore);
+    /** The audio names something the key says and the candidate does not — so
+     *  the learner has a content reason to prefer the key. */
+    const discriminated = (t: string) => {
+      const c = coreOf(t);
+      return [...keyCore].some((w) => !c.has(w) && audioCore.has(w));
+    };
+    /** The audio echoes the CANDIDATE harder than the key: "Is everything
+     *  done?" against "Everything is ready for the next guest." with the key
+     *  saying "The room is ready for you." A learner picking by echo is right
+     *  to pick the wrong one, which is worse than a coin toss. */
+    const pullsAway = (t: string) => pointsAt(coreOf(t)) > keyPull;
+    /** The same taught move with a different object. Both are correct replies
+     *  whenever the audio does not name the object — "Is there a problem?"
+     *  answered by "I will bring a new lounge card." and "I will bring a
+     *  ribbon." Gated on `discriminated` so a lesson that DOES name the object
+     *  keeps its same-frame distractor, which is the one worth hearing. */
+    const MOVES = [
+      /\bi will bring\b/i,
+      /\bi will send\b/i,
+      /\bi will call\b/i,
+      /\bi will check\b/i,
+      /\bmay i have\b/i,
+      /\bis ready\b/i,
+      /\bhave a good\b/i,
+      /\benjoy your\b/i,
+      // "What do you do first?" has as many right answers as the department
+      // has opening jobs, and three weeks of this phase each teach a different
+      // one. Same for the every-day and end-of-shift frames beside it.
+      /\bfirst[.?!]?$/i,
+      /\bevery day[.?!]?$/i,
+      /\bat the end[.?!]?$/i,
+    ];
+    const moveIdx = (t: string) => MOVES.findIndex((r) => r.test(t.trim()));
+    const keyMove = moveIdx(s.targetResponse);
+    const secondRightAnswer = (t: string) =>
+      pullsAway(t) || (!discriminated(t) && keyMove >= 0 && moveIdx(t) === keyMove);
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
-    const usable = widened.filter((t) => !nearlySameAnswer(t, s.targetResponse));
+    const usable = widened.filter(
+      (t) => !nearlySameAnswer(t, s.targetResponse) && !secondRightAnswer(t),
+    );
     const banded = usable.filter(inBand);
-    const strict = ranked(banded.length >= 2 ? banded : usable);
+    // Discriminated candidates first: when the audio can tell the key from a
+    // distractor, that is the distractor worth printing. 57-60% of items have
+    // an audio that names nothing in the key at all, and those fall through to
+    // the similarity ranking exactly as before.
+    const byDiscrimination = (list: string[]) => [
+      ...ranked(list.filter(discriminated)),
+      ...ranked(list.filter((t) => !discriminated(t))),
+    ];
+    const strict = byDiscrimination(banded.length >= 2 ? banded : usable);
     // And the two distractors must differ from EACH OTHER. The old rule
     // compared every candidate to the key and never to its neighbour, so a
     // paper could offer "This one is better, madam." against "This one is
@@ -571,7 +627,18 @@ export function buildPaper(dep: string, week: string): Question[] {
     // taking the LEAST similar first, so the filler is the least likely of the
     // rejects to read as a second right answer. Three options beats a pure
     // strict rule that hands the learner a coin toss.
-    const filler = ranked(pool.filter((t) => saysTheSame(t)))
+    //
+    // The rejects are what the strict filters removed, not `saysTheSame` — a
+    // missing `!` had this drawing the top-up from the candidates whose
+    // content is IDENTICAL to the key, which is the one set that must never
+    // reach a paper: the learner would be marked wrong for choosing a sentence
+    // that says exactly what the answer says. Reversing the similarity rank
+    // still puts those last within the rejects, so a paper reaches for them
+    // only when nothing else exists at all.
+    const rejected = widened.filter(
+      (t) => nearlySameAnswer(t, s.targetResponse) || secondRightAnswer(t),
+    );
+    const filler = ranked(rejected)
       .reverse()
       .filter((x) => !clean.some((c) => c.t === x.t || nearlySameAnswer(c.t, x.t)))
       // Stable sort, so within each group the reverse order above survives:

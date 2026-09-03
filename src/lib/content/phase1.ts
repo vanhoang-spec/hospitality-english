@@ -1341,7 +1341,7 @@ function week10(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will check it now." ${lx.staff} writes it down and goes to look at once. The guest says: "Thank you for listening." The room is right ten minutes later.`,
+        `The guest says: "This is too ${lower(s4)}." ${lx.staff} answers at once: "I am very sorry, sir. I will check it now." ${lx.staff} writes it down and goes to look at once. The guest says: "Thank you for listening." The guest is happy ten minutes later.`,
         [
           {
             q: "'Too' khác 'very' ở điểm nào?",
@@ -1354,8 +1354,8 @@ function week10(lx: Ctx): LessonContent[] {
             explanation: "very hot = rất nóng (bình thường); too hot = nóng quá (có vấn đề).",
           },
           {
-            q: "Quản lý tới sau bao lâu?",
-            options: ["Mười phút", "Một tiếng", "Ngày hôm sau"],
+            q: "Sau bao lâu thì khách hài lòng?",
+            options: ["Sau mười phút", "Sau một tiếng", "Sang ngày hôm sau"],
             correct: 0,
             explanation:
               "Bài đọc ghi rõ mười phút. Ghi lại lời phàn nàn rồi đi kiểm ngay là cách duy nhất để con số đó xảy ra.",
@@ -5799,6 +5799,7 @@ function reviewWordsFor(lx: Ctx, week: number, phase0Words: string[]): string[] 
 
 function buildWeek(lx: Ctx, week: number, phase0Words: string[]): WeekContent {
   const meta = WEEK_META[week];
+  const review = reviewWordsFor(lx, week, phase0Words);
   return {
     departmentId: lx.code,
     weekNumber: week,
@@ -5807,8 +5808,8 @@ function buildWeek(lx: Ctx, week: number, phase0Words: string[]): WeekContent {
     // Phase 0 locks its headwords into the grader here and Phase 1 did not,
     // so eight weeks of speaking could be passed without saying the word the
     // lesson exists to teach.
-    lessons: lockWeekHeadwords(lessonsFor(lx, week)),
-    reviewWords: reviewWordsFor(lx, week, phase0Words),
+    lessons: lockWeekHeadwords(lessonsFor(lx, week), review),
+    reviewWords: review,
   };
 }
 

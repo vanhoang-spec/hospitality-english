@@ -384,7 +384,63 @@ export function requiredValueTokens(target: string, override?: string[]): string
     ...(override ?? []).map((t) => t.toLowerCase()),
     ...titleAndSurname(target),
     ...fixedPhraseTokens(target),
+    ...particleTokens(toks),
   ];
+}
+
+/** Verb + particle pairs where the particle IS the meaning.
+ *
+ *  "Send it UP", "write it DOWN", "come BACK" — the particle is short, it is a
+ *  function word, and the content allowance was designed to forgive exactly
+ *  that shape. Measured: five of eight such targets passed with the particle
+ *  gone, including two where the phrasal verb is the headword the week exists
+ *  to teach. "Of course. Let me send it for you." passed a `Send it up` item
+ *  at 88%; "I write it because the shift changes." passed a `Write it down`
+ *  item at 88%.
+ *
+ *  Locked against the VERB rather than by a list of bare particles: "back" in
+ *  "at the back of the lounge" is a place and stays droppable, while "back" in
+ *  "I will come back" is half the promise. */
+const PHRASAL_VERBS: Record<string, string[]> = {
+  send: ["up", "back"],
+  write: ["down"],
+  wrote: ["down"],
+  writes: ["down"],
+  come: ["back"],
+  comes: ["back"],
+  call: ["back"],
+  calls: ["back"],
+  go: ["home", "back"],
+  goes: ["home", "back"],
+  hold: ["on"],
+  hang: ["up"],
+  pick: ["up"],
+  wake: ["up"],
+  sit: ["down"],
+  put: ["on", "down"],
+  take: ["off", "back"],
+  turn: ["on", "off"],
+  fill: ["in"],
+  check: ["in", "out"],
+  bring: ["back", "up"],
+  brings: ["back", "up"],
+};
+function particleTokens(toks: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < toks.length; i++) {
+    const parts = PHRASAL_VERBS[toks[i]];
+    if (!parts) continue;
+    // Up to three tokens of object may sit between the verb and its particle —
+    // "send IT up", "write THE NUMBER down" — but no further, or the next
+    // sentence's "back" would be claimed by this sentence's "come".
+    for (let j = i + 1; j <= Math.min(i + 3, toks.length - 1); j++) {
+      if (parts.includes(toks[j])) {
+        out.push(toks[j]);
+        break;
+      }
+    }
+  }
+  return out;
 }
 
 /** Set phrases that are all-or-nothing.

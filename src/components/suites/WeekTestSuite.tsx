@@ -103,18 +103,63 @@ function buildOral(dep: string, week: string): OralItem[] {
   // single safety line. One item per week first (weeks shuffled, items
   // within a week shuffled), then random fill if the phase has fewer weeks
   // than slots. Every week of the phase now has a voice in the oral half.
-  const byWeek = new Map<number, typeof items>();
-  for (const it of shuffle(items)) {
-    if (!byWeek.has(it.sourceWeek)) byWeek.set(it.sourceWeek, []);
-    byWeek.get(it.sourceWeek)!.push(it);
+  // A `follows` chain is ONE exchange, so it is one draw. Sampling the middle
+  // turn on its own measures a turn and never the conversation the week exists
+  // to teach: four academic reviews measured the same thing independently —
+  // 4.5% of sittings drew a chain turn, 0.0% drew two of them, so the
+  // three-turn can-do had no assessment at all. A chain is pulled in whole
+  // behind its head, and the cut below never lands inside one.
+  const headOf = new Map<string, number>();
+  items.forEach((it, i) => headOf.set(it.target, i));
+  const nextOf = new Map<number, number>();
+  const isTail = new Set<number>();
+  items.forEach((it, i) => {
+    if (!it.follows) return;
+    const prev = headOf.get(it.follows);
+    if (prev === undefined || prev === i || nextOf.has(prev)) return;
+    nextOf.set(prev, i);
+    isTail.add(i);
+  });
+  const chainAt = (i: number) => {
+    const out = [items[i]];
+    for (let cur = i, n = nextOf.get(cur); n !== undefined; cur = n, n = nextOf.get(cur))
+      out.push(items[n]);
+    return out;
+  };
+  const heads = items.map((_, i) => i).filter((i) => !isTail.has(i));
+
+  const byWeek = new Map<number, number[]>();
+  for (const i of shuffle(heads)) {
+    const wk = items[i].sourceWeek;
+    if (!byWeek.has(wk)) byWeek.set(wk, []);
+    byWeek.get(wk)!.push(i);
   }
+  // Within a week, a chain head goes first. A week that teaches a three-turn
+  // exchange has one of them among thirty single turns, so leaving it to the
+  // shuffle drew it on 3.6% of sittings — the can-do would stay unmeasured
+  // with the grouping fixed and nothing else changed.
+  for (const list of byWeek.values())
+    list.sort((a, b) => Number(!nextOf.has(a)) - Number(!nextOf.has(b)));
+
+  // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
+  // its three turns in a row the way the lesson taught them.
   const picked: typeof items = [];
+  const used = new Set<number>();
+  let units = 0;
+  const take = (i: number) => {
+    for (const it of chainAt(i)) picked.push(it);
+    for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
+    units++;
+  };
   for (const wk of shuffle([...byWeek.keys()])) {
-    if (picked.length >= CHECKPOINT_ORAL_ITEMS) break;
-    picked.push(byWeek.get(wk)![0]);
+    if (units >= CHECKPOINT_ORAL_ITEMS) break;
+    take(byWeek.get(wk)![0]);
   }
-  const rest = items.filter((it) => !picked.includes(it));
-  return [...picked, ...shuffle(rest)].slice(0, CHECKPOINT_ORAL_ITEMS);
+  for (const i of shuffle(heads)) {
+    if (units >= CHECKPOINT_ORAL_ITEMS) break;
+    if (!used.has(i)) take(i);
+  }
+  return picked;
 }
 
 /** The oral half. Deliberately does NOT show the target sentence: an earlier
