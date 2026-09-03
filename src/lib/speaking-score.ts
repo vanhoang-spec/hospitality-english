@@ -190,7 +190,12 @@ const FINITE_VERBS = new Set<string>(
     "massage massages warm warms light lights meet meets show shows count counts file files " +
     "pay pays save saves attend attends mop mops dust dusts change changes report reports " +
     "transfer transfers cancel cancels dial dials email emails confirm confirms hold holds " +
-    "welcome welcomes order orders repeat repeats stop stops fix fixes seat seats spell spells"
+    "welcome welcomes order orders repeat repeats stop stops fix fixes seat seats spell spells " +
+    "go goes leave leaves sit sits put puts get gets see sees know knows come comes " +
+    // Progressive forms carry the predicate on their own: "Your water bottle is
+    // coming, madam." keeps only a bare copula without this one.
+    "coming going waiting checking bringing cleaning working starting finishing " +
+    "speaking calling asking helping looking making taking sending writing"
   ).split(" "),
 );
 
@@ -480,7 +485,11 @@ const COURTESY_EXTRAS = new Set<string>([
 /** What is left of a model sentence once the grammar and the courtesy are
  *  taken out: the words that carry what it says. */
 const isContentToken = (t: string) =>
-  t.length >= 3 &&
+  // A verb counts however short it is. The length floor exists to keep
+  // two-letter glue out of the content list, and it was also keeping "go" out:
+  // "I go to the pool bar first." passed with the verb missing, because a word
+  // that never becomes content is a word the verb lock never sees.
+  (t.length >= 3 || FINITE_VERBS.has(t)) &&
   !FUNCTION_TOKENS.has(t) &&
   !GRAMMAR_TOKENS.has(t) &&
   !COURTESY_EXTRAS.has(t) &&
@@ -758,7 +767,27 @@ export function utterancePassed(
   // token lock still demanding the exact word, which fails the same honest
   // answer for the same missing reason.
   const gated = dayFree ? required.filter((t) => !DAYPART.test(t)) : required;
-  const missingRequired = [...new Set(gated)].filter((t) => !spokenSet.has(t));
+  // BY OCCURRENCE. A Set said "the answer contains `is`" and stopped there, so
+  // a model that needs the copula twice passed with one of them gone: "This
+  // one brighter. That one is bright." against "This one IS brighter. That one
+  // is bright." at 88% accuracy. Eleven items behaved that way — the same
+  // shape of bug this file already fixed once for the function tokens, and the
+  // fix never reached this line.
+  // How many times each gated token is needed comes from the TARGET, not from
+  // the gated list — that list is a set of rules and can name the same token
+  // twice (requiredValueTokens finds "madam", then the honorific rule pushes
+  // it again), which would demand two of something the model says once.
+  const gatedSet = new Set(gated);
+  const requiredSeq = foldCourtesy(normalize(target)).filter((t) => gatedSet.has(t));
+  const requiredTally = new Map<string, number>();
+  for (const t of foldCourtesy(normalize(spoken)))
+    requiredTally.set(t, (requiredTally.get(t) ?? 0) + 1);
+  const missingRequired: string[] = [];
+  for (const t of requiredSeq) {
+    const left = requiredTally.get(t) ?? 0;
+    if (left > 0) requiredTally.set(t, left - 1);
+    else missingRequired.push(t);
+  }
   // Có mặt là chưa đủ: các token GIÁ TRỊ phải xuất hiện đúng thứ tự của câu
   // mẫu, và đúng số lần. "Two keys to room two-oh-five" chứa "two" hai lần vì
   // hai lần đó nói hai điều khác nhau; đọc "nine keys to room two-oh-five"
@@ -871,6 +900,12 @@ export function utterancePassed(
   // sentence stops being a sentence without it. So the allowance opens at
   // three content words, and never spends itself on a verb.
   const contentAllowance = targetContent.length >= 3 ? 1 : 0;
+  // BY OCCURRENCE, not by presence. `missingContent` is already built that way,
+  // so asking it whether a verb is missing is right — but the earlier draft
+  // asked the spoken SET instead, and a model that uses a verb twice kept
+  // passing with one copy gone: "This one brighter. That one is bright."
+  // against "This one IS brighter…" at 88%. Eleven items behaved that way, the
+  // same shape of bug this file already fixed once for function tokens.
   const missingVerb = missingContent.some((t) => FINITE_VERBS.has(t));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
