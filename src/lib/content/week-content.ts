@@ -248,11 +248,13 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give me your name.",
           polite: "May I have your name, please?",
+          nearMiss: "May I to have your name, please?",
           rule: "Xin thông tin của khách bằng 'May I have…?' — lịch sự hơn hẳn câu mệnh lệnh.",
         },
         {
           rude: "What is your booking number?",
           polite: "Could you please share your booking reference?",
+          nearMiss: "Could you please to share your booking reference?",
           rule: "Câu hỏi mang tính nghiệp vụ mở đầu bằng 'Could you please…?'.",
         },
       ],
@@ -336,11 +338,13 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give passport.",
           polite: "Could you provide your passport, please?",
+          nearMiss: "Could you provide me your passport, please?",
           rule: "Làm mềm lời đề nghị bằng 'Could you…, please?'. Một từ làm mềm là đủ — 'please kindly' nghe không tự nhiên.",
         },
         {
           rude: "I take this.",
           polite: "May I hold your passport for a moment?",
+          nearMiss: "May I holding your passport for a moment?",
           rule: "Xin phép giữ tạm thứ gì đó bằng 'May I hold…?'.",
         },
       ],
@@ -432,21 +436,25 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Give me your credit card.",
           polite: "May I secure a pre-authorization on your credit card?",
+          nearMiss: "May I secure a pre-authorization at your credit card?",
           rule: "Dùng 'May I secure…?' thay vì đòi thẻ của khách.",
         },
         {
           rude: "You must pay for minibar.",
           polite: "This deposit is for incidental charges like the minibar.",
+          nearMiss: "This deposit is for incidental charges like minibar.",
           rule: "Giải thích quy định nhẹ nhàng bằng 'This is for…'.",
         },
         {
           rude: "Your card is declined. No good.",
           polite: "The card did not go through, sir. Do you have another one?",
+          nearMiss: "The card did not went through, sir. Do you have another one?",
           rule: "Máy hiện 'declined' nhưng bạn nói 'did not go through'. Lỗi thuộc về máy, không thuộc về khách — và người xung quanh không hiểu được câu đó.",
         },
         {
           rude: "Do you have money in the bank?",
           polite: "May I try this at the other terminal, madam?",
+          nearMiss: "May I try this at other terminal, madam?",
           rule: "Đề nghị thử máy khác trước tiên. Khách giữ được thể diện, và đôi khi máy hỏng thật.",
         },
       ],
@@ -476,8 +484,8 @@ export const FO_WEEK_17: WeekContent = {
             q: "Khi thẻ của khách không thanh toán được, tuyệt đối KHÔNG được làm gì?",
             options: [
               "Ask the guest about their bank or their balance",
-              "Offer the other terminal",
-              "Ask quietly for another card",
+              "Offer to try the other card terminal quietly",
+              "Ask the guest quietly for another card instead",
             ],
             correct: 0,
           },
@@ -561,11 +569,13 @@ export const FO_WEEK_17: WeekContent = {
         {
           rude: "Go to first floor for food.",
           polite: "Breakfast is served at the main restaurant on the first floor.",
+          nearMiss: "Breakfast is serve at the main restaurant on the first floor.",
           rule: "Câu bị động kiểu 'Breakfast is served…' nghe chuyên nghiệp hơn.",
         },
         {
           rude: "Pool closes at 9.",
           polite: "The swimming pool is open until 9:00 PM.",
+          nearMiss: "The swimming pool is opened until 9:00 PM.",
           rule: "Nói giờ hoạt động bằng 'is open until…'.",
         },
       ],
@@ -662,6 +672,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "What's your room number?",
           polite: "May I ask for your room number, please?",
+          nearMiss: "May I ask your room number, please?",
           rule: "Hỏi xin thông tin nhẹ nhàng bằng động từ khuyết thiếu: 'May I ask for…?'.",
         },
         {
@@ -758,11 +769,13 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Wait there.",
           polite: "Would you mind waiting here for just a moment, sir?",
+          nearMiss: "Would you mind to wait here for just a moment, sir?",
           rule: "'Would you mind…?' biến câu mệnh lệnh thành lời đề nghị gián tiếp, lịch sự.",
         },
         {
           rude: "Table's not ready.",
           polite: "Your table is being prepared now. It will take a few minutes.",
+          nearMiss: "Your table is being prepare now. It will take a few minutes.",
           rule: "Bị động ('is being prepared') nghe chuyên nghiệp và không quy lỗi cho ai.",
         },
       ],
@@ -786,8 +799,8 @@ export const FB_WEEK_15: WeekContent = {
           {
             q: "Nên mời khách đang chờ sang đâu?",
             options: [
-              "Near the buffet line",
-              "To another restaurant",
+              "Near the buffet line, standing up",
+              "To another restaurant in the hotel",
               "To the waiting area near the entrance",
             ],
             correct: 2,
@@ -854,6 +867,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Go get food there.",
           polite: "Let me show you where the hot food station is.",
+          nearMiss: "Let me to show you where the hot food station is.",
           rule: "'Let me…' là lời mời giúp đỡ, không phải ra lệnh.",
         },
         {
@@ -945,6 +959,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Give me your plate.",
           polite: "Would you like me to clear your plate for you?",
+          nearMiss: "Would you like me clear your plate for you?",
           rule: "'Would you like me to…?' mời phục vụ mà không gây phiền.",
         },
         {
@@ -968,9 +983,9 @@ export const FB_WEEK_15: WeekContent = {
           {
             q: "Khi nào nhân viên KHÔNG được dọn đĩa?",
             options: [
-              "When it is empty",
+              "When the plate has been completely empty for a while",
               "While the guest is still using cutlery on it",
-              "After the guest leaves",
+              "After the guest has finally left the table for good",
             ],
             correct: 1,
           },
@@ -1064,11 +1079,13 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "Housekeeping, open the door.",
           polite: "Housekeeping! May I come in to service the room?",
+          nearMiss: "Housekeeping! May I come in to servicing the room?",
           rule: "Xin phép vào phòng bằng 'May I come in…?', không nói trống không.",
         },
         {
           rude: "I'm coming in now.",
           polite: "Would it be convenient for me to clean the room now?",
+          nearMiss: "Would it be convenient for me cleaning the room now?",
           rule: "Hỏi giờ giấc lịch sự bằng 'Would it be convenient…?'.",
         },
       ],
@@ -1153,11 +1170,13 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "What do you want?",
           polite: "How may I assist you today?",
+          nearMiss: "How may I assisting you today?",
           rule: "Câu hỏi mở lịch sự 'How may I…?' thay cho câu cộc lốc.",
         },
         {
           rude: "Wait there.",
           polite: "I will bring that up to your room right away.",
+          nearMiss: "I will bringing that up to your room right away.",
           rule: "'will' kèm mốc thời gian cụ thể làm khách yên tâm, thay vì ra lệnh.",
         },
       ],
@@ -1242,11 +1261,13 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "You want a bed or not?",
           polite: "Would you like us to set up a rollaway bed for you?",
+          nearMiss: "Would you like us set up a rollaway bed for you?",
           rule: "Mời dùng dịch vụ lịch sự bằng 'Would you like us to…?'.",
         },
         {
           rude: "That costs more money.",
           polite: "Please note there is a small extra charge for this service.",
+          nearMiss: "Please note there is small extra charge for this service.",
           rule: "Làm mềm tin không vui bằng 'Please note…' thay vì nói thẳng tuột.",
         },
       ],
@@ -1365,9 +1386,9 @@ export const HK_WEEK_15: WeekContent = {
           {
             q: "Nếu gọi điện không ai bắt máy, nhân viên phải làm gì?",
             options: [
-              "Enter the room anyway",
+              "Enter the room anyway and quietly start the work",
               "Leave a voicemail and slip a note under the door",
-              "Ignore the room",
+              "Ignore the room and skip it for the whole shift",
             ],
             correct: 1,
           },
@@ -3913,11 +3934,13 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Towels are over there.",
           polite: "Fresh towels are at the station past the pool bar. Please help yourself.",
+          nearMiss: "Fresh towels is at the station past the pool bar. Please help yourself.",
           rule: "Chỉ chỗ xong thêm 'Please help yourself' để lời chỉ dẫn thành lời mời.",
         },
         {
           rude: "Use your key for the locker.",
           polite: "Your room key card will open the locker for you.",
+          nearMiss: "Your room key card will opens the locker for you.",
           rule: "Câu tương lai 'will open' đưa thông tin trung tính, dễ tiếp nhận.",
         },
       ],
@@ -4014,6 +4037,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "You can't wear that in the pool.",
           polite: "Would you mind changing into proper swimwear before entering the pool, please?",
+          nearMiss: "Would you mind changing into proper swimwear before enter the pool, please?",
           rule: "'Would you mind + V-ing…?' để đề nghị khách thay đổi hành vi một cách lịch sự.",
         },
       ],
@@ -4104,6 +4128,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "The sea is too dangerous today.",
           polite: "For your safety, swimming is not recommended today due to rough sea conditions.",
+          nearMiss: "For your safety, swimming is not recommend today due to rough sea conditions.",
           rule: "Mở đầu lời cảnh báo bằng 'For your safety, …' — quan tâm chứ không hù dọa.",
         },
         {
@@ -4204,6 +4229,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Drink water, you're dehydrated.",
           polite: "Please try to drink some water slowly. I will bring you a cool towel.",
+          nearMiss: "Please try drinking some water slowly. I will bring you a cool towel.",
           rule: "'Please try to…' kèm một câu trấn an để hướng dẫn khách trong tình huống khẩn.",
         },
       ],

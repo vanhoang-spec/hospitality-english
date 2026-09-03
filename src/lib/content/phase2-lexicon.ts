@@ -218,7 +218,12 @@ const FO_BANK: P2Bank = {
       icon: "✅",
     },
     { word: "In order", phonetic: "/ɪn ˈɔːdə/", definition: "Đúng thủ tục, hợp lệ", icon: "👌" },
-    { word: "Copy", phonetic: "/ˈkɒpi/", definition: "Bản sao", icon: "🖨️" },
+    {
+      word: "Copy the form",
+      phonetic: "/ˈkɒpi ðə fɔːm/",
+      definition: "Sao lại tờ khai",
+      icon: "🖨️",
+    },
   ],
   rules: [
     {
@@ -732,7 +737,12 @@ const HK_BANK: P2Bank = {
       definition: "Đồ khách bỏ quên",
       icon: "🎒",
     },
-    { word: "Hand in", phonetic: "/hænd ɪn/", definition: "Nộp lại", icon: "🤲" },
+    {
+      word: "Hand in the key",
+      phonetic: "/hænd ɪn ðə kiː/",
+      definition: "Nộp lại chìa khoá",
+      icon: "🤲",
+    },
     { word: "In progress", phonetic: "/ɪn ˈprəʊɡres/", definition: "Đang xử lý", icon: "🕓" },
     { word: "Sign the sheet", phonetic: "/saɪn ðə ʃiːt/", definition: "Ký vào bảng", icon: "✍️" },
   ],
@@ -1028,7 +1038,12 @@ const SW_BANK: P2Bank = {
       icon: "💻",
     },
     { word: "Confirmed", phonetic: "/kənˈfɜːmd/", definition: "Đã xác nhận", icon: "🕑" },
-    { word: "Fill in", phonetic: "/fɪl ɪn/", definition: "Điền vào", icon: "✏️" },
+    {
+      word: "Fill in the form",
+      phonetic: "/fɪl ɪn ðə fɔːm/",
+      definition: "Điền vào tờ khai",
+      icon: "✏️",
+    },
   ],
   rules: [
     {
@@ -1678,7 +1693,12 @@ const BO_BANK: P2Bank = {
       icon: "🏦",
     },
     { word: "Stamp", phonetic: "/stæmp/", definition: "Con dấu", icon: "🔖" },
-    { word: "Attach", phonetic: "/əˈtætʃ/", definition: "Đính kèm", icon: "📎" },
+    {
+      word: "Attach the file",
+      phonetic: "/əˈtætʃ ðə faɪl/",
+      definition: "Đính kèm tệp",
+      icon: "📎",
+    },
     { word: "Approved", phonetic: "/əˈpruːvd/", definition: "Đã được duyệt", icon: "✅" },
     {
       word: "Write the reference",
