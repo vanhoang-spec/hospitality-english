@@ -274,7 +274,7 @@ const FO_BANK: P2Bank = {
     },
     { word: "Corner room", phonetic: "/ˈkɔːnə ruːm/", definition: "Phòng góc", icon: "❤️" },
     { word: "Quiet room", phonetic: "/ˈkwaɪət ruːm/", definition: "Phòng yên tĩnh", icon: "🔄" },
-    { word: "Either one", phonetic: "/ˈaɪðə wʌn/", definition: "Cái nào cũng được", icon: "🤷" },
+    { word: "Either room", phonetic: "/ˈaɪðə wʌn/", definition: "Cái nào cũng được", icon: "🤷" },
     { word: "Best option", phonetic: "/best ˈɒpʃn/", definition: "Phương án tốt nhất", icon: "👍" },
     { word: "Ground floor", phonetic: "/ɡraʊnd flɔː/", definition: "Tầng trệt", icon: "🔇" },
     // Slot 9 is what the staff member actually recommends ("I would suggest
@@ -495,21 +495,21 @@ const FB_BANK: P2Bank = {
     },
   ],
   choices: [
-    { word: "Chicken or beef", phonetic: "/ˈtʃɪkɪn ɔː biːf/", definition: "Gà hay bò", icon: "🍗" },
+    { word: "Grilled chicken", phonetic: "/ˈtʃɪkɪn ɔː biːf/", definition: "Gà hay bò", icon: "🍗" },
     {
-      word: "Rice or noodles",
+      word: "Grilled beef",
       phonetic: "/raɪs ɔː ˈnuːdlz/",
       definition: "Cơm hay mì",
       icon: "🍜",
     },
     {
-      word: "Still or sparkling",
+      word: "Still water",
       phonetic: "/stɪl ɔː ˈspɑːklɪŋ/",
       definition: "Nước thường hay có ga",
       icon: "💧",
     },
     {
-      word: "Indoor or outdoor",
+      word: "Sparkling water",
       phonetic: "/ˈɪndɔː ɔː ˈaʊtdɔː/",
       definition: "Trong nhà hay ngoài trời",
       icon: "🌤️",
@@ -790,14 +790,14 @@ const HK_BANK: P2Bank = {
   ],
   choices: [
     {
-      word: "Cleaning time slot",
+      word: "Morning clean",
       phonetic: "/ˈkliːnɪŋ taɪm slɒt/",
       definition: "Khung giờ dọn phòng",
       icon: "🕐",
     },
-    { word: "Fresh sheets", phonetic: "/freʃ ʃiːts/", definition: "Ga giường mới", icon: "🛏️" },
+    { word: "Afternoon clean", phonetic: "/freʃ ʃiːts/", definition: "Ga giường mới", icon: "🛏️" },
     {
-      word: "Reused towels",
+      word: "Towel reuse",
       phonetic: "/riːˈjuːzd ˈtaʊəlz/",
       definition: "Khăn dùng lại",
       icon: "♻️",
@@ -1079,13 +1079,13 @@ const SW_BANK: P2Bank = {
   ],
   choices: [
     {
-      word: "Light or strong",
+      word: "Light pressure",
       phonetic: "/laɪt ɔː strɒŋ/",
       definition: "Nhẹ hay mạnh",
       icon: "💪",
     },
     {
-      word: "Sixty or ninety",
+      word: "Strong pressure",
       phonetic: "/ˈsɪksti ɔː ˈnaɪnti/",
       definition: "Sáu mươi hay chín mươi phút",
       icon: "⏱️",
@@ -1093,7 +1093,7 @@ const SW_BANK: P2Bank = {
     { word: "Lavender", phonetic: "/ˈlævəndə/", definition: "Hương oải hương", icon: "💜" },
     { word: "Lemongrass", phonetic: "/ˈlemənɡrɑːs/", definition: "Hương sả", icon: "🌿" },
     {
-      word: "Morning or evening",
+      word: "Morning slot",
       phonetic: "/ˈmɔːnɪŋ ɔː ˈiːvnɪŋ/",
       definition: "Buổi sáng hay buổi tối",
       icon: "🌅",
@@ -1438,12 +1438,12 @@ const GR_BANK: P2Bank = {
   ],
   choices: [
     {
-      word: "Lounge or room",
+      word: "Lounge seat",
       phonetic: "/laʊndʒ ɔː ruːm/",
       definition: "Ở phòng chờ hay tại phòng",
       icon: "🛋️",
     },
-    { word: "Early or late", phonetic: "/ˈɜːli ɔː leɪt/", definition: "Sớm hay muộn", icon: "🕐" },
+    { word: "Garden seat", phonetic: "/ˈɜːli ɔː leɪt/", definition: "Sớm hay muộn", icon: "🕐" },
     { word: "Private car", phonetic: "/ˈpraɪvət kɑː/", definition: "Xe riêng", icon: "🚗" },
     { word: "Group tour", phonetic: "/ɡruːp tʊə/", definition: "Tour đoàn", icon: "🚌" },
     { word: "Quiet table", phonetic: "/ˈkwaɪət ˈteɪbl/", definition: "Bàn yên tĩnh", icon: "🤫" },
@@ -1454,7 +1454,7 @@ const GR_BANK: P2Bank = {
       icon: "🪟",
     },
     {
-      word: "Something local",
+      word: "Local option",
       phonetic: "/ˈsʌmθɪŋ ˈləʊkl/",
       definition: "Món/nơi đặc trưng địa phương",
       icon: "🏮",
@@ -1751,13 +1751,13 @@ const BO_BANK: P2Bank = {
   ],
   choices: [
     {
-      word: "Supplier A or B",
+      word: "First supplier",
       phonetic: "/səˈplaɪə eɪ ɔː biː/",
       definition: "Nhà cung cấp A hay B",
       icon: "🏭",
     },
     {
-      word: "Cheaper option",
+      word: "Second supplier",
       phonetic: "/ˈtʃiːpə ˈɒpʃn/",
       definition: "Phương án rẻ hơn",
       icon: "🪙",
@@ -1781,7 +1781,7 @@ const BO_BANK: P2Bank = {
       definition: "Đơn hàng dùng thử",
       icon: "🧪",
     },
-    { word: "Comparison", phonetic: "/kəmˈpærɪsn/", definition: "Sự so sánh", icon: "⚖️" },
+    { word: "Price comparison", phonetic: "/kəmˈpærɪsn/", definition: "Sự so sánh", icon: "⚖️" },
     {
       word: "Value for money",
       phonetic: "/ˈvæljuː fə ˈmʌni/",

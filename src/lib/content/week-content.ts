@@ -11732,7 +11732,7 @@ export const FB_WEEK_32: WeekContent = {
     "Recommend",
     "Chef suggestion",
     "Favourite",
-    "Still or sparkling",
+    "Still water",
     "Tasting menu",
     "Signature dish",
     "Pair well with",
