@@ -247,7 +247,7 @@ function week7(lx: Ctx): LessonContent[] {
         [
           {
             q: "Người thứ hai làm chức danh gì?",
-            options: [r2.definition, r1.definition, "Khách"],
+            options: [r2.definition, r1.definition, "Một người khách đang chờ"],
             correct: 0,
             explanation: `${lx.staff} nói "${roleSubj(r2)} is our ${lower(r2)}" — tức ${r2.definition}.`,
           },
@@ -323,7 +323,7 @@ function week7(lx: Ctx): LessonContent[] {
         [
           {
             q: "Hôm nay ai đang trực?",
-            options: [r3.definition, r5.definition, "Không ai"],
+            options: [r3.definition, r5.definition, "Hôm nay không ai trực"],
             correct: 0,
             explanation: `Câu "Our ${lower(r3)} is on duty today" cho biết ${r3.definition} đang trực.`,
           },
@@ -397,13 +397,13 @@ function week7(lx: Ctx): LessonContent[] {
         [
           {
             q: `${lx.staff} làm ở bộ phận nào?`,
-            options: [lx.deptVi, "Bếp", "Bảo vệ"],
+            options: [lx.deptVi, "Bếp và kho hàng", "An ninh và bảo vệ"],
             correct: 0,
             explanation: `"I work in ${lx.deptEn}" — tức bộ phận ${lx.deptVi}.`,
           },
           {
             q: "Khách hỏi về bộ phận nào?",
-            options: ["Bếp", "Buồng phòng", "Bảo vệ"],
+            options: ["Bếp và kho hàng", "Buồng phòng", "An ninh và bảo vệ"],
             correct: 0,
             explanation: "Bài đọc nói rõ khách hỏi về bếp, và nhân viên không đoán mà đi hỏi.",
           },
@@ -585,7 +585,11 @@ function week8(lx: Ctx): LessonContent[] {
           },
           {
             q: "Ai đang đứng ở cửa chính?",
-            options: [lx.bank.roles[1].definition, lx.bank.roles[5].definition, "Khách"],
+            options: [
+              lx.bank.roles[1].definition,
+              lx.bank.roles[5].definition,
+              lx.bank.roles[3].definition,
+            ],
             correct: 0,
             explanation: `Bài đọc nêu đích danh chức danh đó. Nói được tên chức danh nghĩa là khách biết phải tìm ai.`,
           },
@@ -659,13 +663,21 @@ function week8(lx: Ctx): LessonContent[] {
         [
           {
             q: `${p3.definition} nằm ở đâu?`,
-            options: [`Kế bên ${p4.definition.toLowerCase()}`, "Ở tầng trên", "Ngoài bãi xe"],
+            options: [
+              `Kế bên ${p4.definition.toLowerCase()}`,
+              "Ở tầng trên, cuối hành lang",
+              "Ngoài sân, cạnh bãi đỗ xe",
+            ],
             correct: 0,
             explanation: `"next to it" — kế bên ${p4.definition.toLowerCase()} vừa nhắc.`,
           },
           {
             q: "Ai đợi khách ở thang máy?",
-            options: [lx.bank.roles[5].definition, lx.bank.roles[1].definition, "Quản lý"],
+            options: [
+              lx.bank.roles[5].definition,
+              lx.bank.roles[1].definition,
+              lx.bank.roles[3].definition,
+            ],
             correct: 0,
             explanation: `Chi tiết này chỉ có trong bài đọc, và nó cho thấy cả ca đang phối hợp chứ không ai làm việc nấy.`,
           },
@@ -742,7 +754,11 @@ function week8(lx: Ctx): LessonContent[] {
           },
           {
             q: "Hôm nay ai cũng làm ở tầng trên?",
-            options: [lx.bank.roles[2].definition, lx.bank.roles[4].definition, "Không ai"],
+            options: [
+              lx.bank.roles[2].definition,
+              lx.bank.roles[4].definition,
+              lx.bank.roles[6].definition,
+            ],
             correct: 0,
             explanation: `Bài đọc nói rõ chức danh đó cũng làm ở tầng trên hôm nay — thông tin khách cần khi hỏi tiếp.`,
           },
@@ -989,8 +1005,8 @@ function week9(lx: Ctx): LessonContent[] {
             q: "Nhân viên làm gì với con số khách vừa nói?",
             options: [
               "Ghi lại rồi đọc lại cho khách nghe",
-              "Nhớ trong đầu cho nhanh",
-              "Hỏi lại quản lý",
+              "Nhớ trong đầu cho nhanh, khỏi mất thời gian",
+              "Hỏi lại quản lý xem có đúng không",
             ],
             correct: 0,
             explanation:
@@ -1070,7 +1086,11 @@ function week9(lx: Ctx): LessonContent[] {
           },
           {
             q: `${lx.bank.places[1].definition} nằm gần chỗ nào?`,
-            options: [lx.bank.places[2].definition, lx.bank.places[4].definition, "Thang máy"],
+            options: [
+              lx.bank.places[2].definition,
+              lx.bank.places[4].definition,
+              lx.bank.places[6].definition,
+            ],
             correct: 0,
             explanation: `Bài đọc nêu đúng cặp vị trí này, và đó là lý do đường đi ngắn.`,
           },
@@ -1347,8 +1367,8 @@ function week10(lx: Ctx): LessonContent[] {
             q: "'Too' khác 'very' ở điểm nào?",
             options: [
               "'Too' mang nghĩa quá mức, gây khó chịu",
-              "Hai từ giống hệt nhau",
-              "'Too' nghĩa là rất tốt",
+              "Hai từ giống hệt nhau, thay được cho nhau",
+              "'Too' nghĩa là rất tốt, dùng để khen",
             ],
             correct: 0,
             explanation: "very hot = rất nóng (bình thường); too hot = nóng quá (có vấn đề).",
@@ -1645,13 +1665,17 @@ function week11(lx: Ctx): LessonContent[] {
         [
           {
             q: "Việc đầu tiên trong ngày là gì?",
-            options: [t1.definition, t2.definition, "Nghỉ trưa"],
+            options: [t1.definition, t2.definition, "Nghỉ trưa giữa ca"],
             correct: 0,
             explanation: `"I ${act(t1)} every morning" — việc làm mỗi sáng.`,
           },
           {
             q: "Ai kiểm tra lại và ghi giờ?",
-            options: [lx.bank.roles[1].definition, lx.bank.roles[0].definition, "Khách"],
+            options: [
+              lx.bank.roles[1].definition,
+              lx.bank.roles[0].definition,
+              lx.bank.roles[4].definition,
+            ],
             correct: 0,
             explanation: `Bài đọc nêu đích danh chức danh đó. Ghi lại giờ là bước bàn giao, không phải thói quen cá nhân.`,
           },
@@ -1827,7 +1851,7 @@ function week11(lx: Ctx): LessonContent[] {
         [
           {
             q: "Trạng từ 'usually' đứng ở đâu?",
-            options: ["Trước động từ chính", "Cuối câu", "Trước chủ ngữ"],
+            options: ["Trước động từ chính", "Sau tân ngữ, cuối câu", "Trước chủ ngữ của câu"],
             correct: 0,
             explanation: "I USUALLY start… — trạng từ tần suất đứng trước động từ.",
           },
@@ -1922,7 +1946,7 @@ function week11(lx: Ctx): LessonContent[] {
         [
           {
             q: "Việc cuối ca là gì?",
-            options: [t7.definition, t8.definition, "Ăn tối"],
+            options: [t7.definition, t8.definition, "Ăn tối cuối ca"],
             correct: 0,
             explanation: `"I ${act(t7)} at the end" — việc làm cuối ca.`,
           },
@@ -2131,7 +2155,7 @@ function week12(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên đề nghị làm gì?",
-            options: ["Ghi lại lời nhắn", "Chuyển máy", "Gọi lại sau"],
+            options: ["Ghi lại lời nhắn", "Chuyển máy thẳng lên phòng", "Bảo khách gọi lại sau"],
             correct: 0,
             explanation: `"May I take a message?" — xin ghi lời nhắn.`,
           },
@@ -2225,8 +2249,8 @@ function week12(lx: Ctx): LessonContent[] {
             q: "Nhân viên giữ máy tới khi nào?",
             options: [
               "Tới khi có người bên kia bắt máy",
-              "Tới khi khách sốt ruột",
-              "Không giữ máy, cúp luôn",
+              "Tới khi khách bắt đầu sốt ruột",
+              "Không giữ máy, cúp rồi gọi lại",
             ],
             correct: 0,
             explanation: "Bài đọc nói rõ điều đó, và kết quả là khách không phải gọi lần thứ hai.",
@@ -2300,13 +2324,13 @@ function week12(lx: Ctx): LessonContent[] {
         [
           {
             q: "Ai nên gác máy trước?",
-            options: ["Khách", "Nhân viên", "Ai cũng được"],
+            options: ["Khách gác trước", "Nhân viên gác trước", "Ai gác trước cũng được"],
             correct: 0,
             explanation: "Lễ nghi điện thoại: để khách gác máy trước.",
           },
           {
             q: "Sau cuộc gọi, nhân viên ghi lại gì?",
-            options: ["Giờ của cuộc gọi", "Tên khách", "Số phòng"],
+            options: ["Giờ của cuộc gọi", "Tên riêng của khách", "Số phòng của khách"],
             correct: 0,
             explanation: "Bài đọc ghi rõ giờ gọi, và đó là thứ ca sau cần để làm nốt việc.",
           },
@@ -2661,7 +2685,11 @@ function week13(lx: Ctx): LessonContent[] {
           },
           {
             q: `${lx.bank.places[3].definition} nằm cạnh chỗ nào?`,
-            options: [lx.bank.places[4].definition, lx.bank.places[1].definition, "Thang máy"],
+            options: [
+              lx.bank.places[4].definition,
+              lx.bank.places[1].definition,
+              lx.bank.places[6].definition,
+            ],
             correct: 0,
             explanation: `Bài đọc nêu đúng cặp vị trí này, và đó là lý do không ai phải đi xa.`,
           },
@@ -2991,7 +3019,11 @@ function week14(lx: Ctx): LessonContent[] {
           },
           {
             q: "Trước khi đi lấy đồ, nhân viên làm gì?",
-            options: ["Nhắc lại con số một lần nữa", "Hỏi lại tên khách", "Gọi quản lý"],
+            options: [
+              "Nhắc lại con số một lần nữa",
+              "Hỏi lại tên và số phòng",
+              "Gọi quản lý xuống xác nhận",
+            ],
             correct: 0,
             explanation:
               "Bài đọc ghi rõ điều đó, và nhờ vậy nhân viên quay lại trước khi khách phải hỏi lần hai.",
@@ -3214,7 +3246,7 @@ function week14(lx: Ctx): LessonContent[] {
         [
           {
             q: "Câu nào chốt nhu cầu của khách?",
-            options: ["Is there anything else?", "Finish? Bye.", "You go now?"],
+            options: ["Is there anything else?", "Finish? Bye bye now.", "You go now, yes?"],
             correct: 0,
             explanation: "'Is there anything else?' là câu hỏi chốt chuẩn mực.",
           },
@@ -3554,8 +3586,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao gọi khách bằng họ?",
             options: [
               "Khách quen nhớ rất lâu việc mình được nhận ra",
-              "Vì quy định bắt gọi tên trong mọi câu",
-              "Vì gọi 'sir' là thiếu lịch sự",
+              "Vì quy định bắt phải gọi tên khách trong mọi câu",
+              "Vì gọi khách bằng 'sir' là thiếu lịch sự",
             ],
             correct: 0,
             explanation:
@@ -3565,8 +3597,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao hỏi số phòng trước khi giao đồ?",
             options: [
               "Để đồ tới đúng phòng và ghi đúng hoá đơn",
-              "Để biết khách ở tầng mấy cho tiện đi",
-              "Vì khách hay quên số phòng của mình",
+              "Để biết khách đang ở tầng mấy cho tiện đường đi",
+              "Vì khách rất hay quên số phòng của chính mình",
             ],
             correct: 0,
             explanation:
@@ -3658,8 +3690,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Khách tới sớm, nhân viên làm gì?",
             options: [
               "Nói thật là chưa xong, kèm con số phút và một chỗ ngồi",
-              "Xếp khách vào bàn khác cho nhanh",
-              "Bảo khách quay lại sau",
+              "Xếp khách vào một bàn khác cho nhanh, khỏi phải chờ",
+              "Bảo khách đi một vòng rồi quay lại sau",
             ],
             correct: 0,
             explanation:
@@ -3670,7 +3702,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             options: [
               "Công thức đổi theo ca bếp, và trả lời sai có thể gây nguy hiểm",
               "Vì nhân viên phục vụ không được nói chuyện với khách về món",
-              "Vì bếp cấm nhân viên nhắc tới nguyên liệu",
+              "Vì bếp cấm nhân viên nhắc tới nguyên liệu của bất kỳ món nào",
             ],
             correct: 0,
             explanation:
@@ -3755,8 +3787,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Khách nói lực ấn hơi mạnh — làm gì?",
             options: [
               "Đổi lực ngay tại chỗ, không rời tay đi kiểm gì cả",
-              "Đi hỏi quản lý xem có được giảm lực không",
-              "Làm nốt rồi hỏi lại ở cuối buổi",
+              "Đi hỏi quản lý xem có được phép giảm lực không",
+              "Làm nốt cho xong rồi hỏi lại ở cuối buổi",
             ],
             correct: 0,
             explanation:
@@ -3766,8 +3798,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao phải hỏi lại giữa buổi?",
             options: [
               "Khách nằm sấp, nhắm mắt, thường ngại kêu lần thứ hai",
-              "Vì quy định bắt hỏi ba lần mỗi buổi",
-              "Vì khách hay quên mình đã nói gì",
+              "Vì quy định bắt phải hỏi ba lần trong mỗi buổi",
+              "Vì khách nằm lâu hay quên mình đã nói gì",
             ],
             correct: 0,
             explanation:
@@ -3860,8 +3892,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Khách hỏi giờ trả phòng — trả lời thế nào?",
             options: [
               "Đọc đúng con số giờ trả phòng của khách sạn",
-              "Nói giờ mình làm thủ tục trong ca",
-              "Bảo khách hỏi lại vào buổi sáng",
+              "Nói giờ mình hay làm thủ tục trong ca của mình",
+              "Bảo khách sáng mai xuống quầy hỏi lại",
             ],
             correct: 0,
             explanation:
@@ -3961,8 +3993,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao buồng phòng không tự quyết giường phụ?",
             options: [
               "Nó có tính tiền và có giới hạn số người ở mỗi phòng",
-              "Vì kho không đủ giường",
-              "Vì khách phải tự xuống lễ tân lấy",
+              "Vì kho đồ vải đang không còn giường phụ nào",
+              "Vì khách phải tự xuống quầy lễ tân mà lấy",
             ],
             correct: 0,
             explanation:
@@ -3972,8 +4004,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Còn dép thì sao?",
             options: [
               "Miễn phí và trong quyền của mình — cứ hỏi số lượng rồi mang tới",
-              "Cũng phải hỏi lễ tân cho chắc",
-              "Chỉ đưa khi khách phàn nàn",
+              "Cũng phải xuống hỏi lễ tân cho chắc đã",
+              "Chỉ đưa khi nào khách phàn nàn về chuyện đó",
             ],
             correct: 0,
             explanation:
@@ -4067,8 +4099,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao nhân viên xin hộ chiếu?",
             options: [
               "Chìa khoá chỉ đưa cho đúng người thuê phòng",
-              "Để ghi tên khách vào sổ trực",
-              "Để tính tiền chìa khoá dự phòng",
+              "Để ghi tên khách vào sổ trực của ca",
+              "Để tính tiền cho chìa khoá dự phòng",
             ],
             correct: 0,
             explanation:
@@ -4078,8 +4110,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao không đọc to số phòng?",
             options: [
               "Người đứng gần quầy sẽ nghe được số phòng của khách",
-              "Vì nhân viên không nhớ chính xác số",
-              "Vì khách không thích nghe số bằng tiếng Anh",
+              "Vì nhân viên không nhớ chính xác số phòng của khách",
+              "Vì khách không thích nghe đọc số bằng tiếng Anh",
             ],
             correct: 0,
             explanation:
@@ -4160,8 +4192,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao trả lời 'no' cũng không an toàn?",
             options: [
               "Trả lời kiểu nào cũng cho biết khách có ở đây hay không",
-              "Vì nói 'no' là nói dối với người gọi",
-              "Vì người gọi sẽ gọi lại ngay sau đó",
+              "Vì nói 'no' với người gọi thì thành ra nói dối",
+              "Vì người gọi chắc chắn sẽ gọi lại ngay sau đó",
             ],
             correct: 0,
             explanation:
@@ -4171,8 +4203,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Nhân viên làm gì thay vào đó?",
             options: [
               "Nhận lời nhắn để khách tự quyết có gọi lại không",
-              "Chuyển máy thẳng vào phòng khách",
-              "Ghi số người gọi rồi thôi, không nói gì",
+              "Chuyển thẳng máy vào phòng của khách, không hỏi gì",
+              "Ghi số người gọi rồi thôi, không nói lại với ai",
             ],
             correct: 0,
             explanation:
@@ -4388,8 +4420,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao phải đọc lại cả đơn?",
             options: [
               "Để khách sửa ngay tại bàn khi mình nghe sai",
-              "Để khách thấy mình nói được tiếng Anh",
-              "Vì bếp yêu cầu đọc lại mới nhận đơn",
+              "Để khách thấy mình nói được tiếng Anh với người lạ",
+              "Vì bếp yêu cầu phải đọc lại thì mới nhận đơn",
             ],
             correct: 0,
             explanation:
@@ -4499,8 +4531,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Khách bảo quay lại sau thì làm gì?",
             options: [
               "Nhận lời và quay lại sau, ghi lại phòng đó",
-              "Vẫn vào vì đã tới giờ dọn phòng",
-              "Đề nghị khách ra ngoài một lát",
+              "Vẫn vào phòng vì đã tới giờ dọn của mình",
+              "Đề nghị khách ra ngoài một lát cho mình dọn",
             ],
             correct: 0,
             explanation:
@@ -5004,8 +5036,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao nhân viên không nhận lời ngay?",
             options: [
               "Nôi em bé có tính tiền và có giới hạn số người trong phòng",
-              "Vì kho đang hết nôi em bé",
-              "Vì khách chưa nói rõ mấy giờ cần",
+              "Vì kho của khách sạn đang hết nôi em bé",
+              "Vì khách vẫn chưa nói rõ mấy giờ thì cần",
             ],
             correct: 0,
             explanation:
@@ -5187,8 +5219,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao không để khách vào kho?",
             options: [
               "Kho có hoá chất và đồ vải sạch, là khu vực nội bộ",
-              "Vì kho quá nhỏ, không đủ chỗ đứng",
-              "Vì khách sẽ không tìm được đường ra",
+              "Vì kho quá nhỏ, không đủ chỗ cho hai người đứng",
+              "Vì khách vào rồi sẽ không tìm được đường ra",
             ],
             correct: 0,
             explanation:
@@ -5390,8 +5422,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Khách kêu quá nóng thì làm gì TRƯỚC?",
             options: [
               "Dừng tay ngay, rồi mới xin lỗi và xử lý",
-              "Làm nốt bước đang dở cho nhanh",
-              "Hỏi khách có chịu thêm được không",
+              "Làm nốt cho xong bước đang dở cho nhanh",
+              "Hỏi xem khách có chịu thêm một lát được không",
             ],
             correct: 0,
             explanation:
@@ -5402,7 +5434,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             options: [
               "Vì tổn thương xảy ra ngay trong lúc chờ cho xong",
               "Vì khách không hiểu câu tiếng Anh đó",
-              "Vì quản lý cấm nói câu đó với khách",
+              "Vì quản lý cấm nói đúng câu đó với khách",
             ],
             correct: 0,
             explanation:
@@ -5489,8 +5521,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao phải đưa một mốc giờ?",
             options: [
               "Để khách còn quyết được là chờ hay đi chỗ khác",
-              "Để khách thấy spa đang rất đông khách",
-              "Vì quy định bắt phải đọc giờ ra",
+              "Để khách thấy spa hôm nay đang rất đông khách",
+              "Vì quy định bắt phải đọc giờ ra cho mọi khách",
             ],
             correct: 0,
             explanation:
@@ -5574,7 +5606,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao không trả lời 'không' cho an toàn?",
             options: [
               "Trả lời kiểu nào cũng cho biết khách có ở đây hay không",
-              "Vì nói 'không' là nói dối với người gọi",
+              "Vì nói 'không' với người gọi thì thành ra nói dối",
               "Vì người gọi chắc chắn sẽ gọi lại lần nữa",
             ],
             correct: 0,
@@ -5585,7 +5617,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Nhân viên làm gì thay vào đó?",
             options: [
               "Nhận lời nhắn, để khách tự quyết có gọi lại không",
-              "Chuyển máy thẳng vào phòng khách",
+              "Chuyển thẳng máy vào phòng của khách, không hỏi gì",
               "Ghi lại số người gọi rồi thôi",
             ],
             correct: 0,
@@ -5671,7 +5703,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             options: [
               "Vì khách vẫn bước vào đúng chỗ có rủi ro",
               "Vì khách không hiểu câu tiếng Anh đó",
-              "Vì quản lý không cho phép cảnh báo khách",
+              "Vì quản lý không cho phép tự cảnh báo khách",
             ],
             correct: 0,
             explanation:
