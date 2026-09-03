@@ -986,7 +986,7 @@ const SW_BANK: P2Bank = {
       icon: "🎯",
     },
     {
-      word: "Comfortable level",
+      word: "Comfort level",
       phonetic: "/ˈkʌmftəbl ˈlevl/",
       definition: "Mức độ dễ chịu",
       icon: "📊",
@@ -1322,7 +1322,7 @@ const GR_BANK: P2Bank = {
       icon: "🎯",
     },
     {
-      word: "Returning guest",
+      word: "Trip length",
       phonetic: "/rɪˈtɜːnɪŋ ɡest/",
       definition: "Khách quay lại",
       icon: "🔁",
