@@ -201,6 +201,10 @@ export function buildPaper(dep: string, week: string): Question[] {
   // paper that keys one and marks the other wrong is failing the learner for
   // knowing the course.
   const SCAFFOLD = new Set([
+    // A discourse connector, not content: leaving it in kept "Then I sign
+    // the form." apart from "I sign the form before lunch.", and the second
+    // was offered as a distractor for the first on 3.7% of papers.
+    "then",
     "one",
     "please",
     "certainly",
@@ -579,6 +583,11 @@ export function buildPaper(dep: string, week: string): Question[] {
      *  ribbon." Gated on `discriminated` so a lesson that DOES name the object
      *  keeps its same-frame distractor, which is the one worth hearing. */
     const MOVES = [
+      // "We have X" is an offer of stock, and every department has stock. A
+      // list only ever covers the moves someone remembered — an academic
+      // review said exactly that after a new batch of content walked through
+      // the gap this entry closes.
+      /\bwe have\b/i,
       /\bi will bring\b/i,
       /\bi will send\b/i,
       /\bi will call\b/i,
@@ -653,10 +662,15 @@ export function buildPaper(dep: string, week: string): Question[] {
     // that says exactly what the answer says. Reversing the similarity rank
     // still puts those last within the rejects, so a paper reaches for them
     // only when nothing else exists at all.
-    const rejected = widened.filter(
-      (t) => nearlySameAnswer(t, s.targetResponse) || secondRightAnswer(t),
-    );
-    const filler = ranked(rejected)
+    // And the top-up may not reach into what the correctness filters removed
+    // at all. Drawing from the rejects is how "Then I show our guests around."
+    // got "I show our guests around before lunch." as its distractor —
+    // `nearlySameAnswer` had already thrown that out for containing the whole
+    // key, and the filler put it straight back on 3.9% of papers. The top-up
+    // now comes from candidates that were merely OUTRANKED, and a question
+    // with nothing left ships with two options: better a coin toss the
+    // learner can reason about than three options of which two are right.
+    const filler = ranked(usable.filter((t) => !clean.some((c) => c.t === t)))
       .reverse()
       .filter((x) => !clean.some((c) => c.t === x.t || nearlySameAnswer(c.t, x.t)))
       // Stable sort, so within each group the reverse order above survives:

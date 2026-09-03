@@ -1446,8 +1446,10 @@ function week10(lx: Ctx): LessonContent[] {
           "Ôn tuần 9: gọi tên món khách chỉ tay hỏi. Mẫu: THAT IS + mạo từ + món.",
         ),
         sp(
-          "What else do you have?",
-          `We have ${wa(lx.bank.requests[0])}, madam.`,
+          // The prompt has to name something, or the audio is answerable by
+          // any offer of stock in the phase.
+          `Do you keep ${wa(lx.bank.requests[0])} here?`,
+          `Yes, madam. We have ${wa(lx.bank.requests[0])}.`,
           "Ôn tuần 9: kể tên món mình có. 'We have' + mạo từ + món.",
         ),
       ],
@@ -1929,8 +1931,12 @@ function week11(lx: Ctx): LessonContent[] {
           "manager",
         ),
         sp(
-          "Is it all right now?",
-          `Yes. It is not ${lower(lx.bank.states[7])} here any more.`,
+          // A guest prompt with no content of its own cannot be told apart
+          // from any other reassurance when it is played as audio — measured
+          // at 3.3% of papers with two right answers. Naming the place in
+          // both halves gives the listener something to hear.
+          `Is the ${back(lx.bank.places, 1)} all right now?`,
+          `Yes. The ${back(lx.bank.places, 1)} is not ${lower(lx.bank.states[7])} any more.`,
           "Ôn tuần 10: phủ định của tính từ là IS NOT + tính từ. Nói với đồng nghiệp thì bỏ kính ngữ.",
           "colleague",
         ),
