@@ -442,6 +442,19 @@ const ADJS = new Set([
   // Replacements from the P0 content fix: the words that took over slots
   // where the old filler was the wrong semantic class for its frame
   // ("It is a little safe.", "The machine is unhappy.").
+  // "crushed" joined them in the P1 fix: "The item is crushed." for a Guest
+  // Relations gift box, where the slot used to hold "Rainy".
+  // "lukewarm", "interrupted" and "suspended" joined in the round-3 fix, when
+  // Spa's fault slots held "Unheated", "Overdue" and "Double-booked" — three
+  // administrative words in frames that read "It is ___" and "The service is
+  // ___", and the learner was locked to say all three.
+  "crushed",
+  "lukewarm",
+  "interrupted",
+  "suspended",
+  "scratched",
+  "chipped",
+  "humid",
   "crowded",
   "cool",
   "warm",
@@ -958,6 +971,283 @@ function lintDeadBankEntries(banks: BankSet) {
   }
 }
 
+/** LAYER F — the dead `arcade` field, ratcheted down.
+ *
+ *  `arcade` is a legacy field: ArcadeSuite runs on `game`, and nothing in the
+ *  app reads `arcade` at all. It stayed authored for months anyway — a blind
+ *  auditor found ~296 hand-written English sentences no learner would ever
+ *  see, and two audit rounds before that had spent their findings critiquing
+ *  the style of invisible content.
+ *
+ *  A hard ban would fail on every legacy week at once, so this ratchets
+ *  instead: the count may fall and may never rise. When it falls, the
+ *  baseline rewrites itself, exactly like the semantic-debt ledger. Delete
+ *  arcade blocks from a week you are touching anyway and the gate records the
+ *  new floor for you. */
+const ARCADE_BASELINE = new URL("./_arcade-baseline.json", import.meta.url);
+
+async function lintDeadArcadeField() {
+  let live = 0;
+  const carriers: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const n = week.lessons.filter((l) => (l.arcade?.length ?? 0) > 0).length;
+    if (n > 0) {
+      live += n;
+      carriers.push(key);
+    }
+  }
+
+  const file = Bun.file(ARCADE_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).lessonsWithArcade as number)
+    : live;
+
+  const writeBaseline = (n: number) =>
+    Bun.write(
+      ARCADE_BASELINE,
+      JSON.stringify(
+        { lessonsWithArcade: n, note: "Ratchet only — this number may fall, never rise." },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await writeBaseline(live);
+    console.log(`  Dead \`arcade\` field: baseline recorded at ${live} lessons.`);
+    return;
+  }
+
+  if (live > baseline) {
+    errors.push(
+      `[F dead-arcade] ${live} lessons author the dead \`arcade\` field, up from ${baseline}. ` +
+        `No suite reads it — ArcadeSuite runs on \`game\`. Put the writing into \`game\` rounds instead.`,
+    );
+    return;
+  }
+  if (live < baseline) {
+    await writeBaseline(live);
+    console.log(
+      `  Dead \`arcade\` field: ${live} lessons still carry it, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(
+    `  Dead \`arcade\` field: ${live} lessons still carry it across ${carriers.length} dep-weeks (ratchet holds).`,
+  );
+}
+
+/** LAYER G — a helpTip may only quote English that its own target says.
+ *
+ *  A helpTip sits beside one `targetResponse` and coaches the learner through
+ *  saying exactly that sentence. When the sentence is rewritten and the tip is
+ *  not, the tip starts coaching a line that no longer exists: stress marks for
+ *  a word that was cut, "count the two questions" beside a target that asks
+ *  one. A blind auditor found four of these in a single pair of weeks, and
+ *  the learners who lean on tips hardest are the ones with the least English
+ *  to notice.
+ *
+ *  So: every single-quoted run of English inside a helpTip must appear in that
+ *  item's own targetResponse. Vietnamese quotes are ignored (they are glosses,
+ *  not things to say), and so are quotes that are plainly a counter-example —
+ *  a tip is allowed to name the phrase it is warning against, as long as it
+ *  marks it. */
+const VN_MARK = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
+/** A tip may quote a phrase in order to forbid it — but only when the warning
+ *  sits immediately in front of the quote. Scanning a wide window instead
+ *  swallows real defects, because "không" appears in almost every Vietnamese
+ *  tip: a planted bad quote slipped through until this was tightened. */
+const COUNTER_EXAMPLE =
+  /(đừng|không phải|không nói|tránh|thay vì|thay cho|nghe như|sai thành|chứ không)[^']{0,24}$/i;
+
+const HELPTIP_BASELINE = new URL("./_helptip-baseline.json", import.meta.url);
+
+async function lintHelpTipQuotes() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      for (const item of lesson.speaking) {
+        const target = item.targetResponse.toLowerCase();
+        for (const raw of item.helpTip.match(/'([^']{2,60})'/g) ?? []) {
+          const q = raw.slice(1, -1);
+          if (VN_MARK.test(q)) continue; // Vietnamese gloss, not a line to say
+          if (!/[a-z]/i.test(q)) continue; // punctuation or a bare IPA fragment
+          if (q !== q.trim()) continue; // " and " — a slice of prose, not a quote
+          if (/-/.test(q) && !target.includes(q.toLowerCase())) continue; // "che-kyer": a respelling
+          if (target.includes(q.toLowerCase())) continue;
+          const at = item.helpTip.indexOf(raw);
+          const before = item.helpTip.slice(Math.max(0, at - 40), at);
+          if (COUNTER_EXAMPLE.test(before)) continue; // the tip is naming what NOT to say
+          offenders.push(`${key}/${lesson.lessonId}: "${q}"`);
+        }
+      }
+    }
+  }
+
+  const file = Bun.file(HELPTIP_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).orphanQuotes as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      HELPTIP_BASELINE,
+      JSON.stringify(
+        {
+          orphanQuotes: n,
+          note: "Ratchet only — a helpTip may not quote English its own target never says.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  helpTip quotes with no home in their target: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[G helptip-quote] ${offenders.length} helpTips quote English their own targetResponse never says, up from ${baseline}. ` +
+        `Newest offenders: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  helpTip orphan quotes: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  helpTip orphan quotes: ${offenders.length} (ratchet holds).`);
+}
+
+// ── Layer H · trần độ dài câu trong bài đọc ────────────────────────────────
+// The productive cap is 22 words. Reading may sit above it — receptive before
+// productive is ordinary — but not at 66. A safety rule buried in a 43-word
+// sentence with three nested clauses is a rule an A2.2 learner does not have.
+// Every offender today is hand-authored Phase 4; generated weeks have none.
+const READ_SENT_BASELINE = new URL("./_reading-sentence-baseline.json", import.meta.url);
+const READ_SENT_MAX = 25;
+
+async function lintReadingSentenceLength() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      // The lookbehind used to be a bare `[.!?]`, which never fires on a
+      // sentence that ends inside quoted speech — `…, sir." The guest says:`
+      // puts a quote mark between the full stop and the space. Every passage
+      // built out of dialogue therefore measured as ONE sentence spanning all
+      // its turns, and this gate was reporting the length of the passage, not
+      // of any sentence in it. Closing quotes now end a sentence too.
+      for (const sentence of lesson.reading.text.split(/(?<=[.!?]["'”’]?)\s+|\n/)) {
+        const n = sentence.trim().split(/\s+/).filter(Boolean).length;
+        if (n > READ_SENT_MAX)
+          offenders.push(
+            `${key}/${lesson.lessonId}: ${n} words — "${sentence.trim().slice(0, 50)}…"`,
+          );
+      }
+
+  const file = Bun.file(READ_SENT_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).longSentences as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      READ_SENT_BASELINE,
+      JSON.stringify(
+        {
+          longSentences: n,
+          max: READ_SENT_MAX,
+          note: "Ratchet only — a reading sentence over 25 words is above the band it is written for.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  Reading sentences over ${READ_SENT_MAX} words: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[H reading-sentence] ${offenders.length} reading sentences run over ${READ_SENT_MAX} words, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Reading sentences over ${READ_SENT_MAX} words: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(
+    `  Reading sentences over ${READ_SENT_MAX} words: ${offenders.length} (ratchet holds).`,
+  );
+}
+
+// ── Layer I · cặp lâm sàng không được đứng chung một câu ─────────────────
+// Hai lần trong đợt biên tập tuần cấp cứu, một mệnh đề đúng ngữ pháp và đúng
+// thuật ngữ đã gắn TƯ THẾ NẰM NGHIÊNG vào khách KHÔNG THỞ. Đó là sai điều trị,
+// không phải sai văn phong, và không lớp nào ở trên nhìn thấy nó: câu đúng cú
+// pháp, từ vựng đúng, độ dài đạt. Lớp này chỉ đọc nghĩa ở mức thô nhất — hai
+// khái niệm loại trừ nhau xuất hiện trong cùng một câu mà không có phủ định.
+const SENTENCE_SPLIT = /(?<=[.!?])\s+|\n/;
+const CLINICAL_CLASHES: { a: RegExp; b: RegExp; negate: RegExp; why: string }[] = [
+  {
+    a: /\b(recovery position|side position|onto (his|her|their) side|on (his|her|their) side|nằm nghiêng|lật nghiêng)\b/i,
+    b: /\b(not breathing|NOT BREATHING|no breathing|không thở|ngừng thở)\b/i,
+    negate: /\b(never|not for|KHÔNG BAO GIỜ|không dành cho|only when .{0,20}breathing)\b/i,
+    why: "the side position is for a guest who IS breathing; on a non-breathing guest it replaces compressions",
+  },
+  {
+    a: /\b(AED|defibrillator)\b/i,
+    b: /\b(wet chest|lying in water|in the water|trong nước|ngực ướt)\b/i,
+    negate: /\b(never|not|clear of|bring (him|her|them) clear|KHÔNG|dry the chest)\b/i,
+    why: "an AED must never go onto a wet chest or a guest lying in water",
+  },
+  {
+    a: /\b(chest compressions?|push(ing)? (hard|on the chest)|ép tim)\b/i,
+    b: /\b(on the bed|trên giường|mattress|đệm)\b/i,
+    negate: /\b(not hard|onto the floor|xuống sàn|slide (him|her|them))\b/i,
+    why: "compressions on a mattress do nothing; the guest comes onto the floor first",
+  },
+];
+
+function lintClinicalClashes() {
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons) {
+      const surfaces: string[] = [
+        lesson.reading.text,
+        ...lesson.grammar.flatMap((g) => [g.rule, g.polite, g.rude]),
+        ...lesson.speaking.flatMap((s) => [s.targetResponse, s.helpTip]),
+        ...lesson.vocabulary.flatMap((v) => [v.definition, v.context]),
+      ];
+      for (const surface of surfaces)
+        for (const sentence of surface.split(SENTENCE_SPLIT)) {
+          for (const c of CLINICAL_CLASHES) {
+            if (!c.a.test(sentence) || !c.b.test(sentence)) continue;
+            if (c.negate.test(sentence)) continue;
+            errors.push(
+              `[I clinical-clash] ${key}/${lesson.lessonId}: ${c.why} — "${sentence.trim().slice(0, 90)}"`,
+            );
+          }
+        }
+    }
+}
+
 function lintBanks(phase: string, banks: BankSet) {
   const contracts = SLOT_CONTRACTS[phase] ?? {};
   const deps = Object.keys(banks);
@@ -1085,8 +1375,20 @@ const SENTENCE_RULES: { name: string; test: (s: string) => boolean; why: string 
     // frames were fixed. A genuinely definite request ("Can I have the bill,
     // please?" — unique in its situation) would trip this; author it with the
     // article inside the headword, or narrow this rule then.
+    //
+    // Narrowed, as that note said to. Some referents are unique in the
+    // guest's own situation the moment they speak: there is exactly one
+    // bill for their table, one total, one manager on duty. "Can I have the
+    // bill, please?" is the most-said sentence in a restaurant, and forcing
+    // "a bill" to satisfy a lint would teach the wrong article far more
+    // often than the rule teaches the right one. The list stays short and
+    // holds only nouns that are unique BY THE SITUATION, not merely
+    // familiar — "the key" and "the towel" are not on it, because a guest
+    // requesting either has not established which one.
     name: "definite-article-on-first-mention",
-    test: (s) => /\b(can|could|may) i have the\b|\bi (need|will bring) the\b/i.test(s),
+    test: (s) =>
+      /\b(can|could|may) i have the\b|\bi (need|will bring) the\b/i.test(s) &&
+      !/\bthe (bill|total|change|manager|receipt|time)\b/i.test(s),
     why: 'a first request takes "a"/"an"/"some", not "the" — the guest has not mentioned it yet',
   },
   {
@@ -1307,6 +1609,333 @@ function collectSentences(node: unknown, where: string, out: { where: string; te
   }
 }
 
+// ── Layer J · sàn lượng sản sinh theo phase ────────────────────────────────
+// Hai auditor mù, độc lập, cùng bắt được một điều mà không lớp nào ở trên nhìn
+// thấy: tuần củng cố và tuần khép khoá của HK có 4 lượt nói, trong khi mọi tuần
+// Phase 4 khác có 8–9, và ma trận ghi sàn 6–8 cho P4. Không lớp nào ĐẾM, nên
+// hai tuần mỏng nhất lại đúng là hai tuần đáng lẽ dày nhất. Ratchet, không phải
+// cổng cứng: phần lớn tuần dưới sàn hiện nay là tuần sinh tự động.
+const VOLUME_BASELINE = new URL("./_speaking-volume-baseline.json", import.meta.url);
+const SPEAKING_FLOOR: Record<string, number> = { P0: 4, P1: 4, P2: 4, P3: 6, P4: 6 };
+const phaseOfWeek = (w: number) =>
+  w <= 6 ? "P0" : w <= 14 ? "P1" : w <= 22 ? "P2" : w <= 30 ? "P3" : "P4";
+
+async function lintSpeakingVolume() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const n = week.lessons.reduce((a, l) => a + l.speaking.length, 0);
+    const phase = phaseOfWeek(week.weekNumber);
+    if (n < SPEAKING_FLOOR[phase])
+      offenders.push(`${key}: ${n} (${phase} floor ${SPEAKING_FLOOR[phase]})`);
+  }
+
+  const file = Bun.file(VOLUME_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).belowFloor as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      VOLUME_BASELINE,
+      JSON.stringify(
+        {
+          belowFloor: n,
+          floors: SPEAKING_FLOOR,
+          note: "Ratchet only — a week below the matrix speaking floor rehearses less than its phase requires.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Weeks below the speaking floor: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[J speaking-volume] ${offenders.length} weeks sit below the matrix speaking floor, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Weeks below the speaking floor: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Weeks below the speaking floor: ${offenders.length} (ratchet holds).`);
+}
+
+// ── Layer K · đáp án đúng dồn về một vị trí ────────────────────────────────
+// Trong HK-39/40, cả 24 đáp án đúng — bài đọc lẫn game — đều nằm ở chỉ số 1.
+// Mọi suite đều xáo phương án lúc render, nên đây không phải lỗ đo trong app
+// đang chạy; nhưng một cụm đồng nhất tuyệt đối là dấu hiệu phương án nhiễu được
+// viết cho đủ ba, không phải như lựa chọn thật. Ngưỡng 60%, tuần từ 6 mục trở lên.
+const SKEW_BASELINE = new URL("./_answer-skew-baseline.json", import.meta.url);
+const SKEW_MAX = 0.6;
+
+async function lintAnswerPositionSkew() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const idx: number[] = [];
+    for (const lesson of week.lessons) {
+      for (const q of lesson.reading.questions) idx.push(q.correct);
+      for (const g of lesson.game) idx.push(g.options.findIndex((o) => o.correct));
+    }
+    if (idx.length < 6) continue;
+    const counts = [0, 1, 2].map((i) => idx.filter((x) => x === i).length);
+    const top = Math.max(...counts) / idx.length;
+    if (top > SKEW_MAX)
+      offenders.push(`${key}: ${Math.round(top * 100)}% of ${idx.length} at one index`);
+  }
+
+  const file = Bun.file(SKEW_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).skewedWeeks as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      SKEW_BASELINE,
+      JSON.stringify(
+        {
+          skewedWeeks: n,
+          max: SKEW_MAX,
+          note: "Ratchet only — a week with over 60% of its correct answers at one index is not offering three real choices.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Weeks with skewed answer positions: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[K answer-skew] ${offenders.length} weeks put over ${Math.round(SKEW_MAX * 100)}% of their correct answers at one index, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Weeks with skewed answer positions: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Weeks with skewed answer positions: ${offenders.length} (ratchet holds).`);
+}
+
+// ── Layer M · một bài đọc, một kính ngữ ───────────────────────────────────
+// Tuần 1 dạy "thêm 'sir' (nam) hoặc 'madam' (nữ)". Rồi 24 bài đọc của pha 1
+// gọi cùng một vị khách bằng cả hai, và một bài để KHÁCH gọi nhân viên là
+// "madam". Học viên đọc mẫu nhiều hơn đọc luật, nên mẫu tự mâu thuẫn là mẫu
+// dạy ngược. Ratchet, không phải cổng cứng: vài bài ở tuần 33-40 có nhiều
+// khách trong cùng một cảnh và dùng hai kính ngữ hợp lệ.
+const HON_BASELINE = new URL("./_honorific-baseline.json", import.meta.url);
+async function lintOneHonorificPerReading() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons) {
+      const t = lesson.reading.text;
+      if (/\bsir\b/i.test(t) && /\b(madam|ma'am)\b/i.test(t))
+        offenders.push(`${key}/${lesson.lessonId}`);
+    }
+
+  const file = Bun.file(HON_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).mixed as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      HON_BASELINE,
+      JSON.stringify(
+        {
+          mixed: n,
+          note: "Ratchet only — a passage that calls one guest both sir and madam teaches against week 1.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Readings mixing sir and madam: baseline recorded at ${offenders.length}.`);
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[M one-honorific] ${offenders.length} readings call one guest both sir and madam, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Readings mixing sir and madam: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Readings mixing sir and madam: ${offenders.length} (ratchet holds).`);
+}
+
+// ── Layer M · lượt nội bộ không được xưng kính ngữ ────────────────────────
+// `speakerRole` tồn tại vì một tuần dạy báo cáo LÊN TRÊN là một tuần về
+// register, và gọi một Duty Manager là ngang hàng là điều duy nhất tuần đó
+// không được làm. Chiều ngược lại cũng vậy: gọi đồng nghiệp cùng ca là "sir"
+// hay "madam" dạy học viên nói câu đó với cả sàn.
+//
+// Đây là gate do một quản lý bộ phận đề nghị sau khi bắt được lỗi này hai
+// vòng liên tiếp — cả hai lần đều ở những lượt vừa được thêm vào để chữa một
+// phát hiện khác. Cổng cứng: toàn corpus hiện sạch.
+function lintColleagueHonorific() {
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      for (const item of lesson.speaking) {
+        if (item.speakerRole !== "colleague") continue;
+        // An honorific inside quotation marks is the colleague being COACHED
+        // on what to say to a guest — week 39 of Guest Relations tells a
+        // colleague to say 'One moment, sir' and nothing else. That is
+        // reported speech, not a colleague being called sir.
+        const outsideQuotes = item.targetResponse.replace(/['"“”‘’][^'"“”‘’]*['"“”‘’]/g, " ");
+        const hit = outsideQuotes.match(/\b(sir|madam|ma'am)\b/i);
+        if (hit)
+          errors.push(
+            `[M colleague-honorific] ${key}/${lesson.lessonId}: lượt đồng nghiệp nói "${hit[0]}" — ` +
+              `"${item.targetResponse}"`,
+          );
+      }
+    }
+  }
+}
+
+// ── Layer N · `follows` phải khớp một targetResponse có thật cùng bài ─────
+// Trường này nối các lượt của một hội thoại bằng cách SO CHUỖI TUYỆT ĐỐI. Sửa
+// câu mẫu của lượt trước mà quên chuỗi trong lượt sau thì mắt xích đứt im
+// lặng: bài sát hạch thôi rút trọn chuỗi (đo được: 62,6% → 0,0% số lần thi),
+// và màn hình vẫn in "Bạn vừa nói: …" một câu học viên chưa từng nói — ở ca
+// đã xảy ra, đó lại đúng là câu khoá học vừa dạy là SAI. Không thể tự thấy
+// khi đọc source vì hai chuỗi chỉ lệch một từ, nên nó là cổng cứng.
+function lintFollowsChain() {
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      const said = new Set(lesson.speaking.map((s) => s.targetResponse));
+      for (const item of lesson.speaking) {
+        if (!item.follows) continue;
+        if (said.has(item.follows)) continue;
+        errors.push(
+          `[N follows-chain] ${key}/${lesson.lessonId}: follows "${item.follows}" ` +
+            `không khớp câu mẫu nào trong bài — mắt xích hội thoại đứt`,
+        );
+      }
+    }
+  }
+}
+
+// ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
+// Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
+// reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
+// một reviewWord không trỏ vào đâu cả thì không hiện gì. resolveReviewVocab
+// quét toàn bộ tuần của bộ phận, kể cả tuần sau, nên nó không thể tự bắt lỗi
+// này. Toàn corpus hiện sạch, nên đây là cổng cứng chứ không phải ratchet.
+function lintReviewWordOrder() {
+  const firstTaught = new Map<string, number>();
+  for (const week of Object.values(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      for (const item of lesson.vocabulary) {
+        const k = `${week.departmentId}|${item.word.toLowerCase()}`;
+        const prev = firstTaught.get(k);
+        if (prev === undefined || week.weekNumber < prev) firstTaught.set(k, week.weekNumber);
+      }
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const rw of week.reviewWords ?? []) {
+      const taught = firstTaught.get(`${week.departmentId}|${rw.toLowerCase()}`);
+      if (taught === undefined)
+        errors.push(
+          `[L review-order] ${key}: reviewWord "${rw}" is not a ${week.departmentId} headword anywhere — the review card resolves to nothing`,
+        );
+      else if (taught >= week.weekNumber)
+        errors.push(
+          `[L review-order] ${key}: reviewWord "${rw}" is first taught at week ${taught} — a review card must show a card the learner has already met`,
+        );
+    }
+}
+
+// ── Layer M · thẻ dạy bị khung câu nhét vào sai chỗ ───────────────────────
+// Thẻ ôn kéo lại câu ví dụ của thẻ dạy gốc, nên một câu vỡ ở tuần 15 vẫn hiện
+// ra nguyên vẹn trong một tuần soạn tay ở Phase 4. Dấu hiệu bắt được chắc tay
+// nhất: headword tự nó đã mang một mạo từ bên trong ("Note the preference"),
+// và khung câu lại nhét thêm một mạo từ nữa ngay trước nó — "The note the
+// preference comes last." Khoảng một phần ba số hit là dương tính giả ("The
+// cocktail of the day is also available today." đúng ngữ pháp), nên đây là
+// ratchet chứ không phải cổng cứng: giá trị của nó là chặn cái MỚI.
+const SLOT_BASELINE = new URL("./_slotted-headword-baseline.json", import.meta.url);
+const ARTICLE = /\b(?:the|a|an|your|our)\b/;
+
+async function lintSlottedHeadwords() {
+  const offenders: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons)
+      for (const item of lesson.vocabulary) {
+        const head = item.word.toLowerCase();
+        const tail = head.split(" ").slice(1).join(" ");
+        if (!tail || !ARTICLE.test(tail)) continue;
+        const esc = head.replace(/[.*+?^${}()|[\]\\]/g, (m) => "\\" + m);
+        if (new RegExp(`\\b(?:the|a|an|your|our) ${esc}\\b`).test(item.context.toLowerCase()))
+          offenders.push(`${key}: "${item.word}" → "${item.context}"`);
+      }
+
+  const file = Bun.file(SLOT_BASELINE);
+  const known = await file.exists();
+  const baseline = known ? JSON.parse(await file.text()).slottedCards : offenders.length;
+  const write = (n) =>
+    Bun.write(
+      SLOT_BASELINE,
+      JSON.stringify(
+        {
+          slottedCards: n,
+          note: "Ratchet only — a headword that already carries an article must not be slotted after another one.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(
+      `  Headwords slotted after a second article: baseline recorded at ${offenders.length}.`,
+    );
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[M slotted-headword] ${offenders.length} vocabulary cards slot an article-bearing headword after a second article, up from ${baseline}. ` +
+        `Newest: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Headwords slotted after a second article: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    return;
+  }
+  console.log(`  Headwords slotted after a second article: ${offenders.length} (ratchet holds).`);
+}
+
 // ============================================================
 // Run
 // ============================================================
@@ -1316,6 +1945,17 @@ lintBanks("P3", P3_BANKS as unknown as BankSet);
 lintBanks("P4", P4_BANKS as unknown as BankSet);
 lintSemantics("P4", P4_BANKS as unknown as BankSet);
 lintDeadBankEntries(P4_BANKS as unknown as BankSet);
+await lintDeadArcadeField();
+await lintHelpTipQuotes();
+await lintReadingSentenceLength();
+lintClinicalClashes();
+await lintSpeakingVolume();
+await lintAnswerPositionSkew();
+lintReviewWordOrder();
+lintColleagueHonorific();
+lintFollowsChain();
+await lintOneHonorificPerReading();
+await lintSlottedHeadwords();
 reportStaleDebt();
 
 let sentenceCount = 0;

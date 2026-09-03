@@ -7,6 +7,7 @@ import {
   dictationMatches,
   headwordRateForWeek,
   listeningRateForWeek,
+  phaseOfWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
@@ -50,17 +51,24 @@ type QuizQuestion =
  *  items, so the new-word share sits near 70% in every phase and the quiz
  *  lengthens slightly in the phases that teach more. */
 const MCQ_NEW_MAX = 10;
-const MCQ_REVIEW = 4;
+// Four of a week's ~20 recycled words is a 19% chance any one of them is even
+// shown, and two academic reviews measured the consequence from opposite ends:
+// most of a department's vocabulary comes back only as recognition, and only a
+// fifth of that recognition actually happens.
+const MCQ_REVIEW = 6;
+// Ten of the checkpoint week seventy-five recycled words is 13% — the week
+// that exists to consolidate a whole phase sampled an eighth of it.
+const MCQ_REVIEW_CHECKPOINT = 20;
 const MAX_DICTATION = 3;
 
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
 // Distractors are drawn from the same term set so they stay plausible.
-function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
+function buildQuiz(terms: Term[], reviewWords: Term[] = [], atCheckpoint = false): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
   const mcqTerms = shuffle([
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
-    ...shuffle(reviewWords).slice(0, MCQ_REVIEW),
+    ...shuffle(reviewWords).slice(0, atCheckpoint ? MCQ_REVIEW_CHECKPOINT : MCQ_REVIEW),
   ]);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
     const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
@@ -88,7 +96,14 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
   // and only falls back to the review pool when the week has too few
   // spellable ones. It used to draw from the mixed pool, which at P4 meant
   // the three spelling items were almost always words learned weeks ago.
-  const spellable = (t: Term) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en);
+  // Cụm nhiều từ không phải bài chính tả. Bộ lọc này viết cho từ đơn nhưng
+  // không chặn cụm, nên ở Phase 4 — nơi headword đã thành cụm công thức 4–6
+  // từ — nó bắt học viên gõ khớp tuyệt đối cả một câu, trong khi dung sai gõ
+  // sai đã tắt từ A2.1. Đó là đo tốc độ gõ, không đo từ vựng. Giới hạn 2 từ;
+  // đã kiểm cả 240 dep-week, không tuần nào tụt xuống dưới 3 mục nhờ nguồn
+  // dự phòng reviewWords.
+  const spellable = (t: Term) =>
+    /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en) && t.en.trim().split(/\s+/).length <= 2;
   const dictationTerms = [
     ...shuffle(terms.filter(spellable)),
     ...shuffle(reviewWords.filter(spellable)),
@@ -166,7 +181,7 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms, reviewTerms));
+    setQuiz(buildQuiz(terms, reviewTerms, phaseOfWeek(week)?.checkpointWeek === Number(week)));
     setQIdx(0);
     setPicked(null);
     setTyped("");

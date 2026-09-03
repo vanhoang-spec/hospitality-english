@@ -3,7 +3,7 @@
 // is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
-import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP } from "./phase0";
+import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP, lockWeekHeadwords } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
 import { buildPhase3, phase3WordsByDep, WEEK26_MEDIATION_TASKS } from "./phase3";
@@ -27,8 +27,62 @@ export type VocabItem = {
   context: string;
   icon?: string;
 };
-export type GrammarItem = { rude: string; polite: string; rule: string };
-export type SpeakingItem = { guestPrompt: string; targetResponse: string; helpTip: string };
+export type GrammarItem = {
+  rude: string;
+  polite: string;
+  rule: string;
+  /** A repair that LOOKS right and is still wrong ("What is you room
+   *  number?"), for the checkpoint's grammar block. Its stem quotes `rude`
+   *  verbatim and the key is a repair of that very sentence, so the key
+   *  shares nearly every content word with the stem while random distractors
+   *  share none — "pick the option with the most words in common" scored 73%
+   *  in Phase 0 and 81% in Phase 1 with no grammar knowledge. Overlap-matched
+   *  distractor selection got Phase 0 to ~60%; only an authored near-miss
+   *  makes the choice turn on the repair itself. */
+  nearMiss?: string;
+};
+export type SpeakingItem = {
+  guestPrompt: string;
+  targetResponse: string;
+  helpTip: string;
+  /** Overrides the auto-derived value-token requirement in
+   *  `speaking-score.ts` — see VALUE_TOKENS there. Omit for the default
+   *  (numbers, clock words, days, times of day and currencies in the target
+   *  must actually be said); pass `[]` for a sentence whose value word is
+   *  purely formulaic. */
+  requiredTokens?: string[];
+  /** Who says `guestPrompt`. Almost always a guest, so it is optional — but a
+   *  handful of turns are a supervisor or a colleague, and labelling those
+   *  "Khách nói" teaches the learner to say floor words ('lead time', 'cue',
+   *  'service window') straight into a guest's face. */
+  speakerRole?: "guest" | "colleague" | "manager";
+  /** What the LEARNER said one turn earlier, when this item continues an
+   *  exchange rather than starting one.
+   *
+   *  The curriculum matrix promises a three-turn conversation at week 14 —
+   *  greet, take the request, close — and five academic reviews reported the
+   *  same thing: all ~140 speaking items in the phase are a single guest line
+   *  answered by a single reply, so nothing in the data could hold a
+   *  conversation together. The suite prints this above the prompt, so turns
+   *  two and three are answered in the light of what the learner has already
+   *  committed to. */
+  follows?: string;
+};
+/** The label every suite prints above the prompt. "manager" exists because a
+ *  week that trains reporting UPWARD is a week about register, and calling a
+ *  Duty Manager an equal is the one thing such a week must not do. */
+export const speakerAudioLabel = (s: { speakerRole?: "guest" | "colleague" | "manager" }) =>
+  s.speakerRole === "manager"
+    ? "lời cấp trên"
+    : s.speakerRole === "colleague"
+      ? "lời đồng nghiệp"
+      : "lời khách";
+export const speakerLabel = (s: { speakerRole?: "guest" | "colleague" | "manager" }) =>
+  s.speakerRole === "manager"
+    ? "Cấp trên nói"
+    : s.speakerRole === "colleague"
+      ? "Đồng nghiệp nói"
+      : "Khách nói";
 export type ReadingQuestion = {
   q: string;
   options: string[];
@@ -37,8 +91,36 @@ export type ReadingQuestion = {
 };
 export type ReadingItem = { text: string; questions: ReadingQuestion[] };
 export type ArcadeItem = { bad: string; good: string };
-export type GameOption = { text: string; correct: boolean };
-export type GameRound = { prompt: string; options: GameOption[] };
+/** Which KIND of wrong an option is.
+ *
+ *  `game()` fixes the shape of a round: one right answer, one broken-English
+ *  option, one that is correct English and wrong for the job. The arcade used
+ *  to show the same `explanation` whichever wrong bubble was popped, and every
+ *  explanation is written about the second kind — so a learner who popped
+ *  "Cleaner eight." was told the sentence they chose was grammatically fine.
+ *  Four audits counted it: 61/64 rounds in Housekeeping, 63/64 in Guest
+ *  Relations, 59/64 in F&B, 54/64 in Spa.
+ *
+ *  Optional, because the hand-authored weeks build their options inline and
+ *  the arcade falls back to the old behaviour for them. */
+export type GameOptionKind = "answer" | "form" | "register";
+export type GameOption = { text: string; correct: boolean; kind?: GameOptionKind };
+export type GameRound = {
+  prompt: string;
+  options: GameOption[];
+  /** Why the wrong options are wrong. ReadingSuite renders an explanation for
+   *  all 48 of its questions; the arcade said only "Chưa đúng — thử bong bóng
+   *  khác nhé." for all 48 of its rounds. That gap is worst exactly where the
+   *  distractor is correct English and loses on register or on length, which
+   *  three audit reports listed round by round: the learner is marked wrong
+   *  and given no way to work out the criterion. */
+  explanation?: string;
+  /** Who says `prompt` — same contract as SpeakingItem.speakerRole. A week
+   *  that trains reporting UPWARD (a crisis, a proposal) has rounds whose
+   *  prompt is a manager's, and labelling those "Khách nói" teaches the
+   *  learner to say internal figures into a guest's face. */
+  speakerRole?: "guest" | "colleague" | "manager";
+};
 
 export type LessonContent = {
   lessonId: string;
@@ -76,6 +158,11 @@ export type WritingTask = {
   reviewText: string;
   promptVi: string;
   mustConvey: RequiredIdea[];
+  /** Phrases a reply must NOT contain. mustConvey can only reward presence, so a
+   *  task that forbids something — naming a colleague, admitting fault, quoting a
+   *  figure in public — had no way to enforce it, and a reply doing all three
+   *  scored full marks. These block the answer the way a too-short one is blocked. */
+  mustAvoid?: string[];
   modelReply: string;
   explanationVi: string;
 };
@@ -182,12 +269,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Khách đã thanh toán phòng bằng cách nào?",
-            options: ["A. Paid online via Agoda", "B. Pay later at front desk", "C. Cash"],
+            options: ["Paid online via Agoda", "Pay later at front desk", "Cash"],
             correct: 0,
           },
           {
             q: "David Green đã đặt loại phòng nào?",
-            options: ["A. Standard Room", "B. Superior City View", "C. Deluxe Ocean View"],
+            options: ["Standard Room", "Superior City View", "Deluxe Ocean View"],
             correct: 2,
           },
         ],
@@ -270,12 +357,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Khách quốc tế phải xuất trình giấy tờ gì khi nhận phòng?",
-            options: ["A. Credit card", "B. Original passport", "C. Flight ticket"],
+            options: ["Credit card", "Original passport", "Flight ticket"],
             correct: 1,
           },
           {
             q: "Lễ tân phải tải bản scan hộ chiếu lên khi nào?",
-            options: ["A. Next morning", "B. Before 11:00 PM", "C. After check-out"],
+            options: ["Next morning", "Before 11:00 PM", "After check-out"],
             correct: 1,
           },
         ],
@@ -382,15 +469,15 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Tiền đặt cọc được hoàn khi nào?",
-            options: ["A. At check-out time", "B. Two weeks later", "C. At dinner time"],
+            options: ["At check-out time", "Two weeks later", "At dinner time"],
             correct: 0,
           },
           {
             q: "Khi thẻ của khách không thanh toán được, tuyệt đối KHÔNG được làm gì?",
             options: [
-              "A. Ask the guest about their bank or their balance",
-              "B. Offer the other terminal",
-              "C. Ask quietly for another card",
+              "Ask the guest about their bank or their balance",
+              "Offer the other terminal",
+              "Ask quietly for another card",
             ],
             correct: 0,
           },
@@ -495,12 +582,12 @@ export const FO_WEEK_17: WeekContent = {
         questions: [
           {
             q: "Hồ bơi nằm ở đâu?",
-            options: ["A. First floor", "B. On the rooftop", "C. Room 512"],
+            options: ["First floor", "On the rooftop", "Room 512"],
             correct: 1,
           },
           {
             q: "Buffet sáng miễn phí đóng lúc mấy giờ?",
-            options: ["A. 9:00 AM", "B. 10:00 AM", "C. 11:00 AM"],
+            options: ["9:00 AM", "10:00 AM", "11:00 AM"],
             correct: 1,
           },
         ],
@@ -534,7 +621,7 @@ export const FB_WEEK_15: WeekContent = {
   weekNumber: 15,
   weekTitleEn: "Breakfast Buffet Welcoming & Station Mapping",
   weekTitleVi: "Điều Phối & Đón Tiếp Tại Nhà Hàng Buffet Sáng",
-  reviewWords: ["Menu", "Table", "Serve", "Plate", "Fresh", "Booking", "Dining room", "Glass"],
+  reviewWords: ["Menu", "Table", "Serve", "Plate", "Fresh", "Reservation", "Dining room", "Glass"],
   lessons: [
     {
       lessonId: "FB_15_1",
@@ -597,19 +684,15 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khách nào KHÔNG được kèm bữa sáng?",
-            options: [
-              "A. Mr. David Green in Room 512",
-              "B. Ms. Lisa Tran in Room 608",
-              "C. Both guests",
-            ],
+            options: ["Mr. David Green in Room 512", "Ms. Lisa Tran in Room 608", "Both guests"],
             correct: 1,
           },
           {
             q: "'B&B' nghĩa là gì với khách phòng 512?",
             options: [
-              "A. Bed and Breakfast included",
-              "B. Bed only, no meals",
-              "C. Breakfast paid separately",
+              "Bed and Breakfast included",
+              "Bed only, no meals",
+              "Breakfast paid separately",
             ],
             correct: 0,
           },
@@ -697,15 +780,15 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khung giờ nào nhà hàng thường kín bàn?",
-            options: ["A. 6:00 - 7:00 AM", "B. 8:00 - 9:30 AM", "C. 10:00 - 11:00 AM"],
+            options: ["6:00 - 7:00 AM", "8:00 - 9:30 AM", "10:00 - 11:00 AM"],
             correct: 1,
           },
           {
             q: "Nên mời khách đang chờ sang đâu?",
             options: [
-              "A. Near the buffet line",
-              "B. To another restaurant",
-              "C. To the waiting area near the entrance",
+              "Near the buffet line",
+              "To another restaurant",
+              "To the waiting area near the entrance",
             ],
             correct: 2,
           },
@@ -792,12 +875,12 @@ export const FB_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Quầy bánh nằm ở đâu?",
-            options: ["A. Center", "B. Left wall", "C. Near the windows"],
+            options: ["Center", "Left wall", "Near the windows"],
             correct: 1,
           },
           {
             q: "Khách gọi được món gì ở quầy chế biến tại chỗ?",
-            options: ["A. Only bread and jam", "B. Only coffee", "C. Phở and made-to-order eggs"],
+            options: ["Only bread and jam", "Only coffee", "Phở and made-to-order eggs"],
             correct: 2,
           },
         ],
@@ -885,18 +968,18 @@ export const FB_WEEK_15: WeekContent = {
           {
             q: "Khi nào nhân viên KHÔNG được dọn đĩa?",
             options: [
-              "A. When it is empty",
-              "B. While the guest is still using cutlery on it",
-              "C. After the guest leaves",
+              "When it is empty",
+              "While the guest is still using cutlery on it",
+              "After the guest leaves",
             ],
             correct: 1,
           },
           {
             q: "Trong bữa ăn, nhân viên nên hỏi câu gì?",
             options: [
-              "A. 'Is everything to your liking?'",
-              "B. 'Are you finished?'",
-              "C. 'How much did you eat?'",
+              "'Is everything to your liking?'",
+              "'Are you finished?'",
+              "'How much did you eat?'",
             ],
             correct: 0,
           },
@@ -1003,12 +1086,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khi gõ cửa, nhân viên phải nói gì?",
-            options: ["A. Room service", "B. Housekeeping", "C. Reception"],
+            options: ["Room service", "Housekeeping", "Reception"],
             correct: 1,
           },
           {
             q: "Sau khi gõ cửa, phải chờ phản hồi bao lâu?",
-            options: ["A. At least 10 seconds", "B. 1 minute", "C. No need to wait"],
+            options: ["At least 10 seconds", "1 minute", "No need to wait"],
             correct: 0,
           },
         ],
@@ -1092,12 +1175,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Khách phòng 812 xin mấy chiếc khăn tắm?",
-            options: ["A. One", "B. Two", "C. Three"],
+            options: ["One", "Two", "Three"],
             correct: 1,
           },
           {
             q: "Yêu cầu đồ dùng phải giao trong bao lâu?",
-            options: ["A. Within 15 minutes", "B. Within 1 hour", "C. Next morning"],
+            options: ["Within 15 minutes", "Within 1 hour", "Next morning"],
             correct: 0,
           },
         ],
@@ -1181,12 +1264,12 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Giường phụ giá bao nhiêu một đêm?",
-            options: ["A. Free", "B. 300,000 VND", "C. 500,000 VND"],
+            options: ["Free", "300,000 VND", "500,000 VND"],
             correct: 1,
           },
           {
             q: "Khách cần báo trước bao lâu để xin giường phụ?",
-            options: ["A. 2 hours", "B. 1 day", "C. No need to request"],
+            options: ["2 hours", "1 day", "No need to request"],
             correct: 0,
           },
         ],
@@ -1276,15 +1359,15 @@ export const HK_WEEK_15: WeekContent = {
         questions: [
           {
             q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
-            options: ["A. Past 2:00 PM", "B. Past 6:00 PM", "C. Immediately in the morning"],
+            options: ["Past 2:00 PM", "Past 6:00 PM", "Immediately in the morning"],
             correct: 0,
           },
           {
             q: "Nếu gọi điện không ai bắt máy, nhân viên phải làm gì?",
             options: [
-              "A. Enter the room anyway",
-              "B. Leave a voicemail and slip a note under the door",
-              "C. Ignore the room",
+              "Enter the room anyway",
+              "Leave a voicemail and slip a note under the door",
+              "Ignore the room",
             ],
             correct: 1,
           },
@@ -1396,16 +1479,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Trong lúc xoa bóp, kỹ thuật viên phải tránh vùng nào?",
-            options: [
-              "A. The guest's arms",
-              "B. The guest's lower back",
-              "C. The guest's shoulders",
-            ],
+            options: ["The guest's arms", "The guest's lower back", "The guest's shoulders"],
             correct: 1,
           },
           {
             q: "Khách bị dị ứng gì?",
-            options: ["A. Peanut oil", "B. Lavender", "C. Nuts and dairy"],
+            options: ["Peanut oil", "Lavender", "Nuts and dairy"],
             correct: 0,
           },
         ],
@@ -1492,15 +1571,15 @@ export const SW_WEEK_23: WeekContent = {
           {
             q: "Liệu trình nào dùng đá bazan làm nóng?",
             options: [
-              "A. Traditional Vietnamese Massage",
-              "B. Hot Stone Massage",
-              "C. Herbal Steam Therapy",
+              "Traditional Vietnamese Massage",
+              "Hot Stone Massage",
+              "Herbal Steam Therapy",
             ],
             correct: 1,
           },
           {
             q: "Liệu trình xông thảo mộc kéo dài bao lâu?",
-            options: ["A. 30 minutes", "B. 60 minutes", "C. 75 minutes"],
+            options: ["30 minutes", "60 minutes", "75 minutes"],
             correct: 0,
           },
         ],
@@ -1590,12 +1669,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Gói Couple's Combo tặng kèm những gì?",
-            options: ["A. Herbal tea for two", "B. A free foot scrub", "C. A discount voucher"],
+            options: ["Herbal tea for two", "A free foot scrub", "A discount voucher"],
             correct: 0,
           },
           {
             q: "Gói Family Care có hiệu lực bao lâu?",
-            options: ["A. 1 month", "B. 3 months", "C. 1 year"],
+            options: ["1 month", "3 months", "1 year"],
             correct: 1,
           },
         ],
@@ -1686,20 +1765,12 @@ export const SW_WEEK_23: WeekContent = {
         questions: [
           {
             q: "Sản phẩm nào hợp nhất với da nhạy cảm, bị nắng?",
-            options: [
-              "A. Lavender Essential Oil",
-              "B. Ginger Body Scrub",
-              "C. Aloe Vera Moisturizer",
-            ],
+            options: ["Lavender Essential Oil", "Ginger Body Scrub", "Aloe Vera Moisturizer"],
             correct: 2,
           },
           {
             q: "Tinh dầu oải hương dùng để làm gì?",
-            options: [
-              "A. Improves circulation",
-              "B. Relaxation and sleep support",
-              "C. Sun protection",
-            ],
+            options: ["Improves circulation", "Relaxation and sleep support", "Sun protection"],
             correct: 1,
           },
         ],
@@ -1807,16 +1878,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Executive Lounge đóng cửa lúc mấy giờ?",
-            options: ["A. 8:00 PM", "B. 10:00 PM", "C. 2:00 PM"],
+            options: ["8:00 PM", "10:00 PM", "2:00 PM"],
             correct: 1,
           },
           {
             q: "Ngoài bữa sáng và đồ uống còn kèm gì?",
-            options: [
-              "A. Free spa treatment",
-              "B. Free garment pressing",
-              "C. Free airport transfer",
-            ],
+            options: ["Free spa treatment", "Free garment pressing", "Free airport transfer"],
             correct: 1,
           },
         ],
@@ -1907,15 +1974,15 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Khách dùng trà chiều được vào khung giờ nào?",
-            options: ["A. 7:00 - 10:30 AM", "B. 3:00 - 5:00 PM", "C. 6:00 - 8:00 PM"],
+            options: ["7:00 - 10:30 AM", "3:00 - 5:00 PM", "6:00 - 8:00 PM"],
             correct: 1,
           },
           {
             q: "Quy định độ tuổi vào phòng chờ là gì?",
             options: [
-              "A. No children allowed at all",
-              "B. Children under 12 welcome only before 6:00 PM",
-              "C. Children must be accompanied after 8:00 PM",
+              "No children allowed at all",
+              "Children under 12 welcome only before 6:00 PM",
+              "Children must be accompanied after 8:00 PM",
             ],
             correct: 1,
           },
@@ -2009,12 +2076,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Khách cần bao nhiêu bản sao tài liệu?",
-            options: ["A. 1 copy", "B. 5 copies", "C. 10 copies"],
+            options: ["1 copy", "5 copies", "10 copies"],
             correct: 1,
           },
           {
             q: "Tài liệu đang in là loại gì?",
-            options: ["A. Confidential", "B. Public", "C. Marketing material"],
+            options: ["Confidential", "Public", "Marketing material"],
             correct: 0,
           },
         ],
@@ -2067,7 +2134,7 @@ export const GR_WEEK_27: WeekContent = {
           word: "Allergy",
           phonetic: "/ˈælədʒi/",
           definition: "Dị ứng",
-          context: "The guest has a shellfish allergy, so please inform the kitchen.",
+          context: "The guest has a shellfish allergy — I am writing the slip for the chef now.",
           icon: "⚠️",
         },
         {
@@ -2105,16 +2172,12 @@ export const GR_WEEK_27: WeekContent = {
         questions: [
           {
             q: "Ông Carter thích uống cà phê thế nào?",
-            options: ["A. Black, no sugar", "B. With milk and sugar", "C. Black with sugar"],
+            options: ["Black, no sugar", "With milk and sugar", "Black with sugar"],
             correct: 0,
           },
           {
             q: "Cần chuẩn bị riêng điều gì cho ông Carter?",
-            options: [
-              "A. Airport pickup",
-              "B. A small cake for his anniversary",
-              "C. Extra towels",
-            ],
+            options: ["Airport pickup", "A small cake for his anniversary", "Extra towels"],
             correct: 1,
           },
         ],
@@ -2134,7 +2197,7 @@ export const GR_WEEK_27: WeekContent = {
           prompt: "We'll be back in October for our wedding anniversary.",
           options: [
             {
-              text: "How wonderful, madam. It has been noted in your profile for your next stay.",
+              text: "How wonderful, madam. May I put that on your file for your next stay?",
               correct: true,
             },
             { text: "Please remind us again when you arrive in October.", correct: false },
@@ -2158,7 +2221,7 @@ export const BO_WEEK_37: WeekContent = {
     "Company name",
     "Reply by email",
     "Check the order",
-    "Deadline",
+    "Printout",
     "Agreed",
     "Volume discount",
     "Deposit policy",
@@ -2225,16 +2288,12 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Mức giá doanh nghiệp này đòi sản lượng tối thiểu bao nhiêu?",
-            options: [
-              "A. 100 room-nights/month",
-              "B. 150 room-nights/month",
-              "C. 200 room-nights/month",
-            ],
+            options: ["100 room-nights/month", "150 room-nights/month", "200 room-nights/month"],
             correct: 1,
           },
           {
             q: "Hợp đồng có thời hạn bao lâu?",
-            options: ["A. 6 months", "B. 12 months", "C. 24 months"],
+            options: ["6 months", "12 months", "24 months"],
             correct: 1,
           },
         ],
@@ -2322,15 +2381,15 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Khách sạn giữ bao nhiêu phòng mỗi đêm cho đối tác?",
-            options: ["A. 5 rooms", "B. 10 rooms", "C. 15 rooms"],
+            options: ["5 rooms", "10 rooms", "15 rooms"],
             correct: 1,
           },
           {
             q: "Phòng không được xác nhận trong hạn giữ chỗ sẽ ra sao?",
             options: [
-              "A. They are held for another week",
-              "B. They are released back to general inventory",
-              "C. They are given a discount",
+              "They are held for another week",
+              "They are released back to general inventory",
+              "They are given a discount",
             ],
             correct: 1,
           },
@@ -2422,12 +2481,12 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Dịp lễ nào bị liệt vào ngày không áp dụng giá?",
-            options: ["A. Christmas", "B. Tet Holiday", "C. National Day"],
+            options: ["Christmas", "Tet Holiday", "National Day"],
             correct: 1,
           },
           {
             q: "Hủy dưới 14 ngày trước ngày đến thì bị phạt thế nào?",
-            options: ["A. No penalty", "B. One night's rate", "C. Full stay charge"],
+            options: ["No penalty", "One night's rate", "Full stay charge"],
             correct: 1,
           },
         ],
@@ -2521,15 +2580,15 @@ export const BO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Khách sạn đối thủ chào mức hoa hồng bao nhiêu?",
-            options: ["A. 10%", "B. 12%", "C. 15%"],
+            options: ["10%", "12%", "15%"],
             correct: 2,
           },
           {
             q: "Đối tác nói điều gì có thể xảy ra nếu không theo được mức giá đó?",
             options: [
-              "A. They will end the partnership immediately",
-              "B. They may shift allocation next quarter",
-              "C. They will sue the hotel",
+              "They will end the partnership immediately",
+              "They may shift allocation next quarter",
+              "They will sue the hotel",
             ],
             correct: 1,
           },
@@ -2645,12 +2704,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Trong đoàn có bao nhiêu phòng cần giường phụ?",
-            options: ["A. 20", "B. 5", "C. 2"],
+            options: ["20", "5", "2"],
             correct: 1,
           },
           {
             q: "Hai khách có ghi chú yêu cầu đặc biệt gì?",
-            options: ["A. Early check-in", "B. Extra pillows", "C. Low floor rooms"],
+            options: ["Early check-in", "Extra pillows", "Low floor rooms"],
             correct: 2,
           },
         ],
@@ -2742,12 +2801,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Trước khi đoàn đến phải chuẩn bị gì?",
-            options: ["A. Key packets", "B. Luggage tags only", "C. Nothing"],
+            options: ["Key packets", "Luggage tags only", "Nothing"],
             correct: 0,
           },
           {
             q: "Ai đưa hành lý thẳng lên phòng?",
-            options: ["A. Front desk staff", "B. The bellman team", "C. The tour leader"],
+            options: ["Front desk staff", "The bellman team", "The tour leader"],
             correct: 1,
           },
         ],
@@ -2839,12 +2898,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Ông Trần và ông Lê yêu cầu gì về phòng của họ?",
-            options: ["A. To swap rooms", "B. To upgrade rooms", "C. To cancel their rooms"],
+            options: ["To swap rooms", "To upgrade rooms", "To cancel their rooms"],
             correct: 0,
           },
           {
             q: "Khách yêu cầu đổi gì trong cách xuất hóa đơn?",
-            options: ["A. One combined bill", "B. Separate folios", "C. No bill needed"],
+            options: ["One combined bill", "Separate folios", "No bill needed"],
             correct: 1,
           },
         ],
@@ -2936,12 +2995,12 @@ export const FO_WEEK_26: WeekContent = {
         questions: [
           {
             q: "Đoàn sẽ ăn sáng ở đâu?",
-            options: ["A. Lotus Private Hall", "B. Main Lobby", "C. Rooftop Restaurant"],
+            options: ["Lotus Private Hall", "Main Lobby", "Rooftop Restaurant"],
             correct: 0,
           },
           {
             q: "Xe đưa đón khởi hành lúc mấy giờ?",
-            options: ["A. 07:00 AM", "B. 07:55 AM", "C. 08:00 AM"],
+            options: ["07:00 AM", "07:55 AM", "08:00 AM"],
             correct: 2,
           },
         ],
@@ -3043,16 +3102,12 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Nước dùng bò được ninh trong bao lâu?",
-            options: ["A. 2 hours", "B. 8 hours", "C. 1 hour"],
+            options: ["2 hours", "8 hours", "1 hour"],
             correct: 1,
           },
           {
             q: "Theo lời bếp trưởng, khi nào mới cho rau thơm vào?",
-            options: [
-              "A. While the broth is simmering",
-              "B. Just before eating",
-              "C. The night before",
-            ],
+            options: ["While the broth is simmering", "Just before eating", "The night before"],
             correct: 1,
           },
         ],
@@ -3142,15 +3197,15 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Pha phin truyền thống mất bao lâu?",
-            options: ["A. 4-5 minutes", "B. 30 seconds", "C. 1 hour"],
+            options: ["4-5 minutes", "30 seconds", "1 hour"],
             correct: 0,
           },
           {
             q: "What makes Bạc Sỉu different from Cà Phê Sữa Đá?",
             options: [
-              "A. It has no coffee at all",
-              "B. It has a higher ratio of condensed milk",
-              "C. It is always served hot",
+              "It has no coffee at all",
+              "It has a higher ratio of condensed milk",
+              "It is always served hot",
             ],
             correct: 1,
           },
@@ -3243,15 +3298,15 @@ export const FB_WEEK_31: WeekContent = {
         questions: [
           {
             q: "Bà Carter bị dị ứng gì?",
-            options: ["A. Peanut allergy", "B. Seafood allergy", "C. Dairy allergy"],
+            options: ["Peanut allergy", "Seafood allergy", "Dairy allergy"],
             correct: 0,
           },
           {
             q: "Theo ghi chú, bếp phải làm gì trước khi phục vụ?",
             options: [
-              "A. Nothing special",
-              "B. Confirm all sauces and use a separate pan",
-              "C. Add extra peanut oil",
+              "Nothing special",
+              "Confirm all sauces and use a separate pan",
+              "Add extra peanut oil",
             ],
             correct: 1,
           },
@@ -3343,15 +3398,15 @@ export const FB_WEEK_31: WeekContent = {
           {
             q: "Món nào được gợi ý cho khách thích ăn cay?",
             options: [
-              "A. Stir-Fried Morning Glory",
-              "B. Grilled Squid with Chili Lime Sauce",
-              "C. Grilled Lemongrass Beef",
+              "Stir-Fried Morning Glory",
+              "Grilled Squid with Chili Lime Sauce",
+              "Grilled Lemongrass Beef",
             ],
             correct: 1,
           },
           {
             q: "Món bò nướng sả hợp với món gì?",
-            options: ["A. Red wine", "B. Iced coffee", "C. Green tea"],
+            options: ["Red wine", "Iced coffee", "Green tea"],
             correct: 0,
           },
         ],
@@ -3462,12 +3517,12 @@ export const HK_WEEK_33: WeekContent = {
         questions: [
           {
             q: "Khách gửi giặt mấy chiếc quần?",
-            options: ["A. 1", "B. 2", "C. 3"],
+            options: ["1", "2", "3"],
             correct: 1,
           },
           {
             q: "Trước khi nhận đồ đã ghi nhận tình trạng gì?",
-            options: ["A. A missing button", "B. A torn sleeve", "C. A small stain on the collar"],
+            options: ["A missing button", "A torn sleeve", "A small stain on the collar"],
             correct: 2,
           },
         ],
@@ -3555,15 +3610,15 @@ export const HK_WEEK_33: WeekContent = {
         questions: [
           {
             q: "Giặt khô tính phụ thu bao nhiêu?",
-            options: ["A. +50%", "B. +30%", "C. No extra charge"],
+            options: ["+50%", "+30%", "No extra charge"],
             correct: 1,
           },
           {
             q: "Đơn giặt nhanh đặt sau 18h thì sao?",
             options: [
-              "A. It is cancelled",
-              "B. It is delivered within 4 hours anyway",
-              "C. It is delivered the next morning",
+              "It is cancelled",
+              "It is delivered within 4 hours anyway",
+              "It is delivered the next morning",
             ],
             correct: 2,
           },
@@ -3658,18 +3713,18 @@ export const HK_WEEK_33: WeekContent = {
           {
             q: "Khách phản ánh hai vấn đề gì?",
             options: [
-              "A. Faded color and missing button",
-              "B. Torn sleeve and wrong size",
-              "C. Wrong item returned",
+              "Faded color and missing button",
+              "Torn sleeve and wrong size",
+              "Wrong item returned",
             ],
             correct: 0,
           },
           {
             q: "Sự việc được báo lên ai?",
             options: [
-              "A. The Front Office Manager",
-              "B. The Housekeeping Supervisor",
-              "C. The Laundry Vendor directly",
+              "The Front Office Manager",
+              "The Housekeeping Supervisor",
+              "The Laundry Vendor directly",
             ],
             correct: 1,
           },
@@ -3716,7 +3771,8 @@ export const HK_WEEK_33: WeekContent = {
           word: "Policy",
           phonetic: "/ˈpɒləsi/",
           definition: "Chính sách",
-          context: "Our compensation policy covers up to 10 times the laundry fee.",
+          context:
+            "Our compensation policy is set by the hotel, and my supervisor confirms the amount.",
           icon: "📋",
         },
         {
@@ -3750,28 +3806,24 @@ export const HK_WEEK_33: WeekContent = {
       ],
       speaking: [
         {
-          guestPrompt: "This shirt cost me $80. Your $20 compensation isn't enough.",
+          guestPrompt: "This shirt cost me two million. Your four hundred thousand isn't enough.",
           targetResponse:
-            "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee, which comes to $20. Let me check with my supervisor if we can review this further for you.",
+            "I completely understand, sir. Compensation is set by our policy, and my supervisor confirms the amount. May I ask her to come and give you the figure herself?",
           helpTip:
-            "Practice the phrase 'ten times the laundry fee' — stress 'ten times' clearly so the guest understands how the amount was calculated.",
+            "Đừng đọc con số hay bội số của bảng nội bộ cho khách — chỉ người ký mới nói ra mức. 'Confirms' /kənˈfɜːmz/ — đuôi /mz/ đọc liền.",
         },
       ],
       reading: {
-        text: "HOUSEKEEPING SOP - LAUNDRY COMPENSATION GUIDE\nMinor Damage (stain, small mark): Free re-cleaning\nMajor Damage (shrinkage, fading, tearing): Up to 10x the laundry service fee\nLost Item: Up to 10x the laundry service fee or replacement value, whichever is lower, pending Manager approval\nAll compensation above $50 requires Duty Manager sign-off.",
+        text: "HOUSEKEEPING SOP - LAUNDRY COMPENSATION GUIDE\nMinor Damage (stain, small mark): Free re-cleaning\nMajor Damage (shrinkage, fading, tearing): Up to 10x the laundry service fee\nLost Item: Up to 10x the laundry service fee or replacement value, whichever is lower, pending Manager approval\nAll compensation above 1,200,000 VND requires Duty Manager sign-off.\nThe figures above are one hotel's — ask your Executive Housekeeper for yours.",
         questions: [
           {
             q: "Hư hỏng nhẹ như vết ố được bồi thường thế nào?",
-            options: ["A. Cash refund", "B. Free re-cleaning", "C. 10x the laundry fee"],
+            options: ["Cash refund", "Free re-cleaning", "10x the laundry fee"],
             correct: 1,
           },
           {
-            q: "Bồi thường trên 50 đô cần điều kiện gì?",
-            options: [
-              "A. Guest signature only",
-              "B. Duty Manager sign-off",
-              "C. No approval needed",
-            ],
+            q: "Bồi thường trên 1.200.000 đồng cần điều kiện gì?",
+            options: ["Guest signature only", "Duty Manager sign-off", "No approval needed"],
             correct: 1,
           },
         ],
@@ -3779,7 +3831,7 @@ export const HK_WEEK_33: WeekContent = {
       arcade: [
         {
           bad: "Twenty dollars, that's it.",
-          good: "Our policy allows up to $20 in this case — let me see if my supervisor can review it further.",
+          good: "Our policy allows up to 500,000 dong in this case — let me see if my supervisor can review it further.",
         },
         {
           bad: "You can't get more than that.",
@@ -3791,7 +3843,7 @@ export const HK_WEEK_33: WeekContent = {
           prompt: "This dress cost me $150. A refund of the cleaning fee alone isn't fair.",
           options: [
             {
-              text: "I completely understand, sir. Our policy allows compensation of up to 10 times the laundry fee. Let me check with my supervisor if we can review this further for you.",
+              text: "I completely understand, sir. Our policy sets the amount, and my supervisor confirms it. Shall I ask them to come and tell you the figure?",
               correct: true,
             },
             { text: "That's the maximum we can offer, end of discussion.", correct: false },
@@ -3883,12 +3935,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Khách cần gì để dùng tủ khóa?",
-            options: ["A. A separate rental fee", "B. Their room key card", "C. A signed form"],
+            options: ["A separate rental fee", "Their room key card", "A signed form"],
             correct: 1,
           },
           {
             q: "Cần đặt chòi riêng trước bao lâu?",
-            options: ["A. At least 30 minutes", "B. At least 2 hours", "C. One full day"],
+            options: ["At least 30 minutes", "At least 2 hours", "One full day"],
             correct: 1,
           },
         ],
@@ -3979,12 +4031,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Theo nội quy, trẻ dưới 12 tuổi xuống hồ phải có ai đi kèm?",
-            options: ["A. A swimming certificate", "B. An adult", "C. A pool pass"],
+            options: ["A swimming certificate", "An adult", "A pool pass"],
             correct: 1,
           },
           {
             q: "Ở khu nước nông không được làm gì?",
-            options: ["A. Diving", "B. Floating", "C. Standing"],
+            options: ["Diving", "Floating", "Standing"],
             correct: 0,
           },
         ],
@@ -4074,16 +4126,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Cờ đỏ cảnh báo cấm điều gì?",
-            options: [
-              "A. Swimming in the ocean",
-              "B. Sitting on the beach deck",
-              "C. Using the pool",
-            ],
+            options: ["Swimming in the ocean", "Sitting on the beach deck", "Using the pool"],
             correct: 0,
           },
           {
             q: "Trong lúc có cảnh báo, khu nào vẫn mở?",
-            options: ["A. The beach shoreline", "B. The pool", "C. The private cabanas"],
+            options: ["The beach shoreline", "The pool", "The private cabanas"],
             correct: 1,
           },
         ],
@@ -4173,16 +4221,12 @@ export const SW_WEEK_19: WeekContent = {
         questions: [
           {
             q: "Gặp khách bị say nắng, việc đầu tiên phải làm là gì?",
-            options: [
-              "A. Give them coffee",
-              "B. Move them to the shade",
-              "C. Ask them to keep swimming",
-            ],
+            options: ["Give them coffee", "Move them to the shade", "Ask them to keep swimming"],
             correct: 1,
           },
           {
             q: "Ca nặng thì gọi số máy lẻ nào?",
-            options: ["A. Ext. 100", "B. Ext. 115", "C. Ext. 911"],
+            options: ["Ext. 100", "Ext. 115", "Ext. 911"],
             correct: 1,
           },
         ],
@@ -4256,7 +4300,7 @@ export const GR_WEEK_34: WeekContent = {
           word: "Honeymoon",
           phonetic: "/ˈhʌnimuːn/",
           definition: "Tuần trăng mật",
-          context: "I noticed you're here on your honeymoon.",
+          context: "May I ask if you are celebrating a honeymoon with us, madam?",
           icon: "🌙",
         },
         {
@@ -4276,7 +4320,7 @@ export const GR_WEEK_34: WeekContent = {
         {
           rude: "Is this your honeymoon?",
           polite: "I couldn't help but notice the lovely bouquet — are you newlyweds, perhaps?",
-          rule: "Thêm trạng từ rào 'perhaps' để lời phỏng đoán thành nhận xét nhã nhặn.",
+          rule: "Nhìn thấy một thứ là quyền được HỎI, không phải quyền được đoán — tuần 32. 'Perhaps' giữ câu ở dạng câu hỏi; bỏ nó đi là thành một kết luận về khách.",
         },
       ],
       speaking: [
@@ -4289,23 +4333,23 @@ export const GR_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "GUEST PROFILE NOTE – GR OBSERVATION LOG\nRoom: 812\nGuest: Mr. & Mrs. Tran\nObservation: Guest mentioned \"first anniversary trip\" during check-in small talk.\nGuests wearing matching rings, asked concierge about rose petal options.\nAction: Flag profile as 'Anniversary – Day 2 of stay'. Notify GR Manager for surprise planning.",
+        text: 'GUEST PROFILE NOTE – GR OBSERVATION LOG\nRoom: 812\nGuest: Mr. & Mrs. Tran\nHeard at check-in: guest mentioned a "first anniversary trip".\nAsked: "May I put that on your file, sir?" — guest said yes, 14:20, taken by Trang.\nAction: Flag profile as \'Anniversary – Day 2 of stay\'. Notify GR Manager for surprise planning.\nNot written: anything the guest was not asked about.',
         questions: [
           {
             q: "Dấu hiệu nào khiến nhân viên đoán khách đang có dịp đặc biệt?",
             options: [
               'A. They mentioned a "first anniversary trip"',
-              "B. They asked for extra towels",
-              "C. They requested a late checkout",
+              "They asked for extra towels",
+              "They requested a late checkout",
             ],
             correct: 0,
           },
           {
             q: "Sau khi nhận ra điều đó, nhân viên nên làm gì?",
             options: [
-              "A. Ignore it and continue as normal",
-              "B. Flag the profile and notify the GR Manager",
-              "C. Ask the guests to confirm in writing",
+              "Ignore it and continue as normal",
+              "Ask the guest first, then flag the profile and notify the GR Manager",
+              "Ask the guests to confirm in writing",
             ],
             correct: 1,
           },
@@ -4387,6 +4431,7 @@ export const GR_WEEK_34: WeekContent = {
         {
           guestPrompt:
             "Housekeeping here. We only have white towels left, no red ones for the heart shape. What should we do?",
+          speakerRole: "colleague",
           targetResponse:
             "That's fine, please use the white towels for now and add extra rose petals for color. Thank you for letting me know.",
           helpTip:
@@ -4394,16 +4439,16 @@ export const GR_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: 'INTERNAL COORDINATION SLIP – SPECIAL SET-UP\nRoom: 1205\nOccasion: Wedding Anniversary\nRequested by: GR Team\nKitchen: 1 heart-shaped chocolate cake, "Happy Anniversary" in red icing, deliver 6:45 PM\nHousekeeping: Rose petal bed decoration + 2 candles, complete by 6:30 PM\nGR: Confirm room access with guest before 6:15 PM',
+        text: 'INTERNAL COORDINATION SLIP – SPECIAL SET-UP\nRoom: 1205\nOccasion: Wedding Anniversary\nRequested by: GR Team\nKitchen: 1 heart-shaped chocolate cake, "Happy Anniversary" in red icing, deliver 6:45 PM\nHousekeeping: Rose petal bed decoration + 2 LED candles, complete by 6:30 PM\nGR: Confirm room access with guest before 6:15 PM',
         questions: [
           {
             q: "Buồng phòng phải trang trí xong trước mấy giờ?",
-            options: ["A. 6:15 PM", "B. 6:30 PM", "C. 6:45 PM"],
+            options: ["6:15 PM", "6:30 PM", "6:45 PM"],
             correct: 1,
           },
           {
             q: "GR phải xác nhận điều gì trước 18h15?",
-            options: ["A. Room access with the guest", "B. The cake flavor", "C. The candle color"],
+            options: ["Room access with the guest", "The cake flavor", "The petal color"],
             correct: 0,
           },
         ],
@@ -4497,16 +4542,12 @@ export const GR_WEEK_34: WeekContent = {
         questions: [
           {
             q: "Khi bưng bánh hoặc quà vào phòng, phải cầm thế nào?",
-            options: ["A. With both hands", "B. Behind their back", "C. On a rolling cart only"],
+            options: ["With both hands", "Behind their back", "On a rolling cart only"],
             correct: 0,
           },
           {
             q: "Bước 2 trong checklist là gì?",
-            options: [
-              "A. Offer photo assistance",
-              "B. Knock and announce politely",
-              "C. Exit the room",
-            ],
+            options: ["Offer photo assistance", "Knock and announce politely", "Exit the room"],
             correct: 1,
           },
         ],
@@ -4596,24 +4637,20 @@ export const GR_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: 'GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name "Nguyen" printed as "Nguyan" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered\nFollow-up: Manager to review order-confirmation process with Kitchen team',
+        text: 'GR INCIDENT LOG – SET-UP ERROR\nRoom: 1508\nIssue: Kitchen delivered chocolate cake instead of requested vanilla; guest name "Nguyen" printed as "Nguyan" on card\nAction Taken: GR apologized immediately, contacted Kitchen for replacement within 10 minutes, complimentary bottle of wine offered from the GR desk limit; GR Manager informed\nFollow-up: Manager to review order-confirmation process with Kitchen team',
         questions: [
           {
             q: "Sự cố này mô tả lỗi gì?",
             options: [
-              "A. Wrong cake flavor and a misspelled name",
-              "B. Late delivery only",
-              "C. Wrong room number",
+              "Wrong cake flavor and a misspelled name",
+              "Late delivery only",
+              "Wrong room number",
             ],
             correct: 0,
           },
           {
             q: "GR đã tặng khách gì để bày tỏ thiện chí?",
-            options: [
-              "A. A room discount",
-              "B. A complimentary bottle of wine",
-              "C. A free extra night",
-            ],
+            options: ["A room discount", "A complimentary bottle of wine", "A free extra night"],
             correct: 1,
           },
         ],
@@ -4725,12 +4762,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Hội nghị có bao nhiêu đại biểu tham dự?",
-            options: ["A. 15", "B. 200", "C. 20"],
+            options: ["15", "200", "20"],
             correct: 1,
           },
           {
             q: "Hạn nộp đề xuất là khi nào?",
-            options: ["A. 15 October", "B. 17 October", "C. 25 July"],
+            options: ["15 October", "17 October", "25 July"],
             correct: 2,
           },
         ],
@@ -4818,16 +4855,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Ballroom B kê kiểu lớp học chứa được bao nhiêu khách?",
-            options: ["A. 250", "B. 150", "C. 180"],
+            options: ["250", "150", "180"],
             correct: 1,
           },
           {
             q: "Ballroom B có ánh sáng tự nhiên không?",
-            options: [
-              "A. No windows at all",
-              "B. Yes, with blackout curtains",
-              "C. Only in the evening",
-            ],
+            options: ["No windows at all", "Yes, with blackout curtains", "Only in the evening"],
             correct: 1,
           },
         ],
@@ -4916,12 +4949,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Màn hình LED tính thêm bao nhiêu?",
-            options: ["A. $300", "B. $400", "C. Free of charge"],
+            options: ["$300", "$400", "Free of charge"],
             correct: 0,
           },
           {
             q: "Trước sự kiện cần bao nhiêu thời gian dựng?",
-            options: ["A. 1 hour", "B. 3 hours", "C. 30 minutes"],
+            options: ["1 hour", "3 hours", "30 minutes"],
             correct: 1,
           },
         ],
@@ -5011,16 +5044,12 @@ export const BO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Khi nào phải chốt số khách cuối cùng?",
-            options: [
-              "A. On the event day",
-              "B. 3 days before the event",
-              "C. 1 week after signing",
-            ],
+            options: ["On the event day", "3 days before the event", "1 week after signing"],
             correct: 1,
           },
           {
             q: "BEO hiện đang ở trạng thái nào?",
-            options: ["A. Confirmed and paid", "B. Cancelled", "C. Pending client sign-off"],
+            options: ["Confirmed and paid", "Cancelled", "Pending client sign-off"],
             correct: 2,
           },
         ],
@@ -5144,15 +5173,15 @@ export const FO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Bảo tàng thành phố đóng cửa vào ngày nào?",
-            options: ["A. Sundays", "B. Mondays", "C. It never closes"],
+            options: ["Sundays", "Mondays", "It never closes"],
             correct: 1,
           },
           {
             q: "Theo ghi chú, mùa mưa thì nhân viên nên làm gì trước khi khách rời quầy?",
             options: [
-              "A. Offer the guest an umbrella from the desk",
-              "B. Tell the guest to stay in the hotel",
-              "C. Cancel the guest's plan",
+              "Offer the guest an umbrella from the desk",
+              "Tell the guest to stay in the hotel",
+              "Cancel the guest's plan",
             ],
             correct: 0,
           },
@@ -5244,12 +5273,12 @@ export const FO_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Đi sân bay vào giờ cao điểm mất bao lâu?",
-            options: ["A. 40 minutes", "B. 60-70 minutes", "C. 8 minutes"],
+            options: ["40 minutes", "60-70 minutes", "8 minutes"],
             correct: 1,
           },
           {
             q: "Chuyến nửa ngày về khách sạn lúc mấy giờ?",
-            options: ["A. 12:30", "B. 17:00", "C. 18:00"],
+            options: ["12:30", "17:00", "18:00"],
             correct: 0,
           },
         ],
@@ -5349,18 +5378,18 @@ export const FO_WEEK_37: WeekContent = {
           {
             q: "Vì sao không nên gợi ý chùa trên đồi cho gia đình có trẻ nhỏ?",
             options: [
-              "A. It is too expensive",
-              "B. There are 200 steps and no stroller access",
-              "C. It closes early",
+              "It is too expensive",
+              "There are 200 steps and no stroller access",
+              "It closes early",
             ],
             correct: 1,
           },
           {
             q: "Khách không nói được tiếng Việt và ít thời gian thì hợp với lựa chọn nào?",
             options: [
-              "A. The walking map on their own",
-              "B. The boat route",
-              "C. A guided tour with an English-speaking guide",
+              "The walking map on their own",
+              "The boat route",
+              "A guided tour with an English-speaking guide",
             ],
             correct: 2,
           },
@@ -5457,18 +5486,18 @@ export const FO_WEEK_37: WeekContent = {
           {
             q: "Nhân viên đã làm gì sau khi biết du thuyền hết chỗ?",
             options: [
-              "A. Told the guest to try again another time",
-              "B. Held two seats for the next evening and offered a walk tonight",
-              "C. Asked the guest to pay a deposit",
+              "Told the guest to try again another time",
+              "Held two seats for the next evening and offered a walk tonight",
+              "Asked the guest to pay a deposit",
             ],
             correct: 1,
           },
           {
             q: "Ngày hôm sau phải làm gì lúc 17h?",
             options: [
-              "A. Follow up to reconfirm the cruise pick-up",
-              "B. Cancel the booking",
-              "C. Send the guest a new map",
+              "Follow up to reconfirm the cruise pick-up",
+              "Cancel the booking",
+              "Send the guest a new map",
             ],
             correct: 0,
           },
@@ -5579,15 +5608,15 @@ export const FO_WEEK_38: WeekContent = {
           {
             q: "Khách được đón lúc mấy giờ và ở đâu?",
             options: [
-              "A. 08:00 at the car park",
-              "B. 07:45 at the main lobby door",
-              "C. 06:45 in the restaurant",
+              "08:00 at the car park",
+              "07:45 at the main lobby door",
+              "06:45 in the restaurant",
             ],
             correct: 1,
           },
           {
             q: "Quầy phải xác nhận lại với công ty tour vào lúc nào?",
-            options: ["A. Thursday 08:00", "B. Wednesday 18:00", "C. Thursday 07:45"],
+            options: ["Thursday 08:00", "Wednesday 18:00", "Thursday 07:45"],
             correct: 1,
           },
         ],
@@ -5680,15 +5709,15 @@ export const FO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Xe khách sạn đi sân bay có giá bao nhiêu?",
-            options: ["A. 380,000 VND", "B. 450,000 VND fixed", "C. It depends on the meter"],
+            options: ["380,000 VND", "450,000 VND fixed", "It depends on the meter"],
             correct: 1,
           },
           {
             q: "Nếu khách quay lại phàn nàn về giá cước thì phải làm gì?",
             options: [
-              "A. Log the plate number and amount, then inform the Duty Manager",
-              "B. Pay the difference from the desk float",
-              "C. Ask the guest to call the taxi company",
+              "Log the plate number and amount, then inform the Duty Manager",
+              "Pay the difference from the desk float",
+              "Ask the guest to call the taxi company",
             ],
             correct: 0,
           },
@@ -5788,15 +5817,15 @@ export const FO_WEEK_38: WeekContent = {
         questions: [
           {
             q: "Nhà hàng nào phù hợp nhất cho khách ăn chay?",
-            options: ["A. Riverside Terrace", "B. Street Kitchen", "C. Lotus Vegetarian"],
+            options: ["Riverside Terrace", "Street Kitchen", "Lotus Vegetarian"],
             correct: 2,
           },
           {
             q: "Khi gọi điện đặt bàn, phải cung cấp những thông tin nào?",
             options: [
-              "A. Only the guest's room number",
-              "B. Name, head count, time, and any dietary requirement",
-              "C. The guest's passport number",
+              "Only the guest's room number",
+              "Name, head count, time, and any dietary requirement",
+              "The guest's passport number",
             ],
             correct: 1,
           },
@@ -5891,15 +5920,15 @@ export const FO_WEEK_38: WeekContent = {
           {
             q: "Nếu khách làm mất phiếu nhận hành lý thì phải làm gì?",
             options: [
-              "A. Give the bag anyway if the guest describes it",
-              "B. Check photo ID against the log and call the Duty Manager",
-              "C. Keep the bag until the next day",
+              "Give the bag anyway if the guest describes it",
+              "Check photo ID against the log and call the Duty Manager",
+              "Keep the bag until the next day",
             ],
             correct: 1,
           },
           {
             q: "Khách đã trả phòng dùng được phòng tắm ban ngày tới mấy giờ?",
-            options: ["A. 12:00", "B. 18:00", "C. 21:00"],
+            options: ["12:00", "18:00", "21:00"],
             correct: 1,
           },
         ],
@@ -6018,18 +6047,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Theo thẻ quy trình, việc đầu tiên phải làm là gì?",
             options: [
-              "A. Ask the guest for details first",
-              "B. Send help first and ask questions second",
-              "C. Find the guest's insurance card",
+              "Ask the guest for details first",
+              "Send help first and ask questions second",
+              "Find the guest's insurance card",
             ],
             correct: 1,
           },
           {
             q: "Hai điều tuyệt đối KHÔNG được làm là gì?",
             options: [
-              "A. Move the guest and give any medicine",
-              "B. Call the Duty Manager and the doctor",
-              "C. Ask about allergies and symptoms",
+              "Move the guest and give any medicine",
+              "Call the Duty Manager and the doctor",
+              "Ask about allergies and symptoms",
             ],
             correct: 0,
           },
@@ -6132,18 +6161,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Vì sao không được tự rời đi lấy đồ?",
             options: [
-              "A. Because a colleague should be sent instead and the guest is never left alone",
-              "B. Because the equipment is locked away",
-              "C. Because the manager has to approve it",
+              "Because a colleague should be sent instead and the guest is never left alone",
+              "Because the equipment is locked away",
+              "Because the manager has to approve it",
             ],
             correct: 0,
           },
           {
             q: "Với khách bị dị ứng, nhân viên được phép làm gì?",
             options: [
-              "A. Choose a suitable medicine from the first aid box",
-              "B. Help the guest reach their own medicine, but not choose or give any",
-              "C. Give water and wait",
+              "Choose a suitable medicine from the first aid box",
+              "Help the guest reach their own medicine, but not choose or give any",
+              "Give water and wait",
             ],
             correct: 1,
           },
@@ -6237,18 +6266,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải xin giấy khám bệnh bằng tiếng Anh?",
             options: [
-              "A. Because the hotel needs a copy for its records",
-              "B. Because without it the guest's insurance claim will be refused at home",
-              "C. Because the clinic charges less for it",
+              "Because the hotel needs a copy for its records",
+              "Because without it the guest's insurance claim will be refused at home",
+              "Because the clinic charges less for it",
             ],
             correct: 1,
           },
           {
             q: "Nơi nào nhận cấp cứu 24 giờ và thanh toán trực tiếp với bảo hiểm?",
             options: [
-              "A. The Provincial Hospital",
-              "B. The dental emergency clinic",
-              "C. The International Clinic",
+              "The Provincial Hospital",
+              "The dental emergency clinic",
+              "The International Clinic",
             ],
             correct: 2,
           },
@@ -6342,18 +6371,18 @@ export const GR_WEEK_37: WeekContent = {
           {
             q: "Biên bản sự việc được phép ghi những gì?",
             options: [
-              "A. Facts only — time, room, what was observed and done, who was called",
-              "B. The staff member's opinion on what caused it",
-              "C. A diagnosis from the hotel nurse",
+              "Facts only — time, room, what was observed and done, who was called",
+              "The staff member's opinion on what caused it",
+              "A diagnosis from the hotel nurse",
             ],
             correct: 0,
           },
           {
             q: "Sau khi khách từ bệnh viện về, buồng phòng được dặn điều gì?",
             options: [
-              "A. To clean the room early in the morning",
-              "B. Not to knock in the morning",
-              "C. To ask the guest about the hospital",
+              "To clean the room early in the morning",
+              "Not to knock in the morning",
+              "To ask the guest about the hospital",
             ],
             correct: 1,
           },
@@ -6466,15 +6495,15 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Trong thời gian có cảnh báo, khu vực nào vẫn mở bình thường?",
             options: [
-              "A. The beach and the outdoor pool",
-              "B. The spa, the gym and the kids club",
-              "C. The rooftop bar",
+              "The beach and the outdoor pool",
+              "The spa, the gym and the kids club",
+              "The rooftop bar",
             ],
             correct: 1,
           },
           {
             q: "Thông báo mới được cập nhật bao lâu một lần?",
-            options: ["A. Every hour", "B. Every three hours", "C. Once a day"],
+            options: ["Every hour", "Every three hours", "Once a day"],
             correct: 1,
           },
         ],
@@ -6567,18 +6596,18 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Thứ tự phương án được đưa ra cho khách là gì?",
             options: [
-              "A. Refund, then rain check, then a new date",
-              "B. A new date, then a rain check, then a full refund",
-              "C. Only a full refund",
+              "Refund, then rain check, then a new date",
+              "A new date, then a rain check, then a full refund",
+              "Only a full refund",
             ],
             correct: 1,
           },
           {
             q: "Vì sao phải gọi trước cho nhóm khách rời đi sớm?",
             options: [
-              "A. Because they can only be offered a refund",
-              "B. Because they booked the most expensive tour",
-              "C. Because they are lounge members",
+              "Because they can only be offered a refund",
+              "Because they booked the most expensive tour",
+              "Because they are lounge members",
             ],
             correct: 0,
           },
@@ -6682,18 +6711,18 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Khách bị mắc kẹt được tính giá phòng thế nào?",
             options: [
-              "A. The walk-in rate for the extra nights",
-              "B. The same rate the guest already booked",
-              "C. Half the normal rate",
+              "The walk-in rate for the extra nights",
+              "The same rate the guest already booked",
+              "Half the normal rate",
             ],
             correct: 1,
           },
           {
             q: "Khách cần chứng từ cho bảo hiểm thì khách sạn cấp gì?",
             options: [
-              "A. A letter confirming the dates and the reason for the extension",
-              "B. A copy of the weather warning",
-              "C. A new booking confirmation only",
+              "A letter confirming the dates and the reason for the extension",
+              "A copy of the weather warning",
+              "A new booking confirmation only",
             ],
             correct: 0,
           },
@@ -6787,15 +6816,15 @@ export const GR_WEEK_38: WeekContent = {
           {
             q: "Máy phát điện KHÔNG cấp điện cho thứ gì?",
             options: [
-              "A. The corridors and the lifts",
-              "B. Room air-conditioning and the minibar fridge",
-              "C. The fire systems",
+              "The corridors and the lifts",
+              "Room air-conditioning and the minibar fridge",
+              "The fire systems",
             ],
             correct: 1,
           },
           {
             q: "Trong bão, điểm tập trung là ở đâu?",
-            options: ["A. The garden", "B. The car park", "C. The main ballroom"],
+            options: ["The garden", "The car park", "The main ballroom"],
             correct: 2,
           },
         ],
@@ -6914,18 +6943,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Món của trẻ được phục vụ vào lúc nào?",
             options: [
-              "A. At the same time as the adults' food",
-              "B. First, before the adults' food",
-              "C. After the adults have finished",
+              "At the same time as the adults' food",
+              "First, before the adults' food",
+              "After the adults have finished",
             ],
             correct: 1,
           },
           {
             q: "Trong vòng 3 phút sau khi gia đình ngồi xuống, phải mang gì ra bàn?",
             options: [
-              "A. Bread, fruit or plain rice, without waiting for the order",
-              "B. The bill folder",
-              "C. The wine list",
+              "Bread, fruit or plain rice, without waiting for the order",
+              "The bill folder",
+              "The wine list",
             ],
             correct: 0,
           },
@@ -7027,15 +7056,15 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Nhà hàng phải làm gì để yêu cầu Halal được bếp chấp nhận?",
             options: [
-              "A. Tell the kitchen staff verbally",
-              "B. Write HALAL on the order slip",
-              "C. Ask the guest to speak to the chef",
+              "Tell the kitchen staff verbally",
+              "Write HALAL on the order slip",
+              "Ask the guest to speak to the chef",
             ],
             correct: 1,
           },
           {
             q: "Món nào KHÔNG có chứng nhận Halal?",
-            options: ["A. The beef", "B. The chicken", "C. The seafood"],
+            options: ["The beef", "The chicken", "The seafood"],
             correct: 2,
           },
         ],
@@ -7129,18 +7158,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Điều gì nhân viên KHÔNG được phép khẳng định?",
             options: [
-              "A. That a dish contains no pork",
-              "B. That there is no chance of cross-contamination at a shared buffet",
-              "C. That a dish is made to order in a clean pan",
+              "That a dish contains no pork",
+              "That there is no chance of cross-contamination at a shared buffet",
+              "That a dish is made to order in a clean pan",
             ],
             correct: 1,
           },
           {
             q: "Khách dị ứng nặng thì được đề xuất gì?",
             options: [
-              "A. A made-to-order dish from the kitchen at no extra charge",
-              "B. The safest corner of the buffet",
-              "C. A written warning to sign",
+              "A made-to-order dish from the kitchen at no extra charge",
+              "The safest corner of the buffet",
+              "A written warning to sign",
             ],
             correct: 0,
           },
@@ -7233,18 +7262,18 @@ export const FB_WEEK_37: WeekContent = {
           {
             q: "Khi khách làm đổ đồ ăn, nhân viên xử lý thế nào?",
             options: [
-              "A. Clear it without comment and without looking at the parents",
-              "B. Politely ask the parents to be more careful",
-              "C. Wait until the family has left",
+              "Clear it without comment and without looking at the parents",
+              "Politely ask the parents to be more careful",
+              "Wait until the family has left",
             ],
             correct: 0,
           },
           {
             q: "Việc hâm bình sữa cho em bé được tính phí thế nào?",
             options: [
-              "A. A small service charge applies",
-              "B. It is never refused and never charged",
-              "C. Only for in-house guests",
+              "A small service charge applies",
+              "It is never refused and never charged",
+              "Only for in-house guests",
             ],
             correct: 1,
           },
@@ -7356,18 +7385,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Với khách đi theo cặp, phải hỏi thế nào?",
             options: [
-              "A. Ask them together at the desk",
-              "B. Ask each person separately and quietly",
-              "C. Ask only the person who is paying",
+              "Ask them together at the desk",
+              "Ask each person separately and quietly",
+              "Ask only the person who is paying",
             ],
             correct: 1,
           },
           {
             q: "Nếu kỹ thuật viên khách muốn không có, phải báo khi nào?",
             options: [
-              "A. At the time of booking",
-              "B. At the treatment room door",
-              "C. After the treatment",
+              "At the time of booking",
+              "At the treatment room door",
+              "After the treatment",
             ],
             correct: 0,
           },
@@ -7392,7 +7421,7 @@ export const SW_WEEK_37: WeekContent = {
               correct: true,
             },
             { text: "I will see who is working that day and let you know.", correct: false },
-            { text: "Our male therapists are very professional, madam.", correct: false },
+            { text: "Our male therapists are very professional, sir.", correct: false },
           ],
         },
       ],
@@ -7461,18 +7490,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải báo cho khách càng sớm càng tốt?",
             options: [
-              "A. Because the guest at the treatment room door has already undressed and prepared",
-              "B. Because the price changes later in the day",
-              "C. Because the roster is fixed in the morning",
+              "Because the guest at the treatment room door has already undressed and prepared",
+              "Because the price changes later in the day",
+              "Because the roster is fixed in the morning",
             ],
             correct: 0,
           },
           {
             q: "Phương án thứ hai được đưa ra là gì?",
             options: [
-              "A. Full cancellation at no charge",
-              "B. The next day with thirty free minutes added",
-              "C. A different therapist immediately",
+              "Full cancellation at no charge",
+              "The next day with thirty free minutes added",
+              "A different therapist immediately",
             ],
             correct: 1,
           },
@@ -7580,18 +7609,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Nếu khách đưa tiền mặt trực tiếp cho kỹ thuật viên thì phải làm gì?",
             options: [
-              "A. Keep it, as it was given personally",
-              "B. Accept graciously and place it in the team box before the shift ends",
-              "C. Refuse it politely",
+              "Keep it, as it was given personally",
+              "Accept graciously and place it in the team box before the shift ends",
+              "Refuse it politely",
             ],
             correct: 1,
           },
           {
             q: "Khi khách hỏi mức tip thông thường là bao nhiêu, phải trả lời sao?",
             options: [
-              "A. Say there is no usual amount",
-              "B. Suggest ten percent",
-              "C. Say it depends on the treatment",
+              "Say there is no usual amount",
+              "Suggest ten percent",
+              "Say it depends on the treatment",
             ],
             correct: 0,
           },
@@ -7685,18 +7714,18 @@ export const SW_WEEK_37: WeekContent = {
           {
             q: "Trước khi trị liệu, phải hỏi khách điều gì?",
             options: [
-              "A. Whether any area should be avoided",
-              "B. How much they will tip",
-              "C. Which therapist they had last time",
+              "Whether any area should be avoided",
+              "How much they will tip",
+              "Which therapist they had last time",
             ],
             correct: 0,
           },
           {
             q: "Trong lúc trị liệu, phải kiểm tra lực xoa bóp bao lâu một lần?",
             options: [
-              "A. Only at the beginning",
-              "B. After five minutes, then every fifteen minutes",
-              "C. Only if the guest says something",
+              "Only at the beginning",
+              "After five minutes, then every fifteen minutes",
+              "Only if the guest says something",
             ],
             correct: 1,
           },
@@ -7808,19 +7837,15 @@ export const HK_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Phải có mặt tại phòng khách trong bao lâu?",
-            options: [
-              "A. Within 5 minutes",
-              "B. Within one hour",
-              "C. Before the end of the shift",
-            ],
+            options: ["Within 5 minutes", "Within one hour", "Before the end of the shift"],
             correct: 0,
           },
           {
             q: "Khi nào tuyệt đối không được xịt thuốc diệt côn trùng?",
             options: [
-              "A. While the guest or their belongings are in the room",
-              "B. During the morning shift",
-              "C. When the window is open",
+              "While the guest or their belongings are in the room",
+              "During the morning shift",
+              "When the window is open",
             ],
             correct: 0,
           },
@@ -7913,15 +7938,15 @@ export const HK_WEEK_37: WeekContent = {
         questions: [
           {
             q: "Sau khi xử lý, phòng phải được thông gió tối thiểu bao lâu?",
-            options: ["A. Thirty minutes", "B. Two hours", "C. Until the next morning"],
+            options: ["Thirty minutes", "Two hours", "Until the next morning"],
             correct: 1,
           },
           {
             q: "Nếu khách báo bị côn trùng cắn thì việc đó được xử lý thế nào?",
             options: [
-              "A. As a cleaning matter for the next shift",
-              "B. As a medical matter, reported to the Duty Manager the same shift",
-              "C. As a laundry matter",
+              "As a cleaning matter for the next shift",
+              "As a medical matter, reported to the Duty Manager the same shift",
+              "As a laundry matter",
             ],
             correct: 1,
           },
@@ -7946,7 +7971,7 @@ export const HK_WEEK_37: WeekContent = {
               correct: true,
             },
             { text: "You can move back if you really want to.", correct: false },
-            { text: "The other room is nicer anyway, madam.", correct: false },
+            { text: "The other room is nicer anyway, sir.", correct: false },
           ],
         },
       ],
@@ -8011,19 +8036,19 @@ export const HK_WEEK_37: WeekContent = {
         },
       ],
       reading: {
-        text: "LOST & FOUND — HOUSEKEEPING PROCEDURE\n1. Anything found in a room, however small, is handed in the SAME shift. Nothing stays on the trolley overnight.\n2. Log: room number, date, time, where in the room it was found, and the attendant's name.\n3. Valuables (cash, jewellery, passports, phones, laptops) go into a SEALED BAG, signed by two people, straight to the safe.\n4. Storage: valuables 6 months, ordinary items 3 months, food and opened toiletries discarded immediately.\n5. Never take a found item home, and never decide that something is rubbish. That decision is the Executive Housekeeper's.",
+        text: "LOST & FOUND — HOUSEKEEPING PROCEDURE\n1. Anything found in a room AFTER A DEPARTURE, however small, is handed in the SAME shift. Nothing stays on the trolley overnight.\n2. Log: room number, date, time, where in the room it was found, and the attendant's name.\n3. Valuables (cash, jewellery, passports, phones, laptops) go into a SEALED BAG, signed by two people, straight to the safe.\n4. Storage: valuables 6 months, ordinary items 3 months, food and opened toiletries discarded immediately.\n5. Never take a found item home, and never decide that something is rubbish. That decision is the Executive Housekeeper's.",
         questions: [
           {
             q: "Đồ có giá trị được cất giữ trong bao lâu?",
-            options: ["A. Three months", "B. Six months", "C. One year"],
+            options: ["Three months", "Six months", "One year"],
             correct: 1,
           },
           {
             q: "Ai là người quyết định một món đồ là bỏ đi?",
             options: [
-              "A. The room attendant who found it",
-              "B. The Executive Housekeeper",
-              "C. The guest's next room attendant",
+              "The room attendant who found it",
+              "The Executive Housekeeper",
+              "The guest's next room attendant",
             ],
             correct: 1,
           },
@@ -8044,7 +8069,7 @@ export const HK_WEEK_37: WeekContent = {
           prompt: "Someone must have taken my watch. It was on the bedside table this morning.",
           options: [
             {
-              text: "Let me check the lost item log with you right now, sir. Every valuable is sealed and signed by two people.",
+              text: "Let me check the lost item log with you now, sir, and I will ask my supervisor to come up.",
               correct: true,
             },
             { text: "Our staff do not take things, sir.", correct: false },
@@ -8117,19 +8142,15 @@ export const HK_WEEK_37: WeekContent = {
           {
             q: "Vì sao phải để khách mô tả món đồ trước?",
             options: [
-              "A. Because the item must not be shown first and then asked about",
-              "B. Because the log needs a longer entry",
-              "C. Because the guest may want a different item",
+              "Because the item must not be shown first and then asked about",
+              "Because the log needs a longer entry",
+              "Because the guest may want a different item",
             ],
             correct: 0,
           },
           {
             q: "Món nào tuyệt đối không được gửi qua chuyển phát?",
-            options: [
-              "A. Clothes and books",
-              "B. Cash, passports and medicine",
-              "C. Cameras and chargers",
-            ],
+            options: ["Clothes and books", "Cash, passports and medicine", "Cameras and chargers"],
             correct: 1,
           },
         ],
@@ -8250,23 +8271,23 @@ export const FO_WEEK_31: WeekContent = {
         },
       ],
       reading: {
-        text: "FRONT DESK — HOUSE HISTORY CARD\n1925: built as a merchant residence. The courtyard was the family garden.\n1954: became a state guest house. Most original tiles survive in the lobby and on the main staircase.\n2019: restored over 14 months. The staircase was rebuilt from the original 1925 drawings, now displayed by the lift.\nGuests most often ask about: the tiles, the staircase, the courtyard tree (planted 1931).\nIf a guest asks something you do not know, say so and offer the history folder kept at the desk.",
+        text: "FRONT DESK — HOUSE HISTORY CARD\nThe three dates below are one hotel's. Ask your Front Office Manager for your own, and write them over these.\n1925: built as a merchant residence. The courtyard was the family garden.\n1954: became a state guest house. Most original tiles survive in the lobby and on the main staircase.\n2019: restored over 14 months. The staircase was rebuilt from the original 1925 drawings, now displayed by the lift.\nGuests most often ask about: the tiles, the staircase, the courtyard tree (planted 1931).\nIf a guest asks something you do not know, say so and offer the history folder kept at the desk.",
         questions: [
           {
             q: "Cầu thang được phục dựng dựa trên cái gì?",
             options: [
-              "A. Ảnh chụp tư liệu từ năm 1954",
-              "B. Bộ bản vẽ gốc năm 1925",
-              "C. Bản thiết kế của người chủ hiện nay",
+              "Ảnh chụp tư liệu từ năm 1954",
+              "Bộ bản vẽ gốc năm 1925",
+              "Bản thiết kế của người chủ hiện nay",
             ],
             correct: 1,
           },
           {
             q: "Nếu khách hỏi điều bạn không biết thì phải làm gì?",
             options: [
-              "A. Nói thật là chưa chắc, và mời khách xem cuốn sổ tư liệu ở quầy",
-              "B. Đưa câu trả lời nhiều khả năng đúng nhất để khách khỏi chờ",
-              "C. Mời khách tự tra cứu trên mạng vì ở đó thông tin đầy đủ hơn",
+              "Nói thật là chưa chắc, và mời khách xem cuốn sổ tư liệu ở quầy",
+              "Đưa câu trả lời nhiều khả năng đúng nhất để khách khỏi chờ",
+              "Mời khách tự tra cứu trên mạng vì ở đó thông tin đầy đủ hơn",
             ],
             correct: 0,
           },
@@ -8359,18 +8380,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Theo hướng dẫn, phải mở đầu bằng gì?",
             options: [
-              "A. Mức chênh lệch giá giữa hai hạng phòng, cho khách cân nhắc từ đầu",
-              "B. Một điều khách sẽ tự cảm nhận được, rồi mời khách lên xem phòng",
-              "C. Danh sách đầy đủ mọi ưu điểm của căn phòng, càng nhiều càng tốt",
+              "Mức chênh lệch giá giữa hai hạng phòng, cho khách cân nhắc từ đầu",
+              "Một điều khách sẽ tự cảm nhận được, rồi mời khách lên xem phòng",
+              "Danh sách đầy đủ mọi ưu điểm của căn phòng, càng nhiều càng tốt",
             ],
             correct: 1,
           },
           {
             q: "Khi khách từ chối nâng cấp thì làm gì?",
             options: [
-              "A. Ghi nhận lại và không nhắc chuyện nâng hạng nữa trong kỳ ở",
-              "B. Chờ tới lúc khách trả phòng rồi khéo léo đề nghị lần nữa",
-              "C. Đề nghị lại ngay với mức giảm giá sâu hơn để khách đổi ý",
+              "Ghi nhận lại và không nhắc chuyện nâng hạng nữa trong kỳ ở",
+              "Chờ tới lúc khách trả phòng rồi khéo léo đề nghị lần nữa",
+              "Đề nghị lại ngay với mức giảm giá sâu hơn để khách đổi ý",
             ],
             correct: 0,
           },
@@ -8472,18 +8493,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Khi nào KHÔNG nên kể chuyện toà nhà?",
             options: [
-              "A. Khi khách đang đứng ngắm quanh sảnh",
-              "B. Khi khách vừa xuống chuyến bay đêm, hoặc đang có hàng chờ",
-              "C. Khi khách nhắc tới chuyện chụp ảnh",
+              "Khi khách đang đứng ngắm quanh sảnh",
+              "Khi khách vừa xuống chuyến bay đêm, hoặc đang có hàng chờ",
+              "Khi khách nhắc tới chuyện chụp ảnh",
             ],
             correct: 1,
           },
           {
             q: "Nguyên tắc 'một câu trước' nghĩa là gì?",
             options: [
-              "A. Nói một câu; khách hỏi tiếp câu thứ hai thì mới kể tiếp",
-              "B. Nói một câu rồi luôn kể tiếp, vì khách đã tỏ ra quan tâm",
-              "C. Chờ khách nhận phòng xong chừng một phút rồi mới bắt đầu",
+              "Nói một câu; khách hỏi tiếp câu thứ hai thì mới kể tiếp",
+              "Nói một câu rồi luôn kể tiếp, vì khách đã tỏ ra quan tâm",
+              "Chờ khách nhận phòng xong chừng một phút rồi mới bắt đầu",
             ],
             correct: 0,
           },
@@ -8577,18 +8598,18 @@ export const FO_WEEK_31: WeekContent = {
           {
             q: "Vì sao phải nói những điều này TRƯỚC khi khách lên phòng?",
             options: [
-              "A. Khách được báo ở quầy sẽ hỏi lại; khách tự phát hiện trên phòng sẽ khiếu nại",
-              "B. Quy định yêu cầu khách ký xác nhận là đã được thông báo trước",
-              "C. Nói trước ở quầy giúp thủ tục trả phòng về sau nhanh hơn nhiều",
+              "Khách được báo ở quầy sẽ hỏi lại; khách tự phát hiện trên phòng sẽ khiếu nại",
+              "Quy định yêu cầu khách ký xác nhận là đã được thông báo trước",
+              "Nói trước ở quầy giúp thủ tục trả phòng về sau nhanh hơn nhiều",
             ],
             correct: 0,
           },
           {
             q: "Việc sửa chữa ở tầng bốn diễn ra vào khung giờ nào?",
             options: [
-              "A. 09:00–16:00 các ngày trong tuần",
-              "B. Cả ngày, tất cả các ngày",
-              "C. Chỉ vào hai ngày cuối tuần",
+              "09:00–16:00 các ngày trong tuần",
+              "Cả ngày, tất cả các ngày",
+              "Chỉ vào hai ngày cuối tuần",
             ],
             correct: 0,
           },
@@ -8696,23 +8717,23 @@ export const FO_WEEK_32: WeekContent = {
         },
       ],
       reading: {
-        text: "PREFERENCE CAPTURE — FRONT DESK STANDARD\nA preference is anything the guest says about how they want to stay, even in passing, even with a smile.\nCapture from: check-in small talk, complaints softened with 'never mind', requests to housekeeping, what the guest asks the concierge.\nWrite it in the profile the same shift, in the guest's own words. Do not translate 'light sleeper' into 'noise complaint'.\nAct on it within the stay if you can, not at the next booking. An unprompted change on day two is worth more than a perfect room on the next visit.\nNever tell the guest you have 'a note about them'. Say what you did, not what you recorded. One exception: when the guest ASKS whether they must repeat themselves, 'it is on file' is the reassurance they are asking for.",
+        text: "PREFERENCE CAPTURE — FRONT DESK STANDARD\nA preference is anything the guest says about how they want to stay, even in passing, even with a smile.\nHear it anywhere: check-in small talk, complaints softened with 'never mind', requests to housekeeping, what the guest asks the concierge.\nThen ask before you write.\n'Shall I put that down for next time, madam?'\nA preference the guest did not say yes to is not a preference — it is a note about a person.\nWrite it in the profile the same shift, in the guest's own words. Do not translate 'light sleeper' into 'noise complaint'.\nAct on it within the stay if you can, not at the next booking. An unprompted change on day two is worth more than a perfect room on the next visit.\nSay what you did, not what you recorded. The guest already knows there is a file, because you asked before you wrote on it. So 'it is on file' is a reassurance, not a confession.",
         questions: [
           {
             q: "Ghi sở thích vào hồ sơ phải theo cách nào?",
             options: [
-              "A. Bằng đúng lời khách nói, ngay trong ca",
-              "B. Tóm tắt lại thành một nhóm khiếu nại",
-              "C. Vào cuối kỳ lưu trú, khi đã đủ thông tin",
+              "Bằng đúng lời khách nói, ngay trong ca",
+              "Tóm tắt lại thành một nhóm khiếu nại",
+              "Vào cuối kỳ lưu trú, khi đã đủ thông tin",
             ],
             correct: 0,
           },
           {
             q: "Với khách, nên nói điều gì?",
             options: [
-              "A. Rằng hệ thống có lưu một ghi chú về họ",
-              "B. Điều bạn đã làm, không phải điều bạn đã ghi",
-              "C. Tên đồng nghiệp nào đã viết ghi chú đó",
+              "Rằng hệ thống có lưu một ghi chú về họ",
+              "Điều bạn đã làm, không phải điều bạn đã ghi",
+              "Tên đồng nghiệp nào đã viết ghi chú đó",
             ],
             correct: 1,
           },
@@ -8805,18 +8826,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Ở quầy, xác nhận sở thích của khách quen thế nào?",
             options: [
-              "A. Hỏi lần lượt thành một danh sách câu hỏi",
-              "B. Gộp trong một câu, rồi hỏi có gì cần đổi không",
-              "C. Chỉ nhắc tới khi khách tự nêu ra trước",
+              "Hỏi lần lượt thành một danh sách câu hỏi",
+              "Gộp trong một câu, rồi hỏi có gì cần đổi không",
+              "Chỉ nhắc tới khi khách tự nêu ra trước",
             ],
             correct: 1,
           },
           {
             q: "Khi nào thì nên nói số lần lưu trú?",
             options: [
-              "A. Mọi lần, ngay từ lần lưu trú đầu tiên",
-              "B. Từ lần lưu trú thứ ba trở lên",
-              "C. Chỉ với khách có thẻ thành viên",
+              "Mọi lần, ngay từ lần lưu trú đầu tiên",
+              "Từ lần lưu trú thứ ba trở lên",
+              "Chỉ với khách có thẻ thành viên",
             ],
             correct: 1,
           },
@@ -8910,18 +8931,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Vì sao phải báo cho khách ngay tại quầy?",
             options: [
-              "A. Để khách không bao giờ tự phát hiện ra trên phòng",
-              "B. Vì hệ thống yêu cầu ghi nhận trước khi giao chìa khoá",
-              "C. Để tiết kiệm giấy tờ đối chiếu về sau",
+              "Để khách không bao giờ tự phát hiện ra trên phòng",
+              "Vì hệ thống yêu cầu ghi nhận trước khi giao chìa khoá",
+              "Để tiết kiệm giấy tờ đối chiếu về sau",
             ],
             correct: 0,
           },
           {
             q: "Ba lần không đáp ứng được cho cùng một khách thì sao?",
             options: [
-              "A. Thành cuộc trao đổi của Duty Manager",
-              "B. Sở thích đó bị xoá khỏi hồ sơ khách",
-              "C. Khách được đề nghị hoàn lại tiền phòng",
+              "Thành cuộc trao đổi của Duty Manager",
+              "Sở thích đó bị xoá khỏi hồ sơ khách",
+              "Khách được đề nghị hoàn lại tiền phòng",
             ],
             correct: 0,
           },
@@ -9015,18 +9036,18 @@ export const FO_WEEK_32: WeekContent = {
           {
             q: "Một ghi chú dùng được phải trả lời những gì?",
             options: [
-              "A. Cái gì, số lượng bao nhiêu, và khi nào",
-              "B. Ai đã yêu cầu và ca nào ghi nhận việc đó",
-              "C. Lý do vì sao khách lại muốn như vậy",
+              "Cái gì, số lượng bao nhiêu, và khi nào",
+              "Ai đã yêu cầu và ca nào ghi nhận việc đó",
+              "Lý do vì sao khách lại muốn như vậy",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không bao giờ ghi nhận xét cá nhân về khách?",
             options: [
-              "A. Vì hồ sơ có thể bị đọc to trong một phiên xử lý khiếu nại",
-              "B. Vì trường dữ liệu không đủ chỗ cho nhận xét dài như vậy",
-              "C. Vì hệ thống tự động xoá mọi nhận xét mang tính cá nhân",
+              "Vì hồ sơ có thể bị đọc to trong một phiên xử lý khiếu nại",
+              "Vì trường dữ liệu không đủ chỗ cho nhận xét dài như vậy",
+              "Vì hệ thống tự động xoá mọi nhận xét mang tính cá nhân",
             ],
             correct: 0,
           },
@@ -9142,18 +9163,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Trong lúc khách đang nói, nhân viên KHÔNG được làm gì?",
             options: [
-              "A. Ngắt lời khách, hoặc tra hệ thống trong lúc khách nói",
-              "B. Ghi lại những gì khách đang trình bày",
-              "C. Nhìn thẳng vào khách trong lúc lắng nghe",
+              "Ngắt lời khách, hoặc tra hệ thống trong lúc khách nói",
+              "Ghi lại những gì khách đang trình bày",
+              "Nhìn thẳng vào khách trong lúc lắng nghe",
             ],
             correct: 0,
           },
           {
             q: "Phải xin lỗi về điều gì trước tiên?",
             options: [
-              "A. Về số tiền đã bị tính",
-              "B. Về trải nghiệm khách phải chịu",
-              "C. Về sai sót của ca trực trước đó",
+              "Về số tiền đã bị tính",
+              "Về trải nghiệm khách phải chịu",
+              "Về sai sót của ca trực trước đó",
             ],
             correct: 1,
           },
@@ -9246,18 +9267,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Khoản nào lễ tân được tự duyệt?",
             options: [
-              "A. Một khoản hoàn tiền về thẻ của khách",
-              "B. Khoản minibar dưới 500.000 đồng",
-              "C. Bồi thường cho đồ có giá trị bị mất",
+              "Một khoản hoàn tiền về thẻ của khách",
+              "Khoản minibar dưới 500.000 đồng",
+              "Bồi thường cho đồ có giá trị bị mất",
             ],
             correct: 1,
           },
           {
             q: "Khiếu nại liên quan tới thương tích hoặc mất đồ có giá trị thì xử lý thế nào?",
             options: [
-              "A. Xử lý tại quầy nếu số tiền không lớn",
-              "B. Không bao giờ xử tại quầy — chuyển Duty Manager",
-              "C. Chuyển sang bảo hiểm du lịch của khách",
+              "Xử lý tại quầy nếu số tiền không lớn",
+              "Không bao giờ xử tại quầy — chuyển Duty Manager",
+              "Chuyển sang bảo hiểm du lịch của khách",
             ],
             correct: 1,
           },
@@ -9350,18 +9371,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Với khoản tranh chấp trong hạn mức, thứ tự xử lý là gì?",
             options: [
-              "A. Điều tra trước, hoàn khoản sau",
-              "B. Hoàn khoản trước, điều tra sau",
-              "C. Đề nghị khách cứ thanh toán rồi khiếu nại lại sau",
+              "Điều tra trước, hoàn khoản sau",
+              "Hoàn khoản trước, điều tra sau",
+              "Đề nghị khách cứ thanh toán rồi khiếu nại lại sau",
             ],
             correct: 1,
           },
           {
             q: "Ba lần tranh chấp minibar cùng một tầng trong một tuần nghĩa là gì?",
             options: [
-              "A. Vấn đề kiểm soát kho hàng",
-              "B. Ba vị khách không trung thực",
-              "C. Lỗi hệ thống của phần mềm tính tiền",
+              "Vấn đề kiểm soát kho hàng",
+              "Ba vị khách không trung thực",
+              "Lỗi hệ thống của phần mềm tính tiền",
             ],
             correct: 0,
           },
@@ -9454,18 +9475,18 @@ export const FO_WEEK_33: WeekContent = {
           {
             q: "Khách rời đi phải cầm theo ba thứ gì?",
             options: [
-              "A. Hoá đơn kê sạch, xác nhận bằng văn bản, và mã hồ sơ",
-              "B. Biên lai, danh thiếp của quầy, và một phiếu ưu đãi",
-              "C. Thư xin lỗi, khoản hoàn tiền và một đêm miễn phí",
+              "Hoá đơn kê sạch, xác nhận bằng văn bản, và mã hồ sơ",
+              "Biên lai, danh thiếp của quầy, và một phiếu ưu đãi",
+              "Thư xin lỗi, khoản hoàn tiền và một đêm miễn phí",
             ],
             correct: 0,
           },
           {
             q: "Theo tài liệu, hoàn tiền vào thẻ mất bao lâu?",
             options: [
-              "A. Ngay lập tức, giống như hoàn tiền mặt tại quầy",
-              "B. 7–15 ngày làm việc, thẻ nước ngoài có thể tới 30 ngày",
-              "C. Luôn đúng 5 ngày làm việc với mọi loại thẻ",
+              "Ngay lập tức, giống như hoàn tiền mặt tại quầy",
+              "7–15 ngày làm việc, thẻ nước ngoài có thể tới 30 ngày",
+              "Luôn đúng 5 ngày làm việc với mọi loại thẻ",
             ],
             correct: 1,
           },
@@ -9576,18 +9597,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Vì sao phải hỏi ai đã biết trước khi sắp xếp?",
             options: [
-              "A. Vì điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ",
-              "B. Vì bếp cần biết tên khách để viết lên bánh cho đúng chính tả",
-              "C. Vì chính sách yêu cầu hai chữ ký trước khi sắp xếp",
+              "Vì điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ",
+              "Vì bếp cần biết tên khách để viết lên bánh cho đúng chính tả",
+              "Vì chính sách yêu cầu hai chữ ký trước khi sắp xếp",
             ],
             correct: 0,
           },
           {
             q: "Khách nói không có dịp gì đặc biệt thì làm gì?",
             options: [
-              "A. Không ghi gì vào hồ sơ và không bao giờ nhắc lại nữa",
-              "B. Ghi chú là 'đã từ chối' và hỏi lại vào ngày hôm sau",
-              "C. Vẫn cứ chuẩn bị một món nhỏ để tạo bất ngờ cho khách",
+              "Không ghi gì vào hồ sơ và không bao giờ nhắc lại nữa",
+              "Ghi chú là 'đã từ chối' và hỏi lại vào ngày hôm sau",
+              "Vẫn cứ chuẩn bị một món nhỏ để tạo bất ngờ cho khách",
             ],
             correct: 0,
           },
@@ -9678,23 +9699,23 @@ export const FO_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions, ~350,000-600,000 VND), a written message piped on it, sparkling wine on ice (~800,000-1,500,000 VND).\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, custom or photo cake, a specific flavour, or a cake for a dietary restriction.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.\nNo candles or sparklers in guest rooms — the smoke detector does not know it is a birthday. Ask the kitchen for an LED candle.\nAsk about allergies before ordering any cake. A celebration that sends someone to hospital is the one nobody forgets.\nThe prices and lead times above are one hotel's — ask your F&B coordinator for this month's. And quote the TOTAL the guest will see on the bill: F&B prices are usually ++, with service charge and VAT on top.",
+        text: "WHAT THE DESK CAN ARRANGE — SAME DAY\nWithin 2 hours, no approval needed: handwritten card · fruit plate (complimentary) · rose petals on the bed · room set to 'turn-down surprise' while the guests dine · a quiet table moved to the window.\nWithin 4 hours, kitchen confirmation needed: small cake (6-8 portions, ~350,000-600,000 VND), a written message piped on it, sparkling wine on ice (~800,000-1,500,000 VND).\nNeeds 24 hours: balloons, photographer, room decoration beyond petals, custom or photo cake, a specific flavour, or a cake for a dietary restriction.\nCost note: the card, the petals and the fruit plate are complimentary once per stay. Anything else is posted to the room, and the price is stated to the guest BEFORE it is arranged.\nNever promise the 24-hour items on the same day. A cake that arrives the next morning is worse than no cake.\nNo candles or sparklers in guest rooms — the smoke detector does not know it is a birthday. Ask the kitchen for an LED candle.\nAsk about allergies before ANY of it — a cake, fruit, chocolate, scent or petals — and ask the age of any child in the room before latex balloons. The floor may not ask the guest; the answer has to come from you. A celebration that sends someone to hospital is the one nobody forgets.\nThe prices and lead times above are one hotel's — ask your F&B coordinator for this month's. And quote the TOTAL the guest will see on the bill: F&B prices are usually ++, with service charge and VAT on top.",
         questions: [
           {
             q: "Món nào cần báo trước 24 giờ?",
             options: [
-              "A. Một tấm thiệp viết tay",
-              "B. Bóng bay và bánh in ảnh",
-              "C. Cánh hoa hồng rải trên giường",
+              "Một tấm thiệp viết tay",
+              "Bóng bay và bánh in ảnh",
+              "Cánh hoa hồng rải trên giường",
             ],
             correct: 1,
           },
           {
             q: "Với món có tính phí, phải làm gì trước khi sắp xếp?",
             options: [
-              "A. Báo giá cho khách trước khi sắp xếp",
-              "B. Xin chữ ký duyệt của Duty Manager",
-              "C. Cứ tính vào phòng rồi báo khách lúc trả phòng",
+              "Báo giá cho khách trước khi sắp xếp",
+              "Xin chữ ký duyệt của Duty Manager",
+              "Cứ tính vào phòng rồi báo khách lúc trả phòng",
             ],
             correct: 0,
           },
@@ -9782,23 +9803,23 @@ export const FO_WEEK_34: WeekContent = {
         },
       ],
       reading: {
-        text: "OCCASION HANDOVER SLIP — ONE PER ARRANGEMENT\nRoom · guest name · what the occasion is · WHO ALREADY KNOWS.\nEach line carries three things: the task, a NAMED person, and a trigger.\n  Cake, 6 portions, no message — Chef Nam — ready 19:00, held in the pastry fridge\n  Petals and card — Housekeeping, Chi — trigger: guests leave for dinner (~19:30)\n  Card written and signed — Front desk, Duy — before 18:00\n  Chase call to kitchen — Front desk, Duy — 18:00\nA slip with 'Housekeeping' but no name is not a handover; it is a hope. Departments do not remember things, people do.\nThe desk keeps the slip until the guest confirms it happened, then files it in the profile.",
+        text: "OCCASION HANDOVER SLIP — ONE PER ARRANGEMENT\nRoom · guest name · what the occasion is · THE HOUR THE ROOM WILL BE EMPTY · what was promised, word for word · WHO ALREADY KNOWS · ALLERGIES and any child's age · WHO PAYS, and whether the price was stated.\nEach line carries three things: the task, a NAMED person, and a trigger.\n  Cake, 6 portions, no message — Chef Nam — ready 19:00, held in the pastry fridge\n  Petals and card — Housekeeping, Chi — trigger: guests leave for dinner (~19:30)\n  Card written and signed — Front desk, Duy — before 18:00\n  Chase call to kitchen — Front desk, Duy — 18:00\nA slip with 'Housekeeping' but no name is not a handover; it is a hope. Departments do not remember things, people do.\nThe desk keeps the slip until the guest confirms it happened, then files it in the profile.",
         questions: [
           {
             q: "Mỗi dòng bàn giao phải có ba thứ gì?",
             options: [
-              "A. Đầu việc, một người có tên, và dấu hiệu bắt đầu",
-              "B. Đầu việc, mức giá, và số phòng của khách",
-              "C. Bộ phận phụ trách, khung giờ, và người quản lý",
+              "Đầu việc, một người có tên, và dấu hiệu bắt đầu",
+              "Đầu việc, mức giá, và số phòng của khách",
+              "Bộ phận phụ trách, khung giờ, và người quản lý",
             ],
             correct: 0,
           },
           {
             q: "Vì sao ghi 'Housekeeping' mà không ghi tên người là chưa đủ?",
             options: [
-              "A. Vì phòng ban không nhớ việc, chỉ con người nhớ việc",
-              "B. Vì buồng phòng thường là bộ phận bận rộn nhất ca",
-              "C. Vì hệ thống cần mã số nhân viên để lưu lại",
+              "Vì phòng ban không nhớ việc, chỉ con người nhớ việc",
+              "Vì buồng phòng thường là bộ phận bận rộn nhất ca",
+              "Vì hệ thống cần mã số nhân viên để lưu lại",
             ],
             correct: 0,
           },
@@ -9893,18 +9914,18 @@ export const FO_WEEK_34: WeekContent = {
           {
             q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
             options: [
-              "A. Người tổ chức, một cách kín đáo",
-              "B. Cả hai vị khách, ngay tại quầy",
-              "C. Người được nhận bất ngờ, ngay trong bữa tối",
+              "Người tổ chức, một cách kín đáo",
+              "Cả hai vị khách, ngay tại quầy",
+              "Người được nhận bất ngờ, ngay trong bữa tối",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không nên đề nghị bồi thường bằng tiền?",
             options: [
-              "A. Vì khách mất một khoảnh khắc, không phải một khoản tiền",
-              "B. Vì quầy lễ tân không có thẩm quyền chi tiền bồi thường",
-              "C. Vì mọi khoản đền bù đều cần quản lý phê duyệt trước",
+              "Vì khách mất một khoảnh khắc, không phải một khoản tiền",
+              "Vì quầy lễ tân không có thẩm quyền chi tiền bồi thường",
+              "Vì mọi khoản đền bù đều cần quản lý phê duyệt trước",
             ],
             correct: 0,
           },
@@ -10021,18 +10042,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Theo tài liệu, giá trên trang bên thứ ba thường là gì?",
             options: [
-              "A. Sai, do trang web hiển thị nhầm",
-              "B. Có thật, nhưng là một sản phẩm khác",
-              "C. Chỉ dành cho khách nước ngoài",
+              "Sai, do trang web hiển thị nhầm",
+              "Có thật, nhưng là một sản phẩm khác",
+              "Chỉ dành cho khách nước ngoài",
             ],
             correct: 1,
           },
           {
             q: "Khách vẫn chọn giá trên mạng thì nên làm gì?",
             options: [
-              "A. Nhận vui vẻ, ghi lại SỰ VIỆC: đã báo giá trực tiếp, khách chọn giá trả trước",
-              "B. Giải thích lại một lần nữa cho tới khi khách hiểu",
-              "C. Báo quản lý để duyệt giá bằng trang web",
+              "Nhận vui vẻ, ghi lại SỰ VIỆC: đã báo giá trực tiếp, khách chọn giá trả trước",
+              "Giải thích lại một lần nữa cho tới khi khách hiểu",
+              "Báo quản lý để duyệt giá bằng trang web",
             ],
             correct: 0,
           },
@@ -10129,18 +10150,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao phải đưa món tặng TRƯỚC khi từ chối giảm giá?",
             options: [
-              "A. Khách nhận món tặng sẽ thôi hỏi giá; bị từ chối trước thì món tặng thành giải khuyến khích",
-              "B. Vì quy trình yêu cầu nêu hết ưu đãi trước khi nói bất kỳ lời từ chối nào",
-              "C. Vì món tặng thường có giá trị cao hơn hẳn khoản giảm giá khách đang đòi",
+              "Khách nhận món tặng sẽ thôi hỏi giá; bị từ chối trước thì món tặng thành giải khuyến khích",
+              "Vì quy trình yêu cầu nêu hết ưu đãi trước khi nói bất kỳ lời từ chối nào",
+              "Vì món tặng thường có giá trị cao hơn hẳn khoản giảm giá khách đang đòi",
             ],
             correct: 0,
           },
           {
             q: "Vì sao nên xin lại một thứ gì đó từ khách?",
             options: [
-              "A. Để bù lại phần chi phí của món tặng mà khách sạn vừa bỏ ra",
-              "B. Vì cuộc đàm phán chỉ một bên cho sẽ dạy khách ép mạnh hơn lần sau",
-              "C. Vì quản lý yêu cầu ghi lại mọi nhượng bộ để tổng kết cuối tháng",
+              "Để bù lại phần chi phí của món tặng mà khách sạn vừa bỏ ra",
+              "Vì cuộc đàm phán chỉ một bên cho sẽ dạy khách ép mạnh hơn lần sau",
+              "Vì quản lý yêu cầu ghi lại mọi nhượng bộ để tổng kết cuối tháng",
             ],
             correct: 1,
           },
@@ -10233,18 +10254,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Vì sao KHÔNG được nói 'maybe' khi câu trả lời là không?",
             options: [
-              "A. Vì khách sẽ hỏi lại lúc trả phòng, và lần từ chối thứ hai tốn thiện chí hơn nhiều",
-              "B. Vì quản lý đã cấm nhân viên dùng những từ mơ hồ khi báo giá",
-              "C. Vì khách sẽ nghĩ nhân viên không nắm được bảng giá của khách sạn",
+              "Vì khách sẽ hỏi lại lúc trả phòng, và lần từ chối thứ hai tốn thiện chí hơn nhiều",
+              "Vì quản lý đã cấm nhân viên dùng những từ mơ hồ khi báo giá",
+              "Vì khách sẽ nghĩ nhân viên không nắm được bảng giá của khách sạn",
             ],
             correct: 0,
           },
           {
             q: "Khi khách to tiếng hoặc công kích cá nhân thì phải làm gì?",
             options: [
-              "A. Đề nghị một mức giảm nhỏ để hạ nhiệt",
-              "B. Ngừng đàm phán và gọi Duty Manager",
-              "C. Tiếp tục giải thích cho tới khi khách hiểu",
+              "Đề nghị một mức giảm nhỏ để hạ nhiệt",
+              "Ngừng đàm phán và gọi Duty Manager",
+              "Tiếp tục giải thích cho tới khi khách hiểu",
             ],
             correct: 1,
           },
@@ -10338,18 +10359,18 @@ export const FO_WEEK_35: WeekContent = {
           {
             q: "Nên ghi nhượng bộ bằng cách nào?",
             options: [
-              "A. Ghi bằng con số hoặc số lượng, không ghi bằng tính từ",
-              "B. Ghi ngắn gọn bằng tính từ cho dễ đọc",
-              "C. Ghi vào sổ bàn giao ca thay vì vào booking",
+              "Ghi bằng con số hoặc số lượng, không ghi bằng tính từ",
+              "Ghi ngắn gọn bằng tính từ cho dễ đọc",
+              "Ghi vào sổ bàn giao ca thay vì vào booking",
             ],
             correct: 0,
           },
           {
             q: "Vì sao phải nêu cả những thứ KHÔNG bao gồm?",
             options: [
-              "A. Để hoá đơn liệt kê đầy đủ và trông chuyên nghiệp hơn khi in",
-              "B. Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí — đúng cuộc cãi đang phòng ngừa",
-              "C. Vì hệ thống đặt phòng bắt buộc điền đủ mọi trường trước khi lưu",
+              "Để hoá đơn liệt kê đầy đủ và trông chuyên nghiệp hơn khi in",
+              "Vì khách đồng ý bữa sáng rồi tưởng minibar cũng miễn phí — đúng cuộc cãi đang phòng ngừa",
+              "Vì hệ thống đặt phòng bắt buộc điền đủ mọi trường trước khi lưu",
             ],
             correct: 1,
           },
@@ -10461,18 +10482,18 @@ export const FO_WEEK_36: WeekContent = {
           {
             q: "Trong hai phút đầu, lễ tân phải làm gì?",
             options: [
-              "A. Rời quầy đi kiểm tra tầng có báo động",
-              "B. Ở lại quầy, xác nhận bảng điều khiển và gọi an ninh",
-              "C. Đi từng phòng gõ cửa báo khách",
+              "Rời quầy đi kiểm tra tầng có báo động",
+              "Ở lại quầy, xác nhận bảng điều khiển và gọi an ninh",
+              "Đi từng phòng gõ cửa báo khách",
             ],
             correct: 1,
           },
           {
             q: "Tài liệu nói tuyệt đối không dẫn khách tới đâu?",
             options: [
-              "A. Tầng hầm, và đường cho xe chữa cháy tiếp cận",
-              "B. Khu vườn phía sau khách sạn",
-              "C. Bãi cỏ đối diện cổng chính",
+              "Tầng hầm, và đường cho xe chữa cháy tiếp cận",
+              "Khu vườn phía sau khách sạn",
+              "Bãi cỏ đối diện cổng chính",
             ],
             correct: 0,
           },
@@ -10534,7 +10555,7 @@ export const FO_WEEK_36: WeekContent = {
           word: "Stay with",
           phonetic: "/steɪ wɪð/",
           definition: "Ở lại cùng khách, không bỏ đi",
-          context: "Someone stays with them until the fire team arrives.",
+          context: "Someone stays with them when that corridor has smoke in it.",
           icon: "🤝",
         },
       ],
@@ -10555,29 +10576,29 @@ export const FO_WEEK_36: WeekContent = {
         {
           guestPrompt: "My mother uses a wheelchair. We cannot get her down four floors.",
           targetResponse:
-            "You do not have to, madam. Stay in the room with the door closed, and I am telling the fire team your room number right now.",
+            "You may not have to, madam. Stay in the room with the door closed while I check your corridor with the floor. Your room number is going to the fire team now.",
           helpTip:
             "'Closed' đọc /kləʊzd/ — MỘT âm tiết, đuôi /zd/. Đừng tách thành 'clo-sờ'; chính đuôi /zd/ nói rằng cửa đã đóng xong.",
         },
       ],
       reading: {
-        text: 'GUESTS WHO CANNOT USE THE STAIRS — FRONT DESK\nAsk at check-in, and ask permission first: "May I note that you would need help in an emergency, madam? It stays with the duty team only." Record the FLOOR on the in-house list. That list is the only reason anyone knows to look for them.\nWhat happens during an alarm depends on YOUR building, and there are only two answers. If your hotel has a designated refuge area — a protected room with two-way communication — that is where they wait. Most hotels do not have one, and then the guest stays in the room, closes the door, blocks the gap with a wet towel, and the desk reports the ROOM NUMBER. Ask your Security Manager which one your hotel is. Never park a guest on a staircase landing: that is the escape route for every floor above.\nTwo channels, two rules. On an open radio, or anywhere a guest can hear: floor and number of people only. Face to face with the fire commander or the Security Manager: room number, name, how many, and whether they can walk. Making the fire team open twenty doors instead of one costs minutes they do not have.\nGuests who refuse to leave are counted as still inside. Their room stays on the not-accounted list until somebody has seen them outside.\nGuests who went out to dinner will also show as not accounted for. Say so when you hand the list over, or you send a search team into an empty room.',
+        text: 'GUESTS WHO CANNOT USE THE STAIRS — FRONT DESK\nAsk at check-in, and ask permission first: "May I note that you would need help in an emergency, madam? It stays with the duty team only." Record the FLOOR on the in-house list. That list is the only reason anyone knows to look for them.\nWhat happens during an alarm depends on YOUR building, and there are only two answers. If your hotel has a designated refuge area — a protected room with two-way communication — that is where they wait. Most hotels do not have one. Then the guest stays in the room with the door closed and a wet towel along the gap — unless the floor reports smoke on that floor, and then it is the fire team who moves them. Either way the desk reports the ROOM NUMBER and what the floor says about the corridor. Ask your Security Manager which one your hotel is. Never park a guest on a staircase landing: that is the escape route for every floor above.\nTwo channels, two rules. On an open radio, or anywhere a guest can hear: floor and number of people only. Face to face with the fire commander or the Security Manager: room number, name, how many, and whether they can walk. Making the fire team open twenty doors instead of one costs minutes they do not have.\nGuests who refuse to leave are counted as still inside. Their room stays on the not-accounted list until somebody has seen them outside.\nGuests who went out to dinner will also show as not accounted for. Say so when you hand the list over, or you send a search team into an empty room.',
         questions: [
           {
             q: "Khách sạn KHÔNG có gian lánh nạn thì khách không đi cầu thang được phải làm gì?",
             options: [
-              "A. Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
-              "B. Chờ ngay bên trong lồng cầu thang, ở chiếu nghỉ gần cửa nhất",
-              "C. Xuống bằng thang máy dịch vụ, có nhân viên trực đi kèm suốt",
+              "Ở lại phòng, đóng cửa, chèn khăn ướt — và quầy báo SỐ PHÒNG cho đội chữa cháy",
+              "Chờ ngay bên trong lồng cầu thang, ở chiếu nghỉ gần cửa nhất",
+              "Xuống bằng thang máy dịch vụ, có nhân viên trực đi kèm suốt",
             ],
             correct: 0,
           },
           {
             q: "Khách từ chối rời phòng được tính là gì?",
             options: [
-              "A. Vẫn còn ở bên trong toà nhà",
-              "B. Đã tự chịu trách nhiệm nên không tính nữa",
-              "C. Đã sơ tán vì đã được thông báo",
+              "Vẫn còn ở bên trong toà nhà",
+              "Đã tự chịu trách nhiệm nên không tính nữa",
+              "Đã sơ tán vì đã được thông báo",
             ],
             correct: 0,
           },
@@ -10678,18 +10699,18 @@ export const FO_WEEK_36: WeekContent = {
           {
             q: "Hỏi hai lần mà khách vẫn không đi thì làm gì?",
             options: [
-              "A. Tiếp tục thuyết phục cho tới khi khách đồng ý",
-              "B. Dừng lại và chuyển việc cho an ninh",
-              "C. Vào phòng đưa khách ra",
+              "Tiếp tục thuyết phục cho tới khi khách đồng ý",
+              "Dừng lại và chuyển việc cho an ninh",
+              "Vào phòng đưa khách ra",
             ],
             correct: 1,
           },
           {
             q: "Vì sao tranh cãi ngoài hành lang là sai?",
             options: [
-              "A. Vì nó giữ hai người ở lại bên trong thay vì một",
-              "B. Vì làm phiền các khách khác",
-              "C. Vì camera hành lang sẽ ghi lại",
+              "Vì nó giữ hai người ở lại bên trong thay vì một",
+              "Vì làm phiền các khách khác",
+              "Vì camera hành lang sẽ ghi lại",
             ],
             correct: 0,
           },
@@ -10781,15 +10802,15 @@ export const FO_WEEK_36: WeekContent = {
         questions: [
           {
             q: "Ai là người cho phép khách vào lại toà nhà?",
-            options: ["A. Duty Manager", "B. Cán bộ phòng cháy chữa cháy", "C. Trưởng ca lễ tân"],
+            options: ["Duty Manager", "Cán bộ phòng cháy chữa cháy", "Trưởng ca lễ tân"],
             correct: 1,
           },
           {
             q: "Khách còn hoảng thì điều gì làm họ bình tâm?",
             options: [
-              "A. Một lời giải thích rõ ràng về nguyên nhân",
-              "B. Có người ở gần họ chừng mười phút",
-              "C. Một khoản bồi thường vào hoá đơn",
+              "Một lời giải thích rõ ràng về nguyên nhân",
+              "Có người ở gần họ chừng mười phút",
+              "Một khoản bồi thường vào hoá đơn",
             ],
             correct: 1,
           },
@@ -10900,15 +10921,15 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Theo tài liệu, việc nào được ưu tiên hơn: điện thoại đang reo hay khách đứng trước mặt?",
             options: [
-              "A. Khách đứng trước mặt — người gọi có thể xin phép giữ máy, khách đứng thì không",
-              "B. Điện thoại — vì người gọi không thấy mình đang chờ ai",
-              "C. Tuỳ ai đến trước",
+              "Khách đứng trước mặt — người gọi có thể xin phép giữ máy, khách đứng thì không",
+              "Điện thoại — vì người gọi không thấy mình đang chờ ai",
+              "Tuỳ ai đến trước",
             ],
             correct: 0,
           },
           {
             q: "Khi hàng chờ tới bao nhiêu người thì gọi thêm đồng nghiệp?",
-            options: ["A. Bốn người", "B. Tám người", "C. Khi khách bắt đầu phàn nàn"],
+            options: ["Bốn người", "Tám người", "Khi khách bắt đầu phàn nàn"],
             correct: 0,
           },
         ],
@@ -10997,18 +11018,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Trả lời theo thứ tự nào?",
             options: [
-              "A. Theo mức độ gấp, không theo thứ tự khách hỏi",
-              "B. Theo đúng thứ tự khách hỏi, cho lịch sự",
-              "C. Việc dễ nhất trước để giải quyết nhanh",
+              "Theo mức độ gấp, không theo thứ tự khách hỏi",
+              "Theo đúng thứ tự khách hỏi, cho lịch sự",
+              "Việc dễ nhất trước để giải quyết nhanh",
             ],
             correct: 0,
           },
           {
             q: "Vì sao phải gọi tên việc mình tạm gác lại?",
             options: [
-              "A. Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
-              "B. Vì hệ thống yêu cầu ghi lại đầy đủ mọi câu khách từng hỏi",
-              "C. Vì khách chắc chắn sẽ quên mất những gì họ vừa hỏi xong",
+              "Vì câu hỏi không được gọi tên sẽ có cảm giác bị bỏ rơi",
+              "Vì hệ thống yêu cầu ghi lại đầy đủ mọi câu khách từng hỏi",
+              "Vì khách chắc chắn sẽ quên mất những gì họ vừa hỏi xong",
             ],
             correct: 0,
           },
@@ -11101,18 +11122,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Dòng nào trong bàn giao là quan trọng nhất, theo tài liệu?",
             options: [
-              "A. Phòng 1104 — khách đã thôi hỏi, và đó mới là dấu hiệu xấu",
-              "B. Phòng 508 — vì có mã hồ sơ",
-              "C. Phòng 312 — vì đang ở chỗ Duty Manager",
+              "Phòng 1104 — khách đã thôi hỏi, và đó mới là dấu hiệu xấu",
+              "Phòng 508 — vì có mã hồ sơ",
+              "Phòng 312 — vì đang ở chỗ Duty Manager",
             ],
             correct: 0,
           },
           {
             q: "Vì sao không được bảo ca sau đi hỏi lại khách?",
             options: [
-              "A. Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
-              "B. Vì khách có thể kể lại sai chi tiết so với lần trình bày đầu",
-              "C. Vì hỏi lại làm mất thời gian của cả ca sau lẫn của khách",
+              "Vì bị hỏi lại là lúc một việc nhỏ biến thành một bài đánh giá",
+              "Vì khách có thể kể lại sai chi tiết so với lần trình bày đầu",
+              "Vì hỏi lại làm mất thời gian của cả ca sau lẫn của khách",
             ],
             correct: 0,
           },
@@ -11204,18 +11225,18 @@ export const FO_WEEK_39: WeekContent = {
           {
             q: "Theo tài liệu, ba phần của câu 'tôi chưa biết' là gì?",
             options: [
-              "A. Nói sẽ kiểm tra, cho một mốc thời gian, hứa quay lại dù kết quả thế nào",
-              "B. Xin lỗi, giải thích lý do, rồi hỏi đồng nghiệp",
-              "C. Nói 'tôi nghĩ là', rồi kiểm tra sau",
+              "Nói sẽ kiểm tra, cho một mốc thời gian, hứa quay lại dù kết quả thế nào",
+              "Xin lỗi, giải thích lý do, rồi hỏi đồng nghiệp",
+              "Nói 'tôi nghĩ là', rồi kiểm tra sau",
             ],
             correct: 0,
           },
           {
             q: "Nhân viên mới nói 'let me check' được khách tin hơn hay kém hơn người trả lời ngay?",
             options: [
-              "A. Tin hơn — sự chắc chắn không đồng nghĩa với năng lực",
-              "B. Kém hơn — khách muốn câu trả lời ngay",
-              "C. Như nhau, miễn là cuối cùng đúng",
+              "Tin hơn — sự chắc chắn không đồng nghĩa với năng lực",
+              "Kém hơn — khách muốn câu trả lời ngay",
+              "Như nhau, miễn là cuối cùng đúng",
             ],
             correct: 0,
           },
@@ -11326,18 +11347,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, điều thay đổi lớn nhất sau 40 tuần là gì?",
             options: [
-              "A. Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
-              "B. Bạn biết nhiều từ vựng chuyên ngành hơn hẳn lúc bắt đầu",
-              "C. Bạn phát âm chuẩn hơn và nghe tự nhiên hơn trước nhiều",
+              "Bạn với tay tới một KHUNG xử lý, thay vì tới một câu có sẵn",
+              "Bạn biết nhiều từ vựng chuyên ngành hơn hẳn lúc bắt đầu",
+              "Bạn phát âm chuẩn hơn và nghe tự nhiên hơn trước nhiều",
             ],
             correct: 0,
           },
           {
             q: "Tuần 30 bạn xử lý phàn nàn bằng cách nào?",
             options: [
-              "A. Bằng một cấu trúc, thay vì bằng một lời xin lỗi",
-              "B. Bằng cách gọi quản lý",
-              "C. Bằng cách xin lỗi thật nhiều lần",
+              "Bằng một cấu trúc, thay vì bằng một lời xin lỗi",
+              "Bằng cách gọi quản lý",
+              "Bằng cách xin lỗi thật nhiều lần",
             ],
             correct: 0,
           },
@@ -11426,18 +11447,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, nhân viên không bao giờ escalate là người thế nào?",
             options: [
-              "A. Là người mà sai sót sẽ đến muộn hơn và lớn hơn",
-              "B. Là người giỏi nhất trong nhóm",
-              "C. Là người tiếng Anh tốt nhất",
+              "Là người mà sai sót sẽ đến muộn hơn và lớn hơn",
+              "Là người giỏi nhất trong nhóm",
+              "Là người tiếng Anh tốt nhất",
             ],
             correct: 0,
           },
           {
             q: "Sau 40 tuần, cái ĐÃ thay đổi khi phải chuyển việc lên cấp trên là gì?",
             options: [
-              "A. Bạn bàn giao được bằng tiếng Anh trong ba câu rõ ràng",
-              "B. Bạn không còn phải chuyển lên nữa",
-              "C. Bạn được tự quyết những việc đó",
+              "Bạn bàn giao được bằng tiếng Anh trong ba câu rõ ràng",
+              "Bạn không còn phải chuyển lên nữa",
+              "Bạn được tự quyết những việc đó",
             ],
             correct: 0,
           },
@@ -11461,7 +11482,7 @@ export const FO_WEEK_40: WeekContent = {
               text: "Not this one, madam. Anything legal goes to my Duty Manager — that is the rule, not my English.",
               correct: true,
             },
-            { text: "You are right, sir. Let me see what I can do for you.", correct: false },
+            { text: "You are right, madam. Let me see what I can do for you.", correct: false },
             { text: "I am sorry, my English is not good enough for this.", correct: false },
           ],
         },
@@ -11529,18 +11550,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Sau khi đồng nghiệp mới xử lý xong, nên góp ý thế nào?",
             options: [
-              "A. Một lỗi cần sửa và một điều họ làm tốt",
-              "B. Liệt kê đủ mọi lỗi để họ nhớ hết",
-              "C. Chỉ khen, không sửa gì",
+              "Một lỗi cần sửa và một điều họ làm tốt",
+              "Liệt kê đủ mọi lỗi để họ nhớ hết",
+              "Chỉ khen, không sửa gì",
             ],
             correct: 0,
           },
           {
             q: "Vì sao nên kể cho người mới nghe lỗi của chính mình hồi mới vào?",
             options: [
-              "A. Vì họ sẽ dám cầm điện thoại sớm hơn",
-              "B. Vì như vậy lịch sự hơn",
-              "C. Vì quản lý yêu cầu chia sẻ kinh nghiệm",
+              "Vì họ sẽ dám cầm điện thoại sớm hơn",
+              "Vì như vậy lịch sự hơn",
+              "Vì quản lý yêu cầu chia sẻ kinh nghiệm",
             ],
             correct: 0,
           },
@@ -11632,18 +11653,18 @@ export const FO_WEEK_40: WeekContent = {
           {
             q: "Theo tài liệu, việc phần lớn tình huống nghề nghiệp không khớp bài học nào là gì?",
             options: [
-              "A. Đó chính là mục đích của khoá học, không phải thiếu sót",
-              "B. Đó là một lỗ hổng cần bổ sung thêm bài",
-              "C. Đó là lý do phải học lại từ đầu",
+              "Đó chính là mục đích của khoá học, không phải thiếu sót",
+              "Đó là một lỗ hổng cần bổ sung thêm bài",
+              "Đó là lý do phải học lại từ đầu",
             ],
             correct: 0,
           },
           {
             q: "Nên hỏi đồng nghiệp 'anh sẽ nói thế nào' vào lúc nào?",
             options: [
-              "A. Sau ca, không bao giờ trong ca",
-              "B. Ngay lúc đang xử lý khách",
-              "C. Trước khi vào ca",
+              "Sau ca, không bao giờ trong ca",
+              "Ngay lúc đang xử lý khách",
+              "Trước khi vào ca",
             ],
             correct: 0,
           },
@@ -12326,7 +12347,7 @@ export const FB_WEEK_33: WeekContent = {
           word: "Approval",
           phonetic: "/əˈpruːvl/",
           definition: "Sự chuẩn thuận từ cấp trên",
-          context: "I will get the approval before I promise it, sir.",
+          context: "The approval is my supervisor's, sir, not mine.",
           icon: "✅",
         },
         {
@@ -12690,7 +12711,7 @@ export const FB_WEEK_34: WeekContent = {
     "Private dining room",
     "Dessert",
     "Terrace",
-    "Booking",
+    "Reservation",
     "Chef's table",
   ],
   lessons: [
@@ -13192,7 +13213,7 @@ export const FB_WEEK_35: WeekContent = {
       vocabulary: [
         {
           word: "In exchange for",
-          phonetic: "/ɪn ɪksˈtʃeɪndʒ fɔː/",
+          phonetic: "/ɪn ɪksˈtʃeɪndʒ fə/",
           definition: "Để đổi lấy",
           context: "We can add the welcome drinks in exchange for an earlier start.",
           icon: "🔄",
@@ -15655,6 +15676,3593 @@ export const FB_WEEK_40: WeekContent = {
   ],
 };
 
+export const HK_WEEK_31: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 31,
+  weekTitleEn: "What the Room Says, and What You Say About It",
+  weekTitleVi: "Căn phòng kể chuyện — và bạn kể phần còn lại",
+  reviewWords: [
+    "Amenities",
+    "Turndown service",
+    "Eco option",
+    "Premium toiletries",
+    "Bath robe",
+    "Fresh flowers",
+    "Spotless",
+    "Pillow menu",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_31_1",
+      lessonOrder: 1,
+      titleEn: "The Linen Has a Story",
+      titleVi: "Tấm khăn trải giường cũng có câu chuyện",
+      vocabulary: [
+        {
+          word: "Hand-woven",
+          phonetic: "/ˌhænd ˈwəʊvən/",
+          definition: "Dệt thủ công",
+          context: "The bed runner is hand-woven, madam.",
+          icon: "🧵",
+        },
+        {
+          word: "Weaving village",
+          phonetic: "/ˈwiːvɪŋ ˌvɪlɪdʒ/",
+          definition: "Làng dệt truyền thống",
+          context: "Our linen comes from a weaving village near Hoi An.",
+          icon: "🏘️",
+        },
+        {
+          word: "Signature scent",
+          phonetic: "/ˈsɪɡnətʃə ˌsent/",
+          definition: "Mùi hương đặc trưng của khách sạn",
+          context: "The signature scent is pandan and green tea.",
+          icon: "🌿",
+        },
+        {
+          word: "Proud",
+          phonetic: "/praʊd/",
+          definition: "Tự hào",
+          context: "We are proud of the linen in this hotel.",
+          icon: "🏅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Is hotel cloth. Very nice. You like?",
+          polite:
+            "The bed runner is hand-woven, madam — it comes from a weaving village near Hoi An.",
+          rule: "Khung kể chuyện của tuần: MỘT sự thật về vật + MỘT xuất xứ, ngắt một nhịp ngắn giữa hai vế. Hai vế là đủ; người phục vụ phòng không cần bài thuyết minh dài.",
+        },
+        {
+          rude: "I don't know. I only clean the room.",
+          polite: "I am not sure of the name, sir — may I find out and leave a note for you?",
+          rule: "'May I find out and leave a note?' — không biết thì hẹn tra cứu, và tận dụng đúng thế mạnh của buồng phòng: bạn quay lại căn phòng đó mỗi ngày.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "This blanket at the end of the bed is beautiful. Is it local?",
+          targetResponse:
+            "It is, madam — hand-woven in a village near Hoi An. We are very proud of it.",
+          helpTip:
+            "'Hand-woven' — /wəʊvən/ có âm /w/ tròn môi, đừng đọc thành 'vô-ven'. Thay tên làng bằng nơi khách sạn bạn lấy đồ vải — hỏi Executive Housekeeper trước ca đầu tiên.",
+        },
+        {
+          guestPrompt: "Everything in this room smells wonderful. What is it?",
+          targetResponse:
+            "That is our signature scent, sir — pandan and green tea, in every corridor of the hotel.",
+          helpTip:
+            "'Scent' đọc /sent/, chữ 'c' câm hoàn toàn, cụm /nt/ cuối nghe rõ. Và thay tên mùi hương bằng mùi của khách sạn bạn — mỗi nhà một khác.",
+        },
+      ],
+      reading: {
+        text: "THE ROOM STORY CARD — HOUSEKEEPING\nEvery attendant is asked about the room sooner or later. Three answers are worth knowing by heart.\nThe linen: hand-woven bed runners from a weaving village near Hoi An. The sheets are cotton.\nThe scent: pandan and green tea, made for this hotel and used in every corridor.\nThe toiletries: refillable bottles in the bathroom, made locally, topped up every day before a guest has to ask.\nIf you do not know an answer, say so and offer to find out. Then actually find out, and leave a note in the room. A guest remembers the attendant who came back with the answer.\nThe details above are one hotel's. Ask your Executive Housekeeper for yours, and write theirs over these.",
+        questions: [
+          {
+            q: "Ba câu trả lời buồng phòng nên thuộc lòng nói về điều gì?",
+            options: [
+              "Giá phòng, giờ trả phòng, và số điện thoại của quầy lễ tân",
+              "Khăn trải giường, mùi hương, và bộ đồ dùng trong phòng tắm",
+              "Lịch dọn phòng, tên quản lý, và quy định hút thuốc của phòng",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Không biết câu trả lời thì làm gì?",
+            options: [
+              "Bảo khách xuống hỏi quầy lễ tân vì buồng phòng không phụ trách",
+              "Đoán một câu nghe hợp lý để khách khỏi thất vọng ngay lúc đó",
+              "Nói thật là chưa biết, hẹn tra cứu, rồi để lại ghi chú trong phòng",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Everything in this room smells wonderful. What is it — some kind of incense?",
+          options: [
+            {
+              text: "It is our own scent, madam — pandan and green tea, in every corridor here.",
+              correct: true,
+            },
+            {
+              text: "I believe the night team sprays something before the guests arrive each evening.",
+              correct: false,
+            },
+            {
+              text: "It is a room spray, madam — I could not tell you which one we use.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Who actually makes these bed runners? They look handmade.",
+          options: [
+            {
+              text: "A lady called Mrs. Hoa weaves every single one of them herself, madam, in her own home.",
+              correct: false,
+            },
+            {
+              text: "They come from a weaving village near Hoi An, madam — the weaver's name I could find out.",
+              correct: true,
+            },
+            {
+              text: "A factory in the north, madam — they arrive by the hundred every month.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_31_2",
+      lessonOrder: 2,
+      titleEn: "The Eco Programme, Without the Lecture",
+      titleVi: "Chương trình xanh — nói mà không lên lớp",
+      vocabulary: [
+        {
+          word: "Eco programme",
+          phonetic: "/ˈiːkəʊ ˌprəʊɡræm/",
+          definition: "Chương trình tiết kiệm tài nguyên của khách sạn",
+          context: "Our eco programme changes the sheets every second day.",
+          icon: "🌱",
+        },
+        {
+          word: "Laundered",
+          phonetic: "/ˈlɔːndəd/",
+          definition: "Đã được giặt là chuyên nghiệp",
+          context: "Any towel on the floor is laundered, always.",
+          icon: "🧺",
+        },
+        {
+          word: "Towel rail",
+          phonetic: "/ˈtaʊəl ˌreɪl/",
+          definition: "Thanh treo khăn trong phòng tắm",
+          context: "A clean towel left on the towel rail stays with the guest.",
+          icon: "🪝",
+        },
+        {
+          word: "Delighted",
+          phonetic: "/dɪˈlaɪtɪd/",
+          definition: "Rất vui, hân hoan",
+          context: "We are delighted when a guest asks about the linen.",
+          icon: "😊",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Hotel rule now. Two days one time. Save the planet.",
+          polite:
+            "Sheets are changed every second day, madam — and whenever you ask, at no charge.",
+          rule: "Bị động 'are changed' cho một quy trình không do ai cụ thể làm, rồi mở ngay cánh cửa: 'and whenever you ask'. Chương trình xanh nào cũng phải để khách được chọn — không thì nó là cắt giảm dịch vụ.",
+        },
+        {
+          rude: "You use too many towels. Bad for the environment.",
+          polite:
+            "A clean towel left on the towel rail stays, sir — one on the floor goes to the wash.",
+          rule: "Dạy KÝ HIỆU thay vì dạy đạo đức: giá khăn = giữ, sàn = giặt. Khách tự chọn mà không bị ai chấm điểm.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Do they actually wash these towels, or does the card just save the hotel money?",
+          targetResponse:
+            "Anything on the floor is laundered, sir — that never changes. The card only saves the ones you did not use.",
+          helpTip:
+            "'Laundered' /ˈlɔːndəd/ — trọng âm đầu, đuôi '-ed' đọc /d/ nhẹ, không thành 'lơn-đơ-rịt'. Nói sự thật trước, giải thích sau.",
+        },
+        {
+          guestPrompt: "We're here for ten nights. I'd like fresh sheets every single day, please.",
+          targetResponse:
+            "Of course, madam — I am delighted you asked. Fresh sheets today, and every morning after.",
+          helpTip:
+            "Nói 'of course' TRƯỚC, không kèm bài giảng môi trường. Rồi thêm giá trị: ghi lại để khách khỏi phải nhắc.",
+        },
+      ],
+      reading: {
+        text: "THE TOWEL CARD — WHAT IT REALLY MEANS\nOn the rail: the guest wants to keep it. On the floor or in the basket: it goes to the laundry. One thing overrides the card — anything marked or soiled is washed, wherever it is hanging.\nSheets are changed every second day under the eco programme, on departure, and whenever a guest asks — at no charge, without a raised eyebrow.\nSome guests test us: 'do you really wash them?' The honest answer is short. Anything on the floor is laundered. Anything visibly soiled is laundered, wherever it is lying.\nNever teach the environment to a guest. They booked a room, not a lesson. If one asks why we do it, the story is short and true: our own laundry team counted the clean towels going into the wash each morning, and asked to stop.\nIf a guest asks for daily linen, note it on the guest's profile the same day.\nHow often your own hotel changes linen, and what the card says, is your Executive Housekeeper's answer — ask before your first floor.",
+        questions: [
+          {
+            q: "Khăn nằm trên sàn nghĩa là gì?",
+            options: [
+              "Khách muốn giữ lại chiếc khăn đó thêm một ngày nữa",
+              "Nhân viên phải hỏi lại khách trước khi mang khăn đi giặt",
+              "Khăn được mang đi giặt, dù khách chưa dùng tới nó",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Khách xin thay ga mỗi ngày thì xử lý thế nào?",
+            options: [
+              "Đồng ý ngay, miễn phí, và ghi vào hồ sơ khách trong ngày",
+              "Giải thích lợi ích môi trường rồi mới đồng ý thay ga hằng ngày",
+              "Đồng ý nhưng báo trước rằng khoản này sẽ tính thêm phí dịch vụ",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "So if I leave the towels hanging up, does that mean I get no clean ones at all?",
+          options: [
+            {
+              text: "It means we keep those, madam. Ask any time, and I will bring fresh ones this morning.",
+              correct: true,
+            },
+            {
+              text: "The programme runs for the whole week, madam, so we bring no fresh towels until you leave.",
+              correct: false,
+            },
+            {
+              text: "That is right, madam — the eco card applies to every towel in the bathroom.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "I hung the towels up like the card said, and you changed them anyway. Why?",
+          options: [
+            {
+              text: "The eco card only counts on the first two days, madam — after that everything is washed.",
+              correct: false,
+            },
+            {
+              text: "I am sorry, madam — a towel goes to the wash if it is marked, wherever it is hanging.",
+              correct: true,
+            },
+            {
+              text: "The night team changes every towel, madam — the cards are really just for show.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_31_3",
+      lessonOrder: 3,
+      titleEn: '"Can I Take These Home?"',
+      titleVi: "Khi khách hỏi mua đồ trong phòng",
+      vocabulary: [
+        {
+          word: "Souvenir",
+          phonetic: "/ˌsuːvəˈnɪə/",
+          definition: "Món đồ mua về làm kỷ niệm",
+          context: "The slippers make a lovely souvenir, madam.",
+          icon: "🎁",
+        },
+        {
+          word: "Artisan",
+          phonetic: "/ˌɑːtɪˈzæn/",
+          definition: "Nghệ nhân thủ công",
+          context: "An artisan in the old town makes the tea sets.",
+          icon: "🪵",
+        },
+        {
+          word: "Boutique",
+          phonetic: "/buːˈtiːk/",
+          definition: "Cửa hàng nhỏ trong khách sạn",
+          context: "The boutique by the lobby sells the same set.",
+          icon: "🛍️",
+        },
+        {
+          word: "Yours to keep",
+          phonetic: "/ˌjɔːz tə ˈkiːp/",
+          definition: "Là quà tặng khách được giữ",
+          context: "The slippers are yours to keep, sir.",
+          icon: "✅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "That is hotel property. Please leave it.",
+          polite:
+            "The robe stays with the room, madam — but the boutique sells the same one downstairs.",
+          rule: "Đừng nói 'không' rồi dừng lại. Nêu ranh giới + chỉ ngay lối đi tiếp. Ở buồng phòng, câu này tránh được cả một vụ mất đồ ghi vào biên bản.",
+        },
+        {
+          rude: "I don't know price. Not my job.",
+          polite: "I do not know the price, sir — may I ask the boutique to call your room?",
+          rule: "Không đoán giá, và cũng không đẩy khách đi. 'May I ask them to call your room?' giữ việc trong tay bạn cho tới khi có người tiếp nhận.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "These slippers are so comfortable. Can I take a pair home?",
+          targetResponse:
+            "They are yours to keep, madam — a small souvenir. I am delighted you like them.",
+          helpTip:
+            "'Yours to keep' — bốn từ ngắn, trọng âm rơi vào 'KEEP'. Học thuộc nguyên cụm, rồi thêm một bước nhỏ ngoài mong đợi.",
+        },
+        {
+          guestPrompt: "And the bathrobe? It's the nicest one I've ever used.",
+          targetResponse:
+            "The robe belongs to the room, sir, but the boutique sells it. Shall I ask them to call you?",
+          helpTip:
+            "'Belongs to' đọc nối liền /bɪˈlɒŋz tə/. Cách nói khách quan này nghe nhẹ hơn hẳn 'you cannot take it'.",
+        },
+      ],
+      reading: {
+        text: "WHAT LEAVES THE ROOM WITH THE GUEST — AND WHAT DOES NOT\nYours to keep: slippers, the sewing kit, the small amenity items, the pen and the notepad.\nStays with the room: the robe, the towels, the hairdryer, the umbrella, the art, the bed runner. The bathroom bottles are refillable and stay — say so kindly if a guest asks.\nUsually complimentary and replaced daily: the bottled water, the tea and the coffee sachets. Usually charged when used: what is in the minibar fridge — though some houses give the water and the soft drinks free. If a guest asks whether something is free, say so only when you are certain. Otherwise bring the price list, and never guess a price.\nSold downstairs: the robe, the light bed throw, the room scent and the tea set — the throw is not the runner on your bed. The boutique keeps the price list.\nIf an item is missing after a departure, report it to the housekeeping office at once — the guest may still be at the desk. What happens next is the Duty Manager's decision, never a conversation you start.\nEvery hotel draws these lines differently. Ask your Executive Housekeeper for your own list in your first week.",
+        questions: [
+          {
+            q: "Món nào khách được mang về?",
+            options: [
+              "Áo choàng tắm treo sẵn trong tủ quần áo của căn phòng",
+              "Dép đi trong phòng và bộ kim chỉ nhỏ trong ngăn kéo",
+              "Chiếc ô và máy sấy tóc để sẵn cho khách dùng khi ở",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Phát hiện thiếu đồ sau khi khách trả phòng thì làm gì?",
+            options: [
+              "Báo văn phòng buồng phòng ngay lúc đó, vì khách có thể còn ở quầy",
+              "Ghi vào sổ cuối ca rồi để giám sát tầng xử lý vào hôm sau",
+              "Gọi thẳng cho khách qua số điện thoại lưu trong hồ sơ đặt phòng",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "My daughter loves this little tea set. Any chance we could buy one?",
+          options: [
+            {
+              text: "I am afraid those are only for the rooms, sir, and we do not sell them to guests at all.",
+              correct: false,
+            },
+            {
+              text: "An artisan in the old town makes them, sir — the boutique downstairs sells the set.",
+              correct: true,
+            },
+            {
+              text: "Take that one, sir — I can bring another set up to the room this afternoon.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Quick question — is the water free, or does it go on the bill like the minibar?",
+          options: [
+            {
+              text: "Everything in the room is complimentary, madam, apart from the alcohol in the fridge.",
+              correct: false,
+            },
+            {
+              text: "Everything in the fridge is free too, madam — nothing in this room goes on your bill.",
+              correct: false,
+            },
+            {
+              text: "The water is complimentary here, madam — for the fridge, may I bring the price list?",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_31_4",
+      lessonOrder: 4,
+      titleEn: "The Evening Ritual",
+      titleVi: "Nghi thức buổi tối",
+      vocabulary: [
+        {
+          word: "Ritual",
+          phonetic: "/ˈrɪtʃuəl/",
+          definition: "Nghi thức được làm theo cùng một cách mỗi tối",
+          context: "The evening ritual takes about five minutes, madam.",
+          icon: "🕯️",
+        },
+        {
+          word: "Fold back",
+          phonetic: "/ˌfəʊld ˈbæk/",
+          definition: "Gấp mở góc chăn cho khách lên giường",
+          context: "We fold back the corner of the bed between six and eight.",
+          icon: "🛌",
+        },
+        {
+          word: "Bedside light",
+          phonetic: "/ˈbedsaɪd ˌlaɪt/",
+          definition: "Đèn ngủ đầu giường",
+          context: "The bedside light is left on, and the room safe stays untouched.",
+          icon: "💡",
+        },
+        {
+          word: "Decline",
+          phonetic: "/dɪˈklaɪn/",
+          definition: "Từ chối một dịch vụ",
+          context: "Many guests decline turndown, and that is fine.",
+          icon: "🙅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Turndown is standard. We come at seven, every night.",
+          polite:
+            "We fold back the bed between six and eight, sir — unless you would rather we did not.",
+          rule: "Mệnh đề 'unless you would rather…' trao quyền từ chối ngay trong lời giới thiệu. Lưu ý: sau 'would rather + chủ ngữ', động từ lùi về QUÁ KHỨ dù đang nói chuyện hiện tại — 'you would rather we did not', không phải 'do not'.",
+        },
+        {
+          rude: "Why you don't want? It is free service.",
+          polite: "Of course, madam — I will mark your room as no turndown for the whole stay.",
+          rule: "Khách từ chối thì nhận NGAY, và ghi cho cả kỳ lưu trú. Hỏi lại 'vì sao' biến một lời từ chối thành một cuộc tranh luận nhỏ mỗi tối.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Someone came in while we were at dinner and moved things around. What was that?",
+          targetResponse:
+            "I am sorry, sir — that was turndown. We cleared the cups and changed the water. Nothing of yours was moved.",
+          helpTip:
+            "Khách hỏi câu này vì đang LO, không vì tò mò. Kể ba việc cụ thể, rồi câu quan trọng nhất: 'Nothing of yours was moved.' 'Turndown' /ˈtɜːndaʊn/ — trọng âm ở âm tiết đầu.",
+        },
+        {
+          guestPrompt: "We'd rather nobody came in after six. Is that possible?",
+          targetResponse:
+            "Of course, madam. No evening service for the whole stay — I will tell the turndown team myself.",
+          helpTip:
+            "Nhận lời trong sáu từ, rồi nói ai sẽ được báo. 'Myself' cuối câu là lời cam kết cá nhân, đọc hơi nhấn.",
+        },
+      ],
+      reading: {
+        text: "THE EVENING SERVICE — WHAT WE DO, AND WHAT WE ASK\nKnock and announce in the evening as you do in the morning — two knocks, wait, then a second round: 'Good evening — housekeeping, turndown service.'\nBetween six and eight, an attendant folds back one corner of the bed and closes the curtains. The bedside light goes on, the slippers go by the bed, the bath mat is laid, the water is refreshed and the day's cups are cleared.\nWhat we never do in the evening: move a guest's belongings to clean under them, or open a suitcase. We never tidy papers into a pile, and we touch nothing on the bedside table except the water.\nIf the room shows Do Not Disturb, the service does not happen. DURING THE DAY we may leave a voicemail and slip a note under the door. After six in the evening we slip nothing under the door: the paper and the corridor light wake a sleeping guest. A phone call before nine is still fine. The evening refusal goes on the turndown list instead.\nThe ritual is older than this hotel. Houses turned the bed down so a guest could find it open in the dark, before there was a light by the bed at all. We keep it because guests still remember it.\nA guest may decline the ritual for one night or the whole stay. Mark it once, and make sure the next shift reads it.\nYour own hotel's turndown hours may differ — ask your Floor Supervisor in your first week.",
+        questions: [
+          {
+            q: "Buổi tối, nhân viên KHÔNG được làm gì?",
+            options: [
+              "Kéo rèm cửa lại và bật đèn ngủ đầu giường lên cho khách",
+              "Xếp gọn giấy tờ của khách thành một chồng cho ngăn nắp",
+              "Thay nước uống và dọn những chiếc ly đã dùng trong ngày",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Phòng treo biển Do Not Disturb buổi tối thì ghi chú xử lý ra sao?",
+            options: [
+              "Vẫn luồn một tờ ghi chú xuống khe cửa như quy trình buổi sáng",
+              "Gõ cửa nhẹ ba lần rồi mới quyết định có nên vào phòng hay không",
+              "Không luồn giấy sau sáu giờ tối — ghi vào danh sách turndown",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "What exactly do you do in here while we are at dinner?",
+          options: [
+            {
+              text: "We tidy the whole room again, madam, and check everything that the morning team may have missed.",
+              correct: false,
+            },
+            {
+              text: "We fold back the bed, close the curtains, put the light on and change the water, madam. Five minutes.",
+              correct: true,
+            },
+            {
+              text: "Just a quick look around, madam — nothing that would disturb any of your things at all.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Please, no one in our room in the evenings. We have a baby sleeping by then.",
+          options: [
+            {
+              text: "Of course, sir — no turndown for the whole stay, and I will tell the evening team myself.",
+              correct: true,
+            },
+            {
+              text: "Understood, sir — we will come a little earlier instead, before the baby has gone to sleep.",
+              correct: false,
+            },
+            {
+              text: "No problem at all, sir — just hang the Do Not Disturb sign every single evening.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_32: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 32,
+  weekTitleEn: "Advice from the Room You Just Cleaned",
+  weekTitleVi: "Tư vấn từ chính căn phòng vừa dọn",
+  reviewWords: [
+    "Guest preference",
+    "Pillow choice",
+    "Dust allergy",
+    "Preferred time",
+    "Feather pillow",
+    "Room note",
+    "Guest privacy",
+    "Lost property",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_32_1",
+      lessonOrder: 1,
+      titleEn: "What the Room Tells You",
+      titleVi: "Căn phòng nói gì với bạn",
+      vocabulary: [
+        {
+          word: "Untouched",
+          phonetic: "/ʌnˈtʌtʃt/",
+          definition: "Còn nguyên, chưa ai dùng đến",
+          context: "The second pillow is untouched every morning.",
+          icon: "🛌",
+        },
+        {
+          word: "Thermostat",
+          phonetic: "/ˈθɜːməstæt/",
+          definition: "Bộ điều chỉnh nhiệt độ phòng",
+          context: "The thermostat is set to twenty-six every night.",
+          icon: "🌡️",
+        },
+        {
+          word: "Set aside",
+          phonetic: "/ˌset əˈsaɪd/",
+          definition: "Để riêng ra một bên",
+          context: "I set aside the unused pillow for the wardrobe.",
+          icon: "📥",
+        },
+        {
+          word: "Leave it as found",
+          phonetic: "/ˌliːv ɪt əz ˈfaʊnd/",
+          definition: "Để nguyên hiện trạng như lúc bạn thấy",
+          context:
+            "When in doubt, leave it as found — those four words save more jobs than any excuse.",
+          icon: "🤫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You only use one pillow, so I put the other away without asking.",
+          polite:
+            "Based on what you said about the pillows, madam, may I leave one firm and one soft?",
+          rule: "Khung tư vấn của tuần: 'Based on + điều khách đã nói (hoặc một sự việc của CĂN PHÒNG), may I…?' Quan sát biến thành ĐỀ NGHỊ, không bao giờ thành nhận xét về con người.",
+        },
+        {
+          rude: "The room is always too cold. Why you set like that?",
+          polite:
+            "Shall I set the room to twenty-six each morning, sir? That is how I find it each day.",
+          rule: "Nêu điều nhìn thấy TRONG PHÒNG rồi đề nghị làm sẵn cho lần sau. Buồng phòng phục vụ tốt nhất khi khách không phải yêu cầu lần thứ hai.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The extra blanket in the wardrobe — we've been using it every night.",
+          targetResponse:
+            "Based on what you said, madam, it stays on the bed tonight — the second one is untouched.",
+          helpTip:
+            "Một luật duy nhất cho cả tuần: nêu điều CĂN PHÒNG cho thấy, không bao giờ nêu điều bạn suy ra về CON NGƯỜI. Âm /st/ trong 'based' nối thẳng sang 'on', đọc liền /beɪst‿ɒn/ — đừng tách hai từ.",
+        },
+        {
+          guestPrompt: "The room is freezing every time we come back from the beach.",
+          targetResponse:
+            "I am sorry, madam. Shall I set the room warmer each morning, so it is ready when you come back?",
+          helpTip:
+            "'Thermostat' bắt đầu bằng /θ/ — đầu lưỡi chạm nhẹ mặt sau răng cửa trên rồi thổi hơi ra, không thành /t/ cũng không thành /s/. Đừng phiên sang tiếng Việt: mọi cách phiên đều làm hỏng đúng âm này.",
+        },
+      ],
+      reading: {
+        text: "READING A ROOM — THE QUIET HALF OF THE JOB\nEvery morning a room tells its story. Which pillow was slept on. Which towel was never opened. How the thermostat was left.\nKnow which half is silent. Putting something back where it belongs is done in silence: the unused pillow is set aside, back into the wardrobe. Changing how the room is set for the rest of the stay is asked first. The blanket pulled out at midnight stays on the bed. The thermostat returns to the setting the guest chose — unless your hotel's energy rule says otherwise while the room is empty. Ask your Executive Housekeeper which applies.\nDo not act on anything that is a person rather than a preference. A guest who sleeps badly, a couple in separate beds, a bin that tells a story — none of that is yours.\nWrite the preference on the guest's profile so the next attendant does not start from zero. One line is enough.\nAnd know the difference between a preference and a report. A preference is served in silence. Smoking in a non-smoking room, a candle or incense, cooking, or somebody staying who is not on the booking — those are reported to your supervisor the same hour, every time. Silence is a service; it is never a safety decision.\nAnd say what you will DO, never what the room told you about the person. 'Shall I keep the window open?' is service. 'I saw you slept on one side' is not.",
+        questions: [
+          {
+            q: "Điều gì nên tự làm mà không cần khách yêu cầu?",
+            options: [
+              "Xếp lại giấy tờ trên bàn cho căn phòng trông gọn gàng hơn hẳn",
+              "Trả nhiệt độ phòng về đúng mức khách đã tự chọn tối hôm trước",
+              "Đổi loại gối cho khách để thử xem khách thích loại nào hơn cả",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Câu nào đạt chuẩn khi nói với khách?",
+            options: [
+              "'Tôi để ý là tối qua chị bị lạnh, nên tôi đã lấy thêm chăn cho chị'",
+              "'Chị có muốn tôi để sẵn chiếc chăn thứ hai ra ngoài không ạ?'",
+              "'Hình như anh chị không hợp với điều hoà của căn phòng này'",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "How did you know I wanted the window open? I never told anyone.",
+          options: [
+            {
+              text: "The window was open each morning, madam — shall I keep it that way for you?",
+              correct: true,
+            },
+            {
+              text: "The desk passes us notes on guests, madam, so we usually know these things.",
+              correct: false,
+            },
+            {
+              text: "Most of our guests prefer fresh air in the mornings, so we open them all.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "You've put both pillows back. I only ever sleep on the firm one.",
+          options: [
+            {
+              text: "I noticed you sleep on one side, madam, so I put the other pillow away.",
+              correct: false,
+            },
+            {
+              text: "Based on that, madam — the firm one stays, and I will set the soft one aside.",
+              correct: true,
+            },
+            {
+              text: "Both pillows are standard for a double room, madam — that is what we always set out.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_32_2",
+      lessonOrder: 2,
+      titleEn: "What You See and Never Mention",
+      titleVi: "Điều bạn thấy và không bao giờ nhắc tới",
+      vocabulary: [
+        {
+          word: "Belongings",
+          phonetic: "/bɪˈlɒŋɪŋz/",
+          definition: "Đồ đạc cá nhân của khách",
+          context: "Clean around the belongings, never under them.",
+          icon: "🧳",
+        },
+        {
+          word: "Medication",
+          phonetic: "/ˌmedɪˈkeɪʃn/",
+          definition: "Thuốc men của khách",
+          context: "Medication on the table is never moved.",
+          icon: "💊",
+        },
+        {
+          word: "Discretion",
+          phonetic: "/dɪˈskreʃn/",
+          definition: "Sự kín đáo, ý tứ",
+          context: "Discretion is half of this job.",
+          icon: "🤐",
+        },
+        {
+          word: "Room safe",
+          phonetic: "/ˈruːm ˌseɪf/",
+          definition: "Két sắt trong phòng",
+          context: "The room safe is the guest's to use, never ours.",
+          icon: "🔒",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I moved your papers to clean. They are in the drawer now.",
+          polite: "I cleaned around your papers, sir — nothing on the desk has been moved.",
+          rule: "Câu này bảo vệ bạn CHỈ KHI nó đúng. Nếu bạn có di chuyển bất cứ thứ gì, hãy nói đúng thứ bạn đã di chuyển và chỉ vào báo cáo phòng — một câu phủ nhận sai bị camera hoặc chính sổ ghi của bạn lật lại sẽ đắt hơn nhiều.",
+        },
+        {
+          rude: "You take many medicines, madam. Are you sick?",
+          polite: "Is there anything in the room you would rather I did not touch, madam?",
+          rule: "Không bao giờ bình luận về đồ cá nhân. Thay vào đó là MỘT câu hỏi trung tính, hỏi một lần, dùng cho cả kỳ lưu trú. (Lại là 'would rather + quá khứ' của tuần 31.)",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Here, take this — you have looked after us beautifully all week.",
+          targetResponse:
+            "You are very kind, madam. Thank you very much — I will let my supervisor know, as the hotel asks us to.",
+          helpTip:
+            "Nhận lời cảm ơn cho ấm, rồi THÔNG BÁO — không bao giờ xin phép khách để khai báo một khoản tiền, vì khách có thể nói 'không'. 'Supervisor' /ˈsuːpəvaɪzə/ — trọng âm đầu, bốn âm tiết. Đây là mẫu cho nhà theo quy định NHẬN-VÀ-KHAI-BÁO. Nhà từ chối tip thì mẫu là: 'You are very kind, madam — the hotel asks us not to accept it, but I will tell my supervisor how kind you have been.' Phong bì dán kín hoặc khoản lớn thì hỏi giám sát TRƯỚC khi nhận.",
+        },
+        {
+          guestPrompt: "You were the only person in my room today. My money is gone.",
+          targetResponse:
+            "I understand, madam. Everything I moved today is on my room report. May I call my supervisor now?",
+          helpTip:
+            "Ba bước, không hơn: hiểu lời khách, nói sự thật ngắn, gọi giám sát. 'Belongings' /bɪˈlɒŋɪŋz/ có cụm /ŋz/ cuối — đừng nuốt mất âm /z/. Không bao giờ tự mở túi hay xe đẩy khi chưa có người chứng kiến.",
+        },
+      ],
+      reading: {
+        text: "PRIVACY IN A ROOM YOU MUST ENTER\nYou will see everything: medicines, documents, money, letters. None of it is conversation, with a guest or with a colleague. Discretion is half of this job.\nClean around a guest's belongings. Never lift a bag to vacuum under it. Never gather papers into a pile, and never move medication to wipe a table.\nA prayer mat, a religious book, a small shrine: clean around it, never lift it, and never put a book on the floor.\nAn open flame is the one exception: report it as a fire matter the same hour, without touching anything and without saying a word to the guest. The Duty Manager speaks to the guest, not you.\nNever reach into a bin — tip it out. Anything sharp is reported, not handled.\nMoney and valuables stay exactly where they are — leave it as found. You never tidy them into a drawer 'for safety' — a helpful hand looks identical to a dishonest one on a camera. Something clearly fallen may be moved out of a doorway, in plain sight. Write it on the room report either way. A valuable is the exception: leave it, and call your supervisor before you touch it.\nTips are the one place where houses differ, so learn yours before your first floor. Money left WITH A NOTE is a tip everywhere. Money with no note is not your decision: leave it, and tell your Floor Supervisor.\nMoney put into your hand is a third case, and it is your house's rule, not yours. Some houses ask you to accept it and declare it. Some ask you to put it in the team box. Some ask you to decline politely. A sealed envelope, or any large sum, goes to your supervisor before you accept it.\nThe moment a guest suggests something is missing, you stop being alone in that conversation. Answer honestly, then call your supervisor to the room.\nA room that has kept Do Not Disturb up for twenty-four hours, with no sound inside, goes to your supervisor: the Duty Manager and Security open it together, never you and never alone.",
+        questions: [
+          {
+            q: "Nhìn thấy tiền mặt trên bàn làm việc thì làm gì?",
+            options: [
+              "Cất vào ngăn kéo cho an toàn rồi báo lại với khách sau đó",
+              "Để nguyên tại chỗ, dọn xung quanh, và ghi vào báo cáo phòng",
+              "Bỏ vào két sắt trong phòng và ghi lại giờ đã bỏ vào cẩn thận",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách nói có món đồ bị mất thì phản xạ đầu tiên là gì?",
+            options: [
+              "Gọi giám sát lên phòng, không đứng một mình trong cuộc trao đổi đó",
+              "Mở túi và xe đẩy cho khách xem ngay để chứng minh mình trong sạch",
+              "Mời khách xuống quầy lễ tân trình báo rồi chờ kết quả kiểm tra lại",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "My wife's ring was on the bathroom shelf yesterday and now it's on the desk. Who moved it?",
+          options: [
+            {
+              text: "It may well have been the night cleaner, sir — several of us go into the room each day.",
+              correct: false,
+            },
+            {
+              text: "Nobody on our team would ever touch guest jewellery, sir — it must have been somebody else entirely.",
+              correct: false,
+            },
+            {
+              text: "I did, sir — it had fallen by the door, so I put it on the shelf beside it and wrote it down.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt:
+            "I left fifty thousand dong on the pillow this morning. Did you see it when you cleaned?",
+          options: [
+            {
+              text: "I saw it, madam, and left it where it was. The room safe is there if you would rather lock it away.",
+              correct: true,
+            },
+            {
+              text: "I took it, madam, and thank you — money left on a pillow is always a tip for us.",
+              correct: false,
+            },
+            {
+              text: "I put it safely away inside the drawer for you, madam, so that it could not possibly go missing.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_32_3",
+      lessonOrder: 3,
+      titleEn: "Asking Instead of Guessing",
+      titleVi: "Hỏi thay vì đoán",
+      vocabulary: [
+        {
+          word: "Based on",
+          phonetic: "/ˈbeɪst ɒn/",
+          definition: "Dựa trên điều đã biết",
+          context: "Based on your note, I brought two extra towels.",
+          icon: "🧭",
+        },
+        {
+          word: "Fragrance-free",
+          phonetic: "/ˌfreɪɡrəns ˈfriː/",
+          definition: "Không mùi hương",
+          context: "We keep a fragrance-free cleaner for sensitive guests.",
+          icon: "🚫",
+        },
+        {
+          word: "Anti-allergy",
+          phonetic: "/ˌænti ˈælədʒi/",
+          definition: "Chống dị ứng (trên nhãn thường ghi 'hypoallergenic')",
+          context: "Anti-allergy bedding comes from the linen store.",
+          icon: "🌾",
+        },
+        {
+          word: "Suit you better",
+          phonetic: "/ˌsuːt juː ˈbetə/",
+          definition: "Hợp với khách hơn",
+          context: "Which pillow would suit you better, madam?",
+          icon: "🎯",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Everyone likes this room spray. I use it in all rooms.",
+          polite:
+            "Would a fragrance-free clean suit you better, madam, or shall I keep the room scent?",
+          rule: "Câu hỏi lựa chọn với 'or' để khách chọn mà không phải giải thích lý do — đặc biệt quan trọng với dị ứng và mùi hương. Nếu khách sạn bạn không có dòng sản phẩm không mùi, câu trung thực là 'Plain water on the floors today, madam, and no room scent at all.'",
+        },
+        {
+          rude: "I think maybe you have allergy, so I change everything.",
+          polite:
+            "Based on your note about dust, madam, may I ask the linen store for anti-allergy bedding tonight?",
+          rule: "Suy đoán về sức khoẻ là vùng cấm. Dẫn nguồn cụ thể ('your note about dust') rồi xin phép, và nêu mốc thời gian kho vải thật sự đáp ứng được.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The room smells strongly of cleaning products. It gives me a headache.",
+          targetResponse:
+            "I am sorry, madam. I will ask my supervisor to move you tonight, and the Duty Manager will know before my shift ends.",
+          helpTip:
+            "Triệu chứng của khách là việc của Duty Manager NGAY TRONG CA, không phải một yêu cầu dịch vụ. Và đừng tự hứa có phòng trống — 'I will ask my supervisor to move you'. 'Move' /muːv/ giữ trọn âm /v/ cuối.",
+        },
+        {
+          guestPrompt: "Do you have anything for someone who reacts to feathers?",
+          targetResponse:
+            "Based on what you have told me, sir, I will bring foam pillows today and ask the linen store.",
+          helpTip:
+            "Nói 'anti-allergy' khi giao tiếp; giữ 'hypoallergenic' để ĐỌC HIỂU trên nhãn — sáu âm tiết không nên đứng giữa ca bận.",
+        },
+      ],
+      reading: {
+        text: "WHEN TO ASK — THREE MOMENTS WORTH ONE QUESTION\nSmell and skin: cleaning products, room scent, detergent. Ask once, mark the profile, and use the fragrance-free line for that room until the guest leaves.\nSleep: pillow type, blanket weight, mattress topper. Offer the pillow menu by name — most houses keep three or four, and they can be changed the same evening. Ask your Executive Housekeeper for yours.\nTiming: when the room should be serviced. Ask on the first morning, not the third, and offer a window rather than a promise of a minute.\nWhat you never ask about: health, religion, who is staying in the room, why the guest is upset. Preferences are ours to ask; people are not.\nAnd one thing you never merely note: a guest who reports a headache, a rash or any reaction to something of ours is a Duty Manager matter the same shift. That is a medical record, not a cleaning preference. If a guest is struggling to breathe, it is not a shift matter at all — call the operator from the room phone at once.\nAsk your Executive Housekeeper what your hotel actually keeps: an anti-allergy bedding set, a fragrance-free cleaning line, or neither. Where a house has neither, what you can honestly promise is plain water on the floors, no room scent, and a move to another room.",
+        questions: [
+          {
+            q: "Ba việc đáng hỏi khách một câu là gì?",
+            options: [
+              "Sức khoẻ của khách, tôn giáo, và số người đang ở trong phòng",
+              "Mùi hương và da, chuyện ngủ nghỉ, và khung giờ dọn phòng",
+              "Nghề nghiệp, quốc tịch, và số đêm mà khách sẽ lưu lại đây",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách báo bị đau đầu vì mùi hoá chất của khách sạn thì sao?",
+            options: [
+              "Đây là việc phải báo Duty Manager ngay trong ca đó",
+              "Ghi vào hồ sơ phòng như một ý thích về mùi hương",
+              "Đổi hoá chất rồi theo dõi thêm vài ngày mới báo cáo",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Is that the same spray you use in every room? It sets my son off.",
+          options: [
+            {
+              text: "It is a very mild spray, sir — we have used it here for years and no guest has ever reacted.",
+              correct: false,
+            },
+            {
+              text: "I will use less of it in here, sir, so the smell is not as strong tomorrow.",
+              correct: false,
+            },
+            {
+              text: "No spray in this room from today, sir. My supervisor reports it to the Duty Manager.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "My skin reacts to almost everything. I'm nervous about hotel bedding, honestly.",
+          options: [
+            {
+              text: "Everything here is washed at a high temperature, madam, so there is really nothing to worry about.",
+              correct: false,
+            },
+            {
+              text: "A fragrance-free clean today, madam, and I will ask the linen store about anti-allergy bedding.",
+              correct: true,
+            },
+            {
+              text: "I understand completely, madam — perhaps you could use your own sheets from home during the week.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_32_4",
+      lessonOrder: 4,
+      titleEn: "Writing It Down for Tomorrow",
+      titleVi: "Ghi lại cho ngày mai",
+      vocabulary: [
+        {
+          word: "Guest profile",
+          phonetic: "/ˈɡest ˌprəʊfaɪl/",
+          definition: "Hồ sơ theo NGƯỜI — đi cùng khách sang lần lưu trú sau",
+          context: "A guest profile holds three lines, not three pages.",
+          icon: "🗂️",
+        },
+        {
+          word: "Wording",
+          phonetic: "/ˈwɜːdɪŋ/",
+          definition: "Cách chọn chữ khi ghi chép",
+          context: "The wording of a note matters as much as the fact.",
+          icon: "✍️",
+        },
+        {
+          word: "Factual",
+          phonetic: "/ˈfæktʃuəl/",
+          definition: "Nêu sự việc, không nêu ý kiến",
+          context: "Keep every note factual, never personal.",
+          icon: "📏",
+        },
+        {
+          word: "Carry over",
+          phonetic: "/ˌkæri ˈəʊvə/",
+          definition: "Chuyển tiếp sang ca hoặc lần lưu trú sau",
+          context: "Preferences carry over to the guest's next stay.",
+          icon: "➡️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Room 612 never lets us in. Impossible people.",
+          polite:
+            "Mr. Pham asked for service after eleven — it is on his guest profile, and it carries over to his next stay.",
+          rule: "Ghi SỰ VIỆC ('asked for service after eleven'), không ghi PHÁN XÉT — và ghi theo NGƯỜI, không theo số phòng, vì tuần sau phòng đó là của khách khác. Hồ sơ có thể được đọc to trong buổi họp khiếu nại, và đôi khi được đưa cho chính khách xem.",
+        },
+        {
+          rude: "It is written in your file, madam. We have a note about you.",
+          polite:
+            "Your cleaning time is set for eleven from tomorrow, madam — you will not have to say it again.",
+          rule: "Nói VIỆC BẠN ĐÃ LÀM, không nói việc bạn đã ghi. Chỉ khi khách tự hỏi 'tôi có phải nhắc lại không?' thì 'it is on file' mới là câu trấn an đúng — đúng như quầy lễ tân được dạy.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Last year somebody remembered our cleaning time. Nobody has this year.",
+          targetResponse:
+            "Based on what you told us last year, madam, service is after eleven from tomorrow. May I carry that over?",
+          helpTip:
+            "'Carry over' đọc nối /ˌkæri ˈəʊvə/, trọng âm rơi vào 'O'. XIN PHÉP rồi mới ghi — đặc biệt với thông tin sức khoẻ.",
+        },
+        {
+          guestPrompt:
+            "I told the morning girl about the carpet spray. Do I have to explain again?",
+          targetResponse: "You do not, madam — it is on file. No spray goes on that carpet again.",
+          helpTip:
+            "Đây là NGOẠI LỆ: khách tự hỏi có phải nhắc lại không, nên 'it is on file' chính là lời trấn an họ đang cần. 'File' /faɪl/ — âm /aɪ/ tròn, /l/ cuối phải chạm lợi, đừng thành 'phai'.",
+        },
+      ],
+      reading: {
+        text: "THE GUEST PROFILE — THREE LINES, WRITTEN WELL\nTwo files, not one. The GUEST profile follows the person between stays: pillow, allergies as they stated them, service window, whether turndown is wanted. The ROOM profile stays with the room: no carpet spray here, this bathroom holds damp, this balcony door sticks. Put a person's preference on a room and next week's guest inherits it — which is meaningless at best and, with an allergy, worse.\nWhat stays out: opinions about the guest, guesses about health, anything about visitors, and anything you would not read aloud to the guest's face. A security report is not a guest profile — somebody staying who is not on the booking goes to your supervisor, never onto this line.\nHealth details go on a profile only with the guest's agreement — ask, then write. They are never read aloud where another guest can hear.\nWording, tested three ways: is it factual, is it useful tomorrow, could the guest read it without being hurt? If a line fails any of the three, rewrite it.\nGood, on the GUEST file: 'service after 11:00; DND most mornings.' Good, on the ROOM file: 'no carpet spray.' Poor, anywhere: 'never lets us in.'\nPreferences carry over between stays. Who types them into the system differs by house — ask your Executive Housekeeper whether you write it or your supervisor does, how long your hotel keeps it, and who may read it.",
+        questions: [
+          {
+            q: "Ba câu kiểm tra một dòng ghi chú là gì?",
+            options: [
+              "Chính tả đã đúng chưa, câu đã đủ ngắn chưa, và ai là người ký xác nhận vào dòng ghi đó",
+              "Có phải sự việc không, mai còn dùng được không, khách đọc có tổn thương không",
+              "Ai là người đã viết dòng này, viết vào lúc mấy giờ trong ca, và ca nào sẽ đọc lại nó",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Cách ghi nào đạt chuẩn?",
+            options: [
+              "'Khách không bao giờ cho vào phòng, rất khó làm việc cùng'",
+              "'Khách hay phàn nàn, nên cẩn thận mỗi khi vào dọn phòng này'",
+              "Hồ sơ khách: 'Dọn sau 11:00; hay treo DND buổi sáng' — hồ sơ phòng: 'không xịt thảm'",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Every attendant this week has sprayed something on that carpet. I've asked three times.",
+          options: [
+            {
+              text: "I am sorry, madam. It goes on the room file now, and I will tell my supervisor you had to ask three times.",
+              correct: true,
+            },
+            {
+              text: "I will tell the other attendants myself, madam, so that every one of them remembers tomorrow.",
+              correct: false,
+            },
+            {
+              text: "We already have a note about you, madam, so somebody on the floor has not read it properly.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Do you write things about guests? I'd rather not be in some file somewhere.",
+          options: [
+            {
+              text: "Only what helps us serve you, madam — service times, and what you tell us yourself. Shall I ask my supervisor to come and explain?",
+              correct: true,
+            },
+            {
+              text: "Every single room has a file, madam, and we record whatever we happen to notice while cleaning.",
+              correct: false,
+            },
+            {
+              text: "We write nothing down at all, madam — the attendants simply remember their own floors by heart.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_34: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 34,
+  weekTitleEn: "Dressing a Room for an Occasion",
+  weekTitleVi: "Dựng phòng cho một dịp đặc biệt",
+  reviewWords: [
+    "Fresh flowers",
+    "Belongings",
+    "Discretion",
+    "Turndown time",
+    "Do Not Disturb",
+    "Courtesy call",
+    "Damage charge amount",
+    "Room inspection result",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_34_1",
+      lessonOrder: 1,
+      titleEn: "The Set-Up Slip Reaches the Floor",
+      titleVi: "Phiếu dựng phòng về tới tầng",
+      vocabulary: [
+        {
+          word: "Set-up slip",
+          phonetic: "/ˈset ʌp ˌslɪp/",
+          definition: "Phiếu yêu cầu dựng phòng từ lễ tân",
+          context: "Every set-up slip names the room and the hour.",
+          icon: "📋",
+        },
+        {
+          word: "Lead time",
+          phonetic: "/ˈliːd ˌtaɪm/",
+          definition: "Thời gian cần chuẩn bị trước",
+          context: "Flowers need a lead time of a full day.",
+          icon: "⏳",
+        },
+        {
+          word: "Allergies",
+          phonetic: "/ˈælədʒiz/",
+          definition: "Các trường hợp dị ứng",
+          context: "The slip must state any allergies before anything goes in.",
+          icon: "⚠️",
+        },
+        {
+          word: "Report back",
+          phonetic: "/rɪˌpɔːt ˈbæk/",
+          definition: "Báo lại cho bộ phận đã yêu cầu",
+          context: "I report back to whoever sent the slip, the moment the room is ready.",
+          icon: "↩️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Desk said petals. I do what I can.",
+          polite: "It is in hand, sir. I will report back to whoever sent it when it is done.",
+          rule: "Không đọc lại nội dung phiếu cho bất kỳ ai — kể cả người bạn nghĩ là đã đặt. Còn GIỜ thì tách làm hai: lead time của tầng ('fruit and a card take an hour') nói thẳng được; nhưng GIỜ GIAO mà quầy đã hứa với khách thì tuyệt đối không nhắc lại. Bạn chỉ xác nhận phiếu đã tới tay mình: 'it is in hand'. Lưu ý cấu trúc: sau 'when' chỉ tương lai, động từ ở HIỆN TẠI ĐƠN — 'when it is done', không phải 'when it will be done'.",
+        },
+        {
+          rude: "Flowers in one hour? Impossible, nobody told me.",
+          polite: "Flowers need a full day, sir. May I ask the desk what we can do for tonight?",
+          rule: "Nêu LEAD TIME thật rồi mở một lối đi tiếp. Hứa cái không kịp làm còn tệ hơn nói không kịp ngay từ đầu.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "It's my wife's birthday tonight. Could the room look special when we come back?",
+          targetResponse:
+            "How lovely, sir. May I pass that to the desk? They will take the details — and what time will you be out of the room?",
+          helpTip:
+            "Chuyển yêu cầu về quầy, rồi chỉ hỏi đúng thứ thuộc về tầng: GIỜ phòng trống. Dị ứng là câu hỏi của quầy khi nhận đơn — bạn đọc nó trên phiếu. 'Details' /ˈdiːteɪlz/ — trọng âm ở âm tiết đầu.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations here — 906 wants petals and balloons for tonight. Can the floor take it?",
+          speakerRole: "colleague",
+          targetResponse:
+            "I can do petals and towel art by six. Balloons need a full day's lead time — shall we set the cue with the desk?",
+          helpTip:
+            "Đây là ĐỒNG NGHIỆP hỏi, nên dùng đúng từ nghề: 'lead time' và 'cue'. Ra tới hành lang thì bỏ cả hai — khách chỉ nghe một lý do bình thường. 'Cue' /kjuː/ — một âm tiết, đọc đúng như chữ 'Q'.",
+        },
+      ],
+      reading: {
+        text: "AN OCCASION SET-UP — WHAT THE SET-UP SLIP MUST CARRY\nA set-up slip that is missing any of these six is not ready to work from.\n1. Room number, and the occasion.\n2. GUESTS OUT — the hour the room will be empty, not the hour of the dinner. A set-up starts in an empty room, and the desk sets your cue from it.\n3. What the desk has promised the guest, word for word.\n4. WHO SENT IT — the desk or Guest Relations — and who promised it, by name, and WHO ALREADY KNOWS. You report back to whoever sent the slip, not always to the desk. If it does not say, you say nothing until whoever sent the slip tells you.\n5. Allergies and anything with a scent. Ask before flowers or petals enter the room.\n6. WHO PAYS. The card, the petals and the fruit plate are the house's, once per stay. A cake, wine, flowers or balloons go on the room, and the DESK states the price before anything is ordered. The floor never takes a paid order and never says 'of course' to one.\nLead times are real, and they sit inside what the desk promises. Petals and towel art take fifteen minutes once the room is empty. Fruit and a card take an hour, a small cake four hours, and flowers, balloons or any decoration beyond petals a full day. Say the floor's own lead time plainly — 'flowers need a day'. Never quote a DELIVERY hour the desk promised: that hour is the desk's to give.\nNever start while the guests are in the room, and never enter a room showing Do Not Disturb to set one up. Send that question back to the desk.\nReport back when the room is finished, so the desk can time the guests' return.\nCUE and LEAD TIME are our words, for the floor and the desk. A guest hears an ordinary reason, or hears that it is in hand — never the word itself. The desk calls it the trigger and the floor says the cue; they are the same moment.\nThe lead times above are one hotel's. Ask your Executive Housekeeper for yours.",
+        questions: [
+          {
+            q: "Giờ ghi trên phiếu phải là giờ nào?",
+            options: [
+              "Giờ khách bắt đầu bữa tối ở nhà hàng của khách sạn",
+              "Giờ khách rời khỏi phòng, vì phải phòng trống mới dựng được",
+              "Giờ nhân viên buồng phòng kết thúc ca làm việc hôm đó",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Phòng đang treo Do Not Disturb mà có yêu cầu dựng phòng thì sao?",
+            options: [
+              "Chuyển câu hỏi ngược lại cho quầy lễ tân, không tự vào phòng",
+              "Gõ cửa nhẹ và giải thích rằng đây là yêu cầu đặc biệt của khách",
+              "Vào thật nhanh trong năm phút vì đây là điều bất ngờ cho khách",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Can you have the room ready with fruit and a card by seven? We're going out now.",
+          options: [
+            {
+              text: "Fruit and a card take an hour, madam. Shall I ask the desk to confirm the hour with you?",
+              correct: true,
+            },
+            {
+              text: "Yes, madam — I will have flowers, petals and a card waiting for you at seven tonight.",
+              correct: false,
+            },
+            {
+              text: "I am afraid that is a Front Desk matter entirely, madam — please call them from your room.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "I ordered something for my husband and nobody has told you, have they?",
+          options: [
+            {
+              text: "I am sure the desk will send something down before this evening, madam, so please do not worry.",
+              correct: false,
+            },
+            {
+              text: "It is with me, madam — it is in hand, and I will report back to whoever sent it.",
+              correct: true,
+            },
+            {
+              text: "Nothing has reached our floor yet, madam, but these things usually arrive in the end anyway.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_34_2",
+      lessonOrder: 2,
+      titleEn: "What May Go Into a Room",
+      titleVi: "Thứ gì được phép vào phòng",
+      vocabulary: [
+        {
+          word: "Rose petals",
+          phonetic: "/ˈrəʊz ˌpetlz/",
+          definition: "Cánh hoa hồng rắc trang trí",
+          context: "Rose petals go on the bed and along the rim of the bath, never on a floor.",
+          icon: "🌹",
+        },
+        {
+          word: "Towel art",
+          phonetic: "/ˈtaʊəl ˌɑːt/",
+          definition: "Khăn gấp tạo hình",
+          context: "Towel art takes fifteen minutes and delights children.",
+          icon: "🦢",
+        },
+        {
+          word: "LED candle",
+          phonetic: "/ˌel iː ˈdiː ˌkændl/",
+          definition: "Nến điện tử, không có lửa",
+          context: "We use an LED candle in every room set-up.",
+          icon: "🕯️",
+        },
+        {
+          word: "Latex balloon",
+          phonetic: "/ˈleɪteks bəˌluːn/",
+          definition: "Bóng bay cao su — có người dị ứng",
+          context: "The slip must name a latex balloon before it enters the room.",
+          icon: "🎈",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No candles. Fire rule. That is all.",
+          polite:
+            "Real flames are not allowed in the rooms, madam — our LED candles look the same in photographs.",
+          rule: "Bị động quy định 'are not allowed' đặt lệnh cấm vào khách sạn chứ không vào bạn — không ai cãi nhau với một quy định. Rồi đưa ngay phương án tương đương.",
+        },
+        {
+          rude: "Petals everywhere. Very romantic, I put a lot.",
+          polite:
+            "Petals on the bed and by the bath, sir — I keep the floor clear so nobody slips.",
+          rule: "Mô tả CHÍNH XÁC nơi sẽ đặt, kèm một lý do an toàn ngắn. Buồng phòng dựng cảnh đẹp nhưng vẫn phải nghĩ tới sàn ướt.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "We would like to light a little incense in the room this evening, for my mother.",
+          targetResponse:
+            "I am so sorry, madam — nothing that burns is allowed in the rooms, because of the fire system. May I ask my supervisor to come up?",
+          helpTip:
+            "Ở Việt Nam, xin thắp hương gần như luôn là việc lễ — đừng đáp lại bằng một cây nến LED. Từ chối bằng QUY ĐỊNH, rồi đưa việc lên giám sát ngay. 'Burns' /bɜːnz/ — đuôi /nz/ đọc rõ.",
+        },
+        {
+          guestPrompt: "Could you run a bath for us, so it's ready when we come back up?",
+          targetResponse:
+            "A bath is my supervisor's to arrange, madam. May I ask her to call you about the hour? We never leave one standing in an empty room.",
+          helpTip:
+            "Từ chối bằng THẨM QUYỀN, rồi một lý do an toàn ngắn — đúng khung mà cặp ngữ pháp về cánh hoa của bài này đã dùng. Nước nóng để lâu trong phòng trống là bỏng, là trẻ nhỏ, và là tràn xuống tầng dưới. 'Standing' /ˈstændɪŋ/ — đuôi /ŋ/ đừng bật thành /ŋɡ/.",
+        },
+      ],
+      reading: {
+        text: "WHAT MAY GO INTO A ROOM — AND WHAT MAY NOT\nYES: rose petals, towel art, an LED candle, a card, fruit, chocolates, and air-filled balloons — never helium, because a floating balloon reaches the smoke detector and the sprinkler head. Balloons still need a full day.\nNO, in every room and for every occasion: real flames, incense, sparklers, and glitter that blocks a drain.\nA DRAWN BATH is not ours to run alone. Your Floor Supervisor arranges it with the desk, at the hour and the temperature your house sets, and never at all when a child is in the room.\nCHECK THE SLIP FIRST: it must state allergies before petals, scent, fruit or chocolate, and latex before balloons. If it does not say, you do not set it — you send it back to the desk, and you do not ask the guest yourself.\nThe DESK asks the age and the allergies when it takes the order — that is why the slip, and not the guest, is where you look.\nA CHILD IN THE ROOM CHANGES THE LIST: no latex where a child under eight sleeps, no scent at all, and no drawn bath. It is the burst pieces that choke, not the balloon.\nNEVER, IN ANY ROOM: petals on a floor, and nothing loose on a bathroom floor. A wet petal is the commonest fall in this hotel.\nOccasions are not only birthdays. A milestone birthday for an elder, a baby's first month, a family memorial: ask the desk which it is, because the flowers change with it. White chrysanthemums belong at a memorial and nowhere else.\nIf a guest ASKS for incense — and in Viet Nam that is usually a memorial or a full-month rite, not decoration — do not answer with a candle. Say 'I am so sorry, madam — nothing that burns is allowed in the rooms, because of the fire system.'\nThen ask your supervisor to come up. Your supervisor takes it to the Duty Manager, and there may be a place in the house where it can be done properly. Incense already burning is not a conversation: report it as a fire matter the same hour, and let the Duty Manager speak to the guest, as in week thirty-two.\nPhotograph the decorated area only, never a guest's belongings, on the department device. If your house has none, write what you set on the slip.\nAsk your Executive Housekeeper before you promise anything that burns, floats or sticks.",
+        questions: [
+          {
+            q: "Phòng có trẻ dưới tám tuổi thì bỏ những thứ nào?",
+            options: [
+              "Bóng bay cao su, mọi thứ có mùi thơm, và không xả sẵn bồn tắm",
+              "Nến LED, thiệp chúc mừng, và đĩa trái cây tươi cắt sẵn",
+              "Khăn gấp hình thú, thiệp chúc mừng, và nến LED để trên bàn",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Được chụp cái gì, và bằng máy nào?",
+            options: [
+              "Toàn bộ căn phòng, bằng điện thoại cá nhân của nhân viên dọn",
+              "Chỉ khu vừa trang trí, bằng máy của bộ phận, không chụp đồ khách",
+              "Cả phòng lẫn đồ khách, để làm bằng chứng nếu sau này mất đồ",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "It's our tenth anniversary. Can you make the bathroom really romantic — candles, the works?",
+          options: [
+            {
+              text: "Certainly, madam — a few small candles by the bath will be lit just before you come back up.",
+              correct: false,
+            },
+            {
+              text: "Rose petals along the bath and our LED candles, madam — real flames are not allowed.",
+              correct: true,
+            },
+            {
+              text: "Romantic bathrooms are quite difficult for our team, madam — perhaps the bedroom would be better?",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My son wants the room full of balloons for tomorrow. Can you manage that?",
+          options: [
+            {
+              text: "Of course, sir — I will fill the room with balloons and have it all finished well before four.",
+              correct: false,
+            },
+            {
+              text: "Latex balloons are the desk's to arrange, sir — may I ask them to call you about the room?",
+              correct: true,
+            },
+            {
+              text: "Balloons are quite easy, sir — I will bring some up with the towels this afternoon.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Front desk — is 906 set? The guests are finishing dessert.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Not yet, but I will set it now and put a note on the slip about the allergies.",
+              correct: false,
+            },
+            {
+              text: "The slip has no allergy line, so I cannot set it yet. May I hold it while you ask them?",
+              correct: true,
+            },
+            {
+              text: "I will knock and ask the guests myself, and then I can start the room straight away.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_34_3",
+      lessonOrder: 3,
+      titleEn: "Setting a Room Without Being Seen",
+      titleVi: "Dựng phòng mà không bị bắt gặp",
+      vocabulary: [
+        {
+          word: "Cue",
+          phonetic: "/kjuː/",
+          definition: "Tín hiệu bắt đầu, hẹn trước với quầy lễ tân",
+          context: "The desk gives the cue when the guests leave the lobby.",
+          icon: "🤙",
+        },
+        {
+          word: "Sign for",
+          phonetic: "/ˈsaɪn fə/",
+          definition: "Ký nhận trách nhiệm về một món đồ",
+          context: "My supervisor must sign for a guest's ring.",
+          icon: "✍️",
+        },
+        {
+          word: "Unattended",
+          phonetic: "/ˌʌnəˈtendɪd/",
+          definition: "Không có người trông",
+          context: "A set-up room is never left unattended with the door open.",
+          icon: "🚷",
+        },
+        {
+          word: "Low-key",
+          phonetic: "/ˌləʊ ˈkiː/",
+          definition: "Kín đáo, không phô trương",
+          context: "Keep the answer low-key if the guests come back early.",
+          icon: "🤫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You came back too early! Your husband asked me to do a surprise!",
+          polite: "I am just finishing your room, madam — may I have ten more minutes?",
+          rule: "Câu cứu điều bất ngờ: MỘT lý do bình thường + xin thêm thời gian. Không bao giờ nhắc tới người đã đặt, tới dịp, hay tới ba chữ birthday, anniversary, surprise.",
+        },
+        {
+          rude: "Sorry, no time now. Maybe later, maybe tomorrow.",
+          polite: "Shall I come back after your dinner, sir, and finish everything then?",
+          rule: "Đề nghị dời giờ dưới dạng câu hỏi có mốc cụ thể. 'Maybe' làm hỏng cả buổi tối của người đang lên kế hoạch cho nó.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Could you put this ring on her pillow for me? Here, take it.",
+          targetResponse:
+            "I am not allowed to carry that myself, sir. May I ask my supervisor to come up and sign for it?",
+          helpTip:
+            "Không bao giờ nhận đồ có giá trị của khách một mình — từ chối bằng QUY TRÌNH, không bằng lời từ chối. 'Sign' /saɪn/ — chữ 'g' hoàn toàn câm.",
+        },
+        {
+          guestPrompt: "Is my husband up to something? You're being very mysterious.",
+          targetResponse:
+            "I could not say, madam — I am only finishing your room. May I have ten more minutes?",
+          helpTip:
+            "Chệch hướng thì được, PHỦ NHẬN SAI thì không — một câu phủ nhận bị phiếu dựng phòng lật lại sẽ đắt hơn nhiều. Báo quầy là việc bạn làm SAU KHI ra khỏi phòng, đừng nói ý định đó ra trong phòng. 'Minutes' /ˈmɪnɪts/ — đuôi /ts/ đọc gọn.",
+        },
+      ],
+      reading: {
+        text: "A SET-UP THE GUESTS MUST NOT SEE\nWork in an order you can stop at any moment. Do the parts a guest may walk in on first — a tidy room, fresh water, folded towels — and the parts that give it away last. Then an early return costs ten minutes, not the evening.\nThe door stays open while you work, and the trolley stays across it. A set-up changes nothing about that rule: you do not work behind a closed door with a guest in the room.\nThe trolley itself carries nothing loose: the section key never waits on it, and chemicals stay on the locked shelf. A trolley left in a corridor is the easiest thing in this hotel to steal from.\nIf you must step away, the door is closed and LOCKED behind you. A set-up room is never left unattended with the door open: gifts go missing, and the attendant is the one asked about it.\nA guest's own ring or envelope never travels on a trolley. Your supervisor signs for it, and two people place it.\nAgree the cue with the desk, never with the guest who ordered it. Never text a guest.\nIf they walk in: name an ordinary task, ask for a few more minutes, keep it low-key. Never say birthday, anniversary or surprise.\nIf the guest who must not know starts asking, you tell WHOEVER SENT THE SLIP — never the guest, and never the other way round.\nSteering away is allowed; a false denial is not. 'I could not say, madam' survives being checked; a denial does not.\n'I could not say' is for a question about the occasion. A question about the room itself gets a plain, true answer.\nIf a guest asks you to leave, you leave at once and tell the desk. What you did still goes on the room report.\nWho agrees the cue, and whether you may wait outside a room, differs by house. Ask your Floor Supervisor.",
+        questions: [
+          {
+            q: "Nên dựng phòng theo thứ tự nào?",
+            options: [
+              "Làm phần bình thường trước, phần lộ bí mật để sau cùng",
+              "Làm phần bí mật trước để chắc chắn kịp giờ đã hẹn",
+              "Làm nhanh tất cả cùng lúc để rút ngắn thời gian trong phòng",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không để phòng đang dựng mở cửa mà không có người?",
+            options: [
+              "Vì quà của khách có thể mất, và nhân viên là người bị hỏi tới",
+              "Vì gió hành lang sẽ thổi bay cánh hoa đã rắc lên giường",
+              "Vì quy định phòng cháy không cho phép mở cửa phòng khách",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "You've been in there twenty minutes. Is something wrong with our room?",
+          options: [
+            {
+              text: "There is something being prepared for you, sir, but I really cannot say what it is now.",
+              correct: false,
+            },
+            {
+              text: "I would have to ask the front desk about that, sir — they know more than we do.",
+              correct: false,
+            },
+            {
+              text: "Nothing at all, sir — I am just finishing in your room. Five minutes and I am gone.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "My wife is coming up in five minutes. Is it all ready?",
+          options: [
+            {
+              text: "It is in hand, sir — the desk has the timing and will confirm with you.",
+              correct: true,
+            },
+            {
+              text: "Almost ready, sir — I will finish the last few things while she is unpacking her bags.",
+              correct: false,
+            },
+            {
+              text: "Not quite, sir — perhaps you could keep her downstairs a little longer for me tonight?",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "We're back and there's nothing here. My husband arranged all this days ago.",
+          options: [
+            {
+              text: "The desk must have forgotten, madam — I will go down and find out what happened.",
+              correct: false,
+            },
+            {
+              text: "I am very sorry, madam. May I ask the desk and the duty manager to come up to you now?",
+              correct: true,
+            },
+            {
+              text: "Nothing has reached our floor at all, madam, so there is really nothing I can do.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Just pull the door to while you finish — I don't want her seeing it from the corridor.",
+          options: [
+            {
+              text: "Of course, sir — I will close it over and be as quick as I possibly can for you.",
+              correct: false,
+            },
+            {
+              text: "I have to keep the door open while I work, sir — that is our rule for every room.",
+              correct: true,
+            },
+            {
+              text: "I will pull it almost shut, sir, and finish the last of it in five minutes flat.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_34_4",
+      lessonOrder: 4,
+      titleEn: "The Morning After",
+      titleVi: "Buổi sáng sau bữa tiệc",
+      vocabulary: [
+        {
+          word: "Reset",
+          phonetic: "/ˈriːset/",
+          definition: "Lượt dọn trả phòng về đúng tiêu chuẩn ban đầu",
+          context: "A celebration adds forty minutes to the reset.",
+          icon: "♻️",
+        },
+        {
+          word: "Congratulations",
+          phonetic: "/kənˌɡrætʃuˈleɪʃnz/",
+          definition: "Lời chúc mừng",
+          context: "Congratulations on your golden anniversary, madam.",
+          icon: "🎉",
+        },
+        {
+          word: "On behalf of",
+          phonetic: "/ɒn bɪˈhɑːf əv/",
+          definition: "Thay mặt cho",
+          context: "On behalf of the housekeeping team, congratulations, madam.",
+          icon: "🎊",
+        },
+        {
+          word: "Chargeable",
+          phonetic: "/ˈtʃɑːdʒəbl/",
+          definition: "Thuộc diện có thể bị tính phí",
+          context: "Only the Duty Manager decides what is chargeable.",
+          icon: "🧾",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Congrats! How many years is it? You two do not look old enough for that.",
+          polite:
+            "On behalf of the housekeeping team, congratulations on your anniversary, madam — we hope the year ahead is kind.",
+          rule: "Một lời chúc trang trọng chỉ có MỘT câu, và khung là 'On behalf of + bộ phận, congratulations'. Phần 'on + dịp' CHỈ thêm khi khách đã tự gọi tên dịp đó; chưa nghe thì dừng lại ở 'congratulations'. Và nếu khách chưa nói gì cả thì bạn chỉ chào buổi sáng — tuần này đã dạy rằng một 'occasion' có thể là lễ giỗ.",
+        },
+        {
+          rude: "You made this mess, madam. Somebody will have to pay for it.",
+          polite:
+            "Please do not think of it, madam — that is what the room was dressed for. Thank you for telling me.",
+          rule: "Phân biệt HẬU QUẢ CỦA DỊCH VỤ (không tính phí) với HƯ HỎNG THẬT (quản lý quyết). Nhân viên buồng phòng không bao giờ tự nói tới tiền với khách. Trong tổ thì 'reset' là danh từ, trọng âm âm tiết đầu /ˈriːset/; làm động từ thì ngược lại, /ˌriːˈset/.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Sorry about the state of the room — we had a bit of a celebration.",
+          targetResponse:
+            "Please do not think of it, madam — that is what the room was dressed for. On behalf of the housekeeping team, congratulations.",
+          helpTip:
+            "Xoá cảm giác áy náy của khách rồi thôi — và đừng nói 'reset' với khách, đó là từ của tầng. 'Dressed' /drest/ — đuôi /st/ đọc gọn, không tách thành hai âm tiết.",
+        },
+        {
+          guestPrompt: "There's candle wax on the desk. Are we going to be charged for that?",
+          targetResponse:
+            "That is not my decision, madam — I will photograph the mark now, and my supervisor will come to see it today.",
+          helpTip:
+            "Không hứa miễn phí, không doạ tính phí. Nói QUY TRÌNH và THỜI HẠN — hai thứ bạn thật sự kiểm soát được. 'Photograph' /ˈfəʊtəɡrɑːf/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "THE ROOM AFTER A CELEBRATION — RESET, NOT BLAME\nBefore anything else, look for glass. Broken glass: cut-resistant gloves on, never bare hands, and never into a bin bag at all. A bag does not stop glass, and the next hands on that bag are a colleague's. Sweep it with a dustpan into a rigid box, label it GLASS, and write it on the room report. Anything wet from a body you do not touch at all: you report it, and your supervisor decides who clears it.\nThen strip the decoration: petals, paper hearts, balloons, cards. Put aside anything the guests may want to keep — cards, ribbons, a photograph — and leave those on the desk. If they have already checked out, nothing is left on a desk: it goes to Lost & Found.\nA dressed room takes longer to reset. Say so early, with a number: a longer reset is planned in minutes, not discovered at inspection.\nNEVER CHARGEABLE: petals and paper hearts from our own set-up; extra linen from a party; an untidy room; normal wear on anything.\nPOSSIBLY CHARGEABLE, and only by the Duty Manager, who has seen the evidence: a burn, a wax mark, a broken item, a stain that survives professional cleaning, a smoking penalty.\nThree steps, and all three are yours: notice it, photograph it on the department device, report it. If your house has no device, write the mark, its size and the hour on the room report, and ask your supervisor to see it before you clean it. A fresh liquid spill is the one you treat before you photograph; anything dried or burned you photograph first. You never quote a figure to a guest, and you never promise there will be no charge.\nWrite the reset time on the slip. A department that measures its celebrations can promise them honestly next season.\nWhat is chargeable and what is not is one hotel's list. Ask your Executive Housekeeper for yours.",
+        questions: [
+          {
+            q: "Việc đầu tiên khi dọn phòng sau tiệc là gì?",
+            options: [
+              "Tìm mảnh thuỷ tinh vỡ và vết dịch, đeo găng vào đã",
+              "Gỡ trang trí, để riêng thứ khách có thể muốn giữ lại",
+              "Hút bụi thảm thật kỹ để lấy hết giấy vụn còn sót lại",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khoản nào KHÔNG bao giờ bị tính phí?",
+            options: [
+              "Vết cháy trên khăn trải giường do khách gây ra trong đêm",
+              "Vết bẩn không tẩy được dù đã giặt là chuyên nghiệp kỹ càng",
+              "Cánh hoa và tim giấy từ chính phần dựng phòng của khách sạn",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "We spilled a whole bottle of wine on the carpet last night. Are we in trouble?",
+          options: [
+            {
+              text: "I am afraid so, madam — a carpet stain like that is normally charged to the room on your departure day.",
+              correct: false,
+            },
+            {
+              text: "I am glad you told me, madam — I will photograph it and treat it now. Only a manager decides what is chargeable.",
+              correct: true,
+            },
+            {
+              text: "Do not worry at all, madam — an accident like this one is never charged to any guest staying here.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "How long until our room is ready? We booked it again for tonight.",
+          options: [
+            {
+              text: "It will be a while yet, madam — a room like this always takes us far longer than usual.",
+              correct: false,
+            },
+            {
+              text: "A room like this takes us about forty minutes longer, madam — the desk will confirm the time.",
+              correct: true,
+            },
+            {
+              text: "You will have to ask downstairs, madam — room times are really nothing to do with us.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "One of the glasses went over last night. Just leave it, we'll be out in ten minutes.",
+          options: [
+            {
+              text: "Of course, madam — I will come back and sweep it up after you have both gone out.",
+              correct: false,
+            },
+            {
+              text: "Please do not walk there without shoes, madam — may I clear the glass now, with gloves?",
+              correct: true,
+            },
+            {
+              text: "It is no trouble at all, madam, I will pick the big pieces up by hand right now.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "We had family here last night, for my father.",
+          options: [
+            {
+              text: "On behalf of the housekeeping team, congratulations, madam — I hope it was a lovely evening.",
+              correct: false,
+            },
+            {
+              text: "Good morning, madam. I will put the room back quietly — please tell me what should stay.",
+              correct: true,
+            },
+            {
+              text: "How nice, madam. Shall I bring some fresh flowers up for the room this morning?",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_35: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 35,
+  weekTitleEn: "Trading the Hour, Not the Standard",
+  weekTitleVi: "Đổi giờ dọn, không đổi tiêu chuẩn",
+  reviewWords: [
+    "Compensation",
+    "Surcharge",
+    "Guest profile",
+    "Minibar charge",
+    "Chargeable",
+    "Policy",
+    "Damaged linen charge",
+    "Report back",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_35_1",
+      lessonOrder: 1,
+      titleEn: "The Hour the Guest Wants",
+      titleVi: "Khung giờ khách muốn",
+      vocabulary: [
+        {
+          word: "Service window",
+          phonetic: "/ˈsɜːvɪs ˌwɪndəʊ/",
+          definition: "Khoảng giờ dọn phòng đã hẹn",
+          context: "I write the service window on the guest's profile the same day.",
+          icon: "🕐",
+        },
+        {
+          word: "Fit you in",
+          phonetic: "/ˌfɪt jə ˈɪn/",
+          definition: "Xếp được khách vào lịch",
+          context: "I can fit you in at four, sir.",
+          icon: "🧩",
+        },
+        {
+          word: "However",
+          phonetic: "/haʊˈevə/",
+          definition: "Tuy nhiên — bước ngoặt lịch sự giữa hai vế",
+          context: "However, we can look at another hour for you.",
+          icon: "↪️",
+        },
+        {
+          word: "Skip a day",
+          phonetic: "/ˌskɪp ə ˈdeɪ/",
+          definition: "Bỏ qua một ngày không dọn",
+          context: "Some guests skip a day — but never two without a check.",
+          icon: "📆",
+        },
+      ],
+      grammar: [
+        {
+          rude: "We clean nine to four. Your time is not possible.",
+          polite:
+            "Five o'clock is past the end of my shift, sir. However — what if I came at half past three, or a colleague on the late clean came at five?",
+          rule: "Khung đàm phán của tuần: giữ giới hạn + 'however' + 'what if…'. 'What if' + quá khứ đơn ('came', 'left') nghe mềm và giả định hơn; hiện tại đơn cũng đúng nhưng trực tiếp hơn — cả hai đều được, miễn là đừng trộn hai thì trong cùng MỘT câu. Buồng phòng đổi được LỊCH, không đổi được TIÊU CHUẨN.",
+        },
+        {
+          rude: "You always say later. Then the room is never clean.",
+          polite:
+            "Shall we say four o'clock each day, madam? I will keep that hour for you, in exchange for the later time.",
+          rule: "'In exchange for' đổi GIỜ lấy GIỜ — khách nhận khung giờ mình muốn, khách sạn nhận quyền vào muộn hơn. Đừng bao giờ đặt lần dọn trọn vẹn vào vế khách nhận: đó là tiêu chuẩn, không phải nhượng bộ.",
+        },
+        {
+          rude: "No! I cannot close door. Not allowed.",
+          polite:
+            "I have to keep the door open while I am working, madam — that is our rule for every room.",
+          rule: "Cửa mở là quy tắc bảo vệ CHÍNH BẠN, và nó không đổi vì bất kỳ thoả thuận giờ giấc nào. Đặt lệnh cấm vào khách sạn ('that is our rule'), đừng đặt vào mình — không ai cãi nhau với một quy định.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Floor supervisor. You called — what happened?",
+          speakerRole: "colleague",
+          targetResponse:
+            "I have come out of 1204. The guest said something to me, and I am not going back in.",
+          helpTip:
+            "Đây là GIÁM SÁT hỏi. Báo cáo bằng ba sự thật, không bằng cảm xúc: tôi đã ra khỏi phòng nào, chuyện gì, và tôi không vào lại. Ai vào lại là việc của giám sát. 'Guest' /ɡest/ — cụm /st/ cuối đọc gọn.",
+        },
+        {
+          guestPrompt: "Just don't clean at all this week. We'll manage on our own.",
+          targetResponse:
+            "For today, of course, madam. However — after two days somebody must look in for safety, and that is one rule I am not able to move. What if I came every second day?",
+          helpTip:
+            "Nhận lời cho HÔM NAY, rồi NÓI RA ràng buộc 48 giờ — đây là quy trình an toàn khách được biết, không phải hạn mức nội bộ phải giấu. 'Second' /ˈsekənd/ — ở đây là số thứ tự, trọng âm âm tiết đầu.",
+        },
+        {
+          guestPrompt: "Come here a moment — you're a pretty one, aren't you?",
+          targetResponse: "I am stepping outside now, sir.",
+          helpTip:
+            "Một hơi, một câu, rồi đi. Thì hiện tại tiếp diễn nghĩa là ĐANG XẢY RA, không phải đang xin phép — đừng dùng 'excuse me', người Việt học nó như câu mở lời. Và đừng nói trước trong phòng rằng bạn sắp gọi ai: người vừa gạ gẫm có lý do để ngăn cuộc gọi đó. 'Stepping' /ˈstepɪŋ/ — đuôi /ŋ/ đừng bật thành /ŋɡ/.",
+        },
+      ],
+      reading: {
+        text: "WHAT MOVES AND WHAT DOES NOT — HOUSEKEEPING\nWHAT MOVES: the hour, the order of the floor, which attendant comes, whether you skip a day, whether towels are left at the door.\nWHAT NEVER MOVES: the standard of the clean, the safety checks, and what goes on the record. A shorter visit is a smaller job done fully, not a lighter one.\nThe safety checks, every visit: the kettle and its socket, the balcony door, any smell of burning, the smoke detector, and the safe left exactly as the guest left it. Those five happen even in ten minutes.\nTowels at the door are a delivery, not a visit: the five checks did not happen, so the forty-eight-hour clock keeps running. Write it down as no entry.\nAND ONE RULE THAT NEVER MOVES FOR YOU. While a guest is in the room the door stays open and the trolley stays across it. A guest who asks you to close it, or who crosses the line with you — hands or words — is not yours to handle alone: you step out, and your supervisor comes. An agreed hour never means an agreed room with the door shut.\nA room may skip a day. It may not skip two: after forty-eight hours with no entry, your supervisor arranges a check. And a room with Do Not Disturb showing and no sound inside goes to your supervisor after twenty-four hours, not forty-eight — the Duty Manager and Security open that one together, never you.\nEvery no travels with a what-if: 'Five is past the end of my shift. However — what if I came at four?' Then write the window down.\nA guest who takes a later slot gets the full service, in exchange for the later hour.\nWrite the agreed window on the guest's profile the same day. A schedule that lives in one head disappears on that attendant's day off.\nThe evening team folds back beds and closes curtains; they do not clean rooms, so never promise their hour for a clean. A late clean is a cleaning shift and the evening team is not — ask your Floor Supervisor whether your house runs one, and until what hour.\nShift hours differ by hotel. Ask your Floor Supervisor what your house can promise.",
+        questions: [
+          {
+            q: "Thứ gì KHÔNG bao giờ được đem ra đổi?",
+            options: [
+              "Giờ dọn phòng và thứ tự các phòng trong cùng một tầng",
+              "Tiêu chuẩn của lần dọn và các bước kiểm tra an toàn",
+              "Việc để khăn sạch ở cửa thay cho việc vào phòng dọn",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Vì sao phải ghi khung giờ đã thoả thuận vào hồ sơ khách?",
+            options: [
+              "Vì giám sát tầng cần đếm số lần đổi lịch trong tuần đó",
+              "Vì khách thường quên mất khung giờ chính mình đã chọn",
+              "Vì lịch nằm trong đầu một người sẽ mất vào ngày người đó nghỉ",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "I sleep until noon. Every day someone knocks at nine. Sort it out, please.",
+          options: [
+            {
+              text: "I can fit you in after one, madam. If a day suits you better than every day, tell me the night before.",
+              correct: true,
+            },
+            {
+              text: "I am sorry, madam. Our floor is always cleaned in strict room order, so nine is simply when we get to you.",
+              correct: false,
+            },
+            {
+              text: "Please hang the Do Not Disturb sign every night, madam, and we will simply skip your room.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Could you do just ten minutes now? I've got a call at half past.",
+          options: [
+            {
+              text: "Ten minutes is not really enough for a room, madam — may I come back this afternoon instead?",
+              correct: false,
+            },
+            {
+              text: "Ten minutes now, madam. However — what if I came back at four for the rest of it?",
+              correct: true,
+            },
+            {
+              text: "Of course, madam — ten minutes is plenty of time for me to do the whole room properly for you.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Four o'clock, we agreed. It is half past five.",
+          options: [
+            {
+              text: "The floor ran late today, madam — there were three checkouts before yours this afternoon.",
+              correct: false,
+            },
+            {
+              text: "You are right, madam, and I am sorry. May I do the room now, and fix four o'clock on your profile?",
+              correct: true,
+            },
+            {
+              text: "I do not have that hour written anywhere, madam, so it cannot have been agreed with us.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_35_2",
+      lessonOrder: 2,
+      titleEn: "More Than the Standard",
+      titleVi: "Nhiều hơn tiêu chuẩn",
+      vocabulary: [
+        {
+          word: "Bed service",
+          phonetic: "/ˈbed ˌsɜːvɪs/",
+          definition: "Lượt dọn và trải lại giường trong ngày",
+          context: "A second bed service is my supervisor's to approve.",
+          icon: "🛌",
+        },
+        {
+          word: "What if",
+          phonetic: "/ˈwɒt ɪf/",
+          definition: "Còn nếu… thì sao — mở một phương án khác",
+          context: "What if I came at four instead, madam?",
+          icon: "💡",
+        },
+        {
+          word: "In exchange for",
+          phonetic: "/ɪn ɪksˈtʃeɪndʒ fə/",
+          definition: "Để đổi lấy",
+          context: "A later hour, in exchange for a full clean.",
+          icon: "🔁",
+        },
+        {
+          word: "Put it forward",
+          phonetic: "/ˌpʊt ɪt ˈfɔːwəd/",
+          definition: "Trình lên cấp trên xem xét",
+          context: "I will put it forward to my supervisor today.",
+          icon: "📮",
+        },
+      ],
+      grammar: [
+        {
+          rude: "One robe per person. That is the rule, madam.",
+          polite:
+            "I will bring a second robe now, madam. However — for the third, I will ask my supervisor today.",
+          rule: "Tách rõ CÁI TỰ LÀM ĐƯỢC và CÁI PHẢI TRÌNH LÊN, trong cùng một câu ngắn — nhưng đừng nói ra con số hạn mức, vì khách sẽ xin đúng bằng con số đó. Dùng 'For X, I will ask…' cho vế thứ hai; đừng đảo tân ngữ lên đầu câu.",
+        },
+        {
+          rude: "Extra things cost money. Ask the front desk about it.",
+          polite:
+            "I will bring towels and water now, sir. An extra bed is the Front Desk's to arrange — shall I ask them to call your room?",
+          rule: "Cho ngay thứ mình được phép cho, rồi chỉ đúng bộ phận cho phần còn lại. Cái phòng vốn có sẵn hằng ngày thì nói thẳng được; cái đã lên hoá đơn thì không — đó là việc của quầy.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We'd like the bed made twice a day, and fresh towels each time.",
+          targetResponse:
+            "I can do towels twice a day, madam. A second bed service is my supervisor's to approve. May I put it forward, in exchange for one fixed hour, and come back before six?",
+          helpTip:
+            "Cho ngay cái rẻ, TRÌNH LÊN cái đắt, và luôn kèm một MỐC GIỜ — 'come back before six'. Đừng hứa lượt dọn giường thứ hai như thể nó là của bạn: nó là của giám sát. 'Forward' /ˈfɔːwəd/ — âm /w/ gần như nuốt.",
+        },
+        {
+          guestPrompt:
+            "1204 again — a third robe, the cleaning charge, and what hour are you doing them?",
+          speakerRole: "colleague",
+          targetResponse:
+            "I gave two robes and I will put the third forward. Their service window is after one, and the charge is not my call.",
+          helpTip:
+            "Đây là ĐỒNG NGHIỆP hỏi. Bàn giao trong tổ thì nói theo tầng thẩm quyền: cái tự cho, cái 'put the third forward', và cái 'not my call'. 'Service window' cũng chỉ dùng trong tổ — với khách thì nói giờ. 'Window' — /w/ đầu phải tròn môi, và /d/ trước /əʊ/ đừng bật thành /t/.",
+        },
+      ],
+      reading: {
+        text: "WHAT THE FLOOR MAY GIVE — AND WHAT IT MUST PASS UP\nTHE ATTENDANT GIVES FREELY: extra towels, extra water, more tea and coffee, extra hangers, an extra blanket or pillow, a second robe, nightly linen when a guest asks.\nTHE SUPERVISOR DECIDES: a permanent second bed service, and amenities beyond the daily allowance on a long stay. A room move is asked of the Front Desk on the guest's behalf: you ask, you do not allocate. A safety fault is different — an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. The desk then finds a room at once. A door that no longer locks is not a service request: your supervisor calls the Duty Manager and Security, and the guest does not sleep in that room.\nA SMELL OF BURNING OR GAS IS NOT A ROOM MOVE, and it is not a tier at all. Burning: get everyone out, close the door behind you, and call from a corridor phone. Gas is the opposite — leave the door as you found it, touch no switch and no telephone on that floor, and call from the stairwell. Week thirty-six has both in full.\nTHE DUTY MANAGER DECIDES three things: a waiver on a charge that is CORRECT, a free night, and any claim about a guest's belongings that is not a laundry item. A charge recorded in ERROR is the desk's to correct, and that is not a waiver at all. YOUR SUPERVISOR decides laundry compensation inside the week thirty-three table, up to 1,200,000 dong — a compensation table is not a folio — and above that figure the Duty Manager still signs. You have no limit of either kind.\nSay the process and the time, never a limit of your own. What the room includes every day you may state plainly. 'I will put it forward and come back to you before six' is a promise you can keep; 'my limit is three items' invites a guest to ask for exactly three.\nOne ceiling you may quote: a figure printed on a document the guest also holds, such as the laundry price list they sign. A figure from an internal table — including the compensation multiple in week thirty-three — is your supervisor's to say, not yours.\nExtra bedding, an extra robe or an extra towel set asked for 'a visitor' is a supervisor matter as well as a service one. Give what your tier allows, then tell your supervisor the same hour, as in week thirty-two.\nGiving generously inside your own tier is the cheapest guest satisfaction a hotel can buy.\nThese tiers are one hotel's. Ask your Executive Housekeeper for yours in your first week.",
+        questions: [
+          {
+            q: "Ngửi thấy mùi khét trong phòng thì đó là việc của ai?",
+            options: [
+              "Của giám sát tầng — báo lên rồi chờ hướng dẫn tiếp theo",
+              "Không thuộc bậc nào cả: đưa người ra rồi gọi tổng đài ngay",
+              "Của lễ tân, vì đây thực chất là một yêu cầu đổi phòng",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Vì sao không nói cho khách biết hạn mức của mình?",
+            options: [
+              "Vì hạn mức là thông tin nội bộ chỉ quản lý mới được biết rõ",
+              "Vì hạn mức thay đổi theo từng mùa cao điểm trong năm đó",
+              "Vì khách sẽ xin đúng bằng con số hạn mức vừa nghe thấy",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "We're staying a month. Can we have the full amenity set replaced every single day?",
+          options: [
+            {
+              text: "Of course, madam — a full set every day for a month is no trouble at all for our team.",
+              correct: false,
+            },
+            {
+              text: "Soap and shampoo daily, madam — that is the allowance. However, for the full set I will ask and come back to you today.",
+              correct: true,
+            },
+            {
+              text: "For a long stay we replace them only weekly, madam — that is simply the standing allowance for the room.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Could we have a second bathrobe? And a third for my mother when she visits?",
+          options: [
+            {
+              text: "Robes are strictly one per guest, madam — I am afraid I cannot bring any extra ones up to you at all.",
+              correct: false,
+            },
+            {
+              text: "Two now, madam. However — what if I put the third forward to my supervisor, and rang you this afternoon?",
+              correct: true,
+            },
+            {
+              text: "I will bring all three up straight away, madam, and nobody downstairs really needs to know about it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_35_3",
+      lessonOrder: 3,
+      titleEn: "When the Guest Wants It Waived",
+      titleVi: "Khi khách xin miễn khoản phí",
+      vocabulary: [
+        {
+          word: "Waive",
+          phonetic: "/weɪv/",
+          definition: "Miễn một khoản phí",
+          context: "Only a manager can waive a cleaning charge.",
+          icon: "🪶",
+        },
+        {
+          word: "Folio",
+          phonetic: "/ˈfəʊliəʊ/",
+          definition: "Hoá đơn phòng đang mở của khách",
+          context: "A charge on the folio is the Duty Manager's to waive.",
+          icon: "📄",
+        },
+        {
+          word: "Approval",
+          phonetic: "/əˈpruːvl/",
+          definition: "Sự chuẩn thuận từ cấp trên",
+          context: "The approval is my supervisor's, sir, not mine.",
+          icon: "✅",
+        },
+        {
+          word: "Come back to you",
+          phonetic: "/ˌkʌm ˈbæk tə juː/",
+          definition: "Quay lại trả lời khách",
+          context: "I will come back to you before six either way.",
+          icon: "🔔",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I cannot touch the bill. Not my job at all.",
+          polite:
+            "That is the Duty Manager's to waive, madam. I will come back to you before six either way.",
+          rule: "Sở hữu cách chỉ đúng CHỦ của quyết định, rồi bạn thành người đưa tin có thời hạn. 'Before six' chỉ là ví dụ — thay bằng mốc THẬT của ca bạn ('within the hour', 'before the end of my shift'). Bắt buộc phải có MỘT mốc, và phải quay lại thật kể cả khi chưa có câu trả lời. Miễn phí trên hoá đơn KHÔNG thuộc giám sát tầng — đó là Duty Manager. Bảng tuần 33 là bảng BỒI THƯỜNG, không phải bảng miễn phí trên hoá đơn — đừng lấy con số của bảng này áp cho bảng kia.",
+        },
+        {
+          rude: "Fine, fine — no charge, just please calm down.",
+          polite:
+            "I am not able to promise that, sir. The manager on duty decides, and the approval is the manager's alone.",
+          rule: "Đừng hứa thứ ngoài quyền của mình. Lời hứa quá quyền bị rút lại sẽ tạo ra khiếu nại thứ hai, tệ hơn khiếu nại thứ nhất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "There's a cleaning charge on my bill. Take it off — I am not paying that.",
+          targetResponse:
+            "That is not mine to waive, madam — the manager on duty decides it. I will carry it there now and come back before the end of my shift.",
+          helpTip:
+            "Không bênh khách sạn, không đồng tình với khách, và ĐỪNG tự nhắc tới khoản thiện chí — khách chưa nghĩ tới thì đừng gieo vào. Chỉ đúng người có quyền và nêu một mốc thật. 'Carry' /ˈkæri/ — âm /æ/ mở rộng.",
+        },
+        {
+          guestPrompt: "Look, here's something for you — just make the charge disappear.",
+          targetResponse:
+            "I am not able to take that, sir, and the charge is not mine to change. May I ask the manager on duty to come?",
+          helpTip:
+            "Hai lời từ chối trong một hơi: không nhận tiền, và không đụng vào hoá đơn. Rồi đưa lên đúng người. Hết lượt thì báo giám sát — một lời mời gian lận hoá đơn là sự việc phải ghi nhận, không phải một câu đùa. 'Charge' /tʃɑːdʒ/ — /tʃ/ đầu và /dʒ/ cuối là hai âm khác nhau.",
+        },
+      ],
+      reading: {
+        text: "WHEN A GUEST ASKS FOR A CHARGE TO GO AWAY\nHousekeeping does not waive and does not argue. It carries the request quickly and honestly.\nSay THE PROCESS and THE TIME, never the number: 'That is the Duty Manager's decision, and I will come back to you before six.' A guest who hears a name and an hour stops pushing.\nNever say the charge is fair, and never say it is unfair. You do not know, and both sentences will be quoted back to you.\nOne number you may read aloud: a figure printed on a list the guest can also see, such as the laundry price list they sign. A figure you work out yourself is not on that list.\nA goodwill gesture belongs to the manager who signs it. Offer one yourself and it may be refused above you.\nCarry the request the same shift, or it becomes a complaint about two things.\nA charge on the folio is never a supervisor's to waive — that is the Duty Manager's. What your supervisor may give is compensation, and that list is in your compensation guide. Read it before you need it.\nWho signs a waiver differs by house. Ask your Executive Housekeeper who signs in yours.",
+        questions: [
+          {
+            q: "Nhân viên buồng phòng nói gì với khách xin miễn phí?",
+            options: [
+              "Nêu quy trình và mốc thời gian, không nêu con số nào cả",
+              "Nêu mức phí tối đa mà giám sát tầng có quyền miễn cho khách",
+              "Nêu ý kiến của mình về việc khoản phí đó có hợp lý hay không",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Vì sao không được tự đề nghị một khoản thiện chí?",
+            options: [
+              "Vì khoản đó luôn phải trừ vào quỹ tiền tip chung của tổ",
+              "Vì nếu cấp trên bác đi thì khách bị từ chối tới hai lần",
+              "Vì khách sẽ kể lại cho những khách khác trong cùng tầng",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Just take the charge off yourself. Nobody downstairs is going to check.",
+          options: [
+            {
+              text: "You are right that nobody downstairs would ever check on it, madam, but I would still rather not risk that myself.",
+              correct: false,
+            },
+            {
+              text: "Nothing on the bill is ours to change on the floor, madam. I will take it to the manager on duty and come back within the hour.",
+              correct: true,
+            },
+            {
+              text: "Billing is all downstairs, madam — you will have to take it up with them yourself.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Do you think that cleaning charge is fair? Honestly, between us.",
+          options: [
+            {
+              text: "Honestly, madam, it does look rather high to me — I would ask them to take it off the bill for you.",
+              correct: false,
+            },
+            {
+              text: "The approval is not mine to give, madam. The manager on duty will look at it with you today.",
+              correct: true,
+            },
+            {
+              text: "It is the standard charge, madam, so I am afraid it is really quite fair in this case.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_35_4",
+      lessonOrder: 4,
+      titleEn: "The Minibar the Guest Never Opened",
+      titleVi: "Minibar khách bảo không hề đụng tới",
+      vocabulary: [
+        {
+          word: "Minibar check",
+          phonetic: "/ˈmɪnibɑː ˌtʃek/",
+          definition: "Lượt kiểm minibar để ghi đồ đã dùng",
+          context: "The minibar check is done at the same time each day.",
+          icon: "🥤",
+        },
+        {
+          word: "Restock list",
+          phonetic: "/ˈriːstɒk ˌlɪst/",
+          definition: "Bảng ghi món cần bù vào minibar",
+          context: "Write the time on the restock list, every room.",
+          icon: "📝",
+        },
+        {
+          word: "Take it off",
+          phonetic: "/ˌteɪk ɪt ˈɒf/",
+          definition: "Gỡ một khoản khỏi hoá đơn",
+          context: "The desk corrects our errors; we cannot take a charge off ourselves.",
+          icon: "➖",
+        },
+        {
+          word: "Not my call",
+          phonetic: "/ˌnɒt maɪ ˈkɔːl/",
+          definition: "Không thuộc thẩm quyền của tôi",
+          context: "A charge is not my call — I record, and the desk decides.",
+          icon: "🙅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The minibar was empty. Somebody in your room drank it.",
+          polite: "I record what I find, madam — the bill itself is a question for the Front Desk.",
+          rule: "Buồng phòng GHI NHẬN, lễ tân TÍNH TIỀN. Câu này giữ bạn ngoài cuộc tranh cãi và giữ cho hồ sơ của bạn đáng tin.",
+        },
+        {
+          rude: "Not my problem. Go downstairs and argue there.",
+          polite:
+            "May I ask the desk to call your room, sir? They can take it off if it is our error.",
+          rule: "Chuyển việc mà vẫn đi cùng khách: 'May I ask them to call your room?' Đừng bao giờ để khách tự đi tìm người giải quyết.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Two beers on my bill. We never touched the minibar — not once.",
+          targetResponse:
+            "The bill is not mine to change, madam — I only record what I find. Shall I ask the desk to call you?",
+          helpTip:
+            "Ba câu rất ngắn, ba việc rõ ràng. 'Call' /kɔːl/ — nguyên âm dài, /l/ cuối phải chạm lợi.",
+        },
+      ],
+      reading: {
+        text: "A MINIBAR THE GUEST DISPUTES — WHY YOUR RECORD MATTERS\nHousekeeping does not bill, does not remove a charge, and does not argue about one. Housekeeping records — and a good record settles more disputes than any conversation.\nTwo different things: a charge recorded in error is the desk's to correct; a correct charge a guest wants removed is the Duty Manager's to waive.\nDo the minibar check at the same hour every day, and write the hour down: 'two waters, one beer, 10:20.' A restock list without a time proves very little a month later.\nKeep the wording neutral. 'Two bottles used' is a record. 'Guest clearly had a party' is an opinion that will be read aloud in a complaint review, and it will not help.\nIf a guest challenges a charge, say it is not your call, and offer to have the desk ring the room. Never say the guest is wrong, and never say the hotel is wrong — you do not know which.\nA charge that cannot be backed up should be dropped — the manager's decision, made easy by a clean record.\nWho checks the minibar differs by hotel. Ask who does it in your house.",
+        questions: [
+          {
+            q: "Vai trò của buồng phòng khi khách phản đối một khoản minibar là gì?",
+            options: [
+              "Giải thích khoản phí vì mình là người trực tiếp kiểm phòng",
+              "Đề nghị quản lý xoá phí nếu thấy khách có vẻ nói thật lòng",
+              "Ghi nhận sự việc — không tính tiền, không xoá phí, không tranh cãi",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Cách ghi chép nào đạt chuẩn?",
+            options: [
+              "'Minibar: hai chai nước, một lon bia, lúc 10:20'",
+              "'Phòng bừa bộn bất thường, có lẽ khách đã tổ chức tiệc'",
+              "'Khách rõ ràng đã dùng đồ trong tủ lạnh của phòng đêm qua'",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Your colleague charged us for a towel we never took. Fix it or I'll speak to the manager.",
+          options: [
+            {
+              text: "I will take it off the bill for you, madam — I can see it was a mistake on our side.",
+              correct: false,
+            },
+            {
+              text: "The linen count is done twice a day, madam, so a missing towel is very rarely an error.",
+              correct: false,
+            },
+            {
+              text: "The desk can take it off if it is our error, madam. Shall I ask them to call you?",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "You people always add things to the bill. What did you write about my room?",
+          options: [
+            {
+              text: "Only what I find, sir — I record it with the hour, the same way in every room.",
+              correct: true,
+            },
+            {
+              text: "I did not write anything at all about your room, sir — it must have come from elsewhere.",
+              correct: false,
+            },
+            {
+              text: "We are asked to record everything we see in a room, sir, whether it is used or not used.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_36: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 36,
+  weekTitleEn: "When the Floor Becomes an Emergency",
+  weekTitleVi: "Khi tầng của bạn thành hiện trường",
+  reviewWords: [
+    "Report",
+    "Unattended",
+    "Wet floor sign",
+    "Never touch",
+    "Guest privacy",
+    "Duty manager",
+    "Engineering team",
+    "Do not mix",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_36_1",
+      lessonOrder: 1,
+      titleEn: "The Guest Who Does Not Answer",
+      titleVi: "Vị khách không trả lời",
+      vocabulary: [
+        {
+          word: "Unresponsive",
+          phonetic: "/ˌʌnrɪˈspɒnsɪv/",
+          definition: "Không phản ứng — gọi, lay đều không tỉnh",
+          context: "A guest who is unresponsive is an emergency, not a sleeping guest.",
+          icon: "🚨",
+        },
+        {
+          word: "First aider",
+          phonetic: "/ˌfɜːst ˈeɪdə/",
+          definition: "Người đã được huấn luyện sơ cứu",
+          context:
+            "Call the first aider by name on the phone — but for water or choking, shout for the nearest colleague first.",
+          icon: "⛑️",
+        },
+        {
+          word: "AED",
+          phonetic: "/ˌeɪ iː ˈdiː/",
+          definition: "Máy sốc tim tự động — chính máy quyết định có sốc hay không",
+          context: "An AED is built for someone who has never used one before.",
+          icon: "⚡",
+        },
+        {
+          word: "Recovery position",
+          phonetic: "/rɪˈkʌvəri pəˌzɪʃn/",
+          definition: "Tư thế nằm nghiêng an toàn — đầu, vai, hông xoay cùng một lúc",
+          context:
+            "An unresponsive guest who is breathing goes on his side, and that one is yours to do.",
+          icon: "🧑‍⚕️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I found a man on the floor! Somebody come!",
+          polite:
+            "Room 812, a guest is unresponsive but breathing. He is on his side — send our first aider and the Duty Manager.",
+          rule: "KHÔNG PHẢI chuyện lịch sự — chuyện an toàn. Gọi cấp cứu theo đúng thứ tự: SỐ PHÒNG trước, tình huống sau, rồi tên người bạn cần. Khi luyện, thay 'our first aider' bằng TÊN THẬT của người trực sơ cứu tầng bạn. 'Somebody' không phải một cái tên — không ai nhận việc khi bạn gọi 'somebody'. Cả hai từ này đều đứng sau 'be', nhưng vì hai lý do khác nhau: 'unresponsive' là TÍNH TỪ, còn 'breathing' là ĐỘNG TỪ ở thì tiếp diễn. Nghĩa của chúng thì khác hẳn nhau — và đó chính là cả bài học này. Đừng nói 'he is unresponding'.",
+        },
+        {
+          rude: "I am sitting him up, madam — a little water will bring him round.",
+          polite:
+            "That is the trained person's job, madam — I am staying right here, and help is on its way up.",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Không di chuyển, không cho uống nước, không lay người — trừ chín việc đánh số trong bài đọc, và trừ khi tổng đài 115 bảo bạn làm. Ba việc ai cũng làm được là GỌI, DỌN CHỖ và Ở LẠI. Ngoài ra bài đọc đánh số CHÍN việc bạn được tự làm — sáu ở bài này, ba ở bài 2 — và không việc nào chờ ai cho phép. Việc số MỘT là ép tim, kèm thao tác đưa khách xuống sàn cứng. Lật nghiêng là việc số HAI và KHÔNG BAO GIỜ dành cho người không thở: đó là tư thế của khách còn thở mà không tỉnh.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "My husband collapsed by the bed — he is breathing, but he will not wake. Please, do something!",
+          targetResponse:
+            "I have called the first aider and the Duty Manager, madam. He is breathing, so I am rolling him onto his side — that keeps his throat clear. I am staying right here.",
+          helpTip:
+            "Đừng bảo người đang hoảng 'hãy bình tĩnh' — hãy nói ĐÃ GỌI AI, rồi nói mình ở lại. Và khi luyện, hãy thay 'the first aider' bằng TÊN THẬT của người trực sơ cứu tầng bạn: bài đọc đòi một cái tên, không phải một chức danh. 'Called' /kɔːld/ — đuôi -ed đọc thành /d/.",
+        },
+        {
+          guestPrompt: "Duty Manager. I am dialling 115 now — tell me what they will ask for.",
+          speakerRole: "manager",
+          targetResponse:
+            "The hotel name and the street first, then the floor and the room, then 'not breathing'.",
+          helpTip:
+            "Khách KHÔNG THỞ thì 115 đi TRƯỚC mọi số nội bộ. Duty Manager người Việt thì gọi tên; sir/madam để dành cho khách và cho quản lý nước ngoài. Câu này luyện THỨ TỰ trên đường dây 115: tên khách sạn và đường trước, rồi tầng và phòng, rồi tình trạng. Ngược hẳn công thức gọi nội bộ. Rồi tập riêng ngoài app: nói TO tên và địa chỉ khách sạn mình, hai lần, cho tới khi thuộc — đó là câu duy nhất quyển sách này không viết hộ bạn được. Người trực 115 nói tiếng Việt thì bạn cứ nói tiếng Việt.",
+        },
+      ],
+      reading: {
+        text: "A GUEST FOUND UNWELL — LOOK FIRST, THEN CALL, CLEAR AND STAY. AND THREE MORE WHEN A GUEST IS NOT BREATHING.\n('House' on this page means your hotel.)\nLOOK BEFORE YOU GO IN, and if you are already inside when you find him, step back to the doorway and take those seconds there. Three seconds from the doorway: water on the floor, a cable, a smell of gas or burning, anybody else in the room. If any of those is there you do not go in — you call from the corridor. A second person hurt in that room helps nobody. GAS is the exception: no telephone anywhere on that floor. Call from the stairwell, and see lesson three.\nCALL. The first aider and the Duty Manager, by name where you know it, from the room phone. THEY call the hotel doctor or 115. In most houses you do not call it yourself — but you never wait for permission when a guest is not breathing. If nobody answers within thirty seconds, dial the operator. If the operator does not answer either, you call 115 yourself. A guest who is NOT BREATHING does not wait for an inside line at all: 115 first. No house has any business disciplining anyone for calling an ambulance. If yours does, that is a matter for your Executive Housekeeper, not a reason to hesitate next time.\nAnd 115 is not an inside line: a room number means nothing to them. On 115 the FIRST thing you say is where the hotel is. Its name and its street address. Then the floor and the room. Then 'a guest is not breathing'. Say the address twice, in Vietnamese if that is faster — nobody on that line needs your English. Learn your own hotel's address by heart this week.\nOnce you are on 115, the controller on that line IS the trained person. If she tells you to move the guest, tip the head back or push on the chest, you do it. Say aloud what you are doing. Her instruction outranks every NEVER on this page.\nON AN INSIDE LINE it is the other way round. Room number FIRST, then the situation in one sentence, then whether the guest is BREATHING. A number said first survives a bad line.\nLook at the chest for ten seconds, no longer. A guest in the worst trouble may still make a noise — a slow, loud gasp every few seconds, like a snore. That is NOT breathing. If the gasps are far apart and the guest does not wake, the answer is 'not breathing'. Then say what you saw: 'Room 812, a guest is unresponsive, and he is breathing.' Or: 'Room 812, a guest is not breathing.'\nA guest who does not wake is an emergency even when he is breathing. That one the Duty Manager decides: the doctor, or 115. You ask him which, out loud, so the question is on the record.\nIf the guest is NOT BREATHING and your house keeps an AED, send for it at once and switch it on. It is built for someone who has never used one. Ask your Floor Supervisor this week where the nearest one is kept. No house disciplines anyone for switching one on. Then do exactly what the machine says out loud: the MACHINE decides whether to shock, and it refuses when a shock is wrong. But it never goes onto a wet chest. If the guest is lying in water, bring him clear of it first and dry the chest. Nobody touches him when the machine says stand clear.\nA GUEST WHO IS NOT BREATHING GETS HANDS ON HIS CHEST, and he gets them now. Not when 115 answers, not when the first aider arrives, not when anybody gives you permission. Pushing only works on something hard, and a bed is not hard. If he is on the bed, slide him onto the floor first, one movement. Then push hard and fast in the centre, about a hundred a minute, until somebody takes over. Hands only — no breaths, ever. If 115 takes your address and rings off, that is normal here, and it changes nothing you are doing.\nAnd a guest who is UNRESPONSIVE BUT BREATHING is rolled onto his side. Head, shoulders and hips together. That keeps his own tongue and his own sick from closing his throat while you wait, and it is yours to do.\nAnd if you cannot tell whether a guest is breathing, the answer you give is 'not breathing'. Say that, then say you are not sure. Hands on a chest that did not need them harm nobody; waiting harms everybody.\nCLEAR. Open the door fully and stand the trolley flat against the far wall. The trolley half of the week thirty-five rule gives way here; the door half does not. A stretcher must reach that door without anybody moving your buckets.\nSTAY. Do not leave to fetch anyone — that is what the phone is for — and stay with the companion too. On that same call, ask for a second person at the door. You touch nothing of the guest's: not a wallet, not a phone, not a watch. Two people in that room protect the guest and protect you.\nNEVER, except the nine numbered actions — six below, three in lesson two. Do not move the guest to another room, sit them up, give water or give medicine. Take nothing from the guest's own medicine bag.\nA GUEST ASLEEP OR DRUNK IN A CORRIDOR. Most of them are exactly that, and you still do not walk past. Say his room number loudly and shake one shoulder. A drunk guest opens his eyes, pulls his arm away, or swears at you. All three are answers, and all three mean he is not unresponsive. Then he is Security's: you stay in sight and you telephone. A guest who gives you NOTHING is unresponsive, and everything on this page starts. Never sit him up against a wall, and never leave him face up.\nA GUEST WHO SAYS DO NOT CALL ANYBODY. The telephone is not his to refuse. 'I have to tell my manager, sir — that part is not mine to decide. I am staying with you.' Then call, say the guest refused, and write the hour. A refusal reported is the house's business; a refusal obeyed is yours alone.\nA GUEST WHO IS AWAKE ON THE FLOOR still does not get lifted, and this is the hardest NEVER here, because they will ask you. 'I am not allowed to lift you, madam, and I am not going anywhere.' A pillow under the head, a blanket over them. Sit down beside them so they are not looking up at anybody. Then ask on the phone how long.\nSIX things here are yours to do, and they are numbered. THREE more in lesson two — nine in all, and you should be able to name them at handover. Nothing you are allowed to do is left out of the numbers.\nTHE FIRST IS THE CHEST. A guest who is not breathing gets hands on his chest, and if he is on a bed you slide him onto the floor first. That move is part of this one, and it needs nobody's permission.\nTHE SECOND IS THE SIDE POSITION, and it is the one you will use most. It is for a guest who will not wake, and for a guest being sick. Head, shoulders and hips turn together. And one rule above all of them: what 115 or the first aider tells you to do.\nTHE THIRD IS WATER — a guest face down in a BATH or a basin, where you can reach them standing dry. Look at that water first. If anything electrical is in it or over it — a hairdryer, a shaver, a charger — you touch nothing and nobody. Call from the corridor, and Engineering kills the power before anyone goes in.\nIf the water is clear, shout once for the nearest colleague — this is water, and you do not do it alone. On a night shift there may be nobody to shout to. Then you shout anyway and go on alone. A head held above water beats a second pair of hands that is not coming. Say on the telephone that you are by yourself. Pull out the bath stopper, never an electrical plug, as you shout. Then hold the head above the water. Do not try to lift the whole guest out yourself.\nA guest in a POOL is never yours: shout for the lifeguard, throw anything that floats, and do not go in.\nTHE FOURTH IS VOMIT. If the guest is being sick and cannot clear it, keep the mouth lower than the throat while you turn him. Nothing goes into that mouth to clear it — not a finger, not a cloth. THE FIFTH IS THE GUEST'S OWN MEDICINE. A conscious guest reaching for their own inhaler or adrenaline pen may be helped to reach it — you never choose it for them.\nTHE SIXTH IS THE MACHINE. If the AED is here and the guest lies in water, you drag him clear and dry the chest, as above. Nothing else about him moves.\nSay nothing to another guest and nothing in the corridor. You photograph nothing and you tell nobody: not another floor, not the canteen, not a group chat, not your family. Guest privacy holds after the shift and after you leave the house. Afterwards write what you SAW and what you DID, with times — never what you think was wrong with them.\nAsk your Floor Supervisor to take you off the floor for the rest of that shift. If the house cannot spare you, ask for somebody to work beside you. Nobody finishes a corridor alone after this.\nFive answers differ by house. Who is trained on your floor. Which number reaches them fastest. WHERE the nearest AED is kept. WHETHER you may switch it on. And WHO calls 115. Ask your Floor Supervisor this week, not on the day.",
+        questions: [
+          {
+            q: "Gọi ĐƯỜNG DÂY NỘI BỘ thì nói gì trước, gọi 115 thì nói gì trước?",
+            options: [
+              "Cả hai đều nói số phòng trước cho nhanh, rồi mới tới tình huống",
+              "Nội bộ: số phòng trước. Còn 115: tên và địa chỉ khách sạn trước",
+              "Cả hai đều phải nói tình trạng của khách trước rồi mới tới chỗ nào ở",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Vì sao không rời phòng đi tìm người tới giúp?",
+            options: [
+              "Vì hành lang mỗi tầng đều có camera ghi lại toàn bộ lối đi lại",
+              "Vì giám sát tầng sẽ không tìm ra phòng nếu cửa đang khép lại",
+              "Vì điện thoại làm được việc đó, còn khách cần có người ở lại",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Khách úp mặt trong bồn tắm, có máy sấy tóc rơi trong nước. Làm gì trước?",
+            options: [
+              "Nhấc đầu khách lên khỏi mặt nước ngay rồi mới rút phích cắm ra",
+              "Không chạm vào ai cả — gọi từ hành lang, chờ kỹ thuật cắt điện",
+              "Rút phích máy sấy ra trước, xong rồi mới nhấc đầu khách lên",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Tổng đài 115 bảo lật người khách lại, mà trang này ghi KHÔNG di chuyển. Nghe ai?",
+            options: [
+              "Nghe trang này, vì đó là quy định do chính khách sạn ban hành",
+              "Nghe 115 — người trực tổng đài đó chính là người đã được huấn luyện",
+              "Cúp máy rồi chạy đi tìm giám sát tầng hỏi cho thật chắc rồi hẵng làm",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Operator. Housekeeping — go ahead.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "There is a man on the floor in 812 and I think he may have had a heart attack of some kind.",
+              correct: false,
+            },
+            {
+              text: "Room 812, a guest is not breathing. I need our first aider now. 115 has been called.",
+              correct: true,
+            },
+            {
+              text: "Could somebody come up to the eighth floor please, as quickly as you can manage it?",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Should I give him some water? He looks so pale.",
+          options: [
+            {
+              text: "A little water may help him, madam — let me go and fetch a glass from the bathroom for him right now.",
+              correct: false,
+            },
+            {
+              text: "Please do not give him anything to drink, madam. The first aider is coming up, and I am staying right here.",
+              correct: true,
+            },
+            {
+              text: "Please try to sit him up against the bed, madam, while we wait for somebody to come.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Duty Manager. What have you got in 812? Is 115 on the way?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "A guest has collapsed up here, sir — I think it may well be his heart, but I could not really swear to it.",
+              correct: false,
+            },
+            {
+              text: "Room 812. A guest is unresponsive but breathing, and he is on his side. Do we call 115, or the doctor? The first aider is with him.",
+              correct: true,
+            },
+            {
+              text: "There is a guest on the floor in 812, sir, and I am waiting for somebody to come up.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Is he going to be all right? Tell me honestly.",
+          options: [
+            {
+              text: "He looks a great deal better already, madam — I am quite sure that he is going to be perfectly fine soon.",
+              correct: false,
+            },
+            {
+              text: "I am not able to say, madam. Our first aider is on her way up, and I am staying right here with you.",
+              correct: true,
+            },
+            {
+              text: "It is really hard to say, madam, but these things almost always turn out to be nothing.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_2",
+      lessonOrder: 2,
+      titleEn: "Sharps, Blood and Broken Glass",
+      titleVi: "Kim tiêm, máu và mảnh vỡ",
+      vocabulary: [
+        {
+          word: "Sharps box",
+          phonetic: "/ˈʃɑːps ˌbɒks/",
+          definition: "Hộp đựng vật sắc nhọn y tế",
+          context:
+            "Every needle goes into the sharps box with tongs — unless it is beside foil or powder.",
+          icon: "🧷",
+        },
+        {
+          word: "Choking",
+          phonetic: "/ˈtʃəʊkɪŋ/",
+          definition: "Hóc nghẹn — không nói được, không ho được thì phải ra tay ngay",
+          context: "A choking guest cannot speak, cannot cough, and cannot wait.",
+          icon: "🫁",
+        },
+        {
+          word: "Chemical spill",
+          phonetic: "/ˈkemɪkl ˌspɪl/",
+          definition: "Hoá chất đổ tràn",
+          context: "A chemical spill is your supervisor's call, not a job for a mop.",
+          icon: "☣️",
+        },
+        {
+          word: "Tongs",
+          phonetic: "/tɒŋz/",
+          definition: "Cái kẹp gắp — vật duy nhất được phép chạm vào kim tiêm",
+          context: "A needle is lifted with tongs, sharp end down, one at a time.",
+          icon: "🥢",
+        },
+        {
+          word: "Biohazard bag",
+          phonetic: "/ˈbaɪəʊˌhæzəd ˌbæɡ/",
+          definition: "Túi niêm phong đồ dính dịch cơ thể",
+          context: "Soiled linen is sealed in a biohazard bag inside the room.",
+          icon: "🧺",
+        },
+      ],
+      grammar: [
+        {
+          rude: "There was a needle in the bin. I threw it out already.",
+          polite:
+            "I have found a needle in 610. I have not touched the bag — may I have a sharps box and tongs?",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Không bao giờ bóp, ấn hay lắc một túi rác. Kim tiêm xuyên qua nilon dễ như xuyên qua giấy. Lưu ý cấu trúc: 'I have found' và 'I have not touched' là HIỆN TẠI HOÀN THÀNH — việc vừa xảy ra và hậu quả còn nguyên; 'I found' quá khứ đơn nghe như chuyện đã khép lại.",
+        },
+        {
+          rude: "Broken glass everywhere. I picked it all up, no problem.",
+          polite:
+            "There is broken glass by the balcony door, madam — may I ask you to stay on the carpet for a moment?",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Với khách: nói rõ chỗ nguy hiểm rồi xin họ đứng yên một chỗ. Với mảnh vỡ: chổi và ky, không bao giờ bằng tay — kể cả khi đã đeo găng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I'm here — what do you need?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Take over the pushing on three, and send someone for the AED. I have called 115 already.",
+          helpTip:
+            "ĐỒNG NGHIỆP vừa chạy vào. Ba việc, đúng thứ tự: giao ca ép tim, cử người lấy AED, và nói 115 đã gọi rồi — để không ai gọi lại lần nữa. 'Pushing' /ˈpʊʃɪŋ/ — đuôi -ing đọc gọn, đừng bật thành /ŋɡ/.",
+        },
+        {
+          guestPrompt: "Housekeeping desk — what do you need sending up to 610?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A sharps box and a biohazard bag, please. There is broken glass by the bath as well.",
+          helpTip:
+            "Đây là BÀN BUỒNG PHÒNG hỏi. Gọi đúng tên từng thứ cần, rồi thêm mối nguy còn lại — người ở đầu dây kia phải hình dung được căn phòng. 'Biohazard' /ˈbaɪəʊˌhæzəd/ — trọng âm rơi vào 'BI' ở đầu từ, không phải vào 'ha'.",
+        },
+        {
+          guestPrompt: "Housekeeping desk. You sound out of breath — what has happened?",
+          speakerRole: "colleague",
+          targetResponse:
+            "In 610 — this is a needle injury. I have washed it under the tap, and I need a nurse now.",
+          helpTip:
+            "Đây là chấn thương của CHÍNH BẠN, và bạn phải nói được nó bằng tiếng Anh khi tay đang run. Ba việc: chuyện gì, đã rửa chưa, cần gì NGAY TRONG CA. Đừng nói 'later'. 'Needle' /ˈniːdl/ — /iː/ dài, /dl/ cuối liền một hơi.",
+        },
+      ],
+      reading: {
+        text: "WHAT YOU MUST NOT PICK UP\nGloves go on before you touch a bin, a bag or anything a guest has spilt. Every room, every time. For glass they are the cut-resistant pair, as in week thirty-four. But they are only where you start; they are not what makes a needle safe.\nA needle, a lancet, a razor blade, a broken ampoule: these go into the sharps box, and nothing else does. Never into a bin bag, never into a pocket, never onto the trolley.\nThe box goes to the needle; the needle never travels to the box. Lift it with tongs or into a dustpan, sharp end down, one at a time. Never with your fingers. A glove is not an answer. No tongs and no dustpan means you leave it exactly where it is and call your supervisor.\nA needle beside foil, a burnt spoon or a powder is not a diabetic's needle. You touch nothing, you leave, and you call your supervisor from the corridor. That room has stopped being a cleaning job, and anything you tidy is something the police cannot see.\nBut a guest who is UNCONSCIOUS is a life before it is a scene. You call for the first aider and the Duty Manager exactly as in lesson one, and 115 if he is not breathing. You stay. You touch nothing IN THAT ROOM — but the guest is not the room. Not breathing: your hands on his chest. Breathing and will not wake: he goes on his side. Everything else stays exactly where it is. Tell the Duty Manager what you can see on the floor. Those words go to the ambulance crew, and they change the medicine the guest is given.\nNever squeeze, press down or shake a bin bag. Hold it away from your leg and carry it by the neck. A needle goes through a bin bag as easily as through paper. Most needle injuries in a hotel happen to the person emptying the bin, not to the person who used it.\nIf you are pricked: wash it under running water with soap and let it bleed gently. Do not squeeze it, and do not suck it. Tell your supervisor the same minute, and say the words 'this is a needle injury'. You must be SEEN BY A DOCTOR in this shift, not by anybody at the next handover. If your house has a nurse, she sees you first. If it has none, or she cannot prescribe, the Duty Manager sends you to a hospital tonight, and the house pays. Write the room number down. The medicine that stops an infection works in hours, not days, and nobody in this building can hand it to you.\nBefore you leave the floor, the injury goes in writing: the room, the hour, what pricked you, and the name of the person you told. An injury nobody wrote down did not happen. That page is what makes this an accident at work — and the house pays for the treatment of an accident at work. It pays for nothing nobody recorded.\nA small cut from glass is not yours to dress. Bring the first-aid kit and the first aider. Report it even when the guest asks you not to.\nBroken glass is swept with a brush and pan into a rigid box labelled GLASS. Never into a bin bag: the next hands on that bag are a colleague's. Then wipe with a damp paper towel that goes straight into the bin, never a cloth that goes back to the laundry. Gloved fingers are still fingers.\nBlood or any body fluid ON LINEN: gloves and apron on, seal it in the room, in a biohazard bag, and label it. It never travels loose on a trolley and never joins the normal linen.\nAnything wet from a body that is NOT on linen you do not touch at all. Not on the carpet, not on the wall, not on the bathroom floor. You report it, and your supervisor decides who clears it, as in week thirty-four.\nSome things are a phone call, not a job: a chemical spill, a trapped lift passenger, a missing master key. Anything you cannot make safe in one minute.\nSomeone trapped in a lift hears you before they see anyone: 'Security is coming to you now, sir. Please stand away from the doors.' Then you stay at that door and keep talking. A voice through a lift door beats a promise on a telephone.\nChemical on your skin or in an eye: fifteen minutes under running water while somebody else calls. Blood or any body fluid in an eye or mouth: fifteen minutes too, and do not rub. Either way the nurse sees you this shift, the same clock as a needle. Send the bottle down with the report. Never mix two products, and never pour one into another bottle.\nLesson one gave you six. Here are the last three.\nTHE SEVENTH IS CHOKING. A guest who is choking cannot wait for the first aider — seconds decide it. If they cannot speak or cough, bend them forward. Hit hard between the shoulder blades, five times. If nothing comes out, stand behind them, make a fist above the navel, and pull sharply inwards and upwards five times. Then five more blows and five more thrusts, over and over.\nYou shout here, and you shout one sentence. 'Room 812, call 115, guest choking.' You cannot leave that guest to fetch anybody. This is the second time on these two pages you shout — the first was the bath in lesson one.\nWhen it comes out, it is not finished. Anybody who took those thrusts sees a doctor the same night, however well they look. Tell the Duty Manager you used them, and write down the hour. If they go limp, lower them to the floor and tell 115 they are unconscious. On a pregnant or very large guest the fist goes on the breastbone, not the navel.\nA BABY UNDER ONE is never the fist. Lay the baby face down along your forearm, head lower than the body, jaw supported. Five firm blows between the shoulder blades with the heel of your hand. Then face up, and two fingers pressing the centre of the chest, five times. Five and five, again and again, while somebody calls 115. Never shake a baby.\nTHE EIGHTH IS BLEEDING THAT WILL NOT STOP. Gloves first — they are on your trolley, and a wound is not made worse by ten seconds. Then press hard with a clean towel, with the flat of your hand, and do not lift it to look. If the towel soaks through, put another on top and keep pressing. Lift that arm or leg above the heart if the guest lets you. Do not stop until the first aider or 115 takes your hand off it.\nBlood running onto the floor is 115, and you press while somebody else calls. If your gloves were three rooms away, wash your hands and arms as soon as somebody takes over, and see the nurse in this shift.\nTHE NINTH IS A SEIZURE — older British English calls it a fit. A guest having a seizure is the one guest you never hold down. Nothing goes into the mouth, ever. Move the hard things away, put something soft under the head, note the time it started, and stay. When it stops and he does not wake, he goes on his side, as in lesson one. Call as in lesson one before you kneel: the first aider and the Duty Manager, room number first. If it is still going after five minutes, or a second fit starts, that is 115.\nWhich bag, which box, which number, WHO sees you after a needle and WHICH hospital you are sent to all differ by house. Ask your Executive Housekeeper in your first week.",
+        questions: [
+          {
+            q: "Vì sao không được ấn hay bóp túi rác xuống?",
+            options: [
+              "Vì kim trong túi xuyên qua nilon và xuyên qua cả bàn tay",
+              "Vì túi sẽ rách ra và làm bẩn thảm hành lang của cả tầng đó",
+              "Vì mùi trong túi bay ra và ám vào đồng phục nhân viên",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Bị kim đâm, việc nào KHÔNG được để lại cho ca sau?",
+            options: [
+              "Ghi biên bản: phòng nào, mấy giờ, vật gì, đã báo cho ai",
+              "Thay túi rác mới cho phòng đó rồi lau lại sàn nhà tắm cho sạch",
+              "Nhắn cho tổ trưởng biết là hôm nay mình sẽ về sớm hơn",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Khách hóc, không nói được. Việc đầu tiên là gì?",
+            options: [
+              "Chạy đi gọi nhân viên sơ cứu rồi quay lại ngay với khách",
+              "Cho khách uống nước để trôi thứ đang mắc trong cổ họng",
+              "Cúi người khách xuống, vỗ mạnh năm cái giữa hai bả vai",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Khăn ga dính máu được xử lý thế nào?",
+            options: [
+              "Gấp thật gọn rồi để riêng ở ngăn dưới cùng của chiếc xe đẩy dọn phòng",
+              "Đem thẳng xuống phòng giặt và báo miệng cho tổ trưởng ca",
+              "Niêm phong ngay trong phòng, cho vào túi y tế và dán nhãn",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "There's something sharp in the bin — a razor, I think. Can you just empty it?",
+          options: [
+            {
+              text: "Of course, sir — I will be very careful when I lift the bag out of the holder.",
+              correct: false,
+            },
+            {
+              text: "I will not lift that out by hand, sir — a blade goes in a sharps box with tongs. May I fetch them?",
+              correct: true,
+            },
+            {
+              text: "Certainly, sir — I will wrap it up in a hand towel first, so that nothing at all can possibly cut through it.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Sorry — I dropped a glass in the bathroom. I've cleared most of it up.",
+          options: [
+            {
+              text: "That is quite all right, sir — I will run the vacuum over it when I do the room.",
+              correct: false,
+            },
+            {
+              text: "Thank you for telling me, sir — where did you put the pieces? Please keep your shoes on until I have swept.",
+              correct: true,
+            },
+            {
+              text: "Please put the pieces into the bathroom bin for me, sir, and I will take the whole bag down later on.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My son is diabetic — where are we supposed to put his needles?",
+          options: [
+            {
+              text: "The bathroom bin is perfectly fine for those, sir, as long as you wrap them up in something first for us.",
+              correct: false,
+            },
+            {
+              text: "I will ask our Housekeeping desk for a sharps box, sir, and bring it up as soon as it arrives.",
+              correct: true,
+            },
+            {
+              text: "Please just leave them on the desk, sir, and I will take them down when I finish.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "He can't speak — he's going blue!",
+          options: [
+            {
+              text: "Let me run and get our first aider, madam — she will know exactly what to do here.",
+              correct: false,
+            },
+            {
+              text: "Room 812, call 115 — guest choking! I am going to lean him forward now, madam.",
+              correct: true,
+            },
+            {
+              text: "Try to give him a glass of water, madam, and see whether that will wash it down for him.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "I cut my hand on the glass. It's only small — don't make a fuss.",
+          options: [
+            {
+              text: "As you wish, madam — I will say nothing about it and finish the room now.",
+              correct: false,
+            },
+            {
+              text: "Let me bring the first-aid kit and our first aider, madam — a cut from glass must be seen.",
+              correct: true,
+            },
+            {
+              text: "You could go down to the lobby, madam, and ask the front desk for a plaster whenever you have a moment.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_3",
+      lessonOrder: 3,
+      titleEn: "The Alarm on Your Floor",
+      titleVi: "Chuông báo cháy trên tầng của bạn",
+      vocabulary: [
+        {
+          word: "Gas smell",
+          phonetic: "/ˈɡæs ˌsmel/",
+          definition: "Mùi gas — loại mùi DUY NHẤT không đóng cửa lại",
+          context: "A gas smell means the door stays exactly as you found it.",
+          icon: "👃",
+        },
+        {
+          word: "Burning wire smell",
+          phonetic: "/ˌbɜːnɪŋ ˈwaɪə ˌsmel/",
+          definition: "Mùi dây điện cháy",
+          context:
+            "A burning wire smell empties the room first, and the operator is called from the corridor.",
+          icon: "🔌",
+        },
+        {
+          word: "Blocked fire exit",
+          phonetic: "/ˌblɒkt ˈfaɪər ˌeksɪt/",
+          definition: "Lối thoát hiểm bị chắn",
+          context: "A blocked fire exit is cleared and reported the same minute.",
+          icon: "🚪",
+        },
+        {
+          word: "Assembly point",
+          phonetic: "/əˈsembli ˌpɔɪnt/",
+          definition: "Điểm tập kết khi sơ tán",
+          context: "Say your assembly point aloud at handover, every single shift.",
+          icon: "🚩",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Alarm! Get out! Move, move, move!",
+          polite:
+            "This way please, madam — leave everything, and the stairs are just to your left.",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Giọng bình tĩnh, câu ngắn, và luôn có HƯỚNG ĐI — 'the stairs are just to your left'. Không ai chạy theo tiếng hét; người ta đi theo giọng bình tĩnh nhất trong hành lang — và một giọng bình tĩnh làm được nhiều hơn một giọng nhanh.",
+        },
+        {
+          rude: "Room 1104 cannot walk — anybody hear me?",
+          polite:
+            "Eleventh floor, one guest cannot walk, corridor clear. I am going to the floor phone now.",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Trên BỘ ĐÀM thì KHÔNG đọc số phòng — sóng bộ đàm ai bắt cũng nghe. Chỉ tầng, 'cannot walk', và tình trạng hành lang. Số phòng đi qua điện thoại tầng hoặc nói trực tiếp với an ninh. Ngoại lệ duy nhất là tiếng hô cứu người hóc ở bài 2: cứu mạng đứng trên riêng tư. Ngược với công thức gọi nội bộ ở bài 1 — cùng với đường 115, đây là chỗ thứ hai không nói số phòng trước, và là chỗ duy nhất không nói số phòng ra chút nào. Gõ cửa rồi đi tiếp. Không mở cửa, không tìm người, không quay lại lấy bất cứ thứ gì — trừ chìa khoá tổng vốn đã ở trên người bạn. Và lối thoát hiểm bị chắn không bao giờ để lại cho ca sau: là cái ghế thì dời ngay, nặng hơn thì báo trong phút đó.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Security desk. Fire panel shows your floor — what can you smell up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A burning wire smell outside 1104, not a gas smell. I am calling from the corridor.",
+          helpTip:
+            "Đây là TRỰC BAN AN NINH hỏi — ngang cấp, không phải Duty Manager. Phân biệt đúng loại mùi — hai mùi khác nhau dẫn tới hai đội khác nhau — rồi báo luôn thứ mình vừa xử lý. 'Wire' /ˈwaɪə/ — sau /aɪ/ còn một /ə/ nữa; đừng dừng lại ở 'wai'.",
+        },
+        {
+          guestPrompt: "I use a wheelchair. There is no way I am getting down eleven floors.",
+          targetResponse:
+            "The corridor here is clear, madam. Please close your door and stay just behind it — a closed door holds for a long time. I am telephoning Security from the floor phone now, and I am coming straight back to this door.",
+          helpTip:
+            "Nói CÁI MÌNH ĐANG LÀM, đừng hứa CÁI KHÁCH SẼ NHẬN: bạn biết hành lang mình sạch, bạn không biết đám cháy ở tầng nào. Một lời trấn an về an toàn tính mạng, nói với khách khuyết tật trong đám cháy, là vật chứng nếu có chuyện. Rồi nói việc bạn đang làm NGAY LÚC NÀY, không phải 'soon'. Khách không tự đi được thì KHÔNG vào lồng cầu thang — đó là lối thoát của mọi tầng phía trên.",
+        },
+      ],
+      reading: {
+        text: "THE ALARM WHILE YOU ARE ON THE FLOOR\nBefore the bell there are smells. A smoke smell, a burning wire smell. A socket warm to the back of your hand. A fire door propped open with a wedge. Report the smell before you look for the cause. Finding it is Engineering's work. Losing four minutes helps nobody.\nA SMELL OF BURNING: get everyone out and CLOSE the door behind you — it is a fire door, and it only works shut. Then call the operator from the corridor: the room number, and the word 'burning'.\nA SMELL OF GAS is the other way round. Get everyone out and leave the door exactly as you found it. Touch no switch, no light and no telephone on that floor; call from the stairwell. Open nothing and close nothing — not a window, not a curtain. A window handle or a light switch can make the one spark that room is waiting for. No radio either — do not press the talk button — and no torch and no telephone of your own. A radio and a torch both make a spark, and so does a switch. Nothing in your hand gets turned on until you are out of that corridor. Engineering isolates the supply and ventilates it, and nobody goes back in until they say so.\nWhen the bell sounds you are a guide, not a searcher. Knock, call 'housekeeping — please leave by the stairs', and move on. You do not open doors, you do not look under beds, and you do not wait for an answer.\nIf there is smoke in the corridor, the sweep is over. You take the nearest stairs at once and tell the Duty Manager where you stopped and which doors you did not reach. Nobody sweeps a corridor when they cannot see the end of it.\nAnd a guest who refuses to leave is asked twice, calmly, and then left. You never argue, and you never take hold of a guest who says no. An arm offered and taken is not that. You give the Duty Manager the room number and the words 'declined to leave'. He passes it to Security: one list, in one place, so the fire team reads it once.\nIf a door is already open and you see flame, close that door. Hit the nearest fire alarm call point on your way past, button or glass. Then telephone from the next corridor.\nIf the operator does not answer within thirty seconds, dial 114 yourself: hotel name and street first, then the floor, then 'fire'. Two calls to the fire brigade cost nothing. You do not fight it — an extinguisher is for the person trained on it, and for a fire smaller than you are.\nWalk, do not run. Stairs, never the lift. The open-door rule of week thirty-five stops at the bell: in an alarm the room is empty, so the door is closed. Pull the trolley clear of the doorway first — it is a fire door, and your trolley is holding it open. Then stand the trolley ALONG the corridor wall, never across it.\nA guest who cannot manage the stairs does NOT go into the stairwell. And never waits on a landing: that landing is the escape route for every floor above. What happens next depends on your corridor, and you are the only person who can see it.\nSome houses have a refuge area: a protected room, usually by the stairs, with a telephone in it. If yours has one, that is where a guest who cannot walk waits — but you never lift and you never carry. A guest who can move himself in a chair you may walk beside, while the air is still clear and the way is flat. Anybody who cannot stays in the room with the door closed. Most houses have none — ask your Floor Supervisor which yours is, this week.\nIF YOUR CORRIDOR IS CLEAR and the fire is not on your floor, and your house has no refuge area, they stay in the room. Door closed, a wet towel along the gap.\nIf your corridor stays clear, you stay at that door until Security or the fire team reaches you. You do not resume the sweep: you are the only marker that door has.\nIF THERE IS SMOKE ON YOUR FLOOR, that guest stays in the room and you GO. You do not move them along a corridor you cannot see the end of, and you do not stand in that smoke yourself. A marker nobody can breathe beside is not a marker. Take the nearest stairs and give Security three things: the floor, 'cannot walk', and the state of the corridor. The room number never goes on the radio, not even in smoke. It goes on the floor phone, or face to face with Security at the stairhead. The fire team is the only one who moves that guest. A room number without the state of the corridor tells the fire team nothing.\nBut the moment smoke reaches your corridor, the smoke rule above takes over — you go. Send the next person you see to say which doors you did not reach. If a colleague relieves you there, you may finish the sweep. The fire team is the only one who takes that guest down.\nOffer an arm to anyone merely slow, as far as the stairhead. Then hand them to the next person on the stairs and keep going. A guest who cannot walk at all is a room number, not an arm. Do not stop to count heads — that is done at the assembly point by the person holding the list.\nNever go back up. Not for a guest's bag, not for your own phone, not for the floor keys: those are already on you. At the assembly point, say out loud that you have the floor keys. Hand them to your own Duty Manager or Security, and name who you gave them to. Twenty doors open faster than twenty doors broken.\nA GUEST ON THE WRONG SIDE OF A RAIL, or one who tells you they mean to harm themselves. You do not grab, you do not shout, and you do not bring anybody else to look. Stay where they can see you and your hands. Say one true sentence: 'I am staying here with you, sir.' Nothing about the hotel, the bill or their family. Send the next person you see for the Duty Manager and Security, and do not leave. A note left on a desk goes to the Duty Manager the same minute, unread aloud.\nAfter the sweep, tell the Duty Manager which rooms answered and which did not. That list is the only reason a floor ever gets searched twice.\nSome doors you must not open are not fire doors at all.\nA room you can HEAR a fight in is not a door you knock on either. That is a Security call from the corridor, and never a door you open.\nAnd a guest who is cold and stiff may be beyond help. But that is not yours to decide, and it is not the Duty Manager's either. If there is any doubt at all, treat the guest as NOT BREATHING: 115 first, and say exactly what you can see. Nothing is touched and nothing is cleaned. The Duty Manager calls 113 — the police — as well, and you stand outside that door until somebody relieves you.\nAssembly points, refuge areas, who calls 114 (the fire brigade) and from which phone, and who sweeps which floor all differ by house. Learn yours before your first night shift.",
+        questions: [
+          {
+            q: "Nghe chuông báo cháy, nhân viên buồng phòng làm gì?",
+            options: [
+              "Mở từng cửa ra để chắc chắn không còn ai sót lại trong phòng",
+              "Gõ cửa, gọi to hướng thoát hiểm, rồi đi tiếp sang phòng bên",
+              "Đứng chờ giám sát tầng tới rồi mới bắt đầu di chuyển khách",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Đang gõ cửa quét tầng thì hành lang có khói. Làm gì?",
+            options: [
+              "Dừng quét, xuống cầu thang gần nhất, báo đã dừng ở đâu và chưa tới phòng nào",
+              "Cúi thấp người xuống rồi cứ thế gõ nốt những phòng còn lại cho hết cả tầng đó",
+              "Quay lại lấy khăn ướt bịt mũi rồi tiếp tục quét như bình thường",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Ngửi thấy mùi GAS thì cửa phòng xử lý thế nào?",
+            options: [
+              "Đóng thật chặt lại phía sau lưng mình, vì đó vốn là cửa chống cháy",
+              "Để y nguyên như lúc mình vừa thấy, tuyệt đối không động",
+              "Chèn một chiếc khăn ướt vào khe rồi khép hờ cửa lại",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Is this a real fire or just another drill? I'm in the bath.",
+          options: [
+            {
+              text: "It is almost certainly just another drill, sir — they run one most months at about this hour of the evening, I find.",
+              correct: false,
+            },
+            {
+              text: "We treat every alarm as a real one, sir. The stairs are just to your left — I will knock again on my way past.",
+              correct: true,
+            },
+            {
+              text: "Let me go down and find out for you, sir — I will come straight back up.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Hold the lift! I'm not doing eleven flights with this knee.",
+          options: [
+            {
+              text: "Of course, madam — one trip in the lift will be quicker for both of us, and I will come down with you.",
+              correct: false,
+            },
+            {
+              text: "The lifts are switched off in an alarm, madam. May I give you an arm as far as the stairs?",
+              correct: true,
+            },
+            {
+              text: "You will have to manage the stairs, madam, as the lift is switched off today.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Something smells like gas in here. Shall I open a window?",
+          options: [
+            {
+              text: "Yes, please do go and open it, madam — and then the two of us can wait in here until Engineering comes up.",
+              correct: false,
+            },
+            {
+              text: "Please leave it as it is, madam, and come out with me. Nothing in here gets touched until Engineering has been in.",
+              correct: true,
+            },
+            {
+              text: "Let me switch the extractor fan on first, madam, and then the two of us can step out together.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "I am not going anywhere. I have paid for this room.",
+          options: [
+            {
+              text: "Sir, I really must insist on this — every single person on this floor has to go down the stairs right now.",
+              correct: false,
+            },
+            {
+              text: "Every alarm is treated as real, sir. May I walk down with you? Even as far as the stairs?",
+              correct: true,
+            },
+            {
+              text: "Let me sit with you until the bell stops, sir, and then neither of us has to walk all the way down.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My laptop's still in the room. Two minutes, that's all.",
+          options: [
+            {
+              text: "Two minutes should be all right, sir — go as quickly as you can and I will wait right here for you.",
+              correct: false,
+            },
+            {
+              text: "Nobody goes back in until the fire officer clears the building, sir. May I walk you to the assembly point?",
+              correct: true,
+            },
+            {
+              text: "The room doors all lock automatically, sir, so your laptop is perfectly safe in there until they let us back in.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_36_4",
+      lessonOrder: 4,
+      titleEn: "The Storm Shift",
+      titleVi: "Ca trực ngày bão",
+      vocabulary: [
+        {
+          word: "Typhoon",
+          phonetic: "/taɪˈfuːn/",
+          definition: "Bão lớn",
+          context: "A typhoon shift begins on the balconies, not in the bathrooms.",
+          icon: "🌀",
+        },
+        {
+          word: "Flooded bathroom",
+          phonetic: "/ˌflʌdɪd ˈbɑːθruːm/",
+          definition: "Phòng tắm ngập nước",
+          context:
+            "A flooded bathroom is reported from the doorway, and the power is Engineering's.",
+          icon: "💧",
+        },
+        {
+          word: "Burst pipe",
+          phonetic: "/ˌbɜːst ˈpaɪp/",
+          definition: "Ống nước vỡ",
+          context: "A burst pipe is Engineering's, and the room below is yours.",
+          icon: "🚿",
+        },
+        {
+          word: "Torch",
+          phonetic: "/tɔːtʃ/",
+          definition: "Đèn pin — kiểm đầu ca, và không cho ai mượn",
+          context: "In a power cut the torch lives on the trolley, not in the store.",
+          icon: "🔦",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Big storm coming. Maybe your balcony door breaks tonight.",
+          polite:
+            "May I bring your balcony chairs inside, sir? We are securing every balcony before this evening.",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Nói việc mình SẮP LÀM và việc KHÁCH SẠN đang làm — đừng nói gì về thời tiết, giờ bão hay chuyến bay: đó là việc của Duty Manager và quầy, và nó đổi từng giờ. Hiện tại tiếp diễn 'we are securing' cho thấy việc đang chạy, không phải một lời hứa.",
+        },
+        {
+          rude: "Water everywhere in 704. Not my job — call engineering.",
+          polite:
+            "Water is coming through the ceiling in 704, and the guest is out. May I have a second person before I move his bags?",
+          rule: "NGUY HIỂM, không phải bất lịch sự. Báo sự cố kèm VIỆC MÌNH ĐÃ LÀM. Kê đồ của khách lên cao là việc bạn được phép làm ngay; sửa đường ống thì không bao giờ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The lights have gone out. Are we safe up here?",
+          targetResponse:
+            "There is a night team in the building, madam, and I have a torch. May I ask the Duty Manager to ring your room?",
+          helpTip:
+            "Hứa cái mình giữ được: có người trực và bạn có đèn. Đừng hứa 'sẽ có điện lại'. 'Torch' /tɔːtʃ/ — cụm /tʃ/ cuối, không phải /k/.",
+        },
+        {
+          guestPrompt: "Engineering. What have you got up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A burst pipe above 704 and a flooded bathroom below it. The power is still off on this floor.",
+          helpTip:
+            "Đây là KỸ THUẬT hỏi. Báo theo thứ tự nước chảy: nguồn trước, hậu quả sau, rồi điều kiện chung của tầng. 'Burst' /bɜːst/ — nguyên âm dài, cụm /st/ cuối gọn.",
+        },
+      ],
+      reading: {
+        text: "THE STORM SHIFT — WHAT THE FLOOR DOES BEFORE THE WIND\nBalconies first, every floor, before anything else: chairs, tables, drying racks, plant pots, ashtrays. A plastic chair on the ninth floor is not furniture in a typhoon; it is a thing that goes through somebody's window.\nBut balconies are cleared BEFORE the alert level your house names. Never after the wind is up. Never on your own, and never with the balcony door shut behind you. Ask your Executive Housekeeper which level closes the balconies, and stop at it even if a floor is unfinished.\nThen the doors. Balcony doors LATCHED, not just closed. Curtains drawn — glass that breaks into a curtain stays in the curtain.\nTorches on every trolley, checked at the start of the shift and never borrowed for the store room. In a power cut you are the light on your floor.\nWater: if your house allows it and you can reach the isolation valve while standing dry, turn the water off — and stop there. Never touch a switch, a socket or a plug in a wet room, and never stand in water to reach one. Cutting the power is Engineering's, and you wait outside that door until they have done it. A burst pipe and a ceiling leak are both Engineering's — but the room BELOW the water is yours, and you check it first.\nBefore you leave a wet floor for one second, the wet floor sign goes down. A hazard you have reported but not marked is still your hazard.\nMoving a guest's belongings up and away from water is yours to do, in front of the guest. Never alone when the guest is out. Ask for a second person on the same call that reports the leak. Photograph the bags where they stand, on the department device. Move them onto the bed or the desk, in plain sight, never into a wardrobe or a drawer. Both of you write and sign what was moved and where. A second pair of eyes costs one minute; an accusation costs a career.\nNever promise a guest anything about the weather, the flights or the road. That belongs to the Duty Manager and the desk, and it changes every hour.\nLifts stop on a storm alert in many houses, and the stairs get dark. Know yours before you need them.\nIF GLASS GOES WHILE A GUEST IS IN THE ROOM: get the guest out into the corridor first, then close that door behind you. A closed door holds the pressure and holds the glass. Nobody goes back for a bag. Then the room number to the Duty Manager, and you stay at that door. Never cross a room to reach a window in the wind.\nWhat your house does at each storm level is written in its emergency plan. Ask your Executive Housekeeper to walk you through it before the season, not during it.",
+        questions: [
+          {
+            q: "Trước cơn bão, việc đầu tiên trên tầng là gì?",
+            options: [
+              "Kiểm tra đèn pin trên xe đẩy của từng nhân viên buồng phòng đó",
+              "Kê toàn bộ hành lý của khách lên mặt giường cho khỏi bị ướt",
+              "Thu hết bàn ghế trên ban công vào trong, ở mọi phòng của tầng",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Trần bị dột thì phải kiểm tra phòng nào trước?",
+            options: [
+              "Phòng bên cạnh, vì nước thường chảy ngang theo trần",
+              "Phòng nằm ngay bên dưới chỗ nước đang chảy xuống",
+              "Phòng ở tầng trên cùng, nơi mưa đổ xuống trước tiên",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "It's only a plastic chair. Can't it just stay out on the balcony?",
+          options: [
+            {
+              text: "You are quite right, sir — I will leave it out and come back for it this evening.",
+              correct: false,
+            },
+            {
+              text: "In this wind it could go through a window below us, sir. May I bring it in for you now?",
+              correct: true,
+            },
+            {
+              text: "I will take everything else off the balcony for you, sir, and leave your own chair exactly where it is standing.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "There's water coming down the wall in my room. Can you mop it up?",
+          options: [
+            {
+              text: "I will call Engineering now, madam — and may I ask you to step away from that wall with me?",
+              correct: true,
+            },
+            {
+              text: "I will unplug the lamp by that wall first, madam, and then mop up what I can reach.",
+              correct: false,
+            },
+            {
+              text: "That is Engineering's, madam — you will need to ring the front desk about it yourself.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Will our flight tomorrow be cancelled? What have you heard?",
+          options: [
+            {
+              text: "The airport usually closes in a storm like this one, sir, so I would rather expect so.",
+              correct: false,
+            },
+            {
+              text: "I am not the one to ask, sir. May I ask the Front Desk to call your room about it?",
+              correct: true,
+            },
+            {
+              text: "Nobody has told us anything at all, sir, so your flight is probably going ahead.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "The window's just gone! My passport is on that desk!",
+          options: [
+            {
+              text: "Stay by the door, sir — I will fetch it for you, and then we will both go out.",
+              correct: false,
+            },
+            {
+              text: "Out into the corridor with me now, sir — nobody goes back in. I will close the door behind us.",
+              correct: true,
+            },
+            {
+              text: "Let me pull the curtain across first, sir, and then you can reach the desk safely.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Everyone says the storm hits at nine tonight. Is that right?",
+          options: [
+            {
+              text: "That is what we have been told too, madam, so please do stay inside after eight.",
+              correct: false,
+            },
+            {
+              text: "I could not say, madam. May I ask the Duty Manager to ring your room?",
+              correct: true,
+            },
+            {
+              text: "Nobody really knows, madam — these storms usually turn away at the last minute.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const HK_WEEK_38: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 38,
+  weekTitleEn: "Putting a Case to Your Manager",
+  weekTitleVi: "Trình một hồ sơ lên cấp trên",
+  reviewWords: [
+    "Compensation",
+    "Reimburse",
+    "Stain",
+    "Inspect",
+    "Waive",
+    "Approval",
+    "Executive housekeeper",
+    "Room inspection result",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_38_1",
+      lessonOrder: 1,
+      titleEn: "The One-Page Case",
+      titleVi: "Hồ sơ một trang",
+      vocabulary: [
+        {
+          word: "Propose",
+          phonetic: "/prəˈpəʊz/",
+          definition: "Đề xuất một phương án để cấp trên quyết",
+          context: "I propose one repair and one replacement, nothing more.",
+          icon: "📄",
+        },
+        {
+          word: "Overview",
+          phonetic: "/ˈəʊvəvjuː/",
+          definition: "Phần tóm lược ba câu mở đầu hồ sơ",
+          context: "The overview is three sentences, and busy managers read only those.",
+          icon: "🗂️",
+        },
+        {
+          word: "Incident summary",
+          phonetic: "/ˈɪnsɪdənt ˌsʌməri/",
+          definition: "Bản tóm tắt diễn biến sự việc",
+          context: "An incident summary carries times and facts, never opinions.",
+          icon: "📝",
+        },
+        {
+          word: "Docket",
+          phonetic: "/ˈdɒkɪt/",
+          definition: "Phiếu nhận đồ giặt của khách",
+          context: "The docket is what ties a garment to the hour it was collected.",
+          icon: "🎫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The jacket is ruined. Somebody has to pay for it.",
+          polite:
+            "This is above what my supervisor may sign. I propose we send the letter first. The docket and the evidence sheet are attached.",
+          rule: "NÓI VỚI CẤP TRÊN, không bao giờ nói với khách. Mở đầu bằng ĐỀ XUẤT, không bằng lời than. Cấu trúc của cả tuần: 'I propose (that) we + động từ NGUYÊN THỂ' — 'I propose we replace the jacket', không phải 'we replaces' và cũng không phải 'we to replace'. (Riêng 'I propose to replace…' vẫn đúng ngữ pháp, nhưng nó nghĩa là TÔI sẽ làm; tuần này ta xin cấp trên quyết nên luôn dùng 'we'.) Cấp trên nghe câu đầu để biết bạn muốn họ QUYẾT điều gì.",
+        },
+        {
+          rude: "I think the machine was too hot. Probably. Someone said so.",
+          polite: "The wash log shows sixty degrees at ten past two, and the label says thirty.",
+          rule: "Trong một hồ sơ đề xuất, mỗi câu phải có một NGUỒN: nhật ký máy, nhãn quần áo, ảnh, giờ. 'Tôi nghĩ' và 'hình như' không có chỗ ở đây.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Floor Supervisor. Two minutes, then I have a meeting. Tell me.",
+          speakerRole: "manager",
+          targetResponse:
+            "One guest's jacket, shrunk in our wash, his receipt one million four. The letter needs the Executive Housekeeper's signature — I propose we send it first.",
+          helpTip:
+            "Đây là CẤP TRÊN hỏi, không phải khách. Bản NÓI hai phút khác bản viết: một dòng xin CHỮ KÝ NÀO, rồi ba câu — chuyện gì, TỐN BAO NHIÊU, xin quyết điều gì. Bốn phần trên giấy vẫn giữ nguyên. Nửa hướng-lên của tuần là việc của người tổ cử đi trình; học trước, dùng khi tới lượt. 'Propose' /prəˈpəʊz/ — đuôi /z/ rung, không phải /s/; đừng dừng ở 'pờ-rô-pâu'.",
+        },
+        {
+          guestPrompt: "So what's actually happening about my jacket?",
+          targetResponse:
+            "The case is with my manager today, sir, and I will come back to you myself before six.",
+          helpTip:
+            "Với KHÁCH thì vẫn là quy trình và mốc giờ — không con số, không lời hứa, đúng luật tuần ba mươi lăm. 'Manager' /ˈmænɪdʒə/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "A PROPOSAL THAT GETS READ — ONE PAGE, FOUR PARTS\nThis is the week you stop carrying a complaint and start writing one up. An attendant reports; the person who writes this page is the one your floor sends. One day that is you.\nKnow who you are putting it to. The week thirty-three table is a LAUNDRY table, and every line on it is a guest's own garment. Inside that table your Floor Supervisor signs up to 1,200,000 dong. Above that figure the Duty Manager signs. And any guest property that is not a laundry item is the Duty Manager's from the first dong. A bag, a watch, a laptop. Your Executive Housekeeper signs the corrective action plan and the letter. Say which of the three you are asking for in your first line.\n1. OVERVIEW. Three sentences at the top: what happened, what it cost, what you want decided. A manager who reads only those three must still be able to answer you.\n2. INCIDENT SUMMARY. Times and facts, in the order they happened: 'Collected 09:40. Washed 14:10 at sixty degrees. Label reads thirty.' No adjectives, no blame, and no colleague's name unless the name is itself a fact.\nAnd when the name that is a fact is YOUR name, you write it exactly as you would write anybody's. Say it in the first line and say it plainly: 'The wash was mine.' A mistake reported the same shift is a mistake. A mistake found later is something else.\n3. PHOTO EVIDENCE SHEET, taken on the department device and never on your own phone. A guest's property does not live in an attendant's camera roll. If your house has no device, you still do not use your own. The file is built on the written description instead. Two people look at it together and both write what they saw: the item, the mark, its size, the hour. Both sign under it. Photograph four things: the garment as it is now, the label, the docket, and the intake condition note. Add the collection photograph if the laundry took one. The garment is the guest's, not ours. We ASK to keep it while the file is open, and we say why: 'May we keep it until my manager has seen it, sir? It is what the file is built on.' Bag it, label it with the docket number, and never re-clean or press it. A re-clean is something you propose; it is never something you start. If the guest wants it back, it goes back the same hour. Photograph it from four sides first and note the time. Tell your manager before the guest leaves the corridor. A file with photographs still stands. A file built on a garment we refused to hand back does not. A photograph nobody signed is a photograph nobody trusts.\n4. WHAT YOU PROPOSE. One option, and one alternative if the first is refused. Two options let a manager decide. Five options start a discussion, and the file waits.\nWrite it the same shift. A summary written two days later is a memory, and memories lose to laundry logs.\nNever write what you think somebody else did wrong. Write what the record shows and let the record do it for you.\nYour name goes at the bottom. A proposal nobody signed belongs to nobody, and it will sit unread.\nAnd if your manager asks you to change a fact in the summary, you change nothing and you say so. 'The log reads sixty — shall I add your note underneath it?' If we change a number afterwards, the file stops being evidence.\nAnd you may name an hour on your manager's behalf only after she has given you that hour. Until she has, it is 'may I ask her to…'.\nWhich form your house uses, and who signs beside you, differs. Ask your Executive Housekeeper for a real one from last month — a finished example teaches faster than a blank form.",
+        questions: [
+          {
+            q: "Phần OVERVIEW gồm những gì?",
+            options: [
+              "Toàn bộ diễn biến theo giờ, từ lúc nhận đồ tới lúc trả",
+              "Ba câu: chuyện gì, tốn bao nhiêu, cần quyết điều gì",
+              "Danh sách những người có mặt trong ca hôm xảy ra",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Ảnh chụp đồ của khách phải chụp bằng máy nào?",
+            options: [
+              "Máy của bộ phận — đồ của khách không nằm trong điện thoại riêng của ai",
+              "Điện thoại của chính mình, miễn là gửi cho tổ trưởng ngay trong ca",
+              "Máy nào cũng được, quan trọng là ảnh rõ và có ghi ngày tháng vào",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Đồ hỏng là một chiếc vali, không phải đồ giặt. Ai ký?",
+            options: [
+              "Giám sát tầng ký, nếu số tiền vẫn còn dưới 1.200.000 đồng",
+              "Duty Manager ký, ngay từ đồng đầu tiên, dù là bao nhiêu tiền",
+              "Executive Housekeeper ký, vì chị ấy ký kế hoạch khắc phục",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Why should I sign this? Convince me.",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "He is very angry, and he is threatening to write a review about us online.",
+              correct: false,
+            },
+            {
+              text: "It is in the incident summary: thirty degrees on the label, sixty in our own log.",
+              correct: true,
+            },
+            {
+              text: "It is only a small amount, madam, and signing it now will make the whole thing go away quietly.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "The label was already missing on the blue shirt. What are you asking me for?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "For the replacement — the guest is certain the jacket came in with its label on.",
+              correct: false,
+            },
+            {
+              text: "No payment. The intake note and the docket both show it, and I propose a free re-clean.",
+              correct: true,
+            },
+            {
+              text: "I am not sure yet, madam — perhaps we should simply pay it and close the whole thing.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Just tell me what you're going to pay me.",
+          options: [
+            {
+              text: "The full replacement value, sir — that is what the policy says in a case like this.",
+              correct: false,
+            },
+            {
+              text: "That is my manager's to say, sir. May I ask her to call you? I will come back before six.",
+              correct: true,
+            },
+            {
+              text: "I have put a number in the report, sir, but I am not allowed to tell you it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_2",
+      lessonOrder: 2,
+      titleEn: "Putting a Number on It",
+      titleVi: "Đặt một con số lên bàn",
+      vocabulary: [
+        {
+          word: "Garment replacement value",
+          phonetic: "/ˌɡɑːmənt rɪˈpleɪsmənt ˌvæljuː/",
+          definition: "Giá trị thay thế món đồ của khách",
+          context: "A garment replacement value needs a receipt standing behind it.",
+          icon: "👔",
+        },
+        {
+          word: "Photo evidence sheet",
+          phonetic: "/ˌfəʊtəʊ ˈevɪdəns ˌʃiːt/",
+          definition: "Trang ảnh chứng cứ có ký xác nhận",
+          context: "Each photo evidence sheet is dated and signed by two people.",
+          icon: "📸",
+        },
+        {
+          word: "Compensation amount",
+          phonetic: "/ˌkɒmpənˈseɪʃn əˌmaʊnt/",
+          definition: "Mức bồi thường được duyệt",
+          context: "The compensation amount is proposed by me and decided above me.",
+          icon: "💰",
+        },
+        {
+          word: "Depreciation",
+          phonetic: "/dɪˌpriːʃiˈeɪʃn/",
+          definition: "Phần trừ theo tuổi của món đồ",
+          context: "Depreciation is in the guide; you never invent that percentage.",
+          icon: "📉",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Just give him what he wants. It is easier for everyone.",
+          polite:
+            "Ten times the service fee means the fee for THAT ITEM, not the whole docket. The jacket's own line reads two hundred thousand, so the ceiling is two million. His receipt reads one million four — I propose we pay the receipt.",
+          rule: "NÓI VỚI CẤP TRÊN. Mỗi con số phải đi kèm một NGUỒN. Bảng bồi thường của nhà quyết định TRẦN; hoá đơn của khách chỉ nói món đồ đáng bao nhiêu — hai việc khác nhau, đừng lẫn. Muốn vượt trần thì nói ra ngay câu đầu rằng mình đang xin vượt, kèm lý do.",
+        },
+        {
+          rude: "We will pay him some time next week, probably.",
+          polite: "I propose the tenth as the payment date, and it is written on the letter.",
+          rule: "'Some time' không phải một mốc. Đề xuất phải có NGÀY — lời hứa mơ hồ luôn quay lại thành khiếu nại thứ hai.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Floor Supervisor. Four million on a laundry claim — that is more than three times what I may sign.",
+          speakerRole: "manager",
+          targetResponse:
+            "This is above the guide, Ms Lan — four million against his receipt, not the two million the table allows. May I take it up today?",
+          helpTip:
+            "CẤP TRÊN nói. Với cấp trên NGƯỜI VIỆT thì gọi tên một lần lúc mở lời — 'Ms Lan' — rồi thôi; sir/madam để dành cho khách và cho quản lý nước ngoài. Cái phải bỏ là GIỌNG PHỤC VỤ: đừng bê nguyên những câu vỗ về dành cho khách sang. Với cấp trên là con số và nguồn. Xác nhận đúng bậc thẩm quyền, rồi đề xuất HỒ SƠ ĐI LÊN. 'Receipt' /rɪˈsiːt/ — chữ p câm, đừng đọc thành 'ri-xép'.",
+        },
+        {
+          guestPrompt: "I paid four million for that jacket. Are you covering it?",
+          targetResponse:
+            "I have your receipt with the file, sir. The manager who signs it decides the amount, and I will come back before six.",
+          helpTip:
+            "Nhận đúng thứ khách vừa đưa, rồi trả quyền quyết định về đúng chỗ — không xác nhận và cũng không phủ nhận con số. 'Amount' /əˈmaʊnt/ — trọng âm ở âm tiết sau.",
+        },
+      ],
+      reading: {
+        text: "WHERE A NUMBER COMES FROM\nYour compensation guide decides what is PAYABLE; a receipt only decides what the item was WORTH. Week thirty-three: a shrunk, faded or torn garment is major damage. That is up to ten times the laundry service fee, and the receipt only tells you where inside that ceiling to propose. A LOST item works differently: the guide pays the LOWER of ten times the fee and the replacement value. Your first line names which of those two you are in.\nThen the value itself, and it has one order: the guest's receipt, and only if there is none, the brand's current price today. Now hold that value against the ceiling. Two cases, and the FIRST line of your page says which one you are in. If the value is UNDER the ceiling, propose the value — never the ceiling — and ask for a signature. If it is ABOVE the ceiling, you propose nothing. You name both figures, say which manager the ceiling puts it with, and ask for a decision. Never offer the ceiling itself as a settlement — a ceiling is a limit, not an offer. Say on the page which rule you used, and which source the figure came from.\nDepreciation is real and it is written down. A three-year-old jacket is not a new jacket, and your compensation guide says by how much. Never invent that percentage while a guest is waiting.\nA linen replacement estimate uses the store's cost price — never the guest's idea of it, and never the retail price. Hotel linen costs what the hotel pays for it.\nThe compensation amount is proposed by you and decided above you. Week thirty-three set the tiers, and every tier on that table is a guest's own garment. The signing figures are in lesson one.\nAnd the Duty Manager is not the top of the ladder either. Every house sets a figure above which the General Manager or Finance signs. Above another figure again, the file goes to the hotel's insurer. Ask your Executive Housekeeper for both, and write them beside the 1,200,000 on this page. Either way the whole file travels with it.\nA payment timeline names a DATE. 'By the tenth' is a timeline. 'As soon as possible' is a second complaint waiting to be written.\nIf your laundry is contracted out, the log belongs to the contractor. The file still travels with your name on it. Ask your Executive Housekeeper who pays in your house.\nWhatever currency the guest paid in, the proposal also shows dong. Use the hotel's posted rate on the day of the loss, and write that rate beside the figure. Finance works in dong, and so does the audit.\nOne rule outlives every figure on the page. The guest hears the PROCESS and the DATE from you, and the AMOUNT from the manager who signed it.\nYour house's depreciation table and its ceilings are its own. Ask your Executive Housekeeper for the current one — last year's has been wrong since January.",
+        questions: [
+          {
+            q: "Giá trị món đồ — trước khi so với trần — lấy từ đâu?",
+            options: [
+              "Hoá đơn của khách trước, rồi tới giá hiện hành của hãng",
+              "Bảng bồi thường, rồi giá kho, rồi ước lượng giám sát",
+              "Giá bán lẻ hiện nay, rồi hoá đơn, rồi ý kiến của khách",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Hoá đơn khách đưa là 4 triệu, trần của bảng là 2 triệu. Làm gì?",
+            options: [
+              "Đề xuất đúng 2 triệu, vì đó là mức cao nhất mà bảng cho phép",
+              "Không đề xuất con số nào — nêu cả hai rồi xin cấp trên quyết",
+              "Đề xuất 4 triệu, vì hoá đơn của khách là bằng chứng gốc",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Ai là người nói con số bồi thường cho khách nghe?",
+            options: [
+              "Nhân viên buồng phòng, ngay khi hồ sơ vừa được lập xong xuôi",
+              "Lễ tân, vào lúc khách làm thủ tục trả phòng rời khách sạn",
+              "Người quản lý đã ký duyệt, không phải nhân viên buồng phòng",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Duty Manager, Mr Harris. Two million is above your supervisor's line — where did this come from?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I looked up a very similar jacket on a shopping site this morning, and took the first price on the screen.",
+              correct: false,
+            },
+            {
+              text: "The ceiling is ten times the service fee, Mr Harris — two million. His receipt is one million four, so that is what I propose.",
+              correct: true,
+            },
+            {
+              text: "The guest told me what he paid for it, sir, and I wrote that down.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Give me the overview. Three sentences.",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "It started on Tuesday, and I have been trying to get to the bottom of it since.",
+              correct: false,
+            },
+            {
+              text: "One jacket, shrunk in our wash. His receipt reads one million four, inside the two-million ceiling. I am asking for your approval on the letter.",
+              correct: true,
+            },
+            {
+              text: "The whole file is written up, madam — it is on your desk and it runs to three pages.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "When exactly will I see the money?",
+          options: [
+            {
+              text: "Very soon, sir — these things usually go through by the end of the week.",
+              correct: false,
+            },
+            {
+              text: "By the tenth, sir — the date is written on your letter.",
+              correct: true,
+            },
+            {
+              text: "As soon as the manager finds the time to sign it, sir, I should think.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_3",
+      lessonOrder: 3,
+      titleEn: "What the Hotel Offers",
+      titleVi: "Khách sạn đưa ra điều gì",
+      vocabulary: [
+        {
+          word: "Service recovery offer",
+          phonetic: "/ˌsɜːvɪs rɪˈkʌvəri ˌɒfə/",
+          definition: "Gói khắc phục dành cho khách",
+          context: "A service recovery offer is signed before it is ever spoken.",
+          icon: "🤝",
+        },
+        {
+          word: "Laundry service voucher",
+          phonetic: "/ˌlɔːndri ˈsɜːvɪs ˌvaʊtʃə/",
+          definition: "Phiếu dịch vụ giặt là bù cho khách",
+          context: "A laundry service voucher costs us little and says a great deal.",
+          icon: "🎟️",
+        },
+        {
+          word: "Signed apology letter",
+          phonetic: "/ˌsaɪnd əˈpɒlədʒi ˌletə/",
+          definition: "Thư xin lỗi bằng văn bản có người ký",
+          context: "A signed apology letter carries a name, never just a department.",
+          icon: "✉️",
+        },
+        {
+          word: "Payment timeline",
+          phonetic: "/ˈpeɪmənt ˌtaɪmlaɪn/",
+          definition: "Lịch chi trả có ngày cụ thể",
+          context: "A payment timeline names a date, never the word 'soon'.",
+          icon: "📅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "We will give him a free night. That always works.",
+          polite: "I propose we send the letter and a voucher, and I have left the free night out.",
+          rule: "Đề xuất thứ RẺ NHẤT mà có tác dụng, trước tiên. Một lá thư có tên người ký thường giữ khách tốt hơn một đêm miễn phí — và bạn vẫn còn chỗ để lùi.",
+        },
+        {
+          rude: "I already told the guest we would fix everything for him.",
+          polite: "Nothing has been offered yet — I wrote it down and waited for your signature.",
+          rule: "Không bao giờ nói trước với khách một điều chưa ai ký. Lời hứa bị rút lại tạo ra khiếu nại thứ hai, và khiếu nại thứ hai luôn đắt hơn cái thứ nhất.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Executive Housekeeper. Why a letter? He wants money, not words.",
+          speakerRole: "manager",
+          targetResponse:
+            "He asked twice for an apology. I propose we send the signed apology letter and a laundry service voucher.",
+          helpTip:
+            "CẤP TRÊN hỏi. Trả lời bằng chính điều KHÁCH ĐÃ NÓI, không bằng cảm nhận của mình. 'Apology' /əˈpɒlədʒi/ — trọng âm ở âm tiết thứ hai.",
+        },
+        {
+          guestPrompt: "A letter? That's all I get for a ruined jacket?",
+          targetResponse:
+            "My manager has given me five o'clock, sir, and she will come to you herself and go through it.",
+          helpTip:
+            "Đừng bênh gói khắc phục, cũng đừng chê nó. Hứa một CUỘC GẶP có giờ — thứ đã chắc chắn — chứ đừng hứa một nội dung chưa ai ký. 'Herself' /hɜːˈself/ — trọng âm ở âm tiết sau, /f/ cuối nghe rõ.",
+        },
+      ],
+      reading: {
+        text: "WHAT A HOUSE CAN OFFER, AND IN WHICH ORDER\nThis replaces what week thirty-three had you say at the door. We apologise for the guest's EXPERIENCE. We never apologise for a mistake nobody has established. We never promise a guest that we will make it right, and we never write down whose fault it was. The file says what the record shows, and nothing more.\nThe cheapest thing that works comes first, and it is almost never money.\n1. A SIGNED APOLOGY LETTER, from a person with a job title, delivered by hand. Guests keep these. Nobody keeps a discount code. It apologises for the guest's EXPERIENCE and names what we do next. It never says whose mistake it was, and never repeats a figure. Nobody drafts it alone.\n2. A LAUNDRY SERVICE VOUCHER, or the same service done again, free and fast. When the failure was a service, the repair is usually that service done properly.\n3. THE REPAIR OR REPLACEMENT itself, at the value agreed in the file.\n4. MONEY OFF THE FOLIO — late, and never a supervisor's. It is the Duty Manager's, up to the figure your house sets above her. The week thirty-three table does not reach the folio at all.\n5. A FREE NIGHT — the Duty Manager's alone, and never named to a guest before she has signed it.\nAND THE ACCEPTANCE. When the guest agrees, he signs and dates it on the same letter, and the signed copy goes into the file before anybody pays. A settlement nobody signed for can be asked for a second time, and it usually is.\nA service recovery offer is SIGNED before it is SPOKEN. The order of those two words never changes, in any house, at any hour.\nA room recovery plan belongs beside it when a ROOM caused the failure. Which rooms come out of sale, for how long, and who inspects before they go back. A room sold again too early earns the same complaint twice.\nNever bundle everything at once. Offer, listen, and keep something in reserve — what you hold back is what lets you say yes the second time, instead of refusing twice.\nA guest who has already gone to a review site or a lawyer gets nothing offered at all, unless the Duty Manager is standing there. That conversation stopped being yours.\nWhat each level of your house may offer is in the compensation guide. Read it in a quiet week, not in a loud one.",
+        questions: [
+          {
+            q: "Thứ tự đề xuất khắc phục bắt đầu từ đâu?",
+            options: [
+              "Giảm tiền trên hoá đơn, vì khách quan tâm nhất tới tiền",
+              "Thư xin lỗi có người ký, vì đó là thứ rẻ mà hiệu quả",
+              "Đổi sang một phòng khác cho khách ngay trong tối hôm đó",
+            ],
+            correct: 1,
+          },
+          {
+            q: "'Ký trước, nói sau' ở đây nghĩa là gì?",
+            options: [
+              "Không nói với khách bất cứ điều gì chưa có chữ ký duyệt",
+              "Thư xin lỗi phải do quản lý ký tay trước khi giao cho khách đọc",
+              "Nói trước với khách cho khách yên tâm, rồi xin chữ ký duyệt sau cho kịp",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "He is asking for two free nights. What do we do?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "Just give him the two nights — it is far cheaper than a bad review online.",
+              correct: false,
+            },
+            {
+              text: "The service recovery offer is the letter and the voucher, and we keep a night back.",
+              correct: true,
+            },
+            {
+              text: "Tell him no, madam, and let him take it up with the front desk himself.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "So they said no to the replacement.",
+          options: [
+            {
+              text: "I did put in for a replacement, sir — I am afraid they overruled me upstairs on it.",
+              correct: false,
+            },
+            {
+              text: "My manager has made her decision, sir, and she is coming to you herself at five.",
+              correct: true,
+            },
+            {
+              text: "There is really nothing more that I can do for you now, sir. That is the policy.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Your manager promised me a free night. Where is it?",
+          options: [
+            {
+              text: "She could not have promised that, sir — nobody working here is allowed to give away a night.",
+              correct: false,
+            },
+            {
+              text: "Let me find out before six, sir. May I ask her to come and see you herself?",
+              correct: true,
+            },
+            {
+              text: "I will put it on your room now, sir, and sort the paperwork out later.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_38_4",
+      lessonOrder: 4,
+      titleEn: "So It Does Not Happen Again",
+      titleVi: "Để chuyện đó không lặp lại",
+      vocabulary: [
+        {
+          word: "Corrective action plan",
+          phonetic: "/ˌkɒrektɪv ˈækʃn ˌplæn/",
+          definition: "Kế hoạch sửa tận gốc nguyên nhân",
+          context: "A corrective action plan names one change and one owner.",
+          icon: "🛠️",
+        },
+        {
+          word: "Preventive measures",
+          phonetic: "/prɪˌventɪv ˈmeʒəz/",
+          definition: "Các biện pháp phòng ngừa",
+          context: "Preventive measures stay short, or nobody follows them.",
+          icon: "🧾",
+        },
+        {
+          word: "Follow-up inspection date",
+          phonetic: "/ˌfɒləʊ ʌp ɪnˈspekʃn ˌdeɪt/",
+          definition: "Ngày kiểm tra lại đã ấn định",
+          context: "A follow-up inspection date turns a promise into a diary entry.",
+          icon: "📆",
+        },
+        {
+          word: "Direct line",
+          phonetic: "/daɪˌrekt ˈlaɪn/",
+          definition: "Số máy gọi thẳng, không qua tổng đài",
+          context: "The manager's direct line goes on the letter, not a hotline.",
+          icon: "☎️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "We will all be more careful from now on, I promise.",
+          polite:
+            "I propose we make one change with one owner: the linen supervisor checks every wash temperature, and she signs the sheet.",
+          rule: "'Cẩn thận hơn' không phải một biện pháp — không đo được và không ai chịu trách nhiệm. Một thay đổi CỤ THỂ, một người CHỊU TRÁCH NHIỆM.",
+        },
+        {
+          rude: "The new rule is on the noticeboard. Everyone can read it.",
+          polite:
+            "The linen team was briefed on Thursday, Ms Lan, and the follow-up inspection date is the tenth.",
+          rule: "Một quy tắc chỉ tồn tại khi có người được PHỔ BIẾN và có NGÀY KIỂM TRA LẠI. Dán lên bảng tin không phải là phổ biến.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Executive Housekeeper. I have signed this — how do I know it will not happen again?",
+          speakerRole: "manager",
+          targetResponse:
+            "The corrective action plan names one change and one owner, and the follow-up inspection date is the tenth.",
+          helpTip:
+            "CẤP TRÊN hỏi. Đừng hứa 'sẽ cẩn thận hơn' — đưa MỘT thay đổi, MỘT người, MỘT ngày. 'Inspection' /ɪnˈspekʃn/ — trọng âm ở âm tiết thứ hai.",
+        },
+        {
+          guestPrompt: "And what stops this happening to the next person?",
+          targetResponse:
+            "My manager is writing to you about that herself, sir, and her name will be on the letter.",
+          helpTip:
+            "Với KHÁCH thì KHÔNG mô tả một thay đổi nội bộ nào. Nói 'chỗ đó sửa rồi' cũng là nói 'lúc đồ ông hỏng thì chưa đúng' — và câu ấy đi thẳng vào hồ sơ khiếu nại. Bạn trả về LÁ THƯ và CÁI TÊN. 'Writing' /ˈraɪtɪŋ/ — /aɪ/ là nguyên âm đôi, và đuôi -ing đọc gọn.",
+        },
+      ],
+      reading: {
+        text: "CLOSING THE FILE — THE PART EVERYONE SKIPS\nA complaint is closed twice: once with the guest, and once with the process that produced it. Skip the second and the same file returns next season with a different name on it.\nA CORRECTIVE ACTION PLAN names ONE change and ONE owner. Ten changes owned by 'the team' is a list nobody does; one change owned by a named person is a habit within a month.\nA PREVENTIVE MEASURE LIST is written for the people who will actually do it, in the words they use. Pin it where the work happens: at the machine, on the trolley, inside the linen room door. A measure that lives only in a manager's folder prevents nothing at all.\nA FOLLOW-UP INSPECTION DATE turns a promise into a diary entry. Without a date, every plan is finished the moment it is written.\nThe HOUSEKEEPING MANAGER CONTACT goes on the guest's letter: a name and a direct line, not a general hotline. A guest who has to tell the story twice has been failed twice.\nWrite down what did NOT work, too. A near-miss caught by luck is the cheapest lesson your department will ever get, and it disappears if nobody writes it down.\nThen go back to whoever found it and tell them what changed. An attendant whose report changed something will bring you the next one.\nWhich form, which meeting and which signature close a file differ by house. Ask your Executive Housekeeper to show you one that was closed well.",
+        questions: [
+          {
+            q: "Tổ trưởng nói 'cả tổ sẽ chú ý hơn'. Vì sao đó chưa phải kế hoạch khắc phục?",
+            options: [
+              "Một danh sách thật dài các việc mà cả tổ cùng nhau thực hiện",
+              "Một buổi họp toàn bộ phận vào cuối mỗi tháng làm việc đó",
+              "Một thay đổi cụ thể và một người chịu trách nhiệm rõ ràng",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Vì sao thư gửi khách phải ghi tên và số máy trực tiếp?",
+            options: [
+              "Để khách biết được chính xác ai là người đã gây ra sự cố đó",
+              "Để khách không phải kể lại câu chuyện của mình lần thứ hai",
+              "Để tổng đài của khách sạn không phải nhận thêm cuộc gọi",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "So what actually changes on Monday?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "The whole team has been told to take a great deal more care with guests' garments.",
+              correct: false,
+            },
+            {
+              text: "One thing on the preventive measures: the linen supervisor checks every wash temperature.",
+              correct: true,
+            },
+            {
+              text: "I have put a notice up on the linen room door for everyone to read.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Who signed these photographs?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I took them all myself on my phone, so nobody else needed to sign for them.",
+              correct: false,
+            },
+            {
+              text: "The linen supervisor and I both signed them — taken on the department device, dated Tuesday.",
+              correct: true,
+            },
+            {
+              text: "They came up from the laundry, madam, and I am not really sure who took them.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "How do I reach someone if it happens again?",
+          options: [
+            {
+              text: "You can always call the main hotel number, sir, and ask them to put you through to housekeeping.",
+              correct: false,
+            },
+            {
+              text: "My manager's name and her direct line are on your letter, sir — she answers it herself.",
+              correct: true,
+            },
+            {
+              text: "Just stop any of our staff on the floor, sir, and they will find me.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /** The Phase 2 overrides, named once so the recycling pool below and the
  *  registry itself cannot drift apart. */
 const P2_OVERRIDES: Record<string, WeekContent> = {
@@ -15684,6 +19292,5935 @@ const P3_OVERRIDES: Record<string, WeekContent> = {
   "FO-26": FO_WEEK_26,
   "GR-27": GR_WEEK_27,
 };
+const HK_WEEK_39: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 39,
+  weekTitleEn: "The Floor Under Pressure",
+  weekTitleVi: "Cả tầng dồn vào một lúc",
+  reviewWords: [
+    "Report back",
+    "Yours to keep",
+    "Put it forward",
+    "Guest profile",
+    "Carry over",
+    "Out of order",
+    "Service window",
+    "Sign off",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_39_1",
+      lessonOrder: 1,
+      titleEn: "Three Rooms at Once",
+      titleVi: "Ba phòng cùng một lúc",
+      vocabulary: [
+        {
+          word: "Straight after this",
+          phonetic: "/ˌstreɪt ˈɑːftə ðɪs/",
+          definition: "Ngay sau việc đang làm — một mốc bạn giữ được",
+          context: "I will be with you straight after this room, sir.",
+          icon: "⏭️",
+        },
+        {
+          word: "Out of turn",
+          phonetic: "/ˌaʊt əv ˈtɜːn/",
+          definition: "Làm không theo thứ tự",
+          context: "I did 806 out of turn, Ms Lan — it is written down.",
+          icon: "🔀",
+        },
+        {
+          word: "A second pair of hands",
+          phonetic: "/ə ˌsekənd peər əv ˈhændz/",
+          definition: "Thêm một người phụ",
+          context:
+            "Housekeeping desk — I am three rooms behind on nine. Can you send me a second pair of hands?",
+          icon: "🤝",
+        },
+        {
+          word: "Stand by",
+          phonetic: "/ˌstænd ˈbaɪ/",
+          definition: "Chờ máy — trả lời bộ đàm ngay, mất hai giây, để người gọi biết mình đã nghe",
+          context: "Stand by — give me two minutes, I am in a room.",
+          icon: "📻",
+        },
+        {
+          word: "On the list",
+          phonetic: "/ˌɒn ðə ˈlɪst/",
+          definition: "Đã có tên trong danh sách chờ",
+          context: "Your room is on the list, madam, and I will knock when I start it.",
+          icon: "📋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I am busy. Wait.",
+          polite: "I am in another room, madam. I will be with you straight after this one.",
+          rule: "'I am busy' chỉ nói về bạn; 'I am in another room' nói LÝ DO — và lý do là thứ khách chấp nhận được. Nêu luôn một mốc giữ được: 'straight after this one'.",
+        },
+        {
+          rude: "Your room is not ready. I do not know when.",
+          polite: "Your room is on the list, sir, and it is the next one I open.",
+          rule: "Không biết giờ thì nói VỊ TRÍ trong hàng chờ, đừng nói 'I do not know'. Vị trí là thứ bạn biết chắc; giờ thì không.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I have been waiting since eleven. The room next door was done before mine.",
+          targetResponse:
+            "I am sorry you have waited, madam. Two rooms are ahead of yours, and I will knock when I start your room.",
+          helpTip:
+            "Xin lỗi vì KHÁCH ĐÃ PHẢI CHỜ, đừng xin lỗi vì thứ tự — thứ tự của bạn đúng, và tuần 38 cấm nhận một lỗi chưa ai xác lập. Cũng đừng nói phòng bên là phòng gì: đó là chuyện của khách khác. 'Waited' /ˈweɪtɪd/ — đuôi -ed sau /t/ thành một âm tiết riêng /ɪd/.",
+        },
+        {
+          guestPrompt: "Housekeeping desk. You sound busy — what is going on up there?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Three rooms waiting and none started, and one of them is a departure. Can you send me a second pair of hands?",
+          helpTip:
+            "ĐỒNG NGHIỆP ở bàn buồng phòng. Nêu CON SỐ trước rồi mới xin người — ba phòng chờ, chưa bắt đầu phòng nào. Gọi lúc chậm ba phòng, đừng đợi tới sáu: người lên tới tầng đã mất mười phút. 'Hands' /hændz/ — đuôi /dz/ rung, đừng nuốt.",
+        },
+      ],
+      reading: {
+        text: "THE FLOOR WHEN EVERYTHING ARRIVES AT ONCE\nThree rooms want you and the radio is going. The order is not first come first served.\nThe top of it is not new. Week thirty-six comes first: a guest who is not breathing, or a smell of burning. Then week thirty-five: an insect, or anything that leaves the room unsafe, goes to your supervisor the same minute. Week thirty-seven puts you at that door inside five. Then the room the desk is waiting for, then everything else. And once nothing on this floor is an emergency, the guest standing in front of you is ANSWERED first — answered, not served.\nThe radio is answered too, unless week thirty-six has taken it out of your hand: a gas smell means no talk button at all. The radio carries a room and a job. What it never carries is a room number joined to a fact about the guest. That a staying guest is out, or that her room is empty while she is out. That she cannot walk, that the safe is open, that anybody is unwell. A room that has already checked out is a job, not a guest. Anyone on that floor with a handset hears you. Those go on the floor phone, or into Security's ear. 'Stand by' takes two seconds and costs you nothing. What can wait is what the radio asked you to do, not the radio itself.\nA room with an agreed service window keeps its hour — that is a promise from week thirty-five, not a place in this queue.\nSay the order out loud. A guest who hears 'straight after this room' stops counting; a guest who hears nothing starts.\nNever do the loudest room first. That teaches a floor that raising your voice moves you up the list. Hold your order, and telephone your supervisor to say that a guest on your floor is pushing. Your supervisor decides who moves up the list. The loudest guest does not. Tell that guest the truth instead: 'two rooms are ahead of yours, madam, and I will knock when I start your room'. The truth about her own room is hers. What is happening in the room next door is not yours to say.\nIf three rooms are waiting and none is started, ask for a second pair of hands. That call goes to the desk, not to the attendant on the next section. Call when you are three behind, not when you are six.\nThe second pair of hands takes ten minutes to reach your floor. At three behind you still have those ten minutes; at six you do not.\nAnd whatever else moves, the trolley does not stand alone in a corridor. Chemicals stay on the locked shelf, and the keys stay on you — never on the trolley, not for one room.\nThree behind, ten minutes and fifteen minutes are one hotel's numbers. Ask your Floor Supervisor what your floor's are, in your first week.\nWrite down what you skipped. A room done out of turn is fine; a room skipped and unwritten is not.",
+        questions: [
+          {
+            q: "Ba phòng cùng chờ và bộ đàm đang gọi. Thứ tự đúng là gì?",
+            options: [
+              "Xong việc khẩn đã; rồi khách trước mặt được TRẢ LỜI ngay, chưa phải dọn ngay",
+              "Bộ đàm được LÀM trước, vì người gọi không nhìn thấy mình đang bận việc gì",
+              "Phòng nào gọi trước thì làm trước, như thế mới công bằng",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Chậm mấy phòng thì gọi thêm người phụ?",
+            options: [
+              "Sáu phòng, khi đã chắc chắn là mình không thể tự làm hết được nữa",
+              "Khi khách bắt đầu phàn nàn xuống bộ phận lễ tân dưới sảnh",
+              "Ba phòng — vì người tới phụ mất mười phút mới lên tới tầng",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Bộ đàm không được mang cái gì?",
+            options: [
+              "Số phòng gắn với một sự thật về khách — khách đi vắng, phòng trống, khách ốm",
+              "Bất cứ số phòng nào, kể cả khi chỉ báo trạng thái dọn dẹp cho bàn",
+              "Tên của đồng nghiệp đang trực cùng tầng với mình hôm đó",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Everyone else on this corridor got their room done. Why not mine?",
+          options: [
+            {
+              text: "The other rooms were checkouts, madam, so they had to come before yours.",
+              correct: false,
+            },
+            {
+              text: "I cannot speak for the other rooms, madam. Yours is next, and I will knock.",
+              correct: true,
+            },
+            {
+              text: "I will come back to yours a little later on, madam, once I have finished all the rest.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Floor Supervisor. Why is 806 done before 802?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "The lady in 806 came and asked me twice, so I thought it was easier to start there.",
+              correct: false,
+            },
+            {
+              text: "I did not really notice the order this morning, but both of them are finished now.",
+              correct: false,
+            },
+            {
+              text: "802 had a Do Not Disturb at nine, so I moved on and I wrote it down.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_39_2",
+      lessonOrder: 2,
+      titleEn: "When Two Rules Meet",
+      titleVi: "Khi hai quy tắc gặp nhau",
+      vocabulary: [
+        {
+          word: "What I can do",
+          phonetic: "/wɒt aɪ kən ˈduː/",
+          definition: "Phần tôi làm được — cánh cửa mở ngay sau một lời từ chối",
+          context: "What I can do is bring you fresh towels twice a day, madam.",
+          icon: "🚪",
+        },
+        {
+          word: "Not mine to change",
+          phonetic: "/nɒt ˌmaɪn tə ˈtʃeɪndʒ/",
+          definition: "Không thuộc quyền tôi đổi",
+          context: "That one is not mine to change, sir.",
+          icon: "🔒",
+        },
+        {
+          word: "Either way",
+          phonetic: "/ˌaɪðə ˈweɪ/",
+          definition: "Dù kết quả thế nào đi nữa",
+          context: "Either way I will come back to you before the end of my shift.",
+          icon: "↔️",
+        },
+        {
+          word: "In the meantime",
+          phonetic: "/ɪn ðə ˈmiːntaɪm/",
+          definition: "Trong lúc chờ — cụm mở phần mình làm được ngay",
+          context: "In the meantime I will bring you fresh towels twice a day, madam.",
+          icon: "➡️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No. That is not allowed.",
+          polite:
+            "A second bed service is my supervisor's, sir. I will put it forward, and bring fresh towels twice a day meanwhile.",
+          rule: "'Not allowed' đóng cửa và nói về khách. Nói đúng sự thật về THẨM QUYỀN thì không đổ lỗi cho ai — 'my supervisor's', 'not mine to change', 'not mine to approve': đổi động từ theo việc. Rồi TRÌNH LÊN và mở ngay một cửa khác trong cùng một hơi. Mốc giờ phải là mốc THẬT của ca bạn — ca này tan lúc ba giờ, nên đừng hứa sáu giờ.",
+        },
+        {
+          rude: "I cannot close the door. It is the rule.",
+          polite: "I am stepping outside now, madam. The trolley stays across the door.",
+          rule: "Phân biệt hai ca. Khách hỏi VÌ SAO cửa mở thì trả lời bằng quy tắc và làm tiếp — đó là bài 1 tuần 40. Khách BẢO bạn đóng cửa lại thì bước ra, và ô này là ca đó. Tuần 35 gộp XIN ĐÓNG CỬA với VƯỢT RANH GIỚI vào cùng một xử lý, chính vì bạn không phải người phân loại tại chỗ. Một hơi, một câu, rồi đi. ĐỪNG nói trong phòng rằng mình sắp gọi ai: người vừa vượt ranh giới có lý do để ngăn cuộc gọi đó. Giám sát lên là việc xảy ra ở hành lang, sau khi bạn đã ra khỏi phòng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Just move those papers off the desk so you can wipe it properly.",
+          targetResponse: "Of course, sir. Would you lift them for me, and I will wipe underneath?",
+          helpTip:
+            "Luật tuần 32 — không gom giấy tờ thành chồng — vẫn nguyên. Thứ duy nhất gỡ được nó là lời của CHÍNH CHỦ NHÂN, nói trực tiếp, đang đứng đó — và bạn vẫn hỏi CÁCH làm chứ không tự quyết. Và ghi vào BÁO CÁO PHÒNG rằng chính khách bảo bạn làm — tuần 32: bất cứ thứ gì bạn di chuyển đều phải có một dòng. Lời nói không cứu được bạn; dòng ghi thì có. 'Lift' /lɪft/ — đuôi /ft/ phải nghe rõ cả hai phụ âm.",
+        },
+        {
+          guestPrompt: "Just go ahead and clean. I left the safe open — do not worry about it.",
+          targetResponse:
+            "Would you close the safe first, sir? Then I can start the room straight away.",
+          helpTip:
+            "Khách đang đứng đó, nên bước đơn giản nhất là mời khách tự đóng — năm giây, và hết chuyện. Nếu khách từ chối thì mới quay về luật tuần 32: để nguyên, ra hành lang, gọi giám sát — và đừng tuyên bố cuộc gọi đó trong phòng. Quy tắc này bảo vệ chính bạn khỏi một cáo buộc mất đồ. 'Safe' /seɪf/ — /eɪ/ là nguyên âm đôi, đuôi /f/ nghe rõ.",
+        },
+      ],
+      reading: {
+        text: "WHEN TWO RULES ARRIVE IN THE SAME MINUTE\nSome guests ask for something one rule allows, and another rule does not. The guest who wants his room done while he is out, with the safe left open. The guest who wants the door shut while you work. The guest who tells you to move his papers so you can wipe the desk. The slippers are yours to keep and the robe is not — that is week thirty-one, and it is not a rule you weigh.\nThe open safe is not a judgement at all. You leave the safe and what is in it exactly as you found them, and you telephone your supervisor before you touch either. That is week thirty-two. If the guest is standing there, ask him to close it — that is five seconds and it ends the question.\nWhen two rules meet, neither one bends. One thing releases a rule of this kind: the owner himself, standing there, telling you to do it. You still ask how, and you still write it on the room report. When one of them keeps somebody safe, that one wins, and it is not a matter of judgement. When neither does, the rule is not yours to weigh — it goes up.\nSay the losing half once, and plainly: that one is not yours to change. Then say what you CAN do, in the same breath. A guest who hears only 'no' hears a person refusing. A guest who hears 'not that, but this' hears a hotel.\nName the hotel, not yourself. 'That is our rule' closes the argument; 'I keep the door open' opens one. A guest who asks WHY the door is open hears the rule, and you keep working. A guest who asks you to CLOSE it — asks, not insists — is week thirty-five: you step out, and your supervisor comes.\nWhat is left goes up, not away. It is not your call — say so, and put it forward, exactly as in week thirty-five. Then come back either way, even when the answer is no.",
+        questions: [
+          {
+            q: "Hai quy tắc va nhau thì quy tắc nào thắng?",
+            options: [
+              "Quy tắc nào khách nhắc tới trước thì làm theo quy tắc đó cho nhanh",
+              "Quy tắc giữ an toàn thì thắng; không quy tắc nào giữ an toàn thì trình lên",
+              "Quy tắc nào dễ giải thích với khách hơn thì chọn quy tắc đó",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Phần mình không quyết được thì xử lý thế nào?",
+            options: [
+              "Nói với khách là không được, rồi khép lại chuyện đó tại chỗ luôn",
+              "Hẹn khách hỏi lại vào ca sau, khi có người khác trực tầng",
+              "Trình lên cấp trên — nó đi lên, chứ không biến mất",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Just shut the door while you do the bathroom. I am trying to sleep.",
+          options: [
+            {
+              text: "I am stepping outside now, madam. The trolley stays where it is.",
+              correct: true,
+            },
+            {
+              text: "Of course, madam. I will pull it to and work as quietly as I possibly can.",
+              correct: false,
+            },
+            {
+              text: "I am stepping outside now, madam. May I come back at four instead?",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My watch was on that table this morning and now it is not.",
+          options: [
+            {
+              text: "I did not touch anything on that table, madam. Perhaps you moved it yourself.",
+              correct: false,
+            },
+            {
+              text: "Everything I moved today is on my room report, madam. I am calling my supervisor to the room now.",
+              correct: true,
+            },
+            {
+              text: "Let me have a look around the room for you, madam, before we say anything more.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_39_3",
+      lessonOrder: 3,
+      titleEn: "Handing Over What You Did Not Finish",
+      titleVi: "Bàn giao việc chưa xong",
+      vocabulary: [
+        {
+          word: "Half done",
+          phonetic: "/ˌhɑːf ˈdʌn/",
+          definition: "Mới xong một nửa — phải kèm mô tả trạng thái",
+          context: "Room 704 is half done: bathroom finished, bed stripped.",
+          icon: "◐",
+        },
+        {
+          word: "Waiting for",
+          phonetic: "/ˈweɪtɪŋ fə/",
+          definition: "Đang chờ một thứ cụ thể",
+          context: "Room 704 is waiting for clean linen.",
+          icon: "⏸️",
+        },
+        {
+          word: "Pick it up from here",
+          phonetic: "/ˌpɪk ɪt ˈʌp frəm hɪə/",
+          definition: "Làm tiếp từ đúng chỗ này",
+          context: "You can pick it up from here — the bed is stripped.",
+          icon: "▶️",
+        },
+        {
+          word: "Nothing outstanding",
+          phonetic: "/ˌnʌθɪŋ aʊtˈstændɪŋ/",
+          definition: "Không còn việc nào treo lại",
+          context: "Rooms 701 to 706, nothing outstanding.",
+          icon: "✅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "704 is nearly done.",
+          polite:
+            "704 is half done — bathroom finished, bed stripped, and waiting for clean linen.",
+          rule: "KHÔNG ĐỦ THÔNG TIN, không phải bất lịch sự. 'Nearly done' không nói được gì cả. Nêu TRẠNG THÁI: cái gì xong, cái gì thiếu. Người ca sau phải bắt đầu được từ chính câu của bạn.",
+        },
+        {
+          rude: "704 is not finished.",
+          polite:
+            "Housekeeping desk — 704 will not be ready today. Bed stripped, waiting for linen.",
+          rule: "Câu này gọi xuống BÀN BUỒNG PHÒNG, không gọi thẳng lễ tân — bàn giữ bảng, và bàn nói với lễ tân. Bạn không ra lệnh 'đừng bán'; bạn đưa một TRẠNG THÁI để họ nhập. 'Not finished' để người ta tự đoán; 'will not be ready today' thì khỏi đoán.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Floor Supervisor. Anything I need to know before you go?",
+          speakerRole: "manager",
+          targetResponse:
+            "709 has been waiting for a mattress topper since two, Ms Lan. The desk is finding one, and it is logged.",
+          helpTip:
+            "CẤP TRÊN hỏi. Nêu số phòng, thứ đang chờ, giờ — rồi việc MÌNH đã làm với nó. Đừng nói 'carry it over' với cấp trên: đó là mệnh lệnh, và ghi sổ vốn là việc của bạn. Có since thì phải dùng thì HOÀN THÀNH — 'has been waiting for a mattress topper since two', has waited since two cũng đúng ngữ pháp, nhưng nghe như đã chờ xong — việc còn đang chờ thì dùng has been waiting. Cái KHÔNG được nói là is waiting since two: tiếng Việt không có thể hoàn thành nên đây là lỗi rất dễ mắc. Và carry over ở đây nghĩa là đã ghi vào SỔ bàn giao, không phải đã mang món đồ qua.",
+        },
+        {
+          guestPrompt: "I am taking over your section. Where do I start?",
+          speakerRole: "colleague",
+          targetResponse:
+            "704 first — you can pick it up from here, the bed is stripped. The rest of the section is clear.",
+          helpTip:
+            "ĐỒNG NGHIỆP nhận ca. Mở bằng phòng CÒN VIỆC, rồi mới nói phần sạch — người ta cần biết đặt tay xuống chỗ nào trước. 'Pick it up from here' là cụm bàn giao, nghĩa là làm tiếp từ đúng chỗ này. 'Stripped' /strɪpt/ — đuôi -ed sau /p/ đọc thành /t/, không thêm âm tiết.",
+        },
+      ],
+      reading: {
+        text: "THE LOG IS FOR WHAT DID NOT GET DONE\nA handover that ONLY lists finished rooms is a list nobody needs. The next shift can see the board; what the board cannot show them is the half of 704 you did not reach. So every room gets a line, and the ones that matter are the lines with something still on them.\nAn unfinished job needs five things and no more. The room, what state it is in, what is missing, who is waiting, and the hour.\nNearly done is not a state. Bathroom done, bed stripped, no clean linen on the floor — that is a state, and the next person can pick it up from there.\nAnd the desk gets it before the log does. A room you stripped and could not finish cannot be sold. Say the number and the status down the phone the moment you know it.\nA job that will not close in your shift is one you carry over. The phrase has two senses. Week thirty-two carried a guest's preferences to the next stay; this one carries a job to the next shift. Carrying over is a thing you write, not a thing you hope. A laundry claim you opened and could not close goes over with its docket number and the hour. The file is week thirty-eight; the table under it is week thirty-three. Anything out of order goes down as out of order, in those words: week thirty-seven, and no gentler words for it.\nNothing comes off that list until somebody signs it off, and you report back to whoever asked.\nWrite down the guest who is waiting, by room number, and put anything that will matter next time on the guest profile. Anything about health you ask for first, as in week thirty-two. A request that lives only in your head leaves the building when you do.\nAnd write what you got wrong. A mistake you report is a mistake. One the next shift finds is a mistake with your name beside it.\nRooms with nothing outstanding still get one line each. A blank beside a room number reads as forgotten, not as finished.",
+        questions: [
+          {
+            q: "Sổ bàn giao dùng để ghi gì?",
+            options: [
+              "Mọi phòng đều có một dòng, nhưng dòng đáng đọc là dòng còn việc",
+              "Danh sách những phòng đã làm xong trong ca của mình",
+              "Toàn bộ những gì đã xảy ra trên tầng suốt tám tiếng qua",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Một việc chưa xong cần ghi mấy thứ?",
+            options: [
+              "Ba thứ thôi: số phòng, việc còn thiếu, và tên người mình đã báo lại",
+              "Năm: phòng, trạng thái, thứ còn thiếu, ai đang chờ, mấy giờ",
+              "Chỉ cần ghi số phòng, còn lại nói miệng cho ca sau là đủ",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Floor Supervisor. Night shift is asking about 807 — what do I tell them?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "Bathroom done, bed made, waiting for a second blanket since four. It is in the log.",
+              correct: true,
+            },
+            {
+              text: "It is nearly there — tell them to have a look when they come up.",
+              correct: false,
+            },
+            {
+              text: "Say it is finished. The blanket can go up in the morning.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Housekeeping desk. Reception is asking for 706 — can I release it?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes, go ahead — I am nearly finished with it and it should be fine by now.",
+              correct: false,
+            },
+            {
+              text: "I would rather you asked the Floor Supervisor about that one, to be on the safe side.",
+              correct: false,
+            },
+            {
+              text: "706 is out of order, the shower. Engineering have not been up — I will ring you when they sign it off.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_39_4",
+      lessonOrder: 4,
+      titleEn: "The Last Fifteen Minutes",
+      titleVi: "Mười lăm phút cuối ca",
+      vocabulary: [
+        {
+          word: "Leave it for",
+          phonetic: "/ˈliːv ɪt fə/",
+          definition: "Để lại cho ca sau, có ghi lý do",
+          context: "I will leave it for the next shift, and I have written why.",
+          icon: "🗒️",
+        },
+        {
+          word: "Signed in",
+          phonetic: "/ˌsaɪnd ˈɪn/",
+          definition: "Đã ký nộp lại",
+          context: "The master key is signed in, Ms Lan — three o'clock, my name against it.",
+          icon: "🔑",
+        },
+        {
+          word: "Face to face",
+          phonetic: "/ˌfeɪs tə ˈfeɪs/",
+          definition:
+            "Nói trực tiếp — việc này KHÔNG vào sổ tầng, nhưng sổ vẫn ghi đủ phần còn lại",
+          context: "There is one thing I would rather say face to face too, Ms Lan.",
+          icon: "👥",
+        },
+        {
+          word: "Better left",
+          phonetic: "/ˌbetə ˈleft/",
+          definition: "Thà để nguyên còn hơn làm dở",
+          context: "812 is better left for the next shift, Ms Lan.",
+          icon: "🚫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will just start 812 quickly.",
+          polite: "812 is better left for the next shift, and I have written why.",
+          rule: "Một phòng mở ra lúc còn mười phút là một phòng ca sau nhận ở trạng thái dở dang. 'Better left' cộng LÝ DO đã ghi — đó là bàn giao, không phải bỏ việc.",
+        },
+        {
+          rude: "I gave the key to someone.",
+          polite: "The master key is signed in, and the log has my name and the hour.",
+          rule: "MỘT KHOẢNG TRỐNG TRONG SỔ, không phải bất lịch sự. Chìa khoá tổng chỉ có một trạng thái được chấp nhận: đã ký nộp. 'Gave it to someone' không phải một trạng thái — đó là một khoảng trống trong sổ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Housekeeping desk. It is five to three — are you clear?",
+          speakerRole: "colleague",
+          targetResponse:
+            "All done. Nobody waiting, trolley restocked, log written, and the key comes down with me now.",
+          helpTip:
+            "ĐỒNG NGHIỆP ở bàn buồng phòng hỏi. Ba việc đã xong nói thật gọn, rồi nói chìa đang xuống cùng mình. Đừng nói trên đường dây rằng còn một chuyện phải nói riêng: cả tầng nghe được, và người ở bàn sẽ hỏi ngay chuyện gì. 'Restocked' /ˌriːˈstɒkt/ — đuôi -ed sau /k/ đọc thành /t/, không thêm âm tiết.",
+        },
+        {
+          guestPrompt: "Could you do my room now? I am going out for an hour.",
+          targetResponse:
+            "I am writing your room down and taking it to the desk now, madam. The late shift starts at three.",
+          helpTip:
+            "Đừng mở một phòng lúc còn mười phút — ca sau nhận nó ở trạng thái dở dang, tệ hơn phòng chưa ai động vào. Nói giờ người sau VÀO CA, đừng hứa giờ họ tới phòng này: tuần 38 chỉ cho hẹn giờ thay người khác sau khi người đó đã cho bạn cái giờ ấy. 'Room' /ruːm/ — /uː/ dài, đừng rút ngắn thành /ʊ/.",
+        },
+      ],
+      reading: {
+        text: "THE LAST FIFTEEN MINUTES ARE NOT FOR STARTING A ROOM\nOpen a room at ten to three and the next shift inherits it half-stripped. The bed is bare and the guest's things are moved. That is worse than a room nobody touched.\nThe last fifteen minutes are for five things. Any guest still waiting for something — you deliver it, or you hand it to the desk by name and room. Carry it over in the log as well. Nothing a guest is waiting for rests on one conversation. Then the trolley stripped and restocked, the keys handed in and signed in, the log written, and the one thing you say face to face.\nA room with Do Not Disturb up and no sound inside is not a handover item at all. Count the hours that sign has been up, and telephone your supervisor the moment it reaches twenty-four. Every room you did not get into goes down with the hour you last knocked. A sign still up past two o'clock gets a call to the room, as in week fifteen. Two days with nobody inside is a check your supervisor arranges, and neither clock survives a shift change unless you write it. That is week thirty-five: the Duty Manager and Security open that one together, never you.\nIf you smell burning and there is no gas smell at all, it is week thirty-six's first rule. Everyone out, close that door behind you, and call the operator from the corridor: a fire door only works shut. If you smell gas, it is the other rule. Everyone out, the door exactly as you found it, and no window and no curtain either. No switch, no telephone and no radio on that floor. You call from the stairwell. And if you cannot tell which it is, you say so and you say where. Everyone out, no switch and no telephone on that floor, and you call from the stairwell. Naming it is Engineering's work, and week thirty-six says so. Neither rule waits for three o'clock.\nThe one thing face to face goes to your supervisor, not into the floor log — that log is read by everyone. The way the man in 810 would not look at you when he opened the door. If he only made you uneasy, you telephone her before you open the next door on that corridor. She decides who finishes nine today, not you. If he said anything at all, or touched anything at all, you telephone her the same minute. You do not go back into that room. She writes it where she writes those, and it goes with the room until the guest leaves. Nine is a two-person floor tonight, and 810 is a two-person room every shift until check-out.\nAnd one thing is not on that list at all. A needle, a chemical in an eye, blood in an eye or a mouth — that is week thirty-six. Water first: running water, fifteen minutes for an eye, and never rub it. It is a doctor in THIS shift, not at the next handover. Say the words to your supervisor before you touch the log: 'this is a needle injury'. Then write the room, the hour, what pricked you, and who you told.\nSign the key in. A master key that walks off the floor in a pocket is a Security matter the minute you know. The log is the only thing that says when it left your hand.\nThen go. A shift that ends late every day is a floor that is short a person. That is a conversation for your supervisor, not a habit for you.",
+        questions: [
+          {
+            q: "Mười lăm phút cuối ca dùng để làm gì?",
+            options: [
+              "Bắt đầu thêm một phòng nữa cho ca sau đỡ việc, rồi ghi lại phần còn dở",
+              "Đi kiểm lại toàn bộ những phòng mình đã làm trong ca hôm nay một lượt nữa",
+              "Đóng việc khách đang chờ, dọn xe, nộp chìa, ghi sổ, và nói trực tiếp một việc",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Vì sao chìa khoá tổng phải ký nộp?",
+            options: [
+              "Vì sổ là thứ duy nhất nói được chìa rời tay mình lúc nào",
+              "Vì tổ trưởng cần biết ai đang giữ chìa để còn gọi khi cần tới",
+              "Vì chìa khoá tổng phải được cất trong tủ của bộ phận lễ tân",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Bị kim đâm lúc 14 giờ 40. Việc đầu tiên là gì?",
+            options: [
+              "Ghi vào sổ bàn giao rồi báo giám sát trước khi hết ca",
+              "Rửa ngay dưới vòi nước chảy, rồi mới báo giám sát",
+              "Đợi tới lúc giao ca để nói trực tiếp, vì đây là chuyện của mình",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Floor Supervisor. Ten minutes left — can you get 812 done?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I will start it now and the next shift can finish whatever I do not get to.",
+              correct: false,
+            },
+            {
+              text: "Ten is not enough for 812, Ms Lan. May I leave it and write why?",
+              correct: true,
+            },
+            {
+              text: "Yes, if I skip the bathroom and just do the bed.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Floor Supervisor. Who has the master key for nine?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "Nobody, Ms Lan — it went in at three, and my name is against it in the log.",
+              correct: true,
+            },
+            {
+              text: "I gave it to the attendant who came on after me, so she will still have it.",
+              correct: false,
+            },
+            {
+              text: "I think I left it down at the desk when I came past a moment ago.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const HK_WEEK_40: WeekContent = {
+  departmentId: "HK",
+  weekNumber: 40,
+  weekTitleEn: "Forty Weeks",
+  weekTitleVi: "Bốn mươi tuần",
+  reviewWords: [
+    "Recovery position",
+    "AED",
+    "Discretion",
+    "Leave it as found",
+    "What I can do",
+    "Found item",
+    "Docket",
+    "Propose",
+  ],
+  lessons: [
+    {
+      lessonId: "HK_40_1",
+      lessonOrder: 1,
+      titleEn: "What You Could Not Do Forty Weeks Ago",
+      titleVi: "Điều bốn mươi tuần trước bạn chưa làm được",
+      vocabulary: [
+        {
+          word: "Used to struggle",
+          phonetic: "/ˌjuːst tə ˈstrʌɡl/",
+          definition: "Trước đây từng thấy khó",
+          context: "I used to struggle with complaints; now I write them down.",
+          icon: "📈",
+        },
+        {
+          word: "On my own now",
+          phonetic: "/ɒn maɪ ˈəʊn naʊ/",
+          definition: "Giờ tôi tự làm được",
+          context: "I take a laundry claim on my own now.",
+          icon: "🙋",
+        },
+        {
+          word: "Without checking",
+          phonetic: "/wɪˌðaʊt ˈtʃekɪŋ/",
+          definition: "Không cần tra lại sổ",
+          context: "I say the door rule without checking the guide.",
+          icon: "🧠",
+        },
+        {
+          word: "Word for word",
+          phonetic: "/ˌwɜːd fə ˈwɜːd/",
+          definition: "Đúng từng chữ một",
+          context: "I say it word for word, every time, Ms Chen.",
+          icon: "🔁",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I am not good at English.",
+          polite: "I used to struggle with complaints. Now I take the docket and the hour first.",
+          rule: "YẾU, không phải bất lịch sự. 'Not good at English' là một câu về con người bạn, và nó không đúng. 'Used to struggle' là một câu về THỜI GIAN — có điểm bắt đầu, có điểm kết thúc, và kiểm chứng được. Sau 'used to' luôn là động từ NGUYÊN THỂ TRẦN: used to struggle, không phải used to struggling. Còn 'I am used to + V-ing' là cấu trúc khác hẳn, nghĩa 'đã quen với' — đừng lẫn hai cái.",
+        },
+        {
+          rude: "They never let me do the laundry claims.",
+          polite:
+            "I take the docket and the hour on my own now, Ms Chen — and the photographs get two signatures.",
+          rule: "'They never let me…' là câu nói về NGƯỜI KHÁC và đặt bạn ở thế bị từ chối. Hiện tại đơn cộng 'now' nói về NĂNG LỰC ĐANG CÓ của bạn, và nó kiểm chứng được — mở sổ ra là thấy phiếu bạn nhận hôm nay.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Executive Housekeeper Ms Chen, at your year-end review. What can you do now that you could not forty weeks ago?",
+          speakerRole: "manager",
+          targetResponse:
+            "I take the docket and the hour myself now, Ms Chen, and the linen supervisor signs the photographs with me.",
+          helpTip:
+            "CẤP TRÊN hỏi, nên câu trả lời phải CỤ THỂ: một việc mình mở được, và ai ký cùng. Ms Chen là Executive Housekeeper người nước ngoài — đây là lý do buổi này diễn ra bằng tiếng Anh, và vẫn gọi tên một lần lúc mở lời như tuần 38 chốt. Đừng nói my English is better — câu đó không đo được bằng gì cả. Ảnh chứng cứ không bao giờ chỉ có một tên dưới nó: tuần 38 chốt hai người cùng nhìn, hai người cùng ký. 'Docket' /ˈdɒkɪt/ — trọng âm âm tiết đầu, đuôi /t/ nghe rõ.",
+        },
+        {
+          guestPrompt: "Why does that door have to stay open? Nobody else does that.",
+          targetResponse:
+            "It stays open while anyone is working in a room, madam. That is our rule, in every room.",
+          helpTip:
+            "Câu này phải ra được mà không cần tra sổ — bốn mươi tuần trước bạn tra, giờ thì thuộc. Đặt quy tắc vào KHÁCH SẠN, đừng đặt vào mình, và nói cùng một câu mỗi lần, đúng từng chữ. 'Rule' /ruːl/ — /uː/ dài, chữ l cuối chạm lợi.",
+        },
+      ],
+      reading: {
+        text: "WHAT YOU COULD NOT DO FORTY WEEKS AGO\nForty weeks ago you knocked on 704 and hoped they were out.\nNow you knock twice and say 'Housekeeping', wait at least ten seconds, then knock and say it again if nobody answers. The same way every time. That is not confidence. That is a script you built, and a script holds when confidence does not.\nForty weeks ago a complaint was a bad afternoon. Now it is a docket, an hour, a photograph on the department device with two names under it. Where the house has no device it is a written description instead. And a file with my name at the bottom. Four things you can hold, instead of one feeling you cannot.\nForty weeks ago a guest in tears was a room you cleaned faster. Now she is a room you offer to come back to, and a line for your supervisor. Unless she says she means to hurt herself. Then you stay. You say one true sentence — 'I am staying here with you' — and nothing else. If the corridor is empty, you telephone from the room and you still do not leave. Then you send the next person you see for the Duty Manager and Security, and you do not leave.\nNone of that came from being braver. It came from having the words ready, and the words came from saying them out loud, badly, until they stopped being hard.\nKeep the sentences you use every week. The rest you needed to get here, and you will not need all of them tomorrow.",
+        questions: [
+          {
+            q: "Vì sao câu nói ra được lúc căng thẳng?",
+            options: [
+              "Vì mình đã dạn dĩ hơn nhiều so với một năm trước đây",
+              "Vì đó là câu đã tập nói to nhiều lần, không nhờ tự tin",
+              "Vì khách sạn đã đưa ra quy trình rõ ràng hơn trước rất nhiều",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Khách khóc và nói cô ấy định tự làm hại mình. Làm gì?",
+            options: [
+              "Ở lại, không rời đi, nhờ người đi qua gọi Duty Manager và an ninh",
+              "Làm nốt phòng thật khẽ rồi ghi một dòng cho giám sát, như mọi lần khác",
+              "Ngồi xuống hỏi chuyện cho khách bình tĩnh lại rồi mới đi báo",
+            ],
+            correct: 0,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Please just leave me alone. There is no point in any of this any more.",
+          options: [
+            {
+              text: "Let me get someone who can talk to you properly, madam. I will only be a minute.",
+              correct: false,
+            },
+            {
+              text: "I am staying here with you, madam.",
+              correct: true,
+            },
+            {
+              text: "Please do not say that, madam. Everything will look better in the morning.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Floor Supervisor. Which sentence comes out without you thinking?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I would say most of them by now, although I still look things up quite often.",
+              correct: false,
+            },
+            {
+              text: "I do not really have one — I say whatever seems right at the time.",
+              correct: false,
+            },
+            {
+              text: "The door rule, Ms Lan — word for word, and I have not checked the guide since Tet.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_40_2",
+      lessonOrder: 2,
+      titleEn: "Knowing What Is Still Not Yours",
+      titleVi: "Biết điều vẫn chưa thuộc quyền mình",
+      vocabulary: [
+        {
+          word: "Beyond what I know",
+          phonetic: "/bɪˌjɒnd wɒt aɪ ˈnəʊ/",
+          definition: "Vượt quá hiểu biết của tôi",
+          context: "That is beyond what I know, madam — I am asking my supervisor now.",
+          icon: "🚧",
+        },
+        {
+          word: "That is where I stop",
+          phonetic: "/ˌðæt ɪz weər aɪ ˈstɒp/",
+          definition: "Đến đây là hết phần của tôi",
+          context: "That is where I stop, Ms Lan — the rest goes up to the manager on duty.",
+          icon: "✋",
+        },
+        {
+          word: "Above my authority",
+          phonetic: "/əˌbʌv maɪ ɔːˈθɒrəti/",
+          definition: "Trên thẩm quyền của tôi — người khác mới ký được",
+          context: "Signing that figure is above my authority.",
+          icon: "📏",
+        },
+        {
+          word: "No shame in asking",
+          phonetic: "/ˌnəʊ ʃeɪm ɪn ˈɑːskɪŋ/",
+          definition: "Hỏi thì không có gì phải ngại",
+          context: "I would rather check than guess, madam — I am asking my supervisor now.",
+          icon: "🙂",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I do not know.",
+          polite: "That is beyond what I know, madam. I am asking my supervisor now.",
+          rule: "'I do not know' bỏ khách lại giữa chừng. 'Beyond what I know' cộng việc bạn ĐANG LÀM biến một khoảng trống thành bước tiếp theo. Giới từ là 'beyond', không phải 'past' — 'past' nghe ra là câu dịch.",
+        },
+        {
+          rude: "I can sign that for you.",
+          polite:
+            "Taking that off your bill is the Duty Manager's, sir, not mine. I will come back before three either way.",
+          rule: "Nói ra giới hạn bằng một câu bình thường, không kèm lời xin lỗi. Rồi nêu AI quyết và KHI NÀO — khách cần hai thứ đó, không cần lời xin lỗi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So can you just take it off my bill or not? Yes or no.",
+          targetResponse:
+            "That one is the Duty Manager's, sir, not mine. May I ask him to come up before three?",
+          helpTip:
+            "Khách ép trả lời có hoặc không, nhưng câu trả lời thật là NGƯỜI NÀO quyết. Hoá đơn KHÁC bồi thường: khoản trên hoá đơn là của Duty Manager ngay từ đầu, không đi qua giám sát tầng; còn bồi thường giặt là thì phải lên đúng một bậc — xem ô sau. Khoản trên hoá đơn là của Duty Manager, không phải của giám sát tầng — tuần 35 và 38 đều chốt thế. Cho một mốc giờ của CHÍNH BẠN, đừng hẹn giờ thay sếp. 'Duty' /ˈdjuːti/ — trọng âm ở âm tiết đầu.",
+        },
+        {
+          guestPrompt:
+            "The guest is waiting and Ms Lan is off the floor. Can you just put your name on this one?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Signing that figure is above my authority. I will take it to Ms Lan now and come back to you.",
+          helpTip:
+            "ĐỒNG NGHIỆP nhờ, và khách đang đứng chờ — sức ép đúng lúc dễ ký bừa nhất. Lên ĐÚNG MỘT BẬC: bồi thường giặt là đi qua Giám sát tầng tới 1.200.000đ rồi mới tới Duty Manager, tuần 35 và 38 đều chốt thế. Nhảy thẳng lên Duty Manager là vượt cấp. 'Authority' /ɔːˈθɒrəti/ — trọng âm âm tiết hai.",
+        },
+        {
+          guestPrompt: "Duty Manager. You asked for me — what is it?",
+          speakerRole: "manager",
+          targetResponse:
+            "Room 811, sir. The guest asks for the cleaning charge to come off, and the file is with me. I have promised nothing.",
+          helpTip:
+            "DUTY MANAGER — người duy nhất ký được khoản trên hoá đơn. Với ông ấy thì mở bằng SỐ PHÒNG và VIỆC, không mở bằng lời chào. Nêu hồ sơ đã có gì, rồi nói rõ mình CHƯA đưa con số nào: tuần 38 chốt con số là của người ký, không phải của người trình. 'Receipt' /rɪˈsiːt/ — chữ p câm, đừng đọc thành ri-xép.",
+        },
+      ],
+      reading: {
+        text: "THE LIST OF THINGS THAT ARE STILL NOT YOURS\nForty weeks did not make you a first aider, a manager, or a person who signs money away. It made you someone who knows exactly where those lines are, which is a different and more useful thing.\nThe nine numbered actions of week thirty-six are still yours, and they still wait for nobody. The chest is still yours, and it is still the first one. A guest who is not breathing gets your hands on his chest. If he is on a bed, you slide him onto the floor first. The recovery position — for a guest who is breathing and will not wake — is still yours. So is switching the AED on where your house allows it. No house disciplines anyone for switching one on. Ask your Floor Supervisor this week where the nearest one is kept, and whether you may switch it on. It never goes onto a wet chest: bring the guest clear of the water and dry his chest first. Knowing where you stop is not the same as stopping early.\nYou still do not decide compensation. You propose it, and somebody above you signs it.\nYou still do not lift and you still do not carry a guest who cannot walk in a fire. If your house has a refuge area and she can move herself in her chair, you walk beside her to it. You may do that only while the air is clear and the way is flat. Most houses have no refuge area at all. If she cannot, and the fire is not on your floor, she stays in the room. Door closed, and a wet towel along the gap. If your corridor stays clear, you stay at that door until Security or the fire team reaches you. If there is smoke on your floor, she stays in the room and you go. Security gets three things and never the room number on the radio: the floor, 'cannot walk', and the state of the corridor. The number itself still has to reach them: the floor phone, or Security's ear at the stairhead.\nYou still do not name what is wrong with a guest. You say what you saw, with the hour, and you let the nurse or the doctor name it. You still leave it as found, you still log a found item, and you still come back to the guest either way.\nSaying that something is beyond what you know is not a failure, as long as you go and ask in the same minute. It is the sentence that keeps a guest safe and keeps your name off a report.\nNobody was ever hurt by asking. People are hurt by guessing — once, on a quiet night, because asking felt like admitting something.",
+        questions: [
+          {
+            q: "Bốn mươi tuần đã làm được gì cho bạn?",
+            options: [
+              "Giúp bạn tự quyết được phần lớn những việc thường gặp trên tầng",
+              "Thay thế được phần huấn luyện sơ cấp cứu của khách sạn",
+              "Cho bạn biết chính xác ranh giới nằm ở đâu",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Khách hỏi một điều mình không chắc. Bài đọc bảo làm gì?",
+            options: [
+              "Trả lời theo cách gần đúng nhất rồi kiểm lại với giám sát sau ca",
+              "Nói đó là điều vượt hiểu biết của mình, rồi đi hỏi ngay lúc đó",
+              "Nói mình không biết, rồi để khách tự hỏi bộ phận khác",
+            ],
+            correct: 1,
+          },
+          {
+            q: "Cháy tầng dưới, hành lang tầng bạn có khói, khách 1104 ngồi xe lăn. Làm gì?",
+            options: [
+              "Đẩy khách theo mình ra cầu thang gần nhất, càng nhanh càng tốt",
+              "Ở lại ngoài cửa phòng khách cho tới khi đội cứu hoả lên tới nơi",
+              "Khách ở lại trong phòng, đóng cửa; bạn đi, và báo an ninh tầng nào, 'cannot walk', hành lang thế nào",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Your trolley has cracked my suitcase. I want it replaced today.",
+          options: [
+            {
+              text: "The Floor Supervisor can sign that, sir, if it comes to under a million and a half.",
+              correct: false,
+            },
+            {
+              text: "I am afraid a suitcase is not something we would normally cover, sir.",
+              correct: false,
+            },
+            {
+              text: "A case is the Duty Manager's, sir, not mine. I am photographing it now.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "I have the AED. What do I do with it?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Leave it there for the first aider — we are not supposed to use it ourselves.",
+              correct: false,
+            },
+            {
+              text: "Switch it on and do what it says. If he is lying in water, pull him clear and dry his chest.",
+              correct: true,
+            },
+            {
+              text: "Hold on to it until 115 get here, they will know how to work it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_40_3",
+      lessonOrder: 3,
+      titleEn: "Teaching the Person Who Comes After You",
+      titleVi: "Chỉ lại cho người đến sau",
+      vocabulary: [
+        {
+          word: "Show them once",
+          phonetic: "/ˌʃəʊ ðəm ˈwʌns/",
+          definition: "Làm mẫu đúng một lần",
+          context: "I show them once, slowly, and then I stand back.",
+          icon: "👀",
+        },
+        {
+          word: "Let them try",
+          phonetic: "/ˌlet ðəm ˈtraɪ/",
+          definition: "Để họ tự làm thử",
+          context: "I will let them try it, and I will not say a word.",
+          icon: "🤲",
+        },
+        {
+          word: "Hold on — hands off that one",
+          phonetic: "/ˌhəʊld ˈɒn ˌhændz ˈɒf ðæt ˈwʌn/",
+          definition: "Dừng ngay — câu cắt ngang duy nhất được phép, dùng khi có nguy hiểm",
+          context: "Hold on — hands off that one. I will show you.",
+          icon: "🛑",
+        },
+        {
+          word: "Never in front of a guest",
+          phonetic: "/ˌnevər ɪn ˈfrʌnt əv ə ɡest/",
+          definition: "Không bao giờ trước mặt khách",
+          context: "Never in front of a guest — I said nothing there, Ms Lan.",
+          icon: "🤐",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No, not like that. Give it to me.",
+          polite: "Finish it your way, and I will show you one thing after.",
+          rule: "Cắt ngang giữa chừng dạy người ta rằng họ không tự làm xong được việc gì. Để họ làm hết, rồi sửa MỘT thứ.",
+        },
+        {
+          rude: "You did that wrong in front of the guest.",
+          polite: "One thing about the trolley, when you have a minute.",
+          rule: "Sửa đồng nghiệp thì nói riêng, và nói NGẮN. Đừng kể rằng mình đã đợi khách đi khuất — nói ra là thành lời khoe bọc quanh lời trách. Việc bạn đã đợi thì tự nó nói.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I have never stripped a bed this size. Can you just do it?",
+          speakerRole: "colleague",
+          targetResponse:
+            "I will show you once, then you try it. I will be right here the whole time.",
+          helpTip:
+            "ĐỒNG NGHIỆP MỚI hỏi. Đừng làm hộ — làm mẫu một lần rồi để họ thử, và nói rõ mình vẫn đứng đó. 'Show you once' là lời hứa nhỏ mà bạn giữ được, và nó đúng nghĩa đen. 'Once' /wʌns/ — nguyên âm /ʌ/ ngắn, đuôi /s/ nghe rõ.",
+        },
+        {
+          guestPrompt: "The new one left wet towels on my bathroom floor. Does nobody train them?",
+          targetResponse:
+            "I am sorry, madam. I am putting fresh ones down now, and I will check the bathroom before I leave.",
+          helpTip:
+            "KHÁCH phàn nàn về đồng nghiệp mới. Xin lỗi, sửa NGAY, rồi DỪNG — đừng nói với khách rằng mình sẽ nói chuyện với cô ấy sau. Câu đó xác nhận với khách rằng người kia sai, và nếu người mới đứng gần thì bạn vừa phá đúng luật bài này dạy. Phần kèm cặp vẫn diễn ra, chỉ là không nói ra. 'Bathroom' /ˈbɑːθruːm/ — /ɑː/ dài.",
+        },
+      ],
+      reading: {
+        text: "THE NEW ONE ON YOUR FLOOR NEXT MONTH\nYour supervisor will put somebody new beside you for her first week, and she will know none of this. Everything you show her is already on these pages: the door rule of week thirty-five, the glass box of week thirty-six, the week thirty-eight docket. Glass is swept into that box. Week thirty-two said tip a bin out rather than reach into it. But a bin you know has glass in it is neither tipped nor lifted by the bag. The box goes to the glass. What you do in that week decides more than the training does.\nShow them once, slowly, with your hands where they can see them. Then let them try while you stand there and say nothing.\nSaying nothing is the hard part. A person who is corrected mid-task learns that they cannot finish anything without you.\nOne thing cuts across all of this. If what they are doing is unsafe, you stop them that second — guest or no guest, mid-task or not. 'Hold on — hands off that one. I will show you.' Everything on this page is about work that is slow or untidy. None of it is about work that is dangerous. Stopping her is yours. Deciding whether it happens twice is not — an unsafe habit goes to your supervisor before you go home, with the hour. Anything that leaves a room unsafe still goes the same minute.\nCorrect them once, after, and pick the one thing that matters most. A list of six corrections teaches nothing except that they are bad at this.\nNever in front of a guest. Not a word, not a look — the guest is watching both of you, and a corrected person stops speaking English for a week.\nAnd tell them what you got wrong in your own first month. It is the only part of this they will remember on a bad day.",
+        questions: [
+          {
+            q: "Sau khi làm mẫu một lần thì nên làm gì?",
+            options: [
+              "Đứng nhìn và im lặng để người ta tự làm hết",
+              "Vừa nhìn vừa nhắc từng bước cho người ta khỏi làm sai",
+              "Làm cùng thêm một lượt nữa cho người ta nhớ kỹ hơn",
+            ],
+            correct: 0,
+          },
+          {
+            q: "Đồng nghiệp mới đang cầm một vật sắc bằng tay, ngay trước mặt khách. Làm gì?",
+            options: [
+              "Đợi khách đi rồi mới nói riêng, vì luật là không sửa trước mặt khách",
+              "Dừng tay ngay lập tức — luật không sửa trước mặt khách không áp cho việc nguy hiểm",
+              "Nhặt hộ rồi nói lại sau ca cho đồng nghiệp đỡ mất mặt trước khách",
+            ],
+            correct: 1,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Floor Supervisor. I saw your new one drop linen on the floor in front of a guest.",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I told her straight away so that she would not do it again in the next room.",
+              correct: false,
+            },
+            {
+              text: "I picked it up myself and did not say anything to her about it at all.",
+              correct: false,
+            },
+            {
+              text: "I said nothing there. I will take it up with her after the guest has gone.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "There is glass in this bin. I will just lift the bag out.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Tip it out onto the paper first, and then we can see what is in there.",
+              correct: false,
+            },
+            {
+              text: "Hold on — hands off that one. Glass never travels in a bag — I will fetch the box.",
+              correct: true,
+            },
+            {
+              text: "Tie the neck first and I will take it down myself, so nobody else touches it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "HK_40_4",
+      lessonOrder: 4,
+      titleEn: "What This Course Did Not Teach You",
+      titleVi: "Điều khoá học này chưa dạy bạn",
+      vocabulary: [
+        {
+          word: "Nobody taught me",
+          phonetic: "/ˌnəʊbədi ˈtɔːt miː/",
+          definition: "Không ai dạy tôi cái đó cả",
+          context: "Nobody taught me that one; I asked the floor.",
+          icon: "❓",
+        },
+        {
+          word: "Try it first",
+          phonetic: "/ˌtraɪ ɪt ˈfɜːst/",
+          definition: "Cứ thử trước đã",
+          context: "Try it first, and I will be right here.",
+          icon: "🧪",
+        },
+        {
+          word: "Ask the floor",
+          phonetic: "/ˌɑːsk ðə ˈflɔː/",
+          definition: "Hỏi người cùng làm trên tầng",
+          context: "Ask the floor which lift is slow at seven — nobody wrote that down.",
+          icon: "🗣️",
+        },
+        {
+          word: "Could you write it down",
+          phonetic: "/kʊd juː ˌraɪt ɪt ˈdaʊn/",
+          definition: "Chị ghi lại giúp em được không",
+          context: "Could you write it down for me — I am on nine until three.",
+          icon: "🖊️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Nobody ever told me that.",
+          polite: "Nobody taught me that one, so I asked the floor and wrote it down.",
+          rule: "YẾU, không phải bất lịch sự. 'Nobody ever told me' là một lời than. Cùng dữ kiện đó cộng việc bạn ĐÃ LÀM thì thành một báo cáo — và báo cáo là thứ cấp trên dùng được.",
+        },
+        {
+          rude: "Just tell me quickly.",
+          polite: "Could you write it down for me? I will not remember it at seven.",
+          rule: "Xin ghi lại không phải là kém trí nhớ. Đó là biết mình sẽ ở đâu vào lúc bảy giờ tối, và không ai chê được một câu như thế.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Floor Supervisor. You keep asking me for numbers. What is missing?",
+          speakerRole: "manager",
+          targetResponse:
+            "Our own figures, Ms Lan. Nobody taught me those — may I copy them from the guide when you have a moment?",
+          helpTip:
+            "CẤP TRÊN hỏi. Trả lời bằng một thứ CỤ THỂ mà nhà mình có còn khoá học thì không — con số của nhà. Rồi xin nó ở dạng viết. 'Nobody taught me' ở đây là câu nêu dữ kiện, không phải câu than. 'Copy' /ˈkɒpi/ — trọng âm âm tiết đầu, /ɒ/ ngắn.",
+        },
+        {
+          guestPrompt: "The chemical for the marble floor is the green one. You will remember.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Could you write the name and the number down for me? I read the label before I pour anything.",
+          helpTip:
+            "ĐỒNG NGHIỆP chỉ miệng, và chỉ bằng MÀU. Chai xanh của kho hôm nay không phải chai xanh của tháng sau — xin cái TÊN và con SỐ, rồi vẫn đọc nhãn trước khi rót. Bất cứ thứ gì có con số, hoá chất hay chữ ký đều tra sổ trước, đúng như bài đọc. 'Label' /ˈleɪbl/ — /eɪ/ là nguyên âm đôi.",
+        },
+      ],
+      reading: {
+        text: "WHAT FORTY WEEKS DID NOT COVER\nThis course did not teach you your own hotel. It taught you the shape of the questions, and every answer is a local one.\nIt did not give you the figures. The tiers, the ceiling, the depreciation table, the hour the linen room closes — those are your house's, and they change when your house changes.\nIt taught you discretion in week thirty-two. It did not teach you the version you need at three in the morning, or the guest who fits none of these pages. There is one every month, and there is no script for that guest.\nFor that guest the method is the same as everywhere else. Say what you can see, say what you can do, and put the rest up.\nAnd it did not teach you the words you will need next. Nobody will teach you those either; you will say them out loud, badly, until they come back.\nAsk the floor for the things nobody wrote down — which service lift is slow, which corridor the ice machine is on. For anything with a number, a chemical or a signature on it, you ask the guide first, and then your supervisor.",
+        questions: [
+          {
+            q: "Khoá học không dạy được điều gì?",
+            options: [
+              "Cách nói với khách khi có sự cố xảy ra trên tầng",
+              "Cách ghi lại một việc chưa xong cho ca sau",
+              "Những con số của chính khách sạn mình",
+            ],
+            correct: 2,
+          },
+          {
+            q: "Thứ không ai ghi lại thì hỏi ai, còn thứ có con số hay chữ ký thì hỏi ở đâu?",
+            options: [
+              "Không ai ghi lại thì tra sổ tay; có con số hay chữ ký thì hỏi người trên tầng",
+              "Cả hai đều tra trong sổ tay khoá học, vì đó là tài liệu chính thức",
+              "Không ai ghi lại thì hỏi người cùng làm trên tầng; có số hay chữ ký thì tra sổ trước",
+            ],
+            correct: 2,
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "I need you to keep my dog in your office while I go to a meeting.",
+          options: [
+            {
+              text: "Let me take him for you, madam, and I will keep him in the linen room.",
+              correct: false,
+            },
+            {
+              text: "I am afraid we do not do that here, madam. You would have to arrange something else for him.",
+              correct: false,
+            },
+            {
+              text: "I am not able to look after him, madam. What I can do is ask the Front Desk to catch you downstairs.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Floor Supervisor. Nobody told you which lift is slow at seven — how did you find out?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "I asked the attendants on the floor, Ms Lan, and I wrote it in my own notebook.",
+              correct: true,
+            },
+            {
+              text: "I worked it out myself after a few weeks of being late with the trolley.",
+              correct: false,
+            },
+            {
+              text: "It is in the training guide somewhere, I think, so I looked it up in there.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const GR_WEEK_31: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 31,
+  weekTitleEn: "The Story You Are Allowed to Tell",
+  weekTitleVi: "Câu chuyện bạn được phép kể",
+  reviewWords: [
+    "House rule",
+    "Guest privacy rule",
+    "Concierge desk",
+    "Confidential",
+    "Quiet table",
+    "Lounge dress code",
+    "Speak to the duty manager",
+    "Thoughtful",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_31_1",
+      lessonOrder: 1,
+      titleEn: "Three Facts and Where the Rest Lives",
+      titleVi: "Ba dữ kiện, và chỗ chứa phần còn lại",
+      vocabulary: [
+        {
+          word: "Opened in",
+          phonetic: "/ˈəʊpənd ɪn/",
+          definition: "Mở cửa vào năm — cách nói năm thành lập với khách",
+          context: "The hotel opened in nineteen fifty-four, sir.",
+          icon: "📅",
+        },
+        {
+          word: "Proud of",
+          phonetic: "/ˈpraʊd əv/",
+          definition: "Tự hào về — cách nói về nhà mình mà không thành khoe",
+          context: "We are proud of the old staircase, madam.",
+          icon: "🏛️",
+        },
+        {
+          word: "Curious",
+          phonetic: "/ˈkjʊəriəs/",
+          definition: "Tò mò — trạng thái của vị khách hỏi thêm, và là điều đáng mừng",
+          context: "Guests are often curious about the courtyard, sir.",
+          icon: "🧐",
+        },
+        {
+          word: "Restored",
+          phonetic: "/rɪˈstɔːd/",
+          definition: "Được phục dựng lại như nguyên bản",
+          context: "The staircase was restored in two thousand and nineteen.",
+          icon: "🏛️",
+        },
+        {
+          word: "As far as I know",
+          phonetic: "/əz ˌfɑːr əz aɪ ˈnəʊ/",
+          definition: "Theo chỗ tôi biết — câu rào khi mình chưa chắc",
+          context: "As far as I know, it is original, madam.",
+          icon: "🤔",
+        },
+        {
+          word: "The history folder",
+          phonetic: "/ðə ˈhɪstri ˌfəʊldə/",
+          definition: "Tập lịch sử ngắn của khách sạn, giữ ở quầy lễ tân",
+          context: "The history folder is at the front desk, sir — the dates are in it.",
+          icon: "🗂️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I think it was built about a hundred years ago.",
+          polite:
+            "The hotel opened in nineteen fifty-four, sir. The staircase was restored in two thousand and nineteen.",
+          rule: "Đừng đoán số. Ba dữ kiện chắc thì nói TRƠN, không rào đón phía trước — thêm 'I think' vào một con số đúng cũng làm nó nghe thành phỏng đoán. Chỉ phần ngoài ba dữ kiện mới được rào.",
+        },
+        {
+          rude: "Yes, a famous actor stayed in your room.",
+          polite:
+            "I am not able to say who has stayed here, madam. May I show you the history folder?",
+          rule: "Tên của khách khác KHÔNG BAO GIỜ là một phần câu chuyện — kể cả khách đã trả phòng từ lâu, và kể cả khi chính khách kia đã kể ở đâu đó. Đưa the history folder ra là cách nói không mà vẫn cho khách một thứ. Cuốn guest book thì KHÔNG đưa: nó có chữ ký và tên của khách khác.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "How old is the hotel? It looks colonial.",
+          targetResponse:
+            "The hotel opened in nineteen fifty-four, sir. It was a merchant's house before that.",
+          helpTip:
+            "Hai dữ kiện chắc, hết. Khách nhắc kiến trúc thuộc địa là đang mời bạn đoán niên đại — đừng nhận lời mời đó. Đừng thêm 'I think', và cũng đừng thêm 'maybe' — khách hỏi tuổi toà nhà thì muốn một con số, không muốn một phỏng đoán. 'Opened' /ˈəʊpənd/ — đuôi -ed sau /n/ đọc thành /d/, không thêm âm tiết. Con số trong bài là của MỘT khách sạn: khi luyện cứ nói theo để lấy nhịp câu, khi vào ca thì thay bằng năm của nhà mình.",
+        },
+        {
+          guestPrompt: "And the painting by the lift — is it an original?",
+          targetResponse:
+            "As far as I know, it is, madam. I will check the history folder and tell you this evening.",
+          helpTip:
+            "'As far as I know' là câu thật thà, không phải câu yếu: nó tách phần bạn biết khỏi phần bạn sẽ tra. Rồi phải tra THẬT và quay lại — đừng để lời nhắn ở quầy, vì lời nhắn ở quầy là lời nhắn không ai nhận. 'Know' /nəʊ/ — chữ k câm.",
+        },
+      ],
+      reading: {
+        text: "THREE FACTS, AND WHERE THE REST LIVES\nGuest Relations sits with a guest longer than any other desk. We call this hotel the house, and we call this team the desk. That is why the story falls to you, and why the story has a shape.\nKnow three facts about this house and know them exactly. The year it opened. What the building was before it was a hotel. One thing that was restored, and when.\nThe three facts printed in this week are one hotel's. Yours will be different. Ask your Guest Relations Manager in your first week for your own three, and learn those. A wrong year said with total confidence is the worst answer on this page.\nWhichever three are yours, you say them plainly, with no hedge in front of them. You may be proud of them, and say so — that is part of the job. A guest who hears 'as far as I know' about the founding year hears that nobody here was taught it.\nAnything beyond the three gets 'as far as I know' instead. It costs you nothing and it protects the house.\nThen check the history folder. It sits at the front desk, it holds the dates, and the library has the rest. The history folder is the building's record, not a souvenir.\nA guest's own profile is a different thing. It has their name on it, and it is never the answer to a question about who has stayed here. The guest book is not the answer either — guests sign it themselves.\nAnd that question has one answer only. Not a name, not a room, not a year. Everything this desk knows about a guest is confidential, and it does not expire when they check out. This is the guest privacy rule.\nA curious guest asks twice and then moves on. That is curiosity. This is not: a person asking about a guest by name. Or about a guest who is here now. Or asking anything at all with a camera in their hand.\nAnd it is not curiosity when anybody in a uniform, or anybody who says they are from the authorities, asks.\nBe courteous. You are not refusing them, and you are not obstructing them. You are simply not the person who answers.\nSay 'Of course I will help you, sir. Let me call my Duty Manager for you now.'\nDial from the desk telephone, in front of them. Do not leave the desk.\nLock the screen. Turn every paper face down. Stay where you are until your manager arrives.\nConfirm nothing, deny nothing, and hand over no document.\nSpeak to the duty manager, and to security. Say what was asked and what you did not confirm, and let them decide.",
+        questions: [
+          {
+            q: "Khách hỏi năm khách sạn khai trương. Đó là một trong ba dữ kiện và bạn biết chắc. Nói thế nào?",
+            options: [
+              "Nói thẳng con số, không rào đón gì phía trước",
+              "Nói 'as far as I know' rồi mới nêu con số, cho khiêm tốn",
+              "Nêu con số rồi hẹn tra lại the history folder cho chắc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Whichever three are yours, you say them plainly, with no hedge in front of them.' Rào đón một dữ kiện mình biết chắc làm khách nghe ra là nhà không dạy nhân viên.",
+          },
+          {
+            q: "Một người mặc đồng phục nói mình từ cơ quan chức năng, đòi xem danh sách khách đêm qua. Làm gì?",
+            options: [
+              "Rời quầy đi tìm Duty Manager, để người đó đứng đợi một mình trước màn hình quầy",
+              "Gọi Duty Manager ngay trước mặt họ, và không rời quầy",
+              "Trả lời phần mình chắc chắn, phần không chắc thì nói là không biết",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Dial from the desk telephone, in front of them. Do not leave the desk.' Bạn không từ chối và không cản — bạn chỉ không phải người trả lời.",
+          },
+          {
+            q: "Một người hỏi đích danh tên một vị khách đang ở trong nhà. Làm gì?",
+            options: [
+              "Đưa cuốn guest book ra cho họ tự xem, vì đó là sổ công khai",
+              "Nói là có khách nổi tiếng nhưng không nói tên cụ thể ra",
+              "Không xác nhận gì, và báo duty manager là đã có người hỏi",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'That is curiosity. This is not: a person asking about a guest by name.' Không xác nhận, không phủ nhận, và để quản lý quyết.",
+          },
+          {
+            q: "Ba dữ kiện in trong bài này là của ai?",
+            options: [
+              "Của khách sạn nơi bạn làm — học thuộc là đủ",
+              "Của một khách sạn ví dụ — hỏi quản lý ba dữ kiện của nhà mình",
+              "Của tập đoàn, dùng chung cho mọi khách sạn",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The three facts printed in this week are one hotel's. Yours will be different.' Một năm sai nói bằng giọng chắc chắn là câu trả lời tệ nhất.",
+          },
+          {
+            q: "Vị khách đó đã trả phòng từ năm ngoái. Có được kể tên họ không?",
+            options: [
+              "Được, vì họ đã rời khách sạn rồi",
+              "Được nếu người hỏi là người trong gia đình",
+              "Không — luật riêng tư không hết hạn khi khách trả phòng",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Everything this desk knows about a guest is confidential, and it does not expire when they check out.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Come on, you can tell me. Which suite did the film crew take last month?",
+          options: [
+            {
+              text: "The film crew were in the top-floor suites, madam, but I really should not say more.",
+              correct: false,
+            },
+            {
+              text: "That is not something I can answer, madam. May I help with anything else?",
+              correct: true,
+            },
+            {
+              text: "I was not on duty that week, madam, so I honestly could not tell you anything.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Was this place a French bank before? My guidebook says so.",
+          options: [
+            {
+              text: "As far as I know, it was, madam. I will check and come back to you on that.",
+              correct: false,
+            },
+            {
+              text: "Guidebooks are often wrong about this building, madam, so I would not rely on it.",
+              correct: false,
+            },
+            {
+              text: "It was a merchant's house until nineteen fifty-four, madam. I will check whether the family was French.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_31_2",
+      lessonOrder: 2,
+      titleEn: "Offered, Not Delivered",
+      titleVi: "Mời kể, chứ không kể tràn",
+      vocabulary: [
+        {
+          word: "The short version",
+          phonetic: "/ðə ˈʃɔːt ˌvɜːʃn/",
+          definition: "Bản kể ngắn — cách hỏi khách muốn nghe bao nhiêu",
+          context: "Would you like the short version, sir?",
+          icon: "⏱️",
+        },
+        {
+          word: "Do stop me",
+          phonetic: "/duː ˈstɒp miː/",
+          definition: "Cứ ngắt lời tôi — trao nút dừng cho khách trước",
+          context: "Do stop me whenever you like, madam.",
+          icon: "✋",
+        },
+        {
+          word: "Leave you to it",
+          phonetic: "/ˈliːv juː tu ɪt/",
+          definition: "Để khách được yên, mình lui ra",
+          context: "I will leave you to it, sir. I am at the desk.",
+          icon: "🚶",
+        },
+        {
+          word: "Another time",
+          phonetic: "/əˌnʌðə ˈtaɪm/",
+          definition: "Để dịp khác — cách hoãn mà không đóng cửa",
+          context: "Another time, then, madam. It will still be here.",
+          icon: "↩️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Let me tell you about the history of this hotel.",
+          polite: "Would you like the short version, sir, or shall I leave you to your coffee?",
+          rule: "Đừng mở bằng lời tuyên bố sẽ kể. Hỏi khách muốn nghe bao nhiêu, và cho sẵn một lối ra lịch sự — khách gật thì bạn kể, khách chọn cà phê thì bạn vẫn đúng. Với khách chưa quen tiếng Anh, bản trơn cũng đúng y như vậy: 'or shall I let you enjoy your coffee?'",
+        },
+        {
+          rude: "And then in nineteen fifty-four the family sold it, and after that the army took it, and…",
+          polite: "Do stop me whenever you like, madam. There is a great deal of it.",
+          rule: "Trao cái nút dừng cho khách TRƯỚC khi khách cần tới nó. Người kể giỏi ở bộ phận này không phải người kể lâu nhất — là người dừng đúng lúc mà khách không phải ngắt lời. 'Do stop me' là tiếng Anh Anh; với khách Nga, Hàn, Trung thì nói 'please stop me any time, madam' cho chắc.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "It's a beautiful room. Has it always looked like this?",
+          targetResponse:
+            "Not always, madam. Would you like the short version, or shall I leave you to it?",
+          helpTip:
+            "Trả lời câu hỏi TRƯỚC — 'not always' là đủ — rồi mới hỏi khách muốn nghe bao nhiêu. Hỏi ngược lại trước khi trả lời thì nghe như né. 'Short version' — trọng âm rơi vào SHORT.",
+        },
+        {
+          guestPrompt:
+            "The couple in the lounge look bored. Should I go and tell them about the building?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Offer it, do not start it. Ask if they would like the short version, and let them say no.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Hai mệnh lệnh ngắn rồi một câu về thái độ. 'Let them say no' — lời từ chối phải dễ nói ra, vì khách trong lounge không muốn phải xua tay hai lần. 'Offer' /ˈɒfə/ — trọng âm rơi vào âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "OFFERED, NOT DELIVERED\nA story a guest did not ask for is still an interruption, however politely it starts.\nSo the story is offered. 'Would you like the short version?' — six words, and the guest decides.\nThe short version is three sentences. The whole of it runs about four minutes, and four minutes is long to a guest with a cold coffee.\nWatch two things while you talk. Whether they are looking at you, and whether they are still asking. If both stop, the story is over.\nGive them the stop button before they need it. 'Do stop me whenever you like' means they never have to interrupt you, and a guest who interrupts remembers doing it.\nStopping before you are asked to stop is the most thoughtful thing this desk does.\nNo is a complete answer. 'Another time, then' costs the guest nothing and keeps the door open.\nA guest who asked for a quiet table has already told you they do not want a story. A guest reading, eating, or on the telephone is not a guest waiting for one. Leave them to it. You are at the Guest Relations desk, and they know where it is.\nThen ask the lounge team to keep away from that table for the evening — service as normal, no conversation. A guest should have to say no once, not four times.\nAnd a guest who wants something local is a question for the concierge desk, not a story about the house.\nA city tour, a boat, a restaurant: none of those is yours to arrange.",
+        questions: [
+          {
+            q: "Khách đang đọc sách trong lounge, và bạn đã để khách yên. Còn phải làm gì nữa không?",
+            options: [
+              "Không còn gì nữa — để khách yên là đã đủ",
+              "Nhờ tổ lounge phục vụ bình thường nhưng đừng bắt chuyện với bàn đó",
+              "Ghi vào hồ sơ rằng vị khách này không thích trò chuyện",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'ask the lounge team to keep away from that table for the evening — service as normal, no conversation.' Khách chỉ nên phải nói không MỘT lần.",
+          },
+          {
+            q: "Vì sao phải trao câu 'do stop me' trước khi kể dài?",
+            options: [
+              "Để mình có cớ dừng khi bận việc khác",
+              "Để khách biết trước là câu chuyện sẽ dài",
+              "Để khách không phải ngắt lời mình",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'a guest who interrupts remembers doing it.' Trao nút dừng trước là để khách không bao giờ phải dùng tới nó.",
+          },
+          {
+            q: "Bản ngắn của câu chuyện dài bao nhiêu?",
+            options: ["Ba câu", "Khoảng bốn phút", "Tuỳ khách hỏi tới đâu"],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The short version is three sentences.' Bản đầy đủ mất khoảng bốn phút, và bốn phút là dài với một tách cà phê đang nguội.",
+          },
+          {
+            q: "Khách nói không muốn nghe. Đáp thế nào?",
+            options: [
+              "Hỏi lại lần nữa khi đồ uống của khách được mang ra",
+              "'Another time, then' — và giữ cửa mở cho dịp khác",
+              "Kể phần ngắn nhất cho đỡ phí",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'No is a complete answer.' Câu đó không tốn gì của khách và vẫn giữ cửa mở.",
+          },
+          {
+            q: "Khách hỏi có gì hay ở ngoài khách sạn. Ai lo việc đó?",
+            options: [
+              "The concierge desk",
+              "Guest Relations, vì mình ngồi với khách lâu nhất",
+              "Quản lý Guest Relations",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'a guest who wants something local is a question for the concierge desk, not a story about the house.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "That's fascinating. Go on.",
+          options: [
+            {
+              text: "There is more, madam — please stop me any time you like.",
+              correct: true,
+            },
+            {
+              text: "There is a great deal more, madam. Shall I start again from the beginning?",
+              correct: false,
+            },
+            {
+              text: "I have told you everything I am allowed to tell, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. The gentleman in the corner waved me away. Did I do something wrong?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Ask him again once his drink arrives — most guests warm up after a while.",
+              correct: false,
+            },
+            {
+              text: "No. Leave him to it, and ask the lounge team to serve that table but not to chat.",
+              correct: true,
+            },
+            {
+              text: "Ask the lounge attendant to go and find out what the gentleman is here for.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_31_3",
+      lessonOrder: 3,
+      titleEn: "What You May Show, and What You May Only Describe",
+      titleVi: "Chỗ được dẫn khách tới, và chỗ chỉ được kể",
+      vocabulary: [
+        {
+          word: "If you like",
+          phonetic: "/ɪf juː ˈlaɪk/",
+          definition: "Nếu khách muốn — lời mời không ép",
+          context: "If you like, sir, the old staircase is two minutes from here.",
+          icon: "🙂",
+        },
+        {
+          word: "Not open to guests",
+          phonetic: "/ˌnɒt ˈəʊpən tə ɡests/",
+          definition: "Khu vực khách không vào được",
+          context: "The kitchen is not open to guests, madam.",
+          icon: "🚧",
+        },
+        {
+          word: "Not mine to open",
+          phonetic: "/ˌnɒt ˈmaɪn tu ˌəʊpən/",
+          definition: "Không thuộc quyền mở của tôi — phòng do bộ phận khác giữ chìa",
+          context: "The ballroom is not mine to open — the banquet team holds that key.",
+          icon: "🔐",
+        },
+        {
+          word: "Best seen at",
+          phonetic: "/ˌbest ˈsiːn ət/",
+          definition: "Đẹp nhất vào lúc — cách hẹn giờ cho một điểm ngắm",
+          context: "The courtyard is best seen at six, when we light the lamps.",
+          icon: "🌇",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You cannot go up there.",
+          polite: "May I have your friend's name, madam, and your own? I will call from the desk.",
+          rule: "Đừng nói 'you cannot', và cũng đừng nói tầng nào — nói số tầng là đã xác nhận phòng đó có thật và ai đang ở đó. Chuyển thẳng sang thứ bạn LÀM ĐƯỢC: gọi lên phòng.",
+        },
+        {
+          rude: "The kitchen is staff only.",
+          polite: "The kitchen is not open to guests, madam, but I can ask the chef to come out.",
+          rule: "Mỗi lời từ chối đi kèm một cánh cửa khác trong cùng một hơi. Nhưng chỉ hứa phần bạn LÀM được — bạn XIN bếp trưởng ra chào, bạn không hẹn giờ thay ông ấy. 'Staff only' là chữ trên biển báo, không phải câu người ta nói.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "I'm from the district office. I need to see your guest list for last night.",
+          targetResponse:
+            "Of course I will help you, sir. Let me call my Duty Manager for you from the desk now.",
+          helpTip:
+            "ĐỪNG RỜI QUẦY. Gọi Duty Manager từ điện thoại quầy, ngay trước mặt người đó; khoá màn hình, úp mọi tờ giấy xuống, đứng lại tới khi quản lý tới. Bạn KHÔNG từ chối và KHÔNG cản — bạn chỉ không phải người trả lời. Đừng xác nhận, đừng phủ nhận, đừng đưa bất cứ giấy tờ nào. 'Desk' /desk/ — đuôi /sk/ nghe rõ cả hai phụ âm.",
+        },
+        {
+          guestPrompt: "My friend is in 1806 — can I go up and knock?",
+          targetResponse:
+            "May I have your friend's name, madam, and your own? I will call from here.",
+          helpTip:
+            "Đừng xác nhận có ai ở phòng đó, và đừng nói số tầng — cả hai đều là tiết lộ. Chuyển sang thứ bạn LÀM ĐƯỢC: khách vẫn tới được bạn mình mà không ai bị lộ. Nếu người đó ép, đừng xử lý một mình: báo duty manager, và để quản lý trực quyết có báo cho vị khách trên phòng hay không. 'Friend' /frend/ — đuôi /nd/ nghe rõ cả hai phụ âm.",
+        },
+      ],
+      reading: {
+        text: "WHAT YOU MAY SHOW, AND WHAT YOU MAY ONLY DESCRIBE\nYou may show a guest around some of this house. Some of it you may only describe, and the difference is not about beauty.\nYours to show, at any hour: the lobby, the courtyard, the garden, the old staircase, the library.\nNot open to guests: the kitchen, the linen rooms, the back corridors, the staff areas. These are not secrets. They are simply not safe and not tidy.\nNot yours to open: the ballroom and the meeting rooms. Their availability is the banquet team's to give, not yours. The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow. Ask them, or show it from the door.\nThe rooftop belongs to the bar that runs it, and the lounge dress code applies during its hours, not ours. Each of those is a house rule, and it is easier to give a guest a house rule than an opinion.\nA guest who wants to reach somebody upstairs is offered the telephone, never the lift. You do not say whether that person is in the house, and you do not say which floor. If they press, that is a matter for the duty manager.\nDial from the desk telephone yourself, and say who is asking before anything else. Hand the receiver over only after the guest upstairs has said yes. The receiver is the door, and you hold the handle.\nIf nobody answers, or the guest upstairs says no, say the same sentence.\n'I am afraid I am not able to connect you, madam.'\nThat one is true either way. Never say that somebody does not want to see them — that answer confirms they are here.\nGive one place and one hour. 'Best seen at six' is worth more than a list of nine things. A guest before dinner has fifteen minutes, not an afternoon.",
+        questions: [
+          {
+            q: "Khách muốn lên phòng 1806 tìm bạn. Làm gì?",
+            options: [
+              "Mời gọi lên phòng từ quầy, không nói tầng, và báo duty manager nếu người đó ép",
+              "Nói phòng đó nằm ở tầng club, rồi hỏi tên người bạn để mình kiểm tra giúp",
+              "Đưa khách lên, vì khách biết số phòng nên chắc là bạn thật",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'You do not say whether that person is in the house, and you do not say which floor.'",
+          },
+          {
+            q: "Khách muốn xem phòng khiêu vũ. Ai quyết?",
+            options: [
+              "Guest Relations, vì phòng đang trống thì có ai dùng tới đâu",
+              "Bộ phận tiệc (the banquet team) giữ chìa — hỏi họ, hoặc cho khách xem từ ngoài cửa",
+              "Duty Manager, vì mọi khu vực chung đều thuộc quyền ông ấy",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The banquet team holds those keys, and an empty ballroom today is usually a room being set for tomorrow.'",
+          },
+          {
+            q: "Gọi được lên phòng, nhưng khách trên phòng nói không muốn gặp. Nói gì với người dưới sảnh?",
+            options: [
+              "'She does not want to see you, sir'",
+              "'I am afraid I am not able to connect you, madam'",
+              "'There is nobody in that room, sir'",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'That one is true either way.' Nói khách không muốn gặp cũng là xác nhận người đó đang ở đây.",
+          },
+          {
+            q: "Khách hỏi có gì đáng xem trước bữa tối. Cho bao nhiêu?",
+            options: [
+              "Một danh sách để khách tự chọn theo ý mình",
+              "Ba gợi ý xếp theo thứ tự ưu tiên",
+              "Một chỗ và một giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Give one place and one hour.' Khách trước bữa tối có mười lăm phút, không có cả buổi chiều.",
+          },
+          {
+            q: "Ai đặt luật trang phục cho rooftop?",
+            options: [
+              "Quầy bar điều hành rooftop, trong giờ của họ",
+              "Guest Relations",
+              "Front office",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The rooftop belongs to the bar that runs it.' Giờ của họ, luật của họ.",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Can we see the kitchen? We're both chefs at home.",
+          options: [
+            {
+              text: "Not the kitchen, madam, but I can ask the chef to come out and meet you.",
+              correct: true,
+            },
+            {
+              text: "I will ask the executive chef whether he can make an exception today.",
+              correct: false,
+            },
+            {
+              text: "It is staff only, madam, and I am afraid there is nothing at all I can do.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. A guest wants to see the ballroom and a wedding is being set up. What do I say?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Take him in quickly before the flowers arrive — it looks best empty.",
+              correct: false,
+            },
+            {
+              text: "Unlock it and walk him in — the florists will not be there for another hour.",
+              correct: false,
+            },
+            {
+              text: "It is not ours to open. Show him from the door, and ask the banquet team.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_31_4",
+      lessonOrder: 4,
+      titleEn: "The Answer You Do Not Have",
+      titleVi: "Câu trả lời bạn không có",
+      vocabulary: [
+        {
+          word: "I would rather find out",
+          phonetic: "/aɪ wəd ˌrɑːðə ˈfaɪnd aʊt/",
+          definition: "Tôi muốn tra cho chắc hơn là đoán",
+          context: "I would rather find out than guess, sir.",
+          icon: "🔎",
+        },
+        {
+          word: "The right person for that",
+          phonetic: "/ðə ˌraɪt ˈpɜːsn fə ðæt/",
+          definition: "Người đúng để hỏi việc đó",
+          context: "The right person for that is our Guest Relations Manager, madam.",
+          icon: "👤",
+        },
+        {
+          word: "By this evening",
+          phonetic: "/baɪ ðɪs ˈiːvnɪŋ/",
+          definition: "Trước tối nay — mốc giờ gắn vào lời hứa tra cứu",
+          context: "I will have it for you by this evening, sir.",
+          icon: "🕕",
+        },
+        {
+          word: "Made up",
+          phonetic: "/ˌmeɪd ˈʌp/",
+          definition:
+            "Bịa ra — thứ tuyệt đối không làm với dữ kiện của nhà. Đứng trước danh từ thì có gạch nối: a made-up date",
+          context: "A date I made up would be worse than no date, sir.",
+          icon: "🚫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "It is probably from the French period.",
+          polite:
+            "I would rather find out than guess, madam. I will have it for you by this evening.",
+          rule: "Đừng lấp chỗ trống bằng một phỏng đoán nghe hay. Nói thẳng rằng mình muốn tra, rồi gắn MỘT MỐC — chuyển việc mà không có mốc thì chỉ là đẩy đi.",
+        },
+        {
+          rude: "I do not know, sorry.",
+          polite:
+            "The right person for that is our Guest Relations Manager, sir. I will ask her today.",
+          rule: "'I do not know' đóng chuyện lại. Cùng sự thật đó, cộng TÊN CHỨC DANH và việc bạn sẽ làm, thì thành một đường đi. Chỉ chuyển cho người có thật và chức danh khách hỏi lại được.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Who carved the panels in the ballroom? They look Chinese.",
+          targetResponse:
+            "I would rather find out than guess, sir. The right person for that is our Guest Relations Manager.",
+          helpTip:
+            "Thật thà trước, chuyển tiếp sau. Đừng nói 'probably', và đừng nói 'I think it is' về đồ vật trong nhà — một câu đoán sai về đồ cổ sẽ được khách kể lại ở chỗ khác. 'Rather' /ˈrɑːðə/ — /ɑː/ dài.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. A guest told me the tower was built by the French. Can I use that?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Not until somebody has checked it. Write it down, thank them, and give it to the manager.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Chuyện khách kể cho mình là một món quà, không phải một nguồn — và chép nó vào giấy cũng không biến nó thành dữ kiện. Phải có người kiểm. Đây là chiều ngược lại của luật tuần này: bạn không bịa, và cũng không mượn lời khách để khỏi phải tra. 'Checked' /tʃekt/ — đuôi -ed sau /k/ đọc thành /t/.",
+        },
+      ],
+      reading: {
+        text: "THE ANSWER YOU DO NOT HAVE\nThree facts are enough because the fourth question always comes, and it is meant to.\nA guest who asks a fourth question is enjoying themselves. The wrong move is to reward that with a guess.\nA made-up date is worse than no date. It travels. The guest repeats it at dinner, another colleague hears it, and in a month the house has a fact nobody can find.\nSo say the true thing. 'I would rather find out than guess' tells the guest their question was a good one, and it commits you to going and looking.\nThen hand it on, to somebody who exists. The Guest Relations Manager wrote the history folder and is the one who adds to it. The executive chef will talk about the kitchen garden. The concierge desk knows the town better than any of us.\nHanding on needs a time, or it is only pointing. 'By this evening' is a hand-over. 'Ask somebody else' is not.\nAnd what a guest tells YOU is not a fact yet. Guests are generous with history and often wrong. Write it down, thank them, and give it to the manager — writing something down does not make it true.\nThat is the whole shape of it. Three facts you are sure of, one honest sentence for everything else, and a name and an hour for the rest.",
+        questions: [
+          {
+            q: "Vì sao một cái ngày bịa lại tệ hơn là không có ngày nào?",
+            options: [
+              "Vì khách sẽ nhận ra ngay từ giọng nói là mình đang đoán",
+              "Vì quản lý sẽ hỏi lại mình lấy con số đó ở đâu",
+              "Vì nó lan ra, và sau một tháng thành dữ kiện không ai tra được",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'It travels. The guest repeats it at dinner, another colleague hears it, and in a month the house has a fact nobody can find.'",
+          },
+          {
+            q: "Khách kể cho bạn một chi tiết lịch sử. Làm gì với nó?",
+            options: [
+              "Ghi lại, cảm ơn khách, và đưa cho quản lý kiểm",
+              "Ghi vào the history folder, vì như thế là đã có nguồn",
+              "Dùng luôn trong bài giới thiệu, vì chính khách nói ra",
+            ],
+            correct: 0,
+            explanation: "Bài đọc: 'writing something down does not make it true.'",
+          },
+          {
+            q: "Chuyển việc cho người khác mà không kèm mốc giờ thì là gì?",
+            options: ["Là một cuộc bàn giao", "Chỉ là chỉ tay", "Là cách lịch sự để từ chối"],
+            correct: 1,
+            explanation: "Bài đọc: 'Handing on needs a time, or it is only pointing.'",
+          },
+          {
+            q: "Ai là người thêm dữ kiện vào the history folder?",
+            options: [
+              "Guest Relations Manager",
+              "Lễ tân trực đêm",
+              "Bất kỳ ai tìm được một dữ kiện mới",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The Guest Relations Manager wrote the history folder and is the one who adds to it.'",
+          },
+          {
+            q: "Khách hỏi một chi tiết ngoài ba dữ kiện, và bạn không chắc. Câu nào đúng?",
+            options: [
+              "'It is probably from the French period'",
+              "'I would rather find out than guess'",
+              "'Nobody here has ever been told that'",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The wrong move is to reward that with a guess.' Câu đó khen câu hỏi của khách và buộc bạn phải đi tra thật.",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "So roughly which century are the panels from?",
+          options: [
+            {
+              text: "Roughly the nineteenth century, sir, though I would not want to swear to it.",
+              correct: false,
+            },
+            {
+              text: "I would not want to give you a made-up date, sir. I will have it by this evening.",
+              correct: true,
+            },
+            {
+              text: "The panels are not something anybody here has ever been told about, sir.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. Can I just say the tower is a hundred years old? It roughly is.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "No. Say the year it opened — that one we know — and take the question to the manager.",
+              correct: true,
+            },
+            {
+              text: "Yes, roughly is fine for a welcome talk — nobody has ever checked one of those.",
+              correct: false,
+            },
+            {
+              text: "Say it is very old, and change the subject if the guest pushes you on it.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const GR_WEEK_32: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 32,
+  weekTitleEn: "Advice From What They Told You",
+  weekTitleVi: "Gợi ý dựng trên điều khách đã nói",
+  reviewWords: [
+    "Guest preference file",
+    "Allergy",
+    "As far as I know",
+    "Consent form",
+    "The history folder",
+    "Coffee preference",
+    "Pillow type",
+    "By this evening",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_32_1",
+      lessonOrder: 1,
+      titleEn: "Where the Advice Comes From",
+      titleVi: "Gợi ý mọc ra từ đâu",
+      vocabulary: [
+        {
+          word: "You mentioned",
+          phonetic: "/juː ˈmenʃnd/",
+          definition: "Ban nãy anh/chị có nói — mở đầu bằng chính lời khách",
+          context: "You mentioned you swim in the mornings, sir.",
+          icon: "👂",
+        },
+        {
+          word: "Based on that",
+          phonetic: "/ˌbeɪst ɒn ˈðæt/",
+          definition: "Dựa vào điều đó — nối lời khách với gợi ý",
+          context: "Based on that, madam, I would take the early boat.",
+          icon: "➡️",
+        },
+        {
+          word: "Would that suit you",
+          phonetic: "/wʊd ðæt ˈsuːt juː/",
+          definition: "Như thế có hợp với anh/chị không",
+          context: "Would that suit you, sir, or shall I look again?",
+          icon: "🤝",
+        },
+        {
+          word: "Shall I put that down",
+          phonetic: "/ʃəl aɪ ˌpʊt ðæt ˈdaʊn/",
+          definition: "Tôi ghi lại nhé — xin phép trước khi ghi vào hồ sơ",
+          context: "Shall I put that down for your next stay, madam?",
+          icon: "🖊️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "You look like you would enjoy the spa.",
+          polite:
+            "You mentioned a long flight, madam. Based on that, I would keep tomorrow morning free.",
+          rule: "Gợi ý phải mọc ra từ điều KHÁCH ĐÃ NÓI, không phải từ điều bạn nhìn thấy ở khách. Mở bằng 'You mentioned…' thì khách nghe ra ngay là bạn có nghe, và bạn cũng không phải đoán.",
+        },
+        {
+          rude: "I have booked you on the seven o'clock.",
+          polite: "There is a seven o'clock boat, sir. Shall I ask the concierge desk to book it?",
+          rule: "Đừng chốt hộ khách. Đưa MỘT phương án rồi trả quyền quyết định lại — vế 'or shall I look again?' giữ cho lời từ chối của khách dễ nói ra.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We've got one free afternoon. What would you do?",
+          targetResponse:
+            "You mentioned your children are small, madam. Based on that, I would take the two o'clock boat.",
+          helpTip:
+            "Chỉ nói 'You mentioned' khi bạn nhớ CHÍNH XÁC câu khách đã nói; không nhớ thì hỏi trước. Đừng bắt đầu bằng gợi ý — bắt đầu bằng lời khách. Một dữ kiện khách đã cho, rồi một gợi ý, rồi dừng. Đừng liệt kê ba lựa chọn: khách hỏi what would you do là đang xin một câu trả lời, không xin một thực đơn. 'Mentioned' /ˈmenʃnd/ — đuôi -ed sau /n/ đọc thành /d/.",
+        },
+        {
+          guestPrompt: "Black, no sugar. And I'll be down at six every morning.",
+          targetResponse:
+            "Thank you, sir. Shall I put that down? Six is before the lounge opens, so let me speak to them.",
+          helpTip:
+            "Khách vừa cho bạn hai dữ kiện. XIN PHÉP trước khi ghi — 'shall I put that down' — vì hồ sơ khách là của khách, không phải của mình. Và đừng chốt hộ một bộ phận khác: sáu giờ là trước giờ lounge mở, nên bạn XIN họ sắp xếp chứ không hứa thay họ. 'Opens' /ˈəʊpənz/ — đuôi -s sau /n/ đọc thành /z/, đừng nuốt mất.",
+        },
+      ],
+      reading: {
+        text: "WHERE THE ADVICE COMES FROM\nEvery desk in this house gives advice. What makes Guest Relations different is that you have time, and time is how you learn things nobody wrote down.\nThe history folder answers a question about the building. It never answers one about a guest.\nAdvice has exactly three sources. What the guest told you. What is on the guest preference file, put there with permission. And what the house knows about tomorrow — the tide, the market day, the road that closes at five.\nThere is a fourth source, and it is the one that gets people into trouble. What you noticed about the guest. Their age, their money, their body, their religion, who they came with.\nNone of that is advice. It is a guess, however politely you say it.\nNoticing is not the problem. Noticing is permission to ask about the STAY, and never about the person. 'Would you like a table away from the music, madam?' asks about the stay. Age, money, body, religion, and who they arrived with are never questions, and never notes. What goes on the file is the guest's answer, never the thing you saw.\nSo open with their own words. 'You mentioned the children are small.' The guest hears that you listened, and you never have to guess.\nThen one suggestion, not a list. A guest who asks what you would do is asking for an answer, not a menu.\nThen give the decision back. 'Would that suit you, or shall I look again?' costs four seconds and makes a no easy to say.\nAnd when a preference falls outside another team's hours, give the guest the part that is yours in the same breath. Six is before the lounge opens; a flask at the desk is yours to promise, and the lounge is not.\nAnd a coffee preference is worth writing down. Ask first, every time.",
+        questions: [
+          {
+            q: "Gợi ý được phép mọc ra từ những nguồn nào?",
+            options: [
+              "Từ điều khách nói, hồ sơ có xin phép, và điều nhà biết về ngày mai",
+              "Từ điều mình quan sát được về khách",
+              "Từ kinh nghiệm của mình với những vị khách trông giống họ, vì mình đã gặp nhiều rồi",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Advice has exactly three sources.' Nguồn thứ tư — điều bạn nhìn thấy — là nguồn làm người ta gặp rắc rối.",
+          },
+          {
+            q: "Khách hỏi 'anh/chị sẽ làm gì?'. Trả lời thế nào?",
+            options: [
+              "Đưa ba lựa chọn để khách tự so sánh rồi chọn cái hợp nhất với mình",
+              "Hỏi lại xem khách thích kiểu gì",
+              "Một gợi ý, rồi trả quyền quyết định lại cho khách",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A guest who asks what you would do is asking for an answer, not a menu.'",
+          },
+          {
+            q: "Nguồn thứ tư — điều bạn quan sát được về khách — dùng vào việc gì?",
+            options: [
+              "Vào hồ sơ, vì nó cũng là một dữ kiện mình quan sát được và ca sau cần biết",
+              "Chỉ để hỏi về KỲ NGHỈ, không phải về con người khách",
+              "Không dùng vào việc gì cả",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Noticing is permission to ask about the STAY, and never about the person… What goes on the file is the guest's answer, never the thing you saw.'",
+          },
+          {
+            q: "Khách xin cà phê lúc sáu giờ, trước giờ lounge mở. Hứa được gì?",
+            options: [
+              "Hứa lounge sẽ mở sớm cho khách, rồi báo lại cho tổ lounge sau",
+              "Không hứa gì, để khách tự hỏi lounge",
+              "Một phích ở quầy — phần đó là của bạn",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'a flask at the desk is yours to promise, and the lounge is not.'",
+          },
+          {
+            q: "Có chuyến thuyền bảy giờ và khách gật đầu. Ai đặt chỗ?",
+            options: [
+              "Hỏi concierge desk đặt",
+              "Bạn đặt luôn cho nhanh",
+              "Đưa số điện thoại cho khách tự gọi",
+            ],
+            correct: 0,
+            explanation:
+              "Tuần 31: 'A city tour, a boat, a restaurant: none of those is yours to arrange.' Lời khuyên là của bạn; chỗ đặt thì không.",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Any advice for tomorrow? We're free all day.",
+          options: [
+            {
+              text: "There is the market, the museum, the beach, and a cooking class, sir — take your pick.",
+              correct: false,
+            },
+            {
+              text: "You mentioned markets, sir. Based on that, I would go tomorrow — it is market day.",
+              correct: true,
+            },
+            {
+              text: "Most guests of your age enjoy the museum, sir, so I would start there.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. The lady in 604 looks like she would enjoy the spa. Shall I offer it?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — most guests who are staying alone take the spa on their second day.",
+              correct: false,
+            },
+            {
+              text: "Put it on her file as a suggestion for next time.",
+              correct: false,
+            },
+            {
+              text: "Not from looking at her. Ask what she has planned, then build on the answer.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_32_2",
+      lessonOrder: 2,
+      titleEn: "What Goes on the File, and What Never Does",
+      titleVi: "Cái gì vào hồ sơ, cái gì không bao giờ",
+      vocabulary: [
+        {
+          word: "Only with your permission",
+          phonetic: "/ˌəʊnli wɪð jɔː pəˈmɪʃn/",
+          definition: "Chỉ khi anh/chị đồng ý",
+          context: "It goes on the file only with your permission, madam.",
+          icon: "✅",
+        },
+        {
+          word: "In your own words",
+          phonetic: "/ɪn jɔːr ˌəʊn ˈwɜːdz/",
+          definition: "Đúng lời khách nói, không phải lời mình diễn giải lại",
+          context: "I will write it in your own words, sir.",
+          icon: "💬",
+        },
+        {
+          word: "Leave it blank",
+          phonetic: "/ˌliːv ɪt ˈblæŋk/",
+          definition: "Để trống — khách không muốn nói thì không điền",
+          context: "If you would rather not say, we leave it blank.",
+          icon: "⬜",
+        },
+        {
+          word: "Not for the file",
+          phonetic: "/ˌnɒt fə ðə ˈfaɪl/",
+          definition: "Không thuộc loại được ghi vào hồ sơ",
+          context: "That one is not for the file, and I will not write it.",
+          icon: "🚫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will note that you are diabetic.",
+          polite:
+            "May I put that on your file in your own words, madam? It goes there only with your permission.",
+          rule: "Thông tin SỨC KHOẺ chỉ vào hồ sơ sau khi khách đồng ý — hỏi, rồi mới ghi. NGOẠI LỆ DUY NHẤT là dị ứng: đó là hồ sơ an toàn, viết phiếu và báo bếp ngay, không hỏi ai; chỉ phần lưu cho lần sau mới cần khách đồng ý. Và ghi đúng chữ khách dùng, đừng đổi thành chẩn đoán của mình. Hồ sơ có ghi sức khoẻ là hồ sơ mật.",
+        },
+        {
+          rude: "I will write that she is difficult.",
+          polite: "I will write what she asked for and how many times, madam.",
+          rule: "Hồ sơ ghi VIỆC ĐÃ XẢY RA, không ghi nhận xét về con người. 'Khó tính' thì không tra được, không kiểm được, và nó định sẵn thái độ cho người đọc hồ sơ ở lần sau.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I can't eat shellfish. It's quite serious.",
+          targetResponse:
+            "Thank you, madam. I am writing it down for the kitchen now, and I will come back and tell you they have it.",
+          helpTip:
+            "Cảm ơn trước, rồi GHI NGAY. Dị ứng là hồ sơ an toàn chứ không phải sở thích, nên KHÔNG phải xin phép ai — chỉ phần lưu vào hồ sơ cho lần sau mới cần khách đồng ý, và đó là câu hỏi riêng, hỏi sau. Đừng đổi 'quite serious' thành một cái tên bệnh: bạn chép lại, không chẩn đoán. 'Kitchen' /ˈkɪtʃɪn/ — trọng âm âm tiết đầu, âm /tʃ/ nghe rõ.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. Room 1204 asked me not to write down why she wants a quiet floor.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Leave it blank. Write that she asked for a quiet floor, and nothing about the reason.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Khách có quyền cho bạn một yêu cầu mà không cho lý do — hồ sơ vẫn dùng được, vì ca sau chỉ cần biết PHẢI LÀM GÌ, không cần biết TẠI SAO. Ghi lý do khi khách đã từ chối nói là phá đúng cái lòng tin vừa được trao. 'Blank' /blæŋk/ — đuôi /ŋk/ nghe rõ.",
+        },
+      ],
+      reading: {
+        text: "WHAT GOES ON THE FILE, AND WHAT NEVER DOES\nThe guest preference file is not yours. It is the guest's, kept by us, and read by people they will never meet.\nThree things belong on it. A preference the guest stated — the coffee preference, the pillow type, the table by the window. A special request they made, and what was promised back: by whom, and when. And an occasion the guest told you about, with the date.\nThree things never belong on it. An opinion about the guest. A guess about their health, their money, or their religion. And anything at all about who they arrived with.\nHealth is the line people cross without meaning to. A guest who says 'I cannot eat shellfish' has given you a fact.\nAn allergy is a safety record, not a preference. It goes on the allergy slip the moment you hear it, and nobody has to be asked first.\nWritten, never spoken. You write it on the allergy slip and put the slip into the chef's hand.\nThen enter it on the guest's file for this stay in the same minute, so every outlet sees it on the order.\nRestaurant, lounge, room service, and the banquet chef if there is an event. Verbal instructions to a kitchen are not accepted anywhere in this house.\nThen go back and tell the guest the kitchen has it. A sentence said to one cook is not an allergy record. Consent decides only whether it stays on the file after they check out.\nFor a preference, ask before you write it, and write it in their own words.\nNever turn what a guest said into a diagnosis. You are copying, not deciding.\nConsent decides the file, not the kitchen.\nBut consent governs the preference file only. It does not govern an incident report. When something happens to a guest — a fall, an ambulance, a doctor — you write what was seen and what was done. Nobody has to be asked first. That record is the incident report, it is marked confidential, and it is a different piece of paper from this one.\nThe consent form you met in week twenty-four is signed once, at booking, and it covers the guest's data. A photograph needs the photograph consent sheet, signed the day the photograph is taken. A preference needs neither. It needs a spoken yes, and you write the date and your own name beside it.\nCheck the details with the guest, not with the file.\nA guest may ask to see what we hold, and may ask us to take something out. Both are the Duty Manager's. Say 'Of course I will pass that on, madam.'\n'My Duty Manager will come to you about it today.'\nThen tell the Duty Manager the same minute. Do not promise the copy yourself, and do not promise the deletion. Some of what this house holds it is required to keep, and only the Duty Manager knows which lines those are. Never turn the screen towards a guest at the desk.\nIf a guest would rather not say, leave it blank. A blank is not a hole in the file — it is the guest's answer, and the file works without it.\nWeek twenty-four gave this rule its name. Week thirty-one gave it its first half: not a name, not a room, not a year. Every line above is the other half. The reason is the same: somebody will read this file who was not there. A file that holds anything about health is marked confidential.\nThis replaces what week twenty-seven taught: a preference noted, and the guest told afterwards. From now on the guest says yes first, every time.\nThe front desk works this way too, from week thirty-two. If you see a preference written straight from small talk anywhere in this house, that is the old standard, and it is being changed. A preference the guest did not say yes to is not a preference — it is a note about a person.\nThe same rule covers anything you only noticed. A ring, a bouquet, who somebody walked in with — none of that goes on a file by itself. Notice it, ask about it, and write only the answer.\nNote the preference, and stop at the preference.\nAnd a confidential file is not read out, not even to a colleague. Somebody who needs to act needs the action, not the reason.",
+        questions: [
+          {
+            q: "Khách nói 'tôi không ăn được hải sản'. Ghi thế nào?",
+            options: [
+              "Báo bếp ngay, không cần hỏi ai — rồi xin phép riêng cho phần lưu vào hồ sơ",
+              "Xin phép khách trước đã, rồi mới báo bếp và ghi hồ sơ",
+              "Ghi là khách dị ứng hải sản, vì đó là cách viết gọn nhất cho ca sau đọc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'An allergy is a safety record, not a preference… nobody has to be asked first.' Đồng ý chỉ quyết phần hồ sơ, không quyết phần bếp.",
+          },
+          {
+            q: "Khách không muốn nói lý do xin tầng yên tĩnh. Hồ sơ ghi gì?",
+            options: [
+              "Không ghi gì cả, vì thiếu lý do thì hồ sơ không dùng được",
+              "Ghi thêm phỏng đoán của mình để ca sau hiểu hoàn cảnh",
+              "Ghi yêu cầu, và để trống phần lý do",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'A blank is not a hole in the file — it is the guest's answer.'",
+          },
+          {
+            q: "Khách ngã ở sảnh và phải gọi xe cấp cứu. Có phải xin phép khách trước khi viết biên bản không?",
+            options: [
+              "Có — mọi thứ ghi về khách đều phải được khách đồng ý",
+              "Không — biên bản sự cố ghi việc đã thấy và đã làm, không cần xin ai",
+              "Có, nhưng xin phép sau khi khách đã ổn định là được",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'consent governs the preference file only. It does not govern an incident report.'",
+          },
+          {
+            q: "Ảnh chụp chung với khách, khách muốn lưu vào hồ sơ. Cần gì?",
+            options: [
+              "Một lời đồng ý bằng miệng là đủ, vì chính khách là người xin chụp",
+              "Phiếu đã ký lúc booking",
+              "Phiếu the photograph consent sheet, ký đúng ngày chụp",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A photograph needs the photograph consent sheet, signed the day the photograph is taken.'",
+          },
+          {
+            q: "Khách xin xem hồ sơ của mình, và xin xoá một dòng. Trả lời thế nào?",
+            options: [
+              "Hứa xoá ngay trong hôm nay, vì dữ liệu đó là của chính vị khách",
+              "Cả hai đều là việc của Duty Manager — chuyển lên và báo ngay",
+              "Xoay màn hình cho khách tự xem",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Both are the Duty Manager's… some of what this house holds it is required to keep.' Và không bao giờ xoay màn hình về phía khách.",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Guest Relations. Shall I write 'guest is very demanding' so the evening shift is ready?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Write what the guest asked for and how many times — that is the fact.",
+              correct: true,
+            },
+            {
+              text: "Write 'demanding guest' in the internal notes — nobody outside the team reads those.",
+              correct: false,
+            },
+            {
+              text: "Write nothing, and let the evening shift find out for themselves.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Can you take a photo of us here? And put it in our file so you remember us.",
+          options: [
+            {
+              text: "Of course, madam. I will keep a copy on your file for next time.",
+              correct: false,
+            },
+            {
+              text: "With pleasure, madam — on your own phone? For a copy on your file I have the photograph consent sheet here.",
+              correct: true,
+            },
+            {
+              text: "I am afraid we are not able to keep photographs of guests, madam.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_32_3",
+      lessonOrder: 3,
+      titleEn: "The Guest Who Came Back",
+      titleVi: "Vị khách quay lại",
+      vocabulary: [
+        {
+          word: "Welcome back",
+          phonetic: "/ˌwelkəm ˈbæk/",
+          definition: "Chào mừng anh/chị quay lại",
+          context: "Welcome back, madam — it has been two years.",
+          icon: "🎉",
+        },
+        {
+          word: "Your usual",
+          phonetic: "/jɔː ˈjuːʒuəl/",
+          definition: "Thứ anh/chị vẫn dùng — hỏi lại, không mặc định",
+          context: "Your usual table, madam, or somewhere different tonight?",
+          icon: "🔁",
+        },
+        {
+          word: "Has anything changed",
+          phonetic: "/həz ˌeniθɪŋ ˈtʃeɪndʒd/",
+          definition: "Có gì thay đổi không — câu mở cho khách quay lại",
+          context: "Has anything changed since your last stay, sir?",
+          icon: "❔",
+        },
+        {
+          word: "Still the same",
+          phonetic: "/ˌstɪl ðə ˈseɪm/",
+          definition: "Vẫn như cũ chứ ạ",
+          context: "Still the same, madam, or shall I change it?",
+          icon: "⚖️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I have given you your usual table.",
+          polite: "Your usual table, madam, or somewhere different tonight?",
+          rule: "Thứ khách dùng lần trước là một LỜI MỜI, không phải một quyết định. Người ta thay đổi — và một cái bàn đã xếp sẵn thì khó từ chối hơn một câu hỏi nhiều.",
+        },
+        {
+          rude: "Same as last time?",
+          polite: "Welcome back, sir. Has anything changed since your last stay?",
+          rule: "'Same as last time?' bắt khách nhớ hộ bạn. Câu mở đúng là một lời chào cộng một câu hỏi mở — khách nói gì thì bạn cập nhật cái đó, phần còn lại bạn không phải đoán.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "It's good to be back. Third time now.",
+          targetResponse:
+            "Welcome back, madam. Has anything changed since your last stay, or shall I keep it the same?",
+          helpTip:
+            "Chào mừng, rồi hỏi mở, rồi cho một lối trả lời nhanh. Đừng nói 'I remember you like the corner table' — nghe thì hay, nhưng nó khoá khách vào lựa chọn cũ và làm khách ngại đổi ý. 'Changed' /tʃeɪndʒd/ — đuôi -ed sau /dʒ/ đọc thành /d/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. Mr Pham is back next week — shall I set everything up as before?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Set the room, not the evening. Pillow and floor as the file says; the table he tells you himself.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Chia đôi: thứ ĐẢO NGƯỢC ĐƯỢC và không tốn gì thì dựng sẵn — gối, hướng phòng, cà phê — vì khách không nên phải xin lại lần thứ hai. Thứ có ngày tháng, tốn tiền, hoặc dính người thứ hai thì để khách tự nói. 'Pillow' /ˈpɪləʊ/ — trọng âm âm tiết đầu.",
+        },
+      ],
+      reading: {
+        text: "THE GUEST WHO CAME BACK\nA returning guest is the easiest guest to get wrong, because you already have an answer and you stop asking the question.\nThe file says corner table, firm pillow, black coffee at seven. That was true in March. It is a question now, not an instruction.\nPeople change between stays. They come with somebody new, or without somebody. They stop drinking coffee. They are here for work this time, not for a holiday.\nSo offer it back. 'Your usual table, madam, or somewhere different tonight?' The guest hears that you remembered and that you did not decide.\nAsk what they prefer now. What they preferred in March is a fact about March.\nOpen with one question, not with a display of memory. 'Has anything changed since your last stay?' does more work than any list of remembered details.\nReciting a guest's own preferences at them is not service. It is a performance, and it leaves them nowhere to go but yes.\nWhen they answer, write the answer. So split the file in two.\nAnything reversible and free — the pillow, the floor, the coffee — you set before they arrive, then offer back in your first sentence.\nAnything with a date, a price, or a second person in it you ask about, every time. The table, the tour, the dinner.\nOne thing may be prepared quietly in advance: an occasion the guest told us about themselves. It went on the file when they told us, and they said yes then.\nFirst check two things on the booking, not on the file. That the date still falls inside this stay, and that the accompanying name is the same. A companion's name lives on the booking. It is never copied across to the preference file. Everything else on the file is a question, not an instruction.",
+        questions: [
+          {
+            q: "Khách quay lại lần thứ ba. Mở lời thế nào?",
+            options: [
+              "Chào mừng, rồi hỏi có gì thay đổi không",
+              "Đọc lại các sở thích trong hồ sơ để khách thấy mình được nhớ",
+              "Dựng sẵn mọi thứ như lần trước rồi báo cho khách biết",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''Has anything changed since your last stay?' does more work than any list of remembered details.'",
+          },
+          {
+            q: "Hồ sơ ghi gối cứng từ hai năm trước. Làm gì với dòng đó?",
+            options: [
+              "Bỏ qua, vì hồ sơ hai năm thì không còn đúng nữa",
+              "Dựng sẵn, rồi mời khách đổi ngay trong câu đầu tiên",
+              "Hỏi Duty Manager xem còn dùng được không",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Anything reversible and free… you set before they arrive, then offer back in your first sentence.'",
+          },
+          {
+            q: "Dịp kỷ niệm khách tự kể. Kiểm hai thứ ở đâu?",
+            options: [
+              "Trên hồ sơ sở thích",
+              "Trên booking — ngày còn nằm trong kỳ này, và tên người đi cùng",
+              "Hỏi lại khách thêm một lần nữa cho chắc, ngay lúc khách vừa tới quầy",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'First check two things on the booking, not on the file.'",
+          },
+          {
+            q: "Tên người đi cùng khách được lưu ở đâu?",
+            options: [
+              "Trên booking, và không bao giờ chép sang hồ sơ sở thích",
+              "Trên hồ sơ sở thích, để ca sau còn biết mà chuẩn bị cho đúng",
+              "Ở cả hai chỗ cho chắc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A companion's name lives on the booking. It is never copied across to the preference file.'",
+          },
+          {
+            q: "Đọc lại ba sở thích trong hồ sơ cho khách nghe là gì?",
+            options: [
+              "Là dịch vụ tốt, vì nó chứng minh mình nhớ khách",
+              "Là một màn trình diễn, và nó không chừa cho khách đường nào ngoài gật",
+              "Là bắt buộc theo quy trình đón khách quay lại, và khách sẽ thấy mình được nhớ",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Reciting a guest's own preferences at them is not service. It is a performance.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "I assume my details are still on the system?",
+          options: [
+            {
+              text: "They are, sir. Has anything changed, or shall I keep it the same?",
+              correct: true,
+            },
+            {
+              text: "They are, sir — corner table, firm pillow, coffee at six. All set.",
+              correct: false,
+            },
+            {
+              text: "I will check the file and come back to you, sir.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. Mrs Lee arrives Friday. Her file says anniversary in May — shall I order the cake?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Order it. The file is there so we do not have to ask twice.",
+              correct: false,
+            },
+            {
+              text: "Ask the Duty Manager whether the anniversary note is still valid.",
+              correct: false,
+            },
+            {
+              text: "Not from a May note in August. Check the booking first — same dates, same companion.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_32_4",
+      lessonOrder: 4,
+      titleEn: "The Empty File",
+      titleVi: "Hồ sơ còn trống",
+      vocabulary: [
+        {
+          word: "As this is your first stay",
+          phonetic: "/əz ðɪs ɪz jɔː ˈfɜːst steɪ/",
+          definition: "Vì đây là lần đầu anh/chị ở đây — cách mở lời với khách mới",
+          context: "As this is your first stay, madam, may I ask you one thing?",
+          icon: "📂",
+        },
+        {
+          word: "One question",
+          phonetic: "/ˌwʌn ˈkwestʃən/",
+          definition: "Một câu hỏi — đủ để bắt đầu, đừng thành cuộc phỏng vấn",
+          context: "May I ask you one question before you go up, sir?",
+          icon: "1️⃣",
+        },
+        {
+          word: "Somebody will know",
+          phonetic: "/ˌsʌmbədi wɪl ˈnəʊ/",
+          definition: "Sẽ có người biết — cách chuyển việc mình không biết",
+          context: "Somebody will know, madam, and I will have it by six.",
+          icon: "🧭",
+        },
+        {
+          word: "While you remember",
+          phonetic: "/waɪl juː rɪˈmembə/",
+          definition: "Ghi ngay lúc còn nhớ rõ",
+          context: "I will put it down now, sir, while you remember it.",
+          icon: "⏳",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Everyone enjoys the beach club.",
+          polite: "As this is your first stay with us, madam, may I ask one question?",
+          rule: "Chưa biết gì thì đừng lấy 'khách nào cũng thích' ra lấp. Nói thật là hồ sơ còn trống, rồi xin MỘT câu hỏi — một câu thì khách trả lời, năm câu thì thành thẩm vấn.",
+        },
+        {
+          rude: "I do not know that one.",
+          polite: "Somebody will know, sir. I will have the answer for you by six.",
+          rule: "Chuyển việc mình không biết thì phải kèm MỘT MỐC. 'Somebody will know' mà không có giờ chỉ là một lời an ủi; có giờ thì thành lời hứa khách kiểm được.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "First time here. What do people usually do?",
+          targetResponse:
+            "As this is your first stay, sir, may I ask one question — beach or town?",
+          helpTip:
+            "Khách mới thì hồ sơ trống, và nói thẳng điều đó lại là cách mở tốt nhất. MỘT câu hỏi có hai lựa chọn: khách trả lời trong hai giây, và bạn có đủ để gợi ý. 'Question' /ˈkwestʃən/ — âm /tʃ/ nghe rõ ở giữa.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. The couple in 908 told me a lot at breakfast. Shall I write it up after my shift?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Only the part they said we could keep. Write that now, before you leave the lounge.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Ghi cuối ca là ghi lại một bản đã mờ — tên sai, giờ sai, và phần khách nói khẽ thì rơi mất trước tiên. Ghi ngay, và chỉ ghi phần khách cho phép ghi. 'Lounge' /laʊndʒ/ — /aʊ/ là nguyên âm đôi, đuôi /dʒ/ nghe rõ.",
+        },
+      ],
+      reading: {
+        text: "THE EMPTY FILE\nA new guest arrives with nothing on file, and that is not a problem at all. It is the most honest half hour you will have with them.\nSay the true thing without opening the file to them. 'As this is your first stay with us…' tells the guest the same fact without reading them an empty page. They hear about the file the moment you ask to write on it, and that is the right moment.\nThen ask one question. One. 'Beach or town?' takes two seconds and gives you enough to work with all week.\nFive questions is an interview. A guest who has just come off a flight will answer them politely and remember none of it fondly.\nTake a note while you remember. At the end of a shift the names blur, the hours move, and the thing they said quietly is the first thing to go.\nUpdate the guest's file before you leave the lounge, not after.\nAnd when you do not know something at all, say who will. 'Somebody will know' needs an hour attached, or it is only a kind sentence. 'By this evening' is an hour. 'Soon' is not.\n'As far as I know' is for a fact about the house. It is never for a guest's own file — there you either wrote it down or you did not.\nThe concierge desk, the lounge team, the executive chef — this house is full of people who each know one thing extremely well. Your job is to know which of them.",
+        questions: [
+          {
+            q: "Khách mới, hồ sơ trống. Mở lời thế nào?",
+            options: [
+              "Hỏi năm câu để dựng hồ sơ cho đầy đủ ngay từ đầu",
+              "Gợi ý những thứ khách nào cũng thích rồi xem phản ứng",
+              "Mở bằng 'as this is your first stay', rồi xin hỏi một câu",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'tells the guest the same fact without reading them an empty page.'",
+          },
+          {
+            q: "Vì sao phải ghi ngay chứ không để cuối ca?",
+            options: [
+              "Vì cuối ca thì tên, giờ và phần khách nói khẽ sẽ rơi mất",
+              "Vì hệ thống sẽ khoá lại và không cho sửa hồ sơ sau giờ làm",
+              "Vì quản lý kiểm tra hồ sơ vào cuối mỗi ca",
+            ],
+            correct: 0,
+            explanation: "Bài đọc: 'the thing they said quietly is the first thing to go.'",
+          },
+          {
+            q: "Khách mới thì hỏi năm câu hay một câu?",
+            options: [
+              "Năm câu, để dựng hồ sơ cho đủ",
+              "Một câu, có sẵn hai lựa chọn",
+              "Không hỏi gì, để khách tự nói ra",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Five questions is an interview.' Khách vừa xuống máy bay sẽ trả lời lịch sự và không nhớ gì cả.",
+          },
+          {
+            q: "'Somebody will know' cần thêm gì mới thành một lời hứa?",
+            options: ["Một cái tên", "Một mốc giờ", "Một lời xin lỗi"],
+            correct: 1,
+            explanation: "Bài đọc: ''By this evening' is an hour. 'Soon' is not.'",
+          },
+          {
+            q: "'As far as I know' dùng cho loại thông tin nào?",
+            options: ["Cho dữ kiện về toà nhà", "Cho hồ sơ của khách", "Cho cả hai"],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'It is never for a guest's own file — there you either wrote it down or you did not.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "We've never been to this country before. Where do we start?",
+          options: [
+            {
+              text: "Most first-time guests do the city tour, madam, so I will book that for you.",
+              correct: false,
+            },
+            {
+              text: "May I ask one question, madam — are you here to rest or to see things?",
+              correct: true,
+            },
+            {
+              text: "The beach club is what everybody asks about, madam — shall I book you in?",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. I do not know if the ferry runs on Mondays. What do I tell them?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Say somebody will know, and give them an hour you can keep.",
+              correct: true,
+            },
+            {
+              text: "Tell them it usually does — the timetable rarely changes here.",
+              correct: false,
+            },
+            {
+              text: "Point at the concierge desk and let them work it out themselves.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const GR_WEEK_33: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 33,
+  weekTitleEn: "The Promise That Was Not Kept",
+  weekTitleVi: "Lời hứa đã không được giữ",
+  reviewWords: [
+    "Complaint log",
+    "Bring the manager to you",
+    "Shall I put that down",
+    "I would rather find out",
+    "Follow-up note",
+    "Privilege",
+    "Front office",
+    "Not for the file",
+  ],
+  writing: WEEK33_WRITING_TASKS.GR,
+  lessons: [
+    {
+      lessonId: "GR_33_1",
+      lessonOrder: 1,
+      titleEn: "What Was Actually Promised",
+      titleVi: "Rốt cuộc đã hứa những gì",
+      vocabulary: [
+        {
+          word: "What were you promised",
+          phonetic: "/wɒt wə juː ˈprɒmɪst/",
+          definition: "Anh/chị đã được hứa những gì — câu mở của mọi khiếu nại",
+          context: "What were you promised, madam, and by whom?",
+          icon: "📜",
+        },
+        {
+          word: "What happened instead",
+          phonetic: "/wɒt ˌhæpənd ɪnˈsted/",
+          definition: "Thực tế đã xảy ra thế nào — vế thứ hai của sự việc",
+          context: "And what happened instead, sir?",
+          icon: "↔️",
+        },
+        {
+          word: "From the beginning",
+          phonetic: "/frəm ðə bɪˈɡɪnɪŋ/",
+          definition: "Kể lại từ đầu — lời mời khách nói hết một lượt",
+          context: "Take me through it from the beginning, madam.",
+          icon: "⏮️",
+        },
+        {
+          word: "Four things",
+          phonetic: "/ˌfɔː ˈθɪŋz/",
+          definition: "Bốn dữ kiện một khiếu nại cần: hứa gì, ai hứa, khi nào, và thực tế ra sao",
+          context: "There are four things I need, madam. May I ask?",
+          icon: "4️⃣",
+        },
+        {
+          word: "Policy allows",
+          phonetic: "/ˈpɒləsi əˌlaʊz/",
+          definition:
+            "Chính sách cho phép — chỉ nói SAU khi đã đủ bốn dữ kiện và chỉ khi khách đã hỏi tới tiền; nêu là CÓ một trần, không bao giờ nêu con số",
+          context: "Our policy allows for this, madam, and my manager decides what we can do.",
+          icon: "📋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "What is the problem?",
+          polite: "Take me through it from the beginning, madam. What were you promised?",
+          rule: "'What is the problem?' bắt khách tóm tắt hộ bạn, và khách đang giận thì tóm tắt bằng cảm xúc. Mời khách kể từ đầu, rồi hỏi đúng vế ĐÃ HỨA — đó là vế kiểm được.",
+        },
+        {
+          rude: "I am sure there was a misunderstanding.",
+          polite: "And what happened instead, sir? I will write both down before I say anything.",
+          rule: "Đừng gọi tên nguyên nhân khi chưa có dữ kiện. Ghi cả hai vế — cái đã hứa và cái đã xảy ra — rồi mới nói. Ghi trước, kết luận sau.",
+        },
+        {
+          rude: "Maybe we pay you some money.",
+          polite:
+            "Thank you, madam — I have everything I need. Our policy allows for this, and my manager decides what we can do.",
+          rule: "Câu này chỉ nói SAU khi đã có đủ bốn dữ kiện, và chỉ khi khách đã hỏi tới tiền. Mở đầu bằng chữ 'compensation' là tự mình đặt chuyện tiền lên bàn — khách vào đây với một lời hứa bị bội ước, đừng biến nó thành cuộc mặc cả. Nêu TRẦN thì được; nêu con số thì không, con số là của quản lý.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "This is the third time. Nobody in this hotel does what they say.",
+          targetResponse:
+            "I am sorry, madam. Take me through it from the beginning, and I will write it down.",
+          helpTip:
+            "Khách mở bằng một lời khái quát về cả khách sạn. Đừng cãi lại vế khái quát đó và cũng đừng nhận nó — kéo về SỰ VIỆC bằng cách mời khách kể từ đầu. Cây bút là thứ hạ nhiệt nhanh nhất: khách thấy mình đang ghi là thấy mình đang được nghe. 'Beginning' /bɪˈɡɪnɪŋ/ — trọng âm rơi vào âm tiết hai.",
+        },
+        {
+          guestPrompt: "Guest Relations. Room 1102 is furious about the lounge. Where do I start?",
+          speakerRole: "colleague",
+          targetResponse:
+            "Four things before anything else. What was promised, who promised it, when, and what happened instead.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Đừng bắt đầu bằng việc nghĩ xem cho khách cái gì — bắt đầu bằng bốn dữ kiện. Không có bốn dữ kiện thì mọi lời đề nghị sau đó đều là đoán, và một lời đề nghị sai làm khiếu nại to thêm. 'Promised' /ˈprɒmɪst/ — đuôi -ed sau /s/ đọc thành /t/.",
+        },
+      ],
+      reading: {
+        text: "WHAT WAS ACTUALLY PROMISED\nGuest Relations gets the complaints that are not about a thing. Housekeeping hears about a stain; you hear about a promise.\nThat makes the first move different. There is nothing to photograph. What you have instead is a sentence somebody said, and your job is to find out exactly what it was.\nFour things, every time. What was promised. Who promised it. When. And what happened instead.\nAsk for them in that order, and write while the guest talks. 'Shall I put that down, madam?' is the whole of the permission you need. A guest who can see you writing slows down without being asked to.\nDo not start with what you can give. An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.\nDo not name a cause either. 'There must have been a misunderstanding' is a verdict, and nobody has established one yet.\nSome claims are not about a service at all. A preference ignored, an occasion missed, a detail from the file repeated to the wrong person. Those hurt more than a cold breakfast, and they take the same four things.\nEverything goes in the complaint log before anything is offered. The log is what turns a bad afternoon into a case somebody can close.\nSIX SENTENCES THAT STOP HERE\nFrom weeks twenty-eight and thirty: 'If you like, I can arrange a room upgrade.'\n'We can add the missing points.'\n'If you prefer, we will arrange a private dinner instead.'\n'We can extend your late check-out if it happens again.'\n'We will cancel the extra charge as a gesture of apology.'\nFrom week twenty-five: 'We will confirm the upgrade straight away.'\nNotice what a guest in a claim does not hear. They do not hear 'if you like'. They hear the second half, and the second half is a promise. None of the six is yours to make.\nUpdating the file is not on this list. That one stays yours, in a claim as on any other day.\nWeek thirty-five will drill the same shelf inside a prepared negotiation, where a manager has agreed the range before you sit down.\nRead every line there as a request, because that is all it can be here. A negotiation changes who you are talking to. It does not change whose signature it needs.\nTwo rules hold in a negotiation exactly as they hold at this desk. Anything with a figure needs your manager's figure. Tier, points and tier lounge access stay the loyalty office's on every day of the year.",
+        questions: [
+          {
+            q: "Khách mở lời bằng 'lần thứ ba rồi, khách sạn này chẳng ai làm đúng lời'. Làm gì?",
+            options: [
+              "Mời khách kể lại từ đầu, và bắt đầu ghi",
+              "Xin lỗi thay cho cả khách sạn rồi hỏi khách muốn được bù gì",
+              "Giải thích rằng có thể đã có hiểu nhầm ở đâu đó",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who can see you writing slows down without being asked to.'",
+          },
+          {
+            q: "Vì sao không được đưa ra đề nghị trước khi có đủ bốn dữ kiện?",
+            options: [
+              "Vì quản lý phải duyệt trước mọi lời đề nghị",
+              "Vì khách sẽ đòi thêm nếu thấy mình đề nghị sớm",
+              "Vì đó là một lời đoán, và đoán sai thì khiếu nại to thêm",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'An offer made before the four things is a guess, and a guess that lands wrong makes the complaint bigger than it was.'",
+          },
+          {
+            q: "Tuần 28 dạy nói 'If you like, I can arrange a room upgrade.' Khách đang khiếu nại nghe thấy gì?",
+            options: [
+              "Nghe thấy một lời mời, vì câu vẫn có 'if you like'",
+              "Nghe thấy một lời hứa — vế 'if you like' rơi mất, chỉ còn vế sau",
+              "Nghe thấy một câu từ chối khéo",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'They do not hear \\'if you like\\'. They hear the second half, and the second half is a promise.'",
+          },
+          {
+            q: "Bốn dữ kiện mà một khiếu nại cần là gì?",
+            options: [
+              "Phòng, giờ, tên khách, và số tiền khách đòi",
+              "Hứa gì, ai hứa, khi nào, và thực tế ra sao",
+              "Ai sai, sai ở đâu, thiệt hại bao nhiêu, và bù thế nào",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What was promised. Who promised it. When. And what happened instead.'",
+          },
+          {
+            q: "Ghi vào complaint log lúc nào?",
+            options: [
+              "Trước khi đề nghị bất cứ điều gì",
+              "Sau khi đã thoả thuận xong phần bù",
+              "Cuối ca, khi đã có đủ thông tin",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'The log is what turns a bad afternoon into a case somebody can close.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Your colleague told me the lounge was open until ten. It closed at eight.",
+          options: [
+            {
+              text: "I am very sorry, madam. Let me arrange something to make up for it right away.",
+              correct: false,
+            },
+            {
+              text: "I am sorry, madam. May I ask when you were told, and by whom?",
+              correct: true,
+            },
+            {
+              text: "The lounge has closed at eight since April, madam — there must be a mistake.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Shall I offer 1102 a spa credit to calm him down first?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes, offer it now and get the details from him afterwards.",
+              correct: false,
+            },
+            {
+              text: "Ask the Duty Manager what he thinks we should offer this guest.",
+              correct: false,
+            },
+            {
+              text: "Get the four things first. An offer before that is a guess.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_2",
+      lessonOrder: 2,
+      titleEn: "Five Levels, and Which One You Are On",
+      titleVi: "Năm tầng, và bạn đang đứng ở tầng nào",
+      vocabulary: [
+        {
+          word: "Already yours",
+          phonetic: "/ɔːlˌredi ˈjɔːz/",
+          definition: "Vốn đã thuộc quyền lợi của khách — trả lại thì không tính là bồi thường",
+          context: "The lounge access was already yours, sir, and I am restoring it now.",
+          icon: "↩️",
+        },
+        {
+          word: "My manager's to give",
+          phonetic: "/maɪ ˈmænɪdʒəz tə ɡɪv/",
+          definition: "Thuộc quyền cho của quản lý, không phải của tôi",
+          context: "A spa credit is my manager's to give, madam. I will ask her now.",
+          icon: "🔑",
+        },
+        {
+          word: "Off the bill",
+          phonetic: "/ˌɒf ðə ˈbɪl/",
+          definition:
+            "Bỏ khỏi hoá đơn — khoản nhỏ đang tranh chấp thì Lễ tân xoá ngay; khoản lớn hơn và mọi khoản hoàn tiền là của Duty Manager",
+          context:
+            "The minibar water comes off the bill now, sir — anything larger is my Duty Manager's.",
+          icon: "🧾",
+        },
+        {
+          word: "The loyalty office decides",
+          phonetic: "/ðə ˌlɔɪəlti ˈɒfɪs dɪˈsaɪdz/",
+          definition: "Việc của bộ phận khách hàng thân thiết — hạng thẻ và điểm",
+          context: "Tier and points — the loyalty office decides, madam.",
+          icon: "🏅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will give you the lounge access back as compensation.",
+          polite:
+            "The lounge access was already yours, sir. I am restoring it now, not offering it.",
+          rule: "Với khách chưa quen tiếng Anh, bản trơn của 'my manager's to give' là 'only my manager can offer that, madam'. Trả lại thứ khách VỐN ĐÃ có quyền không phải là bồi thường — đó là việc lẽ ra đã phải làm. Làm ngay, và đừng đếm nó vào phần bù. Gọi nó là quà tặng thì khách nghe ra là mình đang mua sự im lặng.",
+        },
+        {
+          rude: "I can restore your tier status for you.",
+          polite:
+            "Tier and points are the loyalty office's, madam. I am writing to them today and will come back tomorrow.",
+          rule: "Hạng thẻ và điểm không thuộc quầy này — tuần 24 đặt chúng dưới membership tier rule và points expiry rule, và tuần 26 gọi tên bộ phận giữ chúng là loyalty office. Ở một vụ khiếu nại thì đừng HỨA, hãy nói AI quyết; đề xuất chúng là việc của một cuộc thương lượng có chuẩn bị, không phải của mười phút ở quầy.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So what are you going to do about it?",
+          targetResponse:
+            "Your booking has the lounge for these nights, sir. I am telling the lounge now, and the bill goes to my Duty Manager.",
+          helpTip:
+            "Nhìn BOOKING trước khi nói câu này: lounge ghi trong booking cho những đêm này thì bạn trả lại ngay, còn lounge có vì hạng thẻ thì KHÔNG bao giờ bạn tự bật. Rồi bắt đầu bằng phần bạn LÀM ĐƯỢC NGAY và không cần hỏi ai — nó có thật, nó nhanh, và nó chứng minh bạn đang hành động. Đừng mở bằng phần phải xin phép: khách nghe thấy chữ manager đầu tiên sẽ nghĩ mình đang bị đẩy đi. 'Duty' /ˈdjuːti/ — giữ âm /j/, đừng thành /ˈduːti/.",
+        },
+        {
+          guestPrompt: "Duty Manager. You wanted me at the desk — what is it?",
+          speakerRole: "manager",
+          targetResponse:
+            "Room 1102, sir. Reception promised the lounge until ten on Tuesday; it closed at eight. He is asking for two nights off the bill.",
+          helpTip:
+            "DUTY MANAGER vừa lên tới quầy. Bước sang một bên, ngoài tầm nghe của khách, RỒI mới trình — nói con số khách đang đòi ngay trước mặt họ là neo con số đó lại. Trình đủ bốn dữ kiện của bài 1 (hứa gì, AI hứa, KHI NÀO, thực tế ra sao), rồi cái khách đang đòi. Đừng kể cảm xúc của khách, và đừng nêu con số mình nghĩ là hợp lý — con số là của ông ấy. 'Promised' /ˈprɒmɪst/ — đuôi -ed sau /s/ đọc thành /t/.",
+        },
+      ],
+      reading: {
+        text: "FIVE LEVELS, AND WHICH ONE YOU ARE ON\nFive levels, and knowing which one you are standing on is most of this job.\nYOURS, WITHOUT ASKING ANYONE.\nAn apology, spoken, at the moment it is needed.\nPutting back a benefit the guest already had for this stay. Lounge access promised for these nights, a late check-out they were promised, a table they booked. But tell the front office or the restaurant in the same minute. You are not asking permission. You are telling the desk that owns it, before you give the guest a time.\nLounge access that comes with a membership tier is the loyalty office's, and you never switch that one on.\nHow to tell them apart in ten seconds: look at the booking, not at the guest. Written into the booking for these nights, it is yours to put back. Held because of their card, it is the loyalty office's. If the booking does not tell you inside ten seconds, ask the front office.\nReplacing the thing that failed: a wrong cake goes back to the kitchen at once, and nobody counts that as compensation. And whatever a written house programme already authorises — a postponed tour refunded the same day, and you ask nobody. A written house programme is a sheet with a name and an order on it. If you cannot put your hand on the sheet, you do not have one, and a refund is the Duty Manager's, like any other.\nRestoring what somebody was already owed is not a gift. It is the thing that should have happened. Do it fast and do not count it.\nMost houses give this desk a small limit of its own: an amenity sent to the room, a drink in the lounge, one pressed garment. Anything you add on top of a replacement comes out of that limit, or it is your manager's. Ask your Guest Relations Manager what yours is, and what the front office limit is, in figures, in your first week.\nYOUR MANAGER'S.\nAnything the guest was not entitled to before today. A spa credit, a dinner, an upgrade. You propose these; you do not promise them. Your manager says yes, and the front office says which room. The apology letter belongs here too: you draft it, and it goes out over her name.\nTHE FRONT OFFICE'S.\nAny room change, and any late check-out the house does not owe. You ask them, and you never tell a guest which rooms are empty, or that a room will cost nothing.\nTHE DUTY MANAGER'S.\nAny refund the written house programme does not already cover. Any payment to a third party, and anything off the bill above the front office's own limit. You speak to the duty manager yourself, and you never quote a figure.\nA disputed line inside that limit the front office reverses at once — a minibar water, one laundry item. Ask them for it while the guest waits. Nobody should wait for a manager over the price of a bottle of water.\nTHE LOYALTY OFFICE'S.\nTier status and points. Week twenty-four gave those their own rules, and week twenty-six named the team that holds them. This desk promises neither.\nSay which level you are on, out loud. 'That one is my manager's to give' is better than a long silence, and far better than a yes you cannot keep.\nThen open a recovery case. The open recovery case is what keeps a claim alive after your shift ends.",
+        questions: [
+          {
+            q: "Khách bị mất quyền vào lounge mà lẽ ra đã có. Trả lại thì gọi là gì?",
+            options: [
+              "Là phần bồi thường đầu tiên, nên ghi vào hồ sơ như một khoản đã bù",
+              "Là việc lẽ ra đã phải làm — làm ngay và không tính vào phần bù",
+              "Là quyết định của quản lý, nên phải xin phép trước khi trả lại",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'Restoring what somebody was already owed is not a gift.'",
+          },
+          {
+            q: "Khách đòi khôi phục hạng thẻ. Ai quyết?",
+            options: [
+              "Duty Manager, vì mọi thứ liên quan tới quyền lợi đều qua ông ấy",
+              "Quản lý GR, vì hạng thẻ thuộc chương trình khách quen",
+              "Bộ phận khách hàng thân thiết — quầy không hứa hạng thẻ và điểm",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'Tier status and points… This desk promises neither.'",
+          },
+          {
+            q: "Tuần 28 dạy bạn nói 'I can arrange a room upgrade'. Trong một vụ khiếu nại thì sao?",
+            options: [
+              "Vẫn nói được — đó là câu đã học, và khách đang cần được xoa dịu",
+              "Không — nâng hạng là của quản lý; bạn ĐỀ XUẤT chứ không hứa",
+              "Không — nâng hạng là của Duty Manager, nên đưa thẳng lên ông ấy",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'You propose these; you do not promise them. Your manager says yes, and the front office says which room.'",
+          },
+          {
+            q: "Khách tranh chấp một chai nước minibar. Ai xoá, và khách có phải chờ quản lý không?",
+            options: [
+              "Front office xoá ngay trong lúc khách đứng chờ",
+              "Duty Manager — mọi khoản trên hoá đơn đều là của ông ấy",
+              "Guest Relations xoá luôn, vì đó là khoản nhỏ",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Nobody should wait for a manager over the price of a bottle of water.'",
+          },
+          {
+            q: "Lounge access ghi trong booking và lounge access theo hạng thẻ — phân biệt bằng gì?",
+            options: [
+              "Hỏi khách xem họ đang giữ hạng nào",
+              "Hỏi Duty Manager cho chắc",
+              "Nhìn booking, không nhìn khách",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'look at the booking, not at the guest… If the booking does not tell you inside ten seconds, ask the front office.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "The least you can do is give us dinner tonight.",
+          options: [
+            {
+              text: "Dinner is my manager's to give, sir. I will put it to her and come back by six.",
+              correct: true,
+            },
+            {
+              text: "I can certainly arrange dinner for you tonight, sir, after all that has happened.",
+              correct: false,
+            },
+            {
+              text: "Dinner is not something we would normally offer in a case like this, sir.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. He wants his points back as well. Can I just log that as agreed?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Log it as agreed — the loyalty office almost always says yes to these.",
+              correct: false,
+            },
+            {
+              text: "Log it as requested, not as agreed. The loyalty office decides that one.",
+              correct: true,
+            },
+            {
+              text: "Leave the points out of the log and deal with them separately later on.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_3",
+      lessonOrder: 3,
+      titleEn: "Sorry for It, and What Is Not Yours",
+      titleVi: "Xin lỗi về việc đã xảy ra, và việc không phải của bạn",
+      vocabulary: [
+        {
+          word: "I am sorry that happened",
+          phonetic: "/aɪ əm ˈsɒri ðæt ˌhæpənd/",
+          definition: "Xin lỗi về SỰ VIỆC — không nhận một lỗi chưa ai xác lập",
+          context: "I am sorry that happened, madam, and I am looking into it now.",
+          icon: "🙏",
+        },
+        {
+          word: "What I can put right",
+          phonetic: "/wɒt aɪ kən ˌpʊt ˈraɪt/",
+          definition: "Phần tôi sửa được — vế mở ngay sau lời xin lỗi",
+          context: "What I can put right today is the table and the lounge, sir.",
+          icon: "🔧",
+        },
+        {
+          word: "I only know what I saw",
+          phonetic: "/aɪ ˌəʊnli ˌnəʊ wɒt aɪ ˈsɔː/",
+          definition: "Tôi chỉ biết phần tôi thấy — ranh giới của lời kể",
+          context: "I only know what I saw, madam, and I will not guess at the rest.",
+          icon: "👁️",
+        },
+        {
+          word: "Nobody knows that yet",
+          phonetic: "/ˌnəʊbədi ˌnəʊz ðæt ˈjet/",
+          definition: "Chưa ai biết điều đó — câu chặn một kết luận vội",
+          context: "Nobody knows that yet, madam, and I would rather not guess.",
+          icon: "⚖️",
+        },
+        {
+          word: "Not mine to handle",
+          phonetic: "/ˌnɒt ˈmaɪn tə ˌhændl/",
+          definition: "Việc này không thuộc quầy tôi — câu chuyển thẳng lên Duty Manager",
+          context: "That is not mine to handle, madam. I am asking my Duty Manager to come now.",
+          icon: "🛑",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I am sorry, that was our mistake.",
+          polite:
+            "I am sorry that happened, madam. What I can put right today is the table and the lounge.",
+          rule: "Xin lỗi về SỰ VIỆC thì luôn đúng; nhận một LỖI mà chưa ai xác lập thì không phải việc của bạn, và nó khoá luôn phần điều tra sau đó. Xin lỗi rồi mở ngay phần sửa được trong cùng một hơi.",
+        },
+        {
+          rude: "The reception team must have forgotten to pass it on.",
+          polite:
+            "I only know what I saw, sir. I would not want to guess before somebody has looked at it.",
+          rule: "Đừng đổ cho bộ phận khác trước mặt khách — kể cả khi bạn đoán đúng. Câu đó không sửa được gì cho khách, và nó biến một khiếu nại thành một vụ trong nhà.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Somebody clearly dropped the ball here. Who was it?",
+          targetResponse:
+            "I only know what I saw, sir. What I can put right today is the lounge and your table tonight.",
+          helpTip:
+            "Khách đang hỏi TÊN một người. Đừng cho, và cũng đừng nói 'tôi không được phép nói' — nghe như đang giấu. Nói ranh giới của chính mình rồi chuyển ngay sang phần sửa được. 'Saw' /sɔː/ — nguyên âm dài, đừng thành /səʊ/.",
+        },
+        {
+          guestPrompt: "Guest Relations. Should I tell him the kitchen never got the slip?",
+          speakerRole: "colleague",
+          targetResponse: "No. Say what we are putting right, and keep the kitchen out of it.",
+          helpTip:
+            "ĐỒNG NGHIỆP hỏi. Nguyên nhân bên trong là việc của biên bản, không phải việc của khách. Khách cần hai thứ: một lời xin lỗi về sự việc, và một việc sắp được sửa. Tên bộ phận không nằm trong hai thứ đó. 'Right' /raɪt/ — /aɪ/ là nguyên âm đôi.",
+        },
+      ],
+      reading: {
+        text: "SORRY FOR IT, AND WHAT IS NOT YOURS\nThere are two apologies and they are not the same sentence.\n'I am sorry that happened' is about the event. It is always true, it costs nothing, and you may say it before you know a single fact.\n'I am sorry, that was our mistake' is a verdict. It decides who was wrong before anybody has looked, and it is not yours to decide. It also ends the investigation: nothing found afterwards can be said out loud.\nSo apologise for the event, and put the repair in the same breath. 'What I can put right today is the table and the lounge' turns an apology into a plan.\nWhen you do not know, say so: 'I would rather find out than guess' is a better answer than a confident wrong one.\nWhen a guest asks who was to blame, the answer is your own limit. 'I only know what I saw.' Not a name, not a department, not a guess.\nThere is a third case. When the failure is not in dispute, you may name the failure and only the failure. 'You were promised the lounge until ten, madam, and it closed at eight. That part is ours, and I am sorry.' Name the service, never the person and never the cause. 'That part is ours' names a service. 'That was our mistake' hands out a blame nobody has established yet.\nNever name another team as the cause. Saying so repairs nothing, and it turns one complaint into two. Naming the team that is DOING the next thing is a different sentence, and the guest needs it. The cause belongs in the complaint log, where a manager can look at it properly.\nNOT YOURS AT ALL\nSix things arrive at this desk that are not complaints, and none of the five levels applies.\nFirst, a guest who accuses a named member of staff of anything — theft, a hand on them, an insult.\nIf they say a hand was put on them, ask first.\n'Are you hurt, madam — do you need a doctor?' Everything else waits for that answer.\nTake them somewhere private, and take a colleague with you. Never sit alone with a guest who is making an allegation: it protects them and it protects you. Leave the door open — a door that is merely unlocked protects nobody, because nobody can see in.\nWrite down the hour, the room, and as much of what they said as you caught. Write it on an incident report form, marked confidential — not in the complaint log. Do not try to write a full statement, and never ask a guest to sign one. The Duty Manager takes the statement, and tells housekeeping that nobody is to enter or clean the room until they say otherwise.\nSay 'I am going to ask my Duty Manager to come to you now, madam'. Your colleague telephones the Duty Manager and security from where they are standing.\nAsk security to save the camera recording for that floor and that hour — recordings are overwritten, so that one cannot wait.\nYou and your colleague stay with them until the Duty Manager arrives. If the guest wants to leave, they leave: walk with them, and tell the Duty Manager where they went.\nDo not ask them to repeat it. Do not argue any part of it. Do not move them on to what is being put right. And do not say one word to the colleague they named.\nIf the guest says they want the police, that is theirs to decide and never yours to talk them out of. Say 'Of course, madam', and tell the Duty Manager that too.\nSecond, a guest who tells you they were hurt or made ill here.\nHealth first: 'Are you hurt now, madam — do you need a doctor?'\nIf they say yes, or if you are not sure, telephone the Duty Manager and say the room number first.\nThen stay with the guest. If they say no, telephone anyway, at once.\nNever say it was our fault. Never say we will pay. Never say a figure.\nWrite the incident report in your own shift, and photograph the place before anybody tidies it. The place, never the guest.\nThird, a guest who names a lawyer or the press, or who threatens a review with your name in it. Say one sentence and no more: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.' Then say nothing else — not your name, not your opinion, not 'no comment'. Do not agree to be recorded or photographed. If they hand you a card, take it with both hands, say nothing more, and give it to your Duty Manager.\nFourth, a guest who will not accept anything and will not leave the desk. That one is the Duty Manager's the moment it is said.\nFifth, anything at all about safety. That is not a complaint at all.\nA smell of burning, a loose rail, a fire door propped open. Ask 'Which floor, sir?' and nothing else, then call security first and the Duty Manager after.\nA child alone at the pool is different. Go to the water yourself and send the nearest colleague to telephone as you go. A call is not a pair of eyes on a child.\nSixth, and this one is about you. A guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach first. Say 'One moment, sir' and nothing else. Have the nearest colleague call security and the Duty Manager.\nDo not answer him, do not apologise, and do not stay within reach. Nobody at this desk has to stand and take it.",
+        questions: [
+          {
+            q: "Vì sao 'that was our mistake' là câu không nên nói?",
+            options: [
+              "Vì nó là một phán quyết, và nó khoá luôn phần điều tra sau đó",
+              "Vì khách sẽ đòi bồi thường nhiều hơn khi nghe thấy chữ mistake",
+              "Vì chỉ quản lý mới được nói câu đó với khách",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'It also ends the investigation: nothing found afterwards can be said out loud.'",
+          },
+          {
+            q: "Khách nói mình bị thương trong khuôn viên khách sạn. Câu đầu tiên bạn nói là gì?",
+            options: [
+              "Xin lỗi, và nói khách sạn sẽ lo phần viện phí",
+              "Hỏi khách có đau không, có cần bác sĩ không",
+              "Ghi ngay vào complaint log rồi mời khách ngồi chờ quản lý",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Health first.' Nếu khách nói có, gọi Duty Manager và nói số phòng trước tiên, rồi ở lại với khách.",
+          },
+          {
+            q: "Khách nói một nhân viên có tên đã lấy đồ trong phòng họ. Việc đầu tiên là gì?",
+            options: [
+              "Ghi lại đầy đủ lời khai rồi mời khách ký xác nhận",
+              "Hỏi khách có bị thương không, rồi mời sang chỗ riêng CÙNG một đồng nghiệp",
+              "Báo ngay cho người bị nêu tên để họ kịp giải thích",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Never sit alone with a guest who is making an allegation.' Và không nói một lời nào với người bị nêu tên.",
+          },
+          {
+            q: "Khách quát mắng bạn và túm lấy tay bạn ở quầy. Làm gì?",
+            options: [
+              "Xin lỗi rồi cố xử lý cho xong việc của khách",
+              "Ghi vào complaint log rồi báo lại lúc cuối ca",
+              "Lùi ra khỏi tầm tay trước, rồi gọi bảo vệ và Duty Manager",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Nobody at this desk has to stand and take it.' Lùi ra trước, nói 'One moment, sir', và không trả lời gì thêm.",
+          },
+          {
+            q: "Khách báo có một đứa trẻ đang ở hồ bơi một mình. Làm gì trước?",
+            options: [
+              "Gọi bảo vệ rồi đợi ở quầy",
+              "Tự đi ra hồ ngay, và nhờ đồng nghiệp gọi trong lúc mình đi",
+              "Ghi vào sổ và báo Duty Manager cuối ca",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A call is not a pair of eyes on a child.' Mùi khét hay lan can lỏng thì gọi bảo vệ trước; đứa trẻ dưới nước thì không.",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Just admit the hotel got it wrong. That's all I want to hear.",
+          options: [
+            {
+              text: "I am sorry it happened, madam. I would rather put it right today than say whose it was.",
+              correct: true,
+            },
+            {
+              text: "You are right, madam, we got it wrong, and I am sorry for that.",
+              correct: false,
+            },
+            {
+              text: "I am not able to comment on whose fault it was, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. He keeps asking which of us took the booking. What do I say?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Tell him it was the evening shift — it is the truth and he will drop it.",
+              correct: false,
+            },
+            {
+              text: "Say the booking system lost it, so nobody on the team is at fault.",
+              correct: false,
+            },
+            {
+              text: "Say you only know what you saw, and move him on to what is being put right.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "I write for a travel magazine and I am recording this. What happened here?",
+          options: [
+            {
+              text: "I can tell you what I saw, madam, but please do not use my name.",
+              correct: false,
+            },
+            { text: "No comment, madam.", correct: false },
+            {
+              text: "I am not the person to speak about that, madam. I am asking my Duty Manager to come to you now.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "Your night man went through my bag. I want him out here now.",
+          options: [
+            {
+              text: "I will call him to the desk now, sir, so you can tell him yourself.",
+              correct: false,
+            },
+            {
+              text: "That is not mine to handle, sir. I am asking my Duty Manager to come to you now.",
+              correct: true,
+            },
+            {
+              text: "I am sure there has been a misunderstanding, sir — nothing goes missing here.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_33_4",
+      lessonOrder: 4,
+      titleEn: "Closing It So It Stays Closed",
+      titleVi: "Đóng lại sao cho nó ở yên",
+      vocabulary: [
+        {
+          word: "In writing",
+          phonetic: "/ɪn ˈraɪtɪŋ/",
+          definition: "Bằng văn bản — điều đã thoả thuận phải có bản viết",
+          context: "You will have it in writing before you go up, madam.",
+          icon: "✍️",
+        },
+        {
+          word: "A copy for you",
+          phonetic: "/ə ˈkɒpi fə juː/",
+          definition: "Một bản cho khách giữ",
+          context: "A copy for you, sir, and one on the file.",
+          icon: "📄",
+        },
+        {
+          word: "By name and hour",
+          phonetic: "/baɪ ˌneɪm ənd ˈaʊə/",
+          definition: "Ghi rõ tên người và giờ — cách một việc còn sống qua ca sau",
+          context: "I have handed it over by name and hour — Ms Linh, at six.",
+          icon: "🕐",
+        },
+        {
+          word: "Close the case",
+          phonetic: "/ˌkləʊz ðə ˈkeɪs/",
+          definition: "Đóng hồ sơ — chỉ sau khi khách nói là đã ổn",
+          context: "I will not close the case until you tell me it is right, sir.",
+          icon: "✅",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will remember to sort it out for you.",
+          polite:
+            "Let me write this down for you now, madam. You will have a copy before you go up.",
+          rule: "Trí nhớ không phải một cam kết. Bất cứ điều gì đã thoả thuận với khách đều phải ra giấy TRƯỚC KHI khách rời quầy — và khách giữ một bản, vì bản của khách mới là bản khách kiểm được.",
+        },
+        {
+          rude: "I told the evening shift about it.",
+          polite:
+            "I have given it to Ms Linh on the evening shift, sir, at six. The case stays open until you are happy.",
+          rule: "'Tôi đã nói với ca tối' không phải bàn giao — không có tên thì không có ai chịu trách nhiệm. Và hồ sơ chỉ đóng khi KHÁCH nói là đã ổn, không phải khi bạn nghĩ là xong.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "And that extra charge — is it still on my bill?",
+          targetResponse:
+            "The front office is taking the minibar line off now, madam. The rest goes to my Duty Manager before you go up.",
+          helpTip:
+            "Chỉ nói câu này SAU khi đã xin Lễ tân: nó mô tả việc ĐANG xảy ra, không phải việc bạn định xin. Khoản phụ thu còn sống thì lời xin lỗi chết. Đừng nói 'I will check' — nêu AI quyết, rồi cho MỘT MỐC nằm trong ca của bạn. 'Before' /bɪˈfɔː/ — trọng âm rơi vào âm tiết hai.",
+        },
+        {
+          guestPrompt: "And how do I know any of this will actually happen?",
+          targetResponse:
+            "You will have it in writing before you go up, madam — a copy for you and one on the file.",
+          helpTip:
+            "Khách vừa nói thẳng rằng khách không tin lời nói nữa. Đừng hứa thêm bằng lời — đưa ra thứ khách cầm được. Giấy là câu trả lời duy nhất cho câu hỏi này. 'Copy' /ˈkɒpi/ — trọng âm âm tiết đầu, /ɒ/ ngắn.",
+        },
+      ],
+      reading: {
+        text: "CLOSING IT SO IT STAYS CLOSED\nA complaint is not finished when the guest stops talking. It is finished when the guest says it is right.\nEverything agreed goes in writing before the guest leaves the desk. Not later, not by email tonight. A guest who has been let down once will not accept a second promise made only out loud.\nTwo copies. One for the guest, one on the file. The guest's copy is the one that matters, because it is the one they can hold up.\nWrite what was agreed, who agreed it, and when it will happen. An apology letter goes out over a manager's name, not yours. If the guest has left before it is settled, we send a written apology and update the record the same day.\nA letter is not a conversation. Draft it with three things and nothing else: what the guest was promised, what we are doing, and by when. No cause, no department, no colleague's name, and no figure.\nThe cause is not for the file, and it is not for the letter. The figure is the Duty Manager's and it goes on a line they sign. Never write that the hotel was at fault; write what failed.\nIf your shift ends before it is done, hand it over by name and hour. 'I told the evening shift' is not a handover. A job with no name against it belongs to nobody.\nThe recovery case stays open until the guest confirms. You may think it is finished; only they can say so.\nThen follow up once, after it is done, and put a follow-up note in the book. A guest who hears from you when nothing is wrong is a guest who believes you the next time something is.\nAnd thank them. A guest who complained told us instead of telling the internet, and that is a favour.\nAnd the extra charge must go before the guest has to ask twice. A small disputed line inside the front office's limit is different — a minibar water, one laundry item. It goes to the front office and comes off while the guest waits. Anything above that limit, and any refund without a sheet behind it, is the Duty Manager's, and you ask them in the same shift. A charge that survives the apology undoes the apology.",
+        questions: [
+          {
+            q: "Khi nào được đóng hồ sơ khiếu nại?",
+            options: [
+              "Khi việc đã làm xong và quản lý đã ký duyệt",
+              "Khi hết ca, để bàn giao lại cho ca sau xử lý tiếp",
+              "Khi chính khách nói rằng đã ổn",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'You may think it is finished; only they can say so.'",
+          },
+          {
+            q: "Vì sao điều đã thoả thuận phải ra giấy trước khi khách rời quầy?",
+            options: [
+              "Vì khách đã bị thất hứa một lần, nên không nhận lời hứa miệng lần hai",
+              "Vì quy định yêu cầu mọi khiếu nại phải có văn bản kèm theo",
+              "Vì ca sau sẽ không biết phải làm gì nếu không có giấy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who has been let down once will not accept a second promise made only out loud.'",
+          },
+          {
+            q: "Thư xin lỗi đi ra dưới tên ai?",
+            options: [
+              "Tên bạn, vì bạn là người xử lý vụ này",
+              "Tên quản lý — bạn soạn, thư đi dưới tên bà ấy",
+              "Không cần tên ai, chỉ cần tên khách sạn",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'An apology letter goes out over a manager's name, not yours.'",
+          },
+          {
+            q: "Thư xin lỗi viết ba thứ. KHÔNG được viết gì?",
+            options: [
+              "Cái đã hứa với khách",
+              "Mốc thời gian",
+              "Nguyên nhân, tên bộ phận, tên đồng nghiệp và con số",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'No cause, no department, no colleague's name, and no figure.' Con số là của Duty Manager và nằm trên dòng bà ấy ký.",
+          },
+          {
+            q: "Hết ca mà việc chưa xong. Bàn giao thế nào?",
+            options: [
+              "Bàn giao theo tên và giờ",
+              "Nói với ca tối là có việc này",
+              "Để lại một ghi chú ở quầy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''I told the evening shift' is not a handover. A job with no name against it belongs to nobody.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "You'll email me the details, will you? Like last time?",
+          options: [
+            {
+              text: "I will email you tonight, madam, as soon as I am back at my computer.",
+              correct: false,
+            },
+            {
+              text: "Not by email, madam. I will write it here and hand you your copy now.",
+              correct: true,
+            },
+            {
+              text: "I understand your frustration, madam, and I promise this time is different.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. The cake was replaced and the guest seemed pleased. Log it as closed?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Seeming pleased is not saying so. Ask the guest, then close it.",
+              correct: true,
+            },
+            {
+              text: "Yes, log it as closed and add a note that she seemed satisfied.",
+              correct: false,
+            },
+            {
+              text: "Leave it open for a week in case she raises it again with somebody else.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const GR_WEEK_35: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 35,
+  weekTitleEn: "Negotiating Inside a Range",
+  weekTitleVi: "Đàm phán trong khung đã duyệt",
+  reviewWords: [
+    "Policy allows",
+    "The loyalty office decides",
+    "Already yours",
+    "Arrange the transfer myself",
+    "Shall I put that down",
+    "Off the bill",
+    "Not mine to open",
+    "My manager's to give",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_35_1",
+      lessonOrder: 1,
+      titleEn: "Getting the Range First",
+      titleVi: "Xin khung trước khi ngồi xuống",
+      vocabulary: [
+        {
+          word: "What if we",
+          phonetic: "/ˈwɒt ɪf wi/",
+          definition: "Hay là mình…? — mở một hướng khác thay vì đóng cửa",
+          context: "What if we look at the dates instead, sir?",
+          icon: "🔀",
+        },
+        {
+          word: "Before we sit down",
+          phonetic: "/bɪˌfɔː wi ˈsɪt daʊn/",
+          definition: "Trước khi ngồi vào bàn — đúng thời điểm phải xin khung",
+          context: "Before we sit down with him, may I know the range?",
+          icon: "⏱️",
+        },
+        {
+          word: "The range",
+          phonetic: "/ðə ˈreɪndʒ/",
+          definition:
+            "Khung quản lý đã duyệt — bạn làm việc BÊN TRONG nó, và không nói nó ra với khách",
+          context: "The range is my manager's, Nam, and she set it this morning.",
+          icon: "📐",
+        },
+        {
+          word: "What I may offer",
+          phonetic: "/wɒt aɪ meɪ ˈɒfə/",
+          definition: "Những gì tôi được phép đưa ra — hỏi trước, không đoán",
+          context: "She told me what I may offer, and I wrote it down before I came down.",
+          icon: "✅",
+        },
+        {
+          word: "Outside what I was given",
+          phonetic: "/aʊtˌsaɪd wɒt aɪ wəz ˈɡɪvn/",
+          definition: "Ngoài khung được giao — nói ra ngay tại chỗ, rồi mang lên quản lý",
+          context: "That is outside what I was given, madam.",
+          icon: "🚧",
+        },
+      ],
+      grammar: [
+        {
+          rude: "No. We cannot do that price.",
+          polite: "What if we look at the dates instead, sir? That part I can do.",
+          rule: "'What if we…?' mở ra một hướng khác thay vì đóng cửa. Đóng bằng 'no' thì việc duy nhất khách còn làm được là đòi gặp quản lý. Nhưng chỉ mở hướng bạn THẬT SỰ đi được — 'that part I can do' là một lời hứa, và tuần 33 đã dạy giá của một lời hứa không giữ được.",
+        },
+        {
+          rude: "I will see how much I can give you.",
+          polite: "Before we sit down, sir, may I check with my manager what I may offer?",
+          rule: "Xin khung TRƯỚC, không xin giữa chừng. Đứng trước mặt khách mà gọi điện xin phép là cho khách nghe thấy bạn không có quyền — và ai nghe thấy điều đó cũng sẽ đòi gặp người có quyền. Tuần 33 dạy nói mình đang đứng ở tầng nào; tuần này dạy BIẾT tầng đó trước khi mở miệng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Your best rate is still too high for us.",
+          targetResponse:
+            "I understand, sir. What if we look at the dates instead? That part I can do today.",
+          helpTip:
+            "Đừng đáp một con số bằng một con số — tuần 33 cấm nêu con số và tuần này không gỡ lệnh đó. Đổi TRỤC: khách đang nói về giá, bạn mở sang ngày. Và chỉ mở sang thứ bạn thật sự chuyển được. 'Instead' /ɪnˈsted/ — trọng âm ở âm tiết hai, đừng đọc thành /ˈɪnsted/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. Mr Pham wants to talk about his bill at four. Just go and see him.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Before we sit down, I need a range. Money off a bill is my Duty Manager's to set.",
+          helpTip:
+            "Đồng nghiệp đang đẩy bạn vào bàn đàm phán tay không. Từ chối đúng cách không phải là từ chối gặp khách, mà là từ chối gặp khách KHI CHƯA CÓ KHUNG — bốn giờ thì vẫn còn kịp đi hỏi. 'Range' /reɪndʒ/ — /eɪ/ là nguyên âm đôi, và đuôi /dʒ/ phải bật ra.",
+        },
+      ],
+      game: [
+        {
+          prompt: "We were quoted less by the hotel down the road.",
+          options: [
+            {
+              text: "I am afraid that really is the best rate I am able to do for you today, sir.",
+              correct: false,
+            },
+            {
+              text: "What if we look at the room type instead, sir? That one I can put to my manager.",
+              correct: true,
+            },
+            {
+              text: "Other hotels set their own prices, sir, and I would rather not comment on theirs.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just offer him something and close it — he is getting loud.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Not without the range. If he is shouting at you, that is security's first.",
+              correct: true,
+            },
+            {
+              text: "Give him whatever stops the noise and we can sort the paperwork out afterwards.",
+              correct: false,
+            },
+            {
+              text: "Tell him the manager is busy and he will have to come back tomorrow morning.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE RANGE COMES FIRST\nA negotiation is not a conversation you win. It is a conversation you were sent into with something to give.\nWhat you were given is called the range. It has a top and it has a bottom, and your manager sets both before you sit down.\nGetting it is your job, not hers. You go to her with the four things from week thirty-three — what was promised, who promised it, when, and what happened instead. Then you ask three questions.\nWhat may I offer. What may I not offer. Who signs it.\nWrite the answers down. A range you are carrying in your head at four o'clock is a range you will stretch by half past.\nThe range is yours to work inside, and it is never yours to say out loud. Week thirty-three holds here too: you do not quote a figure. You say there is room, and you say where.\n'What if we look at the dates instead?' moves the talk onto ground you were given. 'No' moves it upstairs, to somebody who was not in the room.\nSo open a door rather than close one. But open only doors you can walk through: name nothing you have not been given.\nSome things stay outside the range whatever your manager says, because they were never hers to give.\nWhich room the guest actually moves into is the front office's, and so is a late check-out the house does not owe.\nTier, points and tier lounge access are the loyalty office's, on every day of the year.\nMoney off the bill, above the front office's own small limit, is the Duty Manager's.\nAn upgrade is the one that splits: you put it to your manager, she says yes, and the front office says which room.\nWeek thirty-three named all of them, and a negotiation does not rename them.\nThe levels here are this house's. Ask your Guest Relations Manager for your own limit, and the front office's, in figures, in your first week.\nAnd when a guest asks for something outside what you were given, say so in the room.\nIf it is your manager's to give, say so and say when.\n'That is outside what I was given, madam, and I will put it to my manager' is a real answer.\nIf it was never hers — the tier, the room, the money off the bill — name the desk that owns it instead.\nGoing quiet and hoping is not an answer either way.\nYou will be back within the hour, with her answer or with where it has got to.\nSay the hour, and make it your hour, not hers.",
+        questions: [
+          {
+            q: "Khung (the range) do ai đặt, và đặt lúc nào?",
+            options: [
+              "Bạn tự đặt trong lúc nói chuyện, dựa vào phản ứng của khách",
+              "Quản lý đặt, trước khi bạn ngồi vào bàn",
+              "Khách và bạn cùng thoả thuận ra trong chính buổi nói chuyện đó",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'It has a top and it has a bottom, and your manager sets both before you sit down.' Xin khung là việc của bạn; đặt khung là việc của quản lý.",
+          },
+          {
+            q: "Vì sao phải ghi khung ra giấy?",
+            options: [
+              "Vì quản lý cần chữ ký của bạn xác nhận đã nhận khung",
+              "Vì khách có quyền đòi xem tờ giấy đó khi cần",
+              "Vì khung nhớ trong đầu lúc bốn giờ thì bốn rưỡi đã nới ra",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A range you are carrying in your head at four o'clock is a range you will stretch by half past.'",
+          },
+          {
+            q: "Khách chê giá cao. Câu nào mở đúng một hướng đi tiếp?",
+            options: [
+              "'No' — nói thẳng là không được, cho gọn và dứt khoát",
+              "'What if we look at the dates instead?' — nếu ngày là thứ bạn chuyển được",
+              "Nêu luôn con số trần mà quản lý vừa duyệt cho bạn sáng nay",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'open only doors you can walk through: name nothing you have not been given.' Và tuần 33 vẫn nguyên hiệu lực: không nêu con số.",
+          },
+          {
+            q: "Những thứ nào nằm ngoài khung, dù quản lý có nói gì?",
+            options: [
+              "Lời xin lỗi, mốc thời gian phản hồi, và việc ghi thoả thuận ra giấy trước khi khách rời quầy",
+              "Phòng được xếp vào, hạng thẻ cùng điểm và lounge theo hạng, và tiền xoá khỏi hoá đơn",
+              "Bữa sáng, phích cà phê ở quầy, và một lời mời khách quay lại vào mùa sau",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Which room the guest actually moves into is the front office's… Tier, points and tier lounge access are the loyalty office's… Money off the bill, above the front office's own small limit, is the Duty Manager's.' Đàm phán đổi được điều kiện, không đổi được ai sở hữu cái gì.",
+          },
+          {
+            q: "Khách đòi một thứ ngoài khung. Làm gì ngay tại chỗ?",
+            options: [
+              "Im lặng cho qua rồi tính sau, đừng làm hỏng không khí của buổi nói chuyện đang tốt",
+              "Nói thẳng là ngoài khung, nói rõ nó thuộc quyền ai, rồi hẹn giờ quay lại",
+              "Nhận lời trước cho êm, rồi về xin quản lý duyệt lại sau",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'If it was never hers — the tier, the room, the money off the bill — name the desk that owns it instead.' và 'Say the hour, and make it your hour, not hers.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_2",
+      lessonOrder: 2,
+      titleEn: "Nothing Moves On Its Own",
+      titleVi: "Không nhượng bộ nào đi một mình",
+      vocabulary: [
+        {
+          word: "In exchange for",
+          phonetic: "/ɪn ɪksˈtʃeɪndʒ fə/",
+          definition: "Đổi lại — gắn phần bạn đưa ra với phần khách đưa lại",
+          context: "In exchange for the longer stay, I can ask about the transfer.",
+          icon: "🔁",
+        },
+        {
+          word: "If you can confirm today",
+          phonetic: "/ɪf ju kən kənˈfɜːm təˈdeɪ/",
+          definition: "Nếu anh/chị xác nhận được hôm nay — một điều kiện ghi xuống được",
+          context: "If you can confirm today, I will put it to my manager.",
+          icon: "📅",
+        },
+        {
+          word: "On one condition",
+          phonetic: "/ɒn ˌwʌn kənˈdɪʃn/",
+          definition: "Với một điều kiện — nói rõ có điều kiện trước khi nói điều kiện là gì",
+          context: "On one condition, sir: the dates cannot move.",
+          icon: "☝️",
+        },
+        {
+          word: "That part I can do",
+          phonetic: "/ðæt ˌpɑːt aɪ kən ˈduː/",
+          definition: "Phần đó thì tôi làm được — tách phần làm được ra khỏi phần không",
+          context: "That part I can do today, madam.",
+          icon: "🧩",
+        },
+        {
+          word: "Provided the dates hold",
+          phonetic: "/prəˈvaɪdɪd ðə ˈdeɪts həʊld/",
+          definition: "Miễn là ngày giữ nguyên — nhắc lại điều kiện bằng chính lời khách",
+          context: "Provided the dates hold, I can ask about the fee.",
+          icon: "🔒",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Of course, sir, I will arrange the transfer for you.",
+          polite: "In exchange for the longer stay, I can ask about the transfer, sir.",
+          rule: "Một nhượng bộ đi một mình là một nhượng bộ sẽ bị đòi thêm. Gắn mỗi thứ bạn đưa ra với một thứ khách đưa lại — và thứ khách đưa lại phải là thứ họ trao được thật: ngày ở, số đêm, một xác nhận hôm nay. 'Thiện chí' không phải một điều kiện.",
+        },
+        {
+          rude: "Confirm today and I will get it done for you.",
+          polite: "If you can confirm today, madam, I will put it to my manager before four.",
+          rule: "Câu điều kiện loại 1: điều kiện đứng trước, việc của bạn đứng sau — và việc của bạn là ĐỀ XUẤT, không phải kết quả. 'I will put it to my manager' thì hứa được; 'I will get it for you' thì không, vì tuần 33 đã đặt chữ ký ở chỗ khác.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Fine, I will take the two extra nights — but I want the airport transfer thrown in.",
+          targetResponse:
+            "In exchange for the two extra nights, I can ask my Duty Manager about the transfer, sir.",
+          helpTip:
+            "Khách vừa xin thêm một thứ. Đừng gật, đừng lắc — GẮN nó với thứ khách vừa đưa ra. Và chú ý động từ — bạn XIN HỎI về xe, bạn không SẮP XẾP xe. Xe khách tự trả thì concierge desk đặt — tuần 32 đã dạy bạn XIN họ đặt hộ chứ không tự đặt. Xe được thêm vào trong đàm phán thì khác — đó là tiền trả cho bên thứ ba, tức việc của Duty Manager. 'Exchange' /ɪksˈtʃeɪndʒ/ — trọng âm ở âm tiết hai.",
+        },
+        {
+          guestPrompt: "I can probably stay through to Sunday, if you can help me with the fee.",
+          targetResponse:
+            "Provided you can stay through to Sunday, madam, I can put the cancellation fee to my Duty Manager.",
+          helpTip:
+            "Khách vừa đưa điều kiện — nhận nó bằng 'provided', bằng chính chữ của họ, rồi mới nói phần của mình. Chữ probably của khách chưa phải một cam kết, nên phần bạn đưa lại cũng phải mềm tương ứng. 'Provided' /prəˈvaɪdɪd/ — đuôi -ed sau /d/ đọc thành /ɪd/, thành ba âm tiết.",
+        },
+      ],
+      game: [
+        {
+          prompt: "We will take the two extra nights. Could you throw in breakfast as well?",
+          options: [
+            {
+              text: "Of course, madam — breakfast is included from tomorrow for the rest of your stay.",
+              correct: false,
+            },
+            {
+              text: "In exchange for the extra nights, madam, I will put breakfast to my manager.",
+              correct: true,
+            },
+            {
+              text: "Breakfast is not something I am able to discuss with you at this desk, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. She has agreed to the dates. Shall I write in the free dinner too?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — she gave us the dates, so the dinner is the least we can do now.",
+              correct: false,
+            },
+            {
+              text: "Write it in, and let the Duty Manager take it out again if she disagrees.",
+              correct: false,
+            },
+            {
+              text: "On one condition — the dinner goes to the manager before it goes in writing.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "WHAT YOU GIVE, AND WHAT COMES BACK\nEvery concession has two halves. A concession with only one half is not a negotiation. It is a gift, and a gift teaches the guest to ask again.\nSo say both halves in one breath. 'In exchange for the longer stay, I can ask about the transfer.' The guest hears the two together, and neither half stands alone.\nWhat comes back must be something the guest can actually hand over. Dates. Nights. A confirmation today. A signature this afternoon.\nGoodwill is not a condition. 'If you are happy with that' gives you nothing you can write down, and nothing you can carry back to your manager.\nWatch the verb on your own half. 'I can ask about the transfer' is a proposal. 'I will arrange the transfer' is a promise, and week thirty-three showed you whose signature that needs.\nThe difference is one verb. A guest who is told 'arrange' and then hears 'my manager said no' has been let down twice by the same person.\nWeek twenty-five taught 'I will arrange the transfer myself'. That was a promise you could keep while the guest was paying for the car.\nThe moment the house pays for the car, that is a payment to a third party, and week thirty-three put those with the Duty Manager.\nTake the guest's condition in their own words before you answer. 'Provided the dates hold' repeats back exactly what they offered, so nobody remembers it differently at six o'clock.\nAnd when the guest's half is soft, keep your half soft to match. They said 'probably Sunday'. So you say 'I can put it to my manager', not 'it is done'.\nMatch soft with soft, and firm with firm. That is the whole of it.\nOne thing never trades, whatever else moves. You do not trade away something the guest was already owed. Restoring what should have happened is not a concession, and week thirty-three said not to count it.\nCounting it twice is how a recovery turns into a second complaint.",
+        questions: [
+          {
+            q: "Vì sao một nhượng bộ không kèm điều kiện lại nguy hiểm?",
+            options: [
+              "Vì khách sạn mất doanh thu ngay trong chính lần đưa ra đầu tiên đó",
+              "Vì quản lý sẽ không duyệt bất cứ thứ gì cho không",
+              "Vì nó dạy khách rằng cứ đòi là được, và lần sau khách đòi tiếp",
+            ],
+            correct: 2,
+            explanation: "Bài đọc: 'It is a gift, and a gift teaches the guest to ask again.'",
+          },
+          {
+            q: "Thứ khách đưa lại phải như thế nào?",
+            options: [
+              "Phải là thứ khách trao được thật: ngày, số đêm, một xác nhận hôm nay",
+              "Phải là một cam kết bằng lời rằng khách sẽ quay lại vào mùa cao điểm sang năm",
+              "Phải là thiện chí và sự hài lòng của khách với phương án",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Goodwill is not a condition.' Điều kiện phải ghi xuống được và mang về cho quản lý được.",
+          },
+          {
+            q: "'I can ask about the transfer' khác 'I will arrange the transfer' ở chỗ nào?",
+            options: [
+              "Câu đầu nghe lịch sự và trang trọng hơn, còn về nghĩa thì hai câu như nhau",
+              "Câu đầu là đề xuất; câu sau là lời hứa cần chữ ký của người khác",
+              "Câu sau dùng cho khách quen, câu đầu dùng cho khách mới",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'I can ask about the transfer' là đề xuất; 'I will arrange the transfer' là lời hứa.",
+          },
+          {
+            q: "Khách nói 'probably Sunday'. Phần của bạn nên chắc tới đâu?",
+            options: [
+              "Chắc hẳn — chốt luôn ngay tại bàn để khách không còn cơ hội đổi ý vào phút chót",
+              "Không trả lời gì cho tới khi khách đổi 'probably' thành 'yes'",
+              "Mềm tương ứng — 'I can put it to my manager', không phải 'it is done'",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Match soft with soft, and firm with firm. That is the whole of it.'",
+          },
+          {
+            q: "Thứ duy nhất không bao giờ đem ra đổi là gì?",
+            options: [
+              "Một bữa tối mà quản lý đã duyệt sẵn và đã nằm trong khung từ sáng nay",
+              "Thứ khách vốn đã được hưởng — trả lại không phải là nhượng bộ",
+              "Quyền được gặp Duty Manager của khách khi họ yêu cầu",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'You do not trade away something the guest was already owed.' Tuần 33: trả lại thứ đáng ra phải có thì không đếm là bồi thường.",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_3",
+      lessonOrder: 3,
+      titleEn: "However — The Part That Does Not Move",
+      titleVi: "'However' — phần không dời được",
+      vocabulary: [
+        {
+          word: "However",
+          phonetic: "/haʊˈevə/",
+          definition: "Tuy nhiên — nối hai vế ngược nhau, trang trọng hơn 'but'",
+          context: "I can ask about the room; however, the rate cannot change.",
+          icon: "↔️",
+        },
+        {
+          word: "Although",
+          phonetic: "/ɔːlˈðəʊ/",
+          definition: "Mặc dù — đặt cái khó lên trước, cái làm được xuống sau",
+          context: "Although the dates are tight, I can put it to my manager.",
+          icon: "⚖️",
+        },
+        {
+          word: "The part I cannot move",
+          phonetic: "/ðə ˌpɑːt aɪ ˌkænɒt ˈmuːv/",
+          definition: "Phần tôi không dời được — chỉ nêu MỘT phần, đừng nêu ba",
+          context: "The rate is the part I cannot move, madam.",
+          icon: "🧱",
+        },
+        {
+          word: "Not mine to trade",
+          phonetic: "/ˌnɒt ˈmaɪn tə ˈtreɪd/",
+          definition: "Không phải của tôi để đem đổi — cửa vẫn mở, chỉ không phải cửa của bạn",
+          context: "Your tier is not mine to trade, sir.",
+          icon: "🚪",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The rate is fixed, but I will see what I can do about the check-out.",
+          polite:
+            "I can ask the front office about the late check-out; however, the rate cannot change, sir.",
+          rule: "'However' nối hai vế ngược nhau trang trọng hơn 'but', và nó buộc bạn nói vế CÓ trước. Nói vế không được trước thì khách đã đứng dậy trước khi nghe hết câu. 'However' đứng sau dấu chấm phẩy hoặc mở một câu mới, rồi theo sau là dấu phẩy hoặc dấu gạch ngang.",
+        },
+        {
+          rude: "Although the dates are difficult, but we will try our best for you.",
+          polite: "Although the dates are tight, madam, I can put the suite to my manager.",
+          rule: "Mệnh đề nhượng bộ 'Although…' đặt cái khó lên trước rồi mới đưa ra cái làm được — mệnh đề nhượng bộ đứng trước mệnh đề chính, bậc trên của trần hai mệnh đề ở P4. Và đừng dùng 'although' rồi lại thêm 'but' ở vế sau: tiếng Việt cho phép 'tuy… nhưng…', tiếng Anh chỉ được một.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "So you can do the suite, the transfer and the rate?",
+          targetResponse:
+            "I can put the suite to my manager; however, the rate cannot change, sir.",
+          helpTip:
+            "Khách vừa gộp ba thứ vào một câu để lấy về một chữ đồng ý. Tách ra: nói phần LÀM ĐƯỢC trước, rồi 'however', rồi đúng MỘT phần không dời. Đừng liệt kê cả ba phần không được — một lời từ chối rõ dễ nghe hơn ba. 'However' /haʊˈevə/ — trọng âm ở giữa, và ngắt nhẹ sau nó.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. He is asking for his tier to be restored. Can we just do it?",
+          speakerRole: "colleague",
+          targetResponse:
+            "His tier is not mine to trade. That one is the loyalty office's, and always was.",
+          helpTip:
+            "Đồng nghiệp đang hỏi bạn một câu mà bạn không có quyền trả lời. Trả lời bằng QUYỀN SỞ HỮU, không bằng cảm tính: tuần 33 đã đặt hạng thẻ và điểm ở loyalty office, và một cuộc đàm phán không dời được nó. 'Trade' /treɪd/ — /eɪ/ là nguyên âm đôi, đừng đọc thành /tred/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Everything we asked for, then? Yes or no.",
+          options: [
+            {
+              text: "Yes to all of it, madam — I will confirm the whole thing in writing for you tonight.",
+              correct: false,
+            },
+            {
+              text: "The suite I can put to my manager; however, the rate is the part I cannot move.",
+              correct: true,
+            },
+            {
+              text: "I am afraid the answer to all of that is going to have to be no, madam.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just say although the rate is fixed but we will try our best.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Not both — 'although' already carries the 'but'. Say one or the other.",
+              correct: true,
+            },
+            {
+              text: "That sounds right to me: it softens the rate and still leaves us room.",
+              correct: false,
+            },
+            {
+              text: "Say it exactly like that — he will hear that we are trying for him.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE HALF THAT MOVES, AND THE HALF THAT DOES NOT\nA guest in a negotiation will gather everything into one question and ask for one word back. 'So you can do all of that?' There is no honest yes.\nAnswer in two halves, and put the half that moves first. 'I can put the suite to my manager; however, the rate cannot change.'\nThe order matters more than the words. A guest who hears the refusal first stops listening, and the part you could have given dies in their ear.\n'However' is the hinge. It is more formal than 'but', and it belongs in this kind of conversation.\nIt opens a new clause, with a comma or a dash after it: 'However — what if we look at the dates?'\n'Although' does the same work from the front. Put the difficulty first and the offer last, which is where a guest remembers it.\nA difficulty is not a refusal. 'The dates are tight' is a difficulty, and it may go first. 'The rate cannot change' is a refusal, and it goes second.\n'Although the dates are tight, I can put the suite to my manager.'\nOne warning for us. Vietnamese lets you say tuy and nhưng in the same sentence. English does not. 'Although the rate is fixed, but we will try' is one word too many, and it is the commonest sentence in this room.\nPick one hinge and stop.\nNow the harder half. Some things are not fixed by your manager at all, because they were never hers.\nWhich room the guest moves into is the front office's. Tier, points and tier lounge access are the loyalty office's.\nA refund the written house programme does not already cover is the Duty Manager's.\nAn upgrade you put to your manager; she says yes, and the front office says which room.\nSay which, and say it plainly. 'Your tier is not mine to trade' tells the guest who owns it, and it does not pretend the door is shut. It is open. It is just not your door.\nAnd say only one refusal at a time. Three refusals in one breath sound like a policy. One sounds like a person.",
+        questions: [
+          {
+            q: "Khách gộp mọi thứ vào một câu hỏi. Trả lời thế nào?",
+            options: [
+              "Trả lời một chữ 'yes' rồi nêu các điều kiện ở câu tiếp theo",
+              "Hai vế: vế LÀM ĐƯỢC trước, rồi 'however', rồi vế không dời",
+              "Nói hết các phần không làm được trước cho khách khỏi hy vọng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'put the half that moves first' — và 'A guest who hears the refusal first stops listening.'",
+          },
+          {
+            q: "Vì sao thứ tự hai vế quan trọng hơn từ ngữ?",
+            options: [
+              "Vì tiếng Anh bắt buộc mệnh đề khẳng định phải đứng trước",
+              "Vì nghe vế từ chối trước thì khách thôi nghe, và vế cho được cũng mất theo",
+              "Vì quản lý chỉ duyệt biên bản viết đúng theo thứ tự đó",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'the part you could have given dies in their ear.'",
+          },
+          {
+            q: "Lỗi tiếng Anh mà người Việt hay mắc nhất trong bài này là gì?",
+            options: [
+              "Dùng 'although' và 'but' trong cùng một câu",
+              "Đặt 'however' ở cuối câu thay vì đầu câu",
+              "Quên dấu phẩy sau 'although' khi nó mở đầu câu",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Vietnamese lets you say tuy and nhưng in the same sentence. English does not.' Chọn MỘT bản lề rồi dừng.",
+          },
+          {
+            q: "'Your tier is not mine to trade' nói với khách điều gì?",
+            options: [
+              "Rằng cửa đã đóng và khách không nên hỏi thêm nữa",
+              "Rằng cửa vẫn mở, chỉ là nó không phải cửa của bạn",
+              "Rằng hạng thẻ của khách đã hết hạn từ trước rồi",
+            ],
+            correct: 1,
+            explanation: "Bài đọc: 'It is open. It is just not your door.'",
+          },
+          {
+            q: "Vì sao chỉ nói MỘT lời từ chối một lúc?",
+            options: [
+              "Vì mỗi lời từ chối phải ghi thành một dòng riêng trong complaint log",
+              "Vì ba lời từ chối liền nghe như một chính sách; một lời nghe như một con người",
+              "Vì khách chỉ nhớ được đúng một thông tin trong mỗi lượt nói",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Three refusals in one breath sound like a policy. One sounds like a person.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_35_4",
+      lessonOrder: 4,
+      titleEn: "Closing It, and Writing It Down",
+      titleVi: "Chốt, và ghi lại ngay tại bàn",
+      vocabulary: [
+        {
+          word: "Shall we agree",
+          phonetic: "/ʃəl wi əˈɡriː/",
+          definition: "Ta chốt thế nhé — mời khách kết thúc cùng phía với bạn",
+          context: "Shall we agree on those two, sir? Then I will write them down.",
+          icon: "🤝",
+        },
+        {
+          word: "Once you agree",
+          phonetic: "/wʌns ju əˈɡriː/",
+          definition: "Khi anh/chị đồng ý — nói rõ điều gì kích hoạt việc của bạn",
+          context: "Once you agree, I will put it to my manager before four.",
+          icon: "▶️",
+        },
+        {
+          word: "Before you leave the desk",
+          phonetic: "/bɪˌfɔː ju ˈliːv ðə ˈdesk/",
+          definition: "Trước khi anh/chị rời quầy — mốc phải có giấy trắng mực đen",
+          context: "You will have it in writing before you leave the desk.",
+          icon: "📄",
+        },
+        {
+          word: "Back to my manager",
+          phonetic: "/ˌbæk tə maɪ ˈmænɪdʒə/",
+          definition: "Quay lại chỗ quản lý — dành cho thứ xin thêm ở phút chót",
+          context: "Anything above the range goes back to my manager, madam.",
+          icon: "↩️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Right, that is everything agreed then, sir.",
+          polite: "Shall we agree on those two, sir? Then I will write them down now.",
+          rule: "'Shall we…?' mời khách chốt CÙNG PHÍA với bạn, khác hẳn 'Do you accept?' — câu kia đặt hai người ở hai đầu bàn. Và chỉ chốt đúng phần đã thoả thuận: đọc lại hai thứ, đừng gộp cả thứ còn treo vào cho gọn.",
+        },
+        {
+          rude: "Say yes now and I will get my manager to approve it later.",
+          polite: "Once you agree, madam, I will put it to my manager before six.",
+          rule: "'Once you agree' nói rõ điều gì kích hoạt việc của bạn — khách biết quả bóng đang ở chân ai. Và luôn kèm một MỐC: tuần 32 lẫn tuần 33 đều đã dạy rằng chuyển việc mà không có giờ thì mới chỉ là chỉ tay.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "All right. I think we can work with that.",
+          targetResponse:
+            "Shall we agree on those two, sir? You will have it in writing before you leave.",
+          helpTip:
+            "Đừng để một thoả thuận sống bằng miệng: tuần 33 đã dạy rằng khách đã bị lỡ hẹn một lần thì không nhận lời hứa miệng thứ hai. Chốt xong là viết ngay tại bàn, hai bản, khách giữ một. Và chỉ chốt hai thứ đã thoả thuận — phần còn treo thì nói rõ là còn treo. 'Agree' /əˈɡriː/ — trọng âm ở âm tiết hai.",
+        },
+        {
+          guestPrompt: "And one more thing — I want the spa included too.",
+          targetResponse:
+            "That goes back to my manager, madam. I will come back to you before six.",
+          helpTip:
+            "Câu 'một điều nữa' ở phút chót là phép thử cổ điển, và nó đến ĐÚNG lúc bạn đang muốn xong việc. Đừng nới khung ra để được về sớm. Nói nó thuộc về ai, rồi nói mấy giờ BẠN quay lại — không phải mấy giờ quản lý trả lời, vì giờ của bà ấy không phải của bạn để hứa. 'Manager' /ˈmænɪdʒə/ — đuôi -er là schwa /ə/, đừng kéo thành /ɜː/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Yes, that works for me.",
+          options: [
+            {
+              text: "Wonderful, madam. I will send you an email tonight confirming everything we discussed.",
+              correct: false,
+            },
+            {
+              text: "Shall we agree on those two, madam? I will write them down now.",
+              correct: true,
+            },
+            {
+              text: "Thank you, madam. I will let the front office know and they will take it on.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. He signed. Shall I close the recovery case?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — he signed, so there is nothing further for us to do on it now.",
+              correct: false,
+            },
+            {
+              text: "Close it tomorrow, after the manager has countersigned the sheet he was given.",
+              correct: false,
+            },
+            {
+              text: "Not yet. He has not told us it is right, and the spa is still open.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "CLOSING WITHOUT LOSING IT\nA negotiation that ends in the air ends twice. Once at the desk, and again on the telephone tomorrow, from the beginning.\nSo close it out loud. 'Shall we agree on those two?' invites the guest to finish it with you, on the same side of the desk. 'Do you accept?' puts you on opposite sides, and there is nothing to gain there.\nClose only what is actually agreed. Name the two things. Leave the third where it is, and say out loud that it is still open.\nThen write it before they stand up. Everything agreed goes on paper at the desk, two copies, and the guest keeps one. Week thirty-three set that rule for complaints, and it holds harder here, because a negotiation has more moving parts than a complaint does.\nWrite what was agreed, who agreed it, and when it happens. Counts and times go on the paper: two nights, a six o'clock dinner.\nNothing goes on that paper that the desk which owns it has not agreed to first.\nNo price. A price goes on the line a manager signs, and above the front office's own limit that manager is the Duty Manager.\nExpect the last request. It arrives after the handshake, when you want to be finished, and it is always small. 'And the spa as well?'\nThis is the moment ranges get stretched. Do not stretch it to get home. 'That goes back to my manager, madam, and I will come back to you before six' costs you nothing and keeps the paper true.\nSay the hour every time. A promise with no hour on it is the promise week thirty-three spent four lessons taking away from you.\nAnd the case stays open until the guest says it is closed. Not when they sign. Not when the manager answers. When the guest says so.\nThen follow up once, after it is done. A guest who hears from you when nothing is wrong is a guest who negotiates with you and not with the internet.",
+        questions: [
+          {
+            q: "'Shall we agree on those two?' khác 'Do you accept?' ở chỗ nào?",
+            options: [
+              "Câu đầu trang trọng hơn nên hợp với khách VIP hơn",
+              "Câu đầu đặt hai người cùng một phía; câu sau đặt hai bên hai đầu bàn",
+              "Câu đầu dùng khi quản lý đã duyệt, câu sau dùng khi chưa duyệt",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'invites the guest to finish it with you, on the same side of the desk.'",
+          },
+          {
+            q: "Chốt xong thì viết lúc nào?",
+            options: [
+              "Ngay tại bàn, trước khi khách đứng dậy, hai bản, khách giữ một",
+              "Tối nay bằng email, để có dấu thời gian rõ ràng hơn",
+              "Sau khi quản lý đã duyệt xong toàn bộ các phần còn treo",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Everything agreed goes on paper at the desk, two copies, and the guest keeps one.'",
+          },
+          {
+            q: "Tờ giấy đó KHÔNG được có thứ gì?",
+            options: ["Tên của người đã đồng ý", "Một mức giá", "Số đêm và giờ trả phòng"],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Counts and times go on the paper… No price.' Số đêm và giờ thì ghi; giá thì nằm trên dòng có chữ ký quản lý.",
+          },
+          {
+            q: "Khách xin thêm một thứ sau khi đã bắt tay. Xử lý ra sao?",
+            options: [
+              "Đồng ý cho nhanh, vì phần đó nhỏ và buổi làm việc đã tốt đẹp",
+              "Nói rằng đã chốt xong rồi và không nhận thêm yêu cầu nào nữa",
+              "Nói nó thuộc về quản lý, và nói rõ mấy giờ sẽ có câu trả lời",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'This is the moment ranges get stretched. Do not stretch it to get home.'",
+          },
+          {
+            q: "Hồ sơ đóng lại khi nào?",
+            options: [
+              "Khi khách ký vào bản thoả thuận ngay tại bàn",
+              "Khi quản lý trả lời xong phần còn treo lại",
+              "Khi chính khách nói rằng đã xong",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Not when they sign. Not when the manager answers. When the guest says so.'",
+          },
+        ],
+      },
+    },
+  ],
+};
+
+const GR_WEEK_36: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 36,
+  weekTitleEn: "Where Your Guests Are When It Happens",
+  weekTitleVi: "Khách của bạn đang ở đâu khi sự cố xảy ra",
+  reviewWords: [
+    "Four things",
+    "Guest privacy rule",
+    "I would rather find out",
+    "Speak to the duty manager",
+    "Complaint log",
+    "Follow-up note",
+    "Confidential",
+    "Urgent",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_36_1",
+      lessonOrder: 1,
+      titleEn: "The List Only You Have",
+      titleVi: "Danh sách chỉ mình bạn có",
+      vocabulary: [
+        {
+          word: "Not on the room list",
+          phonetic: "/ˌnɒt ɒn ðə ˈruːm lɪst/",
+          definition:
+            "Không nằm trong danh sách phòng — có người ở ngoài nhà (tour, thuyền), có người vẫn trong nhà mà không ở phòng (ballroom, spa)",
+          context: "The Duty Manager needs to know who is not on the room list.",
+          icon: "📋",
+        },
+        {
+          word: "On the tour",
+          phonetic: "/ˌɒn ðə ˈtʊə/",
+          definition: "Đang đi tour — vị trí của khách khi họ không ở phòng",
+          context: "Nine of our guests are on the tour until four, sir.",
+          icon: "🚌",
+        },
+        {
+          word: "Which floor and whereabouts",
+          phonetic: "/wɪtʃ ˈflɔː ənd ˌweərəˈbaʊts/",
+          definition: "Tầng mấy và chỗ nào trên tầng đó — hai dữ kiện, không phải một",
+          context: "Which floor and whereabouts on it, madam?",
+          icon: "📍",
+        },
+        {
+          word: "I wrote it down",
+          phonetic: "/aɪ ˌrəʊt ɪt ˈdaʊn/",
+          definition: "Tôi có ghi lại — nguồn của một dữ kiện, không phải trí nhớ",
+          context: "I wrote it down at nine, sir, when they left.",
+          icon: "🖊️",
+        },
+        {
+          word: "What I saw myself",
+          phonetic: "/ˌwɒt aɪ ˈsɔː maɪˈself/",
+          definition: "Điều chính tôi nhìn thấy — tách khỏi điều nghe kể",
+          context: "That is what I saw myself, sir. The rest I was told.",
+          icon: "👁️",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I think about nine of them went out this morning.",
+          polite: "Nine guests are on the tour, sir. I wrote it down at nine when they left.",
+          rule: "Trong khủng hoảng, mọi con số phải có NGUỒN. 'I think' và 'about' biến một dữ kiện thành phỏng đoán, và đội ứng phó sẽ đi tìm người theo con số đó. Tuần 31 đã dạy: 'I would rather find out than guess' — ở đây thì không kịp đi tìm, nên hãy nói con số bạn đã GHI, và nói bạn ghi lúc mấy giờ.",
+        },
+        {
+          rude: "Somebody said there is smoke upstairs, madam. Are you quite sure?",
+          polite: "Which floor and whereabouts on it, madam? I am calling security now.",
+          rule: "Một tầng là chưa đủ để tìm ra nguồn khói trong ba phút. Hỏi HAI dữ kiện — tầng, và chỗ nào trên tầng đó — rồi dừng. Đừng hỏi câu thứ ba: bạn không phải người điều tra, bạn là người chuyển tin.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Duty Manager here. The alarm is real. What have you got?",
+          speakerRole: "manager",
+          targetResponse:
+            "Nine on the tour, twelve in the ballroom, two on the boat, one in the spa, sir.",
+          helpTip:
+            "Quản lý không hỏi bạn về toà nhà — Lễ tân có danh sách phòng. Cái chỉ bạn có là danh sách người ĐANG Ở NGOÀI hoặc đang ở chỗ danh sách phòng không phủ tới: tour, sự kiện, thuyền, spa. Liệt kê hết các nhóm rồi dừng — bỏ nhóm nào là nhóm đó không có ai đi tìm. 'Ballroom' /ˈbɔːlruːm/ — /ɔː/ dài, đừng thành /ˈbɒlrʊm/.",
+        },
+        {
+          guestPrompt: "There's smoke coming out somewhere upstairs — I saw it from the garden.",
+          targetResponse: "Which floor and whereabouts on it, madam? I am calling security now.",
+          helpTip:
+            "Hỏi đúng hai dữ kiện rồi dừng, và nói ngay rằng bạn đang chuyển tin — khách cần biết việc đã bắt đầu. Đừng hỏi lại xem khách có chắc không, và đừng tự đi xem trước: xác minh là việc của bảo vệ, chuyển tin là việc của bạn. 'Whereabouts' /ˌweərəˈbaʊts/ — hỏi chỗ thì trọng âm rơi vào âm tiết CUỐI, khác dạng danh từ /ˈweərəbaʊts/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Guest Relations. Control room needs a headcount from you. How many are out?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Around nine or ten, I would say — it was a fairly big group going out this morning.",
+              correct: false,
+            },
+            {
+              text: "Twenty-four in all — tour, ballroom, boat and spa. I wrote each down.",
+              correct: true,
+            },
+            {
+              text: "The front office will have all of that on the room list for you.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My husband went up to the room ten minutes ago. Is he all right?",
+          options: [
+            {
+              text: "He will be fine, madam — the alarm is on a different floor entirely.",
+              correct: false,
+            },
+            {
+              text: "I am not able to say, madam. His name and room number, for the Duty Manager?",
+              correct: true,
+            },
+            {
+              text: "Let me check the room list for you and I will say exactly where he is.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE LIST ONLY YOU HAVE\nWhen an alarm is real, three desks start counting at once, and each one counts something different.\nThe front office counts rooms. Housekeeping walks floors and reports which doors answered. You count the people you placed somewhere.\nThe front office already knows they are not in their rooms; that list says 'not accounted for' and stops there.\nOnly you know where they are instead. Nine on the tour until four. Twelve in the ballroom. Two on the boat. One in the spa who booked through you at eleven.\nNone of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.\nSo the first call about your list is not to the lobby. It is to the Duty Manager, and it is one sentence: who is not on the room list.\nThen where each of them is instead — inside this building, or away from it.\nEvery number you give must have a source. 'I think about nine' sends a team looking for a number you invented.\nSay the number you wrote down, and say when you wrote it. 'Nine on the tour. I wrote it down at half past eight, when they left.'\nWeek thirty-one taught the reason for it — 'I would rather find out than guess'.\nIn a crisis there is no time to find out, so guessing is all that is left.\nThat is why you write things down before there is a crisis.\nSeparate what you saw from what you were told. 'That is what I saw myself. The rest I was told by the lounge.' Both are useful. Only one of them is yours.\nWhen a guest brings you the emergency, take two facts and stop. Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.\nWeek thirty-three gave you one question for a smell of burning at the desk, and told you to stop there.\nA bell that is already ringing buys you the second question, and no more.\nA headcount goes to the Duty Manager. A hazard goes the other way, and that has not changed since week thirty-three: security first, the Duty Manager after.\nDo not ask a third question, and do not go and look. Verifying is security's work.\nCarrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.\nIf security does not answer inside thirty seconds, ring the operator, and then dial 114 — the fire brigade — yourself.\nOn 114 you are not on an inside line, and a room number means nothing there.\nThe hotel's name and its street come first, then the floor, then the word 'fire'. Two calls to the brigade cost nothing.\nAnd the guest who asks whether her husband is safe upstairs gets week thirty-one's answer, not a kind one. You do not confirm who is in this house, even now. Take his name and her room number for the Duty Manager instead.\nThat rule is for guests and for callers. The Duty Manager, and the fire officer commanding this incident, are not the public: they get the whole list, and they get it first.\nAnybody else in a uniform, tonight or tomorrow, is still week thirty-one's answer: call the Duty Manager, and confirm nothing yourself.\nA name without a room makes the fire team open twenty doors.",
+        questions: [
+          {
+            q: "Danh sách mà chỉ Guest Relations có là danh sách gì?",
+            options: [
+              "Danh sách các phòng đang có khách ở, đối chiếu với sổ lễ tân buổi sáng",
+              "Những người bạn đã xếp chỗ: tour, sự kiện, thuyền, spa — họ không nằm trong danh sách phòng",
+              "Danh sách khách VIP và khách hội viên đang lưu trú trong tuần này",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'None of those people are in a room, so none of them are on the room list. If you do not say them out loud, nobody looks for them.'",
+          },
+          {
+            q: "Vì sao mỗi con số phải kèm nguồn?",
+            options: [
+              "Vì biên bản sự cố cần ghi tên người đã cung cấp từng con số cho đội ứng phó",
+              "Vì quản lý sẽ hỏi lại bạn sau đó",
+              "Vì 'khoảng chín người' làm đội ứng phó đi tìm một con số bịa",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: ''I think about nine' sends a team looking for a number you invented.' Nói con số đã GHI, và nói ghi lúc mấy giờ.",
+          },
+          {
+            q: "Khách báo có khói ở trên lầu. Bạn hỏi mấy dữ kiện?",
+            options: [
+              "Hai: tầng mấy, và chỗ nào trên tầng đó",
+              "Một: chỉ cần tầng mấy",
+              "Ba: tầng, chỗ nào, và khách nhìn thấy lúc mấy giờ",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Which floor, and whereabouts on it. A floor alone is twenty rooms and a corridor.' Rồi dừng — xác minh là việc của bảo vệ.",
+          },
+          {
+            q: "Vì sao không tự đi xem trước khi báo?",
+            options: [
+              "Vì bạn không được rời quầy khi chuông báo cháy đang kêu, theo nội quy nhà",
+              "Vì chuyển tin trong mười giây hơn chuyển tin kỹ sau hai phút",
+              "Vì bảo vệ sẽ không tin lời một người không có thiết bị đo",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Verifying is security's work. Carrying the message is yours, and it is worth more done in ten seconds than done well in two minutes.'",
+          },
+          {
+            q: "Khách hỏi chồng mình trên lầu có an toàn không. Trả lời thế nào?",
+            options: [
+              "Trấn an rằng ông ấy ổn, vì chuông báo đang ở một tầng khác hẳn",
+              "Tra danh sách phòng rồi cho khách biết ông ấy đang ở đâu",
+              "Không xác nhận ai đang trong nhà; lấy tên cho Duty Manager",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'You do not confirm who is in this house, even now.' Luật riêng tư của tuần 31 không tạm dừng trong khủng hoảng.",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_36_2",
+      lessonOrder: 2,
+      titleEn: "A Lobby That Wants Answers",
+      titleVi: "Một cái sảnh đang đòi câu trả lời",
+      vocabulary: [
+        {
+          word: "Please move to",
+          phonetic: "/ˌpliːz ˈmuːv tə/",
+          definition: "Mời anh/chị di chuyển sang — một câu lệnh, không phải một lời trấn an",
+          context: "Please move to the front garden, madam.",
+          icon: "➡️",
+        },
+        {
+          word: "I do not know that yet",
+          phonetic: "/aɪ ˌduː nɒt ˈnəʊ ðæt jet/",
+          definition: "Điều đó tôi chưa biết — nói ra được, và tốt hơn một câu đoán",
+          context: "I do not know that yet, sir, and I will not guess.",
+          icon: "🤷",
+        },
+        {
+          word: "I will speak again at",
+          phonetic: "/aɪ wɪl ˌspiːk əˈɡen ət/",
+          definition:
+            "Tôi sẽ nói lại lúc — mốc giờ thay cho câu trả lời chưa có; 'ten past' là 10 phút sau giờ chẵn, vào ca thì nói giờ thật",
+          context: "I will speak again at ten past, madam.",
+          icon: "🕐",
+        },
+        {
+          word: "What is happening now",
+          phonetic: "/ˌwɒt ɪz ˈhæpənɪŋ naʊ/",
+          definition: "Việc đang diễn ra — phần duy nhất bạn được phép kể",
+          context: "I can tell you what is happening now, sir.",
+          icon: "📢",
+        },
+        {
+          word: "Nobody has said that",
+          phonetic: "/ˌnəʊbədi həz ˈsed ðæt/",
+          definition: "Chưa ai nói thế — chặn tin đồn mà không cãi nhau với khách",
+          context: "Nobody has said that, madam.",
+          icon: "🚫",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Please stay calm, everyone. There is nothing at all to worry about.",
+          polite: "Please move to the front garden. I will speak again at ten past.",
+          rule: "'Please stay calm' không phải một câu lệnh — nó bảo người ta CẢM THẤY một điều, và không ai làm theo được. Cho một VIỆC ĐỂ LÀM và một MỐC GIỜ. Và đừng nói 'nothing to worry about': bạn chưa biết, và nếu hoá ra có chuyện thì bạn vừa đốt hết lòng tin của cả sảnh.",
+        },
+        {
+          rude: "It is only a false alarm — the kitchen sets it off all the time.",
+          polite:
+            "I do not know that yet, sir, and I will not guess. I will speak again at ten past.",
+          rule: "Đoán nguyên nhân là điều tuần 33 đã cấm ở phòng khiếu nại, và trong khủng hoảng thì nó tệ hơn: một câu 'chỉ là báo giả' làm người ta ngồi lại. Nói thẳng là chưa biết, rồi đưa mốc giờ — mốc giờ mới là thứ giữ được đám đông, không phải lời trấn an.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "What's going on? Is it serious?",
+          targetResponse:
+            "I do not know that yet, madam. Please move to the front garden — I will speak again at ten past.",
+          helpTip:
+            "Ba vế, đúng thứ tự: điều bạn chưa biết, việc khách cần làm, và mốc giờ. Đừng đảo — nếu mở bằng 'I do not know' rồi dừng, đám đông sẽ tự điền vào chỗ trống. Mốc giờ là phần giữ họ lại. 'Garden' /ˈɡɑːdn/ — đuôi -den nuốt thành âm mũi, đừng đọc rõ thành /den/. Và 'front garden' là điểm tập kết của MỘT khách sạn: khi luyện cứ nói theo để lấy nhịp câu, khi vào ca thì thay bằng tên chỗ thật của nhà mình.",
+        },
+        {
+          guestPrompt: "Somebody said there's a fire in the kitchen. Is that true?",
+          targetResponse: "Nobody has said that, madam. I can tell you what is happening now.",
+          helpTip:
+            "Đừng cãi tin đồn bằng cách nói nó sai — bạn cũng không biết nó đúng hay sai. 'Nobody has said that' chặn được tin đồn mà không khẳng định điều ngược lại, rồi bạn kéo khách về phần bạn CÓ quyền nói: việc đang diễn ra. 'Said' /sed/ — đừng đọc thành /seɪd/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "How long is this going to take? We have a flight at six.",
+          options: [
+            {
+              text: "It should not be much longer, sir — these things are usually over quickly.",
+              correct: false,
+            },
+            {
+              text: "I do not know that yet, sir. I will speak again at ten past with what I have.",
+              correct: true,
+            },
+            {
+              text: "You have plenty of time, sir. Six o'clock is still more than three hours away from now.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Tell them it is a false alarm so the lobby clears faster.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Good idea — they will move much faster once they hear it is nothing serious.",
+              correct: false,
+            },
+            {
+              text: "Not until the Duty Manager says so. I will give them the garden and a time.",
+              correct: true,
+            },
+            {
+              text: "I will say it quietly to the ones at the front and let it travel back.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "A LOBBY THAT WANTS ANSWERS\nA crowd is not calmed by being told to be calm. 'Please stay calm' asks people to feel something, and nobody has ever managed it on request.\nWhat calms a crowd is a thing to do and a time to expect you back.\nSo say three things, in this order. What you do not know. Where they should go. When you will speak again.\n'I do not know that yet. Please move to the front garden. I will speak again at ten past.'\nThe hour is the part that works. Week thirty-five made the same point at a negotiating table, and it holds harder here.\nA promise with no hour on it leaves people standing where they are, asking again in ninety seconds.\nMake it your hour, not somebody else's. You are not promising the Duty Manager will have news by then. You are promising to come back.\nNow the harder half: what you may not say.\nYou may not say why. You may not say how long. You may not say it is safe, and you may not say it is nothing.\nWeek thirty-three forbade naming a cause before anybody has established one. That was about a complaint. Here the same sentence can move a hundred people in the wrong direction.\n'It is only a false alarm' sits people back down. If it is not a false alarm, you have cost them the minutes that mattered, and the house will be asked afterwards who said it.\nRumours arrive fast, and they arrive as questions. 'Somebody said there is a fire in the kitchen.'\nDo not argue with it. 'That is not true' is a claim you cannot support either. Say 'Nobody has said that', which is about the house and not about the fire, and then bring them back to what is happening now.\nAnd if a colleague asks you to say something you do not know, the answer is the same as it is on any other day. Not until the Duty Manager says so.",
+        questions: [
+          {
+            q: "Vì sao 'Please stay calm' không có tác dụng?",
+            options: [
+              "Vì nó bảo người ta CẢM THẤY một điều, mà không ai làm theo được",
+              "Vì câu đó quá trang trọng nên khách nước ngoài thường nghe không kịp",
+              "Vì nó thiếu tên bộ phận đang xử lý",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''Please stay calm' asks people to feel something, and nobody has ever managed it on request.' Cho một VIỆC ĐỂ LÀM và một MỐC GIỜ.",
+          },
+          {
+            q: "Ba vế phải nói, theo đúng thứ tự, là gì?",
+            options: [
+              "Nguyên nhân sự cố, thời gian dự kiến, và lời xin lỗi của khách sạn",
+              "Điều bạn chưa biết, chỗ khách cần sang, và giờ bạn sẽ nói lại",
+              "Tên bộ phận, số khẩn, lối thoát",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What you do not know. Where they should go. When you will speak again.'",
+          },
+          {
+            q: "Mốc giờ bạn đưa ra là lời hứa về điều gì?",
+            options: [
+              "Rằng Duty Manager sẽ có tin mới vào đúng lúc đó",
+              "Rằng sự cố sẽ xong trước lúc đó",
+              "Rằng chính BẠN sẽ quay lại nói tiếp",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Make it your hour, not somebody else's… You are promising to come back.' Giống hệt luật của tuần 35.",
+          },
+          {
+            q: "Vì sao không được nói 'chỉ là báo giả'?",
+            options: [
+              "Vì nếu không phải báo giả, bạn vừa lấy mất của họ đúng những phút quan trọng",
+              "Vì chỉ bộ phận kỹ thuật mới được công bố tình trạng của hệ thống báo cháy",
+              "Vì khách sẽ đòi bồi thường cho thời gian phải đứng chờ ngoài vườn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''It is only a false alarm' sits people back down… the house will be asked afterwards who said it.'",
+          },
+          {
+            q: "Khách nói 'nghe bảo cháy bếp'. Đáp lại ra sao?",
+            options: [
+              "'That is not true' — phủ nhận dứt khoát để tin đồn dừng lại ngay tại đó",
+              "'Nobody has said that' — rồi kéo về việc đang diễn ra",
+              "Không đáp gì, để tin đồn tự tắt",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: ''That is not true' is a claim you cannot support either.' Câu kia nói về NHÀ, không nói về đám cháy.",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_36_3",
+      lessonOrder: 3,
+      titleEn: "Instructions People Follow",
+      titleVi: "Câu lệnh người ta làm theo",
+      vocabulary: [
+        {
+          word: "Because of",
+          phonetic: "/bɪˈkɒz əv/",
+          definition: "Vì — đặt lý do TRƯỚC câu lệnh để người ta chịu làm theo",
+          context: "Because of the alarm, please use the stairs.",
+          icon: "🪜",
+        },
+        {
+          word: "Do not go back",
+          phonetic: "/ˌduː nɒt ɡəʊ ˈbæk/",
+          definition: "Đừng quay lại — lệnh cấm kèm sẵn phương án thay thế",
+          context: "Do not go back up, sir. We go back for it the moment we are cleared.",
+          icon: "⛔",
+        },
+        {
+          word: "Leave it and come",
+          phonetic: "/ˌliːv ɪt ənd ˈkʌm/",
+          definition: "Bỏ lại đó và đi cùng tôi — hai động từ, một hành động",
+          context: "Leave it and come with me, madam.",
+          icon: "🎒",
+        },
+        {
+          word: "The assembly point",
+          phonetic: "/ði əˈsembli pɔɪnt/",
+          definition: "Điểm tập kết — nói tên chỗ thật, không nói chữ chuyên môn",
+          context: "For a fire alarm the assembly point is the front garden, sir.",
+          icon: "🚩",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Would you like to make your way to the staircase, madam?",
+          polite: "Because of the alarm, please use the stairs. The lifts are out of use.",
+          rule: "Câu lệnh khẩn phải NGẮN và chỉ chứa MỘT hành động. 'Would you like…' là khuôn mời của tuần 16, và ở đây nó làm người ta chần chừ, vì một lời mời thì từ chối được. Lý do đứng TRƯỚC, lệnh đứng sau, rồi dừng.",
+        },
+        {
+          rude: "You cannot go back up there. It is not allowed during an evacuation.",
+          polite:
+            "Do not go back up, sir. Your door is locked, and we go back for it the moment we are cleared.",
+          rule: "Một lệnh cấm không kèm phương án thì khách sẽ tự đi tìm phương án — và phương án của họ là chạy lên cầu thang. Cấm rồi đưa ngay cái thay thế. Tuần 31 đã dạy đừng nói 'you cannot'; ở đây vẫn thế, chỉ khác là bạn không có thời gian để nói dài.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "I just need two minutes to run up for my passport.",
+          targetResponse:
+            "Do not go back up, sir. Leave it and come with me. We go back for it the moment we are cleared.",
+          helpTip:
+            "Đây là câu bạn sẽ phải nói thật, và khách sẽ đi qua bạn nếu bạn ngập ngừng. Cấm, rồi đưa phương án, trong cùng một hơi. Đừng giải thích quy định — không ai đứng nghe quy định khi chuông đang kêu. 'Cleared' /klɪəd/ — 'ear' ở đây là /ɪə/, và đuôi -ed đọc gọn thành /d/.",
+        },
+        {
+          guestPrompt: "Where are we supposed to go? Nobody has told us anything.",
+          targetResponse:
+            "For this alarm the assembly point is the front garden, madam. Please use the stairs.",
+          helpTip:
+            "Nói TÊN CHỖ THẬT trước, rồi mới tới đường đi. 'Assembly point' là chữ của nhà, không phải chữ của khách — nên luôn nói kèm nó là chỗ nào. Với khách yếu tiếng Anh thì bỏ hẳn chữ assembly point, chỉ nói tên khu vườn. 'Assembly' /əˈsembli/ — trọng âm ở âm tiết hai.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Guest Relations. There is a lady in the lounge who will not stand up.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Tell them it is compulsory, and that the fire officer will make everyone leave anyway.",
+              correct: false,
+            },
+            {
+              text: "Ask her twice, then give the Duty Manager 'the lounge, one lady, declined' and come out.",
+              correct: true,
+            },
+            {
+              text: "Take hold of an arm and walk the guest out — they will thank us for it later.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "My mother uses a walking frame. She cannot manage six floors of stairs.",
+          options: [
+            {
+              text: "Take the lift down with her, madam — it is still running perfectly well for the moment.",
+              correct: false,
+            },
+            {
+              text: "May I have her room number, madam? Ring her to shut her door — I am on the desk line.",
+              correct: true,
+            },
+            {
+              text: "Bring her down slowly and the rest of us will wait for you outside.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "INSTRUCTIONS PEOPLE FOLLOW\nAn instruction people follow is short, has one action in it, and puts the reason first.\n'Because of the alarm, please use the stairs. The lifts are out of use.'\nThat is two sentences and one thing to do. Everything else can wait.\nThe polite English of week sixteen is the wrong English here. Week sixteen taught 'Would you like a late check-out, sir?' — an offer, and an offer can be declined.\nPeople hesitate, and hesitation is the thing you are trying to remove. Week nineteen gave you the shape you want instead: 'If there is a fire, please use the exit.'\nBeing brief is not being rude. Say please, say it once, and say the action.\nA prohibition on its own does not work either. Tell a guest they cannot go back up and they will go and find their own way back up.\nSo every 'do not' carries an 'instead'. 'Do not go back up. Leave it and come with me — we go back for it the moment we are cleared.'\nThe 'instead' is never a promise that somebody goes up for it. Nobody goes back in, and that includes you.\nThe passport is the one they argue about, every time. The answer is not the rule. Nobody stands in a stairwell listening to a rule. The answer is the alternative, said fast.\nNever the term alone. 'The assembly point' is a phrase from a plan on a wall. A garden is somewhere a guest can picture.\nAnd keep them off the drive. The engines need that road, and a hundred people standing on it cost the brigade the minutes they came for.\nFOUR ANSWERS ONLY YOUR OWN HOUSE CAN GIVE YOU. Ask your Guest Relations Manager this week, not on the night.\nWhere is our assembly point for a fire, and where for a storm? Who brings the fire officer's all-clear to this desk? Do we have a refuge area — a protected room built to wait in — and on which floor? Who dials 114 (the fire brigade), and from which telephone?\nThe garden on this page is one hotel's, and it changes with the emergency. A fire sends people out. Week thirty-eight will show you a storm, which keeps them in.\nSay the term and then the place, never the term alone, and the guest who speaks little English still hears a garden.\nTwo people are not yours to move alone. The guest who will not stand up, and the guest who cannot manage the stairs.\nFor the first, ask twice, calmly, and then stop. Do not argue, and never take hold of a guest who has said no. An arm offered and taken is not that.\nTell the Duty Manager the place, how many, and that they have declined — then go out with everybody else.\nHe passes it to Security: one list, in one place, so the fire team reads it once.\nAn argument keeps two people inside instead of one, and the second one is you.\nFor the second, the floor is not yours and the stairs are not yours. Do not send them to a lift, and do not go up for them.\nGive the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.\nNot across the lobby. Say it on the desk telephone, or say it to his face.\nA room number spoken where guests can hear is the thing week thirty-one still forbids tonight.\nWhere they wait is the floor's call and Security's, not this desk's.\nA refuge area if this house has one.\nIf it has not, a room with the door shut, and a wet towel along the gap.\nIf the floor reports smoke there, that door stays shut too: the fire team is the only one who moves that guest.\nThe room list is the front desk's, not yours. Your job is the people in front of you, and the message that reaches the right floor.\nAnd anything medical stops being this week's problem. That is week thirty-seven, and it starts with the Duty Manager and the room number.\nOne exception, and it is not week thirty-seven's to soften: a guest who is not breathing waits for no inside line. That one is 115 — the ambulance — first.\nNeither 114 nor 115 is an inside line, so name and street come before anything else. On 114 the floor comes next; on 115 the room number comes straight after the address.",
+        questions: [
+          {
+            q: "Một câu lệnh khẩn được cấu tạo thế nào?",
+            options: [
+              "Lý do trước, một hành động sau, rồi dừng",
+              "Lời xin lỗi trước, hành động sau, rồi giải thích quy định",
+              "Tên bộ phận ra lệnh trước, sau đó là hành động và thời hạn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'short, has one action in it, and puts the reason first.' — 'Because of the alarm, please use the stairs.'",
+          },
+          {
+            q: "Vì sao khuôn mời lịch sự của tuần 16 lại sai chỗ ở đây?",
+            options: [
+              "Vì khách nước ngoài không quen với cách nói vòng của người Việt trong lúc gấp",
+              "Vì 'Would you like…' nghe như một lời mời, mà lời mời thì từ chối được",
+              "Vì câu dài làm khách không nghe rõ khi chuông báo cháy đang kêu quá to",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'an offer, and an offer can be declined. People hesitate, and hesitation is the thing you are trying to remove.'",
+          },
+          {
+            q: "Mỗi câu cấm phải đi kèm cái gì?",
+            options: [
+              "Một lời xin lỗi, để khách không cảm thấy bị ra lệnh giữa chỗ đông người",
+              "Tên của quy định đang áp dụng",
+              "Một phương án thay thế, nói ngay trong cùng một hơi",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Tell a guest they cannot go back up and they will go and find their own way back up.' Cấm rồi đưa ngay cái thay thế.",
+          },
+          {
+            q: "Vì sao phải nói tên chỗ thật chứ không chỉ nói 'the assembly point'?",
+            options: [
+              "Vì đó là chữ trong sơ đồ trên tường, còn tên một khu vườn thì khách hình dung ra được",
+              "Vì khách sạn Việt Nam không được phép dùng thuật ngữ tiếng Anh cho lối thoát hiểm",
+              "Vì chỉ được nói chữ 'assembly point' khi có mặt cán bộ phòng cháy chữa cháy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Say the term and then the place, never the term alone, and the guest who speaks little English still hears a garden.'",
+          },
+          {
+            q: "Khách không đi nổi cầu thang. Làm gì?",
+            options: [
+              "Đưa khách vào thang máy vì lúc đó thang vẫn còn chạy được",
+              "Cõng khách xuống và bảo những người khác chờ ở ngoài",
+              "Số phòng, chữ 'cannot manage the stairs', và ai đang ở cùng bà ấy",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Give the Duty Manager three things, in this order: the room number, the words 'cannot manage the stairs', and who is with them.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_36_4",
+      lessonOrder: 4,
+      titleEn: "Standing Down, and What Goes on Paper",
+      titleVi: "Kết thúc, và cái gì vào biên bản",
+      vocabulary: [
+        {
+          word: "The all-clear",
+          phonetic: "/ði ˌɔːl ˈklɪə/",
+          definition:
+            "Lệnh cho phép vào lại — cán bộ PCCC đưa ra, Duty Manager là người truyền lại cho quầy",
+          context: "The fire officer gives the all-clear, and the Duty Manager brings it to us.",
+          icon: "✅",
+        },
+        {
+          word: "Not the complaint log",
+          phonetic: "/ˌnɒt ðə kəmˈpleɪnt lɒɡ/",
+          definition:
+            "Không phải quyển khiếu nại — sự cố đi vào biên bản sự cố, ghi trong chính ca của bạn",
+          context: "This goes on an incident report, not the complaint log.",
+          icon: "📄",
+        },
+        {
+          word: "Back inside",
+          phonetic: "/ˌbæk ɪnˈsaɪd/",
+          definition: "Trở vào trong — và đếm lại đúng những người bạn đã báo ra",
+          context: "I am bringing the tour party back inside now, sir.",
+          icon: "🏨",
+        },
+        {
+          word: "Not the person to speak about that",
+          phonetic: "/ˌnɒt ðə ˈpɜːsn tə ˈspiːk əˌbaʊt ðæt/",
+          definition: "Không phải người có thẩm quyền nói — câu dành cho ống kính và micro",
+          context: "I am not the person to speak about that, sir.",
+          icon: "🎤",
+        },
+      ],
+      grammar: [
+        {
+          rude: "It is all finished now, everyone. You can go back up to your rooms.",
+          polite:
+            "The fire officer gives the all-clear, madam, and my Duty Manager brings it to us.",
+          rule: "Bạn không bao giờ tuyên bố hết sự cố, kể cả khi chuông đã tắt và mọi người đang đi vào. Chuông tắt không phải lệnh báo an toàn. Nói ai là người đưa ra lệnh đó, và nói bạn đang đi hỏi — đó là hai vế, và cả hai đều đúng sự thật.",
+        },
+        {
+          rude: "The lady in the lounge was rude to me, so I put that in the report too.",
+          polite:
+            "This goes on an incident report, not the complaint log. I am writing it this shift.",
+          rule: "Tuần 33 tách hai quyển: complaint log cho khiếu nại, incident report cho sự cố. Trong biên bản sự cố ghi việc ĐÃ XẢY RA và giờ giấc — không ghi thái độ của ai, không ghi phỏng đoán nguyên nhân. Và viết trong chính ca của bạn, vì ca sau không nhìn thấy cái bạn đã thấy.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "The bell has stopped. Can we go back up to the room now?",
+          targetResponse:
+            "The fire officer gives the all-clear, madam. I am asking my Duty Manager now.",
+          helpTip:
+            "Chuông tắt là thứ khách nghe được, nên họ sẽ đi vào dù bạn nói gì. Đừng chặn bằng 'no' — nói AI là người quyết và nói bạn đang đi hỏi ngay. Hai vế đó cho khách một lý do để đứng lại thêm hai phút. 'All-clear' — trọng âm rơi vào 'clear', và /ɔː/ ở 'all' phải dài.",
+        },
+        {
+          guestPrompt: "Excuse me, I'm from the local paper. What actually happened here tonight?",
+          targetResponse:
+            "I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.",
+          helpTip:
+            "Đây đúng là câu tuần 33 đã dạy, và giờ nó tới vào lúc bạn mệt nhất. MỘT câu rồi dừng: không tên bạn, không ý kiến, và đặc biệt là không nói câu no-comment — tuần 33 chấm chính câu đó là SAI. Đừng đồng ý cho quay phim. 'Person' /ˈpɜːsn/ — /ɜː/ dài, đừng thành /ˈpesn/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Guest Relations. Alarm is off, people are drifting in. Shall we let them?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Yes — the bell has stopped, so the building must surely have been cleared by now.",
+              correct: false,
+            },
+            {
+              text: "Not yet. The bell is not the all-clear, and the fire officer has not given it.",
+              correct: true,
+            },
+            {
+              text: "Let the ones with children go up first and hold everybody else in the garden.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Put the whole thing in the complaint log so it is on record.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "An incident report, not the complaint log. I am writing it this shift.",
+              correct: true,
+            },
+            {
+              text: "Both books, so the morning shift finds it whichever one they happen to open.",
+              correct: false,
+            },
+            {
+              text: "The Duty Manager writes that one — it is above what our desk records.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "STANDING DOWN, AND WHAT GOES ON PAPER\nThe bell stopping is not the all-clear. It is only the bell stopping.\nGuests know the difference and ignore it anyway, because standing in a garden is dull and a room is upstairs.\nSo do not block them with a flat no. Tell them who gives the all-clear, and tell them you are asking now. Two facts, both true, and they buy you the two minutes it takes.\nWhile the brigade is here, the fire officer stands this house down, and the Duty Manager is who brings you that word.\nNot the bell, and not you — even if you can see that it is over.\nOnce that word comes, go back to your own list. The nine on the tour are still on the tour, and nobody has told them anything.\nBring them back inside yourself, and count the same people you reported out. A number that goes out and does not come back in is the whole reason anybody counted.\nNow the paper. Week thirty-three gave you two books, and they are not interchangeable.\nThe complaint log is for a guest who is unhappy. The incident report is for a thing that happened.\nAn evacuation is a thing that happened, so it is a report, and it is written in your own shift. The next shift did not see what you saw.\nWrite what happened and when. Do not write why, because nobody has established why yet. Do not write what anybody was like.\n'The lady in the lounge would not stand up' belongs on the report. 'The lady in the lounge was rude to me' does not.\nAnd then the part nobody warns you about. An hour after it is over, somebody arrives with a phone or a microphone.\nWeek thirty-three already wrote your line: 'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nOne sentence, then nothing — not your name, not your opinion, and not 'no comment'.\nAnd before any of the paper, one guest at a time. The people who were frightened are not settled by an explanation.\nThey are settled by somebody standing near them for ten minutes. 'That was frightening, madam. Sit here with me — I will bring something warm.'\nLast, hand it over by name and hour. A tour party still out at six o'clock belongs to somebody by six o'clock, and that somebody has a name.",
+        questions: [
+          {
+            q: "Chuông tắt có nghĩa là gì?",
+            options: [
+              "Nghĩa là toà nhà đã được kiểm tra xong và khách được phép lên phòng",
+              "Chỉ nghĩa là chuông đã tắt — lệnh vào lại đến từ cán bộ PCCC, qua Duty Manager",
+              "Nghĩa là bảo vệ đã xác nhận không còn nguy hiểm ở khu vực đó nữa",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The bell stopping is not the all-clear. It is only the bell stopping.' Lệnh vào lại là của cán bộ PCCC; Duty Manager truyền lại.",
+          },
+          {
+            q: "Sau khi hết sự cố, việc riêng của Guest Relations là gì?",
+            options: [
+              "Đón đoàn tour vào lại, và đếm đúng người mình đã báo ra",
+              "Đi từng phòng kiểm tra xem khách đã lên đầy đủ chưa",
+              "Ghi lại lời khách phàn nàn về thời gian phải chờ ngoài vườn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A number that goes out and does not come back in is the whole reason anybody counted.'",
+          },
+          {
+            q: "Sự cố sơ tán được ghi vào quyển nào?",
+            options: [
+              "Complaint log, vì có khách không hài lòng về việc phải ra ngoài",
+              "Cả hai quyển, để ca sau mở quyển nào cũng thấy",
+              "Incident report — và ghi trong chính ca của bạn",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'An evacuation is a thing that happened, so it is a report… The next shift did not see what you saw.'",
+          },
+          {
+            q: "Câu nào KHÔNG được viết vào biên bản sự cố?",
+            options: [
+              "'The lady in the lounge was rude to me'",
+              "'The lady in the lounge would not stand up'",
+              "Giờ chuông kêu và giờ đoàn tour trở vào",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Do not write what anybody was like.' Ghi việc đã xảy ra và giờ giấc, không ghi thái độ.",
+          },
+          {
+            q: "Nhà báo đến hỏi sau khi mọi việc kết thúc. Nói gì?",
+            options: [
+              "'No comment' — ngắn gọn và không để lộ thông tin nào ra ngoài",
+              "Kể lại đúng những gì mình nhìn thấy, vì đó là sự thật khách quan",
+              "Một câu: không phải người có thẩm quyền nói, rồi dừng",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'One sentence, then nothing — not your name, not your opinion, and not 'no comment'.' Tuần 33 chấm 'no comment' là SAI.",
+          },
+        ],
+      },
+    },
+  ],
+};
+
+const GR_WEEK_39: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 39,
+  weekTitleEn: "The Threads You Are Holding",
+  weekTitleVi: "Những đầu mối bạn đang cầm",
+  reviewWords: [
+    "Guest privacy rule",
+    "I would rather find out",
+    "Shall I put that down",
+    "Already yours",
+    "Occasion",
+    "My manager's to give",
+    "The part I cannot move",
+    "Not the complaint log",
+    "Conscious",
+    "Stranded",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_39_1",
+      lessonOrder: 1,
+      titleEn: "Three at Once",
+      titleVi: "Ba việc cùng lúc",
+      vocabulary: [
+        {
+          word: "Three at once",
+          phonetic: "/ˌθriː ət ˈwʌns/",
+          definition: "Ba việc cùng lúc — và không việc nào là cấp cứu",
+          context: "Three at once, and none of them is an emergency.",
+          icon: "🧵",
+        },
+        {
+          word: "May I take them in order",
+          phonetic: "/ˌmeɪ aɪ ˈteɪk ðəm ɪn ˈɔːdə/",
+          definition: "Cho tôi làm lần lượt nhé — xin phép trước khi xếp thứ tự",
+          context: "May I take them in order, madam?",
+          icon: "🔢",
+        },
+        {
+          word: "The soonest one first",
+          phonetic: "/ðə ˈsuːnɪst wʌn ˈfɜːst/",
+          definition: "Cái có mốc giờ SỚM NHẤT làm trước — không phải cái khách nhắc trước",
+          context: "The soonest one first, madam, and your table is at seven.",
+          icon: "⏱️",
+        },
+        {
+          word: "I am coming back to that",
+          phonetic: "/aɪ əm ˈkʌmɪŋ ˌbæk tə ðæt/",
+          definition: "Việc đó tôi quay lại — gọi tên việc mình đang gác lại",
+          context: "I am coming back to that at half past, sir.",
+          icon: "↩️",
+        },
+        {
+          word: "Still open",
+          phonetic: "/ˌstɪl ˈəʊpən/",
+          definition: "Vẫn còn dang dở — chưa phải là đã xong chỉ vì khách thôi nói",
+          context: "Two things are still open, sir, and yours is one of them.",
+          icon: "📂",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The tour first then, madam, since that is the one you mentioned first.",
+          polite:
+            "May I take them in order, madam? The soonest one first, and your table is at seven.",
+          rule: "Ba việc cùng lúc thì thứ tự KHÔNG phải ai đến trước. Ai đang nguy hiểm đi trước, và 'trước' là một VIỆC chứ không phải một chỗ trong hàng: khách bị thương hay ốm là tuần 37 (Duty Manager và số phòng), mối nguy trong nhà là tuần 33 (bảo vệ trước, Duty Manager sau). Rồi tới người đang đứng trước mặt bạn, rồi điện thoại, rồi tin nhắn. Trong phần CÒN LẠI trên danh sách của bạn thì mốc giờ sớm nhất đi trước. Phục vụ người to tiếng trước là dạy cả sảnh rằng to tiếng thì được việc.",
+        },
+        {
+          rude: "I will get to the lounge booking at some point this evening.",
+          polite:
+            "I am coming back to that at half past, sir. Your table is the sooner of the two.",
+          rule: "Việc bạn gác lại phải được GỌI TÊN và phải có giờ. Một câu hỏi không được nhắc tới thì khách nghe ra là bị bỏ rơi. Tuần 35 đã dạy: mốc giờ là giờ của BẠN, không phải giờ của người khác. Một ngoại lệ duy nhất, và bài 4 nói kỹ: nếu quầy sở hữu việc đó ĐÃ đưa bạn một giờ, giờ ấy chuyển tiếp được.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "I need a tour changed for tomorrow, a charge looked at, and a table at seven.",
+          targetResponse:
+            "May I take them in order, madam? The table at seven is the soonest, then the charge by eight, then the tour.",
+          helpTip:
+            "Ba việc trong một hơi là chuyện bình thường, không phải chuyện khó. Xin phép xếp thứ tự, rồi nói THEO MỐC GIỜ chứ không theo thứ tự khách kể. Bàn ăn lúc bảy giờ đi trước cái tour ngày mai, kể cả khi tour được nói ra trước. Việc chưa có mốc nào thì bạn cho nó một mốc ngay tại đây — khoản phí thành 'by eight' — vì việc không có giờ là việc tự đóng lại. 'order' /ˈɔːdə/ — /ɔː/ dài, và KHÔNG bật /r/ ở cuối: giọng Anh-Anh đóng bằng một âm ơ nhẹ, không phải 'o-đơ-rờ'.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. A lady says her husband has collapsed in 1108, and three people are waiting behind her.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Ask her if he is breathing. If he is not, dial 115 yourself — our name and street, then 1108. If he is, the Duty Manager and 1108, now.",
+          helpTip:
+            "Ba việc đang chờ, và thứ tự vừa bị xoá sạch. Người đang nguy hiểm đi trước tất cả, và 'trước' nghĩa là một VIỆC chứ không phải một chỗ trong hàng. Tuần 37 cho hai thứ phải nói ngay: Duty Manager và số phòng. Tuần 36 thêm đúng một ngoại lệ — không thở thì 115 trước, không qua đường dây trong nhà. Người vợ đang đứng trước mặt đồng nghiệp chứ không phải trước mặt bạn, nên câu hỏi đó hỏi chị ấy — và người bấm số phải được gọi tên, đừng để cả hai tưởng người kia gọi rồi. Không ai nói chắc được là khách còn thở hay không thì COI NHƯ KHÔNG THỞ: 115 trước. 'breathing' /ˈbriːðɪŋ/ — âm /ð/ hữu thanh ở giữa từ, đừng thành /d/.",
+        },
+      ],
+      game: [
+        {
+          prompt: "I have been waiting longer than any of these people.",
+          options: [
+            {
+              text: "You have indeed, madam, and since you have waited longest let me take yours first.",
+              correct: false,
+            },
+            {
+              text: "You have, madam, and I am sorry. One guest ahead of you, then you — by half past.",
+              correct: true,
+            },
+            {
+              text: "Everybody here has been waiting, madam, and I am going as fast as I can.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. Somebody says there is a smell of burning upstairs. Shall I put it in the book?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Put it in the book now so it is on record, and I will walk up and look myself.",
+              correct: false,
+            },
+            {
+              text: "Tell the Duty Manager first — he is the one who decides whether security should come out at all.",
+              correct: false,
+            },
+            {
+              text: "Ask which floor and nothing else. Security first, the Duty Manager second — the book comes later.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THREE AT ONCE\nBy week thirty-nine nothing on this desk is new. What is new is that three of them arrive together.\nThe order is not first come first served, and it is not loudest first.\nAnyone in danger comes first, and 'first' means an action, not a place in a queue.\nA guest who is hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nIf nobody there can say whether she is breathing, treat it as not breathing.\nA smell of burning, a loose rail and a fire door propped open are week thirty-three's.\nWhich floor, then security first and the Duty Manager after.\nIf security does not answer inside thirty seconds, week thirty-six says ring the operator, then dial 114 yourself.\nNeither 114 nor 115 is an inside line: the hotel's name and its street come first on both.\nOn 114 the floor comes next, then the word 'fire'. On 115 the room number comes straight after the address, because the crew still has to find her.\nA child alone at the water is the exception week thirty-three made. You go to the water yourself, and the nearest colleague telephones as you go.\nWeek thirty-six is what it looks like when the whole house is the emergency. Nothing on this page moves any of them.\nThen the person standing in front of you. A guest at the desk cannot be asked to stand there unseen.\nThen the telephone, and after it the messages. A caller may be asked to hold, or to ring back in five; a guest in front of you may not.\nAnd among everything still on your list, the promise with the soonest hour goes first. Week thirty-one put an hour on a promise; week thirty-five made it your hour, not somebody else's.\nThis is the week you find out why: an hour is what sorts a list.\nA table at seven beats a tour for tomorrow, even when the tour was mentioned first.\nSay the order out loud. A guest who hears 'you are next' stops counting the seconds. A guest who hears nothing starts.\nAnd name the one you are parking. 'I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.\nNever serve the loudest first. Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.\nThe hardest of the three is the one that is not urgent and not new: the case from Tuesday that is still open. It has no hour on it because nobody gave it one.\nGive it one now. A case with no hour closes itself, quietly, without the guest agreeing.\nWeek thirty-three said only the guest may close it.\nWhen four people are waiting at this desk, ask for a second pair of hands. Ask at four, not at eight. Help takes three minutes to come, and at four you still have those three minutes; at eight you do not.\nFour waiting and three minutes are one house's numbers. Ask your Guest Relations Manager what yours are, in your first week.",
+        questions: [
+          {
+            q: "Ba việc đến cùng lúc. Thứ tự là gì?",
+            options: [
+              "Ai đến trước làm trước, rồi đến điện thoại, rồi đến việc còn dang dở",
+              "Ai đang nguy hiểm, rồi người đứng trước mặt, rồi điện thoại, rồi tin nhắn — mốc giờ sắp xếp phần còn lại",
+              "Việc của khách VIP trước, rồi tới các việc còn lại theo thứ tự nhận được",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Anyone in danger comes first… Then the person standing in front of you… Then the telephone, and after it the messages… the promise with the soonest hour goes first.'",
+          },
+          {
+            q: "Vì sao mốc giờ quyết định thứ tự?",
+            options: [
+              "Vì việc nào khách nhắc trước thì khách cũng sốt ruột về việc đó trước",
+              "Vì khách có mốc giờ sớm hơn thường là khách hạng thẻ cao hơn",
+              "Vì mốc giờ là thứ duy nhất xếp được một danh sách — cái gần nhất đi trước",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'an hour is what sorts a list.' Tuần 31 gắn mốc giờ vào một lời hứa, tuần 35 làm nó thành giờ của BẠN; tuần này là lúc thấy vì sao.",
+          },
+          {
+            q: "Việc bạn gác lại thì phải làm gì?",
+            options: [
+              "Gọi tên nó ra và cho nó một mốc giờ",
+              "Ghi vào sổ rồi để ca sau xử lý cho gọn",
+              "Chờ khách hỏi lại rồi mới nhắc tới, để khỏi làm khách sốt ruột",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: ''I am coming back to that at half past' is a thread you are still holding. An unnamed question is a thread you dropped.'",
+          },
+          {
+            q: "Vì sao không phục vụ người to tiếng trước?",
+            options: [
+              "Vì người to tiếng thường là người có ít việc gấp nhất trong sảnh",
+              "Vì làm thế một lần là dạy cả sảnh rằng to tiếng thì được lên trước",
+              "Vì nội quy khách sạn cấm thay đổi thứ tự phục vụ khi đã xếp hàng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Do it once in a full lobby and you have taught every guest in it that a raised voice moves the queue.'",
+          },
+          {
+            q: "Trong ba việc, việc nào khó nhất?",
+            options: [
+              "Việc của khách đang to tiếng nhất ở sảnh",
+              "Việc mới nhất, vì bạn chưa có một dữ kiện nào trong tay để mà bắt đầu",
+              "Việc cũ còn dang dở, vì không ai gắn cho nó một mốc giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'It has no hour on it because nobody gave it one… A case with no hour closes itself, quietly, without the guest agreeing.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_2",
+      lessonOrder: 2,
+      titleEn: "When the File Says Yes and the Desk Says No",
+      titleVi: "Khi hồ sơ nói có mà quầy kia nói không",
+      vocabulary: [
+        {
+          word: "The file says",
+          phonetic: "/ðə ˈfaɪl sez/",
+          definition: "Hồ sơ ghi là — điều khách đã đồng ý cho ghi, không phải một quyền",
+          context: "The file says a corner table, madam, and I am asking the restaurant now.",
+          icon: "🗂️",
+        },
+        {
+          word: "Theirs to give",
+          phonetic: "/ˈðeəz tə ˌɡɪv/",
+          definition: "Của bên kia cho — nói rõ quầy nào sở hữu, đừng nói chung chung",
+          context: "The table is theirs to give — the restaurant's, sir, not mine.",
+          icon: "🎁",
+        },
+        {
+          word: "Not mine to overrule",
+          phonetic: "/ˌnɒt ˈmaɪn tuː ˌəʊvəˈruːl/",
+          definition: "Không phải quyền tôi lật — hồ sơ ghi một sở thích, quầy kia sở hữu cái bàn",
+          context:
+            "That is not mine to overrule, madam, so I am asking the desk that owns the table.",
+          icon: "⚖️",
+        },
+        {
+          word: "What I can do meanwhile",
+          phonetic: "/ˌwɒt aɪ kən ˈduː ˈmiːnwaɪl/",
+          definition:
+            "Trong lúc chờ thì tôi làm được gì — và chỉ gồm thứ quầy này sở hữu: một mốc giờ, một lời hẹn quay lại",
+          context: "What I can do meanwhile is come back to you within the half hour.",
+          icon: "🕰️",
+        },
+        {
+          word: "I am asking, not promising",
+          phonetic: "/aɪ əm ˈɑːskɪŋ ˌnɒt ˈprɒmɪsɪŋ/",
+          definition: "Tôi đang XIN, chưa hứa — tách đề xuất khỏi lời hứa",
+          context: "I am asking, madam, not promising.",
+          icon: "🙋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Your file says a corner table, madam, so I will make sure you get one.",
+          polite:
+            "The file says a corner table, madam. It is the restaurant's to give, and I am asking now.",
+          rule: "Hồ sơ ghi lại điều khách ĐÃ NÓI, không cấp cho khách một quyền. Tuần 32 dạy hồ sơ sở thích chỉ ghi câu trả lời của khách; tuần 33 dạy ai sở hữu cái gì. Đọc hồ sơ ra rồi hứa luôn là gộp hai thứ đó lại và hứa hộ một quầy khác.",
+        },
+        {
+          rude: "I am sure they will say yes if I explain that you are a regular guest.",
+          polite:
+            "I am asking, madam, not promising. What I can do meanwhile is come back to you within the half hour.",
+          rule: "Tuần 33 đã dạy đúng khuôn này — 'What I can put right today is…'; ở đây chỉ đổi phần bạn làm được. Đó là mệnh đề chẻ (wh-cleft): đẩy phần LÀM ĐƯỢC lên đầu câu để khách nghe thấy nó trước phần phải chờ. Hai vế trong một hơi: phần bạn ĐANG XIN, và phần bạn LÀM ĐƯỢC NGAY. Vế thứ hai giữ khách lại trong lúc chờ vế thứ nhất. Đừng đoán hộ bên kia sẽ trả lời thế nào — tuần 33 đã dạy một lời 'chắc là được' không giữ nổi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We always have the corner table. It is in your system, I have seen it.",
+          targetResponse:
+            "You are right that it is on the file, madam. The table is theirs to give — the restaurant's — and I am asking now.",
+          helpTip:
+            "Khách nói đúng — hồ sơ có ghi. Đừng cãi phần đó. Điều bạn sửa là chữ mà khách dùng — luôn luôn: hồ sơ ghi một sở thích, không cấp một chỗ ngồi. Nói ai sở hữu cái bàn, rồi nói bạn đang đi xin. 'theirs' /ðeəz/ — âm /ð/ hữu thanh ở đầu, đừng thành /d/; đuôi /z/ chứ không phải /s/.",
+        },
+        {
+          guestPrompt: "So can you do it or not? It is a simple question.",
+          targetResponse:
+            "I am asking, sir, not promising. The part I cannot move is who owns the table — I will come back within the half hour.",
+          helpTip:
+            "Câu 'có hay không' là câu ép bạn hứa. Trả lời bằng đúng hai vế: bạn đang xin, và mấy giờ bạn quay lại. Tuần 35 dạy mốc giờ là giờ của BẠN — bạn không hứa thay nhà hàng. 'Promising' /ˈprɒmɪsɪŋ/ — trọng âm ở âm tiết đầu.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Your colleague last month said we could have the late check-out every time.",
+          options: [
+            {
+              text: "Then that is what we will do, madam — I will put it on your file now.",
+              correct: false,
+            },
+            {
+              text: "May I check your booking first, madam? I am asking, not promising.",
+              correct: true,
+            },
+            {
+              text: "I am afraid nobody here would have said that, madam. It is simply not our policy at all.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt: "Guest Relations. Just tell her yes and we will sort the table out afterwards.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Good idea — she will settle down, and the restaurant can always move somebody later on.",
+              correct: false,
+            },
+            {
+              text: "It is the restaurant's to give. I am asking them, and she gets my answer by six.",
+              correct: true,
+            },
+            {
+              text: "I will say yes but keep it vague, so we are not held to anything firm.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "WHEN THE FILE SAYS YES AND THE DESK SAYS NO\nSome requests are allowed by one rule and refused by another, and both rules are right.\nThe preference file says a corner table. The restaurant is full. Neither of those is a mistake, and neither one is yours to overrule.\nWeek thirty-two built the file: it holds what the guest said yes to, in their own words. Week thirty-three built the ladder: it says which desk owns what.\nPut the two together and the file is a record, not a right. It tells you what she likes. It does not hand you a table.\nCheck the booking before you name an owner. A table she booked, or a late check-out she was promised for these nights, is already hers.\nTen seconds on the booking and no more: if it does not say, the front office does. Week thirty-three set that clock.\nWeek thirty-three put that one in your own hands. Restore it now, and tell the desk that owns it in the same minute.\nThat is not a gift and it is not counted. What she was never promised is the part with an owner to ask.\nOne line on that file is not a preference at all. Week thirty-two made an allergy a safety record: it goes on without asking anybody, and you never ask a desk for it.\nWritten, never spoken — the slip into the chef's hand, and the file in the same minute.\nConsent decides only whether it stays on the file after she leaves.\nSo do not argue with the file, and do not read it out as a promise. 'The file says a corner table' is true. 'You always have the corner table' is somebody else's yes.\nName the owner instead. The table is the restaurant's. A room change is the front office's, every day of the year.\nTier, points and tier lounge access are the loyalty office's, and that last one you never switch on yourself. None of that changed because a guest is standing in front of you.\nThen say the two halves in one breath: what you are asking for, and what you can do while you wait.\n'I am asking the restaurant now. What I can do meanwhile is come back to you within the half hour, either way.'\nWhen the guest presses on the half that will not move, 'however' is the hinge — week thirty-five's word.\n'I can ask the restaurant now; however, the table is theirs to give.'\nOne half moves and one half does not, and you say which is which.\nThe second half is the one that keeps her sitting down. A request with nothing attached is a wait, and a wait feels like a no.\nWhen a guest quotes a colleague, the same rule holds and one more with it. Do not say the colleague is wrong, and do not say nobody would have said it.\nYou were not there. Week thirty-one taught the honest version: you would rather find out than guess.\nAnd when a colleague asks you to say yes now and sort it out later, that is not help. It is a promise with your name on it and somebody else's signature missing.",
+        questions: [
+          {
+            q: "Hồ sơ sở thích ghi 'bàn góc'. Điều đó nghĩa là gì?",
+            options: [
+              "Nghĩa là khách có quyền với cái bàn đó mỗi lần tới",
+              "Nghĩa là bộ phận nhà hàng đã đồng ý giữ sẵn cái bàn đó cho khách mỗi lần tới",
+              "Nghĩa là khách đã nói thích bàn đó — một ghi chép, không phải một quyền",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'the file is a record, not a right. It tells you what she likes. It does not hand you a table.'",
+          },
+          {
+            q: "Khi hai luật gặp nhau thì luật nào nhường?",
+            options: [
+              "Không luật nào nhường; bạn nói ai sở hữu và đi xin bên đó",
+              "Luật của hồ sơ nhường, vì hồ sơ chỉ là ghi chép nội bộ",
+              "Luật của quầy kia nhường, vì khách đang đứng trước mặt bạn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Some requests are allowed by one rule and refused by another, and both rules are right.' Gọi tên chủ sở hữu, rồi đi xin.",
+          },
+          {
+            q: "Vì sao phải nói kèm 'trong lúc chờ tôi làm được gì'?",
+            options: [
+              "Vì quản lý yêu cầu mỗi lời từ chối phải kèm một phương án bù",
+              "Vì một lời xin không kèm gì thì thành một cuộc chờ, và chờ nghe như từ chối",
+              "Vì như thế khách sẽ quên mất yêu cầu ban đầu của mình",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A request with nothing attached is a wait, and a wait feels like a no.'",
+          },
+          {
+            q: "Khách nói một đồng nghiệp tháng trước đã hứa. Đáp lại thế nào?",
+            options: [
+              "Nói rằng ở đây không ai hứa như vậy được, vì điều đó không nằm trong chính sách nhà",
+              "Không nói đồng nghiệp sai, không nói không ai hứa thế — bạn không có mặt lúc đó",
+              "Ghi ngay vào hồ sơ rằng khách được hưởng điều đó từ nay về sau",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'You were not there.' Tuần 31: 'I would rather find out than guess.'",
+          },
+          {
+            q: "Đồng nghiệp bảo cứ nói có rồi tính sau. Đó là gì?",
+            options: [
+              "Là một lời hứa mang tên bạn mà thiếu chữ ký của người khác",
+              "Là cách xử lý hợp lý khi khách đang chờ ngay trước mặt",
+              "Là việc của quản lý ca, không phải việc bạn cần cân nhắc",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'It is a promise with your name on it and somebody else's signature missing.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_3",
+      lessonOrder: 3,
+      titleEn: "The Promise You Cannot Find",
+      titleVi: "Lời hứa không tìm thấy",
+      vocabulary: [
+        {
+          word: "A promise I cannot find",
+          phonetic: "/ə ˈprɒmɪs aɪ ˌkænɒt ˈfaɪnd/",
+          definition: "Lời hứa tôi chưa tìm thấy — nói ra được, và tốt hơn một câu chối",
+          context: "That is a promise I cannot find, madam.",
+          icon: "🔎",
+        },
+        {
+          word: "Who said it and when",
+          phonetic: "/ˌhuː ˈsed ɪt ənd ˈwen/",
+          definition: "Ai nói và nói lúc nào — hai dữ kiện còn thiếu, hỏi thẳng",
+          context: "Who said it and when, madam — I still need those two.",
+          icon: "🕵️",
+        },
+        {
+          word: "Written or spoken",
+          phonetic: "/ˈrɪtn ɔː ˈspəʊkən/",
+          definition: "Ghi ra giấy hay chỉ nói miệng — quyết định tìm ở đâu",
+          context: "Was it written or spoken, sir?",
+          icon: "✍️",
+        },
+        {
+          word: "Not a name, not a team",
+          phonetic: "/ˌnɒt ə ˈneɪm ˌnɒt ə ˈtiːm/",
+          definition:
+            "Không nêu tên người hay bộ phận LÀ NGUYÊN NHÂN — nêu tên quầy đang LÀM việc tiếp theo thì vẫn nói",
+          context: "Not a name, not a team, and not a guess.",
+          icon: "🤐",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Nobody on my team would ever have promised you that, madam.",
+          polite:
+            "That is a promise I cannot find, madam. Who said it and when — I still need those two.",
+          rule: "Không tìm thấy KHÔNG có nghĩa là không có. Câu 'không ai hứa thế' là một phán quyết, và tuần 33 đã cấm ra phán quyết khi chưa ai kiểm. Nói thẳng là bạn chưa tìm thấy, rồi xin hai dữ kiện còn thiếu.",
+        },
+        {
+          rude: "It must have been the front office again — they do this every week.",
+          polite: "Was it written or spoken, sir? Either way I am asking my manager to look.",
+          rule: "Không nêu tên người, không nêu tên bộ phận. Tuần 33: 'Never name another team as the cause.' Câu hỏi hữu ích duy nhất là ghi hay nói: ghi thì tìm được trong hồ sơ, nói thì phải hỏi người trực hôm đó.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "We were promised a free upgrade when we booked. It was definitely said.",
+          targetResponse:
+            "That is a promise I cannot find, sir. I would rather find out than guess — who said it, and when?",
+          helpTip:
+            "Ba việc trong một câu: không chối, không xác nhận, và xin đúng hai dữ kiện còn thiếu. Tuần 33 đòi bốn dữ kiện cho một khiếu nại; ở đây bạn đã có hai (hứa gì, chuyện gì xảy ra) và đang xin nốt hai cái kia. 'guess' /ɡes/ — /g/ phải bật ra, và đuôi là /s/ chứ không phải /z/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. The gentleman at the desk is shouting at me and he has hold of my sleeve.",
+          speakerRole: "colleague",
+          targetResponse:
+            "Ask him to let go of you, and step out of his reach. Say 'One moment, sir' and nothing else — I am calling security and the Duty Manager now.",
+          helpTip:
+            "Việc này thôi là khiếu nại rồi. Tuần 33: khách quát mắng, chửi, hay đặt tay lên người bạn là việc của bảo vệ NGAY TỪ CHỮ ĐẦU, và của Duty Manager. Ba bước, đúng thứ tự: gỡ tay ra và lùi khỏi tầm tay TRƯỚC, rồi đúng một câu và không thêm gì, rồi mới tới cuộc gọi. Tay đã ở trên người thì không lùi ra được nếu chưa gỡ. Và phải nói RÕ ai gọi, đừng để hai người cùng tưởng người kia đã gọi. Không ai đứng quầy này phải chịu trận. 'reach' /riːtʃ/ — /iː/ dài, và đuôi /tʃ/ phải bật ra thành tiếng.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Your reception staff told us the spa was included. Are you calling us liars?",
+          options: [
+            {
+              text: "Of course not, madam. I am sure reception simply made an honest mistake there.",
+              correct: false,
+            },
+            {
+              text: "Not at all, madam. I cannot find it yet — was it written on anything?",
+              correct: true,
+            },
+            {
+              text: "Not at all, madam, and I will include the spa now to put this right.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. Just give her the upgrade — it is easier than arguing about it.",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "An upgrade is my manager's to give. I am getting the last two facts, then she has all four.",
+              correct: true,
+            },
+            {
+              text: "You are right, it is quicker. I will square it with the manager tomorrow.",
+              correct: false,
+            },
+            {
+              text: "Let us split the difference — half the upgrade tonight, and the rest of it if she complains.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE PROMISE YOU CANNOT FIND\nA guest quotes a promise. You look, and it is not there.\nThat is the most common hard minute this desk has, and almost every wrong answer to it sounds reasonable.\n'Nobody would have said that' is a verdict, and week thirty-three took verdicts away from you. You were not on that shift.\n'I am sure it was a misunderstanding' is the same verdict said more gently.\n'Let me just give it to you' is a third wrong answer, and it is the expensive one. It teaches the guest that a claim nobody can find is worth more than one that is written down.\nWhat you say is what is true: you cannot find it yet.\nThen ask for the two facts you are missing. Week thirty-three wanted four — what was promised, who promised it, when, and what happened instead. A guest quoting a promise has already given you the first and the last.\nSo ask who said it, and ask when. Those two turn a claim into something a manager can check.\nAnd ask one more: was it written or spoken. That question is not a challenge; it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift, and only that person can settle it.\nNot a name, not a team, and not a guess. No name goes to the guest as the cause, and no department either. Week thirty-three: never name another team as the cause.\nNaming reception in front of a guest turns one complaint into two, and you still have not found the promise.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it. 'I am asking the restaurant now' is that sentence.\nWrite the four things in the complaint log before anything is offered. The log is what lets somebody else finish this after you go home.\nThat is the book for a promise. A thing that happened — a fall, an ambulance, an accusation against a colleague — is not a promise.\nThat goes on an incident report, not the complaint log, and it is marked confidential.\nAnd some of this stops being yours at all. Week thirty-three named six. Four of them arrive at this desk most.\nA guest who will accept nothing and will not leave the desk gets one sentence and nothing after it.\n'That is not mine to handle, madam. I am asking my Duty Manager to come to you now.'\nA lawyer or the press gets the other sentence, and week thirty-six drilled it too.\n'I am not the person to speak about that, sir. I am asking my Duty Manager to come to you now.'\nThen nothing — not your name, not your opinion, and not 'no comment'. A card handed to you goes straight to him.\nA guest who accuses a colleague by name gets neither sentence. You open with a question instead.\nIf she says a hand was put on her, ask first whether she is hurt and whether she needs a doctor. Everything else waits for that answer.\nThen take her somewhere private, with a colleague, and leave the door open.\nYour colleague telephones the Duty Manager and security from where they are standing.\nAsk security to save the camera recording for that floor and that hour: recordings are overwritten, and that one cannot wait.\nWrite the hour and the room on a confidential incident report. Do not write a full statement and never ask her to sign one.\nBoth of you stay with her until the Duty Manager arrives. If she wants to leave, she leaves — walk with her, and tell him where she went.\nDo not ask her to repeat it, and do not argue any part of it. If she says she wants the police, that is hers to decide.\nAnd say nothing at all to the colleague she named.\nA guest who shouts at you, swears at you, or puts a hand on you is security's from the first word, and the Duty Manager's.\nStep back out of arm's reach, say 'One moment, sir' and nothing else, and have the nearest colleague call them both.\nAnd whatever it turns out to be, the offer is not yours. An upgrade is your manager's to give. You bring her the facts, not a decision she has to take apart again.",
+        questions: [
+          {
+            q: "Khách nhắc một lời hứa mà bạn không tìm thấy. Nói gì?",
+            options: [
+              "Nói rằng chắc có hiểu lầm ở đâu đó, để không làm khách mất mặt",
+              "Nói đúng sự thật: bạn chưa tìm thấy nó",
+              "Nói rằng không ai ở đây hứa như thế, vì hồ sơ không có ghi",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What you say is what is true: you cannot find it yet.' Hai câu kia đều là phán quyết, và tuần 33 đã cấm.",
+          },
+          {
+            q: "Hai dữ kiện còn thiếu là gì?",
+            options: [
+              "Số phòng và hạng thẻ của khách",
+              "Số tiền khách muốn và thời hạn khách chờ",
+              "Ai đã nói, và nói lúc nào",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A guest quoting a promise has already given you the first and the last. So ask who said it, and ask when.'",
+          },
+          {
+            q: "Vì sao phải hỏi 'ghi ra giấy hay nói miệng'?",
+            options: [
+              "Vì lời nói miệng thì khách sạn không có trách nhiệm phải giữ, chỉ giấy tờ mới tính",
+              "Vì nó là tấm bản đồ: ghi thì tra hồ sơ, nói thì phải hỏi đúng người trực hôm đó",
+              "Vì chỉ lời hứa ghi ra giấy mới được đưa vào complaint log",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'That question is not a challenge; it is a map. Written lives on the booking or the file. Spoken lives with one person on one shift.'",
+          },
+          {
+            q: "Khách tố đích danh một đồng nghiệp, và nói có người đặt tay lên mình. Hỏi xong khách có bị thương không thì làm gì tiếp?",
+            options: [
+              "Mời khách sang chỗ riêng cùng một đồng nghiệp, và để cửa mở",
+              "Ghi lời khai đầy đủ rồi mời khách ký xác nhận ngay tại quầy",
+              "Gọi người bị nêu tên xuống để hai bên nói cho rõ",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Then take her somewhere private, with a colleague, and leave the door open.' Tuần 33: không bao giờ ngồi một mình với khách đang tố cáo, và không bao giờ xin khách ký lời khai.",
+          },
+          {
+            q: "Vì sao 'thôi cứ cho khách đi cho nhanh' là câu trả lời đắt nhất?",
+            options: [
+              "Vì quản lý sẽ trừ khoản đó vào hạn mức của quầy trong tháng",
+              "Vì khách sẽ sinh nghi rồi đòi thêm ngay trong cùng buổi hôm đó, và lần sau lại đòi tiếp",
+              "Vì nó dạy khách rằng một lời hứa không ai tìm ra còn đáng giá hơn một lời hứa có ghi",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'It teaches the guest that a claim nobody can find is worth more than one that is written down.'",
+          },
+        ],
+      },
+    },
+    {
+      lessonId: "GR_39_4",
+      lessonOrder: 4,
+      titleEn: "The Last Fifteen Minutes",
+      titleVi: "Mười lăm phút cuối",
+      vocabulary: [
+        {
+          word: "Nothing new after quarter to",
+          phonetic: "/ˌnʌθɪŋ ˈnjuː ˌɑːftə ˌkwɔːtə ˈtuː/",
+          definition:
+            "Sau giờ kém mười lăm ('quarter to' = 5:45) thì không mở việc mới — trừ việc khẩn; và câu này nói với đồng nghiệp, không đọc ra cho khách",
+          context: "Nothing new after quarter to — I am walking this one down to the Duty Manager.",
+          icon: "🚦",
+        },
+        {
+          word: "Hand it over by name",
+          phonetic: "/ˌhænd ɪt ˈəʊvə baɪ ˈneɪm/",
+          definition: "Bàn giao kèm tên người nhận — việc không có tên là việc của không ai",
+          context: "I hand it over by name, not to the shift.",
+          icon: "🤝",
+        },
+        {
+          word: "What the guest expects next",
+          phonetic: "/wɒt ðə ˈɡest ɪkˈspekts ˌnekst/",
+          definition: "Điều khách đang chờ tiếp theo — dòng quan trọng nhất của bàn giao",
+          context: "What the guest expects next is a call by eight.",
+          icon: "📌",
+        },
+        {
+          word: "Stopped asking",
+          phonetic: "/ˌstɒpt ˈɑːskɪŋ/",
+          definition: "Đã thôi hỏi — không phải đã hết bận tâm",
+          context: "She has stopped asking, sir, and she is the one I am worried about.",
+          icon: "🔇",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I will open a file now, sir, and the night shift will ring you about it.",
+          polite: "That is a new one, sir, and I am taking it to my Duty Manager myself now.",
+          rule: "Mở một hồ sơ mới lúc kém mười lăm là để lại cho ca sau một việc chưa có dữ kiện nào. Hoặc bạn làm xong, hoặc bạn đưa thẳng cho người có quyền — không mở rồi bỏ đó. Tuần 33 đã dạy: một việc không có tên gắn vào là việc của không ai.",
+        },
+        {
+          rude: "I told the evening shift about the lady in 1102 before I left.",
+          polite:
+            "I handed 1102 over by name, sir. Ms Hà has it, and the guest expects a call by eight.",
+          rule: "'Tôi đã nói với ca tối' không phải bàn giao — tuần 33 đã chấm câu đó là sai. Bàn giao cần TÊN người nhận, và cần điều KHÁCH ĐANG CHỜ. Ca sau nhìn được bảng; cái họ không nhìn được là thứ khách đang đợi.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Before you go — could you look into a refund for last night?",
+          targetResponse:
+            "A refund with no programme behind it is my Duty Manager's, madam. I am taking it to him myself now.",
+          helpTip:
+            "Đừng nhận một việc mới rồi để nó chết giữa hai ca. Luật 'kém mười lăm' là luật NỘI BỘ — nói với đồng nghiệp, không đọc ra cho khách nghe. Với khách thì nói việc bạn LÀM: mang thẳng tới người có quyền, ngay bây giờ. 'refund' /ˈriːfʌnd/ — là danh từ thì trọng âm rơi vào âm tiết ĐẦU.",
+        },
+        {
+          guestPrompt: "Duty Manager. Anything I should know before you go?",
+          speakerRole: "manager",
+          targetResponse:
+            "Three still open, sir. 704 has stopped asking, and what she expects next is the lounge by nine.",
+          helpTip:
+            "Bàn giao không phải kể lại ca của bạn — là kể những việc CÒN MỞ, và với mỗi việc là điều khách đang chờ. Câu 'đã thôi hỏi' là câu quan trọng nhất trong cả bàn giao: thôi hỏi không phải hết bận tâm. 'stopped' /stɒpt/ — đuôi -ed ở đây bật thành /t/, đừng thành /ɪd/. Đọc số phòng thành từng chữ số: 'seven-oh-four', không phải 'seven hundred and four'. Đây là chuẩn của quầy.",
+        },
+      ],
+      game: [
+        {
+          prompt: "Guest Relations. I am off in ten minutes — anything for the book?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Nothing that cannot wait until the morning shift comes on.",
+              correct: false,
+            },
+            {
+              text: "I will open one now and leave the details in the book for the night shift to pick up.",
+              correct: false,
+            },
+            {
+              text: "Nothing new after quarter to. I hand it over by name — two stranded guests are on the rate they booked.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "You did say somebody would ring me about the cake. That was Tuesday.",
+          options: [
+            {
+              text: "I am so sorry, madam. Let me look into what happened on Tuesday and come back to you tonight.",
+              correct: false,
+            },
+            {
+              text: "You are right, madam, and nobody has. Ms Hà has it at six and will ring you by eight.",
+              correct: true,
+            },
+            {
+              text: "It is in the log, madam, so the evening shift will certainly pick it up.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+      reading: {
+        text: "THE LAST FIFTEEN MINUTES\nThe last fifteen minutes of a shift are not for opening anything.\nA case opened at ten to six has no facts in it and no hour on it. The next shift inherits a name and a complaint with nothing behind it, and the guest explains it all again.\nIf a guest brings you something new at that hour, you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.\nSome things are not new work, and they never wait for the clock. Anyone hurt or unwell is week thirty-seven: the Duty Manager and the room number. Week thirty-six added the exception — 115 first if she is not breathing.\nA smell of burning or a loose rail is security first, the Duty Manager after. A child alone at the water you go to yourself, and somebody else telephones.\nNone of those stops at quarter to.\nQuarter to is one house's number. Ask your Guest Relations Manager where your shift's line falls, in your first week.\nWhat you carry up is week thirty-three's five levels. The front office reverses a small disputed line at once.\nAnything above their limit is the Duty Manager's. So is anything paid to a third party, and so is any refund with no written programme behind it.\nWhat the last fifteen minutes are for is the list of what is still open.\nEvery open case needs four lines at this desk. The room, or the party. What state it is in. What the guest expects next. And the hour.\n· 1102 — cake replaced, apology letter with the manager. She expects a call by eight.\n· Tour party — nine guests out, back by six by road, the boat off for the weather. They expect their keys here, and they are not on the room list until they are back.\n· 704 — asked twice about the lounge, nothing sent. She has stopped asking. The lounge manager has given me nine o'clock, so nine o'clock is what I told her.\nThat last line is the one to say out loud. A guest who has stopped asking has not stopped minding, and she is the one who writes the review.\nThe cake on the first line is an occasion, and that is week thirty-four.\nAn occasion nobody names at handover happens twice or not at all.\nThe boat is week thirty-eight. The programme offers the first clear day, then a rain check, and a refund last.\nA refund today is for the ones leaving before the weather clears — and only if you can put your hand on the sheet.\nAn hour another desk has already given you may be passed on. An hour nobody has given you yet is still your own to promise.\nHand it over by name. Week thirty-three settled this: 'I told the evening shift' is not a handover, because a job with nobody's name against it belongs to nobody.\nAnd say it as well as write it. A promise that lives only in the book waits for somebody to open the book.\nOne last thing, and it is the one people skip. If you promised an hour that falls inside the next shift, that hour is now somebody else's to keep.\nGive them the hour, the room, and the guest's name, out loud, before you leave the desk.\nSay it behind the desk or on the desk telephone, never across the lobby.\nThat is week thirty-one's rule about who is in this house, and week thirty-six put it in these words through an evacuation. A handover does not suspend it either.",
+        questions: [
+          {
+            q: "Vì sao không mở hồ sơ mới trong mười lăm phút cuối?",
+            options: [
+              "Vì hệ thống khoá sổ vào cuối mỗi ca trực và không nhận thêm hồ sơ mới nào nữa",
+              "Vì ca sau nhận được một cái tên và một nỗi bực, còn khách phải kể lại từ đầu",
+              "Vì quản lý phải duyệt mọi hồ sơ mở sau giờ đó",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A case opened at ten to six has no facts in it and no hour on it.'",
+          },
+          {
+            q: "Khách mang việc mới tới lúc đó. Làm gì?",
+            options: [
+              "Không từ chối, không tự bắt đầu — mang thẳng tới Duty Manager khi còn ở đây",
+              "Ghi vào sổ và dặn ca sau gọi lại cho khách",
+              "Nhận rồi làm cho xong bằng được, dù có phải ở lại thêm nửa tiếng sau khi đã hết ca",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'you do not refuse it and you do not start it. You carry it, in person, to the Duty Manager while you are still here.'",
+          },
+          {
+            q: "Mỗi việc còn mở cần mấy dòng, và gồm những gì?",
+            options: [
+              "Ba dòng: phòng, tên nhân viên xử lý, và giờ",
+              "Năm dòng: phòng, tình trạng, nguyên nhân, khách chờ gì, và giờ",
+              "Bốn dòng: phòng, tình trạng, điều khách đang chờ, và giờ",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Every open case needs four lines at this desk. The room, or the party. What state it is in. What the guest expects next. And the hour.'",
+          },
+          {
+            q: "Vì sao dòng 'khách đã thôi hỏi' lại quan trọng nhất?",
+            options: [
+              "Vì thôi hỏi nghĩa là khách đã chấp nhận và hồ sơ đóng được",
+              "Vì thôi hỏi không phải là hết bận tâm, và đó là người sẽ viết đánh giá",
+              "Vì ca sau cần biết khách nào không nên chủ động gọi lại",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'A guest who has stopped asking has not stopped minding, and she is the one who writes the review.'",
+          },
+          {
+            q: "Bàn giao việc còn mở cho Duty Manager — đứng ở đâu mà nói?",
+            options: [
+              "Ở quầy cũng được, miễn là chỉ nói số phòng chứ không nói tên khách",
+              "Sau quầy hoặc trên máy bàn của quầy — không bao giờ nói với qua sảnh",
+              "Ở quầy, nói vừa đủ nghe — bàn giao là việc nội bộ nên không tính là tiết lộ",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Say it behind the desk or on the desk telephone, never across the lobby.' Một số phòng gắn với một sự thật về khách cũng là tiết lộ — tuần 31 cấm, tuần 36 giữ nguyên lệnh đó qua cả một cuộc sơ tán.",
+          },
+        ],
+      },
+    },
+  ],
+};
+
+const GR_WEEK_40: WeekContent = {
+  departmentId: "GR",
+  weekNumber: 40,
+  weekTitleEn: "Forty Weeks, and What This Desk Remembers",
+  weekTitleVi: "Bốn mươi tuần, và những gì quầy này còn nhớ",
+  reviewWords: [
+    "Spell",
+    "How may I help",
+    "Summarise",
+    "Recovery plan",
+    "I would rather find out",
+    "Only with your permission",
+    "My manager's to give",
+    "Occasion",
+    "The part I cannot move",
+    "Not the person to speak about that",
+    "Conscious",
+    "Rain check",
+    "I am asking, not promising",
+  ],
+  lessons: [
+    {
+      lessonId: "GR_40_1",
+      lessonOrder: 1,
+      titleEn: "The Shape You Reach For Now",
+      titleVi: "Cái khuôn giờ bạn với tay tới",
+      vocabulary: [
+        {
+          word: "Used to write it out first",
+          phonetic: "/ˌjuːst tə ˈraɪt ɪt aʊt ˈfɜːst/",
+          definition: "Trước đây phải viết ra giấy rồi mới dám nói",
+          context: "I used to write it out first, sir, and now I do not.",
+          icon: "📝",
+        },
+        {
+          word: "Let the guest finish",
+          phonetic: "/ˌlet ðə ˈɡest ˈfɪnɪʃ/",
+          definition: "Nghe hết đã rồi mới nói — khách bị cắt lời sẽ kể lại từ đầu",
+          context: "I let the guest finish first, and then I named the desk that owns it.",
+          icon: "👂",
+        },
+        {
+          word: "I will find the owner first",
+          phonetic: "/aɪ wɪl ˌfaɪnd ði ˈəʊnə ˈfɜːst/",
+          definition: "Tìm quầy sở hữu trước, câu trả lời đến sau",
+          context: "I do not have the answer yet, Nam. I will find the owner first.",
+          icon: "🗝️",
+        },
+        {
+          word: "I know who owns it",
+          phonetic: "/aɪ ˌnəʊ huː ˈəʊnz ɪt/",
+          definition: "Biết việc này thuộc quầy nào",
+          context: "I do not know the answer yet, madam, but I know who owns it.",
+          icon: "🧭",
+        },
+        {
+          word: "My own hour",
+          phonetic: "/maɪ ˌəʊn ˈaʊə/",
+          definition:
+            "Mốc giờ do CHÍNH BẠN cam kết — giờ quầy khác đã đưa thì chuyển tiếp được, giờ chưa ai đưa thì phải là giờ của bạn",
+          context: "Half past four is my own hour, Nam — not the restaurant's.",
+          icon: "⏰",
+        },
+      ],
+      grammar: [
+        {
+          rude: "Now I am better than before at this desk, sir.",
+          polite: "I used to write it out first, sir. Now I do not.",
+          rule: "'used to + động từ NGUYÊN THỂ TRẦN' = thói quen CŨ nay đã bỏ, và luôn đi kèm một vế 'giờ thì…' để đối chiếu: used to write, không phải used to writing. Phủ định viết là did not USE to — không có chữ D. Và đừng lẫn với 'I am used to + V-ing' nghĩa 'đã quen với', là cấu trúc khác hẳn.",
+        },
+        {
+          rude: "I do not know, madam. You will have to ask somebody else about that one.",
+          polite:
+            "I do not know the answer yet, madam, but I know who owns it. I am asking them now.",
+          rule: "'Tôi không biết' là chỗ dừng. 'Tôi chưa biết câu trả lời, nhưng tôi biết việc này thuộc quầy nào' là một bước đi. Bốn mươi tuần trước bạn đi tìm CÂU; giờ bạn đi tìm CHỦ SỞ HỮU, và câu chữ đến sau. Chú ý 'yet' — nó nói việc chưa xong, chứ không nói bạn không làm được.",
+        },
+        {
+          rude: "Somebody will get back to you at some point today, sir.",
+          polite: "I am coming back to you at half past four, sir, whatever the answer is.",
+          rule: "Một mốc giờ mơ hồ là một lời từ chối nói khéo. Tuần 35 đã chốt: nói giờ ra, và phải là giờ CỦA BẠN — trừ đúng một ngoại lệ tuần 39 mở ra, là giờ mà quầy sở hữu ĐÃ đưa cho bạn. 'Whatever the answer is' mới là nửa đắt nhất: nó hứa bạn quay lại kể cả khi câu trả lời là không, và đó là chỗ phần lớn nhân viên biến mất. Và mốc giờ phải rơi TRƯỚC hạn của khách — một mốc đến sau thứ khách cần chỉ là lời từ chối có gắn đồng hồ.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "…and then the man at the restaurant said — no, sorry, it was the day before — he said the table was ours, and my sister—",
+          targetResponse:
+            "Please go on, madam. What I can do meanwhile is write it down, and I will name the desk when you have finished.",
+          helpTip:
+            "Khách đang kể dở và câu chuyện đang rối. Đừng chen vào để hỏi cho nhanh — cắt lời thì khách kể lại từ đầu, và bạn mất đúng cái phút vừa tiết kiệm. 'Please go on' cộng một việc bạn ĐANG làm giữ được cả hai. 'finished' /ˈfɪnɪʃt/ — đuôi -ed sau /ʃ/ đọc thành /t/, đừng thành /ɪd/.",
+        },
+        {
+          guestPrompt:
+            "Duty Manager. Forty weeks in — what can you do now that you could not do in week one?",
+          speakerRole: "manager",
+          targetResponse:
+            "I used to write it out first, sir. Now I let the guest finish, name the owner, and give my own hour.",
+          helpTip:
+            "Cấp trên hỏi thì trả lời bằng VIỆC LÀM ĐƯỢC, đừng trả lời bằng cảm giác và đừng trả lời bằng khẩu hiệu. Ba trong sáu bước — ba bước cấp trên nghe thấy được. 'used to + động từ nguyên thể' = thói quen CŨ nay đã bỏ, và luôn đi kèm một vế 'giờ thì…' để đối chiếu; phủ định viết là did not USE to, không phải did not USED to. 'used to' /ˈjuːst tə/ — ở đây /s/ VÔ THANH, khác hẳn /z/ trong động từ 'use' /juːz/.",
+        },
+      ],
+      reading: {
+        text: "FORTY WEEKS AGO\nForty weeks ago you could greet a guest by the time of day and spell a name back to them.\nThat was week one, and it mattered. A name spelled wrong at this desk follows a guest for four days.\nBy week fourteen you could take a request, put one small thing right, and close the conversation.\nBy week twenty-two you could run the paperwork, the payment and a full shift report in English.\nBy week thirty you could offer, promise, coordinate with another desk, and apologise when it did not arrive.\nWhat changed after that is not the number of words you know.\nWhat changed is that you stopped hunting for a sentence and started reaching for a shape.\nThe shape is six moves, and it fits almost everything that arrives at this desk.\nAlmost. It does not fit anybody in danger.\nOn the seven of the next lesson it still runs — only the owner changes, and two of them stop at one sentence.\nAnd it is a shape for one thing at a time. Week thirty-nine put three at once in an order first: the guest in front of you, then the telephone.\nThen the messages, and never the loudest. Week thirty-nine settled that order: danger first, and 'first' is an action, not a place in a queue.\nNobody listens to the end of a sentence about a child at the water.\nSo here are the six, for everything else.\nLet the guest finish. Nobody taught you this one, and it is the move the other five rest on.\nA guest who is interrupted starts again from the beginning, and you lose the minute you saved.\nName the owner. 'The restaurant's', 'the front office's', 'my manager's' — a named owner is not a refusal.\nSay what you can do meanwhile. A request with nothing attached is a wait, and a wait feels like a no.\nPut an hour on it, and make it your own hour. Week thirty-five settled that, and week thirty-nine put it in an order.\nPut it before the guest's own hour as well. An hour that lands after the thing she asked for is a no with a time on it.\nWrite it down. The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.\nCome back at your hour even when the answer is no. Especially when the answer is no.\nOne clock sits outside the six. Week thirty-nine: near the end of a shift you open nothing new.\nYou carry it up in person while you are still here, because a case opened at ten to six has no hour on it.\nQuarter to — a quarter of an hour before the hour — was one house's line, and week thirty-nine said so. Ask where your own falls.\nThe shape held all the way through this phase.\nWeek thirty-four gave you an occasion to coordinate, and week thirty-eight gave you a rain check when the weather took the day.\nWeek thirty-six is the other place it does not reach: the assembly point comes before all six, and the bell stopping is not the all-clear.\nNow the words are small and the shape is large, and that is the right way round.\nTest it on yourself. A guest asks for something nobody has ever asked for here.\nForty weeks ago you looked for the sentence and found nothing.\nToday you look for the owner, and the sentence comes after it.",
+        questions: [
+          {
+            q: "Theo bài đọc, thứ đã thay đổi sau tuần 30 là gì?",
+            options: [
+              "Số lượng từ vựng bạn thuộc",
+              "Việc bạn thôi đi tìm một câu và bắt đầu với tay tới một khuôn",
+              "Tốc độ nói của bạn khi khách đứng trước mặt",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'What changed is that you stopped hunting for a sentence and started reaching for a shape.'",
+          },
+          {
+            q: "Vì sao 'nghe hết' là bước đầu tiên, chứ không phải bước lịch sự cho có?",
+            options: [
+              "Vì cắt lời khiến khách kể lại từ đầu, và bạn mất đúng cái phút vừa tiết kiệm",
+              "Vì nếu quản lý đứng gần đó nghe thấy bạn cắt lời khách thì ca sau sẽ bị nhắc nhở",
+              "Vì khách sẽ phàn nàn nếu bị ngắt giữa chừng",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Let the guest finish… A guest who is interrupted starts again from the beginning, and you lose the minute you saved.'",
+          },
+          {
+            q: "Khuôn sáu bước KHÔNG dùng được cho trường hợp nào?",
+            options: [
+              "Khi khách hỏi một việc chưa ai ở quầy từng được hỏi",
+              "Khi việc đó thuộc một quầy khác chứ không phải quầy bạn, nên bạn phải đi hỏi bên đó trước đã",
+              "Khi có người đang gặp nguy hiểm — lúc đó 'trước' là một VIỆC, không phải một chỗ trong hàng",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: \"Week thirty-nine settled that order: danger first, and 'first' is an action, not a place in a queue.\"",
+          },
+          {
+            q: "Bốn thứ tuần 33 đòi ghi lại là gì?",
+            options: [
+              "Tên khách, số phòng, giờ, và bộ phận liên quan",
+              "Đã hứa gì, ai hứa, hứa khi nào, và thực tế xảy ra ra sao",
+              "Vấn đề, nguyên nhân, người chịu trách nhiệm, và chi phí",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The four things week thirty-three wanted: what was promised, who promised it, when, and what happened instead.'",
+          },
+          {
+            q: "Khách mang một việc MỚI tới quầy lúc 5 giờ 50, ca bạn hết lúc 6 giờ. Bạn làm gì?",
+            options: [
+              "Mở hồ sơ ngay rồi ghi lại thật kỹ vào sổ bàn giao cho ca tối tiếp tục",
+              "Xin lỗi khách và hẹn họ quay lại đầu ca tối",
+              "Không từ chối và cũng không mở việc: cầm nó lên tận tay Duty Manager khi mình còn ở đây",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'near the end of a shift you open nothing new… You carry it up in person while you are still here, because a case opened at ten to six has no hour on it.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "Is there a temple near here that is open before six in the morning?",
+          options: [
+            {
+              text: "I do not know that yet, madam, but the concierge does. I will come to you by six this evening.",
+              correct: true,
+            },
+            {
+              text: "I am afraid that is not really something we would have any information about here, madam.",
+              correct: false,
+            },
+            {
+              text: "I think so, madam — there is usually one open early somewhere in that direction.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "I have been sent to three different desks this morning and nobody has told me anything.",
+          options: [
+            {
+              text: "I am so sorry about that, madam. Let me find out what has been happening and come back to you soon.",
+              correct: false,
+            },
+            {
+              text: "Three desks is three too many, madam. I will find the owner first, and tell you which one it is.",
+              correct: true,
+            },
+            {
+              text: "That does sound like a morning, madam. Which of the three desks did you speak to last?",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_2",
+      lessonOrder: 2,
+      titleEn: "The Line This Desk Does Not Cross",
+      titleVi: "Lằn ranh quầy này không bước qua",
+      vocabulary: [
+        {
+          word: "Never mine to give",
+          phonetic: "/ˌnevə ˈmaɪn tə ˈɡɪv/",
+          definition: "Không thuộc quyền cho của tôi — con số là của quản lý, tôi đưa lên",
+          context: "That one was never mine to give, madam; my manager decides it.",
+          icon: "🚫",
+        },
+        {
+          word: "Read aloud",
+          phonetic: "/ˌred əˈlaʊd/",
+          definition: "Đọc lên thành tiếng — hồ sơ mật thì không, kể cả với đồng nghiệp",
+          context: "A confidential file is never read aloud, not even to a colleague.",
+          icon: "🔒",
+        },
+        {
+          word: "Not mine to treat",
+          phonetic: "/ˌnɒt ˈmaɪn tə ˈtriːt/",
+          definition:
+            "Không phải phần tôi CHỮA — chẩn đoán và thuốc thì không; còn gọi trợ giúp, ở lại với khách, xe, phiên dịch, biên bản thì vẫn là việc của tôi",
+          context: "That part is not mine to treat — the doctor decides it, and I stay.",
+          icon: "🚑",
+        },
+        {
+          word: "I am staying with you",
+          phonetic: "/aɪ əm ˈsteɪɪŋ wɪð ˈjuː/",
+          definition: "Cuộc gọi đầu không kết thúc việc của bạn — tuần 37 giữ bạn ở lại",
+          context: "I am staying with you, madam. My colleague is bringing the doctor up.",
+          icon: "🤲",
+        },
+        {
+          word: "Only the guest closes it",
+          phonetic: "/ˌəʊnli ðə ˈɡest ˈkləʊzɪz ɪt/",
+          definition: "Chỉ khách mới đóng được hồ sơ — khách thôi hỏi không có nghĩa là xong",
+          context: "It stays open. Only the guest closes it.",
+          icon: "📂",
+        },
+      ],
+      grammar: [
+        {
+          rude: "I can explain how we work out the compensation figure if you would like, madam.",
+          polite:
+            "The figure was never mine to give, madam. My manager decides it, and I am asking her now.",
+          rule: "Con số là lằn ranh cứng nhất của quầy này, và giải thích CÁCH tính ra nó cũng là đã cho con số rồi. Tuần 33 cho câu để nói: việc đó là của quản lý. Tuần 35 nói tiếp về một tầng khác — có những thứ nằm ngoài khung dù quản lý nói gì, vì chúng chưa bao giờ thuộc quyền bà ấy. Đừng gộp hai tầng đó làm một.",
+        },
+        {
+          rude: "He is not in his room right now, madam, and I do not think he wants to be disturbed.",
+          polite:
+            "May I have his name and your own, madam? I will ring the room from this desk, and pass you over once he says yes.",
+          rule: "Tuần 31 tuyệt đối: nói 'người ta không muốn gặp' là đã xác nhận người ta ở đây. Tuần 31 cho hẳn quy trình, và THỨ TỰ của nó mới là chỗ an toàn: xin tên hai bên, TỰ bấm máy từ quầy, nói ai đang hỏi, và chỉ chuyển máy sau khi người trên phòng đồng ý. Đừng nói người kia có ở đây hay không, đừng nói TẦNG hay số phòng. Câu 'I am afraid I am not able to connect you' để dành cho lúc không ai nghe máy hoặc người trên phòng từ chối — nó đúng dù người kia có ở đây hay không. Luật bảo mật này không hết hiệu lực khi khách trả phòng. Tuần 31 nói rõ luật này KHÔNG hết hiệu lực khi khách trả phòng.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt: "Just tell me roughly what the hotel usually pays in a case like mine.",
+          targetResponse:
+            "That figure was never mine to give, madam. It is the part I cannot move, and I am asking my manager now.",
+          helpTip:
+            "'Khoảng bao nhiêu' vẫn là một con số, và giải thích cách tính cũng vậy. Nói rõ nó chưa bao giờ thuộc quyền bạn, rồi nói ngay việc bạn ĐANG làm. 'figure' /ˈfɪɡə/ — trọng âm âm tiết đầu, và đuôi /ə/ nhẹ, đừng thành 'ơ' rõ.",
+        },
+        {
+          guestPrompt:
+            "Please, somebody — my husband has collapsed in the bathroom and I cannot lift him.",
+          targetResponse:
+            "Is he breathing, madam? Please do not move him. If he is not, I am dialling 115 — our name and street, then your room. If he is, my Duty Manager, now.",
+          helpTip:
+            "Người nhà đang hoảng thì không cần nghe về phận sự của bạn. Sàng lọc TRƯỚC rồi mới hứa: câu hỏi thở quyết định gọi 115 hay đường dây trong nhà, nên đừng nói trợ giúp đang tới khi chưa ai bấm số. Nói rõ CHÍNH BẠN đang bấm — tuần 39: đừng để hai người cùng tưởng người kia gọi rồi. Chặn việc di chuyển khách ngay, thứ tuần 37 in hoa. Và phải đủ HAI NHÁNH: không thở — hoặc không ai nói chắc được — thì 115, kèm tên và đường của khách sạn TRƯỚC số phòng; còn thở thì Duty Manager và số phòng. Và gọi xong KHÔNG phải là xong. 'breathing' /ˈbriːðɪŋ/ — /ð/ hữu thanh, lưỡi giữa hai hàm răng, đừng thành /d/ hay /z/.",
+        },
+      ],
+      reading: {
+        text: "WHAT IS STILL NOT YOURS TO DECIDE\nForty weeks have made you faster. They have not moved the line.\nWeek thirty-three already named six things that are not complaints at all, and those six have not changed.\nThis page is a different list: the decisions that are still not yours to take.\nA figure is the first. A compensation amount, a rate, a night taken off a bill.\nExplaining how the figure is worked out is giving the figure. That part is my manager's too.\nOne kind of charge is not. Week thirty-three: a disputed minibar water or one laundry item goes to the front office.\nIt comes off while the guest is still standing there.\nWeek thirty-three gave you the sentence: 'That one is my manager's to give' is better than a long silence.\nWeek thirty-five went further. Some things stay outside the range whatever your manager says, because they were never hers to give.\nSecond, saying who is staying in this house, or reading out what is on a file. Writing the file is still yours.\nWeek thirty-one: everything this desk knows about a guest is confidential, and it does not expire when they check out.\nWeek thirty-two: a confidential file is never read aloud, not even to a colleague.\nAnd week thirty-one again, the line people get wrong. Never say that somebody does not want to see them — that answer confirms they are here.\nThird, treating anybody. Week thirty-seven: send help first, ask questions second — is she conscious, is she breathing.\nIf nobody can say she is breathing, week thirty-six overrides the inside line.\nThat one is 115 first, and the name and street of this house come before the room.\nAfter that call, the decisions stop being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.\nDo not move the guest either, with the one exception week thirty-seven wrote out: out of the sun and into the shade, in the heat.\nWhat does not stop is the guest. Week thirty-seven keeps you there: stay with them, and send a colleague for anything you need.\nDo only what that week wrote out. Loosened clothing, a wet towel at the neck, and their own medicine reached for them.\nAnd nothing at all to eat or drink, because a surgeon may have to operate later.\nFourth, naming a colleague or another desk as the cause. Week thirty-three: not a name, not a department, not a guess.\nNaming the desk that is doing the next thing is a different sentence, and the guest needs it.\nFifth, closing a case. It stays open until the guest says it is closed, and a guest who has stopped asking has not closed anything.\nSixth, a lawyer or the press. Week thirty-three wrote the line and week thirty-six put it through an evacuation: one turn, and then nothing at all.\nThe turn has two halves — you are not the person to speak about it, and your Duty Manager is coming now.\nThe police are not on that list. Week thirty-three: if a guest asks for them, that is theirs to decide, and you say 'Of course, madam'.\nThen you tell the Duty Manager in the same minute.\nAn insurer is not on it either. Week thirty-seven put the card and the report in English into your hands.\nSeventh, and it is the only one on this page about you. A guest who shouts, swears or puts a hand on you is security's from the first word.\nAsk him to let go, then step back out of arm's reach.\nSay 'One moment, sir' and nothing else, and the nearest colleague makes both calls.\nNone of those is new. What is new is that you can hand every one of them over in English.\nThe four things, written and said out loud, by name.\nThe line is where it always was. You are the one who can now say why.",
+        questions: [
+          {
+            q: "Giải thích CÁCH khách sạn tính ra con số bồi thường thì có được không?",
+            options: [
+              "Được, miễn là bạn nói rõ đó chỉ là cách tính chung chứ không phải con số cho trường hợp này",
+              "Được, nếu khách đã hỏi đến lần thứ hai",
+              "Không — giải thích cách tính cũng là đã cho con số rồi",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'Explaining how the figure is worked out is giving the figure. That part is my manager's too.'",
+          },
+          {
+            q: "Luật bảo mật về khách hết hiệu lực khi nào?",
+            options: [
+              "Không hết — nó không hết hiệu lực ngay cả khi khách đã trả phòng",
+              "Khi khách đã trả phòng và thanh toán xong",
+              "Khi thông tin đó đã có sẵn trên hệ thống của một bộ phận khác trong khách sạn",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'everything this desk knows about a guest is confidential, and it does not expire when they check out.'",
+          },
+          {
+            q: "Vì sao câu 'ông ấy không muốn gặp bà' là một câu sai?",
+            options: [
+              "Vì nghe thiếu lịch sự với người đang đứng trước mặt",
+              "Vì chính câu đó đã xác nhận người kia đang ở trong khách sạn",
+              "Vì bạn không thể biết chắc ý muốn của khách đang ở trong phòng",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Never say that somebody does not want to see them — that answer confirms they are here.'",
+          },
+          {
+            q: "Sau cuộc gọi đầu tiên trong một ca y tế, thứ gì THÔI thuộc về bạn?",
+            options: [
+              "Cả ca đó — gọi xong là bàn giao cho quản lý và bạn quay về quầy làm việc khác",
+              "Các quyết định chữa trị: chọn thuốc, đưa thuốc, gọi tên bệnh — ở lại thì không",
+              "Việc ghi biên bản sự cố, vì bác sĩ và Duty Manager sẽ ghi thay bạn trong ca đó",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'After that call, the decisions stop being yours. Do not choose or give any medicine including painkillers, and never name what is wrong with them.' Vế không dừng: 'What does not stop is the guest.'",
+          },
+          {
+            q: "Khách đòi gặp công an. Bạn xử lý thế nào?",
+            options: [
+              "Nói đúng một câu rồi im, vì công an cũng nằm trong nhóm không được phát ngôn",
+              "Khuyên khách cân nhắc lại và đề nghị để khách sạn tự xử lý nội bộ trước đã",
+              "Đó là quyền của khách: nói 'Of course, madam', rồi báo Duty Manager",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: \"The police are not on that list. Week thirty-three: if a guest asks for them, that is theirs to decide, and you say 'Of course, madam'.\"",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt: "A journalist is asking me about the accident last night. What do I say?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Say it is being looked into, and that nobody was seriously hurt — that much is true anyway.",
+              correct: false,
+            },
+            {
+              text: "One sentence: not the person to speak about that, and the Duty Manager is coming now.",
+              correct: true,
+            },
+            {
+              text: "Say no comment and walk away — that way we have not actually told him anything at all.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "Guest Relations. The boat was off for the weather and she took the rain check. Shall I close it off?",
+          speakerRole: "colleague",
+          options: [
+            {
+              text: "Only the guest closes it. She took the rain check; she has not said the case is closed.",
+              correct: true,
+            },
+            {
+              text: "Yes, close it. She took what we offered, so there is nothing left of it for anybody to do.",
+              correct: false,
+            },
+            {
+              text: "Leave it another week, and if she says nothing more then we can quietly write it off.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_3",
+      lessonOrder: 3,
+      titleEn: "The One Who Sits Here Next Month",
+      titleVi: "Người sẽ ngồi chỗ này tháng sau",
+      vocabulary: [
+        {
+          word: "Stand beside",
+          phonetic: "/ˌstænd bɪˈsaɪd/",
+          definition: "Đứng CẠNH người mới trước mặt khách, đừng đứng chắn trước họ",
+          context: "Stand beside, not in front — the guest must still see her.",
+          icon: "🤝",
+        },
+        {
+          word: "Give her the phrase",
+          phonetic: "/ˌɡɪv hə ðə ˈfreɪz/",
+          definition: "Cho người mới CÂU nói được ngay, đừng cho một điều luật",
+          context: "Give her the phrase, not the rule — she can use a phrase tonight.",
+          icon: "🎁",
+        },
+        {
+          word: "What I got wrong",
+          phonetic: "/ˌwɒt aɪ ɡɒt ˈrɒŋ/",
+          definition: "Cái chính bạn từng làm sai — kể ra thì người mới mới dám hỏi",
+          context: "Let me tell you what I got wrong in my first month.",
+          icon: "🪞",
+        },
+        {
+          word: "Stop it that second",
+          phonetic: "/ˈstɒp ɪt ðæt ˈsekənd/",
+          definition:
+            "Việc nguy hiểm hoặc hồ sơ mật bị nói ra thì chặn NGAY GIÂY ĐÓ, không đợi hết ca",
+          context: "If a file is read out loud, you stop it that second, whoever is listening.",
+          icon: "✋",
+        },
+      ],
+      grammar: [
+        {
+          rude: "One moment, madam — she has got that wrong, and I will sort it out for you.",
+          polite: "May I take this one, madam? Thank you for waiting.",
+          rule: "Sửa người mới TRƯỚC MẶT KHÁCH thì hỏng hai thứ cùng lúc: khách mất lòng tin vào cả quầy, và người mới thôi dám mở miệng. Cầm lấy lượt đó bằng một câu ngắn và KHÔNG nói gì thêm — đừng gọi tên đồng nghiệp, đừng báo trước rằng lát nữa sẽ có màn sửa sai. Phần sửa để sau ca. Thứ không đợi được là nguy hiểm và hồ sơ mật: hai thứ đó chặn ngay giây đó, ngay giữa câu.",
+        },
+        {
+          rude: "You promised her the corner table. That was wrong and you cannot do that.",
+          polite:
+            "You handled the apology well. One thing for next time: 'I am asking, not promising.'",
+          rule: "Khuôn của nhà: một điều họ làm TỐT, rồi ĐÚNG MỘT điều sửa, và sửa bằng cách đưa CÂU chứ không đưa luật. 'Đừng hứa quá tay' là một điều luật, nghe xong vẫn không biết nói gì. 'I am asking, not promising' là một câu dùng được ngay trong ca tối nay.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "Guest Relations. The new starter just read the guest's anniversary date off the file to her friend.",
+          speakerRole: "colleague",
+          targetResponse:
+            "A file is never read aloud, and that one does not wait — you stop it that second. I am coming over.",
+          helpTip:
+            "Đây là ngoại lệ của luật 'sửa sau ca'. Hồ sơ mật bị đọc lên và mọi thứ nguy hiểm thì chặn ngay, không đợi. 'read' ở đây KHÔNG đọc /riːd/ — dạng bị động đọc /red/, cùng mặt chữ khác âm. 'second' /ˈsekənd/ — trọng âm âm tiết đầu, và cụm /nd/ cuối phải nghe được cả hai âm, đừng dừng ở /n/.",
+        },
+        {
+          guestPrompt:
+            "Duty Manager. She starts on Monday. What is the first thing you will give her?",
+          speakerRole: "manager",
+          targetResponse:
+            "A phrase, sir, not a rule. I give her the phrase she can say tonight: 'I am asking, not promising.'",
+          helpTip:
+            "Cấp trên hỏi thì đưa ra thứ CỤ THỂ. Một điều luật phải dịch ra thành hành động mới dùng được; một câu thì dùng được ngay tối nay. 'phrase' /freɪz/ — /fr/ đọc liền không chèn nguyên âm, và đuôi /z/ hữu thanh.",
+        },
+      ],
+      reading: {
+        text: "THE ONE WHO SITS HERE NEXT MONTH\nSomebody will start at this desk in a few weeks, and she will be where you were in week one.\nShe will make three mistakes that belong to this desk in particular, and you already know all three.\nShe will read the file out loud. It is the fastest way to look useful, and it is the one thing that cannot be taken back.\nShe will promise instead of asking. A guest smiles when you promise, and the smile is why it happens.\nAnd she will say no where the house says something better: what I can do meanwhile.\nSo here is how this house teaches, and none of it is about being kind.\nNever correct her in front of a guest. Two things break at once: the guest stops trusting the desk, and she stops speaking.\nTake the turn yourself instead. 'May I take this one, madam' is enough, and nobody in the lobby learns anything about it.\nDo not name her to the guest, and do not say that the two of you will go through it later.\nStand beside her, not in front of her. A guest who cannot see the new person learns to wait for you, and then you have two problems.\nA promise she has already made is a different matter, and it does not wait either. Go and put the hour right first.\nAfter the shift, give her one thing she did well and one correction. One, not four.\nFour corrections is a list, and a list is what people stop listening to.\nGive her the phrase, not the rule. 'Do not over-promise' is a rule, and she still has nothing to say.\n'I am asking, not promising' is a phrase, and she can use it on her first evening.\nThen tell her what you got wrong in your own first month. She will not ask you a question until you do.\nThere is one thing you do not even wait for the guest to leave.\nAnything dangerous, and anything confidential said out loud, you stop it that second.\nA file read to a friend, a corridor named to a stranger, a hand on a guest who is unwell.\nYou do not wait, you do not soften it, and you explain it afterwards.\nEverything else keeps until the shift is over.",
+        questions: [
+          {
+            q: "Vì sao không sửa người mới trước mặt khách?",
+            options: [
+              "Vì khách đang đứng đó sẽ phải chờ thêm trong lúc hai người trao đổi với nhau về cách làm",
+              "Vì hỏng hai thứ cùng lúc: khách mất lòng tin vào quầy, và người mới thôi dám nói",
+              "Vì đó là việc của giám sát chứ không phải của bạn",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Two things break at once: the guest stops trusting the desk, and she stops speaking.'",
+          },
+          {
+            q: "Đứng cạnh chứ không đứng trước — vì sao?",
+            options: [
+              "Vì khách không nhìn thấy người mới sẽ học cách chờ bạn, và thế là bạn có hai vấn đề",
+              "Vì đứng chắn phía trước khiến người mới không nghe rõ khách nói gì, rồi lại phải hỏi lại",
+              "Vì quy định về khoảng cách khi tiếp khách tại quầy",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'A guest who cannot see the new person learns to wait for you, and then you have two problems.'",
+          },
+          {
+            q: "Người mới vừa hứa quá tay với khách. Lời hứa đó xử lý khi nào?",
+            options: [
+              "Sau ca, cùng lúc với phần góp ý, để không cắt ngang việc của cô ấy",
+              "Để nguyên, vì rút lại trước mặt khách còn tệ hơn là cứ để vậy",
+              "Ngay lúc đó — đi sửa mốc giờ trước, phần góp ý mới để sau ca",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'A promise she has already made is a different matter, and it does not wait either. Go and put the hour right first.'",
+          },
+          {
+            q: "Vì sao cho CÂU tốt hơn cho LUẬT?",
+            options: [
+              "Vì luật thì phải học thuộc còn câu thì không",
+              "Vì nghe xong một điều luật, người mới vẫn chưa có gì để nói ra",
+              "Vì luật của mỗi khách sạn một khác, nên dạy luật thì sang nhà khác lại phải học lại",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: \"'Do not over-promise' is a rule, and she still has nothing to say. 'I am asking, not promising' is a phrase, and she can use it on her first evening.\"",
+          },
+          {
+            q: "Việc gì phải chặn NGAY GIÂY ĐÓ, ngay giữa câu?",
+            options: [
+              "Một câu tiếng Anh sai ngữ pháp mà người mới nói trước mặt khách",
+              "Việc nguy hiểm, và hồ sơ mật bị nói ra thành tiếng",
+              "Một cách chào khách chưa đúng chuẩn của nhà",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'Anything dangerous, and anything confidential said out loud, you stop it that second.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "The young lady at the desk told me the spa would fit me in at six. Is that confirmed?",
+          options: [
+            {
+              text: "She should not have said that, madam, and I am afraid nothing has actually been booked for you yet.",
+              correct: false,
+            },
+            {
+              text: "If she told you six, madam, then six it is — I will make sure the spa knows about it.",
+              correct: false,
+            },
+            {
+              text: "Not confirmed yet, madam. I am asking the spa now, and I will come to you by half past five.",
+              correct: true,
+            },
+          ],
+        },
+        {
+          prompt: "Duty Manager. How did her first evening go?",
+          speakerRole: "manager",
+          options: [
+            {
+              text: "She was quite nervous, sir, but I think she will get there in a few weeks with practice.",
+              correct: false,
+            },
+            {
+              text: "Her apology was good, sir. Stand beside, not in front — and I told her what I got wrong.",
+              correct: true,
+            },
+            {
+              text: "There were a few things to fix, sir, so I went through the whole list with her at the desk.",
+              correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      lessonId: "GR_40_4",
+      lessonOrder: 4,
+      titleEn: "What Forty Weeks Did Not Give You",
+      titleVi: "Điều bốn mươi tuần chưa cho bạn",
+      vocabulary: [
+        {
+          word: "The numbers this house keeps",
+          phonetic: "/ðə ˈnʌmbəz ðɪs ˈhaʊs ˈkiːps/",
+          definition: "Con số của CHÍNH khách sạn bạn — phải đi hỏi, không đoán",
+          context: "I asked my Duty Manager for the numbers this house keeps.",
+          icon: "🏨",
+        },
+        {
+          word: "A request nobody wrote down",
+          phonetic: "/ə rɪˈkwest ˈnəʊbədi ˌrəʊt ˈdaʊn/",
+          definition: "Yêu cầu không có trong sách nào — khuôn vẫn chạy y nguyên",
+          context: "That is a request nobody wrote down, madam, and I know who owns it.",
+          icon: "📖",
+        },
+        {
+          word: "Used twice",
+          phonetic: "/ˌjuːzd ˈtwaɪs/",
+          definition: "Câu nào hai khách khác nhau cùng dùng thì ghi lại",
+          context: "A phrase used twice by two guests goes in my notebook.",
+          icon: "✍️",
+        },
+        {
+          word: "After the shift, not during",
+          phonetic: "/ˌɑːftə ðə ˈʃɪft nɒt ˈdjʊərɪŋ/",
+          definition: "Hỏi đồng nghiệp SAU ca, không hỏi giữa ca",
+          context: "I ask her after the shift, not during, and she has time to answer.",
+          icon: "🕕",
+        },
+      ],
+      grammar: [
+        {
+          rude: "The compensation limit for a case like this is around two nights, madam.",
+          polite:
+            "I would rather find out than guess, madam. The numbers this house keeps are my Duty Manager's, and I am back at six.",
+          rule: "Trần bồi thường, bảng hạng thẻ, số máy lẻ Duty Manager lúc ba giờ sáng, điểm tập kết thật của toà nhà — mỗi khách sạn một khác. Sách này in số của MỘT nhà: tuần 37 in một số máy lẻ, tuần 38 in một điểm tập kết. Đoán một con số nội bộ là lỗi nặng hơn nói 'tôi chưa thuộc'. Hỏi trong tuần đầu, và ghi vào sổ của chính bạn.",
+        },
+        {
+          rude: "I cannot do the late check-out but I will try my best about the room for you, sir.",
+          polite:
+            "Although the late check-out is the front office's, sir, I can put the room to my manager.",
+          rule: "Ôn lại bản lề của tuần 35: mệnh đề nhượng bộ đặt cái KHÔNG LÀM ĐƯỢC lên trước, cái LÀM ĐƯỢC xuống sau — vế cuối là vế khách nhớ. Và tiếng Anh chỉ cho MỘT bản lề: 'tuy… nhưng…' của tiếng Việt dịch thành 'although…' HOẶC 'but…', không bao giờ cả hai. Vị khách không khớp trang nào cũng chạy đúng khuôn ấy.",
+        },
+      ],
+      speaking: [
+        {
+          guestPrompt:
+            "The alarm went off last night and nobody told us anything for twenty minutes.",
+          targetResponse:
+            "I am sorry, madam. I do not know why yet, and I will not guess. My Duty Manager will, and I am back to you at six.",
+          helpTip:
+            "Đừng đoán, và đừng xin lỗi thay cho một lời giải thích. Xin lỗi về SỰ VIỆC, nói rõ bạn chưa biết, rồi gọi tên người biết và cho một mốc giờ. 'guess' /ɡes/ — /ɡ/ phải bật ra thành tiếng, và đuôi /s/ vô thanh chứ không phải /z/.",
+        },
+        {
+          guestPrompt:
+            "Guest Relations. How do you still get better once the forty weeks are over?",
+          speakerRole: "colleague",
+          targetResponse:
+            "A phrase used twice goes in my notebook. And I ask you after the shift, not during.",
+          helpTip:
+            "Hai thói quen, nói gọn thành hai câu. Cái thứ nhất lấy tiếng Anh từ chính khách; cái thứ hai giữ cho đồng nghiệp còn thời gian trả lời tử tế. 'notebook' /ˈnəʊtbʊk/ — /t/ ở giữa gần như nuốt, và /ʊ/ ngắn chứ không phải /uː/. Chú ý 'used' ở đây là /juːzd/ HỮU THANH — khác hẳn dạng /juːst/ vô thanh trong cụm chỉ thói quen cũ ở bài 1.",
+        },
+      ],
+      reading: {
+        text: "WHAT FORTY WEEKS DID NOT GIVE YOU\nThis book stops here. Your desk does not.\nThree things are missing from it on purpose, and knowing which three is the last lesson.\nThe first is the numbers this house keeps.\nThe compensation limit your Duty Manager works to. Where your house keeps the tier and points rules. The extension that reaches him at three in the morning.\nWhere this house sends people for a fire, and where for a storm — week thirty-six said those are two different places.\nWhether this building has a refuge area, and on which floor. Who brings you the fire officer's all-clear, because the bell will not.\nWho dials 114 for this house, and from which telephone, when security has not answered inside thirty seconds.\nYour own desk's limit and the front office's, in figures — week thirty-five sent you to ask for both.\nHow many waiting before you call for a second pair of hands, and how long that help takes to come.\nAnd where your own shift's line falls, the one week thirty-nine counted as quarter to.\nWhere this book printed a number, it printed one house's number. Some weeks said so beside it; some did not.\nWeek thirty-seven printed an extension and a doctor fifteen minutes away. Week thirty-eight printed a ballroom.\nNeither said whose they were, and you have been carrying them as if they were yours.\nWeek thirty-nine printed a quarter to and did say so. That one you have already been told to go and ask about.\nGuessing an internal figure is worse than saying you do not know it yet. A guess becomes a promise the moment a guest repeats it.\nThat is ten. Ask for all ten in your first week back, and write them where you can reach them at three in the morning.\nThe second thing missing is the guest who fits no page in this book.\nShe will arrive. Not often, but she will arrive, and the request will be one nobody wrote down.\nWhen she does, and nobody is in danger, nothing changes.\nListen to the end, name the owner, say what you can do meanwhile.\nThen your own hour on it, write it down, and come back.\nThe shape was never about the situations. It was about what to do when you have run out of them.\nThe third thing missing is the English you have not met yet. Three habits keep it growing.\nWrite down any phrase you hear two different guests use. Two guests is not a coincidence; it is the language of the job.\nAsk a colleague after the shift, not during. In the middle of a shift you get half an answer, and she gets a worse one.\nAnd listen to how guests build the request, not only to what they are asking for.\nOne last thing about this week itself. It ends with the checkpoint: questions on paper, and five lines spoken aloud.\nThose five are drawn from all ten weeks of this phase, and the model sentence is not on the screen for them.\nWalk the shape on your next shift. Say the five lines the way you drilled them, because the marking listens for those words and for their order.\nYou need fourteen of the twenty, half of every skill block, and three of the five spoken lines. Four of the twenty are heard, not read.\nIf the first sitting falls short, there is another twenty minutes later.\nThere is no lesson for week forty-one. There is a shift.\nWhat this desk remembers is not the forty weeks. It is what you do on the Tuesday after them.",
+        questions: [
+          {
+            q: "Ba thứ khoá học cố tình không dạy là gì?",
+            options: [
+              "Ngữ pháp nâng cao, từ vựng chuyên ngành, và cách viết email",
+              "Con số của chính khách sạn bạn, vị khách không khớp trang nào, và phần tiếng Anh bạn chưa gặp",
+              "Cách xử lý khiếu nại lớn, cách thương lượng, và cách đào tạo người mới",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'The first is the numbers this house keeps.' · 'the guest who fits no page in this book' · 'the English you have not met yet'.",
+          },
+          {
+            q: "Sách này in số máy lẻ ở tuần 37 và điểm tập kết ở tuần 38. Hiểu thế nào cho đúng?",
+            options: [
+              "Đó là con số của MỘT nhà — có tuần ghi rõ như vậy, có tuần không; phải hỏi lại số của nhà mình",
+              "Đó là chuẩn chung của ngành, dùng được ở mọi khách sạn 4–5★",
+              "Đó là con số mẫu để luyện tập, không nhà nào dùng thật",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc: 'Where this book printed a number, it printed one house's number. Some weeks said so beside it; some did not.'",
+          },
+          {
+            q: "Vì sao đoán một con số nội bộ còn tệ hơn nói 'tôi chưa thuộc'?",
+            options: [
+              "Vì con số đoán sẽ thành một lời hứa ngay khi khách nhắc lại nó",
+              "Vì hôm sau quản lý sẽ phải ngồi giải thích lại với khách vì sao con số thật lại khác",
+              "Vì khách thường kiểm tra lại con số đó trên mạng",
+            ],
+            correct: 0,
+            explanation: "Bài đọc: 'A guess becomes a promise the moment a guest repeats it.'",
+          },
+          {
+            q: "Gặp vị khách không khớp trang nào thì làm gì?",
+            options: [
+              "Chuyển ngay cho Duty Manager, vì tình huống đó nằm ngoài phạm vi mà bạn đã được đào tạo",
+              "Hỏi một đồng nghiệp có kinh nghiệm ngay tại quầy trước khi trả lời khách",
+              "Nếu không có ai đang gặp nguy hiểm thì không đổi gì cả: khuôn sáu bước chạy y nguyên",
+            ],
+            correct: 2,
+            explanation:
+              "Bài đọc: 'When she does, and nobody is in danger, nothing changes. Listen to the end, name the owner, say what you can do meanwhile.'",
+          },
+          {
+            q: "Bài kiểm tra chốt phase của tuần này gồm những gì?",
+            options: [
+              "Chỉ có phần trắc nghiệm trên giấy, và đề chỉ rút từ đúng nội dung của tuần 40 mà thôi",
+              "Phần giấy cộng năm câu nói, rút từ cả mười tuần của phase, và câu mẫu KHÔNG hiện lên",
+              "Một buổi role-play mở với giám sát đóng vai khách",
+            ],
+            correct: 1,
+            explanation:
+              "Bài đọc: 'It ends with the checkpoint: questions on paper, and five lines spoken aloud. Those five are drawn from all ten weeks of this phase, and the model sentence is not on the screen for them.'",
+          },
+        ],
+      },
+      game: [
+        {
+          prompt:
+            "Just tell me what the most is that you can give me, and I will decide whether it is enough.",
+          options: [
+            {
+              text: "That was never mine to give, madam — a guess becomes a promise. My manager decides it, and I am back at six.",
+              correct: true,
+            },
+            {
+              text: "I would say about two nights, madam, though my manager may well be able to do a little better.",
+              correct: false,
+            },
+            {
+              text: "That is not something I am able to discuss, madam. You would have to take it up with my manager.",
+              correct: false,
+            },
+          ],
+        },
+        {
+          prompt:
+            "My mother's ashes are in my case and the airline has lost it. I do not know who to ask.",
+          options: [
+            {
+              text: "I am so sorry, madam. I am afraid the airline is really the only place that can help with that.",
+              correct: false,
+            },
+            {
+              text: "Let me give you the number for the airport office, madam, and they will take it from there.",
+              correct: false,
+            },
+            {
+              text: "I am so sorry, madam. Please tell me all of it, and I will name who I am ringing by four.",
+              correct: true,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "FB-32": FB_WEEK_32,
@@ -15694,8 +25231,23 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "FB-38": FB_WEEK_38,
   "FB-39": FB_WEEK_39,
   "FB-40": FB_WEEK_40,
+  "HK-31": HK_WEEK_31,
+  "HK-32": HK_WEEK_32,
   "HK-33": HK_WEEK_33,
+  "HK-34": HK_WEEK_34,
+  "HK-35": HK_WEEK_35,
+  "HK-36": HK_WEEK_36,
+  "HK-38": HK_WEEK_38,
+  "HK-39": HK_WEEK_39,
+  "HK-40": HK_WEEK_40,
+  "GR-31": GR_WEEK_31,
+  "GR-32": GR_WEEK_32,
+  "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
+  "GR-35": GR_WEEK_35,
+  "GR-36": GR_WEEK_36,
+  "GR-39": GR_WEEK_39,
+  "GR-40": GR_WEEK_40,
   "BO-37": BO_WEEK_37,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
@@ -15747,7 +25299,14 @@ const REGISTRY: Record<string, WeekContent> = {
   "FB-31": FB_WEEK_31,
   "HK-33": HK_WEEK_33,
   "SW-19": SW_WEEK_19,
+  "GR-31": GR_WEEK_31,
+  "GR-32": GR_WEEK_32,
+  "GR-33": GR_WEEK_33,
   "GR-34": GR_WEEK_34,
+  "GR-35": GR_WEEK_35,
+  "GR-36": GR_WEEK_36,
+  "GR-39": GR_WEEK_39,
+  "GR-40": GR_WEEK_40,
   "BO-38": BO_WEEK_38,
   "FO-37": FO_WEEK_37,
   "FO-38": FO_WEEK_38,
@@ -15757,6 +25316,16 @@ const REGISTRY: Record<string, WeekContent> = {
   "SW-37": SW_WEEK_37,
   "HK-37": HK_WEEK_37,
 };
+
+// Every phase builder locks its own headwords into the speaking grader, and
+// the 26 hand-authored weeks above are spread LAST, so they arrived past all
+// of them: none of their targets required the word its lesson exists to teach.
+// Locking here, on the assembled registry, is the only place that catches both
+// kinds of week. The pass merges into whatever a target already declares, so
+// running it over the spine weeks a second time changes nothing.
+for (const key of Object.keys(REGISTRY)) {
+  REGISTRY[key] = { ...REGISTRY[key], lessons: lockWeekHeadwords(REGISTRY[key].lessons) };
+}
 
 /** Every registered dep-week, keyed `${DEP}-${week}`. Exposed for the
  *  content QA gate (scripts/verify-content.ts); app code should use

@@ -50,7 +50,15 @@ export function BoardGameSuite() {
   const r = ROUNDS[round % ROUNDS.length];
   const [picked, setPicked] = useState<number | null>(null);
 
-  const shuffled = useMemo(() => [...r.options].sort(() => Math.random() - 0.5), [round]);
+  // Fisher-Yates — see ArcadeSuite: a random comparator is not a uniform shuffle.
+  const shuffled = useMemo(() => {
+    const c = [...r.options];
+    for (let i = c.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [c[i], c[j]] = [c[j], c[i]];
+    }
+    return c;
+  }, [round]);
 
   function play(i: number) {
     setPicked(i);

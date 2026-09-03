@@ -10,6 +10,7 @@ import {
   resolveReviewItem,
   type ResolvedReviewItem,
 } from "@/lib/review";
+import { speakerLabel } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 
 export const Route = createFileRoute("/review")({
@@ -385,7 +386,9 @@ function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking"
 
   return (
     <div className="border border-primary/30 bg-card p-6 shadow-xl">
-      <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Khách nói</div>
+      <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+        {speakerLabel(speaking)}
+      </div>
       <p className="mt-2 font-display text-xl text-foreground">"{speaking.guestPrompt}"</p>
       <button
         onClick={() => speakEN(speaking.guestPrompt, 0.9)}

@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { getDepartment } from "@/lib/departments";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, speakerLabel } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 import { SuiteComingSoon } from "@/components/suites/SuiteComingSoon";
 import { useWeekAccess } from "@/lib/week-access";
@@ -191,7 +191,7 @@ function HandbookPage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
-                          Khách nói
+                          {speakerLabel(s)}
                         </div>
                         <p className="hb-ink mt-1 text-sm text-foreground">"{s.guestPrompt}"</p>
                       </div>

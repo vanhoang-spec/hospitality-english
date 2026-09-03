@@ -14,6 +14,27 @@ export function speakEN(text: string, rate = 0.85) {
   }
 }
 
+/** Does this device have an English text-to-speech voice at all?
+ *
+ *  The checkpoint waives the listening floor when the answer is no, which is
+ *  right — a learner on a device with no English voice cannot be held to a
+ *  block they were never able to hear. It was reading the wrong signal to
+ *  decide, though: it asked whether the 🔊 button had been clicked. Not
+ *  clicking is free, so the waiver was free, and an academic review measured
+ *  what that was worth — a learner who understands no spoken English at all
+ *  went from 40.0% to 92.3% likely to pass. Ask the device instead.
+ *
+ *  getVoices() is empty on first call in Chrome until the list loads, hence
+ *  the voiceschanged listener at the call site. */
+export function hasEnglishVoice(): boolean {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  try {
+    return window.speechSynthesis.getVoices().some((v) => v.lang?.toLowerCase().startsWith("en"));
+  } catch {
+    return false;
+  }
+}
+
 // Synthetic applause via WebAudio (no asset needed).
 export function playApplause(durationMs = 1800) {
   if (typeof window === "undefined") return;

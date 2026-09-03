@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, type GameRound, type WeekContent } from "@/lib/content/week-content";
+import {
+  getWeekContent,
+  type GameRound,
+  type WeekContent,
+  speakerLabel,
+  type GameOptionKind,
+} from "@/lib/content/week-content";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Bubble = {
   id: number;
   text: string;
   correct: boolean;
+  kind?: GameOptionKind;
   y: number;
   speed: number;
   popped?: boolean;
@@ -35,9 +42,13 @@ function ArcadeSuiteInner({
   const poppedRef = useRef<Set<number>>(new Set());
   const rounds: GameRound[] = content.lessons.flatMap((l) => l.game);
 
+  // 18s mỗi vòng: đọc một prompt cộng ba phương án ở A2+ mất khoảng chừng đó.
+  // Sàn 75s giữ nguyên hành vi cũ cho các tuần 4 vòng.
+  const timeBudget = Math.max(75, rounds.length * 18);
+
   const [stage, setStage] = useState<Stage>("rules");
   const [won, setWon] = useState(false);
-  const [time, setTime] = useState(75);
+  const [time, setTime] = useState(timeBudget);
   const [score, setScore] = useState(0);
   const [roundIdx, setRoundIdx] = useState(0);
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
@@ -49,7 +60,7 @@ function ArcadeSuiteInner({
   function startGame() {
     setStage("playing");
     setWon(false);
-    setTime(75);
+    setTime(timeBudget);
     setScore(0);
     setRoundIdx(0);
     setBubbles([]);
@@ -63,7 +74,10 @@ function ArcadeSuiteInner({
     setStage("done");
     const elapsed = (Date.now() - startedRef.current) / 1000;
     patchMetrics({
-      reflex_speed: Math.min(100, Math.max(20, Math.round(finalScore * 6 + (75 - elapsed) * 0.5))),
+      reflex_speed: Math.min(
+        100,
+        Math.max(20, Math.round(finalScore * 6 + (timeBudget - elapsed) * 0.5)),
+      ),
     });
     if (dep && week) {
       const pct = Math.round((finalScore / (rounds.length * 2)) * 100);
@@ -90,7 +104,14 @@ function ArcadeSuiteInner({
   useEffect(() => {
     if (stage !== "playing") return;
     const round = rounds[roundIdx % rounds.length];
-    const shuffled = [...round.options].sort(() => Math.random() - 0.5);
+    // Fisher-Yates, not sort(() => Math.random() - 0.5): a comparator that
+    // answers at random is not a uniform shuffle, and with three options it
+    // leaves the authored order showing more often than it hides it.
+    const shuffled = [...round.options];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
     const timers: number[] = [];
     shuffled.forEach((opt, i) => {
       const t = window.setTimeout(() => {
@@ -100,6 +121,7 @@ function ArcadeSuiteInner({
             id: ++idRef.current,
             text: opt.text,
             correct: opt.correct,
+            kind: opt.kind,
             y: 20 + Math.random() * 50,
             speed: 14 + Math.random() * 4, // slow: 14-18s across the screen
           },
@@ -132,8 +154,21 @@ function ArcadeSuiteInner({
         }
       }, 900);
     } else {
-      setFeedback({ ok: false, text: "Chưa đúng — thử bong bóng khác nhé." });
-      setTimeout(() => setFeedback(null), 1000);
+      // A round whose distractor is correct English — losing only on register
+      // or on length — teaches nothing without a reason, and the learner has
+      // no way to infer the criterion from a generic "try another bubble".
+      // Held twice as long as the bare message, because there is now something
+      // to read.
+      // The authored explanation is about the option that is correct English
+      // and wrong for the job. Showing it over a broken-English bubble told
+      // the learner their sentence was grammatical when it was not.
+      const authored = rounds[roundIdx % rounds.length]?.explanation;
+      const why =
+        b.kind === "form"
+          ? "Câu đó thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được. Nghe lại đề rồi chọn câu có đủ chủ ngữ và động từ."
+          : authored;
+      setFeedback({ ok: false, text: why ?? "Chưa đúng — thử bong bóng khác nhé." });
+      setTimeout(() => setFeedback(null), why ? 3200 : 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
     }
   }
@@ -199,9 +234,9 @@ function ArcadeSuiteInner({
                 <span className="text-[10px] uppercase tracking-[0.25em] text-primary not-italic">
                   LUẬT CHƠI ·{" "}
                 </span>
-                Đọc kỹ yêu cầu của Khách ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay
-                ngang qua màn hình. Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5
-                sao phù hợp với yêu cầu của Khách trước khi hết giờ!
+                Đọc kỹ lượt thoại ở phía trên cùng. Các bong bóng chứa câu trả lời sẽ bay ngang qua
+                màn hình. Hãy chạm nhanh vào bong bóng chứa câu trả lời lịch sự chuẩn 5 sao phù hợp
+                với yêu cầu của Khách trước khi hết giờ!
               </p>
             </div>
             <button
@@ -221,7 +256,9 @@ function ArcadeSuiteInner({
             animate={{ opacity: 1, y: 0 }}
             className="absolute left-1/2 top-3 z-10 w-[92%] -translate-x-1/2 border border-primary/60 bg-background/80 p-3 text-center shadow-xl backdrop-blur"
           >
-            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Khách nói</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-primary">
+              {speakerLabel(currentRound)}
+            </div>
             <p className="mt-1 font-display text-lg text-foreground">"{currentRound.prompt}"</p>
           </motion.div>
         )}
@@ -276,7 +313,7 @@ function ArcadeSuiteInner({
             <p className="mt-2 text-sm text-foreground/70">
               {won
                 ? `Đạt chuẩn — xử lý đúng cả ${rounds.length} tình huống với ${score} ⭐`
-                : `Được ${score} ⭐ qua ${Math.min(roundIdx, rounds.length)} vòng — cần xử lý đúng cả ${rounds.length} tình huống trong 75s để đạt chuẩn`}
+                : `Được ${score} ⭐ qua ${Math.min(roundIdx, rounds.length)} vòng — cần xử lý đúng cả ${rounds.length} tình huống trong ${timeBudget}s để đạt chuẩn`}
             </p>
             <button
               onClick={startGame}

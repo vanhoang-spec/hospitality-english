@@ -6,7 +6,7 @@ import { findWeek } from "@/lib/curriculum";
 import { getWeekContent } from "@/lib/content/week-content";
 import {
   CHECKPOINT_ORAL_ITEMS,
-  CHECKPOINT_ORAL_PASS_MIN,
+  CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
   CHECKPOINT_TOTAL_QUESTIONS,
   isCheckpointWeek,
@@ -64,7 +64,7 @@ const WEEKTEST_DOOR = {
   slug: "weektest",
   title: "Phase Checkpoint Test",
   tag: "Assessment",
-  detail: `${CHECKPOINT_TOTAL_QUESTIONS} câu trắc nghiệm cả giai đoạn (cần ${CHECKPOINT_PASS_PCT}% và nửa mỗi kỹ năng) + ${CHECKPOINT_ORAL_ITEMS} câu nói, đạt ${CHECKPOINT_ORAL_PASS_MIN}.`,
+  detail: `${CHECKPOINT_TOTAL_QUESTIONS} câu trắc nghiệm cả giai đoạn (cần ${CHECKPOINT_PASS_PCT}% và nửa mỗi kỹ năng) + ${CHECKPOINT_ORAL_ITEMS} lượt nói, đạt ${Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%.`,
 } as const;
 
 /** Only the one week per phase that carries a WritingTask/MediationTask

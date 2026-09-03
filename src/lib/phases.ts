@@ -62,7 +62,7 @@ export const CHECKPOINT_PASS_PCT = 70;
 /** The checkpoint paper's fixed composition. Lives here rather than in the
  *  suite because the pass RULE below is written against it, and a mix that
  *  drifts from its floors silently changes what passing means. */
-export const CHECKPOINT_MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
+export const CHECKPOINT_MIX = { vocab: 6, grammar: 4, listening: 6, reading: 4 } as const;
 export type CheckpointConstruct = keyof typeof CHECKPOINT_MIX;
 export const CHECKPOINT_TOTAL_QUESTIONS = Object.values(CHECKPOINT_MIX).reduce((a, b) => a + b, 0);
 
@@ -103,7 +103,17 @@ export function blockCleared(t: ConstructTally): boolean {
 /** The whole pass rule in one place: the overall mark AND every deliverable
  *  block's floor. */
 export function checkpointPassed(scorePct: number, tallies: readonly ConstructTally[]): boolean {
-  return scorePct >= CHECKPOINT_PASS_PCT && tallies.every(blockCleared);
+  return (
+    scorePct >= CHECKPOINT_PASS_PCT &&
+    tallies.every(blockCleared) &&
+    // A block the device could not deliver is forgiven its floor — nobody is
+    // locked out by their own phone — but it cannot be signed off either. An
+    // academic review measured what the silent waiver was worth: a learner who
+    // understands no spoken English at all passed 100% of the time by simply
+    // having no English voice installed. Forgiving the floor and certifying
+    // the skill are two different things, and only the first one is kind.
+    tallies.every((t) => t.deliverable)
+  );
 }
 
 /** The oral half of a checkpoint.
@@ -116,7 +126,19 @@ export function checkpointPassed(scorePct: number, tallies: readonly ConstructTa
  *  and the oral half is there to make the claim "can speak" true at all,
  *  not to become the hardest gate in the course. */
 export const CHECKPOINT_ORAL_ITEMS = 5;
-export const CHECKPOINT_ORAL_PASS_MIN = 3;
+/** The share of drawn utterances that must pass. Was a flat 3, which was the
+ *  same 60% while every sitting drew exactly five — and stopped being 60% the
+ *  moment a three-turn exchange started arriving as one draw: 62.2% of
+ *  sittings then held seven utterances against an unchanged bar of three, so
+ *  a learner could fail four of seven and still clear the oral half. An
+ *  academic review measured the effective pass mark at 48.1%. */
+export const CHECKPOINT_ORAL_PASS_SHARE = 0.6;
+/** Rounded, not ceilinged: ceil(7 x 0.6) = 5 made a seven-utterance sitting
+ *  a 71.4% bar against 60.0% for a five-utterance one, so two learners faced
+ *  gates 11.4 points apart depending only on whether the three-turn exchange
+ *  happened to be drawn. */
+export const oralPassMin = (drawn: number) =>
+  Math.max(1, Math.round(drawn * CHECKPOINT_ORAL_PASS_SHARE));
 
 /** How long a learner waits after a FAILED checkpoint sitting.
  *

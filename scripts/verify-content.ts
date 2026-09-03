@@ -15,6 +15,7 @@
 //     same course and keep vocabulary actually coming back.
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
+import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 
@@ -105,6 +106,8 @@ function phaseOf(week: number): Phase | null {
 }
 
 const errors: string[] = [];
+/** `dep|phase|gloss` -> the first card that claimed that Vietnamese gloss. */
+const glossOwner = new Map<string, string>();
 const warnings: string[] = [];
 /** Known pre-matrix debt in the hand-authored A2-B1 weeks (see content audit). */
 const legacyGameDupes: string[] = [];
@@ -116,8 +119,63 @@ const words = (s: string) =>
     .filter(Boolean);
 
 /** The cap is per sentence — a checkpoint utterance may chain two short ones. */
+/** The `+1` this cap is granted everywhere was documented as "for a sir/madam
+ *  tag", but the check was `n > wordCap + 1` with no look at whether the
+ *  sentence actually carries one — so the allowance was silently spent on
+ *  content words instead. Four audit reports counted five or six such lines
+ *  per module. The tag now has to be there to buy the extra word.
+ *
+ *  And a multi-word name out of the lexicon counts as ONE word, because it is
+ *  one referent: "Food and Beverage", "lounge card", "five hundred thousand".
+ *  The cap exists to bound how much syntax a pre-A1 learner assembles, and a
+ *  department is not three decisions. Without this, the cap penalises a
+ *  department for the length of its own name — Housekeeping passes and Spa
+ *  and Wellness fails on the identical frame. */
+const HONORIFIC_TAG = /\b(sir|madam|mr|mrs|ms)\b[.,!?]*\s*$/i;
+const lexicalUnits = (): string[] => {
+  const out = new Set<string>();
+  for (const lx of Object.values(LEXICONS)) {
+    for (const s of [lx.deptEn, lx.service.en, lx.priced.en, lx.priced.vndWord, lx.booking.en])
+      if (s && s.includes(" ")) out.add(s.toLowerCase());
+    for (const it of lx.items) if (it.word.includes(" ")) out.add(it.word.toLowerCase());
+  }
+  // Longest first so "five hundred thousand" collapses before "five hundred".
+  return [...out].sort((a, b) => b.length - a.length);
+};
+const UNITS = lexicalUnits();
+const collapseUnits = (s: string) => {
+  let out = s.toLowerCase();
+  for (const u of UNITS) out = out.split(u).join(u.replace(/ /g, "⁠"));
+  return out;
+};
+
 const maxSentenceLen = (s: string) =>
-  Math.max(0, ...s.split(/[.!?]+/).map((part) => words(part).length));
+  Math.max(
+    0,
+    ...collapseUnits(s)
+      .split(/[.!?]+/)
+      .map((part) => words(part).length),
+  );
+
+/** Effective cap for one sentence: the base, plus one only if the sentence
+ *  ends in the honorific the allowance was written for.
+ *
+ *  STRICT only for the generated phases (weeks 1-14). The hand-authored A2-B1
+ *  weeks were written against the loose reading, where the spare word buys a
+ *  subordinate clause rather than a tag, and 12 of their sentences sit on it.
+ *  Rewriting those is a separate pass over separate content; pretending the
+ *  debt is gone by exempting it silently would be worse than naming it. */
+const capFor = (sentence: string, wordCap: number, strict: boolean) =>
+  !strict || HONORIFIC_TAG.test(sentence.trim()) ? wordCap + 1 : wordCap;
+
+const overCap = (s: string, phase: Phase): number | null => {
+  const strict = phase.to <= 14;
+  for (const part of collapseUnits(s).split(/[.!?]+/)) {
+    const n = words(part).length;
+    if (n > capFor(part, phase.wordCap, strict)) return n;
+  }
+  return null;
+};
 
 const longWords = (s: string) =>
   words(s)
@@ -231,25 +289,40 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
     for (const item of lesson.vocabulary) {
       if (!item.word || !item.phonetic || !item.definition || !item.context)
         errors.push(`${where}: vocab "${item.word}" has an empty field`);
+      // Two cards with one gloss make an unanswerable checkpoint question: the
+      // paper prints the same Vietnamese twice and keys one of them.
+      const glossKey = `${week.departmentId}|${phase?.name ?? week.weekNumber}|${item.definition.trim().toLowerCase()}`;
+      const owner = glossOwner.get(glossKey);
+      if (owner && owner !== item.word)
+        errors.push(
+          `${where}: vocab "${item.word}" repeats the gloss of "${owner}" — "${item.definition}"`,
+        );
+      else glossOwner.set(glossKey, item.word);
     }
 
     for (const gr of lesson.grammar) {
       if (!gr.rule) errors.push(`${where}: grammar "${gr.polite}" missing rule`);
+      // A nearMiss goes onto the checkpoint paper as a DISTRACTOR without
+      // passing through the same-answer filter the other two options do, so it
+      // is the one option nothing else can catch. If it equals either half of
+      // its own pair, the paper ships a duplicate option or a second right one.
+      if (gr.nearMiss && (gr.nearMiss === gr.polite || gr.nearMiss === gr.rude))
+        errors.push(`${where}: grammar nearMiss "${gr.nearMiss}" repeats its own rude/polite half`);
       if (phase) {
-        const n = maxSentenceLen(gr.polite);
-        if (n > phase.wordCap + 1)
+        const n = overCap(gr.polite, phase);
+        if (n !== null)
           errors.push(
-            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
     }
 
     for (const s of lesson.speaking) {
       if (phase) {
-        const n = maxSentenceLen(s.targetResponse);
-        if (n > phase.wordCap + 1)
+        const n = overCap(s.targetResponse, phase);
+        if (n !== null)
           errors.push(
-            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
       // The cap covered only grammar.polite and speaking.targetResponse. A
@@ -260,10 +333,10 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
       for (const g of lesson.game) {
         const right = g.options.find((o) => o.correct);
         if (!right) continue;
-        const n = maxSentenceLen(right.text);
-        if (n > phase.wordCap + 1)
+        const n = overCap(right.text, phase);
+        if (n !== null)
           errors.push(
-            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.
@@ -292,8 +365,15 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
         errors.push(`${where}: game "${gm.prompt}" has duplicate options`);
     }
 
-    if (lesson.reading.questions.length !== 2)
-      errors.push(`${where}: reading has ${lesson.reading.questions.length} questions (want 2)`);
+    // Two is the floor, five the ceiling. Mastery is 80% and the bar is
+    // ceil(0.8 * n), so 2/2, 3/3 and 4/4 all demand a perfect run — only five
+    // questions let a learner get one wrong (4/5 = 80%) and still be credited.
+    const qWant = "2-5";
+    const qOk = lesson.reading.questions.length >= 2 && lesson.reading.questions.length <= 5;
+    if (!qOk)
+      errors.push(
+        `${where}: reading has ${lesson.reading.questions.length} questions (want ${qWant})`,
+      );
     for (const q of lesson.reading.questions) {
       if (q.correct < 0 || q.correct >= q.options.length)
         errors.push(`${where}: reading q "${q.q}" has an out-of-range correct index`);
@@ -386,10 +466,19 @@ for (const phase of PHASES) {
 // professional sense — so it is reported rather than blocked.
 const HAND_AUTHORED = new Set(["FB-15", "HK-15", "FO-17", "SW-19"]);
 const spiralIntoLegacy: string[] = [];
+// Headwords minted twice inside weeks 23-40, inherited from the generated
+// Phase 3-4 spine. Ratcheted, not blocked: the count may fall, never rise.
+const latePhaseDuplicates: string[] = [];
+const DUP_BASELINE = new URL("./_late-dup-baseline.json", import.meta.url);
 
 for (const dep of DEPS) {
   const firstSeen = new Map<string, number>();
-  for (let w = 1; w <= 22; w++) {
+  // Spans the whole course, not weeks 1-22. It stopped at 22 while Phase 3
+  // and 4 were still generated; now that they are hand-authored, a headword
+  // minted twice there is exactly the collision this gate exists to catch —
+  // the review scheduler keys on the word, so the second card silently
+  // overwrites the first one's schedule.
+  for (let w = 1; w <= 40; w++) {
     for (const h of headwords(dep, w)) {
       const key = h.toLowerCase();
       const earlier = firstSeen.get(key);
@@ -397,8 +486,16 @@ for (const dep of DEPS) {
         firstSeen.set(key, w);
       } else if (earlier !== w) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
-        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
+        // Weeks 39-40 are the course's own revision weeks: the matrix asks
+        // them to reuse material, so a repeat there is reported, not blocked.
+        const revision = w >= 39 || earlier >= 39;
+        if (revision || HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
           spiralIntoLegacy.push(msg);
+        else if (w > 22 || earlier > 22)
+          // Phase 3-4 debt inherited from the generated spine. Ratcheted below
+          // rather than blocked, so new hand-authored weeks cannot add to it
+          // while the existing count is worked down.
+          latePhaseDuplicates.push(msg);
         else errors.push(msg);
       }
     }
@@ -486,6 +583,44 @@ for (const n of [...freqBuckets.keys()].sort((a, b) => a - b))
   console.log(`  ${String(n).padStart(2)}x — ${freqBuckets.get(n)} headwords`);
 if (neverRecycled)
   console.log(`  never recycled: ${neverRecycled} (e.g. ${neverRecycledSample.join(", ")})`);
+
+{
+  const file = Bun.file(DUP_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).lateDuplicates as number)
+    : latePhaseDuplicates.length;
+  const write = (n: number) =>
+    Bun.write(
+      DUP_BASELINE,
+      JSON.stringify(
+        {
+          lateDuplicates: n,
+          note: "Ratchet only — a headword may not be minted twice in weeks 23-40. This number may fall, never rise.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+  if (!known) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: baseline recorded at ${latePhaseDuplicates.length}.`,
+    );
+  } else if (latePhaseDuplicates.length > baseline) {
+    errors.push(
+      `${latePhaseDuplicates.length} headwords are minted twice in weeks 23-40, up from ${baseline}. ` +
+        `Newest: ${latePhaseDuplicates.slice(-3).join(" · ")}`,
+    );
+  } else if (latePhaseDuplicates.length < baseline) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: ${latePhaseDuplicates.length}, down from ${baseline} — baseline lowered.`,
+    );
+  } else {
+    console.log(`  Late-phase duplicate headwords: ${latePhaseDuplicates.length} (ratchet holds).`);
+  }
+}
 
 if (spiralIntoLegacy.length) {
   console.log(
@@ -633,7 +768,14 @@ if (legacyGameDupes.length) {
   };
 
   const POSITION_MAX = 0.5;
-  const LENGTH_MAX = 0.85;
+  // 0.85 was a number with nothing behind it: a learner needs CHECKPOINT_PASS_PCT
+  // to pass, so any share above that means "tap the longest bubble" is a winning
+  // strategy for the whole course. The course sits at 0.77 today — inherited from
+  // generated content, worst in weeks 5, 9, 17 and 24 where it is 100%. Until that
+  // is fixed batch by batch, this is a ratchet: it may fall, never rise.
+  // Weeks 1–14 are done: P0 is at 0.43, P1 at 0.36, and weeks 5 and 9 are no
+  // longer 100%. Weeks 17 and 24 are still open.
+  const LENGTH_MAX = 0.661; // 1330/2014 today
   const pos = [0, 0, 0, 0];
   let longest = 0;
   let total = 0;
@@ -661,6 +803,91 @@ if (legacyGameDupes.length) {
   if (longShare > LENGTH_MAX)
     errors.push(
       `a learner who always picks the longest option scores ${(longShare * 100).toFixed(0)}% on reading — balance the distractor lengths`,
+    );
+
+  // Games had the same hole and nothing measured it: every one of the 285 rounds
+  // in weeks 1–14 had the correct answer as the longest option, because the model
+  // answer was always a full polite sentence and both distractors were always
+  // clipped pidgin. Weeks 1–14 are fixed; weeks 15–40 still carry it, so this is
+  // a ratchet like the reading one. No position check — ArcadeSuite and
+  // BoardGameSuite reshuffle on every render, so only length can leak.
+  // Week 2 lessons 3 and 4 pluralise lx.items[0] and lx.items[2] — "Two {i1}s,
+  // please.", "How many {i3}s, sir?" — and lesson 4 IS the countable/uncountable
+  // lesson, keying its reading answer to "{i3} đếm được". Front Office shipped
+  // `Luggage` at index 2 and F&B shipped `Water`, so both drilled "Three
+  // luggages, sir." and "How many waters, sir?" as the model answer with a false
+  // rule attached, in a lesson whose own rule uses water as its uncountable
+  // example. Two auditors called it blocking. The slots are structural, so
+  // guard the slots rather than the strings.
+  for (const [code, lx] of Object.entries(LEXICONS))
+    for (const idx of [0, 2])
+      if (lx.items[idx]?.mass)
+        errors.push(
+          `${code}: lx.items[${idx}] is "${lx.items[idx].word}", a mass noun, but weeks 2-6 pluralise that slot — move it to index 1, 3, 4 or 5`,
+        );
+
+  // A headword the lesson never uses again is a flashcard, not a lesson. The
+  // audit found whole blocks of them: F&B teaches Booking, Reservation, Corner
+  // table, Hold the line and Confirm the table in week 12 and practises none of
+  // them; Spa's entire week 12-14 spa lexicon is decorative. Ratchet, because
+  // 797 of 3151 is too many to fix in one pass — it may fall, never rise.
+  const ORPHAN_MAX = 797;
+  const fold = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let orphans = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons) {
+      const used = fold(
+        [
+          ...lesson.grammar.map((x) => x.polite),
+          ...lesson.speaking.map((x) => x.targetResponse),
+          lesson.reading.text,
+          ...(lesson.game ?? []).flatMap((g) => g.options.map((o) => o.text)),
+        ].join(" || "),
+      );
+      for (const item of lesson.vocabulary) if (!used.includes(fold(item.word))) orphans++;
+    }
+  console.log(
+    `Headwords practised in their own lesson — ${(((3151 - orphans) / 3151) * 100).toFixed(0)}% of 3151 (${orphans} taught and never used again)`,
+  );
+  if (orphans > ORPHAN_MAX)
+    errors.push(
+      `${orphans} headwords never reappear in their own lesson's grammar, speaking, reading or game, up from ${ORPHAN_MAX} — a word the lesson does not use is a flashcard, not a lesson`,
+    );
+
+  // Measuring one position was the mistake. The first version of this gate
+  // counted only "the correct option is the longest", so the fix for it
+  // shortened distractors until the correct answer sat in the MIDDLE of the
+  // three by length — and "tap the middle-length bubble" then won 76% in
+  // Phase 0, worse than the 70% pass mark it was supposed to protect. The
+  // honest measure is the best of the three length positions, so no rewrite
+  // can improve one rank by quietly loading another.
+  const GAME_RANK_MAX = 0.64; // 663/1053 today, carried by the untouched P2-P4
+  const rank = [0, 0, 0];
+  let gTotal = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        if (round.options.length !== 3) continue;
+        gTotal++;
+        const at = [...round.options]
+          .sort((a, b) => a.text.length - b.text.length)
+          .findIndex((o) => o.correct);
+        if (at >= 0) rank[at]!++;
+      }
+  const gShare = gTotal ? Math.max(...rank) / gTotal : 0;
+  console.log(
+    `Game answerability — by length the answer is shortest/middle/longest ` +
+      `${rank.map((r) => ((r / gTotal) * 100).toFixed(0) + "%").join(" / ")} of ${gTotal} rounds ` +
+      `(best single strategy ${(gShare * 100).toFixed(0)}%)`,
+  );
+  if (gShare > GAME_RANK_MAX)
+    errors.push(
+      `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
     );
 }
 if (warnings.length) {

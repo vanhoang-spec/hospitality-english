@@ -113,7 +113,14 @@ function ReadingSuiteInner({
       earned.current += gained;
     }
     const pct = Math.round((score / total) * 100);
-    bestPctRef.current.set(pIdx, Math.max(bestPctRef.current.get(pIdx) ?? 0, pct));
+    // FIRST submit only. Submitting reveals the right answer AND the
+    // explanation, and moving to another passage and back resets `picks` and
+    // `submitted` — so `Math.max` over repeated attempts meant the mastery
+    // flag could be farmed by reading the answers and coming back. That made
+    // the reading flag a measure of patience, not of comprehension. An audit
+    // walked the exact loop. A retry still shows feedback and still teaches;
+    // it just no longer rewrites what the learner scored cold.
+    if (!bestPctRef.current.has(pIdx)) bestPctRef.current.set(pIdx, pct);
     if (dep && week) {
       const sumPct = passages.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
       const avgPct = Math.round(sumPct / passages.length);
@@ -164,9 +171,14 @@ function ReadingSuiteInner({
             )}
           </div>
           <h2 className="font-display mt-3 text-2xl">{passage.title}</h2>
-          <pre className="font-sans mt-5 whitespace-pre-wrap text-sm leading-relaxed text-foreground/85">
-            {passage.body}
-          </pre>
+          {/* Split on newlines rather than dumping the passage into one <pre>:
+              a 700-word safety reading arrived as a single block of small type
+              that took five screens to scroll before the first question. */}
+          <div className="mt-5 space-y-3 text-sm leading-relaxed text-foreground/85">
+            {passage.body.split(/\n/).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </motion.article>
 
         <motion.section

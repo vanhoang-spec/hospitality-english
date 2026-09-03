@@ -2,13 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
-import { speakEN, dedupeTranscript } from "@/lib/speech";
+import {
+  getWeekContent,
+  resolveReviewVocab,
+  speakerAudioLabel,
+  speakerLabel,
+  type VocabItem,
+} from "@/lib/content/week-content";
+import { speakEN, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
 import { utterancePassed } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
   CHECKPOINT_ORAL_ITEMS,
-  CHECKPOINT_ORAL_PASS_MIN,
+  oralPassMin,
+  CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
@@ -23,52 +30,9 @@ import {
   type CheckpointConstruct,
   type ConstructTally,
 } from "@/lib/phases";
+import { buildPaper, shuffle, type Question } from "@/lib/checkpoint-paper";
 import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
-
-type Question =
-  | {
-      kind: "vocab";
-      key: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "grammar";
-      key: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "listening";
-      key: string;
-      audio: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "reading";
-      key: string;
-      passage: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    };
-
-function shuffle<T>(a: T[]): T[] {
-  const c = [...a];
-  for (let i = c.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [c[i], c[j]] = [c[j], c[i]];
-  }
-  return c;
-}
 
 /** Returns whether an English voice was actually available for this
  *  utterance. The listening floor is only enforced when the device has
@@ -93,114 +57,24 @@ function speakVaried(text: string, week: string | number): boolean {
   return voices.length > 0;
 }
 
-/**
- * Builds a 20-question mixed paper drawn from EVERY week in the
- * checkpoint's phase (see weeksInPhase), not just the checkpoint week
- * itself — the point of the test is to assess the phase as a whole.
- * Vocabulary additionally pulls the checkpoint week's `reviewWords`
- * recycling pool, same as before.
- *
- * Fixed mix (MIX): 8 vocabulary, 4 grammar, 4 listening, 4 reading.
- */
-function buildPaper(dep: string, week: string): Question[] {
-  const content = getWeekContent(dep, week);
-  if (!content) return [];
-
-  const phaseWeeks = weeksInPhase(week);
-  const phaseContent = phaseWeeks
-    .map((w) => getWeekContent(dep, String(w)))
-    .filter((c): c is NonNullable<typeof c> => c !== null);
-  const phaseLessons = phaseContent.flatMap((c) => c.lessons);
-
-  const weekVocab = phaseLessons.flatMap((l) => l.vocabulary);
-  const reviewVocab = resolveReviewVocab(dep, content.reviewWords ?? []);
-  // Prefer the recycled phase vocabulary — a checkpoint should look back,
-  // not merely re-test the week it sits in.
-  const pool: VocabItem[] = [...reviewVocab, ...weekVocab];
-  const byWord = new Map(pool.map((v) => [v.word, v]));
-  const unique = [...byWord.values()];
-  if (unique.length < MIX.vocab) return [];
-
-  const vocabQs: Question[] = shuffle(unique)
-    .slice(0, MIX.vocab)
-    .map((v, i) => {
-      const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
-      if (i % 2 === 0) {
-        const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
-        return {
-          kind: "vocab" as const,
-          key: `v:${v.word}`,
-          prompt: `Nghĩa của "${v.word}" là gì?`,
-          options,
-          correctIdx: options.indexOf(v.definition),
-          note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
-        };
-      }
-      const options = shuffle([v.word, ...distractors.map((d) => d.word)]);
-      return {
-        kind: "vocab" as const,
-        key: `v:${v.word}`,
-        prompt: `Từ tiếng Anh nào có nghĩa: "${v.definition}"?`,
-        options,
-        correctIdx: options.indexOf(v.word),
-        note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
-      };
-    });
-
-  const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
-  const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
-    const others = shuffle(grammarPool.filter((o) => o.polite !== g.polite)).slice(0, 2);
-    const options = shuffle([g.polite, g.rude, ...others.map((o) => o.rude)].slice(0, 3));
-    return {
-      kind: "grammar" as const,
-      key: `g:${g.rude}`,
-      prompt: `Câu nào là cách nói lịch sự chuẩn 5 sao thay cho "${g.rude}"?`,
-      options,
-      correctIdx: options.indexOf(g.polite),
-      note: g.rule,
-    };
-  });
-
-  const gamePool = shuffle(phaseLessons.flatMap((l) => l.game));
-  const listeningQs: Question[] = gamePool.slice(0, MIX.listening).map((round) => {
-    const options = shuffle(round.options.map((o) => ({ ...o })));
-    return {
-      kind: "listening" as const,
-      key: `l:${round.prompt}`,
-      audio: round.prompt,
-      options: options.map((o) => o.text),
-      correctIdx: options.findIndex((o) => o.correct),
-      note: `Khách nói: "${round.prompt}"`,
-    };
-  });
-
-  const readingPool = shuffle(
-    phaseLessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
-  );
-  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => ({
-    kind: "reading" as const,
-    key: `r:${q.q}`,
-    passage: text,
-    prompt: q.q,
-    options: q.options,
-    correctIdx: q.correct,
-    note: q.explanation ?? "",
-  }));
-
-  return shuffle([...vocabQs, ...grammarQs, ...listeningQs, ...readingQs]).slice(
-    0,
-    TOTAL_QUESTIONS,
-  );
-}
-
 type OralItem = {
   key: string;
   guestPrompt: string;
+  who: string;
+  audioWho: string;
   target: string;
   tip: string;
   /** The week the sentence was authored for — graded at THAT week's
    *  threshold, not the checkpoint's. */
   sourceWeek: number;
+  requiredTokens?: string[];
+  /** What the learner said one turn earlier, for the chained items of a
+   *  multi-turn exchange. Dropping it here is how the phase's only three-turn
+   *  conversation reached the checkpoint as three unrelated sentences — and
+   *  worse: measured over 20,000 draws, 4.7% of oral halves served turn two or
+   *  three with no opener at all, asking a learner to answer "Thank you. Good
+   *  night." out of nowhere. */
+  follows?: string;
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -214,13 +88,79 @@ function buildOral(dep: string, week: string): OralItem[] {
       l.speaking.map((s) => ({
         key: `s:${w}:${s.guestPrompt}`,
         guestPrompt: s.guestPrompt,
+        who: speakerLabel(s),
+        audioWho: speakerAudioLabel(s),
         target: s.targetResponse,
         tip: s.helpTip,
+        requiredTokens: s.requiredTokens,
+        follows: s.follows,
         sourceWeek: c.weekNumber,
       })),
     );
   });
-  return shuffle(items).slice(0, CHECKPOINT_ORAL_ITEMS);
+  // Stratified by week, not a pure lottery. Safety language clusters in two
+  // or three weeks of a phase, and a flat draw of five can miss all of them
+  // at once — measured for Spa: 29.1% of passing learners had never spoken a
+  // single safety line. One item per week first (weeks shuffled, items
+  // within a week shuffled), then random fill if the phase has fewer weeks
+  // than slots. Every week of the phase now has a voice in the oral half.
+  // A `follows` chain is ONE exchange, so it is one draw. Sampling the middle
+  // turn on its own measures a turn and never the conversation the week exists
+  // to teach: four academic reviews measured the same thing independently —
+  // 4.5% of sittings drew a chain turn, 0.0% drew two of them, so the
+  // three-turn can-do had no assessment at all. A chain is pulled in whole
+  // behind its head, and the cut below never lands inside one.
+  const headOf = new Map<string, number>();
+  items.forEach((it, i) => headOf.set(it.target, i));
+  const nextOf = new Map<number, number>();
+  const isTail = new Set<number>();
+  items.forEach((it, i) => {
+    if (!it.follows) return;
+    const prev = headOf.get(it.follows);
+    if (prev === undefined || prev === i || nextOf.has(prev)) return;
+    nextOf.set(prev, i);
+    isTail.add(i);
+  });
+  const chainAt = (i: number) => {
+    const out = [items[i]];
+    for (let cur = i, n = nextOf.get(cur); n !== undefined; cur = n, n = nextOf.get(cur))
+      out.push(items[n]);
+    return out;
+  };
+  const heads = items.map((_, i) => i).filter((i) => !isTail.has(i));
+
+  const byWeek = new Map<number, number[]>();
+  for (const i of shuffle(heads)) {
+    const wk = items[i].sourceWeek;
+    if (!byWeek.has(wk)) byWeek.set(wk, []);
+    byWeek.get(wk)!.push(i);
+  }
+  // Within a week, a chain head goes first. A week that teaches a three-turn
+  // exchange has one of them among thirty single turns, so leaving it to the
+  // shuffle drew it on 3.6% of sittings — the can-do would stay unmeasured
+  // with the grouping fixed and nothing else changed.
+  for (const list of byWeek.values())
+    list.sort((a, b) => Number(!nextOf.has(a)) - Number(!nextOf.has(b)));
+
+  // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
+  // its three turns in a row the way the lesson taught them.
+  const picked: typeof items = [];
+  const used = new Set<number>();
+  let units = 0;
+  const take = (i: number) => {
+    for (const it of chainAt(i)) picked.push(it);
+    for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
+    units++;
+  };
+  for (const wk of shuffle([...byWeek.keys()])) {
+    if (units >= CHECKPOINT_ORAL_ITEMS) break;
+    take(byWeek.get(wk)![0]);
+  }
+  for (const i of shuffle(heads)) {
+    if (units >= CHECKPOINT_ORAL_ITEMS) break;
+    if (!used.has(i)) take(i);
+  }
+  return picked;
 }
 
 /** The oral half. Deliberately does NOT show the target sentence: an earlier
@@ -257,7 +197,13 @@ function OralStage({
   const item = items[idx];
 
   function commit(spoken: string) {
-    const verdict = utterancePassed(spoken, item.target, item.sourceWeek);
+    const verdict = utterancePassed(
+      spoken,
+      item.target,
+      item.sourceWeek,
+      item.requiredTokens,
+      item.guestPrompt,
+    );
     resultsRef.current = [
       ...resultsRef.current,
       { item, passed: verdict.passed, said: spoken.trim() },
@@ -316,7 +262,16 @@ function OralStage({
         if (next >= 2) setTypedMode(true);
         return;
       }
-      if (utterancePassed(cleaned, item.target, item.sourceWeek).passed || next >= 2) {
+      if (
+        utterancePassed(
+          cleaned,
+          item.target,
+          item.sourceWeek,
+          item.requiredTokens,
+          item.guestPrompt,
+        ).passed ||
+        next >= 2
+      ) {
         commit(cleaned);
         return;
       }
@@ -344,8 +299,13 @@ function OralStage({
           <span>
             Phần nói · câu {idx + 1}/{items.length}
           </span>
-          <span className="text-foreground/50">Cần đạt {CHECKPOINT_ORAL_PASS_MIN} câu</span>
+          <span className="text-foreground/50">Cần đạt {oralPassMin(items.length)} câu</span>
         </div>
+        {item.follows && (
+          <div className="mb-4 border-l-2 border-muted pl-3 text-sm italic text-muted-foreground">
+            Bạn vừa nói: "{item.follows}"
+          </div>
+        )}
         <p className="font-display mt-4 text-2xl leading-snug">"{item.guestPrompt}"</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <button
@@ -354,7 +314,7 @@ function OralStage({
             onClick={() => speakEN(item.guestPrompt, listeningRateForWeek(item.sourceWeek))}
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
           >
-            ▶ Nghe lời khách
+            ▶ Nghe {item.audioWho}
           </button>
           {!typedMode && (
             <button
@@ -374,7 +334,10 @@ function OralStage({
             </button>
           )}
         </div>
-        {item.tip && (
+        {/* Gợi ý chỉ hiện SAU khi đã nói. Trong lúc chờ nói, nó là đáp án:
+            một tip in trọn con số bị khoá ("forty-five") biến ô nói thành ô
+            đọc-lại, đúng thứ mà việc giấu câu mẫu sinh ra để chặn. */}
+        {item.tip && said && (
           <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
             💡 {item.tip}
           </p>
@@ -450,7 +413,17 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // capability, not a render-time probe: Chrome returns an empty getVoices()
   // until `voiceschanged` fires, so checking at mount would drop the
   // listening floor for everyone on first paint.
-  const sawEnVoiceRef = useRef(false);
+  // Whether the DEVICE can speak English, asked of the device. This used to
+  // be a ref set inside the 🔊 buttons onClick, so skipping the button waived
+  // the listening floor entirely.
+  const [enVoice, setEnVoice] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const read = () => setEnVoice(hasEnglishVoice());
+    read();
+    window.speechSynthesis.addEventListener?.("voiceschanged", read);
+    return () => window.speechSynthesis.removeEventListener?.("voiceschanged", read);
+  }, []);
 
   if (!week || paper.length < TOTAL_QUESTIONS) return <SuiteComingSoon />;
 
@@ -487,7 +460,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             construct,
             correct: items.filter((r) => r.given === r.question.correctIdx).length,
             total: items.length,
-            deliverable: construct === "listening" ? sawEnVoiceRef.current : true,
+            deliverable: construct === "listening" ? enVoice : true,
           };
         },
       );
@@ -519,7 +492,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   ) {
     const oralPassed = results.filter((r) => r.passed).length;
     const writtenOk = checkpointPassed(pct, tallied);
-    const ok = writtenOk && (results.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN);
+    const ok = writtenOk && (results.length === 0 || oralPassed >= oralPassMin(results.length));
     setOralResults(results);
     if (ok && !awardedRef.current) {
       awardedRef.current = true;
@@ -582,10 +555,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               kỹ năng bị bỏ trống.
             </p>
             <p>
-              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} câu nói</strong> lấy từ khắp
-              giai đoạn — cần đạt <strong>{CHECKPOINT_ORAL_PASS_MIN} câu</strong>. Câu mẫu chỉ hiện
-              ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn được
-              tính.
+              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} lượt nói</strong> lấy từ khắp
+              giai đoạn — một hội thoại nhiều lượt tính là một lượt — và cần đạt{" "}
+              <strong>{Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%</strong> số câu. Câu mẫu chỉ
+              hiện ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn
+              được tính.
             </p>
           </div>
           {cooldownMsLeft > 0 ? (
@@ -621,7 +595,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
 
   if (stage === "done") {
     const oralPassed = oralResults.filter((r) => r.passed).length;
-    const oralOk = oralResults.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN;
+    const oralOk = oralResults.length === 0 || oralPassed >= oralPassMin(oralResults.length);
     const passed = checkpointPassed(scorePct, tallies) && oralOk;
     const shortfall = tallies.filter((t) => !blockCleared(t));
     const undeliverable = tallies.filter((t) => !t.deliverable);
@@ -646,7 +620,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
               : !oralOk && checkpointPassed(scorePct, tallies)
-                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${CHECKPOINT_ORAL_PASS_MIN}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${oralPassMin(oralResults.length)}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
                 : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
                   ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
                       .map(
@@ -686,9 +660,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
           </div>
           {undeliverable.length > 0 && (
             <p className="mt-4 text-xs leading-relaxed text-foreground/60">
-              Thiết bị của bạn chưa có giọng đọc tiếng Anh — phần nghe hiểu vẫn được tính điểm nhưng
-              không tính vào sàn tối thiểu từng kỹ năng. Hãy dùng Chrome hoặc Edge để luyện nghe đầy
-              đủ.
+              Thiết bị của bạn chưa có giọng đọc tiếng Anh, nên phần nghe hiểu chưa đo được. Điểm
+              các phần khác vẫn được ghi và bạn không bị trừ vì chuyện này — nhưng giai đoạn tiếp
+              theo chỉ mở khi có đủ cả phần nghe. Hãy làm lại trên Chrome hoặc Edge.
             </p>
           )}
           {oralResults.length > 0 && (
@@ -696,7 +670,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em]">
                 <span className="text-foreground/60">Phần nói</span>
                 <span className={oralOk ? "text-foreground/60" : "text-primary"}>
-                  {oralPassed}/{oralResults.length} · cần {CHECKPOINT_ORAL_PASS_MIN}
+                  {oralPassed}/{oralResults.length} · cần {oralPassMin(oralResults.length)}
                 </span>
               </div>
               {/* Targets are revealed only here — during the oral stage they
@@ -705,7 +679,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 {oralResults.map((r, i) => (
                   <div key={r.item.key + i} className="text-xs leading-relaxed">
                     <div className={r.passed ? "text-foreground/60" : "text-primary"}>
-                      {r.passed ? "✓" : "✗"} Khách: "{r.item.guestPrompt}"
+                      {r.passed ? "✓" : "✗"} {r.item.who}: "{r.item.guestPrompt}"
                     </div>
                     <div className="mt-1 text-foreground/75">
                       Câu mẫu: <span className="text-foreground">{r.item.target}</span>
@@ -801,11 +775,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         {q.kind === "listening" ? (
           <>
             <p className="font-display text-xl text-foreground">
-              Nghe lời khách và chọn câu trả lời chuẩn 5 sao:
+              Nghe {q.audioWho} và chọn câu trả lời chuẩn 5 sao:
             </p>
             <button
               onClick={() => {
-                if (speakVaried(q.audio, week!)) sawEnVoiceRef.current = true;
+                speakVaried(q.audio, week!);
               }}
               className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >

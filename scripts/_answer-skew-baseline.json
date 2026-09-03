@@ -1,0 +1,5 @@
+{
+  "skewedWeeks": 203,
+  "max": 0.6,
+  "note": "Ratchet only — a week with over 60% of its correct answers at one index is not offering three real choices."
+}

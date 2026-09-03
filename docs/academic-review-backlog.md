@@ -429,3 +429,888 @@ Cả tám tuần FB 32–36, 38–40 phát hành với phán quyết "ĐỦ ĐI�
 **Cập nhật món nợ P1-12:** FB-38 "Presenting a Proposal" đã được soạn tay lại trong batch
 này theo đúng nghiệp vụ (báo giá tiệc bằng đồng, plus-plus, headcount, hoá đơn đỏ) — món nợ
 tuần 38 giờ chỉ còn **SW-38 và HK-38**, sẽ xử trong batch của hai bộ phận đó.
+
+---
+
+## Sổ hậu kỳ cụm HK-34/35 (30/08/2026 — đang trong vòng chấm)
+
+Những mục dưới đây do hai auditor mù nêu ra ở vòng 4 và **được ghi nhận là không chặn**,
+hoặc là chỗ hai luồng chấm xung khắc mà tôi đã chọn một bên có lập luận.
+
+| Mục  | Nội dung                                                                                                                                                                                                                                                                                                                                                                                                               | Nguồn                     |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| HK-A | **Dựng phòng ĐÓN KHÁCH chưa có ở đâu.** Cả HK-34 chỉ dạy dựng phòng buổi tối trong kỳ lưu trú; phần lớn việc "dịp đặc biệt" thật của buồng phòng là set-up trước ETA (giường honeymoon, amenity VIP, thư TGĐ) với ràng buộc khác hẳn: không có cue, phòng phải ở trạng thái VC trước ETA hai giờ, amenity đặt sau cùng. Hạng mục nội dung mới, ~2 giờ.                                                                 | HM v4 2.9                 |
+| HK-B | **`in exchange for` — xung khắc giữa hai luồng.** HM cho rằng mặc cả tay đôi không hợp register 5★ ("khách sạn không đổi chác với khách; khách sạn thu xếp"). Academic ngược lại, coi đây là cách dùng ĐÚNG duy nhất của cụm và muốn thêm. **Đã giữ theo Academic**, vì ma trận quy định tuần 35 chính là tuần Đàm phán — bỏ ngữ liệu đàm phán để chiều register sẽ phá ma trận. Cần một quyết định thiết kế dứt điểm. | HM v4 2.16b vs Acad v4 N5 |
+| HK-C | **Ba headword của HK-34 cố ý không vào ngôn ngữ sản sinh:** `Low-key`, `Unattended`, `Latex balloon`. Hai từ đầu là lệnh cho NHÂN VIÊN, không phải câu nói với khách — Academic đã yêu cầu gỡ `low-key` khỏi miệng nói với khách. Đây là lựa chọn có ý thức, không phải chỗ sót; nhưng phép đo "tỷ lệ từ vào sản sinh" cần biết để không báo động nhầm ở các vòng sau.                                                 | Acad v4 VỪA-6             |
+| HK-D | **Tình huống chưa phủ ở HK-35:** khách dúi tiền để xoá phí, khách quay điện thoại khi tranh chấp, khách tự mua nước bỏ lại vào minibar, trẻ con lấy đồ minibar, kiểm minibar lúc trả phòng gấp. Ba cái sau là tranh chấp minibar phổ biến nhất trong nghề.                                                                                                                                                             | HM v4 3.6, 3.7            |
+| HK-E | **reviewWords HK-35 chứa `Damaged linen charge` và `Missing towel charge`** nhưng quy trình phí đồ vải không được dạy ở bất kỳ bài nào trong tuần — chỉ có minibar. Đổi slot hoặc bổ sung.                                                                                                                                                                                                                             | HM v4 3.8                 |
+| HK-F | **Rượu vào phòng chưa có ai nhận:** FO-34 có `"sparkling wine on ice"`, HK-34 không có một dòng nào về ai đặt xô đá, ai bê lên, và xử lý thế nào khi phòng có trẻ vị thành niên.                                                                                                                                                                                                                                       | HM v4 3.4                 |
+| HK-G | **Văn phong tỉnh lược toàn corpus.** Nhiều câu đích mở bằng mảnh không động từ (`"Two now, madam."`, `"Ten minutes now, madam."`). Rất thật với nghề và rất Anh, nhưng ở A2+ nó mô hình hoá mảnh câu thay vì mệnh đề, và bộ chấm nói chấm chính những mảnh đó. Là quyết định thiết kế cần chốt cho cả khoá, không riêng HK.                                                                                            | Acad v4 VỪA-12            |
+
+**Ghi chú thiết kế đã áp dụng, cần nhớ:** trường `guestPrompt` render ra màn hình dưới dạng
+câu trích trần, không nhãn "khách" (`SpeakingSuite.tsx:161`). HK-34 và HK-38 dùng đặc điểm này
+để đưa vào một số lượt **giám sát/quản lý nói với nhân viên** — đó là cách duy nhất luyện được
+ngôn ngữ nội bộ (`lead time`, `cue`, và cả tuần đề xuất HK-38) mà không dạy nhân viên nói
+những từ đó vào mặt khách. `helpTip` của các lượt này luôn mở đầu bằng "Đây là CẤP TRÊN nói".
+
+**Bổ sung 30/08/2026 — trường `speakerRole` và món nợ nó để lộ ra.**
+Hai auditor mù độc lập cùng phát hiện: `guestPrompt` được BỐN màn hình dán nhãn "Khách nói"
+(`SpeakingSuite.tsx`, `handbook.$dep.$week.tsx`, `review.tsx`, và `WeekTestSuite.tsx` in
+`Khách: "…"`). Ghi chú thiết kế trước đó của tôi — rằng prompt render ra không có nhãn — là
+**SAI**; tôi grep phân biệt hoa thường nên trượt chuỗi `"Lời khách nói"`.
+
+Đã sửa tận gốc: `SpeakingItem` có thêm `speakerRole?: "guest" | "colleague"`, hàm
+`speakerLabel()` in "Đồng nghiệp nói" cho lượt nội bộ, và cả bốn màn hình dùng nó. Đây là kênh
+duy nhất trong khoá học luyện được **ngôn ngữ nội bộ** (`lead time`, `cue`, `service window`,
+`put it forward`, `not my call`) mà không dạy nhân viên nói những từ đó vào mặt khách.
+
+| Mục  | Nội dung                                                                                                                                                                                                                                                                                                                       | Nguồn     |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
+| HK-H | **`GR_34_2.speaking[0]` đang bị dán nhãn sai.** guestPrompt là `"Housekeeping here. We only have white towels left, no red ones for the heart shape."` — rõ ràng là lời một bộ phận khác gọi sang, không phải lời khách. Cần thêm `speakerRole: "colleague"`. Để lại cho batch GR để không đụng file khi hai auditor đang đọc. | HM v5 1-E |
+| HK-I | **Rà toàn corpus** tìm các lượt nội bộ khác đang mang nhãn khách (1349 lượt chưa đánh dấu). Nên viết một lớp lint: nếu `guestPrompt` chứa tên bộ phận tự xưng ("Housekeeping here", "the desk here") hoặc thuật ngữ nội bộ, cảnh báo nếu chưa có `speakerRole`.                                                                | phái sinh |
+
+---
+
+## Sổ hậu kỳ cụm HK-36/38 (30/08/2026 — đang trong vòng chấm)
+
+| Mục  | Nội dung                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Nguồn                               |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| HK-J | **Bài đọc HK-36 dài nhất toàn khoá** (khoảng 700/600/620/365 từ so với FO-36 ~850 tổng). Đây là **hệ quả trực tiếp** của chính các vòng chấm: mỗi vòng auditor yêu cầu thêm một khối an toàn (AED, quy tắc 30 giây, quy tắc khói, khách từ chối rời phòng, biên bản tai nạn, ngưỡng dừng ban công, kiểm điện trước khi chạm nước), và cả bảy khối đều đúng. Không thể vừa giữ chúng vừa xuống 280 từ trong khuôn `reading` một-đoạn-một-bài. **Cần một quyết định cấu trúc**, không phải một lần cắt: hoặc cho `LessonContent` nhiều hơn một `reading`, hoặc chuyển phần giải thích sang trường `rule` tiếng Việt. | Acad v3 V8 · Acad v5 NẶNG-1 · HM v5 |
+| HK-K | **Câu hỏi đọc khoá cứng ở 2 câu/bài** (`verify-content` đòi đúng 2). Với bài đọc 600 từ chứa hơn 12 quy tắc, tỷ lệ đo là ~3%. `ReadingSuite` lại chấm đạt ở `ceil(total/2)` nên 2 câu nghĩa là phải đúng 2/2. Đề nghị cho phép 2–4 câu ở Phase 3–4.                                                                                                                                                                                                                                                                                                                                                                | Acad v5 NẶNG-1                      |
+| HK-L | **`role-play mở` mà ma trận hứa cho Phase 4 vẫn chưa tồn tại** — mọi tuần vẫn là `targetResponse` cố định chấm bằng so khớp từ. HK-38 là ứng viên tự nhiên nhất cho bộ chấm mở đầu tiên (`mustConvey` thay cho `targetResponse`), vì đề xuất lên cấp trên vốn có nhiều cách nói đúng. Nợ toàn khoá, ma trận đã tự thừa nhận.                                                                                                                                                                                                                                                                                       | Acad v5 mục 10                      |
+| HK-M | **`GrammarItem` không có `speakerRole`**, trong khi HK-38 trộn câu nói với cấp trên và câu nói với khách trong cùng một danh sách. Đã vá tạm bằng cách ghi "NÓI VỚI CẤP TRÊN" vào đầu trường `rule` tiếng Việt; sửa triệt để là thêm trường vào type như đã làm cho `SpeakingItem` và `GameRound`.                                                                                                                                                                                                                                                                                                                 | HM v3 2-J                           |
+| HK-N | **Quyền dùng AED là quyết định chính sách, không phải quyết định biên tập.** Nội dung hiện viết "không tự mở trừ khi Duty Manager bảo", và đưa "nhà bạn có cho nhân viên bật AED không" vào danh sách năm câu hỏi phải hỏi Executive Housekeeper. Trưởng an ninh/PCCC và bác sĩ khách sạn cần ký xác nhận đoạn này trước khi in.                                                                                                                                                                                                                                                                                   | HM v4 M1-1 · HM v5 1-C              |
+| HK-O | **FO-36 không có bài y tế nào** — cả bốn bài là cháy và sơ tán. HK-36 và FB-36 đều chuyền cuộc gọi 115 về phía quầy, mà quầy chưa từng được dạy ca cấp cứu y tế. Lỗ này thuộc batch FO.                                                                                                                                                                                                                                                                                                                                                                                                                            | HM v5 M3-9                          |
+| HK-P | **Không gate nào đo độ dài bài đọc theo phase**, và không gate nào đo mẹo "chọn phương án dài nhất" trên `game` (chỉ đo trên `reading`). HK-36 từng lên 81% trên game — vượt ngưỡng mastery 80% — mà mọi gate vẫn xanh.                                                                                                                                                                                                                                                                                                                                                                                            | Acad v3 N3 · Acad v5                |
+
+## Sổ hậu kỳ cụm HK-36/38 — vòng 6
+
+Ba mục dưới đây là **nguyên nhân gốc toàn khoá**, không phải lỗi của riêng cụm HK-36/38.
+Hai mục đầu đã sửa trong vòng này; mục thứ ba mới chỉ được chốt ratchet, chưa sửa.
+
+### HK-Q · Bài đọc dài chỉ được đo bằng đúng hai câu hỏi — ĐÃ SỬA
+
+`verify-content.ts` và `qa-full.ts` đều ép `reading.questions.length === 2` cho mọi bài đọc,
+bất kể dài bao nhiêu. HK_36_1 dài 807 từ và được đo bằng hai câu — nghĩa là gần như không
+được đo. Đây cũng là lý do năm vòng kiểm định trước đó liên tục đòi cắt bớt bài đọc: khung
+không cho chỗ nào khác để đặt nội dung an toàn đã được duyệt.
+
+Nay: bài trên 400 từ được phép mang 2–4 câu hỏi. HK_36_1/2/3 đã có câu thứ ba, đo đúng ba
+quy tắc chết người nhất (nghe 115 hay nghe trang giấy · biên bản kim đâm · khói trong hành lang).
+
+### HK-R · `<pre>` khiến bài đọc thành một khối chữ liền — ĐÃ SỬA
+
+`ReadingSuite.tsx` đổ nguyên `passage.body` vào một thẻ `<pre>`, nên `\n` chỉ xuống dòng chứ
+không tách đoạn. Bài 800 từ hiện ra thành một khối chữ nhỏ, cuộn năm màn hình mới tới câu hỏi
+đầu tiên. Ảnh hưởng **toàn bộ 240 dep-week**, không riêng Phase 4. Nay tách theo `\n` thành
+từng `<p>` có giãn cách.
+
+### HK-S · Mẹo "chọn câu dài nhất" qua được cả khoá — CHƯA SỬA, ĐÃ CHỐT RATCHET
+
+Người học không đọc gì, cứ bấm phương án dài nhất, thắng **77% (1482/1923)** câu hỏi đọc toàn
+khoá. Mốc qua checkpoint là **70%**. Nghĩa là mẹo này một mình đủ qua môn.
+
+Ngưỡng gate cũ đặt ở 0.85 — cao hơn 15 điểm so với mức mà mẹo đã đủ qua môn, tức là một con số
+không đo cái gì cả. Nay hạ về `LENGTH_MAX = 0.771` và dùng như ratchet: chỉ được giảm.
+
+Phân bố: P0 69% · P1 82% · P2 73% · P3 84% · P4 76%. Nặng nhất là nội dung **sinh tự động**,
+không phải nội dung soạn tay — tuần 5 cả sáu bộ phận đều 100%, tuần 9/17/24 nhiều bộ phận 100%.
+Vì cả sáu bộ phận cùng 100% ở cùng một tuần, nguồn lỗi nằm ở **hàm sinh tuần**, không nằm ở bank:
+sửa một chỗ sẽ kéo cả sáu. Việc này nên làm thành một đợt riêng theo phase, không nhét vào một
+cụm Phase 4.
+
+### HK-T · Xáo phương án bằng comparator ngẫu nhiên — ĐÃ SỬA
+
+`ArcadeSuite` và `BoardGameSuite` xáo bằng `sort(() => Math.random() - 0.5)`. Comparator trả lời
+ngẫu nhiên không sinh hoán vị đều; với ba phương án nó để lộ thứ tự soạn nhiều hơn là giấu đi —
+mà thứ tự soạn của cụm này là **27/30 vòng đáp án đúng nằm ở vị trí giữa**. Đã đổi sang
+Fisher-Yates, khớp với `GrammarSuite`/`ListeningSuite` vốn đã làm đúng.
+
+## Sổ hậu kỳ cụm HK-36/38 — vòng 9
+
+### HK-U · Bài luyện nói tiếng Việt là bài KHÔNG CHẤM ĐƯỢC — ĐÃ SỬA, nguyên nhân gốc CHƯA
+
+`src/lib/speech.ts:8` đặt cứng `u.lang = "en-US"`, và `SpeakingSuite` phát `guestPrompt` bằng
+`speakEN(...)`. Bài luyện gọi 115 tôi viết ở vòng 8 có `guestPrompt` tiếng Việt — nó được đọc
+bằng giọng Anh, ra âm thanh vô nghĩa.
+
+Nặng hơn: chấm bằng `compareWords` với ngưỡng `accPct: 80`. helpTip bảo học viên thay tên và
+địa chỉ khách sạn mình vào — làm đúng thế thì mất gần hết content word và **trượt vì đã tuân
+thủ hướng dẫn**. Bài đã thay bằng một item chấm được, vẫn luyện đúng thứ tự khai báo.
+
+Nguyên nhân gốc chưa sửa: engine không có đường nào phát một câu tiếng Việt, và không có
+đường nào cho một item "tự thay dữ liệu của mình". Cả hai đều là quyết định thiết kế, không
+phải sửa câu chữ. Mọi tuần sau này muốn dạy một câu nói với người Việt đều vướng.
+
+### HK-V · Chip ghép câu bị cắt ngang cụm khi câu dài quá 12 từ — CHƯA SỬA
+
+`GrammarSuite.MAX_CHIPS = 12`; câu dài hơn thì `toChips()` gộp từ theo lô
+`per = ceil(n/12)`. Mọi cặp grammar của Phase 4 đều dài 14–29 từ, nên chip ra kiểu
+`"service fee Two"`, `"million dong The"` — cắt ngang cụm từ. Trò chơi sắp xếp câu khi đó
+không còn dạy trật tự từ nữa. Ảnh hưởng toàn Phase 4, không riêng cụm này.
+
+### HK-W · Bài đọc HK-36 vẫn quá tải — GIẢM ĐƯỢC MỘT PHẦN, phần còn lại là quyết định chương trình
+
+Vòng 9 đã cân lại: 1.275/777/847/367 → 986/916/948/367 từ, không cắt một quy tắc nào —
+CHOKING và co giật về bài 2 (khách đang nguy ngay trước mặt), ẩu đả và khách tử vong về bài 3
+(phòng đã thành việc của an ninh), đoạn bể bơi nén còn một câu. Câu hỏi đọc: bài 1 lên 4 câu,
+bài 2 và 3 lên 3 câu, nên phần bài đọc được ĐO tăng gấp đôi.
+
+Phần còn lại không sửa được bằng biên tập. Tuần này chở nội dung của hai tuần: cấp cứu y tế
+(bất tỉnh, ngưng thở, AED, ép tim, hóc nghẹn, co giật, ba ngoại lệ) và sự cố toà nhà (cháy,
+gas, sơ tán, bão, mất điện, ngập). Mỗi quy tắc trong đó do một phát hiện kiểm định cụ thể đặt
+vào qua chín vòng. Muốn xuống 400–550 từ/bài như chuẩn band đòi thì phải **tách thành hai
+tuần** — tức đánh số lại lịch 40 tuần. Đó là quyết định của chủ dự án, không phải của biên tập.
+
+### HK-X · Tuần 40 mang tải từ vựng MỚI đầy đủ ở đúng tuần checkpoint — CHẶN BỞI ENGINE
+
+Kiểm định vòng 5 (Academic, V8) đo được: HK-40 có **16 headword hoàn toàn mới** cộng 8
+`reviewWords` — cùng tỉ lệ với HK-35/36/38 vốn không phải checkpoint. Ma trận
+(`docs/curriculum-level-matrix.md`) đòi tuần checkpoint "gồm ≥50% ngữ liệu tái sử dụng".
+Chín trong mười sáu thẻ là cả mệnh đề chứ không phải đơn vị từ vựng: `"That is where I stop"`,
+`"Never in front of a guest"`, `"Hold on — hands off that one"`, `"Could you write it down"`,
+`"Nobody taught me"`, `"On my own now"`, `"Beyond what I know"`, `"No shame in asking"`,
+`"Show them once"`.
+
+Đề xuất của auditor — chuyển 8 thẻ của HK_40_3 và HK_40_4 thành thẻ ÔN lấy từ tuần 31–38
+(`Leave it as found`, `Put it forward`, `Docket`, `Propose`, `Recovery position`,
+`Out of order`…) — **không thực hiện được**: GATE 1b (`verify-content.ts:387`) cấm một bộ phận
+dạy cùng một headword hai lần, nên những cụm đó chỉ được phép nằm ở `reviewWords`. Đó cũng
+chính là lý do chúng đang nằm ở đó.
+
+Muốn tuần checkpoint thật sự "đo lại thay vì bồi thêm" thì phải đổi một trong hai thứ, và cả
+hai đều là quyết định chương trình:
+
+1. Cho phép thẻ `vocabulary` kiểu ÔN (một trường `review: true` chẳng hạn) được miễn GATE 1b
+   và không tính vào tổng từ chủ động; hoặc
+2. Hạ hạn ngạch headword mới của riêng tuần checkpoint (16–18 → 6–8) và chấp nhận tổng từ
+   chủ động của mọi bộ phận giảm khoảng 8–10 từ — HK sẽ tụt từ 517 xuống ~509, tức dưới mục
+   tiêu 510 nhưng vẫn trên sàn 500.
+
+Áp cho cả sáu bộ phận ở tuần 40, không riêng HK.
+
+### HK-Y · HK-34 chấm ĐÚNG một câu mà HK-35 sẽ đảo lại một tuần sau — CHƯA SỬA
+
+Kiểm định vòng 6 (Academic, V-3) bắt được, và nó nằm ngoài cụm 39/40 nên chưa đụng tới.
+
+`HK_34_3.game[3]`, prompt `"Just pull the door to while you finish — I don't want her seeing it
+from the corridor."` — tức khách XIN ĐÓNG CỬA. Đáp án được chấm ĐÚNG là
+`"I have to keep the door open while I work, sir — that is our rule for every room."` — đứng lại,
+dẫn quy định, làm tiếp.
+
+Một tuần sau, `HK_35_1.reading` chốt: _"A guest who asks you to close it, or who crosses the line
+with you — hands or words — is not yours to handle alone: you step out, and your supervisor
+comes."_ Theo tuần 35, đáp án được chấm đúng ở tuần 34 là đáp án sai.
+
+Đọc theo hướng lũy tiến thì hợp lệ — tuần 34 dạy phát biểu quy tắc, tuần 35 thêm bậc rút lui.
+Nhưng vòng game tuần 34 vẫn chấm sau khi học viên đã học tuần 35, và không có dòng nào nói rằng
+nó đã bị thay thế. HK-39 hiện đã nói rõ ranh giới trong bài đọc (_"A guest who asks WHY the door
+is open hears the rule, and you keep working. A guest who asks you to CLOSE it — asks, not
+insists — is week thirty-five"_), nên người học tới tuần 39 sẽ gỡ được. Người dừng ở tuần 34 thì
+không.
+
+Sửa đúng cách là đổi prompt của `HK_34_3.game[3]` sang câu khách hỏi VÌ SAO cửa mở, để đáp án
+hiện tại đúng với cả hai tuần. Việc này chạm một tuần đã qua kiểm định, nên cần một vòng thẩm
+định riêng cho HK-34 chứ không gộp vào đợt này.
+
+### GR-A · GR-34 ghi vào hồ sơ một quan sát về NGƯỜI ĐI CÙNG khách — ĐÃ SỬA
+
+Cả hai luồng kiểm vòng 1 của cụm GR-31/32 đều bắt được, độc lập.
+
+`GR_34_1.reading` — GUEST PROFILE NOTE, GR OBSERVATION LOG:
+
+> "Observation: Guest mentioned "first anniversary trip" during check-in small talk.
+> **Guests wearing matching rings**, asked concierge about rose petal options."
+
+và câu hỏi đọc của bài chấm ĐÚNG cho việc ghi nhận đó vào hồ sơ.
+
+GR-32 (soạn mới) chốt ngược lại: _"Three things never belong on it. An opinion about the
+guest. A guess about their health, their money, or their religion. And **anything at all about
+who they arrived with**."_
+
+GR-32 nay đã nói rõ ranh giới — _"Noticing is not the problem. Noticing is permission to ASK.
+What goes on the file is the guest's answer, never the thing you saw."_ — nên học viên đi
+tuần 32 rồi tới tuần 34 có cơ sở để gỡ. Nhưng dòng `"Guests wearing matching rings"` vẫn là
+một quan sát về **thân thể** và về **người đi cùng** được ghi thẳng vào hồ sơ, và tuần 34 vẫn
+chấm nó là đúng.
+
+**Đã sửa ở vòng Academic 3 của cụm GR-31/32/33.** Dòng quan sát nay là
+`"Guest asked concierge about rose petal options."` — giữ nguyên hành động, bỏ phần quan sát
+về thân thể. Cả hai câu hỏi đọc của GR-34 vẫn đúng: đáp án 1 là câu khách tự nói ra
+(_"first anniversary trip"_), đáp án 2 là hành động gắn cờ hồ sơ.
+
+Lý do không chờ vòng thẩm định riêng nữa: GR-32 đã phát biểu luật thành một mệnh lệnh tuyệt
+đối, nên để nguyên dòng đó là để hai tuần cách nhau hai tuần dạy ngược nhau — và tuần sau là
+tuần chấm điểm dòng vi phạm ấy là ĐÚNG. Phần còn lại của GR-34 không đụng tới.
+
+### GR-B · GR-27 dạy ghi hồ sơ KHÔNG xin phép, GR-32 lật lại — CHƯA ĐỒNG BỘ
+
+`GR_27_4` có ba câu mẫu ĐÚNG đều ghi hồ sơ rồi báo khách sau:
+
+> grammar: "It has been noted that the guest prefers a firm pillow for future stays."
+> good: "Let's make sure to record his coffee preference in the guest profile for future visits."
+> game **correct: true**: "How wonderful, madam. It has been noted in your profile for your next stay."
+
+GR-32 chốt: hỏi trước, mỗi lần. Bản GR-32 hiện tại đã nói thẳng rằng luật đã đổi
+(_"This replaces what week twenty-seven taught…"_), nên học viên không bị bỏ lại giữa hai luật.
+Nhưng ba câu mẫu của tuần 27 vẫn đang được chấm là đúng trong app.
+
+Sửa đúng cách là đổi `GR_27_4` sang dạng xin phép (`"May I note that in your profile, sir?"`).
+Cùng lý do như GR-A: cần vòng thẩm định riêng cho GR-27.
+
+### GR-C · Ma trận giao tuần 33 một bộ ngữ liệu mà không tuần soạn tay nào dùng — VẤN ĐỀ HỆ THỐNG
+
+Kiểm định Academic vòng 2 của cụm GR bắt được, và nó không phải lỗi riêng của GR.
+
+`docs/curriculum-level-matrix.md` dòng 33 giao:
+
+> `| 33 | Tranh chấp & bồi thường (LAST đầy đủ) | Policy allows…; up to…; Let me check with my supervisor |`
+
+Grep toàn repo: chuỗi `Policy allows` **chỉ tồn tại trong `src/lib/content/phase4.ts`** — tức xương
+sống sinh tự động. Không một tuần 33 soạn tay nào dùng nó, kể cả HK-33 và GR-33. Cấu trúc
+`up to…` để nêu trần bồi thường cũng vắng mặt.
+
+Nặng hơn, GR-33 dạy gần như trái dấu: _"You speak to the duty manager yourself, and you never
+quote a figure."_ Nếu các bộ phận còn chạy spine vẫn dùng `Policy allows… up to…` ở tuần 33 thì
+hai nhóm học viên cùng tuần đang học hai luật khác nhau, và bài weektest dùng chung sẽ lệch.
+
+Đây là vấn đề của **mọi tuần override Phase 4**, không riêng GR — các tuần soạn tay đều thay
+ngữ liệu spine bằng ngữ liệu nghề. Cần quyết một lần:
+
+1. Sửa các dòng Phase 4 của ma trận cho khớp thực tế đã soạn (ví dụ dòng 33 thành
+   _"Ai quyết cái gì; my manager's to give; never quote a figure"_), hoặc
+2. Bổ sung ngữ liệu spine vào từng tuần override.
+
+Không xử lý trong đợt này vì nó chạm cả sáu bộ phận và cả tài liệu chuẩn.
+
+### GR-D · Tuần 39 diễn tập bằng từ ngân hàng mà bộ phận chưa từng gặp — CHƯA SỬA
+
+Kiểm định Academic vòng 3 của cụm GR-31/32/33 bắt được.
+
+Tuần 39 (`phase4.ts` `week39`) là tuần ôn: theo thiết kế nó **không** dạy từ mới, mà lấy lại
+từ của tuần 31–38. Nhưng nó đọc thẳng từ ngân hàng:
+
+> `const s1 = lx.bank.story[0];` … `p1 = lx.bank.preferences[0]` … `d1 = lx.bank.disputes[0]` … `o1 = lx.bank.occasions[0]`
+
+Với một bộ phận có tuần soạn tay ở 31–34, ngân hàng ấy không còn là thứ đã dạy. Render thật của
+GR-39: `Founding story · Founding family · Preferred newspaper · Seating habit · Broken commitment ·
+Ignored preference · Proposal set-up · Milestone anniversary` — **cả tám xuất hiện 0 lần** trong
+`week-content.ts`. Học viên gặp chúng lần đầu ở một tuần ôn.
+
+Repo đã vá đúng lỗi này một lần, cho tuần 37–38, bằng `taughtIn()` — và comment ngay trên hàm
+mô tả chính xác triệu chứng. Guard chỉ phủ 37–38.
+
+**Vì sao chưa mở rộng `taughtIn()` sang 31–34.** Hàm lấy hai từ vựng đầu tiên của tuần soạn tay
+và ghép vào khung câu của tuần 39. Với 37/38 nó chạy được vì `proposal`/`terms` là cụm danh từ và
+các tuần override cũng mở bằng cụm danh từ. Với 31–34 thì không: từ đầu của GR-31 là `"Opened in"`,
+nên khung `The ${s1} is what makes this place special` sinh ra _"The opened in is what makes this
+place special."_ Vá theo đề xuất sẽ đổi một lỗi chương trình lấy một lỗi ngữ pháp trong câu học
+viên phải nói ra.
+
+**Đường sửa đã chọn:** soạn tay GR-39 (và GR-40) — đã nằm trong hàng đợi của chính đợt GR này.
+Một tuần override làm cả vấn đề biến mất tại gốc cho GR, và tám ô ngân hàng chết theo sẽ được xoá
+trong cùng lần đó.
+
+**Còn lại cho bộ phận khác:** FB (override tuần 31) và HK (override tuần 33) mang đúng lỗi này ở
+tuần 39 của họ. Cần một quyết định riêng — hoặc soạn tay tuần 39 cho từng bộ phận, hoặc viết một
+`taughtIn()` biết chọn cụm danh từ thay vì lấy hai ô đầu.
+
+### GR-E · GR-34 còn nợ đo lường và nợ dung lượng của chính nó — CHƯA SỬA
+
+Self-check chạy trên GR-34 sau khi sửa GR-A:
+
+- **4 lượt speaking** — sàn Phase 4 của ma trận là 6–8.
+- **Đáp án đúng dồn 8/4/0 trên 12 câu (67%)** — vượt ngưỡng Layer K 60%.
+- **Phương án dài nhất thắng 11/12 câu.** Nửa đọc hiểu của tuần này gần như không chứng nhận gì:
+  đoán theo độ dài là qua.
+- **4 lượt sản sinh vượt trần 22 từ**, dài nhất 27 từ.
+
+Cả bốn đều đã được tính vào các ratchet toàn corpus, nên build không đỏ. Nhưng GR-34 là tuần
+nằm ngay giữa cụm vừa soạn, và vòng thẩm định kế tiếp của GR sẽ đọc tới nó. Xử lý cùng lúc với
+GR-B (GR-27) trong một đợt riêng cho các tuần GR cũ.
+
+### GR-F · Tuần 25, 28, 30 vẫn chấm ĐÚNG cho những câu tuần 33 vừa thu hồi — CHƯA SỬA
+
+Cả hai luồng kiểm vòng 4 đều bắt được, độc lập, và cùng gọi đây là mục kéo điểm nặng nhất.
+
+GR-33 dựng bảng năm tầng thẩm quyền. Các tuần sinh tự động trước đó dạy học viên nói ngược lại,
+và những câu ấy vẫn là **đáp án đúng** trong app:
+
+| Tuần  | Câu được chấm ĐÚNG                                                                        | Nguồn                                       |
+| ----- | ----------------------------------------------------------------------------------------- | ------------------------------------------- |
+| GR-25 | "We will confirm the upgrade straight away."                                              | `phase3.ts:568` × `phase3-lexicon.ts:2438`  |
+| GR-28 | "If you like, I can arrange a room upgrade, madam."                                       | `phase3.ts:1320` × `phase3-lexicon.ts:2641` |
+| GR-28 | "We can add the missing points. If you prefer, we will arrange a private dinner instead." | `phase3.ts:1368`                            |
+| GR-28 | "We can extend your late check-out if it happens again."                                  | `phase3.ts:1420`                            |
+| GR-28 | "We will cancel the extra charge as a gesture of apology."                                | `phase3.ts:1478`                            |
+| GR-30 | "I am very sorry, and if you like, I can arrange a room upgrade."                         | render GR-30 bài 3                          |
+
+**Đã làm ở vòng 4:** GR-33 nay gọi đích danh và thu hồi bốn câu của tuần 28, y như cách GR-32 đã
+làm với tuần 27 — _"Four sentences from week twenty-eight stop here… none of the four is yours to
+make."_ Và ba thẻ ôn của GR-33 từng hiện ra chính những câu đó (`Cancel the extra charge`,
+`Send a written apology`, `Apology letter`) đã được thay bằng thẻ không mâu thuẫn.
+
+**Còn lại:** bản thân tuần 25/28/30 vẫn dạy và vẫn chấm đúng. Học viên đi tuần 28 trước khi tới
+tuần 33, nên trong năm tuần họ đang luyện một phản xạ sai. Sửa đúng cách là chuyển khung câu của
+tuần 28 từ _hứa_ sang _đề xuất_ — nhưng đó là spine sinh tự động dùng chung cho cả sáu bộ phận, và
+với FO thì "cancel the extra charge" là việc hợp lệ của quầy (FO-33 cho lễ tân hạn mức 500.000đ).
+Cần một quyết định riêng: hoặc tách khung theo bộ phận, hoặc soạn tay GR-28.
+
+### GR-G · Tuần 35 hứa chắc sáu thứ tuần 33 nói là của người khác — SỬA KHI SOẠN GR-35
+
+`phase4-lexicon.ts:997–1051` cho GR sáu headword tuần 35, và khung câu `phase4.ts` biến chúng
+thành lời hứa chắc:
+
+> "We will restore your tier status if you can confirm today." · "I can double your bonus points
+> for you, madam." · "What if we write off the night instead, sir?" · "We could waive the
+> cancellation fee provided the dates stay fixed." · "We can cover your dinner bill; however, the
+> dates cannot change." · "I can upgrade the whole stay in exchange for a longer stay, madam."
+
+Câu đầu tiên chính là câu GR-33 đánh dấu `rude`.
+
+**Đã làm ở vòng 4:** GR-33 mở sẵn một cửa trong bài đọc — _"One door stays open: a prepared
+negotiation, where a manager agreed the range beforehand. At this desk, in a claim, it is never
+yours to offer."_ Đó là băng dán, không phải thuốc.
+
+**Còn lại:** tuần 35 không tự nhận mình là cuộc thương lượng đó — prompt của nó là
+_"Your price is simply too high for us"_, nghe hệt một vị khách ở quầy. GR-35 (Negotiating) đang
+nằm ngay trong hàng đợi soạn tay của đợt GR này. Khi soạn, tuần 35 phải mở bằng một câu đóng
+khung: đây là đàm phán có chuẩn bị với khách đoàn / đại lý / công ty, mọi con số đã được duyệt
+trước khi ngồi xuống, và ở quầy thì năm tầng của tuần 33 vẫn nguyên hiệu lực.
+
+### GR-H · Hai quầy trong một sảnh dạy hai lịch sử toà nhà và hai chuẩn đồng ý — CHƯA SỬA
+
+**(a) Năm xây dựng.** GR-31 dạy _"The hotel opened in nineteen twenty-nine… The building was a
+bank before that."_ FO-31 (`FO_31_1.reading`, "FRONT DESK — HOUSE HISTORY CARD") dạy
+_"1925: built as a merchant residence. The courtyard was the family garden."_ Cả hai tuần đều bảo
+nhân viên nói TRƠN, không rào đón. Đây đúng là hỏng hóc mà chính GR-31 cảnh báo:
+_"in a month the house has a fact nobody can find."_
+
+Đã giảm nhẹ ở vòng 4: GR-31 nay nói rõ ba dữ kiện in trong bài là của MỘT khách sạn, và bảo học
+viên hỏi quản lý dữ kiện của nhà mình. FO-31 chưa có dòng tương đương.
+
+**(b) Chuẩn đồng ý.** GR-32 chốt: _"A preference needs a spoken yes."_ FO-32 cùng tuần dạy ngược:
+_"A preference is anything the guest says about how they want to stay, even in passing… Write it
+in the profile the same shift."_ — không xin phép ai. GR-32 nay đã nói thẳng rằng các quầy khác
+còn làm theo lối cũ và lối đó đang được đổi, nhưng FO-32 vẫn chấm đúng cho lối cũ.
+
+**(c) Hạn mức hoá đơn.** FO-33 cho lễ tân 500.000đ tự quyết; GR-33 trước vòng 4 cho quầy GR đúng
+0đ. Đã sửa một nửa ở vòng 4: GR-33 nay chỉ đường sang front office cho các dòng folio nhỏ
+("Nobody should wait for a manager over sixty thousand dong"). Phần hạn mức riêng của quầy GR vẫn
+chờ con số thật của từng nhà.
+
+### GR-I · Headword dài bằng cả mệnh đề, và GATE 5 đang được chống bằng chúng — CHƯA SỬA
+
+Kiểm định Academic vòng 4. `VocabSuite` rút 3 mục nghe-và-gõ mỗi bài, ưu tiên tuần hiện tại, và từ
+A2.1 trở đi chính tả phải khớp tuyệt đối. Ở GR-31/32/33 thì 47/48 headword đủ điều kiện, trong đó
+có `"Nobody has established that"`, `"As this is your first stay"`, `"I only know what I saw"`.
+Đó không còn là bài từ vựng — là bài chép chính tả nguyên mệnh đề, chấm nhị phân. Đồng thời đầu
+trắc nghiệm lại quá dễ vì phương án nhiễu rút từ cùng bộ.
+
+Liên đới: GR đang ở 508/510 từ chủ động, và con số đó được đỡ bởi những "từ" dài như trên.
+
+Không sửa ở vòng 4 vì rút gọn headword sẽ đụng vào chính những cụm là xương sống của ba tuần, và
+lợi ích thấp hơn rủi ro. Cần một quyết định thiết kế chung cho Phase 4, không phải một bản vá GR.
+
+### Hai lớp lint mới thêm ở vòng 4
+
+- **Layer L · review-order** (cổng cứng, toàn corpus hiện sạch): một `reviewWord` phải trỏ về một
+  headword của chính bộ phận đó, và phải được dạy ở tuần TRƯỚC. `resolveReviewVocab` quét cả tuần
+  tương lai nên không thể tự bắt lỗi này.
+- **Layer M · slotted-headword** (ratchet, baseline 10): headword tự nó đã mang mạo từ mà khung câu
+  còn nhét thêm một mạo từ nữa — _"The note the preference comes last."_ Khoảng một phần ba số hit
+  là dương tính giả, nên nó là ratchet: giá trị nằm ở chỗ chặn cái mới.
+
+**Điều cả hai lớp KHÔNG bắt được**, và cần nói thẳng: lỗi thực sự tìm ra ở vòng 4 là một thẻ ôn
+trỏ đúng thứ tự, tiếng Anh đúng, nhưng **nội dung trái ngược** với tuần đang dạy nó
+(`"We will cancel the extra charge as a gesture of apology."` trong tuần nói chỉ Duty Manager mới
+được). Đó là mâu thuẫn ngữ nghĩa xuyên tuần — không lớp lint nào bắt được, và đó là lý do hai
+luồng kiểm định người vẫn là cổng duy nhất cho lớp lỗi này.
+
+---
+
+## Vòng 5 — trạng thái các mục cũ, và ba mục mới
+
+### GR-F (tuần 25/28 dạy ngược tuần 33) — ĐÃ VÁ MỘT NỬA
+
+GR-33 nay thu hồi **bảy** câu chứ không phải bốn, và thu hồi thành một danh sách đọc quét được:
+
+> SEVEN SENTENCES THAT STOP HERE
+> From week twenty-eight: 'I can arrange a room upgrade.' / 'We can add the missing points.' /
+> 'We will arrange a private dinner.' / 'We can extend your late check-out.' /
+> 'We will cancel the extra charge.'
+> From week twenty-five: 'We will confirm the upgrade straight away.' / 'I will update your guest file.'
+
+**Còn lại y nguyên:** tuần 25 và 28 vẫn dạy và vẫn **chấm ĐÚNG** cho cả bảy câu, năm tuần trước khi
+học viên tới tuần 33. Sửa đúng cách vẫn là tách khung câu spine theo bộ phận, hoặc soạn tay GR-28.
+
+### GR-G (tuần 35) — ĐÃ ĐẶT BIỂN BÁO, CHỜ SOẠN GR-35
+
+GR-33 nay gọi tên tuần 35 và nói trước nó sẽ dạy gì:
+
+> "Week thirty-five will teach you 'we will restore your tier status' and 'what if we write off the
+> night'. That is a prepared negotiation with a manager's figure agreed beforehand. It is not this
+> desk, in a claim, with the guest in front of you."
+
+Đây là **trích tuần xuôi có chủ đích** — khác hẳn loại trích xuôi bị bắt ở vòng 3, vốn lấy tuần
+chưa học làm THẨM QUYỀN. Self-check đã được sửa để phân biệt hai loại: một tham chiếu xuôi ở thì
+tương lai là biển báo, không có thì tương lai là bằng chứng học viên không kiểm được.
+
+Tuần 35 vẫn chưa tự nhận mình là cuộc đàm phán có chuẩn bị. Tan khi soạn tay GR-35.
+
+### GR-H (hai quầy, hai lịch sử toà nhà) — ĐÃ SỬA (a) và (c), CÒN (b)
+
+**(a) ĐÃ SỬA.** GR-31 nay dùng đúng ngôi nhà của FO-31: mở cửa **1925**, trước đó là **nhà một
+thương gia**, cầu thang phục dựng **2019**. Năm chỗ đổi, gồm cả đáp án game bị đóng đinh. Và
+FO-31 nay mang đúng câu miễn trừ mà GR-31 có: _"The three dates below are one hotel's. Ask your
+Front Office Manager for your own, and write them over these."_
+
+**(c) ĐÃ SỬA** ở vòng 4 (đường đi folio nhỏ sang front office).
+
+**(b) CÒN NGUYÊN.** FO-32 vẫn dạy ghi sở thích thẳng từ small talk, không xin phép, trong khi
+GR-32 chốt _"the guest says yes first, every time"_. Cần một quyết định chung cho cả nhà.
+
+### GR-J · Tuần 39 phát lại nguyên văn những câu tuần 33 vừa thu hồi — CHƯA SỬA
+
+Kiểm định Academic vòng 5. `GR-39.reviewWords` chứa `Extend your late check-out`,
+`Arrange a private dinner`, `Cancel the extra charge`. Vì thẻ ôn kéo lại thẻ dạy gốc, học viên ở
+tuần 39 nhìn thấy đúng ba câu tuần 33 vừa cấm — cơ chế ôn xoáy vòng đang **hoàn tác** cuộc thu hồi.
+
+Đã giảm nhẹ ở vòng 5: GR-33 nói trước điều đó — _"You will meet them again on a review card, and a
+card cannot tell you which level you are standing on."_
+
+Sửa tận gốc cần một thay đổi engine: thêm trường `supersededBy` cho `VocabItem` để
+`resolveReviewVocab` in kèm cảnh báo. Chưa làm vì nó chạm cả sáu bộ phận và cả suite từ vựng.
+
+Cùng mục này: `phase4.ts` tuần 39 dùng `Our policy allows compensation` cho **mọi** bộ phận, trong
+khi GR chưa từng gặp cấu trúc đó — vì ma trận giao nó cho tuần 33 và tuần 33 của GR là override.
+**Đã sửa ở vòng 5:** GR-33 nay dạy headword `Policy allows` và một cặp grammar cho nó. Và luật của
+tuần 39 thôi trích tuần 33 làm căn cứ cho việc tuần 33 cấm.
+
+### GR-K · Tải đọc của GR-33 là câu hỏi CẤU TRÚC, không phải câu hỏi nội dung — CẦN QUYẾT
+
+Số đo sau vòng 5: **GR-31 1.151 từ · GR-32 1.323 · GR-33 1.710.** Đối chiếu cùng tuần 33:
+FO 654 · FB 632 · HK 179 · SW 166 · BO 165. Và các tuần GR liền kề: W30 = 162, W34 = 196.
+
+Ba vòng liên tiếp tôi cắt và ba vòng liên tiếp con số tăng, vì mỗi vòng kiểm định lại yêu cầu thêm
+nội dung — và mọi yêu cầu đều đúng: quy trình cáo buộc, quy trình thương tích, dòng về công an,
+đường đi folio, bảy câu thu hồi, biển báo tuần 35, headword `Policy allows`, bước Thank.
+
+Vòng 5 đã làm hết phần có thể làm bằng biên tập: khối thu hồi thành danh sách một câu một dòng,
+bỏ ba câu thừa. Kết quả 1.768 → 1.710. **Gọt tiếp sẽ phải cắt vào thứ hai luồng kiểm định vừa
+yêu cầu.**
+
+Kết luận thành thật: đây là hơn một tuần nội dung. Lối thoát là một quyết định chương trình —
+cho GR **hai tuần** cho khiếu nại (ví dụ 33 xử lý "ai quyết cái gì" và một tuần nữa xử lý "việc
+không phải của bạn" + đóng hồ sơ), thay vì nhồi cả hai vào tuần 33. Việc đó đổi bản đồ 40 tuần,
+nên nó không phải quyết định của người soạn nội dung.
+
+---
+
+## Vòng 7 — ba mục mới, đều ngoài phạm vi cụm
+
+### GR-L · Bộ chấm bài viết tuần 33 không đo được điều nào nó cấm — CẢ SÁU BỘ PHẬN
+
+Kiểm định Academic vòng 7 chạy thử `scoreFreeText` (`src/lib/writing-score.ts`) với đề GR:
+
+| Bài nộp                                                                                                      | Kết quả       |
+| ------------------------------------------------------------------------------------------------------------ | ------------- |
+| Phá cả ba điều cấm của đề (nêu nguyên nhân _"that was our mistake"_, nêu tên bộ phận, nêu con số 4.000.000đ) | **ĐẠT 100%**  |
+| Xác nhận hạng thẻ của người vừa đánh giá — thứ `explanationVi` cấm đích danh                                 | **ĐẠT 100%**  |
+| Sáo rỗng: _"Loyalty matters to us… within a few days"_                                                       | **ĐẠT 100%**  |
+| Bài đúng chuẩn, tiếng Anh tự nhiên                                                                           | **TRƯỢT 50%** |
+
+Thủ phạm là token trần trong `any`-list: `"loyalty"` khớp _"Loyalty matters to us"_, `"within"` khớp
+_"within a few days"_. **Đã siết cho GR ở vòng 7.**
+
+**Còn nguyên ở năm bộ phận kia.** `WEEK33_WRITING_TASKS` của FO dùng `"the charge"`, HK dùng
+`"compensation"`, SW dùng `"health"` — cùng một kiểu token trần, cùng một `scoreFreeText`. Và
+`scoreFreeText` không có khái niệm "ý CẤM", nên mọi điều cấm in trong `promptVi` hiện là trang trí.
+Cần một `forbid` field, hoặc chuyển các điều cấm sang `explanationVi` và nói thẳng rằng máy không
+chấm phần đó.
+
+### GR-M · Ngân hàng đàm phán tuần 35 vẫn hứa thay vì đề xuất — SỬA KHI SOẠN GR-35
+
+`phase4-lexicon.ts` ~1010–1060 cho GR sáu headword tuần 35; khung `phase4.ts` biến chúng thành lời
+hứa ngôi thứ nhất: _"We will restore your tier status if you can confirm today."_ ·
+_"I am able to double your bonus points for a group of twenty."_ · _"Once you agree, I will add two
+free nights immediately."_ Tuần 33 nay báo trước điều này bằng tên (xem GR-G), và **tuần 39 đã được
+vá ở vòng 7** — cả `grammar`, `speaking` lẫn đáp án game của `GR_39_2` nay là ĐỀ XUẤT.
+
+Tuần 35 thì chưa. Tan khi soạn tay GR-35.
+
+### GR-N · Bể chính tả nghe–gõ nhận headword dài sáu từ — VẤN ĐỀ TOÀN PHASE 4
+
+`VocabSuite.tsx` lọc `spellable = /^[A-Za-z][A-Za-z- ]{3,}$/` — chấp nhận dấu cách — còn
+`dictationMatches` (`phases.ts`) khớp tuyệt đối từ tuần 15. Nên ở Phase 4 học viên có thể phải nghe
+rồi gõ đúng từng chữ `"As this is your first stay"` (6 từ) hoặc `"I only know what I saw"` (6 từ).
+Sai một từ = 0 điểm.
+
+Không phải lỗi của ba tuần này — viết headword dạng cụm là đúng triết lý ESP và ma trận công nhận
+("≥510 từ + cụm công thức"). Nhưng ba tuần này đẩy độ dài lên mức cao nhất khoá. Cách rẻ nhất: siết
+`spellable` xuống ≤3 từ.
+
+### Còn mở, mức nhẹ
+
+- **GR-34** `4612`: _"it seems there has been a mix-up with your cake"_ nêu NGUYÊN NHÂN, thứ tuần 33
+  cấm. Nên là _"This is not the cake you asked for, and I am putting it right now."_
+- **Viết hoa `Duty Manager`**: tuần 31 dùng thường, tuần 33 dùng hoa. Chốt một luật — hoa khi chỉ
+  người đang trực, thường khi chỉ vai trò.
+- **FO-32 / GR-32 về khách quay lại**: FO xác nhận ba sở thích trong một câu, GR gọi đó là "a
+  performance". Cả hai đều kết bằng "anything different?" nên sống được, nhưng nên thêm một dòng
+  giải thích vì sao hai quầy làm khác nhau.
+
+---
+
+## Vòng 9 — sáu lần chạy song song (3 Academic × 3 Hotel Manager)
+
+**Điểm:** HM 8,07 · 8,20 · 8,20 → **8,16**. Academic 7,92 · 7,67 · 7,13 → **7,57**. Mốc 7,7.
+
+Sáu lần chạy mù cho một bản đồ đồng thuận đáng tin hơn bất kỳ vòng đơn nào. Mục nào từ hai lần
+chạy trở lên cùng chỉ ra đều đã sửa. Ba mục còn mở, ghi lại đây.
+
+### GR-O · `scoreFreeText` không đọc được ý, và điều đó phải được nói ra chứ không che đi
+
+Bài viết tuần 33 nay có `mustAvoid` phủ bốn điều cấm với nhiều cách diễn đạt, và `promptVi` nêu đủ
+bốn điều đó trước khi chấm — trước đây nó chấm trượt một bài đúng vì chữ `Diamond`, một luật chỉ
+tồn tại trong `mustAvoid` chứ không có trong đề. Bảy trên tám bài tấn công nay bị chặn.
+
+**Bài còn lọt:** _"our loyalty members are told to expect lounge access only when they book it
+correctly, which you did not do."_ — đổ lỗi cho khách. Không vi phạm chuỗi nào; vi phạm giọng điệu.
+Một bộ khớp từ khoá không bắt được loại này, và thêm chuỗi kiểu `"you did not"` sẽ báo giả nhiều
+hơn bắt đúng. Ghi nhận là **giới hạn cố hữu**, không giả vờ đã chặn.
+
+### GR-P · Thẻ ôn speaking đã được sửa ở tầng engine — 1.364 thẻ
+
+`resolveReviewItem` (`src/lib/review.ts`) lấy phương án sai từ `targetResponse` của bài khác trong
+tuần — tức là **câu mẫu đúng của chính tuần đó bị đánh dấu SAI**. Đo được: nhánh ưu tiên game round
+trùng prompt **chưa từng chạy một lần nào trong 1.364 thẻ**, vì game prompt không bao giờ được viết
+trùng prompt của speaking.
+
+Ở tuần 31, câu `"The hotel opened in nineteen fifty-four, sir."` — câu cả tuần tồn tại để dạy —
+là đáp án SAI trên **7/8 thẻ**.
+
+**Đã sửa:** thứ tự nguồn phương án sai nay là game round trùng prompt → phương án sai của bất kỳ
+game nào trong tuần → vế `rude` của cặp ngữ pháp → và chỉ cùng đường mới dùng target của bài khác.
+Đo lại: **0/1.364 thẻ còn hiện câu mẫu làm đáp án sai.**
+
+### GR-Q · Tải bài đọc vẫn trên chuẩn của chính bộ phận
+
+GR-37 và GR-38 (cũng soạn tay) chốt ở ~350 từ bài đọc mỗi tuần. GR-31/32/33 ở 1.275 / 1.580 / 2.132.
+Mọi lần chạy đều nêu. Vòng 9 đã làm phần biên tập làm được: tách đoạn 99 từ và 90 từ, bỏ câu lặp,
+dời khối "sáu câu dừng lại" sang bài 1, nâng trần câu hỏi lên 5 (vì mastery 80% với 4 câu là
+"đúng tuyệt đối hoặc trượt": 3/4 = 75%).
+
+Phần còn lại là quyết định chương trình, không phải quyết định biên tập — hoặc công bố ba tuần này
+là tuần hai buổi, hoặc chuyển khối "NOT YOURS AT ALL" sang GR-36 khi soạn tay tuần đó. Xem GR-K.
+
+### GR-R · Bốn tuần phía sau gỡ lại luật thẩm quyền của tuần 33
+
+Sáu lần chạy kiểm định vòng 11 (ba Hotel Manager, ba Academic, mù với nhau) tìm ra cùng một họ lỗi:
+tuần 33 dựng xong bảng năm tầng thẩm quyền, rồi các tuần sau tháo nó ra. Tất cả đều **ngoài phạm vi
+ba tuần được duyệt**, nên chưa sửa; ghi lại để soạn tới tuần nào thì đóng tuần đó.
+
+- **GR-34** (đã soạn tay) — `GR_34_4` vocab `"Apologize"` context _"Please allow me to sincerely
+  apologize for this mistake."_ và grammar polite _"there has been a mix-up with your cake"_. Tuần 33
+  dạy `'I am sorry, that was our mistake' is a verdict… it is not yours to decide` và cấm gọi tên
+  nguyên nhân khi chưa có dữ kiện. `"this mistake"` và `"a mix-up"` đều là gọi tên nguyên nhân.
+- **GR-38** (tuần sinh tự động) — `week-content.ts:6706` _"I have kept your room at the same rate"_
+  và `:6713` _"We will hold the same rate you booked, sir, and breakfast stays included for as long
+  as you are with us."_ Tuần 33 giao phòng cho Lễ tân và cấm nói giá. Ngoài ra `:6598` _"If not, I
+  will refund it in full today."_ và `:6641` _"I would like to offer you the cooking class as our
+  guest."_ — hoàn tiền là của Duty Manager, và quầy ĐỀ XUẤT chứ không tặng.
+  _Lưu ý ngược lại:_ chương trình bão của GR-38 (`STORM PROGRAMME — GUEST RELATIONS`, có tên và có
+  thứ tự) **đúng là** tờ "written house programme" mà tuần 33 cấp phép trước. Phần đó khớp; phần
+  giá phòng và lớp học nấu ăn thì không.
+- **GR-39** (tuần sinh tự động) — bài 3 nói thẳng với KHÁCH _"There is a guest collapse at the
+  property."_ Tuần 31 cấm xác nhận bất cứ điều gì về một vị khách với người khác.
+- **GR-40** (tuần sinh tự động, tuần đánh giá cuối) — `GR_40_1` _"I can explain the compensation
+  amount to anyone who asks."_ Đây đúng là thứ tuần 33 cấm (`you never quote a figure`), và nó nằm
+  ở tuần cuối khoá, tức là điều cuối cùng học viên gặp.
+- **GR-36** (tuần sinh tự động) — `"Control room. What is the situation?"` và `"Reception, this is
+security."` đều render nhãn "Khách nói" vì thiếu `speakerRole`. Cùng tuần, _"we are handling the
+  lost passport. There is no danger."_ dùng hộ chiếu thất lạc làm khủng hoảng trong bài dạy sơ tán.
+
+### GR-S · Tải bài đọc GR-33: việc còn lại là cắt, không phải viết
+
+Năm trong sáu lần chạy vòng 11 nêu `GR_33_3` (959 từ, 6 quy trình khẩn, 5 câu hỏi). T1/T7 chốt cứng
+4 bài mỗi tuần nên không thêm được bài thứ năm, **nhưng cân lại giữa bài 3 và bài 4 thì được**:
+`GR_33_4` mới 391 từ. Đề xuất trùng nhau của nhiều lần chạy: chuyển ba nhóm ít rủi ro tính mạng
+(báo chí & luật sư · khách không rời quầy · an toàn hiện trường) sang GR_33_4 và dời câu hỏi theo,
+để GR_33_3 còn ~600 từ và mỗi quy trình còn lại có ít nhất một câu hỏi. Không đổi một chữ nội dung.
+
+Cụm GR-31/32/33 đã **qua cổng** (HM 8,33 · Academic 7,90 trên mốc 7,7), nên đây là việc nâng chất,
+không phải việc chặn.
+
+### GR-T · "Our policy allows for this" chưa có mốc giờ
+
+`GR_33_1` dạy _"Our policy allows for this, madam, and my manager decides what we can do."_ Một lần
+chạy HM lập luận rằng khách nghe "chính sách cho phép" là đã tin sẽ có bù, và câu chuyển việc lên
+quản lý **không kèm mốc** — trong khi chính bộ tài liệu này dạy ba lần rằng bàn giao phải có giờ
+(`"Handing on needs a time, or it is only pointing"`). Một lần chạy trên sáu, và cụm đã qua cổng,
+nên chưa sửa. Đáng xem lại vì câu này còn được ôn lại ở deck GR-35.
+
+### GR-U · Tuần 39 trả lại công thức của tuần 35 ở dạng vô nghĩa
+
+Bốn lần chạy kiểm định khác nhau, ở hai vòng, cùng chỉ ra một chỗ: bộ sinh Phase 4 nhét headword
+`Put the night to my manager` vào chính khuôn _"put it to my manager that…"_, nên GR-39 sinh ra
+
+> "May I put it to my manager that we **put the night to my manager**?"
+> "Our policy allows compensation, however my manager decides whether we **put the night to my manager**."
+
+Câu thứ hai còn là comma splice với `however` — đúng thứ GR-35 vừa dạy là sai. Nguồn:
+`phase4.ts:2305`, và template đó áp cho **mọi bộ phận**, nên SW-39 và BO-39 cũng dính.
+
+Tuần 35 dành cả bốn bài rèn đúng một công thức; tuần tổng duyệt trả lại nó hỏng. Đóng khi soạn
+tay GR-39.
+
+### GR-V · FO-35 dạy đổi nhượng bộ lấy đánh giá
+
+Một lần chạy Hotel Manager đối chiếu FO-35 và thấy: _"Ask for something back whenever you can —
+a Sunday night, a direct booking next time, **a review**."_ Đổi một nhượng bộ lấy một bài đánh giá
+là thứ đang bị các nền tảng phạt. GR-35 không có mục này trong danh sách thứ-khách-đưa-lại
+(_"Dates. Nights. A confirmation today. A signature this afternoon."_) — nên đây là việc của FO-35,
+không phải của GR. Ghi lại vì không auditor nào của FO sẽ đọc báo cáo GR.
+
+### GR-W · Layer K đọc chỉ số lưu trữ, không đọc chỉ số hiển thị
+
+`ReadingSuite.tsx` xáo phương án bằng Fisher–Yates có seed từ chuỗi `q`, nên **vị trí học viên
+nhìn thấy khác vị trí lưu trong file**. Layer K của `lint-content.ts` đo chỉ số lưu trữ, nên nó mù
+với thiên lệch thật. Đo lại GR-35 vòng 1 trên thứ tự hiển thị: một bài có 4/5 đáp án rơi vào cùng
+một ô, tức "luôn bấm nút giữa" được đúng 80% — bằng ngưỡng mastery.
+
+Cùng loại: `verify:content` GATE 6 cộng gộp 1978 câu toàn khoá (75% dài-nhất), nên một bài lẻ đạt
+5/5 chìm nghỉm. GR-35 vòng 1 có đúng một bài như thế.
+
+Đề xuất (chưa làm, vì cần ratchet cho 200 dep-week đang có): một lớp lint đo **theo từng bài đọc**
+trên thứ tự sau `permute` — dài-nhất ≤60%, một-vị-trí ≤60%. Hàm xáo đã có sẵn, chi phí là một vòng
+lặp. Hiện tôi đo bằng script ngoài repo trước mỗi lần giao cho auditor.
+
+### GR-X · Spine tuần 36 dạy chính câu GR-36 chấm là sai
+
+`phase4.ts:1496` và `:1516` sinh ra cho **mọi** tuần 36 tự động (SW-36, BO-36):
+
+> "Please stay calm — we are handling the {emergency}. **There is no danger.**"
+
+GR-36 dành cả bài 2 để chứng minh câu đó sai: _"'Please stay calm' asks people to feel something,
+and nobody has ever managed it on request"_ và _"you may not say it is safe, and you may not say
+it is nothing."_ Cùng lỗi ở `phase4.ts:2368` cho GR-39, nơi câu đó là vế **polite** được chấm ĐÚNG
+— ba tuần sau khi GR-36 cấm nó.
+
+Hai auditor độc lập nêu mục này. Đóng khi soạn tay GR-39 và khi tới lượt SW-36/BO-36.
+
+### GR-Y · Đề xuất một lớp lint mới: mâu thuẫn học thuyết liên bộ phận
+
+Vòng kiểm định GR-36 phát hiện ba mâu thuẫn an toàn giữa GR-36 và FO-36/HK-36/GR-38 — ai đưa lệnh
+báo an toàn, khách không đi được cầu thang chờ ở đâu, điểm tập kết ở đâu. **Không lớp gate nào so
+một dữ kiện giữa hai bộ phận trong cùng một tuần.**
+
+`lint-content.ts:1188` đã có tiền lệ đúng khuôn: `CLINICAL_CLASHES` so các cặp lâm sàng và tự ghi
+rằng _"không lớp nào ở trên nhìn thấy nó: câu đúng cú pháp, từ vựng đúng, độ dài đạt"_. Một lớp
+tương tự cho học thuyết vận hành — cùng số tuần, khác bộ phận, cùng khái niệm (`all-clear`,
+`assembly point`, `refuge area`, `who dials 114`) — sẽ chặn được ba trong số đó tự động.
+
+Chưa làm vì cần ratchet cho 200 dep-week hiện có. Ghi lại kèm ca chứng minh.
+
+### GR-Z · GR-37 và GR-38 yếu hơn hẳn ở hai trục đo được
+
+Một auditor Academic đo cả track GR khi đối chiếu với tuần 36 và báo hai tuần liền kề:
+
+- **GR-38**: chọn phương án dài nhất thắng **88%** câu đọc — bấm cái dài nhất được 7/8 điểm mà không
+  cần đọc chữ nào. **GR-37**: 75%. (GR-36 sau khi cân là 25%.)
+- Cả hai chỉ có **2 câu hỏi mỗi bài đọc**, mà ngưỡng mastery P4 là 80% và `ReadingSuite` bắt từng
+  bài qua riêng — nên 2 câu nghĩa là **phải đúng tuyệt đối**, không được sai một câu nào.
+- Câu đích vượt trần 22 từ: GR-37 chạm 26, GR-38 chạm 25.
+
+Hai tuần này đã ship từ trước và chưa qua cổng 3-lần-chạy. Nên đưa vào hàng đợi thẩm định.
+
+**Và một lỗ hổng nội dung cụ thể ở GR-37:** HK-36 coi là tuyệt đối rằng _"A guest who is NOT
+BREATHING does not wait for an inside line at all: 115 first."_ GR-37 xếp 115 ở vị trí thứ ba, sau
+Duty Manager, và không có ngoại lệ nào. GR-36 nay đã chèn tạm ngoại lệ đó vào câu bàn giao, nhưng
+chỗ ở đúng của luật là GR-37.
+
+### GR-AA · Không tuần GR nào có sơ tán phi-cháy
+
+Quét GR-1→40: không có một dòng nào về đe doạ bom, gói khả nghi, hay phong toả an ninh. Đây là lỗ
+hổng cấp giáo trình, không cấp tuần — ghi lại để quyết khi soạn phần còn lại.
+
+### GR-AB · GR-37 thiếu ngoại lệ "không thở → 115 trước"
+
+Bốn auditor của GR-36 cùng nêu. `GR_37_1` là một thẻ quy trình ĐÁNH SỐ:
+
+> "1. Send help first, ask questions second. Call ext. 8888 (Duty Manager) and state the room
+> number. … 3. Ambulance: dial 115."
+
+Không có ngoại lệ nào. HK-36 coi là tuyệt đối: _"A guest who is NOT BREATHING does not wait for an
+inside line at all: 115 first."_ GR-36 nay có câu đó, nhưng nó nằm ở tuần **trước**, chìm giữa một
+bài đọc về sơ tán — học viên đi tuần tự sẽ mang thẻ tuần 37 ra ca trực.
+
+Sửa: thêm vào `GR_37_1` sau mục 3 — _"Exception: a guest who is not breathing — 115 before ext.
+8888."_ Và GR-37 cũng chưa dạy nội dung cuộc gọi ra ngoài (tên và địa chỉ khách sạn trước), thứ
+HK-36 và GR-36 đều có.
+
+GR-37 đã ship từ trước và chưa qua cổng 3-lần-chạy. Xem thêm GR-Z.
+
+## GR-AC — Bài đọc 2 câu hỏi: bấm mù một chữ cái là qua ngưỡng mastery
+
+Phát hiện trong đợt kiểm định GR-39 (2 lượt độc lập), đo lại bằng cách chép nguyên
+`seedOf` + `shuffleOptions` của `ReadingSuite.tsx:30–57` để đo trên **thứ tự học
+viên thật sự nhìn thấy**:
+
+| số câu hỏi/bài | qua được bằng bấm mù một chữ cái |
+| -------------- | -------------------------------- |
+| 2 câu          | **283 / 928 (30%)**              |
+| 3 câu          | 1 / 6                            |
+| 4 câu          | 0 / 2                            |
+| 5 câu          | 1 / 24 (4%) — đã sửa             |
+
+`ReadingSuite` đòi **từng** passage tự đạt `suiteMasteryPct` (P4 = 80%). Với 2 câu
+hỏi thì ngưỡng đó là 2/2 = 100% — nhưng nếu cả hai đáp án rơi vào cùng một vị trí
+sau khi xáo (xác suất 1/3 với 3 phương án), học viên bấm một chữ cái năm lần là qua.
+
+Layer K của `lint-content.ts` mù chuyện này vì nó đọc thứ tự **lưu**, không phải
+thứ tự **hiện**. GATE 6 của `verify-content.ts` thì gộp toàn corpus nên một bài lẻ
+không kéo nổi con số chung.
+
+Nguyên nhân gốc là **2 câu hỏi/bài** — đặc trưng của content sinh tự động. Các tuần
+soạn tay dùng 5 câu và sạch 96%. Hai hướng: (a) nâng số câu hỏi tối thiểu của bản
+sinh lên 3, hoặc (b) thêm một lớp lint đo trên thứ tự sau `shuffleOptions`.
+Script đo: `scratchpad/blindpass.ts` và `scratchpad/blindstat.ts`.
+
+## GR-AD — `speakEN` không chuẩn hoá số, nên nút nghe mẫu đọc sai số phòng
+
+`src/lib/speech.ts` truyền thẳng chuỗi vào `SpeechSynthesisUtterance`, nên
+`"1102 is still open"` được đọc thành _"one thousand one hundred and two"_ — đúng
+thứ mà chính content dạy là sai. `SpeakingSuite.tsx:177` và `GrammarSuite.tsx:227`
+đều phát `targetResponse` / `polite` nguyên văn.
+
+Trớ trêu là bộ **chấm** đã đúng: `speaking-score.ts:25` có `digitToWords()` với đúng
+quy ước khách sạn (`0 = "oh"`, 3 chữ số trở lên thì đọc từng chữ số). Dùng lại hàm
+đó trước khi phát là sửa xong cho cả 40 tuần × 6 bộ phận.
+
+Hiện GR-39 và FO-39 vá tạm bằng một dòng trong `helpTip`; đó là vá content cho một
+lỗi code.
+
+## GR-AE — Trần 5 câu hỏi/bài khiến một luật có con số không được kiểm
+
+`verify-content.ts:299` chặn cứng 2–5 câu hỏi mỗi bài đọc. GR-39 bài 1 đã dùng hết
+5 câu, nên luật _"gọi thêm người khi có bốn người đang chờ"_ — luật định lượng duy
+nhất của bài — không có câu hỏi nào kiểm. Hai lượt kiểm định đều nêu.
+Cân nhắc nâng trần lên 6 cho Phase 4, hoặc chấp nhận và ghi rõ trong quy ước soạn
+bài rằng mỗi bài chỉ được mang **một** luật có con số.
+
+## GR-AF — GR-40 sinh tự động: hai lỗi chặn phát hành
+
+Chưa nằm trong `P4_OVERRIDES`, nên bài đánh giá cuối khoá của GR đang chạy trên
+content sinh tự động:
+
+1. `GR_40_1` — `"I can explain the compensation amount to anyone who asks"` xuất hiện
+   cả trong bài đọc lẫn câu luyện nói. Vừa phá GR-33 (con số bồi thường là của quản
+   lý) vừa phá GR-31 (mọi điều quầy này biết về khách là bảo mật).
+2. `GR_40_4` — `"negotiating a contract in week thirty-seven"`. GR-37 là **cấp cứu
+   y tế**; tuần thương lượng của GR là 35. Đây là câu chung của spine, lấy theo dòng
+   B2B của ma trận vốn không áp dụng cho GR (xem khối ngoại lệ GR 36–38).
+
+Kèm theo: cả 6 câu luyện nói đều đặt `speakerRole: "guest"` cho một cuộc phỏng vấn
+đánh giá nhân sự — khách không hỏi _"How do you feel about your English at work now?"_.
+Và `reviewWords` = 154 (đổ cả khoá), trong khi FO-40/FB-40/HK-40 soạn tay đều dùng 8.
+
+## GR-AQ — FO-39 là tuần đáng thẩm định kế tiếp (đo bởi 6 lượt độc lập)
+
+Sáu lượt kiểm định GR-39 đều tự đo FO-39/FB-39/HK-39 để làm mốc so sánh, và cùng
+quy về một kết luận: **FO-39 là tuần yếu nhất trong bốn tuần 39 soạn tay.**
+
+|                                  | FO-39               | FB-39     | HK-39 | GR-39      |
+| -------------------------------- | ------------------- | --------- | ----- | ---------- |
+| Speaking items                   | **4** (sàn P4 là 6) | 8         | 8     | 8          |
+| Câu hỏi đọc                      | 8 (2/bài)           | 8         | 10    | 20 (5/bài) |
+| Bấm mù một vị trí qua ngưỡng 80% | **4/4 bài**         | 2 bài     | 0     | 0          |
+| Đáp án dài nhất thắng (đọc)      | **75%**             | 13%       | 50%   | 35%        |
+| Đáp án dài nhất thắng (game)     | **100%**            | —         | 50%   | 25%        |
+| Dạy luật "mười lăm phút cuối"    | **không**           | **không** | có    | có         |
+| Trường `arcade` chết             | còn 4 bài           | còn 4 bài | 0     | 0          |
+| Cảnh báo T2 của `qa:full`        | **3**               | 0         | 0     | 0          |
+
+Hai dòng đầu là lỗi trần band. Ba dòng giữa cộng lại nghĩa là **học viên qua được
+cửa mastery 80% của FO-39 mà không cần đọc gì** — hai bài chỉ có 2 câu hỏi, và cả
+hai mẹo (vị trí + độ dài) đều thắng 100%. Đó là loại lỗi gate không bao giờ thấy.
+
+## GR-AR — Bộ chấm nói cho qua đúng cặp tối thiểu mà bài học tồn tại để chặn
+
+Đo trực tiếp trên `speaking-score.ts` (bag-of-words + LCS, ngưỡng 80%/0,60):
+
+- GR-39 bài 2 dạy "xin chứ không hứa" và "phần tôi KHÔNG dời được". Học viên nói
+  `"I am promising, sir… the part I can move is who owns the table"` — mắc **cả hai**
+  lỗi mà bài tồn tại để chặn — vẫn **PASS 88% / 0,83**.
+- GR-35 đảo `cannot` thành `can`: **PASS 93%**.
+- GR-39 bài 1: đảo thứ tự nhánh 115 và nhánh Duty Manager: **PASS 100%**.
+
+Đây là lỗi toàn khoá, không phải lỗi tuần. Hệ quả cho việc soạn bài: ở ô mà **cặp
+tối thiểu chính là bài học**, giữ `targetResponse` ngắn (≤12 token) để bộ chấm còn
+phân biệt được — mục tiêu càng dài, một từ đối lập bị lật càng bị pha loãng.
+
+## GR-AS — `resolveReviewItem` gán trùng cặp nhiễu cho hai thẻ cùng một bài
+
+`review.ts:220–228` băm `offset` theo cách khiến hai thẻ speaking của cùng một bài
+nhận **cùng một cặp phương án nhiễu**. Ở GR-39 bài 3, thẻ an toàn thân thể
+(khách nắm tay áo đồng nghiệp) nhận hai nhiễu nói về lời hứa thất lạc — loại trừ
+được bằng chủ đề, không cần biết luật. Chỉ xuất hiện khi một bài có đúng 2 thẻ
+speaking, tức đúng hình dạng chuẩn của Phase 4.
+
+## GR-AT — Gloss dài là điểm cho không trong VocabSuite
+
+`VocabSuite.buildQuiz` lấy chính `definition` làm phương án EN→VI và rút nhiễu từ
+cùng pool, nên "bấm ô dài nhất" thắng theo TỪNG MỤC. Mô phỏng 20.000 lượt trên
+GR-39 (trước khi sửa): `"Nothing new after"` **100%**, `"What I can do meanwhile"`
+89%, `"Not a name, not a team"` 79% — trong khi lệch toàn pool chỉ 24%, tức là
+gate đo tổng thể và không bao giờ nhìn từng mục. Mục đầu đã sửa; hai mục còn lại
+và toàn bộ các tuần khác chưa rà.
+
+Quy ước đề nghị: `definition` dưới ~90 ký tự; mọi phần giải thích thêm chuyển sang
+`rule` hoặc `helpTip`.
+
+## GR-AU — GR-39 không luyện SẢN SINH tuần 34 và tuần 38
+
+GR-39 dẫn chiếu 50 lần và không sai lần nào, nhưng phân bố lệch mạnh: tuần 33
+chiếm 12–22 lần, còn **tuần 34 và tuần 38 mỗi tuần đúng một dòng, 0 ô nói, 0 câu
+hỏi đọc**. Đúng hai tuần đó lại là hai tuần mỏng nhất pha (4–5 speaking, bài đọc
+50–100 từ/bài). Cộng thêm `VocabSuite` chỉ rút **4/10** thẻ ôn mỗi lượt:
+C(8,4)/C(10,4) = **1/3 số lượt chạy không gặp cả `Occasion` lẫn `Stranded`**.
+
+Sửa được mà không cần viết thêm bài: chuyển một ô game bài 4 từ tuần 33 sang tuần
+34, và thêm một câu hỏi đọc cho tuần 38.
+
+## GR-AV — Ngữ pháp đặc trưng Phase 4 không được SẢN SINH ở tuần tổng duyệt
+
+Trong 16 câu học viên phải tự nói ở GR-39, **không câu nào** chứa `however`,
+`although`, `in exchange for`, `provided`, `Based on…` hay `Policy allows… up to…`
+— sáu cấu trúc mà chính ma trận liệt kê là ngôn ngữ mới của tuần 32, 33 và 35.
+`however` **có** trong bài đọc bài 2 kèm câu mẫu, nhưng không ô nào bắt nói nó ra.
+3/16 câu có mệnh đề phụ thật; phần còn lại là câu đơn và câu mệnh lệnh. Độ dài đạt
+band, **cú pháp thì ở A2**. 71% khối dẫn chiếu nằm ở bề mặt học viên chỉ ĐỌC.
+
+Đây là câu hỏi thiết kế cho cả sáu tuần 39, không riêng GR: một tuần tổng duyệt
+nên ôn NGÔN NGỮ hay ôn QUY TRÌNH?
+
+## GR-AW — Các mục nhỏ còn treo của GR-39
+
+- **Khối định tuyến khẩn cấp bài 1** (6 dòng: 114/115, 30 giây, trẻ dưới nước) có
+  **0/5 câu hỏi đọc**. Ngữ liệu rủi ro cao nhất được kiểm ít nhất. GR-37/GR-38 đã
+  có sẵn khuôn **thẻ đánh số** (`MEDICAL EMERGENCY — FIRST RESPONSE CARD`) — đúng
+  khuôn khối này cần.
+- **`Ms Hà` trong ô ghép câu GrammarSuite**: `normalizeSentence` dùng lớp ký tự
+  `\w` không có cờ `/u`, nên "à" bị xoá và đích thành `ms h`; gõ "Ms Ha" không dấu
+  sẽ trượt. Tiền lệ: `Dũng` BO-12, `Phở` FB-15 — lỗi engine, không phải lỗi tuần.
+- **Trùng prop xuyên bộ phận**: `704` dùng ở cả HK-39 (phòng dọn dở) và GR-39
+  (khách chờ lounge); quy tắc 5 của ma trận cấm.
+- **Mùi khét dẫn tới "the book comes later"** (bài 1 game 2) ngầm xác nhận complaint
+  log, trong khi tuần 36 dạy nó thuộc incident report — và `Not the complaint log`
+  là một trong mười thẻ ôn của chính tuần 39.
+- **Tải đọc**: GR-38 355 từ, GR-39 2 448 từ, GR-40 169 từ. Không luật nào bị phá
+  (không có trần độ dài bài đọc), nhưng tuyến 38-39-40 giật rất mạnh. Bài 3 một
+  mình 741 từ sau khi bổ sung ba bước cuối của quy trình tố cáo — đó là đánh đổi
+  có chủ ý: đủ quy trình an toàn đổi lấy độ dài.
+- **Headword dài**: TB 4,2 từ, 16/18 từ ba từ trở lên. `dictationAllowsTypo` tắt từ
+  A2.1, nên bài chính tả là gõ khớp tuyệt đối một mệnh đề sáu từ
+  (`"May I take them in order"`). Học viên vẫn đạt 82% nếu trượt cả ba, nhưng ba
+  mục đó không còn là bài luyện.

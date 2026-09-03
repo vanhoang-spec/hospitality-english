@@ -34,13 +34,652 @@ function digitToWords(tok: string): string[] {
   return [...tok].map((d) => (d === "0" ? "oh" : ONES[Number(d)]));
 }
 
+/** Contractions expand before anything else looks at the stream. A learner who
+ *  says "It's seven o'clock" has produced the copula the lesson is teaching,
+ *  and ASR transcribes contractions as contractions — so a grammar word that
+ *  is required (see GRAMMAR_TOKENS) must not be counted missing just because
+ *  the speaker was fluent enough to contract it. */
+const CONTRACTIONS: [RegExp, string][] = [
+  [/\bit's\b/g, "it is"],
+  [/\bhe's\b/g, "he is"],
+  [/\bshe's\b/g, "she is"],
+  [/\bthat's\b/g, "that is"],
+  [/\bthere's\b/g, "there is"],
+  [/\bwhat's\b/g, "what is"],
+  [/\bi'm\b/g, "i am"],
+  [/\byou're\b/g, "you are"],
+  [/\bwe're\b/g, "we are"],
+  [/\bthey're\b/g, "they are"],
+  [/\bi'll\b/g, "i will"],
+  [/\bwe'll\b/g, "we will"],
+  [/\bcan't\b/g, "cannot"],
+  [/\bdon't\b/g, "do not"],
+  [/\bdoesn't\b/g, "does not"],
+  [/\bisn't\b/g, "is not"],
+  [/\baren't\b/g, "are not"],
+  [/\bwon't\b/g, "will not"],
+];
+
 export function normalize(s: string) {
-  return s
-    .toLowerCase()
+  let t = ` ${s.toLowerCase()} `;
+  for (const [re, full] of CONTRACTIONS) t = t.replace(re, full);
+  return t
     .replace(/[^\w\s']/g, " ")
     .split(/\s+/)
     .filter(Boolean)
     .flatMap((tok) => (/^\d+$/.test(tok) ? digitToWords(tok) : [tok]));
+}
+
+/** The words whose loss changes the MESSAGE, not just the score.
+ *
+ *  At the Phase 0 thresholds (60% accuracy over a 4-6 word target) every
+ *  target had exactly one droppable token, and it was always the value:
+ *  "Room three-oh-five" passed a two-oh-five item, "It is eleven o'clock"
+ *  passed a seven-o'clock item, "Five hundred dong" passed a
+ *  five-hundred-thousand item — wrong by a factor of a thousand, in the
+ *  three of six P0 weeks that exist to teach numbers, times and money.
+ *  An audit ran those exact utterances and every one scored PASS.
+ *
+ *  So value words are not droppable. The list is closed and deliberately
+ *  small — numbers, clock words, ordinals, days, times of day, currencies —
+ *  because a required token that is merely stylistic would punish fluent
+ *  paraphrase. */
+const VALUE_TOKENS = new Set<string>([
+  ...ONES,
+  ...TEENS,
+  ...TENS.filter(Boolean),
+  "oh",
+  "hundred",
+  "thousand",
+  "million",
+  "o'clock",
+  "half",
+  "past",
+  "first",
+  "second",
+  "third",
+  "fourth",
+  "fifth",
+  "sixth",
+  "seventh",
+  "eighth",
+  "ninth",
+  "tenth",
+  "eleventh",
+  "twelfth",
+  "ground",
+  "morning",
+  "afternoon",
+  "evening",
+  "night",
+  "today",
+  "tomorrow",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+  "dong",
+  "dollar",
+  "dollars",
+]);
+
+/** The grammar words Phase 0 exists to install, and whose loss is the exact
+ *  L1 error every rude/polite pair is built around: the copula, the future
+ *  auxiliary, and negation.
+ *
+ *  VALUE_TOKENS closed the numeric hole; this closes the grammatical one.
+ *  Measured over all 249 Phase 0 targets: a learner who drops every function
+ *  word and every plural -s — the complete Vietnamese-speaker error profile,
+ *  and precisely what each lesson's `rule` warns against — passed 89% of
+ *  items. Five audit reports found this independently, in five modules.
+ *
+ *  Raising the pass threshold does NOT fix it, and I measured that before
+ *  believing the recommendation to: at 75% the sloppy version still passes
+ *  65% of items, and at 80% it still passes 52% while honest answers that
+ *  drop a single word start failing 41% of the time. A threshold cannot tell
+ *  a dropped copula from a mumbled noun. This list can. */
+// "be" joined them after a review found "Yes, sir. Please be." and "Please
+// careful. It is slippery." both passing the wet-floor safety item — the bare
+// infinitive after an imperative is the same copula this list exists for.
+// "there" is here as the existential subject, not as a place word: week 8
+// calls "There is one near the lift." the most important structure it teaches,
+// and dropping it left the sentence passing at 86%.
+const GRAMMAR_TOKENS = new Set<string>(["is", "am", "are", "was", "were", "will", "be", "there"]);
+
+/** The verbs a service sentence is a PROMISE about — check, tell, change,
+ *  bring. Swapping one for another leaves the percentage untouched and
+ *  reverses what the learner has just committed the hotel to.
+ *
+ *  It lived in the content layer, where it could only reach the weeks that
+ *  call `lockWeekHeadwords`. Here it reaches every utterance in the course,
+ *  including the twenty-six hand-authored weeks and every grammar model. */
+export const PROMISE_VERBS = new Set<string>([
+  "ask",
+  "arrange",
+  "bring",
+  "call",
+  "change",
+  "check",
+  "help",
+  "repeat",
+  "report",
+  "show",
+  "sign",
+  "stop",
+  "tell",
+  "transfer",
+  "wait",
+]);
+
+/** Finite verbs, in both the bare and the third-person form. The one-word
+ *  allowance may never be spent on one: a sentence without its verb is not a
+ *  slip, it is a different utterance, and the -s that marks the third person
+ *  is the single most-taught point of the phase. */
+const FINITE_VERBS = new Set<string>(
+  (
+    "work works start starts finish finishes come comes go goes open opens close closes " +
+    "clean cleans bring brings check checks make makes take takes give gives need needs " +
+    "want wants say says tell tells call calls keep keeps stay stays send sends write writes " +
+    "read reads ask asks help helps wait waits serve serves pour pours cook cooks vacuum vacuums " +
+    "collect collects print prints sign signs greet greets register registers deliver delivers " +
+    "update updates refill refills prepare prepares wash washes fold folds rest rests " +
+    "invite invites decorate decorates remember remembers arrange arranges book books " +
+    "massage massages warm warms light lights meet meets show shows count counts file files " +
+    "pay pays save saves attend attends mop mops dust dusts change changes report reports " +
+    "transfer transfers cancel cancels dial dials email emails confirm confirms hold holds " +
+    "welcome welcomes order orders repeat repeats stop stops fix fixes seat seats spell spells " +
+    "go goes leave leaves sit sits put puts get gets see sees know knows come comes " +
+    // Progressive forms carry the predicate on their own: "Your water bottle is
+    // coming, madam." keeps only a bare copula without this one.
+    "coming going waiting checking bringing cleaning working starting finishing " +
+    "speaking calling asking helping looking making taking sending writing"
+  ).split(" "),
+);
+
+/** Words a lesson is ABOUT, which the one-word allowance must never spend
+ *  itself on. The allowance says a long model may lose one word; it did not
+ *  say WHICH, so a review found ten items where the droppable word was the
+ *  point: "Please change here. I will wait." passed a model ending "…I will
+ *  wait outside." in the lesson whose rule is "say where they change and say
+ *  that you leave — two halves, neither missing"; "because" fell out of both
+ *  reason clauses; "sometimes" and "twice" fell out of the frequency frames;
+ *  "some" fell out of four requests. */
+const STRUCTURE_TOKENS = new Set<string>([
+  "because",
+  "when",
+  "while",
+  "after",
+  "before",
+  "until",
+  "always",
+  "usually",
+  "sometimes",
+  "often",
+  "never",
+  "twice",
+  "another",
+  "some",
+  "more",
+  "outside",
+  "inside",
+  "upstairs",
+  "downstairs",
+]);
+
+/** Words whose absence inverts the outcome rather than blurring it. A wet
+ *  floor warned about without "careful" is not a warning; a treatment
+ *  described without "hot" is not a caution. A review found seven such
+ *  utterances passing while missing exactly this word. */
+const SAFETY_TOKENS = new Set<string>([
+  "careful",
+  "carefully",
+  "slowly",
+  "hot",
+  "wet",
+  "slippery",
+  "allergy",
+  "allergic",
+  "doctor",
+  "emergency",
+  "fire",
+  "smoke",
+  "danger",
+]);
+
+/** The rest of the function words, graded with one life.
+ *
+ *  The list above closed the copula hole and left the wider one open. Four
+ *  more reports measured what stayed open, in four modules: strip EVERY
+ *  function word and every plural -s — the whole Vietnamese-speaker error
+ *  profile — and the answer still passed 37.8% (GR), 47.4% (FO), 50.8% (HK)
+ *  and 53.4% (SW) of speaking items. "Please pay reception sir" passed
+ *  "Please pay at reception, sir." in the lesson whose rule is the preposition.
+ *
+ *  Adding these to the hard list was the obvious move and it costs too much:
+ *  measured, it takes the sloppy profile from 50.8% down to 32.8% but also
+ *  drops an HONEST learner who fluffs one word from 58.7% to 50.8%. ASR eats
+ *  articles for breakfast; a course cannot fail people for its own microphone.
+ *
+ *  So these are required with a tolerance of one. Losing a single "the" is a
+ *  slip. Losing two or more function words is not an accident, it is the
+ *  error profile — and the profile is what every rude/polite pair in P0 is
+ *  built to erase. */
+const FUNCTION_TOKENS = new Set<string>([
+  "a",
+  "an",
+  "the",
+  "my",
+  "your",
+  "our",
+  "i",
+  "we",
+  "you",
+  "it",
+  "at",
+  "in",
+  "on",
+  "to",
+  "of",
+  "for",
+  "do",
+  "does",
+  "did",
+  "may",
+  "can",
+  "could",
+  "would",
+  "shall",
+  // "if" arrived after a review found the near-miss "Tell me it is too hot."
+  // passing its own model "Please tell me if it is too hot." — the conjunction
+  // was the whole difference and nothing was watching it.
+  "if",
+  "have",
+  "has",
+]);
+/** One function word may go missing, however many the target has.
+ *
+ *  Scaling the allowance by length was tried first and measured worse in the
+ *  direction that matters least: it took the sloppy profile to 0.4% but also
+ *  failed an HONEST learner who lost a single "the" 91% of the time, and a
+ *  browser microphone loses "the" all day. A course cannot fail people for
+ *  its own ASR.
+ *
+ *  One life, flat, kills the profile on every target carrying two or more
+ *  function words. On a target carrying exactly one — "At reception, madam."
+ *  — dropping it and slipping on it are literally the same utterance, so no
+ *  scoring rule can separate them, and this one does not pretend to. What
+ *  covers those is the other half of the fix: the lessons own headwords are
+ *  required outright (see lesson() in phase0.ts), so the content word can
+ *  never be the thing that goes. */
+function functionAllowance(count: number): number {
+  // Câu mang đúng một hư từ THÌ hư từ đó là bài học: "At reception, madam."
+  // mất "at", "Thank you" mất "you", "The second floor" mất "the". Ở đó lỡ
+  // miệng và bỏ qua ngữ pháp là một, nên không tha. Từ hai hư từ trở lên,
+  // tha một — micro của trình duyệt nuốt mạo từ cả ngày.
+  //
+  // Và chỉ tha cho MẠO TỪ: xem FORGIVABLE_FUNCTION_TOKENS. Suất tha này từng
+  // ăn vào giới từ, tức ăn vào đúng cấu trúc mà bài đang dạy.
+  return count <= 1 ? 0 : 1;
+}
+
+/** Negation is graded asymmetrically, and deliberately.
+ *
+ *  Four reports proposed adding "yes"/"no" to the required list. That breaks
+ *  honest answers: "The second floor, madam." is a correct reply to "Is my
+ *  room on the second floor?" even though the model opens with "Yes". So an
+ *  affirmative is never required. A NEGATION is, in both directions — losing
+ *  one reverses the message ("We never close" → "We close"), and adding one
+ *  reverses it just as hard ("Yes, someone is here" → "No, nobody is here").
+ *  Both passed before this: 60% and 86%. */
+const NEGATION_TOKENS = new Set<string>([
+  "no",
+  "not",
+  "never",
+  "nobody",
+  "none",
+  "nothing",
+  "cannot",
+]);
+
+/** Every token this target cannot lose: the ones derived from the closed
+ *  lists above, plus anything the frame author names, plus any title+surname
+ *  the model uses. */
+export function requiredValueTokens(target: string, override?: string[]): string[] {
+  const toks = foldCourtesy(normalize(target));
+  return [
+    ...new Set(
+      toks.filter((t, i) => {
+        // "ONE moment" is a chunk, not a count — the comment above promised an
+        // override for exactly this and no frame ever wrote one, so "Certainly,
+        // madam. A moment." failed on a missing digit. Three audit reports hit
+        // it. Handled here instead of in 20 hand-written overrides, because it
+        // is a property of the phrase, not of any one lesson. A "one" that is
+        // counting something ("One three, madam" — reading digits back) keeps
+        // its status: only the immediate `one moment` pair is formulaic.
+        if (t === "one" && toks[i + 1] === "moment") return false;
+        // A comparative standing beside its own base form is the whole lesson
+        // of week 10: "This one is warmer. That one is warm." Dropping the
+        // "-er" left the pair passing at 88%.
+        if (t.endsWith("er") && (toks.includes(t.slice(0, -2)) || toks.includes(t.slice(0, -1))))
+          return true;
+        return (
+          VALUE_TOKENS.has(t) ||
+          GRAMMAR_TOKENS.has(t) ||
+          NEGATION_TOKENS.has(t) ||
+          PROMISE_VERBS.has(t) ||
+          SAFETY_TOKENS.has(t) ||
+          STRUCTURE_TOKENS.has(t)
+        );
+      }),
+    ),
+    // An authored list ADDS to the derived one; it does not replace it. The
+    // old contract was "override wins", and an audit proved what that would
+    // have cost: declaring `requiredTokens: ["room"]` made "Room NINE-one-two"
+    // pass a two-oh-five item, because naming one content word switched the
+    // number lock off. No frame had used the field yet — and all five reports
+    // that call it the highest-leverage fix left would have walked into that.
+    ...(override ?? []).map((t) => t.toLowerCase()),
+    ...titleAndSurname(target),
+    ...fixedPhraseTokens(target),
+    ...particleTokens(toks),
+  ];
+}
+
+/** Verb + particle pairs where the particle IS the meaning.
+ *
+ *  "Send it UP", "write it DOWN", "come BACK" — the particle is short, it is a
+ *  function word, and the content allowance was designed to forgive exactly
+ *  that shape. Measured: five of eight such targets passed with the particle
+ *  gone, including two where the phrasal verb is the headword the week exists
+ *  to teach. "Of course. Let me send it for you." passed a `Send it up` item
+ *  at 88%; "I write it because the shift changes." passed a `Write it down`
+ *  item at 88%.
+ *
+ *  Locked against the VERB rather than by a list of bare particles: "back" in
+ *  "at the back of the lounge" is a place and stays droppable, while "back" in
+ *  "I will come back" is half the promise. */
+const PHRASAL_VERBS: Record<string, string[]> = {
+  send: ["up", "back"],
+  write: ["down"],
+  wrote: ["down"],
+  writes: ["down"],
+  come: ["back"],
+  comes: ["back"],
+  call: ["back"],
+  calls: ["back"],
+  go: ["home", "back"],
+  goes: ["home", "back"],
+  hold: ["on"],
+  hang: ["up"],
+  pick: ["up"],
+  wake: ["up"],
+  sit: ["down"],
+  put: ["on", "down"],
+  take: ["off", "back"],
+  turn: ["on", "off"],
+  fill: ["in"],
+  check: ["in", "out"],
+  bring: ["back", "up"],
+  brings: ["back", "up"],
+};
+function particleTokens(toks: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < toks.length; i++) {
+    const parts = PHRASAL_VERBS[toks[i]];
+    if (!parts) continue;
+    // Up to three tokens of object may sit between the verb and its particle —
+    // "send IT up", "write THE NUMBER down" — but no further, or the next
+    // sentence's "back" would be claimed by this sentence's "come".
+    for (let j = i + 1; j <= Math.min(i + 3, toks.length - 1); j++) {
+      if (parts.includes(toks[j])) {
+        out.push(toks[j]);
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/** Set phrases that are all-or-nothing.
+ *
+ *  Two academic reviews measured "Thank" — no "you" — passing targets whose
+ *  own lesson rule is "Phải có 'you': THANK YOU." Locking the lesson's
+ *  headwords caught it in week 1 lesson 4 and nowhere else, because that is
+ *  the only lesson where the phrase is a headword. It is a property of the
+ *  phrase, so it belongs here: if the target says it, the learner says all of
+ *  it. Day-parts are deliberately absent — greetingIsFree() exists because the
+ *  guest's line usually does not fix the hour. */
+const FIXED_PHRASES = [
+  "thank you",
+  "here you are",
+  // "of course" left this list when foldCourtesy arrived: the pair is folded
+  // to one token with "certainly" before anything counts it, so locking both
+  // halves here made every model that opens with it reject the synonym the
+  // course itself prints as an arcade key.
+  "excuse me",
+  "anything else",
+  "half past",
+  "this way",
+  // "one moment" KHÔNG nằm ở đây, và đó là chủ ý. Cụm này đã có miễn trừ
+  // riêng ở requiredValueTokens (chữ 'one' đứng ngay trước 'moment' không
+  // tính là số đếm), vì "Certainly, madam. A moment." là câu đúng. Đưa nó
+  // vào đây khoá luôn chữ 'one' và đánh trượt chính câu đó — đo được, và là
+  // lỗi tôi tự gây ra khi thêm lớp bảo vệ mới mà không kiểm lớp cũ.
+];
+function fixedPhraseTokens(target: string): string[] {
+  const t = " " + normalize(target).join(" ") + " ";
+  return [
+    ...new Set(FIXED_PHRASES.filter((p) => t.includes(" " + p + " ")).flatMap((p) => p.split(" "))),
+  ];
+}
+
+/** The value tokens of an utterance, in order, with the formulaic "one" of
+ *  "one moment" removed.
+ *
+ *  That exemption exists in requiredValueTokens too, and the two must agree:
+ *  "Certainly, madam. A moment." is a correct answer, and a round of patching
+ *  broke it twice in one file — once by adding "one moment" to FIXED_PHRASES,
+ *  once by counting its "one" here. One helper now, used by both, so the next
+ *  edit cannot fix half of it. */
+function valueTokenSequence(toks: string[]): string[] {
+  return toks.filter((t, i) => VALUE_TOKENS.has(t) && !(t === "one" && toks[i + 1] === "moment"));
+}
+
+/** The only function words the allowance may spend itself on.
+ *
+ *  The allowance exists because a browser microphone swallows articles all day
+ *  long. It was never meant to cover a preposition, and covering one made the
+ *  grader pass "I work Housekeeping, sir." against "I work in Housekeeping,
+ *  sir." — the exact string that lesson prints as the learner's ERROR, with a
+ *  rule that reads "you need the preposition 'in' before the department". Two
+ *  more from the same audit: "The wardrobe is the left, sir." and "Of course.
+ *  staircase is next to lift."
+ *
+ *  A dropped preposition, pronoun or auxiliary changes the structure the
+ *  lesson is teaching. A dropped article is a slip. */
+const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "your", "our"]);
+
+/** Noise a microphone adds and no lesson ever teaches. Exempt from the
+ *  inserted-word check below, along with articles and honorifics. */
+const DISFLUENCY = new Set<string>(["uh", "um", "er", "ah", "eh", "hmm", "mm", "ok", "okay"]);
+
+/** Words the course itself teaches as an UPGRADE to a model sentence, and
+ *  which therefore must never fail one.
+ *
+ *  The inserted-word rule was written to stop "He is works here every day."
+ *  and "The car park is near at the lift." from passing, and it does. But it
+ *  counted by number rather than by kind, so it also failed "I am VERY sorry,
+ *  madam. I will check it." at accuracy 100 and orderRatio 1.00 — while week
+ *  13 of the same department prints "I am very sorry, sir." as its own model.
+ *  Measured: "Certainly" for "Of course" failed 16 of 16 items whose own
+ *  arcade key is "Certainly, madam. One moment."; a grammatical "now" failed
+ *  130 of 130.
+ *
+ *  An added intensifier or courtesy marker cannot make a service sentence
+ *  wrong. An added auxiliary, pronoun or preposition can, and those are not
+ *  here. */
+const COURTESY_EXTRAS = new Set<string>([
+  // "yes" is here because the negation docstring in this file already says an
+  // affirmative is never required, and the content rule below was requiring it:
+  // "sir. The bartender is here." scored 83% against "Yes, sir. The bartender
+  // is here." and failed. Twelve of fifteen Yes-opening F&B items failed that
+  // way, and 13-15 of 16 in the other four departments.
+  "yes",
+  "please",
+  "very",
+  "now",
+  "certainly",
+  "just",
+  "really",
+  "kindly",
+  "so",
+]);
+
+/** What is left of a model sentence once the grammar and the courtesy are
+ *  taken out: the words that carry what it says. */
+const isContentToken = (t: string) =>
+  // A verb counts however short it is. The length floor exists to keep
+  // two-letter glue out of the content list, and it was also keeping "go" out:
+  // "I go to the pool bar first." passed with the verb missing, because a word
+  // that never becomes content is a word the verb lock never sees.
+  (t.length >= 3 || FINITE_VERBS.has(t)) &&
+  !FUNCTION_TOKENS.has(t) &&
+  !GRAMMAR_TOKENS.has(t) &&
+  !COURTESY_EXTRAS.has(t) &&
+  !DISFLUENCY.has(t) &&
+  !HONORIFIC.test(t);
+
+/** The function words this target actually contains, WITH REPETITION.
+ *
+ *  Deduplicating them hid every second occurrence: "The lobby is on the left,
+ *  sir." reduced to [the, on], so a learner could drop one of its two "the"s
+ *  and the grader saw nothing missing at all. */
+export function requiredFunctionTokens(target: string): string[] {
+  return foldCourtesy(normalize(target)).filter((t) => FUNCTION_TOKENS.has(t));
+}
+
+/** A title plus the name it belongs to: "Ms Smith", "Mr Chen".
+ *
+ *  This is NOT the sir/madam coin-flip. The guest has just said their own
+ *  name out loud, so the title AND the surname are both determined — and
+ *  choosing Ms over Mrs, or Chen over Wei, is the entire subject of the
+ *  lessons built on these frames. Measured before this: "Welcome, Mr Wei."
+ *  passed a "Welcome, Mr Chen." item at 67%, and "Thank you, Mrs Smith."
+ *  passed "Thank you, Ms Smith." at 75% — in the module whose own rule reads
+ *  "Gọi 'Mr Wei' là gọi bằng tên riêng". */
+function titleAndSurname(target: string): string[] {
+  const out: string[] = [];
+  for (const m of target.matchAll(/\b(mr|mrs|ms|miss)\.?\s+([a-z][a-z'-]+)/gi))
+    out.push(m[1].toLowerCase(), m[2].toLowerCase());
+  return out;
+}
+
+/** Dropping the -s — plural or third person — is the single most-taught point
+ *  in Phase 0 ("Two towel." → "Two towels, please."; "It finish at four." →
+ *  "It finishes at four.") and the one the token lists cannot catch, because
+ *  "start" and "starts" are simply different words: the learner loses 20% of
+ *  a five-word target and still clears 60%.
+ *
+ *  It fires only when the learner actually said the STEM, so a target word
+ *  that merely ends in s is safe — nobody says "pleas" for "please". The
+ *  3-letter stem floor keeps "is"/"yes"/"us" out, and -ss words are skipped. */
+export function inflectionErrors(spoken: string, target: string): string[] {
+  const said = new Set(normalize(spoken));
+  return [
+    ...new Set(
+      normalize(target).filter((w) => {
+        if (!w.endsWith("s") || w.endsWith("ss")) return false;
+        const stem = w.slice(0, -1);
+        return stem.length >= 3 && !said.has(w) && said.has(stem);
+      }),
+    ),
+  ];
+}
+
+/** A negation the learner ADDED that the model never had. Checked separately
+ *  from the missing-token list because it is the opposite failure: nothing is
+ *  absent, something contradictory is present. */
+export function addedNegation(spoken: string, target: string): string[] {
+  const t = new Set(normalize(target));
+  if ([...t].some((w) => NEGATION_TOKENS.has(w))) return [];
+  return [...new Set(normalize(spoken).filter((w) => NEGATION_TOKENS.has(w)))];
+}
+
+/** A guest line that carries no clue to the guest's gender leaves BOTH "sir"
+ *  and "madam" correct. The model sentence had to pick one; the student, on
+ *  the floor, picks from the guest in front of them. 20 of the 24 Phase 0
+ *  speaking frames are in exactly that position — measured, not guessed —
+ *  so grading the coin-flip marks people wrong for the course's omission,
+ *  and every audit read it as an unanswerable question.
+ *
+ *  Where the prompt DOES fix the gender ("I am Mrs Lee.", "his room"), the
+ *  tag is determined and stays graded: that is the case worth teaching. */
+// FIRST PERSON only. The old pattern matched any mention of a title, so
+// "Which room is Mr Chen in?" counted as a cue — but Mr Chen is the person
+// being ASKED ABOUT, and the speaker's own gender is still unknown. That
+// turned an honest "I am sorry, madam." into a FAIL, on the one frame whose
+// whole subject is refusing to discuss another guest. Exactly the coin-flip
+// this helper exists to prevent, arriving through the back door.
+const GENDER_CUE =
+  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\b|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister)\b|\b(sir|madam|ma'am)\b/i;
+const HONORIFIC = /^(sir|madam|ma'am|maam)$/;
+
+export function honorificIsFree(guestPrompt?: string): boolean {
+  return !guestPrompt || !GENDER_CUE.test(guestPrompt);
+}
+
+/** The same problem on the time axis, and the very first utterance of the
+ *  course had it: the guest says "Hello!" and the model answers "Good
+ *  morning, sir." — so "Good afternoon, sir." failed on a missing `morning`,
+ *  for a choice the prompt never gave the learner any way to make.
+ *
+ *  Deliberately narrow. It frees the three greeting words only when the
+ *  target OPENS with one, i.e. when they are a courtesy formula. In a
+ *  statement of fact — "We open at six in the morning." — the time of day is
+ *  the information, and it stays locked. */
+const TIME_CUE =
+  /\b(morning|afternoon|evening|night|midnight|noon|breakfast|lunch|dinner|a\.?m|p\.?m|o'clock|arrived)\b/i;
+const GREETING_OPENS = /^good\s+(morning|afternoon|evening)\b/i;
+const DAYPART = /^(morning|afternoon|evening)$/;
+
+export function greetingIsFree(target: string, guestPrompt?: string): boolean {
+  return GREETING_OPENS.test(target.trim()) && (!guestPrompt || !TIME_CUE.test(guestPrompt));
+}
+
+const canonHonorific = (toks: string[], free: boolean) =>
+  free ? toks.map((t) => (HONORIFIC.test(t) ? "sir" : t)) : toks;
+
+const canonDaypart = (toks: string[], free: boolean) =>
+  free ? toks.map((t) => (DAYPART.test(t) ? "morning" : t)) : toks;
+
+/** "Of course" and "Certainly" are the same move, and the course prints both
+ *  as models — "Of course, madam. I will bring one." in one week, "Certainly,
+ *  madam. One moment." as an arcade key in another. Graded apart, saying the
+ *  second one failed all 81 items that model the first: accuracy fell to 33%
+ *  because two of three target words went missing at once. Folded to one
+ *  token before anything is counted. */
+function foldCourtesy(toks: string[]) {
+  const out: string[] = [];
+  for (let i = 0; i < toks.length; i++) {
+    if (toks[i] === "of" && toks[i + 1] === "course") {
+      out.push("certainly");
+      i++;
+      continue;
+    }
+    // "One moment" and "a moment" are the same wait. The required-token layer
+    // has exempted the formulaic "one" for a long time, but the percentage and
+    // the order ratio still counted it, so the sentence the exemption exists
+    // for — "Certainly, madam. A moment." — failed anyway, at 40% accuracy.
+    if (toks[i] === "one" && toks[i + 1] === "moment") {
+      out.push("a");
+      continue;
+    }
+    out.push(toks[i]!);
+  }
+  return out;
 }
 
 function lcsLength(a: string[], b: string[]): number {
@@ -56,9 +695,18 @@ function lcsLength(a: string[], b: string[]): number {
   return dp[b.length];
 }
 
-export function compareWords(spoken: string, target: string) {
-  const a = normalize(spoken);
-  const b = normalize(target);
+export function compareWords(
+  spoken: string,
+  target: string,
+  honorificFree = false,
+  daypartFree = false,
+) {
+  const a = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(spoken), honorificFree), daypartFree),
+  );
+  const b = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(target), honorificFree), daypartFree),
+  );
   const used = new Set<number>();
   const correctIdx = new Set<number>();
   for (let i = 0; i < b.length; i++) {
@@ -75,8 +723,23 @@ export function compareWords(spoken: string, target: string) {
   // streams, as a fraction of the target length. Bag-matching alone can
   // be gamed by reciting the right words in any order — real speech has
   // to follow the sentence's word order too.
-  const orderRatio = b.length === 0 ? 0 : lcsLength(a, b) / b.length;
-  return { correctIdx, accuracy, orderRatio, words: b };
+  //
+  // Computed on honorific-stripped streams. "Thank you, madam. Goodbye."
+  // and "Thank you. Goodbye, madam." are the same sentence with the tag in
+  // the other natural slot — the review that caught this measured 21/21
+  // mid-sentence-honorific items failing at accuracy 100 when the tag
+  // moved, and two authored orderings of one line failing each other
+  // inside the same oral pool. Presence of the tag is still graded by the
+  // required-token layer; its POSITION was never the lesson.
+  const HON_ORDER_FREE = new Set(["sir", "madam", "maam"]);
+  const ao = a.filter((w) => !HON_ORDER_FREE.has(w));
+  const bo = b.filter((w) => !HON_ORDER_FREE.has(w));
+  const orderRatio = bo.length === 0 ? (b.length === 0 ? 0 : 1) : lcsLength(ao, bo) / bo.length;
+  // `words` is what the UI renders back to the learner, so it must be the
+  // target as authored — not the canonicalised stream, which would print
+  // "sir" over a model sentence that says "madam". Same length, so the
+  // correctIdx positions still line up.
+  return { correctIdx, accuracy, orderRatio, words: normalize(target) };
 }
 
 /** How closely a spoken answer must match the model, by week.
@@ -106,17 +769,21 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
   const n = typeof week === "string" ? parseInt(week, 10) : week;
   // Phase 0-1 — a zero-beginner should not have to nail 80% of a four-word
   // utterance to earn a star.
-  if (n <= 14) return { accPct: 60, orderRatio: 0.4 };
+  // orderRatio 0,40 trên một câu năm từ cho qua gần như mọi phép đảo — hai
+  // báo cáo học vụ đo được 42/42 và 57/57 lượt qua khi tráo hai mệnh đề, và
+  // một trong các câu tráo đó ('Here are you') là nearMiss mà khối ngữ pháp
+  // của cùng khoá chấm SAI. Trật tự từ LÀ nội dung đang được dạy ở P0.
+  if (n <= 14) return { accPct: 60, orderRatio: 0.7 };
   // Phase 2 — the step to A2 spread across its eight weeks (65/70/75/80),
   // rather than delivered in one jump at week 15.
   if (n <= 22) {
     const step = Math.floor((n - 15) / 2); // 0,0,1,1,2,2,3,3
     // Rounded: 0.45 + 3 * 0.05 lands on 0.6000000000000001 in binary
     // floating point, which reads as a fall against week 23's flat 0.6.
-    return { accPct: 65 + step * 5, orderRatio: Math.round((0.45 + step * 0.05) * 100) / 100 };
+    return { accPct: 65 + step * 5, orderRatio: Math.round((0.7 + step * 0.05) * 100) / 100 };
   }
   // A2+ and B1.1 — full standard, and it stays there to the last week.
-  return { accPct: 80, orderRatio: 0.6 };
+  return { accPct: 80, orderRatio: 0.85 };
 }
 
 /** One place that decides whether an utterance passed, so the drill and the
@@ -124,12 +791,204 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
  *  a checkpoint paper mixes weeks, and grading a week-16 line at week-40's
  *  lenient open-role-play threshold would make the final exam the easiest
  *  speaking in the course. */
-export function utterancePassed(spoken: string, target: string, sourceWeek: string | number) {
+export function utterancePassed(
+  spoken: string,
+  target: string,
+  sourceWeek: string | number,
+  requiredTokens?: string[],
+  guestPrompt?: string,
+) {
   const th = passThresholds(sourceWeek);
-  const cmp = compareWords(spoken, target);
+  const free = honorificIsFree(guestPrompt);
+  const dayFree = greetingIsFree(target, guestPrompt);
+  const cmp = compareWords(spoken, target, free, dayFree);
+  // The same canonicalisation compareWords applies, so an honorific or a
+  // day-part the item has freed is not counted as an inserted word below.
+  const canonSpoken = foldCourtesy(canonDaypart(canonHonorific(normalize(spoken), free), dayFree));
+  const canonSpokenTarget = foldCourtesy(
+    canonDaypart(canonHonorific(normalize(target), free), dayFree),
+  );
+  // A value token said wrong or not at all fails the utterance regardless of
+  // the percentage — see VALUE_TOKENS. Checked against the normalized spoken
+  // stream, so ASR digits ("205" → two oh five) still count.
+  const spokenSet = new Set(foldCourtesy(normalize(spoken)));
+  const required = requiredValueTokens(target, requiredTokens);
+  // When the guest's line DOES fix the gender, a bare honorific stops being a
+  // coin-flip and becomes the thing the lesson teaches — so grade it. Titles
+  // that carry a surname are handled by titleAndSurname() and need no cue:
+  // the guest said the name, so nothing is left to guess.
+  if (!free) for (const t of ["sir", "madam"]) if (normalize(target).includes(t)) required.push(t);
+  // And drop the day-part from the required list when the greeting is free —
+  // canonicalising it inside compareWords fixes the percentage but leaves the
+  // token lock still demanding the exact word, which fails the same honest
+  // answer for the same missing reason.
+  const gated = dayFree ? required.filter((t) => !DAYPART.test(t)) : required;
+  // BY OCCURRENCE. A Set said "the answer contains `is`" and stopped there, so
+  // a model that needs the copula twice passed with one of them gone: "This
+  // one brighter. That one is bright." against "This one IS brighter. That one
+  // is bright." at 88% accuracy. Eleven items behaved that way — the same
+  // shape of bug this file already fixed once for the function tokens, and the
+  // fix never reached this line.
+  // How many times each gated token is needed comes from the TARGET, not from
+  // the gated list — that list is a set of rules and can name the same token
+  // twice (requiredValueTokens finds "madam", then the honorific rule pushes
+  // it again), which would demand two of something the model says once.
+  const gatedSet = new Set(gated);
+  const requiredSeq = foldCourtesy(normalize(target)).filter((t) => gatedSet.has(t));
+  const requiredTally = new Map<string, number>();
+  for (const t of foldCourtesy(normalize(spoken)))
+    requiredTally.set(t, (requiredTally.get(t) ?? 0) + 1);
+  const missingRequired: string[] = [];
+  for (const t of requiredSeq) {
+    const left = requiredTally.get(t) ?? 0;
+    if (left > 0) requiredTally.set(t, left - 1);
+    else missingRequired.push(t);
+  }
+  // Có mặt là chưa đủ: các token GIÁ TRỊ phải xuất hiện đúng thứ tự của câu
+  // mẫu, và đúng số lần. "Two keys to room two-oh-five" chứa "two" hai lần vì
+  // hai lần đó nói hai điều khác nhau; đọc "nine keys to room two-oh-five"
+  // vẫn có "two" nên phép kiểm tập hợp cho qua. Dãy con cùng thứ tự bắt được
+  // cả hoán vị lẫn thiếu lượt.
+  const valueSeq = valueTokenSequence(normalize(target));
+  const spokenSeq = valueTokenSequence(normalize(spoken));
+  let vi = 0;
+  for (const t of spokenSeq) if (vi < valueSeq.length && valueSeq[vi] === t) vi++;
+  const valueOrderOk = vi === valueSeq.length;
+  // Function words, one life. See FUNCTION_TOKENS.
+  //
+  // Counted by OCCURRENCE on both sides: the target's list repeats, and each
+  // occurrence needs its own match in what was said, so dropping the second
+  // "the" of "on the left" now registers.
+  const funcNeeded = requiredFunctionTokens(target);
+  const spokenTally = new Map<string, number>();
+  for (const t of foldCourtesy(normalize(spoken)))
+    spokenTally.set(t, (spokenTally.get(t) ?? 0) + 1);
+  const missingFunction: string[] = [];
+  for (const t of funcNeeded) {
+    const left = spokenTally.get(t) ?? 0;
+    if (left > 0) spokenTally.set(t, left - 1);
+    else missingFunction.push(t);
+  }
+  // A missing preposition, pronoun or auxiliary is never covered by the
+  // allowance — only a missing article is.
+  const unforgivable = missingFunction.filter((t) => !FORGIVABLE_FUNCTION_TOKENS.has(t));
+  // WORDS THAT WERE NOT IN THE MODEL.
+  //
+  // Both `accuracy` and `orderRatio` divide by the TARGET, so nothing the
+  // learner adds can lower either one. Measured on the whole of Phase 1:
+  // wrapping every model sentence in nonsense — "Banana I work in Guest
+  // Relations sir banana banana." — passed 632 of 632 items at accuracy 100
+  // and orderRatio 1.00, and 204 of the 320 `nearMiss` strings the course
+  // itself prints as the WRONG answer passed the oral item they belong to.
+  // Almost every one of them is an insertion: "He is works here every day.",
+  // "Please you ask our duty manager.", "The car park is near at the lift."
+  //
+  // Counted by occurrence against the canonicalised target, so a repeated
+  // word is only free as often as the model says it. Honorifics and "please"
+  // are never counted — over-politeness is not an error — and neither is a
+  // spare article, which is the one thing a microphone really does add.
+  const targetTally = new Map<string, number>();
+  for (const t of canonSpokenTarget) targetTally.set(t, (targetTally.get(t) ?? 0) + 1);
+  const extra: string[] = [];
+  for (const t of canonSpoken) {
+    const left = targetTally.get(t) ?? 0;
+    if (left > 0) targetTally.set(t, left - 1);
+    else extra.push(t);
+  }
+  const inserted = extra.filter(
+    (t) =>
+      !HONORIFIC.test(t) &&
+      !COURTESY_EXTRAS.has(t) &&
+      !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
+      !DISFLUENCY.has(t),
+  );
+  // One is already one too many. The grader has always failed a single
+  // missing preposition; a single ADDED one is the same error seen from the
+  // other side, and the near-miss column is full of them. What a microphone
+  // really adds — an article, a filler, an extra "sir" — is exempted above,
+  // and so is a word the course itself teaches as an upgrade, so what is left
+  // was said on purpose.
+  const insertionFails = inserted.length > 0;
+  // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
+  //
+  // The percentage threshold is 60% at A1, which is generous on purpose — but
+  // generous per WORD, so a four-word model loses its only verb and still
+  // scores 75%. Two reviews measured the same hole from two departments:
+  // "The cleaner at eight." passed "The cleaner starts at eight." whose own
+  // helpTip is "third person singular takes -s: startS"; "Yes, is one near
+  // the lift." passed "Yes, there is one near the lift." whose helpTip calls
+  // "there is" the most important structure of the week; "Our linen attendant
+  // is on madam." passed while dropping "duty". Across the phase, 36-41% of
+  // single-content-word deletions passed.
+  //
+  // requiredValueTokens cannot cover this: it locks numbers, promises, safety
+  // words and whatever a frame names, and the words above are none of those —
+  // they are simply the sentence. So the content of the model is graded as
+  // content: a short model may lose nothing, a long one may lose one word.
+  const contentTally = new Map<string, number>();
+  for (const t of canonSpoken) contentTally.set(t, (contentTally.get(t) ?? 0) + 1);
+  // Same exemption the required-token layer makes: the "one" of "one moment"
+  // is formulaic, and "Certainly, madam. A moment." is a correct answer.
+  const targetContent = canonSpokenTarget.filter(
+    (t, i) => isContentToken(t) && !(t === "one" && canonSpokenTarget[i + 1] === "moment"),
+  );
+  const missingContent: string[] = [];
+  for (const t of targetContent) {
+    const left = contentTally.get(t) ?? 0;
+    if (left > 0) contentTally.set(t, left - 1);
+    else missingContent.push(t);
+  }
+  // Was >= 5, which meant 88% of Phase 1 targets had no allowance at all and
+  // the published 60% threshold became 100% in practice: an honest learner who
+  // dropped one non-required word passed 17% of items at 80-88% accuracy. At
+  // >= 4 the short models still hold every word — "The cleaner starts at
+  // eight." has three, and "starts" is the lesson — while the longer ones get
+  // the single slip the threshold was always meant to allow.
+  // Two reviews pulled this in opposite directions and both were right. At >=5
+  // then >=4, 88% then 68% of Phase 1 models had no allowance at all, so the
+  // published 60% threshold was 100% in practice and an honest learner who
+  // dropped one ordinary word failed at 80-89% accuracy. But widening it let
+  // the MAIN VERB go: "The morning shift at ten." passed "The morning shift
+  // finishes at ten." — in the item whose helpTip is "a verb ending in -sh
+  // takes -es: finishES".
+  //
+  // The answer was never the threshold. A verb is not an ordinary word: the
+  // sentence stops being a sentence without it. So the allowance opens at
+  // three content words, and never spends itself on a verb.
+  const contentAllowance = targetContent.length >= 3 ? 1 : 0;
+  // BY OCCURRENCE, not by presence. `missingContent` is already built that way,
+  // so asking it whether a verb is missing is right — but the earlier draft
+  // asked the spoken SET instead, and a model that uses a verb twice kept
+  // passing with one copy gone: "This one brighter. That one is bright."
+  // against "This one IS brighter…" at 88%. Eleven items behaved that way, the
+  // same shape of bug this file already fixed once for function tokens.
+  const missingVerb = missingContent.some((t) => FINITE_VERBS.has(t));
+  const added = addedNegation(spoken, target);
+  const inflection = inflectionErrors(spoken, target);
   return {
     ...cmp,
-    passed: Math.round(cmp.accuracy * 100) >= th.accPct && cmp.orderRatio >= th.orderRatio,
+    missingRequired,
+    missingFunction,
+    missingContent,
+    insertedWords: inserted,
+    addedNegation: added,
+    inflectionErrors: inflection,
+    passed:
+      Math.round(cmp.accuracy * 100) >= th.accPct &&
+      cmp.orderRatio >= th.orderRatio &&
+      // Đúng từng chữ nhưng sai thứ tự thì không phải đọc vấp — đó là chưa
+      // biết trật tự, và trật tự là nội dung của bài. Ngưỡng ở trên tha cho
+      // câu nói thiếu; chỗ này không tha cho câu nói đủ mà xếp sai.
+      !(Math.round(cmp.accuracy * 100) === 100 && cmp.orderRatio < 1) &&
+      missingRequired.length === 0 &&
+      valueOrderOk &&
+      unforgivable.length === 0 &&
+      !insertionFails &&
+      missingContent.length <= contentAllowance &&
+      !missingVerb &&
+      missingFunction.length <= functionAllowance(funcNeeded.length) &&
+      added.length === 0 &&
+      inflection.length === 0,
     threshold: th,
   };
 }

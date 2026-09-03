@@ -28,7 +28,7 @@
 // ============================================================
 
 import type { LessonContent, WeekContent, WritingTask } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon } from "./phase0";
+import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P4_BANKS, type P4Bank, type P4Word } from "./phase4-lexicon";
 
 type Ctx = P0Lexicon & { bank: P4Bank };
@@ -347,7 +347,7 @@ function week32(lx: Ctx): LessonContent[] {
     lesson(lx, 32, 1, "Based on What You Told Me", "Tư vấn dựa trên thông tin khách", {
       vocabulary: [
         v("Based on", "/beɪst ɒn/", "Dựa trên", "Based on your needs, I suggest this.", "🧭"),
-        v("Suggest", "/səˈdʒest/", "Đề xuất", "May I suggest another option?", "💡"),
+        v("Suggest", "/səˈdʒest/", "Gợi ý (khách tự quyết)", "May I suggest another option?", "💡"),
         // The advice "a quieter option" was hardcoded to a light-sleeper
         // scenario, but preferences[0] is a department preference — spice
         // tolerance, preferred billing cycle, preferred newspaper. Four of
@@ -1933,7 +1933,7 @@ function week38(lx: Ctx): LessonContent[] {
   return [
     lesson(lx, 38, 1, "Opening the Pitch", "Mở đầu bài trình bày", {
       vocabulary: [
-        v("Propose", "/prəˈpəʊz/", "Đề xuất", "May I propose a solution?", "📊"),
+        v("Propose", "/prəˈpəʊz/", "Đề xuất phương án cụ thể", "May I propose a solution?", "📊"),
         v("Overview", "/ˈəʊvəvjuː/", "Tổng quan", "Here is a short overview.", "🗒️"),
         bw(r1, `The ${lo(r1)} is included in this offer.`),
         bw(r2, `I have attached the ${lo(r2)} for your review.`),
@@ -2242,8 +2242,8 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       speaking: [
         sp(
           "Good evening. This is our first time here.",
-          `Welcome, madam. The ${lo(s1)} is what makes this place special.`,
-          "Vào vai tự nhiên. Khách chưa hỏi gì thì bạn mở chuyện bằng điều đáng tự hào nhất.",
+          `Welcome, madam. Would you like the short version of the ${lo(s1)}?`,
+          "Vào vai tự nhiên. Khách chưa hỏi thì bạn MỜI kể, không kể luôn — tuần 31 đặt luật đó và tuần này không gỡ nó.",
         ),
         sp(
           "That sounds nice. We are quite particular though.",
@@ -2262,8 +2262,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
               "Anh ấy thuộc lòng kịch bản",
             ],
             correct: 0,
-            explanation:
-              "'${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold' — trình tự này phân biệt tư vấn với chào hàng.",
+            explanation: `'${cap(lx.pron.subj)} listened before ${lx.pron.subj} sold' — trình tự này phân biệt tư vấn với chào hàng.`,
           },
           {
             q: "Ứng biến nghĩa là gì trong ngữ cảnh này?",
@@ -2298,13 +2297,13 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       grammar: [
         g(
           `Sorry. Here money. Bye.`,
-          `I am very sorry about the ${lo(d1)}. What if we ${lo(t1)} instead?`,
-          "Thứ tự đúng: thừa nhận trước (tuần 33), đề nghị sau (tuần 35). Đảo lại là mua chuộc.",
+          `I am very sorry about the ${lo(d1)}. May I put it to my manager that we ${lo(t1)}?`,
+          "Thứ tự đúng: thừa nhận trước, đề nghị sau — đảo lại là mua chuộc. Nhưng con số là của quản lý: tuần 33 đặt mọi khoản khỏi hoá đơn dưới Duty Manager, nên ở đây bạn ĐỀ XUẤT chứ không hứa.",
         ),
         g(
           `Policy say no more.`,
-          `Our policy allows compensation, however I can ${lo(t1)} in addition.`,
-          "'However' nối giới hạn chính sách với nhượng bộ bổ sung — cấu trúc đàm phán của tuần 35.",
+          `Our policy allows compensation, however my manager decides whether we ${lo(t1)}.`,
+          "'However' nối giới hạn chính sách với phần bạn ĐỀ XUẤT. Tuần 33 đặt mọi khoản khỏi hoá đơn dưới Duty Manager — 'I can' ở đây là lời hứa bạn không giữ được.",
         ),
       ],
       speaking: [
@@ -2315,22 +2314,23 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         ),
         sp(
           "Sorry is not going to fix it, is it?",
-          `You are right. What if we ${lo(t1)} instead?`,
+          `You are right, sir. Let me put it to my Duty Manager that we ${lo(t1)}.`,
           "Đồng ý với khách rồi chuyển sang phương án — không phòng thủ.",
         ),
       ],
       reading: read(
-        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — acknowledge the ${lo(d1)}, state what policy allows, then offer to ${lo(t1)}. ${cap(lx.pron.poss)} trainer stops the exercise and says nothing needs changing.`,
+        `The rehearsal escalates: a complaint becomes a claim. ${lx.staff} moves through it in order — the four things first, then the ${lo(d1)}, and then what policy allows. Only then comes the offer ${lx.pron.subj} will put to ${lx.pron.poss} manager. ${cap(lx.pron.poss)} trainer stops the exercise and says nothing needs changing.`,
         [
           {
             q: "Thứ tự xử lý đúng là gì?",
             options: [
-              "Thừa nhận → nêu chính sách → đề nghị phương án",
+              "Bốn dữ kiện → thừa nhận → nêu chính sách → đề xuất lên quản lý",
               "Đề nghị tiền → xin lỗi",
               "Nêu chính sách → từ chối",
             ],
             correct: 0,
-            explanation: "Đề nghị bồi thường trước khi thừa nhận sẽ bị hiểu là mua sự im lặng.",
+            explanation:
+              "Đề nghị bồi thường trước khi có bốn dữ kiện là đoán, và trước khi thừa nhận thì bị hiểu là mua sự im lặng. Con số vẫn là của quản lý.",
           },
           {
             q: "Khi khách nói 'xin lỗi không giải quyết được', nên làm gì?",
@@ -2347,7 +2347,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
       game: [
         game(
           "Apologies do not really help us at this point.",
-          `You are right. What if we ${lo(t1)} instead, madam?`,
+          `You are right, madam. Let me ask my Duty Manager whether we can ${lo(t1)}.`,
           `I understand, madam, and I truly am very sorry again.`,
           `I am afraid there is nothing further we can offer.`,
         ),
@@ -2365,11 +2365,11 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
         g(
           `Problem everywhere, help!`,
           `There is a ${lo(e1)} at the property. Please come immediately.`,
-          "Dưới áp lực, câu càng phải ngắn và rõ. Đây là khung câu của tuần 36.",
+          "Dưới áp lực, câu càng phải ngắn và rõ: một việc để làm, không phải một cảm giác để có. Đây là khung câu của tuần 36.",
         ),
         g(
           `Guest angry, party broken, I stop.`,
-          `Please stay calm — we are handling it, and the ${lo(o1)} will still go ahead.`,
+          `We are handling it now, and the ${lo(o1)} will still go ahead.`,
           "Xử lý hai việc cùng lúc: trấn an sự cố và giữ lời hứa về dịp đặc biệt.",
         ),
       ],
@@ -2384,7 +2384,7 @@ function week39(lx: Ctx, overrides: Record<string, WeekContent> = {}): LessonCon
           // an emergency without naming one, so the department's own
           // incident is the right answer.
           "Something has happened downstairs and our guests are panicking!",
-          `There is a ${lo(e1)} at the property. Please stay calm and follow me.`,
+          `There is a ${lo(e1)} at the property. Please follow me now.`,
           "Bài kiểm tra khó nhất: báo cáo và trấn an trong cùng một hơi thở.",
         ),
       ],
@@ -2890,7 +2890,14 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
       {
         labelVi: "Sẽ xem lại mức đền bù cho thoả đáng",
-        any: ["compensation", "reimburse", "cover the cost", "make it right", "review the offer"],
+        any: [
+          "compensation",
+          "reimburse",
+          "cover the cost",
+          "make it right",
+          "put it right",
+          "review the offer",
+        ],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
@@ -2898,9 +2905,9 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       },
     ],
     modelReply:
-      "We are very sorry that your silk dress was damaged in our laundry service — this is not the outcome we want for any guest. We would like to review the compensation offered, as a small credit does not reflect the value of your dress. Please contact our Housekeeping Manager directly so we can offer a fair resolution and regain your trust.",
+      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. Our Housekeeping Manager would like to look at this with you personally. Please contact us directly so that we can put it right.",
     explanationVi:
-      "Khi khách đã nói mức đền bù ban đầu chưa thỏa đáng, phản hồi tốt phải THỪA NHẬN điều đó và cam kết xem lại — lặp lại đề nghị cũ sẽ khiến khách càng bực.",
+      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Đừng viết ra nguyên nhân do mình, và đừng thừa nhận mức đền bù cũ là thấp — cả hai câu đó nằm lại trên internet và thành bằng chứng cho một yêu cầu lớn hơn.",
   },
   SW: {
     reviewMeta: "★★☆☆☆ · Google Reviews · 1 tuần trước",
@@ -2932,26 +2939,106 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewText:
       "As a loyalty member I was promised Executive Lounge access, but on arrival I was told it wasn't available. Nobody offered an alternative. Very disappointing for a Diamond guest.",
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+      "Trong vai Quản lý Guest Relations — SAU khi Duty Manager đã duyệt hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ cả BA ý bên dưới — thiếu một ý là chưa đạt. Bốn điều không được viết ra chỗ công khai: không nhận lỗi, không nêu nguyên nhân hay tên bộ phận, không hứa phần bù và không nêu con số, và không xác nhận hạng thẻ của khách — kể cả khi chính khách đã tự nêu.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Thừa nhận quyền lợi đã hứa không được thực hiện",
-        any: ["promised", "promise", "guaranteed", "assured", "should have been"],
+        labelVi: "Nêu mốc thời gian sẽ liên hệ lại",
+        any: [
+          "within forty-eight",
+          "within 48",
+          "within twenty-four",
+          "within 24",
+          "by tomorrow",
+          "by this evening",
+          "48 hours",
+          "forty-eight hours",
+          "same day",
+        ],
       },
       {
-        labelVi: "Sẽ ghi vào hồ sơ khách cho lần sau",
-        any: ["profile", "record", "account", "guest history", "noted"],
-      },
-      {
-        labelVi: "Mời khách liên hệ để sắp xếp bù đắp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        labelVi: "Mời khách liên hệ trực tiếp",
+        any: [
+          "contact",
+          "get in touch",
+          "reach out",
+          "call the hotel",
+          "call us",
+          "email us",
+          "ask for me",
+          "ask for the guest relations manager",
+        ],
       },
     ],
+    // Four prohibitions, and each needs several phrasings: a reply that says
+    // "we accept full responsibility" breaks the same rule as one that says
+    // "our mistake". Anything added here must also appear in promptVi — a
+    // learner cannot be failed for a rule the task never gave them.
+    mustAvoid: [
+      // admitting fault
+      "our mistake",
+      "our fault",
+      "we got it wrong",
+      "we were wrong",
+      "we failed",
+      "our failure",
+      "we let you down",
+      "accept responsibility",
+      "full responsibility",
+      "take responsibility for what",
+      "our error",
+      "our oversight",
+      "at fault",
+      // naming a cause, a department or a colleague
+      "front office",
+      "front desk",
+      "housekeeping",
+      "night shift",
+      "evening shift",
+      "night team",
+      "lounge team",
+      "banquet team",
+      "loyalty office",
+      "overbooked",
+      "my colleague",
+      "our colleague",
+      // promising the compensation in public
+      "free night",
+      "free nights",
+      "complimentary night",
+      "complimentary stay",
+      "complimentary dinner",
+      "private dinner",
+      "late check-out",
+      "cancel the extra charge",
+      "refund",
+      "goodwill gesture",
+      "million",
+      "spa credit",
+      "room upgrade",
+      "upgrade you",
+      "voucher",
+      "credit you",
+      "restore your tier",
+      "bonus points",
+      "missing points",
+      // a figure, in any currency
+      "VND",
+      "USD",
+      "dollars",
+      "dong",
+      // confirming the guest's tier back to them in public
+      "Diamond",
+      "Platinum",
+      "Gold member",
+      "your tier",
+      "your status",
+      "entitled to",
+    ],
     modelReply:
-      "We are very sorry that the Executive Lounge access we promised you was not available on arrival — this is not the experience a Diamond member should have. We have noted this in your guest profile so it never happens again. Please contact our Guest Relations team directly so we can arrange a benefit to make up for what you missed.",
+      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
-      "Khách hạng cao kỳ vọng được ghi nhớ — phản hồi phải nhắc tới việc lưu hồ sơ (profile) để chứng minh khách sạn thực sự cải thiện, không chỉ xin lỗi cho qua.",
+      "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Bốn điều KHÔNG viết ra chỗ công khai: đừng nêu nguyên nhân hay tên bộ phận ('the front office did not pass it on'); đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
   },
   BO: {
     reviewMeta: "✉️ Email khiếu nại từ đối tác lữ hành · ABC Travel",
@@ -3005,7 +3092,9 @@ function buildWeek(
     weekNumber: week,
     weekTitleEn: meta.en,
     weekTitleVi: meta.vi,
-    lessons: meta.build(lx, overrides),
+    // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
+    // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
+    lessons: lockWeekHeadwords(meta.build(lx, overrides)),
     reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
     writing: week === 33 ? WEEK33_WRITING_TASKS[lx.code] : undefined,
   };

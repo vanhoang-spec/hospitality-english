@@ -338,6 +338,39 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 | 39   | Tổng duyệt role-play liên tình huống                                   | Kết hợp mọi chức năng                                   |
 | 40   | **Đánh giá cuối khóa** — weektest toàn lộ trình (chưa có role-play mở) | Chuẩn đầu ra A2+ nghiệp vụ, có tiếp xúc B1.1            |
 
+> **Ngoại lệ Guest Relations, tuần 36–38.** Bảng trên gộp "thời tiết, y tế, kỹ thuật" vào một
+> tuần 36 rồi giao tuần 37 cho B2B và tuần 38 cho pitch. Track GR không đi theo: nó tách khối
+> khủng hoảng ra ba tuần — **36 sơ tán và sự cố khẩn · 37 cấp cứu y tế · 38 bão và gián đoạn
+> lịch trình** — và không dạy B2B hay pitch, vì quầy Guest Relations không bán hợp đồng.
+>
+> Ba tuần đó đã viết và đã qua kiểm định theo cách chia này; dòng bảng mới là thứ lạc hậu.
+> Ghi lại ở đây theo đúng luật của chính file này (_"Thay đổi ma trận = sửa file này trước"_),
+> để lần thẩm định sau không tính đây là content lệch tài liệu.
+>
+> Một hệ quả kèm theo: **tuần 36 cố ý dạy ngược vế "trấn an"**. Câu `"Please stay calm"` được
+> chấm là SAI, vì nó bảo người ta cảm thấy một điều thay vì cho họ một việc để làm. Thay vào đó
+> là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
+
+> **Chú thích tuần 39 (cả sáu bộ phận).** Bảng ghi "Tổng duyệt role-play liên tình huống —
+> Kết hợp mọi chức năng". Một tuần 39 đúng nghĩa còn phải dạy thêm **hai luật mới** mà không
+> tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến cùng lúc, (2) luật "mười lăm
+> phút cuối ca không mở việc mới".
+>
+> Đó là hai kỹ năng chỉ tồn tại được khi học viên đã có đủ chức năng để mà xếp thứ tự, nên
+> chúng thuộc về đúng chỗ này. Nhưng chúng **là luật mới**, không phải ôn tập: mỗi tuần 39
+> phải dạy chúng đủ một bài có từ vựng, ngữ pháp, luyện nói, game và câu hỏi đọc — không được
+> nhét vào một dòng văn xuôi.
+>
+> **Hiện trạng đo được (6 lượt kiểm định độc lập, 2026-09-01), không phải mô tả mong muốn:**
+> chỉ **GR-39 và HK-39** dạy đủ cả hai luật. **FO-39 và FB-39 không có luật "mười lăm phút
+> cuối"** ở bất kỳ đâu — cả sáu lượt đều đo lại và cùng kết luận như nhau. Bản trước của
+> chú thích này khẳng định cả bốn tuần đều đủ; đó là mô tả sai, đã sửa. Xem GR-AQ trong
+> `docs/academic-review-backlog.md`.
+>
+> Kèm theo, luật ưu tiên phải nói rõ **"nguy hiểm trước" nghĩa là LÀM GÌ**, không chỉ là một
+> chỗ trong hàng chờ: nó dẫn về tuần 37 (y tế) và tuần 33 (an toàn → bảo vệ trước, Duty
+> Manager sau), chứ không phải về tuần 36 — tuần 36 là cảnh sơ tán toàn nhà.
+
 ---
 
 ## Di dời 12 tuần content đã viết (hiện gắn nhãn "tuần 1–2")

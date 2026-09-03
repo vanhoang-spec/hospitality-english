@@ -683,7 +683,7 @@ const HK_BANK: P2Bank = {
       definition: "Độ cứng của gối",
       icon: "🛏️",
     },
-    { word: "Room note", phonetic: "/ruːm nəʊt/", definition: "Ghi chú phòng", icon: "❓" },
+    { word: "Room note", phonetic: "/ruːm nəʊt/", definition: "Ghi chú phòng", icon: "🗒️" },
     { word: "Service note", phonetic: "/ˈsɜːvɪs nəʊt/", definition: "Ghi chú dịch vụ", icon: "✅" },
     { word: "Special note", phonetic: "/ˈspeʃl nəʊt/", definition: "Ghi chú đặc biệt", icon: "🗒️" },
     {
@@ -804,7 +804,7 @@ const HK_BANK: P2Bank = {
       word: "Guest preference",
       phonetic: "/ɡest ˈprefrəns/",
       definition: "Sở thích của khách",
-      icon: "❓",
+      icon: "💚",
     },
     // Slot 7 is "The {w} is a good match." — a recommendable option, the way
     // the other five departments hold "Best option" / "Sharing plate" /
@@ -1450,7 +1450,7 @@ const GR_BANK: P2Bank = {
       definition: "Phương án thư giãn hơn",
       icon: "😌",
     },
-    { word: "Better plan", phonetic: "/ˈbetə plæn/", definition: "Phương án hợp hơn", icon: "❓" },
+    { word: "Better plan", phonetic: "/ˈbetə plæn/", definition: "Phương án hợp hơn", icon: "🗺️" },
     {
       word: "Perfect match",
       phonetic: "/ˈpɜːfɪkt mætʃ/",
