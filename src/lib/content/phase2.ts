@@ -2586,6 +2586,334 @@ function reviewWordsFor(
   return Array.from(new Set(out));
 }
 
+/** Bài riêng theo bộ phận, thay bài khung cùng lessonId.
+ *
+ *  Khung chung của Phase 2 đã khác nhau 81-87% về TỪ NGỮ, nhưng tình huống thì
+ *  vẫn là một: mức riêng ấy đo từ vựng, không đo nghề. Thứ khung không diễn
+ *  được là RANH GIỚI THẨM QUYỀN — cái gì nhân viên quyết được, cái gì phải hỏi.
+ *  Ở Phase 1, hai mươi bốn bài riêng là thứ nâng điểm luồng quản lý bộ phận
+ *  nhiều hơn mọi thay đổi khác.
+ *
+ *  Bài riêng PHẢI giữ đúng bộ headword của bài khung nó thay, vì ngân sách thẻ
+ *  và danh sách ôn của cả phase đếm theo đó. */
+const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
+  // Câu hỏi về dị ứng là câu duy nhất trong tuần này mà trả lời sai có thể đưa
+  // khách vào bệnh viện. Bài khung dạy đánh vần tên; bộ phận nhà hàng cần
+  // đúng một phản xạ: KHÔNG trả lời từ trí nhớ, đi hỏi bếp.
+  FB_17_3: (lx) => {
+    const [, , d3, , d5, , , d8] = lx.bank.details;
+    return lesson(lx, 17, 3, "Never Answer From Memory", "Không bao giờ trả lời từ trí nhớ", {
+      vocabulary: [
+        bw(d3, `Could I have your ${lo(d3)}?`),
+        bw(d5, `And your ${lo(d5)}, please?`),
+        bw(d8, `The ${lo(d8)} is important.`),
+      ],
+      grammar: [
+        g(
+          "No nuts inside, I think.",
+          "I will check with the kitchen for you.",
+          "Không đoán về nguyên liệu. Chủ ngữ + WILL + động từ nguyên thể, và nói rõ mình đi hỏi ai.",
+          "I will check with the kitchen for you, I think.",
+        ),
+        g(
+          "You have allergy?",
+          "Do you have any allergies, madam?",
+          "Câu hỏi cần trợ động từ 'do', và 'any' đứng trước danh từ số nhiều.",
+          "Do you have any allergy, madam?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Is there anything I should tell you?",
+          `Yes, madam. Could I have your ${lo(d3)}?`,
+          "Hỏi chủ động trước khi khách phải tự nói — đó là chuẩn 5 sao và cũng là an toàn.",
+        ),
+        sp(
+          "I cannot eat peanuts at all.",
+          `Thank you. And your ${lo(d5)}, please?`,
+          "Nghe xong thì hỏi tiếp cho đủ, đừng dừng ở món khách vừa nêu.",
+        ),
+        sp(
+          "Are there nuts in this dish?",
+          "One moment, madam. I will check with the kitchen.",
+          "Câu quan trọng nhất tuần này. Công thức đổi theo ca bếp, nên trí nhớ của bạn không phải là nguồn tin.",
+        ),
+        sp(
+          "Can you just tell me quickly?",
+          "I am sorry. Only the kitchen can confirm that.",
+          "Từ chối đoán, và nói rõ ai mới xác nhận được. Nhanh mà sai thì hậu quả không sửa được.",
+        ),
+        sp(
+          "Why do you write everything down?",
+          `The ${lo(d8)} is important.`,
+          "Ghi lại là để bếp đọc đúng, không phải để làm cho có.",
+        ),
+        sp(
+          "What did the kitchen say?",
+          "The chef says this dish has no nuts.",
+          "Báo lại nguyên văn lời bếp, không thêm bớt. Nói rõ nguồn tin là ai.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest asks about nuts in a dish. ${lx.staff} does not answer from memory and says: "One moment, madam. I will check with the kitchen." The chef checks the recipe for today and answers. Only then does ${lx.staff} tell the guest. The recipe changes with the kitchen shift, so the answer from yesterday is not the answer for today.`,
+        [
+          {
+            q: "Vì sao không tự trả lời câu hỏi về dị ứng?",
+            options: [
+              "Công thức đổi theo ca bếp, trả lời sai có thể gây nguy hiểm",
+              "Vì nhân viên phục vụ không được nói chuyện về món ăn",
+              "Vì bếp cấm nhắc tới nguyên liệu của bất kỳ món nào",
+            ],
+            correct: 0,
+            explanation:
+              "Bài đọc nói rõ: công thức đổi theo ca. Câu trả lời đúng của hôm qua có thể sai hôm nay.",
+          },
+          {
+            q: "Nhân viên nói gì với khách trước khi đi hỏi?",
+            options: [
+              "One moment, madam. I will check with the kitchen.",
+              "I think there are no nuts in it, madam.",
+              "The kitchen is very busy right now, madam.",
+            ],
+            correct: 0,
+            explanation: "Xin khách một nhịp chờ, rồi nói rõ mình đi hỏi ai.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Does this cake have any nuts?",
+          "One moment, madam. I will check with the kitchen.",
+          "No nuts have, madam.",
+          "I think it is fine, madam.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và là câu nguy hiểm nhất trong bài: 'I think' về dị ứng là một lời đoán, và người chịu hậu quả không phải bạn.",
+        ),
+        game(
+          "I told the other waiter about my allergy.",
+          "Thank you. Could I have your allergy detail again?",
+          "Ok, he tell kitchen already.",
+          "Then the kitchen already knows, madam.",
+          undefined,
+          "Không bao giờ giả định thông tin đã tới bếp. Hỏi lại mất mười giây; không hỏi lại thì không sửa được.",
+        ),
+      ],
+    });
+  },
+
+  // Kho hoá chất là khu vực nội bộ, và "do not mix" là một CHỈ DẪN AN TOÀN chứ
+  // không phải tên một vật — bài khung nhét nó vào ô danh từ và cho ra
+  // "The do not mix is over there."
+  HK_19_2: (lx) => {
+    const [, , , , r5, , , , r9] = lx.bank.rules;
+    return lesson(lx, 19, 2, "The Store Room Is Not for Guests", "Kho đồ là khu vực nội bộ", {
+      vocabulary: [
+        v(
+          "Do not mix",
+          "/duː nɒt mɪks/",
+          "Không được pha trộn",
+          "Please do not mix the cleaning liquids.",
+          "🧪",
+        ),
+        bw(r5, `Do not touch the ${lo(r5)}, madam.`),
+        bw(r9, `May I remind you of the ${lo(r9)}?`),
+      ],
+      grammar: [
+        g(
+          "You no go inside.",
+          "I am afraid guests may not go inside.",
+          "Từ chối bằng 'I am afraid' rồi mới nêu quy định; 'may not' lịch sự hơn 'cannot'.",
+          "I am afraid guests may not to go inside.",
+        ),
+        g(
+          "Chemical mix danger.",
+          "Please do not mix the cleaning liquids.",
+          "Cấm bằng 'Please do not + động từ' — vẫn là mệnh lệnh nhưng có lễ độ.",
+          "Please do not mixing the cleaning liquids.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Can I get a towel from that room?",
+          "I am afraid guests may not go inside.",
+          "Kho có hoá chất và đồ vải sạch. Nếu khách trượt ngã hay chạm phải thứ gì trong đó, người mở cửa là bạn.",
+        ),
+        sp(
+          "But I only need one towel.",
+          "Of course. I will bring one to your room now.",
+          "Từ chối lối vào, không từ chối yêu cầu. Khách vẫn phải có khăn.",
+        ),
+        sp(
+          "Why can nobody go in there?",
+          "Please do not mix the cleaning liquids.",
+          "Nêu lý do thật: hoá chất pha lẫn sinh khí độc. Có lý do thì khách dễ chấp nhận hơn.",
+        ),
+        sp(
+          "Can I move this box myself?",
+          `Do not touch the ${lo(r5)}, madam.`,
+          "Vật nặng là việc của bộ phận, không phải của khách — và cũng không phải của một người.",
+        ),
+        sp(
+          "I found this in the corridor.",
+          `Thank you. May I remind you of the ${lo(r9)}?`,
+          "Đồ nhặt được phải vào sổ thất lạc. Nhận rồi cảm ơn, rồi nhắc quy định.",
+        ),
+        sp(
+          "Where do I put the chemicals?",
+          // Không đọc ô rules ở đây: rules[3] của buồng phòng chính là chỉ dẫn
+          // "Do not mix", nên khung cho ra "in the do not mix". Bài riêng chỉ
+          // dùng cho một bộ phận nên viết thẳng là đúng và an toàn hơn.
+          "Please leave them in the store room.",
+          "Nói với đồng nghiệp thì bỏ kính ngữ, nhưng vẫn nói rõ chỗ.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest walks towards the store room. ${lx.staff} steps in front of the door politely and says: "I am afraid guests may not go inside. I will bring one to your room now." The room holds cleaning liquids and clean linen. Two liquids mixed together make a dangerous gas, so only trained staff open that door. ${lx.staff} brings the towel two minutes later.`,
+        [
+          {
+            q: "Vì sao khách không được vào kho?",
+            options: [
+              "Kho có hoá chất, hai loại pha lẫn sinh khí độc",
+              "Vì kho quá nhỏ, không đủ chỗ cho hai người đứng",
+              "Vì khách vào rồi sẽ không tìm được đường ra",
+            ],
+            correct: 0,
+            explanation: "Bài đọc nêu đích danh lý do: hoá chất pha lẫn thì nguy hiểm.",
+          },
+          {
+            q: "Nhân viên làm gì thay vì cho khách vào?",
+            options: [
+              "Mang khăn tới tận phòng cho khách",
+              "Bảo khách xuống hỏi quầy lễ tân",
+              "Mở cửa và đi cùng khách vào trong",
+            ],
+            correct: 0,
+            explanation:
+              "Từ chối lối vào nhưng không từ chối yêu cầu — khách vẫn có khăn sau hai phút.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Just let me grab it, I am in a hurry.",
+          "I am afraid guests may not go inside.",
+          "Ok you go quick.",
+          "Of course, madam. Please go in.",
+          undefined,
+          "Câu thứ ba lịch sự và làm khách vui trong ba giây. Nhưng bạn vừa mở một cánh cửa mà quy định phòng cháy và hoá chất đều cấm, và người ký vào biên bản sẽ là bạn.",
+        ),
+      ],
+    });
+  },
+
+  // Nâng hạng phòng là một quyết định doanh thu. Bài khung dạy nhân viên lễ tân
+  // MỜI thẳng, trong khi ở khách sạn thật đó là việc của quản lý ca.
+  FO_16_1: (lx) => {
+    const [o1, o2] = lx.bank.offers;
+    return lesson(
+      lx,
+      16,
+      1,
+      "An Upgrade Is Not Mine to Give",
+      "Nâng hạng không phải quyền của tôi",
+      {
+        vocabulary: [
+          v("Offer", "/ˈɒfə/", "Đề nghị, mời", "May I offer you a drink?", "🎁"),
+          v("Extra", "/ˈekstrə/", "Thêm, phụ trội", "Would you like an extra one?", "➕"),
+          bw(o1, `I will ask about ${wa(o1)} for you.`),
+          bw(o2, `We also have ${wa(o2)}.`),
+        ],
+        grammar: [
+          g(
+            "I give you upgrade free.",
+            `I will ask about ${wa(o1)} for you.`,
+            "Không hứa thứ mình không được quyết. Chủ ngữ + WILL ASK ABOUT — hứa việc mình làm được.",
+            `I will ask about ${wa(o1)} for you, free.`,
+          ),
+          g(
+            "You want higher floor?",
+            `Would you like ${wa(o2)}, madam?`,
+            "Mời bằng câu hỏi đủ chủ ngữ và động từ; hỏi trống không nghe như ra lệnh.",
+            `Would you like to ${wa(o2)}, madam?`,
+          ),
+        ],
+        speaking: [
+          sp(
+            "Could I have a free upgrade?",
+            `I will ask about ${wa(o1)} for you.`,
+            "Nâng hạng là quyết định doanh thu, quản lý ca duyệt. Hứa hỏi thì giữ được; hứa cho thì không.",
+          ),
+          sp(
+            "So can I have it or not?",
+            "My manager decides that, madam. I will call now.",
+            "Nói thẳng ai quyết, rồi nói ngay việc mình làm. Vòng vo còn tệ hơn một lời từ chối.",
+          ),
+          sp(
+            "Is there anything you can do?",
+            `Yes, madam. We also have ${wa(o2)}.`,
+            "Thứ trong quyền mình thì mời ngay — tầng cao hơn không tốn tiền của khách sạn.",
+          ),
+          sp(
+            "Could I have one more towel?",
+            "Would you like an extra one?",
+            "Đồ dùng nhỏ thì nhận lời ngay. Ranh giới là tiền, không phải là mọi yêu cầu.",
+          ),
+          sp(
+            "Anything to drink while I wait?",
+            "May I offer you a drink?",
+            "Khách phải chờ thì mời một thứ trong quyền mình — nhịp chờ ngắn đi rất nhiều.",
+          ),
+          sp(
+            "What did the manager say?",
+            `The duty manager approved ${wa(o1)}.`,
+            "Báo lại kết quả kèm chức danh đã duyệt, để ca sau đọc sổ là hiểu.",
+            "colleague",
+          ),
+        ],
+        reading: read(
+          `A guest asks for a free upgrade at the desk. ${lx.staff} does not say yes and does not say no, but says: "I will ask about an upgrade for you. My manager decides that, madam." Then ${lx.staff} offers a higher floor, which costs the hotel nothing, and a drink while the guest waits. The duty manager comes in four minutes with the answer. The guest waited with something in her hand.`,
+          [
+            {
+              q: "Vì sao nhân viên không tự quyết việc nâng hạng?",
+              options: [
+                "Đó là quyết định doanh thu, quản lý ca mới duyệt",
+                "Vì nhân viên không biết còn phòng trống hay không",
+                "Vì quy định cấm nhân viên nói chuyện về giá phòng",
+              ],
+              correct: 0,
+              explanation:
+                "Hứa một thứ có tính tiền mà mình không được quyết là đẩy việc rút lời hứa cho người khác.",
+            },
+            {
+              q: "Nhân viên mời gì trong lúc khách chờ?",
+              options: [
+                "Một tầng cao hơn và một đồ uống",
+                "Một phòng hạng cao hơn miễn phí",
+                "Không mời gì, chỉ bảo khách ngồi đợi",
+              ],
+              correct: 0,
+              explanation:
+                "Thứ trong quyền mình thì mời ngay; chờ mà có thứ trong tay thì ngắn hơn hẳn.",
+            },
+          ],
+        ),
+        game: [
+          game(
+            "The website said I might get an upgrade.",
+            "I will ask about an upgrade for you, madam.",
+            "Website say so, I give you.",
+            "Of course, madam. I will upgrade you now.",
+            undefined,
+            "Câu thứ ba lịch sự và sai. Bạn vừa hứa một hạng phòng có tính tiền; người phải rút lời hứa lại là quản lý ca, trước mặt chính vị khách đó.",
+          ),
+        ],
+      },
+    );
+  },
+};
+
 function buildWeek(
   lx: Ctx,
   week: number,
@@ -2601,7 +2929,12 @@ function buildWeek(
     weekTitleVi: meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx), review),
+    // Bài riêng thay bài khung cùng lessonId, nên tuần vẫn đủ bốn bài đúng thứ
+    // tự và mọi id ở hạ nguồn — tiến độ, khoá ôn, deep link — vẫn hợp lệ.
+    lessons: lockWeekHeadwords(
+      meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
+      review,
+    ),
     reviewWords: review,
   };
 }
