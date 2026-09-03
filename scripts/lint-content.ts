@@ -1820,6 +1820,29 @@ function lintColleagueHonorific() {
   }
 }
 
+// ── Layer N · `follows` phải khớp một targetResponse có thật cùng bài ─────
+// Trường này nối các lượt của một hội thoại bằng cách SO CHUỖI TUYỆT ĐỐI. Sửa
+// câu mẫu của lượt trước mà quên chuỗi trong lượt sau thì mắt xích đứt im
+// lặng: bài sát hạch thôi rút trọn chuỗi (đo được: 62,6% → 0,0% số lần thi),
+// và màn hình vẫn in "Bạn vừa nói: …" một câu học viên chưa từng nói — ở ca
+// đã xảy ra, đó lại đúng là câu khoá học vừa dạy là SAI. Không thể tự thấy
+// khi đọc source vì hai chuỗi chỉ lệch một từ, nên nó là cổng cứng.
+function lintFollowsChain() {
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      const said = new Set(lesson.speaking.map((s) => s.targetResponse));
+      for (const item of lesson.speaking) {
+        if (!item.follows) continue;
+        if (said.has(item.follows)) continue;
+        errors.push(
+          `[N follows-chain] ${key}/${lesson.lessonId}: follows "${item.follows}" ` +
+            `không khớp câu mẫu nào trong bài — mắt xích hội thoại đứt`,
+        );
+      }
+    }
+  }
+}
+
 // ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
 // Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
 // reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
@@ -1930,6 +1953,7 @@ await lintSpeakingVolume();
 await lintAnswerPositionSkew();
 lintReviewWordOrder();
 lintColleagueHonorific();
+lintFollowsChain();
 await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
 reportStaleDebt();

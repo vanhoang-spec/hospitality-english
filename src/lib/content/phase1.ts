@@ -1736,7 +1736,7 @@ function week11(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What time does your shift start?",
-          "Our shift starts at eight.",
+          "Our shift starts at eight. I come at seven.",
           "Chủ ngữ đầy đủ + động từ chia đúng: our shift STARTS at eight.",
           "colleague",
         ),
@@ -2480,7 +2480,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "When will you tell me?",
-          `I will tell you ${lower(lx.bank.phone[2])}.`,
+          `I will tell you ${lower(lx.bank.phone[2])}. I check first.`,
           "Ôn tuần 12: hứa báo lại thì kèm mốc giờ, đừng để trống. Nói với đồng nghiệp thì bỏ kính ngữ.",
           "colleague",
         ),
@@ -2728,7 +2728,7 @@ function week13(lx: Ctx): LessonContent[] {
         ),
         sp(
           "When will they come?",
-          `They will come ${lower(lx.bank.phone[2])}.`,
+          `They will come ${lower(lx.bank.phone[2])}. I will wait here.`,
           "Ôn tuần 12: mốc thời gian đặt ở cuối câu. Nói với đồng nghiệp thì bỏ kính ngữ.",
           "colleague",
         ),
@@ -3186,7 +3186,7 @@ function week14(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Can you check that again?",
-          `Of course. I will check the ${lower(c7)}.`,
+          `Of course. I will check the ${lower(c7)} for you now.`,
           "Nhắc lại đúng thứ khách vừa nhờ, để họ biết bạn nghe đúng.",
         ),
         sp(
@@ -3225,7 +3225,7 @@ function week14(lx: Ctx): LessonContent[] {
         // act on and one they cannot.
         sp(
           "What is not ready?",
-          `${lx.bank.station.spoken} is not ready, madam.`,
+          `${lx.bank.station.spoken} is not ready, madam. It is ${lower(lx.bank.states[7])} now.`,
           "Cấp trên hỏi thì trả lời bằng tên đơn vị, không nói 'one place'. Người nhận tin phải đi được ngay sau câu của bạn.",
           "manager",
         ),
@@ -3314,7 +3314,7 @@ function week14(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Thank you for your help.",
-          "My pleasure, madam.",
+          "My pleasure, madam. Please ask me any time.",
           "Câu đáp lời cảm ơn sang nhất trong nghề. Chữ 'pleasure' đọc /ˈpleʒə/, âm giữa là /ʒ/ chứ không phải /z/.",
         ),
         sp(
@@ -3363,7 +3363,7 @@ function week14(lx: Ctx): LessonContent[] {
         // sáng của thứ học viên vừa hứa ở lượt trước.
         sp(
           "Excuse me, are you free?",
-          "Yes, madam. How may I help?",
+          "Yes, madam. How may I help you today?",
           "Lượt 1 của 3 — mở đầu. Nhận lời trước, hỏi việc sau; khách chưa nói cần gì thì đừng đoán.",
         ),
         sp(
@@ -3380,7 +3380,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Lượt 2 của 3 — tiếp nhận. Nhận lời rồi nói ngay việc mình làm; đừng bảo đảm chung chung cho cả ngày mai.",
           undefined,
           undefined,
-          "Yes, madam. How may I help?",
+          "Yes, madam. How may I help you today?",
         ),
         sp(
           "Thank you. Good night.",
@@ -3388,7 +3388,7 @@ function week14(lx: Ctx): LessonContent[] {
           "Lượt 3 của 3 — kết thúc. Chào lại rồi thêm một lời chúc; đây là câu cuối khách nghe trong ngày.",
           undefined,
           undefined,
-          "Of course, madam. I will bring it now.",
+          "Of course, madam. I will bring one now.",
         ),
       ],
       reading: read(
@@ -3839,7 +3839,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         // in the department's own unit.
         sp(
           "What is not ready?",
-          `${lx.bank.station.spoken} is not ready, madam.`,
+          `${lx.bank.station.spoken} is not ready, madam. It is ${lower(lx.bank.states[7])} now.`,
           "Cấp trên hỏi thì trả lời bằng số bàn, không nói 'one table'. Người nhận tin phải đi được ngay sau câu của bạn.",
           "manager",
         ),
