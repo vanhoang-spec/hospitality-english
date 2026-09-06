@@ -307,7 +307,7 @@ const FO_BANK: P2Bank = {
     { word: "Checked in", phonetic: "/tʃekt ɪn/", definition: "Đã nhận phòng", icon: "📥" },
     { word: "Cancelled", phonetic: "/ˈkænsld/", definition: "Đã hủy", icon: "🔁" },
     { word: "Informed", phonetic: "/ɪnˈfɔːmd/", definition: "Đã báo cho biết", icon: "📢" },
-    { word: "The front desk", phonetic: "/ðə frʌnt desk/", definition: "Quầy lễ tân", icon: "🛎️" },
+    { word: "This afternoon", phonetic: "/ðɪs ˌɑːftəˈnuːn/", definition: "Chiều nay", icon: "🛎️" },
     { word: "Arrivals", phonetic: "/əˈraɪvlz/", definition: "Lượt khách đến", icon: "🛬" },
     {
       word: "Started later",
@@ -581,7 +581,7 @@ const FB_BANK: P2Bank = {
     { word: "Ordered", phonetic: "/ˈɔːdəd/", definition: "Đã gọi món", icon: "📝" },
     { word: "Prepared", phonetic: "/prɪˈpeəd/", definition: "Đã chuẩn bị", icon: "⚙️" },
     { word: "Told", phonetic: "/təʊld/", definition: "Đã báo cho biết", icon: "🗣️" },
-    { word: "The restaurant", phonetic: "/ðə ˈrestrɒnt/", definition: "Nhà hàng", icon: "🍽️" },
+    { word: "Last night", phonetic: "/lɑːst naɪt/", definition: "Tối qua", icon: "🍽️" },
     { word: "Covers", phonetic: "/ˈkʌvəz/", definition: "Lượt khách phục vụ", icon: "🔢" },
     {
       word: "Finished later",
@@ -915,7 +915,12 @@ const HK_BANK: P2Bank = {
     { word: "Restock", phonetic: "/ˌriːˈstɒk/", definition: "Bổ sung vật tư", icon: "🧴" },
     { word: "Room check", phonetic: "/ruːm tʃek/", definition: "Lượt kiểm tra phòng", icon: "🔑" },
     { word: "Well done", phonetic: "/wel dʌn/", definition: "Làm tốt", icon: "👍" },
-    { word: "Handover note", phonetic: "/ˈhændəʊvə nəʊt/", definition: "Ghi chú bàn giao", icon: "🛒" },
+    {
+      word: "Handover note",
+      phonetic: "/ˈhændəʊvə nəʊt/",
+      definition: "Ghi chú bàn giao",
+      icon: "🛒",
+    },
     { word: "Wrap up", phonetic: "/ræp ʌp/", definition: "Khép lại công việc", icon: "✅" },
     { word: "Room count", phonetic: "/ruːm kaʊnt/", definition: "Số phòng đã làm", icon: "🔢" },
     {
@@ -1204,7 +1209,12 @@ const SW_BANK: P2Bank = {
       definition: "Sớm hơn dự kiến",
       icon: "🔁",
     },
-    { word: "Linen count", phonetic: "/ˈlɪnɪn kaʊnt/", definition: "Số đồ vải đã giặt", icon: "🧺" },
+    {
+      word: "Linen count",
+      phonetic: "/ˈlɪnɪn kaʊnt/",
+      definition: "Số đồ vải đã giặt",
+      icon: "🧺",
+    },
     {
       word: "Relax the guest",
       phonetic: "/rɪˈlæks ðə ɡest/",
@@ -1225,8 +1235,18 @@ const SW_BANK: P2Bank = {
       icon: "📅",
     },
     { word: "End", phonetic: "/end/", definition: "Kết thúc", icon: "🌙" },
-    { word: "Treatment count", phonetic: "/ˈtriːtmənt kaʊnt/", definition: "Số lượt trị liệu", icon: "🕊️" },
-    { word: "Room reset", phonetic: "/ruːm ˌriːˈset/", definition: "Dọn lại phòng trị liệu", icon: "🎵" },
+    {
+      word: "Treatment count",
+      phonetic: "/ˈtriːtmənt kaʊnt/",
+      definition: "Số lượt trị liệu",
+      icon: "🕊️",
+    },
+    {
+      word: "Room reset",
+      phonetic: "/ruːm ˌriːˈset/",
+      definition: "Dọn lại phòng trị liệu",
+      icon: "🎵",
+    },
   ],
 };
 
@@ -1918,7 +1938,12 @@ const BO_BANK: P2Bank = {
       icon: "📄",
     },
     { word: "Do better", phonetic: "/duː ˈbetə/", definition: "Làm tốt hơn", icon: "💡" },
-    { word: "Team feedback", phonetic: "/tiːm ˈfiːdbæk/", definition: "Phản hồi của nhóm", icon: "📈" },
+    {
+      word: "Team feedback",
+      phonetic: "/tiːm ˈfiːdbæk/",
+      definition: "Phản hồi của nhóm",
+      icon: "📈",
+    },
     {
       word: "Filed properly",
       phonetic: "/faɪld ˈprɒpəli/",
@@ -1933,7 +1958,12 @@ const BO_BANK: P2Bank = {
       definition: "Kiểm soát chi phí",
       icon: "📉",
     },
-    { word: "File closing", phonetic: "/faɪl ˈkləʊzɪŋ/", definition: "Việc đóng hồ sơ", icon: "🗄️" },
+    {
+      word: "File closing",
+      phonetic: "/faɪl ˈkləʊzɪŋ/",
+      definition: "Việc đóng hồ sơ",
+      icon: "🗄️",
+    },
   ],
 };
 

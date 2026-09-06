@@ -128,6 +128,17 @@ function week15(lx: Ctx): LessonContent[] {
           "Cụm nối 'After that,' có dấu phẩy rồi mới tới mệnh đề.",
           "colleague",
         ),
+        sp(
+          "How does it start?",
+          `First we ${lo(a1)}, then we continue.`,
+          "Bước đầu tiên phải nói được thành lời trước khi làm.",
+        ),
+        sp(
+          "What is step two?",
+          `After that, I ${lo(a2)}.`,
+          "Nối bước bằng After that để người nghe theo kịp.",
+          "colleague",
+        ),
       ],
       reading: read(
         `${lx.staff} explains the routine to a new colleague. "First I ${lo(a1)}, then I ${lo(a2)}. After that, I ${lo(a3)}. We always ${lo(a8)}."`,
@@ -196,6 +207,16 @@ function week15(lx: Ctx): LessonContent[] {
           "Will you do that yourself?",
           `I will ${lo(a5)} in a moment.`,
           "Hứa việc mình làm: WILL + động từ nguyên thể, kèm mốc 'in a moment'.",
+        ),
+        sp(
+          "What are you doing now?",
+          `Now we ${lo(a4)} for you, madam.`,
+          "Nói việc đang làm, khách sẽ không nghĩ mình bị bỏ quên.",
+        ),
+        sp(
+          "And right after this?",
+          `I will ${lo(a5)} in a moment.`,
+          "Will cho việc sắp làm ngay sau đây.",
         ),
       ],
       reading: read(
@@ -276,6 +297,16 @@ function week15(lx: Ctx): LessonContent[] {
           "Trạng từ tần suất always đứng trước động từ chính.",
           "colleague",
         ),
+        sp(
+          "Which part comes last?",
+          `We always ${lo(a6)} last.`,
+          "Always đứng trước động từ chính.",
+        ),
+        sp(
+          "Is that always the order?",
+          `We always ${lo(a8)}.`,
+          "Quy trình chuẩn nói ở thì hiện tại đơn.",
+        ),
       ],
       reading: read(
         `The supervisor reminds the team: "The order of the steps is important. If we change the order, we make mistakes. We always ${lo(a6)} last."`,
@@ -345,6 +376,18 @@ function week15(lx: Ctx): LessonContent[] {
           "Báo việc còn dở bằng một câu đủ, đừng nói trống không.",
           "colleague",
         ),
+        sp(
+          "Anything I tend to forget?",
+          `Do not forget to ${lo(a7)}.`,
+          "Nhắc việc bằng câu mệnh lệnh phủ định, ngắn và rõ.",
+          "colleague",
+        ),
+        sp(
+          "Could you run me through it?",
+          `First we ${lo(a1)}, then we continue.`,
+          "Kể lại quy trình từ đầu là cách tự kiểm tra mình nhớ đủ.",
+          "colleague",
+        ),
       ],
       reading: read(
         `A new colleague asks for the full picture. ${lx.staff} answers: "Our ${lo(a9)} has four simple steps. ${a10.word} needs attention at every stage. That is the whole routine."`,
@@ -381,7 +424,7 @@ function week15(lx: Ctx): LessonContent[] {
 //         · "May I offer you {offer}?"
 // ============================================================
 function week16(lx: Ctx): LessonContent[] {
-  const [pa1, pa2, pa3, pa4] = lx.bank.steps;
+  const [pa1, pa2, pa3, pa4, pa5, pa6, pa7, pa8, pa9] = lx.bank.steps;
   const [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10] = lx.bank.offers;
   return [
     lesson(lx, 16, 1, "Would You Like…?", "Mời khách bằng 'Would you like…?'", {
@@ -431,6 +474,21 @@ function week16(lx: Ctx): LessonContent[] {
           `We ${lo(pa1)} at the very start.`,
           "Ôn tuần 15: trình tự các bước.",
           "colleague",
+        ),
+        sp(
+          "What happens after that?",
+          `I will ${lo(pa5)} in a moment.`,
+          "Ôn tuần 15: will cho việc sắp làm ngay.",
+        ),
+        sp(
+          "How many steps in total?",
+          `Our ${lo(pa9)} has four steps.`,
+          "Ôn tuần 15: gọi tên cả quy trình rồi mới kể từng bước.",
+        ),
+        sp(
+          "Do I need to fill this in?",
+          "The document must be accurate, madam.",
+          "Nói rõ vì sao phải đúng, khách sẽ khai cẩn thận hơn.",
         ),
       ],
       reading: read(
@@ -506,6 +564,16 @@ function week16(lx: Ctx): LessonContent[] {
           `Then we ${lo(pa2)}, and we continue.`,
           "Ôn tuần 15: nối bước bằng then.",
           "colleague",
+        ),
+        sp(
+          "And the very last thing?",
+          `We always ${lo(pa6)} last.`,
+          "Ôn tuần 15: always đứng trước động từ chính.",
+        ),
+        sp(
+          "Is there anything more?",
+          "May I offer you an extra choice?",
+          "Mời thêm bằng câu hỏi, khách vẫn là người quyết.",
         ),
       ],
       reading: read(
@@ -586,6 +654,17 @@ function week16(lx: Ctx): LessonContent[] {
           "Ôn tuần 15: nối bước bằng then.",
           "colleague",
         ),
+        sp(
+          "Anything people usually miss?",
+          `Do not forget to ${lo(pa7)}.`,
+          "Ôn tuần 15: nhắc việc bằng câu mệnh lệnh phủ định.",
+          "colleague",
+        ),
+        sp(
+          "Sorry, I did not catch that.",
+          "Please say it clearly, and I will fix the issue.",
+          "Nhận phần khó nghe về mình, đừng đổ cho khách.",
+        ),
       ],
       reading: read(
         `The first choice is not available. ${lx.staff} says: "We do not have that today, but we could offer ${wa(o4)}. Perhaps you would prefer ${wa(o5)}?"`,
@@ -651,6 +730,16 @@ function week16(lx: Ctx): LessonContent[] {
           "Ôn tuần 15: trạng từ tần suất trước động từ chính.",
           "colleague",
         ),
+        sp(
+          "Is it the same every time?",
+          `We always ${lo(pa8)}.`,
+          "Ôn tuần 15: quy trình chuẩn thì nói ở thì hiện tại đơn.",
+        ),
+        sp(
+          "Why is that so strict?",
+          "I am afraid you must, madam. It is a safety rule.",
+          "Viện dẫn an toàn thì lời từ chối không còn là ý riêng của bạn.",
+        ),
       ],
       reading: read(
         `The guest agrees. ${lx.staff} confirms: "Shall I arrange ${wa(o6)} for you now?" The guest nods. "Certainly. ${Wt(o7)} will be ready shortly, madam."`,
@@ -695,7 +784,7 @@ function week16(lx: Ctx): LessonContent[] {
 //         · "So that is {detail}, correct?"
 // ============================================================
 function week17(lx: Ctx): LessonContent[] {
-  const [, , , , po1, po2, po3, po4] = lx.bank.offers;
+  const [qo1, qo2, qo3, qo4, po1, po2, po3, po4, qo9, qo10] = lx.bank.offers;
   const [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10] = lx.bank.details;
   return [
     lesson(lx, 17, 1, "Could I Have…?", "Xin thông tin bằng 'Could I have…?'", {
@@ -745,6 +834,11 @@ function week17(lx: Ctx): LessonContent[] {
           "Is there anything you can add?",
           `We also have ${wa(po1)}.`,
           "Ôn tuần 16: mời thêm bằng We also have.",
+        ),
+        sp(
+          "Is there something for me?",
+          `Would you like ${wa(qo1)}?`,
+          "Ôn tuần 16: mời bằng câu hỏi, đừng khẳng định thay khách.",
         ),
       ],
       reading: read(
@@ -819,6 +913,16 @@ function week17(lx: Ctx): LessonContent[] {
           "What else could you offer?",
           `We could arrange ${wa(po2)} instead.`,
           "Ôn tuần 16: could làm lời đề nghị nhẹ đi.",
+        ),
+        sp(
+          "What else is there?",
+          `We also have ${wa(qo2)}.`,
+          "Ôn tuần 16: giới thiệu thêm bằng We also have.",
+        ),
+        sp(
+          "Is that part included?",
+          `That part is ${lo(qo9)}.`,
+          "Ôn tuần 16: nói rõ phần nào đã gồm trong giá.",
         ),
       ],
       reading: read(
@@ -902,6 +1006,16 @@ function week17(lx: Ctx): LessonContent[] {
           `${Wt(po3)} is very popular.`,
           "Ôn tuần 16: gợi ý bằng cái nhiều người chọn.",
         ),
+        sp(
+          "What do most people take?",
+          `${Wt(qo3)} is very popular.`,
+          "Ôn tuần 16: gợi ý bằng cái nhiều khách chọn.",
+        ),
+        sp(
+          "What do you need from me?",
+          `Could I have your ${lo(d3)}?`,
+          "Xin từng mẩu thông tin một, đừng hỏi dồn.",
+        ),
       ],
       reading: read(
         `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me read the ${lo(d8)} back to you." Nothing is wrong.`,
@@ -975,6 +1089,16 @@ function week17(lx: Ctx): LessonContent[] {
           `Would you like ${wa(po4)}, madam?`,
           "Ôn tuần 16: mời thêm bằng câu hỏi lịch sự.",
         ),
+        sp(
+          "Could we change that?",
+          `We could arrange ${wa(qo4)} instead.`,
+          "Ôn tuần 16: could làm lời đề nghị nhẹ đi.",
+        ),
+        sp(
+          "What does the price cover?",
+          `The price includes ${lo(qo10)}.`,
+          "Ôn tuần 16: includes để liệt kê thứ đã tính vào giá.",
+        ),
       ],
       reading: read(
         `The last detail is needed. ${lx.staff} says: "Just your ${lo(d4)}, and that is everything." The guest gives it. "Thank you. I am writing it down now."`,
@@ -1015,7 +1139,7 @@ function week17(lx: Ctx): LessonContent[] {
 //         · "You need to {verb} here."
 // ============================================================
 function week18(lx: Ctx): LessonContent[] {
-  const [, , , , pd1, pd2, pd3, pd4] = lx.bank.details;
+  const [qd1, qd2, qd3, qd4, pd1, pd2, pd3, pd4, qd9, qd10] = lx.bank.details;
   const [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10] = lx.bank.paperwork;
   return [
     lesson(lx, 18, 1, "I Am Preparing It Now", "Đang xử lý giấy tờ", {
@@ -1068,6 +1192,21 @@ function week18(lx: Ctx): LessonContent[] {
           "What do you need from me first?",
           `Could I have your ${lo(pd1)}, please?`,
           "Ôn tuần 17: xin thông tin bằng câu hỏi lịch sự.",
+        ),
+        sp(
+          "Where do we start?",
+          `Could I have your ${lo(qd1)}?`,
+          "Ôn tuần 17: xin thông tin bằng Could I have.",
+        ),
+        sp(
+          "What comes after that?",
+          `Could I have your ${lo(qd3)}?`,
+          "Ôn tuần 17: hỏi tiếp một mẩu nữa, vẫn giữ giọng xin phép.",
+        ),
+        sp(
+          "Do I need to fill this in?",
+          "The document must be accurate, madam.",
+          "Nói rõ vì sao phải đúng, khách sẽ khai cẩn thận hơn.",
         ),
       ],
       reading: read(
@@ -1151,6 +1290,21 @@ function week18(lx: Ctx): LessonContent[] {
           `May I ask about your ${lo(pd2)}?`,
           "Ôn tuần 17: hỏi thông tin tế nhị bằng May I ask about.",
         ),
+        sp(
+          "Go ahead, ask me.",
+          `May I ask about your ${lo(qd2)}?`,
+          "Ôn tuần 17: May I ask about cho thông tin tế nhị.",
+        ),
+        sp(
+          "Is there anything more?",
+          "May I offer you an extra choice?",
+          "Mời thêm bằng câu hỏi, khách vẫn là người quyết.",
+        ),
+        sp(
+          "What do you need from me now?",
+          `May I have your ${lo(p2)}?`,
+          "Xin đúng một thứ mỗi lần, khách khỏi rối.",
+        ),
       ],
       reading: read(
         `${lx.staff} hands over the form. "You need to sign here, please. Is the ${lo(p3)} correct?" The guest checks and signs the paper.`,
@@ -1187,7 +1341,7 @@ function week18(lx: Ctx): LessonContent[] {
         // keep their literal "A" because a number always follows it.
         bw(p5, `${wa(p5).charAt(0).toUpperCase()}${wa(p5).slice(1)} is added.`),
         bw(p6, `Which ${lo(p6)} would you prefer?`),
-        bw(p8, `You can ${lo(p8)} now.`),
+        bw(p8, `You can ${lo(p8)} whenever you are ready.`),
       ],
       grammar: [
         g(
@@ -1228,6 +1382,21 @@ function week18(lx: Ctx): LessonContent[] {
           "Do you need more details?",
           `Could I have your ${lo(pd3)}?`,
           "Ôn tuần 17: mỗi lần hỏi một mẩu thông tin.",
+        ),
+        sp(
+          "So it is all agreed?",
+          `The ${lo(qd9)} is confirmed.`,
+          "Ôn tuần 17: chốt lại bằng một câu ngắn.",
+        ),
+        sp(
+          "And the last thing?",
+          `Could I have your ${lo(qd4)}?`,
+          "Ôn tuần 17: gom câu hỏi cuối vào một lần cho gọn.",
+        ),
+        sp(
+          "Sorry, I did not catch that.",
+          "Please say it clearly, and I will fix the issue.",
+          "Nhận phần khó nghe về mình, đừng đổ cho khách.",
         ),
       ],
       reading: read(
@@ -1293,6 +1462,16 @@ function week18(lx: Ctx): LessonContent[] {
           `And your ${lo(pd4)}, please?`,
           "Ôn tuần 17: nối câu hỏi tiếp bằng And.",
         ),
+        sp(
+          "Will you remember that?",
+          `I will note the ${lo(qd10)} for you.`,
+          "Ôn tuần 17: ghi lại là một cam kết, nói ra cho khách yên tâm.",
+        ),
+        sp(
+          "Why is that so strict?",
+          "I am afraid you must, madam. It is a safety rule.",
+          "Viện dẫn an toàn thì lời từ chối không còn là ý riêng của bạn.",
+        ),
       ],
       reading: read(
         `The paperwork is finished. ${lx.staff} says: "Here is your ${lo(p7)}, madam. We keep one copy and you keep one. The ${lo(p4)} is on file."`,
@@ -1328,7 +1507,7 @@ function week18(lx: Ctx): LessonContent[] {
 // FRAMES · "You must {rule}."  · "Please do not {rule}."
 // ============================================================
 function week19(lx: Ctx): LessonContent[] {
-  const [pp1, pp2, pp3, pp4] = lx.bank.paperwork;
+  const [pp1, pp2, pp3, pp4, , pp6, pp7, pp8, pp9, pp10] = lx.bank.paperwork;
   const [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10] = lx.bank.rules;
   return [
     lesson(lx, 19, 1, "You Must / You Must Not", "Bắt buộc & cấm: must / must not", {
@@ -1377,6 +1556,11 @@ function week19(lx: Ctx): LessonContent[] {
           "What are you getting ready?",
           `Your ${lo(pp1)} is almost ready.`,
           "Ôn tuần 18: hiện tại tiếp diễn cho việc đang làm.",
+        ),
+        sp(
+          "How should I settle this?",
+          `Which ${lo(pp6)} would you prefer?`,
+          "Ôn tuần 18: hỏi cách thanh toán bằng Which.",
         ),
       ],
       reading: read(
@@ -1456,6 +1640,16 @@ function week19(lx: Ctx): LessonContent[] {
           `Could I see your ${lo(pp2)}, please?`,
           "Ôn tuần 18: xin giấy tờ của khách.",
         ),
+        sp(
+          "Do I keep anything?",
+          `Here is your ${lo(pp7)}.`,
+          "Ôn tuần 18: trao giấy tờ kèm một câu ngắn.",
+        ),
+        sp(
+          "Where do I write my name?",
+          `Please ${lo(pp10)} on this line.`,
+          "Ôn tuần 18: chỉ chỗ ký bằng một câu mệnh lệnh lịch sự.",
+        ),
       ],
       reading: read(
         `${lx.staff} points to the equipment. "That is the ${lo(r4)}, sir. Please do not touch the ${lo(r5)}." The guest thanks ${lx.staff} for the warning.`,
@@ -1530,6 +1724,11 @@ function week19(lx: Ctx): LessonContent[] {
           `Let me check the ${lo(pp3)} again.`,
           "Ôn tuần 18: hỏi xác nhận trước khi chốt.",
         ),
+        sp(
+          "When may I do that?",
+          `You can ${lo(pp8)} whenever you are ready.`,
+          "Ôn tuần 18: can để nói khách được phép.",
+        ),
       ],
       reading: read(
         `A guest asks about the rules. ${lx.staff} explains: "The ${lo(r3)} is outside, near the garden. Our ${lo(r2)} does not allow that, madam."`,
@@ -1603,6 +1802,11 @@ function week19(lx: Ctx): LessonContent[] {
           `The ${lo(pp4)} is on file.`,
           "Ôn tuần 18: nói rõ thứ gì được lưu lại.",
         ),
+        sp(
+          "Is my request done?",
+          `Your request is ${lo(pp9)}.`,
+          "Ôn tuần 18: báo trạng thái bằng một tính từ.",
+        ),
       ],
       reading: read(
         `${lx.staff} gives safety advice. "Please keep your ${lo(r6)} in the safety box. If there is a fire, please use the exit near the stairs."`,
@@ -1639,7 +1843,7 @@ function week19(lx: Ctx): LessonContent[] {
 //         · "I would suggest {choice}, because…"
 // ============================================================
 function week20(lx: Ctx): LessonContent[] {
-  const [pr1, pr2, pr3, pr4] = lx.bank.rules;
+  const [pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10] = lx.bank.rules;
   const [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10] = lx.bank.choices;
   return [
     lesson(lx, 20, 1, "A or B?", "Đưa hai lựa chọn: A hay B?", {
@@ -1678,6 +1882,21 @@ function week20(lx: Ctx): LessonContent[] {
           "Are there rules about that?",
           `We keep to the ${lo(pr1)} here too.`,
           "Ôn tuần 19: viện dẫn quy định của khách sạn, không phải ý mình.",
+        ),
+        sp(
+          "Can I move this?",
+          `Do not touch the ${lo(pr5)}.`,
+          "Ôn tuần 19: cấm bằng câu mệnh lệnh phủ định, ngắn và rõ.",
+        ),
+        sp(
+          "I did not know about that.",
+          `May I remind you of the ${lo(pr9)}?`,
+          "Ôn tuần 19: nhắc quy định bằng câu hỏi, không bằng lời trách.",
+        ),
+        sp(
+          "Do I need to fill this in?",
+          "The document must be accurate, madam.",
+          "Nói rõ vì sao phải đúng, khách sẽ khai cẩn thận hơn.",
         ),
       ],
       reading: read(
@@ -1756,6 +1975,21 @@ function week20(lx: Ctx): LessonContent[] {
           "What is the policy here?",
           `We follow the ${lo(pr2)} closely.`,
           "Ôn tuần 19: mở đầu ngắn rồi mới vào chi tiết.",
+        ),
+        sp(
+          "Where should I leave this?",
+          `Please keep your ${lo(pr6)} safe.`,
+          "Ôn tuần 19: nhắc giữ đồ mà không doạ khách.",
+        ),
+        sp(
+          "Is there another idea?",
+          `The ${lo(c9)} is worth considering.`,
+          "Đưa thêm một hướng thay vì lặp lại hướng cũ.",
+        ),
+        sp(
+          "Is there anything more?",
+          "May I offer you an extra choice?",
+          "Mời thêm bằng câu hỏi, khách vẫn là người quyết.",
         ),
       ],
       reading: read(
@@ -1837,6 +2071,21 @@ function week20(lx: Ctx): LessonContent[] {
           `You will find the ${lo(pr3)} outside.`,
           "Ôn tuần 19: chỉ chỗ bằng một mốc nhìn thấy được.",
         ),
+        sp(
+          "Which way should I go?",
+          `Please use the ${lo(pr7)}.`,
+          "Ôn tuần 19: chỉ lối bằng Please use.",
+        ),
+        sp(
+          "Would that be all right?",
+          `The ${lo(c7)} is fine, sir.`,
+          "Nói rõ lựa chọn của khách là ổn, khách sẽ thôi phân vân.",
+        ),
+        sp(
+          "Sorry, I did not catch that.",
+          "Please say it clearly, and I will fix the issue.",
+          "Nhận phần khó nghe về mình, đừng đổ cho khách.",
+        ),
       ],
       reading: read(
         `The guest chooses differently. ${lx.staff} answers warmly: "Of course, that is a good choice too, sir. Whichever you prefer." The guest feels comfortable.`,
@@ -1904,6 +2153,26 @@ function week20(lx: Ctx): LessonContent[] {
           `The ${lo(pr4)} is on your right.`,
           "Ôn tuần 19: chỉ chỗ bằng The … is over there.",
         ),
+        sp(
+          "Could you make an exception?",
+          `That is ${lo(pr8)}, I am afraid.`,
+          "Ôn tuần 19: từ chối kèm I am afraid cho nhẹ.",
+        ),
+        sp(
+          "Please go ahead with it.",
+          `We will arrange the ${lo(c6)} then.`,
+          "Chốt xong thì nói ngay mình sẽ làm gì.",
+        ),
+        sp(
+          "Is that your own rule?",
+          `This is a hotel ${lo(pr10)}.`,
+          "Ôn tuần 19: viện dẫn khách sạn để khách không tranh luận với bạn.",
+        ),
+        sp(
+          "Why is that so strict?",
+          "I am afraid you must, madam. It is a safety rule.",
+          "Viện dẫn an toàn thì lời từ chối không còn là ý riêng của bạn.",
+        ),
       ],
       reading: read(
         `The decision is made. ${lx.staff} confirms: "So you would like ${lo(c5)}, correct?" The guest agrees. "Very good, sir. I will arrange that now."`,
@@ -1944,7 +2213,7 @@ function week20(lx: Ctx): LessonContent[] {
 //         · "We {verb-ed} at {time}."
 // ============================================================
 function week21(lx: Ctx): LessonContent[] {
-  const [pc1, pc2, pc3, pc4] = lx.bank.choices;
+  const [pc1, pc2, pc3, pc4, pc5, pc6, pc7, pc8, pc9, pc10] = lx.bank.choices;
   const [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10] = lx.bank.reports;
   return [
     lesson(lx, 21, 1, "What I Did Today", "Kể việc đã làm hôm nay", {
@@ -1995,6 +2264,17 @@ function week21(lx: Ctx): LessonContent[] {
           "Which one would you suggest?",
           `Many guests choose the ${lo(pc1)}.`,
           "Ôn tuần 20: đưa lựa chọn bằng câu hỏi, không quyết thay khách.",
+        ),
+        sp(
+          "Yes, that one please.",
+          `So you would like the ${lo(pc5)}?`,
+          "Ôn tuần 20: nhắc lại lựa chọn để xác nhận.",
+        ),
+        sp(
+          "How was it earlier?",
+          `${e5.word} was very busy.`,
+          "Nêu bối cảnh trước, người nghe mới hiểu con số phía sau.",
+          "colleague",
         ),
       ],
       reading: read(
@@ -2064,6 +2344,22 @@ function week21(lx: Ctx): LessonContent[] {
           `The ${lo(pc2)} is another option.`,
           "Ôn tuần 20: mở lựa chọn thứ hai bằng Or perhaps.",
         ),
+        sp(
+          "Could you set that up?",
+          `We will arrange the ${lo(pc6)} then.`,
+          "Ôn tuần 20: chốt bằng will và một việc cụ thể.",
+        ),
+        sp(
+          "What else could I look at?",
+          `The ${lo(pc9)} is worth considering.`,
+          "Ôn tuần 20: mở thêm một hướng mà không ép khách.",
+        ),
+        sp(
+          "Any problems today?",
+          `Everything was ${lo(e9)}.`,
+          "Một câu trạng thái gọn cho cả ca, rồi mới nói ngoại lệ.",
+          "colleague",
+        ),
       ],
       reading: read(
         `At the end of the shift, ${lx.staff} reports: "We had twelve ${lo(e6)} today. The last guest ${lo(e2)} at noon. I ${lo(e10)} everything down."`,
@@ -2127,6 +2423,17 @@ function week21(lx: Ctx): LessonContent[] {
           "Is there anything else available?",
           `We can also offer the ${lo(pc3)}.`,
           "Ôn tuần 20: mở thêm lựa chọn mà không ép.",
+        ),
+        sp(
+          "Would that be acceptable?",
+          `The ${lo(pc7)} is fine, sir.`,
+          "Ôn tuần 20: xác nhận lựa chọn của khách là ổn.",
+        ),
+        sp(
+          "Was it slower today?",
+          `It ${lo(e7)} than usual.`,
+          "So sánh hơn kèm than — cách nói ca bận mà không than phiền.",
+          "colleague",
         ),
       ],
       reading: read(
@@ -2192,6 +2499,22 @@ function week21(lx: Ctx): LessonContent[] {
           `The ${lo(pc4)} is ready if you like it.`,
           "Ôn tuần 20: giới thiệu thêm lựa chọn.",
         ),
+        sp(
+          "Which suits me best?",
+          `The ${lo(pc8)} is a good match.`,
+          "Ôn tuần 20: khuyên bằng một câu khẳng định ngắn.",
+        ),
+        sp(
+          "Which do most guests take?",
+          `The ${lo(pc10)} is very popular.`,
+          "Ôn tuần 20: dựa vào số đông để khách dễ quyết.",
+        ),
+        sp(
+          "What about the broken one?",
+          `I ${lo(e8)} the broken one.`,
+          "Nói việc đã xử lý, đừng chỉ nói việc đã phát hiện.",
+          "colleague",
+        ),
       ],
       reading: read(
         `The shift ends. ${lx.staff} tells the next colleague: "I ${lo(e4)} the supervisor about one issue. Everything else was ${lo(e9)}. The next shift will finish the rest."`,
@@ -2228,7 +2551,7 @@ function week21(lx: Ctx): LessonContent[] {
 // light and evaluative; the load is recall across the whole phase.
 // ============================================================
 function week22(lx: Ctx): LessonContent[] {
-  const [pe1, pe2, pe3, pe4] = lx.bank.reports;
+  const [pe1, pe2, pe3, pe4, pe5, pe6, pe7, pe8, pe9, pe10] = lx.bank.reports;
   const [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10] = lx.bank.wrapUp;
   const [a1] = lx.bank.steps;
   const [o1] = lx.bank.offers;
@@ -2281,6 +2604,27 @@ function week22(lx: Ctx): LessonContent[] {
           `I already ${lo(pe1)} it this morning.`,
           "Ôn tuần 21: quá khứ đơn, mốc thời gian cuối câu.",
           "colleague",
+        ),
+        sp(
+          "How was it out there?",
+          `${pe5.word} was very busy.`,
+          "Ôn tuần 21: nêu bối cảnh trước khi vào chi tiết.",
+        ),
+        sp(
+          "Was there any trouble?",
+          `Everything was ${lo(pe9)}.`,
+          "Ôn tuần 21: một câu trạng thái gọn cho cả ca làm.",
+          "colleague",
+        ),
+        sp(
+          "Do I need to fill this in?",
+          "The document must be accurate, madam.",
+          "Nói rõ vì sao phải đúng, khách sẽ khai cẩn thận hơn.",
+        ),
+        sp(
+          "Is that how it always goes?",
+          "Yes, madam. This is our standard.",
+          "Gọi tên chuẩn nghề, khách hiểu đây không phải ngẫu hứng.",
         ),
       ],
       reading: read(
@@ -2351,6 +2695,39 @@ function week22(lx: Ctx): LessonContent[] {
           `The guest ${lo(pe2)} after that.`,
           "Ôn tuần 21: chủ ngữ là khách, động từ ở quá khứ đơn.",
           "colleague",
+        ),
+        sp(
+          "How many were there?",
+          `We had twelve ${lo(pe6)} today.`,
+          "Ôn tuần 21: had là quá khứ của have.",
+        ),
+        sp(
+          "Did you write anything down?",
+          `I noted the ${lo(w3)} in the log.`,
+          "Ghi vào sổ ca là việc bắt buộc, không phải tuỳ hứng.",
+          "colleague",
+        ),
+        sp(
+          "How did the guest react?",
+          `The ${lo(w5)} was positive.`,
+          "Báo cả phản hồi tốt, không chỉ báo sự cố.",
+          "colleague",
+        ),
+        sp(
+          "Anything for the record?",
+          `The ${lo(w9)} was noted today.`,
+          "Thứ đã ghi thì nói rõ là đã ghi.",
+          "colleague",
+        ),
+        sp(
+          "Is there anything more?",
+          "May I offer you an extra choice?",
+          "Mời thêm bằng câu hỏi, khách vẫn là người quyết.",
+        ),
+        sp(
+          "Is the paperwork done?",
+          "Yes. The form is complete.",
+          "Báo trạng thái xong bằng một câu ngắn.",
         ),
       ],
       reading: read(
@@ -2426,6 +2803,36 @@ function week22(lx: Ctx): LessonContent[] {
           "Ôn tuần 21: thể bị động cho việc đã xong, kèm mốc yesterday.",
           "colleague",
         ),
+        sp("Did it take longer?", `It ${lo(pe7)} than usual.`, "Ôn tuần 21: so sánh hơn kèm than."),
+        sp(
+          "Could anything be better?",
+          `We can always ${lo(w4)}.`,
+          "Nhận việc còn cải thiện được mà không đổ lỗi cho ai.",
+          "colleague",
+        ),
+        sp(
+          "How was the team today?",
+          `The whole shift was ${lo(w6)}.`,
+          "Khen cả ca làm, không khen riêng một người.",
+          "colleague",
+        ),
+        sp(
+          "Sorry, I did not catch that.",
+          "Please say it clearly, and I will fix the issue.",
+          "Nhận phần khó nghe về mình, đừng đổ cho khách.",
+        ),
+        sp(
+          "How did the day go?",
+          "Overall, the day went well.",
+          "Mở đầu báo cáo bằng một câu tổng, rồi mới vào chi tiết.",
+          "colleague",
+        ),
+        sp(
+          "What is left to do?",
+          `The last thing is the ${lo(w10)}.`,
+          "Việc cuối ca phải được gọi tên, nếu không nó sẽ bị bỏ.",
+          "colleague",
+        ),
       ],
       reading: read(
         `A guest requests something against the rules. ${lx.staff} answers: "I am afraid that is not allowed, sir. Would you prefer another option? We could arrange something quieter."`,
@@ -2455,7 +2862,10 @@ function week22(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 22, 4, "Full Shift Report", "Báo cáo trọn ca làm", {
-      vocabulary: [bw(w7, `Let me tell you about the ${lo(w7)}.`), bw(w8, `Let me ${lo(w8)} the day.`)],
+      vocabulary: [
+        bw(w7, `Let me tell you about the ${lo(w7)}.`),
+        bw(w8, `Let me ${lo(w8)} the day.`),
+      ],
       grammar: [
         g(
           `Today all good, no problem.`,
@@ -2486,6 +2896,23 @@ function week22(lx: Ctx): LessonContent[] {
           `Yes. I ${lo(pe4)} the whole team.`,
           "Ôn tuần 21: báo lại cấp trên bằng câu quá khứ đủ.",
           "colleague",
+        ),
+        sp(
+          "What did you do about it?",
+          `I ${lo(pe8)} the broken one.`,
+          "Ôn tuần 21: quá khứ đơn cho việc đã xong.",
+          "colleague",
+        ),
+        sp(
+          "Did you keep a record?",
+          `I ${lo(pe10)} everything down.`,
+          "Ôn tuần 21: ghi chép là phần bắt buộc của bàn giao.",
+          "colleague",
+        ),
+        sp(
+          "Why is that so strict?",
+          "I am afraid you must, madam. It is a safety rule.",
+          "Viện dẫn an toàn thì lời từ chối không còn là ý riêng của bạn.",
         ),
       ],
       reading: read(

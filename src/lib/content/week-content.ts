@@ -265,6 +265,33 @@ export const FO_WEEK_17: WeekContent = {
             "Good morning, sir. Welcome to our hotel. Let me check our system for your name, please.",
           helpTip: "Remember to pronounce the ending sound in 'good morning' and 'welcome'.",
         },
+        {
+          guestPrompt: "Good evening, we just arrived.",
+          targetResponse: "Good evening. Do you have a reservation with us?",
+          helpTip: "Hỏi thẳng mà vẫn lịch sự, khách khỏi đoán mình cần gì.",
+        },
+        {
+          guestPrompt: "Yes, I booked online last week.",
+          targetResponse: "May I have your booking reference number?",
+          helpTip: "Xin mã đặt phòng thay vì tra bằng tên: nhanh và chính xác hơn.",
+        },
+        {
+          guestPrompt: "Is Mr Green in the system?",
+          targetResponse: "Yes. The reservation is for two nights.",
+          helpTip: "Bàn giao kèm số đêm, ca sau khỏi tra lại.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Do I need to sign anything?",
+          targetResponse: "Could you please sign the registration card?",
+          helpTip: "Đưa bút và nói rõ ký vào đâu, đừng chỉ đẩy tờ giấy qua.",
+        },
+        {
+          guestPrompt: "Which room did you give them?",
+          targetResponse: "A twin room on the fourth floor.",
+          helpTip: "Bàn giao kèm loại phòng và tầng, ca sau khỏi tra lại.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "AGODA CONFIRMATION VOUCHER\nGuest Name: David Green\nRoom Type: Deluxe Ocean View\nStay: 2 Nights\nStatus: Confirmed / Paid Online",
@@ -354,6 +381,33 @@ export const FO_WEEK_17: WeekContent = {
           targetResponse:
             "Thank you, sir. I just need to keep it briefly for our local registration process.",
           helpTip: "Focus on the linked sound in 'keep it briefly'.",
+        },
+        {
+          guestPrompt: "Why do you need my passport?",
+          targetResponse: "We need your passport for local registration.",
+          helpTip: "Nói lý do trước khi cầm giấy tờ của khách.",
+        },
+        {
+          guestPrompt: "Can I skip that this time?",
+          targetResponse: "I am sorry. This registration is mandatory by law.",
+          helpTip: "Viện dẫn luật, không viện dẫn ý mình.",
+        },
+        {
+          guestPrompt: "Did you scan 704's passport?",
+          targetResponse: "Yes. The local registration is complete.",
+          helpTip: "Xác nhận đã xong, đừng nói đang làm.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "How long will you keep it?",
+          targetResponse: "I will keep your passport briefly to scan it.",
+          helpTip: "Nói rõ giữ bao lâu, khách sẽ yên tâm rời quầy.",
+        },
+        {
+          guestPrompt: "Is the passport scan done?",
+          targetResponse: "Yes. I gave the passport back already.",
+          helpTip: "Trả giấy tờ xong thì nói ra, đừng để ai phải đi tìm.",
+          speakerRole: "colleague",
         },
       ],
       reading: {
@@ -471,6 +525,32 @@ export const FO_WEEK_17: WeekContent = {
           helpTip:
             "Đồng ý với khách trước ('Of course'), đổ lỗi cho cái máy, rồi hỏi một câu ngắn. Không bao giờ nhắc tới tài khoản của khách.",
         },
+        {
+          guestPrompt: "What is this hold on my card?",
+          targetResponse: "We require a credit card pre-authorisation.",
+          helpTip: "Gọi đúng tên nghiệp vụ, khách sẽ nhận ra thuật ngữ trên sao kê.",
+        },
+        {
+          guestPrompt: "Do I get that money back?",
+          targetResponse: "We will refund the amount at check-out.",
+          helpTip: "Nói rõ mốc hoàn tiền, đừng để khách phải hỏi lại.",
+        },
+        {
+          guestPrompt: "What did the terminal say?",
+          targetResponse: "It was declined. I asked for another card.",
+          helpTip: "Từ này chỉ nói với đồng nghiệp, không nói trước mặt khách.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "What is the deposit for?",
+          targetResponse: "The deposit is for any incidental charges.",
+          helpTip: "Gọi tên khoản phí, khách sẽ không nghĩ mình bị tính thêm.",
+        },
+        {
+          guestPrompt: "Will I lose that money?",
+          targetResponse: "No, madam. The security deposit is fully refundable.",
+          helpTip: "Trả lời phần khách lo nhất trước, rồi mới giải thích.",
+        },
       ],
       reading: {
         text: 'INCIDENTAL POLICY:\nA security deposit of 1,000,000 VND per night is required at check-in. This amount will be released automatically at check-out if there are no mini-bar or laundry uses.\n\nIF THE CARD DOES NOT GO THROUGH:\nNever say "declined" or "refused" where other guests can hear. Say "it did not go through" and offer the other terminal. Then ask quietly for another card. If no card works, invite the guest to step aside with you and call the Duty Manager. Never ask a guest about their bank or their balance.',
@@ -586,6 +666,33 @@ export const FO_WEEK_17: WeekContent = {
             "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
           helpTip: "Ensure a clear 't' sound at the end of 'breakfast' and 's' sound in 'served'.",
         },
+        {
+          guestPrompt: "How do I get into the room?",
+          targetResponse: "Here is your electronic room key, madam.",
+          helpTip: "Trao chìa khoá kèm một câu, đừng đẩy im lặng qua quầy.",
+        },
+        {
+          guestPrompt: "Which way do we go up?",
+          targetResponse: "The elevators are just behind you.",
+          helpTip: "Chỉ hướng theo vị trí của khách, không theo vị trí của bạn.",
+        },
+        {
+          guestPrompt: "When is the airport guest arriving?",
+          targetResponse: "Their ETA is nine this evening.",
+          helpTip: "Giờ dự kiến giúp ca sau chuẩn bị phòng đúng lúc.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Where is breakfast served?",
+          targetResponse: "Our breakfast buffet is on the first floor.",
+          helpTip: "Chỉ tầng cụ thể, khách khỏi hỏi lại thang máy.",
+        },
+        {
+          guestPrompt: "Anything to prepare for tonight?",
+          targetResponse: "Two rooms need keys before six.",
+          helpTip: "Bàn giao bằng việc cần làm kèm mốc giờ.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.",
@@ -689,6 +796,38 @@ export const FB_WEEK_15: WeekContent = {
             "Good morning, and welcome. Yes, of course. May I just check your room number on our list, please?",
           helpTip: "Link 'check your' smoothly so it sounds like one word: 'che-kyer'.",
         },
+        {
+          guestPrompt: "Where should we wait?",
+          targetResponse: "Please wait for me at the restaurant entrance.",
+          helpTip: "Chỉ chỗ đợi cụ thể, khách sẽ không đứng chắn lối vào.",
+        },
+        {
+          guestPrompt: "Do we need to show anything?",
+          targetResponse: "Could I see your breakfast voucher, please?",
+          helpTip: "Xin phiếu bằng một câu hỏi, đừng ra lệnh cho khách.",
+        },
+        {
+          guestPrompt: "Are they staying with us?",
+          targetResponse: "Yes. All in-house guests have breakfast included.",
+          helpTip: "Nói rõ khách nội trú hay khách ngoài, vì hai bên tính tiền khác nhau.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Can you just let us in?",
+          targetResponse: "I need to verify your room number first.",
+          helpTip: "Kiểm tra là bắt buộc; nói lý do ngắn thì khách không thấy bị làm khó.",
+        },
+        {
+          guestPrompt: "We are in room 512.",
+          targetResponse: "Thank you. Let me verify that on our list.",
+          helpTip: "Xác minh trước khi mời vào, và nói ra là mình đang xác minh.",
+        },
+        {
+          guestPrompt: "Who is at the entrance?",
+          targetResponse: "Two guests waiting. I will greet them now.",
+          helpTip: "Bàn giao bằng con số và việc mình sắp làm.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "IN-HOUSE GUEST LIST - BREAKFAST\nRoom 512 - Mr. David Green - 2 Adults - B&B Included\nRoom 608 - Ms. Lisa Tran - 1 Adult - Room Only (No Breakfast)\nRestaurant Hours: 06:30 - 10:00",
@@ -787,6 +926,32 @@ export const FB_WEEK_15: WeekContent = {
           helpTip:
             "Say 'sorry' gently and keep your tone calm and unhurried, not apologetic in a worried way.",
         },
+        {
+          guestPrompt: "Why is it so crowded now?",
+          targetResponse: "Breakfast is busiest during peak hours, madam.",
+          helpTip: "Một câu giải thích ngắn giúp khách chấp nhận việc phải chờ.",
+        },
+        {
+          guestPrompt: "Where does the line start?",
+          targetResponse: "There is a short queue near the entrance.",
+          helpTip: "Chỉ đúng chỗ hàng đợi bắt đầu, đừng chỉ chung chung.",
+        },
+        {
+          guestPrompt: "How is the queue now?",
+          targetResponse: "It is moving. Two tables are free soon.",
+          helpTip: "Bàn giao tình hình bằng con số, không bằng cảm giác.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Could we sit by the window?",
+          targetResponse: "A window table will be available very soon.",
+          helpTip: "Hứa cái mình biết chắc, đừng hứa ngay lập tức.",
+        },
+        {
+          guestPrompt: "How long exactly?",
+          targetResponse: "Your table will be ready shortly, sir.",
+          helpTip: "Trả lời bằng một mốc, đừng để khách tự đoán.",
+        },
       ],
       reading: {
         text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.",
@@ -883,6 +1048,32 @@ export const FB_WEEK_15: WeekContent = {
             "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
           helpTip: "Practice linking 'show' and 'you' so they blend smoothly into 'show-you'.",
         },
+        {
+          guestPrompt: "Could you take us to a table?",
+          targetResponse: "Let me escort you to your table, madam.",
+          helpTip: "Dẫn khách tận nơi thay vì chỉ tay về hướng đó.",
+        },
+        {
+          guestPrompt: "Where is the fresh juice?",
+          targetResponse: "The juice area is next to the coffee machines.",
+          helpTip: "Mốc chỉ đường nên là thứ khách nhìn thấy được ngay.",
+        },
+        {
+          guestPrompt: "Which station needs help?",
+          targetResponse: "The live station. I will escort guests there.",
+          helpTip: "Nói rõ quầy nào, đồng nghiệp khỏi phải đoán.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Where is the hot food?",
+          targetResponse: "Our live station serves hot Pho every morning.",
+          helpTip: "Gọi tên quầy, khách sẽ tìm đúng chỗ.",
+        },
+        {
+          guestPrompt: "Any fresh bread?",
+          targetResponse: "You will find fresh croissants at the bakery corner.",
+          helpTip: "Nêu món cụ thể rồi mới nêu vị trí.",
+        },
       ],
       reading: {
         text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)",
@@ -975,6 +1166,33 @@ export const FB_WEEK_15: WeekContent = {
             "I'm so glad to hear that. Would you like me to clear your plates for you?",
           helpTip:
             "Smile while saying 'glad to hear that' — it naturally lifts your pitch and sounds sincere.",
+        },
+        {
+          guestPrompt: "Are you taking this away?",
+          targetResponse: "I can see an empty plate. Shall I take it?",
+          helpTip: "Hỏi trước khi dọn — đĩa trống chưa chắc là khách đã xong.",
+        },
+        {
+          guestPrompt: "The eggs were excellent.",
+          targetResponse: "I hope you enjoy your breakfast, madam.",
+          helpTip: "Nhận lời khen rồi nhắc lại chính niềm vui của khách.",
+        },
+        {
+          guestPrompt: "How was table nine?",
+          targetResponse: "They left fully satisfied. I noted their comment.",
+          helpTip: "Báo cả phản hồi tốt, không chỉ báo sự cố.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Could you take these away?",
+          targetResponse: "May I clear this plate for you, madam?",
+          helpTip: "Xin phép trước khi chạm vào đồ trên bàn.",
+        },
+        {
+          guestPrompt: "Is table four finished?",
+          targetResponse: "Yes. I will clear it now.",
+          helpTip: "Trả lời gọn rồi làm ngay, đừng để bàn trống lâu.",
+          speakerRole: "colleague",
         },
       ],
       reading: {
@@ -1097,6 +1315,35 @@ export const HK_WEEK_15: WeekContent = {
           helpTip:
             "Link the words smoothly in 'sorry to disturb' — soften the 't' sound into the next word.",
         },
+        {
+          guestPrompt: "How do I start a room?",
+          targetResponse: "Please knock twice before entering the room.",
+          helpTip: "Gõ hai lần là chuẩn nghề, không phải gõ cho có.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Is 1204 empty now?",
+          targetResponse: "No. The status shows this room is occupied.",
+          helpTip: "Đọc trạng thái trên bảng, tuyệt đối không đoán.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Do I say anything at the door?",
+          targetResponse: "Always announce yourself before entering.",
+          helpTip: "Xưng danh trước khi vào là ranh giới riêng tư của khách.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Who is at the door?",
+          targetResponse: "Housekeeping! Good morning!",
+          helpTip: "Xưng bộ phận trước, khách nghe là biết ai đang gõ.",
+        },
+        {
+          guestPrompt: "What if nobody answers?",
+          targetResponse: "I knock twice, then I announce myself.",
+          helpTip: "Trình tự cố định: gõ, xưng danh, chờ.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "HOUSEKEEPING SOP - KNOCK AND ANNOUNCE:\n1. Knock on the door twice and say 'Housekeeping' in a clear voice.\n2. Wait at least 10 seconds for a response.\n3. If there is no answer, knock and announce a second time before entering.\n4. If a guest answers, greet them and politely ask permission to clean the room.",
@@ -1188,6 +1435,32 @@ export const HK_WEEK_15: WeekContent = {
           helpTip:
             "Practice linking 'send up' smoothly — connect the 'd' straight into the 'u' sound.",
         },
+        {
+          guestPrompt: "Do you have anything extra?",
+          targetResponse: "We are happy to provide extra amenities, madam.",
+          helpTip: "Nói có trước, hỏi chi tiết sau — khách thấy mình được đón nhận.",
+        },
+        {
+          guestPrompt: "Will the water be charged?",
+          targetResponse: "Bottled water is complimentary in every room.",
+          helpTip: "Nói rõ miễn phí ngay, khách sẽ không ngại dùng.",
+        },
+        {
+          guestPrompt: "What did 812 ask for?",
+          targetResponse: "Two bath towels and a razor. Amenities only.",
+          helpTip: "Bàn giao đúng món và đúng số lượng.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Could I have another towel?",
+          targetResponse: "Certainly, madam. I will bring a bath towel.",
+          helpTip: "Nhận việc rồi nói rõ mình mang gì tới.",
+        },
+        {
+          guestPrompt: "And something to shave with?",
+          targetResponse: "I can bring a disposable razor shortly.",
+          helpTip: "Nói được hay không được ngay, đừng để khách chờ câu trả lời.",
+        },
       ],
       reading: {
         text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.",
@@ -1278,6 +1551,32 @@ export const HK_WEEK_15: WeekContent = {
             "Certainly, sir. We can set up a rollaway bed in your room. Please note there is a small extra charge per night.",
           helpTip:
             "Stress the word 'certainly' at the start of your reply to sound warm and confident.",
+        },
+        {
+          guestPrompt: "My charger does not fit.",
+          targetResponse: "I can lend you a universal adapter.",
+          helpTip: "Đưa giải pháp ngay, đừng dừng ở lời xin lỗi.",
+        },
+        {
+          guestPrompt: "My shirt is very creased.",
+          targetResponse: "Would you like to borrow an iron?",
+          helpTip: "Mời mượn bằng câu hỏi thì khách dễ nhận lời.",
+        },
+        {
+          guestPrompt: "Anything to bring to 1102?",
+          targetResponse: "An iron and one adapter, please.",
+          helpTip: "Danh sách ngắn, đủ món, không thiếu món nào.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Could we have another bed?",
+          targetResponse: "Certainly, sir. We can set up a rollaway bed.",
+          helpTip: "Xác nhận làm được trước, chi tiết nói sau.",
+        },
+        {
+          guestPrompt: "Is there a fee for that?",
+          targetResponse: "The rollaway bed has an extra charge per night.",
+          helpTip: "Nói phụ phí trước khi kê giường, không nói sau.",
         },
       ],
       reading: {
@@ -1373,6 +1672,35 @@ export const HK_WEEK_15: WeekContent = {
             "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
           helpTip:
             "Let your tone rise gently on 'later' so it sounds like a genuine question, not a command.",
+        },
+        {
+          guestPrompt: "The sign is still up at noon.",
+          targetResponse: "We will make a courtesy call before checkout.",
+          helpTip: "Gọi nhắc là bước bắt buộc trước giờ trả phòng.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Nobody answered the phone.",
+          targetResponse: "I will leave a voicemail for the guest.",
+          helpTip: "Để lại lời nhắn để có dấu vết bàn giao.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "And if there is still no answer?",
+          targetResponse: "I will slip a note under the door.",
+          helpTip: "Không mở cửa. Ghi giấy là bước cuối cùng.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Room 1005 still has the sign.",
+          targetResponse: "The sign on the door says Do Not Disturb.",
+          helpTip: "Đọc đúng biển báo, đừng suy đoán ý khách.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Sorry, I forgot the sign.",
+          targetResponse: "Not at all, madam. Would now be convenient?",
+          helpTip: "Gỡ ngượng cho khách rồi mới hỏi giờ dọn.",
         },
       ],
       reading: {
@@ -3952,6 +4280,33 @@ export const SW_WEEK_19: WeekContent = {
           helpTip:
             "Link 'towel station' smoothly as one phrase — don't pause between the two words.",
         },
+        {
+          guestPrompt: "How do I open the locker?",
+          targetResponse: "This key card opens your locker, madam.",
+          helpTip: "Một thẻ mở nhiều thứ — nói rõ để khách không đi tìm chìa khác.",
+        },
+        {
+          guestPrompt: "Can I use the cabana too?",
+          targetResponse: "The same key card opens the cabana.",
+          helpTip: "Nhắc lại công dụng thứ hai của cùng một tấm thẻ.",
+        },
+        {
+          guestPrompt: "Did 305 take a cabana?",
+          targetResponse: "Yes. I gave them a key card.",
+          helpTip: "Bàn giao rõ ai đang giữ thẻ nào.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Where do I leave my things?",
+          targetResponse: "Your locker number is on this key card.",
+          helpTip: "Chỉ chỗ ghi số tủ, khách khỏi phải nhớ.",
+        },
+        {
+          guestPrompt: "Is cabana three free?",
+          targetResponse: "No. It is reserved until five.",
+          helpTip: "Trả lời kèm mốc giờ, đồng nghiệp khỏi hỏi lại.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "POOL AREA GUEST GUIDE\nTowel Station: Located at the pool entrance, open 7:00 AM - 7:00 PM\nLockers: Complimentary, use your room key card\nPrivate Cabanas: Reserve at least 2 hours in advance at the Pool Bar\nLost your key card? Please inform any pool attendant immediately.",
@@ -4049,6 +4404,32 @@ export const SW_WEEK_19: WeekContent = {
           helpTip:
             "Stress the words 'under 12' clearly so the guest understands the exact age policy.",
         },
+        {
+          guestPrompt: "Are there rules for the pool?",
+          targetResponse: "Our pool policy requires an adult with children.",
+          helpTip: "Gọi tên quy định, khách sẽ không nghĩ đó là ý riêng của bạn.",
+        },
+        {
+          guestPrompt: "He can swim on his own.",
+          targetResponse: "Please supervise your children closely near the pool.",
+          helpTip: "Nói việc cần làm, thay vì nói việc bị cấm.",
+        },
+        {
+          guestPrompt: "Can I swim in this shirt?",
+          targetResponse: "Proper swimwear is required in the pool area.",
+          helpTip: "Nêu yêu cầu chung, đừng nhận xét trang phục của khách.",
+        },
+        {
+          guestPrompt: "Is anyone watching the pool?",
+          targetResponse: "Our lifeguard is on duty until seven.",
+          helpTip: "Nói giờ trực cụ thể, khách mới thật sự yên tâm.",
+        },
+        {
+          guestPrompt: "Did you tell them the rule?",
+          targetResponse: "Yes. I explained the pool policy clearly.",
+          helpTip: "Xác nhận đã nói, và nói với ai.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.",
@@ -4145,6 +4526,33 @@ export const SW_WEEK_19: WeekContent = {
           helpTip:
             "Keep your pitch gentle and falling on 'I understand, sir' so the warning sounds caring, not commanding.",
         },
+        {
+          guestPrompt: "Is the beach open today?",
+          targetResponse: "We have issued a storm warning for this afternoon.",
+          helpTip: "Thông báo cảnh báo trước khi khách kịp hỏi tới.",
+        },
+        {
+          guestPrompt: "The water looks calm to me.",
+          targetResponse: "Strong currents can be dangerous today.",
+          helpTip: "Nêu mối nguy cụ thể, không nói chung chung.",
+        },
+        {
+          guestPrompt: "Should we raise the flag?",
+          targetResponse: "Yes. The current is strong this morning.",
+          helpTip: "Quyết định an toàn phải nói thành lời với đồng nghiệp.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Can we swim later today?",
+          targetResponse: "Not while the red flag is up, madam.",
+          helpTip: "Gắn lời từ chối vào dấu hiệu khách nhìn thấy được.",
+        },
+        {
+          guestPrompt: "Why is the beach closed?",
+          targetResponse: "The sea is too rough this afternoon.",
+          helpTip: "Nêu lý do thời tiết, không nêu quy định chung chung.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
         text: "RESORT SAFETY BULLETIN\nStatus: RED FLAG - Tropical Storm Approaching\nSea Condition: Strong currents and rough waves expected until 6:00 PM\nSwimming: Prohibited in the ocean; pool remains open\nGuests are advised to stay on the beach deck and avoid the shoreline.",
@@ -4240,6 +4648,33 @@ export const SW_WEEK_19: WeekContent = {
             "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
           helpTip:
             "Speak slowly and lower your pitch slightly — a calm voice reassures a guest who feels unwell.",
+        },
+        {
+          guestPrompt: "My leg suddenly hurts.",
+          targetResponse: "If you feel a cramp, please signal our lifeguard.",
+          helpTip: "Dạy khách cách gọi cứu hộ trước khi thật sự cần tới.",
+        },
+        {
+          guestPrompt: "I have been in the sun all day.",
+          targetResponse: "Heat exhaustion can happen quickly here.",
+          helpTip: "Cảnh báo sớm, đừng đợi khách ngã mới nói.",
+        },
+        {
+          guestPrompt: "How is the guest now?",
+          targetResponse: "Still dizzy. I moved them into the shade.",
+          helpTip: "Báo trạng thái hiện tại kèm việc mình đã làm.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Should I sit down?",
+          targetResponse: "Yes. Let us move you into the shade.",
+          helpTip: "Ra một chỉ dẫn ngắn và làm cùng khách.",
+        },
+        {
+          guestPrompt: "Do we need the first aid kit?",
+          targetResponse: "Yes. Bring water and the first aid kit.",
+          helpTip: "Yêu cầu cụ thể từng món, đừng nói chung là mang đồ tới.",
+          speakerRole: "colleague",
         },
       ],
       reading: {
