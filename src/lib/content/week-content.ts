@@ -7793,8 +7793,8 @@ export const HK_WEEK_37: WeekContent = {
     "Lost property",
     "Lost item log",
     "Pest control team",
-    "Guest privacy",
-    "Never touch",
+    "Service lift",
+    "Not possible",
     "Move you to another room",
     "Duty manager",
     "Report",
@@ -13733,9 +13733,9 @@ export const FB_WEEK_36: WeekContent = {
   weekTitleVi: "Sự cố khẩn cấp giữa giờ phục vụ",
   reviewWords: [
     "Safety",
-    "Wet floor",
-    "Hot plate",
-    "Food safety",
+    "Terrace area",
+    "Table policy",
+    "Hot dish",
     "Problem",
     "Fix",
     "Cracked",
@@ -16232,7 +16232,7 @@ export const HK_WEEK_32: WeekContent = {
     "Preferred time",
     "Feather pillow",
     "Room note",
-    "Guest privacy",
+    "Service lift",
     "Lost property",
   ],
   lessons: [
@@ -17903,12 +17903,12 @@ export const HK_WEEK_36: WeekContent = {
   reviewWords: [
     "Report",
     "Unattended",
-    "Wet floor sign",
-    "Never touch",
-    "Guest privacy",
+    "Service entrance",
+    "Not possible",
+    "Service lift",
     "Duty manager",
     "Engineering team",
-    "Do not mix",
+    "Wet floor sign",
   ],
   lessons: [
     {
@@ -20417,7 +20417,7 @@ const GR_WEEK_31: WeekContent = {
   weekTitleEn: "The Story You Are Allowed to Tell",
   weekTitleVi: "Câu chuyện bạn được phép kể",
   reviewWords: [
-    "House rule",
+    "Standard",
     "Guest privacy rule",
     "Concierge desk",
     "Confidential",

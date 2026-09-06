@@ -1432,7 +1432,7 @@ function week19(lx: Ctx): LessonContent[] {
       ],
       speaking: [
         sp(
-          "What is that alarm for?",
+          "What is that over there?",
           `That is the ${lo(r4)}, madam. Please do not touch it.`,
           "Chỉ rõ vị trí thiết bị an toàn cho khách — nhiều khách không để ý.",
         ),
@@ -1512,7 +1512,7 @@ function week19(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Can my friend come up too?",
-          `I am afraid our ${lo(r2)} allows two guests only.`,
+          `I am afraid our ${lo(r2)} does not allow that.`,
           "Viện dẫn quy định thay vì ý kiến cá nhân, khách sẽ không tranh luận với bạn.",
         ),
         sp(
@@ -1532,7 +1532,7 @@ function week19(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest asks about the rules. ${lx.staff} explains: "The ${lo(r3)} is outside, near the garden. Our ${lo(r2)} allows two guests only, madam."`,
+        `A guest asks about the rules. ${lx.staff} explains: "The ${lo(r3)} is outside, near the garden. Our ${lo(r2)} does not allow that, madam."`,
         [
           {
             q: "Khu vực hút thuốc ở đâu?",
@@ -1672,12 +1672,12 @@ function week20(lx: Ctx): LessonContent[] {
         sp(
           "They both sound fine to me.",
           `Both are excellent choices, sir.`,
-          "Khẳng định cả hai đều tốt để khách không sợ chọn sai.",
+          "Nêu quy định ngắn gọn trước, chi tiết để dành cho câu sau.",
         ),
         sp(
           "Are there rules about that?",
-          `The ${lo(pr1)} applies here too.`,
-          "Ôn tuần 19: nhắc nội quy bằng Please.",
+          `We keep to the ${lo(pr1)} here too.`,
+          "Ôn tuần 19: viện dẫn quy định của khách sạn, không phải ý mình.",
         ),
       ],
       reading: read(
@@ -2348,8 +2348,8 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "And what happened after that?",
-          `I ${lo(pe2)} it after that.`,
-          "Ôn tuần 21: động từ chia quá khứ.",
+          `The guest ${lo(pe2)} after that.`,
+          "Ôn tuần 21: chủ ngữ là khách, động từ ở quá khứ đơn.",
           "colleague",
         ),
       ],
@@ -2422,8 +2422,8 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did anyone deal with it?",
-          `Yes. I ${lo(pe3)} it yesterday.`,
-          "Ôn tuần 21: quá khứ đơn kèm mốc yesterday.",
+          `Yes. That was ${lo(pe3)} yesterday.`,
+          "Ôn tuần 21: thể bị động cho việc đã xong, kèm mốc yesterday.",
           "colleague",
         ),
       ],
@@ -2548,7 +2548,12 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
  *  recycling must read those, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
   const override = overrides[`${lx.code}-${week}`];
-  const lessons = override ? override.lessons : WEEK_META[week].build(lx);
+  // Đi qua đúng cùng một đường mà buildWeek đi: một bài riêng theo bộ phận
+  // có thể mang bộ headword khác bài khung, và lịch ôn phải đọc cái học viên
+  // THẬT SỰ gặp, không phải cái spine định dạy.
+  const lessons = override
+    ? override.lessons
+    : WEEK_META[week].build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l);
   return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
@@ -2706,16 +2711,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
   // không phải tên một vật — bài khung nhét nó vào ô danh từ và cho ra
   // "The do not mix is over there."
   HK_19_2: (lx) => {
-    const [, , , , r5, , , , r9] = lx.bank.rules;
+    const [, , , r4, r5, , , , r9] = lx.bank.rules;
     return lesson(lx, 19, 2, "The Store Room Is Not for Guests", "Kho đồ là khu vực nội bộ", {
       vocabulary: [
-        v(
-          "Do not mix",
-          "/duː nɒt mɪks/",
-          "Không được pha trộn",
-          "Please do not mix the cleaning liquids.",
-          "🧪",
-        ),
+        bw(r4, `The ${lo(r4)} is at the door, madam.`),
         bw(r5, `Do not touch the ${lo(r5)}, madam.`),
         bw(r9, `May I remind you of the ${lo(r9)}?`),
       ],
@@ -2911,6 +2910,238 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ],
       },
     );
+  },
+  // Ở spa, câu hỏi trước buổi trị liệu không phải thủ tục giấy tờ: chấn
+  // thương mới, thai kỳ, thuốc đang uống đều là thứ khiến liệu trình phải
+  // ĐỔI hoặc DỪNG. Bài khung dạy đánh vần tên khách — đúng cho lễ tân,
+  // nhưng ở đây kỹ thuật viên cần biết mình được quyết tới đâu.
+  SW_17_3: (lx) => {
+    const [, , d3, , d5, , , d8] = lx.bank.details;
+    return lesson(
+      lx,
+      17,
+      3,
+      "Some Answers Stop the Treatment",
+      "Có câu trả lời buộc phải dừng lại",
+      {
+        vocabulary: [
+          bw(d3, `Your ${lo(d3)} tells me what to avoid.`),
+          bw(d5, `The ${lo(d5)} changes the oil we use.`),
+          bw(d8, `Your ${lo(d8)} matters more than the plan.`),
+        ],
+        grammar: [
+          g(
+            "You are pregnant? Ok, we start.",
+            "I will ask my manager before we start.",
+            "Chủ ngữ + WILL + động từ nguyên thể. Mệnh đề 'before' đi sau, và động từ trong đó ở thì hiện tại.",
+            "I will ask my manager before we will start.",
+          ),
+          g(
+            "Where you have injury?",
+            "Where exactly is the injury, madam?",
+            "Câu hỏi WH cần đảo động từ 'to be' lên trước chủ ngữ, không giữ trật tự như câu kể.",
+            "Where exactly the injury is, madam?",
+          ),
+        ],
+        speaking: [
+          sp(
+            "Do you really need all of this?",
+            `Yes, madam. Your ${lo(d3)} tells me what to avoid.`,
+            "Nói rõ tờ phiếu dùng để làm gì thì khách trả lời thật hơn hẳn.",
+          ),
+          sp(
+            "I hurt my shoulder last week.",
+            "Thank you. I will ask my manager before we start.",
+            "Câu quan trọng nhất bài này. Chấn thương mới không phải thứ kỹ thuật viên tự quyết.",
+          ),
+          sp(
+            "I am four months pregnant.",
+            "Thank you for telling me. I cannot start until I ask.",
+            "Nói thẳng là chưa bắt đầu được, và lý do là đi hỏi — không phải từ chối khách.",
+          ),
+          sp(
+            "My skin burns with strong oil.",
+            `I understand. The ${lo(d5)} changes the oil we use.`,
+            "Thông tin khách vừa cho phải dẫn tới một thay đổi cụ thể, nếu không thì hỏi làm gì.",
+          ),
+          sp(
+            "This is a little too strong.",
+            `Of course. Your ${lo(d8)} matters more than the plan.`,
+            "Khách có quyền đổi ý giữa chừng. Đừng bảo vệ liệu trình đã ghi trên phiếu.",
+          ),
+          sp(
+            "Anything on her form I should know?",
+            "Yes. She has a shoulder injury.",
+            "Bàn giao thì nói đúng cái đã đọc được, không thêm suy đoán của mình.",
+            "colleague",
+          ),
+          sp(
+            "Can we go ahead with the deep tissue?",
+            "My manager says light pressure only today.",
+            "Trích lại quyết định của quản lý để cả hai người cùng làm đúng một việc.",
+            "colleague",
+          ),
+        ],
+        reading: read(
+          `Before a treatment, ${lx.staff} asks about injury, medicine and pregnancy. A guest says she is pregnant. ${lx.staff} does not say yes and does not say no: "I will ask my manager before we start." The manager chooses a lighter treatment, and the guest is happy. A therapist never makes this decision alone.`,
+          [
+            {
+              q: "Khi khách báo đang mang thai, kỹ thuật viên làm gì?",
+              options: [
+                "Hỏi quản lý trước khi bắt đầu",
+                "Từ chối khách và mời khách về",
+                "Vẫn làm liệu trình nhưng nhẹ tay hơn",
+              ],
+              correct: 0,
+              explanation:
+                "Bài đọc nói rõ: không gật, không lắc, đi hỏi. Quản lý mới là người chọn liệu trình thay thế.",
+            },
+            {
+              q: "Vì sao kỹ thuật viên không tự quyết?",
+              options: [
+                "Đây là quyết định an toàn, không phải sở thích của khách",
+                "Vì kỹ thuật viên không được phép nói chuyện với khách",
+                "Vì quản lý muốn tự tay kiểm tra mọi tờ phiếu",
+              ],
+              correct: 0,
+              explanation:
+                "Sở thích thì khách chọn. An toàn thì người có thẩm quyền chọn — đó là ranh giới của bài này.",
+            },
+          ],
+        ),
+        game: [
+          game(
+            "I take medicine for my heart.",
+            "Thank you. I will ask my manager before we start.",
+            "Ok, no problem, we start now.",
+            "That is fine, madam. Heart medicine is not a problem.",
+            undefined,
+            "Câu thứ ba lịch sự và nguy hiểm nhất: bạn vừa xác nhận một điều thuộc chuyên môn y tế mà mình không có.",
+          ),
+          game(
+            "Can you press much harder on my back?",
+            "Of course, madam. Please tell me at once if it hurts.",
+            "Yes, I press very strong for you.",
+            "Certainly, madam. I will press as hard as you like.",
+            undefined,
+            "Câu thứ ba nghe rất chiều khách, và nó bỏ mất quyền dừng tay của chính bạn.",
+          ),
+        ],
+      },
+    );
+  },
+
+  // Concierge giới thiệu thứ nằm NGOÀI khách sạn: bàn ăn, tour, xe. Bài
+  // khung dạy khuyên kèm lý do — đúng, nhưng thiếu ranh giới khiến lời
+  // khuyên hoá lời hứa: khách nghe xong là tưởng đã có bàn, tới nơi mới
+  // biết chưa ai gọi. Bài này tách GỢI Ý khỏi ĐẶT CHỖ.
+  GR_20_2: (lx) => {
+    const [, , , , , , , c8, c9, c10] = lx.bank.choices;
+    return lesson(lx, 20, 2, "A Suggestion Is Not a Booking", "Gợi ý không phải là đã đặt chỗ", {
+      vocabulary: [
+        bw(c8, `The ${lo(c8)} is quiet in the evening.`),
+        bw(c9, `I have a ${lo(c9)} for you.`),
+        bw(c10, `That would be a ${lo(c10)}, madam.`),
+      ],
+      grammar: [
+        g(
+          "I book table for you now.",
+          "Shall I call the restaurant for you?",
+          "'Shall I…?' là mẫu xin phép làm giúp: bạn đề nghị, khách vẫn là người quyết.",
+          "Shall I to call the restaurant for you?",
+        ),
+        g(
+          "Sure, they have table for you.",
+          "I will call and confirm the table.",
+          "Đừng khẳng định thay nhà hàng. Chủ ngữ + WILL, rồi hai động từ nối bằng 'and'.",
+          "I will call and confirming the table.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "We would like somewhere calm tonight.",
+          `The ${lo(c8)} is quiet in the evening.`,
+          "Khuyên thì phải kèm một lý do cụ thể, nếu không khách chẳng có gì để cân nhắc.",
+        ),
+        sp(
+          "Could you book it for me?",
+          "Of course. Shall I call the restaurant now?",
+          "Đề nghị làm giúp, đừng tự làm rồi báo sau. Khách vẫn là người quyết.",
+        ),
+        sp(
+          "So the table is ready for us?",
+          "Not yet, madam. I will call and confirm.",
+          "Câu quan trọng nhất bài này: chưa gọi thì chưa có bàn, nói thẳng ra.",
+        ),
+        sp(
+          "What if they are full tonight?",
+          `Then I have a ${lo(c9)} for you.`,
+          "Có phương án hai trước khi khách kịp lo — đó là khác biệt của một concierge.",
+        ),
+        sp(
+          "Is that place good for a birthday?",
+          `Yes, madam. That would be a ${lo(c10)}.`,
+          "Khớp gợi ý với dịp của khách thì lời khuyên mới có sức nặng.",
+        ),
+        sp(
+          "Did the guest ask for a table?",
+          "Yes. I am calling the restaurant now.",
+          "Bàn giao ngắn: việc đang tới đâu, không kể lại cả câu chuyện.",
+          "colleague",
+        ),
+        sp(
+          "What do I tell them at the door?",
+          "Tell them the table is not confirmed.",
+          "Đồng nghiệp ở cửa cần trạng thái thật, không phải trạng thái mình mong muốn.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A guest asks about dinner. ${lx.staff} suggests a restaurant and gives a reason. Then the guest asks for a table. ${lx.staff} does not promise one: "Not yet, madam. I will call and confirm." The restaurant is full tonight, so ${lx.staff} offers a second one, and the guest agrees. Nothing is promised before the phone call.`,
+        [
+          {
+            q: "Khách hỏi bàn đã có chưa, câu trả lời đúng là gì?",
+            options: [
+              "Not yet, madam. I will call and confirm.",
+              "Yes, madam. The table is ready for you.",
+              "I book already for you, madam.",
+            ],
+            correct: 0,
+            explanation:
+              "Chưa gọi thì chưa có bàn. Nói đúng trạng thái hiện tại, rồi nói mình sắp làm gì.",
+          },
+          {
+            q: "Vì sao không hứa trước khi gọi điện?",
+            options: [
+              "Nhà hàng có thể hết bàn, lời hứa sẽ vỡ ngay tại chỗ",
+              "Vì khách sạn cấm nhân viên gọi điện ra bên ngoài",
+              "Vì gọi điện làm mất thời gian chờ của khách",
+            ],
+            correct: 0,
+            explanation:
+              "Bàn nằm ở nhà hàng khác, không nằm trong tay bạn. Bên mất mặt khi vỡ hẹn lại là khách sạn.",
+          },
+        ],
+      ),
+      game: [
+        game(
+          "My friend said you could get us a table.",
+          "I will call them now and confirm, madam.",
+          "Yes yes, no problem, table have.",
+          "Of course, madam. Your table is booked already.",
+          undefined,
+          "Câu thứ ba lịch sự và sai. Khách sẽ tới nhà hàng, không có bàn, và bên sai hẹn là khách sạn.",
+        ),
+        game(
+          "Is the tour price the same as last year?",
+          "I will check the price and call you back.",
+          "Same same, madam, no change.",
+          "Yes, madam. The price is exactly the same.",
+          undefined,
+          "Giá tour do đối tác đặt, không phải khách sạn. Đoán đúng chín lần rồi sai một lần là đủ mất khách.",
+        ),
+      ],
+    });
   },
 };
 
