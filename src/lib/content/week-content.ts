@@ -1184,7 +1184,7 @@ export const HK_WEEK_15: WeekContent = {
         {
           guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
           targetResponse:
-            "Certainly, sir. I will send two extra towels and a razor. They will arrive right away.",
+            "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
           helpTip:
             "Practice linking 'send up' smoothly — connect the 'd' straight into the 'u' sound.",
         },
@@ -1213,7 +1213,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "Could you send up some towels and a razor, please?",
           options: [
             {
-              text: "Certainly, sir. I will send two extra towels and a razor. They will arrive right away.",
+              text: "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
               correct: true,
             },
             { text: "What do you want them for?", correct: false },
@@ -3933,7 +3933,7 @@ export const SW_WEEK_19: WeekContent = {
       grammar: [
         {
           rude: "Towels are over there.",
-          polite: "Fresh towels are at the station past the pool bar. Please help yourself.",
+          polite: "Fresh towels are at the towel station past the pool bar. Please help yourself.",
           nearMiss: "Fresh towels is at the station past the pool bar. Please help yourself.",
           rule: "Chỉ chỗ xong thêm 'Please help yourself' để lời chỉ dẫn thành lời mời.",
         },
@@ -3948,7 +3948,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           guestPrompt: "Where can I get a towel, and do you have private cabanas?",
           targetResponse:
-            "Of course! Fresh towels are at the station over there. I would be happy to show you a private cabana.",
+            "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
           helpTip:
             "Link 'towel station' smoothly as one phrase — don't pause between the two words.",
         },
@@ -3983,7 +3983,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "Is there somewhere to get towels and a shaded seat?",
           options: [
             {
-              text: "Of course! Fresh towels are at the station over there. I would be happy to show you a private cabana.",
+              text: "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
               correct: true,
             },
             { text: "Towels are over there, and cabanas are full today.", correct: false },
