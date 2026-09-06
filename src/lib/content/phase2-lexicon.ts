@@ -340,9 +340,9 @@ const FO_BANK: P2Bank = {
     { word: "Review", phonetic: "/rɪˈvjuː/", definition: "Điểm lại, xem lại", icon: "📋" },
     { word: "Log book", phonetic: "/lɒɡ bʊk/", definition: "Sổ nhật ký ca", icon: "📓" },
     {
-      word: "Guest satisfied",
-      phonetic: "/ɡest ˈsætɪsfaɪd/",
-      definition: "Khách hài lòng",
+      word: "Night report",
+      phonetic: "/naɪt rɪˈpɔːt/",
+      definition: "Báo cáo ca đêm",
       icon: "😊",
     },
   ],
@@ -608,7 +608,7 @@ const FB_BANK: P2Bank = {
       definition: "Phục vụ nhanh hơn",
       icon: "⚡",
     },
-    { word: "Stock", phonetic: "/stɒk/", definition: "Hàng tồn", icon: "📦" },
+    { word: "Kitchen note", phonetic: "/ˈkɪtʃɪn nəʊt/", definition: "Ghi chú của bếp", icon: "📦" },
     {
       word: "Well managed",
       phonetic: "/wel ˈmænɪdʒd/",
@@ -628,7 +628,7 @@ const FB_BANK: P2Bank = {
       definition: "Quầy đã dọn sạch",
       icon: "✨",
     },
-    { word: "Shift end", phonetic: "/ʃɪft end/", definition: "Kết thúc ca", icon: "🏁" },
+    { word: "Till count", phonetic: "/tɪl kaʊnt/", definition: "Kiểm quỹ cuối ca", icon: "🏁" },
   ],
 };
 
@@ -915,7 +915,7 @@ const HK_BANK: P2Bank = {
     { word: "Restock", phonetic: "/ˌriːˈstɒk/", definition: "Bổ sung vật tư", icon: "🧴" },
     { word: "Room check", phonetic: "/ruːm tʃek/", definition: "Lượt kiểm tra phòng", icon: "🔑" },
     { word: "Well done", phonetic: "/wel dʌn/", definition: "Làm tốt", icon: "👍" },
-    { word: "Trolley clean", phonetic: "/ˈtrɒli kliːn/", definition: "Xe đẩy đã sạch", icon: "🛒" },
+    { word: "Handover note", phonetic: "/ˈhændəʊvə nəʊt/", definition: "Ghi chú bàn giao", icon: "🛒" },
     { word: "Wrap up", phonetic: "/ræp ʌp/", definition: "Khép lại công việc", icon: "✅" },
     { word: "Room count", phonetic: "/ruːm kaʊnt/", definition: "Số phòng đã làm", icon: "🔢" },
     {
@@ -1204,7 +1204,7 @@ const SW_BANK: P2Bank = {
       definition: "Sớm hơn dự kiến",
       icon: "🔁",
     },
-    { word: "Linen washed", phonetic: "/ˈlɪnɪn wɒʃt/", definition: "Đồ vải đã giặt", icon: "🧺" },
+    { word: "Linen count", phonetic: "/ˈlɪnɪn kaʊnt/", definition: "Số đồ vải đã giặt", icon: "🧺" },
     {
       word: "Relax the guest",
       phonetic: "/rɪˈlæks ðə ɡest/",
@@ -1219,14 +1219,14 @@ const SW_BANK: P2Bank = {
       icon: "🙏",
     },
     {
-      word: "Prepared for tomorrow",
-      phonetic: "/prɪˈpeəd fə təˈmɒrəʊ/",
-      definition: "Đã chuẩn bị cho mai",
+      word: "Next booking",
+      phonetic: "/nekst ˈbʊkɪŋ/",
+      definition: "Lượt khách kế tiếp",
       icon: "📅",
     },
     { word: "End", phonetic: "/end/", definition: "Kết thúc", icon: "🌙" },
-    { word: "Peaceful day", phonetic: "/ˈpiːsfl deɪ/", definition: "Ngày yên bình", icon: "🕊️" },
-    { word: "Soft music", phonetic: "/sɒft ˈmjuːzɪk/", definition: "Nhạc nhẹ", icon: "🎵" },
+    { word: "Treatment count", phonetic: "/ˈtriːtmənt kaʊnt/", definition: "Số lượt trị liệu", icon: "🕊️" },
+    { word: "Room reset", phonetic: "/ruːm ˌriːˈset/", definition: "Dọn lại phòng trị liệu", icon: "🎵" },
   ],
 };
 
@@ -1601,9 +1601,9 @@ const GR_BANK: P2Bank = {
       icon: "🤗",
     },
     {
-      word: "Guest delighted",
-      phonetic: "/ɡest dɪˈlaɪtɪd/",
-      definition: "Khách rất vui",
+      word: "Lobby check",
+      phonetic: "/ˈlɒbi tʃek/",
+      definition: "Lượt kiểm tra sảnh",
       icon: "😍",
     },
   ],
@@ -1918,7 +1918,7 @@ const BO_BANK: P2Bank = {
       icon: "📄",
     },
     { word: "Do better", phonetic: "/duː ˈbetə/", definition: "Làm tốt hơn", icon: "💡" },
-    { word: "Good result", phonetic: "/ɡʊd rɪˈzʌlt/", definition: "Kết quả tốt", icon: "📈" },
+    { word: "Team feedback", phonetic: "/tiːm ˈfiːdbæk/", definition: "Phản hồi của nhóm", icon: "📈" },
     {
       word: "Filed properly",
       phonetic: "/faɪld ˈprɒpəli/",
@@ -1933,7 +1933,7 @@ const BO_BANK: P2Bank = {
       definition: "Kiểm soát chi phí",
       icon: "📉",
     },
-    { word: "Files closed", phonetic: "/faɪlz kləʊzd/", definition: "Hồ sơ đã đóng", icon: "🗄️" },
+    { word: "File closing", phonetic: "/faɪl ˈkləʊzɪŋ/", definition: "Việc đóng hồ sơ", icon: "🗄️" },
   ],
 };
 

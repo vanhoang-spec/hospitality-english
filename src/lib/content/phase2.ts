@@ -2317,9 +2317,9 @@ function week22(lx: Ctx): LessonContent[] {
     lesson(lx, 22, 2, "Details, Paperwork & Payment", "Ghép hỏi thông tin với giấy tờ", {
       vocabulary: [
         v("Complete", "/kəmˈpliːt/", "Hoàn tất", "The form is complete.", "✅"),
-        bw(w3, `We follow the hotel ${lo(w3)}.`),
+        bw(w3, `I noted the ${lo(w3)} in the log.`),
         bw(w5, `The ${lo(w5)} was positive.`),
-        bw(w9, `${w9.word} was noted today.`),
+        bw(w9, `The ${lo(w9)} was noted today.`),
       ],
       grammar: [
         g(
@@ -2392,8 +2392,8 @@ function week22(lx: Ctx): LessonContent[] {
       vocabulary: [
         v("Overall", "/ˌəʊvərˈɔːl/", "Nhìn chung", "Overall, the day went well.", "🌐"),
         bw(w4, `We can always ${lo(w4)}.`),
-        bw(w6, `That was ${lo(w6)} of the team.`),
-        bw(w10, `${w10.word} at the end of the day.`),
+        bw(w6, `The whole shift was ${lo(w6)}.`),
+        bw(w10, `The last thing is the ${lo(w10)}.`),
       ],
       grammar: [
         g(
@@ -2404,9 +2404,9 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         g(
           `Team do well yesterday.`,
-          `That was ${lo(w6)} of the team.`,
+          `The whole shift was ${lo(w6)}.`,
           "Ôn tuần 21: câu bị động quá khứ đơn giản.",
-          `That was ${lo(w6)} of team.`,
+          `The whole shift were ${lo(w6)}.`,
         ),
       ],
       speaking: [
@@ -2455,7 +2455,7 @@ function week22(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 22, 4, "Full Shift Report", "Báo cáo trọn ca làm", {
-      vocabulary: [bw(w7, `The ${lo(w7)} starts at two.`), bw(w8, `Let me ${lo(w8)} the day.`)],
+      vocabulary: [bw(w7, `Let me tell you about the ${lo(w7)}.`), bw(w8, `Let me ${lo(w8)} the day.`)],
       grammar: [
         g(
           `Today all good, no problem.`,
@@ -2478,7 +2478,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Anything for the next team?",
-          `Let me ${lo(w8)}. The ${lo(w7)} starts at two.`,
+          `Let me ${lo(w8)}. I will tell you about the ${lo(w7)}.`,
           "Tóm tắt rồi bàn giao mốc thời gian cụ thể cho ca sau.",
         ),
         sp(
@@ -2489,7 +2489,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `At the end of week, ${lx.staff} reports to the manager: "Today went well, with no problems. Let me ${lo(w8)} briefly. The ${lo(w7)} starts at two o'clock."`,
+        `At the end of week, ${lx.staff} reports to the manager: "Today went well, with no problems. Let me ${lo(w8)} briefly. I will tell you about the ${lo(w7)}."`,
         [
           {
             q: "Ca làm hôm nay thế nào?",
