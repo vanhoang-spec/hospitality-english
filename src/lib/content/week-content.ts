@@ -2331,7 +2331,7 @@ export const GR_WEEK_27: WeekContent = {
   // Pulled forward from Phases 0-3 so this week joins the spaced-recycling
   // system instead of standing outside it.
   reviewWords: [
-    "Lounge access",
+    "Lounge hours",
     "Afternoon tea",
     "Evening cocktail hour",
     "Meeting room",

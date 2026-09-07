@@ -251,6 +251,9 @@ export function buildPaper(dep: string, week: string): Question[] {
   // that CLOSES at eight also FINISHES at eight; a lounge that is READY is
   // also FREE. Four reviews hit pairs from this list.
   const SYNONYM: Record<string, string> = {
+    offer: "arrange",
+    offers: "arrange",
+    arranges: "arrange",
     finish: "close",
     finishes: "close",
     closes: "close",
@@ -603,6 +606,11 @@ export function buildPaper(dep: string, week: string): Question[] {
       /\bis ready\b/i,
       /\bhave a good\b/i,
       /\benjoy your\b/i,
+      // A later batch added "We could arrange X", and an audit measuring
+      // 1,800 listening questions found it answering an open question two
+      // different right ways. The comment above this list predicted exactly
+      // that: a list by name reopens every time content is added.
+      /\bwe (could|can) (also )?(arrange|offer)\b/i,
       // "What do you do first?" has as many right answers as the department
       // has opening jobs, and three weeks of this phase each teach a different
       // one. Same for the every-day and end-of-shift frames beside it.

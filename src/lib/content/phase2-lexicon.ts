@@ -182,7 +182,12 @@ const FO_BANK: P2Bank = {
       definition: "Số đêm lưu trú",
       icon: "🌙",
     },
-    { word: "Spelling", phonetic: "/ˈspelɪŋ/", definition: "Cách viết chính tả", icon: "🔤" },
+    {
+      word: "Special request",
+      phonetic: "/ˈspeʃl rɪˈkwest/",
+      definition: "Yêu cầu riêng của khách",
+      icon: "📝",
+    },
     { word: "Home address", phonetic: "/həʊm əˈdres/", definition: "Địa chỉ nhà", icon: "✏️" },
     {
       word: "Passport number",
@@ -224,9 +229,9 @@ const FO_BANK: P2Bank = {
     },
     { word: "In order", phonetic: "/ɪn ˈɔːdə/", definition: "Đúng thủ tục, hợp lệ", icon: "👌" },
     {
-      word: "Copy the form",
-      phonetic: "/ˈkɒpi ðə fɔːm/",
-      definition: "Sao lại tờ khai",
+      word: "Sign your name",
+      phonetic: "/saɪn jɔː neɪm/",
+      definition: "Ký tên của quý khách",
       icon: "🖨️",
     },
   ],
@@ -295,7 +300,12 @@ const FO_BANK: P2Bank = {
       definition: "Hướng nhìn ra vườn",
       icon: "🤷",
     },
-    { word: "Best option", phonetic: "/best ˈɒpʃn/", definition: "Phương án tốt nhất", icon: "👍" },
+    {
+      word: "Quiet option",
+      phonetic: "/ˈkwaɪət ˈɒpʃn/",
+      definition: "Lựa chọn yên tĩnh",
+      icon: "🤫",
+    },
     { word: "Ground floor", phonetic: "/ɡraʊnd flɔː/", definition: "Tầng trệt", icon: "🔇" },
     // Slot 9 is what the staff member actually recommends ("I would suggest
     // the {w}, because it is popular."), so a word meaning "a choice" made
@@ -879,8 +889,10 @@ const HK_BANK: P2Bank = {
       icon: "💚",
     },
     // Slot 7 is "The {w} is a good match." — a recommendable option, the way
-    // the other five departments hold "Best option" / "Sharing plate" /
-    // "Popular choice". "Environment" is a topic, not something to recommend.
+    // the other five departments hold "Quiet option" / "Sharing plate" /
+    // "Popular choice". "Environment" is a topic, not something to recommend,
+    // and neither was Front Office's old "Best option": an evaluation of a
+    // choice cannot BE the choice, so the sentence said nothing.
     {
       word: "Eco option",
       phonetic: "/ˈiːkəʊ ˈɒpʃn/",
@@ -984,8 +996,8 @@ const SW_BANK: P2Bank = {
       icon: "❓",
     },
     {
-      word: "Serve tea after",
-      phonetic: "/sɜːv tiː ˈɑːftə/",
+      word: "Serve tea afterwards",
+      phonetic: "/sɜːv tiː ˈɑːftəwədz/",
       definition: "Mời trà sau liệu trình",
       icon: "🍵",
     },
@@ -1335,9 +1347,9 @@ const GR_BANK: P2Bank = {
       icon: "👋",
     },
     {
-      word: "Personal touch",
-      phonetic: "/ˈpɜːsənl tʌtʃ/",
-      definition: "Dấu ấn cá nhân",
+      word: "Welcome routine",
+      phonetic: "/ˈwelkəm ruːˈtiːn/",
+      definition: "Quy trình đón khách",
       icon: "✨",
     },
     {
@@ -1520,9 +1532,9 @@ const GR_BANK: P2Bank = {
   ],
   rules: [
     {
-      word: "Lounge access",
-      phonetic: "/laʊndʒ ˈækses/",
-      definition: "Quyền vào phòng chờ",
+      word: "Lounge hours",
+      phonetic: "/laʊndʒ ˈaʊəz/",
+      definition: "Giờ mở phòng chờ",
       icon: "🔑",
     },
     {
