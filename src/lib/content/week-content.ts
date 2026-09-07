@@ -478,7 +478,7 @@ export const FO_WEEK_17: WeekContent = {
           word: "Pre-authorisation",
           phonetic: "/ˌpriːˌɔːθəraɪˈzeɪʃən/",
           definition: "Khoảng tạm giữ/Đặt cọc thẻ",
-          context: "We require a credit card pre-authorization.",
+          context: "We require a credit card pre-authorisation.",
           icon: "💳",
         },
         {
@@ -517,8 +517,8 @@ export const FO_WEEK_17: WeekContent = {
       grammar: [
         {
           rude: "Give me your credit card.",
-          polite: "May I secure a pre-authorization on your credit card?",
-          nearMiss: "May I secure a pre-authorization at your credit card?",
+          polite: "May I secure a pre-authorisation on your credit card?",
+          nearMiss: "May I secure a pre-authorisation at your credit card?",
           rule: "Dùng 'May I secure…?' thay vì đòi thẻ của khách.",
         },
         {
@@ -912,7 +912,8 @@ export const FB_WEEK_15: WeekContent = {
               "Breakfast paid separately",
             ],
             correct: 0,
-            explanation: '"IN-HOUSE GUEST LIST - BREAKFAST"',
+            explanation:
+              '"B&B Included" đứng đối lại với "Room Only (No Breakfast)" ở dòng dưới: B&B là phòng có kèm bữa sáng.',
           },
         ],
       },
@@ -1473,7 +1474,7 @@ export const HK_WEEK_15: WeekContent = {
             q: "Khi gõ cửa, nhân viên phải nói gì?",
             options: ["Room service", "Housekeeping", "Reception"],
             correct: 1,
-            explanation: '"HOUSEKEEPING SOP - KNOCK AND ANNOUNCE:"',
+            explanation: `"Knock on the door twice and say 'Housekeeping' in a clear voice."`,
           },
           {
             q: "Sau khi gõ cửa, phải chờ phản hồi bao lâu?",
@@ -4907,7 +4908,7 @@ export const SW_WEEK_19: WeekContent = {
             q: "Ca nặng thì gọi số máy lẻ nào?",
             options: ["Ext. 100", "Ext. 115", "Ext. 911"],
             correct: 1,
-            explanation: '"Always call the on-duty nurse for serious cases: Ext."',
+            explanation: '"Always call the on-duty nurse for serious cases: Ext. 115"',
           },
         ],
       },

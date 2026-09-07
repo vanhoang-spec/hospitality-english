@@ -542,10 +542,10 @@ function week16(lx: Ctx): LessonContent[] {
           `${Wt(o8)} is free of you, madam.`,
         ),
         g(
-          `Price include breakfast.`,
-          `The price includes breakfast, sir.`,
+          `Price include ${lo(o10)}.`,
+          `The price includes ${lo(o10)}, sir.`,
           "Chủ ngữ số ít 'the price' đi với 'includes' có -s.",
-          `The price is includes breakfast, sir.`,
+          `The price is includes ${lo(o10)}, sir.`,
         ),
       ],
       speaking: [
@@ -556,7 +556,7 @@ function week16(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What exactly does it include?",
-          `The price includes ${lo(o10)} and service.`,
+          `The price includes ${lo(o10)}, sir.`,
           "Liệt kê tối đa hai thứ trong một câu; nhiều hơn thì tách câu.",
         ),
         sp(
@@ -1026,7 +1026,7 @@ function week17(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me read the ${lo(d8)} back to you." Nothing is wrong. The name has seven letters.`,
+        `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me read the ${lo(d8)} back to you." Nothing is wrong. The name has six letters.`,
         [
           {
             q: "Khi tên khách khó nghe, nên làm gì?",
@@ -1036,9 +1036,9 @@ function week17(lx: Ctx): LessonContent[] {
           },
           {
             q: "Tên khách có mấy chữ cái?",
-            options: ["Bảy", "Năm", "Mười"],
+            options: ["Sáu", "Năm", "Tám"],
             correct: 0,
-            explanation: '"The name has seven letters."',
+            explanation: '"The name has six letters."',
           },
         ],
       ),
