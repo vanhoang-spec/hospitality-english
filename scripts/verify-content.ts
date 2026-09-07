@@ -921,6 +921,53 @@ if (legacyGameDupes.length) {
     errors.push(
       `${honKeyOnly} game rounds put "sir"/"madam" only in the correct answer, up from ${HONORIFIC_KEY_MAX} — tapping the polite bubble must not be a strategy`,
     );
+  // The reading block had the mirror-image problem the arcade had: the second
+  // question of nearly every generated lesson was a Vietnamese maxim — "Vì sao
+  // nên nói rõ về phí ngay từ đầu?" — whose distractors are absurd in
+  // Vietnamese, so it was answerable without touching the English passage at
+  // all. Three auditors classified their department by hand and found 36-39%
+  // of questions in that shape, and the checkpoint's reading block draws from
+  // exactly this pool, so its 50% floor could be cleared without reading.
+  //
+  // A machine cannot mark a question "answerable from common sense". What it
+  // CAN check is whether the explanation quotes the passage: an answer the
+  // learner is meant to find in the text has a sentence in the text to point
+  // at, and a maxim has none. Both numbers are ratchets — Phase 2 sits at 0
+  // unexplained and 67% anchored; the older phases have not been through this.
+  const READING_NO_EXPLANATION_MAX = 322;
+  const READING_ANCHORED_MIN = 485;
+  const rnorm = (t: string) =>
+    t
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let rNoExp = 0;
+  let rAnchored = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading?.questions ?? []) {
+        const e = (q as { explanation?: string }).explanation;
+        if (!e) {
+          rNoExp++;
+          continue;
+        }
+        const quotes = [...e.matchAll(/"([^"]{6,})"/g)].map((m) => m[1]!);
+        if (quotes.length && quotes.every((x) => rnorm(lesson.reading.text).includes(rnorm(x))))
+          rAnchored++;
+      }
+  console.log(
+    `Reading questions — ${rAnchored} anchored in their own passage, ${rNoExp} with no explanation`,
+  );
+  if (rNoExp > READING_NO_EXPLANATION_MAX)
+    errors.push(
+      `${rNoExp} reading questions have no explanation, up from ${READING_NO_EXPLANATION_MAX} — a wrong answer teaches nothing without one`,
+    );
+  if (rAnchored < READING_ANCHORED_MIN)
+    errors.push(
+      `only ${rAnchored} reading questions quote their own passage, down from ${READING_ANCHORED_MIN} — a question whose answer is not in the text is not a reading question`,
+    );
+
   if (noExplanation > NO_EXPLANATION_MAX)
     errors.push(
       `${noExplanation} game rounds have no explanation, up from ${NO_EXPLANATION_MAX} — a learner who taps the correct-English-wrong-job bubble is told nothing`,
