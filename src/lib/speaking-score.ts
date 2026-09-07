@@ -500,7 +500,8 @@ function valueTokenSequence(toks: string[]): string[] {
  *
  *  A dropped preposition, pronoun or auxiliary changes the structure the
  *  lesson is teaching. A dropped article is a slip. */
-const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "your", "our"]);
+const ARTICLES = new Set<string>(["a", "an", "the"]);
+const FORGIVABLE_FUNCTION_TOKENS = new Set<string>([...ARTICLES, "my", "your", "our"]);
 
 /** Noise a microphone adds and no lesson ever teaches. Exempt from the
  *  inserted-word check below, along with articles and honorifics. */
@@ -871,7 +872,28 @@ export function utterancePassed(
   }
   // A missing preposition, pronoun or auxiliary is never covered by the
   // allowance — only a missing article is.
-  const unforgivable = missingFunction.filter((t) => !FORGIVABLE_FUNCTION_TOKENS.has(t));
+  //
+  // But "only an article" turned into "every article, free". 674 of the 761
+  // Phase 2 targets that carry an article carry exactly ONE, so the allowance
+  // handed that one away every time: a learner who drops every article passed
+  // 55.3% of those items and 88.3% of five-item oral sittings — while the
+  // grammar block two screens away prints "Please keep your handbag in safety
+  // box." as the WRONG answer, and the course calls the missing article the
+  // single L1 error it exists to unlearn. Two graders on the same course
+  // cannot disagree about its own central point.
+  //
+  // The rule the file already applies to function words in general settles it:
+  // a target carrying exactly one of them means that one IS the lesson
+  // (see functionAllowance). So an article is forgiven only where the target
+  // has another to prove the learner produces them — and only from Phase 2,
+  // where articles have been taught outright and the pass threshold has risen.
+  // Weeks 1-14 keep the old allowance untouched: A1 learners, and twelve
+  // rounds of tuning behind them.
+  const articlesRequired = funcNeeded.filter((t) => ARTICLES.has(t)).length;
+  const articleIsTheLesson = Number(sourceWeek) >= 15 && articlesRequired < 2;
+  const unforgivable = missingFunction.filter(
+    (t) => !FORGIVABLE_FUNCTION_TOKENS.has(t) || (articleIsTheLesson && ARTICLES.has(t)),
+  );
   // WORDS THAT WERE NOT IN THE MODEL.
   //
   // Both `accuracy` and `orderRatio` divide by the TARGET, so nothing the

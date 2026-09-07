@@ -180,7 +180,7 @@ function OralStage({
   onFinish,
 }: {
   items: OralItem[];
-  onFinish: (results: { item: OralItem; passed: boolean; said: string }[]) => void;
+  onFinish: (results: { item: OralItem; passed: boolean; said: string; typed: boolean }[]) => void;
 }) {
   const [idx, setIdx] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -191,12 +191,14 @@ function OralStage({
     typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
   );
   const [note, setNote] = useState<string | null>(null);
-  const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string }[]>([]);
+  const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string; typed: boolean }[]>(
+    [],
+  );
   const recogRef = useRef<SpeechRecognition | null>(null);
   const finalRef = useRef("");
   const item = items[idx];
 
-  function commit(spoken: string) {
+  function commit(spoken: string, wasTyped = false) {
     const verdict = utterancePassed(
       spoken,
       item.target,
@@ -206,7 +208,7 @@ function OralStage({
     );
     resultsRef.current = [
       ...resultsRef.current,
-      { item, passed: verdict.passed, said: spoken.trim() },
+      { item, passed: verdict.passed, said: spoken.trim(), typed: wasTyped },
     ];
     if (idx + 1 >= items.length) {
       onFinish(resultsRef.current);
@@ -354,7 +356,7 @@ function OralStage({
               className="w-full border border-primary/30 bg-background p-3 text-sm outline-none focus:border-primary"
             />
             <button
-              onClick={() => typed.trim() && commit(typed)}
+              onClick={() => typed.trim() && commit(typed, true)}
               className="mt-3 bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground"
             >
               Gửi câu trả lời →
@@ -398,7 +400,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const oral = useMemo(() => (week ? buildOral(dep, week) : []), [dep, week, attempt]);
   const [oralResults, setOralResults] = useState<
-    { item: OralItem; passed: boolean; said: string }[]
+    { item: OralItem; passed: boolean; said: string; typed: boolean }[]
   >([]);
   const [idx, setIdx] = useState(0);
   // Answers are held until the end — a test that reveals each answer as
@@ -488,7 +490,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   function finish(
     pct: number,
     tallied: ConstructTally[],
-    results: { item: OralItem; passed: boolean; said: string }[],
+    results: { item: OralItem; passed: boolean; said: string; typed: boolean }[],
   ) {
     const oralPassed = results.filter((r) => r.passed).length;
     const writtenOk = checkpointPassed(pct, tallied);
@@ -673,6 +675,12 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                   {oralPassed}/{oralResults.length} · cần {oralPassMin(oralResults.length)}
                 </span>
               </div>
+              {oralResults.every((r) => r.typed) && (
+                <p className="mt-2 text-[11px] leading-relaxed text-foreground/55">
+                  Phần này bạn đã GÕ, không phải nói — trình duyệt không nhận được micro. Kết quả
+                  vẫn tính, nhưng hãy luyện lại bằng giọng ở mục Nói khi có thiết bị nhận micro.
+                </p>
+              )}
               {/* Targets are revealed only here — during the oral stage they
                   are hidden so the item measures speech, not reading. */}
               <div className="mt-4 space-y-3">
@@ -684,7 +692,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                     <div className="mt-1 text-foreground/75">
                       Câu mẫu: <span className="text-foreground">{r.item.target}</span>
                     </div>
-                    {r.said && <div className="mt-0.5 text-foreground/50">Bạn nói: "{r.said}"</div>}
+                    {r.said && (
+                      <div className="mt-0.5 text-foreground/50">
+                        {r.typed ? "Bạn gõ" : "Bạn nói"}: "{r.said}"
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

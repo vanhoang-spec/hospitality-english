@@ -121,7 +121,14 @@ export function buildPaper(dep: string, week: string): Question[] {
   // on the review.
   const reviewFirst = shuffle(unique.filter((v) => reviewVocab.some((r) => r.word === v.word)));
   const restPool = shuffle(unique.filter((v) => !reviewFirst.includes(v)));
-  const fromRest = Math.min(restPool.length, Math.max(MIX.vocab - reviewFirst.length, 2));
+  // …and the floor on the current week was 2 of 6, which is 33.3% of the
+  // certifying block spent on words the learner met once, in the week they
+  // are being certified ON. Week 22 supplies about 13% of the phase's
+  // headwords, so it took two and a half times its share. `reviewFirst` is 84
+  // entries deep at a checkpoint, so `Math.max(6 - 84, 2)` was never anything
+  // but 2. One keeps the current week represented without letting it crowd
+  // out the seven weeks the paper exists to measure.
+  const fromRest = Math.min(restPool.length, Math.max(MIX.vocab - reviewFirst.length, 1));
   const vocabPicks = shuffle([
     ...reviewFirst.slice(0, MIX.vocab - fromRest),
     ...restPool.slice(0, fromRest),
@@ -662,22 +669,46 @@ export function buildPaper(dep: string, week: string): Question[] {
     // is not enough: a five-word key beside two six-word distractors is still
     // the unique shortest option, which is the whole trick. It has to be
     // possible to be wrong by picking the shortest.
-    if (clean.length === 2 && !clean.some((c) => wordsOf(c.t) <= keyLen)) {
-      const near = strict.find(
-        (c) =>
-          wordsOf(c.t) <= keyLen && !clean.some((k) => k.t === c.t || nearlySameAnswer(k.t, c.t)),
-      );
-      if (near) clean[1] = near;
-    }
+    // Three constraints and only two distractors to carry them, so they are
+    // satisfied TOGETHER. Applied one after another, the second repair simply
+    // overwrote the first — both wrote to clean[1].
+    //
+    //   · one distractor no LONGER than the key  — "always pick the shortest"
+    //   · one echoing the audio at least as hard — "pick the loudest"
+    //   · one echoing it at most as hard         — "pick the quietest"
+    //
+    // The third is new, and it exists because the second one alone did not
+    // remove the overlap signal, it INVERTED it. Weighting `echo` in the
+    // ranker and then forcing a high-echo distractor left the distractors
+    // echoing the audio harder than the key on average, so "pick the option
+    // sharing FEWEST words with what you just heard" answered 48.3% of
+    // listening questions and carried 61.3% of papers through the block's own
+    // 50% floor — worse than the 44.1% the high-echo repair was written to
+    // kill. A surface signal that points either way is still a surface signal;
+    // the key has to sit INSIDE the range its distractors span.
     const keyEcho = echo(s.targetResponse);
-    if (clean.length === 2 && !clean.some((c) => echo(c.t) >= keyEcho)) {
-      const loud = strict.find(
-        (c) =>
-          echo(c.t) >= keyEcho &&
-          !clean.some((k) => k.t === c.t || nearlySameAnswer(k.t, c.t)) &&
-          !nearlySameAnswer(c.t, s.targetResponse),
-      );
-      if (loud) clean[1] = loud;
+    const shortEnough = (c: { t: string }) => wordsOf(c.t) <= keyLen;
+    const loudEnough = (c: { t: string }) => echo(c.t) >= keyEcho;
+    const quietEnough = (c: { t: string }) => echo(c.t) <= keyEcho;
+    const covers = (pair: { t: string }[]) =>
+      (pair.some(shortEnough) ? 1 : 0) +
+      (pair.some(loudEnough) ? 1 : 0) +
+      (pair.some(quietEnough) ? 1 : 0);
+    if (clean.length === 2 && covers(clean) < 3) {
+      // `strict` is already in rank order, so the first pair that covers all
+      // three is also the best-ranked one that does.
+      let best = [clean[0], clean[1]];
+      search: for (let i = 0; i < strict.length; i++)
+        for (let j = i + 1; j < strict.length; j++) {
+          const pair = [strict[i], strict[j]];
+          if (nearlySameAnswer(pair[0].t, pair[1].t)) continue;
+          if (covers(pair) > covers(best)) {
+            best = pair;
+            if (covers(best) === 3) break search;
+          }
+        }
+      clean[0] = best[0];
+      clean[1] = best[1];
     }
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the
