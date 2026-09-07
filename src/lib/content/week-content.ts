@@ -6999,7 +6999,7 @@ export const GR_WEEK_38: WeekContent = {
     "Airport transfer",
     "Take a note",
     "Departure schedule",
-    "Update the record",
+    "Pick-up time",
     "Apology letter",
   ],
   lessons: [
@@ -8336,7 +8336,7 @@ export const HK_WEEK_37: WeekContent = {
   weekTitleEn: "Insects in the Room, and Lost & Found",
   weekTitleVi: "Côn trùng trong phòng và quy trình đồ thất lạc",
   reviewWords: [
-    "Laundry slip",
+    "Lost property",
     "Lost item log",
     "Pest control team",
     "Guest lift",
@@ -16779,7 +16779,7 @@ export const HK_WEEK_32: WeekContent = {
     "Feather pillow",
     "Room note",
     "Guest lift",
-    "Laundry slip",
+    "Lost property",
   ],
   lessons: [
     {

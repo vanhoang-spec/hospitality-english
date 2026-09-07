@@ -1220,6 +1220,11 @@ function week18(lx: Ctx): LessonContent[] {
           "I will note it clearly on the document.",
           "Nói ra là mình đang ghi, khách yên tâm thông tin không rơi.",
         ),
+        sp(
+          "Could you make an exception for me?",
+          "I am not able to decide that, madam. May I ask my manager?",
+          "Câu quan trọng nhất của cả phase: nói thẳng mình không được quyết, rồi xin phép đi hỏi.",
+        ),
       ],
       reading: read(
         `The guest waits at the desk. ${lx.staff} says: "Just a moment, sir. I am preparing your ${lo(p1)}. Your request is ${lo(p9)} now." The guest waits calmly. It will take two more minutes.`,
@@ -1574,6 +1579,11 @@ function week19(lx: Ctx): LessonContent[] {
           `Which ${lo(pp6)} would you prefer?`,
           "Ôn tuần 18: hỏi cách thanh toán bằng Which.",
         ),
+        sp(
+          "Can you just let me do it?",
+          "I cannot decide that alone. I will call my supervisor.",
+          "Không quyết một mình việc vượt quyền — đó là cách tự bảo vệ mình.",
+        ),
       ],
       reading: read(
         `A guest asks about a restriction. ${lx.staff} answers: "I am afraid that is not allowed, madam. It is a hotel ${lo(r10)}, for everyone's safety." The rule is the same for every guest.`,
@@ -1820,6 +1830,12 @@ function week19(lx: Ctx): LessonContent[] {
           "Is my request done?",
           `Your request is ${lo(pp9)}.`,
           "Ôn tuần 18: báo trạng thái bằng một tính từ.",
+        ),
+        sp(
+          "The guest wants me to break the rule.",
+          "Do not decide alone. Call the supervisor first.",
+          "Nhắc đồng nghiệp bằng hai câu ngắn, trước khi họ lỡ tay.",
+          "colleague",
         ),
       ],
       reading: read(
@@ -2106,6 +2122,11 @@ function week20(lx: Ctx): LessonContent[] {
           "Of course, sir. I will speak more clearly.",
           "Hứa nói rõ hơn thì lịch sự hơn là xin khách nói to lên.",
         ),
+        sp(
+          "Who can change this for me?",
+          "My manager can, sir. I will ask my manager to come.",
+          "Nói rõ ai có quyền, rồi đi mời người đó tới.",
+        ),
       ],
       reading: read(
         `The guest chooses differently. ${lx.staff} answers warmly: "Of course, that is a good choice too, sir. Whichever you prefer." The guest feels comfortable. The staff member does not argue.`,
@@ -2194,6 +2215,12 @@ function week20(lx: Ctx): LessonContent[] {
           "Why must I do that?",
           "Every guest must do that, madam. It is our safety rule.",
           "Nói rõ quy định áp dụng cho mọi khách, không riêng ai.",
+        ),
+        sp(
+          "Anything you could not handle?",
+          "One request. I am passing it to you now.",
+          "Báo lên đúng lúc còn gỡ được, không đợi hết ca.",
+          "manager",
         ),
       ],
       reading: read(
@@ -3609,6 +3636,1093 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       ],
     });
   },
+  // Cả năm quản lý bộ phận đều nói cùng một câu: khoá dạy nửa ca đầu rất tốt
+  // và không dạy gì cho nửa sau. Lễ tân là ca nặng nhất — grep cả tám tuần
+  // không có một chữ "check-out" nào, trong khi phase vẫn dạy hoá đơn, phí
+  // phục vụ, biên lai và mã số thuế. Bài này đặt chúng vào đúng chỗ chúng
+  // được dùng.
+  FO_18_4: (lx) => {
+    const [, , , p4, , , p7] = lx.bank.paperwork;
+    return lesson(lx, 18, 4, "Check-out, Line by Line", "Trả phòng, từng dòng một", {
+      vocabulary: [
+        bw(p7, `Here is your ${lo(p7)}, madam.`),
+        bw(p4, `The ${lo(p4)} is on file, sir.`),
+      ],
+      grammar: [
+        g(
+          "Room finish. You pay now.",
+          "May I check the minibar before you leave, sir?",
+          "Xin phép bằng 'May I' rồi mới nêu việc; mệnh đề 'before' đi sau, động từ ở hiện tại.",
+          "May I check the minibar before you will leave, sir?",
+        ),
+        g(
+          "Bill have one more money.",
+          "There is one more charge, madam. Shall I explain it?",
+          "'There is' dùng cho một thứ số ít; 'Shall I…?' là lời đề nghị làm giúp.",
+          "There is one more charge, madam. Shall I explaining it?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "We are checking out now.",
+          "Good morning, madam. May I have your room number?",
+          "Hỏi số phòng trước; mọi thứ còn lại tra theo nó.",
+        ),
+        sp(
+          "Is that everything?",
+          "One moment. I will check the minibar with Housekeeping.",
+          "Không chốt hoá đơn trước khi buồng phòng xác nhận.",
+        ),
+        sp(
+          "What is this line here?",
+          "That is the service charge, sir. Ten percent.",
+          "Gọi đúng tên khoản phí và đúng con số, đừng nói chung chung.",
+        ),
+        sp(
+          "Could I have a receipt?",
+          `Here is your ${lo(p7)}, madam.`,
+          "Trao giấy kèm một câu, đừng đẩy im lặng qua quầy.",
+        ),
+        sp(
+          "We need an invoice for our company.",
+          `The ${lo(p4)} is on file, sir.`,
+          "Hoá đơn công ty tra theo mã số thuế đã lưu, không hỏi lại khách.",
+        ),
+        sp(
+          "Is 512 clear to check out?",
+          "Yes. Housekeeping says the minibar is clear.",
+          "Bàn giao là xác nhận, không phải phỏng đoán.",
+          "colleague",
+        ),
+        sp(
+          "Our taxi is waiting outside.",
+          "Of course, madam. I will be quick.",
+          "Khách đang vội thì nói rõ mình sẽ nhanh.",
+        ),
+      ],
+      reading: read(
+        `A guest is leaving. ${lx.staff} asks for the room number, then calls Housekeeping about the minibar. One line on the folio is the service charge, ten percent of the room. ${lx.staff} explains it before the guest asks. The printed receipt is given by hand. The whole check-out takes four minutes.`,
+        [
+          {
+            q: "Nhân viên gọi cho bộ phận nào trước khi chốt hoá đơn?",
+            options: ["Buồng phòng", "Nhà hàng", "Kỹ thuật"],
+            correct: 0,
+            explanation: `"calls Housekeeping about the minibar"`,
+          },
+          {
+            q: "Cả lượt trả phòng mất bao lâu?",
+            options: ["Bốn phút", "Mười phút", "Nửa giờ"],
+            correct: 0,
+            explanation: `"The whole check-out takes four minutes."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Can you just take the payment now?",
+          "One moment, sir. I will check the minibar first.",
+          "Yes yes, pay now, madam, minibar later I check.",
+          "Of course, sir. The minibar is surely empty anyway.",
+          undefined,
+          "Câu thứ ba lịch sự và sai: đoán minibar trống là cách khách sạn mất tiền, và cách khách bị gọi lại sau khi đã ra sân bay.",
+        ),
+        game(
+          "This charge was not on the website.",
+          "That is the service charge, madam. Ten percent on every bill.",
+          "Website no say, but hotel take ten percent always.",
+          "I am not sure, madam. The system adds it by itself.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và đẩy trách nhiệm cho phần mềm; khoản phí nào cũng phải có một người giải thích được.",
+        ),
+      ],
+    });
+  },
+
+  // 217 lượt nói của lễ tân, không một lượt nào dạy từ chối tiết lộ số phòng.
+  // Đây là phép thử an ninh phổ biến nhất ở quầy, và trả lời sai một lần là
+  // một sự cố, không phải một lỗi tiếng Anh. Bài giữ nguyên ba headword của ô
+  // và dùng chính chúng để dạy ranh giới: cái gì ai hỏi cũng nói được, và cái
+  // gì thì không.
+  FO_19_3: (lx) => {
+    const [, r2, r3, , , , r7] = lx.bank.rules;
+    return lesson(lx, 19, 3, "A Room Number Is Not Mine to Give", "Số phòng thì không nói", {
+      vocabulary: [
+        bw(r2, `Our ${lo(r2)} is simple.`),
+        bw(r3, `The ${lo(r3)} is outside.`),
+        bw(r7, `Please use the ${lo(r7)}.`),
+      ],
+      grammar: [
+        g(
+          "He is in room eight-one-two.",
+          "I am afraid I cannot give a room number, sir.",
+          "Từ chối mở đầu bằng 'I am afraid', rồi nêu đúng việc mình không được làm.",
+          "I am afraid I cannot to give a room number, sir.",
+        ),
+        g(
+          "You go up, no problem.",
+          "May I call the room for you instead?",
+          "'May I…?' xin phép làm giúp; 'instead' mở lối khác ngay sau lời từ chối.",
+          "May I calling the room for you instead?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Which room is Mr Tanaka in?",
+          "I am afraid I cannot give a room number, sir.",
+          "Câu quan trọng nhất bài này. Không có ngoại lệ cho ai cả.",
+        ),
+        sp(
+          "But I am his brother.",
+          "I understand, sir. May I call the room for you?",
+          "Từ chối rồi mở ngay một lối khác — khách vẫn gặp được người cần gặp.",
+        ),
+        sp(
+          "Just tell me if he is staying here.",
+          "I am sorry. I cannot confirm that, sir.",
+          "Xác nhận một vị khách đang ở đây cũng là tiết lộ.",
+        ),
+        sp(
+          "Then where can I wait?",
+          `Our ${lo(r2)} is simple. Please wait in the lobby.`,
+          "Nêu quy định rồi chỉ chỗ, khách sẽ không thấy mình bị đuổi.",
+        ),
+        sp(
+          "Can I smoke while I wait?",
+          `The ${lo(r3)} is outside, near the garden.`,
+          "Thứ này thì ai hỏi cũng nói được — đó là điểm của bài.",
+        ),
+        sp(
+          "And if the alarm goes off?",
+          `Please use the ${lo(r7)}, sir.`,
+          "Chỉ dẫn an toàn không bao giờ là thông tin cần giữ kín.",
+        ),
+        sp(
+          "Someone is asking for 812.",
+          "Please do not confirm it. Call the room first.",
+          "Nhắc đồng nghiệp bằng một câu ngắn, trước khi họ lỡ miệng.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A visitor comes to the desk and asks for a guest by name. ${lx.staff} does not say the room number and does not say whether the guest is in the hotel. ${lx.staff} offers to call the room instead. The visitor waits in the lobby. Anyone may be told where the smoking area is; nobody may be told a room number.`,
+        [
+          {
+            q: "Nhân viên đề nghị làm gì thay vì cho số phòng?",
+            options: ["Gọi lên phòng", "Dẫn khách lên tận nơi", "Nhắn tin cho khách"],
+            correct: 0,
+            explanation: `"offers to call the room instead"`,
+          },
+          {
+            q: "Điều gì ai hỏi cũng nói được?",
+            options: ["Khu vực hút thuốc ở đâu", "Số phòng của khách", "Khách có ở đây hay không"],
+            correct: 0,
+            explanation: `"Anyone may be told where the smoking area is"`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is Mr Tanaka staying here?",
+          "I am sorry, sir. I cannot confirm that.",
+          "He stay here yes, room eight-one-two, sir.",
+          "Yes, sir, he is here. Shall I take you up?",
+          undefined,
+          "Câu thứ ba lịch sự và là một sự cố an ninh: xác nhận một vị khách đang ở đây cũng đã là tiết lộ.",
+        ),
+        game(
+          "I only need his room number, please.",
+          "I am afraid I cannot give that, sir. May I call?",
+          "Cannot give number, sir. Is rule of hotel here.",
+          "Of course, sir. Just this once, it is eight-one-two.",
+          undefined,
+          "Câu thứ ba lịch sự và sai: 'chỉ lần này thôi' là câu mở đầu của gần như mọi sự cố an ninh.",
+        ),
+      ],
+    });
+  },
+
+  // Ô paperwork của buồng phòng giữ khái niệm của lễ tân, nên khung dạy nhân
+  // viên buồng phòng hỏi khách trả tiền thế nào. Trong khi đó việc họ làm mỗi
+  // ngày — báo hỏng — không xuất hiện một lần nào trong tám tuần: maintenance
+  // 0, leak 0, out of order 0. Bài này thay cả bộ headword.
+  HK_18_3: (lx) =>
+    lesson(lx, 18, 3, "Reporting a Fault", "Báo hỏng cho kỹ thuật", {
+      vocabulary: [
+        v(
+          "Maintenance request",
+          "/ˈmeɪntənəns rɪˈkwest/",
+          "Phiếu báo hỏng",
+          "I will put in a maintenance request.",
+          "🔧",
+        ),
+        v(
+          "Room blocked",
+          "/ruːm blɒkt/",
+          "Phòng bị khoá lại",
+          "Room 1408 is blocked tonight.",
+          "⛔",
+        ),
+        v("Leaking", "/ˈliːkɪŋ/", "Bị rò rỉ", "The tap is leaking in the bathroom.", "💧"),
+      ],
+      grammar: [
+        g(
+          "Tap broken, I tell you.",
+          "The tap is leaking in room 1408.",
+          "Việc đang xảy ra ngay lúc này: is + động từ đuôi -ing.",
+          "The tap leaking in room 1408.",
+        ),
+        g(
+          "I write paper for fix.",
+          "I will put in a maintenance request.",
+          "'Put in' là cụm động từ — rơi mất 'in' là mất nghĩa nộp phiếu.",
+          "I will put a maintenance request.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "What is wrong in 1408?",
+          "The tap is leaking in the bathroom.",
+          "Nói rõ cái gì hỏng và hỏng ở đâu, chỉ trong một câu.",
+          "colleague",
+        ),
+        sp(
+          "Who else knows about it?",
+          "Nobody yet. I will put in a maintenance request.",
+          "Báo hỏng là một tờ phiếu, không phải một câu nói miệng.",
+          "colleague",
+        ),
+        sp(
+          "Can the guest still use the room?",
+          "No. Room 1408 is blocked tonight.",
+          "Trạng thái phòng phải được gọi tên, nếu không lễ tân sẽ bán nó.",
+          "colleague",
+        ),
+        sp(
+          "The shower is not working.",
+          "I am sorry, madam. I will report it now.",
+          "Nhận việc ngay bằng một câu ngắn, rồi mới đi làm.",
+        ),
+        sp(
+          "When will someone come?",
+          "Maintenance comes within thirty minutes, madam.",
+          "Cho một mốc thời gian có thật, đừng nói sớm thôi.",
+        ),
+        sp(
+          "Why is 1408 not on the list?",
+          "It is blocked. The tap is leaking.",
+          "Báo lên cấp trên thì nêu trạng thái trước, lý do sau.",
+          "manager",
+        ),
+        sp(
+          "Can I move to another room?",
+          "I will ask the front desk for you, madam.",
+          "Đổi phòng không phải quyền của buồng phòng — hứa đi hỏi, đừng hứa đổi.",
+        ),
+      ],
+      reading: read(
+        `A room attendant finds water on the bathroom floor of room 1408. The tap is leaking. The attendant does not try to fix it. The attendant puts in a maintenance request and tells the floor supervisor. The room is blocked until maintenance comes. Maintenance answers within thirty minutes.`,
+        [
+          {
+            q: "Nhân viên buồng phòng làm gì khi thấy vòi nước rò?",
+            options: ["Báo hỏng và báo giám sát", "Tự sửa lấy", "Đợi ca sau xử lý"],
+            correct: 0,
+            explanation: `"puts in a maintenance request and tells the floor supervisor"`,
+          },
+          {
+            q: "Kỹ thuật đến trong bao lâu?",
+            options: ["Trong ba mươi phút", "Trong hai tiếng", "Sáng hôm sau"],
+            correct: 0,
+            explanation: `"Maintenance answers within thirty minutes."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "There is water all over the bathroom floor.",
+          "I am sorry, madam. I will report it right now.",
+          "Water there, madam. I clean, no problem for you.",
+          "I will wipe it up, madam. It happens quite often.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và giấu sự cố: lau khô một vũng nước không sửa được cái vòi, và ca sau sẽ gặp lại đúng nó.",
+        ),
+        game(
+          "Shall I just tighten the tap myself?",
+          "No. Put in a maintenance request and mark the room.",
+          "You no touch, is job of maintenance man only.",
+          "Yes, go ahead. It is only a small job anyway.",
+          "colleague",
+          "Câu thứ ba nghe hợp lý và sai thẩm quyền: đường nước không nằm trong phần việc của buồng phòng, và một mối nối vặn hỏng là một trần nhà ướt ở tầng dưới.",
+        ),
+      ],
+    }),
+
+  // Khung cho ra "Here is your lost property, sir." — trao đồ khách bỏ quên
+  // ngay tại cửa phòng như trao một tờ hoá đơn. Trưởng buồng phòng gọi đó là
+  // một biên bản chờ sẵn. Đây là SOP thật.
+  HK_18_4: (lx) =>
+    lesson(lx, 18, 4, "Lost and Found", "Đồ khách bỏ quên", {
+      vocabulary: [
+        v(
+          "Lost property",
+          "/lɒst ˈprɒpəti/",
+          "Đồ khách bỏ quên",
+          "The watch goes to lost property.",
+          "🔎",
+        ),
+        v(
+          "Log the item",
+          "/lɒɡ ði ˈaɪtəm/",
+          "Ghi vào sổ",
+          "Please log the item with the room number.",
+          "📓",
+        ),
+      ],
+      grammar: [
+        g(
+          "Watch in room, I keep here.",
+          "There is a watch in 1204. I will log the item.",
+          "'There is' cho một thứ số ít, rồi WILL cho việc mình sắp làm.",
+          "There is a watch in 1204. I will logging the item.",
+        ),
+        g(
+          "You take it now yes?",
+          "I am afraid I cannot give it here, madam.",
+          "Từ chối bằng 'I am afraid' và nêu rõ chỗ nào không được làm.",
+          "I am afraid I cannot giving it here, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Anything left in 1204?",
+          "There is a watch on the desk.",
+          "Báo đúng món và đúng chỗ tìm thấy.",
+          "colleague",
+        ),
+        sp(
+          "What do I do with it?",
+          "Log the item and take it to the office.",
+          "Hai bước, đúng thứ tự: ghi sổ trước, mang đi sau.",
+          "colleague",
+        ),
+        sp(
+          "I left my watch in 1204.",
+          "One moment, madam. I will check lost property.",
+          "Không xác nhận đã tìm thấy trước khi văn phòng tra sổ.",
+        ),
+        sp(
+          "Could you just bring it to me?",
+          "I am afraid I cannot give it here, madam.",
+          "Trao đồ tại cửa phòng là chỗ mọi vụ mất đồ bắt đầu.",
+        ),
+        sp(
+          "Why not? It is mine.",
+          "The office checks your name first, madam.",
+          "Nêu bước còn thiếu, không nêu sự nghi ngờ.",
+        ),
+        sp(
+          "Is the watch logged?",
+          "Yes. It is in the office with the guest name.",
+          "Trả lời cấp trên bằng trạng thái và vị trí.",
+          "manager",
+        ),
+        sp(
+          "Where is the office?",
+          "On the ground floor, madam. I will show you.",
+          "Chỉ đường xong thì đi cùng, đừng để khách tự tìm.",
+        ),
+      ],
+      reading: read(
+        `A room attendant finds a watch on the desk in room 1204. The attendant does not leave it and does not give it to anyone at the door. The item is written in the lost property book with the room number and the date. Then it goes to the housekeeping office. A guest who claims it gives their name first.`,
+        [
+          {
+            q: "Đồ nhặt được ghi vào sổ kèm những gì?",
+            options: ["Số phòng và ngày", "Tên nhân viên nhặt được", "Giá trị món đồ"],
+            correct: 0,
+            explanation: `"with the room number and the date"`,
+          },
+          {
+            q: "Khách nhận lại đồ phải làm gì trước?",
+            options: ["Cho biết tên", "Trả một khoản phí", "Ký ngay tại cửa phòng"],
+            correct: 0,
+            explanation: `"A guest who claims it gives their name first."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "I think I left my watch in that room.",
+          "One moment, madam. I will check lost property.",
+          "Watch here, madam, I give you now, no problem.",
+          "Of course, madam. Here it is, I found it today.",
+          undefined,
+          "Câu thứ ba lịch sự và là một biên bản: trao đồ tại cửa mà không đối chiếu tên là lúc khách sạn không giải trình được nếu người thật đến nhận sau.",
+        ),
+        game(
+          "Nobody will miss this old umbrella.",
+          "Log the item anyway. Everything goes to the office.",
+          "Small thing only, no need write in book.",
+          "You are probably right. Just leave it in the trolley.",
+          "colleague",
+          "Câu thứ ba nghe có lý và sai quy trình: giá trị món đồ không phải điều bạn được quyền đánh giá.",
+        ),
+      ],
+    }),
+
+  // Hoá đơn nhà hàng Việt Nam có 5% phí phục vụ cộng 10% VAT. Khoá dạy đúng
+  // một nửa cấu trúc phí, và trưởng bộ phận gọi phần thiếu là nguồn tranh cãi
+  // hàng tuần. Bài này giữ nguyên ba headword của ô và dạy trọn tờ hoá đơn,
+  // kèm ranh giới: giảm giá không phải quyền của người phục vụ.
+  FB_18_3: (lx) => {
+    const [, , , , p5, p6, , p8] = lx.bank.paperwork;
+    return lesson(lx, 18, 3, "The Bill, Line by Line", "Hoá đơn, từng dòng một", {
+      vocabulary: [
+        bw(p5, `The ${lo(p5)} is ten percent.`),
+        bw(p6, `Which ${lo(p6)} would you prefer?`),
+        bw(p8, `You can ${lo(p8)} at the table.`),
+      ],
+      grammar: [
+        g(
+          "Bill have tax and service.",
+          "The bill includes ten percent VAT and five percent service.",
+          "Hai khoản nối bằng 'and'; con số phần trăm đứng trước danh từ.",
+          "The bill include ten percent VAT and five percent service.",
+        ),
+        g(
+          "You pay how, cash or card?",
+          `Which ${lo(p6)} would you prefer, madam?`,
+          "Câu hỏi lựa chọn mở đầu bằng 'Which' + danh từ, không hỏi trống.",
+          `Which ${lo(p6)} would you prefer it, madam?`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "Could we have the bill?",
+          "Of course, madam. I will bring it now.",
+          "Nhận việc rồi làm ngay; hoá đơn để khách chờ là ấn tượng cuối bữa.",
+        ),
+        sp(
+          "What are these two extra lines?",
+          `The ${lo(p5)} is ten percent, and service is five.`,
+          "Đọc từng dòng cho khách, đừng chỉ nói tổng.",
+        ),
+        sp(
+          "Can we split it in two?",
+          "Certainly, sir. I will make two separate bills.",
+          "Tách hoá đơn là việc thường ngày, nhận lời ngay.",
+        ),
+        sp(
+          "How would you like us to pay?",
+          `Which ${lo(p6)} would you prefer, madam?`,
+          "Hỏi cách thanh toán bằng một câu lựa chọn.",
+        ),
+        sp(
+          "By card, please.",
+          `Of course. You can ${lo(p8)} at the table.`,
+          "Nói rõ khách không phải đi đâu cả.",
+        ),
+        sp(
+          "Table six wants the bill.",
+          "I am printing it now. Two bills, not one.",
+          "Bàn giao kèm chi tiết khác thường, để người kia khỏi in lại.",
+          "colleague",
+        ),
+        sp(
+          "Is service included in that?",
+          "Yes, madam. Five percent is already on the bill.",
+          "Trả lời thẳng có hay không, rồi mới nêu con số.",
+        ),
+      ],
+      reading: read(
+        `A guest at table six asks for the bill. ${lx.staff} brings it and explains the two extra lines: ten percent VAT and five percent service. The guest asks to split the bill, so ${lx.staff} prints two. The guest pays by card at the table. Nothing is added after the guest sees the total.`,
+        [
+          {
+            q: "Hai dòng thêm trên hoá đơn là gì?",
+            options: ["Thuế VAT và phí phục vụ", "Tiền tip và thuế", "Phí phục vụ và tiền phòng"],
+            correct: 0,
+            explanation: `"ten percent VAT and five percent service"`,
+          },
+          {
+            q: "Khách thanh toán ở đâu?",
+            options: ["Ngay tại bàn", "Ở quầy thu ngân", "Ở quầy lễ tân"],
+            correct: 0,
+            explanation: `"The guest pays by card at the table."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "What is this five percent line?",
+          "That is the service charge, madam. It is on every bill.",
+          "Five percent is service, madam, everybody pay this one.",
+          "I am not sure, madam. The kitchen adds that line.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và sai người: phí phục vụ do nhà hàng tính chứ không phải bếp, và khoản tiền nào cũng phải có người giải thích được.",
+        ),
+        game(
+          "Could you give us a small discount?",
+          "I will ask my manager, madam. I cannot decide that.",
+          "No discount, madam, price is price for everybody here.",
+          "Of course, madam. I can take ten percent off for you.",
+          undefined,
+          "Câu thứ ba lịch sự và vượt quyền: giảm giá là quyết định của quản lý ca, và người phải rút lời hứa lại là quản lý, trước mặt chính vị khách đó.",
+        ),
+      ],
+    });
+  },
+  // Tám tuần dạy spa mà không có một câu nào về hướng dẫn cởi đồ, khăn phủ và
+  // gõ cửa. Trưởng bộ phận gọi đó là thao tác đầu tiên của mọi buổi trị liệu
+  // và là chỗ phát sinh gần như toàn bộ khiếu nại nhạy cảm của ngành. Bài này
+  // thay bộ headword của ô, vì hai thẻ cũ là biên lai và tên kỹ thuật viên.
+  SW_18_4: (lx) =>
+    lesson(
+      lx,
+      18,
+      4,
+      "Before We Begin: What You Wear",
+      "Trước buổi trị liệu: áo choàng & khăn phủ",
+      {
+        vocabulary: [
+          v(
+            "Treatment robe",
+            "/ˈtriːtmənt rəʊb/",
+            "Áo choàng trị liệu",
+            "Your treatment robe is on the hook.",
+            "🥼",
+          ),
+          v(
+            "Towel cover",
+            "/ˈtaʊəl ˈkʌvə/",
+            "Khăn phủ người",
+            "A towel cover stays on at all times.",
+            "🛏️",
+          ),
+        ],
+        grammar: [
+          g(
+            "You take off all clothes.",
+            "Please undress to your comfort level, madam.",
+            "Mệnh lệnh lịch sự mở đầu bằng 'Please'; phần sau trả quyền quyết định cho khách.",
+            "Please undress to your comfortable level, madam.",
+          ),
+          g(
+            "I come in now ok?",
+            "I will knock before I come in, madam.",
+            "WILL cho việc sắp làm; mệnh đề 'before' đi sau và động từ trong đó ở hiện tại.",
+            "I will knock before I will come in, madam.",
+          ),
+        ],
+        speaking: [
+          sp(
+            "Do I take everything off?",
+            "Please undress to your comfort level, madam.",
+            "Câu quan trọng nhất bài này. Mức nào là do khách quyết, không phải do bạn.",
+          ),
+          sp(
+            "Where do I put my clothes?",
+            "Your treatment robe is on the hook, madam.",
+            "Chỉ đúng chỗ, khách sẽ không phải hỏi lại khi bạn đã ra ngoài.",
+          ),
+          sp(
+            "Will I be covered?",
+            "Yes, madam. A towel cover stays on at all times.",
+            "Trả lời thẳng rồi nói rõ suốt buổi, không chỉ lúc đầu.",
+          ),
+          sp(
+            "How will I know you are coming in?",
+            "I will knock before I come in, madam.",
+            "Gõ cửa là lời hứa; nói ra thành lời thì khách yên tâm cởi đồ.",
+          ),
+          sp(
+            "I am twenty minutes late, sorry.",
+            "That is all right, madam. We finish at four.",
+            "Nhận lời xin lỗi rồi nêu ngay mốc kết thúc thật.",
+          ),
+          sp(
+            "Can we add the time at the end?",
+            "I am sorry. The next guest starts at four.",
+            "Kéo dài buổi này là lấy thời gian của vị khách kế tiếp.",
+          ),
+          sp(
+            "Is room two ready?",
+            "Yes. Robe out, towel cover ready.",
+            "Bàn giao phòng bằng danh sách ngắn, đủ món.",
+            "colleague",
+          ),
+        ],
+        reading: read(
+          `Before a treatment, ${lx.staff} shows the guest the changing room. The guest undresses to their own comfort level. A towel cover stays on the whole time, and only the area being worked on is open. ${lx.staff} knocks and waits before coming back in. A guest who arrives late still finishes at the booked end time.`,
+          [
+            {
+              q: "Khách cởi đồ tới mức nào?",
+              options: ["Tới mức khách thấy thoải mái", "Cởi hết", "Giữ nguyên quần áo"],
+              correct: 0,
+              explanation: `"The guest undresses to their own comfort level."`,
+            },
+            {
+              q: "Khách đến muộn thì buổi trị liệu kết thúc lúc nào?",
+              options: [
+                "Đúng giờ đã đặt",
+                "Muộn thêm đúng số phút đến trễ",
+                "Khi nào xong thì thôi",
+              ],
+              correct: 0,
+              explanation: `"A guest who arrives late still finishes at the booked end time."`,
+            },
+          ],
+        ),
+        game: [
+          game(
+            "Should I take everything off?",
+            "Please undress to your comfort level, madam.",
+            "You take off all, madam, is normal for massage.",
+            "Yes, madam. Everything off, that is how we do it.",
+            undefined,
+            "Câu thứ ba đúng ngữ pháp và là chỗ phát sinh gần như mọi khiếu nại nhạy cảm của ngành: quyết định ấy thuộc về khách, không thuộc về bạn.",
+          ),
+          game(
+            "I am late. Can we still do the full hour?",
+            "I am sorry, madam. The next guest starts at four.",
+            "No time, madam, next people come, you late already.",
+            "Of course, madam. We will just run over a little.",
+            undefined,
+            "Câu thứ ba lịch sự và sai: kéo dài buổi này là lấy mất giờ của vị khách kế tiếp, và người phải xin lỗi họ là đồng nghiệp của bạn.",
+          ),
+        ],
+      },
+    ),
+
+  // Sự cố được báo cáo nhiều nhất trong spa resort không có một chữ nào trong
+  // tám tuần. Bài giữ nguyên bốn headword của ô — hai mức lực là phương tiện —
+  // và dạy đúng một phản xạ: dừng tay, ra ngoài, gọi quản lý.
+  SW_20_1: (lx) => {
+    const [c1, c2] = lx.bank.choices;
+    return lesson(lx, 20, 1, "A Request You Must Not Take", "Yêu cầu không được nhận", {
+      vocabulary: [
+        v("Prefer", "/prɪˈfɜː/", "Thích hơn", "Would you prefer tea or coffee?", "❤️"),
+        v("Choice", "/tʃɔɪs/", "Sự lựa chọn", "Both are good choices.", "🔀"),
+        bw(c1, `Would you prefer the ${lo(c1)}?`),
+        bw(c2, `Or perhaps the ${lo(c2)}?`),
+      ],
+      grammar: [
+        g(
+          "No, I not do that.",
+          "I am not able to do that, madam.",
+          "'I am not able to' nghe nhã hơn 'I cannot' khi từ chối một yêu cầu của khách.",
+          "I am not able do that, madam.",
+        ),
+        g(
+          "Stop now, I go out.",
+          "I need to stop here. Please excuse me a moment.",
+          "Hai câu ngắn: nêu việc mình làm, rồi xin phép rời phòng.",
+          "I need stop here. Please excuse me a moment.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "How hard will you press?",
+          `Would you prefer the ${lo(c1)} or the ${lo(c2)}?`,
+          "Đưa hai mức rõ ràng ngay từ đầu, khách sẽ dễ nói khi muốn đổi.",
+        ),
+        sp(
+          "Both sound fine to me.",
+          "Both are good choices, madam. We can change any time.",
+          "Nói rõ đổi được giữa chừng — đó là lời mời khách lên tiếng.",
+        ),
+        sp(
+          "Could you work higher up, please?",
+          "I am not able to do that, madam.",
+          "Câu quan trọng nhất bài này. Ngắn, không giải thích dài, không xin lỗi nhiều lần.",
+        ),
+        sp(
+          "Just a little higher, it is fine.",
+          "I am sorry. I need to stop here.",
+          "Lần thứ hai thì không thương lượng nữa: dừng tay.",
+        ),
+        sp(
+          "What is happening in room two?",
+          "A request I cannot take. I am stopping now.",
+          "Báo cấp trên bằng một câu, không kể chi tiết ở hành lang.",
+          "manager",
+        ),
+        sp(
+          "Do I tell the guest anything?",
+          "Say the manager will come. Do not argue.",
+          "Đồng nghiệp cần đúng hai việc: nói gì, và không làm gì.",
+          "colleague",
+        ),
+        sp(
+          "Tell me if it is too much.",
+          "Of course, madam. Say stop at any time.",
+          "Trao lại cho khách quyền dừng, bằng đúng một từ dễ nói.",
+        ),
+      ],
+      reading: read(
+        `A guest asks for something outside the treatment. ${lx.staff} does not argue and does not explain for a long time. ${lx.staff} says only that it is not possible, stops the treatment and steps out. The manager comes to the room. A therapist never decides alone what to allow.`,
+        [
+          {
+            q: "Kỹ thuật viên làm gì ngay sau lời từ chối?",
+            options: [
+              "Dừng buổi trị liệu và ra ngoài",
+              "Tranh luận với khách",
+              "Tiếp tục nhưng nhẹ tay hơn",
+            ],
+            correct: 0,
+            explanation: `"stops the treatment and steps out"`,
+          },
+          {
+            q: "Ai tới phòng sau đó?",
+            options: ["Quản lý", "Lễ tân", "Nhân viên cứu hộ"],
+            correct: 0,
+            explanation: `"The manager comes to the room."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Could you press a little higher up?",
+          "I am not able to do that, madam.",
+          "No, no higher, madam, is not my job here.",
+          "Of course, madam. Just this once, no problem.",
+          undefined,
+          "Câu thứ ba lịch sự và là chỗ mọi sự cố spa bắt đầu: 'chỉ lần này thôi' bỏ đi một ranh giới mà bạn không có quyền bỏ.",
+        ),
+        game(
+          "Come on, nobody will know.",
+          "I need to stop here. Please excuse me a moment.",
+          "I go now, madam, you wait, manager come talk.",
+          "Please do not worry, madam. I will not tell anyone.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và biến bạn thành người cùng giữ bí mật. Việc đúng là dừng tay và gọi quản lý.",
+        ),
+      ],
+    });
+  },
+
+  // 217 lượt nói của guest relations, không lượt nào dạy từ chối tiết lộ số
+  // phòng — trong khi đây là quầy được hỏi câu đó nhiều nhất. Bài giữ nguyên
+  // ba headword của ô và dùng chúng để vẽ ranh giới: cái gì nói được với bất
+  // kỳ ai, và cái gì thì không.
+  GR_19_3: (lx) => {
+    const [, r2, r3, , , , r7] = lx.bank.rules;
+    return lesson(lx, 19, 3, "A Room Number Is Not Mine to Give", "Số phòng thì không nói", {
+      vocabulary: [
+        bw(r2, `Our ${lo(r2)} is simple.`),
+        bw(r3, `The ${lo(r3)} is outside.`),
+        bw(r7, `Please use the ${lo(r7)}.`),
+      ],
+      grammar: [
+        g(
+          "She is in room seven-oh-four.",
+          "I am afraid I cannot give a room number, madam.",
+          "Từ chối mở đầu bằng 'I am afraid', rồi nêu đúng việc mình không được làm.",
+          "I am afraid I cannot to give a room number, madam.",
+        ),
+        g(
+          "You leave flower here ok.",
+          "May I take the flowers to the room for you?",
+          "'May I…?' xin phép làm giúp — khách vẫn đạt được việc của họ.",
+          "May I taking the flowers to the room for you?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Which room is Mrs Chen in?",
+          "I am afraid I cannot give a room number, madam.",
+          "Câu quan trọng nhất bài này. Không có ngoại lệ cho ai cả.",
+        ),
+        sp(
+          "I have flowers for her.",
+          "May I take the flowers to the room for you?",
+          "Từ chối rồi mở ngay một lối khác: hoa vẫn tới nơi.",
+        ),
+        sp(
+          "Is she even staying here?",
+          "I am sorry. I cannot confirm that, madam.",
+          "Trả lời có hay không đều là tiết lộ. Không trả lời cả hai.",
+        ),
+        sp(
+          "Where should I wait then?",
+          `The ${lo(r3)} is outside. Please wait there, madam.`,
+          "Chỉ chỗ ngồi tử tế, khách sẽ không thấy mình bị đuổi.",
+        ),
+        sp(
+          "Can she come down to meet me?",
+          `Our ${lo(r2)} is simple. I will call the room.`,
+          "Viện dẫn quy định rồi làm ngay việc mình được làm.",
+        ),
+        sp(
+          "Where do the cars come in?",
+          `Please use the ${lo(r7)}, madam.`,
+          "Chỉ đường thì ai hỏi cũng nói được — đó là điểm của bài.",
+        ),
+        sp(
+          "A courier is asking for 704.",
+          "Take the parcel. Do not give the number.",
+          "Nhắc đồng nghiệp bằng hai câu ngắn, trước khi họ lỡ miệng.",
+          "colleague",
+        ),
+      ],
+      reading: read(
+        `A courier comes with flowers for a guest. ${lx.staff} does not give the room number and does not say whether the guest is in the hotel. ${lx.staff} takes the flowers and delivers them. The courier waits in the garden lounge. A card with the sender's name goes up with the flowers.`,
+        [
+          {
+            q: "Nhân viên làm gì với bó hoa?",
+            options: [
+              "Tự mang lên phòng",
+              "Đưa số phòng cho người giao",
+              "Để lại ở quầy cho khách xuống lấy",
+            ],
+            correct: 0,
+            explanation: `"takes the flowers and delivers them"`,
+          },
+          {
+            q: "Cái gì được gửi lên cùng bó hoa?",
+            options: ["Tấm thiệp có tên người gửi", "Hoá đơn", "Số điện thoại người giao"],
+            correct: 0,
+            explanation: `"A card with the sender's name goes up with the flowers."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Which room do I deliver these to?",
+          "I will take them up, sir. May I have your name?",
+          "Room seven-oh-four, sir, you go up by lift.",
+          "Of course, sir. It is room seven-oh-four, top floor.",
+          undefined,
+          "Câu thứ ba lịch sự và là một sự cố an ninh: người giao hàng không cần số phòng, họ chỉ cần bó hoa tới đúng nơi.",
+        ),
+        game(
+          "Is Mrs Chen checked in yet?",
+          "I am sorry, madam. I cannot confirm that.",
+          "She here already, madam, come this morning early.",
+          "She is, madam. Would you like me to ring her?",
+          undefined,
+          "Câu thứ ba lịch sự và vẫn tiết lộ: trả lời có hay không cũng đều là thông tin về một vị khách.",
+        ),
+      ],
+    });
+  },
+
+  // Concierge có đúng một câu về xe trong tám tuần, và đó là câu thực đơn:
+  // "The private car is available too." Không giờ đón, không điểm đón, không
+  // tên tài xế, không thời gian di chuyển. Bài này thay bộ headword của ô.
+  GR_18_2: (lx) =>
+    lesson(lx, 18, 2, "The Car at Six-Thirty", "Xe đón lúc sáu rưỡi", {
+      vocabulary: [
+        v("Pick-up time", "/ˈpɪk ʌp taɪm/", "Giờ đón", "Your pick-up time is six-thirty.", "🕡"),
+        v("Driver's name", "/ˈdraɪvəz neɪm/", "Tên tài xế", "The driver's name is Mr Hung.", "🧑‍✈️"),
+        v(
+          "Journey time",
+          "/ˈdʒɜːni taɪm/",
+          "Thời gian di chuyển",
+          "The journey time is forty minutes.",
+          "🛣️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Car come six-thirty ok.",
+          "Your car will be here at six-thirty, sir.",
+          "WILL + BE cho một cái hẹn; mốc giờ đứng sau 'at'.",
+          "Your car will here at six-thirty, sir.",
+        ),
+        g(
+          "Driver name Hung, no problem.",
+          "The driver's name is Mr Hung, madam.",
+          "Sở hữu cách: driver'S name. Tên riêng đi kèm 'Mr'.",
+          "The driver name is Mr Hung, madam.",
+        ),
+      ],
+      speaking: [
+        sp(
+          "Could you book a car to the airport?",
+          "Of course, sir. What time is your flight?",
+          "Hỏi giờ bay trước, mọi mốc còn lại tính ngược từ đó.",
+        ),
+        sp(
+          "It leaves at nine.",
+          "Your pick-up time is six-thirty, then.",
+          "Đưa một con số, đừng nói sớm sớm một chút.",
+        ),
+        sp(
+          "Who will be driving?",
+          "The driver's name is Mr Hung, madam.",
+          "Có tên là có người chịu trách nhiệm; khách yên tâm hơn hẳn.",
+        ),
+        sp(
+          "How long does it take?",
+          "The journey time is forty minutes, sir.",
+          "Nói thời gian di chuyển, để khách tự kiểm được mốc đón.",
+        ),
+        sp(
+          "Is it confirmed?",
+          "Not yet, madam. I will call the company now.",
+          "Chưa gọi thì chưa có xe — nói thẳng, đừng để khách tưởng xong.",
+        ),
+        sp(
+          "Any cars for the morning?",
+          "One at six-thirty. Airport, two guests.",
+          "Bàn giao bằng giờ, nơi đến và số khách.",
+          "colleague",
+        ),
+        sp(
+          "Where will the car wait?",
+          "At the main entrance, sir. I will walk you out.",
+          "Chỉ chỗ rồi đi cùng — đó là phần việc của concierge.",
+        ),
+      ],
+      reading: read(
+        `A guest asks for a car to the airport. ${lx.staff} asks for the flight time first, then works backwards: the journey takes forty minutes, so the pick-up time is six-thirty. ${lx.staff} calls the car company and only then tells the guest it is confirmed. The driver's name goes on the guest's card.`,
+        [
+          {
+            q: "Nhân viên hỏi điều gì trước tiên?",
+            options: ["Giờ bay", "Loại xe", "Số kiện hành lý"],
+            correct: 0,
+            explanation: `"asks for the flight time first"`,
+          },
+          {
+            q: "Đi ra sân bay mất bao lâu?",
+            options: ["Bốn mươi phút", "Hai mươi phút", "Một tiếng rưỡi"],
+            correct: 0,
+            explanation: `"the journey takes forty minutes"`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Can you have a car ready for six?",
+          "I will call the company and confirm, madam.",
+          "Six o'clock car have, madam, no problem for you.",
+          "Of course, madam. Your car will be here at six.",
+          undefined,
+          "Câu thứ ba lịch sự và sai: chưa gọi thì chưa có xe, và người đứng chờ ở sảnh lúc sáu giờ là khách.",
+        ),
+        game(
+          "Is the driver reliable?",
+          "Mr Hung drives for us every week, madam.",
+          "Driver good, madam, no worry, he drive long time.",
+          "I am not sure, madam. The company sends anyone.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và bỏ khách lại với nỗi lo; concierge tồn tại để bảo đảm phần mình biết chắc.",
+        ),
+      ],
+    }),
+
+  // Tình huống số một của mọi nhà hàng — khách chê món — không có một lượt nói
+  // nào trong tám tuần, và giao tiếp với bếp chỉ có đúng một lượt. Bài này
+  // thay bộ headword của ô, vì hai thẻ cũ là túi xách và két an toàn.
+  FB_19_4: (lx) =>
+    lesson(lx, 19, 4, "When the Guest Is Not Happy", "Khi khách không hài lòng", {
+      vocabulary: [
+        v(
+          "Bring another one",
+          "/brɪŋ əˈnʌðə wʌn/",
+          "Mang món khác ra",
+          "Would you like me to bring another one?",
+          "🍽️",
+        ),
+        v(
+          "Take it back",
+          "/teɪk ɪt ˈbæk/",
+          "Mang trả lại bếp",
+          "I will take it back to the kitchen.",
+          "↩️",
+        ),
+      ],
+      grammar: [
+        g(
+          "Food no good? I take.",
+          "I am very sorry, madam. I will take it back.",
+          "Xin lỗi trước, rồi mới nói mình sẽ làm gì.",
+          "I am very sorry, madam. I will taking it back.",
+        ),
+        g(
+          "You want new one or no?",
+          "Would you like me to bring another one?",
+          "'Would you like me to' + động từ nguyên thể là mẫu đề nghị làm giúp.",
+          "Would you like me bring another one?",
+        ),
+      ],
+      speaking: [
+        sp(
+          "This beef is overcooked.",
+          "I am very sorry, madam. I will take it back.",
+          "Không giải thích, không bào chữa. Xin lỗi rồi mang đĩa đi.",
+        ),
+        sp(
+          "I waited thirty minutes for this.",
+          "I am sorry, sir. I will speak to the kitchen now.",
+          "Nhận phần chậm về nhà hàng, đừng kể khách nghe bếp đang bận.",
+        ),
+        sp(
+          "Can I have something else?",
+          "Of course. Would you like me to bring another one?",
+          "Đồng ý ngay, rồi mới hỏi khách muốn gì.",
+        ),
+        sp(
+          "What is wrong at table six?",
+          "The beef is overcooked. Please cook a new one.",
+          "Nói với bếp bằng sự việc, không bằng lời trách.",
+          "colleague",
+        ),
+        sp(
+          "Should I go to the table?",
+          "Yes. Table six is not happy with the beef.",
+          "Gọi quản lý sớm hơn là muộn; khách chờ càng lâu càng khó gỡ.",
+          "manager",
+        ),
+        sp(
+          "How long will the new one take?",
+          "About ten minutes, madam. I will bring bread now.",
+          "Cho một mốc, và cho khách thứ gì đó trong lúc chờ.",
+        ),
+        sp(
+          "We do not want to pay for that.",
+          "I will ask my manager, sir. I cannot decide that.",
+          "Bỏ một món khỏi hoá đơn là quyết định của quản lý ca.",
+        ),
+      ],
+      reading: read(
+        `A guest at table six says the beef is overcooked. ${lx.staff} apologises, takes the plate back and tells the chef at once. The chef cooks a new one. ${lx.staff} brings bread to the table while the guest waits. The manager comes to the table before the bill is written.`,
+        [
+          {
+            q: "Nhân viên làm gì ngay sau lời xin lỗi?",
+            options: [
+              "Mang đĩa về bếp và báo bếp trưởng",
+              "Ghi vào sổ góp ý",
+              "Gọi quản lý trước đã",
+            ],
+            correct: 0,
+            explanation: `"takes the plate back and tells the chef at once"`,
+          },
+          {
+            q: "Trong lúc chờ món mới, khách được mời gì?",
+            options: ["Bánh mì", "Nước ngọt", "Món tráng miệng"],
+            correct: 0,
+            explanation: `"brings bread to the table while the guest waits"`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "This is cold. We have been waiting ages.",
+          "I am very sorry, sir. I will take it back now.",
+          "Sorry sir, kitchen very busy today, many people here.",
+          "I understand, sir. The kitchen is short of staff tonight.",
+          undefined,
+          "Câu thứ ba đúng ngữ pháp và đổ lỗi cho bếp ngay trước mặt khách; khách không cần biết bếp thiếu người, khách cần một đĩa nóng.",
+        ),
+        game(
+          "We are not paying for that dish.",
+          "I will ask my manager, sir. I cannot decide that.",
+          "No pay is not possible, sir, food already cook.",
+          "Of course, sir. I will take it off the bill.",
+          undefined,
+          "Câu thứ ba lịch sự và vượt quyền: bỏ một món khỏi hoá đơn là quyết định của quản lý ca, không phải của người phục vụ.",
+        ),
+      ],
+    }),
 };
 
 function buildWeek(
