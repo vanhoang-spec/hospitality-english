@@ -1764,7 +1764,7 @@ export const SW_WEEK_23: WeekContent = {
     "Health form",
     "Included",
     "Popular choice",
-    "Skin type",
+    "Herbal compress",
   ],
   lessons: [
     {
@@ -8225,10 +8225,10 @@ export const HK_WEEK_37: WeekContent = {
   weekTitleEn: "Insects in the Room, and Lost & Found",
   weekTitleVi: "Côn trùng trong phòng và quy trình đồ thất lạc",
   reviewWords: [
-    "Lost property",
+    "Laundry slip",
     "Lost item log",
     "Pest control team",
-    "Service lift",
+    "Guest lift",
     "Not possible",
     "Move you to another room",
     "Duty manager",
@@ -12165,7 +12165,7 @@ export const FB_WEEK_32: WeekContent = {
   weekTitleVi: "Tư vấn từ chính bàn khách trước mặt",
   reviewWords: [
     "Recommend",
-    "Chef suggestion",
+    "Chef's choice",
     "Favourite",
     "Still water",
     "Tasting menu",
@@ -14661,7 +14661,7 @@ export const FB_WEEK_38: WeekContent = {
     "Table layout",
     "Wine order",
     "VAT",
-    "Discount",
+    "Payment option",
     "Confirm the table",
   ],
   lessons: [
@@ -16667,8 +16667,8 @@ export const HK_WEEK_32: WeekContent = {
     "Preferred time",
     "Feather pillow",
     "Room note",
-    "Service lift",
-    "Lost property",
+    "Guest lift",
+    "Laundry slip",
   ],
   lessons: [
     {
@@ -18338,9 +18338,9 @@ export const HK_WEEK_36: WeekContent = {
   reviewWords: [
     "Report",
     "Unattended",
-    "Service entrance",
+    "Smoking area",
     "Not possible",
-    "Service lift",
+    "Guest lift",
     "Duty manager",
     "Engineering team",
     "Wet floor sign",
