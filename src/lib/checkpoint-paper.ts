@@ -632,9 +632,27 @@ export function buildPaper(dep: string, week: string): Question[] {
     const keyHands = handsOffTo(s.targetResponse);
     const sameRecipient = (t: string) =>
       keyHands.size > 0 && [...handsOffTo(t)].some((w) => keyHands.has(w));
+    // A shape, not a list. MOVES catches the frames somebody remembered, and
+    // three audits measured what it misses: a distractor that opens with the
+    // same words as the key and differs only in an object the audio never
+    // names is a second right answer whatever frame it belongs to.
+    // "Could I have your newspaper choice?" beside "Could I have your travel
+    // purpose?" for "What do you need from me?" — 8.7% to 18.6% of listening
+    // items depending on the department, better than one a paper.
+    const openingWords = (t: string) =>
+      t
+        .toLowerCase()
+        .replace(/[^a-z ]/g, " ")
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 4)
+        .join(" ");
+    const keyOpening = openingWords(s.targetResponse);
+    const sameFrame = (t: string) => openingWords(t) === keyOpening;
     const secondRightAnswer = (t: string) =>
       pullsAway(t) ||
-      (!discriminated(t) && ((keyMove >= 0 && moveIdx(t) === keyMove) || sameRecipient(t)));
+      (!discriminated(t) &&
+        ((keyMove >= 0 && moveIdx(t) === keyMove) || sameRecipient(t) || sameFrame(t)));
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
     const usable = widened.filter(
       (t) => !nearlySameAnswer(t, s.targetResponse) && !secondRightAnswer(t),

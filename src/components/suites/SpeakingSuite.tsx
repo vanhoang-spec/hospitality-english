@@ -336,11 +336,23 @@ function SpeakingSuiteInner({
                   Thiếu đuôi -s: {result.inflectionErrors.join(", ")} — nghe kỹ âm cuối rồi nói lại
                 </div>
               )}
+              {/* The commonest failure in the whole course had no words. A learner
+                  who drops an article or a pronoun — the exact L1 error this
+                  product exists to correct — saw a percentage and nothing else:
+                  an audit deleted one token at a time across 248 items and
+                  found 36.7% of the failures silent. utterancePassed had been
+                  returning missingFunction the whole time; nothing rendered it. */}
+              {!result.passed && result.missingFunction.length > 0 && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Thiếu {result.missingFunction.join(", ")} — chữ nhỏ nhưng bắt buộc, nói lại cho đủ
+                </div>
+              )}
               {!result.passed &&
                 result.missingRequired.length === 0 &&
                 result.addedNegation.length === 0 &&
                 result.insertedWords.length === 0 &&
                 result.missingContent.length === 0 &&
+                result.missingFunction.length === 0 &&
                 result.inflectionErrors.length === 0 &&
                 result.accuracy * 100 >= th.accPct &&
                 result.orderRatio < th.orderRatio && (

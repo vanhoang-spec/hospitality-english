@@ -149,7 +149,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "Will you keep it long?",
-      "We keep briefly, sir — about two minutes.",
+      "We keep it briefly, sir — about two minutes.",
       "Ôn tuần 17: briefly là trạng từ, đứng ngay sau động từ.",
     ),
     sp(

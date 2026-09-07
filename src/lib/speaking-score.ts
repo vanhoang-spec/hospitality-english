@@ -199,6 +199,65 @@ const FINITE_VERBS = new Set<string>(
   ).split(" "),
 );
 
+/** Whether a word sits where the sentence's own verb has to be.
+ *
+ *  FINITE_VERBS is a list by name, and a list by name only ever covers the
+ *  verbs somebody remembered. An audit deleted each department's OWN verbs and
+ *  found eighteen Spa sentences still passing without them — including
+ *  "Please undress to your comfort level, madam.", which the lesson's help tip
+ *  calls the most important sentence in the lesson, and "If you feel a cramp,
+ *  please signal our lifeguard.", which is a first-aid instruction.
+ *
+ *  So the test is positional instead. English puts the finite verb in a small
+ *  number of places, and every one of those failures sits in one of them: the
+ *  word right after a leading "please", after a modal, after a subject pronoun
+ *  and its frequency adverb, or after a determiner-headed subject. A word in
+ *  one of those slots carries the predicate whether or not anyone listed it.
+ */
+function holdsThePredicate(word: string, target: string): boolean {
+  const w = target
+    .toLowerCase()
+    .replace(/[^a-z' ]/g, " ")
+    .split(" ")
+    .filter(Boolean);
+  const at = w.indexOf(word);
+  if (at <= 0) return false;
+  const before = w[at - 1]!;
+  const twoBefore = at >= 2 ? w[at - 2]! : "";
+  const SUBJECT = new Set(["i", "we", "you", "he", "she", "they", "it"]);
+  const MODAL = new Set([
+    "will",
+    "would",
+    "can",
+    "could",
+    "may",
+    "might",
+    "must",
+    "shall",
+    "should",
+    "do",
+    "does",
+  ]);
+  const ADVERB = new Set([
+    "always",
+    "never",
+    "often",
+    "usually",
+    "sometimes",
+    "just",
+    "then",
+    "also",
+  ]);
+  const DETERMINER = new Set(["the", "a", "an", "your", "our", "my", "this", "that"]);
+  if (before === "please") return true;
+  if (MODAL.has(before)) return true;
+  if (SUBJECT.has(before)) return true;
+  if (ADVERB.has(before) && (SUBJECT.has(twoBefore) || MODAL.has(twoBefore))) return true;
+  // "The price includes locker access." — determiner, head noun, then the verb.
+  if (at >= 2 && DETERMINER.has(twoBefore)) return true;
+  return false;
+}
+
 /** Words a lesson is ABOUT, which the one-word allowance must never spend
  *  itself on. The allowance says a long model may lose one word; it did not
  *  say WHICH, so a review found ten items where the droppable word was the
@@ -984,7 +1043,9 @@ export function utterancePassed(
   // passing with one copy gone: "This one brighter. That one is bright."
   // against "This one IS brighter…" at 88%. Eleven items behaved that way, the
   // same shape of bug this file already fixed once for function tokens.
-  const missingVerb = missingContent.some((t) => FINITE_VERBS.has(t));
+  const missingVerb =
+    missingContent.some((t) => FINITE_VERBS.has(t)) ||
+    missingContent.some((t) => holdsThePredicate(t, target));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {

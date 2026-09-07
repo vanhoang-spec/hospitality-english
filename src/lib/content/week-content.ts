@@ -363,10 +363,10 @@ export const FO_WEEK_17: WeekContent = {
           icon: "⚖️",
         },
         {
-          word: "Keep briefly",
-          phonetic: "/kiːp ˈbriːfli/",
+          word: "Keep it briefly",
+          phonetic: "/kiːp ɪt ˈbriːfli/",
           definition: "Giữ lại trong thời gian ngắn",
-          context: "I will keep your passport briefly to scan it.",
+          context: "We keep it briefly, then return it to you.",
           icon: "⏱️",
         },
       ],
@@ -387,9 +387,9 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Sure, here is my passport. Do you need to keep it?",
-          targetResponse: "Thank you, sir. We keep briefly for local registration.",
+          targetResponse: "Thank you, sir. We keep it briefly for local registration.",
           helpTip:
-            "Nối 'keep briefly' thành một hơi — âm /p/ chạy thẳng sang 'briefly', không tách rời.",
+            "Nối 'keep it briefly' thành một hơi — âm /p/ chạy thẳng sang 'it', không tách rời.",
         },
         {
           guestPrompt: "Why do you need my passport?",
@@ -26057,6 +26057,13 @@ for (const built of Object.values(REGISTRY))
         if (DISCOURSE_NOUNS.has(n)) continue;
         if (!previous.includes(n)) return;
       }
+      // Two turns are only one exchange if the same person is speaking to the
+      // learner. Without this, a guest line was chained to a colleague's
+      // follow-up — "I am preparing the paperwork now." answered by a
+      // colleague asking "And what happened after that?" — and the checkpoint
+      // draws a whole chain as one oral item, so a broken chain became a
+      // broken exam question.
+      if ((all[i - 1].speakerRole ?? "guest") !== (item.speakerRole ?? "guest")) return;
       item.follows = all[i - 1].targetResponse;
     });
 

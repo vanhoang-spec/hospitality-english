@@ -79,8 +79,12 @@ type OralItem = {
 
 /** Five spoken items drawn from across the phase, same pool the written
  *  paper samples. Tagged with their source week, which is why this walks
- *  the week records rather than the flattened lesson list. */
-function buildOral(dep: string, week: string): OralItem[] {
+ *  the week records rather than the flattened lesson list.
+ *
+ *  Exported so a measurement can call it. Three audits had to copy this
+ *  function into their own scripts to measure the draw, and a copied rule is
+ *  a rule that stops being the one that ships. */
+export function buildOral(dep: string, week: string): OralItem[] {
   const items = weeksInPhase(week).flatMap((w) => {
     const c = getWeekContent(dep, String(w));
     if (!c) return [];
@@ -135,12 +139,18 @@ function buildOral(dep: string, week: string): OralItem[] {
     if (!byWeek.has(wk)) byWeek.set(wk, []);
     byWeek.get(wk)!.push(i);
   }
-  // Within a week, a chain head goes first. A week that teaches a three-turn
-  // exchange has one of them among thirty single turns, so leaving it to the
-  // shuffle drew it on 3.6% of sittings — the can-do would stay unmeasured
-  // with the grouping fixed and nothing else changed.
+  // Within a week, a chain head goes first — SOMETIMES. Pinning it every time
+  // is what a flat "one draw per week" does to a pool once most weeks have a
+  // chain: three audits measured the result independently and agreed. Only
+  // 106 of 246 items could ever be drawn, 77% of everything a learner had to
+  // say was one of twelve sentences, and memorising those twelve passed the
+  // oral half 100% of the time. A certificate that says "speaking" cannot be
+  // won by learning twelve sentences.
+  //
+  // A third of sittings still lead with the chain, which is enough to measure
+  // the multi-turn can-do; the rest draw from the whole week.
   for (const list of byWeek.values())
-    list.sort((a, b) => Number(!nextOf.has(a)) - Number(!nextOf.has(b)));
+    if (Math.random() < 0.33) list.sort((a, b) => Number(!nextOf.has(a)) - Number(!nextOf.has(b)));
 
   // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
   // its three turns in a row the way the lesson taught them.
@@ -152,9 +162,22 @@ function buildOral(dep: string, week: string): OralItem[] {
     for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
     units++;
   };
+  // Five draws cannot cover eight weeks, so a topic that lives in one week can
+  // be missed entirely. Two managers measured what that costs: 95% of sittings
+  // never asked for a single "I cannot decide that — may I ask my manager?"
+  // sentence, and 58% asked for no safety language at all, in a course whose
+  // own help tip calls the first of those the most important sentence of the
+  // phase. One draw goes first to that pool, before the per-week pass, so the
+  // reservation never has to be taken back out of a chain.
+  const CARRIES_AUTHORITY =
+    /manager|supervisor|front desk|cannot decide|not allowed|may not|must not|do not touch|i am afraid|call security|not able to/i;
+  const safety = shuffle(heads).filter((i) => CARRIES_AUTHORITY.test(items[i].target));
+  if (safety.length) take(safety[0]);
+
   for (const wk of shuffle([...byWeek.keys()])) {
     if (units >= CHECKPOINT_ORAL_ITEMS) break;
-    take(byWeek.get(wk)![0]);
+    const next = byWeek.get(wk)!.find((i) => !used.has(i));
+    if (next !== undefined) take(next);
   }
   for (const i of shuffle(heads)) {
     if (units >= CHECKPOINT_ORAL_ITEMS) break;
@@ -502,7 +525,10 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     // may stand in for speech when the device failed — a browser with no
     // SpeechRecognition, a firewalled property, a locked-down handset — and
     // not otherwise, or the certificate says "speaking" about a keyboard.
-    const spokenAtAll = results.some((r) => !r.typed);
+    // "At least one spoken item" was too weak: speak once, fail it, then type
+    // the other four and the oral half still counts. The spoken items have to
+    // carry the pass on their own.
+    const spokenAtAll = results.filter((r) => !r.typed).length >= oralPassMin(results.length);
     const oralCounts = deviceFailed || spokenAtAll;
     const ok =
       writtenOk &&

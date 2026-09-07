@@ -465,7 +465,7 @@ function week16(lx: Ctx): LessonContent[] {
         ),
         sp(
           "That sounds good, yes please.",
-          `Certainly. I will arrange it right away.`,
+          `Certainly. I will check and confirm right away.`,
           "Nhận lời rồi cam kết hành động ngay.",
         ),
         sp(
@@ -831,7 +831,7 @@ function week17(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Sorry, could you repeat that?",
-          `Please say it clearly.`,
+          `Of course. Let me say it clearly.`,
           "Đề nghị lịch sự mở bằng Please + động từ nguyên thể.",
           "colleague",
         ),
@@ -2419,7 +2419,7 @@ function week21(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(e6, `We had twelve ${lo(e6)} today, and all went well.`),
         bw(e2, `The guest ${lo(e2)} at noon.`),
-        bw(e10, `I ${lo(e10)} everything down.`),
+        bw(e10, `I ${lo(e10)} everything in the log.`),
       ],
       grammar: [
         g(
@@ -2430,9 +2430,9 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         g(
           `I note all already.`,
-          `I ${lo(e10)} everything down, so nothing is forgotten.`,
-          "Động từ quá khứ + tân ngữ 'everything' + tiểu từ 'down'.",
-          `I am ${lo(e10)} everything down.`,
+          `I ${lo(e10)} everything in the log, so nothing is forgotten.`,
+          "Động từ quá khứ + tân ngữ 'everything' + cụm chỉ nơi ghi: in the log.",
+          `I am ${lo(e10)} everything in the log.`,
         ),
       ],
       speaking: [
@@ -2444,7 +2444,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did you record all of that?",
-          `Yes, I ${lo(e10)} everything down.`,
+          `Yes, I ${lo(e10)} everything in the log.`,
           "Ghi chép đầy đủ là nền tảng của bàn giao ca tốt.",
           "colleague",
         ),
@@ -2520,7 +2520,7 @@ function week21(lx: Ctx): LessonContent[] {
         g(
           `It take long time.`,
           `It ${lo(e7)} than usual, sir.`,
-          "Động từ 'take' ở quá khứ là 'took'; so sánh dùng 'than usual'.",
+          "So sánh hơn: động từ chia quá khứ + 'than usual' — dài hơn thường lệ.",
           `It ${lo(e7)} that usual, sir.`,
         ),
       ],
@@ -2773,9 +2773,9 @@ function week22(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên hứa gì về thời gian?",
-            options: ["Mọi thứ xong đúng giờ", "Sẽ trễ một chút", "Không hứa gì về giờ"],
+            options: [`Mọi thứ xong ${lo(w2)}`, "Sẽ trễ một chút", "Không hứa gì về giờ"],
             correct: 0,
-            explanation: '"Everything will be ready on time."',
+            explanation: `"Everything will be ready ${lo(w2)}."`,
           },
           {
             q: "Khách đồng ý với mấy đề nghị?",
@@ -3019,7 +3019,7 @@ function week22(lx: Ctx): LessonContent[] {
         g(
           `Today all good, no problem.`,
           `Today went well, because the team finished ahead of time.`,
-          "Ôn tuần 21: 'went' là quá khứ của 'go'; cụm 'with no problems' gọn và chuẩn.",
+          "Ôn tuần 21: 'went' là quá khứ của 'go'; nêu lý do bằng 'because' rồi mới tới mệnh đề.",
           `Today went well, because the team finish ahead of time.`,
         ),
         g(
@@ -3056,7 +3056,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did you keep a record?",
-          `I ${lo(pe10)} everything down, so the next shift knows.`,
+          `I ${lo(pe10)} everything in the log, so the next shift knows.`,
           "Ôn tuần 21: ghi chép là phần bắt buộc của bàn giao.",
           "colleague",
         ),

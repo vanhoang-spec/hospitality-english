@@ -20,9 +20,14 @@
  * classify confidently returns null and the tip is left alone.
  */
 
-/** Tips that already name a form are left untouched. */
+/** Tips that already name a form are left untouched.
+ *
+ *  The first version of this list carried the bare token "thì " — one of the
+ *  commonest words in Vietnamese, meaning "then". Every tip containing it was
+ *  read as already naming a tense and skipped, so the sentences that most
+ *  needed a note were the ones that could never get one. */
 const NAMES_A_FORM =
-  /động từ|mạo từ|thì |chủ ngữ|trạng từ|giới từ|số nhiều|quá khứ|hiện tại|bị động|so sánh|đuôi -s|tính từ|danh từ|trợ động từ|-ing|to \+|câu hỏi|thứ tự từ|đại từ/i;
+  /động từ|mạo từ|ở thì |chia thì |thì hiện tại|thì quá khứ|thì tương lai|chủ ngữ|trạng từ|giới từ|số nhiều|quá khứ|hiện tại|bị động|so sánh|đuôi -s|tính từ|danh từ|trợ động từ|-ing|to \+|câu hỏi|thứ tự từ|đại từ/i;
 
 const PAST =
   /\b(was|were|had|went|took|came|made|said|got|arrived|confirmed|cleaned|served|noted|listed|completed|arranged|finished|started|sent|checked|booked|signed|added|fixed|prepared|reported)\b/i;
@@ -54,14 +59,30 @@ export function formNote(target: string): string | null {
   // "not" may sit between the auxiliary and the participle: "is not confirmed"
   // is still passive, and reading it as a past simple would teach the wrong
   // thing about the most common negative shape in the phase.
+  // An adverb may sit between the auxiliary and the participle — "is fully
+  // booked" — and without this slot the past-simple branch below claimed it,
+  // teaching an adjectival participle as a past tense five weeks before the
+  // past tense is taught at all.
+  // Not every -ed word after a copula is a participle. "unlimited" and
+  // "unhurried" are adjectives that never had a verb, and calling them passive
+  // teaches a structure the sentence does not contain.
+  const ADJECTIVE_ED =
+    /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly)$/;
   if (
     (m = s.match(
-      / (is|are|was|were) (not )?(\w+ed|given|taken|made|sent|put|shown|held|kept|written|done) /,
-    ))
+      / (is|are|was|were) (not |fully |already |now |just )?(\w+ed|given|taken|made|sent|put|shown|held|kept|written|done) /,
+    )) &&
+    !ADJECTIVE_ED.test(m[3])
   )
     return `Bị động: '${m[1]}' + phân từ hai — ${m[1]} ${m[2] ?? ""}${m[3]}.`;
 
-  if ((m = s.match(/ (am|is|are) (\w+ing) /)))
+  // "everything", "morning", "evening" and their kin end in -ing and are not
+  // participles: "and that is everything" was being taught as a present
+  // continuous. A note that names the wrong form is worse than no note.
+  if (
+    (m = s.match(/ (am|is|are) (\w+ing) /)) &&
+    !/^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing)$/.test(m[2])
+  )
     return `Hiện tại tiếp diễn cho việc đang làm: ${m[1]} ${m[2]}.`;
 
   if (
@@ -82,8 +103,16 @@ export function formNote(target: string): string | null {
   // The whole noun phrase, not the adjective in front of it: "a good match",
   // never "a good". The {0,2} prefix is lazy so the phrase stops at the first
   // boundary rather than swallowing "a day pass today".
+  // The phrase runs to a real boundary, so "a city tour" is not cut down to
+  // "a city" and "a safety rule here" does not swallow the adverb. Adding
+  // "here", "there" and "too" to the terminators fixed the second; making the
+  // head noun greedy up to a terminator fixed the first.
+  // The terminators need a boundary of their own: without one, "to" matched
+  // the front of "tour" and cut "a city tour" down to "a city".
+  // A finite verb ends the phrase too, or "A towel cover stays on at all
+  // times." hands back "a towel cover stays" as the noun.
   const nounPhrase =
-    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|to|in|on|at|with|of|and|is|was|today|now|please|sir|madam))/i;
+    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|here|there|please|sir|madam)(?![a-z]))/i;
   if ((m = target.match(nounPhrase)))
     return m[1].toLowerCase() === "an"
       ? `Mạo từ 'an' đứng trước âm nguyên âm: an ${m[2].toLowerCase()}.`
