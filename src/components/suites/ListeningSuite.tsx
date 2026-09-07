@@ -63,16 +63,23 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
     content.lessons.flatMap((l) => l.vocabulary.flatMap((v) => v.word.toLowerCase().split(/\s+/))),
   );
 
+  // Built from the speaking pairs, not from l.game. The arcade rounds are the
+  // same prompts and the same three bubbles, word for word, so a learner who
+  // played the arcade first was answering from memory and the block measured
+  // recall rather than listening. The checkpoint moved off this source for
+  // exactly that reason; the weekly practice had not.
+  const allTargets = content.lessons.flatMap((l) => l.speaking.map((s) => s.targetResponse));
   const chooses: ListeningTask[] = content.lessons.flatMap((l) =>
-    l.game.map((round, gi) => {
-      const opts = shuffle(round.options.map((o) => ({ ...o })));
+    l.speaking.map((sp, si) => {
+      const others = shuffle(allTargets.filter((t) => t !== sp.targetResponse)).slice(0, 2);
+      const opts = shuffle([sp.targetResponse, ...others]);
       return {
         kind: "choose" as const,
-        key: `choose:${l.lessonId}:${gi}`,
-        audio: round.prompt,
-        options: opts.map((o) => o.text),
-        correctIdx: opts.findIndex((o) => o.correct),
-        audioWho: speakerAudioLabel(round),
+        key: `choose:${l.lessonId}:${si}`,
+        audio: sp.guestPrompt,
+        options: opts,
+        correctIdx: opts.indexOf(sp.targetResponse),
+        audioWho: speakerAudioLabel(sp),
       };
     }),
   );

@@ -588,7 +588,7 @@ function week16(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `A guest worries about the cost. ${lx.staff} explains: "${Wt(o8)} is free for our guests, sir. The price also includes ${lo(o10)}." The guest is pleased. Nothing is added to the bill.`,
+        `A guest worries about the cost. ${lx.staff} explains: "${Wt(o8)} is free for our guests, sir. The price also includes ${lo(o10)}." The guest is pleased. The service charge stays on its own line.`,
         [
           {
             q: "Khách có phải trả thêm tiền không?",
@@ -597,10 +597,10 @@ function week16(lx: Ctx): LessonContent[] {
             explanation: `"${Wt(o8)} is free for our guests" — miễn phí.`,
           },
           {
-            q: "Hoá đơn có bị cộng thêm gì không?",
-            options: ["Không cộng thêm gì", "Cộng thêm mười phần trăm", "Cộng thêm phí phục vụ"],
+            q: "Phí phục vụ nằm ở đâu trên hoá đơn?",
+            options: ["Trên một dòng riêng", "Đã gộp trong giá phòng", "Không có phí này"],
             correct: 0,
-            explanation: '"Nothing is added to the bill."',
+            explanation: '"The service charge stays on its own line."',
           },
         ],
       ),

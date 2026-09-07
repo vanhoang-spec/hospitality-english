@@ -26067,6 +26067,49 @@ for (const built of Object.values(REGISTRY))
       item.follows = all[i - 1].targetResponse;
     });
 
+// A review label has to point at something the learner met. When a week is
+// hand-authored or replaced by a department lesson, that week's bank group
+// never becomes vocabulary cards for that department — but the review slots in
+// later weeks still read the group by index, so they produce sentences built
+// on words with no card, no phonetic and no Vietnamese gloss, under a tip that
+// says "Ôn tuần 15". An audit called this the worst finding in its report, and
+// the reason is exactly right: a self-learner has nobody to ask what the word
+// is or why they were told they had already learned it.
+//
+// The sentence itself is usually harmless — "First I enter the room" explains
+// itself. The false claim is not, so it is the claim that goes.
+{
+  const norm = (t: string) =>
+    t
+      .toLowerCase()
+      .replace(/[^a-z0-9' ]/g, " ")
+      .replace(/  +/g, " ")
+      .trim();
+  // Headwords per department AND week, because the claim a label makes is
+  // about one specific week: "Ôn tuần 15" is only true if the sentence carries
+  // something week 15 actually taught this department.
+  const cardsOf = new Map<string, string[]>();
+  for (const [key, wk] of Object.entries(REGISTRY))
+    cardsOf.set(
+      key,
+      wk.lessons.flatMap((l) => l.vocabulary.map((v) => norm(v.word))).filter((w) => w.length > 3),
+    );
+  for (const [key, wk] of Object.entries(REGISTRY)) {
+    const dep = key.split("-")[0]!;
+    for (const lesson of wk.lessons)
+      for (const item of lesson.speaking) {
+        const m = /^Ôn tuần ([0-9]+)(?: và ([0-9]+))?(?: — cách [a-zà-ỹ ]+)?: /.exec(item.helpTip);
+        if (!m) continue;
+        const said = norm(item.targetResponse);
+        const claimed = [m[1], m[2]]
+          .filter(Boolean)
+          .flatMap((w) => cardsOf.get(`${dep}-${w}`) ?? []);
+        if (!claimed.some((w) => said.includes(w)))
+          item.helpTip = item.helpTip.slice(m[0].length).replace(/^./, (c) => c.toUpperCase());
+      }
+  }
+}
+
 export const AVAILABLE_WEEKS = Array.from(
   new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
 ).sort((a, b) => a - b);

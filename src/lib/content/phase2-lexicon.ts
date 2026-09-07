@@ -766,7 +766,12 @@ const HK_BANK: P2Bank = {
     },
   ],
   paperwork: [
-    { word: "Room list", phonetic: "/ruːm lɪst/", definition: "Danh sách phòng", icon: "📋" },
+    {
+      word: "Valet ticket",
+      phonetic: "/ˈvæleɪ ˈtɪkɪt/",
+      definition: "Phiếu nhận đồ giặt là",
+      icon: "📋",
+    },
     {
       word: "Signature",
       phonetic: "/ˈsɪɡnətʃə/",
@@ -815,9 +820,9 @@ const HK_BANK: P2Bank = {
       icon: "🧪",
     },
     {
-      word: "Glove policy",
-      phonetic: "/ɡlʌv ˈpɒləsi/",
-      definition: "Quy định dùng găng tay",
+      word: "Cleaning policy",
+      phonetic: "/ˈkliːnɪŋ ˈpɒləsi/",
+      definition: "Quy định dọn phòng",
       icon: "🧤",
     },
     {
@@ -910,9 +915,9 @@ const HK_BANK: P2Bank = {
       // Slot 9 fills "I would suggest the {w}, because it is popular." and
       // "Most guests choose the {w}." — it has to BE a choice, not the act of
       // choosing: "I would suggest the guest decision" recommended nothing.
-      word: "Morning cleaning",
-      phonetic: "/ˈmɔːnɪŋ ˈkliːnɪŋ/",
-      definition: "Dọn phòng buổi sáng",
+      word: "Late clean",
+      phonetic: "/leɪt kliːn/",
+      definition: "Dọn muộn theo yêu cầu",
       icon: "🌅",
     },
   ],
