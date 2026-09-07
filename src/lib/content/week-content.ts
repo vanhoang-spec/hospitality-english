@@ -263,7 +263,8 @@ export const FO_WEEK_17: WeekContent = {
           guestPrompt: "Hello, I have a booking under the name of David Green.",
           targetResponse:
             "Good morning, sir. Welcome to our hotel. Let me check our system for your name, please.",
-          helpTip: "Remember to pronounce the ending sound in 'good morning' and 'welcome'.",
+          helpTip:
+            "Bật rõ âm cuối của 'good morninG' và 'welcomE' — nuốt âm cuối là lỗi phát âm phổ biến nhất của người Việt.",
         },
         {
           guestPrompt: "Good evening, we just arrived.",
@@ -320,12 +321,16 @@ export const FO_WEEK_17: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng hỏi như kiểm tra giấy tờ; đón khách bắt đầu bằng lời mời, không bằng lời tra hỏi.",
+            "Câu này đúng ngữ pháp nhưng hỏi như kiểm tra giấy tờ; đón khách bắt đầu bằng lời mời, không bằng lời tra hỏi.",
           prompt: "Good evening. I have a reservation for tonight.",
           options: [
-            { text: "May I have your name, please?", correct: true },
-            { text: "Give me name, and passport also now.", correct: false },
-            { text: "Who are you, sir, and which room is yours?", correct: false },
+            { text: "May I have your name, please?", correct: true, kind: "answer" },
+            { text: "Give me name, and passport also now.", correct: false, kind: "form" },
+            {
+              text: "Who are you, sir, and which room is yours?",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -384,7 +389,8 @@ export const FO_WEEK_17: WeekContent = {
           guestPrompt: "Sure, here is my passport. Do you need to keep it?",
           targetResponse:
             "Thank you, sir. I just need to keep it briefly for our local registration process.",
-          helpTip: "Focus on the linked sound in 'keep it briefly'.",
+          helpTip:
+            "Nối 'keep it' thành một hơi — âm /p/ chạy thẳng sang 'it', không tách rời hai chữ.",
         },
         {
           guestPrompt: "Why do you need my passport?",
@@ -440,12 +446,24 @@ export const FO_WEEK_17: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp và sai quy trình: hộ chiếu chỉ giữ đủ lâu để quét, không giữ suốt kỳ lưu trú.",
+            "Câu này đúng ngữ pháp và sai quy trình: hộ chiếu chỉ giữ đủ lâu để quét, không giữ suốt kỳ lưu trú.",
           prompt: "Will you be holding on to my passport for long?",
           options: [
-            { text: "I just need to keep it briefly for local registration, sir.", correct: true },
-            { text: "Give passport now, sir, I keep for the registration.", correct: false },
-            { text: "We must keep your passport until you leave the hotel.", correct: false },
+            {
+              text: "I just need to keep it briefly for local registration, sir.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Give passport now, sir, I keep for the registration.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "We must keep your passport until you leave the hotel.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -527,7 +545,7 @@ export const FO_WEEK_17: WeekContent = {
           guestPrompt: "Why do you need my credit card if the room is already paid?",
           targetResponse:
             "I understand, madam. This is just a temporary deposit for any incidental charges during your stay.",
-          helpTip: "Pronounce 'incidental charges' clearly by breaking it down: in-ci-den-tal.",
+          helpTip: "Đọc 'incidental' tách bốn nhịp: in-ci-den-tal, trọng âm rơi vào 'den'.",
         },
         {
           guestPrompt: "That is strange. There is definitely money in that account.",
@@ -601,15 +619,20 @@ export const FO_WEEK_17: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp và sai bản chất: đó là khoản tạm giữ, không phải khoản đã thu.",
+            "Câu này đúng ngữ pháp và sai bản chất: đó là khoản tạm giữ, không phải khoản đã thu.",
           prompt: "What is this extra hold on my card for?",
           options: [
             {
               text: "This is just a temporary deposit for incidental charges, madam.",
               correct: true,
+              kind: "answer",
             },
-            { text: "Minibar is not free, madam, so we take money.", correct: false },
-            { text: "It is a charge, madam. That money is gone now.", correct: false },
+            { text: "Minibar is not free, madam, so we take money.", correct: false, kind: "form" },
+            {
+              text: "It is a charge, madam. That money is gone now.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
         {
@@ -620,14 +643,17 @@ export const FO_WEEK_17: WeekContent = {
             {
               text: "Not at all, sir. May I ask you to step this way for a moment?",
               correct: true,
+              kind: "answer",
             },
             {
               text: "The machine says declined, sir. Please give me a different card now.",
               correct: false,
+              kind: "register",
             },
             {
               text: "Your bank has refused this payment, sir. You should call your bank.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -687,7 +713,8 @@ export const FO_WEEK_17: WeekContent = {
           guestPrompt: "Thank you. What time is breakfast served tomorrow morning?",
           targetResponse:
             "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
-          helpTip: "Ensure a clear 't' sound at the end of 'breakfast' and 's' sound in 'served'.",
+          helpTip:
+            "Bật âm /t/ cuối 'breakfast' và âm /d/ cuối 'served' — thiếu hai âm này câu nghe như chưa nói xong.",
         },
         {
           guestPrompt: "How do I get into the room?",
@@ -744,17 +771,23 @@ export const FO_WEEK_17: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng không có giờ; khách có chuyến bay sớm cần đúng một con số.",
+            "Câu này đúng ngữ pháp nhưng không có giờ; khách có chuyến bay sớm cần đúng một con số.",
           prompt: "We have an early flight. When does breakfast open?",
           options: [
             {
               text: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
               correct: true,
+              kind: "answer",
             },
-            { text: "Go to the first floor and eat there from six to ten, sir.", correct: false },
+            {
+              text: "Go to the first floor and eat there from six to ten, sir.",
+              correct: false,
+              kind: "register",
+            },
             {
               text: "Breakfast is over there, sir, so please just go along whenever you like.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -816,6 +849,8 @@ export const FB_WEEK_15: WeekContent = {
           rude: "You're not on the list.",
           polite:
             "I'm sorry, I can't find your name on the list just yet. Could you give me a moment?",
+          nearMiss:
+            "I'm sorry, I can't found your name on the list just yet. Could you give me a moment?",
           rule: "Báo tin không vui: xin lỗi trước, rồi rào bằng 'just yet'.",
         },
       ],
@@ -824,7 +859,8 @@ export const FB_WEEK_15: WeekContent = {
           guestPrompt: "Good morning. We're staying in room 512, is breakfast included?",
           targetResponse:
             "Good morning, and welcome. Yes, of course. May I just check your room number on our list, please?",
-          helpTip: "Link 'check your' smoothly so it sounds like one word: 'che-kyer'.",
+          helpTip:
+            "Nối 'check your' thành một hơi, nghe gần như 'che-kyơ' — đừng tách rời hai chữ.",
         },
         {
           guestPrompt: "Where should we wait?",
@@ -890,15 +926,24 @@ export const FB_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba lịch sự nhưng bỏ mất bước kiểm phiếu; khách không lưu trú sẽ ăn sáng mà không ai tính tiền.",
+            "Câu này lịch sự nhưng bỏ mất bước kiểm phiếu; khách không lưu trú sẽ ăn sáng mà không ai tính tiền.",
           prompt: "Hi, we would like breakfast. We are in room 306.",
           options: [
             {
               text: "Good morning, and welcome. May I just check your room number on our list, please?",
               correct: true,
+              kind: "answer",
             },
-            { text: "Room number? I check list now for you, madam, one moment.", correct: false },
-            { text: "Yes, please go and sit down anywhere at all that you like.", correct: false },
+            {
+              text: "Room number? I check list now for you, madam, one moment.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "Yes, please go and sit down anywhere at all that you like.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -958,7 +1003,7 @@ export const FB_WEEK_15: WeekContent = {
           targetResponse:
             "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes? A table will be free very soon.",
           helpTip:
-            "Say 'sorry' gently and keep your tone calm and unhurried, not apologetic in a worried way.",
+            "Nói 'sorry' nhẹ và chậm, giọng bình thản — xin lỗi mà cuống thì khách tưởng có chuyện lớn.",
         },
         {
           guestPrompt: "Why is it so crowded now?",
@@ -1019,17 +1064,23 @@ export const FB_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng bỏ khách đứng chờ vô hạn; chờ có mốc thì khách chấp nhận được.",
+            "Câu này đúng ngữ pháp nhưng bỏ khách đứng chờ vô hạn; chờ có mốc thì khách chấp nhận được.",
           prompt: "Everything looks full. Should we come back later?",
           options: [
             {
               text: "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes?",
               correct: true,
+              kind: "answer",
             },
-            { text: "No table now, sir. You wait here five minute, then I call.", correct: false },
+            {
+              text: "No table now, sir. You wait here five minute, then I call.",
+              correct: false,
+              kind: "form",
+            },
             {
               text: "I don't know, sir. Just stand over there until a table opens up.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -1080,6 +1131,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Coffee's over there.",
           polite: "You'll find the coffee and juice station just next to the bakery corner.",
+          nearMiss: "You'll find the coffees and juice station just next to the bakery corner.",
           rule: "'You'll find…' hướng dẫn khách nhẹ nhàng, thay vì chỉ trỏ hay ra lệnh.",
         },
       ],
@@ -1088,7 +1140,7 @@ export const FB_WEEK_15: WeekContent = {
           guestPrompt: "This is our first time here — where can we find something hot to eat?",
           targetResponse:
             "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
-          helpTip: "Practice linking 'show' and 'you' so they blend smoothly into 'show-you'.",
+          helpTip: "Nối 'show' với 'you' thành một hơi — âm /w/ chạy thẳng sang 'you'.",
         },
         {
           guestPrompt: "Could you take us to a table?",
@@ -1144,20 +1196,23 @@ export const FB_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng đẩy việc tìm sang khách; dẫn tận nơi là chỗ tách khách sạn năm sao khỏi quán ăn.",
+            "Câu này đúng ngữ pháp nhưng đẩy việc tìm sang khách; dẫn tận nơi là chỗ tách khách sạn năm sao khỏi quán ăn.",
           prompt: "We cannot find the hot food. Could you point us there?",
           options: [
             {
               text: "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
               correct: true,
+              kind: "answer",
             },
             {
               text: "Hot food is over there, madam, and bread also over there somewhere.",
               correct: false,
+              kind: "form",
             },
             {
               text: "I don't know exactly, madam. Please look around and you will find it.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -1208,6 +1263,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "Is food ok?",
           polite: "I hope you're enjoying your breakfast so far, is everything to your liking?",
+          nearMiss: "I hope you're enjoy your breakfast so far, is everything to your liking?",
           rule: "'I hope…' kèm câu hỏi đuôi ấm áp để hỏi khách có hài lòng không.",
         },
       ],
@@ -1217,7 +1273,7 @@ export const FB_WEEK_15: WeekContent = {
           targetResponse:
             "I'm so glad to hear that. Would you like me to clear your plates for you?",
           helpTip:
-            "Smile while saying 'glad to hear that' — it naturally lifts your pitch and sounds sincere.",
+            "Mỉm cười khi nói 'glad to hear that' — giọng tự nhiên cao lên và nghe thật lòng.",
         },
         {
           guestPrompt: "Are you taking this away?",
@@ -1282,17 +1338,23 @@ export const FB_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng tiễn khách đi thay vì hỏi có dọn đĩa không; lời khen vừa rồi đáng được đáp lại.",
+            "Câu này đúng ngữ pháp nhưng tiễn khách đi thay vì hỏi có dọn đĩa không; lời khen vừa rồi đáng được đáp lại.",
           prompt: "That was delicious, thank you. We are done now.",
           options: [
             {
               text: "I'm so glad to hear that. Would you like me to clear your plates for you?",
               correct: true,
+              kind: "answer",
             },
-            { text: "Finished, madam? Give plate to me now please, thank you.", correct: false },
+            {
+              text: "Finished, madam? Give plate to me now please, thank you.",
+              correct: false,
+              kind: "form",
+            },
             {
               text: "Okay, goodbye, madam. Please leave the table when you are ready.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -1372,7 +1434,7 @@ export const HK_WEEK_15: WeekContent = {
           targetResponse:
             "Of course, madam. I'm sorry to disturb you. I will come back later. Thank you.",
           helpTip:
-            "Link the words smoothly in 'sorry to disturb' — soften the 't' sound into the next word.",
+            "Nối liền 'sorry to disturb' — âm /t/ của 'to' chạy nhẹ sang chữ sau, không dừng giữa chừng.",
         },
         {
           guestPrompt: "How do I start a room?",
@@ -1428,18 +1490,24 @@ export const HK_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng trách khách; khách quên treo biển không phải chuyện để nhắc lại.",
+            "Câu này đúng ngữ pháp nhưng trách khách; khách quên treo biển không phải chuyện để nhắc lại.",
           prompt: "Hello? I am just getting dressed. Could you wait?",
           options: [
             {
               text: "Of course, madam. I'm sorry to disturb you. I will come back later.",
               correct: true,
+              kind: "answer",
             },
             {
               text: "No problem, madam, I clean quickly now while you get dressed.",
               correct: false,
+              kind: "form",
             },
-            { text: "You should have put the DND sign up on the door, madam.", correct: false },
+            {
+              text: "You should have put the DND sign up on the door, madam.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -1498,8 +1566,7 @@ export const HK_WEEK_15: WeekContent = {
           guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
           targetResponse:
             "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
-          helpTip:
-            "Practice linking 'send up' smoothly — connect the 'd' straight into the 'u' sound.",
+          helpTip: "Nối 'send up' thành một hơi — âm /d/ chạy thẳng sang 'up', nghe như 'sen-dup'.",
         },
         {
           guestPrompt: "Do you have anything extra?",
@@ -1552,20 +1619,23 @@ export const HK_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng để khách chờ mà không hẹn giờ; việc bận của bạn không phải việc của khách.",
+            "Câu này đúng ngữ pháp nhưng để khách chờ mà không hẹn giờ; việc bận của bạn không phải việc của khách.",
           prompt: "Could you send up some towels and a razor, please?",
           options: [
             {
               text: "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
               correct: true,
+              kind: "answer",
             },
             {
               text: "What you want them for, sir? I bring them later maybe today.",
               correct: false,
+              kind: "form",
             },
             {
               text: "Please wait there, sir. I am busy right now with another room.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -1626,7 +1696,7 @@ export const HK_WEEK_15: WeekContent = {
           targetResponse:
             "Certainly, sir. We can set up a rollaway bed in your room. Please note there is a small extra charge per night.",
           helpTip:
-            "Stress the word 'certainly' at the start of your reply to sound warm and confident.",
+            "Nhấn vào 'certainly' ngay đầu câu — đó là chữ làm câu trả lời nghe chắc chắn và ấm.",
         },
         {
           guestPrompt: "My charger does not fit.",
@@ -1685,15 +1755,24 @@ export const HK_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng từ chối trước khi kiểm tra; giường phụ là thứ có thật và có phụ phí.",
+            "Câu này đúng ngữ pháp nhưng từ chối trước khi kiểm tra; giường phụ là thứ có thật và có phụ phí.",
           prompt: "My nephew arrives tonight. Can we add another bed?",
           options: [
             {
               text: "Certainly, sir. We can set up a rollaway bed in your room. There is a small charge per night.",
               correct: true,
+              kind: "answer",
             },
-            { text: "You want bed or not, sir? I bring one tonight maybe.", correct: false },
-            { text: "We do not have any extra beds at all tonight, sir.", correct: false },
+            {
+              text: "You want bed or not, sir? I bring one tonight maybe.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "We do not have any extra beds at all tonight, sir.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -1737,11 +1816,13 @@ export const HK_WEEK_15: WeekContent = {
         {
           rude: "Wake up, we need to clean.",
           polite: "I'm sorry to disturb you. Could I check if you need housekeeping later?",
+          nearMiss: "I'm sorry to disturb you. Could I checked if you need housekeeping later?",
           rule: "Xin lỗi trước bằng 'I'm sorry to disturb you, but…' rồi mới nêu đề nghị.",
         },
         {
           rude: "You have to open the door now.",
           polite: "Whenever it's convenient, please let us know. When may we service the room?",
+          nearMiss: "Whenever it's convenient, please let us know. When may we serviced the room?",
           rule: "'Whenever it's convenient…' để khách tự chọn thời điểm.",
         },
       ],
@@ -1750,8 +1831,7 @@ export const HK_WEEK_15: WeekContent = {
           guestPrompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
           targetResponse:
             "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
-          helpTip:
-            "Let your tone rise gently on 'later' so it sounds like a genuine question, not a command.",
+          helpTip: "Lên giọng nhẹ ở 'later' để câu thành lời hỏi, không thành lời ra lệnh.",
         },
         {
           guestPrompt: "The sign is still up at noon.",
@@ -1819,15 +1899,24 @@ export const HK_WEEK_15: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng trách khách về tấm biển; khách vừa xin lỗi xong.",
+            "Câu này đúng ngữ pháp nhưng trách khách về tấm biển; khách vừa xin lỗi xong.",
           prompt: "Sorry, the sign has been up since yesterday by mistake.",
           options: [
             {
               text: "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
               correct: true,
+              kind: "answer",
             },
-            { text: "You must open the door now, sir, so I clean room.", correct: false },
-            { text: "You should not leave that sign up all day, sir.", correct: false },
+            {
+              text: "You must open the door now, sir, so I clean room.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "You should not leave that sign up all day, sir.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -4363,8 +4452,7 @@ export const SW_WEEK_19: WeekContent = {
           guestPrompt: "Where can I get a towel, and do you have private cabanas?",
           targetResponse:
             "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
-          helpTip:
-            "Link 'towel station' smoothly as one phrase — don't pause between the two words.",
+          helpTip: "Đọc 'towel station' liền một cụm, không ngắt giữa hai chữ.",
         },
         {
           guestPrompt: "How do I open the locker?",
@@ -4424,20 +4512,23 @@ export const SW_WEEK_19: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp nhưng đẩy khách sang người khác cho một câu hỏi bạn trả lời được.",
+            "Câu này đúng ngữ pháp nhưng đẩy khách sang người khác cho một câu hỏi bạn trả lời được.",
           prompt: "Is there somewhere to get towels and a shaded seat?",
           options: [
             {
               text: "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
               correct: true,
+              kind: "answer",
             },
             {
               text: "Towels over there, madam, and cabana all full for today already.",
               correct: false,
+              kind: "form",
             },
             {
               text: "I'm not sure, madam. Please ask another member of staff about that.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -4483,6 +4574,8 @@ export const SW_WEEK_19: WeekContent = {
           rude: "Your kid needs an adult with him.",
           polite:
             "I'm afraid children under 12 must be with an adult. That applies in the pool area.",
+          nearMiss:
+            "I'm afraid childrens under 12 must be with an adult. That applies in the pool area.",
           rule: "'I'm afraid…' làm mềm khi phải nêu quy định bắt buộc.",
         },
         {
@@ -4497,8 +4590,7 @@ export const SW_WEEK_19: WeekContent = {
           guestPrompt: "My son is 8. Can he swim by himself while I relax here?",
           targetResponse:
             "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
-          helpTip:
-            "Stress the words 'under 12' clearly so the guest understands the exact age policy.",
+          helpTip: "Nhấn rõ 'under 12' — đó là con số quyết định, khách phải nghe được chính xác.",
         },
         {
           guestPrompt: "Are there rules for the pool?",
@@ -4557,15 +4649,24 @@ export const SW_WEEK_19: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ hai lịch sự và nguy hiểm nhất: bạn vừa cho một đứa trẻ chín tuổi xuống hồ một mình. Câu thứ ba thì cấm quá tay — quy định là phải có người lớn đi kèm, không phải cấm trẻ em.",
+            "Câu này đúng ngữ pháp và cấm quá tay: quy định là trẻ dưới 12 phải có người lớn đi kèm, không phải cấm trẻ em khỏi hồ. Từ chối rộng hơn quy định cũng là trả lời sai.",
           prompt: "My daughter is 9. May she go in the water alone?",
           options: [
             {
               text: "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
               correct: true,
+              kind: "answer",
             },
-            { text: "Sure, no problem, sir, just relax there and she swim alone.", correct: false },
-            { text: "Children are not allowed in this pool at all, sir.", correct: false },
+            {
+              text: "Sure, no problem, sir, just relax there and she swim alone.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "Children are not allowed in this pool at all, sir.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -4615,6 +4716,8 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "You can't swim, the flag is red.",
           polite: "I'm sorry, sir. Guests may not enter the water now. The red flag is displayed.",
+          nearMiss:
+            "I'm sorry, sir. Guests may not entered the water now. The red flag is displayed.",
           rule: "Bị động 'are not permitted' nêu quy định trang trọng hơn 'can't'.",
         },
       ],
@@ -4624,7 +4727,7 @@ export const SW_WEEK_19: WeekContent = {
           targetResponse:
             "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
           helpTip:
-            "Keep your pitch gentle and falling on 'I understand, sir' so the warning sounds caring, not commanding.",
+            "Hạ giọng ở 'I understand, sir' — lời cảnh báo nghe như quan tâm, không như ra lệnh.",
         },
         {
           guestPrompt: "Is the beach open today?",
@@ -4684,17 +4787,23 @@ export const SW_WEEK_19: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp và nguy hiểm: cờ đỏ không phải ý kiến của bạn về thời tiết.",
+            "Câu này đúng ngữ pháp và nguy hiểm: cờ đỏ không phải ý kiến của bạn về thời tiết.",
           prompt: "Other guests are in the water. Why can't we swim?",
           options: [
             {
               text: "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
               correct: true,
+              kind: "answer",
             },
-            { text: "Rules are rules, sir, no swimming today for anybody at all.", correct: false },
+            {
+              text: "Rules are rules, sir, no swimming today for anybody at all.",
+              correct: false,
+              kind: "register",
+            },
             {
               text: "The weather looks fine, sir. You may swim if you really want.",
               correct: false,
+              kind: "register",
             },
           ],
         },
@@ -4739,6 +4848,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Sit down, you're sick.",
           polite: "Let's get you into the shade and have a seat right away, sir.",
+          nearMiss: "Let's got you into the shade and have a seat right away, sir.",
           rule: "'Let's…' cùng khách hành động, nghe quan tâm chứ không ra lệnh.",
         },
         {
@@ -4754,7 +4864,7 @@ export const SW_WEEK_19: WeekContent = {
           targetResponse:
             "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
           helpTip:
-            "Speak slowly and lower your pitch slightly — a calm voice reassures a guest who feels unwell.",
+            "Nói chậm và hạ giọng xuống một bậc — giọng bình tĩnh trấn an được người đang thấy mệt.",
         },
         {
           guestPrompt: "My leg suddenly hurts.",
@@ -4814,15 +4924,24 @@ export const SW_WEEK_19: WeekContent = {
       game: [
         {
           explanation:
-            "Câu thứ ba đúng ngữ pháp và bỏ một người có dấu hiệu say nắng ngồi lại một mình.",
+            "Câu này đúng ngữ pháp và bỏ một người có dấu hiệu say nắng ngồi lại một mình.",
           prompt: "I feel very hot and a bit faint right now.",
           options: [
             {
               text: "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
               correct: true,
+              kind: "answer",
             },
-            { text: "You be fine, sir, just keep walking slowly to your room.", correct: false },
-            { text: "Please wait here, sir. I will come back to you later.", correct: false },
+            {
+              text: "You be fine, sir, just keep walking slowly to your room.",
+              correct: false,
+              kind: "form",
+            },
+            {
+              text: "Please wait here, sir. I will come back to you later.",
+              correct: false,
+              kind: "register",
+            },
           ],
         },
       ],
@@ -15453,7 +15572,7 @@ export const FB_WEEK_39: WeekContent = {
           targetResponse:
             "Her health first, sir — the first aider is coming. The dessert waits safely with Mai until we are sure.",
           helpTip:
-            "Sức khoẻ trước mọi kịch bản lãng mạn. Câu thứ hai cứu buổi tối: chiếc nhẫn có người giữ TÊN CỤ THỂ, không bị quên.",
+            "Sức khoẻ trước mọi kịch bản lãng mạn. Câu đúng cứu buổi tối: chiếc nhẫn có người giữ TÊN CỤ THỂ, không bị quên.",
         },
       ],
       reading: {

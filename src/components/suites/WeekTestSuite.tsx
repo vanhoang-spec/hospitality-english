@@ -180,7 +180,10 @@ function OralStage({
   onFinish,
 }: {
   items: OralItem[];
-  onFinish: (results: { item: OralItem; passed: boolean; said: string; typed: boolean }[]) => void;
+  onFinish: (
+    results: { item: OralItem; passed: boolean; said: string; typed: boolean }[],
+    deviceFailed: boolean,
+  ) => void;
 }) {
   const [idx, setIdx] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -191,6 +194,12 @@ function OralStage({
     typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
   );
   const [note, setNote] = useState<string | null>(null);
+  // Whether the device actually failed, as opposed to the learner choosing
+  // not to speak. Only the first tells us a typed answer is the best this
+  // learner could give; the results are graded differently for the second.
+  const deviceFailedRef = useRef(
+    typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
+  );
   const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string; typed: boolean }[]>(
     [],
   );
@@ -211,7 +220,7 @@ function OralStage({
       { item, passed: verdict.passed, said: spoken.trim(), typed: wasTyped },
     ];
     if (idx + 1 >= items.length) {
-      onFinish(resultsRef.current);
+      onFinish(resultsRef.current, deviceFailedRef.current);
       return;
     }
     setIdx((i) => i + 1);
@@ -246,6 +255,7 @@ function OralStage({
     // firewalled property looks nothing like `not-allowed` on a locked
     // handset, and neither learner should be graded zero for it.
     r.onerror = () => {
+      deviceFailedRef.current = true;
       setTypedMode(true);
       setNote("Micro hoặc mạng không dùng được — hãy gõ câu trả lời bằng tiếng Anh.");
     };
@@ -285,6 +295,7 @@ function OralStage({
       setRecording(true);
       setNote(null);
     } catch {
+      deviceFailedRef.current = true;
       setTypedMode(true);
       setNote("Không mở được micro — hãy gõ câu trả lời bằng tiếng Anh.");
     }
@@ -325,14 +336,6 @@ function OralStage({
               className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground disabled:opacity-50"
             >
               {recording ? "● Đang thu…" : attempts === 0 ? "🎤 Trả lời" : "🎤 Nói lại"}
-            </button>
-          )}
-          {!typedMode && (
-            <button
-              onClick={() => setTypedMode(true)}
-              className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
-            >
-              Gõ thay vì nói
             </button>
           )}
         </div>
@@ -477,7 +480,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         scorePct: Math.min(pct, CHECKPOINT_PASS_PCT - 1),
       });
       setStage(oral.length >= CHECKPOINT_ORAL_ITEMS ? "oral" : "done");
-      if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, []);
+      if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, [], false);
       return;
     }
     setIdx((i) => i + 1);
@@ -491,10 +494,19 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     pct: number,
     tallied: ConstructTally[],
     results: { item: OralItem; passed: boolean; said: string; typed: boolean }[],
+    deviceFailed: boolean,
   ) {
     const oralPassed = results.filter((r) => r.passed).length;
     const writtenOk = checkpointPassed(pct, tallied);
-    const ok = writtenOk && (results.length === 0 || oralPassed >= oralPassMin(results.length));
+    // A typed answer is graded by the same scorer, but it is not speech. It
+    // may stand in for speech when the device failed — a browser with no
+    // SpeechRecognition, a firewalled property, a locked-down handset — and
+    // not otherwise, or the certificate says "speaking" about a keyboard.
+    const spokenAtAll = results.some((r) => !r.typed);
+    const oralCounts = deviceFailed || spokenAtAll;
+    const ok =
+      writtenOk &&
+      (results.length === 0 || (oralCounts && oralPassed >= oralPassMin(results.length)));
     setOralResults(results);
     if (ok && !awardedRef.current) {
       awardedRef.current = true;
@@ -592,7 +604,12 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   }
 
   if (stage === "oral") {
-    return <OralStage items={oral} onFinish={(results) => finish(scorePct, tallies, results)} />;
+    return (
+      <OralStage
+        items={oral}
+        onFinish={(results, deviceFailed) => finish(scorePct, tallies, results, deviceFailed)}
+      />
+    );
   }
 
   if (stage === "done") {
@@ -677,8 +694,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               </div>
               {oralResults.every((r) => r.typed) && (
                 <p className="mt-2 text-[11px] leading-relaxed text-foreground/55">
-                  Phần này bạn đã GÕ, không phải nói — trình duyệt không nhận được micro. Kết quả
-                  vẫn tính, nhưng hãy luyện lại bằng giọng ở mục Nói khi có thiết bị nhận micro.
+                  Phần này bạn đã GÕ, không phải nói. Bài sát hạch cuối phase chứng nhận kỹ năng
+                  NÓI, nên câu gõ chỉ thay được cho câu nói khi máy thật sự không thu được. Hãy
+                  luyện ở mục Nói rồi thi lại bằng giọng.
                 </p>
               )}
               {/* Targets are revealed only here — during the oral stage they

@@ -487,7 +487,7 @@ function week7(lx: Ctx): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "Ba câu khác nhau một chữ. Câu thứ hai đẩy việc sang khách; câu thứ ba nói mình chắc, trong khi cả bài dạy điều ngược lại.",
+              "Ba câu khác nhau một chữ. Một phương án sai đẩy việc sang khách; phương án sai kia nói mình chắc, trong khi cả bài dạy điều ngược lại.",
           },
           {
             q: "Nhân viên mời khách chờ bằng câu nào?",
@@ -1161,7 +1161,7 @@ function week9(lx: Ctx): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "Hết thứ này thì mời thứ khác. Câu thứ hai chỉ báo hết thêm một lần nữa; câu thứ ba mời lại đúng thứ vừa hết.",
+              "Hết thứ này thì mời thứ khác. Một phương án sai chỉ báo hết thêm một lần nữa; phương án sai kia mời lại đúng thứ vừa hết.",
           },
           {
             q: "Khi nào khách có thể nhận được thứ mình xin?",
@@ -2641,7 +2641,7 @@ function week13(lx: Ctx): LessonContent[] {
           "Manager? Why you want?",
           "I can help you, madam. There is no need.",
           undefined,
-          "Khách xin gặp quản lý thì không thương lượng. Câu thứ hai nghe tự tin nhưng nó chặn một yêu cầu chính đáng, và đó đúng là câu khách sẽ kể lại.",
+          "Khách xin gặp quản lý thì không thương lượng. Câu này nghe tự tin nhưng nó chặn một yêu cầu chính đáng, và đó đúng là câu khách sẽ kể lại.",
         ),
         game(
           `Why is it ${lower(b3)}?`,

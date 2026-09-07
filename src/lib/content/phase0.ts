@@ -601,7 +601,7 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Good evening, madam.",
           "Good evening. Do you want a room?",
           undefined,
-          "Khách vừa nói tên mình ra. 'Good evening, madam.' không sai câu nào, nhưng nó bỏ đi thứ khách vừa đưa cho bạn — dùng HỌ khách là nâng cấp rẻ nhất trong nghề, và lùi về 'madam' là quay lại mức phục vụ cho người lạ. Câu thứ ba thì vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
+          "Khách vừa nói tên mình ra. 'Good evening, madam.' không sai câu nào, nhưng nó bỏ đi thứ khách vừa đưa cho bạn — dùng HỌ khách là nâng cấp rẻ nhất trong nghề, và lùi về 'madam' là quay lại mức phục vụ cho người lạ. Phương án cộc lốc còn lại thì vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
         ),
       ],
     }),
@@ -1600,7 +1600,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Price list no have, sir.",
           "Yes sir, price list I bring you.",
           undefined,
-          "Câu thứ ba đảo tân ngữ lên trước theo trật tự tiếng Việt và thiếu mạo từ — tiếng Anh là chủ ngữ–động từ–tân ngữ: 'I will bring you the price list.' Đây đúng là lỗi mà tuần 2 bài 3 dạy bạn bỏ.",
+          "Câu này đảo tân ngữ lên trước theo trật tự tiếng Việt và thiếu mạo từ — tiếng Anh là chủ ngữ–động từ–tân ngữ: 'I will bring you the price list.' Đây đúng là lỗi mà tuần 2 bài 3 dạy bạn bỏ.",
         ),
         game(
           "Is the wifi free?",

@@ -911,9 +911,9 @@ const HK_BANK: P2Bank = {
     { word: "Updated", phonetic: "/ʌpˈdeɪtɪd/", definition: "Đã cập nhật cho", icon: "🔄" },
     { word: "This morning", phonetic: "/ðɪs ˈmɔːnɪŋ/", definition: "Sáng nay", icon: "🌅" },
     {
-      word: "Rooms cleaned",
-      phonetic: "/ruːmz kliːnd/",
-      definition: "Số phòng đã dọn",
+      word: "Room checks",
+      phonetic: "/ruːm tʃeks/",
+      definition: "Số lượt kiểm phòng",
       icon: "🔢",
     },
     {
