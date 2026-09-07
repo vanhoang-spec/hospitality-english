@@ -659,7 +659,7 @@ function week16(lx: Ctx): LessonContent[] {
         sp(
           "What is the third step?",
           `The third step is to ${lo(pa3)}.`,
-          "Ôn tuần 15: nối bước bằng then.",
+          "Ôn tuần 15: gọi tên bước bằng số thứ tự — the third step.",
           "colleague",
         ),
         sp(
@@ -1750,7 +1750,7 @@ function week19(lx: Ctx): LessonContent[] {
         sp(
           "Which one should I use?",
           `Please use the ${lo(r7)}.`,
-          "Hướng dẫn lối đi bằng Please use the + nơi chốn.",
+          "Chỉ đúng thứ khách nên dùng: Please use the + danh từ.",
         ),
         sp(
           "Did I write it correctly?",
@@ -1937,7 +1937,7 @@ function week20(lx: Ctx): LessonContent[] {
         sp(
           "They both sound fine to me.",
           `Both are excellent choices, sir.`,
-          "Nêu quy định ngắn gọn trước, chi tiết để dành cho câu sau.",
+          "Khen cả hai lựa chọn để khách không thấy mình vừa chọn sai.",
         ),
         sp(
           "Are there rules about that?",
@@ -2358,19 +2358,19 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What did you finish, and when?",
-          `I ${lo(e1)} it ${lo(e5)}.`,
+          `I ${lo(e1)} it ${lo(e5)}, and it is done now.`,
           "Quá khứ đơn: động từ chia quá khứ, mốc thời gian đặt cuối câu.",
           "colleague",
         ),
         sp(
           "How many were there?",
-          `We had twelve ${lo(e6)} today.`,
+          `We had twelve ${lo(e6)} today, and all went well.`,
           "Số nhiều đếm được đi với had; con số đọc thành chữ.",
           "colleague",
         ),
         sp(
           "Which one would you suggest?",
-          `Many guests choose the ${lo(pc1)}.`,
+          `Many guests choose the ${lo(pc1)}, and they are happy.`,
           "Ôn tuần 20: đưa lựa chọn bằng câu hỏi, không quyết thay khách.",
         ),
         sp(
@@ -2416,20 +2416,20 @@ function week21(lx: Ctx): LessonContent[] {
 
     lesson(lx, 21, 2, "Reporting Numbers", "Báo cáo số liệu", {
       vocabulary: [
-        bw(e6, `We had twelve ${lo(e6)} today.`),
+        bw(e6, `We had twelve ${lo(e6)} today, and all went well.`),
         bw(e2, `The guest ${lo(e2)} at noon.`),
         bw(e10, `I ${lo(e10)} everything down.`),
       ],
       grammar: [
         g(
           `Today have twelve.`,
-          `We had twelve ${lo(e6)} today.`,
+          `We had twelve ${lo(e6)} today, and all went well.`,
           "Quá khứ của 'have' là 'had'; câu cần chủ ngữ 'We'.",
-          `We have twelve ${lo(e6)} today.`,
+          `We have twelve ${lo(e6)} today, and all went well.`,
         ),
         g(
           `I note all already.`,
-          `I ${lo(e10)} everything down.`,
+          `I ${lo(e10)} everything down, so nothing is forgotten.`,
           "Động từ quá khứ + tân ngữ 'everything' + tiểu từ 'down'.",
           `I am ${lo(e10)} everything down.`,
         ),
@@ -2437,7 +2437,7 @@ function week21(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "How many did we have today?",
-          `We had twelve ${lo(e6)} today.`,
+          `We had twelve ${lo(e6)} today, and all went well.`,
           "Báo số liệu phải chính xác — đoán bừa làm hỏng cả báo cáo ca.",
           "colleague",
         ),
@@ -2449,8 +2449,8 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "And the other one?",
-          `The ${lo(pc2)} is another option.`,
-          "Ôn tuần 20: mở lựa chọn thứ hai bằng Or perhaps.",
+          `The ${lo(pc2)} is another option, if you prefer that.`,
+          "Ôn tuần 20: mở lựa chọn thứ hai bằng is another option.",
         ),
         sp(
           "Could you set that up?",
@@ -2469,7 +2469,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Any problems today?",
-          `Everything was ${lo(e9)}.`,
+          `Everything was ${lo(e9)}, and I noted it in the log.`,
           "Một câu trạng thái gọn cho cả ca, rồi mới nói ngoại lệ.",
           "colleague",
         ),
@@ -2494,7 +2494,7 @@ function week21(lx: Ctx): LessonContent[] {
       game: [
         game(
           "What were the numbers today?",
-          `We had twelve ${lo(e6)} today.`,
+          `We had twelve ${lo(e6)} today, and all went well.`,
           "Today have twelve only.",
           "Quite a lot today, and it felt like a very busy shift.",
           "manager",
@@ -2506,7 +2506,7 @@ function week21(lx: Ctx): LessonContent[] {
     lesson(lx, 21, 3, "Reporting a Problem", "Báo cáo sự cố đã xảy ra", {
       vocabulary: [
         bw(e3, `One booking was ${lo(e3)}.`),
-        bw(e7, `It ${lo(e7)} than usual.`),
+        bw(e7, `It ${lo(e7)} than usual, because we were very busy.`),
         bw(e8, `I ${lo(e8)} the broken one.`),
       ],
       grammar: [
@@ -2538,7 +2538,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is there anything else available?",
-          `We can also offer the ${lo(pc3)}.`,
+          `We can also offer the ${lo(pc3)}, if that suits you.`,
           "Ôn tuần 20: mở thêm lựa chọn mà không ép.",
         ),
         sp(
@@ -2553,7 +2553,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Was it slower today?",
-          `It ${lo(e7)} than usual.`,
+          `It ${lo(e7)} than usual, because we were very busy.`,
           "So sánh hơn kèm than — cách nói ca bận mà không than phiền.",
           "colleague",
         ),
@@ -2592,9 +2592,9 @@ function week21(lx: Ctx): LessonContent[] {
       grammar: [
         g(
           `I tell supervisor already.`,
-          `I ${lo(e4)} the supervisor this afternoon.`,
+          `I ${lo(e4)} the supervisor this afternoon, and it is noted.`,
           "Dùng động từ quá khứ chuẩn thay cho 'tell already' theo lối tiếng Việt.",
-          `I ${lo(e4)} to the supervisor this afternoon.`,
+          `I ${lo(e4)} to the supervisor this afternoon, and it is noted.`,
         ),
         g(
           `Next shift do rest.`,
@@ -2606,7 +2606,7 @@ function week21(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "Anything I should know before I start?",
-          `I ${lo(e4)} the supervisor about one issue.`,
+          `I ${lo(e4)} the supervisor, and the issue is closed.`,
           "Bàn giao phải nêu rõ việc còn dở — người ca sau không đọc được suy nghĩ của bạn.",
           "colleague",
         ),
@@ -2648,7 +2648,7 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What about the broken one?",
-          `I ${lo(e8)} the broken one.`,
+          `I ${lo(e8)} the broken one, because it was not safe.`,
           "Nói việc đã xử lý, đừng chỉ nói việc đã phát hiện.",
           "colleague",
         ),
@@ -2734,13 +2734,13 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did everything finish in time?",
-          `Everything finished ${lo(w2)}.`,
+          `Everything finished ${lo(w2)}, and the report is signed.`,
           "Quá khứ đơn cho việc đã xong, kèm cụm trạng ngữ thời gian.",
           "colleague",
         ),
         sp(
           "What did you finish this morning?",
-          `I already ${lo(pe1)} it this morning.`,
+          `I already ${lo(pe1)} it this morning, before the shift began.`,
           "Ôn tuần 21: quá khứ đơn, mốc thời gian cuối câu.",
           "colleague",
         ),
@@ -2812,7 +2812,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         g(
           `I prepare paper now.`,
-          `I am preparing the paperwork now.`,
+          `I am preparing the paperwork now, and it is nearly ready.`,
           "Ôn tuần 18: việc đang làm dùng hiện tại tiếp diễn.",
           `I am preparing paperwork now.`,
         ),
@@ -2842,7 +2842,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did you write anything down?",
-          `I noted the ${lo(w3)} in the log.`,
+          `I noted the ${lo(w3)} in the log, so nothing is lost.`,
           "Ghi vào sổ ca là việc bắt buộc, không phải tuỳ hứng.",
           "colleague",
         ),
@@ -2905,9 +2905,9 @@ function week22(lx: Ctx): LessonContent[] {
     lesson(lx, 22, 3, "Rules & Choices Together", "Ghép nội quy với tư vấn lựa chọn", {
       vocabulary: [
         v("Overall", "/ˌəʊvərˈɔːl/", "Nhìn chung", "Overall, the day went well.", "🌐"),
-        bw(w4, `We can always ${lo(w4)}.`),
+        bw(w4, `We can always ${lo(w4)}, if you would like that.`),
         bw(w6, `The whole shift was ${lo(w6)}.`),
-        bw(w10, `The last thing is the ${lo(w10)}.`),
+        bw(w10, `The last thing is the ${lo(w10)}, and then I finish.`),
       ],
       grammar: [
         g(
@@ -2919,7 +2919,7 @@ function week22(lx: Ctx): LessonContent[] {
         g(
           `Team do well yesterday.`,
           `The whole shift was ${lo(w6)}.`,
-          "Ôn tuần 21: câu bị động quá khứ đơn giản.",
+          "Ôn tuần 21: quá khứ của to be — was đi với chủ ngữ số ít.",
           `The whole shift were ${lo(w6)}.`,
         ),
       ],
@@ -2936,19 +2936,19 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Did anyone deal with it?",
-          `Yes. That was ${lo(pe3)} yesterday.`,
+          `Yes, that was ${lo(pe3)} yesterday, and I noted it.`,
           "Ôn tuần 21: thể bị động cho việc đã xong, kèm mốc yesterday.",
           "colleague",
         ),
         sp(
           "Did it take longer?",
-          `It ${lo(pe7)} than usual.`,
+          `It ${lo(pe7)} than usual, because we were short-staffed.`,
           "Ôn tuần 21: so sánh hơn kèm than.",
           "colleague",
         ),
         sp(
           "Could anything be better?",
-          `We can always ${lo(w4)}.`,
+          `We can always ${lo(w4)}, if you would like that.`,
           "Nhận việc còn cải thiện được mà không đổ lỗi cho ai.",
           "colleague",
         ),
@@ -2971,7 +2971,7 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What is left to do?",
-          `The last thing is the ${lo(w10)}.`,
+          `The last thing is the ${lo(w10)}, and then I finish.`,
           "Việc cuối ca phải được gọi tên, nếu không nó sẽ bị bỏ.",
           "colleague",
         ),
@@ -3017,9 +3017,9 @@ function week22(lx: Ctx): LessonContent[] {
       grammar: [
         g(
           `Today all good, no problem.`,
-          `Today went well, with no problems.`,
+          `Today went well, because the team finished ahead of time.`,
           "Ôn tuần 21: 'went' là quá khứ của 'go'; cụm 'with no problems' gọn và chuẩn.",
-          `Today went well, with no problem.`,
+          `Today went well, because the team finish ahead of time.`,
         ),
         g(
           `I say again short.`,
@@ -3031,7 +3031,7 @@ function week22(lx: Ctx): LessonContent[] {
       speaking: [
         sp(
           "How was your shift overall?",
-          `Today went well, with no problems.`,
+          `Today went well, because the team finished ahead of time.`,
           "Câu tổng kết ca chuẩn — ngắn, tích cực, trung thực.",
           "manager",
         ),
@@ -3043,19 +3043,19 @@ function week22(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Was the team told?",
-          `Yes. I ${lo(pe4)} the whole team.`,
+          `Yes, I ${lo(pe4)} the whole team before the shift ended.`,
           "Ôn tuần 21: báo lại cấp trên bằng câu quá khứ đủ.",
           "colleague",
         ),
         sp(
           "What did you do about it?",
-          `I ${lo(pe8)} the broken one.`,
+          `I ${lo(pe8)} the broken one, and it works now.`,
           "Ôn tuần 21: quá khứ đơn cho việc đã xong.",
           "colleague",
         ),
         sp(
           "Did you keep a record?",
-          `I ${lo(pe10)} everything down.`,
+          `I ${lo(pe10)} everything down, so the next shift knows.`,
           "Ôn tuần 21: ghi chép là phần bắt buộc của bàn giao.",
           "colleague",
         ),
@@ -3066,13 +3066,13 @@ function week22(lx: Ctx): LessonContent[] {
         ),
       ],
       reading: read(
-        `At the end of week, ${lx.staff} reports to the manager: "Today went well, with no problems. Let me ${lo(w8)} briefly. I will tell you about the ${lo(w7)}." The whole report takes less than a minute.`,
+        `At the end of week, ${lx.staff} reports to the manager: "Today went well, because the team finished ahead of time. Let me ${lo(w8)} briefly. I will tell you about the ${lo(w7)}." The whole report takes less than a minute.`,
         [
           {
             q: "Ca làm hôm nay thế nào?",
             options: ["Suôn sẻ, không sự cố", "Rất nhiều vấn đề xảy ra", "Chưa kết thúc ca trực"],
             correct: 0,
-            explanation: `"Today went well, with no problems."`,
+            explanation: `"Today went well, because the team finished ahead of time."`,
           },
           {
             q: "Báo cáo mất bao lâu?",
@@ -3085,7 +3085,7 @@ function week22(lx: Ctx): LessonContent[] {
       game: [
         game(
           "Give me a quick summary please.",
-          "Today went well, with no problems.",
+          "Today went well, because the team finished ahead of time.",
           "Today all good, no problem.",
           "It was fine, and I would rather not go into the details now.",
           "manager",

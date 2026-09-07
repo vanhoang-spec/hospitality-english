@@ -1317,10 +1317,10 @@ const GR_BANK: P2Bank = {
       icon: "🛋️",
     },
     {
-      word: "Escort you upstairs",
-      phonetic: "/ɪˈskɔːt ju ˌʌpˈsteəz/",
-      definition: "Dẫn quý khách lên phòng",
-      icon: "🛗",
+      word: "Confirm your booking",
+      phonetic: "/kənˈfɜːm jɔː ˈbʊkɪŋ/",
+      definition: "Xác nhận đặt phòng của khách",
+      icon: "✅",
     },
     {
       word: "Serve refreshments",
@@ -1451,7 +1451,7 @@ const GR_BANK: P2Bank = {
       word: "Trip length",
       phonetic: "/trɪp leŋθ/",
       definition: "Độ dài chuyến đi",
-      icon: "🔁",
+      icon: "📏",
     },
     {
       word: "Children's ages",
@@ -1497,7 +1497,7 @@ const GR_BANK: P2Bank = {
       word: "Arrangement fee",
       phonetic: "/əˈreɪndʒmənt fiː/",
       definition: "Phí sắp xếp dịch vụ",
-      icon: "🎀",
+      icon: "💵",
     },
     {
       word: "Billing option",
@@ -1509,13 +1509,13 @@ const GR_BANK: P2Bank = {
       word: "Welcome card",
       phonetic: "/ˈwelkəm kɑːd/",
       definition: "Thiệp chào mừng",
-      icon: "➕",
+      icon: "💌",
     },
     {
       word: "Check the details",
       phonetic: "/tʃek ðə ˈdiːteɪlz/",
       definition: "Kiểm tra thông tin",
-      icon: "🎫",
+      icon: "🔎",
     },
     {
       word: "With the team",
@@ -1547,13 +1547,13 @@ const GR_BANK: P2Bank = {
       word: "Garden lounge",
       phonetic: "/ˈɡɑːdn laʊndʒ/",
       definition: "Sảnh vườn",
-      icon: "🧒",
+      icon: "🌿",
     },
     {
       word: "Luggage trolley",
       phonetic: "/ˈlʌɡɪdʒ ˈtrɒli/",
       definition: "Xe đẩy hành lý",
-      icon: "📷",
+      icon: "🛒",
     },
     {
       word: "Guest luggage",
@@ -1571,9 +1571,9 @@ const GR_BANK: P2Bank = {
       word: "Side entrance",
       phonetic: "/saɪd ˈentrəns/",
       definition: "Lối vào bên hông",
-      icon: "👔",
+      icon: "🚪",
     },
-    { word: "Fully booked", phonetic: "/ˈfʊli bʊkt/", definition: "Đã kín chỗ", icon: "🕙" },
+    { word: "Fully booked", phonetic: "/ˈfʊli bʊkt/", definition: "Đã kín chỗ", icon: "🚫" },
     {
       word: "Lounge rule",
       phonetic: "/laʊndʒ ruːl/",
@@ -1593,7 +1593,7 @@ const GR_BANK: P2Bank = {
       word: "Garden seat",
       phonetic: "/ˈɡɑːdn siːt/",
       definition: "Chỗ ngồi ngoài vườn",
-      icon: "🕐",
+      icon: "🌳",
     },
     { word: "Private car", phonetic: "/ˈpraɪvət kɑː/", definition: "Xe riêng", icon: "🚗" },
     { word: "Group tour", phonetic: "/ɡruːp tʊə/", definition: "Tour đoàn", icon: "🚌" },
@@ -1625,7 +1625,7 @@ const GR_BANK: P2Bank = {
     },
   ],
   reports: [
-    { word: "Arranged", phonetic: "/əˈreɪndʒd/", definition: "Đã sắp xếp", icon: "🙏" },
+    { word: "Arranged", phonetic: "/əˈreɪndʒd/", definition: "Đã sắp xếp", icon: "📌" },
     { word: "Arrived", phonetic: "/əˈraɪvd/", definition: "Đã tới", icon: "🚶" },
     { word: "Delivered", phonetic: "/dɪˈlɪvəd/", definition: "Đã chuyển tới", icon: "📦" },
     { word: "Briefed", phonetic: "/briːft/", definition: "Đã trao đổi nhanh với", icon: "🗣️" },
@@ -1640,7 +1640,7 @@ const GR_BANK: P2Bank = {
       word: "Took longer",
       phonetic: "/tʊk ˈlɒŋɡə/",
       definition: "Mất nhiều thời gian hơn",
-      icon: "👍",
+      icon: "⏳",
     },
     { word: "Remembered", phonetic: "/rɪˈmembəd/", definition: "Đã nhớ được", icon: "🧠" },
     { word: "Very smooth", phonetic: "/ˈveri smuːð/", definition: "Rất suôn sẻ", icon: "🌊" },
@@ -1648,7 +1648,7 @@ const GR_BANK: P2Bank = {
   ],
   wrapUp: [
     { word: "Warm", phonetic: "/wɔːm/", definition: "Ân cần, nồng hậu", icon: "🤗" },
-    { word: "On time", phonetic: "/ɒn taɪm/", definition: "Đúng giờ", icon: "⭐" },
+    { word: "On time", phonetic: "/ɒn taɪm/", definition: "Đúng giờ", icon: "⏱️" },
     {
       word: "Special moment",
       phonetic: "/ˈspeʃl ˈməʊmənt/",
@@ -1680,7 +1680,7 @@ const GR_BANK: P2Bank = {
       word: "Lobby check",
       phonetic: "/ˈlɒbi tʃek/",
       definition: "Lượt kiểm tra sảnh",
-      icon: "😍",
+      icon: "🔍",
     },
   ],
 };
