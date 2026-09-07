@@ -35,7 +35,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Ôn tuần 15: gọi tên quầy rồi mới nói nó phục vụ gì.",
     ),
     sp(
-      "And the bread?",
+      "Where is the bread, please?",
       "Please follow me to the bakery corner.",
       "Ôn tuần 15: dẫn tận nơi bằng Please follow me.",
     ),

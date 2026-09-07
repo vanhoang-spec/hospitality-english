@@ -26041,6 +26041,42 @@ for (const built of Object.values(REGISTRY))
     for (const item of lesson.speaking)
       item.helpTip = tipWithFormNote(item.helpTip, item.targetResponse);
 
+// A guest prompt that opens with a back-reference — "And what happens after
+// that?", "But I am his brother.", "So can I have it or not?" — only means
+// anything after one specific previous turn, and SpeakingSuite may serve it
+// first. The suite has always been able to show what the learner just said
+// (`follows`), and across four phases not one item set it, so the multi-turn
+// scaffolding rendered for exactly zero exchanges.
+//
+// The link is derived rather than authored because the previous target is
+// already there: writing it out beside each prompt would be the same string
+// twice, and the second copy would drift. Layer N's rule -- follows must match
+// a real target in the same lesson -- holds by construction.
+// A connective alone is not enough. "And the other one?" opens with one, but
+// it also names a thing, and if the turn before it never mentioned that thing
+// the pair is not a conversation — it is two unrelated turns that happen to
+// sit next to each other in the array. So a prompt naming a definite thing is
+// only linked when the previous turn actually mentions it. The four discourse
+// nouns below refer to the conversation rather than to anything in the room.
+const BACK_REFERENCE = /^(and|but|then|so|after that|actually|yes,|no,)([ ,.?!]|$)/i;
+const DEFINITE_THING = /\bthe ([a-z]+)/gi;
+const DISCOURSE_NOUNS = new Set(["last", "rest", "same", "next"]);
+
+for (const built of Object.values(REGISTRY))
+  for (const lesson of built.lessons)
+    lesson.speaking.forEach((item, i, all) => {
+      if (i === 0 || item.follows) return;
+      const prompt = item.guestPrompt.trim();
+      if (!BACK_REFERENCE.test(prompt)) return;
+      const previous = `${all[i - 1].guestPrompt} ${all[i - 1].targetResponse}`.toLowerCase();
+      for (const [, noun] of prompt.matchAll(DEFINITE_THING)) {
+        const n = noun.toLowerCase();
+        if (DISCOURSE_NOUNS.has(n)) continue;
+        if (!previous.includes(n)) return;
+      }
+      item.follows = all[i - 1].targetResponse;
+    });
+
 export const AVAILABLE_WEEKS = Array.from(
   new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
 ).sort((a, b) => a - b);
