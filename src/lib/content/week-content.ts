@@ -317,11 +317,13 @@ export const FO_WEEK_17: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng hỏi như kiểm tra giấy tờ; đón khách bắt đầu bằng lời mời, không bằng lời tra hỏi.",
           prompt: "Good evening. I have a reservation for tonight.",
           options: [
             { text: "May I have your name, please?", correct: true },
-            { text: "Give me your name.", correct: false },
-            { text: "Who are you?", correct: false },
+            { text: "Give me name, and passport also now.", correct: false },
+            { text: "Who are you, sir, and which room is yours?", correct: false },
           ],
         },
       ],
@@ -431,11 +433,13 @@ export const FO_WEEK_17: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp và sai quy trình: hộ chiếu chỉ giữ đủ lâu để quét, không giữ suốt kỳ lưu trú.",
           prompt: "Will you be holding on to my passport for long?",
           options: [
             { text: "I just need to keep it briefly for local registration, sir.", correct: true },
-            { text: "Give passport now.", correct: false },
-            { text: "Yes, I take this.", correct: false },
+            { text: "Give passport now, sir, I keep for the registration.", correct: false },
+            { text: "We must keep your passport until you leave the hotel.", correct: false },
           ],
         },
       ],
@@ -587,25 +591,35 @@ export const FO_WEEK_17: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp và sai bản chất: đó là khoản tạm giữ, không phải khoản đã thu.",
           prompt: "What is this extra hold on my card for?",
           options: [
             {
               text: "This is just a temporary deposit for incidental charges, madam.",
               correct: true,
             },
-            { text: "Minibar is not free.", correct: false },
-            { text: "Give me card for money.", correct: false },
+            { text: "Minibar is not free, madam, so we take money.", correct: false },
+            { text: "It is a charge, madam. That money is gone now.", correct: false },
           ],
         },
         {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp. Cái sai là nói chuyện thẻ hỏng ở nơi khách khác nghe được, và đoán về tài khoản của khách.",
           prompt: "Are you telling me in front of everyone that my card does not work?",
           options: [
             {
               text: "Not at all, sir. May I ask you to step this way for a moment?",
               correct: true,
             },
-            { text: "The machine says declined. Please use another card.", correct: false },
-            { text: "Your bank has refused the payment, sir.", correct: false },
+            {
+              text: "The machine says declined, sir. Please give me a different card now.",
+              correct: false,
+            },
+            {
+              text: "Your bank has refused this payment, sir. You should call your bank.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -718,14 +732,19 @@ export const FO_WEEK_17: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng không có giờ; khách có chuyến bay sớm cần đúng một con số.",
           prompt: "We have an early flight. When does breakfast open?",
           options: [
             {
               text: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
               correct: true,
             },
-            { text: "Go to first floor and eat from 6 to 10.", correct: false },
-            { text: "Restaurant is over there, go eat.", correct: false },
+            { text: "Go to the first floor and eat there from six to ten, sir.", correct: false },
+            {
+              text: "Breakfast is over there, sir, so please just go along whenever you like.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -857,14 +876,16 @@ export const FB_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba lịch sự nhưng bỏ mất bước kiểm phiếu; khách không lưu trú sẽ ăn sáng mà không ai tính tiền.",
           prompt: "Hi, we would like breakfast. We are in room 306.",
           options: [
             {
               text: "Good morning, and welcome. May I just check your room number on our list, please?",
               correct: true,
             },
-            { text: "Room number?", correct: false },
-            { text: "Yes, go sit down.", correct: false },
+            { text: "Room number? I check list now for you, madam, one moment.", correct: false },
+            { text: "Yes, please go and sit down anywhere at all that you like.", correct: false },
           ],
         },
       ],
@@ -981,14 +1002,19 @@ export const FB_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng bỏ khách đứng chờ vô hạn; chờ có mốc thì khách chấp nhận được.",
           prompt: "Everything looks full. Should we come back later?",
           options: [
             {
               text: "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes?",
               correct: true,
             },
-            { text: "No table. Wait.", correct: false },
-            { text: "I don't know, just stand there.", correct: false },
+            { text: "No table now, sir. You wait here five minute, then I call.", correct: false },
+            {
+              text: "I don't know, sir. Just stand over there until a table opens up.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -1099,14 +1125,22 @@ export const FB_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng đẩy việc tìm sang khách; dẫn tận nơi là chỗ tách khách sạn năm sao khỏi quán ăn.",
           prompt: "We cannot find the hot food. Could you point us there?",
           options: [
             {
               text: "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
               correct: true,
             },
-            { text: "Food is over there.", correct: false },
-            { text: "I don't know, look around.", correct: false },
+            {
+              text: "Hot food is over there, madam, and bread also over there somewhere.",
+              correct: false,
+            },
+            {
+              text: "I don't know exactly, madam. Please look around and you will find it.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -1227,14 +1261,19 @@ export const FB_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng tiễn khách đi thay vì hỏi có dọn đĩa không; lời khen vừa rồi đáng được đáp lại.",
           prompt: "That was delicious, thank you. We are done now.",
           options: [
             {
               text: "I'm so glad to hear that. Would you like me to clear your plates for you?",
               correct: true,
             },
-            { text: "Finished? Give plate.", correct: false },
-            { text: "Okay, bye.", correct: false },
+            { text: "Finished, madam? Give plate to me now please, thank you.", correct: false },
+            {
+              text: "Okay, goodbye, madam. Please leave the table when you are ready.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -1366,14 +1405,19 @@ export const HK_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng trách khách; khách quên treo biển không phải chuyện để nhắc lại.",
           prompt: "Hello? I am just getting dressed. Could you wait?",
           options: [
             {
               text: "Of course, madam. I'm sorry to disturb you. I will come back later.",
               correct: true,
             },
-            { text: "No problem, I will just clean quickly now.", correct: false },
-            { text: "You should have put the DND sign up.", correct: false },
+            {
+              text: "No problem, madam, I clean quickly now while you get dressed.",
+              correct: false,
+            },
+            { text: "You should have put the DND sign up on the door, madam.", correct: false },
           ],
         },
       ],
@@ -1483,14 +1527,22 @@ export const HK_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng để khách chờ mà không hẹn giờ; việc bận của bạn không phải việc của khách.",
           prompt: "Could you send up some towels and a razor, please?",
           options: [
             {
               text: "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
               correct: true,
             },
-            { text: "What do you want them for?", correct: false },
-            { text: "Wait there, I'm busy right now.", correct: false },
+            {
+              text: "What you want them for, sir? I bring them later maybe today.",
+              correct: false,
+            },
+            {
+              text: "Please wait there, sir. I am busy right now with another room.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -1606,14 +1658,16 @@ export const HK_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng từ chối trước khi kiểm tra; giường phụ là thứ có thật và có phụ phí.",
           prompt: "My nephew arrives tonight. Can we add another bed?",
           options: [
             {
               text: "Certainly, sir. We can set up a rollaway bed in your room. There is a small charge per night.",
               correct: true,
             },
-            { text: "You want a bed or not?", correct: false },
-            { text: "We don't have extra beds.", correct: false },
+            { text: "You want bed or not, sir? I bring one tonight maybe.", correct: false },
+            { text: "We do not have any extra beds at all tonight, sir.", correct: false },
           ],
         },
       ],
@@ -1734,14 +1788,16 @@ export const HK_WEEK_15: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng trách khách về tấm biển; khách vừa xin lỗi xong.",
           prompt: "Sorry, the sign has been up since yesterday by mistake.",
           options: [
             {
               text: "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
               correct: true,
             },
-            { text: "You have to open the door now.", correct: false },
-            { text: "You should not have that sign up.", correct: false },
+            { text: "You must open the door now, sir, so I clean room.", correct: false },
+            { text: "You should not leave that sign up all day, sir.", correct: false },
           ],
         },
       ],
@@ -4335,14 +4391,22 @@ export const SW_WEEK_19: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp nhưng đẩy khách sang người khác cho một câu hỏi bạn trả lời được.",
           prompt: "Is there somewhere to get towels and a shaded seat?",
           options: [
             {
               text: "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
               correct: true,
             },
-            { text: "Towels are over there, and cabanas are full today.", correct: false },
-            { text: "I'm not sure, please ask another staff member.", correct: false },
+            {
+              text: "Towels over there, madam, and cabana all full for today already.",
+              correct: false,
+            },
+            {
+              text: "I'm not sure, madam. Please ask another member of staff about that.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -4458,14 +4522,16 @@ export const SW_WEEK_19: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ hai lịch sự và nguy hiểm nhất: bạn vừa cho một đứa trẻ chín tuổi xuống hồ một mình. Câu thứ ba thì cấm quá tay — quy định là phải có người lớn đi kèm, không phải cấm trẻ em.",
           prompt: "My daughter is 9. May she go in the water alone?",
           options: [
             {
               text: "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
               correct: true,
             },
-            { text: "Sure, no problem, just relax.", correct: false },
-            { text: "Kids can't swim here at all.", correct: false },
+            { text: "Sure, no problem, sir, just relax there and she swim alone.", correct: false },
+            { text: "Children are not allowed in this pool at all, sir.", correct: false },
           ],
         },
       ],
@@ -4581,14 +4647,19 @@ export const SW_WEEK_19: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp và nguy hiểm: cờ đỏ không phải ý kiến của bạn về thời tiết.",
           prompt: "Other guests are in the water. Why can't we swim?",
           options: [
             {
               text: "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
               correct: true,
             },
-            { text: "Rules are rules, no swimming today.", correct: false },
-            { text: "The weather is fine, you can swim if you want.", correct: false },
+            { text: "Rules are rules, sir, no swimming today for anybody at all.", correct: false },
+            {
+              text: "The weather looks fine, sir. You may swim if you really want.",
+              correct: false,
+            },
           ],
         },
       ],
@@ -4704,14 +4775,16 @@ export const SW_WEEK_19: WeekContent = {
       ],
       game: [
         {
+          explanation:
+            "Câu thứ ba đúng ngữ pháp và bỏ một người có dấu hiệu say nắng ngồi lại một mình.",
           prompt: "I feel very hot and a bit faint right now.",
           options: [
             {
               text: "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
               correct: true,
             },
-            { text: "You'll be fine, just keep walking.", correct: false },
-            { text: "Please wait here, I'll be back later.", correct: false },
+            { text: "You be fine, sir, just keep walking slowly to your room.", correct: false },
+            { text: "Please wait here, sir. I will come back to you later.", correct: false },
           ],
         },
       ],

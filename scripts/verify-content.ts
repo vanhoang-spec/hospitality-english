@@ -866,7 +866,7 @@ if (legacyGameDupes.length) {
   // Phase 0, worse than the 70% pass mark it was supposed to protect. The
   // honest measure is the best of the three length positions, so no rewrite
   // can improve one rank by quietly loading another.
-  const GAME_RANK_MAX = 0.64; // 663/1053 today, carried by the untouched P2-P4
+  const GAME_RANK_MAX = 0.47; // 46% today; was 0.64 while Phase 2 sat at 100% longest
   const rank = [0, 0, 0];
   let gTotal = 0;
   for (const wk of Object.values(ALL_WEEKS))
@@ -888,6 +888,42 @@ if (legacyGameDupes.length) {
   if (gShare > GAME_RANK_MAX)
     errors.push(
       `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
+    );
+
+  // Length is not the only shape a bubble has. Two more strategies win without
+  // reading, and both were measured at Phase 2 before this: "tap the bubble
+  // with sir or madam in it" (65.8% of rounds carried the honorific ONLY in
+  // the correct answer) and, when the learner taps wrong, no way to learn why
+  // (95.9% of rounds had no `explanation`, so the arcade said "Chưa đúng —
+  // thử bong bóng khác nhé." and stopped). A distractor that is correct
+  // English and wrong for the job is the hardest thing in the course to work
+  // out alone, and it is exactly the one that was never explained.
+  const HONORIFIC_KEY_MAX = 220; // 92 today across 1439 rounds
+  const NO_EXPLANATION_MAX = 522; // 522 today; Phase 2 is at 0
+  let honKeyOnly = 0;
+  let noExplanation = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        const key = round.options.find((o) => o.correct);
+        if (
+          key &&
+          /\b(sir|madam)\b/i.test(key.text) &&
+          !round.options.some((o) => !o.correct && /\b(sir|madam)\b/i.test(o.text))
+        )
+          honKeyOnly++;
+        if (!round.explanation) noExplanation++;
+      }
+  console.log(
+    `Game surface tells — honorific only in the answer ${honKeyOnly}, rounds with no explanation ${noExplanation}`,
+  );
+  if (honKeyOnly > HONORIFIC_KEY_MAX)
+    errors.push(
+      `${honKeyOnly} game rounds put "sir"/"madam" only in the correct answer, up from ${HONORIFIC_KEY_MAX} — tapping the polite bubble must not be a strategy`,
+    );
+  if (noExplanation > NO_EXPLANATION_MAX)
+    errors.push(
+      `${noExplanation} game rounds have no explanation, up from ${NO_EXPLANATION_MAX} — a learner who taps the correct-English-wrong-job bubble is told nothing`,
     );
 }
 if (warnings.length) {
