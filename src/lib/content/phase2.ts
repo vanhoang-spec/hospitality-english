@@ -22,6 +22,7 @@
 
 import type { LessonContent, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
+import { DEPT_REVIEW } from "./phase2-dept-review";
 import { P2_BANKS, type P2Bank, type P2Word } from "./phase2-lexicon";
 
 type Ctx = P0Lexicon & { bank: P2Bank };
@@ -3940,8 +3941,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         v(
           "Room blocked",
           "/ruːm blɒkt/",
-          "Phòng bị khoá lại",
-          "Room 1408 is blocked tonight.",
+          "Phòng bị khoá lại, không nhận khách",
+          "The system shows room blocked tonight.",
           "⛔",
         ),
         v("Leaking", "/ˈliːkɪŋ/", "Bị rò rỉ", "The tap is leaking in the bathroom.", "💧"),
@@ -4807,6 +4808,18 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
     }),
 };
 
+/** Spread a department's own review turns across the week's four lessons.
+ *  Applied after the headword lock so they are never counted as this week's
+ *  targets — they exist to put an EARLIER week's words back in the mouth. */
+function withDeptReview(lessons: LessonContent[], code: string, week: number): LessonContent[] {
+  const extra = DEPT_REVIEW[`${code}-${week}`];
+  if (!extra) return lessons;
+  return lessons.map((lesson, i) => ({
+    ...lesson,
+    speaking: [...lesson.speaking, ...extra.filter((_, j) => j % lessons.length === i)],
+  }));
+}
+
 function buildWeek(
   lx: Ctx,
   week: number,
@@ -4824,9 +4837,13 @@ function buildWeek(
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
     // Bài riêng thay bài khung cùng lessonId, nên tuần vẫn đủ bốn bài đúng thứ
     // tự và mọi id ở hạ nguồn — tiến độ, khoá ôn, deep link — vẫn hợp lệ.
-    lessons: lockWeekHeadwords(
-      meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
-      review,
+    lessons: withDeptReview(
+      lockWeekHeadwords(
+        meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
+        review,
+      ),
+      lx.code,
+      week,
     ),
     reviewWords: review,
   };
