@@ -262,10 +262,9 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Hello, I have a booking under the name of David Green.",
-          targetResponse:
-            "Good morning, sir. Welcome to our hotel. Let me check our system for your name, please.",
+          targetResponse: "Good morning, sir. Let me check our system for your name.",
           helpTip:
-            "Bật rõ âm cuối của 'good morninG' và 'welcomE' — nuốt âm cuối là lỗi phát âm phổ biến nhất của người Việt.",
+            "Bật rõ âm cuối của 'good morninG' và 'systeM' — nuốt âm cuối là lỗi phát âm phổ biến nhất của người Việt.",
         },
         {
           guestPrompt: "Good evening, we just arrived.",
@@ -388,10 +387,9 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Sure, here is my passport. Do you need to keep it?",
-          targetResponse:
-            "Thank you, sir. I just need to keep it briefly for our local registration process.",
+          targetResponse: "Thank you, sir. We keep briefly for local registration.",
           helpTip:
-            "Nối 'keep it' thành một hơi — âm /p/ chạy thẳng sang 'it', không tách rời hai chữ.",
+            "Nối 'keep briefly' thành một hơi — âm /p/ chạy thẳng sang 'briefly', không tách rời.",
         },
         {
           guestPrompt: "Why do you need my passport?",
@@ -544,13 +542,12 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Why do you need my credit card if the room is already paid?",
-          targetResponse:
-            "I understand, madam. This is just a temporary deposit for any incidental charges during your stay.",
+          targetResponse: "I understand, madam. This deposit covers any incidental charges.",
           helpTip: "Đọc 'incidental' tách bốn nhịp: in-ci-den-tal, trọng âm rơi vào 'den'.",
         },
         {
           guestPrompt: "That is strange. There is definitely money in that account.",
-          targetResponse: "Of course, sir. It is often the machine. May I try another card?",
+          targetResponse: "Of course, sir. May I try another card?",
           helpTip:
             "Đồng ý với khách trước ('Of course'), đổ lỗi cho cái máy, rồi hỏi một câu ngắn. Không bao giờ nhắc tới tài khoản của khách.",
         },
@@ -712,8 +709,7 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Thank you. What time is breakfast served tomorrow morning?",
-          targetResponse:
-            "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
+          targetResponse: "Our breakfast buffet is served from 6:30 until 10:00, sir.",
           helpTip:
             "Bật âm /t/ cuối 'breakfast' và âm /d/ cuối 'served' — thiếu hai âm này câu nghe như chưa nói xong.",
         },
@@ -776,7 +772,7 @@ export const FO_WEEK_17: WeekContent = {
           prompt: "We have an early flight. When does breakfast open?",
           options: [
             {
-              text: "Our complimentary breakfast buffet is served from 6:30 AM until 10:00 AM, sir.",
+              text: "Our breakfast buffet is served from 6:30 until 10:00, sir.",
               correct: true,
               kind: "answer",
             },
@@ -858,8 +854,7 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "Good morning. We're staying in room 512, is breakfast included?",
-          targetResponse:
-            "Good morning, and welcome. Yes, of course. May I just check your room number on our list, please?",
+          targetResponse: "Good morning, and welcome. May I check your room number, please?",
           helpTip:
             "Nối 'check your' thành một hơi, nghe gần như 'che-kyơ' — đừng tách rời hai chữ.",
         },
@@ -1002,8 +997,7 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "There are no tables free right now. How long do we have to wait?",
-          targetResponse:
-            "I'm sorry for the wait, sir. Would you mind waiting here for just five minutes? A table will be free very soon.",
+          targetResponse: "I'm sorry for the wait, sir. A table will be free soon.",
           helpTip:
             "Nói 'sorry' nhẹ và chậm, giọng bình thản — xin lỗi mà cuống thì khách tưởng có chuyện lớn.",
         },
@@ -1140,8 +1134,7 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "This is our first time here — where can we find something hot to eat?",
-          targetResponse:
-            "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
+          targetResponse: "Let me show you. Our live station serves hot Phở and eggs.",
           helpTip: "Nối 'show' với 'you' thành một hơi — âm /w/ chạy thẳng sang 'you'.",
         },
         {
@@ -1202,7 +1195,7 @@ export const FB_WEEK_15: WeekContent = {
           prompt: "We cannot find the hot food. Could you point us there?",
           options: [
             {
-              text: "Let me show you. Our live station serves hot Phở and eggs. The bakery corner is next to it.",
+              text: "Let me show you. Our live station serves hot Phở and eggs.",
               correct: true,
               kind: "answer",
             },
@@ -1272,8 +1265,7 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "We're all finished, thank you. The food was lovely.",
-          targetResponse:
-            "I'm so glad to hear that. Would you like me to clear your plates for you?",
+          targetResponse: "I'm so glad to hear that. May I clear your empty plate?",
           helpTip:
             "Mỉm cười khi nói 'glad to hear that' — giọng tự nhiên cao lên và nghe thật lòng.",
         },
@@ -1344,7 +1336,7 @@ export const FB_WEEK_15: WeekContent = {
           prompt: "That was delicious, thank you. We are done now.",
           options: [
             {
-              text: "I'm so glad to hear that. Would you like me to clear your plates for you?",
+              text: "I'm so glad to hear that. May I clear your empty plate?",
               correct: true,
               kind: "answer",
             },
@@ -1433,8 +1425,7 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "Oh, sorry, I'm still in the room. Can you come back later?",
-          targetResponse:
-            "Of course, madam. I'm sorry to disturb you. I will come back later. Thank you.",
+          targetResponse: "I'm sorry to disturb you, madam. I will come back later.",
           helpTip:
             "Nối liền 'sorry to disturb' — âm /t/ của 'to' chạy nhẹ sang chữ sau, không dừng giữa chừng.",
         },
@@ -1566,8 +1557,7 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
-          targetResponse:
-            "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
+          targetResponse: "Certainly, sir. I will send up a bath towel and a razor.",
           helpTip: "Nối 'send up' thành một hơi — âm /d/ chạy thẳng sang 'up', nghe như 'sen-dup'.",
         },
         {
@@ -1625,7 +1615,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "Could you send up some towels and a razor, please?",
           options: [
             {
-              text: "Certainly, sir. I will send up two extra towels and a razor. They will arrive right away.",
+              text: "Certainly, sir. I will send up a bath towel and a razor.",
               correct: true,
               kind: "answer",
             },
@@ -1695,8 +1685,7 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "My son is joining us tonight. Do you have an extra bed we could use?",
-          targetResponse:
-            "Certainly, sir. We can set up a rollaway bed in your room. Please note there is a small extra charge per night.",
+          targetResponse: "Certainly, sir. A rollaway bed has a small extra charge.",
           helpTip:
             "Nhấn vào 'certainly' ngay đầu câu — đó là chữ làm câu trả lời nghe chắc chắn và ấm.",
         },
@@ -1831,9 +1820,8 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "Hello? Yes, this is room 1005, sorry, I forgot to remove the sign.",
-          targetResponse:
-            "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
-          helpTip: "Lên giọng nhẹ ở 'later' để câu thành lời hỏi, không thành lời ra lệnh.",
+          targetResponse: "Not at all, sir. Would now be a good time to clean?",
+          helpTip: "Lên giọng nhẹ ở 'to clean' để câu thành lời hỏi, không thành lời ra lệnh.",
         },
         {
           guestPrompt: "The sign is still up at noon.",
@@ -1905,7 +1893,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "Sorry, the sign has been up since yesterday by mistake.",
           options: [
             {
-              text: "Not at all, sir. Would now be a good time to clean? Or shall we come back later?",
+              text: "Not at all, sir. Would now be a good time to clean?",
               correct: true,
               kind: "answer",
             },
@@ -4452,8 +4440,7 @@ export const SW_WEEK_19: WeekContent = {
       speaking: [
         {
           guestPrompt: "Where can I get a towel, and do you have private cabanas?",
-          targetResponse:
-            "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
+          targetResponse: "Fresh towels are at the towel station, and a cabana is free.",
           helpTip: "Đọc 'towel station' liền một cụm, không ngắt giữa hai chữ.",
         },
         {
@@ -4518,7 +4505,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "Is there somewhere to get towels and a shaded seat?",
           options: [
             {
-              text: "Of course! Fresh towels are at the towel station over there. I would be happy to show you a private cabana.",
+              text: "Fresh towels are at the towel station, and a cabana is free.",
               correct: true,
               kind: "answer",
             },
@@ -4590,8 +4577,7 @@ export const SW_WEEK_19: WeekContent = {
       speaking: [
         {
           guestPrompt: "My son is 8. Can he swim by himself while I relax here?",
-          targetResponse:
-            "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
+          targetResponse: "I'm afraid children under 12 must be with an adult, sir.",
           helpTip: "Nhấn rõ 'under 12' — đó là con số quyết định, khách phải nghe được chính xác.",
         },
         {
@@ -4655,7 +4641,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "My daughter is 9. May she go in the water alone?",
           options: [
             {
-              text: "I'm afraid children under 12 must be with an adult, sir. Our lifeguard is also on duty to help.",
+              text: "I'm afraid children under 12 must be with an adult, sir.",
               correct: true,
               kind: "answer",
             },
@@ -4726,10 +4712,8 @@ export const SW_WEEK_19: WeekContent = {
       speaking: [
         {
           guestPrompt: "The weather looks fine to me. Why can't I go swimming?",
-          targetResponse:
-            "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
-          helpTip:
-            "Hạ giọng ở 'I understand, sir' — lời cảnh báo nghe như quan tâm, không như ra lệnh.",
+          targetResponse: "The rough sea is dangerous, sir. The red flag means no swimming.",
+          helpTip: "Hạ giọng ở 'no swimming' — lời cảnh báo nghe như quan tâm, không như ra lệnh.",
         },
         {
           guestPrompt: "Is the beach open today?",
@@ -4793,7 +4777,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "Other guests are in the water. Why can't we swim?",
           options: [
             {
-              text: "I understand, sir. The sea is too rough today. The red flag is up, so swimming is not allowed.",
+              text: "The rough sea is dangerous, sir. The red flag means no swimming.",
               correct: true,
               kind: "answer",
             },
@@ -4863,8 +4847,7 @@ export const SW_WEEK_19: WeekContent = {
       speaking: [
         {
           guestPrompt: "I feel really dizzy and my leg is cramping.",
-          targetResponse:
-            "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
+          targetResponse: "Let's get you into the shade, sir. I will bring water.",
           helpTip:
             "Nói chậm và hạ giọng xuống một bậc — giọng bình tĩnh trấn an được người đang thấy mệt.",
         },
@@ -4930,7 +4913,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "I feel very hot and a bit faint right now.",
           options: [
             {
-              text: "Let's get you into the shade right away, sir. Please sit down slowly. I will bring water now.",
+              text: "Let's get you into the shade, sir. I will bring water.",
               correct: true,
               kind: "answer",
             },

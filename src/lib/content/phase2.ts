@@ -1222,7 +1222,7 @@ function week18(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Could you make an exception for me?",
-          "I am not able to decide that, madam. May I ask my manager?",
+          "I cannot decide that, madam. May I ask my manager?",
           "Câu quan trọng nhất của cả phase: nói thẳng mình không được quyết, rồi xin phép đi hỏi.",
         ),
       ],
