@@ -596,6 +596,16 @@ const COURTESY_EXTRAS = new Set<string>([
   "really",
   "kindly",
   "so",
+  // Four managers ran their own sentences through the grader and reported the
+  // same shape: "Please DO keep your valuables in the safety box, madam." and
+  // "First I check the arrival list AND then I greet in the lobby." are
+  // graded wrong for one word that changes nothing. "and" is a connective the
+  // course teaches as an upgrade; "do" is emphatic; "sorry" opens half the
+  // service apologies in the phase. Everything else stays: a single added
+  // preposition is still the near-miss column's commonest error.
+  "and",
+  "do",
+  "sorry",
 ]);
 
 /** What is left of a model sentence once the grammar and the courtesy are
@@ -983,12 +993,13 @@ export function utterancePassed(
       !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
       !DISFLUENCY.has(t),
   );
-  // One is already one too many. The grader has always failed a single
-  // missing preposition; a single ADDED one is the same error seen from the
-  // other side, and the near-miss column is full of them. What a microphone
-  // really adds — an article, a filler, an extra "sir" — is exempted above,
-  // and so is a word the course itself teaches as an upgrade, so what is left
-  // was said on purpose.
+  // One is already one too many, and it has to stay that way. Forgiving one
+  // insertion on an otherwise-perfect reading looked safe and let 95 of the
+  // course's own 255 nearMiss strings pass: "…then I WILL check the profile.",
+  // "Could you TO come this way?", "I DID confirmed it yesterday." are the
+  // model plus one word, which is the commonest wrong-answer shape in the
+  // whole phase. The managers' sentences are handled by naming their words in
+  // COURTESY_EXTRAS instead, which is narrow enough to measure.
   const insertionFails = inserted.length > 0;
   // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
   //
