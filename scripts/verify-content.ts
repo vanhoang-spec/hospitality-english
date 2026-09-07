@@ -796,6 +796,11 @@ if (legacyGameDupes.length) {
       `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
       `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
   );
+  const READING_LONGEST_MAX = 0.56;
+  if (longShare > READING_LONGEST_MAX)
+    errors.push(
+      `the keyed reading answer is the longest option ${(longShare * 100).toFixed(0)}% of the time, up from ${(READING_LONGEST_MAX * 100).toFixed(0)}% — long enough to be a strategy`,
+    );
   if (worstPos > POSITION_MAX)
     errors.push(
       `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
@@ -935,7 +940,7 @@ if (legacyGameDupes.length) {
   // at, and a maxim has none. Both numbers are ratchets — Phase 2 sits at 0
   // unexplained and 67% anchored; the older phases have not been through this.
   const READING_NO_EXPLANATION_MAX = 322;
-  const READING_ANCHORED_MIN = 485;
+  const READING_ANCHORED_MIN = 553;
   const rnorm = (t: string) =>
     t
       .toLowerCase()

@@ -406,7 +406,7 @@ function week15(lx: Ctx): LessonContent[] {
           },
           {
             q: "Cả quy trình mất khoảng bao lâu?",
-            options: ["Khoảng mười phút", "Khoảng một giờ", "Cả buổi sáng"],
+            options: ["Khoảng mười phút", "Khoảng một giờ đồng hồ", "Cả buổi sáng"],
             correct: 0,
             explanation: '"The whole routine takes about ten minutes."',
           },
@@ -678,14 +678,10 @@ function week16(lx: Ctx): LessonContent[] {
         `The first choice is not available. ${lx.staff} says: "We do not have that today, but we could offer ${wa(o4)}. Perhaps you would prefer ${wa(o5)}?"`,
         [
           {
-            q: "Khi thứ khách muốn không có, nên làm gì?",
-            options: [
-              "Đề xuất phương án thay thế",
-              "Chỉ nói là không có rồi thôi",
-              "Im lặng cho tới khi khách hỏi",
-            ],
+            q: "Nhân viên đề nghị mấy phương án thay thế?",
+            options: ["Hai", "Một", "Không có phương án nào"],
             correct: 0,
-            explanation: "Luôn kèm lựa chọn khác để khách vẫn được phục vụ.",
+            explanation: `"but we could offer" và "Perhaps you would prefer" — hai lời mời.`,
           },
           {
             q: "Từ nối nào dùng để mở lối khác sau tin xấu?",
@@ -766,7 +762,7 @@ function week16(lx: Ctx): LessonContent[] {
           },
           {
             q: "Bao lâu nữa thì xong?",
-            options: ["Mười lăm phút", "Năm phút", "Một tiếng"],
+            options: ["Mười lăm phút", "Năm phút", "Hơn một tiếng rưỡi"],
             correct: 0,
             explanation: '"It will be ready in fifteen minutes."',
           },
@@ -939,14 +935,14 @@ function week17(lx: Ctx): LessonContent[] {
         `${lx.staff} repeats the information carefully. "Let me read that back to you. Please correct me if I am wrong." The guest confirms that the ${lo(d9)} is right. One word was wrong, and the guest corrects it.`,
         [
           {
-            q: "Vì sao phải đọc lại thông tin cho khách?",
+            q: "Nhân viên mời khách làm gì khi đọc lại?",
             options: [
-              "Sai một chữ có thể hỏng cả đơn",
-              "Để kéo dài thời gian chờ của khách ra",
-              "Vì quản lý ca yêu cầu phải làm vậy",
+              "Sửa lại nếu có chỗ sai",
+              "Ký ngay vào tờ phiếu gọi món",
+              "Chờ thêm khoảng mười lăm phút",
             ],
             correct: 0,
-            explanation: "Xác nhận lại là hàng rào cuối cùng chặn sai sót.",
+            explanation: '"Please correct me if I am wrong."',
           },
           {
             q: "Có bao nhiêu chỗ ghi sai?",
@@ -1029,10 +1025,10 @@ function week17(lx: Ctx): LessonContent[] {
         `The name is difficult. ${lx.staff} asks: "Could you spell that slowly, please?" Then: "Thank you. Let me read the ${lo(d8)} back to you." Nothing is wrong. The name has six letters.`,
         [
           {
-            q: "Khi tên khách khó nghe, nên làm gì?",
-            options: ["Nhờ khách đánh vần chậm", "Đoán rồi ghi đại vào phiếu", "Bỏ trống ô đó lại"],
+            q: "Sau khi đọc lại, có chỗ nào sai không?",
+            options: ["Không có chỗ nào sai", "Sai một chữ", "Sai cả tên"],
             correct: 0,
-            explanation: "Nhờ đánh vần là chuẩn mực; ghi sai tên mới là lỗi nặng.",
+            explanation: '"Nothing is wrong."',
           },
           {
             q: "Tên khách có mấy chữ cái?",
@@ -1114,18 +1110,14 @@ function week17(lx: Ctx): LessonContent[] {
         `The last detail is needed. ${lx.staff} says: "Just your ${lo(d4)}, and that is everything." The guest gives it. "Thank you. I am writing it down now." This is the last question on the form.`,
         [
           {
-            q: "Vì sao nên gom câu hỏi còn lại vào một lần?",
-            options: [
-              "Khách không phải trả lời rời rạc nhiều lần",
-              "Để tiết kiệm giấy in phiếu cho khách sạn",
-              "Không có lý do gì đặc biệt cả",
-            ],
+            q: "Nhân viên làm gì ngay sau khi khách trả lời?",
+            options: ["Ghi lại ngay", "Đi hỏi bếp", "Đọc lại thực đơn"],
             correct: 0,
-            explanation: "Hỏi gọn một lần thể hiện sự chuẩn bị và tôn trọng thời gian khách.",
+            explanation: '"I am writing it down now."',
           },
           {
             q: "Đây là câu hỏi thứ mấy của tờ khai?",
-            options: ["Câu cuối cùng", "Câu đầu tiên", "Câu ở giữa"],
+            options: ["Câu cuối cùng", "Câu đầu tiên của tờ khai", "Câu hỏi ở giữa tờ khai"],
             correct: 0,
             explanation: '"This is the last question on the form."',
           },
@@ -1977,14 +1969,18 @@ function week20(lx: Ctx): LessonContent[] {
         `The guest hesitates. ${lx.staff} helps: "Would you prefer ${wt(c1)} or ${wt(c2)}, madam? Both are excellent choices." The guest picks one quickly. The guest takes only a moment to decide.`,
         [
           {
-            q: "Nên đưa cho khách mấy lựa chọn?",
-            options: ["Hai", "Năm", "Càng nhiều càng tốt"],
+            q: "Nhân viên đánh giá hai lựa chọn thế nào?",
+            options: ["Cả hai đều rất tốt", "Một cái tốt hơn hẳn", "Không nói gì về chúng"],
             correct: 0,
-            explanation: "Hai lựa chọn giúp khách quyết nhanh; quá nhiều gây rối.",
+            explanation: '"Both are excellent choices."',
           },
           {
             q: "Khách quyết định trong bao lâu?",
-            options: ["Chỉ một khoảnh khắc", "Sau mười phút", "Đến hôm sau"],
+            options: [
+              "Chỉ một khoảnh khắc",
+              "Sau khoảng hai mươi phút",
+              "Phải đợi đến tận hôm sau",
+            ],
             correct: 0,
             explanation: '"The guest takes only a moment to decide."',
           },
@@ -2083,10 +2079,14 @@ function week20(lx: Ctx): LessonContent[] {
         `The guest wants advice. ${lx.staff} says: "I would suggest the ${lo(c10)}, because it is very popular with our guests. It would suit you nicely." Most guests choose the same one.`,
         [
           {
-            q: "Lời khuyên nên kèm theo gì?",
-            options: ["Lý do cụ thể", "Giá tiền của dịch vụ", "Không cần kèm gì cả"],
+            q: "Nhân viên nêu lý do gợi ý là gì?",
+            options: [
+              "Vì rất được khách ưa chuộng",
+              "Vì đó là chỗ rẻ nhất",
+              "Vì chỉ còn mỗi chỗ đó",
+            ],
             correct: 0,
-            explanation: "Lời khuyên có lý do mới đáng tin, nếu không sẽ giống chào hàng.",
+            explanation: '"because it is very popular with our guests"',
           },
           {
             q: "Phần lớn khách chọn thế nào?",
@@ -2184,18 +2184,14 @@ function week20(lx: Ctx): LessonContent[] {
         `The guest chooses differently. ${lx.staff} answers warmly: "Of course, that is a good choice too, sir. Whichever you prefer." The guest feels comfortable. The staff member does not argue.`,
         [
           {
-            q: "Khi khách không theo lời khuyên, nên làm gì?",
-            options: [
-              "Ủng hộ lựa chọn của khách",
-              "Cố thuyết phục khách chọn lại",
-              "Tỏ ra thất vọng ra mặt",
-            ],
+            q: "Khách cảm thấy thế nào sau câu trả lời?",
+            options: ["Thoải mái", "Bị ép buộc", "Khó xử"],
             correct: 0,
-            explanation: "Khách có quyền quyết định; bảo vệ lời khuyên của mình là sai lầm.",
+            explanation: '"The guest feels comfortable."',
           },
           {
             q: "Nhân viên có tranh luận lại không?",
-            options: ["Không tranh luận", "Có, một chút", "Có, khá lâu"],
+            options: ["Không tranh luận", "Có, một chút", "Có, tranh luận khá lâu"],
             correct: 0,
             explanation: '"The staff member does not argue."',
           },
@@ -2289,14 +2285,10 @@ function week20(lx: Ctx): LessonContent[] {
         `The decision is made. ${lx.staff} confirms: "So you would like ${wt(c5)}, correct?" The guest agrees. "Very good, sir. I will arrange that now." The work starts straight away.`,
         [
           {
-            q: "Vì sao phải chốt lại lựa chọn?",
-            options: [
-              "Tránh làm sai rồi phải làm lại",
-              "Để nói thêm cho đủ dài",
-              "Vì quy định của khách sạn",
-            ],
+            q: "Khách phản ứng thế nào khi được chốt lại?",
+            options: ["Đồng ý", "Đổi sang thứ khác", "Không trả lời"],
             correct: 0,
-            explanation: "Xác nhận một lần tiết kiệm rất nhiều thời gian sửa sai.",
+            explanation: '"The guest agrees."',
           },
           {
             q: "Việc được bắt đầu khi nào?",
@@ -2570,14 +2562,10 @@ function week21(lx: Ctx): LessonContent[] {
         `${lx.staff} gives an honest report: "There was one problem this morning, but I fixed it. It ${lo(e7)} than usual, because we were very busy."`,
         [
           {
-            q: "Nhân viên báo cáo sự cố như thế nào?",
-            options: [
-              "Nêu vấn đề và cách đã xử lý",
-              "Giấu đi và không báo lại cho ai",
-              "Đổ lỗi cho người làm ca trước đó",
-            ],
+            q: "Có mấy sự cố trong ca sáng?",
+            options: ["Một", "Ba", "Không có sự cố nào"],
             correct: 0,
-            explanation: "Báo cáo trung thực kèm giải pháp là chuẩn mực chuyên nghiệp.",
+            explanation: '"There was one problem this morning"',
           },
           {
             q: "Từ nối nào dùng để nêu nguyên nhân?",
@@ -2669,14 +2657,14 @@ function week21(lx: Ctx): LessonContent[] {
         `The shift ends. ${lx.staff} tells the next colleague: "I ${lo(e4)} the supervisor about one issue. Everything else was ${lo(e9)}. The next shift will finish the rest."`,
         [
           {
-            q: "Bàn giao ca cần nêu rõ điều gì?",
-            options: ["Việc còn dở dang", "Chuyện cá nhân", "Không cần nêu gì"],
+            q: "Nhân viên đã báo việc đó cho ai?",
+            options: ["Cấp trên trực ca", "Người khách vừa rời đi", "Chưa báo cho ai"],
             correct: 0,
-            explanation: "Người ca sau cần biết chính xác việc gì chưa xong.",
+            explanation: '"the supervisor about one issue"',
           },
           {
             q: "Câu 'The next shift will finish the rest' nói về thời gian nào?",
-            options: ["Thì tương lai đơn", "Thì quá khứ đơn", "Thì hiện tại đơn"],
+            options: ["Thì tương lai đơn", "Thì quá khứ đơn", "Thì hiện tại tiếp diễn"],
             correct: 0,
             explanation: "'will + động từ' diễn tả việc sắp làm.",
           },
@@ -2783,10 +2771,10 @@ function week22(lx: Ctx): LessonContent[] {
         `${lx.staff} combines the steps naturally. "First I ${lo(a1)}. Would you like ${wa(o1)}, madam? Everything will be ready ${lo(w2)}." The guest agrees to both.`,
         [
           {
-            q: "Nhân viên ghép hai kỹ năng nào?",
-            options: ["Trình tự và lời mời", "Xin lỗi và từ chối", "Hỏi giá và thanh toán"],
+            q: "Nhân viên hứa gì về thời gian?",
+            options: ["Mọi thứ xong đúng giờ", "Sẽ trễ một chút", "Không hứa gì về giờ"],
             correct: 0,
-            explanation: "Câu đầu là trình tự (tuần 15), câu sau là lời mời (tuần 16).",
+            explanation: '"Everything will be ready on time."',
           },
           {
             q: "Khách đồng ý với mấy đề nghị?",
@@ -2885,14 +2873,14 @@ function week22(lx: Ctx): LessonContent[] {
         `${lx.staff} handles the formalities. "Could I have your name, please? Then please sign here. I am preparing the paperwork now, sir." The name comes first, the signature second.`,
         [
           {
-            q: "Thứ tự đúng khi làm thủ tục là gì?",
+            q: "Nhân viên đang làm gì lúc nói câu cuối?",
             options: [
-              "Xin thông tin rồi hướng dẫn ký",
-              "Bắt ký trước rồi hỏi tên",
-              "Không cần thứ tự nào cả",
+              "Đang chuẩn bị giấy tờ",
+              "Đang gọi điện thoại cho quản lý",
+              "Đang rời khỏi quầy",
             ],
             correct: 0,
-            explanation: "Thu thập thông tin trước, hoàn tất giấy tờ sau.",
+            explanation: '"I am preparing"',
           },
           {
             q: "Thứ tự đúng là gì?",
@@ -2992,10 +2980,14 @@ function week22(lx: Ctx): LessonContent[] {
         `A guest requests something against the rules. ${lx.staff} answers: "I am afraid that is not allowed, sir. Would you prefer another option? We could arrange something quieter."`,
         [
           {
-            q: "Sau khi từ chối, nhân viên làm gì?",
-            options: ["Đưa ra lựa chọn khác", "Kết thúc câu chuyện ở đó", "Gọi bảo vệ tới ngay"],
+            q: "Phương án nhân viên đưa thêm là gì?",
+            options: [
+              "Một chỗ yên tĩnh hơn",
+              "Giảm giá phòng cho khách ngay",
+              "Gọi bảo vệ tới ngay lập tức",
+            ],
             correct: 0,
-            explanation: "Từ chối luôn phải đi kèm một lối ra cho khách.",
+            explanation: '"We could arrange something quieter."',
           },
           {
             q: "Cụm nào làm lời từ chối mềm đi?",
@@ -3084,7 +3076,7 @@ function week22(lx: Ctx): LessonContent[] {
           },
           {
             q: "Báo cáo mất bao lâu?",
-            options: ["Chưa tới một phút", "Khoảng nửa giờ", "Cả buổi chiều"],
+            options: ["Chưa tới một phút", "Khoảng nửa giờ đồng hồ", "Gần như cả buổi chiều nay"],
             correct: 0,
             explanation: '"The whole report takes less than a minute."',
           },
