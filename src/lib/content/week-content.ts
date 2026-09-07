@@ -3,6 +3,7 @@
 // is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
+import { tipWithFormNote } from "./form-note";
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP, lockWeekHeadwords } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
@@ -26028,6 +26029,17 @@ export function getWeekContent(dep: string, week: string | number): WeekContent 
   const wk = typeof week === "string" ? parseInt(week, 10) : week;
   return REGISTRY[`${dep.toUpperCase()}-${wk}`] ?? null;
 }
+
+// The spine authors one template per slot and renders it six ways, so a
+// grammar note naming the verb the learner must actually produce can only be
+// written after the sentence exists. Done here, in place, because the whole
+// registry is built eagerly above and because callers compare lessons by
+// identity. Idempotent: a decorated tip already names a form, so a second
+// pass leaves it alone.
+for (const built of Object.values(REGISTRY))
+  for (const lesson of built.lessons)
+    for (const item of lesson.speaking)
+      item.helpTip = tipWithFormNote(item.helpTip, item.targetResponse);
 
 export const AVAILABLE_WEEKS = Array.from(
   new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
