@@ -66,6 +66,9 @@ const VERBS = new Set([
   "miss",
   "reject",
   "exchange",
+  // Spa's end-of-shift slot 3 ("Dim the lights") is a verb phrase like the
+  // other departments' "Restock" and "Serve faster".
+  "dim",
   // Intransitive past-report verbs, added with the P0 content fix so
   // "The guest arrived at noon." tags as a verb rather than a noun.
   "arrive",

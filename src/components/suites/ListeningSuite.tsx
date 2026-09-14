@@ -21,6 +21,7 @@ type ListeningTask =
       options: string[];
       correctIdx: number;
       audioWho: string;
+      tip: string;
     }
   | { kind: "cloze"; key: string; audio: string; tokens: { text: string; blank: boolean }[] };
 
@@ -68,10 +69,46 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
   // played the arcade first was answering from memory and the block measured
   // recall rather than listening. The checkpoint moved off this source for
   // exactly that reason; the weekly practice had not.
-  const allTargets = content.lessons.flatMap((l) => l.speaking.map((s) => s.targetResponse));
+  const allTargets = content.lessons.flatMap((l) =>
+    l.speaking.map((s) => ({ t: s.targetResponse, lessonId: l.lessonId, prompt: s.guestPrompt })),
+  );
+  // The words a sentence says, with honorifics and courtesy stripped: two
+  // options that say the same thing to the same guest are two right answers.
+  // "The price includes daily housekeeping, sir." sat beside "The price
+  // includes daily housekeeping." with one of them marked wrong; a review
+  // measured it on about 8% of one week's items. Distractors now come from
+  // OTHER lessons, never share their content with the answer, and never
+  // answer the same guest line.
+  const content_ = (t: string) =>
+    new Set(
+      t
+        .toLowerCase()
+        .replace(/[^a-z' ]/g, " ")
+        .split(" ")
+        .filter(
+          (w) => w.length > 2 && !/^(sir|madam|please|the|and|you|your|certainly|course)$/.test(w),
+        ),
+    );
+  const overlaps = (a: string, b: string) => {
+    const A = content_(a);
+    const B = content_(b);
+    const shared = [...A].filter((w) => B.has(w)).length;
+    return shared >= Math.min(A.size, B.size) - 1;
+  };
   const chooses: ListeningTask[] = content.lessons.flatMap((l) =>
     l.speaking.map((sp, si) => {
-      const others = shuffle(allTargets.filter((t) => t !== sp.targetResponse)).slice(0, 2);
+      const pool = allTargets.filter(
+        (o) =>
+          o.lessonId !== l.lessonId &&
+          o.prompt !== sp.guestPrompt &&
+          !overlaps(o.t, sp.targetResponse),
+      );
+      const others: string[] = [];
+      for (const o of shuffle(pool)) {
+        if (others.length >= 2) break;
+        if (others.some((x) => overlaps(x, o.t))) continue;
+        others.push(o.t);
+      }
       const opts = shuffle([sp.targetResponse, ...others]);
       return {
         kind: "choose" as const,
@@ -80,6 +117,7 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
         options: opts,
         correctIdx: opts.indexOf(sp.targetResponse),
         audioWho: speakerAudioLabel(sp),
+        tip: sp.helpTip,
       };
     }),
   );
@@ -344,6 +382,17 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
 
         {answered !== null && task.kind === "cloze" && !answered && (
           <p className="mt-3 text-sm text-destructive">Câu đầy đủ: "{task.audio}"</p>
+        )}
+        {/* A wrong pick used to show only "Chưa đúng". Without the line that
+            was said, a learner working alone cannot tell whether they
+            misheard the guest or misread the answers. */}
+        {answered === false && task.kind === "choose" && (
+          <div className="mt-3 space-y-1 text-sm">
+            <p className="text-foreground/80">
+              Bạn vừa nghe: <span className="italic">"{task.audio}"</span>
+            </p>
+            {task.tip && <p className="text-xs italic text-foreground/60">💡 {task.tip}</p>}
+          </div>
         )}
         {answered !== null && (
           <p

@@ -110,7 +110,12 @@ function SpeakingSuiteInner({
       const avgPct = Math.round(sumPct / scenarios.length);
       recordSuiteResult(dep, week, "speaking", earned.current, {
         scorePct: avgPct,
-        mastered: passedRef.current.size === scenarios.length,
+        // Nine in ten, not every one. A week holds 24-41 scenarios, and a
+        // single item a recogniser cannot hear the way the model spells it
+        // ("from 6:30 until 10:00") made the week's mastery unreachable by
+        // voice for a learner who said every sentence right — two reviews
+        // named it as the thing a self-study learner cannot get past alone.
+        mastered: passedRef.current.size >= Math.ceil(scenarios.length * 0.9),
       });
     }
   }
@@ -390,7 +395,8 @@ function SpeakingSuiteInner({
               )}
               {!result.passed && result.insertedWords.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                  Câu mẫu không có {result.insertedWords.join(", ")} — thừa một chữ cũng là sai câu
+                  Câu mẫu không có {result.insertedWords.join(", ")} — câu của bạn có thể vẫn đúng
+                  tiếng Anh, nhưng bài này luyện đúng câu mẫu. Nói lại sát câu mẫu hơn.
                 </div>
               )}
               {!result.passed && result.inflectionErrors.length > 0 && (

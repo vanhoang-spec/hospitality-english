@@ -55,7 +55,11 @@ const MCQ_NEW_MAX = 10;
 // shown, and two academic reviews measured the consequence from opposite ends:
 // most of a department's vocabulary comes back only as recognition, and only a
 // fifth of that recognition actually happens.
-const MCQ_REVIEW = 6;
+// Six was still a 21-26% chance per recycled word, and a round of reviews
+// measured most of a phase's earlier vocabulary living on recognition that
+// mostly never happened. Ten keeps the new-word share near 60% while every
+// recycled word has better than a one-in-three chance of being asked.
+const MCQ_REVIEW = 10;
 // Ten of the checkpoint week seventy-five recycled words is 13% — the week
 // that exists to consolidate a whole phase sampled an eighth of it.
 const MCQ_REVIEW_CHECKPOINT = 20;

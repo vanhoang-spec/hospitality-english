@@ -77,6 +77,61 @@ export function shuffle<T>(a: T[]): T[] {
   return c;
 }
 
+const DROPPABLE = new Set(["a", "an", "the", "is", "are", "am", "was", "were", "to", "does", "of"]);
+const SWAPPED: Record<string, string> = {
+  a: "an",
+  an: "a",
+  is: "are",
+  are: "is",
+  was: "were",
+  were: "was",
+  has: "have",
+  have: "has",
+  does: "do",
+  do: "does",
+  this: "these",
+  these: "this",
+  much: "many",
+  many: "much",
+};
+const MODAL_WORDS = new Set(["will", "can", "could", "would", "may", "must", "should", "shall"]);
+const NOT_AFTER_MODAL = new Set(["not", "i", "you", "we", "he", "she", "they", "it"]);
+
+/** Every sentence one closed-class edit away from `sentence`: drop an article,
+ *  copula, "to" or "of"; swap a/an, is/are, was/were, has/have, do/does,
+ *  this/these, much/many; or put "to" after a modal and "the" before a
+ *  possessive. Each edit is one a Vietnamese learner makes and none of them
+ *  can turn a correct service sentence into another correct one — the caller
+ *  still removes any result that happens to be a sentence the course teaches. */
+function wrongVariants(sentence: string): string[] {
+  const toks = sentence.split(" ").filter(Boolean);
+  const core = (t: string) => t.toLowerCase().replace(/[^a-z']/g, "");
+  const withCase = (from: string, word: string) =>
+    /^[A-Z]/.test(from) ? word.charAt(0).toUpperCase() + word.slice(1) : word;
+  const out = new Set<string>();
+  const emit = (arr: string[]) => {
+    if (arr.length < 2) return;
+    const a = [...arr];
+    a[0] = a[0].charAt(0).toUpperCase() + a[0].slice(1);
+    out.add(a.join(" "));
+  };
+  toks.forEach((t, i) => {
+    const w = core(t);
+    const tail = t.slice(t.toLowerCase().indexOf(w) + w.length);
+    if (DROPPABLE.has(w) && !/[.,?!]$/.test(t)) {
+      const a = toks.filter((_, j) => j !== i);
+      if (i === 0 && a[0]) a[0] = a[0].charAt(0).toUpperCase() + a[0].slice(1);
+      emit(a);
+    }
+    if (SWAPPED[w]) emit(toks.map((x, j) => (j === i ? withCase(t, SWAPPED[w]) + tail : x)));
+    const next = toks[i + 1] ? core(toks[i + 1]) : "";
+    if (MODAL_WORDS.has(w) && !tail && next && !NOT_AFTER_MODAL.has(next))
+      emit([...toks.slice(0, i + 1), "to", ...toks.slice(i + 1)]);
+    if (/^(your|our|my)$/.test(w) && i > 0) emit([...toks.slice(0, i), "the", ...toks.slice(i)]);
+  });
+  return [...out];
+}
+
 /**
  * Builds a 20-question mixed paper drawn from EVERY week in the
  * checkpoint's phase (see weeksInPhase), not just the checkpoint week
@@ -415,6 +470,46 @@ export function buildPaper(dep: string, week: string): Question[] {
     // survived a first fix and showed up once in 7,500 generated papers.
     const chosen = new Set([g.polite, ...(g.nearMiss ? [g.nearMiss] : [])]);
     const want = 3;
+    // THE THIRD OPTION IS ONE MORE WRONG REPAIR, NOT A SENTENCE FROM ELSEWHERE.
+    //
+    // With {answer, its near miss, an unrelated polite sentence} the paper had
+    // a shape, and ten reviews in one round all found it: the unrelated one is
+    // eliminated on sight, and of the two look-alikes the near miss is usually
+    // the LONGER one because most near misses insert a word ("Could I TO
+    // have…"). "Pick the shorter of the two most similar" answered 57-67% of
+    // grammar questions and cleared the block's own floor on 79-90% of papers.
+    // "Pick the option most like the other two" answered 52-57%.
+    //
+    // So the third option is a generated edit, and which sentence it is edited
+    // FROM is drawn: from the answer one time in three, from the near miss two
+    // times in three. An option edited from X sits next to X, which makes X the
+    // middle of the three — the answer a third of the time, a wrong option the
+    // rest — so "most like the other two" falls to chance. Among the edits
+    // available, the one chosen puts the answer at a randomly drawn length rank,
+    // which does the same to every length rule. A phase without near misses
+    // (weeks 23-40) keeps the old draw: an edit of the answer alone would make
+    // the answer the middle of the three every time.
+    if (g.nearMiss) {
+      const flat = (t: string) =>
+        t
+          .toLowerCase()
+          .replace(/[^a-z ]/g, " ")
+          .replace(/ +/g, " ")
+          .trim();
+      const taught = new Set(grammarPool.map((o) => flat(o.polite)));
+      const avoid = new Set([flat(g.polite), flat(g.nearMiss)]);
+      const fromAnswer = Math.random() < 1 / 3;
+      const base = fromAnswer ? g.polite : g.nearMiss;
+      const cands = shuffle(
+        wrongVariants(base).filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v))),
+      );
+      const wantRank = Math.floor(Math.random() * 3);
+      const nearMiss = g.nearMiss;
+      const rankOf = (third: string) =>
+        [nearMiss, third].filter((o) => o.length < g.polite.length).length;
+      const third = cands.find((c) => rankOf(c) === wantRank) ?? cands[0];
+      if (third) chosen.add(third);
+    }
     const ranked = grammarPool
       .filter((o) => o.lessonId !== g.lessonId && !saysTheSame(o.polite) && !sameStem(o))
       .map((o) => ({ o, score: share(o.polite) }))
@@ -605,8 +700,16 @@ export function buildPaper(dep: string, week: string): Question[] {
       /\bi will bring\b/i,
       /\bi will send\b/i,
       /\bi will call\b/i,
-      /\bi will check\b/i,
-      /\bmay i have\b/i,
+      // Checking, fixing and reporting are one promise to a guest who has only
+      // said "There is a small problem" — a review found "I will fix the issue
+      // now" keyed right beside "I will report it now" keyed wrong.
+      /\bi will (check|fix|report|look into)\b/i,
+      // A request for a detail, whatever verb carries it: "Could I have your
+      // pain area?" and "May I see your consent form?" both answer "Anything
+      // else from me?", and the old entry matched only "may i have" — one
+      // review read 12 of 60 listening items with a second right answer, most
+      // of them this shape.
+      /^(could|may|can) i (have|see|ask about|check)\b/i,
       /\bis ready\b/i,
       // A location answer: "The lift is on the right." beside "Your robe is
       // on the hook." both answer a where-question when the audio names
@@ -615,6 +718,14 @@ export function buildPaper(dep: string, week: string): Question[] {
       /\b(is|are) on (the|your)\b/i,
       /\bhave a good\b/i,
       /\benjoy your\b/i,
+      // Five more moves ten reviews found answering one audio two right ways:
+      // writing it down, offering, handing something over, refusing, and
+      // giving one more of something.
+      /\bi will (note|write)\b|\b(noted|wrote|listed|jotted|typed|logged) everything\b|\bin the log\b/i,
+      /\bwould you like\b/i,
+      /^(yes[.,]? )?here is your\b/i,
+      /\bnot (allowed|permitted|possible|available)\b|\bcannot decide\b/i,
+      /\b(an extra|another|one more)\b/i,
       // A later batch added "We could arrange X", and an audit measuring
       // 1,800 listening questions found it answering an open question two
       // different right ways. The comment above this list predicted exactly
@@ -624,6 +735,7 @@ export function buildPaper(dep: string, week: string): Question[] {
       // has opening jobs, and three weeks of this phase each teach a different
       // one. Same for the every-day and end-of-shift frames beside it.
       /\bfirst[.?!]?$/i,
+      /^first (i|we)\b/i,
       /\bevery day[.?!]?$/i,
       /\bat the end[.?!]?$/i,
     ];
@@ -690,46 +802,25 @@ export function buildPaper(dep: string, week: string): Question[] {
     // paper could offer "This one is better, madam." against "This one is
     // better, sir." — three options, two of them one word apart. Measured at
     // 9-34% of papers depending on the department.
-    const clean: { t: string; score: number }[] = [];
-    for (const c of strict) {
-      if (clean.length >= 2) break;
-      if (clean.some((k) => nearlySameAnswer(k.t, c.t))) continue;
-      clean.push(c);
-    }
-    // At least one distractor must echo the audio as hard as the key does.
-    // The score already weights `echo` for this reason, but narrowing the
-    // candidate pool with the second-right-answer rules above filtered out
-    // the high-echo candidates as a side effect, and "pick the option sharing
-    // most words with what you heard" climbed from 36.9% to 44.1% of
-    // listening questions — through the block's own 50% floor on 54.9% of
-    // papers. Overlap has to stay useless, so it is repaired here rather than
-    // by weakening the rules that made it useful again.
-    // And at least one distractor must be about the key's own length. The band
-    // filter allows +/-2 words, which was wide enough for "always pick the
-    // shortest option" to reach 41.9% of listening questions and through the
-    // block floor on 48.9% of papers — the length bias the reading block just
-    // lost, reappearing one block over.
-    // At least one distractor no LONGER than the key. "Within a word or two"
-    // is not enough: a five-word key beside two six-word distractors is still
-    // the unique shortest option, which is the whole trick. It has to be
-    // possible to be wrong by picking the shortest.
-    // Three constraints and only two distractors to carry them, so they are
-    // satisfied TOGETHER. Applied one after another, the second repair simply
-    // overwrote the first — both wrote to clean[1].
+    // THE PAIR OF DISTRACTORS.
     //
-    //   · one distractor no LONGER than the key  — "always pick the shortest"
-    //   · one echoing the audio at least as hard — "pick the loudest"
-    //   · one echoing it at most as hard         — "pick the quietest"
+    // Three constraints on echo and length used to be the whole rule, and they
+    // held: at least one distractor no longer than the key, one echoing the
+    // audio at least as hard, one at most as hard — each exists because the
+    // surface signal it removes had carried more than half the papers through
+    // the block floor once. They still apply first.
     //
-    // The third is new, and it exists because the second one alone did not
-    // remove the overlap signal, it INVERTED it. Weighting `echo` in the
-    // ranker and then forcing a high-echo distractor left the distractors
-    // echoing the audio harder than the key on average, so "pick the option
-    // sharing FEWEST words with what you just heard" answered 48.3% of
-    // listening questions and carried 61.3% of papers through the block's own
-    // 50% floor — worse than the 44.1% the high-echo repair was written to
-    // kill. A surface signal that points either way is still a surface signal;
-    // the key has to sit INSIDE the range its distractors span.
+    // What they left was the key at the centre of its options. Both
+    // distractors were ranked by likeness to the KEY, so the key was always the
+    // option most like the other two, and ten reviews in one round used exactly
+    // that: "pick the option most like the other two" answered 46-53% of
+    // listening questions, "pick the middle length" 40-48%.
+    //
+    // So the second distractor is ranked by likeness to the FIRST distractor
+    // two times in three, and to the key one time in three. Whichever sentence
+    // the pair is built around becomes the middle of the three, and that is
+    // the answer only a third of the time. Among the pairs available, the one
+    // chosen puts the key at a randomly drawn length rank.
     const keyEcho = echo(s.targetResponse);
     const shortEnough = (c: { t: string }) => wordsOf(c.t) <= keyLen;
     const loudEnough = (c: { t: string }) => echo(c.t) >= keyEcho;
@@ -738,22 +829,42 @@ export function buildPaper(dep: string, week: string): Question[] {
       (pair.some(shortEnough) ? 1 : 0) +
       (pair.some(loudEnough) ? 1 : 0) +
       (pair.some(quietEnough) ? 1 : 0);
-    if (clean.length === 2 && covers(clean) < 3) {
-      // `strict` is already in rank order, so the first pair that covers all
-      // three is also the best-ranked one that does.
-      let best = [clean[0], clean[1]];
-      search: for (let i = 0; i < strict.length; i++)
-        for (let j = i + 1; j < strict.length; j++) {
-          const pair = [strict[i], strict[j]];
-          if (nearlySameAnswer(pair[0].t, pair[1].t)) continue;
-          if (covers(pair) > covers(best)) {
-            best = pair;
-            if (covers(best) === 3) break search;
-          }
-        }
-      clean[0] = best[0];
-      clean[1] = best[1];
-    }
+    const bagOfWords = (t: string) =>
+      new Set(
+        t
+          .toLowerCase()
+          .replace(/[^a-z' ]/g, " ")
+          .split(" ")
+          .filter(Boolean),
+      );
+    const likeness = (a: string, b: string) => {
+      const A = bagOfWords(a);
+      const B = bagOfWords(b);
+      const shared = [...A].filter((w) => B.has(w)).length;
+      return shared / Math.max(1, new Set([...A, ...B]).size);
+    };
+    type Cand = { t: string; score: number };
+    const top: Cand[] = strict.slice(0, 12);
+    const aroundKey = Math.random() < 1 / 3;
+    const wantRank = Math.floor(Math.random() * 3);
+    const keyChars = s.targetResponse.length;
+    const pairs: { a: Cand; b: Cand; w: number }[] = [];
+    for (let i = 0; i < Math.min(3, top.length); i++)
+      for (let j = 0; j < top.length; j++) {
+        if (i === j || nearlySameAnswer(top[i].t, top[j].t)) continue;
+        pairs.push({
+          a: top[i],
+          b: top[j],
+          w: aroundKey ? likeness(top[j].t, s.targetResponse) : likeness(top[j].t, top[i].t),
+        });
+      }
+    const covered = pairs.filter((p) => covers([p.a, p.b]) === 3);
+    const candidates = covered.length ? covered : pairs;
+    const atRank = candidates.filter(
+      (p) => [p.a.t, p.b.t].filter((t) => t.length < keyChars).length === wantRank,
+    );
+    const best = (atRank.length ? atRank : candidates).sort((x, y) => y.w - x.w)[0];
+    const clean: Cand[] = best ? [best.a, best.b] : top.slice(0, 2);
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the
     // rejects to read as a second right answer. Three options beats a pure

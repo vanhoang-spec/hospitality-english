@@ -146,10 +146,26 @@ function OralStage({
       }
       setSaid(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
-    // Any error at all, not a curated list of codes: `network` on a
-    // firewalled property looks nothing like `not-allowed` on a locked
-    // handset, and neither learner should be graded zero for it.
-    r.onerror = () => {
+    // Only a device that cannot hear opens the typed path. This handler used
+    // to accept any error at all, and two of those errors are the learner's
+    // own doing: `no-speech` is silence, and `not-allowed` is the learner
+    // tapping "Block" on the microphone prompt. Four reviews in one round read
+    // the same consequence off the code — stay silent once, or refuse the
+    // microphone, and the oral half is typed and counted as spoken. The
+    // practice suite already drew this line; the exam did not.
+    r.onerror = (e: SpeechRecognitionErrorEvent) => {
+      if (e.error === "no-speech" || e.error === "aborted") {
+        setNote("Chưa nghe được gì — bấm micro và nói lại.");
+        return;
+      }
+      // `service-not-allowed` is the browser refusing a speech service it
+      // does not offer — a device limit, handled with the others below.
+      if (e.error === "not-allowed") {
+        setNote(
+          "Phần nói cần quyền dùng micro. Hãy cho phép micro trong trình duyệt rồi bấm nói lại.",
+        );
+        return;
+      }
       deviceFailedRef.current = true;
       setTypedMode(true);
       setNote("Micro hoặc mạng không dùng được — hãy gõ câu trả lời bằng tiếng Anh.");
@@ -161,12 +177,10 @@ function OralStage({
       const next = attempts + 1;
       setAttempts(next);
       if (cleaned === "") {
-        setNote(
-          next >= 2
-            ? "Vẫn chưa nghe được. Hãy gõ câu trả lời để tính điểm phần nói."
-            : "Chưa nghe được gì — thử lại lần nữa.",
-        );
-        if (next >= 2) setTypedMode(true);
+        // Silence is not a broken device. Two silent attempts used to switch
+        // the item to typing for good, which is the same back door the error
+        // handler above closes: say nothing twice and type the answer.
+        setNote("Chưa nghe được gì — bấm micro, nói gần máy hơn rồi thử lại.");
         return;
       }
       if (

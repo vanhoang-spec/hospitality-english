@@ -364,7 +364,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "Mandatory",
-          phonetic: "/ˈmændətɔːri/",
+          phonetic: "/ˈmændətri/",
           definition: "Bắt buộc theo quy định",
           context: "This registration is mandatory by law.",
           icon: "⚖️",
@@ -483,7 +483,7 @@ export const FO_WEEK_17: WeekContent = {
         {
           word: "Pre-authorisation",
           phonetic: "/ˌpriːˌɔːθəraɪˈzeɪʃən/",
-          definition: "Khoảng tạm giữ/Đặt cọc thẻ",
+          definition: "Khoản tạm giữ/Đặt cọc thẻ",
           context: "We require a credit card pre-authorisation.",
           icon: "💳",
         },
@@ -503,9 +503,9 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "Refund",
-          phonetic: "/ˈriːfʌnd/",
+          phonetic: "/rɪˈfʌnd/",
           definition: "Hoàn tiền lại",
-          context: "We will refund the amount at check-out.",
+          context: "We release the hold, and your bank shows the refund later.",
           icon: "💵",
         },
         // A declined card was measured at zero across all 240 dep-weeks, and
@@ -565,7 +565,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Do I get that money back?",
-          targetResponse: "We will refund the amount at check-out.",
+          targetResponse: "Your bank shows the refund a few days after check-out.",
           helpTip: "Nói rõ mốc hoàn tiền, đừng để khách phải hỏi lại.",
         },
         {
@@ -716,7 +716,7 @@ export const FO_WEEK_17: WeekContent = {
       speaking: [
         {
           guestPrompt: "Thank you. What time is breakfast served tomorrow morning?",
-          targetResponse: "Our breakfast buffet is served from 6:30 until 10:00, sir.",
+          targetResponse: "Our breakfast buffet is served from six-thirty until ten, sir.",
           helpTip:
             "Bật âm /t/ cuối 'breakfast' và âm /d/ cuối 'served' — thiếu hai âm này câu nghe như chưa nói xong.",
         },
@@ -779,7 +779,7 @@ export const FO_WEEK_17: WeekContent = {
           prompt: "We have an early flight. When does breakfast open?",
           options: [
             {
-              text: "Our breakfast buffet is served from 6:30 until 10:00, sir.",
+              text: "Our breakfast buffet is served from six-thirty until ten, sir.",
               correct: true,
               kind: "answer",
             },
@@ -846,7 +846,7 @@ export const FB_WEEK_15: WeekContent = {
         {
           rude: "What's your room number?",
           polite: "May I ask for your room number, please?",
-          nearMiss: "May I ask your room number, please?",
+          nearMiss: "May I ask you room number, please?",
           rule: "Hỏi xin thông tin nhẹ nhàng bằng động từ khuyết thiếu: 'May I ask for…?'.",
         },
         {
@@ -1004,7 +1004,7 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "There are no tables free right now. How long do we have to wait?",
-          targetResponse: "I'm sorry for the wait, sir. A table will be free soon.",
+          targetResponse: "I'm sorry for the wait, sir. A table will be free in ten minutes.",
           helpTip:
             "Nói 'sorry' nhẹ và chậm, giọng bình thản — xin lỗi mà cuống thì khách tưởng có chuyện lớn.",
         },
@@ -1031,7 +1031,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "How long exactly?",
-          targetResponse: "Your table will be ready shortly, sir.",
+          targetResponse: "Your table will be ready shortly, sir — in about ten minutes.",
           helpTip: "Trả lời bằng một mốc, đừng để khách tự đoán.",
         },
       ],
@@ -1118,7 +1118,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           word: "Juice area",
-          phonetic: "/dʒuːs ˈeriə/",
+          phonetic: "/dʒuːs ˈeəriə/",
           definition: "Khu vực nước trái cây",
           context: "The juice area is right next to the coffee machines.",
           icon: "🧃",
@@ -1267,8 +1267,8 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           rude: "Is food ok?",
-          polite: "I hope you're enjoying your breakfast so far, is everything to your liking?",
-          nearMiss: "I hope you're enjoy your breakfast so far, is everything to your liking?",
+          polite: "I hope you're enjoying your breakfast. Is everything to your liking?",
+          nearMiss: "I hope you're enjoy your breakfast. Is everything to your liking?",
           rule: "'I hope…' kèm câu hỏi đuôi ấm áp để hỏi khách có hài lòng không.",
         },
       ],
@@ -1459,7 +1459,7 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "Who is at the door?",
-          targetResponse: "Housekeeping! Good morning!",
+          targetResponse: "Good morning! Housekeeping!",
           helpTip: "Xưng bộ phận trước, khách nghe là biết ai đang gõ.",
         },
         {
@@ -1567,7 +1567,7 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
-          targetResponse: "Certainly, sir. I will send up a bath towel and a razor.",
+          targetResponse: "Certainly, sir. I will send up two bath towels and a razor.",
           helpTip: "Nối 'send up' thành một hơi — âm /d/ chạy thẳng sang 'up', nghe như 'sen-dup'.",
         },
         {
@@ -1625,7 +1625,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "Could you send up some towels and a razor, please?",
           options: [
             {
-              text: "Certainly, sir. I will send up a bath towel and a razor.",
+              text: "Certainly, sir. I will send up two bath towels and a razor.",
               correct: true,
               kind: "answer",
             },
@@ -1938,7 +1938,7 @@ export const SW_WEEK_23: WeekContent = {
     "Massage",
     "Health form",
     "Included",
-    "Popular choice",
+    "Deep tissue massage",
     "Herbal compress",
   ],
   lessons: [
@@ -2337,7 +2337,7 @@ export const GR_WEEK_27: WeekContent = {
     "Meeting room",
     "Coffee preference",
     "Pillow type",
-    "Guest history",
+    "Welcome letter",
     "Late check-out",
   ],
   lessons: [
@@ -4698,7 +4698,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           word: "Current",
-          phonetic: "/ˈkɜːrənt/",
+          phonetic: "/ˈkʌrənt/",
           definition: "Dòng chảy (nước)",
           context: "Strong currents can be dangerous for swimmers today.",
           icon: "🌀",
@@ -4736,8 +4736,8 @@ export const SW_WEEK_19: WeekContent = {
           helpTip: "Nêu mối nguy cụ thể, không nói chung chung.",
         },
         {
-          guestPrompt: "Should we raise the flag?",
-          targetResponse: "Yes. The current is strong this morning.",
+          guestPrompt: "Why is the red flag up?",
+          targetResponse: "The current is strong this morning.",
           helpTip: "Quyết định an toàn phải nói thành lời với đồng nghiệp.",
           speakerRole: "colleague",
         },
@@ -4850,7 +4850,7 @@ export const SW_WEEK_19: WeekContent = {
         {
           rude: "Drink water, you're dehydrated.",
           polite: "Please try to drink some water slowly. I will bring you a cool towel.",
-          nearMiss: "Please try drinking some water slowly. I will bring you a cool towel.",
+          nearMiss: "Please try to drinking some water slowly. I will bring you a cool towel.",
           rule: "'Please try to…' kèm một câu trấn an để hướng dẫn khách trong tình huống khẩn.",
         },
       ],
@@ -4862,7 +4862,7 @@ export const SW_WEEK_19: WeekContent = {
             "Nói chậm và hạ giọng xuống một bậc — giọng bình tĩnh trấn an được người đang thấy mệt.",
         },
         {
-          guestPrompt: "My leg suddenly hurts.",
+          guestPrompt: "What if I get a cramp in the water?",
           targetResponse: "If you feel a cramp, please signal our lifeguard.",
           helpTip: "Dạy khách cách gọi cứu hộ trước khi thật sự cần tới.",
         },
@@ -7571,12 +7571,12 @@ export const FB_WEEK_37: WeekContent = {
   weekTitleVi: "Phục vụ trẻ em và khách ăn Halal",
   reviewWords: [
     "High chair",
-    "Dietary need",
-    "Allergy detail",
+    "Dietary needs",
+    "Allergy details",
     "Set lunch",
     "Kitchen team",
     "Prepare a nut-free dish",
-    "Today's special",
+    "Seasonal dessert",
     "Sharing plate",
   ],
   lessons: [
@@ -8014,7 +8014,7 @@ export const SW_WEEK_37: WeekContent = {
   weekTitleVi: "Yêu cầu kỹ thuật viên, sự thoải mái và chính sách tip",
   reviewWords: [
     "Therapist gender",
-    "Therapist choice",
+    "Treatment record",
     "Pressure",
     "Consent form",
     "Draping technique",
@@ -12406,10 +12406,10 @@ export const FB_WEEK_32: WeekContent = {
   reviewWords: [
     "Recommend",
     "Chef's choice",
-    "Favourite",
+    "Sharing plate",
     "Still water",
     "Tasting menu",
-    "Signature dish",
+    "House special",
     "Pair well with",
     "Corner table",
   ],
@@ -16385,7 +16385,7 @@ export const HK_WEEK_31: WeekContent = {
   reviewWords: [
     "Amenities",
     "Turndown service",
-    "Eco option",
+    "Blackout curtain",
     "Premium toiletries",
     "Bath robe",
     "Fresh flowers",

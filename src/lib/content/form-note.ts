@@ -60,7 +60,9 @@ export function formNote(target: string): string | null {
     " ";
   let m: RegExpMatchArray | null;
 
-  if ((m = s.match(/ (do not|does not) (\w+) /)))
+  // "The Do Not Disturb sign was on the door." names a sign, and the note
+  // taught it as a negative with a bare verb.
+  if ((m = s.match(/ (do not|does not) (\w+) /)) && !/do not disturb/i.test(target))
     return `Phủ định: '${m[1]}' rồi tới động từ gốc — ${m[1]} ${m[2]}.`;
 
   // The four branches below exist because the ones further down claimed

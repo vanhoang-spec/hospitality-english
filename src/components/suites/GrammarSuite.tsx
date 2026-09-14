@@ -310,7 +310,18 @@ function GrammarSuiteInner({
         )}
         {checked === false && (
           <span className="text-xs uppercase tracking-[0.25em] text-destructive">
-            Gần đúng rồi — sắp lại thứ tự nhé.
+            {/* Every wrong order used to get the same line, so a learner could
+                not tell which chip was out of place. Name the first one. */}
+            {(() => {
+              const want = puzzle.target.split(" ").filter(Boolean);
+              if (tray.length < want.length) return `Còn thiếu ${want.length - tray.length} chip.`;
+              const k = tray.findIndex(
+                (w, i) => normalizeSentence(w) !== normalizeSentence(want[i] ?? ""),
+              );
+              return k < 0
+                ? "Gần đúng rồi — kiểm lại dấu câu nhé."
+                : `Từ thứ ${k + 1} chưa đúng chỗ: «${tray[k]}».`;
+            })()}
           </span>
         )}
       </div>

@@ -11,7 +11,8 @@ import {
   type ResolvedReviewItem,
 } from "@/lib/review";
 import { speakerLabel } from "@/lib/content/week-content";
-import { speakEN } from "@/lib/speech";
+import { dedupeTranscript, speakEN } from "@/lib/speech";
+import { utterancePassed } from "@/lib/speaking-score";
 
 export const Route = createFileRoute("/review")({
   head: () => ({ meta: [{ title: "Ôn tập hằng ngày — Embassy Hospitality" }] }),
@@ -379,10 +380,90 @@ function GrammarReview({ item, answered, onResult }: ReviewCardProps<"grammar">)
   );
 }
 
+/** The spaced-review speaking card makes the learner SAY the reply.
+ *
+ *  It used to be "Chọn câu phản hồi chuẩn 5 sao" — three options, pick one.
+ *  The course names speaking as its outcome, and the only encounter with a
+ *  sentence at a long gap (up to sixty days) was recognition: four academic
+ *  reviews in one round said so. The card now hides the model, records the
+ *  answer, and grades it with the same utterancePassed the drill and the
+ *  checkpoint use, at the threshold of the week the sentence came from. A
+ *  device that cannot hear gets a text box through the same grader rather
+ *  than a multiple choice. */
 function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking">) {
   const { speaking } = item;
-  const options = useMemo(() => shuffle(item.options), [item.options]);
-  const [picked, setPicked] = useState<number | null>(null);
+  const week = item.row.week_number;
+  const canHear =
+    typeof window !== "undefined" && !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const [deviceFailed, setDeviceFailed] = useState(!canHear);
+  const [recording, setRecording] = useState(false);
+  const [said, setSaid] = useState("");
+  const [typed, setTyped] = useState("");
+  const [note, setNote] = useState<string | null>(null);
+  const finalRef = useRef("");
+  const recogRef = useRef<SpeechRecognition | null>(null);
+
+  function grade(text: string) {
+    const cleaned = text.trim();
+    if (!cleaned) return;
+    setSaid(cleaned);
+    onResult(
+      utterancePassed(
+        cleaned,
+        speaking.targetResponse,
+        week,
+        speaking.requiredTokens,
+        speaking.guestPrompt,
+      ).passed,
+    );
+  }
+
+  function listen() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      setDeviceFailed(true);
+      return;
+    }
+    finalRef.current = "";
+    setSaid("");
+    setNote(null);
+    const r = new SR();
+    r.lang = "en-US";
+    r.continuous = true;
+    r.interimResults = true;
+    r.onresult = (e: SpeechRecognitionEvent) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript;
+        if (e.results[i].isFinal) finalRef.current += " " + t;
+        else interim += " " + t;
+      }
+      setSaid(dedupeTranscript((finalRef.current + " " + interim).trim()));
+    };
+    r.onerror = (e: SpeechRecognitionErrorEvent) => {
+      if (e.error === "no-speech" || e.error === "aborted") {
+        setNote("Chưa nghe được gì — bấm micro và nói lại.");
+        return;
+      }
+      if (e.error === "not-allowed") {
+        setNote("Cần cho phép micro trong trình duyệt để ôn phần nói.");
+        return;
+      }
+      setDeviceFailed(true);
+    };
+    r.onend = () => {
+      setRecording(false);
+      const cleaned = dedupeTranscript(finalRef.current.trim());
+      if (cleaned) grade(cleaned);
+    };
+    try {
+      r.start();
+      recogRef.current = r;
+      setRecording(true);
+    } catch {
+      setDeviceFailed(true);
+    }
+  }
 
   return (
     <div className="border border-primary/30 bg-card p-6 shadow-xl">
@@ -396,47 +477,62 @@ function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking"
       >
         🔊 Nghe
       </button>
-      <p className="mt-4 text-sm text-foreground/70">Chọn câu phản hồi chuẩn 5 sao:</p>
-      <div className="mt-3 space-y-2">
-        {options.map((opt, i) => {
-          const isPicked = picked === i;
-          const showCorrect = answered !== null && opt.correct;
-          const showWrong = answered !== null && isPicked && !opt.correct;
-          return (
-            <button
-              key={i}
-              disabled={answered !== null}
-              onClick={() => setPicked(i)}
-              className={`block w-full border px-4 py-2.5 text-left text-sm transition-all ${
-                showCorrect
-                  ? "border-primary bg-primary/15"
-                  : showWrong
-                    ? "border-destructive bg-destructive/15"
-                    : isPicked
-                      ? "border-primary"
-                      : "border-primary/20 hover:border-primary/60"
-              }`}
-            >
-              {opt.text}
-            </button>
-          );
-        })}
-      </div>
-      {answered === null && (
-        <div className="mt-5 flex justify-end">
+      <p className="mt-4 text-sm text-foreground/70">Nói câu trả lời của bạn (câu mẫu đang ẩn):</p>
+      {answered === null && !deviceFailed && (
+        <div className="mt-3 flex items-center gap-3">
           <button
-            onClick={() => onResult(picked !== null && options[picked].correct)}
-            disabled={picked === null}
-            className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground shadow-xl disabled:opacity-40"
+            onClick={() => (recording ? recogRef.current?.stop() : listen())}
+            className={`border px-5 py-2.5 text-xs uppercase tracking-[0.2em] ${
+              recording
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-primary text-primary hover:bg-primary/10"
+            }`}
           >
-            Trả lời
+            {recording ? "■ Dừng" : "🎙 Bấm để nói"}
           </button>
+          {said && <span className="text-sm italic text-foreground/70">{said}</span>}
         </div>
       )}
+      {answered === null && deviceFailed && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            grade(typed);
+          }}
+          className="mt-3 flex gap-2"
+        >
+          <input
+            value={typed}
+            onChange={(e) => setTyped(e.target.value)}
+            placeholder="Thiết bị không nghe được — gõ câu trả lời bằng tiếng Anh…"
+            className="flex-1 border border-primary/30 bg-background/60 px-3 py-2 text-sm"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+          />
+          <button
+            type="submit"
+            className="bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+          >
+            Chấm
+          </button>
+        </form>
+      )}
+      {note && answered === null && <p className="mt-2 text-xs text-destructive">{note}</p>}
       {answered !== null && (
-        <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">
-          💡 {speaking.helpTip}
-        </p>
+        <div className="mt-4 space-y-2 text-sm">
+          {said && (
+            <p className="text-foreground/70">
+              Bạn nói: <span className="italic">"{said}"</span>
+            </p>
+          )}
+          <p className={answered ? "text-primary" : "text-destructive"}>
+            {answered ? "Đạt." : "Chưa đạt."} Câu mẫu: "{speaking.targetResponse}"
+          </p>
+          <p className="border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/70">
+            💡 {speaking.helpTip}
+          </p>
+        </div>
       )}
     </div>
   );
