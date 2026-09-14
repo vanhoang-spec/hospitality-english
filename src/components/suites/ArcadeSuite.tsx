@@ -167,7 +167,14 @@ function ArcadeSuiteInner({
         b.kind === "form"
           ? "Câu đó thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được. Nghe lại đề rồi chọn câu có đủ chủ ngữ và động từ."
           : authored;
-      setFeedback({ ok: false, text: why ?? "Chưa đúng — thử bong bóng khác nhé." });
+      // Name the bubble by quoting it, never by its position. The three
+      // options are Fisher-Yates shuffled above and the bubbles carry no
+      // numbers, so an explanation opening "Câu thứ ba…" pointed at nothing
+      // the learner could see. Quoting also survives any future reordering.
+      setFeedback({
+        ok: false,
+        text: why ? `«${b.text}» — ${why}` : "Chưa đúng — thử bong bóng khác nhé.",
+      });
       setTimeout(() => setFeedback(null), why ? 3200 : 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
     }

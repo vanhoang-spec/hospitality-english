@@ -2268,6 +2268,7 @@ function buildWeek(
   overrides: Record<string, WeekContent>,
 ): WeekContent {
   const meta = WEEK_META[week];
+  const review = reviewWordsFor(lx, week, priorWords, overrides);
   return {
     departmentId: lx.code,
     weekNumber: week,
@@ -2275,8 +2276,8 @@ function buildWeek(
     weekTitleVi: meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx)),
-    reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
+    lessons: lockWeekHeadwords(meta.build(lx), review),
+    reviewWords: review,
     mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
   };
 }

@@ -55,7 +55,11 @@ const MCQ_NEW_MAX = 10;
 // shown, and two academic reviews measured the consequence from opposite ends:
 // most of a department's vocabulary comes back only as recognition, and only a
 // fifth of that recognition actually happens.
-const MCQ_REVIEW = 6;
+// Six was still a 21-26% chance per recycled word, and a round of reviews
+// measured most of a phase's earlier vocabulary living on recognition that
+// mostly never happened. Ten keeps the new-word share near 60% while every
+// recycled word has better than a one-in-three chance of being asked.
+const MCQ_REVIEW = 10;
 // Ten of the checkpoint week seventy-five recycled words is 13% — the week
 // that exists to consolidate a whole phase sampled an eighth of it.
 const MCQ_REVIEW_CHECKPOINT = 20;
@@ -70,8 +74,32 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = [], atCheckpoint = false
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
     ...shuffle(reviewWords).slice(0, atCheckpoint ? MCQ_REVIEW_CHECKPOINT : MCQ_REVIEW),
   ]);
+  // The checkpoint has refused nested glosses since a review found questions
+  // with no single right answer — "Biên lai" beside "Biên lai đã in", "Tầng
+  // cao" beside "Tầng cao hơn". The weekly practice, drawing from the same
+  // pool, did not, so it printed exactly those pairs: an audit counted 19 in
+  // one department. A learner who picks correctly is marked wrong, in the
+  // exercise rather than the exam, which is the worse of the two places.
+  const glossKey = (x: string) =>
+    " " +
+    x
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N} ]/gu, " ")
+      .replace(/  +/g, " ")
+      .trim() +
+    " ";
+  const nested = (x: string, y: string) => x.includes(y) || y.includes(x);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
-    const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
+    const key = glossKey(t.vi);
+    const distractors: typeof pool = [];
+    for (const o of shuffle(pool)) {
+      if (distractors.length >= 3) break;
+      if (o.en === t.en || o.vi === t.vi) continue;
+      const g = glossKey(o.vi);
+      if (nested(key, g)) continue;
+      if (distractors.some((d) => nested(glossKey(d.vi), g))) continue;
+      distractors.push(o);
+    }
     if (i % 2 === 0) {
       const options = shuffle([t.vi, ...distractors.map((d) => d.vi)]);
       return {

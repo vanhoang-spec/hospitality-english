@@ -59,6 +59,16 @@ const warnings: string[] = [];
 // fall through to NOUN, which is the right default for these banks.
 // ------------------------------------------------------------
 const VERBS = new Set([
+  // Week 21's problem report reads slot 3 as a participle ("One request was
+  // postponed") and slot 8 as a past verb ("I exchanged the broken one").
+  // Without their stems here the tagger read all four as nouns.
+  "postpone",
+  "miss",
+  "reject",
+  "exchange",
+  // Spa's end-of-shift slot 3 ("Dim the lights") is a verb phrase like the
+  // other departments' "Restock" and "Serve faster".
+  "dim",
   // Intransitive past-report verbs, added with the P0 content fix so
   // "The guest arrived at noon." tags as a verb rather than a noun.
   "arrive",
@@ -1843,6 +1853,103 @@ function lintFollowsChain() {
   }
 }
 
+// ── Layer O · phiên âm phải khớp chính headword của thẻ ───────────────────
+// Đổi tên một giá trị ngân hàng là sửa MỘT trường trong ba. Ba mươi tám thẻ
+// Phase 2 đã ship với phiên âm và nghĩa của từ CŨ: thẻ "Garden seat" đọc
+// /ˈɜːli ɔː leɪt/ ("early or late"), thẻ "Signature" đọc /ˈkliːnɪŋ ˈrekɔːd/,
+// thẻ "Payment method" đọc /ˈmeɪntənəns fɔːm/. Không cổng nào thấy được vì cả
+// ba trường đều là chuỗi hợp lệ; chỉ có người đọc to lên mới biết. Học viên
+// thì tin bản phiên âm hơn tin mình, nên đây là dạy sai phát âm có hệ thống.
+//
+// Phép kiểm: số "từ" của headword phải bằng số cụm phiên âm, VÀ âm đầu mỗi
+// cụm phải hợp với chữ cái đầu của từ tương ứng. Bắt 37/38 ca đã xảy ra.
+// Chữ cái trong từ viết tắt (LED, HR, ADR) chỉ tính số lượng, không kiểm âm
+// đầu — tên chữ cái mở bằng nguyên âm ("el", "eɪtʃ", "ɑː").
+const IPA_VOWEL = "æɑʌeɪiɒɔʊuəɜaeiou";
+const IPA_ONSET: Record<string, string> = {
+  b: "b",
+  c: "ksʃtʃ",
+  d: "dð",
+  f: "f",
+  g: "ɡdʒ",
+  h: "h" + IPA_VOWEL,
+  j: "dʒ",
+  k: "kn",
+  l: "l",
+  m: "m",
+  n: "n",
+  p: "pf",
+  q: "k",
+  r: "r",
+  s: "sʃz",
+  t: "ttʃθð",
+  v: "v",
+  w: "wrh",
+  x: "z" + IPA_VOWEL,
+  y: "j",
+  z: "z",
+  a: IPA_VOWEL,
+  e: IPA_VOWEL + "j",
+  i: IPA_VOWEL,
+  o: IPA_VOWEL + "w",
+  u: IPA_VOWEL + "j",
+};
+/** null nếu hợp lệ, ngược lại là lý do. */
+function phoneticMismatch(word: string, phonetic: string): string | null {
+  const ipa = phonetic
+    .replace(/^\/|\/$/g, "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (!ipa.length) return "không có phiên âm";
+  const base = word
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/[—–]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+  // "check-out" đọc liền một cụm ở thẻ này, tách hai cụm ở thẻ khác — thử cả hai.
+  for (const split of [false, true]) {
+    const raw = split ? base.flatMap((t) => t.split("-").filter(Boolean)) : base;
+    const toks: { t: string; letter: boolean }[] = raw.flatMap((t) =>
+      /^[A-Z]{2,}$/.test(t)
+        ? t.split("").map((c) => ({ t: c, letter: true }))
+        : [{ t, letter: false }],
+    );
+    if (toks.length !== ipa.length) continue;
+    let ok = true;
+    for (let i = 0; i < toks.length; i++) {
+      if (toks[i].letter) continue;
+      const c = toks[i].t.toLowerCase().replace(/[^a-z]/g, "")[0];
+      const p = ipa[i].replace(/^[ˈˌ]+/, "")[0];
+      if (!c || !p) continue;
+      if (!(IPA_ONSET[c] ?? IPA_VOWEL).includes(p)) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok) return null;
+  }
+  return `phiên âm không khớp từ`;
+}
+function lintPhoneticMatchesWord() {
+  const seen = new Set<string>();
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      for (const item of lesson.vocabulary) {
+        const id = `${item.word}|${item.phonetic}`;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        const why = phoneticMismatch(item.word, item.phonetic);
+        if (why) {
+          errors.push(
+            `[O phiên âm] ${key}/${lesson.lessonId}: thẻ "${item.word}" mang ${item.phonetic} — ${why}`,
+          );
+        }
+      }
+    }
+  }
+}
+
 // ── Layer L · reviewWords phải trỏ về một tuần ĐÃ dạy ─────────────────────
 // Thẻ ôn không tự sinh câu ví dụ: nó kéo lại đúng thẻ dạy gốc. Nên một
 // reviewWord trỏ vào tuần tương lai sẽ hiện ra một câu học viên chưa gặp, và
@@ -1954,6 +2061,7 @@ await lintAnswerPositionSkew();
 lintReviewWordOrder();
 lintColleagueHonorific();
 lintFollowsChain();
+lintPhoneticMatchesWord();
 await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
 reportStaleDebt();

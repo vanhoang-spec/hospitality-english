@@ -58,13 +58,90 @@ const CONTRACTIONS: [RegExp, string][] = [
   [/\bisn't\b/g, "is not"],
   [/\baren't\b/g, "are not"],
   [/\bwon't\b/g, "will not"],
+  // A round of ten reviews ran fluent sentences through the grader and found
+  // the list stopped at the forms the first authors happened to write. "You
+  // mustn't smoke inside the hotel." failed in the very week that teaches
+  // must/mustn't; "I've reported it, madam." and "Here's your red invoice."
+  // failed on the contraction alone. ASR writes all of these as contractions.
+  [/\bmustn't\b/g, "must not"],
+  [/\bshouldn't\b/g, "should not"],
+  [/\bcouldn't\b/g, "could not"],
+  [/\bwouldn't\b/g, "would not"],
+  [/\bdidn't\b/g, "did not"],
+  [/\bwasn't\b/g, "was not"],
+  [/\bweren't\b/g, "were not"],
+  [/\bhaven't\b/g, "have not"],
+  [/\bhasn't\b/g, "has not"],
+  [/\bhadn't\b/g, "had not"],
+  [/\byou'll\b/g, "you will"],
+  [/\bthey'll\b/g, "they will"],
+  [/\bit'll\b/g, "it will"],
+  [/\bhe'll\b/g, "he will"],
+  [/\bshe'll\b/g, "she will"],
+  [/\byou'd\b/g, "you would"],
+  [/\bi'd\b/g, "i would"],
+  [/\bwe'd\b/g, "we would"],
+  [/\bthey'd\b/g, "they would"],
+  [/\bhere's\b/g, "here is"],
+  [/\bwho's\b/g, "who is"],
+  [/\bi've\b/g, "i have"],
+  [/\bwe've\b/g, "we have"],
+  [/\byou've\b/g, "you have"],
+  [/\bthey've\b/g, "they have"],
+  [/\blet's\b/g, "let us"],
+];
+
+/** How the same word reaches the grader two ways. Chrome's recogniser runs in
+ *  en-US, so it writes "jewelry", "favorite", "canceled", "checkout" and
+ *  "pickup" for words this course spells "jewellery", "favourite", "cancelled",
+ *  "check-out" and "pick-up"; and it joins or splits compounds the course
+ *  writes the other way ("bath robe" / "bathrobe"). Four reviews measured an
+ *  honest speaker failing on nothing but the spelling a machine chose — 27 of
+ *  31 such variants in one department. Both sides go through this table, so
+ *  it can never make a wrong answer right: it only stops one right answer
+ *  being spelled two ways. */
+const SPELLING: [RegExp, string][] = [
+  [/\bjewelry\b/g, "jewellery"],
+  [/\bfavorite(s?)\b/g, "favourite$1"],
+  [/\bcolor(s?)\b/g, "colour$1"],
+  [/\bflavor(s?)\b/g, "flavour$1"],
+  [/\bneighbor(s?)\b/g, "neighbour$1"],
+  [/\bcenter(s?)\b/g, "centre$1"],
+  [/\btheater(s?)\b/g, "theatre$1"],
+  [/\bcanceled\b/g, "cancelled"],
+  [/\bcanceling\b/g, "cancelling"],
+  [/\btraveler(s?)\b/g, "traveller$1"],
+  [/\bapologiz(e|ed|es|ing)\b/g, "apologis$1"],
+  [/\borganiz(e|ed|es|ing)\b/g, "organis$1"],
+  [/\brealiz(e|ed|es|ing)\b/g, "realis$1"],
+  [/\bcheckout\b/g, "check out"],
+  [/\bcheckin\b/g, "check in"],
+  [/\bpickup\b/g, "pick up"],
+  [/\bbath robe(s?)\b/g, "bathrobe$1"],
+  [/\bturn down service\b/g, "turndown service"],
+  [/\broll away\b/g, "rollaway"],
+  [/\bmini bar\b/g, "minibar"],
+  [/\bvoice mail\b/g, "voicemail"],
+  [/\bwi fi\b/g, "wifi"],
+  [/\be mail(s?)\b/g, "email$1"],
+  [/\bv i p(s?)\b/g, "vip$1"],
+  [/\bmister\b/g, "mr"],
+  [/\bchildrens\b/g, "children's"],
 ];
 
 export function normalize(s: string) {
-  let t = ` ${s.toLowerCase()} `;
+  // Diacritics are folded before the ASCII filter below, which otherwise cut
+  // "Phở" down to "ph": the recogniser writes "pho", the model said "ph", and
+  // one F&B sentence could not be passed by voice at all.
+  let t = ` ${s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/gi, "d")
+    .toLowerCase()} `;
   for (const [re, full] of CONTRACTIONS) t = t.replace(re, full);
+  t = t.replace(/[^\w\s']/g, " ").replace(/\s+/g, " ");
+  for (const [re, full] of SPELLING) t = t.replace(re, full);
   return t
-    .replace(/[^\w\s']/g, " ")
     .split(/\s+/)
     .filter(Boolean)
     .flatMap((tok) => (/^\d+$/.test(tok) ? digitToWords(tok) : [tok]));
@@ -198,6 +275,65 @@ const FINITE_VERBS = new Set<string>(
     "speaking calling asking helping looking making taking sending writing"
   ).split(" "),
 );
+
+/** Whether a word sits where the sentence's own verb has to be.
+ *
+ *  FINITE_VERBS is a list by name, and a list by name only ever covers the
+ *  verbs somebody remembered. An audit deleted each department's OWN verbs and
+ *  found eighteen Spa sentences still passing without them — including
+ *  "Please undress to your comfort level, madam.", which the lesson's help tip
+ *  calls the most important sentence in the lesson, and "If you feel a cramp,
+ *  please signal our lifeguard.", which is a first-aid instruction.
+ *
+ *  So the test is positional instead. English puts the finite verb in a small
+ *  number of places, and every one of those failures sits in one of them: the
+ *  word right after a leading "please", after a modal, after a subject pronoun
+ *  and its frequency adverb, or after a determiner-headed subject. A word in
+ *  one of those slots carries the predicate whether or not anyone listed it.
+ */
+function holdsThePredicate(word: string, target: string): boolean {
+  const w = target
+    .toLowerCase()
+    .replace(/[^a-z' ]/g, " ")
+    .split(" ")
+    .filter(Boolean);
+  const at = w.indexOf(word);
+  if (at <= 0) return false;
+  const before = w[at - 1]!;
+  const twoBefore = at >= 2 ? w[at - 2]! : "";
+  const SUBJECT = new Set(["i", "we", "you", "he", "she", "they", "it"]);
+  const MODAL = new Set([
+    "will",
+    "would",
+    "can",
+    "could",
+    "may",
+    "might",
+    "must",
+    "shall",
+    "should",
+    "do",
+    "does",
+  ]);
+  const ADVERB = new Set([
+    "always",
+    "never",
+    "often",
+    "usually",
+    "sometimes",
+    "just",
+    "then",
+    "also",
+  ]);
+  const DETERMINER = new Set(["the", "a", "an", "your", "our", "my", "this", "that"]);
+  if (before === "please") return true;
+  if (MODAL.has(before)) return true;
+  if (SUBJECT.has(before)) return true;
+  if (ADVERB.has(before) && (SUBJECT.has(twoBefore) || MODAL.has(twoBefore))) return true;
+  // "The price includes locker access." — determiner, head noun, then the verb.
+  if (at >= 2 && DETERMINER.has(twoBefore)) return true;
+  return false;
+}
 
 /** Words a lesson is ABOUT, which the one-word allowance must never spend
  *  itself on. The allowance says a long model may lose one word; it did not
@@ -500,7 +636,8 @@ function valueTokenSequence(toks: string[]): string[] {
  *
  *  A dropped preposition, pronoun or auxiliary changes the structure the
  *  lesson is teaching. A dropped article is a slip. */
-const FORGIVABLE_FUNCTION_TOKENS = new Set<string>(["a", "an", "the", "my", "your", "our"]);
+const ARTICLES = new Set<string>(["a", "an", "the"]);
+const FORGIVABLE_FUNCTION_TOKENS = new Set<string>([...ARTICLES, "my", "your", "our"]);
 
 /** Noise a microphone adds and no lesson ever teaches. Exempt from the
  *  inserted-word check below, along with articles and honorifics. */
@@ -536,6 +673,16 @@ const COURTESY_EXTRAS = new Set<string>([
   "really",
   "kindly",
   "so",
+  // Four managers ran their own sentences through the grader and reported the
+  // same shape: "Please DO keep your valuables in the safety box, madam." and
+  // "First I check the arrival list AND then I greet in the lobby." are
+  // graded wrong for one word that changes nothing. "and" is a connective the
+  // course teaches as an upgrade; "do" is emphatic; "sorry" opens half the
+  // service apologies in the phase. Everything else stays: a single added
+  // preposition is still the near-miss column's commonest error.
+  "and",
+  "do",
+  "sorry",
 ]);
 
 /** What is left of a model sentence once the grammar and the courtesy are
@@ -677,6 +824,26 @@ function foldCourtesy(toks: string[]) {
       out.push("a");
       continue;
     }
+    // "May I", "Can I" and "Could I" open the same request, and the course
+    // teaches all three — week 17 prints "May I ask about your pillow type?"
+    // two screens after grading "May I have your coffee preference?" wrong
+    // for the word "may". Twenty-three of twenty-three swaps failed.
+    if ((toks[i] === "may" || toks[i] === "can") && toks[i + 1] === "i") {
+      out.push("could");
+      continue;
+    }
+    // "right away", "straight away" and "right now" promise the same thing as
+    // "now", which is the word the models use.
+    if ((toks[i] === "right" || toks[i] === "straight") && toks[i + 1] === "away") {
+      out.push("now");
+      i++;
+      continue;
+    }
+    if (toks[i] === "right" && toks[i + 1] === "now") {
+      out.push("now");
+      i++;
+      continue;
+    }
     out.push(toks[i]!);
   }
   return out;
@@ -791,6 +958,92 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
  *  a checkpoint paper mixes weeks, and grading a week-16 line at week-40's
  *  lenient open-role-play threshold would make the final exam the easiest
  *  speaking in the course. */
+/** Openers that frame a service sentence without changing what it says, in
+ *  two classes: an apology and an acceptance. */
+const APOLOGY_OPENERS: string[][] = [
+  ["i", "am", "very", "sorry"],
+  ["i", "am", "so", "sorry"],
+  ["i", "am", "sorry"],
+  ["i", "am", "afraid"],
+  ["i", "do", "apologise"],
+  ["sorry"],
+];
+const ACCEPT_OPENERS: string[][] = [
+  ["of", "course"],
+  ["certainly"],
+  ["absolutely"],
+  ["no", "problem"],
+  ["my", "pleasure"],
+  ["sure"],
+];
+const COURTESY_OPENERS: string[][] = [
+  ["thank", "you", "very", "much"],
+  ["thank", "you"],
+  ...APOLOGY_OPENERS,
+  ...ACCEPT_OPENERS,
+  ["yes"],
+];
+const COURTESY_CLOSERS: string[][] = [
+  ["for", "you"],
+  ["right", "away"],
+  ["straight", "away"],
+  ["right", "now"],
+  ["now"],
+  ["please"],
+];
+const opensWith = (a: string[], p: string[]) => p.every((t, i) => a[i] === t);
+const closesWith = (a: string[], p: string[]) =>
+  a.length >= p.length && p.every((t, i) => a[a.length - p.length + i] === t);
+
+/** A courtesy frame the model does not carry is not an error in the answer.
+ *
+ *  Ten reviews in one round ran what a good member of staff actually says
+ *  through this grader, and it failed nearly all of it: "Thank you. I will ask
+ *  my manager before we begin." (0 of 258 items passed with "Thank you." in
+ *  front), "…I will check with the kitchen for you.", "I am afraid I cannot
+ *  confirm that, sir." where the model opens "I am sorry". The learner had
+ *  said the model sentence and been polite about it, and the screen told them
+ *  an extra word made it wrong.
+ *
+ *  So a frame is lifted off the EDGES of the answer before grading, and only
+ *  where the model does not open or close the same way. Nothing in the middle
+ *  of the sentence is touched, and the middle is where every hand-written
+ *  near miss in the course puts its error ("Could I TO have…", "I DID
+ *  confirmed…"): the course's own wrong answers were run through this with and
+ *  without "Thank you." in front, and none of them passes. An apology opener
+ *  may also stand in for the model's own apology opener, and an acceptance for
+ *  an acceptance — "I am afraid" for "I am sorry", "Certainly" for "Sure". */
+function stripCourtesyFrame(spoken: string, target: string): string {
+  let a = normalize(spoken);
+  const b = normalize(target);
+  for (const cls of [APOLOGY_OPENERS, ACCEPT_OPENERS]) {
+    const theirs = cls.find((p) => opensWith(b, p));
+    const mine = cls.find((p) => opensWith(a, p));
+    // Only with a sentence left after it: "Sorry sorry." against "I am very
+    // sorry, sir." would otherwise become the model's own apology and pass.
+    if (!theirs || !mine || theirs === mine || a.length - mine.length < 2) continue;
+    const rest = a.slice(mine.length);
+    // "I am sorry, I am afraid that is not allowed" already carries the
+    // model's opener after the learner's own: drop the extra one, do not
+    // stack a second copy of it.
+    a = opensWith(rest, theirs) ? rest : [...theirs, ...rest];
+  }
+  for (let guard = 0; guard < 4; guard++) {
+    const op = COURTESY_OPENERS.find((p) => opensWith(a, p) && !opensWith(b, p));
+    if (!op || a.length - op.length < 2) break;
+    a = a.slice(op.length);
+    // "Certainly, madam." — the honorific belongs to the opener it follows.
+    if (/^(sir|madam|ma'am|maam)$/.test(a[0] ?? "") && !/^(sir|madam|ma'am|maam)$/.test(b[0] ?? ""))
+      a = a.slice(1);
+  }
+  for (let guard = 0; guard < 3; guard++) {
+    const cl = COURTESY_CLOSERS.find((p) => closesWith(a, p) && !closesWith(b, p));
+    if (!cl || a.length - cl.length < 2) break;
+    a = a.slice(0, a.length - cl.length);
+  }
+  return a.join(" ");
+}
+
 export function utterancePassed(
   spoken: string,
   target: string,
@@ -798,6 +1051,7 @@ export function utterancePassed(
   requiredTokens?: string[],
   guestPrompt?: string,
 ) {
+  spoken = stripCourtesyFrame(spoken, target);
   const th = passThresholds(sourceWeek);
   const free = honorificIsFree(guestPrompt);
   const dayFree = greetingIsFree(target, guestPrompt);
@@ -871,7 +1125,28 @@ export function utterancePassed(
   }
   // A missing preposition, pronoun or auxiliary is never covered by the
   // allowance — only a missing article is.
-  const unforgivable = missingFunction.filter((t) => !FORGIVABLE_FUNCTION_TOKENS.has(t));
+  //
+  // But "only an article" turned into "every article, free". 674 of the 761
+  // Phase 2 targets that carry an article carry exactly ONE, so the allowance
+  // handed that one away every time: a learner who drops every article passed
+  // 55.3% of those items and 88.3% of five-item oral sittings — while the
+  // grammar block two screens away prints "Please keep your handbag in safety
+  // box." as the WRONG answer, and the course calls the missing article the
+  // single L1 error it exists to unlearn. Two graders on the same course
+  // cannot disagree about its own central point.
+  //
+  // The rule the file already applies to function words in general settles it:
+  // a target carrying exactly one of them means that one IS the lesson
+  // (see functionAllowance). So an article is forgiven only where the target
+  // has another to prove the learner produces them — and only from Phase 2,
+  // where articles have been taught outright and the pass threshold has risen.
+  // Weeks 1-14 keep the old allowance untouched: A1 learners, and twelve
+  // rounds of tuning behind them.
+  const articlesRequired = funcNeeded.filter((t) => ARTICLES.has(t)).length;
+  const articleIsTheLesson = Number(sourceWeek) >= 15 && articlesRequired < 2;
+  const unforgivable = missingFunction.filter(
+    (t) => !FORGIVABLE_FUNCTION_TOKENS.has(t) || (articleIsTheLesson && ARTICLES.has(t)),
+  );
   // WORDS THAT WERE NOT IN THE MODEL.
   //
   // Both `accuracy` and `orderRatio` divide by the TARGET, so nothing the
@@ -902,12 +1177,13 @@ export function utterancePassed(
       !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
       !DISFLUENCY.has(t),
   );
-  // One is already one too many. The grader has always failed a single
-  // missing preposition; a single ADDED one is the same error seen from the
-  // other side, and the near-miss column is full of them. What a microphone
-  // really adds — an article, a filler, an extra "sir" — is exempted above,
-  // and so is a word the course itself teaches as an upgrade, so what is left
-  // was said on purpose.
+  // One is already one too many, and it has to stay that way. Forgiving one
+  // insertion on an otherwise-perfect reading looked safe and let 95 of the
+  // course's own 255 nearMiss strings pass: "…then I WILL check the profile.",
+  // "Could you TO come this way?", "I DID confirmed it yesterday." are the
+  // model plus one word, which is the commonest wrong-answer shape in the
+  // whole phase. The managers' sentences are handled by naming their words in
+  // COURTESY_EXTRAS instead, which is narrow enough to measure.
   const insertionFails = inserted.length > 0;
   // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
   //
@@ -956,13 +1232,70 @@ export function utterancePassed(
   // sentence stops being a sentence without it. So the allowance opens at
   // three content words, and never spends itself on a verb.
   const contentAllowance = targetContent.length >= 3 ? 1 : 0;
+  // The allowance never spends itself on a word whose loss strands a
+  // determiner. "We always walk the out.", "Our has four steps.", "A will be
+  // free soon." and "The red flag is a about rough sea." all passed on the
+  // one-word allowance — three reviews quoted them, and 47.8% of the Phase 2
+  // deletions that leave "the", "a" or "our" pointing at nothing passed. A
+  // dropped adjective ("the hot stone massage" → "the stone massage") still
+  // leaves a sentence, so only a determiner left with no noun after it counts.
+  const ORPHANING = new Set(["a", "an", "the", "your", "our", "my", "their", "every", "each"]);
+  // What may follow a determiner without being the noun it needs. These are
+  // long enough to count as content, so "We always walk the out." and "The red
+  // flag is a about rough sea." slipped past a check that only asked whether
+  // the next word was content.
+  const NOT_A_NOUN = new Set([
+    "out",
+    "up",
+    "down",
+    "off",
+    "back",
+    "over",
+    "away",
+    "here",
+    "there",
+    "now",
+    "today",
+    "again",
+    "too",
+    "first",
+    "about",
+    "for",
+    "with",
+    "from",
+    "into",
+    "near",
+    "after",
+    "before",
+    "until",
+    "then",
+    "please",
+    "sir",
+    "madam",
+  ]);
+  const spokenCount = new Map<string, number>();
+  for (const t of canonSpoken) spokenCount.set(t, (spokenCount.get(t) ?? 0) + 1);
+  const seenAt = new Map<string, number>();
+  let orphanDeterminer = false;
+  canonSpokenTarget.forEach((t, i) => {
+    const k = seenAt.get(t) ?? 0;
+    seenAt.set(t, k + 1);
+    if (!isContentToken(t) || (t === "one" && canonSpokenTarget[i + 1] === "moment")) return;
+    if (k < (spokenCount.get(t) ?? 0)) return;
+    const prev = canonSpokenTarget[i - 1];
+    const next = canonSpokenTarget[i + 1];
+    if (prev && ORPHANING.has(prev) && (!next || !isContentToken(next) || NOT_A_NOUN.has(next)))
+      orphanDeterminer = true;
+  });
   // BY OCCURRENCE, not by presence. `missingContent` is already built that way,
   // so asking it whether a verb is missing is right — but the earlier draft
   // asked the spoken SET instead, and a model that uses a verb twice kept
   // passing with one copy gone: "This one brighter. That one is bright."
   // against "This one IS brighter…" at 88%. Eleven items behaved that way, the
   // same shape of bug this file already fixed once for function tokens.
-  const missingVerb = missingContent.some((t) => FINITE_VERBS.has(t));
+  const missingVerb =
+    missingContent.some((t) => FINITE_VERBS.has(t)) ||
+    missingContent.some((t) => holdsThePredicate(t, target));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   return {
@@ -985,6 +1318,7 @@ export function utterancePassed(
       unforgivable.length === 0 &&
       !insertionFails &&
       missingContent.length <= contentAllowance &&
+      !orphanDeterminer &&
       !missingVerb &&
       missingFunction.length <= functionAllowance(funcNeeded.length) &&
       added.length === 0 &&
