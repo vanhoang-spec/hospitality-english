@@ -597,13 +597,22 @@ export function buildPaper(dep: string, week: string): Question[] {
       // list only ever covers the moves someone remembered — an academic
       // review said exactly that after a new batch of content walked through
       // the gap this entry closes.
-      /\bwe have\b/i,
+      // "also" slots into the middle of the frame without changing the move
+      // — "We also have a city tour." is the same offer of stock, and the
+      // audit that asked for the (also )? group in the arrange/offer entry
+      // below named this one in the same breath.
+      /\bwe (also )?have\b/i,
       /\bi will bring\b/i,
       /\bi will send\b/i,
       /\bi will call\b/i,
       /\bi will check\b/i,
       /\bmay i have\b/i,
       /\bis ready\b/i,
+      // A location answer: "The lift is on the right." beside "Your robe is
+      // on the hook." both answer a where-question when the audio names
+      // neither object. The same review that asked for (also )?have asked
+      // for this frame.
+      /\b(is|are) on (the|your)\b/i,
       /\bhave a good\b/i,
       /\benjoy your\b/i,
       // A later batch added "We could arrange X", and an audit measuring
@@ -627,8 +636,17 @@ export function buildPaper(dep: string, week: string): Question[] {
      *  and `ask` is not `call`. The recipient is the thing the guest actually
      *  gets, so that is what decides. */
     const RECIPIENTS = /\b(manager|reception|receptionist|kitchen|chef|supervisor|desk|doctor)\b/gi;
+    // The guest cannot hear rank: "I will ask my manager" and "I will tell
+    // my supervisor" both hand the problem up, and both were printed under
+    // one audio because the tokens differ. Same for the three names of the
+    // front desk.
+    const SAME_RECIPIENT: Record<string, string> = {
+      supervisor: "manager",
+      receptionist: "reception",
+      desk: "reception",
+    };
     const handsOffTo = (t: string) =>
-      new Set((t.toLowerCase().match(RECIPIENTS) ?? []).map((w) => w));
+      new Set((t.toLowerCase().match(RECIPIENTS) ?? []).map((w) => SAME_RECIPIENT[w] ?? w));
     const keyHands = handsOffTo(s.targetResponse);
     const sameRecipient = (t: string) =>
       keyHands.size > 0 && [...handsOffTo(t)].some((w) => keyHands.has(w));

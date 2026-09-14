@@ -59,6 +59,13 @@ const warnings: string[] = [];
 // fall through to NOUN, which is the right default for these banks.
 // ------------------------------------------------------------
 const VERBS = new Set([
+  // Week 21's problem report reads slot 3 as a participle ("One request was
+  // postponed") and slot 8 as a past verb ("I exchanged the broken one").
+  // Without their stems here the tagger read all four as nouns.
+  "postpone",
+  "miss",
+  "reject",
+  "exchange",
   // Intransitive past-report verbs, added with the P0 content fix so
   // "The guest arrived at noon." tags as a verb rather than a noun.
   "arrive",

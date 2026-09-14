@@ -43,18 +43,18 @@ một danh từ hồ sơ — `Injury note`, `Skin note`, `Pain area`.
 
 ## `paperwork` — giấy tờ và thanh toán (tuần 18)
 
-| ô   | hình dạng                            | khung đọc nó                   |
-| --- | ------------------------------------ | ------------------------------ |
-| 0   | **giấy tờ bộ phận chuẩn bị**         | `I am preparing your ${x}.`    |
-| 1   | **thứ KHÁCH đưa**                    | `May I have your ${x}?`        |
-| 2   | **dữ liệu kiểm lại được**            | `Is the ${x} correct?`         |
-| 3   | **dữ liệu nằm trong hồ sơ**          | `The ${x} is on file.`         |
-| 4   | **khoản phí**                        | `A ten percent ${x} is added.` |
-| 5   | **lựa chọn thanh toán KHÁCH chọn**   | `Which ${x} would you prefer?` |
-| 6   | **vật TRAO TAY khách**               | `Here is your ${x}.`           |
-| 7   | **cụm động từ, việc khách làm được** | `You can ${x} now.`            |
-| 8   | **tính từ trạng thái**               | `Your request is ${x}.`        |
-| 9   | **cụm động từ có tân ngữ**           | `Please ${x} on this line.`    |
+| ô   | hình dạng                                                                                      | khung đọc nó                   |
+| --- | ---------------------------------------------------------------------------------------------- | ------------------------------ |
+| 0   | **giấy tờ bộ phận chuẩn bị**                                                                   | `I am preparing your ${x}.`    |
+| 1   | **thứ KHÁCH đưa**                                                                              | `May I have your ${x}?`        |
+| 2   | **dữ liệu kiểm lại được**                                                                      | `Is the ${x} correct?`         |
+| 3   | **dữ liệu nằm trong hồ sơ**                                                                    | `The ${x} is on file.`         |
+| 4   | **khoản phí**                                                                                  | `A ten percent ${x} is added.` |
+| 5   | **lựa chọn KHÁCH chọn** — thanh toán chỉ khi bộ phận thu tiền (buồng phòng: loại dịch vụ giặt) | `Which ${x} would you prefer?` |
+| 6   | **vật TRAO TAY khách**                                                                         | `Here is your ${x}.`           |
+| 7   | **cụm động từ, việc khách làm được**                                                           | `You can ${x} now.`            |
+| 8   | **tính từ trạng thái**                                                                         | `Your request is ${x}.`        |
+| 9   | **cụm động từ có tân ngữ**                                                                     | `Please ${x} on this line.`    |
 
 Ô 7 và 9 đều là động từ nhưng **ô 9 phải mang sẵn tân ngữ**: `Fill in` một mình
 cho ra `Please fill in on this line.` Đã sửa thành `Fill in the form`.
@@ -62,6 +62,12 @@ cho ra `Please fill in on this line.` Đã sửa thành `Fill in the form`.
 ## `rules` — nội quy và an toàn (tuần 19)
 
 Ô 0–7 danh từ hoặc cụm danh từ chỉ quy định/khu vực; 8–9 như các nhóm khác.
+
+**Ô 3 và 4 là THIẾT BỊ**, không phải quy định hay đồ vật bất kỳ. Khung là
+`That is the ${x}, madam. Please do not touch it.` và bài đọc mở bằng
+`points to the equipment`. Đã ship `That is the raw food… do not touch the hot
+dish` (F&B — quầy buffet tự phục vụ) và `the luggage trolley… the guest luggage`
+(Guest Relations). Ô 3 còn đi vào `The ${x} is on your right.` ở tuần 20.
 
 ## `choices` — hai lựa chọn để so (tuần 20)
 
@@ -82,6 +88,18 @@ available too.` Ô 6 từng là rổ tạp (`Either one`, `Something local`,
 | 0–3 và 6–9 | **động từ quá khứ**            | `Checked in` · `Took longer` · `Jotted` |
 | 4          | **mốc thời gian đã qua**       | `This morning` · `Last week`            |
 | 5          | **danh từ đếm được, số nhiều** | `Arrivals` · `Rooms done` · `Invoices`  |
+
+Ba ô trong nhóm này có nghĩa hẹp hơn "động từ quá khứ", vì khung đọc chúng trong
+một câu cụ thể:
+
+| ô   | khung                                              | phải là                                        | từng ship                          |
+| --- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------- |
+| 1   | `The last guest ${x} at noon.`                     | việc **của khách** xảy ra ở một giờ            | `The last guest finished at noon.` |
+| 2   | `One request was ${x}.` · `It was ${x} yesterday.` | phân từ gọi tên **sự cố** — mỗi bộ phận một từ | `One booking was prepared.`        |
+| 7   | `I ${x} the broken one, because it was not safe.`  | việc làm với **đồ hỏng** — thay, đổi, cất, báo | `I remembered the broken one.`     |
+
+Ô 2 và 7 phải khác nhau giữa các bộ phận: tuần 21 có sàn 65% headword riêng theo
+bộ phận, và một từ dùng chung cho bốn bộ phận đã kéo nó xuống 63%.
 
 ## `wrapUp` — tổng kết ca (tuần 22)
 

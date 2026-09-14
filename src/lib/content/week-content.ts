@@ -238,10 +238,14 @@ export const FO_WEEK_17: WeekContent = {
           icon: "🔖",
         },
         {
-          word: "Registration card",
-          phonetic: "/ˌredʒɪˈstreɪʃən kɑːd/",
-          definition: "Phiếu đăng ký lưu trú",
-          context: "Could you please sign the registration card for me?",
+          // Was "Registration card" — the exact headword week 18's paperwork
+          // bank teaches again, so FO carried the same card twice in
+          // consecutive weeks. Check-in says the spoken name; week 18 then
+          // teaches the document's formal name.
+          word: "Check-in form",
+          phonetic: "/ˈtʃek ɪn fɔːm/",
+          definition: "Phiếu nhận phòng",
+          context: "Could you please sign the check-in form for me?",
           icon: "📝",
         },
       ],
@@ -284,7 +288,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Do I need to sign anything?",
-          targetResponse: "Could you please sign the registration card?",
+          targetResponse: "Could you please sign the check-in form?",
           helpTip: "Đưa bút và nói rõ ký vào đâu, đừng chỉ đẩy tờ giấy qua.",
         },
         {
@@ -295,7 +299,7 @@ export const FO_WEEK_17: WeekContent = {
         },
       ],
       reading: {
-        text: "AGODA CONFIRMATION VOUCHER\nGuest Name: David Green\nRoom Type: Deluxe Ocean View\nStay: 2 Nights\nStatus: Confirmed / Paid Online",
+        text: "AGODA CONFIRMATION VOUCHER\nGuest Name: David Green\nRoom Type: Deluxe Ocean View\nStay: 2 Nights\nStatus: Confirmed / Paid Online\nArrival: Tonight, ETA 21:00\nSpecial Request: Quiet room, away from the lift\nNote to desk: Do not charge the room again. Take the deposit only.",
         questions: [
           {
             q: "Khách đã thanh toán phòng bằng cách nào?",
@@ -342,10 +346,13 @@ export const FO_WEEK_17: WeekContent = {
       titleVi: "Mượn hộ chiếu & Đăng ký lưu trú",
       vocabulary: [
         {
-          word: "Passport",
-          phonetic: "/ˈpæspɔːt/",
-          definition: "Hộ chiếu",
-          context: "May I have your passport, please?",
+          // Was "Passport" — taught in week 2 already, so this week's card
+          // duplicated a Phase 0 headword. The SOP lesson's own noun is the
+          // scan: that is the thing this desk produces and hands back from.
+          word: "Passport scan",
+          phonetic: "/ˈpæspɔːt skæn/",
+          definition: "Bản quét hộ chiếu",
+          context: "I will return your passport after the passport scan.",
           icon: "📘",
         },
         {
@@ -409,7 +416,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "How long will you keep it?",
-          targetResponse: "I will keep your passport briefly to scan it.",
+          targetResponse: "I will keep it briefly for the passport scan.",
           helpTip: "Nói rõ giữ bao lâu, khách sẽ yên tâm rời quầy.",
         },
         {
@@ -420,7 +427,7 @@ export const FO_WEEK_17: WeekContent = {
         },
       ],
       reading: {
-        text: "HOTEL SOP - LOCAL REGISTRATION:\nAll international guests must show their original passport at check-in. The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM.",
+        text: "HOTEL SOP - LOCAL REGISTRATION:\nAll international guests must show their original passport at check-in. The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM. Return the passport to the guest as soon as the scan is done. Never keep a passport at the desk overnight.",
         questions: [
           {
             q: "Khách quốc tế phải xuất trình giấy tờ gì khi nhận phòng?",
@@ -574,7 +581,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Will I lose that money?",
-          targetResponse: "No, madam. The security deposit is fully refundable.",
+          targetResponse: "No, madam. We refund the deposit at check-out if nothing is charged.",
           helpTip: "Trả lời phần khách lo nhất trước, rồi mới giải thích.",
         },
       ],
@@ -742,7 +749,7 @@ export const FO_WEEK_17: WeekContent = {
         },
       ],
       reading: {
-        text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.",
+        text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.\n- Late check-out: ask at the front desk. The desk confirms it, not housekeeping.\n- Airport car: book at the desk at least 3 hours before your flight.",
         questions: [
           {
             q: "Hồ bơi nằm ở đâu?",
@@ -768,7 +775,7 @@ export const FO_WEEK_17: WeekContent = {
       game: [
         {
           explanation:
-            "Câu này đúng ngữ pháp nhưng không có giờ; khách có chuyến bay sớm cần đúng một con số.",
+            "Hai phương án sai đều đúng ngữ pháp. Một câu có giờ nhưng ra lệnh cho khách đi ăn; một câu không có giờ nào. Khách có chuyến bay sớm cần đúng một con số, nói lịch sự.",
           prompt: "We have an early flight. When does breakfast open?",
           options: [
             {
@@ -892,7 +899,7 @@ export const FB_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "IN-HOUSE GUEST LIST - BREAKFAST\nRoom 512 - Mr. David Green - 2 Adults - B&B Included\nRoom 608 - Ms. Lisa Tran - 1 Adult - Room Only (No Breakfast)\nRestaurant Hours: 06:30 - 10:00",
+        text: "IN-HOUSE GUEST LIST - BREAKFAST\nRoom 512 - Mr. David Green - 2 Adults - B&B Included\nRoom 608 - Ms. Lisa Tran - 1 Adult - Room Only (No Breakfast)\nRoom 715 - Mr. Kenji Sato - 2 Adults - B&B Included\nRestaurant Hours: 06:30 - 10:00\nA guest not on this list may still eat: offer the breakfast price, never refuse at the door.",
         questions: [
           {
             q: "Khách nào KHÔNG được kèm bữa sáng?",
@@ -1029,7 +1036,7 @@ export const FB_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.",
+        text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.\nGive the wait in minutes, not 'soon'. Offer coffee or tea while the guest waits.",
         questions: [
           {
             q: "Khung giờ nào nhà hàng thường kín bàn?",
@@ -1165,7 +1172,7 @@ export const FB_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)",
+        text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)\nCold Station: Salad, Fruit, Yoghurt (Right Wall)\nAllergy questions: ask the station chef. Never guess an ingredient.",
         questions: [
           {
             q: "Quầy bánh nằm ở đâu?",
@@ -1234,10 +1241,13 @@ export const FB_WEEK_15: WeekContent = {
           icon: "🍴",
         },
         {
-          word: "Enjoy",
-          phonetic: "/ɪnˈdʒɔɪ/",
-          definition: "Thưởng thức, hài lòng",
-          context: "I hope you are enjoying your breakfast.",
+          // Was "Enjoy" — a straight duplicate of the FB week-6 card, so the
+          // review scheduler had two owners for one headword and a week-20
+          // label claimed week 15 for a sentence week 6 had taught.
+          word: "To your liking",
+          phonetic: "/tə jɔː ˈlaɪkɪŋ/",
+          definition: "Vừa ý, hợp khẩu vị",
+          context: "Is everything to your liking, madam?",
           icon: "😊",
         },
         {
@@ -1276,7 +1286,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "The eggs were excellent.",
-          targetResponse: "I hope you enjoy your breakfast, madam.",
+          targetResponse: "I am glad, madam. Is everything to your liking?",
           helpTip: "Nhận lời khen rồi nhắc lại chính niềm vui của khách.",
         },
         {
@@ -1298,7 +1308,7 @@ export const FB_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "TABLE SERVICE SOP - CLEARING\nAlways ask for permission before clearing any plate.\nNever clear a plate while a guest is still using cutlery on it.\nAsk 'Is everything to your liking?' at least once during the meal.",
+        text: "TABLE SERVICE SOP - CLEARING\nAlways ask for permission before clearing any plate.\nNever clear a plate while a guest is still using cutlery on it.\nAsk 'Is everything to your liking?' at least once during the meal.\nClear from the guest's right side, one plate at a time.\nIf a guest is still eating, offer more coffee instead of clearing.",
         questions: [
           {
             q: "Khi nào nhân viên KHÔNG được dọn đĩa?",
@@ -1588,7 +1598,7 @@ export const HK_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.",
+        text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.\nDelivered by: Room Attendant, Floor 8\nKnock, say 'Housekeeping', and hand the items over at the door. Do not enter unless the guest asks.",
         questions: [
           {
             q: "Khách phòng 812 xin mấy chiếc khăn tắm?",
@@ -1717,7 +1727,7 @@ export const HK_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes",
+        text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes\nExtra Pillow & Blanket: Complimentary, no advance notice needed\nAny charge goes on the room bill. Housekeeping staff never take cash.",
         questions: [
           {
             q: "Giường phụ giá bao nhiêu một đêm?",
@@ -1796,9 +1806,9 @@ export const HK_WEEK_15: WeekContent = {
           icon: "📥",
         },
         {
-          word: "Slip under the door",
-          phonetic: "/slɪp ˈʌndə ðə dɔː/",
-          definition: "Nhét đồ/giấy qua khe cửa",
+          word: "Slip a note",
+          phonetic: "/slɪp ə nəʊt/",
+          definition: "Nhét giấy nhắn qua khe cửa",
           context: "I will slip a note under the door instead.",
           icon: "✉️",
         },
@@ -4472,17 +4482,17 @@ export const SW_WEEK_19: WeekContent = {
         },
       ],
       reading: {
-        text: "POOL AREA GUEST GUIDE\nTowel Station: Located at the pool entrance, open 7:00 AM - 7:00 PM\nLockers: Complimentary, use your room key card\nPrivate Cabanas: Reserve at least 2 hours in advance at the Pool Bar\nLost your key card? Please inform any pool attendant immediately.",
+        text: "POOL AREA GUEST GUIDE\nTowel Station: Located at the pool entrance, open 7:00 AM - 7:00 PM\nLockers: Complimentary, use your room key card\nPrivate Cabanas: Reserve at least 2 hours in advance at the Pool Bar\nLost your key card? Please inform any pool attendant immediately.\nUsed towels: please leave them in the basket at the towel station. There is no charge.",
         questions: [
           {
             q: "Khách cần gì để dùng tủ khóa?",
-            options: ["A separate rental fee", "Their room key card", "A signed form"],
+            options: ["Trả thêm phí thuê riêng", "Thẻ chìa khoá phòng", "Một tờ đơn đã ký"],
             correct: 1,
             explanation: '"Lockers: Complimentary, use your room key card"',
           },
           {
             q: "Cần đặt chòi riêng trước bao lâu?",
-            options: ["At least 30 minutes", "At least 2 hours", "One full day"],
+            options: ["Ít nhất 30 phút", "Ít nhất 2 tiếng", "Trước trọn một ngày"],
             correct: 1,
             explanation: '"Private Cabanas: Reserve at least 2 hours in advance at the Pool Bar"',
           },
@@ -4608,17 +4618,17 @@ export const SW_WEEK_19: WeekContent = {
         },
       ],
       reading: {
-        text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.",
+        text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.\n5. No glass bottles or food in the water area.",
         questions: [
           {
             q: "Theo nội quy, trẻ dưới 12 tuổi xuống hồ phải có ai đi kèm?",
-            options: ["A swimming certificate", "An adult", "A pool pass"],
+            options: ["Chứng chỉ bơi", "Một người lớn", "Vé vào hồ bơi"],
             correct: 1,
             explanation: '"Children under 12 must be accompanied by an adult at all times."',
           },
           {
             q: "Ở khu nước nông không được làm gì?",
-            options: ["Diving", "Floating", "Standing"],
+            options: ["Lặn đầu xuống nước", "Nằm nổi trên mặt nước", "Đứng dưới nước"],
             correct: 0,
             explanation: '"Diving is not permitted in the shallow end."',
           },
@@ -4706,7 +4716,7 @@ export const SW_WEEK_19: WeekContent = {
           polite: "I'm sorry, sir. Guests may not enter the water now. The red flag is displayed.",
           nearMiss:
             "I'm sorry, sir. Guests may not entered the water now. The red flag is displayed.",
-          rule: "Bị động 'are not permitted' nêu quy định trang trọng hơn 'can't'.",
+          rule: "'May not' + động từ gốc nêu điều khách sạn không cho phép — trang trọng hơn 'can't': may not ENTER, không phải 'may not entered'.",
         },
       ],
       speaking: [
@@ -4744,17 +4754,17 @@ export const SW_WEEK_19: WeekContent = {
         },
       ],
       reading: {
-        text: "RESORT SAFETY BULLETIN\nStatus: RED FLAG - Tropical Storm Approaching\nSea Condition: Strong currents and rough waves expected until 6:00 PM\nSwimming: Prohibited in the ocean; pool remains open\nGuests are advised to stay on the beach deck and avoid the shoreline.",
+        text: "RESORT SAFETY BULLETIN\nStatus: RED FLAG - Tropical Storm Approaching\nSea Condition: Strong currents and rough waves expected until 6:00 PM\nSwimming: Prohibited in the ocean; pool remains open\nGuests are advised to stay on the beach deck and avoid the shoreline.\nPool attendants: keep guests out of the sea and explain the red flag calmly. Never say the weather looks fine.",
         questions: [
           {
             q: "Cờ đỏ cảnh báo cấm điều gì?",
-            options: ["Swimming in the ocean", "Sitting on the beach deck", "Using the pool"],
+            options: ["Bơi ngoài biển", "Ngồi trên sàn gỗ bãi biển", "Dùng hồ bơi"],
             correct: 0,
             explanation: '"Swimming: Prohibited in the ocean; pool remains open"',
           },
           {
             q: "Trong lúc có cảnh báo, khu nào vẫn mở?",
-            options: ["The beach shoreline", "The pool", "The private cabanas"],
+            options: ["Mép nước bãi biển", "Hồ bơi", "Các chòi riêng"],
             correct: 1,
             explanation: '"Swimming: Prohibited in the ocean; pool remains open"',
           },
@@ -4773,7 +4783,7 @@ export const SW_WEEK_19: WeekContent = {
       game: [
         {
           explanation:
-            "Câu này đúng ngữ pháp và nguy hiểm: cờ đỏ không phải ý kiến của bạn về thời tiết.",
+            "Hai phương án sai đều đúng ngữ pháp. Một câu cho khách bơi khi cờ đỏ — nguy hiểm, vì cờ đỏ không phải ý kiến của bạn về thời tiết. Một câu cấm cộc lốc mà không nêu lý do an toàn.",
           prompt: "Other guests are in the water. Why can't we swim?",
           options: [
             {
@@ -4878,13 +4888,28 @@ export const SW_WEEK_19: WeekContent = {
           helpTip: "Yêu cầu cụ thể từng món, đừng nói chung là mang đồ tới.",
           speakerRole: "colleague",
         },
+        // The quick guide says "Always call the on-duty nurse for serious
+        // cases: Ext. 115" and no turn in the phase ever said it out loud —
+        // the one sentence the card exists for lived only in the reading.
+        {
+          guestPrompt: "He is still dizzy after ten minutes. What now?",
+          targetResponse: "Call the on-duty nurse now. It is extension one-one-five.",
+          helpTip:
+            "Không đỡ sau vài phút là ca nặng: gọi y tá trực ngay, đọc rõ từng số của máy lẻ.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "I feel worse. Is someone coming?",
+          targetResponse: "Yes, sir. Our nurse is coming now. Please stay in the shade.",
+          helpTip: "Trấn an bằng một việc cụ thể: người đang tới, và khách cần ở yên chỗ nào.",
+        },
       ],
       reading: {
-        text: "BEACH FIRST AID - QUICK GUIDE\nHeat Exhaustion Signs: Dizziness, heavy sweating, weakness\nAction: Move guest to shade, offer water, loosen tight clothing\nMuscle Cramps: Gently stretch the affected muscle, apply light massage\nAlways call the on-duty nurse for serious cases: Ext. 115",
+        text: "BEACH FIRST AID - QUICK GUIDE\nHeat Exhaustion Signs: Dizziness, heavy sweating, weakness\nAction: Move guest to shade, offer water, loosen tight clothing\nMuscle Cramps: Gently stretch the affected muscle, apply light massage\nAlways call the on-duty nurse for serious cases: Ext. 115\nNever give the guest medicine yourself. Stay with the guest until the nurse arrives.",
         questions: [
           {
             q: "Gặp khách bị say nắng, việc đầu tiên phải làm là gì?",
-            options: ["Give them coffee", "Move them to the shade", "Ask them to keep swimming"],
+            options: ["Mời khách uống cà phê", "Đưa khách vào chỗ râm", "Bảo khách bơi tiếp"],
             correct: 1,
             explanation: '"Action: Move guest to shade, offer water, loosen tight clothing"',
           },
@@ -7994,7 +8019,7 @@ export const SW_WEEK_37: WeekContent = {
     "Consent form",
     "Draping technique",
     "Sensitive area",
-    "Treatment fee",
+    "Service charge",
     "Booking notice period",
   ],
   lessons: [
@@ -14385,7 +14410,7 @@ export const FB_WEEK_36: WeekContent = {
     "Safety",
     "Terrace area",
     "Table policy",
-    "Hot dish",
+    "Hot plate",
     "Problem",
     "Fix",
     "Cracked",
@@ -16878,7 +16903,7 @@ export const HK_WEEK_32: WeekContent = {
   reviewWords: [
     "Guest preference",
     "Pillow choice",
-    "Allergy note",
+    "Guest instruction",
     "Preferred time",
     "Feather pillow",
     "Room note",

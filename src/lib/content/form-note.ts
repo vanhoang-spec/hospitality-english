@@ -43,6 +43,13 @@ const NOT_A_VERB = new Set(
 
 const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
 
+/** Not every -ed word after a copula or auxiliary is a participle.
+ *  "unlimited" and "unhurried" are adjectives that never had a verb, and
+ *  calling them passive (or perfect) teaches a structure the sentence does
+ *  not contain. Shared by the passive, perfect and modal-passive branches. */
+const ADJECTIVE_ED =
+  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly)$/;
+
 export function formNote(target: string): string | null {
   const s =
     " " +
@@ -56,6 +63,60 @@ export function formNote(target: string): string | null {
   if ((m = s.match(/ (do not|does not) (\w+) /)))
     return `Phủ định: '${m[1]}' rồi tới động từ gốc — ${m[1]} ${m[2]}.`;
 
+  // The four branches below exist because the ones further down claimed
+  // their sentences first, and always as the wrong form. This file runs on
+  // all forty weeks, so the misreadings landed exactly where a phase was
+  // teaching the very form the note denied: week 25 ("We are going to send…"
+  // called a present continuous), week 29 ("I was checking… when the guest
+  // called." called a past simple because of "was"), week 32 ("I have
+  // arranged…" called a past simple), week 37 ("must be ventilated" called a
+  // bare-verb modal). Each earns its slot ahead of the branch that misread it.
+
+  // Past continuous before PAST: "was" alone is not a past simple lesson
+  // when the -ing verb beside it is the actual form.
+  if (
+    (m = s.match(/ (was|were) (not )?(\w+ing) /)) &&
+    !/^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing)$/.test(m[3])
+  )
+    return `Quá khứ tiếp diễn — việc đang dở thì việc khác xen vào: ${m[1]} ${m[2] ?? ""}${m[3]}.`;
+
+  // Present perfect before PAST: "I have arranged…" is not "arranged" the
+  // past simple. The participle list is closed so "We have a city tour"
+  // (have as a main verb) can never match, and the word before "have" must
+  // not be a modal — "should not have happened" is a modal perfect, and
+  // calling it a present tense is the exact class of error this file was
+  // rewritten to stop making.
+  if (
+    (m = s.match(
+      / (\w+) (has|have) (not |already |just )?(\w+ed|been|done|gone|made|taken|given|sent|put|shown|held|kept|written|seen|come|left|found|told|brought|read|set) /,
+    )) &&
+    !/^(should|would|could|may|might|must|will|can|shall|to|not)$/.test(m[1]) &&
+    !ADJECTIVE_ED.test(m[4])
+  )
+    return `Hiện tại hoàn thành: '${m[2]}' + phân từ hai — ${m[2]} ${m[3] ?? ""}${m[4]}.`;
+
+  // Modal passive before the modal branches: in "must be ventilated" the
+  // lesson is the passive, not "after 'must' the verb stays base".
+  if (
+    (m = s.match(
+      / (will|would|can|could|may|might|must|shall|should) (not )?be (\w+ed|given|taken|made|sent|put|shown|held|kept|written|done|seen|found|served|printed|handled|arranged|confirmed|cleaned|charged|refunded|delivered) /,
+    )) &&
+    !ADJECTIVE_ED.test(m[3])
+  )
+    return `Bị động với '${m[1]}': ${m[1]} ${m[2] ?? ""}be ${m[3]}.`;
+
+  // Going-to future before the continuous branch: "going" ends in -ing, so
+  // without this slot "We are going to send a bellman up" reads as a present
+  // continuous. Only when a verb follows, though — "Your room number is
+  // going to the fire team now." really is continuous, and the word after
+  // "to" there is a determiner, not a verb.
+  if (
+    (m = s.match(/ (am|is|are) (not )?going to (\w+) /)) &&
+    !NOT_A_VERB.has(m[3]) &&
+    !/^(the|this|that|these|those|another|any|some)$/.test(m[3])
+  )
+    return `Thì tương lai gần: going to ${m[3]}.`;
+
   // "not" may sit between the auxiliary and the participle: "is not confirmed"
   // is still passive, and reading it as a past simple would teach the wrong
   // thing about the most common negative shape in the phase.
@@ -63,11 +124,6 @@ export function formNote(target: string): string | null {
   // booked" — and without this slot the past-simple branch below claimed it,
   // teaching an adjectival participle as a past tense five weeks before the
   // past tense is taught at all.
-  // Not every -ed word after a copula is a participle. "unlimited" and
-  // "unhurried" are adjectives that never had a verb, and calling them passive
-  // teaches a structure the sentence does not contain.
-  const ADJECTIVE_ED =
-    /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly)$/;
   if (
     (m = s.match(
       / (is|are|was|were) (not |fully |already |now |just )?(\w+ed|given|taken|made|sent|put|shown|held|kept|written|done) /,

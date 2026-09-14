@@ -18,7 +18,97 @@ import type { SpeakingItem } from "./week-content";
  * could substitute into.
  */
 export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
+  // Same-week turns. A department lesson or a bank slot the shared frames
+  // never speak left these cards taught and silent in the very week that
+  // teaches them; each turn below is the first time the word is said.
+  "FB-17": [
+    sp(
+      "No ice in my drink, please.",
+      "Of course, madam. I will note your ice preference for the bar.",
+      "Ghi ice preference cho quầy bar — nhắc lại yêu cầu để khách yên tâm.",
+    ),
+  ],
+  "HK-17": [
+    sp(
+      "The guest left a note on the desk.",
+      "Thank you. I will read the room note before I clean.",
+      "Room note là lời khách để lại — đọc trước khi dọn, không vứt đi.",
+      "colleague",
+    ),
+  ],
+  "SW-17": [
+    sp(
+      "I take tablets for my blood pressure.",
+      "Thank you, madam. May I add that to your medicine list?",
+      "Thuốc khách đang dùng phải vào medicine list trước khi làm liệu trình.",
+    ),
+  ],
+  "GR-17": [
+    sp(
+      "My two children will join the tour.",
+      "Wonderful, sir. May I note the children's ages for the guide?",
+      "Hỏi tuổi trẻ em để hướng dẫn viên chuẩn bị — xin phép bằng May I.",
+    ),
+  ],
+  "BO-17": [
+    sp(
+      "Please set the tables in rows for our meeting.",
+      "Noted, sir. I will put that in the room layout.",
+      "Ghi yêu cầu bố trí vào room layout rồi mới xác nhận lại.",
+    ),
+  ],
+  "FO-18": [
+    sp(
+      "Can I pay in dollars?",
+      "Of course, sir. Which currency would you prefer?",
+      "Hỏi loại tiền bằng Which + currency, không tự quyết thay khách.",
+    ),
+  ],
+  "SW-18": [
+    sp(
+      "Can I pay by card or cash?",
+      "Both are fine, madam. Which payment type would you prefer?",
+      "Nói cả hai đều được, rồi để khách chọn bằng Which … would you prefer.",
+    ),
+  ],
+  "GR-18": [
+    sp(
+      "How do I pay for the car?",
+      "Which billing option would you prefer, sir — room bill or card?",
+      "Nêu luôn hai lựa chọn sau câu hỏi Which để khách khỏi phải đoán.",
+    ),
+    sp(
+      "Do I still get lounge access?",
+      "Yes, madam. The club benefit is on file.",
+      "On file là đã có trong hồ sơ — trả lời chắc chắn vì mình đã kiểm.",
+    ),
+  ],
+  "BO-18": [
+    sp(
+      "Can we pay by bank transfer?",
+      "Yes, sir. Which transfer option would you prefer?",
+      "Xác nhận được, rồi hỏi hình thức chuyển khoản bằng Which.",
+    ),
+    sp(
+      "When do we need to pay?",
+      "The payment term is thirty days, sir. It is on file.",
+      "Nêu con số của payment term trước, rồi mới nói đã lưu hồ sơ.",
+    ),
+  ],
+  "HK-19": [
+    sp(
+      "The corridor is still wet. What do I do?",
+      "Put the wet floor sign out first, then finish the floor.",
+      "Đặt wet floor sign trước khi làm tiếp — an toàn của khách đi trước tốc độ.",
+      "colleague",
+    ),
+  ],
   "FB-18": [
+    sp(
+      "Whose name goes on the invoice?",
+      "The billing name is on file, madam. May I read it back?",
+      "Billing name đã có trong hồ sơ — đọc lại cho khách xác nhận trước khi in.",
+    ),
     sp(
       "When does this expire?",
       "Your breakfast voucher is valid until ten, madam.",
@@ -73,11 +163,17 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "Thank you very much.",
-      "Please enjoy your breakfast, sir.",
-      "Ôn tuần 15: enjoy đi thẳng với danh từ, không cần to.",
+      "You are welcome, sir. Is everything to your liking?",
+      "Ôn tuần 15: to your liking — hỏi độ vừa ý thay cho lời chúc chung.",
     ),
   ],
   "HK-18": [
+    sp(
+      "Can I put the new guest in 1408?",
+      "No. The system shows room blocked tonight.",
+      "Room blocked là phòng khoá, không nhận khách — kiểm hệ thống trước khi xếp.",
+      "colleague",
+    ),
     sp(
       "How do you enter a room?",
       "I will knock twice and announce housekeeping.",
@@ -212,9 +308,9 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Ôn tuần 19: supervise là trông chừng, giám sát.",
     ),
     sp(
-      "How much is the massage?",
-      "The treatment fee is on the booking sheet.",
-      "Ôn tuần 18: treatment fee là phí liệu trình.",
+      "Why is the total higher than the price list?",
+      "A service charge of ten percent is added, madam.",
+      "Ôn tuần 18: service charge là phí phục vụ cộng vào hoá đơn, không phải tiền tip.",
     ),
     sp(
       "What do I do first?",
@@ -311,6 +407,219 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Is everything correct?",
       "Let me check the details once more.",
       "Ôn tuần 18: Let me + động từ gốc để xin phép làm việc gì.",
+    ),
+  ],
+  // The eight keys below came out of one measurement: 34 headwords taught in
+  // weeks 15-21 were never produced again in any later week, concentrated in
+  // exactly the weeks the spine's index-driven review slots cannot see. Each
+  // turn is asked to earn its place twice — put a dead headword back in the
+  // mouth, or close a scenario three independent reviews named as absent
+  // (wet floor, missing property, an allergy answered honestly, security,
+  // a guest who is angry and a desk that says so out loud).
+  "FO-20": [
+    sp(
+      "Is my room ready? We landed early.",
+      "I am sorry, sir. I checked, and the room is ready at two. Please have a welcome drink in the lounge.",
+      "Ôn tuần 16: khách đến sớm — xin lỗi, nêu giờ đã kiểm tra, mời welcome drink trong lúc chờ.",
+    ),
+    sp(
+      "Can I get a room away from the lift?",
+      "Of course, madam. A higher floor is quiet — the choice is yours.",
+      "Ôn tuần 16: higher floor — gợi ý một phương án rồi trao quyền chọn.",
+    ),
+    sp(
+      "Can someone show me the way?",
+      "Certainly, madam. I will escort you upstairs myself.",
+      "Ôn tuần 15: escort you upstairs — tự dẫn khách đi, không chỉ tay.",
+    ),
+    sp(
+      "Anything for the next shift?",
+      "Two notes in the handover, and one checklist item is still open.",
+      "Ôn tuần 15: handover và checklist item — bàn giao ca bằng con số.",
+      "colleague",
+    ),
+  ],
+  "FO-22": [
+    sp(
+      "Does the room rate include everything?",
+      "Yes, madam. All taxes are included, and the airport pick up is optional.",
+      "Ôn tuần 16: all taxes, airport pick up, optional — ba ý giá cả trong một câu.",
+    ),
+    sp(
+      "Why is the bill higher than the room rate?",
+      "The service charge is on its own line, sir. May I show you?",
+      "Ôn tuần 18: service charge nằm riêng một dòng trên hoá đơn.",
+    ),
+    sp(
+      "My company will pay for this stay.",
+      "Certainly, sir. I will note the company name. You can settle the bill at check-out.",
+      "Ôn tuần 18: company name cho hoá đơn; settle the bill là thanh toán xong.",
+    ),
+    sp(
+      "You are useless! I will stand here until you give me that key!",
+      "I am sorry you feel that way, sir. My manager and our security team will help us now.",
+      "Khách gây gổ: không tự xử lý — gọi manager và security, giữ lời xin lỗi ngắn.",
+    ),
+  ],
+  "FB-21": [
+    sp(
+      "We are ready to order now.",
+      "Certainly, madam. May I take your order?",
+      "Câu mở màn gọi món chuẩn — May I take your order?",
+    ),
+    sp(
+      "Is the green curry safe for my nut allergy?",
+      "I checked with the chef, madam. It has no nuts, but our kitchen does handle nuts.",
+      "Trả lời dị ứng: nói điều đã kiểm tra và nêu rủi ro thật — không hứa an toàn tuyệt đối.",
+    ),
+    sp(
+      "Medium, please, and nothing too spicy.",
+      "Noted, sir. I will tell the kitchen your cooking level and meat preference.",
+      "Ôn tuần 17: cooking level và meat preference — nhắc lại để bếp làm đúng.",
+    ),
+    sp(
+      "What drink goes well with this dish?",
+      "For your drink choice, may I suggest the fresh mango juice, madam?",
+      "Ôn tuần 17: drink choice — gợi ý một món cụ thể, không hỏi lại chung chung.",
+    ),
+  ],
+  "FB-22": [
+    sp(
+      "Does this dish have pork? We eat halal.",
+      "Let me check with the kitchen about halal options, sir. Many dishes can be cooked without pork.",
+      "Hỏi halal hay pork: kiểm với bếp, nêu phương án — không tự đoán thành phần.",
+    ),
+    sp(
+      "Another bottle of wine, and be quick about it!",
+      "Of course, sir. May I bring some water and a small snack as well?",
+      "Khách uống nhiều: không từ chối thẳng — chậm nhịp bằng nước và đồ ăn nhẹ.",
+    ),
+    sp(
+      "There is a mark on this glass.",
+      "I am very sorry, madam. I will take it back and bring another one.",
+      "Ôn tuần 19: take it back và bring another one — nhận lỗi rồi đổi ngay.",
+    ),
+    sp(
+      "Can I pay for everything later tonight?",
+      "Yes, sir. Your bill is on hold until the last order.",
+      "Ôn tuần 18: on hold — hoá đơn gộp lại, chốt ở món cuối.",
+    ),
+    sp(
+      "Can I get a red invoice for my company?",
+      "Certainly, sir. May I have your billing name, please?",
+      "Ôn tuần 18: billing name — tên xuất hoá đơn, hỏi trước khi in.",
+    ),
+  ],
+  "HK-22": [
+    sp(
+      "Can I walk through here?",
+      "Please be careful, madam — the floor is wet. Mind your step.",
+      "Cảnh báo sàn ướt: nói ngay khi thấy khách, kèm hành động mind your step.",
+    ),
+    sp(
+      "You can move my things when you clean.",
+      "Thank you, madam, but we do not move guest belongings. I will clean around them.",
+      "Không đụng đồ của khách — kể cả khi được phép; nói rõ mình sẽ làm gì thay thế.",
+    ),
+    sp(
+      "My watch is not in my room!",
+      "I am very sorry, sir. I will call my supervisor now, and we will check together.",
+      "Khách báo mất đồ: xin lỗi, gọi supervisor ngay — không tự kết luận, không tự tìm một mình.",
+    ),
+    sp(
+      "When does my laundry come back?",
+      "Before six, madam. The laundry count is on your valet ticket.",
+      "Ôn tuần 17 và 18: laundry count ghi trên valet ticket — trả lời giờ trước, giấy tờ sau.",
+    ),
+    sp(
+      "The guest in 512 wants no ice in the bucket.",
+      "I will write it in the service note now.",
+      "Ôn tuần 17: service note — dặn dò của khách phải vào sổ, không nhớ miệng.",
+      "colleague",
+    ),
+    sp(
+      "How do I know what each guest wants?",
+      "Read the guest instruction first, then the cleaning note for each room.",
+      "Ôn tuần 17: guest instruction và cleaning note — đọc trước khi vào phòng.",
+      "colleague",
+    ),
+    sp(
+      "This room was not cleaned properly at all!",
+      "I am very sorry, madam. I will clean it again now, and my supervisor will check it.",
+      "Khách chê chất lượng: xin lỗi, làm lại ngay, cấp trên kiểm tra — đủ ba bước.",
+    ),
+    sp(
+      "Do I have to change the towels every day?",
+      "Not at all, madam. Towel reuse or fresh towels — the choice is yours.",
+      "Ôn tuần 20: towel reuse — trao quyền chọn cho khách.",
+    ),
+  ],
+  "SW-20": [
+    sp(
+      "Which therapist will I have tomorrow?",
+      "Your therapist choice is on the booking sheet, madam.",
+      "Ôn tuần 17 và 18: therapist choice ghi trên booking sheet.",
+    ),
+    sp(
+      "Is room three ready for Mrs Lan?",
+      "Yes. The preparation is complete, and her health form is accurate.",
+      "Ôn tuần 15 và 17: preparation xong, health form phải accurate — kiểm cả hai trước khi mời khách vào.",
+      "colleague",
+    ),
+    sp(
+      "I am ready to start.",
+      "Please lie face down first, madam. I will adjust the towel to keep you covered.",
+      "Ngôn ngữ trong liệu trình: lie face down, adjust the towel — khách luôn được che.",
+    ),
+    sp(
+      "Should I move now?",
+      "Yes, madam. Please turn over slowly — take your time.",
+      "Ngôn ngữ trong liệu trình: turn over — hướng dẫn chậm, từng bước một.",
+    ),
+  ],
+  "GR-20": [
+    sp(
+      "Can my children join the kids club?",
+      "Of course, madam. May I note the children's ages for the kids club?",
+      "Ôn tuần 17: children's ages — hỏi tuổi để xếp nhóm, ghi vào hồ sơ.",
+    ),
+    sp(
+      "The pillows are too soft for me.",
+      "I understand, sir. I will note your pillow type and send a firmer one up.",
+      "Ôn tuần 17: pillow type — đồng cảm trước, hành động ngay sau.",
+    ),
+    sp(
+      "What comes next for the guests in 1802?",
+      "The next service stage is the welcome tea.",
+      "Ôn tuần 15: service stage — từ nội bộ, nói với đồng nghiệp, không nói với khách.",
+      "colleague",
+    ),
+    sp(
+      "Well? Did you find my booking?",
+      "Thank you for waiting, sir. Yes — your booking is confirmed.",
+      "Thank you for waiting — câu mở lại hội thoại sau khi khách phải chờ.",
+    ),
+  ],
+  "GR-22": [
+    sp(
+      "Can my friend stay in my room tonight?",
+      "The room policy asks us to register every guest, sir. Could I see their travel documents?",
+      "Ôn tuần 19: room policy và travel documents — đăng ký khách là bắt buộc.",
+    ),
+    sp(
+      "I have waited twenty minutes for my car!",
+      "I do apologise, madam. Let me look into this personally right now.",
+      "Khách giận: I do apologise + Let me look into this personally — nhận việc về mình.",
+    ),
+    sp(
+      "I am a Diamond member. I should not have to queue.",
+      "You are right to expect more, sir. Please come with me — I will handle it myself.",
+      "Khách hạng cao đòi hỏi: công nhận kỳ vọng, tự xử lý, không phân bua.",
+    ),
+    sp(
+      "Which seat should I take in the lounge?",
+      "Window or garden, madam — the choice is yours.",
+      "Ôn tuần 20: trao quyền chọn bằng the choice is yours.",
     ),
   ],
 };
