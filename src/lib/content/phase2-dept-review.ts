@@ -44,8 +44,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
   "SW-17": [
     sp(
       "I take tablets for my blood pressure.",
-      "Thank you, madam. May I add that to your medicine list?",
-      "Thuốc khách đang dùng phải vào medicine list trước khi làm liệu trình.",
+      "Thank you, madam. I will note your medicine list and ask my manager.",
+      "Thuốc khách đang dùng phải vào medicine list, và thuốc huyết áp thì hỏi quản lý trước khi bắt đầu.",
     ),
   ],
   "GR-17": [
@@ -65,8 +65,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
   "FO-18": [
     sp(
       "Can I pay in dollars?",
-      "Of course, sir. Which currency would you prefer?",
-      "Hỏi loại tiền bằng Which + currency, không tự quyết thay khách.",
+      "The bill is in Vietnamese dong, sir. May I check today's rate?",
+      "Không tự nhận thu ngoại tệ: nói rõ hoá đơn tính bằng đồng, rồi đi hỏi tỷ giá.",
     ),
   ],
   "SW-18": [
@@ -216,8 +216,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "My nephew arrives tonight.",
-      "We can add a rollaway bed for one night.",
-      "Ôn tuần 15: rollaway bed là giường phụ gấp được.",
+      "I will ask the front desk about a rollaway bed.",
+      "Ôn tuần 15: rollaway bed là giường phụ; thêm người ngủ lại là việc của lễ tân.",
     ),
   ],
   "HK-20": [
@@ -243,7 +243,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "I did not hear anything.",
-      "I left a voicemail and a slip under the door.",
+      "I left a voicemail and a note under the door.",
       "Ôn tuần 15: hai cách để lại tin nhắn, nối bằng and.",
     ),
     sp(
@@ -386,7 +386,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
   "SW-22": [
     sp(
       "Why is that flag up?",
-      "The red flag is a warning about rough sea.",
+      "The red flag is a warning about the rough sea.",
       "Ôn tuần 19: red flag là cờ báo nguy hiểm.",
     ),
     sp(
@@ -406,7 +406,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "I do not feel well.",
-      "You look dizzy, sir. Please sit down slowly.",
+      "Do you feel dizzy, sir? Please sit down slowly.",
       "Ôn tuần 19: dizzy là chóng mặt.",
     ),
     sp(
@@ -421,12 +421,12 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "What do I wear?",
-      "Here is your treatment robe and towel cover.",
+      "Here are your treatment robe and towel cover.",
       "Ôn tuần 18: trao hai thứ cùng lúc, nối bằng and.",
     ),
     sp(
       "I want my money back!",
-      "I am very sorry, madam. I cannot decide a refund, but I will ask my manager now.",
+      "I am very sorry, madam. I cannot approve a refund, but I will ask my manager now.",
       "Đòi hoàn tiền: xin lỗi, nói rõ mình không quyết, gọi quản lý ngay.",
     ),
     sp(
@@ -438,6 +438,73 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I had a few beers. Can I use the sauna now?",
       "I'm afraid not after drinking, sir. It is for your safety.",
       "Khách đã uống rượu: không cho vào phòng xông — nói lý do an toàn.",
+    ),
+    sp(
+      "Someone has fainted in the steam room!",
+      "Please stay here, sir. I am calling the nurse now.",
+      "Khách ngất: không tự di chuyển khách, gọi y tá ngay và ở lại hiện trường.",
+    ),
+    sp(
+      "A guest is struggling in the deep end.",
+      "Call the lifeguard now. I am going to the pool.",
+      "Báo cứu hộ bằng một câu mệnh lệnh ngắn, rồi chạy tới hồ.",
+      "colleague",
+    ),
+    sp(
+      "The flag is red but I will swim anyway.",
+      "I am sorry, madam. The red flag means no swimming.",
+      "Cờ đỏ là quy định an toàn, không phải lời khuyên — nói rõ và giữ nguyên.",
+    ),
+    sp(
+      "My back hurts after yesterday.",
+      "I am very sorry, sir. I will call my manager now.",
+      "Khách nói bị đau sau liệu trình: không bàn nguyên nhân, báo quản lý để lập biên bản.",
+    ),
+    sp(
+      "Do you need to know anything first?",
+      "Do you have any allergies or injuries, madam?",
+      "Hỏi thẳng dị ứng và chấn thương trước mỗi liệu trình, không chờ khách tự nói.",
+    ),
+    sp(
+      "This room feels cold.",
+      "I will warm the room now, madam.",
+      "Nhiệt độ phòng là thứ khách ngại nói ra — sửa ngay khi nghe.",
+    ),
+    sp(
+      "Where do I put my ring?",
+      "Please keep your jewellery in your locker, madam.",
+      "Trang sức luôn vào tủ khoá, đừng để trên bàn trị liệu.",
+    ),
+    sp(
+      "Where is the treatment room?",
+      "Please follow me to the treatment room, madam.",
+      "Dẫn khách đi, không chỉ tay — đó là khác biệt của spa năm sao.",
+    ),
+    sp(
+      "I am ready to leave now.",
+      "How was your treatment today, madam?",
+      "Hỏi cảm nhận trước khi khách rời đi, lúc còn sửa được.",
+    ),
+    sp(
+      "Do I need to sign anything?",
+      "Please sign the consent form first, madam.",
+      "Ôn tuần 18: consent form ký trước khi bắt đầu, không ký sau.",
+    ),
+    sp(
+      "Which oil should I take?",
+      "Either one, madam. The choice is yours.",
+      "Ôn tuần 20: khen cả hai rồi trả quyền chọn cho khách.",
+    ),
+    sp(
+      "Can I come in the morning?",
+      "We have a morning slot at nine, madam.",
+      "Ôn tuần 20: morning slot — đưa giờ cụ thể thay vì nói còn chỗ.",
+    ),
+    sp(
+      "When did the guest leave?",
+      "The guest left ten minutes ago.",
+      "Ôn tuần 21: ago đứng sau mốc thời gian trong câu quá khứ.",
+      "colleague",
     ),
   ],
   "HK-21": [
@@ -527,13 +594,13 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
   "FO-20": [
     sp(
       "Is my room ready? We landed early.",
-      "I am sorry, sir. I checked, and the room is ready at two. Please have a welcome drink in the lounge.",
-      "Ôn tuần 16: khách đến sớm — xin lỗi, nêu giờ đã kiểm tra, mời welcome drink trong lúc chờ.",
+      "I am sorry, sir. The room will be ready at two. Please have a welcome drink in the lounge.",
+      "Ôn tuần 16: khách đến sớm — xin lỗi, nêu giờ phòng sẵn sàng, mời welcome drink trong lúc chờ.",
     ),
     sp(
       "Can I get a room away from the lift?",
-      "Of course, madam. A higher floor is quiet — the choice is yours.",
-      "Ôn tuần 16: higher floor — gợi ý một phương án rồi trao quyền chọn.",
+      "Let me check what is free, madam. A higher floor is quiet.",
+      "Ôn tuần 16: higher floor — kiểm phòng trống trước, chưa kiểm thì chưa hứa.",
     ),
     sp(
       "Can someone show me the way?",
@@ -562,7 +629,7 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Gọi khách bằng Mr hoặc Ms cộng họ ngay khi khách xưng tên.",
     ),
     sp(
-      "Your bags? Where did you put them?",
+      "My bags? Where did you put them?",
       "Your bags are in the luggage room, sir.",
       "Ôn tuần 8: luggage room là phòng giữ hành lý.",
     ),
@@ -580,8 +647,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "My company will pay for this stay.",
-      "Certainly, sir. I will note the company name. You can settle the bill at check-out.",
-      "Ôn tuần 18: company name cho hoá đơn; settle the bill là thanh toán xong.",
+      "Thank you, sir. I will check the company name with my manager. Then you can settle the bill at check-out.",
+      "Ôn tuần 18: công ty trả tiền phải được duyệt công nợ, nên hỏi quản lý trước khi hứa.",
     ),
     sp(
       "You are useless! I will stand here until you give me that key!",
@@ -602,6 +669,99 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I booked a sea view room!",
       "I am very sorry, madam. Let me check what we can do today.",
       "Sai loại phòng: xin lỗi và kiểm tra — chưa kiểm thì chưa hứa đổi.",
+    ),
+    sp(
+      "Give me my key now! I am in a hurry.",
+      "Good evening, sir. May I see your passport, please?",
+      "Khách đã uống rượu vẫn phải qua bước xác minh — giọng bình tĩnh, câu ngắn.",
+    ),
+    sp(
+      "I lost it. Just give me the key!",
+      "I understand, sir. I must check your name first.",
+      "Nhắc lại lý do một lần, không tranh luận, không nhượng bộ chìa khoá.",
+    ),
+    sp(
+      "I am going up there anyway!",
+      "Please take a seat, sir. My duty manager is coming.",
+      "Khách không hợp tác: mời ngồi và gọi duty manager, gọi bảo vệ qua bộ đàm.",
+    ),
+    sp(
+      "My room is dirty and the air-con is broken.",
+      "I am very sorry, madam. I will send Housekeeping now.",
+      "Phàn nàn phòng: xin lỗi rồi nói việc mình làm ngay, không hứa thay bộ phận khác.",
+    ),
+    sp(
+      "And if it is still not fixed tonight?",
+      "Then I will ask my manager about another room.",
+      "Phương án hai là quyền của quản lý, nên nói rõ mình sẽ đi hỏi.",
+    ),
+    sp(
+      "I want a discount for this.",
+      "I cannot decide that, madam. May I ask my manager?",
+      "Giảm giá không phải quyền của lễ tân — nói thẳng và chuyển lên quản lý.",
+    ),
+    sp(
+      "Do you have a room for tonight?",
+      "I am afraid we are full tonight, sir. May I call another hotel?",
+      "Hết phòng: nói thật rồi đưa ngay một lối đi tiếp cho khách.",
+    ),
+    sp(
+      "What time is check-out?",
+      "Check-out is at twelve noon, sir.",
+      "Giờ trả phòng là con số cố định, trả lời gọn một câu.",
+    ),
+    sp(
+      "Can I keep the room until four?",
+      "I will ask my manager about a late check-out, madam.",
+      "Trả phòng muộn do quản lý và bộ phận đặt phòng quyết, không hứa tại quầy.",
+    ),
+    sp(
+      "Which room am I in?",
+      "Your room number is inside this key folder, madam.",
+      "Không đọc to số phòng ở sảnh — chỉ vào chỗ đã ghi sẵn.",
+    ),
+    sp(
+      "My friend will sleep in my room tonight.",
+      "Of course, madam. May I have your friend's passport for registration?",
+      "Thêm người ở lại phải khai báo tạm trú, nên xin giấy tờ ngay.",
+    ),
+    sp(
+      "The website said I might get an upgrade.",
+      "I will ask my manager about an upgrade, madam.",
+      "Ôn tuần 16: nâng hạng là quyết định của quản lý, nói rõ mình đi hỏi.",
+    ),
+    sp(
+      "Is the paperwork finished for 512?",
+      "Yes. The check-in form is signed, and the passport scan is done.",
+      "Ôn tuần 17: check-in form và passport scan — báo đủ hai việc trong một câu.",
+      "colleague",
+    ),
+    sp(
+      "What did the terminal say?",
+      "The card was declined, so I called the duty manager.",
+      "Ôn tuần 17: declined chỉ nói với đồng nghiệp, kèm việc mình đã làm.",
+      "colleague",
+    ),
+    sp(
+      "Do you have something quieter?",
+      "We have a corner room, madam. Would that suit you?",
+      "Ôn tuần 20: corner room — gợi ý một phương án rồi để khách quyết.",
+    ),
+    sp(
+      "Which one should I take?",
+      "Either one, madam. The choice is yours.",
+      "Ôn tuần 20: khen cả hai rồi trả quyền chọn cho khách.",
+    ),
+    sp(
+      "How do we get to the airport?",
+      "I can arrange an airport pick-up, madam.",
+      "Ôn tuần 16: airport pick-up là dịch vụ quầy đặt được.",
+    ),
+    sp(
+      "When did the guest leave?",
+      "The guest left ten minutes ago.",
+      "Ôn tuần 21: ago đứng sau mốc thời gian, dùng với thì quá khứ.",
+      "colleague",
     ),
   ],
   "FB-21": [
@@ -654,8 +814,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "Can I pay for everything later tonight?",
-      "May I have your room number, sir? Then your bill can stay on hold.",
-      "Ôn tuần 18: on hold — chỉ treo hoá đơn cho khách đang lưu trú, nên hỏi số phòng trước.",
+      "May I have your room number and signature, sir? Then your bill can stay on hold.",
+      "Ôn tuần 18: on hold — treo hoá đơn cần số phòng VÀ chữ ký, để đúng người ký nhận.",
     ),
     sp(
       "Can I get a red invoice for my company?",
@@ -676,6 +836,82 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "This service is a joke! Get me someone useful!",
       "I am sorry, sir. I will call my manager now.",
       "Khách giận nói nặng: không cãi, không giải thích dài — gọi quản lý.",
+    ),
+    sp(
+      "I would like the steak, please.",
+      "Certainly, madam. Rare, medium or well done?",
+      "Ba mức chín hay dùng nhất — hỏi đủ ba, đừng để khách phải tự nói.",
+    ),
+    sp(
+      "Medium rare for me, please.",
+      "Medium rare, madam. Thank you.",
+      "Nhắc lại mức chín khách vừa chọn để xác nhận, rồi mới ghi phiếu.",
+    ),
+    sp(
+      "Can I have eggs with that?",
+      "How would you like your eggs, sir — fried or scrambled?",
+      "Trứng luôn có hai cách làm phổ biến nhất; hỏi gọn trong một câu.",
+    ),
+    sp(
+      "Is this dish vegetarian?",
+      "I will check with the chef, madam.",
+      "Món chay hay không là việc của bếp, không trả lời bằng trí nhớ.",
+    ),
+    sp(
+      "Can I charge this to my room?",
+      "Certainly, sir. May I have your room number and signature?",
+      "Ghi vào phòng cần số phòng VÀ chữ ký, để đúng người ký nhận.",
+    ),
+    sp(
+      "I need an invoice for my company.",
+      "Certainly, sir. May I have your company name and tax code?",
+      "Hoá đơn đỏ cần tên công ty và mã số thuế — hỏi đủ hai thứ một lần.",
+    ),
+    sp(
+      "This is not what I ordered.",
+      "I am very sorry, madam. I will bring your correct dish now.",
+      "Mang nhầm món: xin lỗi và đổi ngay, không hỏi lại khách đã gọi gì.",
+    ),
+    sp(
+      "You have spilled water on my jacket!",
+      "I am so sorry, sir. My manager will come to help now.",
+      "Làm đổ lên người khách: xin lỗi rồi gọi quản lý — giặt khô là quyết định của quản lý.",
+    ),
+    sp(
+      "Your food made me sick last night.",
+      "I am very sorry, madam. I will call my manager now.",
+      "Khách nói bị ngộ độc: không nhận lỗi, không giải thích — báo quản lý ngay.",
+    ),
+    sp(
+      "I am fine. One more beer, please.",
+      "I understand, sir. My supervisor is coming to help you.",
+      "Khách đã say đòi thêm: không phục vụ tiếp, không tranh luận — gọi giám sát.",
+    ),
+    sp(
+      "What do you have for dessert?",
+      "May I show you the dessert menu, madam?",
+      "Mời xem thực đơn tráng miệng thay vì đọc thuộc từng món.",
+    ),
+    sp(
+      "Give us a minute, please.",
+      "Of course, madam. I will be back in a moment.",
+      "Câu rời bàn lịch sự nhất trong ca — nói rõ mình sẽ quay lại.",
+    ),
+    sp(
+      "Is VAT included in this price?",
+      "Yes, madam. The price includes VAT.",
+      "Ôn tuần 18: VAT đã nằm trong giá — trả lời gọn một câu.",
+    ),
+    sp(
+      "Is this dish spicy?",
+      "It has a mild flavour, sir.",
+      "Ôn tuần 20: mild flavour — mô tả vị trước khi khách phải hỏi lần hai.",
+    ),
+    sp(
+      "When did table six order?",
+      "They ordered twenty minutes ago.",
+      "Ôn tuần 21: ago đứng sau mốc thời gian trong câu quá khứ.",
+      "colleague",
     ),
   ],
   "HK-22": [
@@ -707,8 +943,8 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "How do I know what each guest wants?",
-      "Read the guest instruction first, then the cleaning note for each room.",
-      "Ôn tuần 17: guest instruction và cleaning note — đọc trước khi vào phòng.",
+      "Read the cleaning request first, then the cleaning note for each room.",
+      "Ôn tuần 17: cleaning request và cleaning note — đọc trước khi vào phòng.",
       "colleague",
     ),
     sp(
@@ -740,6 +976,70 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Can I clean the bathroom without gloves?",
       "No. Wear gloves when you use chemicals.",
       "Hoá chất luôn đi với găng tay — nói với đồng nghiệp ngắn và rõ.",
+      "colleague",
+    ),
+    sp(
+      "Come inside and close the door.",
+      "I will keep the door open, sir. I will come back later.",
+      "Giữ cửa mở là quy tắc bảo vệ chính bạn; rời phòng rồi báo giám sát.",
+    ),
+    sp(
+      "I feel very unwell.",
+      "Please sit down, sir. I will call the duty manager now.",
+      "Khách mệt: mời ngồi và gọi quản lý trực, không tự cho thuốc.",
+    ),
+    sp(
+      "I broke the lamp. How much is it?",
+      "I will report it to my supervisor, madam.",
+      "Đồ hỏng: không báo giá, không thu tiền — chuyển cho giám sát.",
+    ),
+    sp(
+      "My friend will sleep here tonight.",
+      "I will tell the front desk, madam. They register every guest.",
+      "Người ở thêm phải do lễ tân đăng ký, buồng phòng chỉ báo tin.",
+    ),
+    sp(
+      "There are needles in the bin.",
+      "I will not touch them. I will call my supervisor now.",
+      "Vật sắc nhọn: không nhặt bằng tay, gọi giám sát để xử lý đúng cách.",
+      "colleague",
+    ),
+    sp(
+      "These papers are rubbish. Take them.",
+      "May I throw these away, madam?",
+      "Hỏi trước khi vứt bất cứ thứ gì trong phòng khách.",
+    ),
+    sp(
+      "How long will you take?",
+      "I will be finished in twenty minutes, madam.",
+      "Cho khách một mốc thời gian cụ thể để họ biết khi nào quay lại.",
+    ),
+    sp(
+      "Can you clean while I am out?",
+      "Certainly, sir. I will clean while you are out.",
+      "Nhắc lại đúng điều khách vừa cho phép — đó là cách xác nhận an toàn nhất.",
+    ),
+    sp(
+      "What if nobody answers the door?",
+      "I will slip a note under the door.",
+      "Ôn tuần 15: slip a note — không mở cửa, để lại giấy rồi báo giám sát.",
+      "colleague",
+    ),
+    sp(
+      "Why is 1408 not on my list?",
+      "It is a blocked room this week.",
+      "Ôn tuần 18: blocked room là phòng khoá không nhận khách.",
+      "colleague",
+    ),
+    sp(
+      "This pillow is too soft.",
+      "I will bring you a foam pillow, madam.",
+      "Ôn tuần 20: foam pillow — đổi gối là việc buồng phòng làm ngay được.",
+    ),
+    sp(
+      "When did the guest check out?",
+      "The guest checked out ten minutes ago.",
+      "Ôn tuần 21: ago đi với thì quá khứ, đứng sau mốc thời gian.",
       "colleague",
     ),
   ],
@@ -854,6 +1154,52 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "You will ask your manager? How long will that take?",
       "I will call you back in ten minutes, madam.",
       "Hẹn gọi lại bằng một mốc thời gian cụ thể, không nói chung chung là sớm thôi.",
+    ),
+    sp(
+      "That is not good enough! I want someone senior.",
+      "I understand, sir. My duty manager is coming now.",
+      "Khách đòi gặp cấp trên: không thương lượng thêm, gọi duty manager ngay.",
+    ),
+    sp(
+      "I cannot find my daughter!",
+      "Please stay here, madam. I am calling security now.",
+      "Trẻ lạc: giữ khách ở một chỗ và gọi bảo vệ ngay lập tức.",
+    ),
+    sp(
+      "My husband feels very unwell.",
+      "Please sit down, sir. I am calling the doctor now.",
+      "Sự cố y tế: mời ngồi, gọi bác sĩ, không tự cho thuốc.",
+    ),
+    sp(
+      "That man is shouting at people.",
+      "I am calling security now, madam. Please stay here.",
+      "Khách gây rối: gọi bảo vệ, không tự can thiệp.",
+    ),
+    sp(
+      "You have no room for us tonight?",
+      "I am very sorry, sir. My manager will arrange another hotel.",
+      "Quá tải phòng: chuyển khách sang khách sạn khác là quyết định của quản lý.",
+    ),
+    sp(
+      "And if I need to cancel the tour?",
+      "I will check the cancellation policy and call you back, sir.",
+      "Điều kiện huỷ do đối tác quy định — đi kiểm rồi gọi lại, không đoán.",
+    ),
+    sp(
+      "Good evening, Mr Brown speaking.",
+      "Good evening, sir. I am calling to check your room is quieter now.",
+      "Gọi lại sau khi xử lý phàn nàn là việc phân biệt Guest Relations với quầy lễ tân.",
+    ),
+    sp(
+      "Can we sit somewhere calm?",
+      "I will book you a quiet table, madam.",
+      "Ôn tuần 20: quiet table — đặt giúp khách thay vì chỉ đường.",
+    ),
+    sp(
+      "When did Mr Chen arrive?",
+      "He arrived twenty minutes ago.",
+      "Ôn tuần 21: ago đi với thì quá khứ, đứng sau mốc thời gian.",
+      "colleague",
     ),
   ],
 };

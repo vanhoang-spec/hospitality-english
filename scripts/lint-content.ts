@@ -424,6 +424,7 @@ const POS_OVERRIDES: Record<string, Pos> = {
   delivered: "ADJ",
   paid: "ADJ",
   spotless: "ADJ",
+  steady: "ADJ",
   comfortable: "ADJ",
   "well handled": "ADJ",
   "filed properly": "ADJ",

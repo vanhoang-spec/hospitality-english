@@ -10,7 +10,7 @@ import {
   type VocabItem,
 } from "@/lib/content/week-content";
 import { speakEN, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
-import { utterancePassed } from "@/lib/speaking-score";
+import { utterancePassedAny } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
   CHECKPOINT_ORAL_ITEMS,
@@ -31,7 +31,7 @@ import {
   type ConstructTally,
 } from "@/lib/phases";
 import { buildPaper, type Question } from "@/lib/checkpoint-paper";
-import { buildOral, type OralItem } from "@/lib/checkpoint-oral";
+import { answersOf, buildOral, type OralItem } from "@/lib/checkpoint-oral";
 import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -103,13 +103,7 @@ function OralStage({
   const item = items[idx];
 
   function commit(spoken: string, wasTyped = false) {
-    const verdict = utterancePassed(
-      spoken,
-      item.target,
-      item.sourceWeek,
-      item.requiredTokens,
-      item.guestPrompt,
-    );
+    const verdict = utterancePassedAny(spoken, answersOf(item), item.sourceWeek, item.guestPrompt);
     resultsRef.current = [
       ...resultsRef.current,
       { item, passed: verdict.passed, said: spoken.trim(), typed: wasTyped },
@@ -184,13 +178,7 @@ function OralStage({
         return;
       }
       if (
-        utterancePassed(
-          cleaned,
-          item.target,
-          item.sourceWeek,
-          item.requiredTokens,
-          item.guestPrompt,
-        ).passed ||
+        utterancePassedAny(cleaned, answersOf(item), item.sourceWeek, item.guestPrompt).passed ||
         next >= 2
       ) {
         commit(cleaned);

@@ -1,6 +1,7 @@
 import { getWeekContent, speakerAudioLabel, speakerLabel } from "./content/week-content";
 import { CHECKPOINT_ORAL_ITEMS, weeksInPhase } from "./phases";
 import { shuffle } from "./checkpoint-paper";
+import { acceptedAnswers, type AcceptedAnswer } from "./speaking-alternates";
 
 /** The oral half of a checkpoint, drawn from the whole phase.
  *
@@ -27,6 +28,8 @@ export type OralItem = {
    *  three with no opener at all, asking a learner to answer "Thank you. Good
    *  night." out of nowhere. */
   follows?: string;
+  /** The other replies the phase teaches for this same line. */
+  alternates?: AcceptedAnswer[];
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -36,6 +39,12 @@ export type OralItem = {
  *  Exported so a measurement can call it. Three audits had to copy this
  *  function into their own scripts to measure the draw, and a copied rule is
  *  a rule that stops being the one that ships. */
+/** Every answer an oral item accepts, its own first. */
+export const answersOf = (item: OralItem): AcceptedAnswer[] => [
+  { target: item.target, requiredTokens: item.requiredTokens },
+  ...(item.alternates ?? []),
+];
+
 export function buildOral(dep: string, week: string): OralItem[] {
   const items = weeksInPhase(week).flatMap((w) => {
     const c = getWeekContent(dep, String(w));
@@ -50,6 +59,14 @@ export function buildOral(dep: string, week: string): OralItem[] {
         tip: s.helpTip,
         requiredTokens: s.requiredTokens,
         follows: s.follows,
+        alternates: acceptedAnswers(
+          dep,
+          week,
+          s.guestPrompt,
+          s.targetResponse,
+          s.requiredTokens,
+          s.speakerRole,
+        ).slice(1),
         sourceWeek: c.weekNumber,
       })),
     );
@@ -102,6 +119,12 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // The model is hidden at the exam, so the learner cannot know which of the
   // two taught answers this paper holds, and the other one fails: 9.2% of
   // Spa sittings carried one, and swapping the two answers failed 14 of 14.
+  //
+  // Lines that ask the same thing in other words ("What else do you need from
+  // me?" / "Do you need anything else from me?") stay in the draw: excluding
+  // them too cut the pool from ~240 sentences to ~140 and let sixty memorised
+  // sentences pass 57-65% of sittings. They carry each other's answers
+  // instead — see `alternates`.
   const answersTo = new Map<string, Set<string>>();
   for (const i of heads) {
     const k = flat(items[i].guestPrompt);

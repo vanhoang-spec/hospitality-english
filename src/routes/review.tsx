@@ -12,7 +12,8 @@ import {
 } from "@/lib/review";
 import { speakerLabel } from "@/lib/content/week-content";
 import { dedupeTranscript, speakEN } from "@/lib/speech";
-import { utterancePassed } from "@/lib/speaking-score";
+import { utterancePassedAny } from "@/lib/speaking-score";
+import { acceptedAnswers } from "@/lib/speaking-alternates";
 
 export const Route = createFileRoute("/review")({
   head: () => ({ meta: [{ title: "Ôn tập hằng ngày — Embassy Hospitality" }] }),
@@ -408,11 +409,17 @@ function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking"
     if (!cleaned) return;
     setSaid(cleaned);
     onResult(
-      utterancePassed(
+      utterancePassedAny(
         cleaned,
-        speaking.targetResponse,
+        acceptedAnswers(
+          item.row.department_id,
+          week,
+          speaking.guestPrompt,
+          speaking.targetResponse,
+          speaking.requiredTokens,
+          speaking.speakerRole,
+        ),
         week,
-        speaking.requiredTokens,
         speaking.guestPrompt,
       ).passed,
     );

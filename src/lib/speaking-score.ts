@@ -127,6 +127,13 @@ const SPELLING: [RegExp, string][] = [
   [/\bv i p(s?)\b/g, "vip$1"],
   [/\bmister\b/g, "mr"],
   [/\bchildrens\b/g, "children's"],
+  // Measured in one Front Office round: the en-US recogniser writes these
+  // as one word, or with the US -z-, where the course writes them apart.
+  [/\bpre ?authori[sz](\w*)/g, "preauthoris$1"],
+  [/\bauthoriz(\w*)/g, "authoris$1"],
+  [/\bnonsmoking\b/g, "non smoking"],
+  [/\blogbook(s?)\b/g, "log book$1"],
+  [/\be t a\b/g, "eta"],
 ];
 
 export function normalize(s: string) {
@@ -139,7 +146,11 @@ export function normalize(s: string) {
     .replace(/đ/gi, "d")
     .toLowerCase()} `;
   for (const [re, full] of CONTRACTIONS) t = t.replace(re, full);
-  t = t.replace(/[^\w\s']/g, " ").replace(/\s+/g, " ");
+  // "A 10% service charge" is how the recogniser writes "ten percent".
+  t = t
+    .replace(/%/g, " percent ")
+    .replace(/[^\w\s']/g, " ")
+    .replace(/\s+/g, " ");
   for (const [re, full] of SPELLING) t = t.replace(re, full);
   return t
     .split(/\s+/)
@@ -292,6 +303,132 @@ const FINITE_VERBS = new Set<string>(
  *  one of those slots carries the predicate whether or not anyone listed it.
  */
 function holdsThePredicate(word: string, target: string): boolean {
+  // Two positions the flat token list below cannot see, because it has lost
+  // the full stops. The verb that OPENS a sentence is an imperative, and
+  // nothing before it marks the slot: "Yes. No gloves when you use chemicals."
+  // passed "No. Wear gloves when you use chemicals." on the one-word
+  // allowance, with the safety instruction reversed. And the word a statement
+  // LANDS on is its predicate: "The next step is." and "The service stage
+  // needs." passed for the same reason.
+  const LEAD = new Set([
+    "yes",
+    "no",
+    "please",
+    "sir",
+    "madam",
+    "certainly",
+    "sure",
+    "ok",
+    "okay",
+    "so",
+    "and",
+    "but",
+    "of",
+    "course",
+  ]);
+  const TAIL = new Set(["sir", "madam", "please", "now", "too", "today", "again"]);
+  const LOOSE_END = new Set([
+    "later",
+    "instead",
+    "here",
+    "there",
+    "soon",
+    "immediately",
+    "anyway",
+    "first",
+    "then",
+    "also",
+    "tonight",
+    "tomorrow",
+    "yet",
+    "already",
+    "still",
+    "together",
+    "outside",
+    "inside",
+    "upstairs",
+  ]);
+  const OPENS_NON_VERB = new Set([
+    "i",
+    "we",
+    "you",
+    "he",
+    "she",
+    "it",
+    "they",
+    "the",
+    "a",
+    "an",
+    "your",
+    "our",
+    "my",
+    "his",
+    "her",
+    "their",
+    "this",
+    "that",
+    "these",
+    "those",
+    "there",
+    "here",
+    "what",
+    "when",
+    "where",
+    "which",
+    "who",
+    "how",
+    "why",
+    "is",
+    "are",
+    "am",
+    "was",
+    "were",
+    "will",
+    "would",
+    "can",
+    "could",
+    "may",
+    "might",
+    "must",
+    "shall",
+    "should",
+    "do",
+    "does",
+    "did",
+    "every",
+    "each",
+    "all",
+    "some",
+    "any",
+    "not",
+    "if",
+    "because",
+    "after",
+    "before",
+    "then",
+    "first",
+    "next",
+    "just",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+  ]);
+  for (const sentence of target.toLowerCase().split(/[.!?;]+/)) {
+    const s = sentence
+      .replace(/[^a-z' ]/g, " ")
+      .split(" ")
+      .filter(Boolean);
+    let k = 0;
+    while (k < s.length && LEAD.has(s[k]!)) k++;
+    if (k < s.length - 1 && s[k] === word && !OPENS_NON_VERB.has(word)) return true;
+    let e = s.length - 1;
+    while (e > 0 && TAIL.has(s[e]!)) e--;
+    // An adverb of time or place can close a sentence without being what it
+    // says: "I will come back." is still a sentence without "later".
+    if (e >= 2 && s[e] === word && !LOOSE_END.has(word)) return true;
+  }
   const w = target
     .toLowerCase()
     .replace(/[^a-z' ]/g, " ")
@@ -328,6 +465,9 @@ function holdsThePredicate(word: string, target: string): boolean {
   const DETERMINER = new Set(["the", "a", "an", "your", "our", "my", "this", "that"]);
   if (before === "please") return true;
   if (MODAL.has(before)) return true;
+  // "Do not FORGET to check again later." lost its verb and passed as "Do not
+  // to check again later." — the modal is one word further back.
+  if (before === "not" && MODAL.has(twoBefore)) return true;
   if (SUBJECT.has(before)) return true;
   if (ADVERB.has(before) && (SUBJECT.has(twoBefore) || MODAL.has(twoBefore))) return true;
   // "The price includes locker access." — determiner, head noun, then the verb.
@@ -844,6 +984,31 @@ function foldCourtesy(toks: string[]) {
       i++;
       continue;
     }
+    // "I am not able to", "I am unable to" and "I cannot" refuse the same
+    // thing, and the course models both ("I am not able to do that, madam."
+    // beside "I cannot give a room number"). Three manager reviews had the
+    // other form fail in the authority items that matter most.
+    const be = (t?: string) => t === "am" || t === "is" || t === "are";
+    const refusal =
+      toks[i] === "not" && toks[i + 1] === "able" && toks[i + 2] === "to"
+        ? 3
+        : toks[i] === "unable" && toks[i + 1] === "to"
+          ? 2
+          : toks[i] === "can" && toks[i + 1] === "not"
+            ? 2
+            : 0;
+    if (refusal) {
+      if (refusal !== 2 || toks[i] === "unable") if (be(out[out.length - 1])) out.pop();
+      out.push("cannot");
+      i += refusal - 1;
+      continue;
+    }
+    // "Let me check" is "I will check" said warmly.
+    if (toks[i] === "let" && toks[i + 1] === "me") {
+      out.push("i", "will");
+      i++;
+      continue;
+    }
     out.push(toks[i]!);
   }
   return out;
@@ -984,6 +1149,8 @@ const COURTESY_OPENERS: string[][] = [
   ["yes"],
 ];
 const COURTESY_CLOSERS: string[][] = [
+  ["thank", "you", "very", "much"],
+  ["thank", "you"],
   ["for", "you"],
   ["right", "away"],
   ["straight", "away"],
@@ -1042,6 +1209,25 @@ function stripCourtesyFrame(spoken: string, target: string): string {
     a = a.slice(0, a.length - cl.length);
   }
   return a.join(" ");
+}
+
+/** utterancePassed against each answer the course teaches for the line, in
+ *  order: the first that passes is the verdict, and if none does the verdict
+ *  is the item's own. Every answer is graded at full strictness — see
+ *  speaking-alternates.ts for where the list comes from. */
+export function utterancePassedAny(
+  spoken: string,
+  answers: { target: string; requiredTokens?: string[] }[],
+  sourceWeek: string | number,
+  guestPrompt?: string,
+) {
+  let own: ReturnType<typeof utterancePassed> | undefined;
+  for (const a of answers) {
+    const verdict = utterancePassed(spoken, a.target, sourceWeek, a.requiredTokens, guestPrompt);
+    if (verdict.passed) return verdict;
+    own ??= verdict;
+  }
+  return own ?? utterancePassed(spoken, "", sourceWeek, undefined, guestPrompt);
 }
 
 export function utterancePassed(
@@ -1171,11 +1357,7 @@ export function utterancePassed(
     else extra.push(t);
   }
   const inserted = extra.filter(
-    (t) =>
-      !HONORIFIC.test(t) &&
-      !COURTESY_EXTRAS.has(t) &&
-      !FORGIVABLE_FUNCTION_TOKENS.has(t) &&
-      !DISFLUENCY.has(t),
+    (t) => !HONORIFIC.test(t) && !COURTESY_EXTRAS.has(t) && !ARTICLES.has(t) && !DISFLUENCY.has(t),
   );
   // One is already one too many, and it has to stay that way. Forgiving one
   // insertion on an otherwise-perfect reading looked safe and let 95 of the

@@ -654,15 +654,15 @@ const FB_BANK: P2Bank = {
     },
     {
       word: "Menu update",
-      phonetic: "/ˈmenjuː ʌpˈdeɪt/",
+      phonetic: "/ˈmenjuː ˈʌpdeɪt/",
       definition: "Cập nhật thực đơn",
       icon: "📋",
     },
     { word: "Review", phonetic: "/rɪˈvjuː/", definition: "Rà soát lại", icon: "📋" },
     {
-      word: "Clean station",
-      phonetic: "/kliːn ˈsteɪʃn/",
-      definition: "Quầy đã dọn sạch",
+      word: "Side station",
+      phonetic: "/saɪd ˈsteɪʃn/",
+      definition: "Quầy phụ trong nhà hàng",
       icon: "✨",
     },
     { word: "Till count", phonetic: "/tɪl kaʊnt/", definition: "Kiểm quỹ cuối ca", icon: "💵" },
@@ -723,14 +723,19 @@ const HK_BANK: P2Bank = {
     { word: "Baby cot", phonetic: "/ˈbeɪbi kɒt/", definition: "Nôi em bé", icon: "🍼" },
     { word: "Extra hanger", phonetic: "/ˈekstrə ˈhæŋə/", definition: "Móc treo thêm", icon: "🧥" },
     {
-      word: "Shoe polish",
-      phonetic: "/ʃuː ˈpɒlɪʃ/",
-      definition: "Xi đánh giày",
+      word: "Shoe shine",
+      phonetic: "/ʃuː ʃaɪn/",
+      definition: "Dịch vụ đánh giày",
       icon: "👞",
       art: "",
     },
     { word: "Sewing kit", phonetic: "/ˈsəʊɪŋ kɪt/", definition: "Bộ kim chỉ", icon: "🧵" },
-    { word: "Pillow menu", phonetic: "/ˈpɪləʊ ˈmenjuː/", definition: "Danh mục gối", icon: "🛌" },
+    {
+      word: "Pillow change",
+      phonetic: "/ˈpɪləʊ tʃeɪndʒ/",
+      definition: "Đổi gối theo ý khách",
+      icon: "🛌",
+    },
     { word: "Air freshener", phonetic: "/eə ˈfreʃnə/", definition: "Xịt thơm phòng", icon: "🌸" },
     // 8 = countable noun
     { word: "Bath robe", phonetic: "/bɑːθ rəʊb/", definition: "Áo choàng tắm", icon: "🥼" },
@@ -806,9 +811,9 @@ const HK_BANK: P2Bank = {
       icon: "⭐",
     },
     {
-      word: "Guest instruction",
-      phonetic: "/ɡest ɪnˈstrʌkʃn/",
-      definition: "Dặn dò của khách",
+      word: "Cleaning request",
+      phonetic: "/ˈkliːnɪŋ rɪˈkwest/",
+      definition: "Yêu cầu dọn phòng của khách",
       icon: "💡",
     },
     {
@@ -946,9 +951,9 @@ const HK_BANK: P2Bank = {
       icon: "🧣",
     },
     {
-      word: "Guest preference",
-      phonetic: "/ɡest ˈprefrəns/",
-      definition: "Sở thích của khách",
+      word: "Evening clean",
+      phonetic: "/ˈiːvnɪŋ kliːn/",
+      definition: "Dọn phòng buổi tối",
       icon: "💚",
     },
     // Slot 7 is "The {w} is a good match." — a recommendable option, the way
@@ -1008,7 +1013,7 @@ const HK_BANK: P2Bank = {
     // Was "Room check" — one letter away from week 21's "Room checks", and a
     // real paper printed the pair as two options of one question.
     { word: "Spot check", phonetic: "/spɒt tʃek/", definition: "Kiểm tra xác suất", icon: "🔑" },
-    { word: "Well done", phonetic: "/wel dʌn/", definition: "Làm tốt", icon: "👍" },
+    { word: "Steady", phonetic: "/ˈstedi/", definition: "Đều tay, ổn định", icon: "👍" },
     {
       word: "Handover note",
       phonetic: "/ˈhændəʊvə nəʊt/",
@@ -1261,9 +1266,9 @@ const SW_BANK: P2Bank = {
       icon: "🪶",
     },
     {
-      word: "Strong pressure",
-      phonetic: "/strɒŋ ˈpreʃə/",
-      definition: "Lực mạnh",
+      word: "Firm pressure",
+      phonetic: "/fɜːm ˈpreʃə/",
+      definition: "Lực chắc tay",
       icon: "💪",
     },
     {
@@ -1370,7 +1375,7 @@ const SW_BANK: P2Bank = {
     },
     {
       word: "Room reset",
-      phonetic: "/ruːm ˌriːˈset/",
+      phonetic: "/ruːm ˈriːset/",
       definition: "Dọn lại phòng trị liệu",
       icon: "🔄",
     },
@@ -1512,8 +1517,8 @@ const GR_BANK: P2Bank = {
     },
     { word: "Pillow type", phonetic: "/ˈpɪləʊ taɪp/", definition: "Loại gối ưa dùng", icon: "🛌" },
     {
-      word: "Newspaper choice",
-      phonetic: "/ˈnjuːzpeɪpə tʃɔɪs/",
+      word: "Newspaper preference",
+      phonetic: "/ˈnjuːzpeɪpə ˈprefrəns/",
       definition: "Loại báo ưa đọc",
       icon: "📰",
     },
@@ -1524,9 +1529,9 @@ const GR_BANK: P2Bank = {
       icon: "🎯",
     },
     {
-      word: "Trip length",
-      phonetic: "/trɪp leŋθ/",
-      definition: "Độ dài chuyến đi",
+      word: "Trip dates",
+      phonetic: "/trɪp deɪts/",
+      definition: "Ngày đi và ngày về",
       icon: "📏",
     },
     {
@@ -1632,9 +1637,9 @@ const GR_BANK: P2Bank = {
       icon: "🛺",
     },
     {
-      word: "Coffee machine",
-      phonetic: "/ˈkɒfi məˈʃiːn/",
-      definition: "Máy pha cà phê",
+      word: "Service lift",
+      phonetic: "/ˈsɜːvɪs lɪft/",
+      definition: "Thang máy nhân viên",
       icon: "☕",
     },
     {
@@ -1691,9 +1696,9 @@ const GR_BANK: P2Bank = {
       icon: "🪟",
     },
     {
-      word: "Local option",
-      phonetic: "/ˈləʊkl ˈɒpʃn/",
-      definition: "Lựa chọn của địa phương",
+      word: "Local restaurant",
+      phonetic: "/ˈləʊkl ˈrestrɒnt/",
+      definition: "Nhà hàng địa phương",
       icon: "🏮",
     },
     {

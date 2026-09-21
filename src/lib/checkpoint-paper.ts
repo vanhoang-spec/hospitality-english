@@ -95,6 +95,7 @@ const SWAPPED: Record<string, string> = {
   many: "much",
 };
 const MODAL_WORDS = new Set(["will", "can", "could", "would", "may", "must", "should", "shall"]);
+const ARTICLE_WORDS = new Set(["a", "an", "the"]);
 const NOT_AFTER_MODAL = new Set(["not", "i", "you", "we", "he", "she", "they", "it"]);
 
 /** Every sentence one closed-class edit away from `sentence`: drop an article,
@@ -103,11 +104,75 @@ const NOT_AFTER_MODAL = new Set(["not", "i", "you", "we", "he", "she", "they", "
  *  possessive. Each edit is one a Vietnamese learner makes and none of them
  *  can turn a correct service sentence into another correct one — the caller
  *  still removes any result that happens to be a sentence the course teaches. */
-function wrongVariants(sentence: string): string[] {
+function wrongVariants(
+  sentence: string,
+  { protect, dropArticles }: { protect?: Set<string>; dropArticles: boolean },
+): string[] {
   const toks = sentence.split(" ").filter(Boolean);
   const core = (t: string) => t.toLowerCase().replace(/[^a-z']/g, "");
   const withCase = (from: string, word: string) =>
     /^[A-Z]/.test(from) ? word.charAt(0).toUpperCase() + word.slice(1) : word;
+  // Where English cannot do without the article, so dropping it from the
+  // answer is always an error: "the" after a preposition ("in THE safety box",
+  // "to THE front desk") and "a/an" before a noun that closes its phrase
+  // ("May I offer you A facial?", "A table for two"). Not after "of" — "the
+  // order of steps" is fine — and not before a word that can be uncountable.
+  const PREPOSITIONS = new Set([
+    "in",
+    "on",
+    "at",
+    "to",
+    "from",
+    "near",
+    "by",
+    "with",
+    "for",
+    "into",
+    "under",
+    "behind",
+  ]);
+  const CAN_BE_MASS = new Set([
+    "juice",
+    "water",
+    "coffee",
+    "tea",
+    "milk",
+    "time",
+    "help",
+    "information",
+    "advice",
+    "service",
+    "food",
+    "wine",
+    "beer",
+    "rice",
+    "bread",
+    "soup",
+    "ice",
+    "luggage",
+    "laundry",
+    "breakfast",
+    "lunch",
+    "dinner",
+    "extra",
+    "fresh",
+    "hot",
+    "cold",
+    "warm",
+    "sparkling",
+    "still",
+    "little",
+    "few",
+  ]);
+  const articleIsRequired = (i: number) => {
+    const w = core(toks[i]!);
+    const nextTok = toks[i + 1] ?? "";
+    const next = core(nextTok);
+    if (!next || CAN_BE_MASS.has(next)) return false;
+    if (w === "the")
+      return i > 0 && PREPOSITIONS.has(core(toks[i - 1]!)) && !/[.,?!]$/.test(toks[i - 1]!);
+    return /[.,?!]$/.test(nextTok) || PREPOSITIONS.has(core(toks[i + 2] ?? ""));
+  };
   const out = new Set<string>();
   const emit = (arr: string[]) => {
     if (arr.length < 2) return;
@@ -118,16 +183,35 @@ function wrongVariants(sentence: string): string[] {
   toks.forEach((t, i) => {
     const w = core(t);
     const tail = t.slice(t.toLowerCase().indexOf(w) + w.length);
-    if (DROPPABLE.has(w) && !/[.,?!]$/.test(t)) {
+    const next = toks[i + 1] ? core(toks[i + 1]) : "";
+    // Three deletions that printed a CORRECT sentence keyed wrong, measured on
+    // 11-13% of papers in two departments:
+    //  - an article from the ANSWER: "The service was excellent today." →
+    //    "Service was excellent today."; "…prefer a fresh juice?" → "…prefer
+    //    fresh juice?" — mass and definite nouns stand without one;
+    //  - "to" before an -ing verb: "Please try drinking some water slowly" is
+    //    simply English;
+    //  - the near miss's own error word: most near misses INSERT one, and "I
+    //    am wrote everything in the log." minus "am" is right.
+    // Any other deletion from a near miss leaves its error where it was, so
+    // those stay — they are the edits that keep the three options from lining
+    // up by length.
+    const safeDrop =
+      (dropArticles || !ARTICLE_WORDS.has(w) || articleIsRequired(i)) &&
+      !protect?.has(w) &&
+      !(w === "to" && /ing$/.test(next));
+    if (DROPPABLE.has(w) && safeDrop && !/[.,?!]$/.test(t)) {
       const a = toks.filter((_, j) => j !== i);
       if (i === 0 && a[0]) a[0] = a[0].charAt(0).toUpperCase() + a[0].slice(1);
       emit(a);
     }
     if (SWAPPED[w]) emit(toks.map((x, j) => (j === i ? withCase(t, SWAPPED[w]) + tail : x)));
-    const next = toks[i + 1] ? core(toks[i + 1]) : "";
     if (MODAL_WORDS.has(w) && !tail && next && !NOT_AFTER_MODAL.has(next))
       emit([...toks.slice(0, i + 1), "to", ...toks.slice(i + 1)]);
-    if (/^(your|our|my)$/.test(w) && i > 0) emit([...toks.slice(0, i), "the", ...toks.slice(i)]);
+    // Not at the start of a sentence: "One moment, please. the Your request…"
+    // is an option nobody has to read to reject.
+    if (/^(your|our|my)$/.test(w) && i > 0 && !/[.?!]$/.test(toks[i - 1]!))
+      emit([...toks.slice(0, i), "the", ...toks.slice(i)]);
   });
   return [...out];
 }
@@ -152,6 +236,11 @@ export function buildPaper(dep: string, week: string): Question[] {
   const phaseLessons = phaseContent.flatMap((c) => c.lessons);
 
   const weekVocab = phaseLessons.flatMap((l) => l.vocabulary);
+  // The phase's multi-word headwords, for telling two replies about the same
+  // taught item apart from two replies that merely share a word.
+  const phraseHeadwords = [
+    ...new Set(weekVocab.map((v) => v.word.toLowerCase()).filter((w) => /\s/.test(w))),
+  ];
   const reviewVocab = resolveReviewVocab(dep, content.reviewWords ?? []);
   // Prefer the recycled phase vocabulary — a checkpoint should look back,
   // not merely re-test the week it sits in.
@@ -301,6 +390,9 @@ export function buildPaper(dep: string, week: string): Question[] {
     "right",
     "all",
     "now",
+    // A preposition the audio shares with a reply is not a reason to prefer
+    // it: "Anything else about me?" counted "about" as naming the key.
+    "about",
   ]);
   // Words the curriculum itself treats as interchangeable in an answer. A spa
   // that CLOSES at eight also FINISHES at eight; a lounge that is READY is
@@ -496,13 +588,35 @@ export function buildPaper(dep: string, week: string): Question[] {
           .replace(/[^a-z ]/g, " ")
           .replace(/ +/g, " ")
           .trim();
-      const taught = new Set(grammarPool.map((o) => flat(o.polite)));
+      // Every sentence the phase teaches as RIGHT, spoken models included: "I
+      // listed everything in the log." is a week-21 model, and it was printed
+      // as a wrong edit of a grammar pair on 2.4% of Spa papers.
+      const taught = new Set([
+        ...grammarPool.map((o) => flat(o.polite)),
+        ...phaseLessons.flatMap((l) => l.speaking.map((s) => flat(s.targetResponse))),
+      ]);
       const avoid = new Set([flat(g.polite), flat(g.nearMiss)]);
       const fromAnswer = Math.random() < 1 / 3;
-      const base = fromAnswer ? g.polite : g.nearMiss;
-      const cands = shuffle(
-        wrongVariants(base).filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v))),
-      );
+      const nm: string = g.nearMiss;
+      // The near miss's error words: what it says that the answer does not.
+      const politeTally = new Map<string, number>();
+      for (const t of flat(g.polite).split(" ")) politeTally.set(t, (politeTally.get(t) ?? 0) + 1);
+      const inserted = new Set<string>();
+      for (const t of flat(g.nearMiss).split(" ")) {
+        const left = politeTally.get(t) ?? 0;
+        if (left > 0) politeTally.set(t, left - 1);
+        else inserted.add(t);
+      }
+      const fromPolite = () => wrongVariants(g.polite, { dropArticles: false });
+      const fromNear = () => wrongVariants(nm, { protect: inserted, dropArticles: true });
+      const usableOf = (list: string[]) =>
+        list.filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v)));
+      let cands = shuffle(usableOf(fromAnswer ? fromPolite() : fromNear()));
+      // A side with nothing left to edit ("I served it yesterday, sir." has no
+      // droppable or swappable word) used to fall through to an unrelated
+      // sentence from the pool, which is rejected on sight — 10-13% of grammar
+      // options. The other side nearly always has an edit.
+      if (!cands.length) cands = shuffle(usableOf(fromAnswer ? fromNear() : fromPolite()));
       const wantRank = Math.floor(Math.random() * 3);
       const nearMiss = g.nearMiss;
       const rankOf = (third: string) =>
@@ -696,7 +810,12 @@ export function buildPaper(dep: string, week: string): Question[] {
       // — "We also have a city tour." is the same offer of stock, and the
       // audit that asked for the (also )? group in the arrange/offer entry
       // below named this one in the same breath.
-      /\bwe (also )?have\b/i,
+      // ONE entry for every way the course offers something. They were four
+      // entries, and a move is matched by index, so "We also have shoe polish."
+      // and "We could arrange shoe polish instead." were two different moves
+      // and went on the same paper as key and distractor for "What else could
+      // I add to that?". Three reviews in one round found pairs of this shape.
+      /\bwe (also )?have\b|\bwould you like\b|\bmay i offer\b|\bperhaps you would prefer\b|\bwe (could|can) (also )?(arrange|offer)\b|\bi can (lend|bring|offer)\b/i,
       /\bi will bring\b/i,
       /\bi will send\b/i,
       /\bi will call\b/i,
@@ -721,16 +840,10 @@ export function buildPaper(dep: string, week: string): Question[] {
       // Five more moves ten reviews found answering one audio two right ways:
       // writing it down, offering, handing something over, refusing, and
       // giving one more of something.
-      /\bi will (note|write)\b|\b(noted|wrote|listed|jotted|typed|logged) everything\b|\bin the log\b/i,
-      /\bwould you like\b/i,
+      /\bi will (note|write|add)\b|\b(noted|wrote|listed|jotted|typed|logged) everything\b|\bin the log\b|\badd (that|it) to\b/i,
       /^(yes[.,]? )?here is your\b/i,
-      /\bnot (allowed|permitted|possible|available)\b|\bcannot decide\b/i,
+      /\bnot (allowed|permitted|possible|available)\b|\bcannot decide\b|\bdoes not allow\b/i,
       /\b(an extra|another|one more)\b/i,
-      // A later batch added "We could arrange X", and an audit measuring
-      // 1,800 listening questions found it answering an open question two
-      // different right ways. The comment above this list predicted exactly
-      // that: a list by name reopens every time content is added.
-      /\bwe (could|can) (also )?(arrange|offer)\b/i,
       // "What do you do first?" has as many right answers as the department
       // has opening jobs, and three weeks of this phase each teach a different
       // one. Same for the every-day and end-of-shift frames beside it.
@@ -779,10 +892,29 @@ export function buildPaper(dep: string, week: string): Question[] {
         .join(" ");
     const keyOpening = openingWords(s.targetResponse);
     const sameFrame = (t: string) => openingWords(t) === keyOpening;
+    // Two more shapes three reviews read by hand and the rules above missed,
+    // because neither is a frame: a paraphrase that keeps most of the key's
+    // content ("It keeps every guest safe…" / "It keeps everyone safe…",
+    // "The smoking area is outside…" / "You will find the smoking area
+    // outside."), and a reply about the same taught item in another frame
+    // ("We can add a rollaway bed for one night." / "Certainly, sir. We can set
+    // up a rollaway bed."). Both are right whenever the audio does not name
+    // what separates them — which is exactly what `discriminated` asks.
+    const sharesContent = (t: string) => [...coreOf(t)].filter((w) => keyCore.has(w)).length >= 2;
+    const keyLower = s.targetResponse.toLowerCase();
+    const keyHeadwords = phraseHeadwords.filter((h) => keyLower.includes(h));
+    const sameItem = (t: string) => {
+      const lower = t.toLowerCase();
+      return keyHeadwords.some((h) => lower.includes(h));
+    };
     const secondRightAnswer = (t: string) =>
       pullsAway(t) ||
       (!discriminated(t) &&
-        ((keyMove >= 0 && moveIdx(t) === keyMove) || sameRecipient(t) || sameFrame(t)));
+        ((keyMove >= 0 && moveIdx(t) === keyMove) ||
+          sameRecipient(t) ||
+          sameFrame(t) ||
+          sharesContent(t) ||
+          sameItem(t)));
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
     const usable = widened.filter(
       (t) => !nearlySameAnswer(t, s.targetResponse) && !secondRightAnswer(t),
@@ -851,7 +983,11 @@ export function buildPaper(dep: string, week: string): Question[] {
     const pairs: { a: Cand; b: Cand; w: number }[] = [];
     for (let i = 0; i < Math.min(3, top.length); i++)
       for (let j = 0; j < top.length; j++) {
-        if (i === j || nearlySameAnswer(top[i].t, top[j].t)) continue;
+        // Two distractors that are near-twins of each other hand the key away
+        // as the odd one out: "pick the option least like the other two"
+        // answered 43-45% of listening questions in five reviews.
+        if (i === j || nearlySameAnswer(top[i].t, top[j].t) || likeness(top[i].t, top[j].t) >= 0.6)
+          continue;
         pairs.push({
           a: top[i],
           b: top[j],
@@ -860,10 +996,24 @@ export function buildPaper(dep: string, week: string): Question[] {
       }
     const covered = pairs.filter((p) => covers([p.a, p.b]) === 3);
     const candidates = covered.length ? covered : pairs;
-    const atRank = candidates.filter(
-      (p) => [p.a.t, p.b.t].filter((t) => t.length < keyChars).length === wantRank,
-    );
-    const best = (atRank.length ? atRank : candidates).sort((x, y) => y.w - x.w)[0];
+    const rankOfPair = (p: { a: Cand; b: Cand }) =>
+      [p.a.t, p.b.t].filter((t) => t.length < keyChars).length;
+    // The drawn rank first; where no pair sits at it, a rank drawn from the
+    // ranks that DO exist. Falling back to the likeliest pair regardless of
+    // length, or to the nearest rank, both walked the key into the middle of
+    // its three options 40-50% of the time against a chance of 33% — and
+    // "pick the middle-length option" was the listening block's best surface
+    // trick in five reviews.
+    const byRank = new Map<number, typeof candidates>();
+    for (const p of candidates) {
+      const r = rankOfPair(p);
+      byRank.set(r, [...(byRank.get(r) ?? []), p]);
+    }
+    const ranks = [...byRank.keys()];
+    const chosenRank = byRank.has(wantRank)
+      ? wantRank
+      : (ranks[Math.floor(Math.random() * ranks.length)] ?? wantRank);
+    const best = (byRank.get(chosenRank) ?? candidates).sort((x, y) => y.w - x.w)[0];
     const clean: Cand[] = best ? [best.a, best.b] : top.slice(0, 2);
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the
@@ -905,7 +1055,9 @@ export function buildPaper(dep: string, week: string): Question[] {
       audio: s.guestPrompt,
       options,
       correctIdx: options.indexOf(s.targetResponse),
-      note: `${speakerLabel(s)}: "${s.guestPrompt}"`,
+      // The tip says WHY this is the reply. Echoing the audio alone told a
+      // learner who missed it what they had heard and nothing else.
+      note: `${speakerLabel(s)}: "${s.guestPrompt}" — ${s.helpTip}`,
       audioWho: speakerAudioLabel(s),
     };
   });

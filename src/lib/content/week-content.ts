@@ -421,7 +421,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Is the passport scan done?",
-          targetResponse: "Yes. I gave the passport back already.",
+          targetResponse: "Yes. The passport is back with the guest.",
           helpTip: "Trả giấy tờ xong thì nói ra, đừng để ai phải đi tìm.",
           speakerRole: "colleague",
         },
@@ -554,7 +554,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "That is strange. There is definitely money in that account.",
-          targetResponse: "Of course, sir. May I try another card?",
+          targetResponse: "Of course, sir. May I try the other terminal?",
           helpTip:
             "Đồng ý với khách trước ('Of course'), đổ lỗi cho cái máy, rồi hỏi một câu ngắn. Không bao giờ nhắc tới tài khoản của khách.",
         },
@@ -565,12 +565,12 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Do I get that money back?",
-          targetResponse: "Your bank shows the refund a few days after check-out.",
+          targetResponse: "Your bank releases the hold a few days after check-out.",
           helpTip: "Nói rõ mốc hoàn tiền, đừng để khách phải hỏi lại.",
         },
         {
           guestPrompt: "What did the terminal say?",
-          targetResponse: "It was declined. I asked for another card.",
+          targetResponse: "The terminal says declined. I will ask for another card.",
           helpTip: "Từ này chỉ nói với đồng nghiệp, không nói trước mặt khách.",
           speakerRole: "colleague",
         },
@@ -581,7 +581,7 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Will I lose that money?",
-          targetResponse: "No, madam. We refund the deposit at check-out if nothing is charged.",
+          targetResponse: "No, madam. We release the hold at check-out if nothing is charged.",
           helpTip: "Trả lời phần khách lo nhất trước, rồi mới giải thích.",
         },
       ],
@@ -758,7 +758,7 @@ export const FO_WEEK_17: WeekContent = {
             explanation: '"- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00."',
           },
           {
-            q: "Buffet sáng miễn phí đóng lúc mấy giờ?",
+            q: "Buffet sáng đóng lúc mấy giờ?",
             options: ["9:00 AM", "10:00 AM", "11:00 AM"],
             correct: 1,
             explanation: '"- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00."',
@@ -1020,7 +1020,7 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "How is the queue now?",
-          targetResponse: "It is moving. Two tables are free soon.",
+          targetResponse: "It is moving. Two tables will be free soon.",
           helpTip: "Bàn giao tình hình bằng con số, không bằng cảm giác.",
           speakerRole: "colleague",
         },
@@ -1681,9 +1681,9 @@ export const HK_WEEK_15: WeekContent = {
       grammar: [
         {
           rude: "You want a bed or not?",
-          polite: "Would you like us to set up a rollaway bed for you?",
-          nearMiss: "Would you like us set up a rollaway bed for you?",
-          rule: "Mời dùng dịch vụ lịch sự bằng 'Would you like us to…?'.",
+          polite: "Shall I ask the front desk for a rollaway bed?",
+          nearMiss: "Shall I to ask the front desk for a rollaway bed?",
+          rule: "Xin phép làm giúp bằng Shall I — giường phụ do lễ tân duyệt, buồng phòng không tự nhận.",
         },
         {
           rude: "That costs more money.",
@@ -1695,9 +1695,9 @@ export const HK_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "My son is joining us tonight. Do you have an extra bed we could use?",
-          targetResponse: "Certainly, sir. A rollaway bed has a small extra charge.",
+          targetResponse: "I will ask the front desk, sir. A rollaway bed has an extra charge.",
           helpTip:
-            "Nhấn vào 'certainly' ngay đầu câu — đó là chữ làm câu trả lời nghe chắc chắn và ấm.",
+            "Nói rõ mình sẽ hỏi lễ tân, rồi nêu luôn phụ phí — khách không phải hỏi lần hai.",
         },
         {
           guestPrompt: "My charger does not fit.",
@@ -1717,7 +1717,7 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "Could we have another bed?",
-          targetResponse: "Certainly, sir. We can set up a rollaway bed.",
+          targetResponse: "One moment, sir. I will ask the front desk about a rollaway bed.",
           helpTip: "Xác nhận làm được trước, chi tiết nói sau.",
         },
         {
@@ -1727,7 +1727,7 @@ export const HK_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes\nExtra Pillow & Blanket: Complimentary, no advance notice needed\nAny charge goes on the room bill. Housekeeping staff never take cash.",
+        text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes\nExtra Pillow & Blanket: Complimentary, no advance notice needed\nAny charge goes on the room bill. The Front Desk arranges rollaway beds. Housekeeping staff never take cash.",
         questions: [
           {
             q: "Giường phụ giá bao nhiêu một đêm?",
@@ -1746,7 +1746,7 @@ export const HK_WEEK_15: WeekContent = {
       arcade: [
         {
           bad: "You want a bed or not?",
-          good: "Would you like us to set up a rollaway bed for you?",
+          good: "Shall I ask the front desk for a rollaway bed?",
         },
         {
           bad: "That costs more money.",
@@ -1760,7 +1760,7 @@ export const HK_WEEK_15: WeekContent = {
           prompt: "My nephew arrives tonight. Can we add another bed?",
           options: [
             {
-              text: "Certainly, sir. We can set up a rollaway bed in your room. There is a small charge per night.",
+              text: "Certainly, sir. I will ask the front desk about a rollaway bed. There is a small charge per night.",
               correct: true,
               kind: "answer",
             },
@@ -1848,7 +1848,14 @@ export const HK_WEEK_15: WeekContent = {
         {
           guestPrompt: "And if there is still no answer?",
           targetResponse: "I will slip a note under the door.",
-          helpTip: "Không mở cửa. Ghi giấy là bước cuối cùng.",
+          helpTip:
+            "Không mở cửa. Ghi giấy xong phải báo giám sát — phòng treo DND quá giờ cần được kiểm tra.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Nobody has answered all afternoon.",
+          targetResponse: "I will tell the floor supervisor now.",
+          helpTip: "Quá giờ mà vẫn im lặng thì báo giám sát — kiểm tra khách có an toàn không.",
           speakerRole: "colleague",
         },
         {
@@ -1864,7 +1871,7 @@ export const HK_WEEK_15: WeekContent = {
         },
       ],
       reading: {
-        text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- Never remove the DND sign or enter without guest confirmation.",
+        text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- If there is still no answer, tell the floor supervisor. The supervisor and Security check that the guest is well.\n- Never remove the DND sign or enter without guest confirmation.",
         questions: [
           {
             q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
@@ -4436,8 +4443,10 @@ export const SW_WEEK_19: WeekContent = {
       grammar: [
         {
           rude: "Towels are over there.",
-          polite: "Fresh towels are at the towel station past the pool bar. Please help yourself.",
-          nearMiss: "Fresh towels is at the station past the pool bar. Please help yourself.",
+          polite:
+            "Fresh towels are at the towel station near the pool entrance. Please help yourself.",
+          nearMiss:
+            "Fresh towels is at the towel station near the pool entrance. Please help yourself.",
           rule: "Chỉ chỗ xong thêm 'Please help yourself' để lời chỉ dẫn thành lời mời.",
         },
         {
@@ -4450,7 +4459,7 @@ export const SW_WEEK_19: WeekContent = {
       speaking: [
         {
           guestPrompt: "Where can I get a towel, and do you have private cabanas?",
-          targetResponse: "Fresh towels are at the towel station, and a cabana is free.",
+          targetResponse: "Fresh towels are at the towel station. I will check the cabana.",
           helpTip: "Đọc 'towel station' liền một cụm, không ngắt giữa hai chữ.",
         },
         {
@@ -4465,7 +4474,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "Did 305 take a cabana?",
-          targetResponse: "Yes. I gave them a key card.",
+          targetResponse: "Yes. They have a key card.",
           helpTip: "Bàn giao rõ ai đang giữ thẻ nào.",
           speakerRole: "colleague",
         },
@@ -4501,7 +4510,7 @@ export const SW_WEEK_19: WeekContent = {
       arcade: [
         {
           bad: "Towels are over there.",
-          good: "You'll find fresh towels at the towel station just past the pool bar.",
+          good: "You'll find fresh towels at the towel station near the pool entrance.",
         },
         {
           bad: "Use your key for the locker.",
@@ -4515,7 +4524,7 @@ export const SW_WEEK_19: WeekContent = {
           prompt: "Is there somewhere to get towels and a shaded seat?",
           options: [
             {
-              text: "Fresh towels are at the towel station, and a cabana is free.",
+              text: "Fresh towels are at the towel station. I will check the cabana.",
               correct: true,
               kind: "answer",
             },
@@ -4679,7 +4688,7 @@ export const SW_WEEK_19: WeekContent = {
           word: "Warning",
           phonetic: "/ˈwɔːnɪŋ/",
           definition: "Cảnh báo",
-          context: "We have issued a storm warning for this afternoon.",
+          context: "There is a storm warning for this afternoon.",
           icon: "⚠️",
         },
         {
@@ -4727,7 +4736,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "Is the beach open today?",
-          targetResponse: "We have issued a storm warning for this afternoon.",
+          targetResponse: "There is a storm warning for this afternoon.",
           helpTip: "Thông báo cảnh báo trước khi khách kịp hỏi tới.",
         },
         {
@@ -4868,12 +4877,12 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "I have been in the sun all day.",
-          targetResponse: "Heat exhaustion can happen quickly here.",
+          targetResponse: "Please rest in the shade, madam. Heat exhaustion can happen quickly.",
           helpTip: "Cảnh báo sớm, đừng đợi khách ngã mới nói.",
         },
         {
           guestPrompt: "How is the guest now?",
-          targetResponse: "Still dizzy. I moved them into the shade.",
+          targetResponse: "Still dizzy. The guest is in the shade now.",
           helpTip: "Báo trạng thái hiện tại kèm việc mình đã làm.",
           speakerRole: "colleague",
         },
@@ -16390,7 +16399,7 @@ export const HK_WEEK_31: WeekContent = {
     "Bath robe",
     "Fresh flowers",
     "Spotless",
-    "Pillow menu",
+    "Pillow change",
   ],
   lessons: [
     {
@@ -16901,9 +16910,9 @@ export const HK_WEEK_32: WeekContent = {
   weekTitleEn: "Advice from the Room You Just Cleaned",
   weekTitleVi: "Tư vấn từ chính căn phòng vừa dọn",
   reviewWords: [
-    "Guest preference",
+    "Evening clean",
     "Pillow choice",
-    "Guest instruction",
+    "Cleaning request",
     "Preferred time",
     "Feather pillow",
     "Room note",

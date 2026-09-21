@@ -313,7 +313,10 @@ function GrammarSuiteInner({
             {/* Every wrong order used to get the same line, so a learner could
                 not tell which chip was out of place. Name the first one. */}
             {(() => {
-              const want = puzzle.target.split(" ").filter(Boolean);
+              // Chips, not words: a sentence over MAX_CHIPS words is built from
+              // two-word chips, and counting words told a learner with every
+              // chip placed that half of them were still missing.
+              const want = puzzle.chips;
               if (tray.length < want.length) return `Còn thiếu ${want.length - tray.length} chip.`;
               const k = tray.findIndex(
                 (w, i) => normalizeSentence(w) !== normalizeSentence(want[i] ?? ""),

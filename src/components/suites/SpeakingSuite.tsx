@@ -9,7 +9,8 @@ import {
   type WeekContent,
 } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
-import { passThresholds, utterancePassed } from "@/lib/speaking-score";
+import { passThresholds, utterancePassed, utterancePassedAny } from "@/lib/speaking-score";
+import { acceptedAnswers } from "@/lib/speaking-alternates";
 import { listeningRateForWeek } from "@/lib/phases";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -47,6 +48,14 @@ function SpeakingSuiteInner({
       target: s.targetResponse,
       tip: s.helpTip,
       requiredTokens: s.requiredTokens,
+      answers: acceptedAnswers(
+        dep,
+        week,
+        s.guestPrompt,
+        s.targetResponse,
+        s.requiredTokens,
+        s.speakerRole,
+      ),
       follows: s.follows,
       who: speakerLabel(s),
       audioWho: speakerAudioLabel(s),
@@ -83,11 +92,10 @@ function SpeakingSuiteInner({
   // false for the typed fallback: a typed sentence still earns the stars,
   // but it must not feed the fluency metric — nothing was pronounced.
   function grade(cleaned: string, spoken: boolean) {
-    const cmp = utterancePassed(
+    const cmp = utterancePassedAny(
       cleaned,
-      scenario.target,
+      scenario.answers,
       week,
-      scenario.requiredTokens,
       // The guest's own line is what decides whether sir/madam was
       // answerable in the first place.
       scenario.complaint,
@@ -376,8 +384,8 @@ function SpeakingSuiteInner({
               )}
               {!result.passed && result.missingRequired.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                  Sai hoặc thiếu từ mang giá trị: {result.missingRequired.join(", ")} — sai số là
-                  sai nghĩa, nói lại cho đúng
+                  Sai hoặc thiếu từ bắt buộc: {result.missingRequired.join(", ")} — đó là chữ mang
+                  nghĩa chính của câu, nói lại cho đúng
                 </div>
               )}
               {/* Ba lý do trượt dưới đây đều là "đủ điểm phần trăm nhưng sai điều
@@ -423,7 +431,12 @@ function SpeakingSuiteInner({
                 result.missingFunction.length === 0 &&
                 result.inflectionErrors.length === 0 &&
                 result.accuracy * 100 >= th.accPct &&
-                result.orderRatio < th.orderRatio && (
+                // The grader also fails every word said with any two swapped
+                // (accuracy 100, order below 1). This line only covered the
+                // order threshold, so 90% of word-order failures showed a
+                // 100% score and no reason at all.
+                (result.orderRatio < th.orderRatio ||
+                  (Math.round(result.accuracy * 100) === 100 && result.orderRatio < 1)) && (
                   <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
                     Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
                   </div>
