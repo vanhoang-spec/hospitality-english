@@ -337,6 +337,34 @@ export const FO_WEEK_17: WeekContent = {
             },
           ],
         },
+        // Round two of this lesson, built on the two cards round one never
+        // says: `Booking reference` and `Check-in form`. Both wrong bubbles
+        // are polite, idiomatic English — the only thing separating them from
+        // the answer is the voucher's own note, "Do not charge the room again.
+        // Take the deposit only.", and the desk's rule that a reference
+        // number finds a booking faster and more exactly than a surname does.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu thu tiền phòng lần nữa — phiếu đặt phòng ghi rõ khách đã thanh toán online, quầy chỉ lấy tiền cọc. Câu kia tra bằng họ và bỏ luôn tờ khai: mã đặt phòng tra nhanh và chính xác hơn tên, còn tờ khai thì vẫn phải có chữ ký.",
+          prompt: "I booked through an online site and paid there already.",
+          options: [
+            {
+              text: "May I take the room payment now, sir? Then the form.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "I will search by your surname, sir. No form is needed.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "May I have your booking reference, sir? Then the check-in form.",
+              correct: true,
+              kind: "answer",
+            },
+          ],
+        },
       ],
     },
     {
@@ -437,11 +465,15 @@ export const FO_WEEK_17: WeekContent = {
               '"All international guests must show their original passport at check-in."',
           },
           {
-            q: "Lễ tân phải tải bản scan hộ chiếu lên khi nào?",
-            options: ["Next morning", "Before 11:00 PM", "After check-out"],
-            correct: 1,
+            q: "Khách nhận phòng lúc 10 giờ 40 tối. Lễ tân phải làm xong hai việc nào, và khi nào?",
+            options: [
+              "Upload the scan tonight, and return the passport in the morning",
+              "Upload the scan tomorrow, and return the passport after that",
+              "Upload the scan before eleven, and return the passport at once",
+            ],
+            correct: 2,
             explanation:
-              '"The receptionist must scan the identity page and upload it to the local immigration portal before 11:00 PM."',
+              'Hai câu giữa của SOP đặt ra hai mốc khác nhau: "upload it to the local immigration portal before 11:00 PM" và "Return the passport to the guest as soon as the scan is done." Một mốc là của cổng đăng ký lưu trú, mốc kia là của khách — và mốc của khách không phải cuối ca.',
           },
         ],
       },
@@ -467,6 +499,33 @@ export const FO_WEEK_17: WeekContent = {
             },
             {
               text: "We must keep your passport until you leave the hotel.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
+        // Round two, on the two cards round one never says: `Passport scan`
+        // and `Mandatory`. Neither wrong bubble is rude and neither is broken
+        // English; each one breaks a different line of the SOP the lesson
+        // prints — "Never keep a passport at the desk overnight" and "upload
+        // it to the local immigration portal before 11:00 PM".
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu nhận giữ hộ chiếu ở quầy — SOP cấm để hộ chiếu qua đêm ở quầy và buộc trả ngay sau khi quét xong. Câu kia hẹn đăng ký sang hôm sau, trong khi bản scan phải tải lên cổng xuất nhập cảnh trước 11 giờ đêm.",
+          prompt: "Just keep my passport at the desk until we leave.",
+          options: [
+            {
+              text: "Of course, madam. We will hold it safely at the desk here.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "We only keep it for the passport scan, madam. That is mandatory.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Then I will register you tomorrow, madam, once the queue clears.",
               correct: false,
               kind: "register",
             },
@@ -773,10 +832,15 @@ export const FO_WEEK_17: WeekContent = {
             explanation: '"- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00."',
           },
           {
-            q: "Buffet sáng đóng lúc mấy giờ?",
-            options: ["9:00 AM", "10:00 AM", "11:00 AM"],
-            correct: 1,
-            explanation: '"- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00."',
+            q: "Khách hỏi về trả phòng muộn và xe ra sân bay. Tấm thiệp chỉ khách tới đâu?",
+            options: [
+              "To housekeeping for the room, and to a driver for the car",
+              "To the desk for the car, and to the lift for the room",
+              "To the front desk, which settles both of them",
+            ],
+            correct: 2,
+            explanation:
+              'Hai dòng cuối tấm thiệp cùng chỉ về một chỗ: "Late check-out: ask at the front desk. The desk confirms it, not housekeeping." và "Airport car: book at the desk at least 3 hours before your flight."',
           },
         ],
       },
@@ -807,6 +871,32 @@ export const FO_WEEK_17: WeekContent = {
               text: "Breakfast is over there, sir, so please just go along whenever you like.",
               correct: false,
               kind: "register",
+            },
+          ],
+        },
+        // Round two, on `Late check-out` — the card round one never says. The
+        // welcome card decides both wrong bubbles: "The desk confirms it, not
+        // housekeeping", and a late check-out depends on that day's departures,
+        // so it is noted and never promised.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu nhờ buồng phòng giữ phòng — tấm thiệp đón khách viết rõ quầy lễ tân mới là nơi xác nhận trả phòng muộn. Câu kia hứa chắc ngày thứ Sáu, trong khi trả phòng muộn phụ thuộc số phòng trống hôm đó: ghi nhận thì được, hứa thì không.",
+          prompt: "Can you promise us a late check-out on Friday?",
+          options: [
+            {
+              text: "Yes, sir. I will ask housekeeping to hold the room for you.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Of course, sir. Your late check-out is confirmed for Friday morning.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "I will note it, sir. The front desk confirms a late check-out.",
+              correct: true,
+              kind: "answer",
             },
           ],
         },
@@ -965,6 +1055,34 @@ export const FB_WEEK_15: WeekContent = {
             },
           ],
         },
+        // Round two, on `Entrance` and `Verify` — two cards round one never
+        // says. Both wrong bubbles are warm, correct English. One seats the
+        // guest and checks afterwards, when nobody can be charged any more;
+        // the other turns a guest away at the door, which the in-house list
+        // forbids in as many words: "offer the breakfast price, never refuse
+        // at the door".
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu mời khách vào ngồi rồi mới kiểm — kiểm số phòng là bước TRƯỚC khi ngồi, vì ngồi xuống rồi thì không ai tính tiền được nữa. Câu kia từ chối ngay ở cửa, trong khi danh sách ghi rõ: khách không có trong danh sách vẫn ăn được, chỉ cần mời xem giá bữa sáng.",
+          prompt: "Can we just walk in and sit down somewhere quiet?",
+          options: [
+            {
+              text: "Please go in and sit down, sir. I will verify it later.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "May I verify your room number at the entrance, sir?",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "I am afraid not, sir. You are not on our list today.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
       ],
     },
     {
@@ -1054,10 +1172,15 @@ export const FB_WEEK_15: WeekContent = {
         text: "STAFF MEMO - PEAK HOUR SEATING\nBetween 8:00 - 9:30 AM, all tables are usually full.\nStaff must offer a waiting area near the entrance and inform guests of the approximate waiting time.\nDo not let guests stand near the buffet line.\nGive the wait in minutes, not 'soon'. Offer coffee or tea while the guest waits.",
         questions: [
           {
-            q: "Khung giờ nào nhà hàng thường kín bàn?",
-            options: ["6:00 - 7:00 AM", "8:00 - 9:30 AM", "10:00 - 11:00 AM"],
-            correct: 1,
-            explanation: '"Between 8:00 - 9:30 AM, all tables are usually full."',
+            q: "Bàn còn khoảng mười phút nữa mới trống. Nhân viên nói gì và mời gì với khách đang chờ?",
+            options: [
+              "Say a table will be free very soon, and then walk away",
+              "Send them to wait standing beside the buffet line instead",
+              "Give the wait in minutes, and offer coffee or tea",
+            ],
+            correct: 2,
+            explanation:
+              'Hai câu cuối của bản ghi nhớ là một cặp: "Give the wait in minutes" và "Offer coffee or tea while the guest waits." Một mốc phút cho khách biết phải chờ bao lâu; ly cà phê làm mười phút đó trôi đi.',
           },
           {
             q: "Nên mời khách đang chờ sang đâu?",
@@ -1099,6 +1222,33 @@ export const FB_WEEK_15: WeekContent = {
               text: "I don't know, sir. Just stand over there until a table opens up.",
               correct: false,
               kind: "register",
+            },
+          ],
+        },
+        // Round two, on `Peak hours` — the card round one never says. All
+        // three bubbles open with the same five words on purpose: the topic,
+        // the register and the grammar are identical, so the only thing left
+        // to choose on is the staff memo. It says give the wait in minutes,
+        // and it says do not let guests stand near the buffet line.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự, và cả ba câu mở đầu giống hệt nhau. Một câu nói không biết phải chờ bao lâu — bản ghi nhớ buộc báo thời gian chờ bằng số phút, chờ có mốc thì khách chấp nhận được. Câu kia mời khách đứng cạnh quầy buffet, đúng chỗ bản ghi nhớ cấm để khách đứng.",
+          prompt: "Why is there a line? We arrived right at eight.",
+          options: [
+            {
+              text: "These are peak hours, sir. I cannot say how long.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "These are peak hours, sir. Please wait beside our buffet line instead.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "These are peak hours, sir. A table will be free in ten minutes.",
+              correct: true,
+              kind: "answer",
             },
           ],
         },
@@ -1251,6 +1401,35 @@ export const FB_WEEK_15: WeekContent = {
             },
           ],
         },
+        // Round two, on `Repeat the order` — the card round one never says.
+        // The station map orders the steps: take the order, repeat it back,
+        // then send it to the station chef; and beside it, "Allergy
+        // questions: ask the station chef. Never guess an ingredient." One
+        // wrong bubble guesses, the other skips the repeat-back — which for
+        // an allergy is the only step standing between the guest and a plate
+        // they cannot eat.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu tự khẳng định món không có nấm — sơ đồ quầy viết rõ: hỏi bếp tại quầy, không bao giờ đoán thành phần. Câu kia chuyển đơn thẳng xuống bếp và bỏ mất bước nhắc lại; với khách dị ứng, nhắc lại là bước chặn sai món duy nhất còn lại.",
+          prompt: "Two omelettes, no mushrooms — one of us is allergic.",
+          options: [
+            {
+              text: "Two omelettes with no mushrooms, madam. There are none inside.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Let me repeat the order, then ask the station chef.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "I will send the order straight down to the chef, madam.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
       ],
     },
     {
@@ -1395,6 +1574,34 @@ export const FB_WEEK_15: WeekContent = {
               text: "Okay, goodbye, madam. Please leave the table when you are ready.",
               correct: false,
               kind: "register",
+            },
+          ],
+        },
+        // Round two, on `To your liking` — the card round one never says. All
+        // three bubbles open with the same four words. The clearing SOP
+        // decides between them twice: never clear a plate while a guest is
+        // still using cutlery on it, and ask "Is everything to your liking?"
+        // at least once DURING the meal — a complaint heard on the way out is
+        // a complaint nobody can still fix.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự, và cả ba câu mở đầu giống hệt nhau. Một câu đòi dọn đĩa giữa bữa — SOP cấm dọn khi khách còn đang dùng dao dĩa. Câu kia hoãn câu hỏi tới lúc khách ăn xong, trong khi SOP buộc hỏi ít nhất một lần TRONG bữa: hỏi lúc khách đã đứng dậy thì không sửa được gì nữa.",
+          prompt: "This is our second plate. The buffet is very good.",
+          options: [
+            {
+              text: "I am glad, sir. May I clear these plates away for you?",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "I am glad, sir. I will ask again when you have finished.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "I am glad, sir. Is everything to your liking this morning?",
+              correct: true,
+              kind: "answer",
             },
           ],
         },
@@ -1551,10 +1758,15 @@ export const HK_WEEK_15: WeekContent = {
             explanation: `"Knock on the door twice and say 'Housekeeping' in a clear voice."`,
           },
           {
-            q: "Sau khi gõ cửa, phải chờ phản hồi bao lâu?",
-            options: ["At least 10 seconds", "1 minute", "No need to wait"],
-            correct: 0,
-            explanation: '"Wait at least 10 seconds for a response."',
+            q: "Khách mở cửa ngay sau tiếng gõ. Nhân viên làm gì tiếp, theo đúng thứ tự?",
+            options: [
+              "Go straight in and start the room, then open the curtains later",
+              "Open the curtains first, then ask whether you may clean",
+              "Greet them, ask permission, then open the curtains inside",
+            ],
+            correct: 2,
+            explanation:
+              'Bước ba và bước bốn nối thẳng vào nhau: "If a guest answers, greet them and politely ask permission to clean the room." và "Inside, open the curtains, then start the room." Xin phép là việc còn đứng NGOÀI cửa; mở rèm là việc đầu tiên khi đã vào.',
           },
         ],
       },
@@ -1584,6 +1796,33 @@ export const HK_WEEK_15: WeekContent = {
               kind: "register",
             },
           ],
+        },
+        // Round two, on `Knock` and `Announce` — cards round one never says.
+        // A colleague's turn, so no honorific belongs in any bubble. The four
+        // steps decide both wrong ones: knock and announce a SECOND time
+        // before entering, and wait at least ten seconds for a response.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp. Một câu mở cửa vào luôn — quy trình bốn bước bắt gõ và xưng danh LẦN HAI trước khi vào, vì lần đầu khách có thể đang ở trong phòng tắm. Câu kia chỉ chờ năm giây, trong khi SOP ghi chờ ít nhất mười giây: mười giây là quãng đủ để một người đang tắm ra tới cửa.",
+          prompt: "Nobody answered in 1102. Can I just use my key?",
+          options: [
+            {
+              text: "Open it quietly, and start the room without waking anyone.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Knock and announce a second time, then enter.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Wait five seconds, then go in and open the curtains.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+          speakerRole: "colleague",
         },
       ],
     },
@@ -1675,10 +1914,15 @@ export const HK_WEEK_15: WeekContent = {
             explanation: '"Items Requested: 2x Bath Towel, 2x Soap"',
           },
           {
-            q: "Yêu cầu đồ dùng phải giao trong bao lâu?",
-            options: ["Within 15 minutes", "Within 1 hour", "Next morning"],
-            correct: 0,
-            explanation: '"Delivery Deadline: Within 15 minutes"',
+            q: "Nhân viên mang khăn tới phòng 812. Khách mở cửa nhưng không mời vào. Nhân viên làm gì?",
+            options: [
+              "Step inside quickly and put the towels on the bathroom rail",
+              "Say Housekeeping, hand the items over, and stay outside",
+              "Leave the towels on the floor just outside the guest's door",
+            ],
+            correct: 1,
+            explanation:
+              'Câu cuối của phiếu là hai câu lệnh nối nhau: "hand the items over at the door" và "Do not enter unless the guest asks." Cửa mở không phải là lời mời vào.',
           },
         ],
       },
@@ -1704,6 +1948,33 @@ export const HK_WEEK_15: WeekContent = {
             },
             {
               text: "Please wait there, sir. I am busy right now with another room.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
+        // Round two, on `Amenities` and `Complimentary` — cards round one
+        // never says. The request form answers the guest's question before he
+        // asks it: "Bottled water is complimentary, no charge to guest." One
+        // wrong bubble invents a charge; the other goes away to look up a
+        // price that is written on the form in the attendant's own hand.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu tính tiền chai nước — phiếu yêu cầu ghi rõ nước suối là đồ miễn phí, không thu của khách. Câu kia hẹn đi hỏi giá rồi gọi lại, bắt khách chờ một con số vốn không tồn tại: thứ mình biết chắc là miễn phí thì trả lời ngay tại cửa.",
+          prompt: "How much will the water and the extra soap cost me?",
+          options: [
+            {
+              text: "Only a small charge for the water, sir, on your room bill.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Nothing at all, sir. Those amenities are complimentary in every room.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "I will check the price for you, sir, and call you back.",
               correct: false,
               kind: "register",
             },
@@ -1793,16 +2064,26 @@ export const HK_WEEK_15: WeekContent = {
         text: "IN-ROOM SERVICE MENU:\nRollaway Bed: 300,000 VND / night (please request 2 hours in advance)\nUniversal Adapter: Complimentary, subject to availability\nIron & Ironing Board: Complimentary, delivered within 20 minutes\nExtra Pillow & Blanket: Complimentary, no advance notice needed\nAny charge goes on the room bill. The Front Desk arranges rollaway beds. Housekeeping staff never take cash.",
         questions: [
           {
-            q: "Giường phụ giá bao nhiêu một đêm?",
-            options: ["Free", "300,000 VND", "500,000 VND"],
-            correct: 1,
-            explanation: '"Rollaway Bed: 300,000 VND / night (please request 2 hours in advance)"',
+            q: "Khách đưa tiền mặt trả giường phụ ngay tại phòng. Nhân viên buồng phòng làm gì?",
+            options: [
+              "Take the cash now and tell the Front Desk about it later",
+              "Take the cash and leave it in the room with the key",
+              "Put the charge on the room bill and take no cash",
+            ],
+            correct: 2,
+            explanation:
+              'Hai câu cuối phải đọc cùng nhau: "Any charge goes on the room bill." và "Housekeeping staff never take cash." Một câu nói tiền đi đâu, câu kia nói tiền không đi qua tay ai.',
           },
           {
-            q: "Khách cần báo trước bao lâu để xin giường phụ?",
-            options: ["2 hours", "1 day", "No need to request"],
-            correct: 0,
-            explanation: '"Rollaway Bed: 300,000 VND / night (please request 2 hours in advance)"',
+            q: "Khách xin thêm giường phụ. Vì sao nhân viên buồng phòng không tự nhận lời ngay được?",
+            options: [
+              "Housekeeping has no rollaway bed left in the store room",
+              "A rollaway bed is only allowed for a child under twelve",
+              "The front desk arranges it, and it needs notice first",
+            ],
+            correct: 2,
+            explanation:
+              'Ghép dòng giường phụ với câu quy trình: "please request 2 hours in advance" và "The Front Desk arranges rollaway beds." Buồng phòng nhận lời hộ lễ tân là hứa thay người khác.',
           },
         ],
       },
@@ -1836,6 +2117,32 @@ export const HK_WEEK_15: WeekContent = {
               text: "We do not have any extra beds at all tonight, sir.",
               correct: false,
               kind: "register",
+            },
+          ],
+        },
+        // Round two, on `Adapter` and `Extra charge` — cards round one never
+        // says. The in-room service menu settles both wrong bubbles in one
+        // line each: the adapter is complimentary, and "Housekeeping staff
+        // never take cash." Taking the note politely is still taking it.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu nhận tiền của khách — bảng dịch vụ trong phòng ghi rõ nhân viên buồng phòng không bao giờ cầm tiền mặt, mọi khoản đều vào hoá đơn phòng. Câu kia đặt ra phụ phí cho bộ chuyển điện, trong khi bảng ghi đó là đồ miễn phí.",
+          prompt: "Here is some cash for the adapter. Keep the change.",
+          options: [
+            {
+              text: "There is a small extra charge, madam, for the adapter.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "That is very kind, madam. I will bring the adapter up now.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "The adapter has no extra charge, madam. We take no cash.",
+              correct: true,
+              kind: "answer",
             },
           ],
         },
@@ -1959,11 +2266,15 @@ export const HK_WEEK_15: WeekContent = {
         text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- If there is still no answer, tell the floor supervisor. The supervisor and Security check that the guest is well.\n- Never remove the DND sign or enter without guest confirmation.\n- Update the status of every room you pass, cleaned or not.",
         questions: [
           {
-            q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
-            options: ["Past 2:00 PM", "Past 6:00 PM", "Immediately in the morning"],
-            correct: 0,
+            q: "Hết ca mà phòng 1005 vẫn treo DND và chưa dọn được. Nhân viên còn phải làm gì?",
+            options: [
+              "Leave its status blank, because nobody entered the room",
+              "Mark it cleaned so the next shift will not open it again",
+              "Call the room first, then set its status to not cleaned",
+            ],
+            correct: 2,
             explanation:
-              '"- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest."',
+              'Dòng đầu và dòng cuối của quy trình nói về cùng một phòng: "If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest." và "Update the status of every room you pass, cleaned or not." Không dọn được vẫn là một trạng thái phải ghi.',
           },
           {
             q: "Nếu gọi điện không ai bắt máy, nhân viên phải làm gì?",
@@ -2010,6 +2321,34 @@ export const HK_WEEK_15: WeekContent = {
               kind: "register",
             },
           ],
+        },
+        // Round two, on `Voicemail` and `Slip a note` — cards round one never
+        // says. A colleague's turn, so no honorific belongs in any bubble.
+        // The DND procedure decides both wrong ones: never remove the sign or
+        // enter without guest confirmation, and update the status of every
+        // room you pass, cleaned or NOT.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp. Một câu gỡ biển DND xuống rồi vào dọn — quy trình cấm gỡ biển và cấm vào phòng khi khách chưa xác nhận. Câu kia ghi phòng đã dọn cho xong việc, trong khi quy trình buộc cập nhật trạng thái THẬT của mọi phòng đi qua: trạng thái sai là ca sau mở nhầm cửa.",
+          prompt: "It is half past three and 1005 is still silent.",
+          options: [
+            {
+              text: "Take the sign down and service the room before the shift ends.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Leave a voicemail, slip a note, tell the supervisor.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Leave it until tomorrow, and mark the room as cleaned.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+          speakerRole: "colleague",
         },
       ],
     },
@@ -4616,10 +4955,15 @@ export const SW_WEEK_19: WeekContent = {
             explanation: '"Lockers: Complimentary, use your room key card"',
           },
           {
-            q: "Cần đặt chòi riêng trước bao lâu?",
-            options: ["Ít nhất 30 phút", "Ít nhất 2 tiếng", "Trước trọn một ngày"],
-            correct: 1,
-            explanation: '"Private Cabanas: Reserve at least 2 hours in advance at the Pool Bar"',
+            q: "Khách làm mất thẻ chìa khoá ngay tại khu hồ bơi. Hệ quả là gì và khách phải làm gì?",
+            options: [
+              "Vẫn mở được tủ khoá, chỉ cần báo lại lúc rời khu hồ bơi",
+              "Phải trả phí mở lại tủ khoá rồi tự lên quầy lễ tân xin thẻ mới",
+              "Không mở được tủ khoá nữa, phải báo ngay nhân viên hồ bơi",
+            ],
+            correct: 2,
+            explanation:
+              'Hai dòng của tấm hướng dẫn nói về cùng một tấm thẻ: "Lockers: Complimentary, use your room key card" và "Lost your key card? Please inform any pool attendant immediately." Mất thẻ là mất luôn cái mở tủ, nên việc báo không chờ được.',
           },
         ],
       },
@@ -4651,6 +4995,33 @@ export const SW_WEEK_19: WeekContent = {
             },
             {
               text: "I'm not sure, madam. Please ask another member of staff about that.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
+        // Round two, on `Key card` and `Locker` — cards round one never says.
+        // The pool guide decides both wrong bubbles: the locker opens with
+        // that card and nothing else, and a lost card is reported to a pool
+        // attendant IMMEDIATELY — which is the person the guest is already
+        // standing in front of.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu bảo tủ khoá vẫn mở được mà không cần thẻ — tấm hướng dẫn ghi rõ tủ khoá mở bằng chính thẻ phòng. Câu kia hẹn tới lúc khách rời hồ bơi, trong khi hướng dẫn viết mất thẻ thì báo NGAY cho nhân viên hồ bơi, và bạn chính là người đó.",
+          prompt: "I cannot find my key card anywhere. What do I do?",
+          options: [
+            {
+              text: "Please look again, madam. The locker opens without the card.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Your key card opens the locker, madam. I will report it now.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Please tell the front desk when you leave, madam, later on.",
               correct: false,
               kind: "register",
             },
@@ -4801,6 +5172,32 @@ export const SW_WEEK_19: WeekContent = {
             },
           ],
         },
+        // Round two, on `Policy` and `Supervise` — cards round one never
+        // says. House rule 1 is "at all times", and both wrong bubbles find a
+        // way around it that sounds reasonable: the lifeguard is on duty, and
+        // the boy can swim. Neither is what the rule turns on, which is age.
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu giao cháu bé cho nhân viên cứu hộ — nội quy viết trẻ dưới 12 phải có NGƯỜI LỚN đi kèm mọi lúc, còn cứu hộ trông cả hồ chứ không trông riêng một cháu. Câu kia lấy việc cháu biết bơi thay cho quy định: quy định tính theo tuổi, không tính theo tay nghề.",
+          prompt: "The lifeguard is here, so my son can swim alone.",
+          options: [
+            {
+              text: "Yes, madam. Our lifeguard watches every child in the water.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Of course, madam. He may swim alone if he swims well.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Our policy still asks you to supervise your child, madam.",
+              correct: true,
+              kind: "answer",
+            },
+          ],
+        },
       ],
     },
     {
@@ -4948,6 +5345,32 @@ export const SW_WEEK_19: WeekContent = {
             },
           ],
         },
+        // Round two, on `Current` and `Not available` — cards round one never
+        // says. The bulletin closes both doors the wrong bubbles open: guests
+        // are to avoid the shoreline and attendants keep them out of the sea,
+        // and "Never say the weather looks fine."
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu cho khách lội ở mép nước — bản tin dặn khách tránh hẳn mép nước và nhân viên giữ khách khỏi biển, vì dòng chảy mạnh nhất nằm đúng ở đó. Câu kia khen thời tiết đẹp, đúng câu bản tin cấm nói: cờ đỏ không phải nhận xét của bạn về trời.",
+          prompt: "We will just paddle at the edge, not swim properly.",
+          options: [
+            {
+              text: "The edge is fine, sir. Only deep swimming is prohibited today.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "The current is strong there, sir. The sea is not available.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "As you wish, sir. The weather does look fine this afternoon.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+        },
       ],
     },
     {
@@ -5064,10 +5487,15 @@ export const SW_WEEK_19: WeekContent = {
             explanation: '"Action: Move guest to shade, offer water, loosen tight clothing"',
           },
           {
-            q: "Ca nặng thì gọi số máy lẻ nào?",
-            options: ["Ext. 100", "Ext. 115", "Ext. 911"],
-            correct: 1,
-            explanation: '"Always call the on-duty nurse for serious cases: Ext. 115"',
+            q: "Khách say nắng xin một viên thuốc giảm đau trong hộp sơ cứu. Nhân viên làm gì?",
+            options: [
+              "Đưa một viên thuốc rồi ngồi lại chờ y tá tới cùng khách",
+              "Đưa khách về phòng nghỉ và dặn khách tự gọi cho y tá trực",
+              "Không đưa thuốc, gọi y tá trực và ở lại bên khách",
+            ],
+            correct: 2,
+            explanation:
+              'Hai dòng cuối là một mệnh lệnh kép: "Always call the on-duty nurse for serious cases" và "Never give the guest medicine yourself. Stay with the guest until the nurse arrives." Không đưa thuốc, và cũng không bỏ khách lại một mình.',
           },
         ],
       },
@@ -5103,6 +5531,34 @@ export const SW_WEEK_19: WeekContent = {
               kind: "register",
             },
           ],
+        },
+        // Round two, on `Heat exhaustion` and `Dizzy` — cards round one never
+        // says. A colleague's turn, so no honorific belongs in any bubble.
+        // The quick guide ends with the two rules both wrong bubbles break:
+        // "Never give the guest medicine yourself. Stay with the guest until
+        // the nurse arrives."
+        {
+          explanation:
+            "Hai phương án sai đều đúng ngữ pháp. Một câu lấy thuốc trong hộp sơ cứu đưa cho khách — cẩm nang cấm tự đưa thuốc, vì bạn không biết khách đang dùng thuốc gì. Câu kia dẫn khách về phòng rồi quay lại làm việc, trong khi cẩm nang buộc ở LẠI với khách cho tới khi y tá tới.",
+          prompt: "The guest in cabana two is dizzy and sweating a lot.",
+          options: [
+            {
+              text: "Give her a tablet from the kit, and she will be fine.",
+              correct: false,
+              kind: "register",
+            },
+            {
+              text: "Those are heat exhaustion signs. Stay with her and call the nurse.",
+              correct: true,
+              kind: "answer",
+            },
+            {
+              text: "Walk her back to her room, then finish the towel round.",
+              correct: false,
+              kind: "register",
+            },
+          ],
+          speakerRole: "colleague",
         },
       ],
     },
@@ -26263,11 +26719,50 @@ for (const built of Object.values(REGISTRY))
   // Headwords per department AND week, because the claim a label makes is
   // about one specific week: "Ôn tuần 15" is only true if the sentence carries
   // something week 15 actually taught this department.
-  const cardsOf = new Map<string, string[]>();
+  //
+  // THREE LETTERS IS A HEADWORD TOO. The filter used to be `length > 3`, which
+  // silenced every short card in the course: `Ago` (FO-21, SW-21), `VAT`
+  // (FB-18), `ETA` (FO-17), `Gym` (SW-8), `Wet` and `Dry` (HK-10), `Pay`
+  // (BO-11). A sentence built on one of those could never confirm anything,
+  // so seven labels that were true — the learner HAD met the word, in exactly
+  // the week named — were stripped as lies. Two of them were patched by
+  // pushing a longer card into the sentence, which fixes the sentence and
+  // leaves the hole.
+  //
+  // The filter is what made a substring test safe, so lowering it means the
+  // test cannot stay a substring one: `vat` sits inside "private", `ago`
+  // inside "Agoda", `eta` inside "retail". A card now has to appear as a
+  // WORD RUN in the sentence, which is what "the sentence carries this card"
+  // meant all along — multi-word cards included, so "check in" still matches
+  // "check in" and still does not match "checking".
+  //
+  // With one allowance the substring test used to give away free, and which
+  // costs five true labels to withdraw: a sentence may pluralise the card it
+  // carries. "Yes. We have umbrellas, madam." carries the week-9 card
+  // `Umbrella` and "I will bring two bath towels right away, madam." carries
+  // the week-15 card `Bath towel`. Only the LAST word of a card takes the
+  // plural, because that is the word a phrase pluralises.
+  const cardsOf = new Map<string, string[][]>();
   for (const [key, wk] of Object.entries(REGISTRY))
     cardsOf.set(
       key,
-      wk.lessons.flatMap((l) => l.vocabulary.map((v) => norm(v.word))).filter((w) => w.length > 3),
+      wk.lessons
+        .flatMap((l) => l.vocabulary.map((v) => norm(v.word)))
+        .filter((w) => w.length > 2)
+        .map((w) => w.split(" ").filter(Boolean)),
+    );
+  const spokenWords = (said: string) => norm(said).split(" ").filter(Boolean);
+  /** The one question every claim reduces to: did THIS department's week `w`
+   *  print a card that the sentence in front of the learner actually carries? */
+  const weekIsCarried = (dep: string, w: string, spoken: string[]) =>
+    (cardsOf.get(`${dep}-${w}`) ?? []).some((card) =>
+      spoken.some((_, i) =>
+        card.every((part, k) => {
+          const word = spoken[i + k];
+          if (word === part) return true;
+          return k === card.length - 1 && (word === `${part}s` || word === `${part}es`);
+        }),
+      ),
     );
   const LABEL = /^Ôn tuần ([0-9]+)(?: và ([0-9]+))?( — cách [a-zà-ỹ ]+)?: /;
   /** `text` with its review label made true about `said`: left alone when
@@ -26279,28 +26774,50 @@ for (const built of Object.values(REGISTRY))
   const truthfulLabel = (text: string, said: string, dep: string) => {
     const m = LABEL.exec(text);
     if (!m) return text;
-    const spoken = norm(said);
+    const spoken = spokenWords(said);
     const weeks = [m[1], m[2]].filter(Boolean) as string[];
-    const kept = weeks.filter((w) =>
-      (cardsOf.get(`${dep}-${w}`) ?? []).some((card) => spoken.includes(card)),
-    );
+    const kept = weeks.filter((w) => weekIsCarried(dep, w, spoken));
     if (kept.length === weeks.length) return text;
     const rest = text.slice(m[0].length);
     if (kept.length === 0) return rest.replace(/^./, (c) => c.toUpperCase());
     return `Ôn tuần ${kept.join(" và ")}${m[3] ?? ""}: ${rest}`;
   };
+  // THE SAME CLAIM, MADE IN THE MIDDLE OF A SENTENCE.
+  //
+  // `LABEL` is anchored at `^`, so the pass above only ever saw a claim that
+  // opened its string. "Ghép quy trình (tuần 15) với lời mời (tuần 16)"
+  // asserts two weeks exactly as "Ôn tuần 15 và 16:" does, and the anchor
+  // meant neither of them was ever tested: that tip shipped to F&B and
+  // Housekeeping at twelve render sites naming a week those departments had
+  // not met. The content was fixed by hand; the hole was not, so nothing
+  // stopped the next batch from reopening it.
+  //
+  // A claim is a claim wherever it sits, so every `(tuần N)` now takes the
+  // same test against the same sentence. A false one loses its parenthesis
+  // and not its sentence — "gợi ý (tuần 23) + cam kết thời gian (tuần 25)"
+  // is still sound advice about two functions once the week that was never
+  // taught stops being named. Idempotent: a parenthesis the pass leaves is
+  // one it accepts.
+  const INLINE = /\s*\(tuần ([0-9]+)\)/g;
+  const truthfulInline = (text: string, said: string, dep: string) => {
+    if (!text.includes("(tuần ")) return text;
+    const spoken = spokenWords(said);
+    return text.replace(INLINE, (whole, w: string) => (weekIsCarried(dep, w, spoken) ? whole : ""));
+  };
+  const truthfulClaims = (text: string, said: string, dep: string) =>
+    truthfulInline(truthfulLabel(text, said, dep), said, dep);
   for (const [key, wk] of Object.entries(REGISTRY)) {
     const dep = key.split("-")[0]!;
     for (const lesson of wk.lessons) {
       for (const item of lesson.speaking)
-        item.helpTip = truthfulLabel(item.helpTip, item.targetResponse, dep);
+        item.helpTip = truthfulClaims(item.helpTip, item.targetResponse, dep);
       // Grammar carries the same label and needs it more: `buildPaper` prints
       // `rule` as the answer explanation ON the checkpoint paper, so a week
       // this department never met is asserted where the learner is being
       // graded, not merely where they are being coached. Twenty-three of the
       // thirty-one false labels this pass strips live in grammar, and every
       // one of them was invisible while the loop only read helpTips.
-      for (const g of lesson.grammar) g.rule = truthfulLabel(g.rule, g.polite, dep);
+      for (const g of lesson.grammar) g.rule = truthfulClaims(g.rule, g.polite, dep);
     }
   }
 }

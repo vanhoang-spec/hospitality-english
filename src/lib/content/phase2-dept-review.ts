@@ -784,8 +784,14 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
   ],
   "HK-21": [
+    // askedKey cũ là `sign` — đúng MỘT từ nội dung, vì "is there anything to"
+    // đều là từ chức năng. Dưới ngưỡng hai từ mà acceptedAnswers đòi, nên lượt
+    // này không gom được cụm nào: người học trả lời bằng câu khoá học đã dạy ở
+    // lượt khác cho cùng câu hỏi vẫn bị chấm sai. "before I leave" nâng key lên
+    // `before leave sign` — ba từ nội dung, và mốc thời gian trong lời khách
+    // chính là mốc câu mẫu phải đặt ở cuối, nên nó cũng là đề bài của helpTip.
     sp(
-      "Is there anything to sign?",
+      "Is there anything to sign before I leave?",
       "Please sign the sheet before you leave, madam.",
       "Ôn tuần 18: mệnh lệnh lịch sự trước, mốc thời gian sau.",
     ),

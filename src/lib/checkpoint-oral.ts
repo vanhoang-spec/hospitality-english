@@ -71,31 +71,39 @@ export function oralHalfPassed(results: { item: OralItem; passed: boolean }[]): 
 }
 
 export function buildOral(dep: string, week: string): OralItem[] {
-  const items: OralItem[] = weeksInPhase(week).flatMap((w) => {
+  // Carried beside each item and never exported: which LESSON printed it. A
+  // `follows` is a within-lesson contract (see the resolution below), and the
+  // flattened phase-wide list is the only place that fact is lost.
+  const built = weeksInPhase(week).flatMap((w) => {
     const c = getWeekContent(dep, String(w));
     if (!c) return [];
     return c.lessons.flatMap((l) =>
       l.speaking.map((s) => ({
-        key: `s:${w}:${s.guestPrompt}`,
-        guestPrompt: s.guestPrompt,
-        who: speakerLabel(s),
-        audioWho: speakerAudioLabel(s),
-        target: s.targetResponse,
-        tip: s.helpTip,
-        requiredTokens: s.requiredTokens,
-        follows: s.follows,
-        alternates: acceptedAnswers(
-          dep,
-          week,
-          s.guestPrompt,
-          s.targetResponse,
-          s.requiredTokens,
-          s.speakerRole,
-        ).slice(1),
-        sourceWeek: c.weekNumber,
+        lesson: `${c.weekNumber}/${l.lessonId}`,
+        item: {
+          key: `s:${w}:${s.guestPrompt}`,
+          guestPrompt: s.guestPrompt,
+          who: speakerLabel(s),
+          audioWho: speakerAudioLabel(s),
+          target: s.targetResponse,
+          tip: s.helpTip,
+          requiredTokens: s.requiredTokens,
+          follows: s.follows,
+          alternates: acceptedAnswers(
+            dep,
+            week,
+            s.guestPrompt,
+            s.targetResponse,
+            s.requiredTokens,
+            s.speakerRole,
+          ).slice(1),
+          sourceWeek: c.weekNumber,
+        } as OralItem,
       })),
     );
   });
+  const items: OralItem[] = built.map((b) => b.item);
+  const lessonOf = (i: number) => built[i]!.lesson;
   // One reserved draw, then a flat draw from the whole phase. This used to be
   // stratified one-per-week, which spread topics but not tickets: a sentence in
   // a thin week was drawn several times as often as one in a busy week, and a
@@ -114,14 +122,64 @@ export function buildOral(dep: string, week: string): OralItem[] {
       .replace(/[^a-z ]/g, " ")
       .replace(/ +/g, " ")
       .trim();
-  const headOf = new Map<string, number>();
-  items.forEach((it, i) => headOf.set(it.target, i));
+
+  // A `follows` RESOLVES INSIDE ITS OWN LESSON, and nowhere else.
+  //
+  // The field holds the previous turn's sentence verbatim, so it was matched
+  // against a phase-wide `target -> index` map built by
+  // `items.forEach((it, i) => headOf.set(it.target, i))` — last write wins.
+  // The shared frames print the same model sentence in several lessons, so
+  // whenever a chain's opener was one of those, the link landed on whichever
+  // COPY happened to be flattened last and the real opener was never drawn at
+  // all: four departments' week-15 exchange (FO/SW/GR/BO, the "We…" variant of
+  // the golden frame) was served as lesson 15_4's copy of the opener followed
+  // by lesson 15_1's second turn — two different guest prompts, two different
+  // source weeks, graded at the wrong week's threshold, printed to the learner
+  // as one conversation. Nothing caught it: the strings matched exactly, so
+  // the linter's Layer N (`follows` names a real target in the same lesson)
+  // stayed green, and the chain was still drawn whole, so the draw looked
+  // healthy from every angle except the one that matters.
+  //
+  // The rule is the lesson, not the week and not the phase, because that is
+  // the only scope in which the field means anything: `SpeakingItem.follows`
+  // documents itself as "what the LEARNER said one turn earlier", the derived
+  // pass in week-content.ts writes it from `all[i - 1].targetResponse` inside
+  // one lesson's array, and Layer N already requires a match there. A wider
+  // fallback — same week, then anywhere in the phase — cannot help: any match
+  // outside the lesson is by construction a DUPLICATE sentence rather than a
+  // continuation, so widening the search can only ever reproduce the defect.
+  // So there is no fallback. An ambiguous or unresolvable link is REFUSED, and
+  // the turn that asked for it is struck out of the draw below rather than
+  // served behind the wrong opener or behind no opener at all.
   const nextOf = new Map<number, number>();
   const isTail = new Set<number>();
+  /** A turn whose opener could not be resolved — never drawable. */
+  const unlinkable = new Set<number>();
+  /** The copy of `items[i].follows` printed in i's own lesson: the nearest one
+   *  BEFORE it, since an exchange runs forward. A copy after it is taken only
+   *  when the lesson prints none before — a lesson that answers its own later
+   *  turn is still one exchange, and the alternative is dropping it. */
+  const openerFor = (i: number) => {
+    const want = items[i]!.follows;
+    const lesson = lessonOf(i);
+    let before: number | undefined;
+    let after: number | undefined;
+    for (let j = 0; j < items.length; j++) {
+      if (j === i || items[j]!.target !== want || lessonOf(j) !== lesson) continue;
+      if (j < i) before = j;
+      else if (after === undefined) after = j;
+    }
+    return before ?? after;
+  };
   items.forEach((it, i) => {
     if (!it.follows) return;
-    const prev = headOf.get(it.follows);
-    if (prev === undefined || prev === i || nextOf.has(prev)) return;
+    const prev = openerFor(i);
+    // Two turns claiming the same opener are not one chain, and serving the
+    // second on its own is the orphan this whole block exists to prevent.
+    if (prev === undefined || nextOf.has(prev)) {
+      unlinkable.add(i);
+      return;
+    }
     nextOf.set(prev, i);
     isTail.add(i);
   });
@@ -137,9 +195,32 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // not. Would you prefer another option?" in 21-28% of every department's,
   // and memorising the sixty most frequent sentences passed the oral half
   // 62-74% of the time. The kept copy is the one a chain links to.
-  const heads = items
-    .map((_, i) => i)
-    .filter((i) => !isTail.has(i) && headOf.get(items[i].target) === i);
+  //
+  // WHICH copy holds the ticket used to be "the last one flattened", which was
+  // arbitrary and was also — through the same `headOf` map — what decided the
+  // chain link. Now that a chain resolves inside its lesson, the two decisions
+  // have to be made in that order or the fix eats itself: name the ticket by
+  // position and the week-15 opener above (lesson 15_1) loses it to lesson
+  // 15_4's copy, the opener drops out of the draw, its tail is already marked
+  // `isTail` — and the exchange the fix exists to repair becomes undrawable.
+  // So the ticket goes to the copy that OPENS an exchange, and only otherwise
+  // to the last copy exactly as before. Still one ticket per sentence: the
+  // opener's ticket replaces the plain copy's, it does not join it.
+  //
+  // Two copies that each open a DIFFERENT exchange both keep a ticket, since
+  // the alternative is deleting a taught conversation to save a duplicate. No
+  // department has one today; Layer P in scripts/lint-content.ts is what keeps
+  // it that way.
+  const kept = new Set<number>();
+  const lastPlain = new Map<string, number>();
+  items.forEach((it, i) => {
+    if (isTail.has(i) || unlinkable.has(i)) return;
+    if (nextOf.has(i)) kept.add(i);
+    else lastPlain.set(it.target, i);
+  });
+  const opened = new Set([...kept].map((i) => items[i]!.target));
+  for (const [target, i] of lastPlain) if (!opened.has(target)) kept.add(i);
+  const heads = [...kept].sort((a, b) => a - b);
   // A guest line the phase answers two different ways is not an oral item.
   // The model is hidden at the exam, so the learner cannot know which of the
   // two taught answers this paper holds, and the other one fails: 9.2% of

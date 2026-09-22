@@ -1854,6 +1854,112 @@ function lintFollowsChain() {
   }
 }
 
+// ── Layer P · `follows` phải là DUY NHẤT trong bể câu đích của phase ──────
+// Layer N chỉ hỏi "chuỗi này có tồn tại trong bài không". Câu trả lời "có" vẫn
+// để lọt trường hợp nguy hiểm hơn: chuỗi tồn tại trong bài NÀY *và* trong một
+// bài khác của cùng bộ phận, cùng phase. buildOral dàn phẳng cả phase thành
+// một mảng rồi nối `follows` bằng so chuỗi, nên một câu đích in ở hai bài là
+// một mắt xích nhập nhằng — nối vào bản nào là chuyện của thứ tự dàn phẳng,
+// không phải của nội dung. Đã đo: bốn bộ phận (FO/SW/GR/BO) có lượt hai của
+// hội thoại tuần 15 bài 1 được phục vụ sau câu mở LẤY TỪ BÀI 4 — hai lời
+// khách khác nhau, hai tuần nguồn khác nhau, in ra cho học viên như một cuộc
+// hội thoại. Không lớp nào thấy vì hai chuỗi khớp nhau TUYỆT ĐỐI.
+//
+// "Bể câu đích" ở đây là MỌI BẢN IN của bộ phận trong phase, kể cả hai bản
+// nằm trong cùng một bài: đúng bốn ca trên, bài 15_1 in lại câu mở của chính
+// nó ở vị trí 4, nên đếm theo bài sẽ báo "một bài, không nhập nhằng" trong
+// khi mắt xích vẫn phải chọn giữa hai bản.
+//
+// buildOral nay giải `follows` trong phạm vi BÀI, nên triệu chứng đã hết. Lớp
+// này chặn nguyên nhân: còn nhập nhằng thì một lần sửa câu mẫu ở bài kia là
+// đủ để mắt xích im lặng đổi nghĩa lần nữa. Ratchet vì corpus hiện đang có
+// sẵn vi phạm và nội dung không thuộc quyền sửa của cổng này — giá trị của nó
+// là chặn cái MỚI.
+const FOLLOWS_BASELINE = new URL("./_follows-ambiguity-baseline.json", import.meta.url);
+
+/** Mỗi lượt có `follows` mà chuỗi đó trùng NHIỀU HƠN MỘT câu đích trong bể của
+ *  cùng bộ phận × phase. Đếm BẢN IN chứ không đếm bài: FO_15_1 in
+ *  "First we greet the guest, then we check the profile." ở cả vị trí 2 lẫn vị
+ *  trí 4 của chính nó, nên đếm theo bài sẽ nói bài ấy "chỉ có một bản" trong
+ *  khi mắt xích vẫn phải chọn giữa hai. Một dòng = một mắt xích cần sửa. */
+function ambiguousFollowsLinks(): string[] {
+  /** dep|phase -> (targetResponse -> mọi vị trí in ra nó) */
+  const printedAt = new Map<string, Map<string, string[]>>();
+  const slot = (key: string, lessonId: string, i: number) => `${key}/${lessonId}#${i}`;
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const scope = `${key.split("-")[0]}|${phaseOfWeek(week.weekNumber)}`;
+    if (!printedAt.has(scope)) printedAt.set(scope, new Map());
+    const byTarget = printedAt.get(scope)!;
+    for (const lesson of week.lessons)
+      lesson.speaking.forEach((item, i) => {
+        if (!byTarget.has(item.targetResponse)) byTarget.set(item.targetResponse, []);
+        byTarget.get(item.targetResponse)!.push(slot(key, lesson.lessonId, i));
+      });
+  }
+  const out: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    const dep = key.split("-")[0];
+    const phase = phaseOfWeek(week.weekNumber);
+    const byTarget = printedAt.get(`${dep}|${phase}`)!;
+    for (const lesson of week.lessons)
+      lesson.speaking.forEach((item, i) => {
+        if (!item.follows) return;
+        const copies = byTarget.get(item.follows) ?? [];
+        if (copies.length <= 1) return;
+        out.push(
+          `${dep} ${phase} ${slot(key, lesson.lessonId, i)} · follows "${item.follows}" ` +
+            `— ${copies.length} bản: ${copies.join(", ")}`,
+        );
+      });
+  }
+  return out.sort();
+}
+
+async function lintFollowsAmbiguity() {
+  const offenders = ambiguousFollowsLinks();
+  const file = Bun.file(FOLLOWS_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).ambiguousLinks as number)
+    : offenders.length;
+  const write = (n: number) =>
+    Bun.write(
+      FOLLOWS_BASELINE,
+      JSON.stringify(
+        {
+          ambiguousLinks: n,
+          note: "Ratchet only — một `follows` khớp NHIỀU HƠN MỘT bản in câu đích trong cùng bộ phận × phase là mắt xích nhập nhằng: buildOral dàn phẳng cả phase, nên bản nào được nối là chuyện thứ tự chứ không phải nội dung. Đếm bản in, kể cả hai bản trong cùng một bài.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+
+  if (!known) {
+    await write(offenders.length);
+    console.log(`  Ambiguous \`follows\` links: baseline recorded at ${offenders.length}.`);
+    offenders.forEach((o) => console.log(`    · ${o}`));
+    return;
+  }
+  if (offenders.length > baseline) {
+    errors.push(
+      `[P follows-ambiguity] ${offenders.length} mắt xích \`follows\` nhập nhằng, tăng từ ${baseline}. ` +
+        `Mới nhất: ${offenders.slice(-3).join(" · ")}`,
+    );
+    return;
+  }
+  if (offenders.length < baseline) {
+    await write(offenders.length);
+    console.log(
+      `  Ambiguous \`follows\` links: ${offenders.length}, down from ${baseline} — baseline lowered.`,
+    );
+    offenders.forEach((o) => console.log(`    · ${o}`));
+    return;
+  }
+  console.log(`  Ambiguous \`follows\` links: ${offenders.length} (ratchet holds).`);
+  offenders.forEach((o) => console.log(`    · ${o}`));
+}
+
 // ── Layer O · phiên âm phải khớp chính headword của thẻ ───────────────────
 // Đổi tên một giá trị ngân hàng là sửa MỘT trường trong ba. Ba mươi tám thẻ
 // Phase 2 đã ship với phiên âm và nghĩa của từ CŨ: thẻ "Garden seat" đọc
@@ -2062,6 +2168,7 @@ await lintAnswerPositionSkew();
 lintReviewWordOrder();
 lintColleagueHonorific();
 lintFollowsChain();
+await lintFollowsAmbiguity();
 lintPhoneticMatchesWord();
 await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
