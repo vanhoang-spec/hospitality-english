@@ -14,6 +14,7 @@ import { speakerLabel } from "@/lib/content/week-content";
 import { dedupeTranscript, speakEN } from "@/lib/speech";
 import { utterancePassedAny } from "@/lib/speaking-score";
 import { acceptedAnswers } from "@/lib/speaking-alternates";
+import { useScopedAttemptLogger } from "@/lib/telemetry";
 
 export const Route = createFileRoute("/review")({
   head: () => ({ meta: [{ title: "Ôn tập hằng ngày — Embassy Hospitality" }] }),
@@ -103,11 +104,23 @@ function ReviewSession({
   const [correctCount, setCorrectCount] = useState(0);
   const [done, setDone] = useState(false);
   const finishedRef = useRef(false);
+  const logAttempt = useScopedAttemptLogger();
 
   const item = sessionItems[idx];
 
   function handleResult(correct: boolean) {
     setAnswered(correct);
+    // The review session is where spacing is actually tested, so HR's
+    // "did they keep up with the review?" column needs these events too.
+    logAttempt(
+      {
+        dep: item.row.department_id,
+        week: item.row.week_number,
+        suite: "review",
+      },
+      item.row.item_key,
+      correct,
+    );
     if (correct) {
       setCorrectCount((c) => c + 1);
       awardStars(1);

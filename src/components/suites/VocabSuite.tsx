@@ -10,6 +10,7 @@ import {
   phaseOfWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Term = { en: string; ipa: string; vi: string; usage: string; icon?: string };
@@ -162,6 +163,11 @@ function VocabSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  // Per-item events, so a report can say how long this took and how often
+  // the answer was right first time — neither is knowable from the single
+  // overwritten lesson_progress row.
+  const logAttempt = useAttemptLogger({ dep, week, suite: "vocab" });
+  useStudySession({ dep, week, suite: "vocab" });
   // Rises with the phase — a flat 80 was unreachable at pre-A1.
   const MASTERY_PCT = suiteMasteryPct(week);
   const terms: Term[] = content.lessons.flatMap((l) =>
@@ -236,6 +242,7 @@ function VocabSuiteInner({
       ok = dictationMatches(typed, q.word, week);
     }
     setAnswered(ok);
+    logAttempt(q.key, ok);
     if (ok) {
       setCorrectCount((c) => c + 1);
       creditIfFirst(q.key, 1);

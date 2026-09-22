@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { suiteMasteryPct } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Passage = {
@@ -72,6 +73,8 @@ function ReadingSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep: dep ?? "", week: week ?? 1, suite: "reading" });
+  useStudySession({ dep: dep ?? "", week: week ?? 1, suite: "reading" });
   const earned = useRef(0);
   const awardedPassageRef = useRef(-1);
   // Best percentage per passage — suite mastery requires >= 80% on every
@@ -106,6 +109,9 @@ function ReadingSuiteInner({
 
   function submit() {
     setSubmitted(true);
+    passage.questions.forEach((q, i) => {
+      logAttempt(`reading:${dep}:${week}:${q.q}`, picks[i] === shuffleOptions(q).correct);
+    });
     if (score >= Math.ceil(total / 2) && awardedPassageRef.current !== pIdx) {
       awardedPassageRef.current = pIdx;
       const gained = score * 2;

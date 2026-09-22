@@ -4,6 +4,7 @@ import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Puzzle = { bad: string; target: string; chips: string[]; rule?: string; near?: string };
@@ -67,6 +68,8 @@ function GrammarSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep, week, suite: "grammar" });
+  useStudySession({ dep, week, suite: "grammar" });
   const earned = useRef(0);
   const awardedRoundRef = useRef(-1);
   const memoryAwardedRef = useRef<Set<number>>(new Set());
@@ -152,6 +155,7 @@ function GrammarSuiteInner({
   function check() {
     const ok = normalizeSentence(tray.join(" ")) === normalizeSentence(puzzle.target);
     setChecked(ok);
+    logAttempt(`grammar:${dep}:${week}:${puzzle.bad}`, ok);
     if (ok && awardedRoundRef.current !== round && !revealed) {
       awardedRoundRef.current = round;
       awardStars(4);

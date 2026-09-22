@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, speakerAudioLabel } from "@/lib/content/week-content";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 const MAX_LISTENS = 3;
@@ -151,6 +152,8 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
 
 export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep: dep ?? "", week: week ?? 1, suite: "listening" });
+  useStudySession({ dep: dep ?? "", week: week ?? 1, suite: "listening" });
   // Rises with the phase — a flat 80 was unreachable at pre-A1.
   const MASTERY_PCT = suiteMasteryPct(week ?? 1);
   const [seed, setSeed] = useState(0);
@@ -208,6 +211,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       const frac = total > 0 ? got / total : 0;
       ok = frac === 1;
       setAnswered(ok);
+      logAttempt(`listening:cloze:${task.key}`, ok);
       setCorrectCount((c) => c + frac);
       if (ok && !awardedRef.current.has(task.key)) {
         awardedRef.current.add(task.key);
@@ -217,6 +221,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       return;
     }
     setAnswered(ok);
+    logAttempt(`listening:choice:${task.key}`, ok);
     if (ok) {
       setCorrectCount((c) => c + 1);
       if (!awardedRef.current.has(task.key)) {

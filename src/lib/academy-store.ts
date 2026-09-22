@@ -96,50 +96,16 @@ function write(userId: string | undefined, state: AcademyState) {
 // rollout. Runs only when the DB profile still looks untouched
 // (service_stars = 0), so it never clobbers a profile that already has
 // real progress.
-async function migrateLegacyLocalState(userId: string): Promise<AcademyState | null> {
-  if (typeof window === "undefined") return null;
-  const raw = window.localStorage.getItem(LEGACY_KEY);
-  if (!raw) return null;
+/** The shared pre-multi-tenant key. It is no longer read — it was a
+ *  hand-me-down: one unscoped bucket that the FIRST person to sign in on
+ *  a machine inherited, stars, streak and all. On a hotel's shared back
+ *  office PC that is somebody else's progress. It is now only deleted. */
+function dropLegacyLocalState(): void {
+  if (typeof window === "undefined") return;
   try {
-    const legacy = JSON.parse(raw) as Partial<AcademyState>;
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("service_stars")
-      .eq("id", userId)
-      .single();
-    if (!profile || profile.service_stars !== 0) {
-      window.localStorage.removeItem(LEGACY_KEY);
-      return null;
-    }
-
-    const merged: AcademyState = {
-      ...DEFAULT_STATE,
-      ...legacy,
-      metrics: { ...DEFAULT_STATE.metrics, ...(legacy.metrics ?? {}) },
-    };
-
-    await supabase
-      .from("profiles")
-      .update({
-        service_stars: merged.service_stars,
-        daily_streak: merged.daily_streak,
-        last_active_date: merged.last_active_date,
-      })
-      .eq("id", userId);
-    await supabase
-      .from("performance_metrics")
-      .update({
-        fluency_score: merged.metrics.fluency_score,
-        courtesy_score: merged.metrics.courtesy_score,
-        reflex_speed: merged.metrics.reflex_speed,
-        crisis_handling_score: merged.metrics.crisis_handling_score,
-      })
-      .eq("profile_id", userId);
-
     window.localStorage.removeItem(LEGACY_KEY);
-    return merged;
   } catch {
-    return null;
+    /* storage blocked — nothing to drop */
   }
 }
 
@@ -216,7 +182,7 @@ export function useAcademy() {
     let cancelled = false;
 
     (async () => {
-      const migrated = await migrateLegacyLocalState(userId);
+      dropLegacyLocalState();
       await flushPendingStars(userId);
 
       const { data: profile } = await supabase
@@ -230,7 +196,7 @@ export function useAcademy() {
         .eq("profile_id", userId)
         .single();
 
-      if (cancelled || (!profile && !migrated)) return;
+      if (cancelled || !profile) return;
 
       // Learning streak maintenance. Grandfather users from the
       // open-app-streak era by treating their last active day as their
@@ -240,7 +206,7 @@ export function useAcademy() {
         lastLearned = profile?.last_active_date ?? yesterdayStr();
         writeLastLearned(userId, lastLearned);
       }
-      let effectiveStreak = profile?.daily_streak ?? migrated?.daily_streak ?? 1;
+      let effectiveStreak = profile?.daily_streak ?? 1;
       if (lastLearned < yesterdayStr() && effectiveStreak !== 0) {
         effectiveStreak = 0;
         supabase
@@ -251,28 +217,16 @@ export function useAcademy() {
       }
 
       const next: AcademyState = {
-        full_name: profile?.full_name || migrated?.full_name || DEFAULT_STATE.full_name,
-        service_stars: profile?.service_stars ?? migrated?.service_stars ?? 0,
+        full_name: profile?.full_name || DEFAULT_STATE.full_name,
+        service_stars: profile?.service_stars ?? 0,
         daily_streak: effectiveStreak,
-        last_active_date:
-          profile?.last_active_date ?? migrated?.last_active_date ?? DEFAULT_STATE.last_active_date,
+        last_active_date: profile?.last_active_date ?? DEFAULT_STATE.last_active_date,
         metrics: {
-          fluency_score:
-            metrics?.fluency_score ??
-            migrated?.metrics.fluency_score ??
-            DEFAULT_STATE.metrics.fluency_score,
-          courtesy_score:
-            metrics?.courtesy_score ??
-            migrated?.metrics.courtesy_score ??
-            DEFAULT_STATE.metrics.courtesy_score,
-          reflex_speed:
-            metrics?.reflex_speed ??
-            migrated?.metrics.reflex_speed ??
-            DEFAULT_STATE.metrics.reflex_speed,
+          fluency_score: metrics?.fluency_score ?? DEFAULT_STATE.metrics.fluency_score,
+          courtesy_score: metrics?.courtesy_score ?? DEFAULT_STATE.metrics.courtesy_score,
+          reflex_speed: metrics?.reflex_speed ?? DEFAULT_STATE.metrics.reflex_speed,
           crisis_handling_score:
-            metrics?.crisis_handling_score ??
-            migrated?.metrics.crisis_handling_score ??
-            DEFAULT_STATE.metrics.crisis_handling_score,
+            metrics?.crisis_handling_score ?? DEFAULT_STATE.metrics.crisis_handling_score,
         },
       };
       write(userId, next);

@@ -27,6 +27,38 @@ async function requireOrgAdmin(
   return caller.org_id;
 }
 
+/** Who did what to whom. Written with the service role, so a browser can
+ *  never forge or erase a line; HR reads it back through RLS. */
+async function logAdminAction(
+  admin: SupabaseClient<Database>,
+  entry: {
+    actorId: string;
+    orgId: string;
+    action: string;
+    targetUserId?: string;
+    meta?: Record<string, unknown>;
+  },
+) {
+  await admin.from("admin_actions").insert({
+    actor_id: entry.actorId,
+    org_id: entry.orgId,
+    action: entry.action,
+    target_user_id: entry.targetUserId ?? null,
+    meta: (entry.meta ?? {}) as never,
+  });
+}
+
+/** A lapsed hotel may still be read and reported on; it may not take on
+ *  new learners. The same rule is a RESTRICTIVE policy on the progress
+ *  tables, so an expired org cannot record learning either. */
+async function requireActiveSubscription(admin: SupabaseClient<Database>, orgId: string) {
+  const { data, error } = await admin.rpc("org_is_active", { target: orgId });
+  if (error) throw new Error(error.message);
+  if (data === false) {
+    throw new Error("Gói của khách sạn đã hết hạn. Vui lòng gia hạn trước khi thêm học viên.");
+  }
+}
+
 function friendlyAuthError(message: string): string {
   if (/phone_exists|already registered/i.test(message)) {
     return "Số điện thoại này đã được đăng ký trong hệ thống.";
@@ -78,19 +110,21 @@ export const createMember = createServerFn({ method: "POST" })
       }
     }
 
+    await requireActiveSubscription(supabaseAdmin, orgId);
+
     // Friendly pre-check for UX; the DB trigger (enforce_seat_quota) is the
-    // hard, race-safe backstop that actually protects the limit.
-    const { data: org } = await supabaseAdmin
-      .from("organizations")
-      .select("seat_limit")
-      .eq("id", orgId)
-      .single();
-    const { count: memberCount } = await supabaseAdmin
-      .from("profiles")
-      .select("id", { count: "exact", head: true })
-      .eq("org_id", orgId);
-    if (org && (memberCount ?? 0) >= org.seat_limit) {
-      throw new Error(`Nhóm đã đạt giới hạn ${org.seat_limit} thành viên.`);
+    // hard, race-safe backstop that actually protects the limit. Both count
+    // LEARNERS only — an HR account is not a seat the hotel pays for.
+    if (data.role === "member") {
+      const { data: seatLimit } = await supabaseAdmin.rpc("org_seat_limit", { target: orgId });
+      const { count: memberCount } = await supabaseAdmin
+        .from("profiles")
+        .select("id", { count: "exact", head: true })
+        .eq("org_id", orgId)
+        .eq("role", "member");
+      if (typeof seatLimit === "number" && (memberCount ?? 0) >= seatLimit) {
+        throw new Error(`Nhóm đã dùng hết ${seatLimit} chỗ học viên của gói.`);
+      }
     }
 
     const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
@@ -116,6 +150,14 @@ export const createMember = createServerFn({ method: "POST" })
       .from("profiles")
       .update({ must_change_password: true })
       .eq("id", created.user.id);
+
+    await logAdminAction(supabaseAdmin, {
+      actorId: context.userId,
+      orgId,
+      action: "member.create",
+      targetUserId: created.user.id,
+      meta: { role: data.role, department: data.department ?? null },
+    });
 
     return { userId: created.user.id };
   });
@@ -154,6 +196,16 @@ export const deleteMember = createServerFn({ method: "POST" })
     const { error } = await supabaseAdmin.auth.admin.deleteUser(data.userId);
     if (error) throw new Error(error.message);
 
+    // Deleting a learner frees the seat immediately: the quota counts rows
+    // that exist, and this row is gone.
+    await logAdminAction(supabaseAdmin, {
+      actorId: context.userId,
+      orgId,
+      action: "member.delete",
+      targetUserId: data.userId,
+      meta: { role: target.role },
+    });
+
     return { success: true as const };
   });
 
@@ -184,6 +236,13 @@ export const resetMemberPassword = createServerFn({ method: "POST" })
       .from("profiles")
       .update({ must_change_password: true })
       .eq("id", data.userId);
+
+    await logAdminAction(supabaseAdmin, {
+      actorId: context.userId,
+      orgId,
+      action: "member.reset_password",
+      targetUserId: data.userId,
+    });
 
     return { tempPassword };
   });
@@ -230,7 +289,19 @@ export const updateMemberRole = createServerFn({ method: "POST" })
       .from("profiles")
       .update({ role: data.role })
       .eq("id", data.userId);
-    if (error) throw new Error(error.message);
+    if (error) {
+      // The seat trigger fires on a role change too: demoting an HR account
+      // back to learner takes a seat the hotel may not have.
+      throw new Error(friendlyAuthError(error.message));
+    }
+
+    await logAdminAction(supabaseAdmin, {
+      actorId: context.userId,
+      orgId,
+      action: "member.role_change",
+      targetUserId: data.userId,
+      meta: { from: target.role, to: data.role },
+    });
 
     return { success: true as const };
   });

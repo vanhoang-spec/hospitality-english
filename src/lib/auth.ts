@@ -83,5 +83,20 @@ export function usePatchProfileCache() {
 }
 
 export async function signOut() {
+  // Hotels run this on a shared back-office machine, so the previous
+  // learner's cached stars, streak and pending-star queue must not sit in
+  // localStorage waiting for the next person to open DevTools. The keys
+  // are per-user, so this is about hygiene on a shared device rather than
+  // about one learner seeing another's screen.
+  try {
+    const doomed: string[] = [];
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      if (key && key.startsWith("academy.")) doomed.push(key);
+    }
+    for (const key of doomed) window.localStorage.removeItem(key);
+  } catch {
+    /* storage blocked — nothing cached to clear */
+  }
   await supabase.auth.signOut();
 }

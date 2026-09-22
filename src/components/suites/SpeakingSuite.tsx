@@ -12,6 +12,7 @@ import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
 import { passThresholds, utterancePassed, utterancePassedAny } from "@/lib/speaking-score";
 import { acceptedAnswers } from "@/lib/speaking-alternates";
 import { listeningRateForWeek } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
@@ -30,6 +31,8 @@ function SpeakingSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep, week, suite: "speaking" });
+  useStudySession({ dep, week, suite: "speaking" });
   const th = passThresholds(week);
   // The bar rises during phase 2. Say so on the week it moves, rather than
   // letting a learner who cleared every scenario last week discover in
@@ -101,6 +104,7 @@ function SpeakingSuiteInner({
       scenario.complaint,
     );
     setResult(cmp);
+    logAttempt(`speaking:${dep}:${week}:${scenario.complaint}`, cmp.passed);
     const acc = Math.round(cmp.accuracy * 100);
     if (spoken) patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
     const passed = cmp.passed;
