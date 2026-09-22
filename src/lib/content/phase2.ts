@@ -99,7 +99,11 @@ function week15(lx: Ctx): LessonContent[] {
         g(
           `I ${lo(a1)} first, after I ${lo(a2)}.`,
           `First I ${lo(a1)}, then I ${lo(a2)}.`,
-          "Trình tự chuẩn dùng 'First … then …'; 'after' không nối hai mệnh đề theo kiểu này.",
+          // Luật cũ bảo 'after' + mệnh đề là sai ngữ pháp. Không đúng: "after
+          // I greet the guest" là câu hoàn toàn chuẩn. Lỗi thật nằm ở NGHĨA —
+          // 'after' đẩy việc đó xuống sau, nên ghép với 'first' thì hai vế
+          // chọi nhau và người nghe không biết bước nào trước.
+          "'after' + mệnh đề vẫn đúng ngữ pháp, nhưng nó nói việc đó xảy ra SAU — ghép với 'first' là ngược trình tự. Nói 'First … then …'.",
           `First I ${lo(a1)}, then I will to ${lo(a2)}.`,
         ),
         g(
@@ -129,8 +133,11 @@ function week15(lx: Ctx): LessonContent[] {
           "colleague",
         ),
         sp(
+          // Lượt ngay trên đã trả lời bằng bước BA. Ô này hỏi bước kế tiếp mà
+          // vẫn trả lời bằng bước HAI, nên hai lượt liền nhau dạy sai thứ tự
+          // quy trình ở đúng tuần đặt nền cho cả phase.
           "And the step after that?",
-          `After that, I ${lo(a2)}.`,
+          `After that, I ${lo(a4)}.`,
           "Cụm nối 'After that,' có dấu phẩy rồi mới tới mệnh đề.",
           "colleague",
         ),
@@ -274,7 +281,10 @@ function week15(lx: Ctx): LessonContent[] {
           `I forget ${lo(a7)} sometimes.`,
           `I sometimes forget to ${lo(a7)}.`,
           "Trạng từ tần suất đứng trước động từ; sau 'forget' dùng 'to + động từ'.",
-          `I forget sometimes to ${lo(a7)}.`,
+          // nearMiss cũ là "I forget sometimes to …" — văn phong hơi vụng
+          // nhưng ĐÚNG ngữ pháp, nên nó dạy học viên sợ một câu không sai.
+          // Lỗi thật mà luật này chống là bỏ mất 'to' sau 'forget'.
+          `I sometimes forget ${lo(a7)}.`,
         ),
       ],
       speaking: [
@@ -634,7 +644,10 @@ function week16(lx: Ctx): LessonContent[] {
       vocabulary: [
         bw(o4, `We could arrange ${wa(o4)} instead.`),
         bw(o5, `We can also offer ${wa(o5)}.`),
-        bw(o9, `That part is ${lo(o9)}.`),
+        // Thẻ từ đứng một mình, nên "That part is unlimited." không có tiền
+        // ngữ: học viên đọc thẻ không biết "that part" là phần nào. Câu ví dụ
+        // phải tự mang theo chỗ bấu víu của nó — ở đây là câu hỏi của khách.
+        bw(o9, `You asked about that part, madam. It is ${lo(o9)}.`),
       ],
       grammar: [
         g(
@@ -1332,9 +1345,14 @@ function week18(lx: Ctx): LessonContent[] {
           "Hỏi xác nhận lại trước khi chốt — sửa lúc này rẻ hơn sửa sau.",
         ),
         sp(
-          "Anything else about me?",
-          `May I ask about your ${lo(pd2)}?`,
-          "Ôn tuần 17: hỏi thông tin tế nhị bằng May I ask about.",
+          // Ô này hỏi ngược khách bằng chính tên ô ghi trên phiếu — với F&B
+          // nó ra "May I ask about your ice preference?", một câu điền form
+          // chứ không phải câu người phục vụ nói. Ghi lại thứ khách vừa dặn
+          // mới là việc của tuần 17, và khung mới đúng cho cả sáu bộ phận.
+          // Mẫu "May I ask about …" vẫn được giữ ở ô ngay bên dưới.
+          "Please remember that for me.",
+          `Let me add your ${lo(pd2)} to the file.`,
+          "Ôn tuần 17: khách dặn gì thì ghi vào hồ sơ ngay, đừng bắt khách nhắc lại lần hai.",
         ),
         sp(
           "Go ahead, ask me.",
@@ -2056,7 +2074,11 @@ function week20(lx: Ctx): LessonContent[] {
         // saving, personal opinion), not a weather-dependent thing — "The
         // personal opinion depends on the weather." made no sense in four of
         // six departments.
-        bw(c9, `${Wt(c9)} is worth considering.`),
+        // "X is worth considering." là giọng văn phòng, không phải giọng sàn
+        // phục vụ — "Chef's choice is worth considering." nghe như một biên
+        // bản họp. Gợi ý thật thì mở bằng lời xin phép, và tuần này đã dạy
+        // "I would suggest…" ở ngay ô ngữ pháp bên trên.
+        bw(c9, `May I suggest ${wt(c9)}?`),
       ],
       grammar: [
         g(
@@ -2091,7 +2113,10 @@ function week20(lx: Ctx): LessonContent[] {
         sp(
           "Would that suit me?",
           `The ${lo(c8)} is a good match.`,
-          "Lời khuyên phải kèm lý do, đừng chỉ nói tốt.",
+          // Tip cũ đòi câu mẫu phải kèm lý do, còn câu mẫu thì không có lý do
+          // nào — lý do là việc của lời khuyên ở ô đầu bài, chỗ này chỉ trả
+          // lời đúng câu khách vừa hỏi.
+          "Khách hỏi hợp hay không thì trả lời bằng một câu khẳng định ngắn.",
         ),
         sp(
           "What is the policy here?",
@@ -2110,8 +2135,8 @@ function week20(lx: Ctx): LessonContent[] {
         ),
         sp(
           "Is there another idea?",
-          `${Wt(c9)} is worth considering.`,
-          "Đưa thêm một hướng thay vì lặp lại hướng cũ.",
+          `May I suggest ${wt(c9)}?`,
+          "Đưa thêm một hướng bằng lời xin phép, thay vì lặp lại hướng cũ.",
         ),
         sp(
           "What other choice is there?",
@@ -2515,8 +2540,8 @@ function week21(lx: Ctx): LessonContent[] {
         ),
         sp(
           "What else could I look at?",
-          `${Wt(pc9)} is worth considering.`,
-          "Ôn tuần 20: mở thêm một hướng mà không ép khách.",
+          `May I suggest ${wt(pc9)}?`,
+          "Ôn tuần 20: mở thêm một hướng bằng lời xin phép, không ép khách.",
         ),
         sp(
           "Do you need a document from me?",
@@ -3208,6 +3233,16 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
   },
 };
 
+/** Tiêu đề tuần riêng cho một bộ phận, keyed `${DEP}-${week}`.
+ *
+ *  Tuần 18 của khung tên là "Paperwork & Payment", nhưng chính khoá dạy
+ *  "Housekeeping staff never take cash." — buồng phòng làm giấy tờ và bàn
+ *  giao, tiền bạc là việc của lễ tân. Một tiêu đề tuần nói ngược lại nội
+ *  dung của chính nó là thứ học viên đọc trước cả bài học. */
+const DEPT_WEEK_TITLES: Record<string, { en: string; vi: string }> = {
+  "HK-18": { en: "Paperwork & Handover", vi: "Giấy tờ & bàn giao" },
+};
+
 /** Headwords a department ACTUALLY meets in a week. Four slots in this
  *  range are served by hand-authored payloads instead of the spine, so
  *  recycling must read those, or it schedules words never taught. */
@@ -3684,12 +3719,15 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             "Câu này lịch sự và nguy hiểm nhất: bạn vừa xác nhận một điều thuộc chuyên môn y tế mà mình không có.",
           ),
           game(
+            // Đáp án cũ mở đầu bằng "Of course" — tức nhận lời ép lực mạnh
+            // hơn NHIỀU, trong chính bài dạy rằng có câu trả lời buộc phải
+            // dừng lại. Đáp án đúng chỉ nhận một nấc và giữ lại quyền dừng.
             "Can you press much harder on my back?",
-            "Of course, madam. Please tell me at once if it hurts.",
+            "A little deeper, madam. Please tell me if it hurts.",
             "Yes, I press very strong for you.",
             "Certainly, madam. I will press as hard as you like.",
             undefined,
-            "Câu này nghe rất chiều khách, và nó bỏ mất quyền dừng tay của chính bạn.",
+            "Khách xin mạnh hơn nhiều; câu đúng chỉ nhận một nấc và giữ lại quyền dừng tay — bài này là bài chống chỉ định.",
           ),
         ],
       },
@@ -4248,20 +4286,453 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
   // một nửa cấu trúc phí, và trưởng bộ phận gọi phần thiếu là nguồn tranh cãi
   // hàng tuần. Bài này giữ nguyên ba headword của ô và dạy trọn tờ hoá đơn,
   // kèm ranh giới: giảm giá không phải quyền của người phục vụ.
+  // Bài khung hứa thay khách sạn. "The second helping is free for our guests."
+  // và "The price includes free refills." là chính sách của TỪNG nhà hàng, chứ
+  // không phải sự thật của ngành — học viên đọc thuộc hai câu ấy sẽ hứa sai ở
+  // chỗ làm đầu tiên, và người phải rút lời hứa lại là quản lý. Bản này giữ
+  // nguyên bộ headword (Side dish · Second helping · Free refills) và buộc mỗi
+  // câu hoặc NÊU ĐIỀU KIỆN, hoặc chuyển lên quản lý.
+  FB_16_2: (lx) => {
+    const [, pa2, , , , pa6] = lx.bank.steps;
+    const [, , o3, , , , , o8, , o10] = lx.bank.offers;
+    return lesson(lx, 16, 2, "What Is Included, and Where", "Đã gồm những gì — và gồm ở đâu", {
+      vocabulary: [
+        bw(o3, `Many guests ask for ${wa(o3)}.`),
+        bw(o8, `The ${lo(o8)} is free at the buffet, madam.`),
+        bw(o10, `Coffee and tea come with ${lo(o10)}, sir.`),
+      ],
+      grammar: [
+        g(
+          `This no money.`,
+          `The ${lo(o8)} is free at the buffet, madam.`,
+          "Nói miễn phí phải kèm nơi áp dụng: THE + danh từ + IS FREE + AT THE + chỗ đó.",
+          `The ${lo(o8)} free at the buffet, madam.`,
+        ),
+        g(
+          `Coffee have ${lo(o10)}.`,
+          `Your coffee includes ${lo(o10)}, sir.`,
+          "Chủ ngữ số ít 'your coffee' đi với 'includes' có -s.",
+          `Your coffee include ${lo(o10)}, sir.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          `Is ${wt(o8)} extra?`,
+          `No, madam. The ${lo(o8)} is free at the buffet.`,
+          "Trả lời rõ về phí và nói luôn phạm vi: miễn phí ở quầy buffet không có nghĩa là miễn phí mọi nơi.",
+        ),
+        sp(
+          "What exactly does it include?",
+          `Your coffee includes ${lo(o10)}, sir.`,
+          "Gọi tên đúng thứ được rót thêm, đừng nói gọn thành cả hoá đơn.",
+        ),
+        sp(
+          "Which one do most guests take?",
+          `Many guests ask for ${wa(o3)}.`,
+          "Gợi ý bằng cái nhiều người chọn — dễ nghe hơn là ép khách.",
+        ),
+        sp(
+          "So everything comes with refills?",
+          "I will ask my manager, madam. I cannot promise that.",
+          "Khách hỏi rộng hơn điều mình biết chắc: nói thẳng mình không quyết được rồi đi hỏi quản lý.",
+        ),
+        sp(
+          "What comes after that?",
+          `Then we ${lo(pa2)}, and we continue.`,
+          "Ôn tuần 15: nối bước bằng then.",
+          "colleague",
+        ),
+        sp(
+          "And what do you always do with care?",
+          `We always ${lo(pa6)} with care.`,
+          "Ôn tuần 15: always đứng trước động từ chính.",
+          "colleague",
+        ),
+        sp(
+          "Is there anything more?",
+          "May I offer you an extra choice?",
+          "Mời thêm bằng câu hỏi, khách vẫn là người quyết.",
+        ),
+      ],
+      reading: read(
+        `A guest worries about the cost. ${lx.staff} explains: "The ${lo(o8)} is free at the buffet, sir. Your coffee includes ${lo(o10)}." Then the guest asks about the evening menu. ${lx.staff} does not guess and goes to ask the manager. The service charge stays on its own line. A guest who knows the price early is rarely unhappy at the end.`,
+        [
+          {
+            q: "Phần thứ hai được miễn phí ở đâu?",
+            options: ["Ở quầy buffet", "Ở mọi nhà hàng của khách sạn", "Ở nhà hàng buổi tối"],
+            correct: 0,
+            explanation: `"The ${lo(o8)} is free at the buffet"`,
+          },
+          {
+            q: "Khi chưa chắc về thực đơn buổi tối, nhân viên làm gì?",
+            options: ["Đi hỏi quản lý", "Đoán rồi trả lời cho nhanh", "Nói là không biết rồi thôi"],
+            correct: 0,
+            explanation: '"goes to ask the manager"',
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Will this cost me anything extra?",
+          `Not at the buffet, sir. The ${lo(o8)} is free there.`,
+          "This no money, madam. All free, no charge you.",
+          "Everything here is free, madam. No charge at all.",
+          undefined,
+          "Câu này hứa quá tay: chỉ phần vừa hỏi, và chỉ ở quầy buffet, là miễn phí — không phải mọi thứ trong khách sạn.",
+        ),
+      ],
+    });
+  },
+
+  // Ice preference · Cooking level · Drink choice là TÊN Ô GHI trên phiếu bếp
+  // và phiếu bar, không phải câu hỏi cho khách. Bài khung đem cả ba ra hỏi
+  // thẳng ("May I check your ice preference, sir?") trong khi chính khoá đã
+  // dạy câu đúng ở chỗ khác. Bản này giữ nguyên bộ headword và trả chúng về
+  // đúng chỗ: lượt bàn giao bếp/bar.
+  FB_17_2: (lx) => {
+    const [, qo2, , , , po2, , , qo9] = lx.bank.offers;
+    const [, , , , , d6, d7, , d9] = lx.bank.details;
+    return lesson(lx, 17, 2, "Reading the Order Back", "Đọc lại phiếu gọi món", {
+      vocabulary: [
+        bw(d6, `The bar needs the ${lo(d6)} for table four.`),
+        bw(d7, `The kitchen asks for the ${lo(d7)}.`),
+        bw(d9, `I will pass the ${lo(d9)} to the bar.`),
+      ],
+      grammar: [
+        g(
+          `Correct or no?`,
+          `So that is correct, madam?`,
+          "Câu xác nhận đầy đủ 'So that is correct, madam?' — không hỏi cụt 'Correct or no?'.",
+          `So that is correctly, madam?`,
+        ),
+        g(
+          `I say wrong you tell me.`,
+          `Please correct me if I am wrong.`,
+          "Câu điều kiện hai mệnh đề, đúng tầm A2: mệnh lệnh lịch sự + 'if'.",
+          `Please correct me if I am wrongly.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "Yes, that is what I said.",
+          `Thank you. Let me read that back to you.`,
+          "Đọc lại thông tin là bước bắt buộc — sai một chữ có thể hỏng cả đơn.",
+        ),
+        sp(
+          "Actually, the second part is wrong.",
+          `I am sorry. Please correct me.`,
+          "Sai thì xin lỗi ngắn và mời khách sửa, đừng thanh minh.",
+        ),
+        sp(
+          "I will have the beef, please.",
+          "Certainly, madam. How would you like it cooked?",
+          "Đây là câu hỏi thật với khách. Mức chín chỉ là ô ghi trên phiếu bếp, không đem ra hỏi.",
+        ),
+        sp(
+          "Table six wants it medium.",
+          `Noted. I will write the ${lo(d7)} on the order.`,
+          "Nghe khách xong thì ghi vào đúng ô cho bếp đọc, không nhớ miệng.",
+          "colleague",
+        ),
+        sp(
+          "What should I tell the bar?",
+          `The ${lo(d6)} for table four is no ice.`,
+          "Bàn giao với quầy bar thì gọi tên ô ghi; với khách thì hỏi bình thường.",
+          "colleague",
+        ),
+        sp(
+          "What goes down to the bar now?",
+          `I will pass the ${lo(d9)} to the bar now.`,
+          "Đồ uống đi thẳng xuống bar — nói rõ mình chuyển cái gì, đừng để bar đoán.",
+          "colleague",
+        ),
+        sp(
+          "What else could you offer?",
+          `We could arrange ${wa(po2)} instead.`,
+          "Ôn tuần 16: could làm lời đề nghị nhẹ đi.",
+        ),
+        sp(
+          "What else is there?",
+          `We also have ${wa(qo2)}.`,
+          "Ôn tuần 16: giới thiệu thêm bằng We also have.",
+        ),
+        sp(
+          "Is the salad bar limited?",
+          `No, madam. That part is ${lo(qo9)}.`,
+          "Ôn tuần 16: nói rõ phần nào không giới hạn, và chỉ phần khách vừa hỏi.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} repeats the order carefully. "Let me read that back to you. Please correct me if I am wrong." The guest wanted the beef medium, not well done, and corrects it. ${lx.staff} writes the ${lo(d7)} on the slip, because the kitchen reads the slip. The ${lo(d9)} goes to the bar on the same slip. Reading back takes one minute and saves a long problem later.`,
+        [
+          {
+            q: "Nhân viên mời khách làm gì khi đọc lại?",
+            options: [
+              "Sửa lại nếu có chỗ sai",
+              "Ký ngay vào tờ phiếu gọi món",
+              "Chờ thêm khoảng mười lăm phút",
+            ],
+            correct: 0,
+            explanation: '"Please correct me if I am wrong."',
+          },
+          {
+            q: "Mức chín của món bò được ghi cho ai đọc?",
+            options: ["Cho bếp", "Cho khách giữ", "Cho quầy thu ngân"],
+            correct: 0,
+            explanation: '"because the kitchen reads the slip"',
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Did you get all of that?",
+          "Let me read that back to you, sir.",
+          "Correct or no, madam?",
+          "No need to check again, madam. I am sure it is right.",
+          undefined,
+          "Câu này đúng ngữ pháp và bỏ mất bước đọc lại — bước duy nhất bắt được lỗi trước khi nó thành sự cố.",
+        ),
+      ],
+    });
+  },
+
+  // Cùng lý do với FB_17_2: "Could I have your meat preference?" là câu hỏi
+  // kiểu điền form, và "The price includes free refills." lại hứa thay nhà
+  // hàng một lần nữa. Bộ headword giữ nguyên (Meat preference · Final order).
+  FB_17_4: (lx) => {
+    const [, , , qo4, , , , po4, , qo10] = lx.bank.offers;
+    const [, , , d4, , , , , , d10] = lx.bank.details;
+    return lesson(lx, 17, 4, "Writing the Order Down", "Ghi phiếu gọi món", {
+      vocabulary: [
+        bw(d4, `The kitchen needs the ${lo(d4)} for table six.`),
+        bw(d10, `I will add that to the ${lo(d10)}.`),
+      ],
+      grammar: [
+        g(
+          `I write it now.`,
+          `I am writing your order down now.`,
+          "Việc đang làm ngay lúc nói dùng hiện tại tiếp diễn: I AM WRITING.",
+          `I am write your order down now.`,
+        ),
+        g(
+          `All finish, thank you.`,
+          `That is everything, thank you very much.`,
+          "Câu chốt đầy đủ: 'That is everything' thay cho 'All finish'.",
+          `That is everything, thank you very many.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "Do you need anything else from me?",
+          "Just one more thing, madam. Chicken or beef?",
+          "Hỏi khách bằng hai lựa chọn thật; tên ô ghi là chuyện của phiếu bếp.",
+        ),
+        sp(
+          "Beef, please.",
+          `Thank you. I will write the ${lo(d4)} for the kitchen.`,
+          "Khách nói món, mình ghi vào đúng ô — bếp đọc phiếu chứ không nghe bàn.",
+        ),
+        sp(
+          "Here you are.",
+          `Thank you. I am writing it down now.`,
+          "Nói ra việc mình đang làm giúp khách biết mình không bị bỏ quên.",
+        ),
+        sp(
+          "Will you remember all that?",
+          `I will add that to the ${lo(d10)}.`,
+          "Ghi lại giúp khách, không bắt khách nhắc lại lần thứ hai.",
+        ),
+        sp(
+          "What is missing for table six?",
+          `Only the ${lo(d4)}. I will ask the guest now.`,
+          "Thiếu ô nào thì gọi tên ô đó khi bàn giao với bếp.",
+          "colleague",
+        ),
+        sp(
+          "Could I add something to that?",
+          `Would you like ${wa(po4)}, madam?`,
+          "Ôn tuần 16: mời thêm bằng câu hỏi lịch sự.",
+        ),
+        sp(
+          "Could we change that?",
+          `We could arrange ${wa(qo4)} instead.`,
+          "Ôn tuần 16: could làm lời đề nghị nhẹ đi.",
+        ),
+        sp(
+          "What does the price cover?",
+          `Your coffee includes ${lo(qo10)}, sir.`,
+          "Ôn tuần 16: gọi tên đúng thứ được rót thêm, không hứa cả hoá đơn.",
+        ),
+      ],
+      reading: read(
+        `The last detail is needed. ${lx.staff} asks: "Chicken or beef, madam?" The guest chooses beef. "Thank you. I am writing it down now." The ${lo(d4)} goes on the slip for the kitchen. When the slip is complete, ${lx.staff} reads it back once. The guest does not wait long, because the slip asks only what the kitchen really needs. The order has four lines in total.`,
+        [
+          {
+            q: "Nhân viên hỏi khách bằng câu nào?",
+            options: [
+              "Chicken or beef, madam?",
+              "You take chicken or beef?",
+              "Meat, madam? Which?",
+            ],
+            correct: 0,
+            explanation: "Hỏi khách bằng hai lựa chọn cụ thể, thành câu đầy đủ.",
+          },
+          {
+            q: "Loại thịt khách chọn được ghi ở đâu?",
+            options: [
+              "Trên phiếu gửi xuống bếp",
+              "Trong trí nhớ của nhân viên",
+              "Trên hoá đơn của khách",
+            ],
+            correct: 0,
+            explanation: `"The ${lo(d4)} goes on the slip for the kitchen."`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "Is that all you need?",
+          "That is everything, madam. Thank you.",
+          "All finish, madam, thank you. No more question.",
+          "Maybe, madam. I will call you again if I need more.",
+          undefined,
+          "Câu này đúng ngữ pháp nhưng để ngỏ; gom hết câu hỏi vào một lần là phép lịch sự với thời gian của khách.",
+        ),
+      ],
+    });
+  },
+
+  // Cả mười ba thẻ từ của tuần sát hạch F&B là từ báo cáo nội bộ — không thẻ
+  // nào nói được với khách, đúng tuần thi. Ba ô danh từ của ngân hàng đã đổi
+  // sang Takeaway box · Wine list · Water refill; bài này là chỗ chúng được
+  // nói RA VỚI KHÁCH, và cũng là chỗ thay câu mời trống nghĩa
+  // "May I offer you an extra service, sir?".
+  FB_22_2: (lx) => {
+    const [, pe2, , , , pe6] = lx.bank.reports;
+    const [, , w3, , w5, , , , w9] = lx.bank.wrapUp;
+    return lesson(lx, 22, 2, "Paperwork & the Last Round", "Giấy tờ & vòng phục vụ cuối", {
+      vocabulary: [
+        v("Complete", "/kəmˈpliːt/", "Hoàn tất", "The form is complete.", "✅"),
+        bw(w3, `May I pack this in a ${lo(w3)}, madam?`),
+        bw(w5, `May I bring you the ${lo(w5)}, sir?`),
+        bw(w9, `Would you like a ${lo(w9)}, madam?`),
+      ],
+      grammar: [
+        g(
+          `Give me name, sign here.`,
+          `Could I have your name? Then please sign here.`,
+          "Ôn tuần 17 và 18: xin thông tin lịch sự rồi mới hướng dẫn ký.",
+          `Could I have your name? Then please to sign here.`,
+        ),
+        g(
+          `I prepare paper now.`,
+          `I am preparing the paperwork now, and it is nearly ready.`,
+          "Ôn tuần 18: việc đang làm dùng hiện tại tiếp diễn.",
+          `I am prepare the paperwork now, and it is nearly ready.`,
+        ),
+      ],
+      speaking: [
+        sp(
+          "What do you need to complete this?",
+          `Could I have your name? Then please sign here.`,
+          "Chuỗi hai bước: xin thông tin rồi hướng dẫn — đúng nhịp làm thủ tục thật.",
+        ),
+        sp(
+          "Here you are. Is that everything?",
+          `Yes. I am preparing the paperwork now.`,
+          "Xác nhận đủ thông tin rồi báo mình đang xử lý.",
+        ),
+        sp(
+          "And what happened after that?",
+          `The guest ${lo(pe2)} after that.`,
+          "Ôn tuần 21: chủ ngữ là khách, động từ ở quá khứ đơn.",
+          "colleague",
+        ),
+        sp(
+          "How many were there?",
+          `We had twelve ${lo(pe6)} today.`,
+          "Ôn tuần 21: had là quá khứ của have.",
+          "colleague",
+        ),
+        sp(
+          "We cannot finish all this food.",
+          `Of course, madam. May I pack it in a ${lo(w3)}?`,
+          "Khách ăn không hết: mời gói mang về trước khi dọn đĩa đi.",
+        ),
+        sp(
+          "What goes well with this dish?",
+          `Certainly, sir. May I bring you the ${lo(w5)}?`,
+          "Đưa danh mục cho khách chọn, đừng đọc thuộc từng chai.",
+        ),
+        sp(
+          "My glass is empty.",
+          `Would you like a ${lo(w9)}, madam?`,
+          "Thấy ly cạn thì mời châm thêm ngay, không đợi khách phải gọi.",
+        ),
+        sp(
+          "Anything else for me?",
+          "Is there anything else I can arrange, sir?",
+          "Câu hỏi mở cuối bữa phải nói rõ mình làm được gì, không mời chung chung.",
+        ),
+        sp(
+          "Is the paperwork done?",
+          "Yes. The form is complete.",
+          "Báo trạng thái xong bằng một câu ngắn.",
+        ),
+      ],
+      reading: read(
+        `${lx.staff} handles the end of the meal. "Could I have your name, please? Then please sign here." The name comes first, the signature second. While the bill prints, ${lx.staff} offers a ${lo(w9)} and packs the rest in a ${lo(w3)}. The guest signs, and ${lx.staff} gives back the pen and says thank you. Nothing has to be signed twice. The form has three pages.`,
+        [
+          {
+            q: "Thứ tự đúng là gì?",
+            options: ["Tên trước, chữ ký sau", "Chữ ký trước, tên sau", "Cả hai cùng lúc"],
+            correct: 0,
+            explanation: '"The name comes first, the signature second."',
+          },
+          {
+            q: "Trong lúc chờ in hoá đơn, nhân viên làm gì?",
+            options: [
+              "Mời châm thêm nước và gói phần ăn còn lại",
+              "Đứng yên chờ khách ký xong",
+              "Đi kiểm quỹ cuối ca",
+            ],
+            correct: 0,
+            explanation: `"offers a ${lo(w9)} and packs the rest in a ${lo(w3)}"`,
+          },
+        ],
+      ),
+      game: [
+        game(
+          "What is the next step for me?",
+          "Please sign here, madam. Then we are finished.",
+          "Give me name, sign here.",
+          "Nothing else for you, madam.",
+          undefined,
+          "Câu này đúng ngữ pháp và bỏ mất chữ ký; thiếu chữ ký thì cả tờ giấy không có giá trị.",
+        ),
+      ],
+    });
+  },
+
   FB_18_3: (lx) => {
     const [, , , , p5, p6, , p8] = lx.bank.paperwork;
     return lesson(lx, 18, 3, "The Bill, Line by Line", "Hoá đơn, từng dòng một", {
       vocabulary: [
-        bw(p5, `The ${lo(p5)} is ten percent.`),
+        // Con số cứng đã bị rút khỏi cả bài. Thuế suất dịch vụ ăn uống ở Việt
+        // Nam đã có lúc là 8%, nên một khoá dạy "ten percent VAT" là dạy nhân
+        // viên đọc thuộc một con số sẽ sai. Câu đúng nghề là chỉ vào dòng in
+        // trên hoá đơn. Cùng lý do, tuần 18 và lượt ôn FB-22 nay nói CÙNG một
+        // điều: VAT và phí phục vụ là hai dòng riêng trên hoá đơn.
+        bw(p5, `The ${lo(p5)} is a separate line, madam.`),
         bw(p6, `Which ${lo(p6)} would you prefer?`),
         bw(p8, `You can ${lo(p8)} at the table.`),
       ],
       grammar: [
         g(
           "Bill have tax and service.",
-          "The bill includes ten percent VAT and five percent service.",
-          "Hai khoản nối bằng 'and'; con số phần trăm đứng trước danh từ.",
-          "The bill include ten percent VAT and five percent service.",
+          "The bill shows VAT and service on separate lines.",
+          "Chủ ngữ số ít 'the bill' đi với 'shows'; hai khoản nối bằng 'and'.",
+          "The bill show VAT and service on separate lines.",
         ),
         g(
           "You pay how, cash or card?",
@@ -4278,8 +4749,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "What are these two extra lines?",
-          `The ${lo(p5)} is ten percent, and service is five.`,
-          "Đọc từng dòng cho khách, đừng chỉ nói tổng.",
+          `${lo(p5)} and service, madam. Both rates are printed there.`,
+          "Gọi tên hai dòng rồi chỉ vào tỷ lệ in trên hoá đơn — không đọc thuộc con số.",
         ),
         sp(
           "Can we split it in two?",
@@ -4304,18 +4775,18 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Is service included in that?",
-          "Yes, madam. Five percent is already on the bill.",
-          "Trả lời thẳng có hay không, rồi mới nêu con số.",
+          "Yes, madam. The service line is already on your bill.",
+          "Trả lời thẳng có hay không, rồi chỉ vào dòng trên hoá đơn.",
         ),
       ],
       reading: read(
-        `A guest at table six asks for the bill. ${lx.staff} brings it and explains the two extra lines: ten percent VAT and five percent service. The guest asks to split the bill, so ${lx.staff} prints two. The guest pays by card at the table. Nothing is added after the guest sees the total.`,
+        `A guest at table six asks for the bill. ${lx.staff} brings it and explains the two extra lines: VAT and service. Both rates are printed on the bill, so nobody has to remember them. The guest asks to split the bill, so ${lx.staff} prints two. The guest pays by card at the table. Nothing is added after the guest sees the total.`,
         [
           {
             q: "Hai dòng thêm trên hoá đơn là gì?",
             options: ["Thuế VAT và phí phục vụ", "Tiền tip và thuế", "Phí phục vụ và tiền phòng"],
             correct: 0,
-            explanation: `"ten percent VAT and five percent service"`,
+            explanation: `"the two extra lines: VAT and service"`,
           },
           {
             q: "Khách thanh toán ở đâu?",
@@ -4327,9 +4798,9 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       ),
       game: [
         game(
-          "What is this five percent line?",
+          "What is this second line here?",
           "That is the service charge, madam. It is on every bill.",
-          "Five percent is service, madam, everybody pay this one.",
+          "Service charge, madam, everybody pay this one here.",
           "I am not sure, madam. The kitchen adds that line.",
           undefined,
           "Câu này đúng ngữ pháp và sai người: phí phục vụ do nhà hàng tính chứ không phải bếp, và khoản tiền nào cũng phải có người giải thích được.",
@@ -4921,11 +5392,12 @@ function buildWeek(
 ): WeekContent {
   const meta = WEEK_META[week];
   const review = reviewWordsFor(lx, week, priorWords, overrides);
+  const title = DEPT_WEEK_TITLES[`${lx.code}-${week}`] ?? meta;
   return {
     departmentId: lx.code,
     weekNumber: week,
-    weekTitleEn: meta.en,
-    weekTitleVi: meta.vi,
+    weekTitleEn: title.en,
+    weekTitleVi: title.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
     // Bài riêng thay bài khung cùng lessonId, nên tuần vẫn đủ bốn bài đúng thứ

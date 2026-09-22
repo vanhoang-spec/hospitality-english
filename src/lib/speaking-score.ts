@@ -256,10 +256,19 @@ export const PROMISE_VERBS = new Set<string>([
   "report",
   "show",
   "sign",
+  "speak",
   "stop",
+  "take",
   "tell",
   "transfer",
   "wait",
+  // "be" is a promise whenever a time follows it, and the paper reads this
+  // list to decide whether two replies make the SAME promise: "Certainly. It
+  // will be ready in ten minutes." and "Certainly. I will speak to the chef."
+  // both carried no listed verb, so an apology-plus-promise pair the listening
+  // block exists to separate was printed as key and distractor under one
+  // audio. Same for "I will take it back now."
+  "be",
 ]);
 
 /** Finite verbs, in both the bare and the third-person form. The one-word
@@ -451,6 +460,22 @@ function holdsThePredicate(word: string, target: string): boolean {
     "should",
     "do",
     "does",
+    // The forms of TO BE, and "cannot". A past participle or an -ing form
+    // after them is the predicate just as surely as a bare verb after "will"
+    // is, and without them the one-word content allowance was being spent on
+    // exactly those words: 190 of 513 P2 targets passed with the word right
+    // after a be-form or "cannot" deleted. "A service charge is to your bill."
+    // (no `added`), "Just a moment. I am your registration card." (no
+    // `preparing`), "I cannot that, madam." (no `decide`) and "I am that is
+    // not allowed, sir." (no `afraid`) all passed before this line.
+    "is",
+    "are",
+    "am",
+    "was",
+    "were",
+    "been",
+    "being",
+    "cannot",
   ]);
   const ADVERB = new Set([
     "always",
@@ -657,9 +682,15 @@ export function requiredValueTokens(target: string, override?: string[]): string
     // pass a two-oh-five item, because naming one content word switched the
     // number lock off. No frame had used the field yet — and all five reports
     // that call it the highest-leverage fix left would have walked into that.
-    ...(override ?? []).map((t) => t.toLowerCase()),
+    // Folded like everything else on this list. The gate below matches the
+    // required tokens against the FOLDED target, so an authored lock written
+    // in the un-folded word never fired: a headword lock on "free" looked for
+    // "free" in a target the synonym fold had already turned into "ready", and
+    // "The welcome drink is free for our guests." passed without it.
+    ...(override ?? []).flatMap((t) => foldCourtesy(normalize(t))),
     ...titleAndSurname(target),
     ...fixedPhraseTokens(target),
+    ...apologyOpenerTokens(target),
     ...particleTokens(toks),
   ];
 }
@@ -750,6 +781,28 @@ function fixedPhraseTokens(target: string): string[] {
   return [
     ...new Set(FIXED_PHRASES.filter((p) => t.includes(" " + p + " ")).flatMap((p) => p.split(" "))),
   ];
+}
+
+/** The apology a model OPENS with is the lesson, not a courtesy extra.
+ *
+ *  "sorry" sits in COURTESY_EXTRAS so that ADDING it is free — four managers
+ *  asked for that and it stays. But free to add had quietly become free to
+ *  drop, because a COURTESY_EXTRAS word is not content and nothing else was
+ *  watching it: 82 of the 88 P2 models that open with an apology passed with
+ *  the apology word deleted. "I am madam. Let me say that again slowly.",
+ *  "I am that is not allowed, sir." and "I am sir. You must not smoke inside
+ *  the hotel." were all PASS — and the sentence the week exists to teach is
+ *  the apology.
+ *
+ *  Locked only at the OPENING, where it is the move. Mid-sentence — "I will
+ *  tell them we are sorry" — it stays droppable, and adding one anywhere is
+ *  still free. stripCourtesyFrame runs first, so a learner who opens "I am
+ *  afraid" against a model that opens "I am sorry" has already had the
+ *  model's own opener substituted in and is not touched by this. */
+const APOLOGY_OPENS = /^(i am (very |so )?|i do )?(sorry|afraid|apologise|apologize)\b/i;
+function apologyOpenerTokens(target: string): string[] {
+  const m = APOLOGY_OPENS.exec(target.trim());
+  return m ? [m[3]!.toLowerCase()] : [];
 }
 
 /** The value tokens of an utterance, in order, with the formulaic "one" of
@@ -927,8 +980,14 @@ export function honorificIsFree(guestPrompt?: string): boolean {
  *  target OPENS with one, i.e. when they are a courtesy formula. In a
  *  statement of fact — "We open at six in the morning." — the time of day is
  *  the information, and it stays locked. */
+// The clock half of this pattern was `a\.?m|p\.?m`, and `\bam\b` is the verb
+// every second guest line contains: "I am in a hurry." and "I am Mr Chen."
+// counted as statements of the hour, so the greeting they cannot possibly fix
+// was graded as though they had. A clock reading carries its digits — "9 a.m.",
+// "7am", "at 10 pm" — so the digits are what the branch now asks for, which
+// also catches "7am", a form the old `\b` boundary could never match.
 const TIME_CUE =
-  /\b(morning|afternoon|evening|night|midnight|noon|breakfast|lunch|dinner|a\.?m|p\.?m|o'clock|arrived)\b/i;
+  /\b(morning|afternoon|evening|night|midnight|noon|breakfast|lunch|dinner|o'clock|arrived)\b|\d\s*[ap]\.?\s?m\b/i;
 const GREETING_OPENS = /^good\s+(morning|afternoon|evening)\b/i;
 const DAYPART = /^(morning|afternoon|evening)$/;
 
@@ -948,7 +1007,57 @@ const canonDaypart = (toks: string[], free: boolean) =>
  *  second one failed all 81 items that model the first: accuracy fell to 33%
  *  because two of three target words went missing at once. Folded to one
  *  token before anything is counted. */
-function foldCourtesy(toks: string[]) {
+/** Words the curriculum itself treats as interchangeable, folded to one token.
+ *
+ *  checkpoint-paper.ts has had a SYNONYM table for this since round 3 — it is
+ *  what stops the written paper printing two correct answers — and the spoken
+ *  half of the SAME exam did not share it. Measured on Phase 2: saying
+ *  "supervisor" where the model says "manager" failed 51 of 51 items,
+ *  "immediately" for "now" 104 of 104, "issue" for "problem" 18 of 18,
+ *  "offer" for "arrange" 41 of 41 (and back the other way 49 of 49), "duty
+ *  manager" for "manager" 43 of 43, "not permitted" for "not allowed" 7 of 7.
+ *  Two graders on one exam cannot disagree about which words mean the same.
+ *
+ *  INFLECTION PAIRS ARE DELIBERATELY ABSENT. The paper's table folds
+ *  prefer/prefers and finish/finishes because it only asks whether two
+ *  sentences SAY the same thing; folding them here would let "Whichever you
+ *  prefers." pass, and the third-person -s is the single most-taught point of
+ *  the course. So each entry keeps its own tense and number, and the fold is
+ *  written form by form.
+ *
+ *  Folded TOWARDS the word the closed lists already know: "offer" becomes
+ *  "arrange" and not the reverse, because `arrange` is a PROMISE_VERBS entry
+ *  and folding the other way would switch that lock off. */
+const SYNONYMS: Record<string, string> = {
+  supervisor: "manager",
+  supervisors: "managers",
+  immediately: "now",
+  issue: "problem",
+  issues: "problems",
+  permitted: "allowed",
+  offer: "arrange",
+  offers: "arranges",
+  offered: "arranged",
+  offering: "arranging",
+  finish: "close",
+  finishes: "closes",
+  finished: "closed",
+  finishing: "closing",
+  start: "open",
+  starts: "opens",
+  started: "opened",
+  starting: "opening",
+  begin: "open",
+  begins: "opens",
+  began: "opened",
+  free: "ready",
+  available: "ready",
+};
+
+function foldCourtesy(input: string[]) {
+  // Word for word first, so the multi-word folds below still see a clean
+  // stream: "shall i" has to survive the single-word pass to be folded.
+  const toks = input.map((t) => SYNONYMS[t] ?? t);
   const out: string[] = [];
   for (let i = 0; i < toks.length; i++) {
     if (toks[i] === "of" && toks[i + 1] === "course") {
@@ -964,11 +1073,12 @@ function foldCourtesy(toks: string[]) {
       out.push("a");
       continue;
     }
-    // "May I", "Can I" and "Could I" open the same request, and the course
-    // teaches all three — week 17 prints "May I ask about your pillow type?"
-    // two screens after grading "May I have your coffee preference?" wrong
-    // for the word "may". Twenty-three of twenty-three swaps failed.
-    if ((toks[i] === "may" || toks[i] === "can") && toks[i + 1] === "i") {
+    // "May I", "Can I", "Shall I" and "Could I" open the same request, and the
+    // course teaches all of them — week 17 prints "May I ask about your pillow
+    // type?" two screens after grading "May I have your coffee preference?"
+    // wrong for the word "may". Twenty-three of twenty-three swaps failed, and
+    // "Shall I" for "May I" failed 111 of 111 after that.
+    if ((toks[i] === "may" || toks[i] === "can" || toks[i] === "shall") && toks[i + 1] === "i") {
       out.push("could");
       continue;
     }
@@ -1222,8 +1332,24 @@ export function utterancePassedAny(
   guestPrompt?: string,
 ) {
   let own: ReturnType<typeof utterancePassed> | undefined;
+  // THE SLOT'S OWN required tokens apply to every reply it accepts.
+  //
+  // Each answer arrived carrying the requiredTokens of the item it was
+  // authored for, and the phase writes the same sentence in several weeks with
+  // different locks: the week-19 copy of "May I remind you of the registration
+  // rule, madam?" requires [registration, rule], the week-20 copy requires
+  // nothing. A learner who dropped `registration` failed the item it belongs to
+  // and then passed on the looser copy standing behind it. 10 of 234 oral slots
+  // held a copy looser than themselves, and 206 of 382 alternates carried a
+  // requiredTokens list that was a strict subset of their slot's.
+  //
+  // Unioning is free of side effects: requiredSeq is built from the ANSWER's
+  // own text, so a token the alternate does not contain is never demanded of
+  // it — only a token it does contain, and could otherwise have dropped.
+  const slotTokens = answers[0]?.requiredTokens ?? [];
   for (const a of answers) {
-    const verdict = utterancePassed(spoken, a.target, sourceWeek, a.requiredTokens, guestPrompt);
+    const req = [...new Set([...(a.requiredTokens ?? []), ...slotTokens])];
+    const verdict = utterancePassed(spoken, a.target, sourceWeek, req, guestPrompt);
     if (verdict.passed) return verdict;
     own ??= verdict;
   }
@@ -1289,8 +1415,15 @@ export function utterancePassed(
   // hai lần đó nói hai điều khác nhau; đọc "nine keys to room two-oh-five"
   // vẫn có "two" nên phép kiểm tập hợp cho qua. Dãy con cùng thứ tự bắt được
   // cả hoán vị lẫn thiếu lượt.
-  const valueSeq = valueTokenSequence(normalize(target));
-  const spokenSeq = valueTokenSequence(normalize(spoken));
+  // Canonicalised the same way compareWords canonicalises, and it was not:
+  // "morning", "afternoon" and "evening" are VALUE_TOKENS, so a greeting that
+  // greetingIsFree() had already freed still had to match the model's exact
+  // day-part HERE. "Good afternoon, madam. May I have your room number?"
+  // failed a "Good morning" model on a prompt that names no hour — 6 of the 6
+  // freed greetings in Phase 2 failed that way, with the percentage at 100
+  // and greetingIsFree() returning true two lines above.
+  const valueSeq = valueTokenSequence(canonDaypart(normalize(target), dayFree));
+  const spokenSeq = valueTokenSequence(canonDaypart(normalize(spoken), dayFree));
   let vi = 0;
   for (const t of spokenSeq) if (vi < valueSeq.length && valueSeq[vi] === t) vi++;
   const valueOrderOk = vi === valueSeq.length;
@@ -1359,14 +1492,120 @@ export function utterancePassed(
   const inserted = extra.filter(
     (t) => !HONORIFIC.test(t) && !COURTESY_EXTRAS.has(t) && !ARTICLES.has(t) && !DISFLUENCY.has(t),
   );
-  // One is already one too many, and it has to stay that way. Forgiving one
-  // insertion on an otherwise-perfect reading looked safe and let 95 of the
-  // course's own 255 nearMiss strings pass: "…then I WILL check the profile.",
-  // "Could you TO come this way?", "I DID confirmed it yesterday." are the
-  // model plus one word, which is the commonest wrong-answer shape in the
-  // whole phase. The managers' sentences are handled by naming their words in
-  // COURTESY_EXTRAS instead, which is narrow enough to measure.
-  const insertionFails = inserted.length > 0;
+  // Forgiving one insertion on an otherwise-perfect reading was tried once as
+  // a plain count and let 95 of the course's own 255 nearMiss strings pass:
+  // "…then I WILL check the profile.", "Could you TO come this way?", "I DID
+  // confirmed it yesterday." That is the model plus one word, and it is the
+  // commonest wrong-answer shape in the phase — so a plain count stays
+  // refused, and `insertionFails` is decided further down, where the rest of
+  // the verdict is known.
+  //
+  // What separates the two is KIND, not number. Every near miss the course
+  // prints inserts a FUNCTION word — an auxiliary, a preposition, a pronoun,
+  // an article — because that is the L1 error the pairs are written around.
+  // A staff member's spare word is a content word: "I will check the profile
+  // QUICKLY, madam.", "I will bring a foam pillow MYSELF.", "I will ask my
+  // DUTY manager." Measured: the model plus one professional content word
+  // passed 0 of 1682 items before this, and "my manager" → "my duty manager"
+  // failed 44 of 44.
+  const FUNCTION_WORDISH = new Set<string>([
+    ...FUNCTION_TOKENS,
+    ...GRAMMAR_TOKENS,
+    ...NEGATION_TOKENS,
+    ...ARTICLES,
+    "he",
+    "she",
+    "they",
+    "them",
+    "him",
+    "her",
+    "his",
+    "their",
+    "me",
+    "us",
+    "this",
+    "that",
+    "these",
+    "those",
+    "there",
+    "by",
+    "with",
+    "from",
+    "into",
+    "about",
+    "over",
+    "under",
+    "near",
+    "than",
+    "then",
+    "as",
+    "or",
+    "but",
+    "been",
+    "being",
+    "must",
+    "might",
+    "should",
+    "were",
+    "was",
+    "are",
+    "am",
+    "to",
+    // Degree words, quantifiers and particles. They are function words by
+    // every definition, and inserting one is a taught error rather than a
+    // flourish: "It is very MUCH quiet.", "This one is MORE better, sir.",
+    // "The room is TOO MUCH stuffy, sir." and "Welcome back, Mr Chen AGAIN."
+    // are all rude halves the course prints, and all four passed the first
+    // draft of this rule.
+    "much",
+    "more",
+    "most",
+    "many",
+    "few",
+    "little",
+    "less",
+    "too",
+    "also",
+    "again",
+    "back",
+    "such",
+    "same",
+    "other",
+    "another",
+    "every",
+    "each",
+    "all",
+    "both",
+    "any",
+    "some",
+    "one",
+  ]);
+  // Words a spare word may never be, whatever else is right. Every one of
+  // them commits the hotel to money it has not agreed to give, or to a
+  // promise nobody may make on the floor — and the model that did not say it
+  // is the lesson. One inserted "free" turns "I will bring a foam pillow"
+  // into a comp, and the percentage does not move.
+  const MONEY_WORDS = new Set<string>([
+    "free",
+    "complimentary",
+    "discount",
+    "refund",
+    "guarantee",
+    "promise",
+    "waive",
+    "upgrade",
+  ]);
+  // Checked on the RAW stream, before foldCourtesy: the synonym fold turns
+  // "free" into "ready", and reading the ban list off folded tokens would let
+  // exactly the word this list exists for through under another name.
+  const rawTargetTally = new Map<string, number>();
+  for (const t of normalize(target)) rawTargetTally.set(t, (rawTargetTally.get(t) ?? 0) + 1);
+  let moneyAdded = false;
+  for (const t of normalize(spoken)) {
+    const left = rawTargetTally.get(t) ?? 0;
+    if (left > 0) rawTargetTally.set(t, left - 1);
+    else if (MONEY_WORDS.has(t)) moneyAdded = true;
+  }
   // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
   //
   // The percentage threshold is 60% at A1, which is generous on purpose — but
@@ -1480,6 +1719,42 @@ export function utterancePassed(
     missingContent.some((t) => holdsThePredicate(t, target));
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
+  // ONE spare word, and only on a reading that is otherwise the model exactly.
+  //
+  // Every clause below was in the rule two auditors measured separately, and
+  // taking any one of them out puts near misses back on the pass side: the
+  // reading has to be word-perfect (accuracy 100 AND orderRatio 1.00), nothing
+  // may be missing on any of the three lists, no negation may be added, no
+  // -s may be wrong, the spare word may not be a function word, and it may not
+  // be one of the money words above. With it: professional readings went from
+  // 0 of 1682 to 1682, and the course's own 508 nearMiss/rude strings still
+  // leak 0.
+  // FROM PHASE 2, for the same reason the article allowance is gated there.
+  //
+  // The rule was written and measured on Phase 2 sentences, which are long
+  // enough that one spare word is a flourish. An A1 model is four words, and
+  // the course's own wrong answers for those weeks ARE the model plus one
+  // word: "The swimming pool is upstairs FLOOR.", "Fifteen minutes only TIME,
+  // madam.", "This way, please GO, madam.", "I will transfer your call. WAIT."
+  // Ungated, this rule took the Phase 1 rude/nearMiss leak from 10 of 494 to
+  // 28 and Phase 0 from 23 of 349 to 25 — a patch in one phase reopening a
+  // hole in two others, which is the failure this file has had before.
+  // Weeks 1-14 keep the old flat refusal.
+  const oneSpareWord =
+    Number(sourceWeek) >= 15 &&
+    inserted.length === 1 &&
+    Math.round(cmp.accuracy * 100) === 100 &&
+    cmp.orderRatio === 1 &&
+    missingRequired.length === 0 &&
+    missingContent.length === 0 &&
+    missingFunction.length === 0 &&
+    unforgivable.length === 0 &&
+    valueOrderOk &&
+    added.length === 0 &&
+    inflection.length === 0 &&
+    !FUNCTION_WORDISH.has(inserted[0]!) &&
+    !moneyAdded;
+  const insertionFails = inserted.length > 0 && !oneSpareWord;
   return {
     ...cmp,
     missingRequired,

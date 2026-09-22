@@ -214,7 +214,13 @@ const FO_BANK: P2Bank = {
     { word: "Company name", phonetic: "/ˈkʌmpəni neɪm/", definition: "Tên công ty", icon: "🏢" },
     { word: "Tax code", phonetic: "/tæks kəʊd/", definition: "Mã số thuế", icon: "🔢" },
     { word: "Service charge", phonetic: "/ˈsɜːvɪs tʃɑːdʒ/", definition: "Phí phục vụ", icon: "💼" },
-    { word: "Currency", phonetic: "/ˈkʌrənsi/", definition: "Loại tiền tệ", icon: "💱" },
+    // Ô này chạy vào khung "Which {5} would you prefer?" — tức thứ KHÁCH
+    // được chọn. "Currency" ở đó chọi thẳng với luật tuần 18 của chính khoá
+    // ("The bill is in Vietnamese dong, sir."): hoá đơn tính bằng đồng, loại
+    // tiền không phải thứ lễ tân mời khách chọn. Loại hoá đơn thì đúng là
+    // thứ khách chọn, và nó đứng cạnh Invoice address / Company name / Tax
+    // code trong cùng ngân hàng.
+    { word: "Invoice type", phonetic: "/ˈɪnvɔɪs taɪp/", definition: "Loại hoá đơn", icon: "💱" },
     {
       word: "Printed receipt",
       phonetic: "/ˈprɪntɪd rɪˈsiːt/",
@@ -255,9 +261,11 @@ const FO_BANK: P2Bank = {
       icon: "🚬",
     },
     {
-      word: "Bell trolley",
-      phonetic: "/bel ˈtrɒli/",
-      definition: "Xe đẩy hành lý của tổ hành lý",
+      // "Bell trolley" không phải tiếng Anh khách sạn — tổ hành lý là
+      // bell desk, nhưng cái xe thì gọi là luggage trolley.
+      word: "Luggage trolley",
+      phonetic: "/ˈlʌɡɪdʒ ˈtrɒli/",
+      definition: "Xe đẩy hành lý",
       icon: "🛒",
     },
     {
@@ -310,7 +318,10 @@ const FO_BANK: P2Bank = {
     // Slot 9 is what the staff member actually recommends ("I would suggest
     // the {w}, because it is popular."), so a word meaning "a choice" made
     // the recommendation circular: "I would suggest the option."
-    { word: "High floor", phonetic: "/haɪ flɔː/", definition: "Tầng cao", icon: "🏙️" },
+    // Tuần 16 đã dạy "Higher floor" ở ô nâng hạng; "High floor" ở đây là
+    // cùng một ý nói hai lần, nên ô này đổi sang một hướng nhìn khác — nó
+    // đứng cùng họ với City view và Garden view trong chính ngân hàng này.
+    { word: "Pool view", phonetic: "/puːl vjuː/", definition: "Hướng nhìn hồ bơi", icon: "🏊" },
   ],
   reports: [
     { word: "Confirmed", phonetic: "/kənˈfɜːmd/", definition: "Đã xác nhận", icon: "✅" },
@@ -638,14 +649,24 @@ const FB_BANK: P2Bank = {
       definition: "Không chậm trễ",
       icon: "⏱️",
     },
-    { word: "Praise", phonetic: "/preɪz/", definition: "Lời khen ngợi", icon: "👏" },
+    // Vòng 6 của F&B: cả mười ba thẻ tuần 22 đều là từ báo cáo nội bộ — không
+    // thẻ nào nói được với khách, đúng tuần sát hạch. Ba ô danh từ (3, 5, 9)
+    // đổi sang thứ người phục vụ thật sự đưa cho khách, và tiện thể lấp ba
+    // khoảng trống mà auditor grep cả 22 tuần không thấy: gói mang về, mời
+    // rượu, và châm thêm nước. Bài FB_22_2 có bản riêng để nói chúng với khách.
+    {
+      word: "Takeaway box",
+      phonetic: "/ˈteɪkəweɪ bɒks/",
+      definition: "Hộp mang phần ăn về",
+      icon: "📦",
+    },
     {
       word: "Serve faster",
       phonetic: "/sɜːv ˈfɑːstə/",
       definition: "Phục vụ nhanh hơn",
       icon: "⚡",
     },
-    { word: "Kitchen note", phonetic: "/ˈkɪtʃɪn nəʊt/", definition: "Ghi chú của bếp", icon: "📝" },
+    { word: "Wine list", phonetic: "/waɪn lɪst/", definition: "Danh mục rượu vang", icon: "🍷" },
     {
       word: "Well managed",
       phonetic: "/wel ˈmænɪdʒd/",
@@ -660,10 +681,10 @@ const FB_BANK: P2Bank = {
     },
     { word: "Review", phonetic: "/rɪˈvjuː/", definition: "Rà soát lại", icon: "📋" },
     {
-      word: "Side station",
-      phonetic: "/saɪd ˈsteɪʃn/",
-      definition: "Quầy phụ trong nhà hàng",
-      icon: "✨",
+      word: "Water refill",
+      phonetic: "/ˈwɔːtə ˈriːfɪl/",
+      definition: "Rót thêm nước cho khách",
+      icon: "💧",
     },
     { word: "Till count", phonetic: "/tɪl kaʊnt/", definition: "Kiểm quỹ cuối ca", icon: "💵" },
   ],
@@ -862,10 +883,15 @@ const HK_BANK: P2Bank = {
       icon: "🧾",
     },
     {
-      word: "Hand in the key",
-      phonetic: "/hænd ɪn ðə kiː/",
-      definition: "Nộp lại chìa khoá",
-      icon: "🤲",
+      // Ô này chạy vào "You can {7} whenever you are ready." và "When can I
+      // {7}?" — tức việc KHÁCH làm với buồng phòng. Buồng phòng không nhận
+      // chìa khoá (đó là việc của lễ tân), còn gửi đồ giặt thì đúng là việc
+      // khách hỏi buồng phòng nhiều nhất, và nó đứng cùng họ với Laundry
+      // form · Laundry service · Laundry slip trong chính ngân hàng này.
+      word: "Send the laundry",
+      phonetic: "/send ðə ˈlɔːndri/",
+      definition: "Gửi đồ đi giặt",
+      icon: "🧺",
     },
     { word: "In progress", phonetic: "/ɪn ˈprəʊɡres/", definition: "Đang xử lý", icon: "🕓" },
     { word: "Sign the sheet", phonetic: "/saɪn ðə ʃiːt/", definition: "Ký vào bảng", icon: "✍️" },
@@ -1735,7 +1761,9 @@ const GR_BANK: P2Bank = {
     },
     { word: "Removed", phonetic: "/rɪˈmuːvd/", definition: "Đã cất đi", icon: "🗑️" },
     { word: "Very smooth", phonetic: "/ˈveri smuːð/", definition: "Rất suôn sẻ", icon: "🌊" },
-    { word: "Jotted", phonetic: "/ˈdʒɒtɪd/", definition: "Đã ghi nhanh", icon: "✍️" },
+    // "Jotted" là từ thông tục, hiếm gặp trong tiếng Anh khách sạn và không
+    // phải thứ một học viên A2 cần học thuộc. Từ nghiệp vụ là "logged".
+    { word: "Recorded", phonetic: "/rɪˈkɔːdɪd/", definition: "Đã ghi vào sổ ca", icon: "✍️" },
   ],
   wrapUp: [
     { word: "Warm", phonetic: "/wɔːm/", definition: "Ân cần, nồng hậu", icon: "🤗" },

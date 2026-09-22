@@ -4394,6 +4394,11 @@ export const SW_WEEK_19: WeekContent = {
   weekNumber: 19,
   weekTitleEn: "Pool & Private Cabana Elite Service",
   weekTitleVi: "Điều Phối Khu Vực Hồ Bơi/Bãi Biển & Cảnh Báo An Toàn",
+  // Tuần này là bài viết tay chèn vào giữa Phase 2, nên lịch ôn của spine
+  // không chạy qua nó: danh sách ôn chỉ có tám mục của Phase 0/1 và không một
+  // lượt nói nào rút lại từ của tuần 15-18, trong khi các tuần cùng phase
+  // mang 21-28 mục. Hai mươi headword dưới đây là của chính SW tuần 15-18,
+  // và bốn lượt ôn ở bốn bài bên dưới đưa chúng trở lại miệng học viên.
   reviewWords: [
     "Locker",
     "Robe",
@@ -4403,6 +4408,26 @@ export const SW_WEEK_19: WeekContent = {
     "Pool attendant",
     "Shower",
     "Appointment",
+    "Check the health form",
+    "Prepare the foot bath",
+    "Check the pressure",
+    "Walk the guest out",
+    "Locker access",
+    "Day pass",
+    "Fitness class",
+    "Aroma oil",
+    "Couple room",
+    "Health form",
+    "Medical condition",
+    "Medicine list",
+    "Injury note",
+    "Comfort level",
+    "Pain area",
+    "Consent form",
+    "Consent signature",
+    "Service charge",
+    "Book online",
+    "Treatment robe",
   ],
   lessons: [
     {
@@ -4488,6 +4513,12 @@ export const SW_WEEK_19: WeekContent = {
           targetResponse: "No. It is reserved until five.",
           helpTip: "Trả lời kèm mốc giờ, đồng nghiệp khỏi hỏi lại.",
           speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Do I need to fill anything in for the pool?",
+          targetResponse: "Only your health form, madam, if you use the sauna.",
+          helpTip:
+            "Ôn tuần 17: health form chỉ cần khi dùng phòng xông — đừng bắt khách khai thừa.",
         },
       ],
       reading: {
@@ -4625,6 +4656,11 @@ export const SW_WEEK_19: WeekContent = {
           helpTip: "Xác nhận đã nói, và nói với ai.",
           speakerRole: "colleague",
         },
+        {
+          guestPrompt: "We are not staying at this hotel.",
+          targetResponse: "The day pass includes locker access, madam.",
+          helpTip: "Ôn tuần 16: day pass và locker access — nói gọn đúng những gì đã gồm.",
+        },
       ],
       reading: {
         text: "SUNSET POOL - HOUSE RULES\n1. Children under 12 must be accompanied by an adult at all times.\n2. Proper swimwear is required; no jeans or plain t-shirts in the water.\n3. Diving is not permitted in the shallow end.\n4. Lifeguard on duty: 7:00 AM - 7:00 PM daily.\n5. No glass bottles or food in the water area.",
@@ -4759,6 +4795,12 @@ export const SW_WEEK_19: WeekContent = {
           guestPrompt: "Why is the beach closed?",
           targetResponse: "The sea is too rough this afternoon.",
           helpTip: "Nêu lý do thời tiết, không nêu quy định chung chung.",
+          speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Can 1204 use the hot pool today?",
+          targetResponse: "The injury note says no. I will ask the supervisor.",
+          helpTip: "Ôn tuần 17: injury note quyết định, không phải ý thích của khách.",
           speakerRole: "colleague",
         },
       ],
@@ -4911,6 +4953,11 @@ export const SW_WEEK_19: WeekContent = {
           guestPrompt: "I feel worse. Is someone coming?",
           targetResponse: "Yes, sir. Our nurse is coming now. Please stay in the shade.",
           helpTip: "Trấn an bằng một việc cụ thể: người đang tới, và khách cần ở yên chỗ nào.",
+        },
+        {
+          guestPrompt: "Can I book a massage after my swim?",
+          targetResponse: "Certainly, madam. May I have your consent signature first?",
+          helpTip: "Ôn tuần 18: consent signature phải có trước khi đặt lịch trị liệu.",
         },
       ],
       reading: {

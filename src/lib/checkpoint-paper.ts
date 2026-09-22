@@ -581,21 +581,23 @@ export function buildPaper(dep: string, week: string): Question[] {
     // which does the same to every length rule. A phase without near misses
     // (weeks 23-40) keeps the old draw: an edit of the answer alone would make
     // the answer the middle of the three every time.
+    const flat = (t: string) =>
+      t
+        .toLowerCase()
+        .replace(/[^a-z ]/g, " ")
+        .replace(/ +/g, " ")
+        .trim();
+    // Every sentence the phase teaches as RIGHT, spoken models included: "I
+    // listed everything in the log." is a week-21 model, and it was printed
+    // as a wrong edit of a grammar pair on 2.4% of Spa papers.
+    const taught = new Set([
+      ...grammarPool.map((o) => flat(o.polite)),
+      ...phaseLessons.flatMap((l) => l.speaking.map((s) => flat(s.targetResponse))),
+    ]);
+    const avoid = new Set([flat(g.polite), ...(g.nearMiss ? [flat(g.nearMiss)] : [])]);
+    const usableOf = (list: string[]) =>
+      list.filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v)));
     if (g.nearMiss) {
-      const flat = (t: string) =>
-        t
-          .toLowerCase()
-          .replace(/[^a-z ]/g, " ")
-          .replace(/ +/g, " ")
-          .trim();
-      // Every sentence the phase teaches as RIGHT, spoken models included: "I
-      // listed everything in the log." is a week-21 model, and it was printed
-      // as a wrong edit of a grammar pair on 2.4% of Spa papers.
-      const taught = new Set([
-        ...grammarPool.map((o) => flat(o.polite)),
-        ...phaseLessons.flatMap((l) => l.speaking.map((s) => flat(s.targetResponse))),
-      ]);
-      const avoid = new Set([flat(g.polite), flat(g.nearMiss)]);
       const fromAnswer = Math.random() < 1 / 3;
       const nm: string = g.nearMiss;
       // The near miss's error words: what it says that the answer does not.
@@ -609,26 +611,102 @@ export function buildPaper(dep: string, week: string): Question[] {
       }
       const fromPolite = () => wrongVariants(g.polite, { dropArticles: false });
       const fromNear = () => wrongVariants(nm, { protect: inserted, dropArticles: true });
-      const usableOf = (list: string[]) =>
-        list.filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v)));
-      let cands = shuffle(usableOf(fromAnswer ? fromPolite() : fromNear()));
+      const preferred = shuffle(usableOf(fromAnswer ? fromPolite() : fromNear()));
       // A side with nothing left to edit ("I served it yesterday, sir." has no
       // droppable or swappable word) used to fall through to an unrelated
       // sentence from the pool, which is rejected on sight — 10-13% of grammar
       // options. The other side nearly always has an edit.
-      if (!cands.length) cands = shuffle(usableOf(fromAnswer ? fromNear() : fromPolite()));
+      const other = shuffle(usableOf(fromAnswer ? fromNear() : fromPolite()));
       const wantRank = Math.floor(Math.random() * 3);
       const nearMiss = g.nearMiss;
+      // How many of the three options come out shorter than the answer — the
+      // answer's own length rank, since the third option and the near miss are
+      // the other two.
       const rankOf = (third: string) =>
         [nearMiss, third].filter((o) => o.length < g.polite.length).length;
-      const third = cands.find((c) => rankOf(c) === wantRank) ?? cands[0];
-      if (third) chosen.add(third);
+      // THE DRAWN RANK, OR A RANK THAT EXISTS — the mechanism the listening
+      // block has used since round 4, and this block was not using it.
+      // `cands.find(...) ?? cands[0]` takes the first of a shuffle whenever the
+      // drawn rank is missing, and the edits available are overwhelmingly
+      // DELETIONS, so the answer came out the shortest of its three options
+      // 37-44% of the time against a chance of 33%: "pick the shortest"
+      // answered 37-44% of grammar questions and cleared the block's own floor
+      // on 49-61% of papers in this round's reviews.
+      //
+      // Both edit sides are grouped, not just the drawn one. The near miss's
+      // length is fixed by hand, so rankOf() can only ever reach TWO of the
+      // three ranks for a given pair, and looking at one side at a time often
+      // left only one. The drawn side is still preferred — an option edited
+      // from X sits next to X, which is what keeps "most like the other two"
+      // at chance — and the other side is reached for only when the drawn rank
+      // is not on it.
+      const group = (list: string[]) => {
+        const m = new Map<number, string[]>();
+        for (const c of list) m.set(rankOf(c), [...(m.get(rankOf(c)) ?? []), c]);
+        return m;
+      };
+      const byPreferred = group(preferred);
+      const byAll = group([...preferred, ...other]);
+      // WHICH RANKS ARE EVEN REACHABLE IS DECIDED BY THE NEAR MISS, NOT HERE.
+      //
+      // rankOf() counts the near miss and the third option, and the near miss
+      // is hand-written: if it is longer than the answer, this pair can only
+      // ever produce rank 0 or rank 1, and if it is shorter, only rank 1 or
+      // rank 2. Two of three, always — so drawing 0-2 and equalising whatever
+      // is left does not flatten anything, it concentrates. Measured, at 1,000
+      // papers a department: equalising the reachable ranks took "pick the
+      // shortest" from 37-44% to 31-38% and pushed the same mass straight onto
+      // "pick the middle", 31-42% → 41-50%. One surface trick traded for a
+      // worse one.
+      //
+      // Rank 2 — the answer being the LONGEST of its three options — is the
+      // rank the pairs can rarely supply (about a quarter of them), and it
+      // measured 19-24% while rank 1 measured 41-44%. So a pair that can
+      // supply it does, and the pairs that cannot split the two ranks they
+      // have. That is the flattest this file can make the three without
+      // rewriting the near misses.
+      const reach = [...byAll.keys()];
+      const rank = reach.includes(2)
+        ? 2
+        : byAll.has(wantRank)
+          ? wantRank
+          : reach[Math.floor(Math.random() * reach.length)]!;
+      const pick = (byPreferred.get(rank) ?? byAll.get(rank) ?? [...preferred, ...other])[0];
+      if (pick) chosen.add(pick);
     }
-    const ranked = grammarPool
+    const rankedAll = grammarPool
       .filter((o) => o.lessonId !== g.lessonId && !saysTheSame(o.polite) && !sameStem(o))
       .map((o) => ({ o, score: share(o.polite) }))
       .sort((a, b) => b.score - a.score);
+    const ranked = rankedAll
+      // A DISTRACTOR THAT SHARES NO CONTENT WORD WITH THE STEM IS NOT ONE.
+      //
+      // The stem is printed in the question — "Câu nào là cách nói đúng và
+      // lịch sự thay cho «I note all already.»" — so an option about a
+      // different subject altogether is struck out without reading it, and the
+      // question is a coin toss between the two that remain. Measured on real
+      // papers: 12.8-24.4% of the drawn distractors shared nothing with their
+      // stem, which turned 14.2-28.2% of grammar questions into two-option
+      // ones. `share` is already computed here for the ranking; it just had no
+      // floor.
+      .filter(({ score }) => score > 0);
     for (const { o } of ranked) {
+      if (chosen.size >= want) break;
+      chosen.add(o.polite);
+    }
+    // Rather than a sentence from elsewhere, one more edit of the answer. The
+    // floor above can empty the pool — a stem whose content words nothing else
+    // in the phase shares — and an edit of the answer is what the block is
+    // made of anyway: it sits one repair away from the key, so it has to be
+    // read.
+    if (chosen.size < want)
+      for (const v of shuffle(usableOf(wrongVariants(g.polite, { dropArticles: false })))) {
+        if (chosen.size >= want) break;
+        chosen.add(v);
+      }
+    // And a two-option question is worse than an eliminable third, so if even
+    // that came up empty the floor is lifted for this one stem.
+    for (const { o } of rankedAll) {
       if (chosen.size >= want) break;
       chosen.add(o.polite);
     }
@@ -847,6 +925,12 @@ export function buildPaper(dep: string, week: string): Question[] {
       // "What do you do first?" has as many right answers as the department
       // has opening jobs, and three weeks of this phase each teach a different
       // one. Same for the every-day and end-of-shift frames beside it.
+      // The bare reassurance. "Certainly. It will be ready shortly." and
+      // "Certainly, everything will be ready for you." are the same promise
+      // with a different subject, and neither names anything the audio has to
+      // have said, so both answer "Will it be done in time?" — the frame rule
+      // below misses them because their first four words differ.
+      /^certainly[.,]? (it|everything) will be\b/i,
       /\bfirst[.?!]?$/i,
       /^first (i|we)\b/i,
       /\bevery day[.?!]?$/i,

@@ -31,7 +31,7 @@ import {
   type ConstructTally,
 } from "@/lib/phases";
 import { buildPaper, type Question } from "@/lib/checkpoint-paper";
-import { answersOf, buildOral, type OralItem } from "@/lib/checkpoint-oral";
+import { answersOf, buildOral, oralHalfPassed, type OralItem } from "@/lib/checkpoint-oral";
 import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -404,9 +404,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     // carry the pass on their own.
     const spokenAtAll = results.filter((r) => !r.typed).length >= oralPassMin(results.length);
     const oralCounts = deviceFailed || spokenAtAll;
-    const ok =
-      writtenOk &&
-      (results.length === 0 || (oralCounts && oralPassed >= oralPassMin(results.length)));
+    // The count AND the reserved draw — oralHalfPassed() holds both, and the
+    // flag it reads is set by buildOral(), which owns the reservation. The
+    // alternative was a copy of CARRIES_AUTHORITY here, and a copied rule is a
+    // rule that stops being the one that ships.
+    const ok = writtenOk && (results.length === 0 || (oralCounts && oralHalfPassed(results)));
     setOralResults(results);
     if (ok && !awardedRef.current) {
       awardedRef.current = true;
@@ -514,7 +516,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
 
   if (stage === "done") {
     const oralPassed = oralResults.filter((r) => r.passed).length;
-    const oralOk = oralResults.length === 0 || oralPassed >= oralPassMin(oralResults.length);
+    const oralOk = oralHalfPassed(oralResults);
+    // Missed the reserved draw while clearing the count — the one case where
+    // the tally on screen looks like a pass and is not, so it gets its own
+    // sentence instead of "you need N of 5".
+    const missedReserved = oralResults.some((r) => r.item.reserved && !r.passed);
     const passed = checkpointPassed(scorePct, tallies) && oralOk;
     const shortfall = tallies.filter((t) => !blockCleared(t));
     const undeliverable = tallies.filter((t) => !t.deliverable);
@@ -539,7 +545,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
               : !oralOk && checkpointPassed(scorePct, tallies)
-                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${oralPassMin(oralResults.length)}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                ? missedReserved
+                  ? `Phần viết đã đạt, nhưng câu về an toàn / thẩm quyền ở phần nói chưa đạt. Câu đó bắt buộc phải đúng: nó là câu bạn sẽ phải nói khi không được tự quyết. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                  : `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${oralPassMin(oralResults.length)}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
                 : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
                   ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
                       .map(
@@ -606,6 +614,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                   <div key={r.item.key + i} className="text-xs leading-relaxed">
                     <div className={r.passed ? "text-foreground/60" : "text-primary"}>
                       {r.passed ? "✓" : "✗"} {r.item.who}: "{r.item.guestPrompt}"
+                      {r.item.reserved && (
+                        <span className="ml-2 text-[10px] uppercase tracking-[0.2em] text-primary">
+                          · bắt buộc đúng
+                        </span>
+                      )}
                     </div>
                     <div className="mt-1 text-foreground/75">
                       Câu mẫu: <span className="text-foreground">{r.item.target}</span>

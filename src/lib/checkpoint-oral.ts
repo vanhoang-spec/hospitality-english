@@ -1,5 +1,5 @@
 import { getWeekContent, speakerAudioLabel, speakerLabel } from "./content/week-content";
-import { CHECKPOINT_ORAL_ITEMS, weeksInPhase } from "./phases";
+import { CHECKPOINT_ORAL_ITEMS, oralPassMin, weeksInPhase } from "./phases";
 import { shuffle } from "./checkpoint-paper";
 import { acceptedAnswers, type AcceptedAnswer } from "./speaking-alternates";
 
@@ -30,6 +30,12 @@ export type OralItem = {
   follows?: string;
   /** The other replies the phase teaches for this same line. */
   alternates?: AcceptedAnswer[];
+  /** The one draw reserved below for a decision the speaker does not own, or
+   *  the department's own risk. The suite requires it outright — see
+   *  oralHalfPassed(). Set HERE and nowhere else: the reservation is made by
+   *  a regex this file owns, and a copy of that regex in the suite would be a
+   *  second rule that stops being the one that ships. */
+  reserved?: boolean;
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -45,8 +51,27 @@ export const answersOf = (item: OralItem): AcceptedAnswer[] => [
   ...(item.alternates ?? []),
 ];
 
+/** Whether the spoken half of a sitting passed: the count, AND the reserved
+ *  draw.
+ *
+ *  The count alone said yes to a learner who answered the safety or authority
+ *  item wrong — measured at 100% of 2,000 sittings a department when the other
+ *  four were right. Three of five is a fair bar for fluency and a useless one
+ *  for "may I promise this?", which is not a matter of degree: the reserved
+ *  draw exists because five draws cannot cover eight weeks and that sentence
+ *  has to be in every sitting, and a sentence that has to be asked has to be
+ *  answered.
+ *
+ *  Lives here, next to the reservation that sets the flag, so the suite cannot
+ *  drift from it and a measurement can call the thing that ships. */
+export function oralHalfPassed(results: { item: OralItem; passed: boolean }[]): boolean {
+  if (results.length === 0) return true;
+  if (results.some((r) => r.item.reserved && !r.passed)) return false;
+  return results.filter((r) => r.passed).length >= oralPassMin(results.length);
+}
+
 export function buildOral(dep: string, week: string): OralItem[] {
-  const items = weeksInPhase(week).flatMap((w) => {
+  const items: OralItem[] = weeksInPhase(week).flatMap((w) => {
     const c = getWeekContent(dep, String(w));
     if (!c) return [];
     return c.lessons.flatMap((l) =>
@@ -176,7 +201,16 @@ export function buildOral(dep: string, week: string): OralItem[] {
   const reserved = shuffle(pool).find(
     (i) => CARRIES_AUTHORITY.test(items[i].target) || (topic?.test(items[i].target) ?? false),
   );
-  if (reserved !== undefined) take(reserved);
+  if (reserved !== undefined) {
+    // The reservation put the sentence in the paper and stopped there, so it
+    // was worth the same as any other draw and the pass mark is 3 of 5:
+    // simulated over 2,000 sittings a department, a learner who got this one
+    // item wrong and the other four right passed 100% of the time. Reserving a
+    // draw for "I cannot decide that — may I ask my manager?" and then not
+    // minding the answer is not an assessment of it.
+    items[reserved] = { ...items[reserved]!, reserved: true };
+    take(reserved);
+  }
   for (const i of shuffle(pool)) {
     if (units >= CHECKPOINT_ORAL_ITEMS) break;
     if (!used.has(i)) take(i);
