@@ -677,12 +677,20 @@ export const FO_WEEK_17: WeekContent = {
           context: "Here is your electronic room keycard.",
           icon: "🔑",
         },
+        // Was "Elevator". Week 2 already gave this department "Lift", glossed
+        // in the card itself as "(Anh–Anh; Mỹ: elevator)" — so this slot spent
+        // one of sixteen places on a second word for a thing the learner could
+        // already name, and week 17 then used both spellings side by side.
+        // The slot goes to the thing this week's own welcome card promises and
+        // no FO week under 23 ever cards: "Late check-out: ask at the front
+        // desk". Week 22 makes the learner SAY it ("I will ask my manager
+        // about a late check-out") with nothing behind it.
         {
-          word: "Elevator",
-          phonetic: "/ˈelɪveɪtə/",
-          definition: "Thang máy",
-          context: "The elevators are just behind you on the left.",
-          icon: "🛗",
+          word: "Late check-out",
+          phonetic: "/leɪt ˈtʃekaʊt/",
+          definition: "Trả phòng muộn",
+          context: "A late check-out is confirmed at the front desk, sir.",
+          icon: "🕛",
         },
         {
           word: "Breakfast buffet",
@@ -727,8 +735,15 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           guestPrompt: "Which way do we go up?",
-          targetResponse: "The elevators are just behind you.",
-          helpTip: "Chỉ hướng theo vị trí của khách, không theo vị trí của bạn.",
+          targetResponse: "The lifts are just behind you.",
+          helpTip:
+            "Chỉ hướng theo vị trí của khách, không theo vị trí của bạn. Gọi thang máy đúng từ tuần 2 đã dạy và giữ nguyên một từ đó trong cả ca; biển chỉ dẫn viết kiểu Mỹ không đổi được từ mình nói.",
+        },
+        {
+          guestPrompt: "Could we keep the room later on our last day?",
+          targetResponse: "I will note that, madam. A late check-out is not guaranteed.",
+          helpTip:
+            "Trả phòng muộn phụ thuộc phòng trống hôm đó, nên ghi nhận yêu cầu nhưng đừng hứa. Chính tấm thiệp đón khách của tuần này viết: hỏi ở quầy lễ tân, và quầy mới là nơi xác nhận.",
         },
         {
           guestPrompt: "When is the airport guest arriving?",
@@ -749,7 +764,7 @@ export const FO_WEEK_17: WeekContent = {
         },
       ],
       reading: {
-        text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the elevator.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.\n- Late check-out: ask at the front desk. The desk confirms it, not housekeeping.\n- Airport car: book at the desk at least 3 hours before your flight.",
+        text: "WELCOME TO THE RESORT:\n- Your room is 512 (5th Floor). Use your keycard in the lift.\n- Breakfast Buffet: Lotus Restaurant (1st Floor) | 06:30 - 10:00.\n- Fitness Center & Infinity Pool: Rooftop | 06:00 - 21:00.\n- Late check-out: ask at the front desk. The desk confirms it, not housekeeping.\n- Airport car: book at the desk at least 3 hours before your flight.",
         questions: [
           {
             q: "Hồ bơi nằm ở đâu?",
@@ -1092,15 +1107,22 @@ export const FB_WEEK_15: WeekContent = {
     {
       lessonId: "FB_15_3",
       lessonOrder: 3,
-      titleEn: "Escorting Guests & Station Mapping",
-      titleVi: "Dẫn khách & Giới thiệu Sơ đồ Buffet",
+      titleEn: "Seating Guests & the Live Station",
+      titleVi: "Xếp chỗ cho khách & Quầy chế biến tại chỗ",
+      // Bốn thẻ cũ của bài này là Escort · Live station · Bakery corner ·
+      // Juice area. Ba trong bốn là tên một góc phòng ăn, và tuần 15 viết tay
+      // thay đúng tuần khung dạy nhóm `steps` — nên các tuần 16/18/20/22 vẫn
+      // đọc nhóm đó theo chỉ số và bắt học viên NÓI "seat the guest",
+      // "take the order", "repeat the order", "send the order" mà chưa ai cấp
+      // thẻ cho chúng. Escort/Bakery corner/Juice area ra, bốn bước phục vụ
+      // vào: chúng là việc phải nói, còn tên góc phòng thì bài đọc vẫn giữ.
       vocabulary: [
         {
-          word: "Escort",
-          phonetic: "/ɪˈskɔːt/",
-          definition: "Dẫn, hộ tống khách",
-          context: "Let me escort you to your table, please follow me.",
-          icon: "🚶",
+          word: "Seat the guest",
+          phonetic: "/siːt ðə ɡest/",
+          definition: "Xếp chỗ cho khách",
+          context: "We seat the guest at a quiet table near the window.",
+          icon: "🪑",
         },
         {
           word: "Live station",
@@ -1110,18 +1132,25 @@ export const FB_WEEK_15: WeekContent = {
           icon: "🍳",
         },
         {
-          word: "Bakery corner",
-          phonetic: "/ˈbeɪkəri ˈkɔːnə/",
-          definition: "Khu vực quầy bánh mì",
-          context: "You will find fresh croissants at the bakery corner.",
-          icon: "🥐",
+          word: "Take the order",
+          phonetic: "/teɪk ði ˈɔːdə/",
+          definition: "Ghi món khách gọi",
+          context: "We take the order for eggs at the live station.",
+          icon: "📝",
         },
         {
-          word: "Juice area",
-          phonetic: "/dʒuːs ˈeəriə/",
-          definition: "Khu vực nước trái cây",
-          context: "The juice area is right next to the coffee machines.",
-          icon: "🧃",
+          word: "Repeat the order",
+          phonetic: "/rɪˈpiːt ði ˈɔːdə/",
+          definition: "Nhắc lại món đã gọi",
+          context: "Always repeat the order back to the guest.",
+          icon: "🔁",
+        },
+        {
+          word: "Send the order",
+          phonetic: "/send ði ˈɔːdə/",
+          definition: "Chuyển đơn xuống bếp",
+          context: "Then we send the order to the station chef.",
+          icon: "🍳",
         },
       ],
       grammar: [
@@ -1132,10 +1161,10 @@ export const FB_WEEK_15: WeekContent = {
           rule: "'Let me…' là lời mời giúp đỡ, không phải ra lệnh.",
         },
         {
-          rude: "Coffee's over there.",
-          polite: "You'll find the coffee and juice station just next to the bakery corner.",
-          nearMiss: "You'll find the coffees and juice station just next to the bakery corner.",
-          rule: "'You'll find…' hướng dẫn khách nhẹ nhàng, thay vì chỉ trỏ hay ra lệnh.",
+          rude: "Say your eggs again.",
+          polite: "May I repeat the order back to you, sir?",
+          nearMiss: "May I repeated the order back to you, sir?",
+          rule: "'May I…?' xin phép trước khi nhắc lại; nhắc lại là bước chặn sai món.",
         },
       ],
       speaking: [
@@ -1145,19 +1174,31 @@ export const FB_WEEK_15: WeekContent = {
           helpTip: "Nối 'show' với 'you' thành một hơi — âm /w/ chạy thẳng sang 'you'.",
         },
         {
+          guestPrompt: "How do we start a new table?",
+          targetResponse: "First we seat the guest, then we take the order.",
+          helpTip:
+            "Xếp chỗ trước, ghi món sau. Đảo thứ tự là khách đứng giữa phòng ăn mà đọc thực đơn.",
+          speakerRole: "colleague",
+        },
+        {
           guestPrompt: "Could you take us to a table?",
-          targetResponse: "Let me escort you to your table, madam.",
+          targetResponse: "Of course, madam. Please follow me to this window table.",
           helpTip: "Dẫn khách tận nơi thay vì chỉ tay về hướng đó.",
         },
         {
-          guestPrompt: "Where is the fresh juice?",
-          targetResponse: "The juice area is next to the coffee machines.",
-          helpTip: "Mốc chỉ đường nên là thứ khách nhìn thấy được ngay.",
+          guestPrompt: "Can I have my eggs cooked fresh?",
+          targetResponse: "Certainly, sir. I will take the order at the station.",
+          helpTip: "Ghi món ngay tại quầy chế biến, trước mặt bếp — đừng ghi lại từ trí nhớ.",
         },
         {
-          guestPrompt: "Which station needs help?",
-          targetResponse: "The live station. I will escort guests there.",
-          helpTip: "Nói rõ quầy nào, đồng nghiệp khỏi phải đoán.",
+          guestPrompt: "Two eggs, no salt, please.",
+          targetResponse: "Let me repeat the order: two eggs, no salt.",
+          helpTip: "Nhắc lại món trước khi rời bàn; sai một chữ là một đĩa phải bỏ đi.",
+        },
+        {
+          guestPrompt: "Is table nine ready for the kitchen?",
+          targetResponse: "Yes. I will send the order to the chef now.",
+          helpTip: "Chuyển đơn xuống bếp ngay sau khi nhắc lại, đừng gom nhiều bàn rồi mới đi.",
           speakerRole: "colleague",
         },
         {
@@ -1165,14 +1206,9 @@ export const FB_WEEK_15: WeekContent = {
           targetResponse: "Our live station serves hot Pho every morning.",
           helpTip: "Gọi tên quầy, khách sẽ tìm đúng chỗ.",
         },
-        {
-          guestPrompt: "Any fresh bread?",
-          targetResponse: "You will find fresh croissants at the bakery corner.",
-          helpTip: "Nêu món cụ thể rồi mới nêu vị trí.",
-        },
       ],
       reading: {
-        text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)\nCold Station: Salad, Fruit, Yoghurt (Right Wall)\nAllergy questions: ask the station chef. Never guess an ingredient.",
+        text: "BREAKFAST STATION MAP\nLive Station: Phở & Made-to-Order Eggs (Center)\nBakery Corner: Bread, Croissants, Jam (Left Wall)\nJuice & Beverage Area: Fresh Juice, Coffee, Tea (Near Windows)\nCold Station: Salad, Fruit, Yoghurt (Right Wall)\nMade-to-order eggs: take the order, repeat it back, then send it to the station chef.\nAllergy questions: ask the station chef. Never guess an ingredient.",
         questions: [
           {
             q: "Quầy bánh nằm ở đâu?",
@@ -1190,10 +1226,7 @@ export const FB_WEEK_15: WeekContent = {
       },
       arcade: [
         { bad: "Food is over there.", good: "Let me show you where the hot food station is." },
-        {
-          bad: "Coffee, that way.",
-          good: "You'll find the coffee and juice area just next to the bakery corner.",
-        },
+        { bad: "Eggs? OK.", good: "May I repeat the order back to you, sir?" },
       ],
       game: [
         {
@@ -1226,19 +1259,16 @@ export const FB_WEEK_15: WeekContent = {
       titleEn: "Table Clearing & Satisfaction Check",
       titleVi: "Dọn bàn & Hỏi thăm Mức độ hài lòng",
       vocabulary: [
+        // "Clear" một mình không phủ được ô ngân hàng `steps[6]`, vốn là cụm
+        // đầy đủ "Clear the plates" và bị tuần 16 bắt nói. Đổi đầu thẻ thành
+        // trọn cụm không tốn suất nào. "Empty plate" ra để lấy chỗ cho
+        // "Sequence" — tên của chính trình tự mà tuần 16 bắt học viên gọi.
         {
-          word: "Clear",
-          phonetic: "/klɪə/",
-          definition: "Dọn (đĩa, bàn)",
-          context: "May I clear this plate for you, madam?",
+          word: "Clear the plates",
+          phonetic: "/klɪə ðə pleɪts/",
+          definition: "Dọn đĩa trên bàn",
+          context: "May I clear the plates for you, madam?",
           icon: "🍽️",
-        },
-        {
-          word: "Empty plate",
-          phonetic: "/ˈempti pleɪt/",
-          definition: "Đĩa đã dùng xong, trống",
-          context: "I can see an empty plate, shall I take it away?",
-          icon: "🍴",
         },
         {
           // Was "Enjoy" — a straight duplicate of the FB week-6 card, so the
@@ -1251,18 +1281,18 @@ export const FB_WEEK_15: WeekContent = {
           icon: "😊",
         },
         {
-          word: "Satisfied",
-          phonetic: "/ˈsætɪsfaɪd/",
-          definition: "Hài lòng",
-          context: "We always want our guests to feel fully satisfied.",
-          icon: "👍",
+          word: "Sequence",
+          phonetic: "/ˈsiːkwəns/",
+          definition: "Trình tự các bước phục vụ",
+          context: "Our breakfast sequence has four steps.",
+          icon: "🔢",
         },
       ],
       grammar: [
         {
           rude: "Give me your plate.",
-          polite: "Would you like me to clear your plate for you?",
-          nearMiss: "Would you like me clear your plate for you?",
+          polite: "Would you like me to clear the plates for you?",
+          nearMiss: "Would you like me clear the plates for you?",
           rule: "'Would you like me to…?' mời phục vụ mà không gây phiền.",
         },
         {
@@ -1275,14 +1305,15 @@ export const FB_WEEK_15: WeekContent = {
       speaking: [
         {
           guestPrompt: "We're all finished, thank you. The food was lovely.",
-          targetResponse: "I'm so glad to hear that. May I clear your empty plate?",
+          targetResponse: "I'm so glad to hear that. May I clear the plates?",
           helpTip:
             "Mỉm cười khi nói 'glad to hear that' — giọng tự nhiên cao lên và nghe thật lòng.",
         },
         {
-          guestPrompt: "Are you taking this away?",
-          targetResponse: "I can see an empty plate. Shall I take it?",
-          helpTip: "Hỏi trước khi dọn — đĩa trống chưa chắc là khách đã xong.",
+          guestPrompt: "What order do we work in at a table?",
+          targetResponse: "Our sequence has four steps: seat, order, serve, clear.",
+          helpTip: "Gọi tên trình tự rồi mới kể bước; đồng nghiệp mới vào ca cần cái tên trước.",
+          speakerRole: "colleague",
         },
         {
           guestPrompt: "The eggs were excellent.",
@@ -1291,20 +1322,25 @@ export const FB_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "How was table nine?",
-          targetResponse: "They left fully satisfied. I noted their comment.",
+          targetResponse: "They were happy. I noted their comment.",
           helpTip: "Báo cả phản hồi tốt, không chỉ báo sự cố.",
           speakerRole: "colleague",
         },
         {
           guestPrompt: "Could you take these away?",
-          targetResponse: "May I clear this plate for you, madam?",
+          targetResponse: "May I clear the plates for you, madam?",
           helpTip: "Xin phép trước khi chạm vào đồ trên bàn.",
         },
         {
           guestPrompt: "Is table four finished?",
-          targetResponse: "Yes. I will clear it now.",
+          targetResponse: "Yes. I will clear the plates now.",
           helpTip: "Trả lời gọn rồi làm ngay, đừng để bàn trống lâu.",
           speakerRole: "colleague",
+        },
+        {
+          guestPrompt: "Do you always ask first?",
+          targetResponse: "Yes, madam. Asking first is part of our sequence.",
+          helpTip: "Xin phép là một BƯỚC trong trình tự, không phải phép lịch sự tuỳ hứng.",
         },
       ],
       reading: {
@@ -1333,7 +1369,7 @@ export const FB_WEEK_15: WeekContent = {
         ],
       },
       arcade: [
-        { bad: "Finished? Give plate.", good: "Would you like me to clear your plate for you?" },
+        { bad: "Finished? Give plate.", good: "Would you like me to clear the plates for you?" },
         {
           bad: "Food good?",
           good: "I hope you're enjoying your breakfast, is everything to your liking?",
@@ -1346,7 +1382,7 @@ export const FB_WEEK_15: WeekContent = {
           prompt: "That was delicious, thank you. We are done now.",
           options: [
             {
-              text: "I'm so glad to hear that. May I clear your empty plate?",
+              text: "I'm so glad to hear that. May I clear the plates?",
               correct: true,
               kind: "answer",
             },
@@ -1373,6 +1409,7 @@ export const HK_WEEK_15: WeekContent = {
   weekTitleEn: "Room Service Requests & Extra Amenities",
   weekTitleVi: "Quy Trình Giao Tiếp Phòng Khách & Phục Vụ Tiện Ích",
   reviewWords: [
+    "Housekeeping",
     "Towel",
     "Soap",
     "Pillow",
@@ -1386,15 +1423,32 @@ export const HK_WEEK_15: WeekContent = {
     {
       lessonId: "HK_15_1",
       lessonOrder: 1,
-      titleEn: "Knock & Announce SOP",
-      titleVi: "Quy trình Gõ cửa & Thông báo",
+      titleEn: "The Room Routine: Door Sign, Knock, Announce",
+      titleVi: "Quy trình vào phòng: Biển treo cửa, Gõ cửa & Thông báo",
+      // Tuần 15 viết tay thay đúng tuần khung dạy nhóm `steps` của buồng
+      // phòng, nên "check the door sign", "open the curtains", "update the
+      // status" và "room routine" chưa bao giờ có thẻ — trong khi tuần 16, 20
+      // và 22 (tuần chứng nhận) vẫn bắt học viên nói chúng. Bài này là chỗ
+      // duy nhất trong tuần đủ chỗ cho chúng: nó vốn đã là quy trình vào
+      // phòng. "Occupied" ra — trạng thái phòng giờ được nói bằng chính động
+      // tác cập nhật nó, ở bài 4.
+      // "Housekeeping" was a card here as well as in week 1, where it is this
+      // department's own name — the same headword twice inside weeks 1-22,
+      // and with two spellings of the stress (/ˈhaʊskiːpɪŋ/ in week 1,
+      // /ˈhaʊsˌkiːpɪŋ/ here), so the learner met one word as two. It is not
+      // gone from the lesson: the grammar, the announce turn and the SOP
+      // passage all still turn on shouting it. It moved to `reviewWords`,
+      // which is the mechanism for saying an earlier week's word again, and
+      // the announce turn now names it in `requiredTokens` so the lock the
+      // card used to supply is still there. That also gives this week — the
+      // only one in the phase standing at the 16-card ceiling — a slot back.
       vocabulary: [
         {
-          word: "Housekeeping",
-          phonetic: "/ˈhaʊsˌkiːpɪŋ/",
-          definition: "Bộ phận Buồng phòng",
-          context: "Housekeeping! Good morning!",
-          icon: "🧹",
+          word: "Check the door sign",
+          phonetic: "/tʃek ðə dɔː saɪn/",
+          definition: "Xem biển treo cửa",
+          context: "Check the door sign before you knock.",
+          icon: "🚪",
         },
         {
           word: "Knock",
@@ -1404,18 +1458,25 @@ export const HK_WEEK_15: WeekContent = {
           icon: "👊",
         },
         {
-          word: "Occupied",
-          phonetic: "/ˈɒkjʊpaɪd/",
-          definition: "Đang có khách ở (phòng)",
-          context: "The status shows this room is occupied.",
-          icon: "🚪",
-        },
-        {
           word: "Announce",
           phonetic: "/əˈnaʊns/",
           definition: "Thông báo danh tính",
           context: "Always announce yourself before entering.",
           icon: "📢",
+        },
+        {
+          word: "Open the curtains",
+          phonetic: "/ˈəʊpən ðə ˈkɜːtnz/",
+          definition: "Mở rèm",
+          context: "We open the curtains as soon as we come in.",
+          icon: "🪟",
+        },
+        {
+          word: "Room routine",
+          phonetic: "/ruːm ruːˈtiːn/",
+          definition: "Quy trình làm một phòng",
+          context: "Our room routine has four steps.",
+          icon: "🪜",
         },
       ],
       grammar: [
@@ -1441,14 +1502,15 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "How do I start a room?",
-          targetResponse: "Please knock twice before entering the room.",
-          helpTip: "Gõ hai lần là chuẩn nghề, không phải gõ cho có.",
+          targetResponse: "First I check the door sign, then I knock twice.",
+          helpTip:
+            "Biển treo cửa đọc TRƯỚC khi tay chạm vào cửa — gõ vào phòng treo DND là lỗi không sửa lại được.",
           speakerRole: "colleague",
         },
         {
-          guestPrompt: "Is 1204 empty now?",
-          targetResponse: "No. The status shows this room is occupied.",
-          helpTip: "Đọc trạng thái trên bảng, tuyệt đối không đoán.",
+          guestPrompt: "What is the order of the work?",
+          targetResponse: "Our room routine has four steps.",
+          helpTip: "Gọi tên quy trình rồi mới kể bước; đồng nghiệp mới vào ca cần cái tên trước.",
           speakerRole: "colleague",
         },
         {
@@ -1461,6 +1523,10 @@ export const HK_WEEK_15: WeekContent = {
           guestPrompt: "Who is at the door?",
           targetResponse: "Good morning! Housekeeping!",
           helpTip: "Xưng bộ phận trước, khách nghe là biết ai đang gõ.",
+          // Explicit because the word is a week-1 headword recycled here, and
+          // the week's own headword lock only reaches this week's cards.
+          // Without it the announce step passes on "Good morning!" alone.
+          requiredTokens: ["housekeeping"],
         },
         {
           guestPrompt: "What if nobody answers?",
@@ -1468,9 +1534,15 @@ export const HK_WEEK_15: WeekContent = {
           helpTip: "Trình tự cố định: gõ, xưng danh, chờ.",
           speakerRole: "colleague",
         },
+        {
+          guestPrompt: "It is very dark in here.",
+          targetResponse: "Let me open the curtains for you, madam.",
+          helpTip:
+            "Mở rèm là việc đầu tiên sau khi vào phòng — ánh sáng cho thấy phòng thật sự sạch hay chưa.",
+        },
       ],
       reading: {
-        text: "HOUSEKEEPING SOP - KNOCK AND ANNOUNCE:\n1. Knock on the door twice and say 'Housekeeping' in a clear voice.\n2. Wait at least 10 seconds for a response.\n3. If there is no answer, knock and announce a second time before entering.\n4. If a guest answers, greet them and politely ask permission to clean the room.",
+        text: "HOUSEKEEPING SOP - THE ROOM ROUTINE, FOUR STEPS:\n1. Check the door sign. Never knock on a Do Not Disturb room.\n2. Knock on the door twice and say 'Housekeeping' in a clear voice. Wait at least 10 seconds for a response.\n3. If there is no answer, knock and announce a second time before entering. If a guest answers, greet them and politely ask permission to clean the room.\n4. Inside, open the curtains, then start the room.",
         questions: [
           {
             q: "Khi gõ cửa, nhân viên phải nói gì?",
@@ -1535,13 +1607,9 @@ export const HK_WEEK_15: WeekContent = {
           context: "Could I get an extra bath towel, please?",
           icon: "🛁",
         },
-        {
-          word: "Razor",
-          phonetic: "/ˈreɪzə/",
-          definition: "Dao cạo râu",
-          context: "I can bring a disposable razor to your room shortly.",
-          icon: "🪒",
-        },
+        // "Razor" đã trả suất cho "Update the status" ở bài 4. Dao cạo là một
+        // danh từ đồ vật thông thường; cập nhật trạng thái phòng là việc tuần
+        // 16 và 22 bắt học viên nói ra mà chưa ai cấp thẻ.
         {
           word: "Complimentary",
           phonetic: "/ˌkɒmplɪˈmentəri/",
@@ -1566,8 +1634,8 @@ export const HK_WEEK_15: WeekContent = {
       ],
       speaking: [
         {
-          guestPrompt: "Hi, could I get two more bath towels and a razor sent up to room 812?",
-          targetResponse: "Certainly, sir. I will send up two bath towels and a razor.",
+          guestPrompt: "Hi, could I get two more bath towels sent up to room 812?",
+          targetResponse: "Certainly, sir. I will send up two bath towels now.",
           helpTip: "Nối 'send up' thành một hơi — âm /d/ chạy thẳng sang 'up', nghe như 'sen-dup'.",
         },
         {
@@ -1582,7 +1650,7 @@ export const HK_WEEK_15: WeekContent = {
         },
         {
           guestPrompt: "What did 812 ask for?",
-          targetResponse: "Two bath towels and a razor. Amenities only.",
+          targetResponse: "Two bath towels and some soap. Amenities only.",
           helpTip: "Bàn giao đúng món và đúng số lượng.",
           speakerRole: "colleague",
         },
@@ -1592,19 +1660,19 @@ export const HK_WEEK_15: WeekContent = {
           helpTip: "Nhận việc rồi nói rõ mình mang gì tới.",
         },
         {
-          guestPrompt: "And something to shave with?",
-          targetResponse: "I can bring a disposable razor shortly.",
+          guestPrompt: "And some soap as well?",
+          targetResponse: "Of course, madam. I will bring soap too.",
           helpTip: "Nói được hay không được ngay, đừng để khách chờ câu trả lời.",
         },
       ],
       reading: {
-        text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 1x Razor\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.\nDelivered by: Room Attendant, Floor 8\nKnock, say 'Housekeeping', and hand the items over at the door. Do not enter unless the guest asks.",
+        text: "HOUSEKEEPING AMENITIES REQUEST FORM\nRoom: 812\nItems Requested: 2x Bath Towel, 2x Soap\nRequested Time: 3:15 PM\nDelivery Deadline: Within 15 minutes\nNote: Bottled water is complimentary, no charge to guest.\nDelivered by: Room Attendant, Floor 8\nKnock, say 'Housekeeping', and hand the items over at the door. Do not enter unless the guest asks.",
         questions: [
           {
             q: "Khách phòng 812 xin mấy chiếc khăn tắm?",
             options: ["One", "Two", "Three"],
             correct: 1,
-            explanation: '"Items Requested: 2x Bath Towel, 1x Razor"',
+            explanation: '"Items Requested: 2x Bath Towel, 2x Soap"',
           },
           {
             q: "Yêu cầu đồ dùng phải giao trong bao lâu?",
@@ -1622,10 +1690,10 @@ export const HK_WEEK_15: WeekContent = {
         {
           explanation:
             "Câu này đúng ngữ pháp nhưng để khách chờ mà không hẹn giờ; việc bận của bạn không phải việc của khách.",
-          prompt: "Could you send up some towels and a razor, please?",
+          prompt: "Could you send up some towels and soap, please?",
           options: [
             {
-              text: "Certainly, sir. I will send up two bath towels and a razor.",
+              text: "Certainly, sir. I will send up two bath towels and soap.",
               correct: true,
               kind: "answer",
             },
@@ -1663,13 +1731,8 @@ export const HK_WEEK_15: WeekContent = {
           context: "I can lend you a universal adapter for your device.",
           icon: "🔌",
         },
-        {
-          word: "Iron",
-          phonetic: "/ˈaɪən/",
-          definition: "Bàn là (ủi đồ)",
-          context: "Would you like to borrow an iron and ironing board?",
-          icon: "👔",
-        },
+        // "Iron" đã trả suất cho "Open the curtains" ở bài 1 — bàn là là một
+        // món cho mượn, mở rèm là một bước của quy trình mà tuần 16 bắt nói.
         {
           word: "Extra charge",
           phonetic: "/ˈekstrə tʃɑːdʒ/",
@@ -1705,13 +1768,13 @@ export const HK_WEEK_15: WeekContent = {
           helpTip: "Đưa giải pháp ngay, đừng dừng ở lời xin lỗi.",
         },
         {
-          guestPrompt: "My shirt is very creased.",
-          targetResponse: "Would you like to borrow an iron?",
-          helpTip: "Mời mượn bằng câu hỏi thì khách dễ nhận lời.",
+          guestPrompt: "Is the adapter free?",
+          targetResponse: "Yes, madam. The adapter has no extra charge.",
+          helpTip: "Nói rõ món nào miễn phí, món nào có phụ phí — đừng để khách đoán.",
         },
         {
           guestPrompt: "Anything to bring to 1102?",
-          targetResponse: "An iron and one adapter, please.",
+          targetResponse: "An adapter for 1102, please.",
           helpTip: "Danh sách ngắn, đủ món, không thiếu món nào.",
           speakerRole: "colleague",
         },
@@ -1795,7 +1858,11 @@ export const HK_WEEK_15: WeekContent = {
           word: "Courtesy call",
           phonetic: "/ˈkɜːtəsi kɔːl/",
           definition: "Cuộc gọi nhắc nhở lịch sự",
-          context: "We will make a courtesy call before checkout time.",
+          // Mốc giờ lấy từ SOP của chính bài này ("past 2:00 PM"), là mốc mà
+          // câu hỏi đọc hiểu chấm điểm. Bản cũ ghi "before checkout time" và
+          // giờ trả phòng ở khách sạn 4-5 sao là 12 giờ trưa, nên một bài dạy
+          // hai mốc giờ cho cùng một thủ tục.
+          context: "We will make a courtesy call after two o'clock.",
           icon: "☎️",
         },
         {
@@ -1811,6 +1878,16 @@ export const HK_WEEK_15: WeekContent = {
           definition: "Nhét giấy nhắn qua khe cửa",
           context: "I will slip a note under the door instead.",
           icon: "✉️",
+        },
+        // Phòng treo DND là phòng KHÔNG được làm, và thứ duy nhất còn lại
+        // phải làm là ghi đúng trạng thái của nó vào hệ thống. Tuần 16 và
+        // tuần 22 đều bắt nói cụm này; đây là chỗ nó thuộc về.
+        {
+          word: "Update the status",
+          phonetic: "/ʌpˈdeɪt ðə ˈsteɪtəs/",
+          definition: "Cập nhật trạng thái phòng",
+          context: "I will update the status after every room.",
+          icon: "🚦",
         },
       ],
       grammar: [
@@ -1834,9 +1911,10 @@ export const HK_WEEK_15: WeekContent = {
           helpTip: "Lên giọng nhẹ ở 'to clean' để câu thành lời hỏi, không thành lời ra lệnh.",
         },
         {
-          guestPrompt: "The sign is still up at noon.",
-          targetResponse: "We will make a courtesy call before checkout.",
-          helpTip: "Gọi nhắc là bước bắt buộc trước giờ trả phòng.",
+          guestPrompt: "The sign is still up past two.",
+          targetResponse: "We will make a courtesy call now.",
+          helpTip:
+            "Biển DND còn treo sau hai giờ chiều thì gọi ngay — đúng mốc giờ SOP của bài này đặt ra, không đợi tới giờ trả phòng.",
           speakerRole: "colleague",
         },
         {
@@ -1869,9 +1947,16 @@ export const HK_WEEK_15: WeekContent = {
           targetResponse: "Not at all, madam. Would now be convenient?",
           helpTip: "Gỡ ngượng cho khách rồi mới hỏi giờ dọn.",
         },
+        {
+          guestPrompt: "So 1005 stays dirty today?",
+          targetResponse: "I will update the status for that room now.",
+          helpTip:
+            "Phòng không làm được vẫn phải có trạng thái đúng trên hệ thống — bỏ trống là ca sau vào nhầm phòng.",
+          speakerRole: "colleague",
+        },
       ],
       reading: {
-        text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- If there is still no answer, tell the floor supervisor. The supervisor and Security check that the guest is well.\n- Never remove the DND sign or enter without guest confirmation.",
+        text: "DND HANDLING PROCEDURE:\n- If a room shows Do Not Disturb past 2:00 PM, call the room to check on the guest.\n- If there is no answer, leave a polite voicemail and slip a courtesy note under the door.\n- If there is still no answer, tell the floor supervisor. The supervisor and Security check that the guest is well.\n- Never remove the DND sign or enter without guest confirmation.\n- Update the status of every room you pass, cleaned or not.",
         questions: [
           {
             q: "Mấy giờ thì gọi vào phòng treo DND để hỏi thăm khách?",
@@ -4583,7 +4668,11 @@ export const SW_WEEK_19: WeekContent = {
           word: "Policy",
           phonetic: "/ˈpɒləsi/",
           definition: "Quy định, chính sách",
-          context: "Our pool policy requires children under 12 to be supervised.",
+          // Thẻ là "Policy", và khung của các tuần sau cũng đọc ô rules[1]
+          // thành "Policy" (P2_SLOT_SUBSTITUTES). Hai câu của chính bài này
+          // từng nói "pool policy" — một cụm không tuần nào cấp thẻ — nên
+          // chúng đã được đưa về đúng từ mà học viên có trong tay.
+          context: "Our policy requires children under 12 to be supervised.",
           icon: "📜",
         },
         {
@@ -4632,7 +4721,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "Are there rules for the pool?",
-          targetResponse: "Our pool policy requires an adult with children.",
+          targetResponse: "Our policy requires an adult with children.",
           helpTip: "Gọi tên quy định, khách sẽ không nghĩ đó là ý riêng của bạn.",
         },
         {
@@ -4652,7 +4741,7 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "Did you tell them the rule?",
-          targetResponse: "Yes. I explained the pool policy clearly.",
+          targetResponse: "Yes. I explained the policy clearly.",
           helpTip: "Xác nhận đã nói, và nói với ai.",
           speakerRole: "colleague",
         },
@@ -4717,15 +4806,19 @@ export const SW_WEEK_19: WeekContent = {
     {
       lessonId: "SW_19_3",
       lessonOrder: 3,
-      titleEn: "Severe Weather & Red Flag Warnings",
-      titleVi: "Cảnh báo Thời tiết Nguy hiểm & Cờ đỏ",
+      titleEn: "Severe Weather & the Red Flag",
+      titleVi: "Thời tiết Nguy hiểm & Cờ đỏ",
+      // "Warning" ra, "Not available" vào. Cảnh báo đã có hai thẻ mang đúng
+      // nghĩa đó trong chính bài này (Red flag, Rough sea) và câu ôn duy nhất
+      // của "Warning" cũng chở sẵn cả hai; còn "Not available" là ô rules[7],
+      // ô mà tuần 20 bắt học viên nói ra mà chưa tuần nào cấp thẻ.
       vocabulary: [
         {
-          word: "Warning",
-          phonetic: "/ˈwɔːnɪŋ/",
-          definition: "Cảnh báo",
-          context: "There is a storm warning for this afternoon.",
-          icon: "⚠️",
+          word: "Not available",
+          phonetic: "/nɒt əˈveɪləbl/",
+          definition: "Hiện không dùng được",
+          context: "Sea swimming is not available while the red flag is up.",
+          icon: "⛔",
         },
         {
           word: "Rough sea",
@@ -4772,8 +4865,9 @@ export const SW_WEEK_19: WeekContent = {
         },
         {
           guestPrompt: "Is the beach open today?",
-          targetResponse: "There is a storm warning for this afternoon.",
-          helpTip: "Thông báo cảnh báo trước khi khách kịp hỏi tới.",
+          targetResponse: "Sea swimming is not available this afternoon, sir.",
+          helpTip:
+            "Nói thẳng là chưa dùng được rồi mới nói vì sao — khách cần câu trả lời trước, lý do sau.",
         },
         {
           guestPrompt: "The water looks calm to me.",
@@ -26175,19 +26269,39 @@ for (const built of Object.values(REGISTRY))
       key,
       wk.lessons.flatMap((l) => l.vocabulary.map((v) => norm(v.word))).filter((w) => w.length > 3),
     );
+  const LABEL = /^Ôn tuần ([0-9]+)(?: và ([0-9]+))?( — cách [a-zà-ỹ ]+)?: /;
+  /** `text` with its review label made true about `said`: left alone when
+   *  every week it names gave this department a card the sentence carries,
+   *  narrowed to the weeks that did when only some did, and dropped when none
+   *  did. Narrowing rather than dropping because "Ôn tuần 17 và 18" is two
+   *  claims, and deleting both over one false half throws away a pointer the
+   *  learner can use. Idempotent: a label the pass leaves is one it accepts. */
+  const truthfulLabel = (text: string, said: string, dep: string) => {
+    const m = LABEL.exec(text);
+    if (!m) return text;
+    const spoken = norm(said);
+    const weeks = [m[1], m[2]].filter(Boolean) as string[];
+    const kept = weeks.filter((w) =>
+      (cardsOf.get(`${dep}-${w}`) ?? []).some((card) => spoken.includes(card)),
+    );
+    if (kept.length === weeks.length) return text;
+    const rest = text.slice(m[0].length);
+    if (kept.length === 0) return rest.replace(/^./, (c) => c.toUpperCase());
+    return `Ôn tuần ${kept.join(" và ")}${m[3] ?? ""}: ${rest}`;
+  };
   for (const [key, wk] of Object.entries(REGISTRY)) {
     const dep = key.split("-")[0]!;
-    for (const lesson of wk.lessons)
-      for (const item of lesson.speaking) {
-        const m = /^Ôn tuần ([0-9]+)(?: và ([0-9]+))?(?: — cách [a-zà-ỹ ]+)?: /.exec(item.helpTip);
-        if (!m) continue;
-        const said = norm(item.targetResponse);
-        const claimed = [m[1], m[2]]
-          .filter(Boolean)
-          .flatMap((w) => cardsOf.get(`${dep}-${w}`) ?? []);
-        if (!claimed.some((w) => said.includes(w)))
-          item.helpTip = item.helpTip.slice(m[0].length).replace(/^./, (c) => c.toUpperCase());
-      }
+    for (const lesson of wk.lessons) {
+      for (const item of lesson.speaking)
+        item.helpTip = truthfulLabel(item.helpTip, item.targetResponse, dep);
+      // Grammar carries the same label and needs it more: `buildPaper` prints
+      // `rule` as the answer explanation ON the checkpoint paper, so a week
+      // this department never met is asserted where the learner is being
+      // graded, not merely where they are being coached. Twenty-three of the
+      // thirty-one false labels this pass strips live in grammar, and every
+      // one of them was invisible while the loop only read helpTips.
+      for (const g of lesson.grammar) g.rule = truthfulLabel(g.rule, g.polite, dep);
+    }
   }
 }
 

@@ -4190,7 +4190,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Room ready. You come.",
           "The room is ready, madam.",
-          "Ôn tuần 5: câu cần 'is', và mời khách bằng một câu thông báo chứ không bằng mệnh lệnh. Đây là phòng trị liệu, không phải phòng ngủ của khách.",
+          // Nhãn cũ ghi "Ôn tuần 5", và tuần 5 của Spa dạy Please/Of course/
+          // Moment — không chữ nào có trong câu này. Chữ được ôn thật là
+          // "Room", thẻ của tuần 2.
+          "Ôn tuần 2: câu cần 'is', và mời khách bằng một câu thông báo chứ không bằng mệnh lệnh. Đây là phòng trị liệu, không phải phòng ngủ của khách.",
           "Room is ready, madam.",
         ),
         g(
@@ -4288,7 +4291,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Seat ready. Sit there.",
           "Your seat is ready, madam.",
-          "Ôn tuần 5: câu cần 'is', và mời khách ngồi bằng một câu thông báo kèm cử chỉ tay mở, không bằng mệnh lệnh.",
+          // "Your seat is ready, madam." không mang thẻ nào của tuần 5, và
+          // "Seat" thì Guest Relations chưa từng được cấp thẻ — nên nhãn ôn
+          // tập ở đây là một lời khai man. Bỏ nhãn, giữ nguyên phần dạy.
+          "Câu cần 'is', và mời khách ngồi bằng một câu thông báo kèm cử chỉ tay mở, không bằng mệnh lệnh.",
           "Your seat ready, madam.",
         ),
         g(

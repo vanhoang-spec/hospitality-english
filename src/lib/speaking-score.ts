@@ -292,7 +292,22 @@ const FINITE_VERBS = new Set<string>(
     // Progressive forms carry the predicate on their own: "Your water bottle is
     // coming, madam." keeps only a bare copula without this one.
     "coming going waiting checking bringing cleaning working starting finishing " +
-    "speaking calling asking helping looking making taking sending writing"
+    "speaking calling asking helping looking making taking sending writing " +
+    // MODALS. A modal is the finite verb of its clause, and dropping one is
+    // not a slip: "Every detail be accurate." passed "Every detail MUST be
+    // accurate." on the one-word content allowance, in the phase whose own
+    // grammar rule is the shape of `must` (phase2.ts: "Sau 'must' là động từ
+    // nguyên mẫu KHÔNG có 'to'"). Same shape: "Which seafood we avoid?" for
+    // "Which seafood MUST we avoid?" on the seafood-allergy turn. Measured
+    // before this: 8 of 30 `must` deletions passed in Phase 2, 5 of 5
+    // `should` in Phase 3, 4 of 9 in Phase 4.
+    //
+    // Only these three are listed. may/can/could/would/shall are already
+    // FUNCTION_TOKENS, so they never become content and can never reach
+    // missingContent — listing them here would read as a rule and be a no-op.
+    // They are refused one line further down instead, as unforgivable
+    // function words, which is where the file already put them.
+    "must should might"
   ).split(" "),
 );
 
@@ -530,6 +545,49 @@ const STRUCTURE_TOKENS = new Set<string>([
   "downstairs",
 ]);
 
+/** The prepositions and contrastive connectives that FUNCTION_TOKENS does not
+ *  hold, required outright.
+ *
+ *  FUNCTION_TOKENS listed six prepositions — at, in, on, to, of, for — so
+ *  every other one was an ordinary CONTENT word and the one-word content
+ *  allowance ate it. Measured by deleting exactly one of them from each model
+ *  and asking this grader: 58.3% of those deletions still passed in Phase 2,
+ *  68.7% in Phase 3, 61.7% in Phase 4, against 0.0% for the six that were
+ *  listed. The course's own rule is "a missing article still passes, a
+ *  missing preposition does not", and it was being applied to six words out
+ *  of sixteen.
+ *
+ *  The sharpest pair: "It started later than usual, because we were busy."
+ *  passed as "It started later usual…", while the nearMiss the course itself
+ *  prints for that model ("It started later THAT usual, sir.") failed. Also
+ *  passing: "This registration is mandatory law.", "I will ask an upgrade for
+ *  you.", "We could arrange a connecting room" without `instead`, "I always
+ *  offer a welcome drink fail.", "Our doorman works me."
+ *
+ *  Required HERE rather than in FUNCTION_TOKENS, which is where an earlier
+ *  draft put them. That list is also what sizes the one-word function
+ *  allowance, so adding ten words to it took targets carrying a single
+ *  function word up to two and handed that one away: Phase 1 article
+ *  deletions went 76.9% → 79.6% and pronoun deletions 9.0% → 10.0%, loosening
+ *  the A1 weeks this file promises not to touch in order to tighten Phase 2.
+ *
+ *  "but" and "instead" are here for the same reason and not by analogy:
+ *  dropping either reverses the concession the sentence exists to make —
+ *  "I cannot move the rate, sir, I can add a two o'clock check-out." reads as
+ *  agreement. "while", "because", "after", "before" and "until" were already
+ *  covered by STRUCTURE_TOKENS below and leaked nothing. */
+const PREPOSITION_TOKENS = new Set<string>([
+  "about",
+  "with",
+  "from",
+  "by",
+  "near",
+  "without",
+  "than",
+  "but",
+  "instead",
+]);
+
 /** Words whose absence inverts the outcome rather than blurring it. A wet
  *  floor warned about without "careful" is not a warning; a treatment
  *  described without "hot" is not a caution. A review found seven such
@@ -585,6 +643,13 @@ const FUNCTION_TOKENS = new Set<string>([
   "to",
   "of",
   "for",
+  // The rest of the prepositions are NOT here, and the omission is on
+  // purpose: see PREPOSITION_TOKENS. They are required outright instead.
+  // Listing them here would have added them to funcNeeded, and the allowance
+  // is sized from that count — measured, it took a target that carried one
+  // function word up to two and handed the first one away: Phase 1 article
+  // deletions went from 76.9% passing to 79.6% and pronoun deletions from
+  // 9.0% to 10.0%, in the weeks this file promises to leave untouched.
   "do",
   "does",
   "did",
@@ -672,7 +737,8 @@ export function requiredValueTokens(target: string, override?: string[]): string
           NEGATION_TOKENS.has(t) ||
           PROMISE_VERBS.has(t) ||
           SAFETY_TOKENS.has(t) ||
-          STRUCTURE_TOKENS.has(t)
+          STRUCTURE_TOKENS.has(t) ||
+          PREPOSITION_TOKENS.has(t)
         );
       }),
     ),
@@ -1513,6 +1579,12 @@ export function utterancePassed(
     ...GRAMMAR_TOKENS,
     ...NEGATION_TOKENS,
     ...ARTICLES,
+    // The prepositions FUNCTION_TOKENS does not hold are function words here
+    // too. "a single added preposition is still the near-miss column's
+    // commonest error" is this file's own sentence, and "The car park is near
+    // at the lift." is its own example — `near` cannot be the spare word the
+    // rule below forgives.
+    ...PREPOSITION_TOKENS,
     "he",
     "she",
     "they",

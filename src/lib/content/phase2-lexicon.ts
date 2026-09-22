@@ -314,7 +314,19 @@ const FO_BANK: P2Bank = {
       definition: "Phòng hướng biển",
       icon: "🌊",
     },
-    { word: "Ground floor", phonetic: "/ɡraʊnd flɔː/", definition: "Tầng trệt", icon: "⬇️" },
+    // Ô 8 là thứ nhân viên CHỦ ĐỘNG gợi ý thêm ("May I suggest the {x}?") —
+    // một điều khách cân nhắc, không phải một vị trí phòng. Năm bộ phận kia
+    // đặt ở đây chef's choice, mosquito net, herbal compress, cooking class,
+    // second quote; riêng lễ tân đặt "Ground floor", nên câu duy nhất trong
+    // khoá nói về tầng trệt là lời mời một vị khách năm sao xuống hạng, ngay
+    // sau khi vừa gợi ý phòng hướng hồ và phòng hướng biển. "Higher floor"
+    // không dùng lại được vì tuần 16 đã dạy nó ở ô nâng hạng.
+    {
+      word: "Early check-in",
+      phonetic: "/ˈɜːli ˈtʃek ɪn/",
+      definition: "Nhận phòng sớm",
+      icon: "🕗",
+    },
     // Slot 9 is what the staff member actually recommends ("I would suggest
     // the {w}, because it is popular."), so a word meaning "a choice" made
     // the recommendation circular: "I would suggest the option."
@@ -769,20 +781,35 @@ const HK_BANK: P2Bank = {
     },
     // 10 = mass/plural noun
     {
-      word: "Daily housekeeping",
-      phonetic: "/ˈdeɪli ˈhaʊskiːpɪŋ/",
-      definition: "Dọn phòng hằng ngày",
-      icon: "🧹",
+      // Slot 9 is read only by "The price includes ${x}." — a sentence about
+      // what the RATE covers. "Daily housekeeping" put a room attendant in
+      // the position of quoting what a guest is paying for, which is the
+      // front desk's sentence, not theirs: the same course tells them
+      // "Housekeeping staff never take cash." An item the floor actually
+      // hands over keeps the frame and drops the claim about the rate.
+      word: "Fresh towels",
+      phonetic: "/freʃ ˈtaʊəlz/",
+      definition: "Khăn sạch thay mới",
+      icon: "🧻",
+      art: "",
     },
   ],
   details: [
-    { word: "Cleaning time", phonetic: "/ˈkliːnɪŋ taɪm/", definition: "Giờ dọn phòng", icon: "🕐" },
+    // Slot 0 sits in "Could I have your ${x}, please?" — a frame that asks
+    // the guest to HAND SOMETHING OVER, so it has to be a thing the guest
+    // actually holds. "Cleaning time" was here, and the hotel is what
+    // schedules a cleaning time, not the guest: six renders across the
+    // phase asked a guest to produce the housekeeping roster. Swapped with
+    // slot 1, which the softer "May I ask about your ${x}?" frame reads —
+    // enquiring about a guest's preferred cleaning hour is exactly right
+    // there, and "Preferred time" is genuinely the guest's to give.
     {
       word: "Preferred time",
       phonetic: "/prɪˈfɜːd taɪm/",
       definition: "Giờ khách muốn",
       icon: "⏰",
     },
+    { word: "Cleaning time", phonetic: "/ˈkliːnɪŋ taɪm/", definition: "Giờ dọn phòng", icon: "🕐" },
     // Slots 2 and 3 sit in the "Could I have your…?" frames. They used to
     // hold "Number of nights" and "Allergy note" — the first is a check-in
     // question housekeeping never asks, the second is F&B's week-17 card
@@ -1266,11 +1293,18 @@ const SW_BANK: P2Bank = {
       icon: "📋",
     },
     { word: "Pool deck", phonetic: "/puːl dek/", definition: "Sàn quanh hồ bơi", icon: "🏊" },
+    // Slot 3 is EQUIPMENT for the week-19 "Please do not touch it" frame —
+    // but Spa's week 19 is hand-authored, so that frame never renders here.
+    // The only frame that reads this slot for Spa is week 20's "Where is the
+    // ${x}? — The ${x} is on your right.", which POINTS A GUEST TOWARDS the
+    // thing. That made the single sentence in the course about a 90°C sauna
+    // heater an invitation to walk up to it. A place a guest may be sent to
+    // is what this slot has to hold for this department.
     {
-      word: "Sauna heater",
-      phonetic: "/ˈsɔːnə ˈhiːtə/",
-      definition: "Lò sưởi phòng xông",
-      icon: "♨️",
+      word: "Relaxation lounge",
+      phonetic: "/ˌriːlækˈseɪʃn laʊndʒ/",
+      definition: "Phòng thư giãn",
+      icon: "🛋️",
     },
     {
       word: "Hot stone",
@@ -1662,10 +1696,16 @@ const GR_BANK: P2Bank = {
       definition: "Xe điện của nhân viên",
       icon: "🛺",
     },
+    // Slot 4 is read by "Please do not touch the ${x}, madam." and by
+    // "Can I use the ${x}? — Only staff may use the ${x}." A lift is not a
+    // thing a guest can touch, and the card carried a ☕ icon for it, which
+    // is how long this slot had been wrong without anyone reading the render.
+    // The lounge machine is staff-operated, genuinely touchable, and the one
+    // piece of equipment a Guest Relations host stands beside all shift.
     {
-      word: "Service lift",
-      phonetic: "/ˈsɜːvɪs lɪft/",
-      definition: "Thang máy nhân viên",
+      word: "Lounge coffee machine",
+      phonetic: "/laʊndʒ ˈkɒfi məˈʃiːn/",
+      definition: "Máy pha cà phê ở sảnh chờ",
       icon: "☕",
     },
     {
@@ -2141,3 +2181,135 @@ export const P2_BANKS: Record<string, P2Bank> = {
   GR: GR_BANK,
   BO: BO_BANK,
 };
+
+// ============================================================
+// ORPHAN SLOTS — a bank group whose own week never becomes cards
+// ============================================================
+/** Four weeks in this range are hand-authored in week-content.ts and carry
+ *  their own headwords, so the bank group that week was supposed to teach
+ *  NEVER becomes a vocabulary card for that department. Every later week
+ *  still recycles the group BY INDEX, and recycling puts words in the
+ *  learner's MOUTH — so those departments were made to produce phrases the
+ *  course never taught them anywhere in weeks 1-22. Measured across all six
+ *  departments: Front Office 9 such phrases (its whole `details` group, since
+ *  FO-17 is hand-authored) and Spa 7 (its `rules` group, since SW-19 is).
+ *
+ *  A substitute is NOT a new card. It redirects the frame to a headword that
+ *  department already owns, in the semantic class the slot's frames require
+ *  (docs/phase2-bank-contract.md) — so the recycling recycles what the
+ *  learner actually met, which is what spaced retrieval was for. Nothing is
+ *  added to the 12-16 card budget and no headword is taught twice.
+ *
+ *  Departments whose week is generated normally do not appear here and are
+ *  bit-for-bit unchanged; the substituted week's own spine output is
+ *  discarded anyway, because the hand-authored week replaces it.
+ *
+ *  F&B and Housekeeping are deliberately ABSENT: their orphaned group is
+ *  `steps`, whose slots 0-7 sit in a bare-verb-phrase position ("The third
+ *  step is to ${x}."), and neither FB-15 nor HK-15 cards more than three
+ *  verbs. Those two cannot be repaired from the department's own stock and
+ *  need cards adding to the hand-authored week itself. */
+export const P2_SLOT_SUBSTITUTES: Record<
+  string,
+  Partial<Record<keyof P2Bank, Record<number, P2Word>>>
+> = {
+  FO: {
+    // FO-17 is the hand-authored registration week. Its sixteen cards ARE
+    // this department's "guest details" vocabulary, so weeks 18 and 20 now
+    // ask for the papers FO genuinely learned to ask for.
+    details: {
+      // "Could I have your ${x}?" / "Could I have your ${x}, please?"
+      0: {
+        word: "Booking reference",
+        phonetic: "/ˈbʊkɪŋ ˈrefərəns/",
+        definition: "Mã số đặt phòng",
+        icon: "🔖",
+      },
+      // "May I ask about your ${x}?"
+      1: {
+        word: "ETA",
+        phonetic: "/iː tiː eɪ/",
+        definition: "Giờ dự kiến đến (estimated time of arrival)",
+        icon: "🕐",
+      },
+      // reads BOTH "Could I have your ${x}?" and "May I ask about your ${x}?"
+      2: {
+        word: "Reservation",
+        phonetic: "/ˌrezəˈveɪʃən/",
+        definition: "Sự đặt phòng trước",
+        icon: "📅",
+      },
+      3: {
+        word: "Check-in form",
+        phonetic: "/ˈtʃek ɪn fɔːm/",
+        definition: "Phiếu nhận phòng",
+        icon: "📝",
+      },
+      4: { word: "Deposit", phonetic: "/dɪˈpɒzɪt/", definition: "Tiền đặt cọc", icon: "💰" },
+      // "Let me add your ${x} to the file." — the residence-portal upload
+      // week 17 spends four cards on is exactly a thing added to a file.
+      5: {
+        word: "Local registration",
+        phonetic: "/ˈləʊkəl ˌredʒɪˈstreɪʃən/",
+        definition: "Đăng ký lưu trú địa phương",
+        icon: "📝",
+      },
+      6: { word: "Room key", phonetic: "/ruːm kiː/", definition: "Chìa khóa phòng", icon: "🔑" },
+      // "And your ${x}, please?"
+      7: {
+        word: "Passport scan",
+        phonetic: "/ˈpæspɔːt skæn/",
+        definition: "Bản quét hộ chiếu",
+        icon: "📘",
+      },
+      // "The ${x} is confirmed."
+      8: {
+        word: "Pre-authorisation",
+        phonetic: "/ˌpriːˌɔːθəraɪˈzeɪʃən/",
+        definition: "Khoản tạm giữ/Đặt cọc thẻ",
+        icon: "💳",
+      },
+    },
+  },
+  SW: {
+    // SW-19 is the hand-authored pool-safety week; its cards are this
+    // department's real rules vocabulary.
+    rules: {
+      // "We follow the ${x} closely."
+      1: { word: "Policy", phonetic: "/ˈpɒləsi/", definition: "Quy định, chính sách", icon: "📜" },
+      // "You will find the ${x} outside."
+      2: {
+        word: "Cabana",
+        phonetic: "/kəˈbænə/",
+        definition: "Nhà nghỉ mát riêng bên hồ bơi",
+        icon: "🏖️",
+      },
+      // "Where is the ${x}? — The ${x} is on your right."
+      3: {
+        word: "Towel station",
+        phonetic: "/ˈtaʊəl ˈsteɪʃən/",
+        definition: "Quầy phát khăn",
+        icon: "🧺",
+      },
+      // "Please keep your ${x} with you, madam."
+      5: { word: "Key card", phonetic: "/kiː kɑːd/", definition: "Thẻ chìa khóa", icon: "🗝️" },
+      // "Please use the ${x}."
+      6: { word: "Locker", phonetic: "/ˈlɒkə/", definition: "Tủ đồ có khóa", icon: "🔐" },
+      // "Every guest must do that, madam. It is our ${x}."
+      8: { word: "Policy", phonetic: "/ˈpɒləsi/", definition: "Quy định, chính sách", icon: "📜" },
+    },
+  },
+};
+
+/** The bank a department's frames should actually read. */
+export function bankFor(code: string): P2Bank {
+  const subs = P2_SLOT_SUBSTITUTES[code];
+  const base = P2_BANKS[code];
+  if (!subs) return base;
+  const out = { ...base } as P2Bank;
+  for (const group of Object.keys(subs) as (keyof P2Bank)[]) {
+    const map = subs[group]!;
+    out[group] = base[group].map((w, i) => map[i] ?? w);
+  }
+  return out;
+}

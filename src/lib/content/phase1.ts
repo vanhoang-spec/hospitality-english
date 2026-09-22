@@ -3301,7 +3301,9 @@ function week14(lx: Ctx): LessonContent[] {
         g(
           "Finish? Bye.",
           "Is there anything else, sir?",
-          "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ.",
+          // Nhãn cũ ghi tuần 12; thẻ thật trong câu là "Anything else", dạy ở
+          // tuần 6 cho cả sáu bộ phận.
+          "Ôn tuần 6: hỏi chốt nhu cầu bằng câu đầy đủ.",
           "Is it anything else, sir?",
         ),
         g(

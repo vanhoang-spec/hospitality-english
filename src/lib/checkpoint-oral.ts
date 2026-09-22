@@ -189,11 +189,43 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // to 90-100% at sixty sentences in a single measurement.
   const CARRIES_AUTHORITY =
     /cannot decide|decide (that )?alone|ask my (manager|supervisor)|call (my|the) (manager|supervisor|duty manager)|ask the front desk|not (allowed|permitted|possible)|may not|must not|cannot (give|confirm|promise|open|take|guarantee)|did not go through|step this way|call security|not able to|stop (here|now)|before we start/i;
+  // A TOPIC ALTERNATIVE NAMES A BEHAVIOUR, NOT A SUBJECT.
+  //
+  // The list below used to be nouns — `passport`, `upgrade`, `deposit`,
+  // `wet`, `maintenance`, `health form`, `injur` — and a noun matches the
+  // week's filing as readily as its risk. Measured on the real draw, that put
+  // the must-be-right slot on sentences nobody has to get right: "The duty
+  // manager approved an upgrade." (3.67% of FO sittings — the sentence the
+  // comment above names as what broke the OLD pattern), "Good morning, madam.
+  // May I have your room number?" (4.00%), "I will note the passport number
+  // in the system." (4.25%), "The wet floor sign is on your right." (2.25%),
+  // "I sent a maintenance request this morning." (2.75%), "Here are your
+  // treatment robe and towel cover." and "First I greet at the door, then I
+  // check the health form." Thirteen of FO's twenty-seven reserved-draw
+  // sentences and thirty-five of Spa's forty-six were in on a bare noun.
+  //
+  // So each alternative below has to name the act: refusing, deferring,
+  // escalating, warning, or the screening question that changes a treatment.
+  // `wet` becomes the sign going out and the floor being wet, not the sign's
+  // location; `maintenance` becomes the request being made, not a report of
+  // one already sent; the spa keeps the screening questions and the first aid
+  // and gives up its filing vocabulary.
+  //
+  // WHAT IS DELIBERATELY NOT TIGHTENED, and it is not an oversight. The pool
+  // this draw runs on is thin outside Phase 2 — measured at one to five
+  // sentences per department per phase — and the reservation is already
+  // impossible for SW/GR/BO at week 30 and BO at week 40. Guest Relations'
+  // whole reserved pool in Phase 1 is two `room number` lines, so taking bare
+  // `room number` out of GR (as was done for FO, which keeps an escalation
+  // line in that phase) would take week 14 from having the slot to not having
+  // it at all. F&B's Phase 1 pool is the single line `allerg` matches. Those
+  // two stay as they are until the content behind them exists; the queue's
+  // own GR item is a content fix, not a pattern one.
   const TOPIC: Record<string, RegExp> = {
-    FO: /room number|cannot confirm|passport|did not go through|step this way|upgrade|deposit|released/i,
+    FO: /cannot give (a|the) room number|cannot confirm|another (card|terminal)|photo identification|keep (it|your passport) briefly|release the hold|ask (my|the) manager about (an upgrade|a late check-out)|step (this way|aside)/i,
     FB: /allerg|nuts|halal|check with the kitchen|only the kitchen|the chef will confirm/i,
-    HK: /lost property|log the item|front desk|security|chemical|maintenance|belongings|wet|do not move/i,
-    SW: /pregnan|injur|medicine|health form|nurse|lifeguard|red flag|cramp|shade|comfort level|towel cover/i,
+    HK: /lost property|log the item|front desk|security|chemical|belongings|do not move|wet floor sign out|floor is wet|put in a maintenance request|maintenance will/i,
+    SW: /pregnan|allerg|cannot start|ask (my|the) (manager|supervisor)|call(ing)? (the|our) (on-duty )?(nurse|lifeguard)|signal (our|us)|red flag (means|is up)|not (recommended|permitted)|under 12|heat exhaustion|comfort level|undress/i,
     GR: /room number|cannot confirm|not yet|call and confirm|message for the guest|for the guest/i,
     BO: /approv|confidential|sign off/i,
   };

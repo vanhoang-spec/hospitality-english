@@ -1020,11 +1020,33 @@ export function buildPaper(dep: string, week: string): Question[] {
     // 9-34% of papers depending on the department.
     // THE PAIR OF DISTRACTORS.
     //
-    // Three constraints on echo and length used to be the whole rule, and they
-    // held: at least one distractor no longer than the key, one echoing the
-    // audio at least as hard, one at most as hard — each exists because the
-    // surface signal it removes had carried more than half the papers through
-    // the block floor once. They still apply first.
+    // Three constraints on echo and length used to be the whole rule: at least
+    // one distractor no longer than the key, one echoing the audio at least as
+    // hard, one at most as hard — each because the surface signal it removes
+    // had carried more than half the papers through the block floor once. The
+    // two ECHO constraints still apply first.
+    //
+    // THE LENGTH ONE IS GONE, and the measurement is why. "At least one
+    // distractor no longer than the key" cannot be satisfied and leave the key
+    // the shortest of the three, so it did not balance length, it banned one
+    // of the three positions — and the other two absorbed the traffic.
+    // Measured on real papers, by WORD, averaged over five departments:
+    //
+    //   phase   pick shortest   pick longest   pick middle
+    //   P0        21.8%           38.0%          40.2%
+    //   P1        26.4%           29.2%          44.4%
+    //   P2        24.6%           26.2%          49.4%
+    //   P3        15.2%           32.4%          52.6%
+    //   P4        14.8%           33.6%          51.4%
+    //
+    // Against a chance of 33.3%: "never the shortest" is as strong a giveaway
+    // as "usually the middle", and the two are the same fact. With the length
+    // rank drawn below in words and this constraint removed, the same
+    // measurement reads 27.6-39.6% / 24.0-32.6% / 35.2-40.0%, and the share of
+    // papers where one of the three tricks ALONE clears the listening block
+    // floor falls from 46-69% to 38-46%. "Always longest", which is what this
+    // constraint was installed to stop, is held down by the rank draw instead
+    // — better than it was holding it: 24.0-32.6% against 26.2-38.0%.
     //
     // What they left was the key at the centre of its options. Both
     // distractors were ranked by likeness to the KEY, so the key was always the
@@ -1038,13 +1060,10 @@ export function buildPaper(dep: string, week: string): Question[] {
     // the answer only a third of the time. Among the pairs available, the one
     // chosen puts the key at a randomly drawn length rank.
     const keyEcho = echo(s.targetResponse);
-    const shortEnough = (c: { t: string }) => wordsOf(c.t) <= keyLen;
     const loudEnough = (c: { t: string }) => echo(c.t) >= keyEcho;
     const quietEnough = (c: { t: string }) => echo(c.t) <= keyEcho;
     const covers = (pair: { t: string }[]) =>
-      (pair.some(shortEnough) ? 1 : 0) +
-      (pair.some(loudEnough) ? 1 : 0) +
-      (pair.some(quietEnough) ? 1 : 0);
+      (pair.some(loudEnough) ? 1 : 0) + (pair.some(quietEnough) ? 1 : 0);
     const bagOfWords = (t: string) =>
       new Set(
         t
@@ -1063,7 +1082,6 @@ export function buildPaper(dep: string, week: string): Question[] {
     const top: Cand[] = strict.slice(0, 12);
     const aroundKey = Math.random() < 1 / 3;
     const wantRank = Math.floor(Math.random() * 3);
-    const keyChars = s.targetResponse.length;
     const pairs: { a: Cand; b: Cand; w: number }[] = [];
     for (let i = 0; i < Math.min(3, top.length); i++)
       for (let j = 0; j < top.length; j++) {
@@ -1078,10 +1096,31 @@ export function buildPaper(dep: string, week: string): Question[] {
           w: aroundKey ? likeness(top[j].t, s.targetResponse) : likeness(top[j].t, top[i].t),
         });
       }
-    const covered = pairs.filter((p) => covers([p.a, p.b]) === 3);
+    const covered = pairs.filter((p) => covers([p.a, p.b]) === 2);
     const candidates = covered.length ? covered : pairs;
-    const rankOfPair = (p: { a: Cand; b: Cand }) =>
-      [p.a.t, p.b.t].filter((t) => t.length < keyChars).length;
+    // WHERE THE KEY SITS WHEN THE THREE OPTIONS ARE SORTED BY LENGTH — IN
+    // WORDS, which is the length a learner can see.
+    //
+    // This counted CHARACTERS, while `inBand` above and `covers` just below
+    // both count words. So the rank being drawn balanced a dimension nobody
+    // reads, and the one they do read was left to fall where it liked: the
+    // key landed mid-length by character 35-48% of the time, near the 33% the
+    // draw aims for, while mid-length by WORD ran 39-57% and "always click the
+    // middle-length option" cleared the listening block's own floor on 41-77%
+    // of papers. That floor exists to stop certifying a learner who heard
+    // nothing (phases.ts).
+    //
+    // A distractor the same length as the key is not a rank. It leaves the
+    // three options with no readable middle at all, which is fine for the
+    // learner and meaningless as a target, so those pairs get their own
+    // bucket and are used only where no pair sits at the rank that was drawn.
+    // Counting them as rank 0 or 1 was measured to put the key mid-length
+    // about half the time on its own.
+    const TIED = 3;
+    const rankOfPair = (p: { a: Cand; b: Cand }) => {
+      const ws = [wordsOf(p.a.t), wordsOf(p.b.t)];
+      return ws.some((w) => w === keyLen) ? TIED : ws.filter((w) => w < keyLen).length;
+    };
     // The drawn rank first; where no pair sits at it, a rank drawn from the
     // ranks that DO exist. Falling back to the likeliest pair regardless of
     // length, or to the nearest rank, both walked the key into the middle of

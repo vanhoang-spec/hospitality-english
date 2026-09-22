@@ -61,18 +61,61 @@ const HEADWORDS_LEFT_OPEN = new Set(
   "you are here the and else past sir madam maam good morning afternoon evening".split(" "),
 );
 
-/** The headwords a week is responsible for: its own vocabulary cards, plus
- *  the earlier cards it was built to bring back. */
-function headwordsOf(dep: string, week: number): Set<string> {
+/** Courtesy markers that are ALSO vocabulary cards.
+ *
+ *  "Please", "Certainly", "Sorry" and "Very" are printed as cards in 32-40
+ *  week-department pairs each, so carrying every earlier week's cards forward
+ *  would require them in every later model that happens to contain one — and
+ *  speaking-score.ts spends a whole list (COURTESY_EXTRAS) on the opposite
+ *  rule: an added or missing courtesy marker cannot make a service sentence
+ *  wrong, measured at 13-15 of 16 items failing per department when it did.
+ *
+ *  A card is locked because it is what its week exists to teach. That is true
+ *  of the week printing it and not of every week after it, so the courtesy
+ *  markers are dropped on the way forward and the week that teaches one still
+ *  locks it. */
+const NOT_CARRIED_FORWARD = new Set(
+  "please certainly sorry very yes now just really kindly".split(" "),
+);
+
+// Memoised: indexFor asks for weeks 1..w for every w of a phase, which is the
+// same forty lookups ten times over.
+const CARDS = new Map<string, string[]>();
+const cardsPrintedIn = (dep: string, week: number): string[] => {
+  const ck = `${dep}:${week}`;
+  const hit = CARDS.get(ck);
+  if (hit) return hit;
   const c = getWeekContent(dep, String(week));
-  return new Set(
-    [
-      ...(c?.lessons ?? []).flatMap((l) => l.vocabulary.map((v) => v.word)),
-      ...(c?.reviewWords ?? []),
-    ]
-      .flatMap((w) => normalize(w))
-      .filter((w) => w.length > 2 && !HEADWORDS_LEFT_OPEN.has(w)),
-  );
+  const built = [
+    ...(c?.lessons ?? []).flatMap((l) => l.vocabulary.map((v) => v.word)),
+    ...(c?.reviewWords ?? []),
+  ]
+    .flatMap((w) => normalize(w))
+    .filter((w) => w.length > 2 && !HEADWORDS_LEFT_OPEN.has(w));
+  CARDS.set(ck, built);
+  return built;
+};
+
+/** The headwords a week is responsible for: its own vocabulary cards, plus
+ *  every card the course taught before it.
+ *
+ *  Locking the week's OWN cards was half the fix. The word a Phase 2 model
+ *  loses is usually a card from an EARLIER week — the course taught it, the
+ *  model is built on it, and nothing was requiring it: measured with the
+ *  production grader, deleting one earlier week's headword from a model left
+ *  26.9% of Phase 1, 30.9% of Phase 2, 31.2% of Phase 3 and 29.3% of Phase 4
+ *  deletions still passing. "No. Wear when you use chemicals." passed the
+ *  `gloves` model, "Please leave them in the room." the `store room` one, and
+ *  "I am afraid I cannot give a number, sir." the `room number` one.
+ *
+ *  Weeks 1..week, not the phase: a card taught in week 2 is still the course's
+ *  word in week 22, and the checkpoint that draws from eight weeks is exactly
+ *  where the older ones stop being asked for. */
+function headwordsOf(dep: string, week: number): Set<string> {
+  const out = new Set(cardsPrintedIn(dep, week));
+  for (let w = 1; w < week; w++)
+    for (const h of cardsPrintedIn(dep, w)) if (!NOT_CARRIED_FORWARD.has(h)) out.add(h);
+  return out;
 }
 
 type PhaseIndex = {
