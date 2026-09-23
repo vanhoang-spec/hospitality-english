@@ -1,4 +1,6 @@
 {
-  "spokenBeforeTaught": 42,
-  "note": "Ratchet only — mọi token trong requiredTokens phải ứng với một thẻ được dạy ở tuần ≤ tuần bắt nói. PROMISE_VERBS không phải thẻ nên không tính; thẻ nhiều từ vẫn dạy từng từ của nó."
+  "requiredNeverTaught": 48,
+  "spokenBeforeTaught": 45,
+  "saidBeforeTaught": 188,
+  "note": "Ratchet only — mọi token trong requiredTokens phải ứng với một thẻ được dạy ở tuần ≤ tuần bắt nói. PROMISE_VERBS không phải thẻ nên không tính; thẻ nhiều từ vẫn dạy từng từ của nó. Ba hạng riêng, nặng dần: chữ CẢ BỘ PHẬN KHÔNG CÓ THẺ nào dạy; chữ bị khoá mà thẻ dạy sau; và chữ câu đích không khoá nhưng bỏ đi là rớt (đo bằng utterancePassedAny trên acceptedAnswers), hạng này còn đòi bộ phận có một thẻ MỘT TỪ cho chữ ấy."
 }

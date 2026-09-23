@@ -3,8 +3,14 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
-import { createOrganization, setSubscription } from "@/lib/platform-admin-actions";
-import { PLAN_LABEL, TERM_LABEL } from "@/lib/subscription";
+import { createOrganization, setSubscription, setPlanPrice } from "@/lib/platform-admin-actions";
+import {
+  PLAN_LABEL,
+  TERM_LABEL,
+  usePlanPrices,
+  planPriceKey,
+  formatMoney,
+} from "@/lib/subscription";
 
 export const Route = createFileRoute("/admin-console")({
   head: () => ({ meta: [{ title: "Bảng điều khiển nền tảng" }] }),
@@ -38,6 +44,12 @@ function AdminConsolePage() {
   const [hrPhone, setHrPhone] = useState("");
   const [hrPassword, setHrPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  // Giá thực thu của hợp đồng này. Để trống = lấy đúng giá niêm yết;
+  // điền số = bán có chiết khấu, và số đó mới là số đi vào hợp đồng.
+  const [priceOverride, setPriceOverride] = useState("");
+
+  const { data: prices } = usePlanPrices();
+  const listed = prices?.get(planPriceKey(planCode, term));
 
   const { data: orgs, isLoading } = useQuery({
     queryKey: ["platform-orgs"] as const,
@@ -87,6 +99,7 @@ function AdminConsolePage() {
           hrFullName: hrName,
           hrPhone,
           hrPassword,
+          price: priceOverride.trim() === "" ? null : Number(priceOverride.replace(/[^\d]/g, "")),
         },
       }),
     onSuccess: () => {
@@ -95,6 +108,7 @@ function AdminConsolePage() {
       setHrName("");
       setHrPhone("");
       setHrPassword("");
+      setPriceOverride("");
       qc.invalidateQueries({ queryKey: ["platform-orgs"] });
     },
     onError: (e: Error) => setMessage(e.message),
@@ -228,6 +242,21 @@ function AdminConsolePage() {
             value={hrPassword}
             onChange={setHrPassword}
           />
+          <div>
+            <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+              Giá thực thu — để trống là lấy giá niêm yết
+            </label>
+            <input
+              value={priceOverride}
+              onChange={(e) => setPriceOverride(e.target.value)}
+              placeholder={listed ? formatMoney(listed.price, listed.currency) : "chưa có bảng giá"}
+              className="mt-1 w-full border border-primary/30 bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+            />
+            <p className="mt-1 text-[11px] text-foreground/60">
+              Niêm yết: {listed ? formatMoney(listed.price, listed.currency) : "chưa điền"} ·{" "}
+              {PLAN_LABEL[planCode]} · {TERM_LABEL[term]}
+            </p>
+          </div>
         </div>
         <button
           disabled={create.isPending}
@@ -237,7 +266,106 @@ function AdminConsolePage() {
           {create.isPending ? "Đang tạo…" : "Tạo khách sạn"}
         </button>
       </section>
+
+      <PriceGrid onSaved={(m) => setMessage(m)} />
     </Shell>
+  );
+}
+
+/** Bảng giá niêm yết: 5 gói × 5 kỳ hạn.
+ *
+ *  Sửa ở đây KHÔNG đụng hợp đồng đã ký — mỗi hợp đồng giữ số tiền của
+ *  chính nó. Ô dùng thử để trống vì gói dùng thử là miễn phí theo thoả
+ *  thuận, và một ô "0 ₫" sửa được chỉ mời người ta điền nhầm vào đó. */
+function PriceGrid({ onSaved }: { onSaved: (message: string) => void }) {
+  const qc = useQueryClient();
+  const { data: prices, isLoading } = usePlanPrices();
+  const [draft, setDraft] = useState<Record<string, string>>({});
+
+  const save = useMutation({
+    mutationFn: (v: {
+      planCode: (typeof PLANS)[number];
+      term: (typeof TERMS)[number];
+      price: number;
+    }) => setPlanPrice({ data: { ...v, currency: "VND" } }),
+    onSuccess: (_r, v) => {
+      onSaved(`Đã lưu giá ${PLAN_LABEL[v.planCode]} · ${TERM_LABEL[v.term]}.`);
+      qc.invalidateQueries({ queryKey: ["plan-prices"] });
+    },
+    onError: (e: Error) => onSaved(e.message),
+  });
+
+  const paidTerms = TERMS.filter((t) => t !== "trial");
+
+  return (
+    <section className="mt-8 border border-primary/20 bg-card p-5">
+      <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Bảng giá theo gói</h2>
+      <p className="mt-2 text-sm text-foreground/70">
+        Giá niêm yết cho mỗi gói và kỳ hạn, tính bằng đồng. Gói dùng thử một tháng là miễn phí nên
+        không có ô nhập. Sửa bảng này không làm đổi số tiền của hợp đồng đã ký.
+      </p>
+
+      {isLoading ? (
+        <p className="mt-4 text-sm text-foreground/60">Đang tải…</p>
+      ) : (
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[640px] text-sm">
+            <thead className="text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+              <tr>
+                <th className="px-2 py-2 text-left">Gói</th>
+                {paidTerms.map((t) => (
+                  <th key={t} className="px-2 py-2 text-right">
+                    {TERM_LABEL[t]}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PLANS.map((p) => (
+                <tr key={p} className="border-t border-primary/10">
+                  <td className="px-2 py-2 whitespace-nowrap">{PLAN_LABEL[p]}</td>
+                  {paidTerms.map((t) => {
+                    const key = planPriceKey(p, t);
+                    const current = prices?.get(key);
+                    const value = draft[key] ?? (current ? String(current.price) : "");
+                    const dirty = draft[key] !== undefined && Number(draft[key]) !== current?.price;
+                    return (
+                      <td key={t} className="px-2 py-2 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <input
+                            inputMode="numeric"
+                            value={value}
+                            onChange={(e) =>
+                              setDraft((d) => ({
+                                ...d,
+                                [key]: e.target.value.replace(/[^\d]/g, ""),
+                              }))
+                            }
+                            className="w-32 border border-primary/30 bg-background px-2 py-1 text-right text-sm outline-none focus:border-primary"
+                          />
+                          <button
+                            disabled={!dirty || save.isPending}
+                            onClick={() =>
+                              save.mutate({ planCode: p, term: t, price: Number(draft[key] || 0) })
+                            }
+                            className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] disabled:opacity-30"
+                          >
+                            Lưu
+                          </button>
+                        </div>
+                        <div className="mt-0.5 text-[11px] text-foreground/50">
+                          {current ? formatMoney(current.price, current.currency) : "—"}
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   );
 }
 

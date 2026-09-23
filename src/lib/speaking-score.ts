@@ -289,6 +289,13 @@ const FINITE_VERBS = new Set<string>(
     "transfer transfers cancel cancels dial dials email emails confirm confirms hold holds " +
     "welcome welcomes order orders repeat repeats stop stops fix fixes seat seats spell spells " +
     "go goes leave leaves sit sits put puts get gets see sees know knows come comes " +
+    // "Ask him to LET go of you." The causative is a bare verb like any other,
+    // and it was missing because foldCourtesy rewrites the only shape anyone
+    // remembered — "let me" becomes "i will" — so nothing else in the file
+    // ever had to name it. Without it that sentence passed as "Ask him to go
+    // of you.", in the week-39 turn on a guest who has taken hold of a
+    // colleague.
+    "let lets " +
     // Progressive forms carry the predicate on their own: "Your water bottle is
     // coming, madam." keeps only a bare copula without this one.
     "coming going waiting checking bringing cleaning working starting finishing " +
@@ -502,7 +509,34 @@ function holdsThePredicate(word: string, target: string): boolean {
     "then",
     "also",
   ]);
-  const DETERMINER = new Set(["the", "a", "an", "your", "our", "my", "this", "that"]);
+  // The quantifiers head a subject exactly as "the" does — "MANY guests choose
+  // the twin room, and they are happy." passed with its verb deleted because
+  // the list stopped at the articles and the possessives.
+  const DETERMINER = new Set([
+    "the",
+    "a",
+    "an",
+    "your",
+    "our",
+    "my",
+    "this",
+    "that",
+    "these",
+    "those",
+    "their",
+    "his",
+    "her",
+    "its",
+    "every",
+    "each",
+    "all",
+    "both",
+    "many",
+    "some",
+    "several",
+    "few",
+    "most",
+  ]);
   if (before === "please") return true;
   if (MODAL.has(before)) return true;
   // "Do not FORGET to check again later." lost its verb and passed as "Do not
@@ -512,7 +546,99 @@ function holdsThePredicate(word: string, target: string): boolean {
   if (ADVERB.has(before) && (SUBJECT.has(twoBefore) || MODAL.has(twoBefore))) return true;
   // "The price includes locker access." — determiner, head noun, then the verb.
   if (at >= 2 && DETERMINER.has(twoBefore)) return true;
+  // THE SUBJECT IS NOT ALWAYS TWO WORDS LONG.
+  //
+  // The line above reads one fixed distance — determiner, ONE noun, then the
+  // verb — so a subject of three words or more lost the check entirely. "The
+  // DUTY manager approved an upgrade." puts its determiner three back, and
+  // the sentence passed with `approved` deleted; so did "Many guests CHOOSE
+  // the twin room, and they are happy." Eight of the eleven surviving verb
+  // deletions sat in weeks 21-22, where the past tense IS the content.
+  //
+  // So the determiner may sit anywhere earlier in the SAME CLAUSE, and the
+  // clause is what bounds it: without that bound "…, and they are happy"
+  // would read the determiner of the clause before it. A clause ends at a
+  // comma, a full stop or a conjunction.
+  //
+  // Two conditions bound it, and both were measured against the alternative
+  // rather than argued. The determiner must OPEN the clause, because one that
+  // opens a clause heads its SUBJECT while one in the middle heads an OBJECT:
+  // the literal reading of the recommendation — any determiner anywhere
+  // earlier — was built and run, and it fails "Please keep your handbag in
+  // the box." against "…in the safety box.", which is the one-word content
+  // allowance the A1 and A2 weeks are built on. And the span between the two
+  // must contain no verb, modal, determiner or preposition, because once one
+  // of those has gone by the predicate has already been found.
+  //
+  // WHAT IT COSTS, stated rather than implied. Inside a clause-initial noun
+  // phrase the rule cannot tell a modifier from the verb, because the only
+  // verb signal it has is FINITE_VERBS and that list is admittedly partial —
+  // "includes" is not on it, so "The price includes LOCKER access." now
+  // refuses to lose `locker` too. That is a tightening on a modifier noun in
+  // the subject region, and it is the price of reaching `approved` in "The
+  // duty manager approved an upgrade." Measured with the patch isolated from
+  // the rest of this round: single-token deletions pass 19.8% → 19.5% in
+  // Phase 2, 18.5% → 17.7% in Phase 3 and 25.2% → 24.8% in Phase 4, no phase
+  // moves the other way, every model still passes itself 100% of the time on
+  // both grading paths, and the course's own nearMiss and rude strings leak
+  // exactly the set they leaked before.
+  const CLAUSE_BREAK = new Set([
+    "and",
+    "or",
+    "but",
+    "because",
+    "when",
+    "while",
+    "if",
+    "so",
+    "then",
+    "that",
+    "which",
+    "after",
+    "before",
+    "until",
+    "although",
+    "though",
+    "unless",
+  ]);
+  const SPAN_STOP = new Set([
+    ...MODAL,
+    ...DETERMINER,
+    ...FINITE_VERBS,
+    ...PREPOSITION_TOKENS,
+    "at",
+    "in",
+    "on",
+    "to",
+    "of",
+    "for",
+    "not",
+  ]);
+  for (const clause of clausesOf(target, CLAUSE_BREAK)) {
+    if (!DETERMINER.has(clause[0] ?? "")) continue;
+    const i = clause.indexOf(word);
+    if (i < 2) continue;
+    if (clause.slice(1, i).some((x) => SPAN_STOP.has(x))) continue;
+    return true;
+  }
   return false;
+}
+
+/** The target cut into clauses: punctuation and conjunctions both end one.
+ *  Written here rather than inline because holdsThePredicate needs the
+ *  commas, and the flat token stream above has already thrown them away. */
+function clausesOf(target: string, breaks: Set<string>): string[][] {
+  const out: string[][] = [[]];
+  for (const tk of target
+    .toLowerCase()
+    .replace(/[.,!?;:]+/g, " | ")
+    .replace(/[^a-z'| ]/g, " ")
+    .split(" ")
+    .filter(Boolean)) {
+    if (tk === "|" || breaks.has(tk)) out.push([]);
+    else out[out.length - 1]!.push(tk);
+  }
+  return out;
 }
 
 /** Words a lesson is ABOUT, which the one-word allowance must never spend
@@ -606,6 +732,48 @@ const SAFETY_TOKENS = new Set<string>([
   "fire",
   "smoke",
   "danger",
+  // "I am calling SECURITY and the Duty Manager now." — the word that says
+  // who is coming. It sat beside `emergency`, `doctor` and `fire` in meaning
+  // and nowhere in this list, so the Guest Relations week-39 turn on a guest
+  // who will not let go of a colleague passed with it deleted. Layer S of
+  // scripts/lint-content.ts is what caught it: the moment the round below
+  // pulled that sentence into the must-be-right oral draw, a droppable
+  // `security` stopped being a curiosity and became an exam answer.
+  "security",
+  // THE ALLERGEN'S NAME, not just the word "allergy".
+  //
+  // The list knew `allergy`/`allergic` and no food, so the sentence that
+  // carries the whole promise carried it in an ordinary content word the
+  // one-word allowance could spend: "…we will not use nut oil." passed as
+  // "…we will not use oil." — in Spa's ONLY allergy turn of the phase, where
+  // the guest has just named what would harm them. Same shape in F&B: the
+  // cross-contact warning "…it has no nuts, but our kitchen does handle
+  // nuts." and "Which seafood must we avoid?".
+  //
+  // Scanned off the content rather than guessed: `nut`, `nuts`, `shellfish`,
+  // `gluten` and `seafood` are the allergen names the forty weeks actually
+  // use. `dairy`, `peanut(s)`, `soy`, `sesame` and `lactose` appear nowhere
+  // yet and are listed anyway — a token no target contains can never fire,
+  // and the next allergy turn somebody authors should not have to find this
+  // list first.
+  //
+  // `egg`/`eggs`, `milk`, `fish`, `beef` and `pork` are DELIBERATELY ABSENT.
+  // Every occurrence of them in the course is a menu word — "two eggs, no
+  // salt", "How would you like your eggs, sir", "the clay-pot fish" — and
+  // locking a menu word is not a safety rule, it is a tighter grade on an
+  // ordinary noun. They go on this list the day a turn says a guest cannot
+  // eat one.
+  "nut",
+  "nuts",
+  "peanut",
+  "peanuts",
+  "shellfish",
+  "gluten",
+  "dairy",
+  "seafood",
+  "soy",
+  "sesame",
+  "lactose",
 ]);
 
 /** The rest of the function words, graded with one life.
@@ -816,7 +984,11 @@ const PHRASAL_VERBS: Record<string, string[]> = {
   sit: ["down"],
   put: ["on", "down"],
   take: ["off", "back"],
-  turn: ["on", "off"],
+  // "turn OVER" is the other half of the draping sequence "face down" belongs
+  // to: "Please turn over slowly" passed as "Please turn slowly", which asks
+  // the guest to do nothing at all. Same shape as "send it up" — the particle
+  // is the instruction.
+  turn: ["on", "off", "over"],
   fill: ["in"],
   check: ["in", "out"],
   bring: ["back", "up"],
@@ -860,6 +1032,17 @@ const FIXED_PHRASES = [
   "anything else",
   "half past",
   "this way",
+  // "at ALL times" means always; "at times" means sometimes. Dropping the one
+  // word inverts the rule, and the percentage barely moves: Spa week 18's
+  // "A towel cover stays on at all times." passed as "…stays on at times." —
+  // a draping promise turned into an occasional one, in the lesson that
+  // exists to make it unconditional. `all` is an ordinary content word to
+  // every other list in this file, so only the phrase can hold it.
+  "at all times",
+  // "Please lie FACE down" is a position, not a direction. "Please lie down
+  // first, madam." passed the model, and a guest lying the wrong way up is
+  // the single thing that draping instruction prevents.
+  "face down",
   // "one moment" KHÔNG nằm ở đây, và đó là chủ ý. Cụm này đã có miễn trừ
   // riêng ở requiredValueTokens (chữ 'one' đứng ngay trước 'moment' không
   // tính là số đếm), vì "Certainly, madam. A moment." là câu đúng. Đưa nó
@@ -1237,6 +1420,23 @@ function lcsLength(a: string[], b: string[]): number {
   return dp[b.length];
 }
 
+/** Greedy bag match: for each target token, the first spoken token not yet
+ *  spent that equals it. Returns the TARGET indices that found a partner. */
+function bagMatch(a: string[], b: string[]): Set<number> {
+  const used = new Set<number>();
+  const hit = new Set<number>();
+  for (let i = 0; i < b.length; i++) {
+    for (let j = 0; j < a.length; j++) {
+      if (!used.has(j) && a[j] === b[i]) {
+        used.add(j);
+        hit.add(i);
+        break;
+      }
+    }
+  }
+  return hit;
+}
+
 export function compareWords(
   spoken: string,
   target: string,
@@ -1249,18 +1449,73 @@ export function compareWords(
   const b = foldCourtesy(
     canonDaypart(canonHonorific(normalize(target), honorificFree), daypartFree),
   );
-  const used = new Set<number>();
-  const correctIdx = new Set<number>();
-  for (let i = 0; i < b.length; i++) {
-    for (let j = 0; j < a.length; j++) {
-      if (!used.has(j) && a[j] === b[i]) {
-        used.add(j);
-        correctIdx.add(i);
-        break;
-      }
-    }
-  }
-  const accuracy = b.length === 0 ? 0 : correctIdx.size / b.length;
+  // Kept over the FULL streams: this is what the suite paints back to the
+  // learner word by word, so every word of the model has to keep an index.
+  const correctIdx = bagMatch(a, b);
+  // A COURTESY MARKER IS NOT PART OF THE PERCENTAGE EITHER.
+  //
+  // The round that freed courtesy markers fixed one of the two layers that
+  // grade them. requiredValueTokens stopped minting them as locks, and
+  // COURTESY_EXTRAS already said adding one is free — but accuracy and
+  // orderRatio still counted every one of them against the learner, so a
+  // model sentence minus its intensifier came back below the threshold with
+  // missingRequired, missingFunction, missingContent and insertedWords all
+  // EMPTY. "This afternoon was busy." scored 0.80/0.80 against "This
+  // afternoon was very busy." and failed the week-21 bar with nothing to
+  // report. Measured on one content snapshot, over the whole course: 18 of
+  // 157 `very` deletions, 45 of 354 `yes` deletions and 37 of 297 `now`
+  // deletions failed that way, and one week-department pair in six lost a
+  // Yes-opening item to it.
+  //
+  // Both streams, not just the target's: dropping the marker out of one side
+  // only would leave the learner's own "very" hunting for a partner that no
+  // longer exists and eating an order slot it never used to.
+  //
+  // ONLY WHEN THE OTHER SIDE NEVER SAYS IT. A marker is discounted where one
+  // speaker used it and the other did not use it AT ALL; a marker BOTH of them
+  // said is graded exactly as before, in the place they put it.
+  //
+  // Two earlier drafts of this line were wrong in two different ways and both
+  // were caught by measurement rather than by reading. Deleting every marker
+  // from both streams also deleted the difference between "I will clean NOW
+  // it, madam." and "I will clean it NOW, madam." — the first is a nearMiss
+  // the course itself prints as the WRONG answer, and it started passing.
+  // Trimming by COUNT instead fixed that and broke something else: a model
+  // with two "and"s, read back with one of them gone, had its FIRST "and"
+  // kept and the learner's SECOND one left hanging, so 27 sentences came back
+  // at accuracy 100 with the order ratio broken — right words, invented
+  // disagreement. A type-level test has neither failure: the surplus copy is
+  // simply graded, which is what the grader did before this round.
+  //
+  // Nothing is loosened past that. Every marker this discounts is still graded
+  // by the layers that own it — the apology a model OPENS with comes back
+  // through apologyOpenerTokens, "do" and "have" are FUNCTION_TOKENS with one
+  // life between them, and a marker the learner ADDS was already free.
+  // Measured over the whole course: dropping the opening apology still fails
+  // (4.2% pass, unchanged), dropping an auxiliary "do" still fails 100% of the
+  // time, and the set of the course's own nearMiss/rude strings that leak is
+  // byte-for-byte the same list as before — not the same count, the same list.
+  //
+  // A FREED HONORIFIC IS THE SAME STORY, one layer further along. When
+  // honorificIsFree() says the guest's line fixes no gender, the required
+  // token layer drops sir/madam and the order ratio has ignored its position
+  // since the round that added HON_ORDER_FREE — but the percentage went on
+  // counting whether it was there. That last layer is what kept the echo
+  // profile ("say the guest's line back to them") off the pass side: "Is this
+  // one confidential?" against "Yes, sir. This one is confidential." lost 1/6
+  // of its accuracy to `sir` and 1/6 to `yes`, and the moment `yes` became
+  // free the echo cleared the bar on `sir` alone. Discounted here too, the
+  // echo comes back word-perfect and OUT OF ORDER, which is what it is, and
+  // the verdict's own "right words, wrong order" clause fails it. Measured:
+  // the echo profile goes back to exactly the items it passed before.
+  const freeTag = (t: string) => honorificFree && HONORIFIC.test(t);
+  const trimCourtesy = (mine: string[], theirs: string[]) => {
+    const said = new Set(theirs.filter((t) => COURTESY_EXTRAS.has(t)));
+    return mine.filter((t) => !freeTag(t) && (!COURTESY_EXTRAS.has(t) || said.has(t)));
+  };
+  const am = trimCourtesy(a, b);
+  const bm = trimCourtesy(b, a);
+  const accuracy = bm.length === 0 ? 0 : bagMatch(am, bm).size / bm.length;
   // Order-aware check: longest common subsequence of the two word
   // streams, as a fraction of the target length. Bag-matching alone can
   // be gamed by reciting the right words in any order — real speech has
@@ -1274,9 +1529,13 @@ export function compareWords(
   // inside the same oral pool. Presence of the tag is still graded by the
   // required-token layer; its POSITION was never the lesson.
   const HON_ORDER_FREE = new Set(["sir", "madam", "maam"]);
-  const ao = a.filter((w) => !HON_ORDER_FREE.has(w));
-  const bo = b.filter((w) => !HON_ORDER_FREE.has(w));
-  const orderRatio = bo.length === 0 ? (b.length === 0 ? 0 : 1) : lcsLength(ao, bo) / bo.length;
+  // Off the courtesy-filtered streams for the same reason the percentage is:
+  // a marker the learner left out was breaking the subsequence it sat inside,
+  // so "This afternoon was busy." lost 0.20 of its order ratio as well as
+  // 0.20 of its accuracy and failed on both counts at once.
+  const ao = am.filter((w) => !HON_ORDER_FREE.has(w));
+  const bo = bm.filter((w) => !HON_ORDER_FREE.has(w));
+  const orderRatio = bo.length === 0 ? (bm.length === 0 ? 0 : 1) : lcsLength(ao, bo) / bo.length;
   // `words` is what the UI renders back to the learner, so it must be the
   // target as authored — not the canonicalised stream, which would print
   // "sir" over a model sentence that says "madam". Same length, so the
@@ -1414,7 +1673,27 @@ function stripCourtesyFrame(spoken: string, target: string): string {
       a = a.slice(1);
   }
   for (let guard = 0; guard < 3; guard++) {
-    const cl = COURTESY_CLOSERS.find((p) => closesWith(a, p) && !closesWith(b, p));
+    // A FRAME IS ONLY A FRAME IF THE MODEL DOES NOT NEED THOSE WORDS.
+    //
+    // The cut asked one question — does the model end this way? — and
+    // "Shall I arrange baggage storage for you NOW?" does not end in "for
+    // you", it ends in "now". So a learner who said the whole sentence bar
+    // the "now" had "for you" taken off the end of their answer and was then
+    // told they had left out `for` and `you`: two words they had just spoken,
+    // reported missing, at a raw compareWords score of 0.875 and a verdict of
+    // 0.625. Five departments print that frame in week 16.
+    //
+    // Counted, not merely looked up. The cut is refused only when it would
+    // leave the answer with FEWER copies of one of those words than the model
+    // has — so the ordinary case, where the model never says them at all,
+    // still strips exactly as before, and "Thank you. I will check for you."
+    // against a model that says "for you" once keeps its one copy.
+    const cl = COURTESY_CLOSERS.find((p) => {
+      if (!closesWith(a, p) || closesWith(b, p)) return false;
+      const rest = a.slice(0, a.length - p.length);
+      const count = (arr: string[], t: string) => arr.reduce((n, x) => n + (x === t ? 1 : 0), 0);
+      return !p.some((t) => count(rest, t) < count(b, t));
+    });
     if (!cl || a.length - cl.length < 2) break;
     a = a.slice(0, a.length - cl.length);
   }
@@ -1685,6 +1964,43 @@ export function utterancePassed(
     "any",
     "some",
     "one",
+    // HEDGES AND TIME SHIFTS. Same class as the degree words above, and the
+    // same failure: the percentage cannot see them, because accuracy and
+    // orderRatio both divide by the target. Appended to the end of a model
+    // sentence they passed 100% of every week-15-and-later item measured on
+    // one content snapshot — 3,040 of 3,040 promise sentences and 548 of 548
+    // safety sentences in Phase 2, and every one of F&B's. "I will ask my
+    // manager before we start TOMORROW." and "Please wait for me at the
+    // restaurant entrance TOMORROW." were both PASS: one postpones the
+    // escalation the sentence exists to make, the other moves the guest's
+    // meeting point to another day.
+    //
+    // `maybe`, `perhaps` and `probably` unmake a commitment; `sometimes` and
+    // `only` unmake a rule; `later`, `tomorrow` and `tonight` move when it
+    // happens; `alone` and `myself` change WHO does it, which on a floor is
+    // the difference between calling the duty manager and not.
+    //
+    // HERE RATHER THAN AS AN addedHedge() GATE, and it was measured both
+    // ways. A symmetric addedHedge — the shape addedNegation has — goes blind
+    // the moment the MODEL itself contains any hedge word, exactly as
+    // addedNegation does: it would have passed "I will check tomorrow MAYBE."
+    // against "I will check tomorrow." Listing them here catches that, needs
+    // no new hard gate in the verdict, and can only ever bite in the one case
+    // the exception was written for — an otherwise word-perfect reading plus
+    // one spare word. The DELETE direction is untouched, which is the point:
+    // a model that says "sometimes" still requires it (STRUCTURE_TOKENS), a
+    // model that says "tomorrow" still requires it (VALUE_TOKENS), and
+    // neither of those numbers moved.
+    "maybe",
+    "perhaps",
+    "probably",
+    "sometimes",
+    "later",
+    "tomorrow",
+    "tonight",
+    "alone",
+    "myself",
+    "only",
   ]);
   // Words a spare word may never be, whatever else is right. Every one of
   // them commits the hotel to money it has not agreed to give, or to a
@@ -1820,9 +2136,24 @@ export function utterancePassed(
   // passing with one copy gone: "This one brighter. That one is bright."
   // against "This one IS brighter…" at 88%. Eleven items behaved that way, the
   // same shape of bug this file already fixed once for function tokens.
-  const missingVerb =
-    missingContent.some((t) => FINITE_VERBS.has(t)) ||
-    missingContent.some((t) => holdsThePredicate(t, target));
+  // THE SYNONYM FOLD RENAMES THE VERB BEFORE THIS CHECK EVER SEES IT.
+  //
+  // `missingContent` is built from the FOLDED stream and holdsThePredicate
+  // reads the RAW target, so every verb the fold touches — finish→close,
+  // start→open, begin/began→open/opened, offer→arrange — arrived here under a
+  // name the sentence does not contain. The lookup returned index -1, the
+  // rule said "no verb", and the answer passed: "Today went well, because the
+  // team FINISHED ahead of time." passed with `finished` deleted, in the two
+  // weeks whose whole lesson is the past tense. FINITE_VERBS missed it for
+  // the same reason. Nothing else in this file reads a folded token against
+  // an unfolded string; this line did, and it did it silently.
+  const rawForms = (folded: string): string[] => {
+    const raw = normalize(target).filter((r) => foldCourtesy([r])[0] === folded);
+    return raw.length ? raw : [folded];
+  };
+  const missingVerb = missingContent.some((t) =>
+    rawForms(t).some((r) => FINITE_VERBS.has(r) || holdsThePredicate(r, target)),
+  );
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
   // ONE spare word, and only on a reading that is otherwise the model exactly.

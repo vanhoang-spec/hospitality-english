@@ -17,6 +17,25 @@ async function requireSuperAdmin(supabase: SupabaseClient<Database>, userId: str
   if (data.role !== "super_admin") throw new Error("Forbidden: super_admin role required");
 }
 
+/** Giá niêm yết của (gói × kỳ hạn) tại thời điểm ký. Trả về null nếu
+ *  chưa ai điền bảng giá — null nghĩa là "chưa biết", khác hẳn 0 là
+ *  "miễn phí", nên đừng thay bằng 0. */
+async function listPrice(
+  admin: SupabaseClient<Database>,
+  planCode: string,
+  term: string,
+): Promise<number | null> {
+  const { data } = await admin
+    .from("plan_prices")
+    .select("price")
+    .eq("plan_code", planCode)
+    .eq("term", term)
+    .maybeSingle();
+  if (!data) return null;
+  const n = Number((data as { price: number | string }).price);
+  return Number.isFinite(n) ? n : null;
+}
+
 function endsAt(kind: string, from: Date): string {
   const months = TERM_MONTHS[kind] ?? 1;
   const end = new Date(from);
@@ -34,6 +53,7 @@ export const createOrganization = createServerFn({ method: "POST" })
       hrPhone: z.string().min(1),
       hrFullName: z.string().trim().min(1).max(120),
       hrPassword: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
+      price: z.number().nonnegative().nullable().optional(),
     }),
   )
   .handler(async ({ data, context }) => {
@@ -65,12 +85,14 @@ export const createOrganization = createServerFn({ method: "POST" })
     if (orgErr || !org) throw new Error(orgErr?.message ?? "Không tạo được khách sạn.");
 
     const now = new Date();
+    const agreed = data.price ?? (await listPrice(supabaseAdmin, data.planCode, data.term));
     const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
       org_id: org.id,
       plan_code: data.planCode,
       kind: data.term,
       starts_at: now.toISOString(),
       ends_at: endsAt(data.term, now),
+      price: agreed,
       created_by: context.userId,
     });
     if (subErr) throw new Error(subErr.message);
@@ -98,7 +120,7 @@ export const createOrganization = createServerFn({ method: "POST" })
       org_id: org.id,
       action: "org.create",
       target_user_id: created.user.id,
-      meta: { plan: data.planCode, term: data.term } as never,
+      meta: { plan: data.planCode, term: data.term, price: agreed } as never,
     });
 
     return { orgId: org.id, hrUserId: created.user.id };
@@ -114,6 +136,7 @@ export const setSubscription = createServerFn({ method: "POST" })
       planCode: z.enum(["p50", "p100", "p200", "p300", "p500"]),
       term: z.enum(["trial", "m3", "m6", "m9", "m12"]),
       startNow: z.boolean().default(true),
+      price: z.number().nonnegative().nullable().optional(),
     }),
   )
   .handler(async ({ data, context }) => {
@@ -148,12 +171,14 @@ export const setSubscription = createServerFn({ method: "POST" })
         .eq("id", current.id);
     }
 
+    const agreed = data.price ?? (await listPrice(supabaseAdmin, data.planCode, data.term));
     const { error } = await supabaseAdmin.from("subscriptions").insert({
       org_id: data.orgId,
       plan_code: data.planCode,
       kind: data.term,
       starts_at: from.toISOString(),
       ends_at: endsAt(data.term, from),
+      price: agreed,
       created_by: context.userId,
     });
     if (error) throw new Error(error.message);
@@ -167,7 +192,51 @@ export const setSubscription = createServerFn({ method: "POST" })
       actor_id: context.userId,
       org_id: data.orgId,
       action: "subscription.set",
-      meta: { plan: data.planCode, term: data.term, startNow: data.startNow } as never,
+      meta: {
+        plan: data.planCode,
+        term: data.term,
+        startNow: data.startNow,
+        price: agreed,
+      } as never,
+    });
+
+    return { success: true as const };
+  });
+
+/** Sửa một ô trong bảng giá niêm yết.
+ *
+ *  Chỉ đụng `plan_prices`. Hợp đồng đã ký giữ nguyên số tiền của nó —
+ *  đó là lý do `subscriptions.price` là một cột riêng chứ không phải
+ *  một phép join tới bảng giá. */
+export const setPlanPrice = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    z.object({
+      planCode: z.enum(["p50", "p100", "p200", "p300", "p500"]),
+      term: z.enum(["trial", "m3", "m6", "m9", "m12"]),
+      price: z.number().nonnegative(),
+      currency: z.string().trim().min(3).max(3).default("VND"),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    await requireSuperAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const { error } = await supabaseAdmin.from("plan_prices").upsert({
+      plan_code: data.planCode,
+      term: data.term,
+      price: data.price,
+      currency: data.currency,
+      updated_at: new Date().toISOString(),
+      updated_by: context.userId,
+    });
+    if (error) throw new Error(error.message);
+
+    await supabaseAdmin.from("admin_actions").insert({
+      actor_id: context.userId,
+      org_id: null,
+      action: "price.set",
+      meta: { plan: data.planCode, term: data.term, price: data.price } as never,
     });
 
     return { success: true as const };

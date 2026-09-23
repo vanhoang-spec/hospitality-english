@@ -266,6 +266,33 @@ export type Database = {
         Update: { code?: string; seats?: number; sort_order?: number };
         Relationships: [];
       };
+      plan_prices: {
+        Row: {
+          plan_code: string;
+          term: string;
+          price: number;
+          currency: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          plan_code: string;
+          term: string;
+          price?: number;
+          currency?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          plan_code?: string;
+          term?: string;
+          price?: number;
+          currency?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       subscriptions: {
         Row: {
           created_at: string;
@@ -277,6 +304,8 @@ export type Database = {
           plan_code: string;
           starts_at: string;
           status: string;
+          price: number | null;
+          currency: string;
         };
         Insert: {
           created_at?: string;
@@ -288,6 +317,8 @@ export type Database = {
           plan_code: string;
           starts_at?: string;
           status?: string;
+          price?: number | null;
+          currency?: string;
         };
         Update: {
           created_at?: string;
@@ -299,6 +330,8 @@ export type Database = {
           plan_code?: string;
           starts_at?: string;
           status?: string;
+          price?: number | null;
+          currency?: string;
         };
         Relationships: [];
       };

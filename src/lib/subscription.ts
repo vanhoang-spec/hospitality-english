@@ -86,3 +86,51 @@ export function orgIsActive(sub: OrgSubscription | null | undefined, loaded: boo
   if (!sub) return true;
   return sub.active;
 }
+
+/** Bảng giá niêm yết: một mức cho mỗi (gói × kỳ hạn).
+ *
+ *  Tách khỏi `subscriptions.price` có chủ đích — đây là giá bán ra hôm
+ *  nay, còn số tiền của một hợp đồng đã ký nằm trên chính hợp đồng đó và
+ *  không đổi khi bảng giá đổi. */
+export type PlanPrice = { planCode: string; term: string; price: number; currency: string };
+
+export function planPriceKey(planCode: string, term: string) {
+  return `${planCode}|${term}`;
+}
+
+export function usePlanPrices() {
+  return useQuery({
+    queryKey: ["plan-prices"] as const,
+    queryFn: async (): Promise<Map<string, PlanPrice>> => {
+      const { data, error } = await supabase
+        .from("plan_prices")
+        .select("plan_code, term, price, currency");
+      if (error) throw error;
+      const rows = (data ?? []) as unknown as {
+        plan_code: string;
+        term: string;
+        price: number | string;
+        currency: string;
+      }[];
+      return new Map(
+        rows.map((r) => [
+          planPriceKey(r.plan_code, r.term),
+          {
+            planCode: r.plan_code,
+            term: r.term,
+            price: Number(r.price),
+            currency: r.currency,
+          },
+        ]),
+      );
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
+/** Tiền Việt đọc bằng mắt, không phải bằng cách đếm số 0. */
+export function formatMoney(amount: number | null | undefined, currency = "VND"): string {
+  if (amount === null || amount === undefined) return "—";
+  if (currency === "VND") return new Intl.NumberFormat("vi-VN").format(amount) + " ₫";
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency }).format(amount);
+}

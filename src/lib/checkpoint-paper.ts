@@ -922,7 +922,6 @@ export function buildPaper(dep: string, week: string): Question[] {
     // candidates are drawn from a band around the key's own length, and the
     // original similarity score ranks what is left.
     const keyLen = wordsOf(s.targetResponse);
-    const inBand = (t: string) => Math.abs(wordsOf(t) - keyLen) <= 2;
     const ranked = (list: string[]) =>
       list.map((t) => ({ t, score: share(t) + echo(t) * 2 })).sort((a, b) => b.score - a.score);
     // Bể nói trước; nếu cạn thì mượn vế polite của khối ngữ pháp cùng phase.
@@ -1020,6 +1019,28 @@ export function buildPaper(dep: string, week: string): Question[] {
         .join(" ");
     const keyOpening = openingWords(s.targetResponse);
     const sameFrame = (t: string) => openingWords(t) === keyOpening;
+    // AND THIS ONE IS NOT GATED ON `discriminated`, WHICH THE OTHERS ARE.
+    //
+    // Every rule in this group asks "is there anything in the audio that
+    // tells the key from this candidate?" and keeps the candidate when there
+    // is. For a candidate that opens with the key's own first four words,
+    // that question is answered against the wrong thing: what the audio names
+    // is the FRAME, which both of them say, and the object they differ in is
+    // the part the audio is silent about. So the gate opens on the strength
+    // of the words the two options share.
+    //
+    //     audio  "I need an invoice for my company."
+    //     key    "Certainly, sir. May I have your company name and tax code?"
+    //     lure   "Certainly, sir. May I have your billing name, please?"
+    //
+    // `discriminated` said yes on "company", which is in the key and not in
+    // the lure — and the lure is the reply this very course teaches for "Can
+    // I get a red invoice for my company?", eleven lines away in the same
+    // file. Both are right. Measured before this line moved: a distractor
+    // opening with the key's first four words appeared on 7.25% of papers in
+    // the audit that reported it and 3.17% on the snapshot this was fixed
+    // against; 0.00% after.
+    //
     // Two more shapes three reviews read by hand and the rules above missed,
     // because neither is a frame: a paraphrase that keeps most of the key's
     // content ("It keeps every guest safe…" / "It keeps everyone safe…",
@@ -1037,16 +1058,64 @@ export function buildPaper(dep: string, week: string): Question[] {
     };
     const secondRightAnswer = (t: string) =>
       pullsAway(t) ||
+      sameFrame(t) ||
       (!discriminated(t) &&
         ((keyMove >= 0 && listeningMoveIndex(t) === keyMove) ||
           sameRecipient(t) ||
-          sameFrame(t) ||
           sharesContent(t) ||
           sameItem(t)));
     // nearlySameAnswer, not sameAnswer: see the note on the helper.
     const usable = widened.filter(
       (t) => !nearlySameAnswer(t, s.targetResponse) && !secondRightAnswer(t),
     );
+    // THE BAND IS ±2 WORDS ON THE SIDE THAT HAS REPLIES, AND WIDER ON THE SIDE
+    // THAT DOES NOT.
+    //
+    // It was a flat `Math.abs(wordsOf(t) - keyLen) <= 2`, and that window is
+    // the candidate filter that decided which length ranks the draw below
+    // could even ask for. A window symmetric in WORDS is not symmetric in
+    // CANDIDATES, because the bank's lengths have a floor and a long tail:
+    // it holds almost no replies of two or three words and plenty of
+    // fifteen-word ones. So for a five-word key the lower half of the window
+    // was empty and "the key is the longest of the three" was unreachable on
+    // 91.4% of those items, while for a fourteen-word key the upper half was
+    // thin and "the key is the shortest" went the same way. The draw then
+    // spent a third of its items asking for a rank that could not exist, and
+    // whatever the fallback did with them became a rule a learner could read
+    // off the page. Phase 2, where the keys sit shortest against their own
+    // pool, was the worst: with the shape rules below already in place but
+    // this window still fixed, "always pick the shortest option" answered
+    // 44.3% of phase-2 listening questions — the same trick the round had
+    // just taken off "avoid the longest", wearing the other hat.
+    //
+    // This is the same defect as the round that fixed `shortEnough`: a
+    // candidate filter, not the rank arithmetic, is what made a rank
+    // impossible. The window therefore keeps ±2 as its floor and opens on
+    // whichever side is short of candidates until that side can actually
+    // supply a pair — never past twelve words, and never wider than the pool
+    // has. Widening only the starved side is the point: widening both would
+    // hand the similarity score back the length signal the band exists to
+    // take away from it, because `ranked` counts shared TOKENS and a longer
+    // candidate collects more of them.
+    const MIN_PER_SIDE = 4;
+    const sideWidth = (dir: -1 | 1) => {
+      let w = 2;
+      while (
+        w < 12 &&
+        usable.filter((t) => {
+          const d = (wordsOf(t) - keyLen) * dir;
+          return d > 0 && d <= w;
+        }).length < MIN_PER_SIDE
+      )
+        w++;
+      return w;
+    };
+    const shortSide = sideWidth(-1);
+    const longSide = sideWidth(1);
+    const inBand = (t: string) => {
+      const d = wordsOf(t) - keyLen;
+      return d <= 0 ? -d <= shortSide : d <= longSide;
+    };
     const banded = usable.filter(inBand);
     // Discriminated candidates first: when the audio can tell the key from a
     // distractor, that is the distractor worth printing. 57-60% of items have
@@ -1123,7 +1192,47 @@ export function buildPaper(dep: string, week: string): Question[] {
       return shared / Math.max(1, new Set([...A, ...B]).size);
     };
     type Cand = { t: string; score: number };
-    const top: Cand[] = strict.slice(0, 12);
+    // THE SHORTLIST TAKES FROM BOTH SIDES OF THE KEY, NOT THE TOP TWELVE.
+    //
+    // `ranked` scores a candidate by `share + echo * 2`, and both of those are
+    // counts of shared TOKENS, so a longer sentence collects more of them and
+    // outranks a shorter one on length alone. The band above bounds that — a
+    // candidate can only be a couple of words longer — but it does not remove
+    // it, and `top.slice(0, 12)` followed by `i < Math.min(3, top.length)`
+    // below means the FIRST distractor of every pair is drawn from the three
+    // highest-scoring candidates, which is to say from the long end of the
+    // band. Measured on the real builder, the first three of the old shortlist
+    // against the key's own length:
+    //
+    //   phase   shorter than the key   longer   |   the banded pool itself
+    //   P1            30%               47%     |     39% / 35%
+    //   P2            28%               50%     |     39% / 39%
+    //
+    // The pool was even; the shortlist was not. A pair needs BOTH distractors
+    // shorter than the key to make the key the longest of its three options,
+    // and with the first one biased long that shape was reachable on 38-40% of
+    // phase 1-2 items against 60-63% for its mirror. That is the second half of
+    // the defect, and the half no rank arithmetic downstream can repair: the
+    // draw below spent a third of its items asking for a shape the item could
+    // not supply.
+    //
+    // So the shortlist is filled from three lanes — candidates shorter than
+    // the key, the same length, and longer — taking each lane's best in turn,
+    // with the lane order shuffled each round so no side is systematically
+    // first.
+    // Each lane keeps its own similarity ranking, so nothing about WHICH
+    // sentences are eligible changes; only the length composition of the
+    // twelve does. Dividing the score by length was tried in an earlier round
+    // and rejected — it inverts the bias instead of removing it, and "longest
+    // wins" went to 57.5%.
+    const laneOf = (c: Cand) => Math.sign(wordsOf(c.t) - keyLen);
+    const lanes = [-1, 0, 1].map((sg) => strict.filter((c) => laneOf(c) === sg));
+    const top: Cand[] = [];
+    for (let i = 0; top.length < 12 && lanes.some((l) => l[i]); i++)
+      for (const lane of shuffle(lanes)) {
+        const c = lane[i];
+        if (c && top.length < 12) top.push(c);
+      }
     const aroundKey = Math.random() < 1 / 3;
     const wantRank = Math.floor(Math.random() * 3);
     const pairs: { a: Cand; b: Cand; w: number }[] = [];
@@ -1154,33 +1263,119 @@ export function buildPaper(dep: string, week: string): Question[] {
     // of papers. That floor exists to stop certifying a learner who heard
     // nothing (phases.ts).
     //
-    // A distractor the same length as the key is not a rank. It leaves the
-    // three options with no readable middle at all, which is fine for the
-    // learner and meaningless as a target, so those pairs get their own
-    // bucket and are used only where no pair sits at the rank that was drawn.
-    // Counting them as rank 0 or 1 was measured to put the key mid-length
-    // about half the time on its own.
-    const TIED = 3;
-    const rankOfPair = (p: { a: Cand; b: Cand }) => {
-      const ws = [wordsOf(p.a.t), wordsOf(p.b.t)];
-      return ws.some((w) => w === keyLen) ? TIED : ws.filter((w) => w < keyLen).length;
+    // A RANK IS NOT ENOUGH: WHAT AN EXCLUSION RULE READS IS ALL THREE GAPS.
+    //
+    // This counted how many distractors are shorter than the key and stopped
+    // there — three buckets plus one for "a distractor exactly as long as the
+    // key", which was treated as no rank at all. It never looked at the two
+    // distractors against EACH OTHER, and that is the whole of the defect two
+    // blind audits reported as "never pick the longest option".
+    //
+    // Two distractors of the same word count sit on one rung, so the three
+    // options have two rungs instead of three, and a rule that ELIMINATES
+    // rather than picks then strikes out both distractors in one stroke and
+    // is left holding the key. Measured on the real builder, 7,200 listening
+    // questions:
+    //
+    //   key shortest, the two distractors equal to each other   15.7%
+    //   key longest,  the two distractors equal to each other   13.5%
+    //
+    // "Avoid the longest option" is worth 100% on the first of those and
+    // "avoid the shortest" 100% on the second; between them they carried
+    // 15.7 of the 42.2 points "avoid the longest" scored and 13.5 of the 38.6
+    // "avoid the shortest" scored. They are common because they are what a
+    // ±2-word band leaves over: once the rank has pushed both distractors to
+    // one side of the key there are only one or two word counts left to
+    // choose between, so the two land on the same one about half the time,
+    // and nothing downstream was looking.
+    //
+    // Same class of defect as the two rounds before it, one layer in: the
+    // first listening round had a candidate filter that made a rank
+    // impossible, the reading block had no rank at all, and this one has the
+    // rank machinery but measures the wrong thing.
+    //
+    // So the three options are classified by the whole LADDER they form when
+    // sorted by word count, five rungs from "the key is the only short one"
+    // to "the key is the only long one", with the two joint positions in
+    // between. A distractor exactly as long as the key is no longer a
+    // non-rank to be avoided — it is the half-step, and the half-step is what
+    // makes the deficit below payable.
+    const KEY_SHORTEST = 0;
+    const KEY_JOINT_SHORTEST = 1;
+    const KEY_MIDDLE = 2;
+    const KEY_JOINT_LONGEST = 3;
+    const KEY_LONGEST = 4;
+    /** All three the same length: no ladder at all, and no rule can read it. */
+    const FLAT = 5;
+    /** The two distractors equal to each other and both on one side of the
+     *  key — the shape above, and the only one an exclusion rule answers
+     *  outright. Never chosen while anything else exists. */
+    const TWINS = 6;
+    const shapeOfPair = (p: { a: Cand; b: Cand }) => {
+      const [lo, hi] = [wordsOf(p.a.t), wordsOf(p.b.t)].sort((x, y) => x - y);
+      if (lo === keyLen && hi === keyLen) return FLAT;
+      if (lo === hi) return TWINS;
+      if (lo === keyLen) return KEY_JOINT_SHORTEST;
+      if (hi === keyLen) return KEY_JOINT_LONGEST;
+      return keyLen < lo ? KEY_SHORTEST : keyLen > hi ? KEY_LONGEST : KEY_MIDDLE;
     };
-    // The drawn rank first; where no pair sits at it, a rank drawn from the
-    // ranks that DO exist. Falling back to the likeliest pair regardless of
-    // length, or to the nearest rank, both walked the key into the middle of
-    // its three options 40-50% of the time against a chance of 33% — and
-    // "pick the middle-length option" was the listening block's best surface
-    // trick in five reviews.
-    const byRank = new Map<number, typeof candidates>();
+    const byShape = new Map<number, typeof candidates>();
     for (const p of candidates) {
-      const r = rankOfPair(p);
-      byRank.set(r, [...(byRank.get(r) ?? []), p]);
+      const r = shapeOfPair(p);
+      byShape.set(r, [...(byShape.get(r) ?? []), p]);
     }
-    const ranks = [...byRank.keys()];
-    const chosenRank = byRank.has(wantRank)
-      ? wantRank
-      : (ranks[Math.floor(Math.random() * ranks.length)] ?? wantRank);
-    const best = (byRank.get(chosenRank) ?? candidates).sort((x, y) => y.w - x.w)[0];
+    // WHERE THE DRAWN RANK DOES NOT EXIST — AND IT IS NOT MISSING AT RANDOM.
+    //
+    // The old line re-drew uniformly from `[...byRank.keys()]`. That was
+    // wrong twice over. It put the tied bucket on the same footing as a real
+    // rank — tied is reachable on 88% of items against 60-75% for the ranks —
+    // so 13.6% of items landed on the bucket the code itself called
+    // meaningless as a target. And which rank is missing depends on the key:
+    // a band of ±2 words around a SHORT key reaches down into word counts the
+    // speaking bank does not contain (there are almost no three-word
+    // replies), so "the key is the longest" exists for only 19.8% of items
+    // whose key is five words or fewer, against 90.5% for "the key is the
+    // shortest". A uniform re-draw poured that missing third straight onto
+    // the shortest, which is the other half of why an exclusion rule paid.
+    //
+    // A miss goes to the OTHER END, and the middle rung goes last of all.
+    //
+    // Which rung is missing is decided by where the key sits in the bank's own
+    // length distribution, and the middle is the rung the content nearly
+    // always supplies — reachable on 69-87% of items by phase, against 39-69%
+    // for "the key is the longest". Walking a miss to the NEAREST rung
+    // therefore hands the middle every miss from both ends at once: simulated
+    // over the reachable sets of 5,400 real items, that put 45-49% of items at
+    // "the key is in the middle" and gave "pick the middle-length option"
+    // exactly the score the block started this round with.
+    //
+    // So a miss is paid by the rungs that are scarce, never by the one that is
+    // not: the drawn rung, then the far end, then the two half-steps nearest
+    // the draw, and the middle last. Worst single phase-by-strategy deviation
+    // from the 33.3 a guess pays, over the same 5,400 items:
+    //
+    //   nearest rung first                   15.8
+    //   farthest whole rung, middle in line    9.8
+    //   farthest whole rung, middle LAST       5.6
+    //
+    // The half-steps sit above the middle and below the far end because a key
+    // that is joint-shortest gives a length rule half a point instead of a
+    // whole one, but two options of the same length leave "pick the middle"
+    // nothing to point at, which is worth half to a learner who clicks one of
+    // the two. FLAT and TWINS sit off the ladder, TWINS last of all.
+    const target = wantRank * 2;
+    const nearestFirst = (rungs: number[]) =>
+      [...shuffle(rungs)].sort((x, y) => Math.abs(x - target) - Math.abs(y - target));
+    const chosenShape =
+      [
+        target,
+        ...shuffle([KEY_SHORTEST, KEY_LONGEST].filter((r) => r !== target)),
+        ...nearestFirst([KEY_JOINT_SHORTEST, KEY_JOINT_LONGEST]),
+        ...(target === KEY_MIDDLE ? [] : [KEY_MIDDLE]),
+        FLAT,
+        TWINS,
+      ].find((r) => byShape.has(r)) ?? target;
+    const best = (byShape.get(chosenShape) ?? candidates).sort((x, y) => y.w - x.w)[0];
     const clean: Cand[] = best ? [best.a, best.b] : top.slice(0, 2);
     // If the strict rule leaves fewer than two, top up from what it rejected —
     // taking the LEAST similar first, so the filler is the least likely of the

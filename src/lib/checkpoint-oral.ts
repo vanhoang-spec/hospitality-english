@@ -297,8 +297,33 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // each pool to a handful of sentences, and memorising those handfuls passed
   // two of five units on their own — the memorisation curve went from 62-74%
   // to 90-100% at sixty sentences in a single measurement.
+  //
+  // ESCALATION IS WRITTEN IN THE CONTINUOUS, AND THIS READ ONLY THE
+  // INFINITIVE.
+  //
+  // The pattern knew "call my manager" and "call security"; the content says
+  // "I am CALLING security now", "I am CALLING our manager and first aid
+  // now", "My supervisor IS COMING to help you." An earlier round noticed
+  // that and patched it into the two department patterns that happened to be
+  // named in the report — F&B's and Spa's — which left Guest Relations and
+  // Front Office matching nothing of the kind, because nobody had named those
+  // two desks. Measured with buildOral over 3,000 sittings: Guest Relations'
+  // whole reserved pool in Phase 2 was 12 sentences, 100% of them "knowing
+  // how to decline" and 0% of them an emergency — a lost child, a medical
+  // incident and a disruptive guest could never reach the one draw the
+  // sitting is required to get right.
+  //
+  // So it is fixed HERE, in the pattern every department shares, and not by
+  // adding a third and fourth copy to TOPIC. Patching by pair is what
+  // produced this defect: the shape is "escalation, in any tense", and the
+  // shape has no department.
+  //
+  // Measured on one content snapshot, five departments × eight weeks: +4
+  // sentences for Guest Relations, +3 for Front Office, 0 for Housekeeping,
+  // Spa and F&B — whose own patterns already reached theirs — and no sentence
+  // pulled in that is not a refusal, an escalation or an emergency.
   const CARRIES_AUTHORITY =
-    /cannot decide|decide (that )?alone|ask my (manager|supervisor)|call (my|the) (manager|supervisor|duty manager)|ask the front desk|not (allowed|permitted|possible)|may not|must not|cannot (give|confirm|promise|open|take|guarantee)|did not go through|step this way|call security|not able to|stop (here|now)|before we start/i;
+    /cannot decide|decide (that )?alone|ask my (manager|supervisor)|call(ing)? (my|the|our) (manager|supervisor|duty manager)|ask the front desk|not (allowed|permitted|possible)|may not|must not|cannot (give|confirm|promise|open|take|guarantee)|did not go through|step this way|call(ing)? (security|first aid)|(duty manager|manager|supervisor) is coming|not able to|stop (here|now)|before we start/i;
   // A TOPIC ALTERNATIVE NAMES A BEHAVIOUR, NOT A SUBJECT.
   //
   // The list below used to be nouns — `passport`, `upgrade`, `deposit`,
