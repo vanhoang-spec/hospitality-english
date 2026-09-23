@@ -211,6 +211,21 @@ export const FO_WEEK_17: WeekContent = {
     "Receipt",
     "Register",
     "Luggage",
+    // Tám thẻ dưới đây là phần đợt sửa nhịp giãn cách KHÔNG với tới được:
+    // `reviewWordsFor` chỉ chạy cho tuần khung, còn tuần này thay cả bản ghi
+    // tuần, nên tám mục Phase 0/1 ở trên là toàn bộ danh sách ôn của nó —
+    // trong khi các tuần cùng phase mang 21-35 mục. Đo bằng getWeekContent
+    // trên cả tám tuần: đúng tám thẻ của FO tuần 15-16 không có MỘT tuần nào
+    // ôn trước đợt quét tuần 22 — chờ 6 đến 7 tuần. Tuần 17 là tuần lag-1 và
+    // lag-2 của chúng, nên đây là chỗ chúng phải quay lại.
+    "Then", // thẻ tuần 15
+    "Allocate the room", // thẻ tuần 15
+    "Escort you upstairs", // thẻ tuần 15
+    "Confirm the details", // thẻ tuần 15
+    "Offer", // thẻ tuần 16
+    "Higher floor", // thẻ tuần 16
+    "All taxes", // thẻ tuần 16
+    "Optional", // thẻ tuần 16
   ],
   lessons: [
     {
@@ -378,7 +393,12 @@ export const FO_WEEK_17: WeekContent = {
           // duplicated a Phase 0 headword. The SOP lesson's own noun is the
           // scan: that is the thing this desk produces and hands back from.
           word: "Passport scan",
-          phonetic: "/ˈpæspɔːt skæn/",
+          // /ɑː/, không phải /æ/. Mọi thẻ khác của khoá đọc passport theo
+          // giọng Anh-Anh — /ˈpɑːspɔːt/ ở thẻ "Passport" tuần 2, ở "Take the
+          // passport" và ở "Passport number" — nên chỉ riêng thẻ này dạy học
+          // viên một nguyên âm khác cho cùng một từ, ngay tuần SOP mà từ đó
+          // được nói nhiều nhất.
+          phonetic: "/ˈpɑːspɔːt skæn/",
           definition: "Bản quét hộ chiếu",
           context: "I will return your passport after the passport scan.",
           icon: "📘",
@@ -562,7 +582,12 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "Refund",
-          phonetic: "/rɪˈfʌnd/",
+          // Trọng âm ở âm tiết ĐẦU: đây là danh từ. Khoá tự dạy đúng luật này
+          // ở tuần 25 ("'refund' /ˈriːfʌnd/ — là danh từ thì trọng âm rơi vào
+          // âm tiết ĐẦU") và thẻ "Full refund" cũng ghi /fʊl ˈriːfʌnd/; chỉ
+          // thẻ này ghi dạng ĐỘNG TỪ, trong khi định nghĩa và câu ví dụ của
+          // chính nó đều là danh từ.
+          phonetic: "/ˈriːfʌnd/",
           definition: "Hoàn tiền lại",
           context: "We release the hold, and your bank shows the refund later.",
           icon: "💵",
@@ -760,7 +785,11 @@ export const FO_WEEK_17: WeekContent = {
         },
         {
           word: "ETA",
-          phonetic: "/iː tiː eɪ/",
+          // Từ viết tắt đọc từng chữ cái thì trọng âm chính rơi vào chữ CUỐI
+          // — khoá đã ghi đúng ở thẻ "VIP arrivals" /ˌviː aɪ ˈpiː əˈraɪvlz/.
+          // Thẻ này không có dấu trọng âm nào, nên học viên đọc đều ba chữ và
+          // người nghe không nhận ra đó là một từ viết tắt.
+          phonetic: "/ˌiː tiː ˈeɪ/",
           definition: "Giờ dự kiến đến (estimated time of arrival)",
           context: "Could you tell me your ETA so we can prepare your room?",
           icon: "🕐",
@@ -1958,10 +1987,23 @@ export const HK_WEEK_15: WeekContent = {
         // asks it: "Bottled water is complimentary, no charge to guest." One
         // wrong bubble invents a charge; the other goes away to look up a
         // price that is written on the form in the attendant's own hand.
+        //
+        // THE QUESTION ONLY ASKS WHAT THE FORM ANSWERS. It used to ask about
+        // "the water and the extra soap" and key an answer that declared
+        // every amenity free in every room — a blanket promise the source
+        // slip does not make: the slip prices nothing and frees exactly one
+        // line, the bottled water. In the same round it marked "I will check
+        // the price for you, sir" WRONG, so a learner was taught to invent a
+        // free-of-charge policy for an item nobody had told him about, and
+        // penalised for going to look. Those are opposite lessons and the
+        // course teaches the second one everywhere else. Narrowed to the
+        // water: now the slip really does answer it, so answering at the door
+        // is right and going away to look it up is the error the explanation
+        // has always described.
         {
           explanation:
             "Hai phương án sai đều đúng ngữ pháp và lịch sự. Một câu tính tiền chai nước — phiếu yêu cầu ghi rõ nước suối là đồ miễn phí, không thu của khách. Câu kia hẹn đi hỏi giá rồi gọi lại, bắt khách chờ một con số vốn không tồn tại: thứ mình biết chắc là miễn phí thì trả lời ngay tại cửa.",
-          prompt: "How much will the water and the extra soap cost me?",
+          prompt: "How much will the bottled water cost me?",
           options: [
             {
               text: "Only a small charge for the water, sir, on your room bill.",
@@ -1969,7 +2011,7 @@ export const HK_WEEK_15: WeekContent = {
               kind: "register",
             },
             {
-              text: "Nothing at all, sir. Those amenities are complimentary in every room.",
+              text: "Nothing at all, sir. The bottled water is a complimentary amenity.",
               correct: true,
               kind: "answer",
             },
@@ -4852,6 +4894,19 @@ export const SW_WEEK_19: WeekContent = {
     "Service charge",
     "Book online",
     "Treatment robe",
+    // Bảy thẻ dưới đây là phần đợt sửa nhịp giãn cách KHÔNG với tới được:
+    // `reviewWordsFor` chỉ chạy cho tuần khung, còn tuần này thay cả bản ghi
+    // tuần nên nó mang danh sách ôn của riêng nó. Đo bằng getWeekContent trên
+    // cả tám tuần: đúng bảy thẻ của SW tuần 16-18 không có MỘT tuần nào ôn
+    // trước đợt quét tuần 22 — chờ 4 đến 6 tuần. Thêm vào đây là chỗ duy nhất
+    // chữa được, vì tuần 19 là tuần đứng giữa chúng và tuần 22.
+    "Body scrub", // thẻ tuần 16
+    "Extra thirty minutes", // thẻ tuần 16
+    "Clearly", // thẻ tuần 17
+    "Booking sheet", // thẻ tuần 18
+    "Confirmed", // thẻ tuần 18
+    "Issue", // thẻ tuần 18
+    "Towel cover", // thẻ tuần 18
   ],
   lessons: [
     {
@@ -5089,6 +5144,12 @@ export const SW_WEEK_19: WeekContent = {
           guestPrompt: "My son is 8. Can he swim by himself while I relax here?",
           targetResponse: "I'm afraid children under 12 must be with an adult, sir.",
           helpTip: "Nhấn rõ 'under 12' — đó là con số quyết định, khách phải nghe được chính xác.",
+          // Tip trích 'under 12' rồi để ô không khoá chữ nào ngoài `be`, nên
+          // "I'm afraid children 12 must be with an adult, sir." — câu đảo
+          // ngược quy định thành "đúng 12 tuổi" — vẫn ĐƯỢC CHẤM ĐÚNG. Lượt
+          // này cũng rơi vào bể ô dự trữ của SW qua `under 12`. Ba chữ khai
+          // thêm đều không phải thẻ của tuần nào trong 40 tuần SW.
+          requiredTokens: ["under", "children", "adult"],
         },
         {
           guestPrompt: "Are there rules for the pool?",

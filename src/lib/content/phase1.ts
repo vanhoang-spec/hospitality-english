@@ -4903,6 +4903,13 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Good evening. Is this the lounge?",
           "Yes, madam. May I have your room number?",
           "Chào trước, hỏi sau. Số phòng là thứ quyết định khách có được vào hay không, nên hỏi ngay câu thứ hai.",
+          undefined,
+          // Ô dự trữ DUY NHẤT mà Phase 1 của GR có: checkpoint-oral ghi rõ cả
+          // bể của GR ở phase này là hai câu `room number`, nên lượt này là ô
+          // bắt buộc đúng của tuần 10 và phải khai chữ nó bắt nói. Khai thêm
+          // chỉ SIẾT: requiredValueTokens hợp nhất override vào tập suy ra,
+          // không thay thế nó. `room`/`number` đều là thẻ GR-2.
+          ["room", "number"],
         ),
         sp(
           `We are in room ${lx.roomNo.spoken}.`,

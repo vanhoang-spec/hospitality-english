@@ -1,6 +1,6 @@
 import { getWeekContent } from "./content/week-content";
 import { weeksInPhase } from "./phases";
-import { normalize } from "./speaking-score";
+import { COURTESY_EXTRAS, normalize } from "./speaking-score";
 
 /** Every answer the course teaches for one line.
  *
@@ -61,25 +61,30 @@ const HEADWORDS_LEFT_OPEN = new Set(
   "you are here the and else past sir madam maam good morning afternoon evening".split(" "),
 );
 
-/** Courtesy markers that are ALSO vocabulary cards.
+/** A COURTESY MARKER IS NEVER MINTED AS A HEADWORD LOCK — not carried
+ *  forward from an earlier week, and not in the week that prints the card
+ *  either.
  *
- *  "Please", "Certainly", "Sorry" and "Very" are printed as cards in 32-40
- *  week-department pairs each, so carrying every earlier week's cards forward
- *  would require them in every later model that happens to contain one — and
- *  speaking-score.ts spends a whole list (COURTESY_EXTRAS) on the opposite
- *  rule: an added or missing courtesy marker cannot make a service sentence
- *  wrong, measured at 13-15 of 16 items failing per department when it did.
+ *  This file used to keep its own copy of the courtesy words ("please
+ *  certainly sorry very yes now just really kindly") and apply it only on
+ *  the way FORWARD, on the argument that a card is locked because it is what
+ *  its week exists to teach. That argument is wrong for these particular
+ *  words: speaking-score.ts spends a whole list (COURTESY_EXTRAS) on the
+ *  opposite rule, and the moment the dept-review turns started being locked,
+ *  the week PRINTING the card began requiring it — F&B week 19's `Very` in
+ *  "Please be careful, sir. This dish is very hot." and Guest Relations week
+ *  22's in "I am very sorry, sir…" — which fails a learner for saying the
+ *  whole safety warning and skipping the intensifier.
  *
- *  A card is locked because it is what its week exists to teach. That is true
- *  of the week printing it and not of every week after it, so the courtesy
- *  markers are dropped on the way forward and the week that teaches one still
- *  locks it. */
-const NOT_CARRIED_FORWARD = new Set(
-  "please certainly sorry very yes now just really kindly".split(" "),
-);
-
-// Memoised: indexFor asks for weeks 1..w for every w of a phase, which is the
-// same forty lookups ten times over.
+ *  THE RULE IS ENFORCED IN requiredValueTokens(), not here, because most of
+ *  those locks are not minted here at all: they are written into the content
+ *  by lockWeekHeadwords(), and a fix in this file alone would have moved
+ *  none of them. What this filter does is stop THIS producer emitting a lock
+ *  the grader is going to refuse, reading the same COURTESY_EXTRAS rather
+ *  than a second copy of it, so the two cannot drift apart again.
+ *
+ *  Memoised: indexFor asks for weeks 1..w for every w of a phase, which is
+ *  the same forty lookups ten times over. */
 const CARDS = new Map<string, string[]>();
 const cardsPrintedIn = (dep: string, week: number): string[] => {
   const ck = `${dep}:${week}`;
@@ -91,7 +96,7 @@ const cardsPrintedIn = (dep: string, week: number): string[] => {
     ...(c?.reviewWords ?? []),
   ]
     .flatMap((w) => normalize(w))
-    .filter((w) => w.length > 2 && !HEADWORDS_LEFT_OPEN.has(w));
+    .filter((w) => w.length > 2 && !HEADWORDS_LEFT_OPEN.has(w) && !COURTESY_EXTRAS.has(w));
   CARDS.set(ck, built);
   return built;
 };
@@ -113,8 +118,7 @@ const cardsPrintedIn = (dep: string, week: number): string[] => {
  *  where the older ones stop being asked for. */
 function headwordsOf(dep: string, week: number): Set<string> {
   const out = new Set(cardsPrintedIn(dep, week));
-  for (let w = 1; w < week; w++)
-    for (const h of cardsPrintedIn(dep, w)) if (!NOT_CARRIED_FORWARD.has(h)) out.add(h);
+  for (let w = 1; w < week; w++) for (const h of cardsPrintedIn(dep, w)) out.add(h);
   return out;
 }
 

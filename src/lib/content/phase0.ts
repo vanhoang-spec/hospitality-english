@@ -5271,11 +5271,24 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         v("This way", "/ðɪs weɪ/", "Mời đi lối này", "This way, please.", "➡️"),
       ],
       grammar: [
+        // LỜI CHO PHÉP, KHÔNG PHẢI LỜI RA LỆNH. Luật của chính vế này đã viết
+        // "nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về
+        // cho khách", nhưng cả năm chỗ in ra lại là thể mệnh lệnh "Keep your
+        // underwear on". Đó là chỗ tuần 5 đá nhau với tuần 18: tuần 18 khoá
+        // "Please undress to your comfort level" với tip "mức nào là do khách
+        // quyết", nên cùng một câu hỏi của khách — "Do I take everything
+        // off?" — được hai tuần trả lời bằng hai chính sách ngược nhau.
+        // Dạng khẳng định + `can` nói đúng điều luật đã hứa và vẫn nằm trong
+        // trần 5 từ của P0 (+1 nhờ đuôi kính ngữ); "You can keep your
+        // underwear on, madam." là 7 từ nên không dùng được ở phase này.
+        // Hai tuần nay nói cùng một chính sách ở hai mức: tuần 5 cho phép,
+        // tuần 18 để khách tự chọn mức. Cái bị loại ở cả hai tuần vẫn là câu
+        // bỏ lửng cho khách đoán.
         g(
           "You take off clothes.",
-          "Keep your underwear on, madam.",
+          "Your underwear can stay on, madam.",
           "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng. 'Underwear' /ˈʌndəweə/ là đồ lót; từ này không có thẻ riêng nhưng phải nói được ngay và nói bằng giọng bình thường.",
-          "Keep your underwear, madam.",
+          "Your underwear can stay, madam.",
         ),
         g(
           "Change there.",
@@ -5292,8 +5305,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Do I take everything off?",
-          "Keep your underwear on, madam.",
-          "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm.",
+          "Your underwear can stay on, madam.",
+          "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm. Câu mẫu là lời CHO PHÉP chứ không phải lời ra lệnh — mức cởi vẫn là quyền của khách, và tuần 18 nói lại đúng điều đó bằng một câu dài hơn.",
           undefined,
           ["underwear", "on"],
         ),
@@ -5318,18 +5331,18 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "You can keep your underwear on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
+        `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "Your underwear can stay on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
         [
           {
             q: "Khách hỏi có phải cởi hết không, câu trả lời đúng là gì?",
             options: [
-              "Keep your underwear on, madam.",
+              "Your underwear can stay on, madam.",
               "Yes, take everything off.",
               "Up to you, madam.",
             ],
             correct: 0,
             explanation:
-              "Câu này nói rõ khách được giữ lại gì, nên khách không phải đoán và không phải hỏi lại.",
+              "Câu này nói rõ khách ĐƯỢC PHÉP giữ lại gì, nên quyền quyết định vẫn ở khách mà khách không phải đoán. 'Up to you' cũng để khách quyết nhưng bỏ lửng, không cho khách biết gì là được phép.",
           },
           {
             q: `${lx.staff} làm gì trong lúc khách thay đồ?`,
@@ -5342,11 +5355,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "Do I wear anything under the robe?",
-          "Keep your underwear on, madam.",
+          "Your underwear can stay on, madam.",
           "No, madam. Nothing.",
           "Up to you, madam.",
           undefined,
-          "Để khách tự đoán trong tình huống nhạy cảm. Quy định của khu nghỉ thì phải nói rõ ràng.",
+          "'Up to you' để khách tự đoán trong tình huống nhạy cảm: đúng là khách quyết, nhưng khách không biết gì là được phép. Nói thẳng khách ĐƯỢC PHÉP giữ lại gì.",
         ),
         game(
           "Where can I put my bag?",

@@ -753,7 +753,31 @@ export function requiredValueTokens(target: string, override?: string[]): string
     // in the un-folded word never fired: a headword lock on "free" looked for
     // "free" in a target the synonym fold had already turned into "ready", and
     // "The welcome drink is free for our guests." passed without it.
-    ...(override ?? []).flatMap((t) => foldCourtesy(normalize(t))),
+    //
+    // AND NEVER A COURTESY MARKER, whoever asked for it. This is the one
+    // place every lock arrives through — the frame author's own list, the
+    // headword lock speaking-alternates.ts derives, and the list the content
+    // layer writes in lockWeekHeadwords() — so it is the only place the rule
+    // can be stated once. "Please", "Certainly", "Sorry" and "Very" are
+    // printed as vocabulary cards in 32-40 week-department pairs each, so the
+    // headword lock demands them in every model that happens to contain one:
+    // measured over the whole course, 173 slots required a word this file
+    // simultaneously declares free to add and free to leave out. The round
+    // that began locking the dept-review turns is what made it bite — F&B
+    // week 19's "Please be careful, sir. This dish is very hot." and Guest
+    // Relations week 22's "I am very sorry, sir…" would have failed a learner
+    // who said the entire safety warning and skipped the intensifier. Failing
+    // an honest answer is worse than passing a sloppy one, and COURTESY_EXTRAS
+    // is the list that already says so.
+    //
+    // The apology a model OPENS with is NOT covered by this: it comes back
+    // two lines below through apologyOpenerTokens(), which is a property of
+    // the sentence rather than a token somebody listed. So "I am sorry, sir.
+    // I cannot say." still requires its apology; "I will tell them we are
+    // sorry." still does not.
+    ...(override ?? [])
+      .flatMap((t) => foldCourtesy(normalize(t)))
+      .filter((t) => !COURTESY_EXTRAS.has(t)),
     ...titleAndSurname(target),
     ...fixedPhraseTokens(target),
     ...apologyOpenerTokens(target),
@@ -916,8 +940,18 @@ const DISFLUENCY = new Set<string>(["uh", "um", "er", "ah", "eh", "hmm", "mm", "
  *
  *  An added intensifier or courtesy marker cannot make a service sentence
  *  wrong. An added auxiliary, pronoun or preposition can, and those are not
- *  here. */
-const COURTESY_EXTRAS = new Set<string>([
+ *  here.
+ *
+ *  EXPORTED because the headword lock has to read the same list. Every word
+ *  here is also printed as a vocabulary card in 32-40 week-department pairs,
+ *  and speaking-alternates.ts kept its own copy of the courtesy words it
+ *  refused to carry forward — so the moment dept-review turns started being
+ *  locked, the week that PRINTS the card began requiring it and three models
+ *  ("Please be careful, sir. This dish is very hot.", "I am very sorry,
+ *  sir…", and F&B week 16's `certainly`) would have failed a learner for
+ *  dropping the exact word this list exists to forgive. Two lists cannot
+ *  disagree about what courtesy is; there is one now. */
+export const COURTESY_EXTRAS = new Set<string>([
   // "yes" is here because the negation docstring in this file already says an
   // affirmative is never required, and the content rule below was requiring it:
   // "sir. The bartender is here." scored 83% against "Yes, sir. The bartender

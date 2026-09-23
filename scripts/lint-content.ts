@@ -2641,7 +2641,7 @@ function unlockedReservedTurnsIn(
 // một thẻ chưa dạy. Sự tồn tại không phải là thứ tự dạy.
 //
 // "Khung bắt học viên NÓI" = `requiredTokens`: bộ chấm không tha token nào
-// trong đó. Hai chỗ phải cẩn thận, cả hai đều đã cắn khi đo:
+// trong đó. Bốn chỗ phải cẩn thận, cả bốn đều đã cắn khi đo:
 //   · `lockWeekHeadwords` còn nhét PROMISE_VERBS ("ask", "check", "call"…)
 //     vào `requiredTokens`. Chúng không phải thẻ, nên loại — không loại thì
 //     327 dòng, quá nửa là "ask" trỏ vào một thẻ tuần 40 tên "Know when to ask".
@@ -2649,7 +2649,20 @@ function unlockedReservedTurnsIn(
 //     `preference`, nên chỉ mục phải tính mọi token của mọi thẻ. Chỉ đếm thẻ
 //     một từ thì GR tuần 17 bị báo oan vì thẻ `Preference` một từ ở tuần 27.
 //   · Khoá sinh ra theo số nhiều ("towels" khớp thẻ "Towel"), nên tra cả dạng
-//     rút "s"/"es" đúng như `lockWeekHeadwords` sinh ra chúng.
+//     rút "s"/"es" đúng như `lockWeekHeadwords` sinh ra chúng — và phải lấy
+//     TUẦN NHỎ NHẤT trên cả ba dạng, xem lookup() bên dưới.
+//   · Chỉ mục đi qua `normalize`, nên gạch nối bị tách: thẻ "Prepare a
+//     nut-free dish" nằm trong chỉ mục dưới `nut` chứ không phải `nut-free`.
+//     Một script kiểm viết riêng mà giữ nguyên gạch nối sẽ báo ngược lại là
+//     "không có thẻ nào dạy chữ này" — đã có người đo nhầm một vòng vì thế.
+//
+// VÀ MỘT ĐIỀU VỀ CÁCH SỬA, không phải về cách đo. Phần lớn dòng còn lại KHÔNG
+// nên chữa bằng cách gỡ token khỏi `requiredTokens`. Nhánh nội dung đã đo
+// từng ca bằng `utterancePassed`: `sorry`, `manager`, `doctor`, `covered`,
+// `sit`, `down`, `cannot`, `someone`, `about` đều đã bị bộ chấm khoá sẵn bằng
+// đường khác, nên gỡ chỉ làm cổng xanh mà không đổi một điểm chấm nào — đúng
+// hình dạng "sửa một nửa hiện vật" mà cả khối này sinh ra để chặn. Cách sửa
+// thật là chuyển thẻ lên sớm, hoặc đổi câu mẫu của tuần ấy.
 type TaughtAt = { week: number; card: string };
 
 function firstTaughtIndex(weeks: Record<string, WeekContent>): Map<string, TaughtAt> {
@@ -2674,12 +2687,22 @@ function teachOrderBreaksIn(
 ): string[] {
   const out: string[] = [];
   const dep = week.departmentId;
+  // TUẦN NHỎ NHẤT TRÊN CẢ BA DẠNG, không phải dạng khớp đầu tiên.
+  //
+  // Bản đầu `return` ngay ở dạng nào khớp trước, nên một thẻ SỐ NHIỀU muộn
+  // che mất thẻ số ít sớm và cổng chỉ thẳng vào thẻ sai: `towels` đọc ra
+  // HK-16 "Fresh towels" trong khi HK-2 đã dạy "Towel"; `guests` đọc ra
+  // GR-15 "Greet guests in the lobby" trong khi GR-1 đã dạy "Guest
+  // Relations". Một nhánh nội dung render lại và đếm: 22 trong 64 dòng là
+  // oan, và ba trong số đó đúng là các ca hàng đợi gọi là nặng nhất — tức
+  // cổng đang đẩy người sửa đi sửa nhầm chỗ, đắt hơn là không có cổng.
   const lookup = (token: string) => {
+    let best: TaughtAt | undefined;
     for (const form of [token, token.replace(/es$/, ""), token.replace(/s$/, "")]) {
       const hit = index.get(`${dep}|${form}`);
-      if (hit) return hit;
+      if (hit && (best === undefined || hit.week < best.week)) best = hit;
     }
-    return undefined;
+    return best;
   };
   lesson.speaking.forEach((item, i) => {
     const seen = new Set<string>();
@@ -2847,6 +2870,31 @@ function selfTestClusterGates(
     index.set("HK|restock", { week: 12, card: "Restock" });
     if (teachOrderBreaksIn(index, "HK-16", hk16, poisoned).length)
       fail("Layer T báo cả khi thẻ đã dạy trước");
+
+    // …và ca THẺ SỐ ÍT SỚM BỊ THẺ SỐ NHIỀU MUỘN CHE. Đây là lỗi lookup() đã
+    // thật sự ship một vòng: 22 trong 64 dòng là oan, trong đó có đúng ba ca
+    // hàng đợi gọi là nặng nhất, nên cổng đẩy người sửa đi sửa nhầm thẻ. Một
+    // cổng chỉ sai chỗ đắt hơn một cổng không có, nên nó có hồi quy riêng.
+    // Tuần nói phải nằm GIỮA hai thẻ, nếu không cả hai cách đọc cho cùng kết
+    // quả và phép thử không chứng minh gì: bản đầu của hồi quy này đặt ở tuần
+    // 16, đúng tuần của thẻ số nhiều, nên nó xanh với cả bug lẫn bản sửa.
+    const hk15 = anyWeek("HK", 15);
+    if (!hk15) fail("Layer T (không tìm thấy HK-15 để dựng ca thẻ số ít/số nhiều)");
+    else {
+      const plural = structuredClone(hk15.lessons[0]);
+      plural.speaking = [
+        {
+          ...plural.speaking[0],
+          targetResponse: "Two bath towels and some soap, madam.",
+          requiredTokens: ["towels"],
+        },
+      ];
+      const bothForms = new Map(taught);
+      bothForms.set("HK|towel", { week: 2, card: "Towel" });
+      bothForms.set("HK|towels", { week: 16, card: "Fresh towels" });
+      if (teachOrderBreaksIn(bothForms, "HK-15", hk15, plural).length)
+        fail('Layer T đọc thẻ số nhiều muộn thay vì thẻ số ít sớm ("towels" che mất "Towel")');
+    }
   }
 }
 

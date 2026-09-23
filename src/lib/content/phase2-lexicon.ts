@@ -104,11 +104,16 @@ const FO_BANK: P2Bank = {
       definition: "Giới thiệu phòng",
       icon: "🛏️",
     },
+    // Was "Follow the steps" — một định nghĩa vòng tròn: bước thứ bảy của quy
+    // trình là "làm theo các bước". Tám bước của lễ tân lại không có bước nào
+    // lấy giấy tờ, trong khi tuần 17 dạy thẳng "This registration is mandatory
+    // by law." Bước thật mà lễ tân Việt Nam làm ở đúng chỗ này là cầm hộ chiếu
+    // để khai lưu trú.
     {
-      word: "Follow the steps",
-      phonetic: "/ˈfɒləʊ ðə steps/",
-      definition: "Làm theo các bước",
-      icon: "🪜",
+      word: "Take the passport",
+      phonetic: "/teɪk ðə ˈpɑːspɔːt/",
+      definition: "Nhận hộ chiếu của khách",
+      icon: "🛂",
     },
     {
       word: "Confirm the details",
@@ -537,7 +542,19 @@ const FB_BANK: P2Bank = {
       definition: "Thanh toán bằng thẻ",
       icon: "🏧",
     },
-    { word: "On hold", phonetic: "/ɒn həʊld/", definition: "Đang tạm giữ, chờ xử lý", icon: "⏸️" },
+    // Slot 9 là TRẠNG THÁI ĐANG CHẠY của giấy tờ, và năm bộ phận kia render
+    // đúng thế: `In order`, `In progress`, `Confirmed`, `With the team`,
+    // `Approved`. Riêng F&B từng giữ `On hold`, nên tuần 18 bài 1 in ra "Your
+    // request is on hold now." rồi bài đọc của chính bài ấy viết "The guest
+    // waits calmly." — thẻ, cặp ngữ pháp, hai lượt nói, bài đọc và đáp án
+    // arcade cùng dạy khách ngồi chờ một việc không ai đang làm. Đơn ăn rời
+    // khỏi tay người phục vụ là sang BẾP, nên đó mới là trạng thái thật.
+    {
+      word: "With the kitchen",
+      phonetic: "/wɪð ðə ˈkɪtʃɪn/",
+      definition: "Đang ở chỗ bếp, bếp đang làm",
+      icon: "🍳",
+    },
     {
       word: "Print your name",
       phonetic: "/prɪnt jɔː neɪm/",
@@ -823,10 +840,17 @@ const HK_BANK: P2Bank = {
       definition: "Giờ trả phòng",
       icon: "🕛",
     },
+    // Was "Laundry count" — ô này dạy nhân viên NHẬN con số từ miệng khách
+    // ("Could I have your laundry count?"), trong khi việc của buồng phòng là
+    // tự đếm rồi đối chiếu với phiếu khách đã ghi. Hỏi cái PHIẾU thì việc đếm
+    // vẫn ở lại với mình, và con số vẫn có chỗ để đối chiếu.
+    // Không đặt tên là `Laundry list`: HK-33 bài 1 đã mint đúng headword ấy
+    // ("Could you fill out this laundry list before I collect your items?"),
+    // và cổng cấm một bộ phận mint lại một headword đã có.
     {
-      word: "Laundry count",
-      phonetic: "/ˈlɔːndri kaʊnt/",
-      definition: "Số món đồ giặt",
+      word: "Laundry ticket",
+      phonetic: "/ˈlɔːndri ˈtɪkɪt/",
+      definition: "Phiếu kê đồ giặt khách tự ghi",
       icon: "🧺",
     },
     {
@@ -1512,12 +1536,20 @@ const GR_BANK: P2Bank = {
       definition: "Trả phòng muộn",
       icon: "🕐",
     },
+    // Ô 2 và ô 6 đã ĐỔI CHỖ cho nhau. Ô 2 nằm trong dải 1-7, dải mà `wa()`
+    // sinh mạo từ và cả tuần 16 dạy đúng chuyện mạo từ. `Afternoon tea` mang
+    // `art: ""`, nên ô này in ra "We also have afternoon tea." cạnh nhiễu
+    // "We also have afternoon tea, madam." — hai phương án chỉ khác chữ
+    // `madam` mà nhiễu lại bị gắn nhãn "sai cấu trúc"; cùng lúc `rule` "Danh
+    // từ đếm được số ít cần A/AN" và `helpTip` "We also have + mạo từ + món"
+    // trỏ vào một câu không hề có mạo từ nào. Quét cả 40 tuần × 6 bộ phận thì
+    // đây là vòng DUY NHẤT có hình dạng ấy. `Flower bouquet` là danh từ đếm
+    // được, nên nó hợp ô 2; `Afternoon tea` chuyển xuống ô 6.
     {
-      word: "Afternoon tea",
-      phonetic: "/ˌɑːftəˈnuːn tiː/",
-      definition: "Trà chiều",
-      icon: "🍰",
-      art: "",
+      word: "Flower bouquet",
+      phonetic: "/ˈflaʊə buˈkeɪ/",
+      definition: "Bó hoa tươi",
+      icon: "💐",
     },
     {
       word: "Happy hour",
@@ -1538,7 +1570,14 @@ const GR_BANK: P2Bank = {
       definition: "Đặt bàn giúp khách",
       icon: "🍽️",
     },
-    { word: "Flower bouquet", phonetic: "/ˈflaʊə buˈkeɪ/", definition: "Bó hoa tươi", icon: "💐" },
+    // Chỗ cũ của `Flower bouquet` — xem ghi chú ở ô 2.
+    {
+      word: "Afternoon tea",
+      phonetic: "/ˌɑːftəˈnuːn tiː/",
+      definition: "Trà chiều",
+      icon: "🍰",
+      art: "",
+    },
     {
       word: "Room decoration",
       phonetic: "/ruːm ˌdekəˈreɪʃn/",

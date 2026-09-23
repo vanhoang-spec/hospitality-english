@@ -1,4 +1,4 @@
 {
-  "spokenBeforeTaught": 64,
+  "spokenBeforeTaught": 42,
   "note": "Ratchet only — mọi token trong requiredTokens phải ứng với một thẻ được dạy ở tuần ≤ tuần bắt nói. PROMISE_VERBS không phải thẻ nên không tính; thẻ nhiều từ vẫn dạy từng từ của nó."
 }

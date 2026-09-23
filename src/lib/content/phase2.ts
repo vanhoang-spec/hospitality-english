@@ -93,6 +93,17 @@ const Wt = (w: P2Word) => {
   return t.charAt(0).toUpperCase() + t.slice(1);
 };
 
+/** Những chữ mang nghĩa của một headword, để khai `requiredTokens` bằng tay.
+ *
+ *  `lockWeekHeadwords` chỉ khoá thẻ của tuần đang học cộng `reviewWords`, nên
+ *  một lượt ÔN mà thẻ của nó rơi khỏi `reviewWords` tuần ấy đi ra KHÔNG khoá
+ *  chữ nào. Lượt nào lại còn rơi vào bể ô nói dự trữ thì học viên bỏ đúng chữ
+ *  mang nghiệp vụ ("The is on your right.") mà vẫn được chấm đúng. */
+const tk = (w: P2Word): string[] =>
+  lo(w)
+    .split(/[^A-Za-z]+/)
+    .filter((t) => t.length > 2);
+
 // ============================================================
 // WEEK 15 — Standard Service Sequence
 // FRAMES · "First I {step}, then I {step}."
@@ -314,10 +325,16 @@ function week15(lx: Ctx): LessonContent[] {
           // trích CẢ HAI — cổng READING_ANCHORED_MIN vẫn tính là có neo.
           {
             q: "Vì sao khách không phải hỏi lại lần nữa?",
+            // Hai nhiễu viết DÀY NGANG đáp án (16/16/16 từ). Ở Phase 2, đáp án
+            // khối Đọc ngắn hơn nhiễu trung bình 0,28 từ và là câu duy nhất
+            // ngắn nhất ở 92/384 câu, nên "chọn câu ngắn nhất" thành một mẹo
+            // ăn điểm mà không cần đọc. Spine Phase 1 chênh +0,02 từ, nên đây
+            // là chuẩn khả thi. Cân bằng bằng cách viết NHIỄU cho đủ dày, không
+            // cắt đáp án.
             options: [
               "Vì nhân viên nói trước việc mình làm rồi quay lại giải thích bước kế tiếp",
-              "Vì khách đã đọc toàn bộ quy trình trên tờ hướng dẫn đặt sẵn ở quầy lễ tân",
-              "Vì nhân viên đề nghị khách chờ yên lặng và khách không được phép hỏi lại gì thêm",
+              "Vì khách đã đọc toàn bộ quy trình trên tờ hướng dẫn đặt sẵn ở quầy",
+              "Vì nhân viên đề nghị khách chờ yên lặng và khách không được phép hỏi lại",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "Please wait a moment while I ${lo(a4)}" và "explains the next step in simple words".`,
@@ -417,7 +434,8 @@ function week15(lx: Ctx): LessonContent[] {
         [
           {
             q: "Điều gì xảy ra nếu đổi thứ tự các bước?",
-            options: ["Dễ mắc lỗi", "Làm việc nhanh hơn", "Không sao cả, vẫn ổn"],
+            // 3/3/3 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
+            options: ["Dễ mắc lỗi", "Làm nhanh hơn", "Không sao cả"],
             correct: 0,
             explanation: `"If we change the order, we make mistakes."`,
           },
@@ -458,13 +476,21 @@ function week15(lx: Ctx): LessonContent[] {
     }),
 
     lesson(lx, 15, 4, "Explaining the Whole Routine", "Trình bày trọn quy trình", {
-      vocabulary: [bw(a9, `Our ${lo(a9)} has four steps.`), bw(a10, `${Wt(a10)} needs attention.`)],
+      // Ô `steps` có 10 mục: 0-7 là TÁM bước quy trình, [8] là TÊN quy trình,
+      // [9] là một từ chung. Thẻ và cặp ngữ pháp từng nói "four steps" trong khi
+      // lượt nói, bài đọc, đáp án câu hỏi và đáp án arcade của CHÍNH bài này nói
+      // "eight" — một bài nói hai con số về cùng một quy trình. Số đúng là TÁM;
+      // điểm ngữ pháp của cặp dưới là has/have và step/steps, không phải con số.
+      vocabulary: [
+        bw(a9, `Our ${lo(a9)} has eight steps.`),
+        bw(a10, `${Wt(a10)} needs attention.`),
+      ],
       grammar: [
         g(
-          `Our ${lo(a9)} have four step.`,
-          `Our ${lo(a9)} has four steps.`,
+          `Our ${lo(a9)} have eight step.`,
+          `Our ${lo(a9)} has eight steps.`,
           "Danh từ số ít đi với 'has'; 'step' số nhiều phải thêm -s.",
-          `Our ${lo(a9)} have four steps.`,
+          `Our ${lo(a9)} have eight steps.`,
         ),
         g(
           `That is all my work.`,
@@ -579,6 +605,18 @@ function week15(lx: Ctx): LessonContent[] {
   ];
 }
 
+/** Số bước quy trình mà tuần 15 của CHÍNH bộ phận này dạy, viết bằng chữ.
+ *
+ *  Bài khung tuần 15 dạy `steps[0..7]` — TÁM bước. Nhưng hai tuần 15 bị bài
+ *  viết tay thay hẳn (FB-15, HK-15 — xem ghi chú ở `buildPhase2`), và cả hai
+ *  bài ấy dạy một quy trình BỐN bước: FB "seat, order, serve, clear", HK bốn
+ *  bước SOP vào phòng đánh số 1-4 ngay trong bài đọc. Một câu ôn ở tuần 16 nói
+ *  sai số bước của tuần 15 mà bộ phận đó thật sự học là cùng một lỗi Layer Q,
+ *  chỉ ở quy mô liên bài nên cổng trong-một-bài không thấy. */
+const W15_HAND_AUTHORED_FOUR_STEP = new Set(["FB", "HK"]);
+const stepsTaughtWord = (lx: Ctx): string =>
+  W15_HAND_AUTHORED_FOUR_STEP.has(lx.code) ? "four" : "eight";
+
 // ============================================================
 // WEEK 16 — Offers & Invitations
 // FRAMES · "Would you like {offer}?"
@@ -651,7 +689,10 @@ function week16(lx: Ctx): LessonContent[] {
         ),
         sp(
           "How many steps in total?",
-          `Our ${lo(pa9)} has four steps.`,
+          // "in total" trả lời đúng chữ của câu hỏi, và giữ câu ôn này KHÁC
+          // câu gốc tuần 15 — bài 15_4 có một mắt xích `follows` trỏ vào câu
+          // gốc ấy, nên hai câu trùng từng chữ là một mắt xích nhập nhằng.
+          `Our ${lo(pa9)} has ${stepsTaughtWord(lx)} steps in total.`,
           "Ôn tuần 15: gọi tên cả quy trình rồi mới kể từng bước.",
           "colleague",
         ),
@@ -776,17 +817,27 @@ function week16(lx: Ctx): LessonContent[] {
         `A guest worries about the cost. ${lx.staff} explains: "${Wt(o8)} is free for our guests, sir. The price also includes ${lo(o10)}." The guest is pleased. The service charge stays on its own line. ${lx.staff} explains the cost before the guest asks, not after. A guest who knows the price early is rarely unhappy at the end.`,
         [
           {
-            q: "Khách có phải trả thêm tiền không?",
-            options: ["Không, đã miễn phí", "Có, khách phải trả thêm", "Chưa rõ, phải hỏi lại"],
+            // Câu hỏi cũ — "Khách có phải trả thêm tiền không?" — bị CHÍNH bài
+            // đọc bác bỏ: hai câu dưới đáp án khoá, bài viết "The service
+            // charge stays on its own line.", tức hoá đơn CÓ một khoản phải
+            // trả. Học viên đọc đúng chọn "Có, khách phải trả thêm" và bị chấm
+            // SAI, ở bốn bộ phận dùng bài khung này, trong đúng bể rút của tờ
+            // đề lên phase. Bài đọc không sai — phí phục vụ tách dòng là
+            // nghiệp vụ thật — nên sửa câu HỎI: hỏi đúng thứ mà bài khẳng định
+            // là miễn phí.
+            q: `Khách có phải trả tiền cho ${o8.definition.toLowerCase()} không?`,
+            // 4/4/4 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
+            options: ["Không, đã miễn phí", "Có, phải trả thêm", "Chưa rõ, phải hỏi"],
             correct: 0,
             explanation: `"${Wt(o8)} is free for our guests" — miễn phí.`,
           },
           {
             q: "Vì sao nhân viên nói về giá trước khi khách kịp hỏi?",
+            // 16/16/16 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Vì khách biết giá sớm thì tới lúc thanh toán hiếm khi còn thấy khó chịu",
-              "Vì quy định buộc nhân viên đọc bảng giá cho mọi khách ngay khi họ ngồi xuống",
-              "Vì nói trước thì khách sẽ chọn thứ đắt hơn và bộ phận đạt doanh thu cao hơn",
+              "Vì quy định buộc nhân viên đọc bảng giá cho mọi khách ngay khi ngồi xuống",
+              "Vì nói trước thì khách chọn thứ đắt hơn và bộ phận đạt doanh thu cao",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "explains the cost before the guest asks, not after" và "A guest who knows the price early is rarely unhappy at the end".`,
@@ -886,10 +937,11 @@ function week16(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên làm gì trong lúc khách suy nghĩ?",
+            // 9/9/9 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Chờ yên lặng, không thêm phương án thứ ba",
-              "Nhắc lại cả hai phương án một lần nữa cho khách nghe",
-              "Đề nghị thêm phương án thứ ba để khách dễ chọn hơn",
+              "Nhắc lại cả hai phương án cho khách nghe",
+              "Đưa thêm phương án thứ ba cho khách chọn",
             ],
             correct: 0,
             explanation: '"waits quietly and does not add a third idea"',
@@ -1006,10 +1058,11 @@ function week16(lx: Ctx): LessonContent[] {
           },
           {
             q: "Vì sao khách không bao giờ phải gọi xuống hỏi?",
+            // 16/16/16 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Vì mốc hẹn được ghi lại, và tới giờ thì nhân viên tự kiểm tra trước",
-              "Vì khách đã được phát một số máy nội bộ để gọi thẳng cho quản lý ca",
-              "Vì khách sạn không nhận thêm cuộc gọi nào từ phòng sau khi lời mời đã chốt",
+              "Vì khách đã được phát số máy nội bộ để gọi thẳng cho quản lý ca",
+              "Vì khách sạn không nhận thêm cuộc gọi từ phòng sau khi lời mời đã chốt",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "writes the promised time on the order" và "checks that everything is ready, so the guest never has to call".`,
@@ -1584,9 +1637,12 @@ function week18(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên đang làm gì?",
+            // Đáp án dài 5 hay 6 từ tuỳ tên giấy tờ của bộ phận, nên một nhiễu
+            // 5 từ và một nhiễu 6 từ: bộ phận nào cũng có một câu hoà độ dài
+            // với đáp án. Xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               `Chuẩn bị ${p1.definition.toLowerCase()}`,
-              "Đi nghỉ ở phòng nhân viên",
+              "Nghỉ ở phòng nhân viên",
               "Gọi điện cho quản lý ca",
             ],
             correct: 0,
@@ -1706,10 +1762,11 @@ function week18(lx: Ctx): LessonContent[] {
           },
           {
             q: "Vì sao lỗi ngày tháng được phát hiện kịp?",
+            // 14/14/14 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Vì nhân viên soát lại từng dòng trước khi mời khách đặt bút ký",
-              "Vì khách đọc kỹ toàn bộ tờ giấy trước khi bước tới quầy lễ tân",
-              "Vì phần mềm tự báo lỗi ngày tháng ngay khi nhân viên nhập vào máy",
+              "Vì khách đã đọc kỹ toàn bộ tờ giấy trước khi bước tới quầy",
+              "Vì phần mềm tự báo lỗi ngày tháng khi nhân viên nhập vào máy",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "Before the guest signs, ${lx.staff} checks the details on the form" và "The guest finds one mistake in the date".`,
@@ -1818,7 +1875,9 @@ function week18(lx: Ctx): LessonContent[] {
         [
           {
             q: "Khoản thêm trên hóa đơn là gì?",
-            options: [p5.definition, "Tiền phòng một đêm", "Tiền phạt trả muộn"],
+            // Tên khoản phí dài 3-5 từ tuỳ bộ phận, nên một nhiễu 3 từ và một
+            // nhiễu 4 từ. Xem ghi chú cân độ dài ở tuần 15 bài 2.
+            options: [p5.definition, "Tiền đặt cọc", "Tiền phạt trả muộn"],
             correct: 0,
             explanation: `"A ten percent ${lo(p5)} is added."`,
           },
@@ -2687,6 +2746,12 @@ function week20(lx: Ctx): LessonContent[] {
           "Is there another one?",
           `${Wt(c3)} is available too.`,
           "'Available too' mở thêm lựa chọn mà không ép.",
+          undefined,
+          // Tip trích đúng chữ "Available too", nhưng khoá headword chỉ giữ
+          // tên lựa chọn, nên "The city view is too." vẫn được chấm ĐÚNG ở năm
+          // bộ phận — lời hứa của tip không có hiệu lực nào. Tip trích chữ nào
+          // thì khoá chữ ấy.
+          ["available"],
         ),
         sp(
           "Actually I will take the other one.",
@@ -2825,6 +2890,11 @@ function week20(lx: Ctx): LessonContent[] {
           `Where is the ${lo(pr4)}?`,
           `The ${lo(pr4)} is on your right.`,
           "Ôn tuần 19: chỉ chỗ bằng The … is on your right.",
+          undefined,
+          // Ở BO thẻ này là `Confidential file`, nên lượt rơi vào bể ô dự trữ
+          // — mà khoá lại rỗng: "The is on your right." vẫn qua. Thẻ đang được
+          // ÔN phải là thứ bị khoá, ở cả sáu bộ phận.
+          tk(pr4),
         ),
         sp(
           "Could you make an exception?",
@@ -3137,10 +3207,11 @@ function week21(lx: Ctx): LessonContent[] {
         [
           {
             q: "Cấp trên tìm thấy gì khi soát lại sổ ca?",
+            // 5/5/5 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Không thiếu chỗ nào cả",
-              "Thiếu mất con số của buổi chiều",
-              "Thiếu tên của người khách cuối cùng",
+              "Thiếu con số buổi chiều",
+              "Thiếu tên khách cuối cùng",
             ],
             correct: 0,
             explanation: '"the supervisor checked the log and found no gaps"',
@@ -3248,20 +3319,22 @@ function week21(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên báo cáo sự cố thế nào?",
+            // 10/10/10 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Nói thẳng, không giấu và không đổ lỗi cho ai",
-              "Nói rằng ca trước đã để lại sự cố này từ hôm qua",
-              "Chỉ báo miệng cho đồng nghiệp chứ không báo cấp trên",
+              "Nói rằng ca trước đã để lại sự cố này",
+              "Chỉ báo miệng cho đồng nghiệp, không báo cấp trên",
             ],
             correct: 0,
             explanation: '"did not hide the problem and did not blame a colleague"',
           },
           {
             q: "Vì sao cấp trên cảm ơn nhân viên?",
+            // 15/15/15 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Vì báo cáo trung thực giúp cả nhóm, và nhóm đã bàn lại việc đó",
-              "Vì nhân viên đã tự xử lý xong mà không làm phiền tới cấp trên lần nào",
-              "Vì nhân viên ở lại hết ca để chờ sự cố được khắc phục hoàn toàn",
+              "Vì nhân viên đã tự xử lý xong mà không làm phiền tới cấp trên",
+              "Vì nhân viên đã ở lại hết ca để chờ sự cố được khắc phục",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "an honest report helps the whole team" và "The team talked about it at the next meeting".`,
@@ -3774,10 +3847,11 @@ function week22(lx: Ctx): LessonContent[] {
         [
           {
             q: "Phương án nhân viên đưa thêm là gì?",
+            // 5/5/5 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Một chỗ yên tĩnh hơn",
-              "Giảm giá phòng cho khách ngay",
-              "Gọi bảo vệ tới ngay lập tức",
+              "Giảm giá phòng cho khách",
+              "Gọi bảo vệ ngay lập tức",
             ],
             correct: 0,
             explanation: '"We could arrange something quieter."',
@@ -3885,10 +3959,11 @@ function week22(lx: Ctx): LessonContent[] {
           },
           {
             q: "Nhân viên trả lời câu hỏi của quản lý bằng gì?",
+            // 13/13/13 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Bằng một mốc giờ và một cái tên, rồi báo cáo kết thúc",
-              "Bằng một lời hứa sẽ kiểm tra lại và trả lời vào sáng hôm sau",
-              "Bằng cách kể lại toàn bộ diễn biến của ca làm một lần nữa",
+              "Bằng một lời hứa sẽ kiểm tra lại và trả lời sáng hôm sau",
+              "Bằng cách kể lại toàn bộ diễn biến của ca làm lần nữa",
             ],
             correct: 0,
             explanation: `Ghép hai câu: "The manager asked one question about tomorrow" và "answered with a time and a name, and the report was finished".`,
@@ -4489,11 +4564,23 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
     );
   },
 
-  // Tuần 20 nói về thứ nằm NGOÀI khách sạn: bàn ăn, tour, xe. Bài khung dạy
-  // khuyên kèm lý do — đúng, nhưng thiếu ranh giới khiến lời khuyên hoá lời
-  // hứa: khách nghe xong là tưởng đã có bàn, tới nơi mới biết chưa ai gọi.
-  // Bài này tách GỢI Ý khỏi ĐẶT CHỖ — gợi ý là việc của Guest Relations, đặt
-  // chỗ bên ngoài là việc của concierge (xem GR_16_3 và tuần 31).
+  // Tuần 20 nói về thứ khách chọn cho buổi tối: bàn ăn, tour, xe. Bài khung
+  // dạy khuyên kèm lý do — đúng, nhưng thiếu ranh giới khiến lời khuyên hoá
+  // lời hứa: khách nghe xong là tưởng đã có bàn, tới nơi mới biết chưa ai gọi.
+  // Bài này tách GỢI Ý khỏi ĐẶT CHỖ.
+  //
+  // RANH GIỚI THẨM QUYỀN — tuần 16 (GR_16_3) đã dựng và bài này phải đứng
+  // đúng bên trong nó: "A table inside the hotel is our work; a tour outside
+  // it is not." Bản trước cho chính nhân viên Guest Relations GỌI NHÀ HÀNG
+  // BÊN NGOÀI ("Shall I call the restaurant now?") và TỰ HỎI GIÁ TOUR ("I will
+  // check the price and call you back") — đúng hai việc tuần 16 vừa giao cho
+  // quầy concierge. Đo trên 3.000 lượt thi: hai câu ấy và câu concierge của
+  // tuần 16 rơi vào đề gần như ngang tần suất (1,83% và 1,80%), nên hai thí
+  // sinh bị chấm theo hai luật trái ngược nhau.
+  // Sửa: cái bàn của bài này là bàn NHÀ HÀNG TRONG KHÁCH SẠN — phần việc mà
+  // chính GR_16_3 vòng hai dạy là của mình (`Table reservation`) — nên bài giữ
+  // nguyên bài học "gợi ý chưa phải là đã đặt", mà không vượt quyền. Còn GIÁ
+  // TOUR thì trả về quầy concierge, đúng như tuần 16.
   GR_20_2: (lx) => {
     const [, , , , , , , c8, c9, c10] = lx.bank.choices;
     return lesson(lx, 20, 2, "A Suggestion Is Not a Booking", "Gợi ý không phải là đã đặt chỗ", {
@@ -4505,9 +4592,9 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
       grammar: [
         g(
           "I book table for you now.",
-          "Shall I call the restaurant for you?",
+          "Shall I call the hotel restaurant for you?",
           "'Shall I…?' là mẫu xin phép làm giúp: bạn đề nghị, khách vẫn là người quyết.",
-          "Shall I to call the restaurant for you?",
+          "Shall I to call the hotel restaurant for you?",
         ),
         g(
           "Sure, they have table for you.",
@@ -4524,8 +4611,8 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Could you book a table for us?",
-          "Of course. Shall I call the restaurant now?",
-          "Đề nghị làm giúp, đừng tự làm rồi báo sau. Khách vẫn là người quyết.",
+          "Of course. Shall I call the hotel restaurant now?",
+          "Đề nghị làm giúp, đừng tự làm rồi báo sau. Khách vẫn là người quyết. Bàn TRONG khách sạn thì bạn gọi được; bàn ở nhà hàng ngoài là việc của quầy concierge.",
         ),
         sp(
           "So the table is ready for us?",
@@ -4544,7 +4631,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
         sp(
           "Did the guest ask for a table?",
-          "Yes. I am calling the restaurant now.",
+          "Yes. I am calling the hotel restaurant now.",
           "Bàn giao ngắn: việc đang tới đâu, không kể lại cả câu chuyện.",
           "colleague",
         ),
@@ -4556,7 +4643,7 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest asks about dinner. ${lx.staff} suggests a restaurant and gives a reason. Then the guest asks for a table. ${lx.staff} does not promise one: "Not yet, madam. I will call and confirm." The restaurant is full tonight, so ${lx.staff} offers a second one, and the guest agrees. Nothing is promised before the phone call.`,
+        `A guest asks about dinner. ${lx.staff} suggests the hotel restaurant and gives a reason. Then the guest asks for a table. ${lx.staff} does not promise one: "Not yet, madam. I will call and confirm." The restaurant is full at eight, so ${lx.staff} offers a later table, and the guest agrees. Nothing is promised before the phone call.`,
         [
           {
             q: "Khách hỏi bàn đã có chưa, câu trả lời đúng là gì?",
@@ -4573,31 +4660,36 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
             q: "Vì sao không hứa trước khi gọi điện?",
             options: [
               "Nhà hàng có thể hết bàn, lời hứa sẽ vỡ ngay tại chỗ",
-              "Vì khách sạn cấm nhân viên gọi điện ra bên ngoài",
+              "Vì quản lý cấm nhân viên nhận đặt bàn giúp khách",
               "Vì gọi điện làm mất thời gian chờ của khách",
             ],
             correct: 0,
             explanation:
-              "Bàn nằm ở nhà hàng khác, không nằm trong tay bạn. Bên mất mặt khi vỡ hẹn lại là khách sạn.",
+              "Bàn do nhà hàng giữ, không nằm trong tay bạn — bài đọc nói rõ nhà hàng hết bàn lúc tám giờ. Bên mất mặt khi vỡ hẹn lại là khách sạn.",
           },
         ],
       ),
       game: [
         game(
           "My friend said you could get us a table.",
-          "I will call them now and confirm, madam.",
+          "I will call the hotel restaurant and confirm, madam.",
           "Yes yes, no problem, table have.",
           "Of course, madam. Your table is booked already.",
           undefined,
           "Câu này lịch sự và sai. Khách sẽ tới nhà hàng, không có bàn, và bên sai hẹn là khách sạn.",
         ),
+        // Vòng hai đứng ở phía NGOÀI của cùng ranh giới: bàn trong khách sạn
+        // thì mình gọi, còn GIÁ TOUR là của đối tác và do quầy concierge báo
+        // (tuần 16: "The concierge will give you the price, sir."). Đáp án cũ
+        // — "I will check the price and call you back." — dạy ngược tuần 16 ở
+        // đúng cùng một bộ phận.
         game(
           "Is the tour price the same as last year?",
-          "I will check the price and call you back.",
+          "The concierge will give you this year's price, madam.",
           "Same same, madam, no change.",
           "Yes, madam. The price is exactly the same.",
           undefined,
-          "Giá tour do đối tác đặt, không phải khách sạn. Đoán đúng chín lần rồi sai một lần là đủ mất khách.",
+          "Giá tour do đối tác đặt, không phải khách sạn, và quầy concierge mới là nơi báo giá. Đoán đúng chín lần rồi sai một lần là đủ mất khách.",
         ),
       ],
     });
@@ -4740,6 +4832,12 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Which room is Mr Tanaka in?",
           "I am afraid I cannot give a room number, sir.",
           "Câu quan trọng nhất bài này. Không có ngoại lệ cho ai cả.",
+          undefined,
+          // Lượt này rơi vào bể ô nói dự trữ (BẮT BUỘC đúng) mà không khoá chữ
+          // nào, nên "I am afraid I cannot give, sir." vẫn qua. Cực tính thì
+          // bộ chấm đã giữ (bỏ "cannot" là RỚT — đã đo), nên khoá phần NGHIỆP
+          // VỤ: cái không được cho đi là SỐ PHÒNG.
+          ["room", "number"],
         ),
         sp(
           "But I am his brother.",
@@ -4750,6 +4848,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Just tell me if he is staying here.",
           "I am sorry. I cannot confirm that, sir.",
           "Xác nhận một vị khách đang ở đây cũng là tiết lộ.",
+          undefined,
+          // Ô dự trữ. "cannot" không cần khai — bộ chấm đã chặn câu lật cực
+          // tính. Chữ phải giữ là việc mình từ chối làm: xác nhận.
+          ["confirm"],
         ),
         sp(
           "Then where can I wait?",
@@ -5149,13 +5251,16 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         [
           {
             q: "Phần thứ hai được miễn phí ở đâu?",
-            options: ["Ở quầy buffet", "Ở mọi nhà hàng của khách sạn", "Ở nhà hàng buổi tối"],
+            // 3/3/5 từ — đáp án không còn là câu duy nhất ngắn nhất. Xem ghi
+            // chú cân độ dài ở tuần 15 bài 2.
+            options: ["Ở quầy buffet", "Ở quầy bar", "Ở nhà hàng buổi tối"],
             correct: 0,
             explanation: `"The ${lo(o8)} is free at the buffet"`,
           },
           {
             q: "Khi chưa chắc về thực đơn buổi tối, nhân viên làm gì?",
-            options: ["Đi hỏi quản lý", "Đoán rồi trả lời cho nhanh", "Nói là không biết rồi thôi"],
+            // 4/4/4 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
+            options: ["Đi hỏi quản lý", "Đoán rồi trả lời", "Nói là không biết"],
             correct: 0,
             explanation: '"goes to ask the manager"',
           },
@@ -5940,6 +6045,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Could you massage under the towel, please?",
           "I am not able to do that, madam.",
           "Câu quan trọng nhất bài này. Ngắn, không giải thích dài, không xin lỗi nhiều lần.",
+          undefined,
+          // Ô dự trữ. Cực tính do bộ chấm giữ; chữ phải khoá là "able" — bỏ nó
+          // thì "I am not to do that, madam." chẳng còn là lời từ chối nào.
+          ["able"],
         ),
         sp(
           "Just a little further, it is fine.",
@@ -6051,6 +6160,10 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Is she even staying here?",
           "I am sorry. I cannot confirm that, madam.",
           "Trả lời có hay không đều là tiết lộ. Không trả lời cả hai.",
+          undefined,
+          // Ô dự trữ. "cannot" không cần khai — bộ chấm đã chặn câu lật cực
+          // tính, và ở GR "cannot" còn trỏ vào một thẻ mãi tuần 35.
+          ["confirm"],
         ),
         sp(
           "Where should I wait then?",
@@ -6704,20 +6817,22 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           [
             {
               q: "Khách xin ghi chiếc áo choàng vào hoá đơn — nhân viên làm gì?",
+              // 9/9/9 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
               options: [
                 "Gọi lễ tân, vì buồng phòng không ghi tiền",
-                "Ghi luôn vào phiếu phòng rồi báo lại cho ca sau",
-                "Từ chối rồi đi ra, không nói thêm gì nữa",
+                "Ghi luôn vào phiếu phòng rồi báo ca sau",
+                "Từ chối rồi đi ra, không nói thêm gì",
               ],
               correct: 0,
               explanation: '"does not add anything to a bill and calls the front desk instead"',
             },
             {
               q: "Vì sao nhân viên kiểm lại phòng trước khi rời đi?",
+              // 11/11/11 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
               options: [
-                "Vì quản lý tầng sẽ chấm điểm từng phòng ngay sau đó",
+                "Vì quản lý tầng sẽ chấm điểm từng phòng sau đó",
                 "Vì cái nhìn cuối của mình là cái khách thấy trước",
-                "Vì khách đã dặn phải kiểm tra lại toàn bộ căn phòng",
+                "Vì khách đã dặn phải kiểm tra lại toàn bộ phòng",
               ],
               correct: 1,
               explanation: `Ghép hai câu: "checks everything in the room" và "the last look is the one the guest sees first".`,
@@ -6826,20 +6941,22 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         [
           {
             q: "Vì sao nhân viên không hẹn giờ cho dịch vụ đánh giày?",
+            // 11/11/11 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Vì người nhận giày là valet, không phải nhân viên tầng",
-              "Vì khách chưa nói rõ mình cần giày vào lúc mấy giờ trong ngày",
-              "Vì tầng đã hết xi đánh giày từ ca sáng hôm đó rồi",
+              "Vì khách chưa nói rõ mình cần giày vào lúc nào",
+              "Vì tầng đã hết xi đánh giày từ ca sáng nay",
             ],
             correct: 0,
             explanation: '"the valet collects the shoes and the floor does not"',
           },
           {
             q: "Nhân viên làm gì trước khi rời phòng?",
+            // 8/8/8 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
-              "Gọi cho valet để báo số phòng của khách",
+              "Gọi cho valet để báo số phòng khách",
               "Tháo ga giường, rồi đóng cửa nhẹ tay",
-              "Để lại bộ kim chỉ trên bàn rồi mới đi ra",
+              "Để bộ kim chỉ trên bàn rồi đi",
             ],
             correct: 1,
             explanation: '"strips the bed, then closes the door quietly on the way out"',
@@ -6948,20 +7065,22 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           [
             {
               q: "Nhân viên ghi gì lên phiếu phòng?",
+              // 6/6/6 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
               options: [
-                "Số phòng và tên của vị khách đang ở",
+                "Số phòng và tên của khách",
                 "Mốc giờ đã hứa với khách",
-                "Loại gối mà khách muốn đổi sang",
+                "Loại gối khách muốn đổi sang",
               ],
               correct: 1,
               explanation: '"writes the time on the room sheet"',
             },
             {
               q: "Vì sao nhân viên không xịt gì trong phòng?",
+              // 9/9/9 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
               options: [
                 "Vì khách đã dặn không muốn mùi hương nồng",
-                "Vì bình xịt trên xe đồ đã hết từ ca sáng hôm đó",
-                "Vì khách sạn cấm xịt thơm trong mọi phòng đang có khách",
+                "Vì bình xịt trên xe đã hết sáng nay",
+                "Vì khách sạn cấm xịt thơm trong mọi phòng",
               ],
               correct: 0,
               explanation: `Ghép hai câu: "asks for no strong scent" và "sprays nothing".`,
@@ -7065,20 +7184,22 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
         [
           {
             q: "Khi khách hỏi về món tráng miệng, nhân viên làm gì?",
+            // 6/6/6 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
-              "Nhận lời ngay rồi báo bếp sau khi khách rời bàn",
+              "Nhận lời ngay rồi báo bếp",
               "Hỏi bếp trước khi trả lời",
-              "Nói rằng món đó hôm nay đã hết từ đầu ca",
+              "Nói rằng món đó đã hết",
             ],
             correct: 1,
             explanation: '"does not promise it from memory and asks the kitchen first"',
           },
           {
             q: "Vì sao nhân viên ghi mốc giờ lên phiếu?",
+            // 9/9/9 từ — xem ghi chú cân độ dài ở tuần 15 bài 2.
             options: [
               "Để ca sau biết đã hẹn gì với khách",
-              "Để bếp biết bàn nào gọi món trước tiên trong ca",
-              "Để quản lý đối chiếu giờ vào ca của từng nhân viên",
+              "Để bếp biết bàn nào gọi món trước tiên",
+              "Để quản lý đối chiếu giờ vào ca sáng",
             ],
             correct: 0,
             explanation: '"writes the time on the order, so the next shift knows what was agreed"',

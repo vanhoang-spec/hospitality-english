@@ -110,6 +110,24 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Thank you, madam. I will note your medicine list and ask my manager.",
       "Thuốc khách đang dùng phải vào medicine list, và thuốc huyết áp thì hỏi quản lý trước khi bắt đầu.",
     ),
+    // CẢ PHASE CỦA SPA CÓ ĐÚNG MỘT TỪ CHỈ CƠ THỂ. Đo trên 292 lượt nói của SW
+    // tuần 15-22 qua getWeekContent: `shoulder` 1 lần (và nằm trong câu bàn
+    // giao), `neck` 0, `leg` 0, `hand` 0, `knee` 0, `muscle` 0; `foot` chỉ
+    // xuất hiện trong `foot bath`, tức tên một dịch vụ. Một nhân viên trị
+    // liệu không gọi được tên chỗ đang đau thì `focus area` và `pain area` —
+    // hai thẻ của chính tuần này — là hai ô trống. Hai lượt dưới là hai câu
+    // mở đầu mọi buổi trị liệu thật, và cả hai đều dừng ở việc GHI LẠI: chọn
+    // liệu trình vẫn là việc của tuần 20.
+    sp(
+      "My neck and shoulders are very tight.",
+      "I will note your neck and shoulders as the focus area, madam.",
+      "Khách chỉ chỗ nào thì nhắc lại đúng chỗ đó rồi mới ghi — nhắc lại là cách khách biết mình được nghe đúng.",
+    ),
+    sp(
+      "Please stay away from my lower back.",
+      "Understood, madam. I will record your lower back as a pain area.",
+      "Chỗ khách không muốn bị chạm vào pain area, không vào trí nhớ. Ghi rồi nói ra cho khách nghe.",
+    ),
   ],
   // Guest Relations nhận điện thoại cả ngày, và cả tám tuần của phase không
   // có một câu nghe máy nào. Cũng không có một lượt nào nhân viên GỌI TÊN
@@ -131,6 +149,23 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I do apologise, sir. I will serve refreshments right now.",
       "Ôn tuần 15: serve refreshments — lời hứa của đồng nghiệp vẫn là lời hứa của khách sạn. Nhận việc, đừng nói đó không phải ca của mình.",
     ),
+    // TÁM TUẦN KHÔNG CÓ MỘT LƯỢT NÀO NÓI VỚI KHÁCH ĐANG RỜI ĐI. Đo trên 288
+    // lượt nói của GR tuần 15-22 qua getWeekContent: `enjoy` 0, `welcome
+    // back` 0, `escort` 0, `safe trip` 0, `see you` 0, `hope` 0. Bước cuối
+    // của chính quy trình tuần này là thẻ `Say goodbye warmly`, và nó chỉ
+    // xuất hiện trong câu KỂ TÊN bước ("Next I say goodbye warmly."), không
+    // một lần nào được nói với khách. Hai lượt dưới đều dựng trên thẻ tuần 1
+    // (`Welcome`, `Goodbye`, `Thank you`), nên không thêm từ mới nào.
+    sp(
+      "We are checking out this morning.",
+      "Goodbye, madam, and thank you. We hope to welcome you again.",
+      "Bước cuối của quy trình cũng là một lượt nói, không phải một dòng trong danh sách. Chào tạm biệt rồi mời khách quay lại — câu mời quay lại là thứ khách nhớ.",
+    ),
+    sp(
+      "Our car is waiting outside.",
+      "I will see you to the car, sir. Goodbye, and welcome back.",
+      "Khách rời đi thì đi cùng khách ra tới xe, đừng chào từ sau quầy. Đây là việc của Guest Relations, không phải của bellman.",
+    ),
   ],
   "GR-16": [
     sp(
@@ -138,10 +173,38 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "The welcome fruit basket is free, madam. I will call the front desk.",
       "Ôn tuần 16: welcome fruit basket — nói rõ thứ đó miễn phí, nhưng sửa hoá đơn là việc của lễ tân. Chuyển đúng chỗ, đừng hứa gỡ tiền.",
     ),
+    // Khách chê phương án thay thế thì việc phải làm là quay lại ĐIỀU KHÁCH
+    // ĐÃ YÊU CẦU, không phải bắn ra một thứ thứ ba. Câu cũ đáp lời chê một
+    // chuyến tham quan bằng lời mời đặt bàn ăn — hai loại việc khác hẳn nhau,
+    // nên khách nghe ra là mình không được lắng nghe mà chỉ được bán thêm.
+    // Thẻ `table reservation` vẫn được nói ra, nhưng ở đúng vai của nó: thứ
+    // khách đã đặt, đọc lại để xác nhận.
     sp(
       "A city tour is not what I asked for!",
-      "I am sorry, sir. Perhaps you would prefer a table reservation?",
-      "Ôn tuần 16: table reservation — khách chê phương án thay thế thì mở phương án khác ngay, đừng bảo vệ phương án vừa bị chê.",
+      "I am sorry, sir. You asked for a table reservation, is that right?",
+      "Ôn tuần 16: table reservation — khách chê phương án thay thế thì đọc lại đúng thứ khách đã yêu cầu để xác nhận, đừng mời ngay một thứ thứ ba không liên quan.",
+    ),
+    // CẢ PHASE KHÔNG DẠY NHÂN VIÊN ĐƯỢC PHÉP CHO CÁI GÌ. Đo trên 288 lượt nói
+    // của GR tuần 15-22: `compensat` 0, `waive` 0, `discount` 0, `amenity` 0,
+    // `no charge` 0; `complimentary` đúng hai lần và cả hai đều tả thứ ĐÃ
+    // GỒM trong giá, không phải thứ nhân viên trao. Một bộ phận chăm sóc
+    // khách mà không biết ranh giới của chính mình thì hoặc hứa liều hoặc
+    // không dám làm gì. Cặp dưới đây vẽ cả hai phía của ranh giới bằng đúng
+    // thẻ tuần 16: thứ trong tay mình là tiện ích, còn tiền thì không.
+    sp(
+      "Our room was not ready for two hours.",
+      "I am sorry, madam. May I send a welcome fruit basket?",
+      "Đây là thứ bạn được phép tự trao: một tiện ích trong danh sách của bộ phận. Mời bằng May I, đừng thông báo rồi mới làm.",
+    ),
+    sp(
+      "And the room rate?",
+      "I cannot decide that, madam. I will ask my manager now.",
+      "Còn đây là phía bên kia của ranh giới: mọi thứ dính tới tiền đều không phải của bạn. Nói thẳng mình không quyết, rồi đi hỏi ngay — đừng hứa sẽ xem xét.",
+      undefined,
+      // Lượt này rơi vào bể ô dự trữ qua `cannot decide` và `ask my manager`
+      // của CARRIES_AUTHORITY, nên nó phải khai khoá. `decide` không phải thẻ
+      // của tuần nào trong 40 tuần GR; `manager` là thẻ GR-7.
+      ["decide", "manager"],
     ),
   ],
   "GR-19": [
@@ -169,7 +232,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     ),
     sp(
       "Hello? Is that Guest Relations?",
-      "Guest Relations, Mai speaking. How may I help you?",
+      // Mai là nhân viên của SPA (LEXICONS.SW.staff); người của Guest
+      // Relations là Trang (LEXICONS.GR.staff). Câu nhấc máy là câu duy nhất
+      // trong cả 8 tuần P2 xưng tên, nên nó xưng nhầm tên ở đúng chỗ học
+      // viên học cách tự giới thiệu.
+      "Guest Relations, Trang speaking. How may I help you?",
       "Câu nhấc máy chuẩn: tên bộ phận, tên mình, rồi mới hỏi khách cần gì.",
     ),
     sp(
@@ -208,6 +275,27 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Can I pay by card or cash?",
       "Both are fine, madam. Which payment type would you prefer?",
       "Nói cả hai đều được, rồi để khách chọn bằng Which … would you prefer.",
+    ),
+    // KHÁCH VỊ THÀNH NIÊN: cả 22 tuần của Spa không có một dòng nào. Tuần 19
+    // có luật hồ bơi cho trẻ dưới 12, nhưng hồ bơi không phải phòng trị liệu,
+    // và câu hỏi thật ở quầy là một người mẹ hỏi cho con gái mười lăm tuổi.
+    // Đặt ở tuần 18 vì `consent form` là thẻ của chính tuần này: người ký
+    // phải là cha mẹ, và chữ ký không thay được sự có mặt.
+    sp(
+      "My daughter is fifteen. Can she have a treatment?",
+      "A parent signs the consent form and stays in the room, madam.",
+      "Khách vị thành niên thì chữ ký của cha mẹ là điều kiện, và cha mẹ ở lại trong phòng là điều kiện thứ hai — nói cả hai trong một câu, đừng để khách hỏi tiếp.",
+    ),
+    sp(
+      "And if I wait outside?",
+      "I am sorry, madam. I cannot start without a parent in the room.",
+      "Đây là chỗ không có ngoại lệ và cũng không có thương lượng. Xin lỗi ngắn, nêu điều kiện, giữ nguyên.",
+      undefined,
+      // Lượt này rơi vào bể ô dự trữ qua `cannot start` của TOPIC.SW, nên nó
+      // phải khai khoá. Cả ba chữ đều đã có thẻ trước tuần 18 hoặc không có
+      // thẻ nào: `start` là "Start the treatment" ở SW-15, `room` là thẻ tuần
+      // 16, `parent` không phải thẻ của tuần nào.
+      ["parent", "room", "start"],
     ),
   ],
   "GR-18": [
@@ -248,11 +336,23 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Never mix two chemicals. I will ask the supervisor.",
       "Không bao giờ trộn hai hoá chất — hỏi giám sát trước khi đổi cách làm.",
       "colleague",
+      // `mix` không phải headword của tuần nào trong 40 tuần, nên không khoá
+      // headword nào chạm tới nó: đo bằng utterancePassed, "Never two
+      // chemicals. I will ask the supervisor." vẫn ĐƯỢC CHẤM ĐÚNG — tức câu
+      // đảo ngược đúng cái luật an toàn mà lượt này tồn tại để dạy. Khai tay.
+      ["mix"],
     ),
     sp(
       "Could I borrow that cleaning spray?",
       "I am sorry, madam. The chemicals stay with housekeeping.",
       "Hoá chất tẩy rửa không đưa cho khách — đề nghị mình làm giúp thay vì cho mượn.",
+      undefined,
+      // Lượt này rơi vào bể ô dự trữ qua `chemical` của TOPIC.HK, nên nó phải
+      // khai requiredTokens. `chemicals` KHÔNG khai được ở tuần 19: thẻ duy
+      // nhất của HK chứa token đó là "Chemical spill" ở HK-36, nên khai nó là
+      // tự tạo một vi phạm Layer T mới. Khoá `housekeeping` (thẻ HK-1) và để
+      // lại `chemicals` trong mục bàn giao.
+      ["housekeeping"],
     ),
   ],
   "FB-18": [
@@ -302,6 +402,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Do not follow them. I am telling the duty manager.",
       "Không đuổi theo, không giữ khách lại — báo quản lý trực ngay và ghi lại giờ.",
       "colleague",
+      // Bể ô dự trữ của F&B nay bắt lượt này qua `do not follow`. `duty` bỏ
+      // được mà vẫn qua — "I am telling the manager" là báo sai người, vì
+      // quản lý trực mới là người xử ca khách bỏ đi. `follow` KHÔNG khai
+      // được: thẻ "Follow up" của FB ở tuần 38.
+      ["duty", "manager"],
     ),
     sp(
       "I think you charged me twice for the water.",
@@ -323,6 +428,12 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "He is choking! He cannot breathe!",
       "I am calling first aid now, madam. Please stay here.",
       "Khách hóc nghẹn: gọi sơ cứu ngay và ở lại cạnh bàn — không tự làm thủ thuật nếu chưa được huấn luyện.",
+      undefined,
+      // Ô dự trữ qua `first aid`. Vế thứ hai — ở LẠI cạnh bàn — là vế bỏ được
+      // mà vẫn qua, và nó chính là nửa sau của luật. `first` không khai được:
+      // thẻ "First aider" của FB ở tuần 36; `first` cũng đã bị bộ chấm giữ
+      // sẵn nên không mất gì.
+      ["aid", "stay"],
     ),
     sp(
       "I am fine. One more beer, please.",
@@ -343,6 +454,27 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I want to speak to the manager now!",
       "My manager is not on the floor, sir. May I call the duty manager?",
       "Quản lý không có mặt thì nói thật và xin phép gọi quản lý trực — đừng hứa quản lý sẽ ra ngay.",
+    ),
+    // `Handbag` và `Not permitted` là hai trong bốn thẻ của FB_19_4, và render
+    // cả bài qua getWeekContent cho thấy chúng không xuất hiện ở MỘT chỗ nào
+    // khác trong bài: không trong cặp ngữ pháp, không trong tám lượt nói,
+    // không trong bài đọc, không trong hai vòng arcade — cả bài nói về một
+    // đĩa bò nấu quá tay. Thẻ chỉ tồn tại trên chính tấm thẻ. Hai lượt dưới
+    // đưa chúng vào miệng học viên ở đúng tuần dạy chúng.
+    sp(
+      "Where should I put my bag during dinner?",
+      "Please keep your handbag with you, madam. It is safer.",
+      "Không cất đồ của khách và cũng không hứa trông hộ — mời khách giữ bên mình và nói lý do.",
+    ),
+    sp(
+      "Can we bring our own drinks to the table?",
+      "I am afraid that is not permitted, sir.",
+      "Từ chối một quy định thì nói ngắn và nói hết câu. Không xin lỗi dài, không mở ra chỗ để thương lượng.",
+      undefined,
+      // `not (allowed|permitted|possible)` của CARRIES_AUTHORITY kéo lượt này
+      // vào bể ô dự trữ, nên nó phải khai khoá. `permitted` là thẻ của chính
+      // tuần 19 ("Not permitted"), tức đã dạy đúng tuần này.
+      ["permitted"],
     ),
   ],
   "FB-20": [
@@ -475,6 +607,20 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Certainly, sir. Would you like some fresh towels?",
       "Khách không cần dọn: vẫn hỏi có muốn thay khăn không.",
     ),
+    // Hai lượt dưới là mặt KHÁCH của cùng lỗ hổng đo được ở tuần 21: cả tám
+    // tuần không có lượt nào nói về việc dọn phòng bằng chính tên của việc
+    // đó. Tuần 20 dạy đưa hai lựa chọn, và giờ dọn phòng là lựa chọn mà
+    // khách thật sự được hỏi mỗi ngày.
+    sp(
+      "I am going out for lunch.",
+      "Shall I make the bed now, or after you return, madam?",
+      "Đưa đúng hai mốc giờ để khách chọn, đừng hỏi trống không rồi chờ khách tự nghĩ ra.",
+    ),
+    sp(
+      "Just the bathroom today, please.",
+      "Certainly, madam. I will mop the bathroom floor and empty the bin.",
+      "Khách giới hạn phạm vi dọn thì nhắc lại đúng phạm vi ấy — khách biết mình được nghe đúng.",
+    ),
   ],
   "FO-19": [
     sp(
@@ -496,6 +642,10 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Will you keep it long?",
       "We keep it briefly, sir — about two minutes.",
       "Ôn tuần 17: briefly là trạng từ, đứng ngay sau động từ.",
+      undefined,
+      // Bể ô dự trữ của FO bắt lượt này qua `keep (it|your passport) briefly`.
+      // Cả hai chữ đều là thẻ FO-17, nên khoá được cả hai.
+      ["keep", "briefly"],
     ),
     sp(
       "How do I get in?",
@@ -680,10 +830,15 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
     // thường vào buồng 43-46 °C và bỏ người bất tỉnh nằm trong đó cho tới khi
     // y tá tới. Phòng xông là nguyên nhân, không phải bối cảnh: rời nguồn
     // nhiệt là bước sơ cứu, không phải là xáo trộn hiện trường.
+    // Người duy nhất được nhờ khiêng một người bất tỉnh ra khỏi buồng 43-46 °C
+    // là đồng nghiệp trong ca, không phải vị khách vừa hô hoán. Lượt cứu hộ hồ
+    // bơi ngay dưới đây đã gắn "colleague" từ đầu; lượt này thiếu đúng trường
+    // đó, nên câu mẫu gọi khách bằng `sir` mà vẫn sai người nghe.
     sp(
       "Someone has fainted in the steam room!",
-      "Please help me bring him out, sir. I am calling the nurse.",
-      "Hơi nóng là nguyên nhân, nên bước đầu là đưa khách RA KHỎI phòng xông — đúng thứ tự tuần 8. Gọi y tá ngay sau đó và ở lại với khách.",
+      "Please help me bring him out now. I am calling the nurse.",
+      "Hơi nóng là nguyên nhân, nên bước đầu là đưa khách RA KHỎI phòng xông — đúng thứ tự tuần 8. Nhờ đồng nghiệp trong ca khiêng, không nhờ khách; gọi y tá ngay sau đó và ở lại với khách.",
+      "colleague",
     ),
     sp(
       "A guest is struggling in the deep end.",
@@ -709,6 +864,12 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Do you need to know anything first?",
       "Any injuries or allergies, madam? And are you pregnant?",
       "Đủ ba vế, không rút còn hai: chấn thương, dị ứng, thai kỳ. Câu thứ ba hỏi bằng giọng bình thường như hai câu kia, và có thai là trường hợp phải hỏi quản lý.",
+      undefined,
+      // Ô dự trữ qua `pregnan` và `allerg`. Tip nói thẳng "đủ ba vế, không rút
+      // còn hai" mà ô không khoá chữ nào, nên câu rút còn hai vế — đo được:
+      // bỏ `injuries` vẫn ĐƯỢC CHẤM ĐÚNG — qua đúng ô bắt buộc đúng. Ba chữ
+      // này không phải thẻ của tuần nào trong 40 tuần SW, nên khai tay.
+      ["injuries", "allergies", "pregnant"],
     ),
     sp(
       "This room feels cold.",
@@ -809,6 +970,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I found this watch in the corridor.",
       "I will log the item as lost property.",
       "Ôn tuần 18: log the item là ghi vào sổ.",
+      undefined,
+      // Bể ô dự trữ bắt qua `log the item` và `lost property`. Cả bốn chữ là
+      // thẻ HK-18, tức đã dạy trước tuần 21, nên khoá được nguyên cụm —
+      // "I will log the item as property." từng qua vì thiếu `lost`.
+      ["log", "item", "lost", "property"],
     ),
     sp(
       "Is 1204 ready?",
@@ -826,6 +992,38 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Where are the extra towels?",
       "They are in the linen room, next to the store room.",
       "Ôn tuần 8: linen room và store room — hai phòng khác nhau.",
+      "colleague",
+    ),
+    // TÁM TUẦN BUỒNG PHÒNG GẦN NHƯ KHÔNG NÓI VỀ CHÍNH CĂN PHÒNG. Đo trên 299
+    // lượt nói của HK tuần 15-22 qua getWeekContent: `make the bed` 0 lần,
+    // `vacuum` 0, `mop` 0, `toilet` 0, `dust` 0, `bin` 0; `linen` đúng 1 lần
+    // và lần đó là TÊN PHÒNG KHO, không phải việc thay ga. Thẻ thì có sẵn từ
+    // lâu — `Vacuum`, `Mop`, `Dust` ở HK-11, `Bin` ở HK-2, `Bathroom` ở HK-8
+    // — nên cả nghiệp vụ lõi của bộ phận chỉ còn sống trong danh sách ôn.
+    // Tuần 21 là tuần kể lại việc đã làm, nên đây là chỗ chúng phải quay lại
+    // miệng học viên, ở đúng thì quá khứ đơn mà tuần này dạy.
+    sp(
+      "What did you do in 1204?",
+      "I made the bed and vacuumed the carpet.",
+      "Kể việc đã làm bằng quá khứ đơn, và kể theo đúng thứ tự đã làm.",
+      "colleague",
+    ),
+    // "And after that?" chứ không phải "And the bathroom?": phép suy ra
+    // `follows` trong week-content.ts từ chối nối hai lượt khi câu sau gọi
+    // tên một thứ xác định mà lượt trước không hề nhắc tới — và nó đúng, vì
+    // một cặp như thế đọc rời ra thì không thành hội thoại. Hỏi bằng mốc
+    // THỜI GIAN thì cặp này nối được, và nó cũng đúng kỹ năng tuần 21: kể
+    // việc đã làm theo thứ tự.
+    sp(
+      "And after that?",
+      "I mopped the bathroom floor and cleaned the toilet.",
+      "Câu hỏi nối tiếp thì trả lời nối tiếp — vẫn quá khứ đơn, vẫn hai việc một câu.",
+      "colleague",
+    ),
+    sp(
+      "Is 1206 finished?",
+      "Not yet. I still need to change the linen.",
+      "Chưa xong thì nói chưa xong và nói rõ còn việc gì — báo sớm hơn thì ca sau còn xoay kịp.",
       "colleague",
     ),
   ],
@@ -961,6 +1159,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "I lost it. Just give me the key!",
       "I understand, sir. May I see any photo identification?",
       "Đọc tên không phải là xác minh. Không có hộ chiếu thì vẫn phải có giấy tờ CÓ ẢNH — không tranh luận, không nhượng bộ chìa khoá.",
+      undefined,
+      // Ca chuẩn của Layer S: tip hứa "CÓ ẢNH" mà ô không khoá chữ nào, nên
+      // "May I see any identification?" — mất đúng chữ mang cả lời hứa — vẫn
+      // được chấm ĐÚNG. Đo lại sau khi khai: câu mất `photo` trượt.
+      ["photo", "identification"],
     ),
     sp(
       "I am going up there anyway!",
@@ -1059,6 +1262,13 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Is the green curry safe for my nut allergy?",
       "I checked with the chef, madam. It has no nuts, but our kitchen does handle nuts.",
       "Trả lời dị ứng: nói điều đã kiểm tra và nêu rủi ro thật — không hứa an toàn tuyệt đối.",
+      undefined,
+      // `nuts` kéo lượt này vào bể ô dự trữ của F&B, nên ô phải khai khoá.
+      // KHÔNG khai chính chữ `nuts`: thẻ "Prepare a nut-free dish" của FB ở
+      // tuần 25, sau tuần này, nên khai nó là tự tạo một vi phạm Layer T mới
+      // (đã đo: 64 → 65). Không mất gì — đo bằng utterancePassed thì `nuts`
+      // vốn đã không bỏ được. Khoá hai vế còn lại: đã hỏi AI, và bếp nào.
+      ["chef", "kitchen"],
     ),
     sp(
       "Medium, please, and nothing too spicy.",
@@ -1115,6 +1325,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "My throat feels strange. I think it is the nuts.",
       "Please sit down, madam. I am calling our manager and first aid now.",
       "Nghi phản ứng dị ứng: không tự cho thuốc — gọi quản lý và sơ cứu, ở lại cạnh khách.",
+      undefined,
+      // Ô dự trữ qua `first aid`. Câu có ba việc và cả ba đều phải nói: cho
+      // khách ngồi xuống, gọi quản lý, gọi sơ cứu. `first` không khai được
+      // (thẻ "First aider" ở FB-36) nhưng bộ chấm đã giữ sẵn chữ đó.
+      ["sit", "down", "manager", "aid"],
     ),
     sp(
       "There is a hair in my soup!",
@@ -1196,6 +1411,12 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Two beers for me and my sister.",
       "May I see some ID, sir? It is the law here.",
       "Xin giấy tờ bằng giọng bình thường như xin bất kỳ thông tin nào khác, rồi nêu lý do là luật. Nói là luật thì không ai thấy bị nghi ngờ.",
+      undefined,
+      // Ô dự trữ qua `see some id`. Đo được: bỏ `id` thì "May I see some,
+      // sir? It is the law here." vẫn ĐƯỢC CHẤM ĐÚNG — đúng ca "May I see
+      // some sir?" trong hàng đợi. Khoá cả `law` vì vế lý do là vế giữ cho
+      // câu không nghe như nghi ngờ khách.
+      ["id", "law"],
     ),
     sp(
       "I left my passport in the room.",
@@ -1252,6 +1473,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Can you open 1204 for me? I lost my key.",
       "I am sorry, sir. For your security, please go to the front desk.",
       "Không bao giờ mở cửa phòng cho người xin — mời xuống lễ tân.",
+      undefined,
+      // Ô dự trữ qua `security` và `front desk`. `front` không khai được: thẻ
+      // "Front desk" của HK ở tuần 26, sau tuần này. `desk` là thẻ HK-12
+      // ("Housekeeping desk"), khai được.
+      ["security", "desk"],
     ),
     sp(
       "My necklace is gone. Did you take it?",
@@ -1268,6 +1494,11 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "No. Wear gloves when you use chemicals.",
       "Hoá chất luôn đi với găng tay — nói với đồng nghiệp ngắn và rõ.",
       "colleague",
+      // `gloves` không phải headword của tuần nào trong 40 tuần HK, nên không
+      // khoá headword nào với tới: "No. Wear when you use chemicals." vẫn
+      // được chấm ĐÚNG. Đây vừa là ô dự trữ (qua `chemical`) vừa là câu mà
+      // bỏ một chữ là mất cả nội dung an toàn. Khai tay.
+      ["gloves"],
     ),
     sp(
       "Come inside and close the door.",
@@ -1282,6 +1513,12 @@ export const DEPT_REVIEW: Record<string, SpeakingItem[]> = {
       "Could you lend me your key for a moment?",
       "I am sorry, sir. My key stays with me. Please ask the front desk.",
       "Chìa khoá tầng mở được mọi phòng trên tầng, nên nó không rời tay mình, kể cả một phút và kể cả cho đồng nghiệp. Từ chối rồi chỉ khách tới nơi giúp được.",
+      undefined,
+      // `me` là chữ mang toàn bộ nghĩa "không rời tay" và không thẻ nào với
+      // tới nó: "My key stays with. Please ask the front desk." vẫn qua. Khai
+      // tay. `key` và `front` thì không khai được — thẻ "Lost key card fee"
+      // ở HK-24 và "Front desk" ở HK-26, đều sau tuần này.
+      ["me"],
     ),
     // Khoá chỉ có ca khách đòi mở phòng CỦA CHÍNH HỌ. Ca thật hay gặp hơn và
     // nguy hiểm hơn nhiều là người đòi vào phòng NGƯỜI KHÁC, và lý do họ đưa

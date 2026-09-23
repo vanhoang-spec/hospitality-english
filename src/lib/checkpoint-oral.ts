@@ -20,6 +20,20 @@ export type OralItem = {
   /** The week the sentence was authored for — graded at THAT week's
    *  threshold, not the checkpoint's. */
   sourceWeek: number;
+  /** EVERYTHING this slot requires, not just what the frame author wrote.
+   *
+   *  It used to be the frame's raw `requiredTokens`, and answersOf() rebuilt
+   *  the slot's own answer from it — which threw away the weeks-1..N headword
+   *  lock acceptedAnswers() had just computed for that very sentence and
+   *  handed the exam a looser answer than the drill. Measured on one content
+   *  snapshot, deleting one locked headword from a model passed 0.5% of the
+   *  time on the practice path and 9.0% on the exam path, in every phase:
+   *  P0 0.0/1.5, P1 1.7/7.4, P2 0.1/8.7, P3 0.5/6.5, P4 0.3/14.3. The exam
+   *  was the most lenient speaking in the course, which is backwards.
+   *
+   *  So the list is written by acceptedAnswers() — the same call that builds
+   *  `alternates` — and the two now come out of ONE call, which is what stops
+   *  them drifting apart again. */
   requiredTokens?: string[];
   /** What the learner said one turn earlier, for the chained items of a
    *  multi-turn exchange. Dropping it here is how the phase's only three-turn
@@ -45,7 +59,14 @@ export type OralItem = {
  *  Exported so a measurement can call it. Three audits had to copy this
  *  function into their own scripts to measure the draw, and a copied rule is
  *  a rule that stops being the one that ships. */
-/** Every answer an oral item accepts, its own first. */
+/** Every answer an oral item accepts, its own first.
+ *
+ *  `item.requiredTokens` is the LOCKED list acceptedAnswers() returned for
+ *  this sentence — see the field's own note. Rebuilding the item's answer
+ *  from the frame's raw tokens here is what made the exam grade looser than
+ *  the drill, and the shape of that defect is why nothing in this function
+ *  recomputes anything: the two sides of the list are set together in
+ *  buildOral() and read back together here. */
 export const answersOf = (item: OralItem): AcceptedAnswer[] => [
   { target: item.target, requiredTokens: item.requiredTokens },
   ...(item.alternates ?? []),
@@ -78,28 +99,36 @@ export function buildOral(dep: string, week: string): OralItem[] {
     const c = getWeekContent(dep, String(w));
     if (!c) return [];
     return c.lessons.flatMap((l) =>
-      l.speaking.map((s) => ({
-        lesson: `${c.weekNumber}/${l.lessonId}`,
-        item: {
-          key: `s:${w}:${s.guestPrompt}`,
-          guestPrompt: s.guestPrompt,
-          who: speakerLabel(s),
-          audioWho: speakerAudioLabel(s),
-          target: s.targetResponse,
-          tip: s.helpTip,
-          requiredTokens: s.requiredTokens,
-          follows: s.follows,
-          alternates: acceptedAnswers(
-            dep,
-            week,
-            s.guestPrompt,
-            s.targetResponse,
-            s.requiredTokens,
-            s.speakerRole,
-          ).slice(1),
-          sourceWeek: c.weekNumber,
-        } as OralItem,
-      })),
+      l.speaking.map((s) => {
+        // ONE call, and both halves of the answer list come out of it. The
+        // slot's own answer is `accepted[0]` — already carrying the week's
+        // headword lock — and taking only `.slice(1)` while rebuilding [0]
+        // from the raw frame tokens is exactly how the exam ended up grading
+        // more leniently than the practice drill.
+        const accepted = acceptedAnswers(
+          dep,
+          week,
+          s.guestPrompt,
+          s.targetResponse,
+          s.requiredTokens,
+          s.speakerRole,
+        );
+        return {
+          lesson: `${c.weekNumber}/${l.lessonId}`,
+          item: {
+            key: `s:${w}:${s.guestPrompt}`,
+            guestPrompt: s.guestPrompt,
+            who: speakerLabel(s),
+            audioWho: speakerAudioLabel(s),
+            target: s.targetResponse,
+            tip: s.helpTip,
+            requiredTokens: accepted[0]!.requiredTokens,
+            follows: s.follows,
+            alternates: accepted.slice(1),
+            sourceWeek: c.weekNumber,
+          } as OralItem,
+        };
+      }),
     );
   });
   const items: OralItem[] = built.map((b) => b.item);
@@ -292,6 +321,40 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // one already sent; the spa keeps the screening questions and the first aid
   // and gives up its filing vocabulary.
   //
+  // TWO BARE NOUNS SURVIVED THAT PASS, and the same measurement found them.
+  //
+  // F&B matched its allergy family and nothing else, so the six sentences the
+  // department is most answerable for never reached the must-be-right slot at
+  // all: "I cannot serve alcohol without ID." and "May I see some ID, sir? It
+  // is the law here." (week 22), "My supervisor is coming to help you." and
+  // "I am calling first aid now, madam." (week 19), "Please sit down, madam.
+  // I am calling our manager and first aid now." (week 22), "Do not follow
+  // them. I am telling the duty manager." (week 18). Every one is a refusal,
+  // an escalation or an emergency, and CARRIES_AUTHORITY does not reach them
+  // — it knows `cannot give|confirm|promise…`, not `cannot serve`, and it
+  // knows calling a manager, not one arriving or being told. Meanwhile bare
+  // `nuts` was letting in the REPORT "The chef says this dish has no nuts.",
+  // a reassurance nobody has to get right, at 5.0% of F&B sittings. `nuts`
+  // becomes `handle nuts`, which keeps the cross-contact WARNING ("…it has no
+  // nuts, but our kitchen does handle nuts.") and drops the reassurance.
+  // `allerg` stays exactly as it is: F&B's whole Phase 1 pool is the one line
+  // it matches, and the note below is about that line.
+  //
+  // Spa matched bare `comfort level`, which is a screening word in "Please
+  // undress to your comfort level, madam." — already in on `undress` — and a
+  // filing word in "I will note the comfort level in the system.", which was
+  // taking the reserved draw on 3.5% of Spa sittings. It becomes `comfort
+  // level matters`, so the consent line ("Your comfort level matters more
+  // than the plan.") keeps its place and the system note loses it.
+  //
+  // Measured on one content snapshot, 1,500 sittings per department per
+  // phase: the share of sittings carrying a reserved draw did not move in any
+  // phase × department, and neither did the draw pool itself (P2: FO 265, FB
+  // 286, HK 275, SW 265, GR 260, BO 214 before and after) — the reservation
+  // is chosen out of that pool, it does not select it. The reserved POOL is
+  // what changed, and only where it was meant to: F&B P2 19 → 24 distinct
+  // sentences, F&B P4 2 → 4, Spa P2 28 → 27.
+  //
   // WHAT IS DELIBERATELY NOT TIGHTENED, and it is not an oversight. The pool
   // this draw runs on is thin outside Phase 2 — measured at one to five
   // sentences per department per phase — and the reservation is already
@@ -304,9 +367,9 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // own GR item is a content fix, not a pattern one.
   const TOPIC: Record<string, RegExp> = {
     FO: /cannot give (a|the) room number|cannot confirm|another (card|terminal)|photo identification|keep (it|your passport) briefly|release the hold|ask (my|the) manager about (an upgrade|a late check-out)|step (this way|aside)/i,
-    FB: /allerg|nuts|halal|check with the kitchen|only the kitchen|the chef will confirm/i,
+    FB: /allerg|halal|check with the kitchen|only the kitchen|the chef will confirm|handle nuts|cannot serve|see some id\b|it is the law|first aid|(manager|supervisor) is coming|do not follow/i,
     HK: /lost property|log the item|front desk|security|chemical|belongings|do not move|wet floor sign out|floor is wet|put in a maintenance request|maintenance will/i,
-    SW: /pregnan|allerg|cannot start|ask (my|the) (manager|supervisor)|call(ing)? (the|our) (on-duty )?(nurse|lifeguard)|signal (our|us)|red flag (means|is up)|not (recommended|permitted)|under 12|heat exhaustion|comfort level|undress/i,
+    SW: /pregnan|allerg|cannot start|ask (my|the) (manager|supervisor)|call(ing)? (the|our) (on-duty )?(nurse|lifeguard)|signal (our|us)|red flag (means|is up)|not (recommended|permitted)|under 12|heat exhaustion|comfort level matters|undress/i,
     GR: /room number|cannot confirm|not yet|call and confirm|message for the guest|for the guest/i,
     BO: /approv|confidential|sign off/i,
   };
