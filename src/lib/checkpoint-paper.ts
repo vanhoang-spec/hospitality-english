@@ -216,6 +216,99 @@ function wrongVariants(
   return [...out];
 }
 
+/** THE TAUGHT SERVICE MOVES — two replies that make the same move answer one
+ *  audio equally well, whichever the paper happens to key.
+ *
+ *  A move is matched BY INDEX: two sentences are the same move when they hit
+ *  the SAME entry. So a fresh way of saying a thing the course already teaches
+ *  belongs inside the entry it paraphrases, and adding it as an entry of its
+ *  own does the opposite of what it looks like — it declares the two ways
+ *  DIFFERENT and puts them on one paper as key and distractor. Three reviews
+ *  in one round found pairs of exactly that shape.
+ *
+ *  At module scope, and exported, for two reasons. It was rebuilt inside the
+ *  per-question map, once for every listening item of every paper; and a
+ *  script that wants to count how many items still have two right answers can
+ *  now ask the shipping list instead of re-typing it, which is how several
+ *  earlier rounds produced numbers that described a copy nobody shipped. */
+export const LISTENING_MOVES: readonly RegExp[] = [
+  // "We have X" is an offer of stock, and every department has stock. A
+  // list only ever covers the moves someone remembered — an academic
+  // review said exactly that after a new batch of content walked through
+  // the gap this entry closes.
+  // "also" slots into the middle of the frame without changing the move
+  // — "We also have a city tour." is the same offer of stock, and the
+  // audit that asked for the (also )? group in the arrange/offer entry
+  // below named this one in the same breath.
+  // ONE entry for every way the course offers something. They were four
+  // entries, and a move is matched by index, so "We also have shoe polish."
+  // and "We could arrange shoe polish instead." were two different moves
+  // and went on the same paper as key and distractor for "What else could
+  // I add to that?". Three reviews in one round found pairs of this shape.
+  // Five more ways in: `would you prefer`, `may i suggest`, `shall i
+  // arrange`, `shall i ask` and `i could offer`. Housekeeping played
+  // "Anything on offer today?" over "Would you like a pillow change today,
+  // sir?" with "May I offer you an extra choice?" and "Would you like an
+  // extra hanger, sir?" beside it — three offers, all three correct.
+  /\bwe (also )?have\b|\bwould you (like|prefer)\b|\bmay i (offer|suggest)\b|\bshall i (arrange|offer|order|book|ask)\b|\bwe (could|can) (also )?(arrange|offer)\b|\bi (can|could) (lend|bring|offer|suggest)\b/i,
+  /\bi will bring\b/i,
+  /\bi will send\b/i,
+  /\bi will call\b/i,
+  // Checking, fixing and reporting are one promise to a guest who has only
+  // said "There is a small problem" — a review found "I will fix the issue
+  // now" keyed right beside "I will report it now" keyed wrong.
+  /\bi will (check|fix|report|look into)\b/i,
+  // A request for a detail, whatever verb carries it and whichever way round
+  // the sentence puts it: "Could I have your pain area?", "May I see your
+  // consent form?", "Could you provide your passport, please?" and "Could you
+  // please share your booking reference?" all answer "What else do you need
+  // from me?" — Front Office keyed the first of those four with the last two
+  // printed beside it. The entry matched only `(could|may|can) i`, so the
+  // half of the frame that asks the GUEST to do the giving was a different
+  // move by index, which is to say no move at all.
+  /^((could|may|can) i (have|see|take|ask about|check)|(could|would|can) you (please )?(provide|share|give|tell|confirm|spell))\b/i,
+  /\bis ready\b/i,
+  // A location answer: "The lift is on the right." beside "Your robe is
+  // on the hook." both answer a where-question when the audio names
+  // neither object. The same review that asked for (also )?have asked
+  // for this frame.
+  /\b(is|are) on (the|your)\b/i,
+  /\bhave a good\b/i,
+  /\benjoy your\b/i,
+  // Five more moves ten reviews found answering one audio two right ways:
+  // writing it down, offering, handing something over, refusing, and
+  // giving one more of something.
+  /\bi will (note|write|add)\b|\b(noted|wrote|listed|jotted|typed|logged) everything\b|\bin the log\b|\badd (that|it) to\b/i,
+  /^(yes[.,]? )?here is your\b/i,
+  /\bnot (allowed|permitted|possible|available)\b|\bcannot decide\b|\bdoes not allow\b/i,
+  /\b(an extra|another|one more)\b/i,
+  // "What do you do first?" has as many right answers as the department
+  // has opening jobs, and three weeks of this phase each teach a different
+  // one. Same for the every-day and end-of-shift frames beside it.
+  // The bare reassurance. "Certainly. It will be ready shortly." and
+  // "Certainly, everything will be ready for you." are the same promise
+  // with a different subject, and neither names anything the audio has to
+  // have said, so both answer "Will it be done in time?" — the frame rule
+  // below misses them because their first four words differ.
+  /^certainly[.,]? (it|everything) will be\b/i,
+  /\bfirst[.?!]?$/i,
+  /^first (i|we)\b/i,
+  /\bevery day[.?!]?$/i,
+  /\bat the end[.?!]?$/i,
+  // LAST, so that every more specific frame above claims its own sentences
+  // first: a reply opening "Yes, …" has already answered the yes/no question
+  // in its first word, and what follows is one department's way of saying so.
+  // Two of them under one audio are two right answers unless the audio names
+  // something only one of them carries — which is what `discriminated` asks
+  // before any of this list is consulted.
+  /^yes[.,]\s/i,
+];
+
+/** Which taught move `text` makes, or -1 when it makes none this list knows. */
+export function listeningMoveIndex(text: string): number {
+  return LISTENING_MOVES.findIndex((r) => r.test(text.trim()));
+}
+
 /**
  * Builds a 20-question mixed paper drawn from EVERY week in the
  * checkpoint's phase (see weeksInPhase), not just the checkpoint week
@@ -390,6 +483,14 @@ export function buildPaper(dep: string, week: string): Question[] {
     "right",
     "all",
     "now",
+    // "today" is the same bare time-marker as "now", and leaving it in cost
+    // more than a distractor: `discriminated` below asks whether the audio
+    // names anything the key says and a candidate does not, and "Anything on
+    // offer today?" against "Would you like a pillow change today, sir?"
+    // answered YES on the strength of the word "today" alone. That opened the
+    // move test's gate, and two other offers went on the paper beside the key.
+    // An echoed time-marker is not a reason to prefer one offer over another.
+    "today",
     // A preposition the audio shares with a reply is not a reason to prefer
     // it: "Anything else about me?" counted "about" as naming the key.
     "about",
@@ -878,66 +979,9 @@ export function buildPaper(dep: string, week: string): Question[] {
      *  whenever the audio does not name the object — "Is there a problem?"
      *  answered by "I will bring a new lounge card." and "I will bring a
      *  ribbon." Gated on `discriminated` so a lesson that DOES name the object
-     *  keeps its same-frame distractor, which is the one worth hearing. */
-    const MOVES = [
-      // "We have X" is an offer of stock, and every department has stock. A
-      // list only ever covers the moves someone remembered — an academic
-      // review said exactly that after a new batch of content walked through
-      // the gap this entry closes.
-      // "also" slots into the middle of the frame without changing the move
-      // — "We also have a city tour." is the same offer of stock, and the
-      // audit that asked for the (also )? group in the arrange/offer entry
-      // below named this one in the same breath.
-      // ONE entry for every way the course offers something. They were four
-      // entries, and a move is matched by index, so "We also have shoe polish."
-      // and "We could arrange shoe polish instead." were two different moves
-      // and went on the same paper as key and distractor for "What else could
-      // I add to that?". Three reviews in one round found pairs of this shape.
-      /\bwe (also )?have\b|\bwould you like\b|\bmay i offer\b|\bperhaps you would prefer\b|\bwe (could|can) (also )?(arrange|offer)\b|\bi can (lend|bring|offer)\b/i,
-      /\bi will bring\b/i,
-      /\bi will send\b/i,
-      /\bi will call\b/i,
-      // Checking, fixing and reporting are one promise to a guest who has only
-      // said "There is a small problem" — a review found "I will fix the issue
-      // now" keyed right beside "I will report it now" keyed wrong.
-      /\bi will (check|fix|report|look into)\b/i,
-      // A request for a detail, whatever verb carries it: "Could I have your
-      // pain area?" and "May I see your consent form?" both answer "Anything
-      // else from me?", and the old entry matched only "may i have" — one
-      // review read 12 of 60 listening items with a second right answer, most
-      // of them this shape.
-      /^(could|may|can) i (have|see|ask about|check)\b/i,
-      /\bis ready\b/i,
-      // A location answer: "The lift is on the right." beside "Your robe is
-      // on the hook." both answer a where-question when the audio names
-      // neither object. The same review that asked for (also )?have asked
-      // for this frame.
-      /\b(is|are) on (the|your)\b/i,
-      /\bhave a good\b/i,
-      /\benjoy your\b/i,
-      // Five more moves ten reviews found answering one audio two right ways:
-      // writing it down, offering, handing something over, refusing, and
-      // giving one more of something.
-      /\bi will (note|write|add)\b|\b(noted|wrote|listed|jotted|typed|logged) everything\b|\bin the log\b|\badd (that|it) to\b/i,
-      /^(yes[.,]? )?here is your\b/i,
-      /\bnot (allowed|permitted|possible|available)\b|\bcannot decide\b|\bdoes not allow\b/i,
-      /\b(an extra|another|one more)\b/i,
-      // "What do you do first?" has as many right answers as the department
-      // has opening jobs, and three weeks of this phase each teach a different
-      // one. Same for the every-day and end-of-shift frames beside it.
-      // The bare reassurance. "Certainly. It will be ready shortly." and
-      // "Certainly, everything will be ready for you." are the same promise
-      // with a different subject, and neither names anything the audio has to
-      // have said, so both answer "Will it be done in time?" — the frame rule
-      // below misses them because their first four words differ.
-      /^certainly[.,]? (it|everything) will be\b/i,
-      /\bfirst[.?!]?$/i,
-      /^first (i|we)\b/i,
-      /\bevery day[.?!]?$/i,
-      /\bat the end[.?!]?$/i,
-    ];
-    const moveIdx = (t: string) => MOVES.findIndex((r) => r.test(t.trim()));
-    const keyMove = moveIdx(s.targetResponse);
+     *  keeps its same-frame distractor, which is the one worth hearing.
+     *  The list itself is LISTENING_MOVES, at module scope. */
+    const keyMove = listeningMoveIndex(s.targetResponse);
     /** Two replies that hand the job to the SAME person are one move, whatever
      *  verb they use to say so: "I am not sure. I will ask our lounge
      *  manager." and "I will call our lounge manager now, sir." were offered
@@ -994,7 +1038,7 @@ export function buildPaper(dep: string, week: string): Question[] {
     const secondRightAnswer = (t: string) =>
       pullsAway(t) ||
       (!discriminated(t) &&
-        ((keyMove >= 0 && moveIdx(t) === keyMove) ||
+        ((keyMove >= 0 && listeningMoveIndex(t) === keyMove) ||
           sameRecipient(t) ||
           sameFrame(t) ||
           sharesContent(t) ||
@@ -1185,13 +1229,124 @@ export function buildPaper(dep: string, week: string): Question[] {
     };
   });
 
-  const readingPool = shuffle(
-    phaseLessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
+  const readingCards = phaseLessons.flatMap((l) =>
+    l.reading.questions.map((q) => ({ q, text: l.reading.text })),
   );
+  // WHERE THE ANSWER SITS WHEN A READING QUESTION'S OPTIONS ARE SORTED BY
+  // LENGTH — first, middle or last, counted in WORDS.
+  //
+  // Every other block on this paper draws that rank and then looks for options
+  // to fit it. The reading block was the one with no rank in it at all: three
+  // authored options, printed in a shuffle, four questions taken off the top
+  // of another shuffle. Whatever the authors' habits did to the length of an
+  // answer went straight onto the paper, and it is not a small effect —
+  // measured on the real builder, one paper at a time, by word:
+  //
+  //   phase   answer is shortest   is longest      "pick shortest" / "longest"
+  //   P0           30.0%             42.6%           clears the reading floor
+  //   P1           32.2%             30.6%           on 24-94% of papers
+  //   P2           44.1%             24.2%           depending on the phase
+  //   P3            8.3%             72.6%
+  //   P4           17.5%             60.1%
+  //
+  // Phase 2 is where an audit found it (answers written tersely beside two
+  // padded distractors), but phase 3 is worse and runs the other way: "always
+  // click the longest option" answered 72.6% of reading questions and cleared
+  // the block's own 50% floor on 94.2% of papers. That floor exists to stop
+  // certifying a learner who read nothing (phases.ts).
+  //
+  // This cannot be fixed the way the listening block fixes it, because the
+  // three options are AUTHORED PROSE: there is nothing here to generate, trim
+  // or pad without writing content into the exam builder. What is left is the
+  // draw — WHICH four questions the paper asks. So the four are picked as a
+  // set whose answers land at all three length positions about equally often,
+  // and the first set that does is taken, so the draw stays as close to
+  // uniform over the phase's questions as the content allows. A pool where
+  // nearly every answer is the longest option (SW and BO at week 40: 97.5% and
+  // 96.3%) cannot supply such a set, and no arrangement of it can — those are
+  // reported as content, with the questions named.
+  const positionShare = (options: string[], correct: number) => {
+    const ws = options.map(wordsOf);
+    const key = ws[correct] ?? 0;
+    const below = ws.filter((w) => w < key).length;
+    // Options of the SAME length share their positions: two seven-word options
+    // and a ten-word one leave the learner no readable "shortest" at all, so
+    // the answer counts half at each of the two places it could be sorted
+    // into. Three phase-2 questions in four are that shape.
+    const equal = Math.max(1, ws.filter((w) => w === key).length);
+    const at = (p: number) => (p >= below && p <= below + equal - 1 ? 1 / equal : 0);
+    const first = at(0);
+    const last = at(ws.length - 1);
+    return [first, 1 - first - last, last];
+  };
+  /** How much two options look like each other, counted in content words —
+   *  the same bag the answer-collision rules above are built on. */
+  const optionLikeness = (a: string, b: string) => {
+    const A = bagOf(a);
+    const B = bagOf(b);
+    return [...A].filter((w) => B.has(w)).length / Math.max(1, new Set([...A, ...B]).size);
+  };
+  /** "Pick the one most like the other two" and "pick the odd one out" are the
+   *  two ends of a single ranking, and both were live: the odd-one-out rule
+   *  answered 38% of phase-2 reading questions and cleared the block floor on
+   *  50% of papers, the twin rule 41% and 54% in phase 1. Balancing the length
+   *  positions alone moved neither, and in phase 3 it made the twin rule worse
+   *  — which is trading one trick for another, so both ends are balanced. */
+  const twinShare = (options: string[], correct: number) => {
+    const score = options.map((o, i) =>
+      options.reduce((sum, other, j) => (i === j ? sum : sum + optionLikeness(o, other)), 0),
+    );
+    const share = (dir: 1 | -1) => {
+      const best = Math.max(...score.map((s) => dir * s));
+      const tied = score.filter((s) => dir * s === best).length;
+      return dir * (score[correct] ?? 0) === best ? 1 / tied : 0;
+    };
+    return [share(1), share(-1)];
+  };
+  const readingShares = new Map(
+    readingCards.map((c) => [
+      c,
+      [...positionShare(c.q.options, c.q.correct), ...twinShare(c.q.options, c.q.correct)],
+    ]),
+  );
+  // A set is balanced when no rule carries more — or less — of the block than
+  // the 1-in-3 a learner would get by guessing. Under is as much a giveaway as
+  // over: "the answer is never the shortest one" turns a three-option question
+  // into a coin toss, which is the lesson the listening block learned when a
+  // filter there quietly banned that same position.
+  const readingTarget = MIX.reading / 3;
+  const imbalance = (set: typeof readingCards) => {
+    const sums = new Array(5).fill(0);
+    for (const c of set) {
+      const share = readingShares.get(c)!;
+      for (let i = 0; i < sums.length; i++) sums[i] += share[i]!;
+    }
+    return Math.max(...sums.map((s) => Math.abs(s - readingTarget)));
+  };
+  // Sixteen tries, and the first set inside the band wins. Where the content
+  // allows balance this lands on the first or second try and the draw is
+  // effectively the old uniform one; where it does not, sixteen is where
+  // trying harder stops buying accuracy and starts buying repetition — the
+  // same few questions on every paper, which is its own way of failing a
+  // learner who sits the test twice.
+  const READING_TRIES = 16;
+  const readingPool = (() => {
+    let best = shuffle(readingCards).slice(0, MIX.reading);
+    let bestScore = imbalance(best);
+    for (let i = 1; i < READING_TRIES && bestScore > 1 / 3; i++) {
+      const next = shuffle(readingCards).slice(0, MIX.reading);
+      const score = imbalance(next);
+      if (score < bestScore) {
+        best = next;
+        bestScore = score;
+      }
+    }
+    return best;
+  })();
   // Reading options are shuffled here like every other question type. Without
   // this they arrived in authored order, so a week whose answers all sit at A
   // handed the paper away.
-  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => {
+  const readingQs: Question[] = readingPool.map(({ q, text }) => {
     const answer = q.options[q.correct];
     const options = shuffle(q.options);
     return {

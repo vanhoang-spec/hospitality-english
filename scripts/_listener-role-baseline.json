@@ -1,0 +1,5 @@
+{
+  "chainRoleBreaks": 0,
+  "listenerRoleMismatches": 1,
+  "note": "Ratchet only — vai người nghe là một trường của cụm: mọi lượt trong một chuỗi `follows` phải cùng speakerRole với lượt mở, và một lượt chỉ có nghĩa khi nói với người trong ca không được gắn `guest`."
+}

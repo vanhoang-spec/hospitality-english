@@ -26630,8 +26630,21 @@ const REGISTRY: Record<string, WeekContent> = {
 // Locking here, on the assembled registry, is the only place that catches both
 // kinds of week. The pass merges into whatever a target already declares, so
 // running it over the spine weeks a second time changes nothing.
+//
+// WITH THE WEEK'S REVIEW LIST, not just its own cards. The second argument was
+// omitted, which quietly made this pass the weaker half of the lock every
+// phase builder already runs: a hand-authored week reached the grader with no
+// review list at all, and a review turn spread in after its builder's lock —
+// Phase 2's DEPT_REVIEW turns — was never offered to either pass. Those turns
+// are built ON an earlier week's card, so the omitted argument was precisely
+// the list that would have locked them. 247 targets across the six
+// departments gained a lock from this one word, and nothing can be loosened
+// by it: lockWeekHeadwords only requires a word the target already says.
 for (const key of Object.keys(REGISTRY)) {
-  REGISTRY[key] = { ...REGISTRY[key], lessons: lockWeekHeadwords(REGISTRY[key].lessons) };
+  REGISTRY[key] = {
+    ...REGISTRY[key],
+    lessons: lockWeekHeadwords(REGISTRY[key].lessons, REGISTRY[key].reviewWords ?? []),
+  };
 }
 
 /** Every registered dep-week, keyed `${DEP}-${week}`. Exposed for the

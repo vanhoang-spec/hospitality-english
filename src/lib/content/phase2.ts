@@ -1137,6 +1137,10 @@ function week17(lx: Ctx): LessonContent[] {
           `I need your ${lo(d1)}, madam, and I need it quickly please.`,
           undefined,
           "Câu này đúng ngữ pháp nhưng là một mệnh lệnh; xin thông tin của khách thì phải hỏi, không đòi.",
+          // A complete imperative, and the course says so twice: the
+          // explanation above opens "Câu này đúng ngữ pháp", and the same
+          // sentence is the `rude` half of this lesson's politeness pair.
+          "register",
         ),
         // Vòng hai, dựng trên thẻ d2 của chính bài. Đáp án xếp hạng DÀI nhất.
         game(
@@ -3980,11 +3984,34 @@ function reviewWordsFor(
 
   const out: string[] = [];
 
-  const oneBack = week - 1;
-  if (oneBack >= 15) out.push(...headwordsOf(lx, oneBack, overrides).slice(0, 4));
-
-  const threeBack = week - 3;
-  if (threeBack >= 15) out.push(...headwordsOf(lx, threeBack, overrides).slice(0, 3));
+  // THE LAGS PARTITION THE SOURCE WEEK. They used to sample it — `slice(0, 4)`
+  // at lag 1 and `slice(0, 3)` at lag 3 — and headwords are authored lesson by
+  // lesson, so "the first four" means "lesson 1". Lessons 2, 3 and 4 of every
+  // week therefore entered no review list at all before the week-22 sweep:
+  // measured over the shipped weeks, 24 of Housekeeping's 96 Phase 2 cards
+  // (25%) got a spaced retrieval before the checkpoint, and 9 of Guest
+  // Relations' 13 week-15 cards waited until week 22 — a lag of seven. Two of
+  // the silent ones were `Close the door` and `Wipe the surfaces`, added a
+  // round earlier precisely to close an orphan cluster: the card existed, and
+  // nothing said it again.
+  //
+  // So a card's lag is a property of the CARD, not of where the sampler
+  // stopped. Index i of week w comes back in week w + 1 + (i % 3): exactly
+  // once, at lag 1, 2 or 3, and the three groups together are the whole week.
+  // The stride is what crosses the lesson boundaries — lessons are contiguous
+  // runs of two to four cards, so every third card is a different lesson —
+  // and it is what makes lag 2 worth adding: with the week split three ways
+  // there is a third mark to put it on, and an expanding 1-2-3 interval is
+  // the schedule this scheme claims to run.
+  //
+  // Weeks 15-19 get all three marks inside the phase. Weeks 20-21 run out of
+  // room before the checkpoint, and the week-22 sweep above takes what is
+  // left: that branch recycles 15-21 whole and is untouched here.
+  for (const lag of [1, 2, 3]) {
+    const src = week - lag;
+    if (src < 15) continue;
+    out.push(...headwordsOf(lx, src, overrides).filter((_, i) => i % 3 === lag - 1));
+  }
 
   const slots = 7; // weeks 15..21
   const size = Math.ceil(priorWords.length / slots);
@@ -7091,8 +7118,25 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
 const REVIEW_BACK_REFERENCE = /^(and|but|then|so|after that|actually|yes,|no,)([ ,.?!]|$)/i;
 
 /** Spread a department's own review turns across the week's four lessons.
- *  Applied after the headword lock so they are never counted as this week's
- *  targets — they exist to put an EARLIER week's words back in the mouth.
+ *
+ *  Applied BEFORE the headword lock, and the ordering is the whole point.
+ *  These turns exist to put an EARLIER week's words back in the mouth, so
+ *  they were once spread afterwards, on the theory that a review turn is not
+ *  one of this week's targets. What that actually bought them was no lock at
+ *  all: `lockWeekHeadwords` never saw them, and the second, registry-wide
+ *  pass in week-content.ts was handed no review list, so the one word each
+ *  turn is built on was the one word the grader did not ask for. Measured
+ *  with the production grader — delete one card word the department has been
+ *  taught and re-grade through acceptedAnswers + utterancePassedAny — the
+ *  dept-review turns leaked on 53.1% of turns against 28.7% for the spine
+ *  frames of the same weeks, and EVERY housekeeping sentence that carries a
+ *  safety or authority word is one of these turns: "No. Wear when you use
+ *  chemicals." passed the `gloves` model, "I will log the item as property."
+ *  the `lost property` one, "I will keep the open, sir." the `door` one.
+ *
+ *  A lock cannot mis-fire on a review turn in any case: lockWeekHeadwords
+ *  only requires a word the target ALREADY says, so a turn built on week
+ *  16's card is graded on week 16's card, which is what it was written for.
  *
  *  The spread used to be `j % lessons.length`, which walks the list one turn
  *  at a time and therefore drops two CONSECUTIVE turns into two DIFFERENT
@@ -7153,13 +7197,13 @@ function buildWeek(
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
     // Bài riêng thay bài khung cùng lessonId, nên tuần vẫn đủ bốn bài đúng thứ
     // tự và mọi id ở hạ nguồn — tiến độ, khoá ôn, deep link — vẫn hợp lệ.
-    lessons: withDeptReview(
-      lockWeekHeadwords(
+    lessons: lockWeekHeadwords(
+      withDeptReview(
         meta.build(lx).map((l) => DEPT_LESSONS[l.lessonId]?.(lx) ?? l),
-        review,
+        lx.code,
+        week,
       ),
-      lx.code,
-      week,
+      review,
     ),
     reviewWords: review,
   };

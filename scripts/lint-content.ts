@@ -40,6 +40,8 @@
 // ============================================================
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
+import type { LessonContent, SpeakingItem, WeekContent } from "../src/lib/content/week-content";
+import { normalize, PROMISE_VERBS, utterancePassed } from "../src/lib/speaking-score";
 import { P1_BANKS } from "../src/lib/content/phase1-lexicon";
 import { P2_BANKS } from "../src/lib/content/phase2-lexicon";
 import { P3_BANKS } from "../src/lib/content/phase3-lexicon";
@@ -2151,6 +2153,799 @@ async function lintSlottedHeadwords() {
 }
 
 // ============================================================
+// LAYERS Q · R · S · T — MỘT BÀI LÀ MỘT CỤM
+//
+// Ba vòng chấm liên tiếp mất điểm vì CÙNG MỘT LỚP lỗi trong khi `bun run ci`
+// xanh suốt: một bài học là một CỤM trường ràng buộc nhau — thẻ từ vựng, cặp
+// ngữ pháp, lượt nói, bài đọc, câu hỏi đọc hiểu và vòng arcade đều nói về một
+// sự việc — và mọi lớp kiểm đang có đều soi TỪNG TRƯỜNG MỘT. Sửa một trường
+// rồi bỏ ba trường kia là bản vá "nửa hiện vật", và nó qua được mọi cổng.
+//
+// Bốn lớp dưới đây kiểm các ràng buộc BÊN TRONG một cụm:
+//
+//   Q. Một bài, một con số. Mọi phát biểu của cùng một bài về cùng một sự
+//      việc phải nói cùng một số.
+//   R. Vai người nghe là một trường của cụm. Layer M đã kiểm chiều "đồng
+//      nghiệp mà xưng sir/madam"; đây là chiều ngược lại, cộng luật mọi lượt
+//      trong một chuỗi `follows` phải cùng `speakerRole` với lượt mở.
+//   S. Tip hứa gì thì khoá nấy. Một helpTip trích dẫn tiếng Anh mà bộ chấm
+//      vẫn cho qua câu thiếu đúng chữ đó là một lời hứa không có hiệu lực.
+//   T. Thẻ phải được dạy TRƯỚC tuần bắt nói.
+//
+// Cả bốn là RATCHET, không phải cổng cứng: nội dung không thuộc quyền của
+// linter, và corpus hôm nay đã có sẵn vi phạm. Giá trị của chúng là chặn cái
+// MỚI. Đặt `LINT_CONTENT_FULL=1` để in trọn danh sách thay vì ba dòng cuối.
+//
+// Mỗi lớp đi kèm một HỒI QUY chạy trong chính lần lint này (selfTestClusterGates
+// ở cuối khối): một bản sao nội dung trong bộ nhớ bị đầu độc để tái hiện đúng
+// ca đã được báo cáo, rồi khẳng định lớp ấy đỏ. Một cổng không tự chứng minh
+// được là một cổng không ai biết đã chết lúc nào.
+// ============================================================
+
+const FULL_LISTING = process.env.LINT_CONTENT_FULL === "1";
+
+type Gauge = { field: string; tag: string; label: string; offenders: string[] };
+
+/** Bật lên khi hồi quy của khối này thất bại. Một lớp đã chết luôn đếm được
+ *  ít vi phạm hơn, nên nếu vẫn cho nó hạ chốt thì lần chạy hỏng sẽ khoá luôn
+ *  mức thấp giả đó vào baseline và cái hỏng trở thành cái chuẩn. Đo thật:
+ *  vô hiệu hoá Layer Q rồi chạy một lần là chốt tụt từ 4 xuống 0. */
+let clusterGatesTrustworthy = true;
+
+/** Ratchet chung cho bốn lớp dưới: chốt ở đúng số vi phạm hiện tại, đỏ khi
+ *  tăng, tự hạ chốt khi giảm. Một file có thể giữ nhiều số đếm độc lập. */
+async function ratchetFile(file: URL, note: string, gauges: Gauge[]) {
+  const handle = Bun.file(file);
+  const known = await handle.exists();
+  const prev: Record<string, unknown> = known ? JSON.parse(await handle.text()) : {};
+  const next: Record<string, number> = {};
+  let write = !known;
+  for (const g of gauges) {
+    const recorded = prev[g.field];
+    const base = typeof recorded === "number" ? recorded : g.offenders.length;
+    next[g.field] = base;
+    if (!known) {
+      console.log(`  ${g.label}: baseline recorded at ${g.offenders.length}.`);
+      next[g.field] = g.offenders.length;
+      g.offenders.forEach((o) => console.log(`    · ${o}`));
+      continue;
+    }
+    if (g.offenders.length > base) {
+      errors.push(
+        `[${g.tag}] ${g.offenders.length} ${g.label}, up from ${base}. ` +
+          `Newest: ${g.offenders.slice(-3).join(" · ")}`,
+      );
+      continue;
+    }
+    if (g.offenders.length < base) {
+      next[g.field] = g.offenders.length;
+      write = true;
+      console.log(`  ${g.label}: ${g.offenders.length}, down from ${base} — baseline lowered.`);
+      g.offenders.forEach((o) => console.log(`    · ${o}`));
+      continue;
+    }
+    console.log(`  ${g.label}: ${g.offenders.length} (ratchet holds).`);
+    if (FULL_LISTING) g.offenders.forEach((o) => console.log(`    · ${o}`));
+  }
+  if (write && !clusterGatesTrustworthy)
+    console.log(`  (chốt giữ nguyên: hồi quy của khối cụm đang đỏ, số đếm lần này không tin được)`);
+  if (write && clusterGatesTrustworthy)
+    await Bun.write(file, JSON.stringify({ ...next, note }, null, 2) + "\n");
+}
+
+const roleOf = (s: SpeakingItem) => s.speakerRole ?? "guest";
+const whereOf = (key: string, lesson: LessonContent) => {
+  const [dep, week] = key.split("-");
+  return `${dep} · tuần ${week} · ${lesson.lessonId}`;
+};
+
+// ── Layer Q · một bài, một con số ─────────────────────────────────────────
+// Sáu trong mười auditor của vòng 8 bắt cùng một lỗi: thẻ từ vựng và cả ba vế
+// cặp ngữ pháp của tuần 15 bài 4 nói quy trình có "four steps", còn lượt nói,
+// bài đọc, lời giải câu hỏi và đáp án arcade CỦA CHÍNH BÀI ẤY nói "eight
+// steps". Đo trên `buildPaper` ×600 ở Guest Relations: 12,3% số đề khẳng định
+// four, 11,8% khẳng định eight, 1,8% chứa cả hai. Không lớp nào thấy, vì mọi
+// câu đều đúng ngữ pháp và mỗi trường đọc riêng đều tự nhất quán.
+//
+// PHÉP SO. Một "phát biểu" là một số viết bằng chữ + danh từ nó đếm + HAI TỪ
+// NỘI DUNG dẫn vào nó trong cùng một mệnh đề ("handover have … step"). Hai
+// phát biểu cùng khoá mà khác số là mâu thuẫn.
+//
+// Vì sao cần cụm dẫn chứ không chỉ danh từ: gom theo danh từ trần báo 106
+// nhóm trên 960 bài, gần hết là dương tính giả có thật về nghĩa — "I will come
+// back in five minutes." đứng cạnh khách nói "Two minute more.", tuần 2 dạy
+// đếm nên "Two keys, please." và "One key, madam." phải khác nhau. Yêu cầu
+// cùng cụm dẫn hạ xuống 4 nhóm, và cả 4 đúng là ca trên (FO/SW/GR/BO tuần 15
+// bài 4): 0 dương tính giả trên 40 tuần × 6 bộ phận.
+//
+// Ba quy ước hẹp, mỗi cái đổi lấy một lớp dương tính giả đã đo:
+//   · Số mở đầu mệnh đề không tính — nó trả lời một câu hỏi chứ không khẳng
+//     định một thuộc tính ("Two keys, please.").
+//   · `thirty-nine` là MỘT số, không phải "thirty" rồi "nine" (tuần 39-40 của
+//     GR kể lại từng tuần một và sinh ra 5 nhóm ma).
+//   · Trong một câu hỏi đọc hiểu hay một vòng arcade, chỉ PHƯƠNG ÁN ĐÚNG là
+//     một khẳng định. Nhiễu được soạn ra để sai; "Three months" cạnh "Six
+//     months" là đề bài, không phải mâu thuẫn.
+const Q_NUM_ALT =
+  "one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|" +
+  "fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|" +
+  "seventy|eighty|ninety|hundred|thousand|million|zero";
+const Q_NUMBERS = new Set(Q_NUM_ALT.split("|"));
+const Q_NUMBER_RE = new RegExp("(?<![a-z])(" + Q_NUM_ALT + ")(?![a-z])", "gi");
+const Q_FUNCTION_WORDS = new Set(
+  (
+    "the a an of in on at to for and or but is am are was were be been will would can could " +
+    "may might shall should must do does did that this these those his her my your our their " +
+    "its it we you i he she they there here no not nobody nothing please so if when then " +
+    "before after with from by as than each every any some more most only just also too very " +
+    "never always sir madam ma'am other another still yet now again"
+  ).split(" "),
+);
+/** Đủ để "has"/"have" và "made"/"make" không tách một khẳng định làm đôi. */
+const Q_LEMMA: Record<string, string> = {
+  has: "have",
+  had: "have",
+  having: "have",
+  takes: "take",
+  took: "take",
+  needs: "need",
+  runs: "run",
+  ran: "run",
+  follows: "follow",
+  followed: "follow",
+  uses: "use",
+  used: "use",
+  puts: "put",
+  comes: "come",
+  came: "come",
+  makes: "make",
+  made: "make",
+  says: "say",
+  said: "say",
+  gives: "give",
+  gave: "give",
+};
+const qLemma = (w: string) => Q_LEMMA[w] ?? w;
+
+/** Danh từ mà con số đếm, hoặc null khi nó không đếm cái gì gọi được tên. */
+function countedNoun(rest: string): string | null {
+  const run: string[] = [];
+  for (const m of rest.matchAll(/[A-Za-z][A-Za-z']*|[^A-Za-z'\s]/g)) {
+    if (!/^[A-Za-z]/.test(m[0])) break; // dấu câu đóng cụm danh từ
+    const w = m[0].toLowerCase();
+    if (Q_FUNCTION_WORDS.has(w) || Q_NUMBERS.has(w)) break;
+    run.push(w);
+    if (run.length >= 4) break;
+  }
+  if (!run.length) return null;
+  let head = qLemma(run[run.length - 1]);
+  if (head.length > 3 && /s$/.test(head) && !/(ss|us|is)$/.test(head)) head = head.slice(0, -1);
+  return head.length > 2 ? head : null;
+}
+
+/** Hai từ nội dung dẫn vào con số, trong chính mệnh đề của nó. */
+function numberIntroducer(text: string, at: number): string | null {
+  const clause =
+    text
+      .slice(0, at)
+      .split(/[.!?;:—\n]|,\s/)
+      .pop() ?? "";
+  const words = (clause.toLowerCase().match(/[a-z][a-z']*/g) ?? [])
+    .map(qLemma)
+    .filter((w) => !Q_FUNCTION_WORDS.has(w) && !Q_NUMBERS.has(w));
+  return words.length ? words.slice(-2).join(" ") : null;
+}
+
+type NumberClaim = { num: string; key: string; where: string; text: string };
+
+function collectNumberClaims(text: string, where: string, out: NumberClaim[]) {
+  if (!text) return;
+  for (const m of text.matchAll(Q_NUMBER_RE)) {
+    const at = m.index ?? 0;
+    const end = at + m[0].length;
+    // Một số ghép bằng gạch nối là MỘT số; không nửa nào của nó đếm gì cả.
+    if (text.slice(Math.max(0, at - 1), at) === "-") continue;
+    if (/^-[A-Za-z]/.test(text.slice(end, end + 2))) continue;
+    const noun = countedNoun(text.slice(end));
+    if (!noun) continue;
+    const intro = numberIntroducer(text, at);
+    if (!intro) continue;
+    out.push({ num: m[0].toLowerCase(), key: `${intro} … ${noun}`, where, text: text.trim() });
+  }
+}
+
+/** Mọi khẳng định chứa số của một bài — chỉ những trường khoá học in ra như
+ *  ĐÚNG. `grammar.rude`/`nearMiss` vẫn tính: chúng sai ngữ pháp, không sai sự
+ *  việc, và ca tuần 15 là cả ba vế của cặp ngữ pháp cùng nói "four". */
+function numberClaimsOfLesson(lesson: LessonContent): NumberClaim[] {
+  const out: NumberClaim[] = [];
+  lesson.vocabulary.forEach((v, i) =>
+    collectNumberClaims(v.context, `vocabulary[${i}].context`, out),
+  );
+  lesson.grammar.forEach((g, i) => {
+    collectNumberClaims(g.rude, `grammar[${i}].rude`, out);
+    collectNumberClaims(g.polite, `grammar[${i}].polite`, out);
+    collectNumberClaims(g.rule, `grammar[${i}].rule`, out);
+    collectNumberClaims(g.nearMiss ?? "", `grammar[${i}].nearMiss`, out);
+  });
+  lesson.speaking.forEach((s, i) => {
+    collectNumberClaims(s.targetResponse, `speaking[${i}].targetResponse`, out);
+    collectNumberClaims(s.helpTip, `speaking[${i}].helpTip`, out);
+  });
+  collectNumberClaims(lesson.reading.text, "reading.text", out);
+  lesson.reading.questions.forEach((q, i) => {
+    const key = q.options[q.correct];
+    if (key) collectNumberClaims(key, `reading.questions[${i}].options[${q.correct}]`, out);
+    collectNumberClaims(q.explanation ?? "", `reading.questions[${i}].explanation`, out);
+  });
+  lesson.game.forEach((g, i) => {
+    collectNumberClaims(g.prompt, `game[${i}].prompt`, out);
+    g.options.forEach((o, j) => {
+      if (o.correct) collectNumberClaims(o.text, `game[${i}].options[${j}]`, out);
+    });
+    collectNumberClaims(g.explanation ?? "", `game[${i}].explanation`, out);
+  });
+  return out;
+}
+
+/** Một dòng cho mỗi sự việc mà một bài nói hai con số khác nhau. */
+function numberClashesIn(key: string, lesson: LessonContent): string[] {
+  const grouped = new Map<string, NumberClaim[]>();
+  for (const c of numberClaimsOfLesson(lesson)) {
+    if (!grouped.has(c.key)) grouped.set(c.key, []);
+    grouped.get(c.key)!.push(c);
+  }
+  const out: string[] = [];
+  for (const [claimKey, claims] of grouped) {
+    const nums = [...new Set(claims.map((c) => c.num))];
+    if (nums.length < 2) continue;
+    out.push(
+      `${whereOf(key, lesson)} · "${claimKey}" nói ${nums.join(" và ")} · ` +
+        claims.map((c) => `${c.where}="${c.text.slice(0, 80)}"`).join(" ⟂ "),
+    );
+  }
+  return out;
+}
+
+// ── Layer R · vai người nghe là một trường của cụm ────────────────────────
+// Layer M kiểm chiều "lượt `colleague` mà câu có sir/madam". Chiều ngược lại
+// không ai kiểm, và nó đắt hơn: câu đích tuần 22 của Spa đổi thành "Please
+// help me bring him out, sir." mà `speakerRole` vẫn là mặc định `guest`, nên
+// học viên được luyện để nhờ CHÍNH VỊ KHÁCH vào buồng xông 43-46 °C khiêng
+// một người bất tỉnh ra. Cách đó năm dòng, lượt cứu hộ hồ bơi làm đúng bằng
+// `"colleague"`. Ô ấy nằm trong bể ô dự trữ BẮT BUỘC ĐÚNG của buildOral.
+//
+// Hai phép kiểm, cả hai đo trên cả 3.770 lượt nói của 40 tuần × 6 bộ phận:
+//
+// (1) CHUỖI. Mọi lượt trong một chuỗi `follows` phải cùng `speakerRole` với
+//     lượt mở của nó. Một hội thoại không đổi người giữa chừng; nếu đổi thì
+//     `follows` đang nối nhầm. Toàn corpus hiện sạch — chốt 0.
+//
+// (2) NGƯỜI NGHE. Một câu chỉ có nghĩa khi nói với đồng nghiệp mà lại gắn
+//     `guest`. Các mẫu dưới đây được chọn bằng cách ĐO: mỗi mẫu phải khớp
+//     nhiều lượt `colleague`/`manager` và không khớp lượt `guest` nào ngoài
+//     chính ca hỏng. Những mẫu nghe có lý mà không qua được phép đo đó đã bị
+//     loại và ghi lại ở đây để không ai thêm lại:
+//       · `are you free|busy` → 16 lượt khách ("Excuse me, are you free?").
+//       · `what do i do` → 5 lượt khách hỏi về tờ khai.
+//       · `the trolley|the linen room|the staff canteen` → 5 lượt khách hỏi
+//         đường; khách NHÌN THẤY xe đẩy, chỉ không đẩy nó.
+//       · `can you lift|hold|take …` → khách được mời tự nhấc giấy tờ của
+//         mình lên (HK tuần 39) là lịch sự, không phải sai vai.
+const R_INTERNAL_PROMPT: { name: string; re: RegExp }[] = [
+  { name: "ca trực", re: /\b(your|my|the|this|that|next|last) shift\b/i },
+  { name: "bàn giao", re: /\bhandover\b/i },
+  { name: "lịch phân công", re: /\b(rota|roster|logbook|log book|duty list)\b/i },
+  { name: "chấm công", re: /\bclock (in|out|off)\b/i },
+  {
+    name: "khu vực nội bộ",
+    re: /\b(the stockroom|the store room|the staff (room|entrance|lift)|the back office)\b/i,
+  },
+  {
+    name: "tổ/cấp trên",
+    re: /\b(the team today|our team|my supervisor|your supervisor|the duty roster)\b/i,
+  },
+];
+const R_INTERNAL_TARGET: { name: string; re: RegExp }[] = [
+  { name: "nhờ làm việc tay chân", re: /\bhelp me (?!with\b|to understand\b|understand\b)[a-z]/i },
+  {
+    name: "giao ca/trực thay",
+    re: /\b(cover for me|cover the (desk|section|floor|station|shift)|take over the|swap shifts)\b/i,
+  },
+  {
+    name: "sai khiến việc nội bộ",
+    re: /(?:^|[.!?]\s+|,\s+)(please\s+)?(restock|mop|vacuum|hoover|clock (in|out)|log the|file the handover|brief the|put the wet floor sign)\b/i,
+  },
+];
+
+function chainRoleBreaksIn(key: string, lesson: LessonContent): string[] {
+  const out: string[] = [];
+  lesson.speaking.forEach((item, i) => {
+    if (!item.follows) return;
+    // MỌI bản in của câu mở trong bài này, không chỉ bản đầu: buildOral giải
+    // `follows` trong phạm vi bài và chọn bản gần nhất TRƯỚC nó, nên một bản
+    // lệch vai là một mắt xích lệch vai.
+    lesson.speaking.forEach((head, j) => {
+      if (j === i || head.targetResponse !== item.follows) return;
+      if (roleOf(head) === roleOf(item)) return;
+      out.push(
+        `${whereOf(key, lesson)} · speaking[${i}].speakerRole=${roleOf(item)} nối vào ` +
+          `speaking[${j}].speakerRole=${roleOf(head)} · lượt mở "${head.targetResponse}" ⟂ ` +
+          `lượt tiếp "${item.targetResponse}"`,
+      );
+    });
+  });
+  return out;
+}
+
+function listenerRoleBreaksIn(key: string, lesson: LessonContent): string[] {
+  const out: string[] = [];
+  lesson.speaking.forEach((item, i) => {
+    if (roleOf(item) !== "guest") return;
+    for (const p of R_INTERNAL_PROMPT)
+      if (p.re.test(item.guestPrompt))
+        out.push(
+          `${whereOf(key, lesson)} · speaking[${i}].speakerRole=guest nhưng guestPrompt là lời ` +
+            `người trong ca (${p.name}) · "${item.guestPrompt}" ⟂ câu đích "${item.targetResponse}"`,
+        );
+    for (const p of R_INTERNAL_TARGET)
+      if (p.re.test(item.targetResponse))
+        out.push(
+          `${whereOf(key, lesson)} · speaking[${i}].speakerRole=guest nhưng targetResponse ` +
+            `${p.name} · "${item.targetResponse}" ⟂ lời người nghe "${item.guestPrompt}"`,
+        );
+  });
+  return out;
+}
+
+// ── Layer S · tip hứa gì thì khoá nấy ─────────────────────────────────────
+// Một helpTip dặn "phải có giấy tờ CÓ ẢNH" trong khi ô không khai
+// `requiredTokens`, nên "May I see any identification?" — mất đúng chữ
+// `photo` — vẫn được chấm ĐÚNG. Cùng hình dạng: mất `room` khỏi "Which room
+// are you in?", mất `late` khỏi "late check-out", mất `duty` khỏi "duty
+// manager", mất `gloves` khỏi "Wear gloves when you use chemicals."
+//
+// (a) TỪ TIP TRÍCH DẪN PHẢI KHOÁ ĐƯỢC. Không so với `requiredTokens` bằng
+//     mắt: BỎ chữ ấy khỏi câu đích rồi hỏi CHÍNH bộ chấm production
+//     (`utterancePassed`) xem câu còn lại có qua không. Qua nghĩa là lời hứa
+//     của tip không có hiệu lực. Gọi hàm thật, nên phép đo không thể lệch
+//     khỏi cái đang ship — chép luật vào script rồi đo bản chép là cách nhiều
+//     vòng trước ra số sai.
+//     Bỏ qua một nhúm từ thuần lễ độ (sorry, glad, certainly…): tip trích
+//     dẫn chúng để dạy GIỌNG, không phải để khoá nghĩa; đo trên corpus, lọc
+//     này bỏ 14 dương tính giả và không bỏ ca nào thật.
+// (b) Ô NÓI DỰ TRỮ PHẢI CÓ KHOÁ. `buildOral` dành đúng một lượt của mỗi lần
+//     thi cho một quyết định người nói không có quyền, hoặc rủi ro của chính
+//     bộ phận — và `oralHalfPassed` bắt buộc lượt đó phải đúng. Một ô nằm
+//     trong bể ấy mà không khai `requiredTokens` là một câu an toàn có thể
+//     đánh rơi đúng chữ mang an toàn.
+//
+//     Mẫu chọn bể KHÔNG được chép: đọc thẳng `CARRIES_AUTHORITY` và `TOPIC`
+//     từ nguồn `src/lib/checkpoint-oral.ts`. Hai hằng ấy nằm trong thân
+//     `buildOral` nên không import được, và một bản chép ở đây sẽ là luật thứ
+//     hai — đúng cái bệnh mà comment của chính file đó cảnh báo. Đọc nguồn thì
+//     mẫu đổi một chữ là lớp này thấy ngay; không đọc được thì báo lỗi cứng.
+const ORAL_SOURCE = new URL("../src/lib/checkpoint-oral.ts", import.meta.url);
+
+function regexFromLiteral(src: string): RegExp {
+  const open = src.indexOf("/");
+  const close = src.lastIndexOf("/");
+  return new RegExp(src.slice(open + 1, close), src.slice(close + 1).trim());
+}
+
+async function reservedDrawPatterns(): Promise<{
+  authority: RegExp;
+  topic: Record<string, RegExp>;
+} | null> {
+  const source = await Bun.file(ORAL_SOURCE).text();
+  const authorityDecl = /const CARRIES_AUTHORITY\s*=\s*([\s\S]*?);\n/.exec(source);
+  const topicStart = source.indexOf("const TOPIC: Record<string, RegExp> = {");
+  if (!authorityDecl || topicStart < 0) return null;
+  const topicBody = source.slice(topicStart, source.indexOf("\n  };", topicStart));
+  const topic: Record<string, RegExp> = {};
+  for (const m of topicBody.matchAll(/^\s*([A-Z]{2}):\s*(\/[\s\S]*?\/[a-z]*),?\s*$/gm))
+    topic[m[1]] = regexFromLiteral(m[2]);
+  if (Object.keys(topic).length < 6) return null;
+  const authority = regexFromLiteral(authorityDecl[1]);
+  // Mỏ neo: nếu mẫu bị đổi đến mức không còn nhận ra hai câu kinh điển của
+  // chính nó thì bản đọc này đã hỏng, và im lặng bỏ qua còn tệ hơn báo đỏ.
+  if (!authority.test("I cannot decide that — may I ask my manager?")) return null;
+  if (!topic.FO.test("May I see any photo identification?")) return null;
+  return { authority, topic };
+}
+
+const S_TIP_FUNCTION_WORDS = new Set(
+  (
+    "a an the and or but of in on at to for with from by as is am are was were be been being " +
+    "do does did have has had will would can could may might shall should must i you he she " +
+    "it we they me him her us them my your his its our their this that these those there here " +
+    "please yes no not so if then very just also too now sir madam"
+  ).split(" "),
+);
+/** Tip trích dẫn chúng để dạy giọng, không phải để khoá nghĩa. */
+const S_EXPRESSIVE = new Set(
+  (
+    "sorry glad hear lovely certainly quite right thank thanks much welcome course moment " +
+    "pleasure happy wonderful great nice good fine sure absolutely indeed apologies " +
+    "apologise apologize excuse"
+  ).split(" "),
+);
+
+function droppableQuotedWordsIn(key: string, week: WeekContent, lesson: LessonContent): string[] {
+  const out: string[] = [];
+  lesson.speaking.forEach((item, i) => {
+    const target = item.targetResponse;
+    const lower = target.toLowerCase();
+    for (const raw of item.helpTip.match(/'([^']{2,60})'/g) ?? []) {
+      const quote = raw.slice(1, -1);
+      if (VN_MARK.test(quote)) continue; // chú giải tiếng Việt, không phải câu phải nói
+      if (!/[a-z]/i.test(quote)) continue;
+      if (quote !== quote.trim()) continue;
+      if (!lower.includes(quote.toLowerCase())) continue; // Layer G lo phần này
+      const at = item.helpTip.indexOf(raw);
+      if (COUNTER_EXAMPLE.test(item.helpTip.slice(Math.max(0, at - 40), at))) continue;
+      const words = (quote.match(/[A-Za-z][A-Za-z'-]*/g) ?? [])
+        .map((w) => w.toLowerCase())
+        .filter((w) => w.length > 2 && !S_TIP_FUNCTION_WORDS.has(w) && !S_EXPRESSIVE.has(w));
+      for (const word of new Set(words)) {
+        const re = new RegExp("(?<![A-Za-z'-])" + word + "(?![A-Za-z'-])", "i");
+        if (!re.test(target)) continue;
+        const without = target
+          .replace(re, "")
+          .replace(/\s{2,}/g, " ")
+          .replace(/\s+([,.!?])/g, "$1")
+          .trim();
+        if (!without || without === target) continue;
+        if (
+          !utterancePassed(without, target, week.weekNumber, item.requiredTokens, item.guestPrompt)
+            .passed
+        )
+          continue;
+        out.push(
+          `${whereOf(key, lesson)} · speaking[${i}].helpTip trích '${quote}' nhưng bỏ "${word}" ` +
+            `vẫn ĐƯỢC CHẤM ĐÚNG · requiredTokens=[${(item.requiredTokens ?? []).join(",") || "—"}] · ` +
+            `câu đích "${target}" ⟂ câu vẫn qua "${without}"`,
+        );
+      }
+    }
+  });
+  return out;
+}
+
+function unlockedReservedTurnsIn(
+  key: string,
+  week: WeekContent,
+  lesson: LessonContent,
+  patterns: { authority: RegExp; topic: Record<string, RegExp> },
+): string[] {
+  const out: string[] = [];
+  const dep = week.departmentId.toUpperCase();
+  lesson.speaking.forEach((item, i) => {
+    const hit =
+      patterns.authority.exec(item.targetResponse) ??
+      patterns.topic[dep]?.exec(item.targetResponse);
+    if (!hit) return;
+    if (item.requiredTokens && item.requiredTokens.length) return;
+    out.push(
+      `${whereOf(key, lesson)} · speaking[${i}] rơi vào bể ô dự trữ qua "${hit[0]}" nhưng ` +
+        `requiredTokens rỗng · câu đích "${item.targetResponse}" ⟂ tip "${item.helpTip.slice(0, 70)}"`,
+    );
+  });
+  return out;
+}
+
+// ── Layer T · thẻ phải được dạy TRƯỚC tuần bắt nói ────────────────────────
+// Phép quét cũ kiểm SỰ TỒN TẠI của thẻ trong tuần 1-22 và báo 0, trong khi
+// tuần 16 vẫn bắt nói `restock` còn thẻ `Restock` nằm ở tuần 22 — rút trúng ở
+// 2,3% lượt oral. Cùng hình dạng: một auditor đo 21/288 (7,3%) câu mẫu GR đòi
+// một thẻ chưa dạy. Sự tồn tại không phải là thứ tự dạy.
+//
+// "Khung bắt học viên NÓI" = `requiredTokens`: bộ chấm không tha token nào
+// trong đó. Hai chỗ phải cẩn thận, cả hai đều đã cắn khi đo:
+//   · `lockWeekHeadwords` còn nhét PROMISE_VERBS ("ask", "check", "call"…)
+//     vào `requiredTokens`. Chúng không phải thẻ, nên loại — không loại thì
+//     327 dòng, quá nửa là "ask" trỏ vào một thẻ tuần 40 tên "Know when to ask".
+//   · Thẻ NHIỀU TỪ vẫn dạy từng từ của nó: "Coffee preference" ở tuần 17 dạy
+//     `preference`, nên chỉ mục phải tính mọi token của mọi thẻ. Chỉ đếm thẻ
+//     một từ thì GR tuần 17 bị báo oan vì thẻ `Preference` một từ ở tuần 27.
+//   · Khoá sinh ra theo số nhiều ("towels" khớp thẻ "Towel"), nên tra cả dạng
+//     rút "s"/"es" đúng như `lockWeekHeadwords` sinh ra chúng.
+type TaughtAt = { week: number; card: string };
+
+function firstTaughtIndex(weeks: Record<string, WeekContent>): Map<string, TaughtAt> {
+  const index = new Map<string, TaughtAt>();
+  for (const week of Object.values(weeks))
+    for (const lesson of week.lessons)
+      for (const card of lesson.vocabulary)
+        for (const token of normalize(card.word)) {
+          const k = `${week.departmentId}|${token}`;
+          const prev = index.get(k);
+          if (prev === undefined || week.weekNumber < prev.week)
+            index.set(k, { week: week.weekNumber, card: card.word });
+        }
+  return index;
+}
+
+function teachOrderBreaksIn(
+  index: Map<string, TaughtAt>,
+  key: string,
+  week: WeekContent,
+  lesson: LessonContent,
+): string[] {
+  const out: string[] = [];
+  const dep = week.departmentId;
+  const lookup = (token: string) => {
+    for (const form of [token, token.replace(/es$/, ""), token.replace(/s$/, "")]) {
+      const hit = index.get(`${dep}|${form}`);
+      if (hit) return hit;
+    }
+    return undefined;
+  };
+  lesson.speaking.forEach((item, i) => {
+    const seen = new Set<string>();
+    for (const declared of item.requiredTokens ?? [])
+      for (const token of normalize(declared)) {
+        if (token.length <= 2 || PROMISE_VERBS.has(token) || seen.has(token)) continue;
+        const taught = lookup(token);
+        if (!taught || taught.week <= week.weekNumber) continue;
+        seen.add(token);
+        out.push(
+          `${whereOf(key, lesson)} · speaking[${i}].requiredTokens bắt nói "${token}" · ` +
+            `thẻ "${taught.card}" mới dạy ở ${dep}-${taught.week} · câu đích ` +
+            `"${item.targetResponse.slice(0, 80)}" ⟂ thẻ dạy sau ${taught.week - week.weekNumber} tuần`,
+        );
+      }
+  });
+  return out;
+}
+
+// ── Hồi quy: đầu độc một bản sao trong bộ nhớ, rồi đòi lớp ấy đỏ ──────────
+// Một cổng không tự chứng minh được là một cổng không ai biết đã chết lúc
+// nào — đợt trước có một bài sát hạch sập 30/30 trong khi mọi gate vẫn xanh,
+// vì gate chép lại luật thay vì gọi hàm thật. Bốn ca dưới đây là bốn ca đã
+// được báo cáo, dựng lại trên BẢN SAO (structuredClone) của nội dung thật.
+// Repo không bị đụng tới.
+function selfTestClusterGates(
+  patterns: { authority: RegExp; topic: Record<string, RegExp> } | null,
+  taught: Map<string, TaughtAt>,
+) {
+  const fail = (what: string) => {
+    clusterGatesTrustworthy = false;
+    errors.push(`[SELFTEST cluster-gates] ${what} — lớp này không còn bắt được ca chuẩn của nó`);
+  };
+  const anyWeek = (dep: string, wk: number) => ALL_WEEKS[`${dep}-${wk}`];
+
+  // Q — "sửa một nửa hiện vật": lấy một bài NHẤT QUÁN, xác nhận sạch, rồi đổi
+  // đúng một trường sang con số khác và đòi nó đỏ.
+  let qProved = false;
+  outer: for (const [key, week] of Object.entries(ALL_WEEKS))
+    for (const lesson of week.lessons) {
+      if (numberClashesIn(key, lesson).length) continue; // bài này đã hỏng sẵn
+      const groups = new Map<string, NumberClaim[]>();
+      for (const c of numberClaimsOfLesson(lesson)) {
+        if (!groups.has(c.key)) groups.set(c.key, []);
+        groups.get(c.key)!.push(c);
+      }
+      for (const claims of groups.values()) {
+        if (claims.length < 2) continue;
+        const victim = claims[0];
+        const swap = victim.num === "eight" ? "four" : "eight";
+        const poisoned = structuredClone(lesson);
+        const field = victim.where;
+        const rewrite = (s: string) =>
+          s.replace(new RegExp("(?<![a-z])" + victim.num + "(?![a-z])", "i"), swap);
+        if (field.startsWith("vocabulary[")) {
+          const i = Number(field.slice(11, field.indexOf("]")));
+          poisoned.vocabulary[i].context = rewrite(poisoned.vocabulary[i].context);
+        } else if (field === "reading.text") {
+          poisoned.reading.text = rewrite(poisoned.reading.text);
+        } else if (field.startsWith("speaking[")) {
+          const i = Number(field.slice(9, field.indexOf("]")));
+          if (field.endsWith("targetResponse"))
+            poisoned.speaking[i].targetResponse = rewrite(poisoned.speaking[i].targetResponse);
+          else poisoned.speaking[i].helpTip = rewrite(poisoned.speaking[i].helpTip);
+        } else continue;
+        if (!numberClashesIn(key, poisoned).length) continue;
+        qProved = true;
+        break outer;
+      }
+    }
+  if (!qProved) fail("Layer Q");
+
+  // R — chuỗi `follows` đổi vai giữa chừng, và ca Spa tuần 22.
+  let rChainProved = false;
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      const tail = lesson.speaking.findIndex(
+        (s) => s.follows && lesson.speaking.some((h) => h.targetResponse === s.follows),
+      );
+      if (tail < 0) continue;
+      const poisoned = structuredClone(lesson);
+      poisoned.speaking[tail].speakerRole =
+        roleOf(poisoned.speaking[tail]) === "colleague" ? "guest" : "colleague";
+      if (chainRoleBreaksIn(key, poisoned).length) rChainProved = true;
+      break;
+    }
+    if (rChainProved) break;
+  }
+  if (!rChainProved) fail("Layer R (chuỗi follows)");
+
+  const swLesson = anyWeek("SW", 22)?.lessons[1] ?? anyWeek("SW", 22)?.lessons[0];
+  if (!swLesson) fail("Layer R (không tìm thấy SW-22 để dựng ca chuẩn)");
+  else {
+    const poisoned = structuredClone(swLesson);
+    poisoned.speaking = [
+      {
+        ...poisoned.speaking[0],
+        guestPrompt: "Someone has fainted in the steam room!",
+        targetResponse: "Please help me bring him out, sir. I am calling the nurse.",
+        speakerRole: "guest",
+      },
+    ];
+    if (!listenerRoleBreaksIn("SW-22", poisoned).length) fail("Layer R (vai người nghe)");
+    const repaired = structuredClone(poisoned);
+    repaired.speaking[0].speakerRole = "colleague";
+    if (listenerRoleBreaksIn("SW-22", repaired).length)
+      fail("Layer R (vai người nghe) báo cả bản đã sửa");
+  }
+
+  // S — ca "CÓ ẢNH": tip trích `photo identification`, ô không khoá gì.
+  const foWeek = anyWeek("FO", 22);
+  if (!foWeek) fail("Layer S (không tìm thấy FO-22 để dựng ca chuẩn)");
+  else {
+    const poisoned = structuredClone(foWeek.lessons[0]);
+    poisoned.speaking = [
+      {
+        ...poisoned.speaking[0],
+        guestPrompt: "I left my passport in the room.",
+        targetResponse: "I understand, sir. May I see any photo identification?",
+        helpTip: "Không có hộ chiếu thì vẫn phải có giấy tờ 'photo identification'.",
+        requiredTokens: undefined,
+      },
+    ];
+    if (!droppableQuotedWordsIn("FO-22", foWeek, poisoned).length) fail("Layer S (a)");
+    const repaired = structuredClone(poisoned);
+    repaired.speaking[0].requiredTokens = ["photo", "identification"];
+    if (droppableQuotedWordsIn("FO-22", foWeek, repaired).length)
+      fail("Layer S (a) báo cả bản đã khoá");
+    if (patterns) {
+      const hkWeek = anyWeek("HK", 22);
+      if (!hkWeek) fail("Layer S (không tìm thấy HK-22 để dựng ca chuẩn)");
+      else {
+        const gloves = structuredClone(hkWeek.lessons[0]);
+        gloves.speaking = [
+          {
+            ...gloves.speaking[0],
+            targetResponse: "No. Wear gloves when you use chemicals.",
+            requiredTokens: undefined,
+          },
+        ];
+        if (!unlockedReservedTurnsIn("HK-22", hkWeek, gloves, patterns).length) fail("Layer S (b)");
+        const locked = structuredClone(gloves);
+        locked.speaking[0].requiredTokens = ["gloves"];
+        if (unlockedReservedTurnsIn("HK-22", hkWeek, locked, patterns).length)
+          fail("Layer S (b) báo cả bản đã khoá");
+      }
+    }
+  }
+
+  // T — ca `restock`: tuần 16 bắt nói, thẻ ở tuần 22.
+  const hk16 = anyWeek("HK", 16);
+  if (!hk16) fail("Layer T (không tìm thấy HK-16 để dựng ca chuẩn)");
+  else {
+    const poisoned = structuredClone(hk16.lessons[0]);
+    poisoned.speaking = [
+      {
+        ...poisoned.speaking[0],
+        targetResponse: "I will restock the trolley now.",
+        requiredTokens: ["restock"],
+      },
+    ];
+    const index = new Map(taught);
+    index.set("HK|restock", { week: 22, card: "Restock" });
+    if (!teachOrderBreaksIn(index, "HK-16", hk16, poisoned).length) fail("Layer T");
+    index.set("HK|restock", { week: 12, card: "Restock" });
+    if (teachOrderBreaksIn(index, "HK-16", hk16, poisoned).length)
+      fail("Layer T báo cả khi thẻ đã dạy trước");
+  }
+}
+
+const NUMBER_BASELINE = new URL("./_number-agreement-baseline.json", import.meta.url);
+const LISTENER_BASELINE = new URL("./_listener-role-baseline.json", import.meta.url);
+const TIP_LOCK_BASELINE = new URL("./_tip-lock-baseline.json", import.meta.url);
+const TEACH_ORDER_BASELINE = new URL("./_teach-before-say-baseline.json", import.meta.url);
+
+async function lintLessonClusters() {
+  const patterns = await reservedDrawPatterns();
+  if (!patterns)
+    errors.push(
+      `[S reserved-pattern] không đọc được CARRIES_AUTHORITY/TOPIC từ src/lib/checkpoint-oral.ts — ` +
+        `Layer S (b) không có mẫu để chạy. Sửa phép đọc ở lint-content.ts, đừng chép mẫu sang đây.`,
+    );
+  const taught = firstTaughtIndex(ALL_WEEKS as Record<string, WeekContent>);
+
+  const numberClashes: string[] = [];
+  const chainRoles: string[] = [];
+  const listenerRoles: string[] = [];
+  const droppable: string[] = [];
+  const unlocked: string[] = [];
+  const teachOrder: string[] = [];
+  for (const [key, week] of Object.entries(ALL_WEEKS)) {
+    for (const lesson of week.lessons) {
+      numberClashes.push(...numberClashesIn(key, lesson));
+      chainRoles.push(...chainRoleBreaksIn(key, lesson));
+      listenerRoles.push(...listenerRoleBreaksIn(key, lesson));
+      droppable.push(...droppableQuotedWordsIn(key, week, lesson));
+      if (patterns) unlocked.push(...unlockedReservedTurnsIn(key, week, lesson, patterns));
+      teachOrder.push(...teachOrderBreaksIn(taught, key, week, lesson));
+    }
+  }
+
+  selfTestClusterGates(patterns, taught);
+
+  await ratchetFile(
+    NUMBER_BASELINE,
+    "Ratchet only — trong MỘT bài, hai phát biểu về cùng một sự việc (cùng cụm dẫn + cùng danh từ) không được nói hai con số khác nhau. Nhiễu của câu hỏi đọc hiểu và của arcade không tính là phát biểu.",
+    [
+      {
+        field: "lessonNumberClashes",
+        tag: "Q lesson-number",
+        label: "sự việc bị một bài nói hai con số",
+        offenders: numberClashes,
+      },
+    ],
+  );
+  await ratchetFile(
+    LISTENER_BASELINE,
+    "Ratchet only — vai người nghe là một trường của cụm: mọi lượt trong một chuỗi `follows` phải cùng speakerRole với lượt mở, và một lượt chỉ có nghĩa khi nói với người trong ca không được gắn `guest`.",
+    [
+      {
+        field: "chainRoleBreaks",
+        tag: "R follows-role",
+        label: "mắt xích `follows` đổi vai giữa chừng",
+        offenders: chainRoles,
+      },
+      {
+        field: "listenerRoleMismatches",
+        tag: "R listener-role",
+        label: "lượt nội bộ gắn nhầm `guest`",
+        offenders: listenerRoles,
+      },
+    ],
+  );
+  await ratchetFile(
+    TIP_LOCK_BASELINE,
+    "Ratchet only — tip hứa gì thì khoá nấy: bỏ một chữ helpTip trích dẫn ra khỏi câu đích mà utterancePassed vẫn cho qua là lời hứa không hiệu lực; và một ô rơi vào bể ô nói dự trữ của buildOral mà không khai requiredTokens là câu an toàn đánh rơi được chữ mang an toàn.",
+    [
+      {
+        field: "droppableQuotedWords",
+        tag: "S tip-lock",
+        label: "chữ được tip trích dẫn mà bỏ đi vẫn qua",
+        offenders: droppable,
+      },
+      {
+        field: "unlockedReservedTurns",
+        tag: "S reserved-lock",
+        label: "ô nói dự trữ không có requiredTokens",
+        offenders: unlocked,
+      },
+    ],
+  );
+  await ratchetFile(
+    TEACH_ORDER_BASELINE,
+    "Ratchet only — mọi token trong requiredTokens phải ứng với một thẻ được dạy ở tuần ≤ tuần bắt nói. PROMISE_VERBS không phải thẻ nên không tính; thẻ nhiều từ vẫn dạy từng từ của nó.",
+    [
+      {
+        field: "spokenBeforeTaught",
+        tag: "T teach-order",
+        label: "lượt bắt nói một chữ chưa có thẻ",
+        offenders: teachOrder,
+      },
+    ],
+  );
+}
+
+// ============================================================
 // Run
 // ============================================================
 lintBanks("P1", P1_BANKS as unknown as BankSet);
@@ -2172,6 +2967,7 @@ await lintFollowsAmbiguity();
 lintPhoneticMatchesWord();
 await lintOneHonorificPerReading();
 await lintSlottedHeadwords();
+await lintLessonClusters();
 reportStaleDebt();
 
 let sentenceCount = 0;
