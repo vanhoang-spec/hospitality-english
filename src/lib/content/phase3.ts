@@ -23,6 +23,52 @@
 // those keys is discarded, and reviewWordsFor() reads through the same
 // overrides so recycling never schedules a word the spine taught but the
 // learner never saw.
+//
+// TWO AUTHORING RULES THIS FILE WAS BREAKING, BOTH FIXED IN ONE PASS.
+//
+// 1. READING DISTRACTORS WERE WRITTEN FOR SPEED, ANSWERS FOR CONTENT.
+//    The keyed answer carried its whole reason ("Thừa nhận đắt hơn chút
+//    rồi nói về giá trị") and the two distractors were three words each
+//    ("Nói là không đắt"), so the answer was the single longest option in
+//    61.2% of this phase's reading questions and the mean answer ran
+//    +2.02 words above the mean distractor. Measured on the real
+//    checkpoint builder: "always click the longest option" answered 72.6%
+//    of reading items and cleared the reading block's own 50% floor on
+//    94.2% of papers — a learner who reads no Vietnamese and no English
+//    passed the half of the exam that exists to prove they read.
+//
+//    The fix is the one the GR-40 round arrived at: thicken the
+//    distractors to the weight of the answer, never trim the answer. A
+//    distractor that carries a full wrong reason is also a distractor
+//    worth choosing, so this buys discrimination as well as closing the
+//    trick. Phase 1 is the target shape and proves it reachable (+0.02
+//    words); this phase now sits at +0.33, with the answer uniquely
+//    longest in 23% of questions and uniquely shortest in 18% — the
+//    spread the checkpoint's length-rank draw needs in its pool.
+//
+//    Do not chase zero. The reading block is 4 questions with a floor of
+//    2, so pure guessing clears it on 40.7% of papers; below that the
+//    numbers stop meaning anything. And "the answer is never the longest"
+//    is as much a tell as "always is" — the pool has to hold all three
+//    shapes, not one.
+//
+// 2. `game()` CALLED WELL-FORMED ENGLISH "NOT ENGLISH".
+//    ArcadeSuite prints a canned line over a popped `form` bubble — "Câu
+//    đó thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được" —
+//    and every round here left `wrongAKind` at its "form" default. But
+//    the third argument in this phase is almost never broken English: it
+//    is a complete, grammatical service sentence that loses on register
+//    or on vagueness ("It should not take very long, sir."). The learner
+//    was told a correct sentence was not English, one screen after the
+//    course taught them to say sentences like it.
+//
+//    Every round in this file that ships a well-formed third argument now
+//    declares "register". None of them carry an `explanation`, so the
+//    arcade falls through to its neutral "Chưa đúng — thử bong bóng khác
+//    nhé." — accurate, where the canned line was not. Where the BROKEN
+//    sentence had been written into the fourth argument instead, the two
+//    are swapped rather than tagged, so the helper's contract (third
+//    argument = the broken one) holds again.
 // ============================================================
 
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
@@ -110,8 +156,8 @@ function week23(lx: Ctx): LessonContent[] {
             q: "Vì sao nhân viên nhắc 'very popular this month'?",
             options: [
               "Để khách yên tâm vì nhiều người đã chọn",
-              "Để khách trả thêm tiền",
-              "Để khách đi chỗ khác",
+              "Để khách thấy mức giá này là hợp lý nhất",
+              "Để khách quyết định nhanh vì hôm nay rất đông",
             ],
             correct: 0,
             explanation:
@@ -125,6 +171,9 @@ function week23(lx: Ctx): LessonContent[] {
           `I recommend the ${lo(u3)}, madam.`,
           `Every option here is equally good, madam.`,
           `I really could not say, madam.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -173,8 +222,8 @@ function week23(lx: Ctx): LessonContent[] {
             q: "Nhân viên xử lý vấn đề giá cả thế nào?",
             options: [
               "Thừa nhận đắt hơn chút rồi nói về giá trị",
-              "Nói là không đắt",
-              "Không nhắc tới giá",
+              "Khẳng định mức giá đó không hề đắt",
+              "Bỏ qua chuyện giá rồi chuyển sang nói về thứ khác",
             ],
             correct: 0,
             explanation:
@@ -188,6 +237,9 @@ function week23(lx: Ctx): LessonContent[] {
           `It costs a little more, but it is much quieter.`,
           `It costs a little more, but that is normal.`,
           `Most guests do not mind the extra cost.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -222,7 +274,11 @@ function week23(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên làm gì trước khi gợi ý?",
-            options: ["Lắng nghe hoàn cảnh của khách", "Đọc bảng giá", "Gọi quản lý"],
+            options: [
+              "Lắng nghe hoàn cảnh của khách",
+              "Đọc to bảng giá cho khách",
+              "Gọi quản lý xuống quyết định",
+            ],
             correct: 0,
             explanation:
               "'listens first' — nghe trước, gợi ý sau. Gợi ý không gắn với nhu cầu thì chỉ là chào hàng.",
@@ -241,6 +297,9 @@ function week23(lx: Ctx): LessonContent[] {
           `For a long stay, I recommend the ${lo(u8)}.`,
           `Two weeks is enough time to decide later.`,
           `We have several rooms available for two weeks.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -277,8 +336,8 @@ function week23(lx: Ctx): LessonContent[] {
             q: "Nhân viên phản ứng thế nào khi khách từ chối?",
             options: [
               "Vui vẻ chấp nhận và khen lựa chọn của khách",
-              "Thuyết phục thêm lần nữa",
-              "Im lặng bỏ đi",
+              "Thuyết phục thêm một lần nữa để khách đổi ý",
+              "Im lặng quay sang phục vụ người khách kế tiếp",
             ],
             correct: 0,
             explanation:
@@ -299,6 +358,9 @@ function week23(lx: Ctx): LessonContent[] {
           `Of course, sir. The standard one is also excellent.`,
           `Are you sure, sir? The upgrade really is much better.`,
           `Very well, sir. I will note that you refused.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -371,8 +433,8 @@ function week24(lx: Ctx): LessonContent[] {
         game(
           "Is that included, or do I pay extra?",
           `There is a small ${lo(p1)} for that, madam.`,
-          `I am not sure if that costs extra, madam.`,
           `Extra, extra. You pay after, madam.`,
+          `I am not sure if that costs extra, madam.`,
         ),
       ],
     }),
@@ -420,7 +482,11 @@ function week24(lx: Ctx): LessonContent[] {
           },
           {
             q: "Nhân viên đề nghị gì khi khách còn nghi ngờ?",
-            options: ["Cho xem quy định bằng văn bản", "Giảm giá ngay", "Đổi chủ đề"],
+            options: [
+              "Cho xem quy định bằng văn bản",
+              "Giảm giá ngay để khách thôi thắc mắc",
+              "Đổi sang chuyện khác cho khách nguôi giận",
+            ],
             correct: 0,
             explanation:
               "'show you … in writing' — bằng chứng viết ra giấy chấm dứt tranh luận mà không ai mất mặt.",
@@ -433,6 +499,9 @@ function week24(lx: Ctx): LessonContent[] {
           `We have to apply it because it is hotel policy.`,
           `This charge does not apply to your room type, sir.`,
           `I can remove that charge for you right away.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -487,6 +556,9 @@ function week24(lx: Ctx): LessonContent[] {
           `I am afraid I cannot, but my manager can review it.`,
           `I am afraid that fee is completely non-negotiable, sir.`,
           `I will remove it for you immediately, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -528,7 +600,11 @@ function week24(lx: Ctx): LessonContent[] {
           },
           {
             q: "Vì sao khách cần giữ giấy tờ?",
-            options: ["Để làm bằng chứng lưu lại", "Để đưa cho nhân viên khác", "Để bỏ đi"],
+            options: [
+              "Để làm bằng chứng lưu lại",
+              "Để đưa cho nhân viên khác xem",
+              "Để bỏ đi khi rời khách sạn",
+            ],
             correct: 0,
             explanation: "'for your record' — giữ làm hồ sơ của khách.",
           },
@@ -540,6 +616,9 @@ function week24(lx: Ctx): LessonContent[] {
           `Shall I repeat the ${lo(p10)} for you?`,
           `You can read it again yourself, sir.`,
           `It is not really that complicated, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -597,7 +676,7 @@ function week25(lx: Ctx): LessonContent[] {
         [
           {
             q: "Cam kết đầu tiên của nhân viên là bao lâu?",
-            options: ["Trong vòng mười phút", "Trong vòng một giờ", "Ngày mai"],
+            options: ["Trong vòng mười phút", "Trong vòng một giờ", "Vào sáng ngày mai"],
             correct: 0,
             explanation: "'within ten minutes' — mười phút.",
           },
@@ -620,6 +699,9 @@ function week25(lx: Ctx): LessonContent[] {
           `I will ${lo(c3)} within ten minutes, sir.`,
           `It should not take very long, sir.`,
           `I will try to hurry for you, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -685,6 +767,9 @@ function week25(lx: Ctx): LessonContent[] {
           `We are going to ${lo(c6)} before three o'clock.`,
           `We will try to finish it sometime today, sir.`,
           `I will ask someone to look at it today.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -726,7 +811,11 @@ function week25(lx: Ctx): LessonContent[] {
           },
           {
             q: "Vì sao khách cảm ơn?",
-            options: ["Vì được cập nhật dù chưa có kết quả", "Vì được giảm giá", "Vì việc đã xong"],
+            options: [
+              "Vì được cập nhật dù chưa có kết quả",
+              "Vì được giảm giá ngay hôm đó",
+              "Vì việc đã xong trước cả mốc hẹn ban đầu",
+            ],
             correct: 0,
             explanation:
               "Được cập nhật là đủ để khách yên tâm chờ. Cập nhật là dịch vụ, không chỉ kết quả mới là dịch vụ.",
@@ -739,6 +828,9 @@ function week25(lx: Ctx): LessonContent[] {
           `I will ${lo(c8)} and let you know within the hour.`,
           `I will check again sometime and let you know.`,
           `Someone will contact you when there is news.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -773,7 +865,11 @@ function week25(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên làm gì khi biết mình trễ hẹn?",
-            options: ["Chủ động tìm khách để xin lỗi", "Đợi khách phàn nàn", "Tránh mặt khách"],
+            options: [
+              "Chủ động tìm khách để xin lỗi",
+              "Đợi tới khi khách phàn nàn rồi mới nói",
+              "Tránh mặt khách cho tới khi hết ca",
+            ],
             correct: 0,
             explanation:
               "'goes to the guest first' — chủ động báo trước khi khách phải đi tìm bạn.",
@@ -793,6 +889,9 @@ function week25(lx: Ctx): LessonContent[] {
           `I am sorry. I will ${lo(c12)} immediately instead.`,
           `I am sorry, sir. It is taking longer than expected.`,
           `I am sorry. I will check on it again.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -863,6 +962,9 @@ function week26(lx: Ctx): LessonContent[] {
           `Let me check with the ${lo(t2)} for you.`,
           `I am sure someone can take care of it.`,
           `You may need to ask at the other desk.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -922,6 +1024,9 @@ function week26(lx: Ctx): LessonContent[] {
           `I will ask the ${lo(t5)} to help you right away.`,
           `Someone should be able to come and help you.`,
           `I will mention it to the team later.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -956,13 +1061,21 @@ function week26(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên chứng minh bằng cách nào?",
-            options: ["Cho khách xem sổ ghi việc", "Nói lớn tiếng hơn", "Hứa thêm lần nữa"],
+            options: [
+              "Cho khách xem sổ ghi việc",
+              "Nói to hơn cho khách nghe rõ",
+              "Hứa thêm một lần nữa cho chắc",
+            ],
             correct: 0,
             explanation: "'shows my log' — ghi chép cụ thể thuyết phục hơn mọi lời hứa.",
           },
           {
             q: "'Follow up with' nghĩa là gì?",
-            options: ["Kiểm tra lại sau khi đã chuyển việc", "Bắt đầu lại từ đầu", "Huỷ yêu cầu"],
+            options: [
+              "Kiểm tra lại sau khi đã chuyển việc",
+              "Bắt đầu lại toàn bộ yêu cầu từ đầu",
+              "Huỷ yêu cầu rồi báo lại cho khách biết",
+            ],
             correct: 0,
             explanation: "Theo dõi tiếp để đảm bảo việc không bị bỏ quên giữa hai bộ phận.",
           },
@@ -974,6 +1087,9 @@ function week26(lx: Ctx): LessonContent[] {
           `I passed it to the ${lo(t9)} and the ${lo(t8)} confirmed it.`,
           `I believe someone is working on it now.`,
           `It should be finished soon, I hope, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1021,8 +1137,8 @@ function week26(lx: Ctx): LessonContent[] {
             q: "Vì sao khách khen dịch vụ?",
             options: [
               "Vì được báo lại đầy đủ và chính xác",
-              "Vì được tặng quà",
-              "Vì không phải trả tiền",
+              "Vì được tặng quà xin lỗi",
+              "Vì không phải trả tiền cho phần dịch vụ đó",
             ],
             correct: 0,
             explanation: "Khép lại vòng yêu cầu — báo lại tận nơi — là thứ khách nhớ lâu nhất.",
@@ -1035,6 +1151,9 @@ function week26(lx: Ctx): LessonContent[] {
           `The ${lo(t10)} finished, and I checked before calling you.`,
           `I believe it is finished now, sir.`,
           `The team said it should be ready, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1109,6 +1228,9 @@ function week27(lx: Ctx): LessonContent[] {
           `I am very sorry, sir. Please tell me what happened.`,
           `I am very sorry, sir. It was likely a misunderstanding.`,
           `I am sorry, sir. Many guests wait this morning.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1153,13 +1275,21 @@ function week27(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên nhận lỗi thế nào?",
-            options: ["Nhận là lỗi của khách sạn", "Đổ cho đồng nghiệp", "Nói khách hiểu nhầm"],
+            options: [
+              "Nhận là lỗi của khách sạn",
+              "Đổ lỗi cho đồng nghiệp của ca trước",
+              "Nói rằng khách đã hiểu nhầm ý",
+            ],
             correct: 0,
             explanation: "'was our mistake' — nhận lỗi tập thể, không chỉ tay sang người khác.",
           },
           {
             q: "Điều gì khiến khách bớt giận?",
-            options: ["Nhân viên không đổ lỗi cho ai", "Nhân viên nói to hơn", "Nhân viên im lặng"],
+            options: [
+              "Nhân viên không đổ lỗi cho ai",
+              "Nhân viên im lặng",
+              "Nhân viên nói to hơn để khách nghe rõ",
+            ],
             correct: 0,
             explanation: "Khách nghe thấy sự đổ lỗi nội bộ sẽ mất niềm tin vào toàn bộ khách sạn.",
           },
@@ -1171,6 +1301,9 @@ function week27(lx: Ctx): LessonContent[] {
           `It was our mistake, sir, and I apologise.`,
           `It may have been a simple misunderstanding, sir.`,
           `I will need to look into that, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1207,8 +1340,8 @@ function week27(lx: Ctx): LessonContent[] {
             q: "Vì sao nhân viên ghi chép?",
             options: [
               "Để không bỏ sót chi tiết nào",
-              "Để kéo dài thời gian",
-              "Vì quy định bắt buộc",
+              "Để kéo dài thời gian nói chuyện",
+              "Vì quy định khách sạn bắt buộc",
             ],
             correct: 0,
             explanation: "'so nothing is missed' — ghi lại để xử lý đúng và đủ.",
@@ -1225,8 +1358,8 @@ function week27(lx: Ctx): LessonContent[] {
         game(
           "I would like to report a problem, please.",
           `Could you tell me when the ${lo(k7)} started?`,
-          `I am sure it is a small problem, sir.`,
           `Problem? Okay, I write it down, sir.`,
+          `I am sure it is a small problem, sir.`,
         ),
       ],
     }),
@@ -1268,7 +1401,11 @@ function week27(lx: Ctx): LessonContent[] {
           },
           {
             q: "Cam kết nào được đưa ra?",
-            options: ["Ở lại cùng khách đến khi giải quyết xong", "Gọi bảo vệ", "Hẹn ngày mai"],
+            options: [
+              "Ở lại cùng khách đến khi giải quyết xong",
+              "Gọi bảo vệ tới",
+              "Hẹn khách quay lại vào sáng mai để nói tiếp",
+            ],
             correct: 0,
             explanation: "'stay with you until … is solved' — không bỏ khách lại giữa chừng.",
           },
@@ -1280,6 +1417,9 @@ function week27(lx: Ctx): LessonContent[] {
           `I understand, sir. I will stay with you until it is solved.`,
           `I understand, sir. Let me find someone who can help.`,
           `I understand, sir. This will be sorted out soon.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1351,6 +1491,9 @@ function week28(lx: Ctx): LessonContent[] {
           `If you like, I can ${lo(s3)} for you today.`,
           `I will see what can be done, sir.`,
           `There are a few things we could consider, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1409,6 +1552,9 @@ function week28(lx: Ctx): LessonContent[] {
           `If you prefer, we will ${lo(s5)} instead.`,
           `There might be another way, let me think.`,
           `We could possibly look at other options, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1452,8 +1598,8 @@ function week28(lx: Ctx): LessonContent[] {
             q: "Vì sao khách ngủ ngon?",
             options: [
               "Vì đã có phương án cho tình huống xấu",
-              "Vì được đổi phòng",
-              "Vì được hoàn tiền",
+              "Vì được hoàn lại một phần tiền đã trả",
+              "Vì được tặng bữa sáng miễn phí hôm sau",
             ],
             correct: 0,
             explanation:
@@ -1501,14 +1647,22 @@ function week28(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên xử lý yêu cầu vượt thẩm quyền thế nào?",
-            options: ["Nói thật và chuyển lên quản lý", "Hứa liều cho xong", "Từ chối rồi bỏ đi"],
+            options: [
+              "Nói thật và chuyển lên quản lý",
+              "Hứa liều cho xong",
+              "Từ chối thẳng rồi quay sang việc khác ngay",
+            ],
             correct: 0,
             explanation:
               "Hứa điều mình không có quyền quyết định sẽ tạo ra một lời hứa bị bội tín ở bước sau.",
           },
           {
             q: "'As a gesture of apology' nghĩa là gì?",
-            options: ["Như một cử chỉ xin lỗi", "Như một khoản phạt", "Như một quy định"],
+            options: [
+              "Như một cử chỉ xin lỗi",
+              "Như một khoản tiền phạt nhỏ",
+              "Như một quy định của ngành",
+            ],
             correct: 0,
             explanation:
               "Một cử chỉ nhỏ kèm lời xin lỗi có sức nặng hơn nhiều so với lời nói suông.",
@@ -1521,6 +1675,9 @@ function week28(lx: Ctx): LessonContent[] {
           `I cannot do that myself, but my manager can review it.`,
           `That amount is more than we usually approve, sir.`,
           `I will see if that is possible, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1590,8 +1747,8 @@ function week29(lx: Ctx): LessonContent[] {
             q: "Vì sao bàn giao chỉ mất hai phút?",
             options: [
               "Vì thông tin đã được ghi và sắp xếp sẵn",
-              "Vì không có gì để nói",
-              "Vì nhân viên vội về",
+              "Vì ca trước không có việc gì đáng để nói lại",
+              "Vì nhân viên đang vội về cho kịp chuyến xe buýt",
             ],
             correct: 0,
             explanation: "Ghi chép trong ca giúp bàn giao nhanh và không sót việc.",
@@ -1604,6 +1761,9 @@ function week29(lx: Ctx): LessonContent[] {
           `I updated the ${lo(h1)} this morning.`,
           `I think everything is fine today.`,
           `Not much happened during my shift.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1652,8 +1812,8 @@ function week29(lx: Ctx): LessonContent[] {
             q: "Cấu trúc 'was checking … when … called' dùng để làm gì?",
             options: [
               "Kể việc đang làm thì bị xen ngang",
-              "Kể kế hoạch tương lai",
-              "Kể thói quen hằng ngày",
+              "Kể kế hoạch sẽ làm trong tương lai",
+              "Kể một thói quen lặp lại hằng ngày",
             ],
             correct: 0,
             explanation: "Quá khứ tiếp diễn nêu bối cảnh, quá khứ đơn nêu sự việc xen vào.",
@@ -1666,6 +1826,9 @@ function week29(lx: Ctx): LessonContent[] {
           `I was checking the ${lo(h4)} when the guest called.`,
           `I think I was helping another guest at reception.`,
           `I do not recall what I was doing exactly.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1721,8 +1884,8 @@ function week29(lx: Ctx): LessonContent[] {
             q: "'Has not been finished YET' nhấn mạnh điều gì?",
             options: [
               "Tới thời điểm hiện tại vẫn chưa xong",
-              "Sẽ không bao giờ xong",
-              "Đã xong từ lâu",
+              "Việc đó sẽ không bao giờ xong được nữa",
+              "Việc đó đã xong từ rất lâu trước đó",
             ],
             correct: 0,
             explanation:
@@ -1736,6 +1899,9 @@ function week29(lx: Ctx): LessonContent[] {
           `No, one task has not been finished yet. I have left a note about it.`,
           `No, but I am sure everything will be fine by morning.`,
           `Most things are finished, I believe, but I am not fully certain.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1783,8 +1949,8 @@ function week29(lx: Ctx): LessonContent[] {
             q: "'Has been recorded' là thì gì, và vì sao dùng ở đây?",
             options: [
               "Hiện tại hoàn thành bị động — nhấn mạnh việc đã xong, không cần nói khi nào",
-              "Tương lai đơn — việc sẽ được ghi sau",
-              "Quá khứ tiếp diễn — việc đang được ghi",
+              "Tương lai đơn — việc sẽ được ghi vào một lúc nào đó sau ca làm này",
+              "Quá khứ tiếp diễn — việc đang được ghi dở thì có người gọi xen vào giữa",
             ],
             correct: 0,
             explanation:
@@ -1798,6 +1964,9 @@ function week29(lx: Ctx): LessonContent[] {
           `Everything has been recorded in the ${lo(h12)}, sir.`,
           `I keep most of it in my memory, sir.`,
           `Some of it is written, some is not, sir.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1852,7 +2021,11 @@ function week30(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên kết hợp hai kỹ năng nào?",
-            options: ["Gợi ý và cam kết thời gian", "Từ chối và xin lỗi", "Ghi sổ và bàn giao"],
+            options: [
+              "Gợi ý và cam kết thời gian",
+              "Từ chối khéo rồi xin lỗi khách",
+              "Ghi sổ rồi bàn giao ca sau",
+            ],
             correct: 0,
             explanation: "'I recommend…' (tuần 23) + 'I will … within ten minutes' (tuần 25).",
           },
@@ -1871,6 +2044,9 @@ function week30(lx: Ctx): LessonContent[] {
           `I recommend the ${lo(u1)}, and I will arrange it within ten minutes.`,
           `I recommend the ${lo(u1)}, but I am not sure how soon.`,
           `I will arrange something for you within ten minutes.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1924,6 +2100,9 @@ function week30(lx: Ctx): LessonContent[] {
           `We apply this because it is policy, and I will check with the team.`,
           `We apply this because it is policy, but I am not sure who handles it.`,
           `I will check with the team about who handles this.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -1963,14 +2142,22 @@ function week30(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên làm gì sau khi hứa với khách?",
-            options: ["Ghi vào sổ cho ca sau biết", "Quên đi", "Chỉ nói miệng"],
+            options: [
+              "Ghi vào sổ cho ca sau biết",
+              "Quên đi vì đã hứa với khách rồi",
+              "Chỉ nói miệng để khách yên tâm thôi",
+            ],
             correct: 0,
             explanation:
               "Ghi vào sổ (tuần 29) là cách duy nhất để lời hứa sống qua ca làm việc của bạn.",
           },
           {
             q: "Hai kỹ năng nào được ghép lại?",
-            options: ["Xin lỗi và đề nghị giải pháp", "Gợi ý và bán hàng", "Bàn giao và nghỉ ca"],
+            options: [
+              "Xin lỗi và đề nghị giải pháp",
+              "Gợi ý thêm và chốt đơn hàng",
+              "Bàn giao xong rồi về nghỉ ca",
+            ],
             correct: 0,
             explanation: "'I am very sorry' (tuần 27) + 'if you like, I can…' (tuần 28).",
           },
@@ -1982,6 +2169,9 @@ function week30(lx: Ctx): LessonContent[] {
           `I am very sorry, and if you like, I can ${lo(s1)}.`,
           `I am very sorry, and I understand your frustration completely.`,
           `I am very sorry. Let me see what can be done.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -2020,7 +2210,11 @@ function week30(lx: Ctx): LessonContent[] {
         [
           {
             q: "Nhân viên tự đánh giá thế nào?",
-            options: ["Đã sẵn sàng cho phần việc khó hơn", "Chưa làm được gì", "Muốn đổi bộ phận"],
+            options: [
+              "Đã sẵn sàng cho phần việc khó hơn",
+              "Chưa làm được việc gì đáng kể trong ca",
+              "Muốn đổi sang một bộ phận khác nhẹ hơn",
+            ],
             correct: 0,
             explanation: `"I can confirm the ${lo(w12)} myself now" — tự tin dựa trên việc đã hoàn thành, không phải cảm tính.`,
           },
@@ -2028,8 +2222,8 @@ function week30(lx: Ctx): LessonContent[] {
             q: "Giai đoạn ba đã dạy những gì?",
             options: [
               "Gợi ý, giải thích, cam kết, điều phối, xin lỗi, giải pháp, bàn giao",
-              "Chỉ chào hỏi",
-              "Chỉ đếm số",
+              "Chào hỏi, đếm số, đánh vần tên, chỉ đường, nhận khoá, chào tạm biệt",
+              "Đặt câu hỏi, ghi chép, xác nhận, đọc số, viết thư, gọi điện thoại",
             ],
             correct: 0,
             explanation: "Bảy chức năng của tuần 23–29 — toàn bộ kỹ năng dịch vụ chủ động.",
@@ -2042,6 +2236,9 @@ function week30(lx: Ctx): LessonContent[] {
           `Yes. I checked everything today, and I am ready.`,
           `Yes, I think so, and I hope it goes well.`,
           `I checked most things, so it should be fine.`,
+          undefined,
+          undefined,
+          "register",
         ),
       ],
     }),
@@ -2268,6 +2465,7 @@ function buildWeek(
   overrides: Record<string, WeekContent>,
 ): WeekContent {
   const meta = WEEK_META[week];
+  const review = reviewWordsFor(lx, week, priorWords, overrides);
   return {
     departmentId: lx.code,
     weekNumber: week,
@@ -2275,8 +2473,8 @@ function buildWeek(
     weekTitleVi: meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx)),
-    reviewWords: reviewWordsFor(lx, week, priorWords, overrides),
+    lessons: lockWeekHeadwords(meta.build(lx), review),
+    reviewWords: review,
     mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
   };
 }

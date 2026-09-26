@@ -796,6 +796,11 @@ if (legacyGameDupes.length) {
       `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
       `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
   );
+  const READING_LONGEST_MAX = 0.56;
+  if (longShare > READING_LONGEST_MAX)
+    errors.push(
+      `the keyed reading answer is the longest option ${(longShare * 100).toFixed(0)}% of the time, up from ${(READING_LONGEST_MAX * 100).toFixed(0)}% — long enough to be a strategy`,
+    );
   if (worstPos > POSITION_MAX)
     errors.push(
       `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
@@ -866,7 +871,7 @@ if (legacyGameDupes.length) {
   // Phase 0, worse than the 70% pass mark it was supposed to protect. The
   // honest measure is the best of the three length positions, so no rewrite
   // can improve one rank by quietly loading another.
-  const GAME_RANK_MAX = 0.64; // 663/1053 today, carried by the untouched P2-P4
+  const GAME_RANK_MAX = 0.47; // 46% today; was 0.64 while Phase 2 sat at 100% longest
   const rank = [0, 0, 0];
   let gTotal = 0;
   for (const wk of Object.values(ALL_WEEKS))
@@ -888,6 +893,89 @@ if (legacyGameDupes.length) {
   if (gShare > GAME_RANK_MAX)
     errors.push(
       `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
+    );
+
+  // Length is not the only shape a bubble has. Two more strategies win without
+  // reading, and both were measured at Phase 2 before this: "tap the bubble
+  // with sir or madam in it" (65.8% of rounds carried the honorific ONLY in
+  // the correct answer) and, when the learner taps wrong, no way to learn why
+  // (95.9% of rounds had no `explanation`, so the arcade said "Chưa đúng —
+  // thử bong bóng khác nhé." and stopped). A distractor that is correct
+  // English and wrong for the job is the hardest thing in the course to work
+  // out alone, and it is exactly the one that was never explained.
+  const HONORIFIC_KEY_MAX = 220; // 92 today across 1439 rounds
+  const NO_EXPLANATION_MAX = 522; // 522 today; Phase 2 is at 0
+  let honKeyOnly = 0;
+  let noExplanation = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        const key = round.options.find((o) => o.correct);
+        if (
+          key &&
+          /\b(sir|madam)\b/i.test(key.text) &&
+          !round.options.some((o) => !o.correct && /\b(sir|madam)\b/i.test(o.text))
+        )
+          honKeyOnly++;
+        if (!round.explanation) noExplanation++;
+      }
+  console.log(
+    `Game surface tells — honorific only in the answer ${honKeyOnly}, rounds with no explanation ${noExplanation}`,
+  );
+  if (honKeyOnly > HONORIFIC_KEY_MAX)
+    errors.push(
+      `${honKeyOnly} game rounds put "sir"/"madam" only in the correct answer, up from ${HONORIFIC_KEY_MAX} — tapping the polite bubble must not be a strategy`,
+    );
+  // The reading block had the mirror-image problem the arcade had: the second
+  // question of nearly every generated lesson was a Vietnamese maxim — "Vì sao
+  // nên nói rõ về phí ngay từ đầu?" — whose distractors are absurd in
+  // Vietnamese, so it was answerable without touching the English passage at
+  // all. Three auditors classified their department by hand and found 36-39%
+  // of questions in that shape, and the checkpoint's reading block draws from
+  // exactly this pool, so its 50% floor could be cleared without reading.
+  //
+  // A machine cannot mark a question "answerable from common sense". What it
+  // CAN check is whether the explanation quotes the passage: an answer the
+  // learner is meant to find in the text has a sentence in the text to point
+  // at, and a maxim has none. Both numbers are ratchets — Phase 2 sits at 0
+  // unexplained and 67% anchored; the older phases have not been through this.
+  const READING_NO_EXPLANATION_MAX = 322;
+  const READING_ANCHORED_MIN = 553;
+  const rnorm = (t: string) =>
+    t
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let rNoExp = 0;
+  let rAnchored = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading?.questions ?? []) {
+        const e = (q as { explanation?: string }).explanation;
+        if (!e) {
+          rNoExp++;
+          continue;
+        }
+        const quotes = [...e.matchAll(/"([^"]{6,})"/g)].map((m) => m[1]!);
+        if (quotes.length && quotes.every((x) => rnorm(lesson.reading.text).includes(rnorm(x))))
+          rAnchored++;
+      }
+  console.log(
+    `Reading questions — ${rAnchored} anchored in their own passage, ${rNoExp} with no explanation`,
+  );
+  if (rNoExp > READING_NO_EXPLANATION_MAX)
+    errors.push(
+      `${rNoExp} reading questions have no explanation, up from ${READING_NO_EXPLANATION_MAX} — a wrong answer teaches nothing without one`,
+    );
+  if (rAnchored < READING_ANCHORED_MIN)
+    errors.push(
+      `only ${rAnchored} reading questions quote their own passage, down from ${READING_ANCHORED_MIN} — a question whose answer is not in the text is not a reading question`,
+    );
+
+  if (noExplanation > NO_EXPLANATION_MAX)
+    errors.push(
+      `${noExplanation} game rounds have no explanation, up from ${NO_EXPLANATION_MAX} — a learner who taps the correct-English-wrong-job bubble is told nothing`,
     );
 }
 if (warnings.length) {

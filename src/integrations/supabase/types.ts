@@ -117,6 +117,276 @@ export type Database = {
         };
         Relationships: [];
       };
+      groups: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          org_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          org_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          org_id?: string;
+        };
+        Relationships: [];
+      };
+      group_members: {
+        Row: { added_at: string; group_id: string; user_id: string };
+        Insert: { added_at?: string; group_id: string; user_id: string };
+        Update: { added_at?: string; group_id?: string; user_id?: string };
+        Relationships: [];
+      };
+      access_rules: {
+        Row: {
+          created_at: string;
+          department_id: string;
+          group_id: string | null;
+          id: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Insert: {
+          created_at?: string;
+          department_id: string;
+          group_id?: string | null;
+          id?: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Update: {
+          created_at?: string;
+          department_id?: string;
+          group_id?: string | null;
+          id?: string;
+          org_id?: string;
+          week_from?: number;
+          week_to?: number;
+        };
+        Relationships: [];
+      };
+      attempts: {
+        Row: {
+          attempt_no: number;
+          correct: boolean;
+          created_at: string;
+          department_id: string;
+          id: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent: number | null;
+          org_id: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Insert: {
+          attempt_no?: number;
+          correct: boolean;
+          created_at?: string;
+          department_id: string;
+          id?: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Update: {
+          attempt_no?: number;
+          correct?: boolean;
+          created_at?: string;
+          department_id?: string;
+          id?: string;
+          is_first_try?: boolean;
+          item_key?: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite?: string;
+          user_id?: string;
+          week_number?: number;
+        };
+        Relationships: [];
+      };
+      study_sessions: {
+        Row: {
+          department_id: string | null;
+          ended_at: string | null;
+          id: string;
+          org_id: string | null;
+          seconds_active: number;
+          started_at: string;
+          suite: string | null;
+          user_id: string;
+          week_number: number | null;
+        };
+        Insert: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id: string;
+          week_number?: number | null;
+        };
+        Update: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id?: string;
+          week_number?: number | null;
+        };
+        Relationships: [];
+      };
+      // Hand-written until the generator is next run against the project:
+      // see supabase/migrations/20260923120000_plans_subscriptions_sessions.sql.
+      plans: {
+        Row: { code: string; seats: number; sort_order: number };
+        Insert: { code: string; seats: number; sort_order?: number };
+        Update: { code?: string; seats?: number; sort_order?: number };
+        Relationships: [];
+      };
+      plan_prices: {
+        Row: {
+          plan_code: string;
+          term: string;
+          price: number;
+          currency: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          plan_code: string;
+          term: string;
+          price?: number;
+          currency?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          plan_code?: string;
+          term?: string;
+          price?: number;
+          currency?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
+      subscriptions: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          ends_at: string;
+          id: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          starts_at: string;
+          status: string;
+          price: number | null;
+          currency: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          ends_at: string;
+          id?: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          starts_at?: string;
+          status?: string;
+          price?: number | null;
+          currency?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string;
+          id?: string;
+          kind?: string;
+          org_id?: string;
+          plan_code?: string;
+          starts_at?: string;
+          status?: string;
+          price?: number | null;
+          currency?: string;
+        };
+        Relationships: [];
+      };
+      org_settings: {
+        Row: { org_id: string; sequential_mode: boolean; updated_at: string };
+        Insert: { org_id: string; sequential_mode?: boolean; updated_at?: string };
+        Update: { org_id?: string; sequential_mode?: boolean; updated_at?: string };
+        Relationships: [];
+      };
+      admin_actions: {
+        Row: {
+          action: string;
+          actor_id: string | null;
+          created_at: string;
+          id: string;
+          meta: Json;
+          org_id: string | null;
+          target_user_id: string | null;
+        };
+        Insert: {
+          action: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      active_sessions: {
+        Row: { last_seen: string; session_id: string; user_agent: string | null; user_id: string };
+        Insert: {
+          last_seen?: string;
+          session_id: string;
+          user_agent?: string | null;
+          user_id: string;
+        };
+        Update: {
+          last_seen?: string;
+          session_id?: string;
+          user_agent?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       performance_metrics: {
         Row: {
           courtesy_score: number;
@@ -302,6 +572,14 @@ export type Database = {
       award_stars: {
         Args: { delta: number };
         Returns: number;
+      };
+      org_seat_limit: {
+        Args: { target: string };
+        Returns: number;
+      };
+      org_is_active: {
+        Args: { target: string };
+        Returns: boolean;
       };
     };
     Enums: {

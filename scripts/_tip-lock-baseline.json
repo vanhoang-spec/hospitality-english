@@ -1,0 +1,5 @@
+{
+  "droppableQuotedWords": 58,
+  "fragileReservedTurns": 48,
+  "note": "Ratchet only — tip hứa gì thì khoá nấy: bỏ một chữ helpTip trích dẫn ra khỏi câu đích mà utterancePassed vẫn cho qua là lời hứa không hiệu lực; và một ô rơi vào bể ô nói dự trữ BẮT BUỘC ĐÚNG của buildOral phải RỚT khi mất bất kỳ từ nội dung nào — đo bằng utterancePassedAny trên acceptedAnswers, đúng cặp hàm kỳ thi dùng, chứ không phải bằng việc ô ấy có khai requiredTokens hay không."
+}

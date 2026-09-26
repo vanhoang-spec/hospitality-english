@@ -487,7 +487,7 @@ function week7(lx: Ctx): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "Ba câu khác nhau một chữ. Câu thứ hai đẩy việc sang khách; câu thứ ba nói mình chắc, trong khi cả bài dạy điều ngược lại.",
+              "Ba câu khác nhau một chữ. Một phương án sai đẩy việc sang khách; phương án sai kia nói mình chắc, trong khi cả bài dạy điều ngược lại.",
           },
           {
             q: "Nhân viên mời khách chờ bằng câu nào?",
@@ -1161,7 +1161,7 @@ function week9(lx: Ctx): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "Hết thứ này thì mời thứ khác. Câu thứ hai chỉ báo hết thêm một lần nữa; câu thứ ba mời lại đúng thứ vừa hết.",
+              "Hết thứ này thì mời thứ khác. Một phương án sai chỉ báo hết thêm một lần nữa; phương án sai kia mời lại đúng thứ vừa hết.",
           },
           {
             q: "Khi nào khách có thể nhận được thứ mình xin?",
@@ -2641,7 +2641,7 @@ function week13(lx: Ctx): LessonContent[] {
           "Manager? Why you want?",
           "I can help you, madam. There is no need.",
           undefined,
-          "Khách xin gặp quản lý thì không thương lượng. Câu thứ hai nghe tự tin nhưng nó chặn một yêu cầu chính đáng, và đó đúng là câu khách sẽ kể lại.",
+          "Khách xin gặp quản lý thì không thương lượng. Câu này nghe tự tin nhưng nó chặn một yêu cầu chính đáng, và đó đúng là câu khách sẽ kể lại.",
         ),
         game(
           `Why is it ${lower(b3)}?`,
@@ -3301,7 +3301,9 @@ function week14(lx: Ctx): LessonContent[] {
         g(
           "Finish? Bye.",
           "Is there anything else, sir?",
-          "Ôn tuần 12: hỏi chốt nhu cầu bằng câu đầy đủ.",
+          // Nhãn cũ ghi tuần 12; thẻ thật trong câu là "Anything else", dạy ở
+          // tuần 6 cho cả sáu bộ phận.
+          "Ôn tuần 6: hỏi chốt nhu cầu bằng câu đầy đủ.",
           "Is it anything else, sir?",
         ),
         g(
@@ -4901,6 +4903,13 @@ const DEPT_LESSONS: Record<string, (lx: Ctx) => LessonContent> = {
           "Good evening. Is this the lounge?",
           "Yes, madam. May I have your room number?",
           "Chào trước, hỏi sau. Số phòng là thứ quyết định khách có được vào hay không, nên hỏi ngay câu thứ hai.",
+          undefined,
+          // Ô dự trữ DUY NHẤT mà Phase 1 của GR có: checkpoint-oral ghi rõ cả
+          // bể của GR ở phase này là hai câu `room number`, nên lượt này là ô
+          // bắt buộc đúng của tuần 10 và phải khai chữ nó bắt nói. Khai thêm
+          // chỉ SIẾT: requiredValueTokens hợp nhất override vào tập suy ra,
+          // không thay thế nó. `room`/`number` đều là thẻ GR-2.
+          ["room", "number"],
         ),
         sp(
           `We are in room ${lx.roomNo.spoken}.`,

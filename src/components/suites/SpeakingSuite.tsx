@@ -9,8 +9,10 @@ import {
   type WeekContent,
 } from "@/lib/content/week-content";
 import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
-import { passThresholds, utterancePassed } from "@/lib/speaking-score";
+import { passThresholds, utterancePassed, utterancePassedAny } from "@/lib/speaking-score";
+import { acceptedAnswers } from "@/lib/speaking-alternates";
 import { listeningRateForWeek } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 export function SpeakingSuite({ dep, week }: { dep?: string; week?: string }) {
@@ -29,6 +31,8 @@ function SpeakingSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep, week, suite: "speaking" });
+  useStudySession({ dep, week, suite: "speaking" });
   const th = passThresholds(week);
   // The bar rises during phase 2. Say so on the week it moves, rather than
   // letting a learner who cleared every scenario last week discover in
@@ -47,6 +51,14 @@ function SpeakingSuiteInner({
       target: s.targetResponse,
       tip: s.helpTip,
       requiredTokens: s.requiredTokens,
+      answers: acceptedAnswers(
+        dep,
+        week,
+        s.guestPrompt,
+        s.targetResponse,
+        s.requiredTokens,
+        s.speakerRole,
+      ),
       follows: s.follows,
       who: speakerLabel(s),
       audioWho: speakerAudioLabel(s),
@@ -65,8 +77,60 @@ function SpeakingSuiteInner({
   const [revealed, setRevealed] = useState(false);
   const [fireworks, setFireworks] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // A device with no SpeechRecognition (Firefox, Safari on iOS, most
+  // WebViews) used to get one line of advice to install Chrome and no way
+  // to practise at all — this suite is the biggest practice block in the
+  // phase, 24-36 scenarios a week, and it simply vanished. When the DEVICE
+  // fails, and only then, a typed answer goes through the same grader.
+  // Typing on a capable device stays off the menu, the same rule the
+  // checkpoint applies.
+  const [deviceFailed, setDeviceFailed] = useState(false);
+  const [typedText, setTypedText] = useState("");
   const recogRef = useRef<SpeechRecognition | null>(null);
   const finalRef = useRef<string>("");
+
+  // One grader for the drill and the exam — utterancePassed also refuses
+  // a missing value token, so "Room three-oh-five" no longer passes a
+  // two-oh-five item here while failing it on the checkpoint. `spoken` is
+  // false for the typed fallback: a typed sentence still earns the stars,
+  // but it must not feed the fluency metric — nothing was pronounced.
+  function grade(cleaned: string, spoken: boolean) {
+    const cmp = utterancePassedAny(
+      cleaned,
+      scenario.answers,
+      week,
+      // The guest's own line is what decides whether sir/madam was
+      // answerable in the first place.
+      scenario.complaint,
+    );
+    setResult(cmp);
+    logAttempt(`speaking:${dep}:${week}:${scenario.complaint}`, cmp.passed);
+    const acc = Math.round(cmp.accuracy * 100);
+    if (spoken) patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
+    const passed = cmp.passed;
+    bestPctRef.current.set(idx, Math.max(bestPctRef.current.get(idx) ?? 0, acc));
+    if (passed && !passedRef.current.has(idx)) {
+      passedRef.current.add(idx);
+      awardStars(5);
+      earned.current += 5;
+      setFireworks(true);
+      playApplause(1800);
+      setTimeout(() => setFireworks(false), 2400);
+    }
+    if (dep && week) {
+      const sumPct = scenarios.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
+      const avgPct = Math.round(sumPct / scenarios.length);
+      recordSuiteResult(dep, week, "speaking", earned.current, {
+        scorePct: avgPct,
+        // Nine in ten, not every one. A week holds 24-41 scenarios, and a
+        // single item a recogniser cannot hear the way the model spells it
+        // ("from 6:30 until 10:00") made the week's mastery unreachable by
+        // voice for a learner who said every sentence right — two reviews
+        // named it as the thing a self-study learner cannot get past alone.
+        mastered: passedRef.current.size >= Math.ceil(scenarios.length * 0.9),
+      });
+    }
+  }
 
   function start() {
     setError(null);
@@ -75,7 +139,8 @@ function SpeakingSuiteInner({
     finalRef.current = "";
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) {
-      setError("Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy thử dùng Chrome.");
+      setError("Trình duyệt này chưa hỗ trợ nhận dạng giọng nói.");
+      setDeviceFailed(true);
       return;
     }
     const r = new SR();
@@ -91,51 +156,28 @@ function SpeakingSuiteInner({
       }
       setTranscript(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
-    r.onerror = (e: SpeechRecognitionErrorEvent) => setError(`Lỗi micro: ${e.error}`);
+    r.onerror = (e: SpeechRecognitionErrorEvent) => {
+      setError(`Lỗi micro: ${e.error}`);
+      // "no-speech" is a quiet room, not a broken device — the learner
+      // should try again out loud rather than fall back to typing.
+      if (e.error !== "no-speech" && e.error !== "aborted") setDeviceFailed(true);
+    };
     r.onend = () => {
       setRecording(false);
       const cleaned = dedupeTranscript(finalRef.current.trim());
       setTranscript(cleaned);
-      // One grader for the drill and the exam — utterancePassed also refuses
-      // a missing value token, so "Room three-oh-five" no longer passes a
-      // two-oh-five item here while failing it on the checkpoint.
-      const cmp = utterancePassed(
-        cleaned,
-        scenario.target,
-        week,
-        scenario.requiredTokens,
-        // The guest's own line is what decides whether sir/madam was
-        // answerable in the first place.
-        scenario.complaint,
-      );
-      setResult(cmp);
-      const acc = Math.round(cmp.accuracy * 100);
-      patchMetrics({ fluency_score: Math.min(100, Math.max(50, acc)) });
-      const passed = cmp.passed;
-      bestPctRef.current.set(idx, Math.max(bestPctRef.current.get(idx) ?? 0, acc));
-      if (passed && !passedRef.current.has(idx)) {
-        passedRef.current.add(idx);
-        awardStars(5);
-        earned.current += 5;
-        setFireworks(true);
-        playApplause(1800);
-        setTimeout(() => setFireworks(false), 2400);
-      }
-      if (dep && week) {
-        const sumPct = scenarios.reduce((s, _, i) => s + (bestPctRef.current.get(i) ?? 0), 0);
-        const avgPct = Math.round(sumPct / scenarios.length);
-        recordSuiteResult(dep, week, "speaking", earned.current, {
-          scorePct: avgPct,
-          mastered: passedRef.current.size === scenarios.length,
-        });
-      }
+      grade(cleaned, true);
     };
     try {
       r.start();
       recogRef.current = r;
       setRecording(true);
+      // A working start() means the device can hear after all — close the
+      // typed path again (audit: typed mode switched on and never off).
+      setDeviceFailed(false);
     } catch (err) {
       setError(`Không mở được micro: ${err instanceof Error ? err.message : String(err)}`);
+      setDeviceFailed(true);
     }
   }
 
@@ -209,6 +251,7 @@ function SpeakingSuiteInner({
                 setTranscript("");
                 setResult(null);
                 setRevealed(false);
+                setTypedText("");
               }}
               className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
             >
@@ -292,6 +335,42 @@ function SpeakingSuiteInner({
             {transcript || <span className="text-foreground/40">Lời bạn nói sẽ hiện ở đây.</span>}
           </div>
 
+          {deviceFailed && (
+            <div className="mt-4 space-y-2">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+                Thiết bị không nghe được — gõ câu trả lời để luyện tiếp. Vẫn nên nói to trước khi
+                gõ.
+              </p>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const cleaned = typedText.trim();
+                  if (!cleaned) return;
+                  setTranscript(cleaned);
+                  grade(cleaned, false);
+                  setTypedText("");
+                }}
+                className="flex gap-2"
+              >
+                <input
+                  value={typedText}
+                  onChange={(e) => setTypedText(e.target.value)}
+                  placeholder="Gõ câu trả lời bằng tiếng Anh…"
+                  className="flex-1 border border-primary/30 bg-background/60 px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-primary focus:outline-none"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                />
+                <button
+                  type="submit"
+                  className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+                >
+                  Chấm
+                </button>
+              </form>
+            </div>
+          )}
+
           {result && (
             <div className="mt-5 flex items-center justify-between">
               <div>
@@ -309,8 +388,8 @@ function SpeakingSuiteInner({
               )}
               {!result.passed && result.missingRequired.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                  Sai hoặc thiếu từ mang giá trị: {result.missingRequired.join(", ")} — sai số là
-                  sai nghĩa, nói lại cho đúng
+                  Sai hoặc thiếu từ bắt buộc: {result.missingRequired.join(", ")} — đó là chữ mang
+                  nghĩa chính của câu, nói lại cho đúng
                 </div>
               )}
               {/* Ba lý do trượt dưới đây đều là "đủ điểm phần trăm nhưng sai điều
@@ -328,7 +407,8 @@ function SpeakingSuiteInner({
               )}
               {!result.passed && result.insertedWords.length > 0 && (
                 <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
-                  Câu mẫu không có {result.insertedWords.join(", ")} — thừa một chữ cũng là sai câu
+                  Câu mẫu không có {result.insertedWords.join(", ")} — câu của bạn có thể vẫn đúng
+                  tiếng Anh, nhưng bài này luyện đúng câu mẫu. Nói lại sát câu mẫu hơn.
                 </div>
               )}
               {!result.passed && result.inflectionErrors.length > 0 && (
@@ -336,14 +416,31 @@ function SpeakingSuiteInner({
                   Thiếu đuôi -s: {result.inflectionErrors.join(", ")} — nghe kỹ âm cuối rồi nói lại
                 </div>
               )}
+              {/* The commonest failure in the whole course had no words. A learner
+                  who drops an article or a pronoun — the exact L1 error this
+                  product exists to correct — saw a percentage and nothing else:
+                  an audit deleted one token at a time across 248 items and
+                  found 36.7% of the failures silent. utterancePassed had been
+                  returning missingFunction the whole time; nothing rendered it. */}
+              {!result.passed && result.missingFunction.length > 0 && (
+                <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
+                  Thiếu {result.missingFunction.join(", ")} — chữ nhỏ nhưng bắt buộc, nói lại cho đủ
+                </div>
+              )}
               {!result.passed &&
                 result.missingRequired.length === 0 &&
                 result.addedNegation.length === 0 &&
                 result.insertedWords.length === 0 &&
                 result.missingContent.length === 0 &&
+                result.missingFunction.length === 0 &&
                 result.inflectionErrors.length === 0 &&
                 result.accuracy * 100 >= th.accPct &&
-                result.orderRatio < th.orderRatio && (
+                // The grader also fails every word said with any two swapped
+                // (accuracy 100, order below 1). This line only covered the
+                // order threshold, so 90% of word-order failures showed a
+                // 100% score and no reason at all.
+                (result.orderRatio < th.orderRatio ||
+                  (Math.round(result.accuracy * 100) === 100 && result.orderRatio < 1)) && (
                   <div className="max-w-[180px] text-right text-[10px] uppercase tracking-[0.2em] text-destructive">
                     Đúng từ nhưng sai thứ tự — nói lại theo đúng trình tự câu
                   </div>

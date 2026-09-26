@@ -28,6 +28,7 @@ export function AcademyNav() {
   const displayName = profile?.full_name || "Esteemed Apprentice";
   const orgName = profile?.organizations?.name;
   const isOrgAdmin = profile?.role === "org_admin";
+  const isPlatformAdmin = profile?.role === "super_admin";
 
   return (
     <>
@@ -62,11 +63,33 @@ export function AcademyNav() {
 
           <div className="flex items-center gap-2">
             {isOrgAdmin && (
+              <>
+                <Link
+                  to="/org-admin"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
+                >
+                  Team
+                </Link>
+                <Link
+                  to="/org-reports"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary lg:inline-flex"
+                >
+                  Báo cáo
+                </Link>
+                <Link
+                  to="/org-access"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary lg:inline-flex"
+                >
+                  Nhóm
+                </Link>
+              </>
+            )}
+            {isPlatformAdmin && (
               <Link
-                to="/org-admin"
+                to="/admin-console"
                 className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
               >
-                Team
+                Nền tảng
               </Link>
             )}
             <Link

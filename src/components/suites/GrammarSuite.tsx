@@ -4,9 +4,10 @@ import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, type WeekContent } from "@/lib/content/week-content";
 import { speakEN } from "@/lib/speech";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
-type Puzzle = { bad: string; target: string; chips: string[]; rule?: string };
+type Puzzle = { bad: string; target: string; chips: string[]; rule?: string; near?: string };
 
 /** Most chips a sentence may be broken into. Beyond this the tray wraps to
  *  four or five rows on a phone and the exercise becomes a hunt rather than
@@ -67,6 +68,8 @@ function GrammarSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep, week, suite: "grammar" });
+  useStudySession({ dep, week, suite: "grammar" });
   const earned = useRef(0);
   const awardedRoundRef = useRef(-1);
   const memoryAwardedRef = useRef<Set<number>>(new Set());
@@ -80,6 +83,7 @@ function GrammarSuiteInner({
       target: g.polite,
       chips: toChips(g.polite),
       rule: g.rule,
+      near: g.nearMiss,
     })),
   );
   const [round, setRound] = useState(0);
@@ -151,6 +155,7 @@ function GrammarSuiteInner({
   function check() {
     const ok = normalizeSentence(tray.join(" ")) === normalizeSentence(puzzle.target);
     setChecked(ok);
+    logAttempt(`grammar:${dep}:${week}:${puzzle.bad}`, ok);
     if (ok && awardedRoundRef.current !== round && !revealed) {
       awardedRoundRef.current = round;
       awardStars(4);
@@ -309,7 +314,21 @@ function GrammarSuiteInner({
         )}
         {checked === false && (
           <span className="text-xs uppercase tracking-[0.25em] text-destructive">
-            Gần đúng rồi — sắp lại thứ tự nhé.
+            {/* Every wrong order used to get the same line, so a learner could
+                not tell which chip was out of place. Name the first one. */}
+            {(() => {
+              // Chips, not words: a sentence over MAX_CHIPS words is built from
+              // two-word chips, and counting words told a learner with every
+              // chip placed that half of them were still missing.
+              const want = puzzle.chips;
+              if (tray.length < want.length) return `Còn thiếu ${want.length - tray.length} chip.`;
+              const k = tray.findIndex(
+                (w, i) => normalizeSentence(w) !== normalizeSentence(want[i] ?? ""),
+              );
+              return k < 0
+                ? "Gần đúng rồi — kiểm lại dấu câu nhé."
+                : `Từ thứ ${k + 1} chưa đúng chỗ: «${tray[k]}».`;
+            })()}
           </span>
         )}
       </div>
@@ -323,6 +342,26 @@ function GrammarSuiteInner({
         >
           <span className="text-[10px] uppercase tracking-[0.25em] text-primary">Quy tắc · </span>
           <span className="text-foreground/85">{puzzle.rule}</span>
+        </motion.div>
+      )}
+
+      {/* The near miss. 386 of these are written across the phases and until
+          now not one component rendered any of them: the only place a learner
+          could meet one was as a checkpoint distractor, once, with no
+          explanation attached. It is the most valuable artefact in the content
+          model — a repair that looks right and is still wrong — so it belongs
+          here, next to the rule, where the learner has just built the correct
+          sentence and can see which single word separates the two. */}
+      {(checked !== null || revealed) && puzzle.near && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-l-2 border-amber-500/60 bg-card p-4 text-sm shadow-xl"
+        >
+          <span className="text-[10px] uppercase tracking-[0.25em] text-amber-500">
+            Trông đúng mà vẫn sai ·{" "}
+          </span>
+          <span className="text-foreground/85">&laquo;{puzzle.near}&raquo;</span>
         </motion.div>
       )}
 

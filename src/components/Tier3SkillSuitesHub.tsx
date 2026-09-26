@@ -33,17 +33,20 @@ const SUITE_DOORS = [
     tag: "Etiquette",
     detail: "Biến câu nói cộc lốc thành câu phục vụ lịch sự, chuẩn 5 sao.",
   },
-  {
-    slug: "speaking",
-    title: "Elite AI Speaking",
-    tag: "Voice",
-    detail: "Luyện nói phản hồi khách chuẩn concierge, có chấm điểm tự động.",
-  },
+  // Listening before speaking: the speaking suite answers the very lines the
+  // listening suite trains the ear on, so hearing them first is the order the
+  // week is built in. The doors render in this order and carry its number.
   {
     slug: "listening",
     title: "Golden Ear Listening",
     tag: "Attention",
     detail: "Luyện tai nghe yêu cầu của khách qua nhiều giọng đọc và tốc độ khác nhau.",
+  },
+  {
+    slug: "speaking",
+    title: "Elite AI Speaking",
+    tag: "Voice",
+    detail: "Luyện nói phản hồi khách chuẩn concierge, có chấm điểm tự động.",
   },
   {
     slug: "reading",
@@ -195,10 +198,12 @@ export function Tier3SkillSuitesHub({
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-foreground/70">
             {department.name_en}
-            {department.name_vi ? ` · ${department.name_vi}` : ""}. Select one suite door to begin
-            this shift module.{" "}
-            <span className="italic text-foreground/60">
-              Hãy chọn một cánh cửa suite để bắt đầu module ca làm việc này.
+            {department.name_vi ? ` · ${department.name_vi}` : ""}.{" "}
+            {/* Six doors with no order was the first thing three reviews said a
+                learner without a teacher cannot work out alone. */}
+            <span className="text-foreground/80">
+              Thứ tự gợi ý: làm lần lượt các cửa từ 1 đến 6 — Từ vựng → Ngữ pháp → Nghe → Nói → Đọc
+              → Arcade. Mở Sổ tay tuần trước phần Nói. Ở tuần sát hạch, làm bài sát hạch sau cùng.
             </span>
           </p>
 
@@ -263,7 +268,10 @@ export function Tier3SkillSuitesHub({
                 onClick={() => document.body.setAttribute("data-active-suite", suite.slug)}
                 className="group relative flex h-64 flex-col overflow-hidden border border-primary/30 bg-card p-5 text-left shadow-xl transition-colors hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/70"
               >
-                <span className="text-xs uppercase tracking-[0.3em] text-primary">{suite.tag}</span>
+                <span className="text-xs uppercase tracking-[0.3em] text-primary">
+                  {index < SUITE_DOORS.length ? `${index + 1} · ` : ""}
+                  {suite.tag}
+                </span>
                 <span className="font-display mt-5 block text-2xl leading-tight text-foreground">
                   {suite.title}
                 </span>

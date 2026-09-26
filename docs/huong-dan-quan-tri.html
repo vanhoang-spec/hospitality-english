@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <title>Embassy Hospitality English — Hướng dẫn quản trị nền tảng</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 18mm 16mm 20mm 16mm;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", "Times New Roman", Arial, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.5;
+        color: #17181a;
+        margin: 0;
+      }
+      h1 {
+        font-size: 22pt;
+        margin: 0 0 2mm;
+        letter-spacing: -0.3pt;
+      }
+      h2 {
+        font-size: 14pt;
+        margin: 9mm 0 3mm;
+        padding-bottom: 1.5mm;
+        border-bottom: 1.2pt solid #8a6a2f;
+        color: #6b4f1d;
+        page-break-after: avoid;
+      }
+      h3 {
+        font-size: 11.5pt;
+        margin: 5mm 0 2mm;
+        color: #2a2c30;
+        page-break-after: avoid;
+      }
+      p {
+        margin: 0 0 2.5mm;
+      }
+      ul,
+      ol {
+        margin: 0 0 3mm;
+        padding-left: 6mm;
+      }
+      li {
+        margin-bottom: 1.2mm;
+      }
+      code {
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 9.2pt;
+        background: #f2f1ee;
+        padding: 0.3mm 1mm;
+        border-radius: 1mm;
+      }
+      pre {
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 8.8pt;
+        line-height: 1.4;
+        background: #f7f6f3;
+        border: 0.4pt solid #ddd9d0;
+        border-left: 2pt solid #8a6a2f;
+        padding: 3mm 3.5mm;
+        margin: 0 0 3.5mm;
+        white-space: pre-wrap;
+        page-break-inside: avoid;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 0 4mm;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+      }
+      th,
+      td {
+        border: 0.4pt solid #ccc7bc;
+        padding: 1.6mm 2mm;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #f2efe8;
+        font-weight: 600;
+        font-size: 8.8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.3pt;
+      }
+      td.num,
+      th.num {
+        text-align: right;
+        white-space: nowrap;
+      }
+      .cover {
+        page-break-after: always;
+        padding-top: 45mm;
+      }
+      .kicker {
+        font-size: 9pt;
+        letter-spacing: 3pt;
+        text-transform: uppercase;
+        color: #8a6a2f;
+      }
+      .sub {
+        font-size: 12pt;
+        color: #4a4c50;
+        margin-top: 3mm;
+      }
+      .meta {
+        margin-top: 30mm;
+        font-size: 9.5pt;
+        color: #55575b;
+      }
+      .meta td {
+        border: none;
+        padding: 1mm 0;
+      }
+      .meta td:first-child {
+        width: 42mm;
+        color: #8a6a2f;
+        text-transform: uppercase;
+        font-size: 8.5pt;
+        letter-spacing: 0.6pt;
+      }
+      .note {
+        border: 0.4pt solid #c9a227;
+        background: #fdf8e8;
+        padding: 3mm 3.5mm;
+        margin: 0 0 4mm;
+        page-break-inside: avoid;
+      }
+      .warn {
+        border: 0.4pt solid #b4472f;
+        background: #fdefe9;
+        padding: 3mm 3.5mm;
+        margin: 0 0 4mm;
+        page-break-inside: avoid;
+      }
+      .note p:last-child,
+      .warn p:last-child {
+        margin-bottom: 0;
+      }
+      .label {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 8.5pt;
+        letter-spacing: 0.6pt;
+        display: block;
+        margin-bottom: 1mm;
+      }
+      .note .label {
+        color: #8a6a2f;
+      }
+      .warn .label {
+        color: #b4472f;
+      }
+      .toc li {
+        margin-bottom: 1.6mm;
+      }
+      .step {
+        border-left: 2pt solid #8a6a2f;
+        padding-left: 4mm;
+        margin-bottom: 5mm;
+        page-break-inside: avoid;
+      }
+      .step h3 {
+        margin-top: 0;
+      }
+      .muted {
+        color: #6a6c70;
+        font-size: 9.5pt;
+      }
+      .pagebreak {
+        page-break-before: always;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="cover">
+      <div class="kicker">Embassy Hospitality English</div>
+      <h1>Hướng dẫn quản trị nền tảng</h1>
+      <div class="sub">
+        Từ tài khoản Super Admin, bảng giá theo gói, đến việc mở một khách sạn mới và bàn giao cho
+        HR
+      </div>
+      <table class="meta">
+        <tr>
+          <td>Phiên bản</td>
+          <td>1.0 — 24/09/2026</td>
+        </tr>
+        <tr>
+          <td>Dành cho</td>
+          <td>Quản trị nền tảng (Super Admin) và người phụ trách HR của khách sạn</td>
+        </tr>
+        <tr>
+          <td>Dự án Supabase</td>
+          <td>Hospitality English_App · <code>qndpocpavzwpephooffk</code> · ap-southeast-1</td>
+        </tr>
+        <tr>
+          <td>Nguồn</td>
+          <td>
+            <code>docs/huong-dan-quan-tri.html</code> trong repo — sửa file này rồi xuất lại PDF
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <h2>Mục lục</h2>
+    <ol class="toc">
+      <li>Hiện trạng hệ thống tại ngày xuất tài liệu</li>
+      <li>Bước 0 — Đưa nền tảng lên production</li>
+      <li>Ba vai trò, và ai làm được gì</li>
+      <li>Tài khoản Super Admin</li>
+      <li>Bảng giá theo gói và kỳ hạn</li>
+      <li>Mở một khách sạn mới</li>
+      <li>HR quản lý học viên</li>
+      <li>Học viên đăng nhập lần đầu</li>
+      <li>Nhóm, ma trận mở khoá theo tuần, và học tuần tự</li>
+      <li>Báo cáo học tập</li>
+      <li>Hết hạn, gia hạn, và đổi gói</li>
+      <li>Những giới hạn đã biết — đọc trước khi cam kết với khách hàng</li>
+      <li>Phụ lục: tra nhanh</li>
+    </ol>
+
+    <h2>1. Hiện trạng hệ thống tại ngày xuất tài liệu</h2>
+    <p>
+      Kiểm trực tiếp trên dự án Supabase production, chỉ đọc, ngày 24/09/2026. Đây là trạng thái
+      thật chứ không phải trạng thái mong muốn — đọc kỹ mục này trước khi làm bất cứ bước nào.
+    </p>
+    <table>
+      <tr>
+        <th>Hạng mục</th>
+        <th>Trạng thái</th>
+      </tr>
+      <tr>
+        <td>Migration mới nhất đã áp dụng</td>
+        <td><code>20260725100000_writing_mediation_suites</code></td>
+      </tr>
+      <tr>
+        <td>Bốn migration nền tảng</td>
+        <td><strong>Chưa áp dụng</strong> — xem bước 0</td>
+      </tr>
+      <tr>
+        <td>Bảng <code>organizations</code></td>
+        <td><strong>0 dòng</strong> — chưa có khách sạn nào</td>
+      </tr>
+      <tr>
+        <td>Bảng <code>profiles</code></td>
+        <td>1 dòng, vai trò <code>super_admin</code>, chưa thuộc tổ chức nào</td>
+      </tr>
+      <tr>
+        <td>Hàm hỗ trợ đã có</td>
+        <td>
+          <code>current_org_id</code>, <code>org_of</code>, <code>is_org_admin</code>,
+          <code>is_super_admin</code>, <code>award_stars</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Hàm còn thiếu</td>
+        <td>
+          <code>org_seat_limit</code>, <code>org_is_active</code> — nằm trong migration chưa chạy
+        </td>
+      </tr>
+    </table>
+    <div class="note">
+      <span class="label">Tin tốt</span>
+      <p>
+        Tài khoản Super Admin <strong>đã tồn tại</strong> trên production. Không cần tạo bằng SQL
+        như các tài liệu trước đã ghi.
+      </p>
+    </div>
+    <p>
+      Nghĩa là: toàn bộ phần bán hàng — gói, thuê bao, ghế, nhóm, báo cáo, bảng giá — hiện chỉ tồn
+      tại trong mã nguồn. Cho tới khi chạy xong bước 0, các màn hình quản trị sẽ báo lỗi vì bảng
+      chưa tồn tại.
+    </p>
+
+    <h2>2. Bước 0 — Đưa nền tảng lên production</h2>
+    <p>Làm một lần, theo đúng thứ tự. Chạy từ thư mục gốc của repo.</p>
+
+    <div class="step">
+      <h3>2.1 · Áp dụng bốn migration</h3>
+      <pre>supabase db push</pre>
+      <p>Bốn file sẽ được áp dụng theo thứ tự tên:</p>
+      <table>
+        <tr>
+          <th>File</th>
+          <th>Nó dựng cái gì</th>
+        </tr>
+        <tr>
+          <td><code>20260923120000_plans_subscriptions_sessions.sql</code></td>
+          <td>
+            <code>plans</code>, <code>subscriptions</code>, <code>org_settings</code>,
+            <code>admin_actions</code>, <code>active_sessions</code>; hàm
+            <code>org_seat_limit()</code>, <code>org_is_active()</code>; sửa trigger đếm ghế; chính
+            sách chặn ghi khi hết hạn
+          </td>
+        </tr>
+        <tr>
+          <td><code>20260923130000_learning_telemetry.sql</code></td>
+          <td><code>attempts</code>, <code>study_sessions</code> — dữ liệu cho báo cáo của HR</td>
+        </tr>
+        <tr>
+          <td><code>20260923140000_groups_and_access.sql</code></td>
+          <td><code>groups</code>, <code>group_members</code>, <code>access_rules</code></td>
+        </tr>
+        <tr>
+          <td><code>20260924090000_plan_pricing.sql</code></td>
+          <td>
+            <code>plan_prices</code> (bảng giá niêm yết) và hai cột <code>price</code>,
+            <code>currency</code> trên <code>subscriptions</code>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <h3>2.2 · Sinh lại file kiểu dữ liệu</h3>
+      <p>
+        <code>src/integrations/supabase/types.ts</code> hiện đang được viết tay cho khớp với bốn
+        migration trên. Sau khi chạy xong phải sinh lại từ database thật để hai bên không trôi khỏi
+        nhau:
+      </p>
+      <pre>
+supabase gen types typescript --project-id qndpocpavzwpephooffk &gt; src/integrations/supabase/types.ts
+bun run typecheck</pre
+      >
+    </div>
+
+    <div class="step">
+      <h3>2.3 · Kiểm tra nhanh trước khi bán</h3>
+      <p>Đăng nhập bằng tài khoản Super Admin rồi mở <code>/admin-console</code>. Nếu thấy:</p>
+      <ul>
+        <li>bảng khách sạn (rỗng là đúng),</li>
+        <li>khối <em>Thêm khách sạn mới</em>,</li>
+        <li>khối <em>Bảng giá theo gói</em> với lưới 5 gói × 4 kỳ hạn,</li>
+      </ul>
+      <p>thì nền tảng đã sống. Nếu màn hình báo lỗi tải dữ liệu, migration chưa chạy xong.</p>
+    </div>
+
+    <h2>3. Ba vai trò, và ai làm được gì</h2>
+    <p>
+      Vai trò nằm ở cột <code>profiles.role</code>. Chỉ có ba giá trị hợp lệ, và ràng buộc trong
+      database chặn mọi giá trị khác.
+    </p>
+    <table>
+      <tr>
+        <th>Vai trò</th>
+        <th>Tên trên giao diện</th>
+        <th>Làm được gì</th>
+        <th class="num">Tốn ghế?</th>
+      </tr>
+      <tr>
+        <td><code>super_admin</code></td>
+        <td>Quản trị nền tảng</td>
+        <td>
+          Tạo khách sạn, gán và gia hạn gói, sửa bảng giá, xem mọi tổ chức. Không thuộc tổ chức nào.
+        </td>
+        <td class="num">Không</td>
+      </tr>
+      <tr>
+        <td><code>org_admin</code></td>
+        <td>HR</td>
+        <td>
+          Thêm/xoá học viên của chính khách sạn mình, nhập CSV, đặt lại mật khẩu, lập nhóm và ma
+          trận mở khoá, xem báo cáo.
+        </td>
+        <td class="num">Không</td>
+      </tr>
+      <tr>
+        <td><code>member</code></td>
+        <td>Học viên</td>
+        <td>Học, làm bài, ôn tập.</td>
+        <td class="num"><strong>Có</strong></td>
+      </tr>
+    </table>
+    <div class="note">
+      <span class="label">Vì sao HR dùng lại vai trò <code>org_admin</code></span>
+      <p>
+        Thêm một vai trò thứ tư chỉ để đổi tên sẽ phải viết lại hàm <code>is_org_admin()</code>, bốn
+        chính sách RLS và mọi hàm máy chủ — mà không được thêm quyền hạn nào. Nên trong database nó
+        là <code>org_admin</code>, còn trên màn hình gọi là HR.
+      </p>
+    </div>
+
+    <h2>4. Tài khoản Super Admin</h2>
+    <h3>4.1 · Kiểm tra tài khoản hiện có</h3>
+    <p>Chạy trong SQL Editor của Supabase:</p>
+    <pre>select id, full_name, role, org_id from public.profiles where role = 'super_admin';</pre>
+    <p>
+      Hôm nay câu này trả về đúng một dòng. Cột <code>org_id</code> phải là <code>null</code> —
+      Super Admin đứng ngoài mọi khách sạn.
+    </p>
+
+    <h3>4.2 · Bổ nhiệm người thứ hai</h3>
+    <p>
+      Theo thiết kế đã chốt, nhóm quản trị nền tảng gồm chủ sở hữu và tối đa một đến hai người được
+      bổ nhiệm. Cách làm:
+    </p>
+    <ol>
+      <li>
+        Người đó đăng nhập vào ứng dụng một lần bằng số điện thoại để hệ thống tạo hồ sơ
+        (<code>profiles</code>).
+      </li>
+      <li>Super Admin hiện tại chạy câu lệnh sau, thay số điện thoại thật:</li>
+    </ol>
+    <pre>
+update public.profiles
+   set role = 'super_admin', org_id = null
+ where id = (select id from auth.users where phone = '84912345678');</pre
+    >
+    <div class="warn">
+      <span class="label">Cẩn trọng</span>
+      <p>
+        Super Admin thấy và sửa được dữ liệu của <strong>mọi</strong> khách sạn. Đừng bổ nhiệm để
+        tiện việc; người phụ trách một khách sạn cụ thể phải là HR của khách sạn đó.
+      </p>
+    </div>
+
+    <h2>5. Bảng giá theo gói và kỳ hạn</h2>
+    <p>
+      Năm gói theo số học viên, một kỳ dùng thử miễn phí và bốn kỳ hạn trả phí. Số ghế của mỗi gói
+      là cố định trong database; giá thì do Super Admin điền.
+    </p>
+    <table>
+      <tr>
+        <th>Mã gói</th>
+        <th class="num">Số học viên</th>
+        <th>Kỳ hạn bán</th>
+      </tr>
+      <tr>
+        <td><code>p50</code></td>
+        <td class="num">50</td>
+        <td rowspan="5">Dùng thử 1 tháng (miễn phí) · 3 tháng · 6 tháng · 9 tháng · 12 tháng</td>
+      </tr>
+      <tr>
+        <td><code>p100</code></td>
+        <td class="num">100</td>
+      </tr>
+      <tr>
+        <td><code>p200</code></td>
+        <td class="num">200</td>
+      </tr>
+      <tr>
+        <td><code>p300</code></td>
+        <td class="num">300</td>
+      </tr>
+      <tr>
+        <td><code>p500</code></td>
+        <td class="num">500</td>
+      </tr>
+    </table>
+
+    <h3>5.1 · Điền bảng giá</h3>
+    <ol>
+      <li>Mở <code>/admin-console</code>, cuộn xuống khối <strong>Bảng giá theo gói</strong>.</li>
+      <li>
+        Lưới có 5 hàng (gói) × 4 cột (kỳ hạn trả phí). Gói dùng thử không có ô nhập vì nó miễn phí
+        theo thoả thuận.
+      </li>
+      <li>
+        Gõ số tiền bằng đồng, không dấu chấm phẩy — ô tự lọc ký tự không phải chữ số. Dòng chữ nhỏ
+        bên dưới hiển thị lại số đã lưu theo định dạng Việt Nam để đối chiếu bằng mắt.
+      </li>
+      <li>Bấm <strong>Lưu</strong> ở từng ô. Nút chỉ sáng khi giá trị đã khác số đang lưu.</li>
+    </ol>
+
+    <h3>5.2 · Giá niêm yết và giá thực thu là hai thứ khác nhau</h3>
+    <p>Đây là điểm quan trọng nhất của phần giá, và nó có lý do vận hành:</p>
+    <table>
+      <tr>
+        <th>Khái niệm</th>
+        <th>Nằm ở đâu</th>
+        <th>Ý nghĩa</th>
+      </tr>
+      <tr>
+        <td>Giá niêm yết</td>
+        <td><code>plan_prices</code></td>
+        <td>Giá bán ra hôm nay. Sửa lúc nào cũng được.</td>
+      </tr>
+      <tr>
+        <td>Giá thực thu</td>
+        <td><code>subscriptions.price</code></td>
+        <td>
+          Số tiền đã chốt của đúng hợp đồng đó. Ghi lại tại thời điểm ký và
+          <strong>không đổi</strong> khi bảng giá đổi.
+        </td>
+      </tr>
+    </table>
+    <p>
+      Khi tạo khách sạn hoặc gia hạn, ô <em>Giá thực thu</em> để trống thì hệ thống lấy đúng giá
+      niêm yết. Điền số vào đó là bán có chiết khấu, và số đó mới là số đi vào hợp đồng. Nhờ vậy
+      tăng giá năm sau không làm đổi hoá đơn của khách đã ký năm nay.
+    </p>
+    <div class="note">
+      <span class="label">Giá trị <code>null</code> khác giá trị 0</span>
+      <p>
+        Hợp đồng ký trước khi có bảng giá sẽ mang <code>price = null</code>, nghĩa là
+        <em>chưa biết</em>. Số 0 nghĩa là <em>miễn phí</em>. Đừng thay cái này bằng cái kia khi làm
+        báo cáo doanh thu.
+      </p>
+    </div>
+
+    <h2 class="pagebreak">6. Mở một khách sạn mới</h2>
+    <p>
+      Kịch bản: một khách sạn hoặc resort đồng ý mua cho nhân viên của họ. Toàn bộ việc này làm ở
+      <code>/admin-console</code>, khối <strong>Thêm khách sạn mới</strong>, và mất chừng một phút.
+    </p>
+
+    <div class="step">
+      <h3>Bước 1 · Điền sáu ô</h3>
+      <table>
+        <tr>
+          <th>Ô</th>
+          <th>Điền gì</th>
+        </tr>
+        <tr>
+          <td>Tên khách sạn</td>
+          <td>Tên hiển thị cho HR và học viên. 2–120 ký tự.</td>
+        </tr>
+        <tr>
+          <td>Gói</td>
+          <td>Chọn theo số nhân viên họ muốn cho học, không phải tổng nhân sự.</td>
+        </tr>
+        <tr>
+          <td>Kỳ hạn</td>
+          <td>Dùng thử 1 tháng, hoặc 3/6/9/12 tháng.</td>
+        </tr>
+        <tr>
+          <td>Tên người phụ trách (HR)</td>
+          <td>Người sẽ quản lý danh sách học viên phía khách sạn.</td>
+        </tr>
+        <tr>
+          <td>Số điện thoại HR</td>
+          <td>
+            Số Việt Nam. Hệ thống tự chuẩn hoá <code>0912…</code> thành <code>84912…</code>. Đây
+            chính là tên đăng nhập.
+          </td>
+        </tr>
+        <tr>
+          <td>Mật khẩu tạm</td>
+          <td>Ít nhất 8 ký tự. HR buộc phải đổi ở lần đăng nhập đầu tiên.</td>
+        </tr>
+      </table>
+      <p class="muted">
+        Ô <em>Giá thực thu</em> để trống nếu bán đúng giá niêm yết. Dòng chữ bên dưới luôn hiển thị
+        giá niêm yết của gói và kỳ hạn đang chọn.
+      </p>
+    </div>
+
+    <div class="step">
+      <h3>Bước 2 · Bấm “Tạo khách sạn”</h3>
+      <p>Một thao tác, bốn việc xảy ra trong cùng một lần gọi:</p>
+      <ol>
+        <li>
+          Tạo tổ chức trong <code>organizations</code>, với <code>seat_limit</code> bằng đúng số ghế
+          của gói.
+        </li>
+        <li>
+          Tạo hợp đồng trong <code>subscriptions</code>: ngày bắt đầu là hôm nay, ngày kết thúc cộng
+          đúng số tháng của kỳ hạn, kèm số tiền đã chốt.
+        </li>
+        <li>
+          Tạo tài khoản HR với cờ buộc đổi mật khẩu, gắn sẵn vào tổ chức vừa tạo với vai trò
+          <code>org_admin</code>.
+        </li>
+        <li>Ghi một dòng vào nhật ký quản trị <code>admin_actions</code>.</li>
+      </ol>
+    </div>
+
+    <div class="step">
+      <h3>Bước 3 · Bàn giao cho khách sạn</h3>
+      <p>Gửi cho người phụ trách HR ba thông tin, qua kênh riêng:</p>
+      <ul>
+        <li>đường dẫn ứng dụng,</li>
+        <li>số điện thoại dùng làm tên đăng nhập,</li>
+        <li>mật khẩu tạm.</li>
+      </ul>
+      <p>
+        Dặn họ: lần đăng nhập đầu tiên hệ thống sẽ bắt đổi mật khẩu trước khi vào được bất cứ đâu.
+      </p>
+    </div>
+
+    <div class="warn">
+      <span class="label">Không có luồng khôi phục mật khẩu tự động</span>
+      <p>
+        Học viên quên mật khẩu thì HR đặt lại hộ ở màn hình <em>Team</em>. HR quên mật khẩu thì
+        Super Admin phải đặt lại trong bảng điều khiển Supabase (Authentication → Users). Hãy tính
+        trước điều này khi bàn giao.
+      </p>
+    </div>
+
+    <h2>7. HR quản lý học viên</h2>
+    <p>
+      Màn hình <code>/org-admin</code>, liên kết trên thanh điều hướng tên là <strong>Team</strong>.
+    </p>
+
+    <h3>7.1 · Thêm từng người</h3>
+    <p>
+      Điền họ tên, số điện thoại, bộ phận, rồi bấm thêm. Hệ thống sinh mật khẩu tạm và hiện ra một
+      lần để HR chép lại. Tài khoản mới buộc đổi mật khẩu ở lần đăng nhập đầu.
+    </p>
+
+    <h3>7.2 · Nhập hàng loạt bằng CSV</h3>
+    <ol>
+      <li>Bấm <strong>Nhập từ CSV</strong> rồi <strong>Tải file mẫu CSV</strong>.</li>
+      <li>Điền vào file mẫu, giữ nguyên dòng tiêu đề.</li>
+      <li>Chọn file. Màn hình kiểm trước và báo số dòng hợp lệ, số dòng lỗi.</li>
+      <li>
+        Nếu số dòng hợp lệ vượt số ghế còn trống, màn hình cảnh báo ngay và các dòng vượt hạn mức sẽ
+        báo lỗi khi nhập.
+      </li>
+      <li>
+        Sau khi nhập, bấm <strong>Tải kết quả CSV</strong> để lấy file gồm tên, số điện thoại và mật
+        khẩu tạm của từng người — đây là bản duy nhất, tải xong hãy phát cho nhân viên rồi xoá.
+      </li>
+    </ol>
+
+    <h3>7.3 · Ghế được tính như thế nào</h3>
+    <ul>
+      <li>Một ghế là một <strong>tài khoản học viên</strong>, không phải một kết nối đồng thời.</li>
+      <li>Chỉ tài khoản vai trò <code>member</code> tính ghế. Tài khoản HR không tốn ghế.</li>
+      <li>
+        Xoá một học viên là giải phóng ghế <strong>ngay lập tức</strong>, thêm được người mới.
+      </li>
+      <li>
+        Nâng một học viên lên HR cũng trả lại ghế; hạ một HR xuống học viên thì chiếm một ghế, và
+        database sẽ chặn nếu đã kín.
+      </li>
+      <li>
+        Khi kín ghế, thao tác thêm người báo lỗi <code>SEAT_QUOTA_EXCEEDED</code> với số ghế đang
+        dùng trên tổng số.
+      </li>
+    </ul>
+    <p>
+      Phần “một trăm người dùng nghĩa là một trăm người” được bảo đảm bằng hai lớp: đếm tài khoản ở
+      trên, và <strong>một phiên đăng nhập sống cho mỗi tài khoản</strong> ở mục 8.3 — đó mới là thứ
+      chặn cả ca cùng dùng chung một mật khẩu.
+    </p>
+
+    <h3>7.4 · Các thao tác khác</h3>
+    <ul>
+      <li><strong>Đặt lại mật khẩu</strong> — sinh mật khẩu tạm mới, người đó phải đổi khi vào.</li>
+      <li><strong>Đổi vai trò</strong> — nâng một người thành HR thứ hai, hoặc ngược lại.</li>
+      <li><strong>Xoá</strong> — xoá tài khoản và trả ghế.</li>
+    </ul>
+    <p class="muted">Mọi thao tác trên đều ghi một dòng vào nhật ký <code>admin_actions</code>.</p>
+
+    <h2>8. Học viên đăng nhập lần đầu</h2>
+    <h3>8.1 · Đăng nhập</h3>
+    <p>
+      Màn hình <code>/login</code> hỏi <strong>số điện thoại</strong> và <strong>mật khẩu</strong>.
+      Không dùng email. Người học gõ <code>0912…</code> cũng được, hệ thống tự chuẩn hoá.
+    </p>
+
+    <h3>8.2 · Buộc đổi mật khẩu</h3>
+    <p>
+      Tài khoản do HR tạo mang cờ <code>must_change_password</code>. Ngay sau khi đăng nhập, người
+      dùng bị đưa tới <code>/change-password</code> và không vào được phần học cho tới khi đổi xong.
+    </p>
+
+    <h3>8.3 · Một phiên sống cho mỗi tài khoản</h3>
+    <p>
+      Trình duyệt sinh một mã phiên khi đăng nhập và gửi tín hiệu duy trì mỗi ba phút. Khi một thiết
+      bị thứ hai đăng nhập cùng tài khoản, nó ghi mã phiên của mình; thiết bị thứ nhất nhận ra ở lần
+      gửi tín hiệu kế tiếp và tự đăng xuất.
+    </p>
+    <div class="note">
+      <span class="label">Cố ý mở khi lỗi</span>
+      <p>
+        Nếu việc kiểm tra phiên gặp lỗi mạng, hệ thống <strong>không</strong> đăng xuất ai cả. Một
+        nhân viên buồng phòng mất bài giữa chừng vì sóng yếu là hỏng nặng hơn một mật khẩu bị dùng
+        chung trong vài phút.
+      </p>
+    </div>
+
+    <h3>8.4 · Máy tính dùng chung ở văn phòng</h3>
+    <p>
+      Khi đăng xuất, toàn bộ dữ liệu học tập lưu tạm trên máy được xoá sạch. Điều này đã từng là lỗi
+      thật: trước đây người đăng nhập thứ hai trên cùng một máy thừa hưởng sao và tiến độ của người
+      thứ nhất.
+    </p>
+
+    <h2>9. Nhóm, ma trận mở khoá theo tuần, và học tuần tự</h2>
+    <p>Màn hình <code>/org-access</code>, liên kết tên là <strong>Nhóm</strong>. Do HR tự làm.</p>
+
+    <h3>9.1 · Mặc định</h3>
+    <p>
+      Không tạo nhóm nào thì học viên vào được toàn bộ khoá — đúng như thoả thuận ban đầu. Ma trận
+      chỉ có tác dụng với những người đã được xếp vào một nhóm.
+    </p>
+
+    <h3>9.2 · Lập nhóm và ma trận</h3>
+    <ol>
+      <li>Tạo nhóm, ví dụ “Lễ tân đợt 1”.</li>
+      <li>Tích chọn thành viên thuộc nhóm.</li>
+      <li>
+        Thêm luật mở khoá: một dòng gồm <em>bộ phận</em> và <em>khoảng tuần</em>. Ví dụ Lễ tân, tuần
+        1 đến 6.
+      </li>
+      <li>Một nhóm có nhiều dòng luật; học viên mở được phần hợp của tất cả các dòng đó.</li>
+    </ol>
+
+    <h3>9.3 · Học theo lộ trình</h3>
+    <p>
+      Một công tắc bật/tắt cho cả khách sạn. Khi bật, học viên phải hoàn thành tuần trước mới mở
+      được tuần sau. Khi tắt, mở hết theo ma trận.
+    </p>
+
+    <div class="warn">
+      <span class="label">Đây là khoá ở tầng giao diện</span>
+      <p>
+        Nội dung bài học nằm trong gói JavaScript gửi về trình duyệt. Một người biết mở công cụ dành
+        cho nhà phát triển vẫn đọc được nội dung tuần chưa mở. Ma trận và lộ trình quyết định ứng
+        dụng <em>mời</em> học viên học gì, không quyết định cái gì tồn tại trên máy họ. Điều này đã
+        được ghi thẳng trong migration và là lựa chọn có chủ đích, không phải sót.
+      </p>
+    </div>
+
+    <h2>10. Báo cáo học tập</h2>
+    <p>
+      Màn hình <code>/org-reports</code>, liên kết tên là <strong>Báo cáo</strong>. HR chỉ thấy
+      khách sạn của mình.
+    </p>
+    <p>Cửa sổ 30 ngày gần nhất, mỗi học viên một dòng:</p>
+    <table>
+      <tr>
+        <th>Cột</th>
+        <th>Ý nghĩa</th>
+      </tr>
+      <tr>
+        <td>Số phút học</td>
+        <td>Thời gian thật sự mở ứng dụng và thao tác, không tính lúc để màn hình chạy không.</td>
+      </tr>
+      <tr>
+        <td>Số lượt làm bài</td>
+        <td>Tổng số câu đã trả lời ở mọi kỹ năng.</td>
+      </tr>
+      <tr>
+        <td>Tỷ lệ đúng</td>
+        <td>Trên tất cả các lần trả lời.</td>
+      </tr>
+      <tr>
+        <td>Tỷ lệ đúng ngay lần đầu</td>
+        <td>Con số phân biệt người học thật với người bấm cho xong. Đây là cột đáng nhìn nhất.</td>
+      </tr>
+      <tr>
+        <td>Thẻ ôn quá hạn</td>
+        <td>Số thẻ đã tới lịch ôn mà chưa được ôn.</td>
+      </tr>
+      <tr>
+        <td>Số tuần đã chạm</td>
+        <td>Độ phủ, để thấy ai đang đứng yên một chỗ.</td>
+      </tr>
+    </table>
+    <p>
+      Nút <strong>Xuất CSV</strong> tải file mở được trực tiếp bằng Excel tiếng Việt, không lỗi dấu.
+    </p>
+
+    <h2>11. Hết hạn, gia hạn, và đổi gói</h2>
+    <h3>11.1 · Khi hợp đồng hết hạn</h3>
+    <table>
+      <tr>
+        <th>Ai</th>
+        <th>Chuyện gì xảy ra</th>
+      </tr>
+      <tr>
+        <td>Học viên</td>
+        <td>
+          Thấy màn hình thông báo hết hạn. Không ghi được tiến độ mới — chặn ở tầng database, không
+          phải chỉ ẩn nút.
+        </td>
+      </tr>
+      <tr>
+        <td>HR</td>
+        <td>Vẫn đăng nhập, vẫn xem và xuất báo cáo trong 90 ngày.</td>
+      </tr>
+      <tr>
+        <td>Dữ liệu</td>
+        <td>Giữ 12 tháng, sau đó ẩn danh.</td>
+      </tr>
+    </table>
+
+    <h3>11.2 · Gia hạn</h3>
+    <p>
+      Ở bảng khách sạn trên <code>/admin-console</code>, cột <strong>Gia hạn</strong>: chọn gói,
+      chọn kỳ hạn, bấm <strong>Áp dụng</strong>. Ngày hết hạn hiện màu đỏ khi còn dưới 15 ngày.
+    </p>
+    <div class="note">
+      <span class="label">Gia hạn cộng nối tiếp, không cắt ngắn</span>
+      <p>
+        Nếu hợp đồng cũ còn hạn, hợp đồng mới bắt đầu từ ngày hợp đồng cũ kết thúc chứ không phải từ
+        hôm nay. Bán 12 tháng là khách nhận đủ 12 tháng. Hợp đồng cũ được đóng lại, nên câu hỏi
+        “khách sạn này đang ở gói nào” luôn có đúng một câu trả lời.
+      </p>
+    </div>
+
+    <h3>11.3 · Đổi gói giữa chừng</h3>
+    <p>
+      Chọn gói khác rồi áp dụng. Số ghế đổi theo ngay. Hạ gói xuống thấp hơn số học viên đang có thì
+      những người hiện tại vẫn giữ nguyên, nhưng HR không thêm được ai cho tới khi số học viên xuống
+      dưới hạn mức mới.
+    </p>
+
+    <h2>12. Những giới hạn đã biết — đọc trước khi cam kết với khách hàng</h2>
+    <ol>
+      <li>
+        <strong>Khoá nội dung là khoá giao diện.</strong> Xem mục 9.3. Đừng cam kết với khách rằng
+        học viên “không thể” xem trước nội dung.
+      </li>
+      <li>
+        <strong>Không có khôi phục mật khẩu tự động.</strong> Học viên nhờ HR; HR nhờ Super Admin.
+      </li>
+      <li>
+        <strong>Chưa có thanh toán trực tuyến.</strong> Bảng giá và số tiền hợp đồng là để ghi nhận
+        và xuất hoá đơn thủ công; hệ thống không nhận tiền.
+      </li>
+      <li>
+        <strong>Một phiên sống mỗi tài khoản là biện pháp răn đe, không phải khoá cứng.</strong> Nó
+        làm việc dùng chung mật khẩu trở nên phiền toái, không làm nó bất khả thi.
+      </li>
+      <li>
+        <strong>Nội dung khoá học hiện đã nghiệm thu tới tuần 22.</strong> Tuần 23–40 vẫn còn nợ
+        chất lượng đã đo được. Khi bán một gói 12 tháng, hãy nói rõ lộ trình phát hành nội dung.
+      </li>
+    </ol>
+
+    <h2>13. Phụ lục: tra nhanh</h2>
+    <h3>13.1 · Bốn màn hình quản trị</h3>
+    <table>
+      <tr>
+        <th>Đường dẫn</th>
+        <th>Ai vào được</th>
+        <th>Để làm gì</th>
+      </tr>
+      <tr>
+        <td><code>/admin-console</code></td>
+        <td>Super Admin</td>
+        <td>Khách sạn, gói, gia hạn, bảng giá</td>
+      </tr>
+      <tr>
+        <td><code>/org-admin</code></td>
+        <td>HR</td>
+        <td>Danh sách học viên, nhập CSV, mật khẩu, vai trò</td>
+      </tr>
+      <tr>
+        <td><code>/org-access</code></td>
+        <td>HR</td>
+        <td>Nhóm, ma trận mở khoá, học tuần tự</td>
+      </tr>
+      <tr>
+        <td><code>/org-reports</code></td>
+        <td>HR</td>
+        <td>Báo cáo 30 ngày, xuất CSV</td>
+      </tr>
+    </table>
+
+    <h3>13.2 · Câu lệnh kiểm tra thường dùng</h3>
+    <pre>
+-- Khách sạn, ghế đã dùng, gói đang chạy
+select o.name,
+       count(p.id) filter (where p.role = 'member')     as hoc_vien,
+       count(p.id) filter (where p.role = 'org_admin')  as hr,
+       o.seat_limit,
+       s.plan_code, s.kind, s.ends_at, s.price
+  from public.organizations o
+  left join public.profiles p on p.org_id = o.id
+  left join public.subscriptions s on s.org_id = o.id and s.status = 'active'
+ group by o.id, o.name, o.seat_limit, s.plan_code, s.kind, s.ends_at, s.price
+ order by o.name;
+
+-- Bảng giá hiện tại
+select plan_code, term, price, currency, updated_at
+  from public.plan_prices order by plan_code, term;
+
+-- Hợp đồng sắp hết hạn trong 30 ngày
+select o.name, s.plan_code, s.kind, s.ends_at
+  from public.subscriptions s join public.organizations o on o.id = s.org_id
+ where s.status = 'active' and s.ends_at &lt; now() + interval '30 days'
+ order by s.ends_at;
+
+-- Nhật ký quản trị gần đây
+select created_at, action, org_id, meta
+  from public.admin_actions order by created_at desc limit 50;</pre
+    >
+
+    <h3>13.3 · Lỗi hay gặp</h3>
+    <table>
+      <tr>
+        <th>Thông báo</th>
+        <th>Nghĩa là</th>
+        <th>Làm gì</th>
+      </tr>
+      <tr>
+        <td><code>SEAT_QUOTA_EXCEEDED</code></td>
+        <td>Đã kín ghế của gói</td>
+        <td>Xoá học viên không còn học, hoặc nâng gói</td>
+      </tr>
+      <tr>
+        <td>Màn hình quản trị báo lỗi tải dữ liệu</td>
+        <td>Migration chưa chạy</td>
+        <td>Xem bước 0</td>
+      </tr>
+      <tr>
+        <td>“Trang này chỉ dành cho quản trị nền tảng”</td>
+        <td>Tài khoản không phải <code>super_admin</code></td>
+        <td>Kiểm bằng câu lệnh ở mục 4.1</td>
+      </tr>
+      <tr>
+        <td>Học viên bị đăng xuất khi đang học</td>
+        <td>Tài khoản đó vừa đăng nhập ở thiết bị khác</td>
+        <td>Mỗi người một tài khoản riêng</td>
+      </tr>
+      <tr>
+        <td>“Số điện thoại hoặc mật khẩu không đúng”</td>
+        <td>Sai thông tin, hoặc tài khoản chưa được tạo</td>
+        <td>HR kiểm lại danh sách và đặt lại mật khẩu</td>
+      </tr>
+    </table>
+  </body>
+</html>

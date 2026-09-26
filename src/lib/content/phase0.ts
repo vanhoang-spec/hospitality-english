@@ -420,6 +420,23 @@ export function game(
   wrongB: string,
   role?: GameRound["speakerRole"],
   explanation?: string,
+  /** What is wrong with `wrongA`. Defaults to "form" — the broken English
+   *  this slot is normally filled with — and every round that leaves it alone
+   *  behaves exactly as before.
+   *
+   *  It has to be sayable because the slot is not always broken English. The
+   *  arcade branches on this tag: a `form` bubble gets a canned line — "Câu đó
+   *  thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được" — INSTEAD of
+   *  the authored explanation, and the tag was hard-coded, so the canned line
+   *  was printed over rounds whose own explanation opens "Câu này đúng ngữ
+   *  pháp nhưng là một mệnh lệnh". The learner was told a well-formed sentence
+   *  was not English, one screen after the course said it was.
+   *
+   *  Declaring "register" hands that round back its authored explanation, so
+   *  it is only right when that explanation is true of THIS option as well —
+   *  it was written about `wrongB`. Where it is not, the round needs prose,
+   *  not a tag, and the tag stays `form`. */
+  wrongAKind: "form" | "register" = "form",
 ): GameRound {
   return {
     ...(role ? { speakerRole: role } : {}),
@@ -430,7 +447,7 @@ export function game(
       // wrongA is the broken-English option by the contract of this helper,
       // wrongB the one that is correct English and wrong for the job. Tagging
       // them lets the arcade explain the one the learner actually popped.
-      { text: wrongA, correct: false, kind: "form" as const },
+      { text: wrongA, correct: false, kind: wrongAKind },
       { text: wrongB, correct: false, kind: "register" as const },
     ],
   };
@@ -601,7 +618,9 @@ function week1(lx: P0Lexicon): LessonContent[] {
           "Good evening, madam.",
           "Good evening. Do you want a room?",
           undefined,
-          "Khách vừa nói tên mình ra. 'Good evening, madam.' không sai câu nào, nhưng nó bỏ đi thứ khách vừa đưa cho bạn — dùng HỌ khách là nâng cấp rẻ nhất trong nghề, và lùi về 'madam' là quay lại mức phục vụ cho người lạ. Câu thứ ba thì vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
+          "Khách vừa nói tên mình ra. 'Good evening, madam.' không sai câu nào, nhưng nó bỏ đi thứ khách vừa đưa cho bạn — dùng HỌ khách là nâng cấp rẻ nhất trong nghề, và lùi về 'madam' là quay lại mức phục vụ cho người lạ. Phương án cộc lốc còn lại thì vừa suồng sã vừa bỏ qua khả năng khách đã đặt trước.",
+          // The explanation above says so itself: "không sai câu nào".
+          "register",
         ),
       ],
     }),
@@ -1104,6 +1123,9 @@ function week2(lx: P0Lexicon): LessonContent[] {
           "Yes, madam. Three.",
           undefined,
           "Khách vừa sửa lại số lượng. Nhắc lại con số MỚI rồi mới đi lấy — hai đáp án kia đều lặp lại con số khách vừa bác bỏ.",
+          // A bare number answering a number question is English; the
+          // explanation is written about "hai đáp án kia" and covers it.
+          "register",
         ),
         game(
           // Chạy trên i2 nên Lễ tân hỏi "Can I have one more passport?" và đáp
@@ -1600,7 +1622,7 @@ function week4(lx: P0Lexicon): LessonContent[] {
           "Price list no have, sir.",
           "Yes sir, price list I bring you.",
           undefined,
-          "Câu thứ ba đảo tân ngữ lên trước theo trật tự tiếng Việt và thiếu mạo từ — tiếng Anh là chủ ngữ–động từ–tân ngữ: 'I will bring you the price list.' Đây đúng là lỗi mà tuần 2 bài 3 dạy bạn bỏ.",
+          "Câu này đảo tân ngữ lên trước theo trật tự tiếng Việt và thiếu mạo từ — tiếng Anh là chủ ngữ–động từ–tân ngữ: 'I will bring you the price list.' Đây đúng là lỗi mà tuần 2 bài 3 dạy bạn bỏ.",
         ),
         game(
           "Is the wifi free?",
@@ -2093,6 +2115,8 @@ function week5(lx: P0Lexicon): LessonContent[] {
           "Yes madam, this one is for you.",
           undefined,
           "Đúng ngữ pháp, nhưng lúc TRAO tận tay thì câu chuẩn là 'Here you are' — vừa trả lời vừa báo là đang đưa.",
+          // The explanation opens "Đúng ngữ pháp" and is true of both options.
+          "register",
         ),
         game(
           "Where is the lounge?",
@@ -3266,6 +3290,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Yes, madam. I will come at some time.",
           undefined,
           "Hẹn mà không có giờ thì khách không biết chờ lúc nào. Nhận lời thì chốt giờ.",
+          // Both wrong options accept without fixing a time, which is what the
+          // explanation says; neither is missing a word.
+          "register",
         ),
         game(
           "What time does the laundry close?",
@@ -4190,7 +4217,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Room ready. You come.",
           "The room is ready, madam.",
-          "Ôn tuần 5: câu cần 'is', và mời khách bằng một câu thông báo chứ không bằng mệnh lệnh. Đây là phòng trị liệu, không phải phòng ngủ của khách.",
+          // Nhãn cũ ghi "Ôn tuần 5", và tuần 5 của Spa dạy Please/Of course/
+          // Moment — không chữ nào có trong câu này. Chữ được ôn thật là
+          // "Room", thẻ của tuần 2.
+          "Ôn tuần 2: câu cần 'is', và mời khách bằng một câu thông báo chứ không bằng mệnh lệnh. Đây là phòng trị liệu, không phải phòng ngủ của khách.",
           "Room is ready, madam.",
         ),
         g(
@@ -4288,7 +4318,10 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         g(
           "Seat ready. Sit there.",
           "Your seat is ready, madam.",
-          "Ôn tuần 5: câu cần 'is', và mời khách ngồi bằng một câu thông báo kèm cử chỉ tay mở, không bằng mệnh lệnh.",
+          // "Your seat is ready, madam." không mang thẻ nào của tuần 5, và
+          // "Seat" thì Guest Relations chưa từng được cấp thẻ — nên nhãn ôn
+          // tập ở đây là một lời khai man. Bỏ nhãn, giữ nguyên phần dạy.
+          "Câu cần 'is', và mời khách ngồi bằng một câu thông báo kèm cử chỉ tay mở, không bằng mệnh lệnh.",
           "Your seat ready, madam.",
         ),
         g(
@@ -5205,6 +5238,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Yes, lie down now.",
           undefined,
           "Câu sàng lọc phải hỏi TRƯỚC khi khách nằm xuống, không hỏi giữa chừng.",
+          // Two well-formed imperatives; both skip the screening question,
+          // which is the reason the explanation gives.
+          "register",
         ),
         game(
           "Is that everything you need to know?",
@@ -5235,11 +5271,24 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         v("This way", "/ðɪs weɪ/", "Mời đi lối này", "This way, please.", "➡️"),
       ],
       grammar: [
+        // LỜI CHO PHÉP, KHÔNG PHẢI LỜI RA LỆNH. Luật của chính vế này đã viết
+        // "nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về
+        // cho khách", nhưng cả năm chỗ in ra lại là thể mệnh lệnh "Keep your
+        // underwear on". Đó là chỗ tuần 5 đá nhau với tuần 18: tuần 18 khoá
+        // "Please undress to your comfort level" với tip "mức nào là do khách
+        // quyết", nên cùng một câu hỏi của khách — "Do I take everything
+        // off?" — được hai tuần trả lời bằng hai chính sách ngược nhau.
+        // Dạng khẳng định + `can` nói đúng điều luật đã hứa và vẫn nằm trong
+        // trần 5 từ của P0 (+1 nhờ đuôi kính ngữ); "You can keep your
+        // underwear on, madam." là 7 từ nên không dùng được ở phase này.
+        // Hai tuần nay nói cùng một chính sách ở hai mức: tuần 5 cho phép,
+        // tuần 18 để khách tự chọn mức. Cái bị loại ở cả hai tuần vẫn là câu
+        // bỏ lửng cho khách đoán.
         g(
           "You take off clothes.",
-          "Keep your underwear on, madam.",
+          "Your underwear can stay on, madam.",
           "Đừng bảo khách cởi đồ. Nói khách ĐƯỢC PHÉP giữ lại gì — câu đó trả quyền quyết định về cho khách và bỏ hết phần ngượng ngùng. 'Underwear' /ˈʌndəweə/ là đồ lót; từ này không có thẻ riêng nhưng phải nói được ngay và nói bằng giọng bình thường.",
-          "Keep your underwear, madam.",
+          "Your underwear can stay, madam.",
         ),
         g(
           "Change there.",
@@ -5256,8 +5305,8 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
         sp(
           "Do I take everything off?",
-          "Keep your underwear on, madam.",
-          "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm.",
+          "Your underwear can stay on, madam.",
+          "Trả lời thẳng và trả lời ngay. Khách hỏi câu này là đang ngại; ậm ừ một giây thôi cũng làm họ ngại thêm. Câu mẫu là lời CHO PHÉP chứ không phải lời ra lệnh — mức cởi vẫn là quyền của khách, và tuần 18 nói lại đúng điều đó bằng một câu dài hơn.",
           undefined,
           ["underwear", "on"],
         ),
@@ -5282,18 +5331,18 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
         ),
       ],
       reading: read(
-        `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "You can keep your underwear on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
+        `A guest asks ${lx.staff}: "Where do I change?" ${lx.staff} says: "This way, please, madam." ${lx.staff} gives a ${lx.items[0].word.toLowerCase()} and ${lx.items[2].word.toLowerCase()}s and says: "Here you are." The guest asks: "Do I take everything off?" ${lx.staff} says: "Your underwear can stay on, madam." Then ${lx.staff} shows the ${lx.items[1].word.toLowerCase()} and waits outside.`,
         [
           {
             q: "Khách hỏi có phải cởi hết không, câu trả lời đúng là gì?",
             options: [
-              "Keep your underwear on, madam.",
+              "Your underwear can stay on, madam.",
               "Yes, take everything off.",
               "Up to you, madam.",
             ],
             correct: 0,
             explanation:
-              "Câu này nói rõ khách được giữ lại gì, nên khách không phải đoán và không phải hỏi lại.",
+              "Câu này nói rõ khách ĐƯỢC PHÉP giữ lại gì, nên quyền quyết định vẫn ở khách mà khách không phải đoán. 'Up to you' cũng để khách quyết nhưng bỏ lửng, không cho khách biết gì là được phép.",
           },
           {
             q: `${lx.staff} làm gì trong lúc khách thay đồ?`,
@@ -5306,11 +5355,11 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
       game: [
         game(
           "Do I wear anything under the robe?",
-          "Keep your underwear on, madam.",
+          "Your underwear can stay on, madam.",
           "No, madam. Nothing.",
           "Up to you, madam.",
           undefined,
-          "Để khách tự đoán trong tình huống nhạy cảm. Quy định của khu nghỉ thì phải nói rõ ràng.",
+          "'Up to you' để khách tự đoán trong tình huống nhạy cảm: đúng là khách quyết, nhưng khách không biết gì là được phép. Nói thẳng khách ĐƯỢC PHÉP giữ lại gì.",
         ),
         game(
           "Where can I put my bag?",
@@ -5788,6 +5837,9 @@ const DEPT_LESSONS: Record<string, (lx: P0Lexicon) => LessonContent> = {
           "Ten o'clock, madam.",
           undefined,
           "Cả hai đáp án sai đều nêu một giờ đóng cửa. Quầy lễ tân không có giờ đóng.",
+          // The explanation already addresses "cả hai đáp án sai": the fault
+          // is the closing time, not the sentence.
+          "register",
         ),
       ],
     }),

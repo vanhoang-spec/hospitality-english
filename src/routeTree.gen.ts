@@ -10,11 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewRouteImport } from './routes/review'
+import { Route as OrgReportsRouteImport } from './routes/org-reports'
 import { Route as OrgAdminRouteImport } from './routes/org-admin'
+import { Route as OrgAccessRouteImport } from './routes/org-access'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ChangePasswordRouteImport } from './routes/change-password'
 import { Route as AppraisalRouteImport } from './routes/appraisal'
 import { Route as AdminLoungeRouteImport } from './routes/admin-lounge'
+import { Route as AdminConsoleRouteImport } from './routes/admin-console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$week'
@@ -26,9 +29,19 @@ const ReviewRoute = ReviewRouteImport.update({
   path: '/review',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrgReportsRoute = OrgReportsRouteImport.update({
+  id: '/org-reports',
+  path: '/org-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrgAdminRoute = OrgAdminRouteImport.update({
   id: '/org-admin',
   path: '/org-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrgAccessRoute = OrgAccessRouteImport.update({
+  id: '/org-access',
+  path: '/org-access',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -49,6 +62,11 @@ const AppraisalRoute = AppraisalRouteImport.update({
 const AdminLoungeRoute = AdminLoungeRouteImport.update({
   id: '/admin-lounge',
   path: '/admin-lounge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminConsoleRoute = AdminConsoleRouteImport.update({
+  id: '/admin-console',
+  path: '/admin-console',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -79,11 +97,14 @@ const DepartmentDepWeekWeekRoute = DepartmentDepWeekWeekRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -92,11 +113,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -106,11 +130,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -121,11 +148,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
     | '/review'
     | '/department/$dep'
     | '/handbook/$dep/$week'
@@ -134,11 +164,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
     | '/review'
     | '/department/$dep'
     | '/handbook/$dep/$week'
@@ -147,11 +180,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
     | '/review'
     | '/department/$dep'
     | '/handbook/$dep/$week'
@@ -161,11 +197,14 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminConsoleRoute: typeof AdminConsoleRoute
   AdminLoungeRoute: typeof AdminLoungeRoute
   AppraisalRoute: typeof AppraisalRoute
   ChangePasswordRoute: typeof ChangePasswordRoute
   LoginRoute: typeof LoginRoute
+  OrgAccessRoute: typeof OrgAccessRoute
   OrgAdminRoute: typeof OrgAdminRoute
+  OrgReportsRoute: typeof OrgReportsRoute
   ReviewRoute: typeof ReviewRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
@@ -182,11 +221,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/org-reports': {
+      id: '/org-reports'
+      path: '/org-reports'
+      fullPath: '/org-reports'
+      preLoaderRoute: typeof OrgReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/org-admin': {
       id: '/org-admin'
       path: '/org-admin'
       fullPath: '/org-admin'
       preLoaderRoute: typeof OrgAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/org-access': {
+      id: '/org-access'
+      path: '/org-access'
+      fullPath: '/org-access'
+      preLoaderRoute: typeof OrgAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -215,6 +268,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-lounge'
       fullPath: '/admin-lounge'
       preLoaderRoute: typeof AdminLoungeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-console': {
+      id: '/admin-console'
+      path: '/admin-console'
+      fullPath: '/admin-console'
+      preLoaderRoute: typeof AdminConsoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -257,11 +317,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminConsoleRoute: AdminConsoleRoute,
   AdminLoungeRoute: AdminLoungeRoute,
   AppraisalRoute: AppraisalRoute,
   ChangePasswordRoute: ChangePasswordRoute,
   LoginRoute: LoginRoute,
+  OrgAccessRoute: OrgAccessRoute,
   OrgAdminRoute: OrgAdminRoute,
+  OrgReportsRoute: OrgReportsRoute,
   ReviewRoute: ReviewRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,
