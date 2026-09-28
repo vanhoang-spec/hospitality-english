@@ -301,6 +301,22 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 
 ## Phase 3 — A2+ (tuần 23–30): Dịch vụ chủ động
 
+### Nghiệm thu P3 — quyết định ngày 29/09/2026
+
+Phạm vi: FO, FB, HK, SW, GR; mỗi bộ phận 8 tuần × 4 bài = 32 bài, tổng 160 bài.
+P2 đã đóng và P4 chưa mở lại. Mỗi ô bộ phận × vai trong 10 ô (5 Academic Director,
+5 Hotel Manager) phải **> 7,5/10**, xét trung bình sáu tiêu chí trước khi làm tròn;
+không lấy trung bình các ô để bù. Rubric giữ nguyên Phụ lục A của brief chuẩn.
+Auditor chấm độc lập trên cùng bản nguồn đóng băng, không nhận báo cáo, điểm số hoặc
+lịch sử sửa của người triển khai và auditor khác. Lỗi chặn phát hành phải được xử lý.
+
+Giữ tải từ 14–16 thẻ/tuần và quota review 35%. Chuỗi hội thoại 3–4 lượt phải giữ cùng
+sự việc, vai người nghe và kết quả xử lý; biến thể phải đổi yêu cầu thật, không chỉ đổi
+tên hoặc danh xưng để làm lớn bể nói. Chuẩn câu nói là 16 từ theo từng câu; gate hiện
+cho 17 là dung sai kỹ thuật được ghi nhận, không phải mục tiêu viết câu mới.
+Phép đo học vẹt phải gọi `buildOral` và `oralHalfPassed`, tách mẫu xếp hạng câu khỏi
+mẫu kiểm tra và báo riêng tỷ lệ đề có ô dự trữ. Không thu bể hoặc nới bộ chấm để đạt điểm.
+
 | Tuần | Chức năng chung                                       | Ngữ pháp mới                                    |
 | ---- | ----------------------------------------------------- | ----------------------------------------------- |
 | 23   | Upsell/gợi ý nâng cấp nhẹ                             | Comparatives; I recommend…                      |

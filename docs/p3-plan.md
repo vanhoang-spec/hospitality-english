@@ -71,4 +71,20 @@ hash trước/sau, kiểm transcript truy cập; lượt vi phạm bị loại v
 Chỉ người điều phối đọc đủ 10 báo cáo sau khi các auditor nộp xong. Không chia sẻ kết quả giữa
 auditor đang chấm. Không đưa báo cáo vòng trước cho auditor vòng tiếp theo.
 
-Trạng thái: đã khảo sát ban đầu và lập kế hoạch; chưa sửa giáo trình, chưa chạy 10 auditor.
+## Tiến độ ngày 29/09
+
+Đã khởi động vòng auditor độc lập trên bản nguồn ac24e13. Các lượt đầu gặp lỗi hạn mức
+hoặc 401, không có báo cáo hoàn chỉnh và không được tính điểm. Lượt thử lại dùng phiên mới.
+Bản nguồn từng auditor có manifest kiểm hash; log và nháp ở thư mục TEMP
+`hospitality-p3-r1-ac24e13`, mỗi mã vai-bộ phận một thư mục. Không đưa log lỗi vào brief.
+
+Đã sửa `oralmeasure.ts`: gọi `oralHalfPassed`, đếm cờ `reserved` thật và tách 2.000 đề
+xếp hạng khỏi 2.000 đề đánh giá. Đây là đổi phương pháp đo, không đổi engine hoặc nội dung.
+Kết quả P3 học 40 câu: FO 99,8%, FB 99,2%, HK 99,0%, SW 99,8%, GR 99,6%; học 60 câu
+vẫn 100%. GR 0/2.000 đề có dự trữ. Danh mục 160 bài: `audit/p3-r1-inventory.json`.
+
+Đối chứng P2 bằng phương pháp mới: học 60 câu qua FO 18,3%, FB 15,7%, HK 17,9%,
+SW 18,5%, GR 18,6%. Không so trực tiếp với mốc 21–26% của phương pháp cũ, vốn lấy cùng
+mẫu để xếp hạng/đánh giá và bỏ điều kiện ô dự trữ. Giáo trình P2 không thay đổi.
+
+Trạng thái: đang chấm baseline, chưa sửa giáo trình, chưa có kết luận nghiệm thu.
