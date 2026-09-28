@@ -42,3 +42,6 @@ supabase/.temp/
 *.njsproj
 *.sln
 *.sw?
+
+# File riêng của chủ dự án đặt ở gốc repo (repo PUBLIC) — không commit
+/*.pdf

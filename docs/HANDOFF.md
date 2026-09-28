@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **27/09/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **28/09/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -146,3 +146,11 @@ bun scripts/probes/orphans2.ts     # mốc: TOTAL 0
 
 Nếu hai lệnh đo cho số khác mốc ở trên mà không ai sửa gì, có người đã làm hỏng thứ gì đó
 giữa các phiên — tìm ra trước khi làm tiếp.
+
+## 8. Hai agent luân phiên
+
+Từ 27/09 người dùng luân phiên Claude Code và Codex (khi một bên hết hạn mức tuần). Mỗi lúc chỉ
+một agent sửa repo. Cách mở phiên, giao việc, chuyển giao, và chạy auditor bằng Codex:
+[`docs/CODEX.md`](CODEX.md).
+
+**Việc đang làm dở:** không có.

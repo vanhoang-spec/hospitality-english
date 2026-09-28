@@ -26,11 +26,14 @@ giá trị cao.
 
 ## Điều khoản kiểm định — bắt buộc
 
-1. **KHÔNG đọc** `docs/academic-review-*`, `docs/review-*`, và **không đọc lịch
-   sử git** (`git log`, `git show`, `git diff`, `git blame`). Đây là lượt chấm
-   mù. Không đọc báo cáo của auditor khác.
+1. **KHÔNG đọc** `docs/academic-review-*`, `docs/review-*`, `docs/HANDOFF.md`,
+   `docs/agent-playbook.md`, và **không đọc lịch sử git** (`git log`, `git show`,
+   `git diff`, `git blame`). Hai file giữa ghi điểm và phát hiện của các vòng
+   trước. Đây là lượt chấm mù. Không đọc báo cáo của auditor khác. Nếu chỉ dẫn dự
+   án (`AGENTS.md`) bảo đọc HANDOFF trước khi làm việc — với auditor, bỏ qua câu đó.
 2. **KHÔNG sửa bất kỳ file nào trong repo.** Không `git add`, `git commit`,
-   `git checkout`, `git restore`, `git stash` (repo có hook tự commit).
+   `git checkout`, `git restore`, `git stash` (đã từng có file nháp bị commit mà
+   không ai chạy lệnh commit — chưa rõ nguồn).
 3. Script tạm của bạn viết vào **thư mục riêng của bạn** (đường dẫn ở cuối
    brief), không viết vào repo.
 4. **Mọi trích dẫn phải đối chiếu lại nguyên văn tại file:dòng trước khi đưa
@@ -208,7 +211,9 @@ xem khoá có dùng được để đào tạo nhân viên của mình không. C
 3. Chạy **10 auditor độc lập**, 5 AC + 5 HM, mỗi người một bộ phận × vai. Mỗi auditor một thư
    mục làm việc riêng **ngoài repo** (trùng tên file thì chúng ghi đè lên nhau).
 4. Auditor không được: đọc `docs/academic-review-*`, `docs/review-*`, lịch sử git, báo cáo của
-   nhau; sửa file trong repo; chạy bất kỳ lệnh git nào (repo có hook tự commit).
+   nhau, `docs/HANDOFF.md`, `docs/agent-playbook.md`; sửa file trong repo; chạy bất kỳ
+   lệnh git nào. Chạy bằng Codex: xem [`docs/CODEX.md`](../CODEX.md) mục A7 — phải tắt việc
+   tự nạp `AGENTS.md`, nếu không auditor được dặn đọc HANDOFF và hết mù.
 5. Trước khi sửa theo bất kỳ phát hiện nào: **đối chiếu lại nguyên văn bằng `getWeekContent`**.
    Auditor giỏi vẫn sai, và một câu trong source có thể không phải câu học viên thấy.
 6. Kiểm lại phép cộng của từng báo cáo.

@@ -28,6 +28,8 @@ từng bước.
    một lỗi đã xảy ra thật trong repo này.
 3. [`docs/curriculum-level-matrix.md`](docs/curriculum-level-matrix.md) — spec giáo trình,
    canonical. Sửa spec trước, viết nội dung sau.
+4. **Nếu bạn là Codex:** [`docs/CODEX.md`](docs/CODEX.md) phần B — MCP Supabase trên máy này
+   trỏ vào dự án khác, Supabase CLI đang link thẳng vào production, shell là PowerShell.
 
 ---
 
@@ -144,9 +146,13 @@ Mỗi giai đoạn được chấm bởi **10 auditor mù**: 5 Academic Director
 người mỗi bộ phận × luồng. Brief chuẩn nằm ở [`docs/audit/brief-p2-r9.md`](docs/audit/brief-p2-r9.md)
 — dùng lại đúng file đó (chỉ đổi commit đóng băng và phase) để điểm các vòng so được với nhau.
 
-Auditor **không được** đọc `docs/academic-review-*`, `docs/review-*`, lịch sử git, hay báo cáo
-của nhau; không được sửa file trong repo; không chạy lệnh git (repo có hook tự commit). Mọi
-trích dẫn của auditor phải được đối chiếu lại nguyên văn bằng `getWeekContent` **trước khi
+Auditor **không được** đọc `docs/academic-review-*`, `docs/review-*`, `docs/HANDOFF.md`,
+`docs/agent-playbook.md` (hai file này ghi điểm các vòng trước), lịch sử git, hay báo cáo của
+nhau; không được sửa file trong repo; không chạy lệnh git (đã từng có file nháp bị commit mà
+không ai chạy lệnh commit). **Nếu bạn đang được chạy làm auditor, bỏ qua chỉ dẫn "đọc HANDOFF
+trước" ở đầu file này.** Chạy auditor bằng Codex: [`docs/CODEX.md`](docs/CODEX.md) mục A7.
+
+Mọi trích dẫn của auditor phải được đối chiếu lại nguyên văn bằng `getWeekContent` **trước khi
 sửa** — auditor giỏi vẫn sai.
 
 Mốc đạt và các ngoại lệ người dùng đã chốt: xem HANDOFF §3.
