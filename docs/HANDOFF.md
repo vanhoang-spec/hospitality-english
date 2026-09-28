@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **28/09/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **29/09/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -20,7 +20,9 @@ Theo thứ tự yêu cầu gần nhất:
 1. **(24/09) Tạm dừng nội dung Phase 3 và 4.** Quay về hoàn thiện quản lý user và tổ chức.
 2. Đã giao: tài liệu hướng dẫn quản trị (PDF), bảng giá theo gói, hồ sơ sản phẩm cho AI viết
    nội dung LinkedIn/fanpage.
-3. **Không tự quay lại làm nội dung** khi người dùng chưa yêu cầu.
+3. **(28/09) Người dùng cho mở lại P3 (tuần 23–30)**, yêu cầu khảo sát kỹ và báo kế hoạch trước.
+   Mỗi ô trong 10 ô Academic Director/Hotel Manager phải **trên 7,5** mới pass; auditor độc lập,
+   không thấy kết quả của nhau. P2 vẫn đóng, P4 vẫn tạm dừng. Kế hoạch: `docs/p3-plan.md`.
 
 ---
 
@@ -153,4 +155,6 @@ Từ 27/09 người dùng luân phiên Claude Code và Codex (khi một bên h�
 một agent sửa repo. Cách mở phiên, giao việc, chuyển giao, và chạy auditor bằng Codex:
 [`docs/CODEX.md`](CODEX.md).
 
-**Việc đang làm dở:** không có.
+**Việc đang làm dở:** người dùng đã duyệt chạy cả 6 bước P3 ngày 29/09. Đang chuẩn bị
+spec, phép đo và bản nguồn chấm mù vòng 1 theo `docs/p3-plan.md`; chưa sửa giáo trình.
+P3 đã mở lại, thay trạng thái tạm dừng P3 ở bảng §3. Mỗi ô phải >7,5, không bù điểm.
