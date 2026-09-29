@@ -83,7 +83,7 @@ if (import.meta.main) {
               console.log(`${d}-${w} ${l.lessonId} ${s.kind.padEnd(24)} ${s.text}`);
   } else if (what === "lesson") {
     for (const d of DEPS)
-      for (let w = 15; w <= 22; w++)
+      for (let w = 1; w <= 40; w++)
         for (const l of lessonsOf(d, w))
           if (l.lessonId === a || l.lessonId.endsWith(a!)) {
             console.log(

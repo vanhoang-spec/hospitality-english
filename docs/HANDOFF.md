@@ -158,3 +158,25 @@ một agent sửa repo. Cách mở phiên, giao việc, chuyển giao, và chạ
 **Việc đang làm dở:** người dùng đã duyệt chạy cả 6 bước P3 ngày 29/09. Đang chuẩn bị
 spec, phép đo và bản nguồn chấm mù vòng 1 theo `docs/p3-plan.md`; chưa sửa giáo trình.
 P3 đã mở lại, thay trạng thái tạm dừng P3 ở bảng §3. Mỗi ô phải >7,5, không bù điểm.
+
+Tiến độ 29/09: đã lưu/push `e35c017` (brief và kế hoạch), `54a6471` (spec, inventory
+160 bài, sửa probe học vẹt gọi production + tách mẫu). Các tầng CI đã đạt; self-pass
+100%, leak và orphans không đổi. Nguồn nội dung baseline vẫn `ac24e13`.
+Vòng đầu chỉ AC-HK nộp báo cáo, 9 lượt bị lỗi hạn mức/401; không tính các lượt lỗi.
+Lượt chạy lại có thêm HM-HK, AC-FO, AC-FB, AC-SW và AC-GR nộp hợp lệ; 4 ô còn lại chưa
+được tính.
+Điểm đã tính lại từ sáu tiêu chí: AC-HK **6,2833**, HM-HK **4,3333**, AC-FO
+**5,9333**, AC-FB **6,5000**, AC-SW **5,4167**, AC-GR **6,0667** — cả sáu không đạt.
+HM-FO đã đo gần xong nhưng hết hạn mức trước khi nộp; lượt này không hợp lệ và không được
+tính. Codex CLI báo mở lại lúc **03:31 ngày 04/10/2026**. Đã dời heartbeat sang 03:35 ngày
+04/10 để chạy lại HM-FO bằng phiên mới, rồi HM-FB, HM-SW, HM-GR, vẫn lần lượt và độc lập.
+Đã đối chiếu bằng `getWeekContent` và hàm production: các lỗi HK trọng yếu được trích là có thật;
+đặc biệt alternate “I will service your room within ten minutes, madam.” vẫn làm
+`utterancePassedAny` và `oralHalfPassed` trả `true` cho ô reserved “How long will that take?”
+→ “Just a moment. This part belongs to the front desk.” Không sửa giáo trình trước khi đủ 10 ô.
+Hạn mức Codex CLI đã mở lại. Heartbeat tiếp tục mỗi giờ, mỗi lần chỉ khởi chạy tối đa một
+auditor còn thiếu và không chạy chồng lên tiến trình đang sống.
+Thư mục báo cáo ngoài repo trên máy này: `%TEMP%/hospitality-p3-r1-ac24e13` (AC-HK),
+`%TEMP%/hospitality-p3-r1-ac24e13-retry3` (9 ô còn lại). Mỗi ô có source, manifest,
+work, events.jsonl và status.json; report.md chỉ xuất hiện khi auditor nộp.
+Chưa tổng hợp bảng đủ 10 ô hoặc sửa giáo trình. Không chạy chồng vòng khác khi các phiên này còn sống.
