@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
 import { SHIPPING_DEPARTMENTS } from "@/lib/departments";
+import { LearnerLinksSection } from "@/components/SignupLinks";
 
 export const Route = createFileRoute("/org-access")({
   head: () => ({ meta: [{ title: "Nhóm & quyền truy cập — Embassy Hospitality" }] }),
@@ -166,7 +167,9 @@ function OrgAccessPage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Quyền truy cập</div>
-          <h1 className="font-display mt-2 text-3xl">Nhóm học viên &amp; khoá theo tuần</h1>
+          <h1 className="font-display mt-2 text-3xl">
+            Nhóm học viên, link đăng ký &amp; khoá theo tuần
+          </h1>
         </div>
         <div className="flex gap-2">
           <Link
@@ -272,6 +275,8 @@ function OrgAccessPage() {
           </div>
         )}
       </section>
+
+      {orgId && <LearnerLinksSection orgId={orgId} groups={groups} />}
 
       <section className="mt-6 border border-primary/20 bg-card p-5">
         <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Ma trận mở khoá</h2>

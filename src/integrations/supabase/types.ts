@@ -293,6 +293,63 @@ export type Database = {
         };
         Relationships: [];
       };
+      signup_links: {
+        Row: {
+          id: string;
+          token: string;
+          kind: "learner" | "organization";
+          label: string | null;
+          org_id: string | null;
+          group_id: string | null;
+          department: string | null;
+          plan_code: string | null;
+          term: string | null;
+          price: number | null;
+          max_uses: number | null;
+          use_count: number;
+          expires_at: string | null;
+          revoked_at: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          token: string;
+          kind: "learner" | "organization";
+          label?: string | null;
+          org_id?: string | null;
+          group_id?: string | null;
+          department?: string | null;
+          plan_code?: string | null;
+          term?: string | null;
+          price?: number | null;
+          max_uses?: number | null;
+          use_count?: number;
+          expires_at?: string | null;
+          revoked_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          token?: string;
+          kind?: "learner" | "organization";
+          label?: string | null;
+          org_id?: string | null;
+          group_id?: string | null;
+          department?: string | null;
+          plan_code?: string | null;
+          term?: string | null;
+          price?: number | null;
+          max_uses?: number | null;
+          use_count?: number;
+          expires_at?: string | null;
+          revoked_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       subscriptions: {
         Row: {
           created_at: string;
@@ -580,6 +637,14 @@ export type Database = {
       org_is_active: {
         Args: { target: string };
         Returns: boolean;
+      };
+      claim_signup_link: {
+        Args: { link_token: string };
+        Returns: Database["public"]["Tables"]["signup_links"]["Row"][];
+      };
+      release_signup_link: {
+        Args: { link_id: string };
+        Returns: undefined;
       };
     };
     Enums: {

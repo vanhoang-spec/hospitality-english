@@ -9,6 +9,13 @@ import { useSingleSession, clearSessionId } from "@/lib/single-session";
 // Server functions remain independently protected by requireSupabaseAuth.
 const PUBLIC_PATHS = new Set(["/login"]);
 
+/** Signup links. Public like /login, but a signed-in visitor is NOT sent
+ *  home: HR opening their own link to test it would otherwise bounce off
+ *  it. The page tells them to sign out instead. */
+function isSignupLinkPath(pathname: string) {
+  return pathname.startsWith("/join/");
+}
+
 export function AuthGate({ children }: { children: ReactNode }) {
   const { session, loading: sessionLoading } = useSession();
   const { data: profile, isLoading: profileLoading } = useProfile(session?.user.id);
@@ -16,7 +23,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
   const pathname = location.pathname;
-  const isPublicPath = PUBLIC_PATHS.has(pathname);
+  const isJoinPath = isSignupLinkPath(pathname);
+  const isPublicPath = PUBLIC_PATHS.has(pathname) || isJoinPath;
 
   // One live session per account — see single-session.ts for why this is a
   // speed bump rather than a lock.
@@ -29,7 +37,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
       navigate({ to: "/login" });
       return;
     }
-    if (session && isPublicPath) {
+    if (session && isPublicPath && !isJoinPath) {
       navigate({ to: "/" });
       return;
     }
@@ -41,11 +49,20 @@ export function AuthGate({ children }: { children: ReactNode }) {
     ) {
       navigate({ to: "/change-password" });
     }
-  }, [sessionLoading, session, isPublicPath, profileLoading, profile, pathname, navigate]);
+  }, [
+    sessionLoading,
+    session,
+    isPublicPath,
+    isJoinPath,
+    profileLoading,
+    profile,
+    pathname,
+    navigate,
+  ]);
 
   if (sessionLoading) return <FullScreenLoader />;
   if (!session && !isPublicPath) return <FullScreenLoader />;
-  if (session && isPublicPath) return <FullScreenLoader />;
+  if (session && isPublicPath && !isJoinPath) return <FullScreenLoader />;
 
   // A lapsed contract stops the LEARNERS; HR keeps its dashboard so the
   // hotel can still read and export what it paid for. The same rule is a

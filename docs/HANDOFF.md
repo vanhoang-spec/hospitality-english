@@ -54,15 +54,33 @@ Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùn
 - Báo cáo 30 ngày cho HR + xuất CSV
 - Bảng giá niêm yết (`plan_prices`) và giá thực thu trên từng hợp đồng (`subscriptions.price`)
 - Nhật ký quản trị (`admin_actions`)
+- **Link đăng ký** (29/09, nhánh `platform/signup-links`): HR tạo link cho học viên tự đăng ký
+  vào khách sạn — gán sẵn nhóm, bộ phận, số người tối đa, hạn dùng, thu hồi được. Super Admin
+  tạo link một-lần cho khách sạn tự mở tài khoản theo gói + kỳ hạn + giá đã chốt. Trang công khai
+  `/join/<token>`. Tạo tài khoản vẫn hoàn toàn phía server (`account-provisioning.server.ts`,
+  dùng chung cho cả ba lối: HR gõ tay, học viên mở link, khách sạn mở link).
+- `bun run test:db` — mọi migration chạy trên Postgres nhúng (PGlite), rồi kiểm luật tài khoản
+  bằng SQL thật: 25 phép kiểm, có trong CI.
+
+### ⚠️ Lỗ bảo mật đã vá trong mã, chưa vá trên production
+
+Trigger `handle_new_user` lấy `role` và `org_id` từ `user_metadata` — phần người đăng ký tự
+viết. Đã chứng minh bằng `test:db` trên schema cũ: đăng ký kèm `{"role":"super_admin"}` thành
+super admin. **Hiện không khai thác được** vì production tắt đăng ký công khai
+(`disable_signup: true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata` (chỉ
+service role ghi được). **Đừng bật đăng ký công khai trong Supabase Auth trước khi migration này
+chạy** — và tính năng link không cần bật nó.
 
 ### ⚠️ Chưa có trên production
 
-Đo chỉ đọc trên dự án Supabase `Hospitality English_App` ngày 24/09:
+Đo chỉ đọc trên dự án Supabase `Hospitality English_App` ngày 29/09:
 
-- **Bốn migration chưa áp dụng:** `20260923120000`, `20260923130000`, `20260923140000`,
-  `20260924090000`. Cho tới khi chạy, mọi màn hình quản trị sẽ lỗi.
+- **Năm migration chưa áp dụng:** `20260923120000`, `20260923130000`, `20260923140000`,
+  `20260924090000`, `20260929090000`. Cho tới khi chạy, mọi màn hình quản trị và trang
+  `/join` sẽ lỗi. Cả năm đã chạy thử trọn chuỗi trên Postgres rỗng (`test:db`) — chưa thử trên
+  bản sao production.
 - `organizations`: **0 dòng**. `profiles`: **1 dòng**, vai trò `super_admin`.
-- `src/integrations/supabase/types.ts` đang **viết tay** cho khớp bốn migration — phải sinh lại
+- `src/integrations/supabase/types.ts` đang **viết tay** cho khớp năm migration — phải sinh lại
   sau khi áp dụng.
 - **Bảng giá chưa có số nào.** Lưới 25 ô, đều trống. Người dùng chưa đưa giá — **không tự đoán.**
 
@@ -72,6 +90,9 @@ Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.htm
 
 - Khoá nội dung theo tuần là **khoá giao diện**; nội dung nằm trong JS bundle.
 - Không có khôi phục mật khẩu tự động.
+- Link đăng ký **không xác minh số điện thoại** (không có OTP): ai có link đều đăng ký được, kể
+  cả bằng số của người khác. HR giới hạn bằng số người tối đa, hạn dùng, thu hồi, và xoá tài
+  khoản sai.
 - Không có thanh toán trực tuyến.
 - Một phiên sống mỗi tài khoản là răn đe, không phải khoá cứng.
 
@@ -81,7 +102,7 @@ Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.htm
 
 Không tự làm những việc này.
 
-1. **Áp dụng bốn migration lên production.** Ghi thật lên database — cần người dùng đồng ý.
+1. **Áp dụng năm migration lên production.** Ghi thật lên database — cần người dùng đồng ý.
 2. **Điền bảng giá.**
 3. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo

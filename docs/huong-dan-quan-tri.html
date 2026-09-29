@@ -239,8 +239,8 @@
         <td><code>20260725100000_writing_mediation_suites</code></td>
       </tr>
       <tr>
-        <td>Bốn migration nền tảng</td>
-        <td><strong>Chưa áp dụng</strong> — xem bước 0</td>
+        <td>Năm migration nền tảng</td>
+        <td><strong>Chưa áp dụng</strong> (đo lại 29/09) — xem bước 0</td>
       </tr>
       <tr>
         <td>Bảng <code>organizations</code></td>
@@ -281,9 +281,9 @@
     <p>Làm một lần, theo đúng thứ tự. Chạy từ thư mục gốc của repo.</p>
 
     <div class="step">
-      <h3>2.1 · Áp dụng bốn migration</h3>
+      <h3>2.1 · Áp dụng năm migration</h3>
       <pre>supabase db push</pre>
-      <p>Bốn file sẽ được áp dụng theo thứ tự tên:</p>
+      <p>Năm file sẽ được áp dụng theo thứ tự tên:</p>
       <table>
         <tr>
           <th>File</th>
@@ -313,13 +313,20 @@
             <code>currency</code> trên <code>subscriptions</code>
           </td>
         </tr>
+        <tr>
+          <td><code>20260929090000_signup_links.sql</code></td>
+          <td>
+            <code>signup_links</code> (link đăng ký cho học viên và khách sạn); vá trigger tạo
+            profile để vai trò và khách sạn của tài khoản mới chỉ do server quyết
+          </td>
+        </tr>
       </table>
     </div>
 
     <div class="step">
       <h3>2.2 · Sinh lại file kiểu dữ liệu</h3>
       <p>
-        <code>src/integrations/supabase/types.ts</code> hiện đang được viết tay cho khớp với bốn
+        <code>src/integrations/supabase/types.ts</code> hiện đang được viết tay cho khớp với năm
         migration trên. Sau khi chạy xong phải sinh lại từ database thật để hai bên không trôi khỏi
         nhau:
       </p>
@@ -592,6 +599,27 @@ update public.profiles
       </p>
     </div>
 
+    <div class="step">
+      <h3>Cách thứ hai · Gửi link để khách sạn tự mở tài khoản</h3>
+      <p>
+        Không muốn tự gõ thông tin và giữ mật khẩu hộ khách? Ở <code>/admin-console</code>, khối
+        <em>Link mở tài khoản khách sạn</em>:
+      </p>
+      <ol>
+        <li>Chọn gói, kỳ hạn đã chốt với khách. Ô giá để trống = lấy giá niêm yết.</li>
+        <li>Chọn hạn dùng của link (7, 14 hoặc 30 ngày), ghi chú tên khách cho dễ nhớ.</li>
+        <li>
+          Bấm <strong>Tạo link</strong>, bấm <strong>Sao chép</strong>, gửi cho người phụ trách.
+        </li>
+      </ol>
+      <p>
+        Người nhận mở link, tự điền tên khách sạn, họ tên, số điện thoại, tự đặt mật khẩu — và trở
+        thành tài khoản HR đầu tiên. Không phải đổi mật khẩu lần đầu, vì chính họ đặt. Mỗi link chỉ
+        dùng <strong>một lần</strong>; sau khi dùng, danh sách link hiện tên khách sạn vừa được tạo.
+        Link chưa dùng có thể <strong>Thu hồi</strong> bất cứ lúc nào.
+      </p>
+    </div>
+
     <h2>7. HR quản lý học viên</h2>
     <p>
       Màn hình <code>/org-admin</code>, liên kết trên thanh điều hướng tên là <strong>Team</strong>.
@@ -618,7 +646,36 @@ update public.profiles
       </li>
     </ol>
 
-    <h3>7.3 · Ghế được tính như thế nào</h3>
+    <h3>7.3 · Gửi link cho học viên tự đăng ký</h3>
+    <p>
+      Màn hình <code>/org-access</code> (nút <strong>Link đăng ký</strong> ở trang Team), khối
+      <em>Link đăng ký cho học viên</em>:
+    </p>
+    <ol>
+      <li>
+        Chọn <strong>nhóm</strong> (người đăng ký vào thẳng nhóm đó) và <strong>bộ phận</strong>
+        (hoặc để học viên tự chọn).
+      </li>
+      <li>Đặt số người tối đa (để trống = không giới hạn) và hạn dùng (mặc định 30 ngày).</li>
+      <li>
+        Bấm <strong>Tạo link</strong>, <strong>Sao chép</strong>, gửi vào nhóm Zalo của đợt học.
+      </li>
+    </ol>
+    <p>
+      Nhân viên mở link, điền họ tên, số điện thoại, tự đặt mật khẩu và vào học ngay. Mỗi người đăng
+      ký tốn một ghế như thêm tay. Khi khách sạn hết ghế hoặc hết hạn gói, link tự báo lỗi và không
+      tạo thêm tài khoản.
+    </p>
+    <div class="warn">
+      <span class="label">Ai có link đều đăng ký được</span>
+      <p>
+        Link không xác minh số điện thoại. Hãy đặt số người tối đa đúng bằng số người của đợt, đặt
+        hạn dùng, và bấm <strong>Thu hồi</strong> khi đợt đã đủ. Ai đăng ký nhầm thì xoá ở màn hình
+        Team — ghế được trả lại ngay.
+      </p>
+    </div>
+
+    <h3>7.4 · Ghế được tính như thế nào</h3>
     <ul>
       <li>Một ghế là một <strong>tài khoản học viên</strong>, không phải một kết nối đồng thời.</li>
       <li>Chỉ tài khoản vai trò <code>member</code> tính ghế. Tài khoản HR không tốn ghế.</li>
@@ -640,7 +697,7 @@ update public.profiles
       chặn cả ca cùng dùng chung một mật khẩu.
     </p>
 
-    <h3>7.4 · Các thao tác khác</h3>
+    <h3>7.5 · Các thao tác khác</h3>
     <ul>
       <li><strong>Đặt lại mật khẩu</strong> — sinh mật khẩu tạm mới, người đó phải đổi khi vào.</li>
       <li><strong>Đổi vai trò</strong> — nâng một người thành HR thứ hai, hoặc ngược lại.</li>
@@ -812,6 +869,11 @@ update public.profiles
       </li>
       <li>
         <strong>Không có khôi phục mật khẩu tự động.</strong> Học viên nhờ HR; HR nhờ Super Admin.
+      </li>
+      <li>
+        <strong>Link đăng ký không xác minh số điện thoại.</strong> Không có mã OTP gửi qua SMS: ai
+        có link đều đăng ký được, kể cả bằng số của người khác. Giới hạn bằng số người tối đa, hạn
+        dùng và thu hồi — xem mục 7.3.
       </li>
       <li>
         <strong>Chưa có thanh toán trực tuyến.</strong> Bảng giá và số tiền hợp đồng là để ghi nhận

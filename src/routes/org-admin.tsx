@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -231,6 +231,13 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
           </p>
         </div>
         <div className="flex gap-3">
+          <Link
+            to="/org-access"
+            hash="signup-links"
+            className="border border-primary/40 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+          >
+            Link đăng ký
+          </Link>
           <button
             onClick={() => setImportOpen(true)}
             className="border border-primary/40 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"

@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
 import { createOrganization, setSubscription, setPlanPrice } from "@/lib/platform-admin-actions";
+import { HotelLinksSection } from "@/components/SignupLinks";
 import {
   PLAN_LABEL,
   TERM_LABEL,
@@ -266,6 +267,8 @@ function AdminConsolePage() {
           {create.isPending ? "Đang tạo…" : "Tạo khách sạn"}
         </button>
       </section>
+
+      <HotelLinksSection orgNames={new Map((orgs ?? []).map((o) => [o.id, o.name]))} />
 
       <PriceGrid onSaved={(m) => setMessage(m)} />
     </Shell>
