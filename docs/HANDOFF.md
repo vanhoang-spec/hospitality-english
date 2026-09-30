@@ -62,29 +62,32 @@ Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùn
 - `bun run test:db` — mọi migration chạy trên Postgres nhúng (PGlite), rồi kiểm luật tài khoản
   bằng SQL thật: 25 phép kiểm, có trong CI.
 
-### ⚠️ Lỗ bảo mật đã vá trong mã, chưa vá trên production
+### Lỗ bảo mật `user_metadata` — đã vá, cả trên production
 
-Trigger `handle_new_user` lấy `role` và `org_id` từ `user_metadata` — phần người đăng ký tự
-viết. Đã chứng minh bằng `test:db` trên schema cũ: đăng ký kèm `{"role":"super_admin"}` thành
-super admin. **Hiện không khai thác được** vì production tắt đăng ký công khai
-(`disable_signup: true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata` (chỉ
-service role ghi được). **Đừng bật đăng ký công khai trong Supabase Auth trước khi migration này
-chạy** — và tính năng link không cần bật nó.
+Trigger `handle_new_user` từng lấy `role` và `org_id` từ `user_metadata` — phần người đăng ký
+tự viết. Chứng minh bằng `test:db` trên schema cũ: đăng ký kèm `{"role":"super_admin"}` thành
+super admin. Không ai khai thác được vì production tắt đăng ký công khai (`disable_signup:
+true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata`; đã chạy trên production
+(xem dưới). **Vẫn đừng bật đăng ký công khai** — tính năng link không cần nó.
 
-### ⚠️ Chưa có trên production
+### Production — đo chỉ đọc ngày 01/10
 
-Đo chỉ đọc trên dự án Supabase `Hospitality English_App` ngày 29/09:
-
-- **Năm migration chưa áp dụng:** `20260923120000`, `20260923130000`, `20260923140000`,
-  `20260924090000`, `20260929090000`. Cho tới khi chạy, mọi màn hình quản trị và trang
-  `/join` sẽ lỗi. Cả năm đã chạy thử trọn chuỗi trên Postgres rỗng (`test:db`) — chưa thử trên
-  bản sao production.
+- **Năm migration nền tảng đã áp dụng** (người dùng chạy `supabase db push`, 30/09–01/10):
+  `20260923120000` … `20260929090000`. Trigger đã đọc `app_metadata`.
+- **Bảng giá đã điền** 01/10, theo `Book1.xlsx` của người dùng: 99.000 ₫/học viên/tháng, giảm
+  10/20/30/40/50% theo gói 50/100/200/300/500, rồi nhân tiếp 0,9/0,8/0,7/0,6 cho kỳ 3/6/9/12
+  tháng. Ô lưu **tổng tiền cả kỳ** (file ghi tiền mỗi tháng, đã nhân số tháng — người dùng xác
+  nhận). Ghi bằng SQL kèm 20 dòng `admin_actions` `price.set`; đọc lại khớp file 20/20.
+- `src/integrations/supabase/types.ts` **đã sinh lại** từ production (01/10), không còn viết tay.
 - `organizations`: **0 dòng**. `profiles`: **1 dòng**, vai trò `super_admin`.
-- `src/integrations/supabase/types.ts` đang **viết tay** cho khớp năm migration — phải sinh lại
-  sau khi áp dụng.
-- **Bảng giá chưa có số nào.** Lưới 25 ô, đều trống. Người dùng chưa đưa giá — **không tự đoán.**
 
-Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.html), mục 2.
+### ⚠️ Code đang chạy chưa khớp database
+
+Màn hình quản trị (Nền tảng, Nhóm, Báo cáo) và `/join` chỉ có ở `content/p2-gates` (PR #9) và
+`platform/signup-links` (PR #10), **chưa merge vào `main`**. Và `createMember` của `main` chỉ
+ghi `user_metadata` — với trigger mới, học viên HR tạo từ bản `main` sẽ **không thuộc khách sạn
+nào**. Hiện vô hại (0 khách sạn, không có HR), nhưng **phải merge PR #10 trước khi mở khách sạn
+đầu tiên.**
 
 ### Giới hạn đã biết — đừng hứa với khách hàng
 
@@ -102,10 +105,10 @@ Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.htm
 
 Không tự làm những việc này.
 
-1. **Áp dụng năm migration lên production.** Ghi thật lên database — cần người dùng đồng ý.
-2. **Điền bảng giá.**
-3. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
-4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+1. **Merge PR #9 và #10 vào `main` khi nào** — cần trước khi bán (xem §4). PR #9 cũng mang nội
+   dung P3 Codex đang làm; merge là phát hành cả phần đó.
+2. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
+3. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 

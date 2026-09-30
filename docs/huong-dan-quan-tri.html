@@ -188,7 +188,7 @@
       <table class="meta">
         <tr>
           <td>Phiên bản</td>
-          <td>1.0 — 24/09/2026</td>
+          <td>1.1 — 01/10/2026 (thêm link đăng ký; migration và bảng giá đã lên production)</td>
         </tr>
         <tr>
           <td>Dành cho</td>
@@ -226,7 +226,7 @@
 
     <h2>1. Hiện trạng hệ thống tại ngày xuất tài liệu</h2>
     <p>
-      Kiểm trực tiếp trên dự án Supabase production, chỉ đọc, ngày 24/09/2026. Đây là trạng thái
+      Kiểm trực tiếp trên dự án Supabase production, chỉ đọc, ngày 01/10/2026. Đây là trạng thái
       thật chứ không phải trạng thái mong muốn — đọc kỹ mục này trước khi làm bất cứ bước nào.
     </p>
     <table>
@@ -236,11 +236,24 @@
       </tr>
       <tr>
         <td>Migration mới nhất đã áp dụng</td>
-        <td><code>20260725100000_writing_mediation_suites</code></td>
+        <td><code>20260929090000_signup_links</code></td>
       </tr>
       <tr>
         <td>Năm migration nền tảng</td>
-        <td><strong>Chưa áp dụng</strong> (đo lại 29/09) — xem bước 0</td>
+        <td><strong>Đã áp dụng</strong> (30/09–01/10) — bước 2.1 đã xong</td>
+      </tr>
+      <tr>
+        <td>Bảng giá</td>
+        <td>
+          <strong>Đã điền</strong> 01/10 — 20 ô, tổng tiền cả kỳ, theo bảng tính của chủ dự án
+        </td>
+      </tr>
+      <tr>
+        <td>Màn hình quản trị trên bản đang chạy</td>
+        <td>
+          <strong>Chưa có</strong> — nằm ở PR #9 và #10, chưa merge vào <code>main</code>. Phải
+          merge trước khi mở khách sạn đầu tiên.
+        </td>
       </tr>
       <tr>
         <td>Bảng <code>organizations</code></td>
@@ -249,19 +262,6 @@
       <tr>
         <td>Bảng <code>profiles</code></td>
         <td>1 dòng, vai trò <code>super_admin</code>, chưa thuộc tổ chức nào</td>
-      </tr>
-      <tr>
-        <td>Hàm hỗ trợ đã có</td>
-        <td>
-          <code>current_org_id</code>, <code>org_of</code>, <code>is_org_admin</code>,
-          <code>is_super_admin</code>, <code>award_stars</code>
-        </td>
-      </tr>
-      <tr>
-        <td>Hàm còn thiếu</td>
-        <td>
-          <code>org_seat_limit</code>, <code>org_is_active</code> — nằm trong migration chưa chạy
-        </td>
       </tr>
     </table>
     <div class="note">
@@ -272,9 +272,9 @@
       </p>
     </div>
     <p>
-      Nghĩa là: toàn bộ phần bán hàng — gói, thuê bao, ghế, nhóm, báo cáo, bảng giá — hiện chỉ tồn
-      tại trong mã nguồn. Cho tới khi chạy xong bước 0, các màn hình quản trị sẽ báo lỗi vì bảng
-      chưa tồn tại.
+      Nghĩa là: database đã sẵn sàng cho toàn bộ phần bán hàng — gói, thuê bao, ghế, nhóm, báo cáo,
+      bảng giá, link đăng ký. Việc còn lại là đưa code của các màn hình quản trị lên bản đang chạy
+      (merge PR). Các mục 2.1 và 2.2 dưới đây giữ lại để tra cứu; đã làm xong.
     </p>
 
     <h2>2. Bước 0 — Đưa nền tảng lên production</h2>
