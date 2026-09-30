@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThanhToanRouteImport } from './routes/thanh-toan'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as OrgReportsRouteImport } from './routes/org-reports'
 import { Route as OrgAdminRouteImport } from './routes/org-admin'
@@ -25,6 +26,11 @@ import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$wee
 import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
 import { Route as DepartmentDepWeekWeekRouteImport } from './routes/department_.$dep.week.$week'
 
+const ThanhToanRoute = ThanhToanRouteImport.update({
+  id: '/thanh-toan',
+  path: '/thanh-toan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewRoute = ReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/org-admin'
     | '/org-reports'
     | '/review'
+    | '/thanh-toan'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/org-admin'
     | '/org-reports'
     | '/review'
+    | '/thanh-toan'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/org-admin'
     | '/org-reports'
     | '/review'
+    | '/thanh-toan'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -218,6 +230,7 @@ export interface RootRouteChildren {
   OrgAdminRoute: typeof OrgAdminRoute
   OrgReportsRoute: typeof OrgReportsRoute
   ReviewRoute: typeof ReviewRoute
+  ThanhToanRoute: typeof ThanhToanRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   JoinTokenRoute: typeof JoinTokenRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
@@ -227,6 +240,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/thanh-toan': {
+      id: '/thanh-toan'
+      path: '/thanh-toan'
+      fullPath: '/thanh-toan'
+      preLoaderRoute: typeof ThanhToanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review': {
       id: '/review'
       path: '/review'
@@ -346,6 +366,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrgAdminRoute: OrgAdminRoute,
   OrgReportsRoute: OrgReportsRoute,
   ReviewRoute: ReviewRoute,
+  ThanhToanRoute: ThanhToanRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   JoinTokenRoute: JoinTokenRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,

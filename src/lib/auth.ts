@@ -36,7 +36,8 @@ export type ProfileWithOrg = {
   service_stars: number;
   daily_streak: number;
   job_rank: string;
-  organizations: { name: string } | null;
+  /** kind: 'hotel', or 'individual' for someone who bought for themself. */
+  organizations: { name: string; kind?: string } | null;
 };
 
 export function profileQueryKey(userId: string | undefined) {
@@ -51,7 +52,11 @@ export function useProfile(userId: string | undefined) {
       const { data, error } = await supabase
         .from("profiles")
         .select(
-          "id, full_name, role, org_id, must_change_password, service_stars, daily_streak, job_rank, organizations(name)",
+          // organizations(*), not (name, kind): every learner's app loads
+          // this row, and naming a column the database does not have yet
+          // would fail it for all of them if code ever lands before the
+          // migration that adds `kind`.
+          "id, full_name, role, org_id, must_change_password, service_stars, daily_streak, job_rank, organizations(*)",
         )
         .eq("id", userId)
         .single();
