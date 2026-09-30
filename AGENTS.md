@@ -51,9 +51,10 @@ TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deplo
 bun install
 bun run dev              # http://localhost:8080
 bun run typecheck        # tsc --noEmit
+bun run test:db          # mọi migration trên Postgres nhúng + luật tài khoản/RLS bằng SQL thật
 bun run verify:content   # verify-content.ts + lint-content.ts (cổng nội dung)
 bun run qa:full          # 7 tầng QA, gồm dựng bài thi thật
-bun run ci               # TẤT CẢ: typecheck && verify:content && qa:full && format:check && lint
+bun run ci               # TẤT CẢ: typecheck && test:db && verify:content && qa:full && format:check && lint
 bun run format           # prettier --write
 ```
 
@@ -79,7 +80,7 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 | `src/lib/org-admin-actions.ts`                                                          | Server function cho HR khách sạn                                                                       |
 | `src/lib/platform-admin-actions.ts`                                                     | Server function cho Super Admin: tạo khách sạn, gói, bảng giá                                          |
 | `src/routes/admin-console.tsx` · `org-admin.tsx` · `org-access.tsx` · `org-reports.tsx` | Bốn màn hình quản trị                                                                                  |
-| `supabase/migrations/`                                                                  | Schema. **Bốn file cuối chưa áp dụng lên production** — xem HANDOFF                                    |
+| `supabase/migrations/`                                                                  | Schema. Tất cả đã áp dụng lên production (01/10) — xem HANDOFF §4                                      |
 | `scripts/verify-content.ts` · `scripts/lint-content.ts`                                 | Cổng nội dung. `lint-content.ts` có các ratchet (file `scripts/_*-baseline.json`)                      |
 | `scripts/probes/`                                                                       | Công cụ đo dùng trong các vòng kiểm định — xem §6                                                      |
 

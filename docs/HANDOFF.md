@@ -54,24 +54,52 @@ Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùn
 - Báo cáo 30 ngày cho HR + xuất CSV
 - Bảng giá niêm yết (`plan_prices`) và giá thực thu trên từng hợp đồng (`subscriptions.price`)
 - Nhật ký quản trị (`admin_actions`)
+- **Link đăng ký** (29/09, nhánh `platform/signup-links`): HR tạo link cho học viên tự đăng ký
+  vào khách sạn — gán sẵn nhóm, bộ phận, số người tối đa, hạn dùng, thu hồi được. Super Admin
+  tạo link một-lần cho khách sạn tự mở tài khoản theo gói + kỳ hạn + giá đã chốt. Trang công khai
+  `/join/<token>`. Tạo tài khoản vẫn hoàn toàn phía server (`account-provisioning.server.ts`,
+  dùng chung cho cả ba lối: HR gõ tay, học viên mở link, khách sạn mở link).
+- `bun run test:db` — mọi migration chạy trên Postgres nhúng (PGlite), rồi kiểm luật tài khoản
+  bằng SQL thật: 25 phép kiểm, có trong CI.
 
-### ⚠️ Chưa có trên production
+### Lỗ bảo mật `user_metadata` — đã vá, cả trên production
 
-Đo chỉ đọc trên dự án Supabase `Hospitality English_App` ngày 24/09:
+Trigger `handle_new_user` từng lấy `role` và `org_id` từ `user_metadata` — phần người đăng ký
+tự viết. Chứng minh bằng `test:db` trên schema cũ: đăng ký kèm `{"role":"super_admin"}` thành
+super admin. Không ai khai thác được vì production tắt đăng ký công khai (`disable_signup:
+true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata`; đã chạy trên production
+(xem dưới). **Vẫn đừng bật đăng ký công khai** — tính năng link không cần nó.
 
-- **Bốn migration chưa áp dụng:** `20260923120000`, `20260923130000`, `20260923140000`,
-  `20260924090000`. Cho tới khi chạy, mọi màn hình quản trị sẽ lỗi.
+### Production — đo chỉ đọc ngày 01/10
+
+- **Năm migration nền tảng đã áp dụng** (người dùng chạy `supabase db push`, 30/09–01/10):
+  `20260923120000` … `20260929090000`. Trigger đã đọc `app_metadata`.
+- **Bảng giá đã điền** 01/10, theo `Book1.xlsx` của người dùng: 99.000 ₫/học viên/tháng, giảm
+  10/20/30/40/50% theo gói 50/100/200/300/500, rồi nhân tiếp 0,9/0,8/0,7/0,6 cho kỳ 3/6/9/12
+  tháng. Ô lưu **tổng tiền cả kỳ** (file ghi tiền mỗi tháng, đã nhân số tháng — người dùng xác
+  nhận). Ghi bằng SQL kèm 20 dòng `admin_actions` `price.set`; đọc lại khớp file 20/20.
+- `src/integrations/supabase/types.ts` **đã sinh lại** từ production (01/10), không còn viết tay.
 - `organizations`: **0 dòng**. `profiles`: **1 dòng**, vai trò `super_admin`.
-- `src/integrations/supabase/types.ts` đang **viết tay** cho khớp bốn migration — phải sinh lại
-  sau khi áp dụng.
-- **Bảng giá chưa có số nào.** Lưới 25 ô, đều trống. Người dùng chưa đưa giá — **không tự đoán.**
 
-Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.html), mục 2.
+### Nền tảng đã lên bản đang chạy (01/10)
+
+PR #11 (`platform/to-main` → `main`, **chỉ phần nền tảng**, không kèm nội dung P2/P3) đã merge
+lúc CI xanh, commit `14acbf8`. Netlify đã triển khai: trên `hospitality-english.netlify.app`,
+`/join/<token>` mở được khi chưa đăng nhập và server function đọc bảng `signup_links` trên
+production (token giả → "Link không tồn tại"). Các màn hình sau đăng nhập **chưa ai kiểm** — cần
+người dùng đăng nhập Super Admin để xem.
+
+PR #9 (nội dung) merge sau, khi P3 xong; lúc đó có thể xung đột nhỏ ở `SpeakingSuite.tsx` và
+`review.tsx` (chỉ các dòng telemetry) — giữ bản của `content/p2-gates`. PR #10 vẫn merge vào
+`content/p2-gates` để nhánh nội dung có cùng code nền tảng.
 
 ### Giới hạn đã biết — đừng hứa với khách hàng
 
 - Khoá nội dung theo tuần là **khoá giao diện**; nội dung nằm trong JS bundle.
 - Không có khôi phục mật khẩu tự động.
+- Link đăng ký **không xác minh số điện thoại** (không có OTP): ai có link đều đăng ký được, kể
+  cả bằng số của người khác. HR giới hạn bằng số người tối đa, hạn dùng, thu hồi, và xoá tài
+  khoản sai.
 - Không có thanh toán trực tuyến.
 - Một phiên sống mỗi tài khoản là răn đe, không phải khoá cứng.
 
@@ -81,10 +109,10 @@ Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.htm
 
 Không tự làm những việc này.
 
-1. **Áp dụng bốn migration lên production.** Ghi thật lên database — cần người dùng đồng ý.
-2. **Điền bảng giá.**
-3. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
-4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+1. **Kiểm các màn hình quản trị sau đăng nhập** trên bản đang chạy — cần người dùng đăng nhập.
+   PR #9 (nội dung) chờ P3.
+2. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
+3. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 

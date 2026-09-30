@@ -8,6 +8,243 @@ export type Database = {
   };
   public: {
     Tables: {
+      access_rules: {
+        Row: {
+          created_at: string;
+          department_id: string;
+          group_id: string | null;
+          id: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Insert: {
+          created_at?: string;
+          department_id: string;
+          group_id?: string | null;
+          id?: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Update: {
+          created_at?: string;
+          department_id?: string;
+          group_id?: string | null;
+          id?: string;
+          org_id?: string;
+          week_from?: number;
+          week_to?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "access_rules_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "access_rules_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      active_sessions: {
+        Row: {
+          last_seen: string;
+          session_id: string;
+          user_agent: string | null;
+          user_id: string;
+        };
+        Insert: {
+          last_seen?: string;
+          session_id: string;
+          user_agent?: string | null;
+          user_id: string;
+        };
+        Update: {
+          last_seen?: string;
+          session_id?: string;
+          user_agent?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "active_sessions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      admin_actions: {
+        Row: {
+          action: string;
+          actor_id: string | null;
+          created_at: string;
+          id: string;
+          meta: Json;
+          org_id: string | null;
+          target_user_id: string | null;
+        };
+        Insert: {
+          action: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "admin_actions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      attempts: {
+        Row: {
+          attempt_no: number;
+          correct: boolean;
+          created_at: string;
+          department_id: string;
+          id: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent: number | null;
+          org_id: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Insert: {
+          attempt_no?: number;
+          correct: boolean;
+          created_at?: string;
+          department_id: string;
+          id?: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Update: {
+          attempt_no?: number;
+          correct?: boolean;
+          created_at?: string;
+          department_id?: string;
+          id?: string;
+          is_first_try?: boolean;
+          item_key?: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite?: string;
+          user_id?: string;
+          week_number?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "attempts_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempts_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      group_members: {
+        Row: {
+          added_at: string;
+          group_id: string;
+          user_id: string;
+        };
+        Insert: {
+          added_at?: string;
+          group_id: string;
+          user_id: string;
+        };
+        Update: {
+          added_at?: string;
+          group_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "group_members_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      groups: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          org_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          org_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          org_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "groups_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       lesson_progress: {
         Row: {
           completed_at: string | null;
@@ -93,6 +330,32 @@ export type Database = {
           },
         ];
       };
+      org_settings: {
+        Row: {
+          org_id: string;
+          sequential_mode: boolean;
+          updated_at: string;
+        };
+        Insert: {
+          org_id: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Update: {
+          org_id?: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_settings_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       organizations: {
         Row: {
           created_at: string;
@@ -114,276 +377,6 @@ export type Database = {
           name?: string;
           seat_limit?: number;
           updated_at?: string;
-        };
-        Relationships: [];
-      };
-      groups: {
-        Row: {
-          created_at: string;
-          created_by: string | null;
-          id: string;
-          name: string;
-          org_id: string;
-        };
-        Insert: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name: string;
-          org_id: string;
-        };
-        Update: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name?: string;
-          org_id?: string;
-        };
-        Relationships: [];
-      };
-      group_members: {
-        Row: { added_at: string; group_id: string; user_id: string };
-        Insert: { added_at?: string; group_id: string; user_id: string };
-        Update: { added_at?: string; group_id?: string; user_id?: string };
-        Relationships: [];
-      };
-      access_rules: {
-        Row: {
-          created_at: string;
-          department_id: string;
-          group_id: string | null;
-          id: string;
-          org_id: string;
-          week_from: number;
-          week_to: number;
-        };
-        Insert: {
-          created_at?: string;
-          department_id: string;
-          group_id?: string | null;
-          id?: string;
-          org_id: string;
-          week_from: number;
-          week_to: number;
-        };
-        Update: {
-          created_at?: string;
-          department_id?: string;
-          group_id?: string | null;
-          id?: string;
-          org_id?: string;
-          week_from?: number;
-          week_to?: number;
-        };
-        Relationships: [];
-      };
-      attempts: {
-        Row: {
-          attempt_no: number;
-          correct: boolean;
-          created_at: string;
-          department_id: string;
-          id: string;
-          is_first_try: boolean;
-          item_key: string;
-          ms_spent: number | null;
-          org_id: string | null;
-          suite: string;
-          user_id: string;
-          week_number: number;
-        };
-        Insert: {
-          attempt_no?: number;
-          correct: boolean;
-          created_at?: string;
-          department_id: string;
-          id?: string;
-          is_first_try: boolean;
-          item_key: string;
-          ms_spent?: number | null;
-          org_id?: string | null;
-          suite: string;
-          user_id: string;
-          week_number: number;
-        };
-        Update: {
-          attempt_no?: number;
-          correct?: boolean;
-          created_at?: string;
-          department_id?: string;
-          id?: string;
-          is_first_try?: boolean;
-          item_key?: string;
-          ms_spent?: number | null;
-          org_id?: string | null;
-          suite?: string;
-          user_id?: string;
-          week_number?: number;
-        };
-        Relationships: [];
-      };
-      study_sessions: {
-        Row: {
-          department_id: string | null;
-          ended_at: string | null;
-          id: string;
-          org_id: string | null;
-          seconds_active: number;
-          started_at: string;
-          suite: string | null;
-          user_id: string;
-          week_number: number | null;
-        };
-        Insert: {
-          department_id?: string | null;
-          ended_at?: string | null;
-          id?: string;
-          org_id?: string | null;
-          seconds_active?: number;
-          started_at?: string;
-          suite?: string | null;
-          user_id: string;
-          week_number?: number | null;
-        };
-        Update: {
-          department_id?: string | null;
-          ended_at?: string | null;
-          id?: string;
-          org_id?: string | null;
-          seconds_active?: number;
-          started_at?: string;
-          suite?: string | null;
-          user_id?: string;
-          week_number?: number | null;
-        };
-        Relationships: [];
-      };
-      // Hand-written until the generator is next run against the project:
-      // see supabase/migrations/20260923120000_plans_subscriptions_sessions.sql.
-      plans: {
-        Row: { code: string; seats: number; sort_order: number };
-        Insert: { code: string; seats: number; sort_order?: number };
-        Update: { code?: string; seats?: number; sort_order?: number };
-        Relationships: [];
-      };
-      plan_prices: {
-        Row: {
-          plan_code: string;
-          term: string;
-          price: number;
-          currency: string;
-          updated_at: string;
-          updated_by: string | null;
-        };
-        Insert: {
-          plan_code: string;
-          term: string;
-          price?: number;
-          currency?: string;
-          updated_at?: string;
-          updated_by?: string | null;
-        };
-        Update: {
-          plan_code?: string;
-          term?: string;
-          price?: number;
-          currency?: string;
-          updated_at?: string;
-          updated_by?: string | null;
-        };
-        Relationships: [];
-      };
-      subscriptions: {
-        Row: {
-          created_at: string;
-          created_by: string | null;
-          ends_at: string;
-          id: string;
-          kind: string;
-          org_id: string;
-          plan_code: string;
-          starts_at: string;
-          status: string;
-          price: number | null;
-          currency: string;
-        };
-        Insert: {
-          created_at?: string;
-          created_by?: string | null;
-          ends_at: string;
-          id?: string;
-          kind: string;
-          org_id: string;
-          plan_code: string;
-          starts_at?: string;
-          status?: string;
-          price?: number | null;
-          currency?: string;
-        };
-        Update: {
-          created_at?: string;
-          created_by?: string | null;
-          ends_at?: string;
-          id?: string;
-          kind?: string;
-          org_id?: string;
-          plan_code?: string;
-          starts_at?: string;
-          status?: string;
-          price?: number | null;
-          currency?: string;
-        };
-        Relationships: [];
-      };
-      org_settings: {
-        Row: { org_id: string; sequential_mode: boolean; updated_at: string };
-        Insert: { org_id: string; sequential_mode?: boolean; updated_at?: string };
-        Update: { org_id?: string; sequential_mode?: boolean; updated_at?: string };
-        Relationships: [];
-      };
-      admin_actions: {
-        Row: {
-          action: string;
-          actor_id: string | null;
-          created_at: string;
-          id: string;
-          meta: Json;
-          org_id: string | null;
-          target_user_id: string | null;
-        };
-        Insert: {
-          action: string;
-          actor_id?: string | null;
-          created_at?: string;
-          id?: string;
-          meta?: Json;
-          org_id?: string | null;
-          target_user_id?: string | null;
-        };
-        Update: {
-          action?: string;
-          actor_id?: string | null;
-          created_at?: string;
-          id?: string;
-          meta?: Json;
-          org_id?: string | null;
-          target_user_id?: string | null;
-        };
-        Relationships: [];
-      };
-      active_sessions: {
-        Row: { last_seen: string; session_id: string; user_agent: string | null; user_id: string };
-        Insert: {
-          last_seen?: string;
-          session_id: string;
-          user_agent?: string | null;
-          user_id: string;
-        };
-        Update: {
-          last_seen?: string;
-          session_id?: string;
-          user_agent?: string | null;
-          user_id?: string;
         };
         Relationships: [];
       };
@@ -427,6 +420,59 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      plan_prices: {
+        Row: {
+          currency: string;
+          plan_code: string;
+          price: number;
+          term: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          currency?: string;
+          plan_code: string;
+          price?: number;
+          term: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          currency?: string;
+          plan_code?: string;
+          price?: number;
+          term?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "plan_prices_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      plans: {
+        Row: {
+          code: string;
+          seats: number;
+          sort_order: number;
+        };
+        Insert: {
+          code: string;
+          seats: number;
+          sort_order?: number;
+        };
+        Update: {
+          code?: string;
+          seats?: number;
+          sort_order?: number;
+        };
+        Relationships: [];
       };
       profiles: {
         Row: {
@@ -564,23 +610,233 @@ export type Database = {
         };
         Relationships: [];
       };
+      signup_links: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          department: string | null;
+          expires_at: string | null;
+          group_id: string | null;
+          id: string;
+          kind: string;
+          label: string | null;
+          max_uses: number | null;
+          org_id: string | null;
+          plan_code: string | null;
+          price: number | null;
+          revoked_at: string | null;
+          term: string | null;
+          token: string;
+          use_count: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          department?: string | null;
+          expires_at?: string | null;
+          group_id?: string | null;
+          id?: string;
+          kind: string;
+          label?: string | null;
+          max_uses?: number | null;
+          org_id?: string | null;
+          plan_code?: string | null;
+          price?: number | null;
+          revoked_at?: string | null;
+          term?: string | null;
+          token: string;
+          use_count?: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          department?: string | null;
+          expires_at?: string | null;
+          group_id?: string | null;
+          id?: string;
+          kind?: string;
+          label?: string | null;
+          max_uses?: number | null;
+          org_id?: string | null;
+          plan_code?: string | null;
+          price?: number | null;
+          revoked_at?: string | null;
+          term?: string | null;
+          token?: string;
+          use_count?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "signup_links_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      study_sessions: {
+        Row: {
+          department_id: string | null;
+          ended_at: string | null;
+          id: string;
+          org_id: string | null;
+          seconds_active: number;
+          started_at: string;
+          suite: string | null;
+          user_id: string;
+          week_number: number | null;
+        };
+        Insert: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id: string;
+          week_number?: number | null;
+        };
+        Update: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id?: string;
+          week_number?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "study_sessions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "study_sessions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      subscriptions: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          ends_at: string;
+          id: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          price: number | null;
+          starts_at: string;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          ends_at: string;
+          id?: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          price?: number | null;
+          starts_at?: string;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          ends_at?: string;
+          id?: string;
+          kind?: string;
+          org_id?: string;
+          plan_code?: string;
+          price?: number | null;
+          starts_at?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "subscriptions_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      award_stars: {
-        Args: { delta: number };
-        Returns: number;
+      award_stars: { Args: { delta: number }; Returns: number };
+      claim_signup_link: {
+        Args: { link_token: string };
+        Returns: {
+          created_at: string;
+          created_by: string | null;
+          department: string | null;
+          expires_at: string | null;
+          group_id: string | null;
+          id: string;
+          kind: string;
+          label: string | null;
+          max_uses: number | null;
+          org_id: string | null;
+          plan_code: string | null;
+          price: number | null;
+          revoked_at: string | null;
+          term: string | null;
+          token: string;
+          use_count: number;
+        }[];
+        SetofOptions: {
+          from: "*";
+          to: "signup_links";
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
       };
-      org_seat_limit: {
-        Args: { target: string };
-        Returns: number;
-      };
-      org_is_active: {
-        Args: { target: string };
-        Returns: boolean;
-      };
+      current_org_id: { Args: never; Returns: string };
+      is_org_admin: { Args: { target_org: string }; Returns: boolean };
+      is_super_admin: { Args: never; Returns: boolean };
+      org_is_active: { Args: { target: string }; Returns: boolean };
+      org_of: { Args: { target_profile: string }; Returns: string };
+      org_seat_limit: { Args: { target: string }; Returns: number };
+      release_signup_link: { Args: { link_id: string }; Returns: undefined };
     };
     Enums: {
       [_ in never]: never;

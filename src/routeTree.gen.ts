@@ -19,6 +19,7 @@ import { Route as AppraisalRouteImport } from './routes/appraisal'
 import { Route as AdminLoungeRouteImport } from './routes/admin-lounge'
 import { Route as AdminConsoleRouteImport } from './routes/admin-console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$week'
 import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
@@ -74,6 +75,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DepartmentDepRoute = DepartmentDepRouteImport.update({
   id: '/department/$dep',
   path: '/department/$dep',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department_/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/department/$dep'
+    | '/join/$token'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/department/$dep'
+    | '/join/$token'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/department/$dep'
+    | '/join/$token'
     | '/handbook/$dep/$week'
     | '/department_/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   OrgReportsRoute: typeof OrgReportsRoute
   ReviewRoute: typeof ReviewRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
+  JoinTokenRoute: typeof JoinTokenRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
   DepartmentDepWeekWeekRoute: typeof DepartmentDepWeekWeekRoute
   LearnDepWeekSuiteRoute: typeof LearnDepWeekSuiteRoute
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/join/$token': {
+      id: '/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof JoinTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/department/$dep': {
       id: '/department/$dep'
       path: '/department/$dep'
@@ -327,6 +347,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrgReportsRoute: OrgReportsRoute,
   ReviewRoute: ReviewRoute,
   DepartmentDepRoute: DepartmentDepRoute,
+  JoinTokenRoute: JoinTokenRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,
   DepartmentDepWeekWeekRoute: DepartmentDepWeekWeekRoute,
   LearnDepWeekSuiteRoute: LearnDepWeekSuiteRoute,
