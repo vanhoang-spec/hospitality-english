@@ -18,6 +18,7 @@ import {
   revokeSignupLink,
 } from "@/lib/signup-link-actions";
 import type { Database } from "@/integrations/supabase/types";
+import { MoneyInput } from "./MoneyInput";
 
 type LinkRow = Database["public"]["Tables"]["signup_links"]["Row"];
 
@@ -302,11 +303,9 @@ export function HotelLinksSection({ orgNames }: { orgNames: Map<string, string> 
           </select>
         </Labeled>
         <Labeled label="Giá chốt (để trống = giá niêm yết)">
-          <input
-            type="number"
-            min={0}
+          <MoneyInput
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={setPrice}
             placeholder={listPrice !== undefined ? formatMoney(listPrice) : "Chưa có giá niêm yết"}
             className={`${INPUT} w-full`}
           />

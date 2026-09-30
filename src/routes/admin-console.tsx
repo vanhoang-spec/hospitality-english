@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
 import { createOrganization, setSubscription, setPlanPrice } from "@/lib/platform-admin-actions";
 import { HotelLinksSection } from "@/components/SignupLinks";
+import { MoneyInput } from "@/components/MoneyInput";
 import {
   PLAN_LABEL,
   TERM_LABEL,
@@ -247,9 +248,9 @@ function AdminConsolePage() {
             <label className="text-[10px] uppercase tracking-[0.2em] text-foreground/60">
               Giá thực thu — để trống là lấy giá niêm yết
             </label>
-            <input
+            <MoneyInput
               value={priceOverride}
-              onChange={(e) => setPriceOverride(e.target.value)}
+              onChange={setPriceOverride}
               placeholder={listed ? formatMoney(listed.price, listed.currency) : "chưa có bảng giá"}
               className="mt-1 w-full border border-primary/30 bg-background px-3 py-2 text-sm outline-none focus:border-primary"
             />
@@ -335,16 +336,11 @@ function PriceGrid({ onSaved }: { onSaved: (message: string) => void }) {
                     return (
                       <td key={t} className="px-2 py-2 text-right">
                         <div className="flex items-center justify-end gap-1">
-                          <input
-                            inputMode="numeric"
+                          <MoneyInput
                             value={value}
-                            onChange={(e) =>
-                              setDraft((d) => ({
-                                ...d,
-                                [key]: e.target.value.replace(/[^\d]/g, ""),
-                              }))
-                            }
-                            className="w-32 border border-primary/30 bg-background px-2 py-1 text-right text-sm outline-none focus:border-primary"
+                            onChange={(digits) => setDraft((d) => ({ ...d, [key]: digits }))}
+                            aria-label={`Giá ${PLAN_LABEL[p]}, ${TERM_LABEL[t]}`}
+                            className="w-36 border border-primary/30 bg-background px-2 py-1 text-right text-sm outline-none focus:border-primary"
                           />
                           <button
                             disabled={!dirty || save.isPending}
