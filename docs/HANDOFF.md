@@ -83,11 +83,15 @@ true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata`; đã
 
 ### ⚠️ Code đang chạy chưa khớp database
 
-Màn hình quản trị (Nền tảng, Nhóm, Báo cáo) và `/join` chỉ có ở `content/p2-gates` (PR #9) và
-`platform/signup-links` (PR #10), **chưa merge vào `main`**. Và `createMember` của `main` chỉ
-ghi `user_metadata` — với trigger mới, học viên HR tạo từ bản `main` sẽ **không thuộc khách sạn
-nào**. Hiện vô hại (0 khách sạn, không có HR), nhưng **phải merge PR #10 trước khi mở khách sạn
-đầu tiên.**
+Màn hình quản trị (Nền tảng, Nhóm, Báo cáo) và `/join` chưa có trên `main`. Và `createMember`
+của `main` chỉ ghi `user_metadata` — với trigger mới, học viên HR tạo từ bản `main` sẽ **không
+thuộc khách sạn nào**. Hiện vô hại (0 khách sạn, không có HR).
+
+**Đường phát hành (01/10, người dùng chọn):** PR #11 (`platform/to-main` → `main`) mang **chỉ
+phần nền tảng**, không kèm nội dung P2/P3. Merge PR #11 trước khi mở khách sạn đầu tiên. PR #9
+(nội dung) merge sau, khi P3 xong; lúc đó có thể xung đột nhỏ ở `SpeakingSuite.tsx` và
+`review.tsx` (chỉ các dòng telemetry) — giữ bản của `content/p2-gates`. PR #10 vẫn merge vào
+`content/p2-gates` để nhánh nội dung có cùng code nền tảng.
 
 ### Giới hạn đã biết — đừng hứa với khách hàng
 
@@ -105,8 +109,7 @@ nào**. Hiện vô hại (0 khách sạn, không có HR), nhưng **phải merge 
 
 Không tự làm những việc này.
 
-1. **Merge PR #9 và #10 vào `main` khi nào** — cần trước khi bán (xem §4). PR #9 cũng mang nội
-   dung P3 Codex đang làm; merge là phát hành cả phần đó.
+1. **Merge PR #11** (nền tảng → `main`) — cần trước khi bán (xem §4). PR #9 (nội dung) chờ P3.
 2. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
 3. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
