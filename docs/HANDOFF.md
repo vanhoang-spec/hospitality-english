@@ -81,15 +81,15 @@ true`, đo 29/09). Migration `20260929090000` chuyển sang `app_metadata`; đã
 - `src/integrations/supabase/types.ts` **đã sinh lại** từ production (01/10), không còn viết tay.
 - `organizations`: **0 dòng**. `profiles`: **1 dòng**, vai trò `super_admin`.
 
-### ⚠️ Code đang chạy chưa khớp database
+### Nền tảng đã lên bản đang chạy (01/10)
 
-Màn hình quản trị (Nền tảng, Nhóm, Báo cáo) và `/join` chưa có trên `main`. Và `createMember`
-của `main` chỉ ghi `user_metadata` — với trigger mới, học viên HR tạo từ bản `main` sẽ **không
-thuộc khách sạn nào**. Hiện vô hại (0 khách sạn, không có HR).
+PR #11 (`platform/to-main` → `main`, **chỉ phần nền tảng**, không kèm nội dung P2/P3) đã merge
+lúc CI xanh, commit `14acbf8`. Netlify đã triển khai: trên `hospitality-english.netlify.app`,
+`/join/<token>` mở được khi chưa đăng nhập và server function đọc bảng `signup_links` trên
+production (token giả → "Link không tồn tại"). Các màn hình sau đăng nhập **chưa ai kiểm** — cần
+người dùng đăng nhập Super Admin để xem.
 
-**Đường phát hành (01/10, người dùng chọn):** PR #11 (`platform/to-main` → `main`) mang **chỉ
-phần nền tảng**, không kèm nội dung P2/P3. Merge PR #11 trước khi mở khách sạn đầu tiên. PR #9
-(nội dung) merge sau, khi P3 xong; lúc đó có thể xung đột nhỏ ở `SpeakingSuite.tsx` và
+PR #9 (nội dung) merge sau, khi P3 xong; lúc đó có thể xung đột nhỏ ở `SpeakingSuite.tsx` và
 `review.tsx` (chỉ các dòng telemetry) — giữ bản của `content/p2-gates`. PR #10 vẫn merge vào
 `content/p2-gates` để nhánh nội dung có cùng code nền tảng.
 
@@ -109,7 +109,8 @@ phần nền tảng**, không kèm nội dung P2/P3. Merge PR #11 trước khi m
 
 Không tự làm những việc này.
 
-1. **Merge PR #11** (nền tảng → `main`) — cần trước khi bán (xem §4). PR #9 (nội dung) chờ P3.
+1. **Kiểm các màn hình quản trị sau đăng nhập** trên bản đang chạy — cần người dùng đăng nhập.
+   PR #9 (nội dung) chờ P3.
 2. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
 3. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
