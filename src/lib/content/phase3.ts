@@ -945,8 +945,7 @@ function week26(lx: Ctx): LessonContent[] {
             q: "Nhân viên xử lý thế nào khi việc thuộc bộ phận khác?",
             options: ["Tự liên hệ giúp khách", "Bảo khách tự đi hỏi", "Từ chối"],
             correct: 0,
-            explanation:
-              "'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}' — cầm lấy việc thay vì đẩy khách đi.",
+            explanation: `'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}' — cầm lấy việc thay vì đẩy khách đi.`,
           },
           {
             q: "Câu nào giữ khách ở lại thay vì đẩy đi?",
@@ -2296,11 +2295,41 @@ function reviewWordsFor(
 
   const out: string[] = [];
 
-  const oneBack = week - 1;
-  if (oneBack >= 23) out.push(...headwordsOf(lx, oneBack, overrides).slice(0, 5));
-
-  const threeBack = week - 3;
-  if (threeBack >= 23) out.push(...headwordsOf(lx, threeBack, overrides).slice(0, 4));
+  // EACH LAG REACHES A DIFFERENT THIRD OF THE WEEK IT LOOKS BACK TO.
+  //
+  // This took `.slice(0, 5)` one week back and `.slice(0, 4)` three weeks
+  // back — the SAME front of every week, twice — so the back two thirds of
+  // each week's words were never retrieved before the checkpoint swept them
+  // all at once. Phase 3 round 1 measured it in every department it audited:
+  // 76-78 of ~107 headwords (71-73%) met again only at week 30.
+  //
+  // Now one week back takes the first third, two back the middle, three back
+  // the last, so a week's words are all retrieved by three weeks later.
+  // Week 29 is the last week before the checkpoint, so it also takes what
+  // weeks 27 and 28 would otherwise hand to week 30. Only week 28's last
+  // third and week 29 itself — which nothing can precede — wait for week 30.
+  const thirds = (ws: string[]) => {
+    const a = Math.ceil(ws.length / 3);
+    return [ws.slice(0, a), ws.slice(a, 2 * a), ws.slice(2 * a)];
+  };
+  const reach: [lag: number, part: number][] =
+    week === 29
+      ? [
+          [1, 0],
+          [1, 1],
+          [2, 1],
+          [2, 2],
+          [3, 2],
+        ]
+      : [
+          [1, 0],
+          [2, 1],
+          [3, 2],
+        ];
+  for (const [lag, part] of reach) {
+    const back = week - lag;
+    if (back >= 23) out.push(...thirds(headwordsOf(lx, back, overrides))[part]!);
+  }
 
   const slots = 7; // weeks 23..29
   const size = Math.ceil(priorWords.length / slots);
@@ -2466,6 +2495,19 @@ function buildWeek(
 ): WeekContent {
   const meta = WEEK_META[week];
   const review = reviewWordsFor(lx, week, priorWords, overrides);
+  // A HAND-AUTHORED WEEK STILL SITS ON THE PHASE'S SPACING SCHEDULE. It used
+  // to be spread over this builder's output wholesale, review list and all,
+  // so the three weeks in this range (SW-23, FO-26, GR-27) kept the eight
+  // review words their authors wrote — 33% of the week against the matrix's
+  // 35% — and every word the schedule meant that week to bring back was
+  // skipped. The authored list stays; the schedule's is added to it.
+  const override = overrides[`${lx.code}-${week}`];
+  if (override) {
+    return {
+      ...override,
+      reviewWords: Array.from(new Set([...(override.reviewWords ?? []), ...review])),
+    };
+  }
   return {
     departmentId: lx.code,
     weekNumber: week,

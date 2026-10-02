@@ -50,6 +50,9 @@ export type OralItem = {
    *  a regex this file owns, and a copy of that regex in the suite would be a
    *  second rule that stops being the one that ships. */
   reserved?: boolean;
+  /** The author marked this turn as a must-be-right one — see
+   *  `SpeakingItem.risk`. */
+  risk?: boolean;
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -126,6 +129,7 @@ export function buildOral(dep: string, week: string): OralItem[] {
             follows: s.follows,
             alternates: accepted.slice(1),
             sourceWeek: c.weekNumber,
+            ...(s.risk ? { risk: true } : {}),
           } as OralItem,
         };
       }),
@@ -399,9 +403,39 @@ export function buildOral(dep: string, week: string): OralItem[] {
     BO: /approv|confidential|sign off/i,
   };
   const topic = TOPIC[dep.toUpperCase()];
-  const reserved = shuffle(pool).find(
-    (i) => CARRIES_AUTHORITY.test(items[i].target) || (topic?.test(items[i].target) ?? false),
-  );
+  const carries = (t: string) => CARRIES_AUTHORITY.test(t) || (topic?.test(t) ?? false);
+
+  // THE MUST-BE-RIGHT TURN ACCEPTS ONLY MUST-BE-RIGHT ANSWERS.
+  //
+  // A slot's alternates are the other replies the phase teaches for the same
+  // line, and for an ordinary turn that is exactly right. For the reserved
+  // one it emptied the test: Phase 3 Housekeeping reserved "How long will
+  // that take?" → "Just a moment. This part belongs to the front desk." and
+  // also accepted "I will service your room within ten minutes, madam." — a
+  // time promise that hands nothing to anyone — which passed the slot whose
+  // whole point is handing the job over. So an alternate stays on the
+  // reserved turn only if it is itself an answer of that kind.
+  const narrowed = (it: OralItem, keep: (target: string) => boolean): OralItem => ({
+    ...it,
+    reserved: true,
+    alternates: (it.alternates ?? []).filter((a) => keep(a.target)),
+  });
+
+  // AN AUTHOR'S MARK BEATS A SEARCH. Where the phase marks its must-be-right
+  // turns (`SpeakingItem.risk`), the draw is made among those and nothing
+  // else — see that field for what the substring search below did to Phase
+  // 3. A chain is drawn whole, so every marked turn in it is required, not
+  // just its head. The search stays only for phases that mark nothing yet.
+  const marked = pool.filter((i) => chainAt(i).some((it) => it.risk));
+  const riskTargets = new Set(items.filter((it) => it.risk).map((it) => it.target));
+  if (marked.length > 0) {
+    const head = shuffle(marked)[0]!;
+    for (let cur: number | undefined = head; cur !== undefined; cur = nextOf.get(cur))
+      if (items[cur]!.risk) items[cur] = narrowed(items[cur]!, (t) => riskTargets.has(t));
+    take(head);
+  }
+  const reserved =
+    marked.length > 0 ? undefined : shuffle(pool).find((i) => carries(items[i].target));
   if (reserved !== undefined) {
     // The reservation put the sentence in the paper and stopped there, so it
     // was worth the same as any other draw and the pass mark is 3 of 5:
@@ -409,7 +443,7 @@ export function buildOral(dep: string, week: string): OralItem[] {
     // item wrong and the other four right passed 100% of the time. Reserving a
     // draw for "I cannot decide that — may I ask my manager?" and then not
     // minding the answer is not an assessment of it.
-    items[reserved] = { ...items[reserved]!, reserved: true };
+    items[reserved] = narrowed(items[reserved]!, carries);
     take(reserved);
   }
   for (const i of shuffle(pool)) {

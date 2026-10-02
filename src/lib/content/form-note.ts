@@ -50,12 +50,22 @@ const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
 const ADJECTIVE_ED =
   /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly)$/;
 
+/** A hyphenated verb is ONE verb. Stripping punctuation used to turn
+ *  "can re-clean" into "can re clean", and the modal rule printed "Sau
+ *  'can' động từ giữ nguyên dạng gốc: can re." to Housekeeping in weeks 28
+ *  and 30. The hyphen is held as "_" — which `\w` matches — while the rules
+ *  run, and put back on the way out. */
 export function formNote(target: string): string | null {
+  return formNoteHeld(target)?.replace(/_/g, "-") ?? null;
+}
+
+function formNoteHeld(target: string): string | null {
   const s =
     " " +
     target
       .toLowerCase()
-      .replace(/[^a-z' ]/g, " ")
+      .replace(/([a-z])-([a-z])/g, "$1_$2")
+      .replace(/[^a-z'_ ]/g, " ")
       .replace(/\s+/g, " ") +
     " ";
   let m: RegExpMatchArray | null;
@@ -171,7 +181,10 @@ export function formNote(target: string): string | null {
   // times." hands back "a towel cover stays" as the noun.
   const nounPhrase =
     /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|here|there|please|sir|madam)(?![a-z]))/i;
-  if ((m = target.match(nounPhrase)))
+  // "a little", "a few", "a lot", "a bit" are quantities, not a countable
+  // noun taking its article: "It costs a little more" was teaching "a little
+  // more" as a singular noun in five tips across Phase 3.
+  if ((m = target.match(nounPhrase)) && !/^(little|few|lot|bit)\b/i.test(m[2]))
     return m[1].toLowerCase() === "an"
       ? `Mạo từ 'an' đứng trước âm nguyên âm: an ${m[2].toLowerCase()}.`
       : `Danh từ đếm được số ít cần mạo từ: a ${m[2].toLowerCase()}.`;

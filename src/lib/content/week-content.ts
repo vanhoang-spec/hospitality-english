@@ -68,6 +68,19 @@ export type SpeakingItem = {
    *  two and three are answered in the light of what the learner has already
    *  committed to. */
   follows?: string;
+  /** This turn is a decision the speaker does not own, or the department's
+   *  own risk — and the checkpoint's must-be-right draw comes from turns
+   *  marked this way.
+   *
+   *  The draw used to find such turns by searching the model sentence for
+   *  substrings, and a substring matches the filing as readily as the risk.
+   *  Phase 3, round 1, measured on the real draw: Front Office's must-be-right
+   *  turn was a rooming-list check in 500/500 sittings (it says "before we
+   *  start"), Spa's was "the guest allergy note has not been finished" in
+   *  500/500 (it says "allerg"), Housekeeping's was "This part belongs to the
+   *  front desk" — and Guest Relations had none at all in 200/200. A flag set
+   *  by the author who knows what the turn is for cannot drift that way. */
+  risk?: true;
 };
 /** The label every suite prints above the prompt. "manager" exists because a
  *  week that trains reporting UPWARD is a week about register, and calling a
@@ -26649,8 +26662,8 @@ const PRIOR_WORDS_THROUGH_P3_BY_DEP: Record<string, string[]> = (() => {
 // Registry — keyed by `${DEP}-${week}`.
 // Order matters: the hand-authored weeks are spread LAST so they win
 // over the Phase 2 spine for the four slots they occupy (FB-15, HK-15,
-// FO-17, SW-19) and the three in Phase 3 (SW-23, FO-26, GR-27) — see the
-// notes at the top of phase2.ts and phase3.ts.
+// FO-17, SW-19) — see the note at the top of phase2.ts. Phase 3's three
+// (SW-23, FO-26, GR-27) come back from buildPhase3 already in place.
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
@@ -26660,10 +26673,9 @@ const REGISTRY: Record<string, WeekContent> = {
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,
-  "SW-23": SW_WEEK_23,
-  "GR-27": GR_WEEK_27,
+  // SW-23, GR-27 and FO-26 are NOT spread here any more: buildPhase3 returns
+  // them itself, on the phase's spacing schedule — see buildWeek() there.
   "BO-37": BO_WEEK_37,
-  "FO-26": FO_WEEK_26,
   "FB-31": FB_WEEK_31,
   "HK-33": HK_WEEK_33,
   "SW-19": SW_WEEK_19,

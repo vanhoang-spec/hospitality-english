@@ -405,6 +405,14 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
   for (const bad of KNOWN_BAD_STRINGS) {
     if (haystack.includes(bad)) errors.push(`${key}: known-bad string regressed: "${bad}"`);
   }
+  // A frame written in quotes instead of backticks ships its own source code:
+  // Phase 3 round 1 found a reading explanation that printed, to every
+  // department, `'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}'`.
+  // No rendered string, in any phase, may still hold a placeholder.
+  for (const t of texts) {
+    const m = /\$\{[^}]*\}/.exec(t);
+    if (m) errors.push(`${key}: unrendered template placeholder ${m[0]} in "${t.slice(0, 80)}"`);
+  }
 }
 
 // ============================================================
