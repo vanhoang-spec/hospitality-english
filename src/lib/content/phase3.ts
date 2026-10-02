@@ -75,6 +75,7 @@ import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { HK_P3 } from "./p3/hk";
+import { SW_P3 } from "./p3/sw";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
 
@@ -2268,7 +2269,7 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
  *  the shared frames (round 1 of the blind audit, ac24e13: a frame knows
  *  a part of speech, never a meaning). Their cards still come from the
  *  department's bank, so Phase 4's recycling finds the same headwords. */
-const AUTHORED: Record<string, Record<number, LessonContent[]>> = { HK: HK_P3 };
+const AUTHORED: Record<string, Record<number, LessonContent[]>> = { HK: HK_P3, SW: SW_P3 };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
