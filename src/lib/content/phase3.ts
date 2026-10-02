@@ -76,6 +76,7 @@ import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } fro
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
+import { GR_P3 } from "./p3/gr";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
 
@@ -2269,7 +2270,11 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
  *  the shared frames (round 1 of the blind audit, ac24e13: a frame knows
  *  a part of speech, never a meaning). Their cards still come from the
  *  department's bank, so Phase 4's recycling finds the same headwords. */
-const AUTHORED: Record<string, Record<number, LessonContent[]>> = { HK: HK_P3, SW: SW_P3 };
+const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
+  HK: HK_P3,
+  SW: SW_P3,
+  GR: GR_P3,
+};
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
@@ -2457,9 +2462,9 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
   },
   GR: {
     colleagueNoteVi:
-      "Suite dành cho khách VIP tối nay chưa dọn xong vì có sự cố rò nước, phải chuyển khách sang Suite khác cùng hạng.",
+      "Suite dành cho khách VIP tối nay chưa dọn xong vì có sự cố rò nước, phải chuyển khách sang Suite khác cùng hạng. Quản lý trực đã duyệt: khách không phải trả thêm đồng nào.",
     promptVi:
-      "Khách VIP tối nay đặt phòng Suite. Hãy nói lại bằng tiếng Anh, truyền đạt đủ ba ý bên dưới.",
+      "Khách VIP tối nay đặt phòng Suite. Hãy nói lại bằng tiếng Anh, truyền đạt đủ bốn ý bên dưới.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies"] },
       {
@@ -2470,6 +2475,46 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
         labelVi: "Chuyển sang phòng cùng hạng",
         any: ["same category", "same type", "identical", "another suite", "similar suite"],
       },
+      // The model answer and the explanation both say "at no extra cost", and
+      // a relay that charged the guest for the move used to score 100%.
+      // Required: with four ideas any three reach the pass mark, and this is
+      // the one a relay must not leave out.
+      {
+        labelVi: "Không phát sinh chi phí",
+        required: true,
+        any: [
+          "no extra cost",
+          "no extra charge",
+          "at no cost",
+          "no additional cost",
+          "no additional charge",
+          "free of charge",
+          "same price",
+          "same rate",
+          "nothing extra",
+          "not pay anything",
+          "not pay more",
+          "no charge",
+        ],
+      },
+    ],
+    // Matching is by phrase, not by meaning, so each entry is one a correct
+    // relay never contains: "an extra charge" blocks "there will be an extra
+    // charge" and not "no extra charge"; "will cost more" blocks the promise
+    // of a higher price and not "it will not cost more".
+    mustAvoid: [
+      "an extra charge",
+      "an extra fee",
+      "an additional charge",
+      "an additional fee",
+      "a surcharge",
+      "have to pay more",
+      "will pay more",
+      "need to pay more",
+      "pay the difference",
+      "will cost more",
+      "it costs more",
+      "charge you more",
     ],
     modelAnswer:
       "I'm very sorry, sir, there has been a water leak in your Suite, so it will not be ready tonight. We would like to move you to another Suite of the same category, at no extra cost — I hope that will still make your stay special.",
