@@ -17,7 +17,7 @@
 //  · Past continuous arrives in week 29 for shift handover ("I was
 //    checking X when Y happened") — how incidents are actually reported.
 //
-// THREE SLOTS ARE NOT GENERATED HERE. SW-23, FO-26 and GR-27 are
+// TWO SLOTS ARE NOT GENERATED HERE. SW-23 and GR-27 are
 // hand-authored weeks already sitting in this range. week-content.ts
 // spreads them AFTER this builder so they win; the spine output for
 // those keys is discarded, and reviewWordsFor() reads through the same
@@ -74,6 +74,7 @@
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
+import { FO_P3 } from "./p3/fo";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
 import { GR_P3 } from "./p3/gr";
@@ -2271,6 +2272,7 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
  *  a part of speech, never a meaning). Their cards still come from the
  *  department's bank, so Phase 4's recycling finds the same headwords. */
 const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
+  FO: FO_P3,
   HK: HK_P3,
   SW: SW_P3,
   GR: GR_P3,
@@ -2280,7 +2282,7 @@ function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
 }
 
-/** Headwords a department ACTUALLY meets in a week. Three slots in this
+/** Headwords a department ACTUALLY meets in a week. Two slots in this
  *  range are served by hand-authored payloads instead of the spine, so
  *  recycling must read those, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
@@ -2359,9 +2361,8 @@ function reviewWordsFor(
 // P2: one mediation task per department, all sitting on week 26
 // (Working With Other Teams — the natural home for "relay what a
 // colleague just told you to a guest who doesn't speak Vietnamese").
-// Exported so week-content.ts can attach the FO entry to the
-// hand-authored FO_WEEK_26 override, which replaces this file's spine
-// output for that one key. Direction is Vietnamese-in / English-out —
+// buildWeek() attaches each department's entry to its week 26, the
+// authored ones (p3/*.ts) included. Direction is Vietnamese-in / English-out —
 // the audit named this exact skill (mediating between a guest and a
 // Vietnamese-speaking colleague) as the most common real B1 task in a
 // VN hotel and absent from all 40 weeks.
@@ -2579,8 +2580,8 @@ function buildWeek(
 }
 
 /**
- * Phase 3 weeks (6 departments × weeks 23-30). Three of these keys are
- * overridden downstream by the hand-authored SW-23, FO-26 and GR-27
+ * Phase 3 weeks (6 departments × weeks 23-30). Two of these keys are
+ * overridden downstream by the hand-authored SW-23 and GR-27
  * payloads — see the note at the top of this file.
  */
 /** Every headword Phase 3 teaches, in order, per department — the
