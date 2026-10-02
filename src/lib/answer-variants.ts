@@ -155,13 +155,27 @@ function oneStep(t: string): string[] {
       /^(I|we|you|he|she|they|it|my|our|the|please)\b/i.test(m[3]!)
     )
       out.push([...ss.slice(0, i), `${m[1]}.`, cap(m[3]!), ...ss.slice(i + 1)].join(" "));
-    // A discourse marker at the front of a sentence: "Then we need…".
-    const d = s.match(/^(Then|So|Now|First|Also),?\s+(.+)$/);
+    // A discourse marker at the front of a sentence: "Then we need…". Not
+    // "First": in "First, take the spill kit." it is the safety order, and
+    // dropping it let "Take the spill kit. I will tell the supervisor." pass.
+    const d = s.match(/^(Then|So|Now|Also),?\s+(.+)$/);
     if (d) out.push([...ss.slice(0, i), cap(d[2]!), ...ss.slice(i + 1)].join(" "));
     // A reason or a condition said first, or said last.
     const h = s.match(HONORIFIC_END);
     const body = h ? s.slice(0, h.index) : s.replace(/[.?!]+$/, "");
     const end = h ? `, ${h[1]}${h[2]}` : (s.match(/[.?!]+$/)?.[0] ?? ".");
+    // "first" at either end of the same sentence: "Take the spill kit first."
+    // and "First, take the spill kit." say the same order.
+    const lastFirst = body.match(/^(.+?) first$/i);
+    if (lastFirst)
+      out.push(
+        [...ss.slice(0, i), `First, ${low(lastFirst[1]!)}${end}`, ...ss.slice(i + 1)].join(" "),
+      );
+    const frontFirst = body.match(/^First,? (.+)$/);
+    if (frontFirst)
+      out.push(
+        [...ss.slice(0, i), `${cap(frontFirst[1]!)} first${end}`, ...ss.slice(i + 1)].join(" "),
+      );
     const back =
       body.match(/^(.+?),? ((?:because|if|before|until|when|after|as soon as) .+)$/i) ??
       body.match(/^(.+?), (for .+)$/i);
