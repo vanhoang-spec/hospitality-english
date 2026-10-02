@@ -457,11 +457,15 @@ export function buildOral(dep: string, week: string): OralItem[] {
   const { items, pool, nextOf, chainAt, carries, marked, reservedAt } = oralSetup(dep, week);
   // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
   // its three turns in a row the way the lesson taught them.
-  const picked: typeof items = [];
+  // Units, not turns: a chain stays in order inside its unit, and the units
+  // are shuffled at the end so the reserved one is not always asked first —
+  // it was the opening question in 78.3% of F&B sittings, which tells a
+  // learner which answer the whole half hangs on.
+  const pickedUnits: (typeof items)[] = [];
   const used = new Set<number>();
   let units = 0;
   const take = (i: number) => {
-    for (const it of chainAt(i)) picked.push(it);
+    pickedUnits.push(chainAt(i));
     for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
     units++;
   };
@@ -486,5 +490,5 @@ export function buildOral(dep: string, week: string): OralItem[] {
     if (units >= CHECKPOINT_ORAL_ITEMS) break;
     if (!used.has(i)) take(i);
   }
-  return picked;
+  return shuffle(pickedUnits).flat();
 }

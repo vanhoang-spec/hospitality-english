@@ -207,6 +207,13 @@ export function Tier3SkillSuitesHub({
             </span>
           </p>
 
+          {authored?.canDoVi && (
+            <p className="mt-4 max-w-2xl border-l-2 border-primary/60 pl-3 text-sm leading-6 text-foreground/85">
+              <span className="font-semibold text-primary">Học xong tuần này, bạn nói được: </span>
+              {authored.canDoVi}
+            </p>
+          )}
+
           {/* Self-study entry point: the printable pattern + vocabulary sheet
               for practising this week away from the app. */}
           {authored && (

@@ -228,6 +228,10 @@ export type WeekContent = {
    *  standard) — see phase3.ts week 26 / phase4.ts week 33. */
   writing?: WritingTask;
   mediation?: MediationTask;
+  /** One line, Vietnamese, shown on the week page and in the handbook: what
+   *  the learner can SAY after the week ("Nói được: …"). The level matrix
+   *  asks for it; five blind reviews found none anywhere a learner looks. */
+  canDoVi?: string;
 };
 
 export const FO_WEEK_17: WeekContent = {

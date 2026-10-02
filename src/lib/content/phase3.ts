@@ -2280,6 +2280,9 @@ const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
   FB: FB_P3,
 };
 
+/** The week's can-do line, for the departments that write one. */
+const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {};
+
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
 }
@@ -2593,6 +2596,7 @@ function buildWeek(
     lessons: lockWeekHeadwords(lessonsOf(lx, week), review),
     reviewWords: review,
     mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
+    ...(AUTHORED_CAN_DO[lx.code]?.[week] ? { canDoVi: AUTHORED_CAN_DO[lx.code]![week] } : {}),
   };
 }
 
