@@ -76,7 +76,7 @@ import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } fro
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
 import { FB_P3, FB_P3_CAN_DO } from "./p3/fb";
-import { HK_P3 } from "./p3/hk";
+import { HK_P3, HK_P3_CAN_DO } from "./p3/hk";
 import { SW_P3, SW_P3_CAN_DO } from "./p3/sw";
 import { GR_P3, GR_P3_CAN_DO } from "./p3/gr";
 
@@ -2286,6 +2286,7 @@ const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
   FB: FB_P3_CAN_DO,
   GR: GR_P3_CAN_DO,
   SW: SW_P3_CAN_DO,
+  HK: HK_P3_CAN_DO,
 };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
@@ -2515,11 +2516,16 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
     explanationVi:
       "Không chỉ nói 'hết món' — xin lỗi, nói rõ món đã hết, đưa đúng món bếp làm được, và để khách chọn. Không tự hứa giảm giá, miễn phí hay 'mai có', không đổ lỗi cho bếp.",
   },
+  // Round 2 (e3d0805): the old note told the attendant the guest "can be moved
+  // to 210", the model answer offered the move, and with no mustAvoid "I will
+  // give you a free upgrade and a refund" scored 100%. A room move is the
+  // front desk's, money is the duty manager's; the attendant's own interim
+  // step is a fan, and that step is now an idea the relay must carry.
   HK: {
     colleagueNoteVi:
-      "Điều hòa phòng 208 đang hỏng, kỹ thuật cần khoảng 1 tiếng để sửa, có thể chuyển khách sang phòng 210 tạm thời.",
+      "Điều hòa phòng 208 đang hỏng, kỹ thuật cần khoảng 1 tiếng để sửa. Trong lúc chờ, mình mang quạt lên cho khách được. Nếu khách muốn đổi phòng thì phải hỏi lễ tân, mình không tự đổi.",
     promptVi:
-      "Khách phòng 208 đang phàn nàn phòng nóng. Hãy nói lại bằng tiếng Anh, truyền đạt đủ ba ý bên dưới.",
+      "Khách phòng 208 đang phàn nàn phòng nóng. Hãy nói lại bằng tiếng Anh, truyền đạt đủ bốn ý bên dưới.",
     mustConvey: [
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies"] },
       {
@@ -2527,21 +2533,53 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
         any: [
           "air conditioning",
           "air-conditioning",
+          "air conditioner",
           "aircon",
           "cooling",
           "being repaired",
           "being fixed",
+          "engineering",
         ],
       },
       {
         labelVi: "Nêu rõ khoảng một giờ",
         any: ["an hour", "one hour", "60 minutes", "sixty minutes"],
       },
+      // The explanation asks for an interim step the attendant offers without
+      // being asked, and the old list never checked for one. Required: with
+      // four ideas any three pass, and this is the one that is the service.
+      {
+        labelVi: "Việc tạm thời bạn tự làm được trong lúc chờ",
+        required: true,
+        any: ["fan", "a fan", "electric fan", "cold water", "cold drink"],
+      },
+    ],
+    // Phrase-matched, so each entry is one a correct relay never says: "ask
+    // the front desk if they can move you to another room" stays open, "I will
+    // move you" and "we can move you" do not.
+    mustAvoid: [
+      "free upgrade",
+      "an upgrade",
+      "upgrade you",
+      "a refund",
+      "refund you",
+      "free of charge",
+      "no charge",
+      "for free",
+      "complimentary",
+      "move you to room",
+      "move to room",
+      "I will move you",
+      "we will move you",
+      "I can move you",
+      "we can move you",
+      "I am moving you",
+      "we are moving you",
     ],
     modelAnswer:
-      "I'm very sorry, madam, the air conditioning in your room is being repaired — our engineering team needs about an hour. Would you like to move to room 210 in the meantime so you can stay comfortable?",
+      "I am very sorry, madam. The air conditioning is being repaired. Our engineering team needs about one hour. I can bring you a fan now. If you prefer, I will ask the front desk about another room.",
     explanationVi:
-      "Câu trả lời cần đủ ba phần: xin lỗi, lý do kỹ thuật cụ thể kèm khung giờ, và một giải pháp tạm thời chủ động đề xuất, không chờ khách phải hỏi.",
+      "Đủ bốn phần: xin lỗi, lý do kỹ thuật kèm khung giờ, một việc tạm thời bạn tự làm được (mang quạt lên), và việc đổi phòng thì chỉ hỏi lễ tân giúp. Nhân viên buồng không tự đổi phòng, không hứa nâng hạng, miễn phí hay hoàn tiền.",
   },
   SW: {
     colleagueNoteVi:
