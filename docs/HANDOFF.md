@@ -24,6 +24,8 @@ Theo thứ tự yêu cầu gần nhất:
 3. **(28/09) Người dùng cho mở lại P3 (tuần 23–30)**, yêu cầu khảo sát kỹ và báo kế hoạch trước.
    Mỗi ô trong 10 ô Academic Director/Hotel Manager phải **trên 7,5** mới pass; auditor độc lập,
    không thấy kết quả của nhau. P2 vẫn đóng, P4 vẫn tạm dừng. Kế hoạch: `docs/p3-plan.md`.
+4. **(03/10) Người dùng cho P3 đạt ở vòng 4** (8/10 ô). Việc kế tiếp chưa được giao: hỏi người
+   dùng trước khi mở PR `content/p3` → `main` hay mở lại P4.
 
 ---
 
@@ -34,7 +36,7 @@ Theo thứ tự yêu cầu gần nhất:
 | P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                     |
 | P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
 | P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
-| P3        | 23–30 | **Chưa qua cổng.** Đang sửa trên `content/p3` (§8)                                                                                                                                                                       |
+| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Trên `content/p3` (§8), chưa có PR                                               |
 | P4        | 31–40 | FO/FB/HK/GR soạn tay đủ 10/10, qua cổng theo batch với chuẩn cũ. SW còn 9/10 tuần sinh tự động. Tạm dừng                                                                                                                 |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
@@ -189,7 +191,13 @@ Code. Nhánh **`content/p3`** (tách từ `content/p2-gates` @ `19410f7`), workt
   tăng 2–4 lần (vd AC-FO 11→36/96, AC-HK 28→48/98), câu nguy hiểm vẫn 0. Ratchet S reserved-lock
   46→56 là phân loại lại có chủ đích (bỏ "myself", "the manager", "first" khi đã có "then").
   Probe mới: `bun scripts/probes/resaid.ts [DEP] [--list]` — headword P3 không được nói lại.
-- Đang làm: năm tác giả (subagent) sửa nội dung theo báo cáo vòng 3 — từ chết, tuần 30 trình bày
-  lại thẻ tuần 23–29 (cổng trùng headword đã miễn cho tuần 30 như tuần 39–40), lỗi nghiệp vụ HM.
-  Gộp xong thì đóng băng và chạy vòng mù 4 (brief = bản sao `brief-p3-r3.md`).
+- Nội dung sau vòng 3 (năm tác giả): từ chết 56–60 → 0–8 mỗi bộ phận, tuần 30 trình bày lại thẻ
+  tuần 23–29 (cổng trùng headword miễn cho tuần 30 như 39–40), lỗi nghiệp vụ HM.
+- **Vòng mù 4 trên `3062984`: 8/10 đạt** — AC FO 7,63 · FB 7,58 · HK 7,75 · SW 7,65 · GR 7,33 ·
+  HM FO 7,42 · FB 7,67 · HK 7,83 · SW 7,83 · GR 7,77. Báo cáo: `%TEMP%/hospitality-p3-r4-3062984/`.
+  **03/10 người dùng chốt: "Kết quả sau vòng 4 … tôi đồng ý cho pass qua" → P3 ĐẠT.** Không chấm
+  lại P3, không vá P3 để nâng điểm.
+- Sau vòng 4 vẫn gộp các bản sửa lỗi thật auditor tìm ra (không chấm lại): engine `79db1d6` (câu
+  bỏ "if" không qua, câu lặp nửa câu không qua, đảo thứ tự bước không qua, "Yes" chưa được đồng ý
+  trượt, "I apologise"/"I'm afraid not") và nội dung năm bộ phận.
 - BO và SE ngoài phạm vi chấm P3, vẫn dùng khung chung.
