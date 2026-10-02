@@ -165,7 +165,17 @@ Code. Nhánh **`content/p3`** (tách từ `content/p2-gates` @ `19410f7`), workt
 - Đã xong: engine (`c031900` — ô bắt buộc lấy từ lượt đánh dấu `risk`, lịch ôn xoay lát cắt,
   gate chuỗi `${…}`, form-note); P3 Buồng phòng viết riêng (`246bfe9`, `67667c6`) trong
   `src/lib/content/p3/hk.ts`; lint Layer S đọc thẳng `reservableTurns` của bài thi.
-- Đang làm: viết riêng SW, FO, GR, FB theo đúng khuôn `hk.ts`; bỏ ba override SW-23/FO-26/GR-27;
-  sửa mediation GR-26 (câu thu thêm phí đang qua). Sau đó: gate bể `risk` cho năm bộ phận, đóng
-  băng, chấm mù vòng 2 đủ 10 ô bằng [`docs/audit/brief-p3-r2.md`](audit/brief-p3-r2.md).
+- Năm bộ phận đều viết riêng trong `src/lib/content/p3/<dep>.ts`; `P3_OVERRIDES` rỗng; GATE 4b giữ
+  bể `risk` của năm bộ phận.
+- **Mốc P3 (người dùng chốt 03/10): ≥ 7,5 mỗi ô là đạt** (đúng 7,5 là đạt). Brief vòng 3:
+  [`docs/audit/brief-p3-r3.md`](audit/brief-p3-r3.md).
+- Vòng mù 2 trên `e3d0805`: HM FO 7,75 · FB 7,68 · HK 7,83 · GR 7,92 đạt; HM SW 7,42 và cả năm
+  ô AC (FO 7,00 · FB 6,75 · HK 6,58 · SW 6,92 · GR 7,33) trượt. Gốc chung: ô nói bắt buộc đúng chỉ
+  nhận đúng một câu, từ P3 không được nói lại, luyện tập mỏng hơn P2.
+- Sửa sau vòng 2: engine `0c13f1e`, `a6a4074` (`alsoAccept`, mở đầu đồng cảm không bị trừ, khoá
+  headword không lấy đại từ, gợi ý ô dự trữ ẩn khi thi, nghe không dùng lượt giữa chuỗi, ôn mỗi
+  phần hai lần, câu can-do mỗi tuần, thứ tự đơn vị nói xáo trộn); nội dung năm bộ phận viết lại
+  (`30db18d` FO, `7109a85` FB, `57cfc3d` GR, `63e7555` SW, HK sau đó).
+- Vòng mù 3 đang chạy trên `a166936` (auditor mới, độc lập). Gói chấm:
+  `%TEMP%/hospitality-p3-r3-a166936`; subagent không ghi được report.md — điều phối viên lưu.
 - BO và SE ngoài phạm vi chấm P3, vẫn dùng khung chung.
