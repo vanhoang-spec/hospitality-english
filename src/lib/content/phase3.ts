@@ -75,7 +75,7 @@ import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
-import { FB_P3 } from "./p3/fb";
+import { FB_P3, FB_P3_CAN_DO } from "./p3/fb";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
 import { GR_P3 } from "./p3/gr";
@@ -2281,7 +2281,10 @@ const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
 };
 
 /** The week's can-do line, for the departments that write one. */
-const AUTHORED_CAN_DO: Record<string, Record<number, string>> = { FO: FO_P3_CAN_DO };
+const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
+  FO: FO_P3_CAN_DO,
+  FB: FB_P3_CAN_DO,
+};
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
@@ -2454,18 +2457,61 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "Món cá hồi nướng hôm nay bếp hết nguyên liệu rồi, chỉ còn cá tuyết thay thế thôi.",
     promptVi:
       "Khách vừa gọi món cá hồi nướng. Hãy nói lại bằng tiếng Anh, truyền đạt đủ ba ý bên dưới.",
+    // Bare "salmon" used to count as "the dish is sold out", so a relay that
+    // only repeated the order ("You want the salmon, sir?") scored the idea.
+    // The idea is the unavailability, in any of the ways a waiter says it.
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "afraid"] },
+      {
+        labelVi: "Xin lỗi khách",
+        any: ["sorry", "apologise", "apologize", "apologies", "afraid"],
+      },
       {
         labelVi: "Món khách gọi đã hết",
-        any: ["salmon", "not available", "sold out", "run out", "finished"],
+        required: true,
+        any: [
+          "sold out",
+          "not available",
+          "no longer available",
+          "is unavailable",
+          "run out",
+          "ran out",
+          "finished",
+          "no more salmon",
+          "out of salmon",
+          "no salmon",
+          "do not have",
+          "don't have",
+          "cannot make",
+          "can't make",
+        ],
       },
-      { labelVi: "Gợi ý món thay thế", any: ["cod", "instead", "alternative", "another dish"] },
+      {
+        labelVi: "Gợi ý món thay thế",
+        any: ["cod", "instead", "alternative", "another fish", "another dish", "different dish"],
+      },
+    ],
+    // A waiter relays what the kitchen said and offers what the kitchen can
+    // make. Money, blame and promises about tomorrow are not in the note, and
+    // each entry here is a phrase a correct relay never contains.
+    mustAvoid: [
+      "free of charge",
+      "for free",
+      "no charge",
+      "complimentary",
+      "on the house",
+      "discount",
+      "same price",
+      "our mistake",
+      "kitchen forgot",
+      "chef forgot",
+      "kitchen's fault",
+      "chef's fault",
+      "tomorrow",
     ],
     modelAnswer:
-      "I'm sorry, sir, the grilled salmon is no longer available today. The kitchen can offer grilled cod instead, which is just as fresh — would that work for you?",
+      "I am sorry, sir. The grilled salmon is sold out today. The kitchen can make grilled cod instead. Would you like that, or shall I bring the menu again?",
     explanationVi:
-      "Không chỉ nói 'hết món' — phải xin lỗi, gợi ý ngay phương án thay thế, và hỏi ý kiến khách để khách vẫn cảm thấy được chủ động lựa chọn.",
+      "Không chỉ nói 'hết món' — xin lỗi, nói rõ món đã hết, đưa đúng món bếp làm được, và để khách chọn. Không tự hứa giảm giá, miễn phí hay 'mai có', không đổ lỗi cho bếp.",
   },
   HK: {
     colleagueNoteVi:
