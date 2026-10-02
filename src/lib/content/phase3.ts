@@ -17,12 +17,12 @@
 //  · Past continuous arrives in week 29 for shift handover ("I was
 //    checking X when Y happened") — how incidents are actually reported.
 //
-// TWO SLOTS ARE NOT GENERATED HERE. SW-23 and GR-27 are
-// hand-authored weeks already sitting in this range. week-content.ts
-// spreads them AFTER this builder so they win; the spine output for
-// those keys is discarded, and reviewWordsFor() reads through the same
-// overrides so recycling never schedules a word the spine taught but the
-// learner never saw.
+// THE FRAMES BELOW NO LONGER SERVE THE AUDITED DEPARTMENTS. FO, FB, HK,
+// SW and GR read their weeks 23-30 from src/lib/content/p3/<dep>.ts (see
+// AUTHORED); the frames still build the remaining departments. Cards in
+// the authored weeks come from the same banks, and headwordsOf() reads
+// what the learner actually met, so recycling never schedules a word the
+// frames would have taught but the learner never saw.
 //
 // TWO AUTHORING RULES THIS FILE WAS BREAKING, BOTH FIXED IN ONE PASS.
 //
@@ -2557,7 +2557,7 @@ function buildWeek(
   const review = reviewWordsFor(lx, week, priorWords, overrides);
   // A HAND-AUTHORED WEEK STILL SITS ON THE PHASE'S SPACING SCHEDULE. It used
   // to be spread over this builder's output wholesale, review list and all,
-  // so the three weeks in this range (SW-23, FO-26, GR-27) kept the eight
+  // so the three hand-authored weeks this range used to hold kept the eight
   // review words their authors wrote — 33% of the week against the matrix's
   // 35% — and every word the schedule meant that week to bring back was
   // skipped. The authored list stays; the schedule's is added to it.
@@ -2581,11 +2581,6 @@ function buildWeek(
   };
 }
 
-/**
- * Phase 3 weeks (6 departments × weeks 23-30). Two of these keys are
- * overridden downstream by the hand-authored SW-23 and GR-27
- * payloads — see the note at the top of this file.
- */
 /** Every headword Phase 3 teaches, in order, per department — the
  *  recycling pool Phase 4 draws its long-spacing slice from. Reads
  *  through the same overrides as the builder, so it reports what the

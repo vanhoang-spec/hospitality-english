@@ -18,6 +18,7 @@ import { ALL_WEEKS } from "../src/lib/content/week-content";
 import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
+import { reservableTurns } from "../src/lib/checkpoint-oral";
 
 type Phase = {
   name: string;
@@ -690,6 +691,49 @@ if (legacyGameDupes.length) {
   console.log(
     `Checkpoint oral pools — ${checked} phase×department pools each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items` +
       (wip.length ? ` (unfinished phases of ${wip.join(", ")} not yet due)` : ""),
+  );
+}
+
+// ============================================================
+// GATE 4b — Phase 3's must-be-right turn is one an author marked
+//
+// buildOral used to find the reserved turn by searching model sentences for
+// substrings, which match filing as readily as risk: on Phase 3 it reserved
+// a rooming-list check for Front Office in every sitting, an allergy-NOTE
+// filing line for the Spa, and found nothing at all for Guest Relations.
+// Each audited department's Phase 3 now marks its hard cases
+// (`SpeakingItem.risk`), and buildOral reserves from those. This holds
+// every one of them to it: the phase draws by mark, the pool is wide enough
+// that memorising it is not the same as passing, and no week is without a
+// hard case. Read through reservableTurns — the function the draw uses.
+// ============================================================
+{
+  const P3_MARKED = ["FO", "FB", "HK", "SW", "GR"];
+  const POOL_MIN = 10;
+  const sizes: string[] = [];
+  for (const dep of P3_MARKED) {
+    const { byMark, turns } = reservableTurns(dep, "30");
+    if (!byMark) {
+      errors.push(
+        `${dep} Phase 3 marks no risk turn — its checkpoint falls back to the substring search`,
+      );
+      continue;
+    }
+    const distinct = new Set(turns.map((t) => t.target)).size;
+    sizes.push(`${dep} ${distinct}`);
+    if (distinct < POOL_MIN)
+      errors.push(
+        `${dep} Phase 3 reserved pool holds ${distinct} turns — the floor is ${POOL_MIN}`,
+      );
+    for (let w = 23; w <= 30; w++) {
+      const marked = (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        .flatMap((l) => l.speaking)
+        .filter((s) => s.risk).length;
+      if (marked === 0) errors.push(`${dep}-${w} has no risk-marked speaking turn`);
+    }
+  }
+  console.log(
+    `Phase 3 reserved pools (marked turns) — ${sizes.join(" · ")}  (floor ${POOL_MIN}, ≥ 1 a week)`,
   );
 }
 

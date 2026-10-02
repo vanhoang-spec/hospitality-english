@@ -33,9 +33,9 @@
 //  · Safety turns first: a reaction or choking at the table, hot soup on a
 //    guest, a child alone at the hot buffet station — help and the manager
 //    are called before anything else, and nobody treats the guest. The
-//    must-say line is "I am calling for help and the manager": F&B has no
-//    card for "aid" before week 36, and adding one here would only turn two
-//    older first-aid lines (weeks 19 and 22) into words taught late.
+//    must-say line names who comes: "I am calling first aid and the
+//    manager". F&B had no card for "aid" in 40 weeks; it gets one in week
+//    27, where the restaurant first has to say it.
 //  · Week 29 is talk between servers and to the outlet supervisor (table
 //    status, open items, tonight's allergy notes), and is labelled so.
 //
@@ -1619,7 +1619,7 @@ function week27(): LessonContent[] {
   const t3a = "I am sorry, sir. Which bottle is on the bill twice?";
   const t3b = "I am sorry, sir. I will call the manager to check the bill now.";
   const t3c = "She will be at your table within five minutes, sir.";
-  const t4a = "I am calling for help and the manager now, madam.";
+  const t4a = "I am calling first aid and the manager now, madam.";
   const t4b = "Does he have his own allergy medicine with him, madam?";
   const t4c = "Please help him use it now, madam. First aid is on the way.";
   return [
@@ -1923,6 +1923,11 @@ function week27(): LessonContent[] {
         c("Lost reservation", "A lost reservation goes straight to the restaurant manager."),
         c("Noisy table", "I am sorry about the noisy table next to you."),
         c("Dirty glass", "A dirty glass or a chipped glass goes back at once."),
+        c("First aid", "I am calling first aid and the manager now.", [
+          "/ˌfɜːst ˈeɪd/",
+          "Sơ cứu",
+          "🩹",
+        ]),
       ],
       grammar: [
         g(
@@ -1943,9 +1948,9 @@ function week27(): LessonContent[] {
           sp(
             "Help! My husband ate a prawn, and he cannot breathe!",
             t4a,
-            "Phản ứng dị ứng tại bàn: gọi người giúp và quản lý NGAY, trước mọi việc khác. Bạn không tự chữa cho khách.",
+            "Phản ứng dị ứng tại bàn: gọi sơ cứu và quản lý NGAY, trước mọi việc khác. Bạn không tự chữa cho khách.",
             undefined,
-            ["calling", "help", "manager"],
+            ["calling", "first", "aid", "manager"],
           ),
         ),
         sp(
@@ -1967,10 +1972,10 @@ function week27(): LessonContent[] {
         risk(
           sp(
             "Ouch! The hot soup went all over my arm!",
-            "I am very sorry, sir. I am calling for help and bringing cold water now.",
-            "Bỏng do súp nóng: xin lỗi, gọi người giúp (sơ cứu, quản lý), mang nước lạnh. Không tranh luận lỗi của ai.",
+            "I am very sorry, sir. I am calling first aid and bringing cold water now.",
+            "Bỏng do súp nóng: xin lỗi, gọi sơ cứu, mang nước lạnh. Không tranh luận lỗi của ai.",
             undefined,
-            ["calling", "help", "bringing", "cold", "water"],
+            ["calling", "first", "aid", "bringing", "cold", "water"],
           ),
         ),
         sp(
@@ -1986,7 +1991,7 @@ function week27(): LessonContent[] {
             q: "Thu làm gì đầu tiên?",
             options: [
               "Cho ông Chen uống thật nhiều nước",
-              "Gọi người giúp và quản lý ngay",
+              "Gọi sơ cứu và quản lý ngay",
               "Hỏi bếp trong món có những gì",
             ],
             correct: 1,
@@ -2396,7 +2401,7 @@ function week29(): LessonContent[] {
   const t1c =
     "The Lim family is coming at seven for a birthday. Their cake is in the pastry fridge.";
   const t2a = "I was serving the soup when a guest suddenly started coughing badly.";
-  const t2b = "I called for help and the manager, and I did not move the guest.";
+  const t2b = "I called first aid and the manager, and I did not move the guest.";
   const t2c = "First aid came in two minutes, and the guest is resting now.";
   const t3a = "Yes. The bar count has not been finished yet.";
   const t3b = "The sea bass is on the sold-out list. Please tell your tables before they order.";
@@ -2525,9 +2530,9 @@ function week29(): LessonContent[] {
           sp(
             "What did you do next?",
             t2b,
-            "Các bước đã làm: gọi người giúp và quản lý, và không di chuyển khách.",
+            "Các bước đã làm: gọi sơ cứu và quản lý, và không di chuyển khách.",
             "manager",
-            ["called", "help", "manager", "move", "guest"],
+            ["called", "first", "aid", "manager", "move", "guest"],
             t2a,
           ),
         ),
@@ -2553,7 +2558,7 @@ function week29(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Nam was serving the soup at table six when a guest suddenly started coughing badly. Nam called for help and the manager, and he did not move the guest. First aid came in two minutes. After service, Nam wrote what happened for the manager, with the times. His report helped the manager speak to the family the next day.`,
+        `Nam was serving the soup at table six when a guest suddenly started coughing badly. Nam called first aid and the manager, and he did not move the guest. First aid came in two minutes. After service, Nam wrote what happened for the manager, with the times. His report helped the manager speak to the family the next day.`,
         [
           {
             q: "Nam đang làm gì khi khách bị ho sặc?",
@@ -2578,11 +2583,11 @@ function week29(): LessonContent[] {
       game: [
         game(
           "Tell me what you did when the guest started coughing.",
-          "I called for help and the manager, and I stayed at the table.",
+          "I called first aid and the manager, and I stayed at the table.",
           "He cough. I run.",
           "I hit him hard on the back many times until he was okay.",
           "manager",
-          "Câu cuối tự làm sơ cứu khi không được đào tạo. Câu đúng gọi người giúp và quản lý, và ở lại với khách.",
+          "Câu cuối tự làm sơ cứu khi không được đào tạo. Câu đúng gọi sơ cứu và quản lý, và ở lại với khách.",
         ),
       ],
     }),

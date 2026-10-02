@@ -25454,8 +25454,8 @@ const PRIOR_WORDS_THROUGH_P3_BY_DEP: Record<string, string[]> = (() => {
 // Registry — keyed by `${DEP}-${week}`.
 // Order matters: the hand-authored weeks are spread LAST so they win
 // over the Phase 2 spine for the four slots they occupy (FB-15, HK-15,
-// FO-17, SW-19) — see the note at the top of phase2.ts. Phase 3's three
-// (SW-23, FO-26, GR-27) come back from buildPhase3 already in place.
+// FO-17, SW-19) — see the note at the top of phase2.ts. Phase 3's weeks
+// all come from buildPhase3, which serves the department-written ones.
 const REGISTRY: Record<string, WeekContent> = {
   ...PHASE0_WEEKS,
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
@@ -25465,8 +25465,6 @@ const REGISTRY: Record<string, WeekContent> = {
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,
-  // SW-23, GR-27 and FO-26 are NOT spread here any more: buildPhase3 returns
-  // them itself, on the phase's spacing schedule — see buildWeek() there.
   "BO-37": BO_WEEK_37,
   "FB-31": FB_WEEK_31,
   "HK-33": HK_WEEK_33,
