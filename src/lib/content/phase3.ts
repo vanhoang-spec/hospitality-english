@@ -78,7 +78,7 @@ import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
 import { FB_P3, FB_P3_CAN_DO } from "./p3/fb";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
-import { GR_P3 } from "./p3/gr";
+import { GR_P3, GR_P3_CAN_DO } from "./p3/gr";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
 
@@ -2284,6 +2284,7 @@ const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
 const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
   FO: FO_P3_CAN_DO,
   FB: FB_P3_CAN_DO,
+  GR: GR_P3_CAN_DO,
 };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
@@ -2577,11 +2578,32 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies"] },
       {
         labelVi: "Phòng gặp sự cố nên không dùng được",
-        any: ["water leak", "leak", "not available", "cannot be used", "out of order"],
+        any: [
+          "water leak",
+          "leak",
+          "leaking",
+          "not available",
+          "not ready",
+          "cannot be used",
+          "cannot use",
+          "out of order",
+          "water problem",
+        ],
       },
       {
         labelVi: "Chuyển sang phòng cùng hạng",
-        any: ["same category", "same type", "identical", "another suite", "similar suite"],
+        any: [
+          "same category",
+          "same type",
+          "same kind",
+          "same level",
+          "identical",
+          "another suite",
+          "other suite",
+          "different suite",
+          "similar suite",
+          "new suite",
+        ],
       },
       // The model answer and the explanation both say "at no extra cost", and
       // a relay that charged the guest for the move used to score 100%.
@@ -2624,8 +2646,10 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "it costs more",
       "charge you more",
     ],
+    // Every sentence within the phase's 16 words, and nothing in it the GRO
+    // decides: the move and the price were approved by the duty manager.
     modelAnswer:
-      "I'm very sorry, sir, there has been a water leak in your Suite, so it will not be ready tonight. We would like to move you to another Suite of the same category, at no extra cost — I hope that will still make your stay special.",
+      "I am very sorry, sir. There is a water leak in your suite, so it is not ready tonight. We are moving you to another suite of the same category, at no extra cost. The duty manager has approved it.",
     explanationVi:
       "Với khách VIP, phải khẳng định rõ 'cùng hạng phòng, không phát sinh chi phí' để khách yên tâm — không chỉ báo tin đổi phòng suông.",
   },
