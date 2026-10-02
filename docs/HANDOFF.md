@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **02/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **03/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -176,6 +176,20 @@ Code. Nhánh **`content/p3`** (tách từ `content/p2-gates` @ `19410f7`), workt
   headword không lấy đại từ, gợi ý ô dự trữ ẩn khi thi, nghe không dùng lượt giữa chuỗi, ôn mỗi
   phần hai lần, câu can-do mỗi tuần, thứ tự đơn vị nói xáo trộn); nội dung năm bộ phận viết lại
   (`30db18d` FO, `7109a85` FB, `57cfc3d` GR, `63e7555` SW, HK sau đó).
-- Vòng mù 3 đang chạy trên `a166936` (auditor mới, độc lập). Gói chấm:
-  `%TEMP%/hospitality-p3-r3-a166936`; subagent không ghi được report.md — điều phối viên lưu.
+- Vòng mù 3 trên `a166936`: **7/10 đạt** — HM FO 7,93 · HK 7,92 · GR 7,80 · FB 7,75 · SW 7,68,
+  AC FB 7,58 · HK 7,53; **trượt AC FO 7,42 · GR 7,25 · SW 7,25**. Báo cáo:
+  `%TEMP%/hospitality-p3-r3-a166936/<ô>/report.md`. Cả 10 ô cùng một lỗi lớn nhất: ô bắt buộc đúng
+  chỉ nhận 11–28% câu đúng diễn đạt khác (t6). Thứ hai (cả 5 ô AC): ~57 trên ~108 headword không
+  được nói lại sau tuần dạy (t5), tuần 30 vẫn dạy thẻ mới (t1).
+- Sửa sau vòng 3 — engine `599734b`: `src/lib/answer-variants.ts` sinh các dạng cùng nghĩa của mỗi
+  câu mẫu từ tuần 23 (đảo câu, nối but/and, đổi thứ tự hai người được gọi, myself, will/going to…,
+  mỗi dạng khoá đủ từ nội dung); `saidInOtherWords` trong `speaking-score.ts` cho qua câu thay từ
+  khi đủ khoá, giữ phủ định, không thêm hoãn/tiền/số, không sai hình thái; "Yes" trước lời từ chối
+  trượt; từ tuần 23 không tha bỏ mạo từ. Đo bằng chính probe của 10 auditor: câu đúng được nhận
+  tăng 2–4 lần (vd AC-FO 11→36/96, AC-HK 28→48/98), câu nguy hiểm vẫn 0. Ratchet S reserved-lock
+  46→56 là phân loại lại có chủ đích (bỏ "myself", "the manager", "first" khi đã có "then").
+  Probe mới: `bun scripts/probes/resaid.ts [DEP] [--list]` — headword P3 không được nói lại.
+- Đang làm: năm tác giả (subagent) sửa nội dung theo báo cáo vòng 3 — từ chết, tuần 30 trình bày
+  lại thẻ tuần 23–29 (cổng trùng headword đã miễn cho tuần 30 như tuần 39–40), lỗi nghiệp vụ HM.
+  Gộp xong thì đóng băng và chạy vòng mù 4 (brief = bản sao `brief-p3-r3.md`).
 - BO và SE ngoài phạm vi chấm P3, vẫn dùng khung chung.

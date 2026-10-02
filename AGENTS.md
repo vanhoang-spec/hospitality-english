@@ -132,6 +132,7 @@ Chạy từ gốc repo. Tất cả gọi hàm production.
 | `bun scripts/probes/tricks.ts [N]`                  | Mẹo làm bài bề mặt (chọn dài nhất / ngắn nhất / giữa…) trên N đề thật               |
 | `bun scripts/probes/oralmeasure.ts [N]`             | Học thuộc 20/40/60/80 câu hay ra nhất thì qua nửa nói bao nhiêu                     |
 | `bun scripts/probes/orphans2.ts`                    | Cụm bắt nói mà không có thẻ ở tuần nào                                              |
+| `bun scripts/probes/resaid.ts [DEP] [--list]`       | Headword P3 tuần 23–29 không được nói lại ở tuần P3 nào sau                         |
 | `LINT_CONTENT_FULL=1 bun run lint:content`          | In trọn danh sách vi phạm của mọi cổng ratchet                                      |
 
 Mức chuẩn hiện tại để đối chiếu (đo 2026-09-27): `leakall` — câu mẫu tự qua **100%** ở cả 5
