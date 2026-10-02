@@ -497,7 +497,11 @@ for (const dep of DEPS) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
         // Weeks 39-40 are the course's own revision weeks: the matrix asks
         // them to reuse material, so a repeat there is reported, not blocked.
-        const revision = w >= 39 || earlier >= 39;
+        // So is week 30 — "Checkpoint P3 · Ôn W23-29" in the matrix — and four
+        // blind reviews of Phase 3 marked down the sixteen NEW cards it used
+        // to teach two screens before the checkpoint. Its cards re-present
+        // weeks 23-29.
+        const revision = w >= 39 || earlier >= 39 || w === 30;
         if (revision || HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
           spiralIntoLegacy.push(msg);
         else if (w > 22 || earlier > 22)

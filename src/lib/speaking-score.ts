@@ -1163,7 +1163,7 @@ export const COURTESY_EXTRAS = new Set<string>([
 
 /** What is left of a model sentence once the grammar and the courtesy are
  *  taken out: the words that carry what it says. */
-const isContentToken = (t: string) =>
+export const isContentToken = (t: string) =>
   // A verb counts however short it is. The length floor exists to keep
   // two-letter glue out of the content list, and it was also keeping "go" out:
   // "I go to the pool bar first." passed with the verb missing, because a word
@@ -1595,6 +1595,21 @@ export function passThresholds(week: string | number): { accPct: number; orderRa
 /** Openers that frame a service sentence without changing what it says, in
  *  two classes: an apology and an acceptance. */
 const APOLOGY_OPENERS: string[][] = [
+  // Longest first — find() takes the first match. "I am very sorry to hear
+  // that" is the opener the course itself teaches for a complaint (week 27),
+  // and the reserved slot failed it against a model that opens "I am sorry"
+  // for the three words after "sorry".
+  ["i", "am", "very", "sorry", "to", "hear", "that"],
+  ["i", "am", "so", "sorry", "to", "hear", "that"],
+  ["i", "am", "sorry", "to", "hear", "that"],
+  ["i", "am", "very", "sorry", "about", "that"],
+  ["i", "am", "sorry", "about", "that"],
+  ["i", "am", "very", "sorry", "for", "the", "trouble"],
+  ["i", "am", "sorry", "for", "the", "trouble"],
+  ["i", "am", "sorry", "for", "the", "inconvenience"],
+  ["i", "apologise", "for", "the", "inconvenience"],
+  ["i", "apologize", "for", "the", "inconvenience"],
+  ["sorry", "to", "hear", "that"],
   ["i", "am", "very", "sorry"],
   ["i", "am", "so", "sorry"],
   ["i", "am", "sorry"],
@@ -1610,21 +1625,41 @@ const ACCEPT_OPENERS: string[][] = [
   ["my", "pleasure"],
   ["sure"],
 ];
-const COURTESY_OPENERS: string[][] = [
-  ["thank", "you", "very", "much"],
+const THANK_OPENERS: string[][] = [
   // Longer first: find() takes the first match, and "thank you" alone would
   // leave "for telling me" behind as three inserted words. The course teaches
   // both of these as the opening of a reply (weeks 27 and 25-30), and a blind
   // review measured "I understand." or "Thank you for telling me." in front of
   // a model failing 16/16 must-be-right slots.
+  ["thank", "you", "very", "much", "for", "telling", "me"],
   ["thank", "you", "for", "telling", "me"],
   ["thank", "you", "for", "letting", "me", "know"],
+  ["thank", "you", "very", "much"],
   ["thank", "you"],
+];
+const UNDERSTAND_OPENERS: string[][] = [
+  ["i", "understand", "how", "you", "feel"],
+  ["i", "understand", "your", "concern"],
   ["i", "understand"],
+];
+const COURTESY_OPENERS: string[][] = [
+  ...THANK_OPENERS,
+  ...UNDERSTAND_OPENERS,
   ...APOLOGY_OPENERS,
   ...ACCEPT_OPENERS,
   ["yes"],
 ];
+/** Openers that acknowledge the guest before the move: thanks, understanding,
+ *  apology. From week 23 any of them stands in for any other — see
+ *  stripCourtesyFrame. Acceptance ("Of course") is not among them: in front
+ *  of a refusal it says the opposite of the sentence. */
+const ACKNOWLEDGE_OPENERS: string[][] = [
+  ...THANK_OPENERS,
+  ...UNDERSTAND_OPENERS,
+  ...APOLOGY_OPENERS,
+];
+const ACKNOWLEDGE_FROM_WEEK = 23;
+const NEGATES = new Set(["no", "not", "never", "nobody", "none", "nothing", "cannot"]);
 const COURTESY_CLOSERS: string[][] = [
   ["thank", "you", "very", "much"],
   ["thank", "you"],
@@ -1657,9 +1692,39 @@ const closesWith = (a: string[], p: string[]) =>
  *  without "Thank you." in front, and none of them passes. An apology opener
  *  may also stand in for the model's own apology opener, and an acceptance for
  *  an acceptance — "I am afraid" for "I am sorry", "Certainly" for "Sure". */
-function stripCourtesyFrame(spoken: string, target: string): string {
+function stripCourtesyFrame(spoken: string, target: string, sourceWeek?: string | number): string {
   let a = normalize(spoken);
   const b = normalize(target);
+  const late = Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK;
+  // ANY ACKNOWLEDGEMENT FOR ANY OTHER, FROM WEEK 23.
+  //
+  // Phase 3 reviews ran "I am sorry, madam. I will ask my manager before we
+  // start." against a model opening "Thank you, madam.", and "I understand,
+  // sir. I cannot change the no-show fee." against one opening "I am sorry":
+  // both failed the must-be-right slot on the opener alone, because the
+  // model's opener is locked and the learner's was stripped as a frame. In
+  // Phase 3 the opener is not the lesson — the move after it is — and the
+  // three are what the course teaches in front of the same moves. Earlier
+  // phases keep their own rule: there, choosing thanks over apology is often
+  // exactly what the item teaches.
+  if (late) {
+    const theirs = ACKNOWLEDGE_OPENERS.find((p) => opensWith(b, p));
+    const mine = ACKNOWLEDGE_OPENERS.find((p) => opensWith(a, p));
+    // Not when one is the other cut short: "Thank you for TELL me…" opens
+    // with "Thank you", and swapping the model's whole opener in front of it
+    // would hand the learner the very word they got wrong.
+    if (
+      theirs &&
+      mine &&
+      theirs !== mine &&
+      !opensWith(theirs, mine) &&
+      !opensWith(mine, theirs) &&
+      a.length - mine.length >= 2
+    ) {
+      const rest = a.slice(mine.length);
+      a = opensWith(rest, theirs) ? rest : [...theirs, ...rest];
+    }
+  }
   for (const cls of [APOLOGY_OPENERS, ACCEPT_OPENERS]) {
     const theirs = cls.find((p) => opensWith(b, p));
     const mine = cls.find((p) => opensWith(a, p));
@@ -1672,13 +1737,46 @@ function stripCourtesyFrame(spoken: string, target: string): string {
     // stack a second copy of it.
     a = opensWith(rest, theirs) ? rest : [...theirs, ...rest];
   }
+  // "Yes" in front of a refusal is not a frame, it is the answer to the
+  // guest's question — and the wrong one. One review put "Yes, sir." in front
+  // of every must-be-right model of a department and passed all 23 of them,
+  // "Are you saying I am drunk?" included. So it is not lifted off a model
+  // that says no; utterancePassed() then fails it.
+  const refuses = b.some((t) => NEGATES.has(t)) && !b.includes("yes");
   for (let guard = 0; guard < 4; guard++) {
-    const op = COURTESY_OPENERS.find((p) => opensWith(a, p) && !opensWith(b, p));
+    const op = COURTESY_OPENERS.find(
+      (p) => opensWith(a, p) && !opensWith(b, p) && !(refuses && p.length === 1 && p[0] === "yes"),
+    );
     if (!op || a.length - op.length < 2) break;
+    // The model opens with a SHORTER form of the same opener — "Thank you,
+    // madam." under "Thank you for telling me, madam." Lifting the whole of
+    // the learner's opener took the model's "thank you" with it, and the
+    // reply failed for leaving out the two words it had just said.
+    const shorter = COURTESY_OPENERS.find(
+      (q) => q.length < op.length && opensWith(op, q) && opensWith(b, q),
+    );
+    if (shorter) {
+      a = [...shorter, ...a.slice(op.length)];
+      continue;
+    }
     a = a.slice(op.length);
     // "Certainly, madam." — the honorific belongs to the opener it follows.
-    if (/^(sir|madam|ma'am|maam)$/.test(a[0] ?? "") && !/^(sir|madam|ma'am|maam)$/.test(b[0] ?? ""))
+    if (
+      /^(sir|madam|ma'am|maam)$/.test(a[0] ?? "") &&
+      !/^(sir|madam|ma'am|maam)$/.test(b[0] ?? "")
+    ) {
+      const h = a[0]!;
       a = a.slice(1);
+      // From week 23, if the model says that honorific elsewhere and the rest
+      // of the answer does not, it moves to where the model has it rather
+      // than going missing: "I am sorry, madam. I cannot offer lounge access
+      // myself…" against "I cannot offer lounge access myself, madam."
+      const at = b.indexOf(h);
+      if (late && at > 0 && !a.includes(h)) {
+        const after = a.indexOf(b[at - 1]!);
+        if (after >= 0) a = [...a.slice(0, after + 1), h, ...a.slice(after + 1)];
+      }
+    }
   }
   for (let guard = 0; guard < 3; guard++) {
     // A FRAME IS ONLY A FRAME IF THE MODEL DOES NOT NEED THOSE WORDS.
@@ -1734,13 +1832,44 @@ export function utterancePassedAny(
   // own text, so a token the alternate does not contain is never demanded of
   // it — only a token it does contain, and could otherwise have dropped.
   const slotTokens = answers[0]?.requiredTokens ?? [];
+  const slotTarget = answers[0]?.target;
   for (const a of answers) {
     const req = [...new Set([...(a.requiredTokens ?? []), ...slotTokens])];
-    const verdict = utterancePassed(spoken, a.target, sourceWeek, req, guestPrompt);
+    const verdict = utterancePassed(spoken, a.target, sourceWeek, req, guestPrompt, slotTarget);
+    // THE SLOT'S OWN POLARITY. saidInOtherWords() holds a reply to the
+    // polarity of the answer it is read against — and an authored paraphrase
+    // may say the slot's "no" another way: "Please keep your door closed" for
+    // "Please do not open your door". Read loosely against that paraphrase,
+    // "Please open your door" passed. So a loose reading only counts against
+    // an answer that says no exactly as often as the slot's own model; a
+    // paraphrase that says it differently has to be said as written.
+    if (
+      verdict.passed &&
+      verdict.byMeaning &&
+      slotTarget &&
+      polarityOf(a.target) !== polarityOf(slotTarget)
+    )
+      continue;
+    // "Yes, sir." in front of a reply to a slot that says no fails, whichever
+    // accepted answer it matched: a paraphrase without the slot's "no" let
+    // "Yes, sir. May I bring you some water?" through on a "No, sir" turn.
+    if (verdict.passed && slotTarget && yesAgainst(spoken, slotTarget, sourceWeek)) continue;
     if (verdict.passed) return verdict;
     own ??= verdict;
   }
   return own ?? utterancePassed(spoken, "", sourceWeek, undefined, guestPrompt);
+}
+
+function yesAgainst(spoken: string, slotTarget: string, sourceWeek: string | number): boolean {
+  const t = normalize(slotTarget);
+  if (!t.some((x) => NEGATES.has(x)) || t.includes("yes")) return false;
+  return normalize(stripCourtesyFrame(spoken, slotTarget, sourceWeek))[0] === "yes";
+}
+
+/** How many times a sentence says no. */
+export function polarityOf(sentence: string): number {
+  const t = foldCourtesy(normalize(sentence));
+  return t.filter((x) => NEGATES.has(x)).length;
 }
 
 export function utterancePassed(
@@ -1749,8 +1878,19 @@ export function utterancePassed(
   sourceWeek: string | number,
   requiredTokens?: string[],
   guestPrompt?: string,
+  /** The model of the slot this answer stands in for, when it is another
+   *  accepted answer — read only by saidInOtherWords(). */
+  slotTarget?: string,
 ) {
-  spoken = stripCourtesyFrame(spoken, target);
+  const asSaid = spoken;
+  spoken = stripCourtesyFrame(spoken, target, sourceWeek);
+  // See stripCourtesyFrame: an answer that opens "Yes" to a model that says
+  // no has answered the guest's question the wrong way round.
+  const targetToks = normalize(target);
+  const yesToARefusal =
+    normalize(spoken)[0] === "yes" &&
+    targetToks.some((t) => NEGATES.has(t)) &&
+    !targetToks.includes("yes");
   const th = passThresholds(sourceWeek);
   const free = honorificIsFree(guestPrompt);
   const dayFree = greetingIsFree(target, guestPrompt);
@@ -1849,7 +1989,15 @@ export function utterancePassed(
   // Weeks 1-14 keep the old allowance untouched: A1 learners, and twelve
   // rounds of tuning behind them.
   const articlesRequired = funcNeeded.filter((t) => ARTICLES.has(t)).length;
-  const articleIsTheLesson = Number(sourceWeek) >= 15 && articlesRequired < 2;
+  // FROM WEEK 23, NO ARTICLE IS FORGIVEN. Phase 3 models are long enough
+  // that nearly all carry two articles, so the allowance was on everywhere —
+  // and the phase's own game marks exactly that as broken English. "Please
+  // stay at pool with him.", "I cannot move you to suite myself.", "I cannot
+  // cancel extra charge myself." are all printed as the WRONG bubble, and all
+  // three passed the must-be-right slot they sit beside. Two graders on one
+  // lesson cannot disagree about the error the course exists to unlearn.
+  const articleIsTheLesson =
+    (Number(sourceWeek) >= 15 && articlesRequired < 2) || Number(sourceWeek) >= 23;
   const unforgivable = missingFunction.filter(
     (t) => !FORGIVABLE_FUNCTION_TOKENS.has(t) || (articleIsTheLesson && ARTICLES.has(t)),
   );
@@ -1879,6 +2027,25 @@ export function utterancePassed(
   const inserted = extra.filter(
     (t) => !HONORIFIC.test(t) && !COURTESY_EXTRAS.has(t) && !ARTICLES.has(t) && !DISFLUENCY.has(t),
   );
+  // A spare article is free because a microphone adds one — in front of a
+  // noun. In front of a preposition it is a word gone missing after it: "I
+  // cannot start THE without a doctor's note" is "the massage" with the noun
+  // cut out, and it passed a paraphrase that never said "the massage". From
+  // week 23, an article the model does not have, standing before a word that
+  // cannot be its noun, fails.
+  const targetPairs = new Set(
+    canonSpokenTarget.slice(1).map((t, i) => `${canonSpokenTarget[i]} ${t}`),
+  );
+  const danglingArticle =
+    Number(sourceWeek) >= 23 &&
+    canonSpoken.some(
+      (t, i) =>
+        ARTICLES.has(t) &&
+        !targetPairs.has(`${t} ${canonSpoken[i + 1] ?? ""}`) &&
+        (canonSpoken[i + 1] === undefined ||
+          PREPOSITION_CLASS.has(canonSpoken[i + 1]!) ||
+          AUXILIARY_CLASS.has(canonSpoken[i + 1]!)),
+    );
   // Forgiving one insertion on an otherwise-perfect reading was tried once as
   // a plain count and let 95 of the course's own 255 nearMiss strings pass:
   // "…then I WILL check the profile.", "Could you TO come this way?", "I DID
@@ -1929,6 +2096,12 @@ export function utterancePassed(
     "over",
     "under",
     "near",
+    // "I will be there IN within five minutes." passed once the course began
+    // accepting "in five minutes" for "within five minutes": a doubled time
+    // preposition is the near-miss column's doubled place preposition again.
+    "within",
+    "until",
+    "during",
     "than",
     "then",
     "as",
@@ -2031,11 +2204,21 @@ export function utterancePassed(
   const rawTargetTally = new Map<string, number>();
   for (const t of normalize(target)) rawTargetTally.set(t, (rawTargetTally.get(t) ?? 0) + 1);
   let moneyAdded = false;
-  for (const t of normalize(spoken)) {
+  const rawSpoken = normalize(spoken);
+  // A money word inside the refusal itself — "I cannot offer FREE lounge
+  // access myself" against "I cannot offer lounge access myself" — refuses
+  // the same comp more plainly, and from week 23 it is not counted. Only
+  // within three words after "cannot"/"not", and only where the model
+  // refuses too: "No, it is free" and "I can offer it free" still count.
+  const refusesMoney = (i: number) =>
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    targetToks.some((t) => t === "cannot" || t === "not") &&
+    rawSpoken.slice(Math.max(0, i - 3), i).some((t) => t === "cannot" || t === "not");
+  rawSpoken.forEach((t, i) => {
     const left = rawTargetTally.get(t) ?? 0;
     if (left > 0) rawTargetTally.set(t, left - 1);
-    else if (MONEY_WORDS.has(t)) moneyAdded = true;
-  }
+    else if (MONEY_WORDS.has(t) && !refusesMoney(i)) moneyAdded = true;
+  });
   // WORDS THE MODEL SAYS AND THE ANSWER DID NOT.
   //
   // The percentage threshold is 60% at A1, which is generous on purpose — but
@@ -2135,7 +2318,16 @@ export function utterancePassed(
     if (k < (spokenCount.get(t) ?? 0)) return;
     const prev = canonSpokenTarget[i - 1];
     const next = canonSpokenTarget[i + 1];
-    if (prev && ORPHANING.has(prev) && (!next || !isContentToken(next) || NOT_A_NOUN.has(next)))
+    if (
+      prev &&
+      ORPHANING.has(prev) &&
+      (!next ||
+        !isContentToken(next) ||
+        NOT_A_NOUN.has(next) ||
+        // "The SAYS it was a short treatment" — a verb that cannot be a
+        // noun, left where the noun was. From week 23 only.
+        (Number(sourceWeek) >= 23 && VERB_ONLY.has(next)))
+    )
       orphanDeterminer = true;
   });
   // BY OCCURRENCE, not by presence. `missingContent` is already built that way,
@@ -2200,6 +2392,40 @@ export function utterancePassed(
     !FUNCTION_WORDISH.has(inserted[0]!) &&
     !moneyAdded;
   const insertionFails = inserted.length > 0 && !oneSpareWord;
+  const meaningPassed = saidInOtherWords({
+    sourceWeek,
+    spoken,
+    target,
+    locks: requiredSeq.length,
+    missingRequired: missingRequired.length,
+    valueOrderOk,
+    inflected: inflection.length > 0,
+    yesToARefusal,
+    moneyAdded,
+    accuracy: cmp.accuracy,
+    orderRatio: cmp.orderRatio,
+    slotTarget,
+    asSaid,
+  });
+  const strictPassed =
+    Math.round(cmp.accuracy * 100) >= th.accPct &&
+    cmp.orderRatio >= th.orderRatio &&
+    // Đúng từng chữ nhưng sai thứ tự thì không phải đọc vấp — đó là chưa
+    // biết trật tự, và trật tự là nội dung của bài. Ngưỡng ở trên tha cho
+    // câu nói thiếu; chỗ này không tha cho câu nói đủ mà xếp sai.
+    !(Math.round(cmp.accuracy * 100) === 100 && cmp.orderRatio < 1) &&
+    missingRequired.length === 0 &&
+    valueOrderOk &&
+    unforgivable.length === 0 &&
+    !insertionFails &&
+    missingContent.length <= contentAllowance &&
+    !orphanDeterminer &&
+    !missingVerb &&
+    missingFunction.length <= functionAllowance(funcNeeded.length) &&
+    added.length === 0 &&
+    inflection.length === 0 &&
+    !yesToARefusal &&
+    !danglingArticle;
   return {
     ...cmp,
     missingRequired,
@@ -2208,23 +2434,545 @@ export function utterancePassed(
     insertedWords: inserted,
     addedNegation: added,
     inflectionErrors: inflection,
-    passed:
-      Math.round(cmp.accuracy * 100) >= th.accPct &&
-      cmp.orderRatio >= th.orderRatio &&
-      // Đúng từng chữ nhưng sai thứ tự thì không phải đọc vấp — đó là chưa
-      // biết trật tự, và trật tự là nội dung của bài. Ngưỡng ở trên tha cho
-      // câu nói thiếu; chỗ này không tha cho câu nói đủ mà xếp sai.
-      !(Math.round(cmp.accuracy * 100) === 100 && cmp.orderRatio < 1) &&
-      missingRequired.length === 0 &&
-      valueOrderOk &&
-      unforgivable.length === 0 &&
-      !insertionFails &&
-      missingContent.length <= contentAllowance &&
-      !orphanDeterminer &&
-      !missingVerb &&
-      missingFunction.length <= functionAllowance(funcNeeded.length) &&
-      added.length === 0 &&
-      inflection.length === 0,
+    /** Passed only as the model's meaning, not as its wording. */
+    byMeaning: meaningPassed && !strictPassed,
+    passed: strictPassed || meaningPassed,
     threshold: th,
   };
+}
+
+/** Words an answer may not ADD to a model and still be said to mean it:
+ *  each hedges, delays, offers an alternative or changes who acts. */
+const MEANING_CHANGERS = new Set<string>([
+  "maybe",
+  "perhaps",
+  "probably",
+  "sometimes",
+  "later",
+  "soon",
+  "tomorrow",
+  "tonight",
+  "yesterday",
+  "next",
+  "alone",
+  "only",
+  "after",
+  "before",
+  "until",
+  "within",
+  "or",
+  "yes",
+  "if",
+  "unless",
+]);
+const DETERMINERS = new Set<string>([
+  "a",
+  "an",
+  "the",
+  "my",
+  "your",
+  "our",
+  "his",
+  "her",
+  "their",
+  "its",
+  "this",
+  "that",
+  "these",
+  "those",
+  "every",
+  "each",
+  "some",
+  "any",
+  "another",
+]);
+
+/** SAID IN OTHER WORDS, FROM WEEK 23.
+ *
+ *  Ten blind reviews wrote 980 answers a manager would accept on Phase 3's
+ *  must-be-right turns — "I am sorry, I am not able to remove the charge. I
+ *  will ask my manager to review it." for "…My manager can review it." — and
+ *  the grader, which reads a model word by word, took 11-28% of them. The
+ *  slot decides the whole spoken half, so most competent learners failed it
+ *  for wording the course never asked them to copy.
+ *
+ *  So from week 23 a reply that does not read as the model can still pass as
+ *  the model's MEANING, and only on terms that keep everything the turn is
+ *  for:
+ *  - every word the turn locks is said — the refusal, the person called, the
+ *    safety action, the headword, the honorific — and the numbers in order;
+ *  - at least three such locks exist, so the meaning is pinned down;
+ *  - no negation is added or lost (a leading "No" on a refusal excepted);
+ *  - nothing is added that hedges, delays, offers an alternative or a comp
+ *    (MEANING_CHANGERS, the money words, any number the model does not say);
+ *  - no -s, past-tense or article error the course marks wrong: an article
+ *    the model puts before a word may not go missing before that same word;
+ *  - "Yes" in front of a refusal fails, as it does everywhere;
+ *  - and the reply is the model's size and mostly its words (≥60% of each),
+ *    so a stock line that happens to name the locks does not.
+ *  The ten reviews' 700 dangerous answers, the course's own wrong options and
+ *  every cheat profile in scripts/probes were re-run against it. */
+function saidInOtherWords(p: {
+  sourceWeek: string | number;
+  spoken: string;
+  target: string;
+  locks: number;
+  missingRequired: number;
+  valueOrderOk: boolean;
+  inflected: boolean;
+  yesToARefusal: boolean;
+  moneyAdded: boolean;
+  accuracy: number;
+  orderRatio: number;
+  slotTarget?: string;
+  /** The reply before stripCourtesyFrame moved anything in it. */
+  asSaid?: string;
+}): boolean {
+  if (
+    Number(p.sourceWeek) < ACKNOWLEDGE_FROM_WEEK ||
+    p.locks < 3 ||
+    p.missingRequired > 0 ||
+    !p.valueOrderOk ||
+    p.inflected ||
+    p.yesToARefusal ||
+    p.moneyAdded ||
+    p.accuracy < 0.6
+  )
+    return false;
+  const fs = foldCourtesy(normalize(p.spoken));
+  const ft = foldCourtesy(normalize(p.target));
+  if (fs.length < 0.6 * ft.length) return false;
+  // A reply that is the slot's model with words cut out is not a paraphrase
+  // of anything: "I am sorry, sir, the did not go through." read loosely
+  // against the shorter "It did not go through, sir." found nothing missing.
+  // How much of a model may be left out is the strict reading's question.
+  const subsequence = (a: string[], b: string[]) => {
+    let i = 0;
+    for (const t of b) if (i < a.length && a[i] === t) i++;
+    return i === a.length;
+  };
+  // Read as said: the courtesy frame may have moved an honorific, and a
+  // moved word hides the cut.
+  const rsAll = normalize(p.asSaid ?? p.spoken);
+  if (
+    subsequence(rsAll, normalize(p.target)) ||
+    (p.slotTarget && subsequence(rsAll, normalize(p.slotTarget)))
+  )
+    return false;
+  const tally = new Map<string, number>();
+  for (const t of ft) tally.set(t, (tally.get(t) ?? 0) + 1);
+  const extra: string[] = [];
+  for (const t of fs) {
+    const left = tally.get(t) ?? 0;
+    if (left > 0) tally.set(t, left - 1);
+    else extra.push(t);
+  }
+  if (
+    extra.some((t) => MEANING_CHANGERS.has(t) || (VALUE_TOKENS.has(t) && !/^(sir|madam)$/.test(t)))
+  )
+    return false;
+  const negs = (xs: string[]) => xs.filter((x) => NEGATES.has(x)).length;
+  // "No, sir. I cannot…" on a refusal that does not open with "No" is the
+  // same no said twice — but not when the model opens with "No" itself:
+  // "No, sir. I am NOT stopping…" against "No, sir. I am stopping…".
+  const lead = fs[0] === "no" && !ft.includes("no") && negs(ft) > 0 ? fs.slice(1) : fs;
+  if (negs(lead) !== negs(ft)) return false;
+  // The words it shares with the model come in the model's order. Clause
+  // moves the course accepts are shapes (answer-variants.ts) and pass on the
+  // strict path; what is left here is word order the course marks wrong —
+  // "What time your flight is, sir?", "I will replace straight away the mat".
+  if (p.orderRatio < p.accuracy - 0.08) return false;
+  const rt = normalize(p.target);
+  const rs = normalize(p.spoken);
+  // The word the model puts right after an article keeps a determiner right
+  // in front of it: "duty manager decides…", "with chef", "ID check keeps…".
+  for (let i = 0; i + 1 < rt.length; i++) {
+    if (!ARTICLES.has(rt[i]!)) continue;
+    const w = rt[i + 1]!;
+    if (w.length < 2 || DETERMINERS.has(w)) continue;
+    for (let j = 0; j < rs.length; j++)
+      if (rs[j] === w && !DETERMINERS.has(rs[j - 1] ?? "")) return false;
+  }
+  // A function word the model has between two words, gone from between the
+  // same two: "I sorry", "Please not serve him", "check with chef".
+  // Read against the slot's own model too: "I SORRY, I cannot do that."
+  // matched a sister sentence that has no apology at all.
+  const said2 = new Set(rs.slice(1).map((t, j) => `${rs[j]} ${t}`));
+  for (const m of [rt, p.slotTarget ? normalize(p.slotTarget) : []]) {
+    const model2 = new Set(m.slice(1).map((t, i) => `${m[i]} ${t}`));
+    for (let i = 1; i + 1 < m.length; i++) {
+      const gap = `${m[i - 1]} ${m[i + 1]}`;
+      if (INSERTABLE.has(m[i]!) && said2.has(gap) && !model2.has(gap)) return false;
+    }
+  }
+  // FORM, NOT JUST WORDS. Every wrong answer the course prints in these weeks
+  // is the model with one word in the wrong form — "I cannot REMOVING the
+  // charge", "I am CALL first aid", "the card did not WENT through",
+  // "Visitors HAS to wait" — and a check that only asks whether the locks are
+  // there passes all of them. So:
+  const tTally = new Map<string, number>();
+  for (const t of rt) tTally.set(t, (tTally.get(t) ?? 0) + 1);
+  const extraRaw: string[] = [];
+  for (const t of rs) {
+    const left = tTally.get(t) ?? 0;
+    if (left > 0) tTally.set(t, left - 1);
+    else extraRaw.push(t);
+  }
+  const missingRaw = [...tTally.entries()].flatMap(([t, n]) => Array<string>(n).fill(t));
+  // a model word said in another form of itself — the slot's own model as
+  // well as the answer matched: "Please do not HELPING her up." matched a
+  // sister sentence that says "move", and the error is against "help";
+  const said = new Set(rs);
+  const ownMissing = p.slotTarget ? normalize(p.slotTarget).filter((t) => !said.has(t)) : [];
+  const missStems = new Set([...missingRaw, ...ownMissing].flatMap(stemsOf));
+  if (extraRaw.some((x) => stemsOf(x).some((s) => missStems.has(s)))) return false;
+  // a model word swapped for its opposite ("I am CONTINUING the massage");
+  if (
+    extraRaw.some((x) => stemsOf(x).some((s) => (OPPOSITES[s] ?? []).some((o) => missStems.has(o))))
+  )
+    return false;
+  // or a clause the model does not have: "YOUR FRIEND IS HERE, madam, but
+  // because of our guest privacy rule that is confidential." A paraphrase
+  // trades words; it does not add a sentence's worth of them.
+  if (extraRaw.length - missingRaw.length > 3) return false;
+  // Nor does it only take them away. The model with a word cut out — "I am
+  // security and the duty manager now", "Ask him to let of you" — is an
+  // unfinished sentence, not another way of saying it, and the strict
+  // reading already decides how much of that is forgiven. Every content word
+  // the reply leaves out has to be traded for one it says instead.
+  const content = (xs: string[]) => xs.filter((t) => isContentToken(t)).length;
+  if (content(missingRaw) > content(extraRaw)) return false;
+  // one function word traded for another of its class ("ask security FOR
+  // check", "I AM stop now", "in the pool" for "at the pool");
+  for (const cls of [PREPOSITION_CLASS, AUXILIARY_CLASS])
+    if (extraRaw.some((x) => cls.has(x)) && missingRaw.some((m) => cls.has(m))) return false;
+  // a function word pushed between two words the model keeps together ("ask
+  // TO the executive housekeeper", "I can TO re-clean", "before you WILL
+  // come back", "I recommend YOU the topper");
+  const adjacent = new Set(rt.slice(1).map((t, i) => `${rt[i]} ${t}`));
+  for (let j = 1; j + 1 < rs.length; j++)
+    if (
+      INSERTABLE.has(rs[j]!) &&
+      extraRaw.includes(rs[j]!) &&
+      adjacent.has(`${rs[j - 1]} ${rs[j + 1]}`)
+    )
+      return false;
+  // "to" lost before the verb the model gives it ("ask the housekeeper call
+  // you"), a modal followed by "to", and "are"/"were" with "a".
+  for (let i = 0; i + 1 < rt.length; i++) {
+    if (rt[i] !== "to" || DETERMINERS.has(rt[i + 1]!)) continue;
+    const w = rt[i + 1]!;
+    for (let j = 1; j < rs.length; j++)
+      if (rs[j] === w && !TO_OR_FINITE_BEFORE.has(rs[j - 1]!)) return false;
+  }
+  for (let j = 0; j + 1 < rs.length; j++) {
+    if ((MODALS.has(rs[j]!) || rs[j] === "cannot") && rs[j + 1] === "to") return false;
+    if ((rs[j] === "are" || rs[j] === "were") && (rs[j + 1] === "a" || rs[j + 1] === "an"))
+      return false;
+    // A preposition pushed between a verb and its object: "ask TO my
+    // manager" where the model says "ask the manager".
+    if (
+      j > 0 &&
+      PREPOSITION_CLASS.has(rs[j]!) &&
+      extraRaw.includes(rs[j]!) &&
+      DETERMINERS.has(rs[j + 1]!) &&
+      rt.some((t, i) => t === rs[j - 1] && DETERMINERS.has(rt[i + 1] ?? ""))
+    )
+      return false;
+  }
+  // A singular subject with a bare verb: "If the noise START again", "it
+  // HAVE", "the kitchen CHECK" — unless a modal, "do" or a causative governs
+  // it ("Can the bellman help", "Let it rest").
+  const base = (w: string) =>
+    !w.endsWith("s") &&
+    FINITE_VERBS.has(w) &&
+    (FINITE_VERBS.has(`${w}s`) || FINITE_VERBS.has(`${w}es`));
+  const GOVERNS = new Set([
+    ...MODALS,
+    "do",
+    "does",
+    "did",
+    "let",
+    "make",
+    "help",
+    "have",
+    "to",
+    "please",
+    "not",
+  ]);
+  for (let j = 1; j < rs.length; j++) {
+    if (!base(rs[j]!) || !extraRaw.includes(rs[j]!)) continue;
+    const pron = /^(he|she|it)$/.test(rs[j - 1]!) && !GOVERNS.has(rs[j - 2] ?? "");
+    const np =
+      j >= 2 &&
+      /^(the|this|that|my|your|our|his|her|its)$/.test(rs[j - 2]!) &&
+      !rs[j - 1]!.endsWith("s") &&
+      !DETERMINERS.has(rs[j - 1]!) &&
+      !GOVERNS.has(rs[j - 3] ?? "");
+    if (pron || np) return false;
+  }
+  return true;
+}
+
+const PREPOSITION_CLASS = new Set([
+  "to",
+  "for",
+  "of",
+  "at",
+  "in",
+  "on",
+  "with",
+  "without",
+  "by",
+  "from",
+  "into",
+  "onto",
+  "about",
+  "within",
+  "during",
+  "until",
+  "near",
+  "under",
+  "over",
+]);
+const AUXILIARY_CLASS = new Set([
+  "am",
+  "is",
+  "are",
+  "was",
+  "were",
+  "be",
+  "do",
+  "does",
+  "did",
+  "have",
+  "has",
+  "had",
+  "will",
+  "would",
+  "can",
+  "could",
+  "shall",
+  "should",
+  "may",
+  "might",
+  "must",
+]);
+const MODALS = new Set([
+  "can",
+  "could",
+  "will",
+  "would",
+  "shall",
+  "should",
+  "must",
+  "may",
+  "might",
+]);
+const INSERTABLE = new Set([
+  ...PREPOSITION_CLASS,
+  ...AUXILIARY_CLASS,
+  "a",
+  "an",
+  "the",
+  "you",
+  "me",
+  "him",
+  "her",
+  "it",
+  "them",
+  "us",
+]);
+/** What may stand before a verb the model introduces with "to". */
+const TO_OR_FINITE_BEFORE = new Set([
+  "to",
+  ...MODALS,
+  "i",
+  "we",
+  "you",
+  "they",
+  "he",
+  "she",
+  "it",
+  "please",
+  "and",
+  "or",
+  "not",
+  "cannot",
+  "let",
+  "me",
+  "us",
+  "him",
+  "her",
+  "them",
+  "will",
+  "help",
+  "make",
+  "let's",
+]);
+const IRREGULAR: Record<string, string> = {
+  went: "go",
+  gone: "go",
+  goes: "go",
+  has: "have",
+  had: "have",
+  is: "be",
+  are: "be",
+  am: "be",
+  was: "be",
+  were: "be",
+  been: "be",
+  being: "be",
+  did: "do",
+  does: "do",
+  done: "do",
+  found: "find",
+  took: "take",
+  taken: "take",
+  brought: "bring",
+  told: "tell",
+  said: "say",
+  made: "make",
+  gave: "give",
+  given: "give",
+  came: "come",
+  saw: "see",
+  seen: "see",
+  got: "get",
+  left: "leave",
+  sent: "send",
+  kept: "keep",
+  held: "hold",
+  wrote: "write",
+  written: "write",
+  spoke: "speak",
+  spoken: "speak",
+  broke: "break",
+  broken: "break",
+  bought: "buy",
+  paid: "pay",
+  felt: "feel",
+  knew: "know",
+  known: "know",
+  thought: "think",
+  ran: "run",
+  sat: "sit",
+  stood: "stand",
+  lost: "lose",
+  met: "meet",
+  wore: "wear",
+  worn: "wear",
+  chose: "choose",
+  chosen: "choose",
+  began: "begin",
+  begun: "begin",
+  drank: "drink",
+  ate: "eat",
+  eaten: "eat",
+  forgot: "forget",
+  fell: "fall",
+  fallen: "fall",
+  heard: "hear",
+  slept: "sleep",
+  spent: "spend",
+  understood: "understand",
+  // Adjective for adverb: "The pillowcase is very WELL" is the near miss of
+  // "very good".
+  well: "good",
+  // A pronoun in the wrong case: "for YOU next visit", "For YOU anniversary".
+  your: "you",
+  their: "they",
+  them: "they",
+  his: "he",
+  him: "he",
+  her: "she",
+  us: "we",
+  our: "we",
+  my: "i",
+  me: "i",
+};
+const IRREGULAR_BASES = new Set(Object.values(IRREGULAR));
+/** Verb forms that are never a noun. */
+const VERB_ONLY = new Set(
+  (
+    "says said goes went gets got takes took makes made gives gave comes came brings brought " +
+    "tells told asks asked needs needed wants wanted knows knew thinks thought sees saw"
+  ).split(" "),
+);
+/** Pairs a paraphrase may never trade one for the other, by stem. */
+const OPPOSITES: Record<string, string[]> = (() => {
+  const pairs: [string, string][] = [
+    ["stop", "continue"],
+    ["stop", "start"],
+    ["start", "finish"],
+    ["open", "close"],
+    ["open", "shut"],
+    ["before", "after"],
+    ["early", "late"],
+    ["hot", "cold"],
+    ["warm", "cool"],
+    ["more", "less"],
+    ["add", "remove"],
+    ["include", "exclude"],
+    ["allow", "forbid"],
+    ["accept", "refuse"],
+    ["enter", "leave"],
+    ["lock", "unlock"],
+    ["safe", "unsafe"],
+    ["safe", "dangerous"],
+    ["inside", "outside"],
+    ["up", "down"],
+    ["on", "off"],
+    ["in", "out"],
+    ["come", "go"],
+    ["bring", "take"],
+    ["give", "take"],
+    ["increase", "reduce"],
+    ["raise", "lower"],
+    ["confirm", "cancel"],
+    ["move", "stay"],
+    ["wait", "leave"],
+    ["help", "leave"],
+    ["now", "later"],
+    ["today", "tomorrow"],
+  ];
+  const m: Record<string, string[]> = {};
+  for (const [a, b] of pairs) {
+    (m[a] ??= []).push(b);
+    (m[b] ??= []).push(a);
+  }
+  return m;
+})();
+/** The stems a word could be a form of: itself, its irregular base, and the
+ *  base under -s/-es/-ies/-ed/-ing/-er (with a doubled consonant or a lost
+ *  "e"). Stems under three letters are dropped so "is"/"it" never meet. */
+function stemsOf(w: string): string[] {
+  const out = new Set<string>([w]);
+  if (IRREGULAR[w]) out.add(IRREGULAR[w]!);
+  const strip = (suf: string, add = "") => {
+    if (w.length > suf.length + 2 && w.endsWith(suf)) {
+      const base = w.slice(0, -suf.length);
+      out.add(base + add);
+      if (/(.)\1$/.test(base)) out.add(base.slice(0, -1));
+    }
+  };
+  strip("ing");
+  strip("ing", "e");
+  strip("ed");
+  strip("d");
+  strip("ies", "y");
+  strip("es");
+  strip("s");
+  strip("er");
+  strip("est");
+  // "gentler" → "gentle", "safest" → "safe".
+  strip("r");
+  strip("st");
+  strip("ly");
+  // A noun said for its adjective: "I feel CONFIDENCE" for "confident".
+  strip("ence", "ent");
+  strip("ance", "ant");
+  strip("ness");
+  // An irregular base is kept at any length: "went" has to meet "go".
+  return [...out].filter((s) => s.length >= 3 || IRREGULAR_BASES.has(s));
 }

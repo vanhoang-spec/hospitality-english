@@ -1,6 +1,7 @@
 import { getWeekContent } from "./content/week-content";
 import { weeksInPhase } from "./phases";
-import { COURTESY_EXTRAS, normalize } from "./speaking-score";
+import { COURTESY_EXTRAS, normalize, polarityOf } from "./speaking-score";
+import { SHAPES_FROM_WEEK, lockedLike, shapesOf } from "./answer-variants";
 
 /** Every answer the course teaches for one line.
  *
@@ -23,7 +24,13 @@ import { COURTESY_EXTRAS, normalize } from "./speaking-score";
  *  both reduce to `need` and are NOT the same question — see acceptedAnswers.
  *  Clusters built on one word are the price of that, and they were measured
  *  to be wrong more often than right. */
-export type AcceptedAnswer = { target: string; requiredTokens?: string[] };
+export type AcceptedAnswer = {
+  target: string;
+  requiredTokens?: string[];
+  /** Another sentence the phase teaches that makes the same must-be-right
+   *  move — see acceptedAnswers(). Kept on the reserved slot. */
+  sameMove?: true;
+};
 
 // What does not change what a line asks. Question words that DO change it —
 // where, when, why, how — are content.
@@ -133,6 +140,11 @@ type PhaseIndex = {
   /** Per model sentence, the paraphrases its author accepts
    *  (`SpeakingItem.alsoAccept`). */
   alsoFor: Map<string, AcceptedAnswer[]>;
+  /** Every model sentence and accepted paraphrase the phase prints, with its
+   *  own locks — the candidates for a risk turn's same-move answers. */
+  taught: AcceptedAnswer[];
+  /** Targets of the turns marked `risk`. */
+  risky: Set<string>;
 };
 
 const INDEX = new Map<string, PhaseIndex>();
@@ -145,6 +157,8 @@ function indexFor(dep: string, week: string | number): PhaseIndex {
   const answers = new Map<string, AcceptedAnswer[]>();
   const headwordsIn = new Map<string, string[]>();
   const alsoFor = new Map<string, AcceptedAnswer[]>();
+  const taught: AcceptedAnswer[] = [];
+  const risky = new Set<string>();
   for (const w of weeks) {
     const heads = headwordsOf(dep, w);
     const noteHeadwords = (sentence: string) => {
@@ -167,13 +181,22 @@ function indexFor(dep: string, week: string | number): PhaseIndex {
           const alts = s.alsoAccept.map((alt) => {
             noteHeadwords(alt);
             const said = new Set(normalize(alt));
-            const keep = (s.requiredTokens ?? []).filter((t) =>
-              normalize(t).every((x) => said.has(x)),
-            );
+            // From week 23 the words a paraphrase says instead of the
+            // model's are locked too — see lockedLike(). Without it "…and
+            // GAVE it to my supervisor" stood in for "…and took it…" with
+            // neither verb required, and the reply that said no verb at all
+            // passed on the one-word allowance.
+            const keep =
+              w >= SHAPES_FROM_WEEK
+                ? lockedLike(s.targetResponse, s.requiredTokens, alt)
+                : (s.requiredTokens ?? []).filter((t) => normalize(t).every((x) => said.has(x)));
             return { target: alt, ...(keep.length ? { requiredTokens: keep } : {}) };
           });
           alsoFor.set(s.targetResponse, [...(alsoFor.get(s.targetResponse) ?? []), ...alts]);
+          taught.push(...alts);
         }
+        taught.push({ target: s.targetResponse, requiredTokens: s.requiredTokens });
+        if (s.risk) risky.add(s.targetResponse);
         // THE WEEK'S OWN WORDS ARE NOT WHAT THE ONE-WORD ALLOWANCE IS FOR.
         //
         // The allowance forgives a long model one ordinary word, and it did
@@ -205,9 +228,46 @@ function indexFor(dep: string, week: string | number): PhaseIndex {
         answers.set(key, list);
       }
   }
-  const built = { answers, headwordsIn, alsoFor };
+  const built = { answers, headwordsIn, alsoFor, taught, risky };
   INDEX.set(cacheKey, built);
   return built;
+}
+
+/** THE COURSE'S OWN SENTENCE FOR THE SAME MOVE PASSES A MUST-BE-RIGHT TURN.
+ *
+ *  Three blind reviews of Phase 3 measured the reserved slot refusing what
+ *  the course itself teaches for the same situation in another lesson: "I am
+ *  sorry, sir. You cannot use the sauna after alcohol." (week 24) failed the
+ *  week-30 alcohol slot for lacking "today"; "…I cannot offer the sauna or the
+ *  hot stone." failed the blood-pressure slot for naming one more risk. A
+ *  learner who learned the course's other sentence fails the whole half.
+ *
+ *  So a risk turn also accepts any sentence the phase prints that says EVERY
+ *  word the turn locks — the refusal, the person, the safety action — with
+ *  the same polarity, graded on its own locks. Only for turns locked on three
+ *  words or more: a lock that thin does not pin the move down. */
+const NEGATORS = new Set(["not", "no", "never", "cannot", "nobody", "nothing"]);
+function sameMoves(idx: PhaseIndex, own: AcceptedAnswer): AcceptedAnswer[] {
+  if (!idx.risky.has(own.target)) return [];
+  const locks = [...new Set((own.requiredTokens ?? []).flatMap((t) => normalize(t)))];
+  if (locks.length < 3) return [];
+  const negOf = (toks: string[]) => toks.some((t) => NEGATORS.has(t));
+  const ownNeg = negOf(normalize(own.target));
+  const out: AcceptedAnswer[] = [];
+  for (const cand of idx.taught) {
+    if (cand.target === own.target || out.some((o) => o.target === cand.target)) continue;
+    const said = normalize(cand.target);
+    if (negOf(said) !== ownNeg) continue;
+    const have = new Set(said);
+    if (!locks.every((t) => have.has(t))) continue;
+    const heads = idx.headwordsIn.get(cand.target);
+    out.push({
+      target: cand.target,
+      requiredTokens: [...new Set([...(cand.requiredTokens ?? []), ...(heads ?? [])])],
+      sameMove: true,
+    });
+  }
+  return out;
 }
 
 /** The item's own answer first, then every other reply the phase teaches for
@@ -230,7 +290,14 @@ export function acceptedAnswers(
       : a;
   };
   const own = lock({ target, requiredTokens });
-  const also = (idx.alsoFor.get(target) ?? []).map(lock);
+  const authored = [own, ...(idx.alsoFor.get(target) ?? []).map(lock)];
+  // From week 23 every authored answer also stands in its other shapes —
+  // see answer-variants.ts. Kept on the reserved slot like a same move.
+  const shaped =
+    Number(week) >= SHAPES_FROM_WEEK
+      ? shapesOf(authored).map((v) => ({ ...v, sameMove: true as const }))
+      : [];
+  const also = [...authored.slice(1), ...shaped, ...sameMoves(idx, own)];
   const k = askedKey(guestPrompt);
   // ONE CONTENT WORD IS NOT A QUESTION. A key of one word — "Do I have to do
   // that?" reduces to `have`, "Do I sign here?" to `sign` — groups lines that
@@ -241,6 +308,10 @@ export function acceptedAnswers(
   if (k.split(" ").filter(Boolean).length < 2) return [own, ...also];
   const others = (idx.answers.get(`${speakerRole ?? "guest"}|${k}`) ?? [])
     .filter((a) => a.target !== target && !also.some((x) => x.target === a.target))
+    // From week 23, never the opposite answer to the same question: "Is room
+    // two ready for the next guest?" accepted both "Not yet…" and "Yes. I
+    // finished the checklist…" because two lessons ask it.
+    .filter((a) => Number(week) < SHAPES_FROM_WEEK || polarityOf(a.target) === polarityOf(target))
     .map(lock);
   return [own, ...also, ...others];
 }

@@ -48,7 +48,14 @@ const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
  *  calling them passive (or perfect) teaches a structure the sentence does
  *  not contain. Shared by the passive, perfect and modal-passive branches. */
 const ADJECTIVE_ED =
-  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly|disappointed|satisfied|delighted|annoyed|confused|upset)$/;
+  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly|disappointed|satisfied|delighted|annoyed|confused|upset|corked|stained|chipped|cracked|scratched)$/;
+
+/** Words ending in -ing that are not a verb's -ing form. "that was DURING
+ *  quiet hours" was taught as a past continuous ("was during") in a week-28
+ *  tip, and "everything", "morning" and their kin were the same mistake
+ *  earlier. Shared by both continuous branches. */
+const NOT_A_PARTICIPLE =
+  /^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing|spring|during|including|according|regarding|concerning|pending|following|building|ceiling|wedding|clothing|bedding|pudding|sibling|stuffing)$/;
 
 /** A hyphenated verb is ONE verb. Stripping punctuation used to turn
  *  "can re-clean" into "can re clean", and the modal rule printed "Sau
@@ -94,11 +101,12 @@ function formNoteHeld(target: string): string | null {
 
   // Past continuous before PAST: "was" alone is not a past simple lesson
   // when the -ing verb beside it is the actual form.
-  if (
-    (m = s.match(/ (was|were) (not )?(\w+ing) /)) &&
-    !/^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing)$/.test(m[3])
-  )
-    return `Quá khứ tiếp diễn — việc đang dở thì việc khác xen vào: ${m[1]} ${m[2] ?? ""}${m[3]}.`;
+  // Named for what it always means — an action in progress at a past moment —
+  // not for the interruption it only sometimes has: "Engineering was fixing
+  // the shower at ten." has nothing breaking in, and the old wording ("việc
+  // khác xen vào") described a clause the sentence does not contain.
+  if ((m = s.match(/ (was|were) (not )?(\w+ing) /)) && !NOT_A_PARTICIPLE.test(m[3]))
+    return `Quá khứ tiếp diễn — việc đang diễn ra tại một lúc trong quá khứ: ${m[1]} ${m[2] ?? ""}${m[3]}.`;
 
   // Present perfect before PAST: "I have arranged…" is not "arranged" the
   // past simple. The participle list is closed so "We have a city tour"
@@ -155,14 +163,15 @@ function formNoteHeld(target: string): string | null {
   // "everything", "morning", "evening" and their kin end in -ing and are not
   // participles: "and that is everything" was being taught as a present
   // continuous. A note that names the wrong form is worse than no note.
-  if (
-    (m = s.match(/ (am|is|are) (\w+ing) /)) &&
-    !/^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing)$/.test(m[2])
-  )
+  if ((m = s.match(/ (am|is|are) (\w+ing) /)) && !NOT_A_PARTICIPLE.test(m[2]))
     return `Hiện tại tiếp diễn cho việc đang làm: ${m[1]} ${m[2]}.`;
 
+  // "Can someone bring…" — the subject sits between the modal and the verb,
+  // and the old note quoted the subject as the verb ("can someone").
   if (
-    (m = s.match(/ (could|would|may|can|will|shall|must) (i|you|we|he|she|they) (\w+) /)) &&
+    (m = s.match(
+      / (could|would|may|can|will|shall|must) (i|you|we|he|she|they|someone|somebody|anyone|anybody|everyone|nobody) (\w+) /,
+    )) &&
     !NOT_A_VERB.has(m[3])
   )
     return capitaliseI(`Sau '${m[1]}' động từ giữ nguyên dạng gốc: ${m[1]} ${m[2]} ${m[3]}.`);
@@ -173,8 +182,10 @@ function formNoteHeld(target: string): string | null {
   if ((m = s.match(/^ please (\w+) /)))
     return `Câu mệnh lệnh lịch sự: Please + động từ gốc — please ${m[1]}.`;
 
+  // A noun phrase built with "of", not an abstract noun: "the back of the
+  // menu" and "the cocktail of the day" were both taught as abstract nouns.
   if ((m = s.match(/ the (\w+) of the (\w+) /)))
-    return `Danh từ trừu tượng cần 'the' và cụm bổ nghĩa: the ${m[1]} of the ${m[2]}.`;
+    return `Cụm danh từ với 'of' — cả hai danh từ đều có 'the': the ${m[1]} of the ${m[2]}.`;
 
   // The whole noun phrase, not the adjective in front of it: "a good match",
   // never "a good". The {0,2} prefix is lazy so the phrase stops at the first
@@ -188,7 +199,10 @@ function formNoteHeld(target: string): string | null {
   // A finite verb ends the phrase too, or "A towel cover stays on at all
   // times." hands back "a towel cover stays" as the noun.
   const nounPhrase =
-    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|then|here|there|please|sir|madam)(?![a-z]))/i;
+    // Adverbs and particles end it too: "a bellman up", "a message instead",
+    // "a suite myself" and "a small table outside" were all printed as the
+    // noun a learner should put the article in front of.
+    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|but|or|so|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|then|here|there|please|sir|madam|up|down|out|off|back|away|over|instead|again|myself|yourself|himself|herself|ourselves|themselves|outside|inside|first|later|tomorrow|tonight|soon|before|after|until|by|from|into|this|that|when|while|if|because|as|than|right|yet|already|still)(?![a-z]))/i;
   // "a little", "a few", "a lot", "a bit" are quantities, not a countable
   // noun taking its article: "It costs a little more" was teaching "a little
   // more" as a singular noun in five tips across Phase 3.

@@ -72,7 +72,17 @@
 // ============================================================
 
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
+import {
+  LEXICONS,
+  PHASE0_WORDS_BY_DEP,
+  game,
+  g,
+  read,
+  sp,
+  v,
+  type P0Lexicon,
+  lockWeekHeadwords,
+} from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
 import { FB_P3, FB_P3_CAN_DO } from "./p3/fb";
@@ -2375,8 +2385,16 @@ function reviewWordsFor(
   // NEWEST FIRST. Walked oldest-first, week 23 — the opening week of an A2+
   // phase — reviewed nothing but Phase 0: "Good morning", "Thirteen",
   // "Goodbye". The weeks just before this phase are the ones at risk.
+  //
+  // AND NOT PHASE 0. Walked newest-first over everything before week 23, the
+  // last two slices still reached the bottom of the pool: week 29 handed 34
+  // of its 69 review places to "Sir", "Spell", "Name", "Welcome" — pre-A1
+  // chunks the learner has said in every lesson since week 1 — and three
+  // reviews counted them as review that reviews nothing. Phases 1 and 2 are
+  // the long-spacing pool.
   const slots = 7; // weeks 23..29
-  const newest = [...priorWords].reverse();
+  const p0 = new Set(PHASE0_WORDS_BY_DEP[lx.code] ?? []);
+  const newest = [...priorWords].reverse().filter((w) => !p0.has(w));
   const size = Math.ceil(newest.length / slots);
   const start = (week - 23) * size;
   out.push(...newest.slice(start, start + size));
@@ -2539,11 +2557,17 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
           "being repaired",
           "being fixed",
           "engineering",
+          // Round 3: "The AC is broken, the technician needs 1 hour" — a
+          // correct relay in the words a floor actually uses — scored 50%.
+          "AC",
+          "A/C",
+          "technician",
+          "engineer",
         ],
       },
       {
         labelVi: "Nêu rõ khoảng một giờ",
-        any: ["an hour", "one hour", "60 minutes", "sixty minutes"],
+        any: ["an hour", "one hour", "1 hour", "1 hr", "60 minutes", "sixty minutes"],
       },
       // The explanation asks for an interim step the attendant offers without
       // being asked, and the old list never checked for one. Required: with
@@ -2575,6 +2599,18 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "we can move you",
       "I am moving you",
       "we are moving you",
+      // Round 3 passed three relays that hand out the front desk's decision
+      // or a comp: "You can change rooms, I will take you to room 210 now",
+      // "The room is free tonight", "you can have another room, no problem".
+      "take you to room",
+      "take you to another room",
+      "you can change rooms",
+      "you can change your room",
+      "you can have another room",
+      "you can move",
+      "I will change your room",
+      "room is free",
+      "free tonight",
     ],
     modelAnswer:
       "I am very sorry, madam. The air conditioning is being repaired. Our engineering team needs about one hour. I can bring you a fan now. If you prefer, I will ask the front desk about another room.",
@@ -2593,16 +2629,17 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       },
       {
         labelVi: "Kỹ thuật viên phụ trách không làm được hôm nay",
+        // Not "unwell", "is ill", "is sick": the explanation forbids naming a
+        // colleague's illness, and round 3 found the idea list rewarding it.
         any: [
           "not available",
           "unavailable",
-          "unwell",
-          "is ill",
-          "is sick",
           "cannot come",
           "cannot work",
+          "can't come",
           "not working today",
           "not here today",
+          "not in today",
         ],
       },
       {
@@ -2652,6 +2689,18 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "free upgrade",
       "a discount",
       "half price",
+      // Round 3: "…and I will add a free foot massage for you" scored 100%,
+      // "…we will give you ten percent off" 75%, "Your therapist is sick
+      // today" passed. Comps are the manager's; illness is the colleague's.
+      "a free",
+      "add a free",
+      "give you a free",
+      "percent off",
+      "% off",
+      "is sick",
+      "is ill",
+      "unwell",
+      "sick today",
     ],
     modelAnswer:
       "I am sorry, madam. Your three o'clock therapist is not available today. We can give you another therapist at three, or move your massage to another time. There is no charge for the change.",
@@ -2679,8 +2728,12 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
           "water problem",
         ],
       },
+      // Required since round 3: "You can wait in the lobby until it is ready.
+      // There is no charge for waiting." dropped the move altogether and still
+      // reached three of four ideas.
       {
         labelVi: "Chuyển sang phòng cùng hạng",
+        required: true,
         any: [
           "same category",
           "same type",
@@ -2714,6 +2767,13 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
           "not pay anything",
           "not pay more",
           "no charge",
+          // Round 3 failed three correct relays for these.
+          "not need to pay",
+          "don't need to pay",
+          "price stays the same",
+          "price is the same",
+          "free of extra charge",
+          "nothing more to pay",
         ],
       },
     ],
@@ -2734,6 +2794,17 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "will cost more",
       "it costs more",
       "charge you more",
+      // Round 3: "…at no extra cost, and I will also give you a free dinner"
+      // scored 100%; "…a smaller room at no extra cost" passed. Comps are the
+      // duty manager's, and the approved move is to the same category.
+      "free dinner",
+      "free night",
+      "free meal",
+      "give you a free",
+      "smaller room",
+      "smaller suite",
+      "lower category",
+      "cheaper room",
     ],
     // Every sentence within the phase's 16 words, and nothing in it the GRO
     // decides: the move and the price were approved by the duty manager.

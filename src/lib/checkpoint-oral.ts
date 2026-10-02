@@ -413,7 +413,7 @@ function oralSetup(dep: string, week: string) {
   const narrowed = (it: OralItem, keep: (target: string) => boolean): OralItem => ({
     ...it,
     reserved: true,
-    alternates: (it.alternates ?? []).filter((a) => keep(a.target)),
+    alternates: (it.alternates ?? []).filter((a) => a.sameMove || keep(a.target)),
   });
 
   // AN AUTHOR'S MARK BEATS A SEARCH. Where the phase marks its must-be-right
