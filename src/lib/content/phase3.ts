@@ -74,7 +74,7 @@
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
-import { FO_P3 } from "./p3/fo";
+import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
 import { FB_P3 } from "./p3/fb";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
@@ -2281,7 +2281,7 @@ const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
 };
 
 /** The week's can-do line, for the departments that write one. */
-const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {};
+const AUTHORED_CAN_DO: Record<string, Record<number, string>> = { FO: FO_P3_CAN_DO };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
   return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
@@ -2391,22 +2391,63 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
     colleagueNoteVi:
       "Phòng 512 chưa dọn xong vì tổ buồng phòng đang thiếu người, phải đợi thêm khoảng 20 phút nữa mới vào ở được.",
     promptVi:
-      "Khách đang đứng chờ nhận phòng 512. Hãy nói lại bằng tiếng Anh cho khách, truyền đạt đủ ba ý bên dưới.",
+      "Khách đang đứng chờ nhận phòng ở quầy, có khách khác đứng gần. Hãy nói lại bằng tiếng Anh cho khách, truyền đạt đủ ba ý bên dưới.",
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies"] },
+      {
+        labelVi: "Xin lỗi khách",
+        any: ["sorry", "apologise", "apologize", "apologies", "afraid"],
+      },
       {
         labelVi: "Phòng chưa sẵn sàng",
-        any: ["not ready", "not quite ready", "still being prepared", "not yet ready"],
+        any: [
+          "not ready",
+          "isn't ready",
+          "isn’t ready",
+          "isn't quite ready",
+          "isn’t quite ready",
+          "not quite ready",
+          "not yet ready",
+          "still being prepared",
+          "still being cleaned",
+        ],
       },
       {
         labelVi: "Nêu rõ khoảng 20 phút",
-        any: ["20 minutes", "twenty minutes", "20 more minutes", "another 20"],
+        any: [
+          "20 minutes",
+          "twenty minutes",
+          "20 more minutes",
+          "twenty more minutes",
+          "another 20",
+          "another twenty",
+          "20 mins",
+        ],
       },
     ],
+    // The note gives the guest-facing facts AND two things a relay must leave
+    // out: the internal reason (short of staff) and the room number, read
+    // aloud at a desk with other guests standing by. A relay that promises
+    // the time or offers something free is outside the receptionist's
+    // authority. Matching is by phrase, so each entry is one a correct relay
+    // never contains.
+    mustAvoid: [
+      "enough staff",
+      "enough people",
+      "short of staff",
+      "short-staffed",
+      "short staffed",
+      "understaffed",
+      "no staff",
+      "free",
+      "promise",
+      "512",
+      "five one two",
+      "five twelve",
+    ],
     modelAnswer:
-      "I'm sorry, sir, your room is not quite ready yet — housekeeping needs about 20 more minutes to finish. May I offer you a seat in the lounge while you wait?",
+      "I am sorry, madam. Your room is not ready yet. Housekeeping needs about twenty more minutes. Would you like a welcome drink in the lobby while you wait?",
     explanationVi:
-      "Khi truyền đạt tin xấu, luôn xin lỗi trước, nêu mốc thời gian cụ thể, và đề nghị một giải pháp tạm trong lúc chờ — không chỉ dịch nguyên văn lời đồng nghiệp.",
+      "Xin lỗi, nói phòng chưa sẵn sàng và mốc khoảng 20 phút của buồng phòng, rồi mời khách ngồi chờ. Không nói lý do nội bộ (thiếu người), không đọc to số phòng trước khách khác, không hứa chắc và không hứa đồ miễn phí.",
   },
   FB: {
     colleagueNoteVi:
