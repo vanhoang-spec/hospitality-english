@@ -220,7 +220,7 @@ function week23(): LessonContent[] {
         game(
           "Which is better for a light sleeper, the fan or the air purifier?",
           "The air purifier is quieter than the fan, madam.",
-          "Air purifier more quiet than fan.",
+          "Air purifier is more quiet than the fan, sir, you take it, very good for sleep.",
           "Both are the same, madam, so it does not really matter.",
           undefined,
           "Câu cuối không giúp khách chọn. Câu đúng so sánh rõ MỘT điểm khách quan tâm: 'quieter than the fan'.",
@@ -496,7 +496,7 @@ function week24(): LessonContent[] {
         game(
           "Is the extra bed free?",
           "There is a rollaway bed charge for that, madam.",
-          "Not free. You pay bed.",
+          "Bed is not free, madam, you pay money for bed every night, I write it.",
           "Do not worry, madam, I will not tell anyone about it.",
           undefined,
           "Câu cuối hứa giấu khoản phí — nhân viên buồng không có quyền bỏ phí. Câu đúng báo nhẹ nhàng là có phí.",
@@ -880,7 +880,7 @@ function week25(): LessonContent[] {
         game(
           "How long until the extra pillows come?",
           "I will deliver them within ten minutes, madam.",
-          "Pillow coming, soon soon.",
+          "Pillow is coming soon soon, madam, you wait, I bring when I finish other room.",
           "As soon as possible, madam — we are very busy today.",
           undefined,
           "'As soon as possible' không phải lời hứa: khách không biết chờ đến khi nào. Câu đúng có mốc: 'within ten minutes'.",
@@ -973,7 +973,7 @@ function week25(): LessonContent[] {
         game(
           "604 asked for service, but the DND sign is on. Should I go in?",
           "No. Call the guest from the floor phone first.",
-          "Yes go in, guest want clean.",
+          "Yes, you go in now, guest want clean room, sign is not important for this.",
           "Yes, just go in quietly so you do not wake them.",
           "colleague",
           "Câu cuối nghe chu đáo nhưng là vào phòng khi biển còn treo. Câu đúng: không vào, gọi khách hỏi trước.",
@@ -1642,7 +1642,7 @@ function week27(): LessonContent[] {
           "I have already told two of your staff about this!",
           "I apologise, madam. I will report it to my supervisor today.",
           "Not my shift. Other staff.",
-          "That is strange, madam. My colleagues did not tell me anything about it.",
+          "That is strange, madam. Nobody told me.",
           undefined,
           "Câu cuối biến lời phàn nàn thành chuyện nội bộ. Câu đúng xin lỗi và đưa lên người có trách nhiệm.",
         ),
