@@ -74,7 +74,7 @@ function week23(): LessonContent[] {
   const t3b = "Four massages, and the herbal tea is complimentary. The package lasts three months.";
   const t3c = "Of course, madam. I will book one massage for today.";
   const t4a =
-    "I am glad you enjoyed it, madam. I recommend our aloe cream to moisturize your skin.";
+    "I am glad you enjoyed it, madam. I recommend our aloe cream to moisturise your skin.";
   const t4b = "No, madam. The cream is lighter than the oil, and it has no smell.";
   const t4c = "Of course, madam. Thank you for your feedback, and enjoy your evening.";
   const nutFree = "Yes, madam. Then we need a nut-free oil, and I will check it first.";
@@ -176,7 +176,7 @@ function week23(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms Weber books a hot stone massage. Before it, Hoa does a short consultation. Ms Weber says she is allergic to nuts. The almond oil has nuts in it, so Hoa checks the oils and chooses a nut-free one. Then Ms Weber says she is four months pregnant. Hoa does not start the massage. She asks her manager first.`,
+        `Ms Weber books a hot stone massage. Before it, Hoa does a short consultation. Ms Weber says she is allergic to nuts. The almond oil has nuts in it, so Hoa checks the oils and chooses a nut-free one. Then Ms Weber says she is four months pregnant. Hoa does not start the massage. She asks her manager first. Hoa writes both answers on the consultation form, so the next therapist knows them too.`,
         [
           {
             q: "Vì sao Hoa không dùng dầu hạnh nhân?",
@@ -206,7 +206,7 @@ function week23(): LessonContent[] {
         game(
           "Can we skip the form today? I am in a hurry.",
           "I understand, madam. The form is short, and we need it first.",
-          "I understand, madam. Form is short, and we need it first.",
+          "I understand, madam. The form short, and we need it first.",
           "Of course, madam. Just tell the therapist during the massage.",
           undefined,
           "Câu cuối bỏ qua bước tư vấn — dị ứng và chống chỉ định phải được hỏi TRƯỚC khi bắt đầu. Câu đúng giữ bước tư vấn và nói nó ngắn.",
@@ -317,7 +317,7 @@ function week23(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Lund has stiff shoulders and asks about the hot stone massage. Tuan explains that it is warmer than the traditional massage. Then Mr Lund says he has high blood pressure. Tuan does not offer the hot stone or the sauna. He recommends a gentle massage with light pressure, and his manager checks the health form first.`,
+        `Mr Lund has stiff shoulders and asks about the hot stone massage. Tuan explains that it is warmer than the traditional massage. Then Mr Lund says he has high blood pressure. Tuan does not offer the hot stone or the sauna. He recommends a gentle massage with light pressure, and his manager checks the health form first. Mr Lund enjoys the gentle massage, and he says his shoulders feel much better.`,
         [
           {
             q: "Vì sao Tuấn không mời khách dùng đá nóng và xông hơi khô?",
@@ -444,7 +444,7 @@ function week23(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mrs Lopez is staying for two weeks and wants a massage every few days. Thu recommends the four-session package, because it is cheaper than four single massages. Mrs Lopez says she only wants one massage today. Thu does not push. She books one massage and says the package lasts three months, in case Mrs Lopez changes her mind.`,
+        `Mrs Lopez is staying for two weeks and wants a massage every few days. Thu recommends the four-session package, because it is cheaper than four single massages. Mrs Lopez says she only wants one massage today. Thu does not push. She books one massage and says the package lasts three months, in case Mrs Lopez changes her mind. Two days later, Mrs Lopez comes back and buys the package after all.`,
         [
           {
             q: "Vì sao Thu gợi ý gói bốn buổi?",
@@ -474,7 +474,7 @@ function week23(): LessonContent[] {
         game(
           "Do I have to buy the package to get the herbal tea?",
           "No, madam. The herbal tea is complimentary with every treatment.",
-          "No, madam. Herbal tea is complimentary with every treatment.",
+          "No, madam. The herbal tea are complimentary with every treatment.",
           "Yes, madam. Sorry, the herbal tea is only for guests who buy a package.",
           undefined,
           "Câu cuối nói sai sự thật để bán gói. Câu đúng nói rõ trà đi kèm mọi liệu trình — khách tự quyết có mua gói hay không.",
@@ -502,7 +502,7 @@ function week23(): LessonContent[] {
           "Tinh dầu",
           "🧴",
         ]),
-        c("Moisturize", "This cream will moisturize your skin after the steam.", [
+        c("Moisturise", "This cream will moisturise your skin after the steam.", [
           "/ˈmɔɪstʃəraɪz/",
           "Dưỡng ẩm",
           "💧",
@@ -517,9 +517,9 @@ function week23(): LessonContent[] {
         ),
         g(
           "Buy this cream.",
-          "This cream is lighter than the body oil, and it will moisturize your skin.",
+          "This cream is lighter than the body oil, and it will moisturise your skin.",
           "So sánh hơn để giới thiệu (lighter than), rồi một lợi ích. Sau 'will' động từ ở dạng gốc.",
-          "This cream is lighter than the body oil, and it will moisturizes your skin.",
+          "This cream is lighter than the body oil, and it will moisturises your skin.",
         ),
       ],
       speaking: [
@@ -556,17 +556,17 @@ function week23(): LessonContent[] {
         ),
         sp(
           "Can I buy the cream you used on my face today?",
-          "Of course, madam. It will moisturize your skin, and it has no smell.",
+          "Of course, madam. It will moisturise your skin, and it has no smell.",
           "Bán khi khách hỏi: nói một lợi ích và một điều khách cần biết.",
         ),
         sp(
           "Which is better for my hands, the oil or the cream?",
-          "The cream is lighter, madam, and it will moisturize your hands quickly.",
+          "The cream is lighter, madam, and it will moisturise your hands quickly.",
           "So sánh một điểm, kèm một lợi ích.",
         ),
       ],
       reading: read(
-        `After her massage, Ms Chen says her skin feels dry. Lan recommends the aloe cream, which is lighter than the body oil. Ms Chen says no, thank you. Lan accepts at once and asks for her feedback. Ms Chen says the music was a bit loud, so Lan tells her manager the same day.`,
+        `After her massage, Ms Chen says her skin feels dry. Lan recommends the aloe cream, which is lighter than the body oil. Ms Chen says no, thank you. Lan accepts at once and asks for her feedback. Ms Chen says the music was a bit loud, so Lan tells her manager the same day. Ms Chen thanks her and books another massage for Saturday. She says she will try the cream next time.`,
         [
           {
             q: "Lan làm gì khi khách từ chối kem dưỡng?",
@@ -628,9 +628,9 @@ function week24(): LessonContent[] {
   const t3a = "I am sorry, sir. You cannot use the sauna after alcohol.";
   const t3b = "Because alcohol and heat together can make you faint, sir.";
   const t3c = "You can rest in the relaxation area with some herbal tea, sir.";
-  const t4a =
-    "I am sorry, sir. Because of our late arrival policy, the massage has to end at four.";
-  const t4b = "The next guest is booked at four, sir, so we have to finish on time.";
+  const t4a = "I am sorry, sir. The massage has to end at four, because the next guest is booked.";
+  const t4b =
+    "Our late arrival policy keeps the next guest's time, sir. It is on your booking card.";
   const t4c = "Of course, sir. There is a session extension fee for thirty extra minutes.";
   return [
     L(24, 1, "There Is a Charge", "Có một khoản phí", {
@@ -701,6 +701,7 @@ function week24(): LessonContent[] {
           alsoAccept: [
             "I am sorry, I cannot change the fee. I will ask my manager to call you.",
             "I cannot change the no-show fee myself, sir, but I will ask the manager to call you.",
+            "I understand, madam. I cannot change the charge, but I will ask my manager to call you.",
           ],
         }),
         sp(
@@ -715,7 +716,7 @@ function week24(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Brandt missed his massage yesterday, and there is a no-show fee on his bill. Nam explains: "We have to charge the fee because the room was kept for you." Mr Brandt says nobody told him. Nam does not argue. He cannot change the fee himself, so he asks his manager to call Mr Brandt.`,
+        `Mr Brandt missed his massage yesterday, and there is a no-show fee on his bill. Nam explains: "We have to charge the fee because the room was kept for you." Mr Brandt says nobody told him. Nam does not argue. He cannot change the fee himself, so he asks his manager to call Mr Brandt. Later that afternoon, the manager listens to Mr Brandt and makes the decision about the fee.`,
         [
           {
             q: "Nam giải thích lý do của phí không đến là gì?",
@@ -745,7 +746,7 @@ function week24(): LessonContent[] {
         game(
           "I cancelled two hours before. Why do I still have to pay?",
           "Because the cancellation window is four hours, madam.",
-          "Because cancellation window is four hours, madam.",
+          "Because the cancellation window four hours, madam.",
           "Do not worry, madam. I can take the charge off your bill myself this time.",
           undefined,
           "Câu cuối tự bỏ phí — đó là quyết định của quản lý. Câu đúng nêu lý do thật: thời hạn hủy là bốn giờ.",
@@ -794,6 +795,13 @@ function week24(): LessonContent[] {
       ],
       speaking: [
         sp(
+          "Why do you need my health form before a facial?",
+          "Because we do a contraindication check before every treatment, madam.",
+          "Ôn tuần 23: 'because' + bước kiểm tra chống chỉ định.",
+          undefined,
+          ["because", "contraindication", "check"],
+        ),
+        sp(
           "Why do I have to fill in a health form for a massage?",
           t2a,
           "Khách hỏi vì sao: trả lời bằng 'because' + lý do thật, rồi nói phiếu khai báo dùng để làm gì.",
@@ -831,9 +839,9 @@ function week24(): LessonContent[] {
           "'because' + lý do cụ thể khách hiểu được.",
         ),
         sp(
-          "Do I need a doctor's note for a facial too?",
-          "No, madam. The medical clearance rule is for massage after an operation.",
-          "Nói đúng phạm vi của quy định — không thêm, không bớt.",
+          "I had a small procedure on my face last week. Can I have a facial?",
+          "Thank you, madam. After a procedure, we have to see a doctor's note first.",
+          "Sau thủ thuật trên mặt: chưa làm facial khi chưa có giấy bác sĩ.",
         ),
         sp(
           "When can I come back after my operation?",
@@ -842,7 +850,7 @@ function week24(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mrs Novak fills in the health declaration form. She writes that she had a knee operation three weeks ago. Linh does not start the massage. She explains the medical clearance rule: after an operation, the spa has to see a doctor's note first. Massage near a new wound can be dangerous. Mrs Novak brings the note the next day.`,
+        `Mrs Novak fills in the health declaration form. She writes that she had a knee operation three weeks ago. Linh does not start the massage. She explains the medical clearance rule: after an operation, the spa has to see a doctor's note first. Massage near a new wound can be dangerous. Mrs Novak brings the note the next day. The therapist reads it, and the massage starts later that afternoon.`,
         [
           {
             q: "Vì sao Linh chưa bắt đầu massage?",
@@ -872,7 +880,7 @@ function week24(): LessonContent[] {
         game(
           "My operation was last month, but I feel fine now. Can we start?",
           "Thank you for telling me. I cannot start without a doctor's note.",
-          "Thank you for telling me. I cannot start without doctor's note.",
+          "Thank you for telling me. I cannot starting without a doctor's note.",
           "If you feel fine, sir, I am sure it is no problem. We can start now and be careful.",
           undefined,
           "Câu cuối tự quyết là 'không sao' — kỹ thuật viên không chẩn đoán và không bỏ qua quy định. Câu đúng giữ quy định xác nhận y tế.",
@@ -902,9 +910,9 @@ function week24(): LessonContent[] {
       grammar: [
         g(
           "No shorts. Change.",
-          "Guests have to wear swimwear in the pool because of our pool policy.",
-          "'Guests' số nhiều → 'have to', không phải 'has to'. 'because of' + danh từ (our pool policy).",
-          "Guests has to wear swimwear in the pool because of our pool policy.",
+          "Guests have to wear swimwear in the pool because it keeps the water clean.",
+          "'Guests' số nhiều → 'have to', không phải 'has to'. Sau 'because' là lý do thật (giữ nước sạch), không phải 'vì quy định'.",
+          "Guests has to wear swimwear in the pool because it keeps the water clean.",
         ),
         g(
           "Drink beer? No sauna!",
@@ -964,13 +972,20 @@ function week24(): LessonContent[] {
           "'have to' + 'because of' + danh từ: quy định và lý do.",
         ),
         sp(
+          "Do I have to take off all my clothes for the massage?",
+          "No, madam. We use a draping technique, because your comfort comes first.",
+          "Ôn tuần 23: kỹ thuật phủ khăn — lý do là sự thoải mái của khách.",
+          undefined,
+          ["draping", "technique", "because"],
+        ),
+        sp(
           "Where can I read all these rules?",
           "Our spa policy is on the back of the menu, madam.",
           "Chỉ đúng chỗ khách tự đọc được quy định.",
         ),
       ],
       reading: read(
-        `Mr Dale comes to the spa after lunch. He has had two beers, and he wants to use the sauna. Vy explains the rule politely: guests cannot use the sauna after alcohol, because heat and alcohol together can make people faint. She offers him the relaxation area and some herbal tea. Mr Dale books the sauna for the next morning.`,
+        `Mr Dale comes to the spa after lunch. He has had two beers, and he wants to use the sauna. Vy explains the rule politely: guests cannot use the sauna after alcohol, because heat and alcohol together can make people faint. She offers him the relaxation area and some herbal tea. Mr Dale books the sauna for the next morning. The next day, he enjoys the sauna, and he thanks Vy for her care.`,
         [
           {
             q: "Vì sao Vy không cho khách vào phòng xông hơi khô?",
@@ -1008,7 +1023,7 @@ function week24(): LessonContent[] {
         game(
           "I only had one glass of wine. The sauna is fine, right?",
           "I am sorry, sir. The sauna is not safe after alcohol.",
-          "I am sorry, sir. Sauna is not safe after alcohol.",
+          "I am sorry, sir. The sauna not safe after alcohol.",
           "One glass is fine, sir. Just drink some water first and stay for ten minutes only.",
           undefined,
           "Câu cuối tự quyết 'một ly thì không sao' — rượu bia cộng nhiệt là rủi ro ngất. Câu đúng từ chối rõ ràng, nhẹ nhàng.",
@@ -1030,9 +1045,9 @@ function week24(): LessonContent[] {
       grammar: [
         g(
           "You late. Short massage.",
-          "Because of our late arrival policy, your massage has to finish at four, sir.",
-          "'your massage' là số ít → 'has to'. 'Because of' + danh từ đứng đầu câu.",
-          "Because of our late arrival policy, your massage have to finish at four, sir.",
+          "Your massage has to finish at four, sir, because the next guest is booked.",
+          "'your massage' là số ít → 'has to'. Lý do thật là khách tiếp theo — không phải 'vì quy định'.",
+          "Your massage have to finish at four, sir, because the next guest is booked.",
         ),
         g(
           "Key back, money back.",
@@ -1048,9 +1063,9 @@ function week24(): LessonContent[] {
           "Nói quy định + giờ kết thúc. Không trách khách đến muộn.",
         ),
         sp(
-          "Can you not just finish later?",
+          "That is not fair. Why should I lose twenty minutes?",
           t4b,
-          "Lý do thật bằng 'so': có khách tiếp theo lúc bốn giờ.",
+          "Quy định nói được mục đích của nó (giữ giờ cho khách sau) và chỗ khách đọc được.",
           undefined,
           undefined,
           t4a,
@@ -1079,13 +1094,20 @@ function week24(): LessonContent[] {
           "Nói rõ phí và tiền cọc dùng để làm gì.",
         ),
         sp(
+          "My skin feels dry after the sauna. Do you sell anything for it?",
+          "Yes, sir. This cream will moisturise your skin, because the heat dries it.",
+          "Ôn tuần 23: gợi ý sản phẩm theo nhu cầu, kèm lý do bằng 'because'.",
+          undefined,
+          ["moisturise", "because"],
+        ),
+        sp(
           "How much is it to add thirty minutes to my massage?",
           "The session extension fee is on the spa menu, madam. Let me show you.",
           "Chỉ đúng bảng giá — không đọc giá theo trí nhớ.",
         ),
       ],
       reading: read(
-        `Mr Kato arrives twenty minutes late for his massage at three. Hung explains the late arrival policy: the massage has to end at four, because the next guest is booked. Mr Kato is not happy, but he understands the reason. For next time, Hung tells him about the session extension fee for a longer massage.`,
+        `Mr Kato arrives twenty minutes late for his massage at three. Hung explains the late arrival policy: the massage has to end at four, because the next guest is booked. Mr Kato is not happy, but he understands the reason. For next time, Hung tells him about the session extension fee for a longer massage. Hung does not argue with him. He books a ninety-minute massage for Mr Kato on Friday.`,
         [
           {
             q: "Vì sao massage của khách vẫn phải kết thúc lúc bốn giờ?",
@@ -1115,7 +1137,7 @@ function week24(): LessonContent[] {
         game(
           "Why do I have to leave my bag in a locker?",
           "Because the spa desk cannot keep valuables, madam.",
-          "Because spa desk cannot keep valuables, madam.",
+          "Because the spa desk cannot keeps valuables, madam.",
           "It is just a rule, madam. Everybody does it.",
           undefined,
           "Câu cuối không nêu lý do và làm khách thấy bị ép. Câu đúng nói lý do thật bằng 'because'.",
@@ -1195,6 +1217,13 @@ function week25(): LessonContent[] {
           t1b,
         ),
         sp(
+          "We are a group of eight. Can we all come tomorrow at ten?",
+          "Yes, madam. That meets our booking notice period, so I will book you now.",
+          "Ôn tuần 24: thời gian báo trước khi đặt cho nhóm — đủ thì đặt ngay.",
+          undefined,
+          ["booking", "notice", "period"],
+        ),
+        sp(
           "The shower in the changing room is cold.",
           "I am sorry, sir. I will ask a colleague to check it within ten minutes.",
           "Xin lỗi + ai làm + mốc giờ.",
@@ -1215,7 +1244,7 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr and Mrs Sato arrive early for their massage. Quynh promises to prepare the treatment room within ten minutes, and she brings them herbal tea straight away. The herbal compress needs fifteen minutes to heat, so Quynh tells them the exact start time. At a quarter past three, the room and the compress are both ready.`,
+        `Mr and Mrs Sato arrive early for their massage. Quynh promises to prepare the treatment room within ten minutes, and she brings them herbal tea straight away. The herbal compress needs fifteen minutes to heat, so Quynh tells them the exact start time. At a quarter past three, the room and the compress are both ready. After the massage, Mr Sato says they felt no rush at all, because every time was clear.`,
         [
           {
             q: "Quỳnh hứa chuẩn bị phòng trị liệu trong bao lâu?",
@@ -1312,6 +1341,13 @@ function week25(): LessonContent[] {
           ["because"],
         ),
         sp(
+          "I am twenty minutes late for my six o'clock massage.",
+          "I am sorry, sir. Our late arrival policy means we are going to finish at seven.",
+          "Ôn tuần 24: quy định khách đến muộn + 'going to' cho giờ kết thúc đã định.",
+          undefined,
+          ["late", "arrival", "policy", "going"],
+        ),
+        sp(
           "Is there a therapist free this afternoon?",
           "Yes, madam. We have availability at four o'clock with Hoa.",
           "Kiểm tra lịch trống rồi mới hứa giờ.",
@@ -1332,7 +1368,7 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Okafor calls the spa at ten. It is his wedding anniversary, and he wants a couple's massage tonight. Dung reserves the couple's suite for six o'clock. His wife would like a female therapist, so Dung checks the availability and calls the room by noon. The foot bath is ready at a quarter to six.`,
+        `Mr Okafor calls the spa at ten. It is his wedding anniversary, and he wants a couple's massage tonight. Dung reserves the couple's suite for six o'clock. His wife would like a female therapist, so Dung checks the availability and calls the room by noon. The foot bath is ready at a quarter to six. Mr Okafor says it is the best evening of their holiday, and he books again for Sunday.`,
         [
           {
             q: "Dũng hứa gọi lại cho khách lúc nào?",
@@ -1429,6 +1465,13 @@ function week25(): LessonContent[] {
           t3b,
         ),
         sp(
+          "My friend wants to take a phone call in the relaxation area.",
+          "I am sorry, madam. The silence rule is for everyone, so I will show her the lobby.",
+          "Ôn tuần 24: quy định giữ yên lặng + một lựa chọn khác cho khách.",
+          undefined,
+          ["silence", "rule", "show"],
+        ),
+        sp(
           "My therapist is not here yet. Is something wrong?",
           "There is a short delay, madam. Your therapist will start at a quarter past two.",
           "Nói thật là có chậm trễ, và đưa giờ mới cụ thể.",
@@ -1455,7 +1498,7 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms Rivera wants to swim before her massage at two. Khoa promises to call her at the pool by two o'clock. At half past one, there is a delay, so Khoa updates the treatment schedule and calls Ms Rivera at once. She is happy to swim a little longer. Khoa also sends her a reminder for tomorrow's booking.`,
+        `Ms Rivera wants to swim before her massage at two. Khoa promises to call her at the pool by two o'clock. At half past one, there is a delay, so Khoa updates the treatment schedule and calls Ms Rivera at once. On the phone, Khoa gives her the new time: a quarter past two. She is happy to swim a little longer. Khoa also sends her a reminder for tomorrow's booking.`,
         [
           {
             q: "Khoa làm gì khi có chậm trễ?",
@@ -1517,9 +1560,9 @@ function week25(): LessonContent[] {
         ),
         g(
           "Nurse come.",
-          "The hotel nurse is going to be here very soon, madam.",
-          "'is going to be' — không bỏ 'is'. Gọi người có chuyên môn, không tự chẩn đoán.",
-          "The hotel nurse going to be here very soon, madam.",
+          "I am going to call the hotel nurse now, madam.",
+          "'am going to' — không bỏ 'am'. Hứa việc bạn làm NGAY (now), không nói 'soon'; gọi người có chuyên môn, không tự chẩn đoán.",
+          "I going to call the hotel nurse now, madam.",
         ),
       ],
       speaking: [
@@ -1565,6 +1608,13 @@ function week25(): LessonContent[] {
           "Trễ hẹn: xin lỗi, giữ ĐÚNG việc đã hứa, đưa mốc mới ngắn hơn.",
         ),
         sp(
+          "I had an operation last month. Can I book a massage for Friday?",
+          "Yes, madam, once we see a doctor's note. That is our medical clearance rule.",
+          "Ôn tuần 24: quy định xác nhận y tế — điều kiện trước khi đặt lịch.",
+          undefined,
+          ["doctor's", "note", "medical", "clearance", "rule"],
+        ),
+        sp(
           "The steam room feels much hotter than yesterday.",
           "Please do not use it now, sir. I will check the steam room straight away.",
           "Nghi có vấn đề về nhiệt: mời khách ra trước, kiểm tra ngay.",
@@ -1578,7 +1628,7 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `During a facial, Mrs Ito says her face is burning. Ngoc stops at once and cleans her skin with cool water. Mrs Ito asks if it is an allergy. Ngoc does not guess. She calls the hotel nurse, and she stays with Mrs Ito until the nurse arrives. Then she tells her supervisor what happened.`,
+        `During a facial, Mrs Ito says her face is burning. Ngoc stops at once and cleans her skin with cool water. Mrs Ito asks if it is an allergy. Ngoc does not guess. She calls the hotel nurse, and she stays with Mrs Ito until the nurse arrives. The nurse checks Mrs Ito's skin, and later Ngoc writes down exactly what happened and when. Then she tells her supervisor at once.`,
         [
           {
             q: "Ngọc làm gì ĐẦU TIÊN khi khách nói mặt bị rát?",
@@ -1634,7 +1684,7 @@ function week26(): LessonContent[] {
   const t1c = "Of course. I will tell the gym instructors that you have to finish by nine.";
   const t2a = "I am coming now, madam. I will help him out of the sauna.";
   const t2b = "I will take him to the cool area and call the hotel nurse now.";
-  const t2c = "Yes, madam, a little cool water. The nurse will be here within five minutes.";
+  const t2c = "Yes, madam, a little cool water. The hotel nurse is on her way now.";
   const t3a =
     "Let me check with the nail technicians, madam. I will call you back within ten minutes.";
   const t3b = "Yes, madam. I have asked the nail technicians, and they are free at four.";
@@ -1701,6 +1751,13 @@ function week26(): LessonContent[] {
           ],
         }),
         sp(
+          "Who decides the rules in the spa?",
+          "The spa supervisors write our spa policy, madam. It is on the back of the menu.",
+          "Ôn tuần 24: quy định của spa — ai viết, khách đọc ở đâu.",
+          undefined,
+          ["policy", "spa", "supervisors"],
+        ),
+        sp(
           "I would like to speak to someone senior about my bookings.",
           "Let me check with our spa supervisors, sir. One of them will call your room.",
           "'Let me check with' + đúng cấp có thẩm quyền.",
@@ -1755,7 +1812,7 @@ function week26(): LessonContent[] {
         game(
           "Can you give me the gym's number? I will call them myself.",
           "Let me transfer your call to the gym now, sir.",
-          "Let me transfer your call to gym now, sir.",
+          "Let me transfers your call to the gym now, sir.",
           "Of course, sir. The gym is on the second floor, so you can just walk up and ask.",
           undefined,
           "Câu cuối đẩy khách tự đi hỏi. Câu đúng nhận việc và chuyển máy ngay cho khách.",
@@ -1827,7 +1884,7 @@ function week26(): LessonContent[] {
         sp(
           "Can I give him some water?",
           t2c,
-          "Một chút nước mát là được; nói rõ y tá tới trong bao lâu.",
+          "Một chút nước mát là được. Không hứa giờ thay y tá — chỉ nói y tá đang tới.",
           undefined,
           undefined,
           t2b,
@@ -1835,14 +1892,14 @@ function week26(): LessonContent[] {
         risk({
           ...sp(
             "Is the sauna meant to be this hot? I can hardly breathe in there.",
-            "Please come out of the sauna now, sir. I will ask the sauna attendants to check the heat.",
-            "Khách khó thở: mời khách RA trước, rồi mới nhờ kiểm tra máy. An toàn của khách đi trước thiết bị.",
+            "Please come out of the sauna now, sir. I am calling the hotel nurse.",
+            "Khách khó thở: mời khách RA trước và gọi y tá ngay. Máy móc để sau.",
             undefined,
-            ["out", "sauna", "ask", "attendants", "check", "heat"],
+            ["out", "sauna", "calling", "hotel", "nurse"],
           ),
           alsoAccept: [
-            "Please come out now, sir. I will ask the sauna attendants to check the heat.",
-            "Please come out of the sauna now and sit in the cool area, sir.",
+            "Please come out now, sir. I am calling the hotel nurse.",
+            "Please come out of the sauna now, sir. I will call the hotel nurse.",
           ],
         }),
         risk({
@@ -1859,6 +1916,13 @@ function week26(): LessonContent[] {
           ],
         }),
         sp(
+          "Is the steam room all right to use now?",
+          "Let me check the steam room first, madam. I will ask the sauna attendants to help.",
+          "Ôn tuần 25: kiểm tra phòng xông trước khi mời khách vào.",
+          undefined,
+          ["check", "steam", "room", "sauna", "attendants"],
+        ),
+        sp(
           "Could someone bring towels to our sun loungers?",
           "Of course, madam. I will ask the pool attendants to bring towels within ten minutes.",
           "'ask + người + to + động từ' + mốc giờ.",
@@ -1870,7 +1934,7 @@ function week26(): LessonContent[] {
         ),
         sp(
           "Do we need to write anything about the guest in the sauna?",
-          "Yes. I will write an incident report with the times before my shift ends.",
+          "Yes. I will write an incident report, and the sauna attendants will check the heat.",
           "Khách không khỏe trong spa là một sự cố — ghi báo cáo sự cố, có giờ.",
           "colleague",
         ),
@@ -1917,18 +1981,18 @@ function week26(): LessonContent[] {
         game(
           "My wife is not well in the steam room. Please come!",
           "I am coming, sir. I will help her out and call the hotel nurse.",
-          "I am coming, sir. I will help her out and call hotel nurse.",
+          "I am coming, sir. I will helping her out and call the hotel nurse.",
           "Please bring her to the spa desk, sir, and I will call the hotel nurse from here.",
           undefined,
           "Câu cuối bắt người nhà tự đưa khách đang choáng đi. Câu đúng tới ngay, đưa khách ra khỏi chỗ nóng và gọi y tá.",
         ),
         game(
           "It is so hot in the sauna today that I feel sick.",
-          "Please come out now, sir. I will ask the sauna attendants to check the heat.",
-          "Please come out now, sir. I will ask the sauna attendants to checking the heat.",
+          "Please come out now, sir. I am calling the hotel nurse.",
+          "Please come out now, sir. I calling the hotel nurse.",
           "The sauna is always hot, sir. Try the lower bench for a few minutes.",
           undefined,
-          "Câu cuối để khách ở lại trong nhiệt khi khách đã thấy mệt. Câu đúng mời khách ra trước, rồi nhờ đúng người kiểm tra.",
+          "Câu cuối để khách ở lại trong nhiệt khi khách đã thấy mệt. Câu đúng mời khách ra trước và gọi y tá.",
         ),
       ],
     }),
@@ -1997,6 +2061,13 @@ function week26(): LessonContent[] {
           ["minimum", "age", "rule"],
         ),
         sp(
+          "Can the herbal compress be ready before my massage at four?",
+          "Yes, madam. I will ask our spa therapists to heat the herbal compress by half past three.",
+          "Ôn tuần 25: giao việc cho đúng người, có mốc giờ.",
+          undefined,
+          ["spa", "therapists", "heat", "herbal", "compress"],
+        ),
+        sp(
           "Is there a therapist who speaks Japanese?",
           "Let me check with our spa therapists, madam. I will call you back within ten minutes.",
           "'Let me check with' + đúng người + mốc gọi lại.",
@@ -2060,7 +2131,7 @@ function week26(): LessonContent[] {
         game(
           "There is a small boy alone in the pool, and I cannot find his mother.",
           "Please stay at the pool with him. I am calling the lifeguard now.",
-          "Please stay at pool with him. I am calling the lifeguard now.",
+          "Please stays at the pool with him. I am calling the lifeguard now.",
           "I will go and look for his mother in the restaurant first.",
           "colleague",
           "Câu cuối bỏ đứa trẻ một mình dưới nước để đi tìm mẹ. Câu đúng: có người ở cạnh ngay, gọi cứu hộ.",
@@ -2123,9 +2194,23 @@ function week26(): LessonContent[] {
           "Nói thật là hết hàng và khi nào có lại.",
         ),
         sp(
+          "Can you set up the foot bath for room five?",
+          "Yes. I am going to set up the foot bath now, before the guests arrive.",
+          "Ôn tuần 25: 'going to' cho việc đã định làm ngay.",
+          "colleague",
+          ["going", "set", "foot", "bath"],
+        ),
+        sp(
           "Is there a yoga class tomorrow morning?",
           "Let me check with the yoga teachers, madam. I will call your room within ten minutes.",
           "'Let me check with' + mốc gọi lại.",
+        ),
+        sp(
+          "The four o'clock guest has just cancelled.",
+          "Thanks. I will update the treatment schedule and tell the spa therapists.",
+          "Ôn tuần 25: cập nhật lịch ngay, báo đúng người.",
+          "colleague",
+          ["update", "treatment", "schedule", "spa", "therapists"],
         ),
         sp(
           "The oil bottles in room three are almost empty.",
@@ -2216,10 +2301,11 @@ function week27(): LessonContent[] {
       vocabulary: [
         c("Concern", "Thank you for telling me about your concern."),
         c("Apologise", "I apologise for the long wait, madam."),
-        c(
-          "Late therapist",
-          "A late therapist means a waiting guest, so tell the spa desk at once.",
-        ),
+        c("Inconvenience", "I am very sorry for the inconvenience, madam.", [
+          "/ˌɪnkənˈviːniəns/",
+          "Sự phiền toái, bất tiện",
+          "😣",
+        ]),
         c("Long waiting time", "I am very sorry about the long waiting time."),
       ],
       grammar: [
@@ -2260,21 +2346,28 @@ function week27(): LessonContent[] {
         ),
         sp(
           "Can I write down my complaint for the manager?",
-          "Of course, madam. Your feedback helps us, and my manager reads every form.",
+          "Of course, madam. Your feedback helps us, and my manager reads every complaint.",
           "Ôn tuần 23: góp ý bằng văn bản — cảm ơn và nói ai đọc.",
           undefined,
           ["feedback"],
         ),
         sp(
           "My therapist came fifteen minutes late today.",
-          "I am very sorry that your therapist was late, sir. I will tell my supervisor today.",
+          "I am very sorry for the inconvenience, sir. I will tell my supervisor today.",
           "Xin lỗi, không viện cớ, báo lên người có trách nhiệm.",
         ),
         sp(
           "Why is the two o'clock guest still waiting?",
-          "We have a late therapist today, so I am asking Lan to take the guest.",
+          "Her therapist is running late, so I am asking Lan to take the guest.",
           "Báo cấp trên: vấn đề + việc bạn đang làm để khách không phải chờ thêm.",
           "manager",
+        ),
+        sp(
+          "I want to speak to someone senior right now.",
+          "Of course, madam. I will ask one of our spa supervisors to come to you now.",
+          "Ôn tuần 26: đưa lên đúng cấp, ngay.",
+          undefined,
+          ["spa", "supervisors"],
         ),
         sp(
           "I want to complain to the spa manager. Can you put me through?",
@@ -2326,7 +2419,7 @@ function week27(): LessonContent[] {
         game(
           "I booked for three o'clock, and nobody has come for me!",
           "I apologise for the wait, sir. Let me check where your therapist is.",
-          "I apologise for wait, sir. Let me check where your therapist is.",
+          "I apologises for the wait, sir. Let me check where your therapist is.",
           "Everybody has to wait a little this afternoon, sir.",
           undefined,
           "Câu cuối viện cớ và coi việc chờ là bình thường. Câu đúng xin lỗi về điều khách gặp và làm ngay một việc.",
@@ -2414,6 +2507,13 @@ function week27(): LessonContent[] {
           "manager",
         ),
         sp(
+          "There were no clean towels in my treatment room.",
+          "I am sorry, madam. I will ask the spa linen staff to bring fresh towels now.",
+          "Ôn tuần 26: xin lỗi + nhờ đúng tổ + làm ngay.",
+          undefined,
+          ["spa", "linen", "staff"],
+        ),
+        sp(
           "Why did my massage start so late today?",
           "There was a delay with the room before you, madam. I am sorry you waited.",
           "Ôn tuần 25: nói thật là có chậm trễ, và xin lỗi về việc khách phải chờ.",
@@ -2482,12 +2582,16 @@ function week27(): LessonContent[] {
     L(27, 3, "Getting the Facts", "Hỏi cho rõ sự việc", {
       vocabulary: [
         c("Dirty changing room", "Report a dirty changing room to the spa linen staff."),
-        c("Cold pool water", "I will report the cold pool water to engineering."),
+        c("Complaint", "Every complaint goes in the shift report, with the time.", [
+          "/kəmˈpleɪnt/",
+          "Lời phàn nàn, khiếu nại",
+          "🗣️",
+        ]),
         c(
           "Wrong treatment booking",
           "Check the schedule before you call it a wrong treatment booking.",
         ),
-        c("Cold treatment room", "A cold treatment room needs the heating checked."),
+        c("Sensitive area", "Please tell me about any sensitive area I should avoid."),
       ],
       grammar: [
         g(
@@ -2541,15 +2645,36 @@ function week27(): LessonContent[] {
           ["reminder"],
         ),
         sp(
+          "Can you arrange a manicure for me before I leave tomorrow?",
+          "Of course, madam. I will arrange it with our nail technicians and call you back.",
+          "Ôn tuần 26: 'arrange' + đúng tổ + gọi lại.",
+          undefined,
+          ["arrange", "nail", "technicians"],
+        ),
+        sp(
           "The pool water is very cold today.",
           "I am sorry, sir. I will report the cold pool water to engineering now.",
           "Báo đúng bộ phận xử lý.",
+        ),
+        sp(
+          "Did any guest make a complaint this morning?",
+          "One complaint was about a dirty changing room. The linen staff cleaned it at ten.",
+          "Báo cấp trên: có phàn nàn gì + đã xử lý ra sao.",
+          "manager",
+          ["complaint", "dirty", "changing", "room"],
         ),
         sp(
           "The women's changing room is a mess. Can someone look at it?",
           "There is a dirty changing room upstairs. Can you ask the linen staff to clean it now?",
           "Nhờ đồng nghiệp: vấn đề + nhờ đúng người.",
           "colleague",
+        ),
+        sp(
+          "I have a scar on my shoulder. Will you be careful there?",
+          "Of course, sir. I will note it as a sensitive area and avoid it.",
+          "Hỏi ra và ghi lại vùng cần tránh — đúng điều khách vừa nói.",
+          undefined,
+          ["sensitive", "area"],
         ),
         sp(
           "What did the guest in room four say?",
@@ -2608,7 +2733,7 @@ function week27(): LessonContent[] {
         game(
           "Why did they give me the wrong treatment?",
           "I am sorry, madam. I will check your booking with the spa desk now.",
-          "I am sorry, madam. I will check your booking with spa desk now.",
+          "I am sorry, madam. I will checking your booking with the spa desk now.",
           "The spa desk made a mistake again, madam. They are always so careless with bookings.",
           undefined,
           "Câu cuối đổ lỗi cho đồng nghiệp trước khi kiểm tra. Câu đúng xin lỗi và đi kiểm tra.",
@@ -2619,7 +2744,7 @@ function week27(): LessonContent[] {
     L(27, 4, "Staying Calm — Safety First", "Giữ bình tĩnh — an toàn trước", {
       vocabulary: [
         c("Skin irritation", "Please tell me at once if you feel any skin irritation."),
-        c("Strong hand pressure", "Strong hand pressure can hurt, so ask the guest often."),
+        c("Rash", "We never massage over a rash.", ["/ræʃ/", "Phát ban, mẩn đỏ trên da", "🔴"]),
         c("Broken sauna heater", "We close the sauna when there is a broken sauna heater."),
         c("Patch test", "We do a patch test on the arm before a new facial.", [
           "/ˈpætʃ test/",
@@ -2666,6 +2791,7 @@ function week27(): LessonContent[] {
           ),
           alsoAccept: [
             "I am not sure, madam. The hotel nurse will look at your skin now.",
+            "I am sorry, I cannot say, madam. I am calling the hotel nurse now.",
             "I cannot say, madam, but the hotel nurse will look at your skin now.",
           ],
         }),
@@ -2688,6 +2814,13 @@ function week27(): LessonContent[] {
           "Mô tả vấn đề thật ngắn + điều đó có nghĩa gì với khách.",
         ),
         sp(
+          "I have a small rash on my back from the sun. Can I still have a massage?",
+          "Thank you, sir. We will avoid the rash, and I will check with my supervisor first.",
+          "Phát ban: không massage lên vùng đó, và hỏi giám sát trước khi bắt đầu.",
+          undefined,
+          ["rash", "supervisor"],
+        ),
+        sp(
           "Can I still have a facial next time?",
           "Yes, madam. We will do a patch test on your arm first.",
           "Sau một lần kích ứng: thử trên vùng da nhỏ trước.",
@@ -2700,8 +2833,22 @@ function week27(): LessonContent[] {
           ["incident", "report"],
         ),
         sp(
+          "A guest wants help with a fitness plan. Who should she see?",
+          "Our wellness consultants can help, and I will arrange a meeting for her today.",
+          "Ôn tuần 26: đúng chuyên môn, đúng người.",
+          "colleague",
+          ["wellness", "consultants", "arrange"],
+        ),
+        sp(
+          "Who do we call when a guest feels unwell in the spa?",
+          "We call the hotel nurses, and we write an incident report afterwards.",
+          "Ôn tuần 25–26: gọi đúng người, rồi ghi báo cáo sự cố.",
+          "manager",
+          ["hotel", "nurses", "incident", "report"],
+        ),
+        sp(
           "Why did the guest in room six complain?",
-          "He felt strong hand pressure, so I made it lighter at once.",
+          "He felt the pressure was too strong, so I made it lighter at once.",
           "Báo cấp trên: khách cảm thấy gì + bạn đã làm gì.",
           "manager",
         ),
@@ -2748,7 +2895,7 @@ function week27(): LessonContent[] {
         game(
           "My neck is getting red. Should I worry?",
           "I am stopping the massage, madam. I will clean the oil off with cool water now.",
-          "I am stopping the massage, madam. I will clean oil off with cool water now.",
+          "I am stopping the massage, madam. I will cleaning the oil off with cool water now.",
           "Do not worry, madam. It is only a small allergy, so we can finish the massage first.",
           undefined,
           "Câu cuối tự chẩn đoán 'dị ứng nhẹ' và làm tiếp — hai lỗi một lúc. Câu đúng dừng ngay và làm sạch da.",
@@ -2788,7 +2935,11 @@ function week28(): LessonContent[] {
       vocabulary: [
         c("Prefer", "If you prefer, we can start ten minutes later."),
         c("Turn up the heating", "If you feel cold, I can turn up the heating."),
-        c("Bring a warm blanket", "If you like, I can bring a warm blanket."),
+        c("Thermostat", "If the room is cold, please turn up the thermostat.", [
+          "/ˈθɜːməstæt/",
+          "Bộ điều chỉnh nhiệt độ",
+          "🌡️",
+        ]),
         c("Use a lighter pressure", "If it hurts, I will use a lighter pressure."),
       ],
       grammar: [
@@ -2838,8 +2989,16 @@ function week28(): LessonContent[] {
           alsoAccept: [
             "I am sorry, sir. I cannot offer the hot stone with high blood pressure.",
             "Thank you for telling me, sir. With high blood pressure, I cannot offer the hot stone.",
+            "I am sorry, sir. With high blood pressure, I cannot offer the hot stone or the sauna.",
           ],
         }),
+        sp(
+          "The guest in room three says she is cold.",
+          "Please turn up the thermostat and bring her a warm blanket.",
+          "Nói với đồng nghiệp: hai việc, đúng thứ tự.",
+          "colleague",
+          ["thermostat", "warm", "blanket"],
+        ),
         sp(
           "Can you massage my back harder, please?",
           "Of course, sir. If it hurts at any time, please tell me straight away.",
@@ -2849,6 +3008,13 @@ function week28(): LessonContent[] {
           "I am not sure what time is best for tomorrow.",
           "If you prefer, I can book you in the morning, when the spa is quieter.",
           "Khách còn phân vân: 'If you prefer' + một lý do để khách chọn.",
+        ),
+        sp(
+          "Where can I get a sun lounger by the pool?",
+          "Our pool attendants can help, sir. I will ask a colleague to take you there.",
+          "Ôn tuần 26: đúng người phụ trách + đồng nghiệp đưa khách đi.",
+          undefined,
+          ["pool", "attendants", "colleague"],
         ),
         sp(
           "This new oil feels a bit strange on my skin.",
@@ -2921,7 +3087,6 @@ function week28(): LessonContent[] {
         c("Option", "There are two options for your treatment room."),
         c("Either", "Either option is fine with us, sir."),
         c("Change the treatment room", "If the room is noisy, we can change the treatment room."),
-        c("Lower the music volume", "I can lower the music volume for you."),
       ],
       grammar: [
         g(
@@ -2960,6 +3125,13 @@ function week28(): LessonContent[] {
           t2b,
         ),
         sp(
+          "What do we do when a guest has a cold treatment room?",
+          "If a guest has a cold treatment room, we change rooms at once.",
+          "Ôn tuần 27 + câu điều kiện: quy trình nội bộ, nói ngắn.",
+          "manager",
+          ["cold", "treatment", "room", "change"],
+        ),
+        sp(
           "Is the couple's suite free tonight?",
           "Let me check our availability, madam. If it is free, I can reserve the couple's suite.",
           "Ôn tuần 25: xem lịch trống trước; câu điều kiện cho lời đề nghị.",
@@ -2977,6 +3149,13 @@ function week28(): LessonContent[] {
           "Ôn tuần 27: nói lại vấn đề của khách bằng câu điều kiện, rồi đề nghị.",
           undefined,
           ["loud", "spa", "music"],
+        ),
+        sp(
+          "The music was too loud again today.",
+          "I apologise, madam. If you like, I can lower the music volume now.",
+          "Ôn tuần 27: xin lỗi + đề nghị có điều kiện.",
+          undefined,
+          ["apologise", "music"],
         ),
         sp(
           "My treatment room was cold again yesterday.",
@@ -3034,7 +3213,7 @@ function week28(): LessonContent[] {
         game(
           "The music in here is far too loud for me.",
           "I am sorry, madam. I will lower the music volume now.",
-          "I am sorry, madam. I will lower music volume now.",
+          "I am sorry, madam. I will lowers the music volume now.",
           "Everybody else likes this music, madam.",
           undefined,
           "Câu cuối đặt ý thích của người khác lên trên khách đang nằm trước mặt. Câu đúng làm ngay điều khách vừa nói.",
@@ -3046,6 +3225,7 @@ function week28(): LessonContent[] {
       vocabulary: [
         c("Change the oil blend", "If the smell is too strong, we can change the oil blend."),
         c("Change your therapist", "If you prefer, I can change your therapist next time."),
+        c("Therapist gender", "Ask about therapist gender when a guest books a massage."),
         c("Reschedule at no charge", "Only the manager can let you reschedule at no charge."),
         c("Extend the session", "If the next hour is free, we can extend the session."),
       ],
@@ -3099,9 +3279,30 @@ function week28(): LessonContent[] {
           ],
         }),
         sp(
+          "I have a concern about the oil you use on my face.",
+          "Thank you for telling me about your concern, madam. If you like, I can show you the bottle.",
+          "Ôn tuần 27: cảm ơn khách đã nói + đề nghị cụ thể.",
+          undefined,
+          ["concern", "show", "bottle"],
+        ),
+        sp(
+          "Does the guest in room one want a man or a woman?",
+          "She asked about therapist gender, so I booked Lan for her.",
+          "Nói với đồng nghiệp: khách yêu cầu gì + bạn đã sắp xếp ai.",
+          "colleague",
+          ["therapist", "gender"],
+        ),
+        sp(
           "Next time I would like a different therapist.",
           "Of course, madam. I will change your therapist for your next visit.",
           "Khách đã nói rõ: đồng ý, không hỏi vặn lý do, đừng hỏi lại 'If you prefer'.",
+        ),
+        sp(
+          "I waited a long time yesterday. Will it happen again?",
+          "If there is a long waiting time again, I will call your room first.",
+          "Ôn tuần 27 + câu điều kiện loại 1: nói trước bạn sẽ làm gì.",
+          undefined,
+          ["long", "waiting", "time", "call"],
         ),
         sp(
           "Can we make my massage longer today?",
@@ -3183,6 +3384,11 @@ function week28(): LessonContent[] {
           "Hoàn lại khoản phí thu thêm",
           "💰",
         ]),
+        c("Goodwill gesture", "A goodwill gesture is always the manager's decision.", [
+          "/ˌɡʊdwɪl ˈdʒestʃə/",
+          "Món quà bù đắp thiện chí (do quản lý quyết)",
+          "🎁",
+        ]),
       ],
       grammar: [
         g(
@@ -3247,8 +3453,23 @@ function week28(): LessonContent[] {
           alsoAccept: [
             "I am sorry, I cannot refund the extra charge. I will ask the manager to call you.",
             "I cannot refund the extra charge myself, madam, but I will ask my manager to call you.",
+            "I understand, madam. I cannot change the charge, but I will ask my manager to call you.",
           ],
         }),
+        sp(
+          "My treatment was short again. I want my money back.",
+          "I am sorry, madam. My manager checks every short treatment, and she will call you today.",
+          "Ôn tuần 27: tiền là việc của quản lý — nói ai kiểm và ai gọi.",
+          undefined,
+          ["manager", "short", "treatment", "call"],
+        ),
+        sp(
+          "Will the spa give me something for all this trouble?",
+          "I am sorry for the inconvenience, madam. A goodwill gesture is my manager's decision.",
+          "Ôn tuần 27: xin lỗi về sự phiền toái; quà bù đắp là việc của quản lý.",
+          undefined,
+          ["inconvenience", "goodwill", "gesture"],
+        ),
         risk({
           ...sp(
             "We waited so long. Give us a free upgrade to the VIP suite.",
@@ -3329,7 +3550,7 @@ function week29(): LessonContent[] {
   const t1b = "The air conditioner is broken. Engineering is coming at five to fix it.";
   const t1c = "Please check the therapist roster first. Hoa is sick, so Lan is taking her guests.";
   const t2a = "She was sitting in the steam room when she suddenly felt dizzy.";
-  const t2b = "I helped her out, gave her water and called the hotel nurse.";
+  const t2b = "I helped her out, called the hotel nurse and gave her water.";
   const t2c = "Yes. The nurse checked her, and I wrote it in the incident report.";
   const t3a = "Yes. The linen order has not arrived yet, so robes are low.";
   const t3b = "Yes. Please read the guest allergy note for room two before the massage.";
@@ -3397,10 +3618,24 @@ function week29(): LessonContent[] {
           ["late", "therapist"],
         ),
         sp(
+          "Any guest notes for tomorrow?",
+          "Yes. Mrs Lim prefers lemongrass, so we have to change the oil blend for her.",
+          "Ôn tuần 28: ghi chú sở thích của khách cho ca sau.",
+          "colleague",
+          ["prefers", "change", "oil", "blend"],
+        ),
+        sp(
           "When does your shift end today?",
-          "My shift ends at three, so Nam takes the spa desk after that.",
+          "My shift ends at three. I will do the handover with Nam at the spa desk.",
           "Bàn giao rõ người nhận ca.",
           "colleague",
+        ),
+        sp(
+          "Why is room one empty at three?",
+          "The guest asked us to change the treatment room, so I moved her to room four.",
+          "Ôn tuần 28: báo cấp trên việc đã làm và vì sao.",
+          "manager",
+          ["change", "treatment", "room"],
         ),
         sp(
           "Did anybody ask about tomorrow's yoga class?",
@@ -3500,14 +3735,14 @@ function week29(): LessonContent[] {
           ...sp(
             "What did you do then?",
             t2b,
-            "Các bước an toàn theo đúng thứ tự: đưa ra khỏi chỗ nóng, cho nước, gọi y tá.",
+            "Các bước an toàn theo đúng thứ tự: đưa ra khỏi chỗ nóng, gọi y tá, rồi cho nước.",
             "manager",
             ["helped", "out", "water", "called", "hotel", "nurse"],
             t2a,
           ),
           alsoAccept: [
-            "I helped her out of the steam room, gave her water and called the hotel nurse.",
-            "I took her out, gave her some water and called the hotel nurse.",
+            "I helped her out of the steam room, called the hotel nurse and gave her water.",
+            "I took her out, called the hotel nurse and gave her some water.",
           ],
         },
         sp(
@@ -3526,10 +3761,24 @@ function week29(): LessonContent[] {
           ["checking", "steam", "room"],
         ),
         sp(
+          "What happened with the guest in room six?",
+          "She had a rash on her arm, so I stopped and wrote an incident report.",
+          "Ôn tuần 27: phát ban → dừng, ghi báo cáo sự cố.",
+          "manager",
+          ["rash", "incident", "report"],
+        ),
+        sp(
           "Why is the sauna closed?",
           "I was checking the sauna when the heater suddenly stopped. It is in the sauna maintenance log.",
           "Sự cố thiết bị ghi vào sổ bảo trì phòng xông hơi.",
           "colleague",
+        ),
+        sp(
+          "The guest in room two says it is cold again.",
+          "I turned up the thermostat ten minutes ago. Please check it again now.",
+          "Ôn tuần 28: việc đã làm + nhờ đồng nghiệp kiểm lại.",
+          "colleague",
+          ["thermostat"],
         ),
         sp(
           "Did anyone test the pool water this morning?",
@@ -3538,14 +3787,14 @@ function week29(): LessonContent[] {
           "manager",
         ),
         sp(
-          "Is room two ready for the next guest?",
+          "Can I take my next guest into room two?",
           "Yes. I finished the treatment room checklist for room two at ten.",
           "Trả lời bằng bằng chứng: bảng kiểm đã xong lúc mấy giờ.",
           "colleague",
         ),
       ],
       reading: read(
-        `Mrs Kim was sitting in the steam room when she suddenly felt dizzy. Quang was checking the towels nearby. He helped her out at once, gave her water and called the hotel nurse. He stayed with her until the nurse arrived. The nurse checked her, and Mrs Kim felt better. Then Quang wrote everything in the incident report, with the times, for his supervisor. The steam room problem went in the maintenance log. Nobody had to remember anything the next day.`,
+        `Mrs Kim was sitting in the steam room when she suddenly felt dizzy. Quang was checking the towels nearby. He helped her out at once, called the hotel nurse and gave her water. He stayed with her until the nurse arrived. The nurse checked her, and Mrs Kim felt better. Then Quang wrote everything in the incident report, with the times, for his supervisor. The steam room problem went in the maintenance log. Nobody had to remember anything the next day.`,
         [
           {
             q: "Quang đang làm gì khi khách bị choáng?",
@@ -3573,12 +3822,12 @@ function week29(): LessonContent[] {
             q: "Quang làm những việc theo thứ tự nào?",
             options: [
               "Gọi y tá → viết báo cáo → đưa khách ra",
-              "Đưa khách ra → cho nước → gọi y tá → viết báo cáo",
+              "Đưa khách ra → gọi y tá → cho nước → viết báo cáo",
               "Cho nước → viết báo cáo → gọi y tá",
             ],
             correct: 1,
             explanation:
-              "'helped her out at once, gave her water and called the hotel nurse… Then Quang wrote' — an toàn của khách trước, giấy tờ sau.",
+              "'helped her out at once, called the hotel nurse and gave her water… Then Quang wrote' — đưa ra, gọi y tá, cho nước, rồi mới giấy tờ.",
           },
         ],
       ),
@@ -3593,8 +3842,8 @@ function week29(): LessonContent[] {
         ),
         game(
           "The guest in the steam room felt faint. What did you do?",
-          "I took her out, gave her some water and called the hotel nurse.",
-          "I take her out, gave her some water and called the hotel nurse.",
+          "I took her out, called the hotel nurse and gave her some water.",
+          "I take her out, called the hotel nurse and gave her some water.",
           "I gave her some water and told her to rest in the steam room for a while.",
           "manager",
           "Câu cuối để khách ở lại trong nhiệt. Câu đúng kể đủ: đưa ra, cho nước, gọi y tá.",
@@ -3639,10 +3888,7 @@ function week29(): LessonContent[] {
             ["guest", "allergy", "note", "room", "massage"],
             t3a,
           ),
-          alsoAccept: [
-            "Yes. Please read the guest allergy note before the massage in room two.",
-            "No. Please read the guest allergy note for room two before the massage.",
-          ],
+          alsoAccept: ["Yes. Please read the guest allergy note before the massage in room two."],
         }),
         sp(
           "What does the note say?",
@@ -3660,6 +3906,13 @@ function week29(): LessonContent[] {
           ["refilling", "oil", "bottles"],
         ),
         sp(
+          "Any complaints from guests today?",
+          "Yes, one complaint about a dirty changing room. I was cleaning it when you called.",
+          "Ôn tuần 27 + quá khứ tiếp diễn: phàn nàn gì, bạn đang làm gì.",
+          "manager",
+          ["complaint", "dirty", "changing", "room"],
+        ),
+        sp(
           "Did you check the product stock list today?",
           "Yes. I checked the product stock list, and lavender oil is low.",
           "Đã kiểm gì + kết quả.",
@@ -3674,7 +3927,7 @@ function week29(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Before her break, Thuy writes the open items for the evening team. The linen order has not arrived yet, so robes are low. The guest in room two is allergic to nuts. Thuy tells the next therapist to read the guest allergy note before the massage, and to check the oil and use a nut-free one. Lavender oil is low on the product stock list, so she has ordered more. The evening team reads the list before the first guest.`,
+        `Before her break, Thuy writes the open items for the evening team. The linen order has not arrived yet, so robes are low. The guest in room two is allergic to nuts. Thuy tells the next therapist to read the guest allergy note before the massage, and to check the oil and use a nut-free one. Unscented oil can still come from almonds. Lavender oil is low on the product stock list, so she has ordered more. The evening team reads the list before the first guest.`,
         [
           {
             q: "Thủy dặn kỹ thuật viên ca sau làm gì trước buổi massage phòng hai?",
@@ -3714,8 +3967,8 @@ function week29(): LessonContent[] {
       game: [
         game(
           "Can I use the almond oil for the guest in room two?",
-          "No. Please read the guest allergy note for room two before the massage.",
-          "No. Please read the guest allergy note for room two before massage.",
+          "Please read the guest allergy note for room two before the massage.",
+          "Please reads the guest allergy note for room two before the massage.",
           "Yes, of course. The almond oil is our best oil, and all the guests like it very much.",
           "colleague",
           "Câu cuối trả lời theo thói quen mà không xem ghi chú dị ứng. Câu đúng chỉ đúng chỗ phải đọc trước khi làm.",
@@ -3733,10 +3986,18 @@ function week29(): LessonContent[] {
 
     L(29, 4, "The Right Log for the Right Thing", "Đúng sổ cho đúng việc", {
       vocabulary: [
-        c("Towel count", "The towel count was forty at the end of the shift."),
+        c("Witness", "A colleague who saw it happen is a witness.", [
+          "/ˈwɪtnəs/",
+          "Người chứng kiến",
+          "👀",
+        ]),
         c("Walk-in list", "Write a guest without a booking on the walk-in list."),
         c("Next day booking list", "Print the next day booking list before you go home."),
-        c("Locker key count", "The locker key count shows if a key is missing."),
+        c("Handover", "Write every open item in the handover before you go.", [
+          "/ˈhændəʊvə/",
+          "Bàn giao ca",
+          "🤝",
+        ]),
       ],
       grammar: [
         g(
@@ -3796,10 +4057,11 @@ function week29(): LessonContent[] {
           "colleague",
         ),
         sp(
-          "What was the towel count tonight?",
-          "The towel count was forty. Five towels went to the laundry at six.",
-          "Con số + chỗ còn lại của số khăn.",
+          "Did the oil order come today?",
+          "Yes. The spa product suppliers were delivering it when I came in at eight.",
+          "Ôn tuần 26 + quá khứ tiếp diễn: việc đang diễn ra khi bạn tới.",
           "manager",
+          ["spa", "product", "suppliers"],
         ),
         sp(
           "What went wrong with Ms Tan's facial?",
@@ -3807,6 +4069,27 @@ function week29(): LessonContent[] {
           "Ôn tuần 26–27: sự việc của khách vào báo cáo sự cố.",
           "manager",
           ["wrong", "treatment", "booking", "incident", "report"],
+        ),
+        sp(
+          "Did anyone see the guest fall by the pool?",
+          "Yes, Nam was a witness. He was cleaning the pool when it happened.",
+          "Người chứng kiến + quá khứ tiếp diễn: ai thấy, họ đang làm gì.",
+          "manager",
+          ["witness"],
+        ),
+        sp(
+          "Did the guest in room six get extra time?",
+          "He asked me to extend the session, but the next hour was booked.",
+          "Ôn tuần 28: kể lại yêu cầu và vì sao chưa làm được.",
+          "manager",
+          ["extend", "session"],
+        ),
+        sp(
+          "A guest wanted something for her late start.",
+          "I told her a goodwill gesture is your decision, and I wrote it in the handover.",
+          "Ôn tuần 28: quà bù đắp là việc của quản lý; ghi vào bàn giao.",
+          "manager",
+          ["goodwill", "gesture", "handover"],
         ),
         sp(
           "Did anyone ask for money back today?",
@@ -3858,7 +4141,7 @@ function week29(): LessonContent[] {
         game(
           "Can I write today's problems in the locker key count?",
           "No. Problems go in the incident report. The key count is for keys.",
-          "No. Problems go in incident report. The key count is for keys.",
+          "No. Problems goes in the incident report. The key count is for keys.",
           "Yes, any book is fine for that.",
           "colleague",
           "Câu cuối cho ghi lẫn sổ — ca sau sẽ không tìm thấy. Câu đúng: sự việc vào báo cáo sự cố, số chìa khóa chỉ để đếm chìa khóa.",
@@ -3877,38 +4160,38 @@ function week29(): LessonContent[] {
 }
 
 // ── Week 30 — Checkpoint: putting it together ───────────────────────────
+// The checkpoint week teaches no new word. Its cards re-present sixteen
+// headwords of weeks 26-29 that had not been said again, and every one of
+// them is said at least twice this week.
 function week30(): LessonContent[] {
   const t1a =
-    "I recommend the ninety-minute session, madam. It is more relaxing than the shorter one.";
-  const t1b =
-    "We have lavender and lemongrass essential oils, madam. Lemongrass is fresher than lavender.";
-  const t1c =
-    "We can start at three o'clock. I will prepare the treatment room within ten minutes.";
-  const t2a = "Because the cancellation deadline is four hours before your treatment, madam.";
+    "I recommend the ninety-minute massage, madam. It is more relaxing than the shorter one.";
+  const t1b = "There are two options, madam: lavender or lemongrass. Either option is lovely.";
+  const t1c = "We can start at three o'clock. I will put it on the treatment schedule now.";
+  const t2a = "Because the cancellation window is four hours, madam. It is on your booking card.";
   const t2b =
     "I understand, madam. I cannot change the charge, but I will ask my manager to call you.";
-  const t2c = "Of course, madam. I will write that on your booking for next time.";
-  const t3a = "I will stop now, sir. Are you hurt?";
+  const t2c = "I cannot promise that, madam. Only my manager can let you reschedule at no charge.";
+  const t3a = "I will stop now, sir. Are you in pain?";
   const t3b = "I am calling the hotel nurse now, sir. I will stay with you.";
-  const t3c =
-    "I am sorry, sir. I will check your health form answers and tell my supervisor today.";
+  const t3c = "I am sorry, sir. I will check your health form and tell my supervisor today.";
   const t4a = "I am sorry, sir. I cannot tell you when our staff finish work.";
   const t4b = "I am sorry, sir. I can book you on Friday at ten with another therapist.";
   const t4c = "I understand, sir. My supervisor will call you about it today.";
   return [
     L(30, 1, "Recommend and Promise", "Gợi ý và cam kết", {
       vocabulary: [
-        c("Review", "Please review the guest allergy note before you start."),
-        c("Session length", "Which session length would you like, sixty or ninety minutes?"),
-        c("Massage oil choice", "Write the guest's massage oil choice on the treatment schedule."),
-        c("Treatment start time", "The treatment start time for room two is three o'clock."),
+        c("Option", "There are two options for your massage oil."),
+        c("Either", "Either option is fine for a first visit."),
+        c("Change your therapist", "If you prefer, I can change your therapist next time."),
+        c("Treatment schedule", "Every booking goes on the treatment schedule."),
       ],
       grammar: [
         g(
           "Ninety good.",
-          "I recommend the ninety-minute session, madam. It is more relaxing than sixty.",
+          "I recommend the ninety-minute massage, madam. It is more relaxing than sixty.",
           "Tuần 23: 'I recommend' + so sánh. Tính từ dài dùng 'more + tính từ + than'.",
-          "I recommend the ninety-minute session, madam. It is more relax than sixty.",
+          "I recommend the ninety-minute massage, madam. It is more relax than sixty.",
         ),
         g(
           "Start three.",
@@ -3926,7 +4209,7 @@ function week30(): LessonContent[] {
         sp(
           "Lovely. Which oil would you use?",
           t1b,
-          "Đưa hai lựa chọn và một so sánh để khách chọn.",
+          "Tuần 28: hai lựa chọn, để khách chọn.",
           undefined,
           undefined,
           t1a,
@@ -3934,37 +4217,41 @@ function week30(): LessonContent[] {
         sp(
           "Lavender, please. When can we start?",
           t1c,
-          "Tuần 25: giờ cụ thể + lời hứa có con số.",
+          "Tuần 25 + 29: giờ cụ thể, ghi ngay vào lịch trị liệu.",
           undefined,
-          ["prepare", "treatment", "room", "within"],
+          undefined,
           t1b,
         ),
         sp(
           "What should I do before my first guest?",
-          "Please review the guest allergy note, and check the session length on the schedule.",
+          "Please read the treatment schedule, and check the guest allergy note for room one.",
           "Nói với đồng nghiệp: hai việc, theo thứ tự.",
           "colleague",
           ["guest", "allergy", "note"],
         ),
         sp(
-          "What oil does the guest in room two want?",
-          "Her massage oil choice is lemongrass. The treatment start time is three o'clock.",
-          "Bàn giao cho đồng nghiệp: dùng đúng tên trên lịch trị liệu.",
-          "colleague",
+          "I did not like my therapist last time.",
+          "I am sorry, madam. I will change your therapist for this visit.",
+          "Tuần 28: khách đã nói rõ — làm ngay, không hỏi vặn.",
         ),
         sp(
-          "Can I use my package for today's massage?",
-          "Yes, madam. Your package has two massages left after today.",
-          "Ôn tuần 23: gói dịch vụ — nói rõ còn bao nhiêu buổi.",
-          undefined,
-          ["package"],
+          "Can I have a different therapist from now on?",
+          "Of course, sir. I will change your therapist and update your guest notes.",
+          "Tuần 28 + 29: đổi người và cập nhật ghi chú cho lần sau.",
         ),
         sp(
-          "How long should my first massage be?",
-          "I recommend sixty minutes for a first visit, madam. It is a good session length to start.",
-          "Tuần 23: gợi ý + lý do ngắn.",
+          "Is a massage or a facial better for tired skin?",
+          "Either option is good, madam, but I recommend the facial for your skin.",
+          "Tuần 23 + 28: so sánh hai lựa chọn rồi gợi ý một.",
           undefined,
           ["recommend"],
+        ),
+        sp(
+          "Which option is cheaper, the package or single visits?",
+          "The package is the cheaper option, madam, if you come four times.",
+          "Tuần 23: so sánh hơn + điều kiện để gói có lợi.",
+          undefined,
+          ["package"],
         ),
         sp(
           "I have a nut allergy. Which oil will you use today?",
@@ -3975,7 +4262,7 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms Park has ninety minutes free. Vy recommends the ninety-minute session, because it is more relaxing than the shorter one. Ms Park chooses lavender, and Vy writes her massage oil choice on the treatment schedule. Vy tells her the start time, three o'clock, and prepares the room within ten minutes. Before the massage, Vy reviews the guest allergy note. Ms Park is allergic to nuts, so Vy checks the oil and uses a nut-free one.`,
+        `Ms Park has ninety minutes free. Vy recommends the ninety-minute massage, because it is more relaxing than the shorter one. She gives Ms Park two options for the oil, lavender or lemongrass, and Ms Park chooses lavender. Vy puts the massage on the treatment schedule for three o'clock. Before the massage, Vy reads the guest allergy note. Ms Park is allergic to nuts, so Vy checks the oil and uses a nut-free one. After the massage, Ms Park books again for Sunday.`,
         [
           {
             q: "Vì sao Vy gợi ý buổi chín mươi phút?",
@@ -3991,13 +4278,13 @@ function week30(): LessonContent[] {
           {
             q: "Vy làm gì ngay trước buổi massage?",
             options: [
-              "Đọc lại ghi chú dị ứng của khách",
+              "Đọc ghi chú dị ứng của khách",
               "Hỏi khách chọn loại tinh dầu nào hôm nay",
               "Báo giá buổi massage cho khách",
             ],
             correct: 0,
             explanation:
-              "'Before the massage, Vy reviews the guest allergy note' — bước an toàn đi trước liệu trình.",
+              "'Before the massage, Vy reads the guest allergy note' — bước an toàn đi trước liệu trình.",
           },
           {
             q: "Vì sao Vy phải kiểm tra loại dầu dù khách đã chọn oải hương?",
@@ -4015,8 +4302,8 @@ function week30(): LessonContent[] {
       game: [
         game(
           "I only have one hour today. Is the ninety-minute one better?",
-          "Then I recommend the sixty-minute session, madam. It fits your time.",
-          "Then I recommend the sixty-minute session, madam. It fit your time.",
+          "Then I recommend the sixty-minute massage, madam. It fits your time.",
+          "Then I recommend the sixty-minute massage, madam. It fit your time.",
           "The ninety-minute one is always better, madam. You can be a little late for your next plan.",
           undefined,
           "Câu cuối bán buổi dài hơn bất chấp thời gian của khách. Câu đúng gợi ý theo đúng nhu cầu khách vừa nói.",
@@ -4034,26 +4321,23 @@ function week30(): LessonContent[] {
 
     L(30, 2, "Explain and Coordinate", "Giải thích và điều phối", {
       vocabulary: [
-        c(
-          "Cancellation deadline",
-          "The cancellation deadline is four hours before your treatment.",
-        ),
-        c("Upgrade price", "The upgrade price for the hot stone massage is on the menu."),
-        c("Therapist gender", "Ask about therapist gender when a guest books a massage."),
-        c("Locker number", "Your locker number is on your key."),
+        c("Reschedule at no charge", "Inside the window, you can reschedule at no charge."),
+        c("Offer a free upgrade", "Only the spa manager can offer a free upgrade."),
+        c("Add ten free minutes", "Only the spa manager can add ten free minutes."),
+        c("Spa therapists", "Our spa therapists start work at nine."),
       ],
       grammar: [
         g(
           "Pay because late.",
-          "There is a charge because you cancelled after the cancellation deadline.",
+          "There is a charge because you cancelled less than four hours before.",
           "Tuần 24: 'because' + mệnh đề có chủ ngữ và động từ; 'because of' chỉ đi với danh từ.",
-          "There is a charge because of you cancelled after the cancellation deadline.",
+          "There is a charge because of you cancelled less than four hours before.",
         ),
         g(
-          "Male? Female? I don't know.",
-          "I will ask the spa desk to book a female therapist for you, madam.",
+          "Therapist early, okay.",
+          "I will ask the spa therapists to start ten minutes early for you, madam.",
           "Tuần 26: 'ask + người + to + động từ' — không bỏ 'to'.",
-          "I will ask the spa desk book a female therapist for you, madam.",
+          "I will ask the spa therapists start ten minutes early for you, madam.",
         ),
       ],
       speaking: [
@@ -4071,74 +4355,72 @@ function week30(): LessonContent[] {
           t2a,
         ),
         sp(
-          "Fine. And next time I want a female therapist.",
+          "Then can I at least reschedule at no charge?",
           t2c,
-          "Khách đã nói rõ: ghi lại, không hỏi lại.",
+          "Dời lịch miễn phí sau hạn hủy là quyết định của quản lý — không tự hứa.",
           undefined,
           undefined,
           t2b,
         ),
         sp(
-          "Anything I should know about tomorrow's bookings?",
-          "Yes. Two guests asked about therapist gender, so I booked female therapists for them.",
-          "Báo cấp trên: khách yêu cầu gì + bạn đã làm gì.",
+          "My massage started late. Can you add ten free minutes?",
+          "I am sorry, madam. Only my manager can add ten free minutes, and I will ask her now.",
+          "Tuần 28: phút miễn phí là việc của quản lý.",
+        ),
+        sp(
+          "Can you give me a free upgrade to the couple's suite?",
+          "I am sorry, sir. Only my manager can offer a free upgrade, and I will ask her.",
+          "Tuần 28: nâng hạng miễn phí — chuyển quản lý.",
+        ),
+        sp(
+          "A guest asked you for a free upgrade today. What did you say?",
+          "I said I cannot offer a free upgrade myself, and I passed it to you.",
+          "Báo cấp trên: kể lại lời từ chối và việc đã chuyển.",
           "manager",
         ),
         sp(
-          "How much more is the hot stone upgrade?",
-          "The upgrade price is on the spa menu, sir. Let me show you.",
-          "Chỉ đúng bảng giá — không đọc giá theo trí nhớ.",
+          "Did the late guest ask for extra time?",
+          "Yes. She asked me to add ten free minutes, so I wrote it in the handover.",
+          "Tuần 28 + 29: yêu cầu về tiền ghi vào bàn giao cho quản lý.",
+          "manager",
+          ["handover"],
         ),
         sp(
-          "I forgot my locker number.",
-          "Your locker number is on your key, sir.",
-          "Câu ngắn, đúng thông tin.",
+          "Can I move my booking to Saturday without paying?",
+          "If you change it four hours before, you can reschedule at no charge, madam.",
+          "Tuần 24 + 28: trong thời hạn thì dời lịch không mất phí — một chính sách.",
         ),
         sp(
-          "Can I leave my handbag at the spa desk?",
-          "Please lock your valuables in your locker, madam. Your locker number is on the key.",
-          "Tuần 24: đồ có giá trị → tủ khóa; quầy không giữ đồ.",
+          "Is there a therapist free at four today?",
+          "Let me check with our spa therapists, sir. I will call your room within ten minutes.",
+          "Tuần 26: hỏi đúng người, hứa gọi lại có con số.",
           undefined,
-          ["valuables", "locker"],
+          ["within"],
         ),
         sp(
-          "A guest without a booking wants a massage now.",
-          "Please write her on the walk-in list, and check our availability first.",
-          "Tuần 25 + 29: đúng sổ, rồi xem lịch trống trước khi hứa.",
+          "Room five needs a therapist at six.",
+          "I will ask the spa therapists now and update the treatment schedule.",
+          "Tuần 26 + 29: giao việc và cập nhật lịch.",
           "colleague",
-          ["walk", "list", "availability"],
-        ),
-        sp(
-          "A guest says she lost her locker key.",
-          "Then please check the locker key count and tell the supervisor now.",
-          "Tuần 29: chìa khóa thiếu là việc an ninh — kiểm số và báo ngay.",
-          "colleague",
-          ["locker", "key", "count", "supervisor"],
-        ),
-        sp(
-          "Can somebody from the gym call me about a trainer?",
-          "Of course, sir. I will ask the gym instructors to call your room before noon.",
-          "Tuần 26: một việc, đúng người, có mốc.",
-          undefined,
-          ["gym", "instructors"],
+          ["update", "treatment", "schedule"],
         ),
       ],
       reading: read(
-        `Mrs Diaz cancels her massage one hour before it starts. Khoa explains the charge: the cancellation deadline is four hours before the treatment, and it is on her booking card. Mrs Diaz says it is not fair. Khoa cannot change the charge, so he asks his manager to call her, and the manager calls that day. Mrs Diaz also wants a female therapist next time, so Khoa writes it on her booking. Nobody has to ask her again.`,
+        `Mrs Diaz cancels her massage one hour before it starts. Khoa explains the charge: the cancellation window is four hours, and it is on her booking card. Mrs Diaz says it is not fair, and she asks to reschedule at no charge. Khoa cannot change the charge or promise that, so he asks his manager to call her. The manager calls that day and moves the massage to Saturday. Nobody has to ask Mrs Diaz twice.`,
         [
           {
             q: "Vì sao khách bị tính phí?",
             options: [
-              "Vì khách hủy sau hạn chót bốn giờ trước buổi hẹn",
+              "Vì khách hủy khi chỉ còn một giờ, mà hạn hủy là bốn giờ",
               "Vì khách không đến buổi hẹn mà không báo trước cho spa",
               "Vì khách muốn đổi sang kỹ thuật viên nữ",
             ],
             correct: 0,
             explanation:
-              "'the cancellation deadline is four hours before the treatment' — khách hủy trước một giờ, đã qua hạn chót.",
+              "'the cancellation window is four hours' — khách hủy trước một giờ, đã qua thời hạn.",
           },
           {
-            q: "Khoa làm gì với yêu cầu bỏ phí?",
+            q: "Khoa làm gì với yêu cầu bỏ phí và dời lịch miễn phí?",
             options: [
               "Tự bỏ phí vì khách là khách quen",
               "Giải thích lại cho tới khi khách đồng ý",
@@ -4146,18 +4428,18 @@ function week30(): LessonContent[] {
             ],
             correct: 2,
             explanation:
-              "'Khoa cannot change the charge, so he asks his manager to call her' — giải thích là việc của Khoa, quyết về tiền là của quản lý.",
+              "'Khoa cannot change the charge or promise that, so he asks his manager to call her' — giải thích là việc của Khoa, quyết về tiền là của quản lý.",
           },
           {
-            q: "Vì sao Khoa ghi yêu cầu kỹ thuật viên nữ vào lịch đặt?",
+            q: "Ai quyết định dời buổi massage sang thứ Bảy?",
             options: [
-              "Để quản lý tính thêm phí cho yêu cầu đặc biệt",
-              "Để lần sau không ai phải hỏi lại khách",
-              "Để khách được giảm giá lần đặt tới",
+              "Chính Khoa, ngay tại quầy",
+              "Quản lý, khi gọi cho khách",
+              "Kỹ thuật viên phụ trách buổi massage",
             ],
             correct: 1,
             explanation:
-              "'Khoa writes it on her booking' — ghi lại điều khách đã nói rõ, để lần sau làm đúng ngay.",
+              "'The manager calls that day and moves the massage to Saturday' — người có quyền quyết, khách vẫn được chăm sóc.",
           },
         ],
       ),
@@ -4165,7 +4447,7 @@ function week30(): LessonContent[] {
         game(
           "The man at the pool said the upgrade is free today.",
           "Let me check the upgrade price with the spa desk, sir.",
-          "Let me check upgrade price with the spa desk, sir.",
+          "Let me checks the upgrade price with the spa desk, sir.",
           "My colleague said so, so it is free, sir.",
           undefined,
           "Câu cuối tặng miễn phí dựa trên lời kể — vượt quyền. Câu đúng kiểm tra giá với quầy spa trước.",
@@ -4183,22 +4465,27 @@ function week30(): LessonContent[] {
 
     L(30, 3, "Apologise and Solve", "Xin lỗi và giải quyết", {
       vocabulary: [
-        c("Pressure preference", "Your pressure preference is light, so I will be gentle."),
-        c("Sensitive area", "Please tell me about any sensitive area I should avoid."),
-        c("Health form answers", "I read your health form answers before we start."),
+        c("Sauna attendants", "The sauna attendants check the heat every hour."),
+        c("Suddenly", "The sauna heater suddenly stopped at ten."),
+        c("Witness", "A colleague who saw it happen is a witness.", [
+          "/ˈwɪtnəs/",
+          "Người chứng kiến",
+          "👀",
+        ]),
+        c("Pool water log", "We write every water test in the pool water log."),
       ],
       grammar: [
         g(
-          "Our mistake.",
-          "I am sorry it hurt, madam. Your pressure preference is light, and I will follow it.",
-          "Tuần 27: xin lỗi về điều khách gặp + việc bạn làm ngay. Sau 'will' không thêm -s.",
-          "I am sorry it hurt, madam. Your pressure preference is light, and I will follows it.",
+          "Guest dizzy, I help.",
+          "The guest was sitting in the sauna when she suddenly felt dizzy.",
+          "Tuần 29: was + -ing cho việc đang diễn ra; quá khứ đơn cho việc chen vào.",
+          "The guest was sit in the sauna when she suddenly felt dizzy.",
         ),
         g(
           "Avoid knee? Okay.",
-          "If you have a sensitive area, I will avoid it, sir.",
+          "If you have an area to avoid, please tell me first, sir.",
           "Tuần 28: mệnh đề 'If' dùng hiện tại (have), không dùng 'will have'.",
-          "If you will have a sensitive area, I will avoid it, sir.",
+          "If you will have an area to avoid, please tell me first, sir.",
         ),
       ],
       speaking: [
@@ -4206,29 +4493,23 @@ function week30(): LessonContent[] {
           ...sp(
             "Ouch! That is my bad knee.",
             t3a,
-            "Khách đau: DỪNG trước, rồi hỏi khách có bị thương không. Không làm tiếp cho xong buổi.",
+            "Khách đau: DỪNG trước, rồi hỏi khách còn đau không. Không làm tiếp cho xong buổi.",
             undefined,
-            ["stop"],
+            ["stop", "pain"],
           ),
           alsoAccept: [
-            "I am stopping now, sir. Are you hurt?",
-            "I am very sorry, sir. I will stop now. Are you hurt?",
+            "I am stopping now, sir. Are you in pain?",
+            "I am very sorry, sir. I will stop now. Are you in pain?",
           ],
         }),
-        {
-          ...sp(
-            "Yes, it hurts quite a lot.",
-            t3b,
-            "Khách bị đau thật: gọi y tá ngay và ở lại với khách. Không tự xoa bóp chỗ đau.",
-            undefined,
-            ["calling", "hotel", "nurse"],
-            t3a,
-          ),
-          alsoAccept: [
-            "I will call the hotel nurse now, sir, and I will stay with you.",
-            "I am calling the hotel nurse now, sir. I will stay here with you.",
-          ],
-        },
+        sp(
+          "Yes, it hurts quite a lot.",
+          t3b,
+          "Khách bị đau thật: gọi y tá ngay và ở lại với khách.",
+          undefined,
+          ["calling", "hotel", "nurse"],
+          t3a,
+        ),
         sp(
           "It is on my form. Did nobody read it?",
           t3c,
@@ -4238,50 +4519,63 @@ function week30(): LessonContent[] {
           t3b,
         ),
         sp(
-          "Do I have to fill in the form again today?",
-          "Yes, madam. Please fill in a new health declaration form at every visit.",
-          "Tuần 24: phiếu khai báo sức khỏe mỗi lần đến — sức khỏe có thể thay đổi.",
-          undefined,
-          ["health", "declaration", "form"],
+          "What happened in the sauna this morning?",
+          "The heater suddenly got very hot, so I asked the sauna attendants to close it.",
+          "Tuần 29: kể sự cố — 'suddenly' + việc bạn đã làm.",
+          "manager",
+        ),
+        sp(
+          "Did anyone see the guest slip by the pool?",
+          "Lan was a witness. She was checking the pool water log when it happened.",
+          "Tuần 29: ai chứng kiến, người đó đang làm gì.",
+          "manager",
+        ),
+        sp(
+          "Who saw the guest in room two feel dizzy?",
+          "I was the witness. She suddenly felt dizzy, so I helped her out.",
+          "Tuần 29: tự nhận là người chứng kiến, kể ngắn theo thứ tự.",
+          "manager",
+        ),
+        sp(
+          "Is the pool water all right today?",
+          "Yes. I tested it at nine, and it is in the pool water log.",
+          "Tuần 29: việc đã làm + ghi ở đúng sổ.",
+          "colleague",
+        ),
+        sp(
+          "The sauna is too hot again.",
+          "Then please ask the sauna attendants to check it, and close it until then.",
+          "Tuần 26: nhờ đúng người, và đóng phòng cho an toàn.",
+          "colleague",
         ),
         sp(
           "I like very light pressure, please.",
-          "Thank you, madam. I will note your pressure preference for your next visit.",
-          "Ghi lại sở thích để lần sau không phải hỏi lại.",
-        ),
-        sp(
-          "Is there anything you need to know before we start?",
-          "Yes, madam. Please tell me about any sensitive area I should avoid.",
-          "Hỏi vùng cần tránh TRƯỚC khi bắt đầu.",
-        ),
-        sp(
-          "It is a little cold in this room.",
-          "I am sorry, madam. I will turn up the heating now.",
-          "Tuần 28: khách đã nói rõ — làm ngay.",
-          undefined,
-          ["turn", "heating"],
-        ),
-        sp(
-          "Your hands are a bit too strong for me.",
-          "I am sorry, madam. I will use a lighter pressure now.",
-          "Tuần 27–28: xin lỗi và đổi lực ngay.",
+          "Thank you, madam. I will note it and use a lighter pressure today.",
+          "Tuần 28: ghi lại sở thích và làm ngay.",
           undefined,
           ["lighter", "pressure"],
         ),
+        sp(
+          "It is a little cold in this room.",
+          "I am sorry, madam. I will turn up the thermostat now.",
+          "Tuần 28: khách đã nói rõ — làm ngay.",
+          undefined,
+          ["thermostat"],
+        ),
       ],
       reading: read(
-        `During a massage, Mr Reyes says, "Ouch! That is my bad knee." Duc stops at once and asks if he is hurt. Mr Reyes says it hurts quite a lot, so Duc calls the hotel nurse and stays with him. Later, Duc checks the health form answers. The knee is on the form, under areas to avoid, and Duc did not read that line before he started. He apologises and tells his supervisor the same day. Now he reads every answer first.`,
+        `During a massage, Mr Reyes says, "Ouch! That is my bad knee." Duc stops at once and asks if he is in pain. Mr Reyes says it hurts quite a lot, so Duc calls the hotel nurse and stays with him. Later, Duc checks the health form. The knee is on the form, under areas to avoid, and Duc did not read that line before he started. He apologises and tells his supervisor the same day. Now he reads every answer first.`,
         [
           {
             q: "Đức làm gì ngay khi khách kêu đau?",
             options: [
               "Hỏi khách bị đau đầu gối từ bao giờ",
-              "Dừng lại và hỏi khách có bị thương không",
+              "Dừng lại và hỏi khách có đau không",
               "Làm nhẹ tay hơn rồi tiếp tục làm",
             ],
             correct: 1,
             explanation:
-              "'Duc stops at once and asks if he is hurt' — dừng trước, hỏi khách trước, rồi mới tìm nguyên nhân.",
+              "'Duc stops at once and asks if he is in pain' — dừng trước, hỏi khách trước, rồi mới tìm nguyên nhân.",
           },
           {
             q: "Vì sao Đức gọi y tá?",
@@ -4303,18 +4597,18 @@ function week30(): LessonContent[] {
             ],
             correct: 2,
             explanation:
-              "'stops… asks… calls the hotel nurse… Later, Duc checks the health form answers… tells his supervisor' — khách trước, giấy tờ sau.",
+              "'stops… asks… calls the hotel nurse… Later, Duc checks the health form… tells his supervisor' — khách trước, giấy tờ sau.",
           },
         ],
       ),
       game: [
         game(
           "That really hurt my shoulder.",
-          "I am stopping now, madam. Are you hurt?",
-          "I am stop now, madam. Are you hurt?",
+          "I am stopping now, madam. Are you in pain?",
+          "I am stop now, madam. Are you in pain?",
           "That is normal for a deep massage, madam. It means the massage is working well.",
           undefined,
-          "Câu cuối coi cơn đau là bình thường và làm tiếp. Câu đúng dừng ngay và hỏi khách có bị thương không.",
+          "Câu cuối coi cơn đau là bình thường và làm tiếp. Câu đúng dừng ngay và hỏi khách còn đau không.",
         ),
         game(
           "Can you avoid my lower back today? It is very sensitive.",
@@ -4322,29 +4616,34 @@ function week30(): LessonContent[] {
           "Of course, sir. I will avoids your lower back today.",
           "The lower back is the best part, sir. I will just be gentle there.",
           undefined,
-          "Câu cuối vẫn làm vào vùng khách đã xin tránh. Câu đúng tôn trọng vùng nhạy cảm khách vừa nói.",
+          "Câu cuối vẫn làm vào vùng khách đã xin tránh. Câu đúng tôn trọng điều khách vừa nói.",
         ),
       ],
     }),
 
     L(30, 4, "End of Phase Three", "Kết thúc giai đoạn ba", {
       vocabulary: [
-        c("Confident", "I feel confident with difficult guests now."),
-        c("Pool opening hours", "The pool opening hours are from seven to nine."),
-        c("Next appointment date", "Your next appointment date is on your booking card."),
+        c("Shift", "My shift ends at three o'clock."),
+        c("Handover", "Write every open item in the handover before you go.", [
+          "/ˈhændəʊvə/",
+          "Bàn giao ca",
+          "🤝",
+        ]),
+        c("Therapist roster", "The therapist roster shows who works tomorrow."),
+        c("Linen order", "The linen order comes at six every morning."),
       ],
       grammar: [
         g(
-          "Guest dizzy, I help.",
-          "The guest was sitting in the sauna when she felt dizzy.",
-          "Tuần 29: was + -ing cho việc đang diễn ra; quá khứ đơn cho việc chen vào.",
-          "The guest was sit in the sauna when she felt dizzy.",
+          "Linen, I check, guest call.",
+          "I was checking the linen order when the guest called.",
+          "Tuần 29: was + -ing cho việc đang làm; quá khứ đơn 'called' cho việc chen vào.",
+          "I was check the linen order when the guest called.",
         ),
         g(
-          "Pool open.",
-          "The pool opening hours are from seven to nine, madam.",
-          "'hours' số nhiều → 'are', không phải 'is'.",
-          "The pool opening hours is from seven to nine, madam.",
+          "Read handover. Start.",
+          "Please read the handover before you start your shift.",
+          "Sau 'before' dùng hiện tại (start), không dùng 'will'.",
+          "Please read the handover before you will start your shift.",
         ),
       ],
       speaking: [
@@ -4378,55 +4677,69 @@ function week30(): LessonContent[] {
           t4b,
         ),
         sp(
+          "Anything I should know about tomorrow's bookings?",
+          "Yes. Two guests asked about therapist gender, so I booked female therapists for them.",
+          "Ôn tuần 28: báo cấp trên yêu cầu của khách và việc đã làm.",
+          "manager",
+          ["therapist", "gender"],
+        ),
+        sp(
           "Anything I should know about Hoa's guests?",
-          "Yes. A guest asked when Hoa finishes work, so I booked him with another therapist.",
-          "Báo cấp trên ngay: khách hỏi gì + bạn đã làm gì.",
+          "Yes. A guest asked when Hoa finishes work, so I wrote it in the handover.",
+          "Báo cấp trên ngay: khách hỏi gì + bạn đã ghi ở đâu.",
           "manager",
         ),
         sp(
-          "Do you feel confident on busy days now?",
-          "Yes. I feel confident, and I still ask my supervisor when I am not sure.",
-          "Tự tin nhưng biết giới hạn của mình — câu chốt giai đoạn ba.",
+          "Is everything ready for the next shift?",
+          "Yes. The therapist roster is done, and the linen order has arrived.",
+          "Bàn giao: hai việc đã xong.",
           "manager",
         ),
         sp(
-          "Is the pool open after dinner?",
-          "Yes, madam. The pool opening hours are seven in the morning to nine at night.",
-          "Thông tin chính xác, đủ sáng và tối.",
+          "When does your shift start tomorrow?",
+          "My shift starts at nine. I will read the handover first.",
+          "Ca làm + việc đầu tiên khi nhận ca.",
+          "colleague",
         ),
         sp(
-          "The new music in the spa is much nicer.",
-          "Thank you for your feedback, sir. I will tell the team today.",
-          "Tuần 23: góp ý tốt cũng cảm ơn và chuyển cho cả tổ.",
-          undefined,
-          ["feedback"],
+          "Who is on the therapist roster for Sunday?",
+          "Lan and Nam are on the therapist roster. I will update it if anyone is sick.",
+          "Bảng phân ca: ai làm, và bạn làm gì nếu có thay đổi.",
+          "colleague",
+          ["update"],
+        ),
+        sp(
+          "Has the linen order come yet?",
+          "The linen order has not come yet. I will call the laundry before my shift ends.",
+          "Việc còn mở: chưa xong (not yet) + việc bạn sẽ làm, có mốc.",
+          "colleague",
         ),
         risk({
           ...sp(
             "I had some wine at lunch. Can I use the sauna now?",
-            "I am sorry, madam. You cannot use the sauna after alcohol today.",
+            "I am sorry, madam. You cannot use the sauna after alcohol.",
             "Tuần 24: rượu bia + nhiệt là nguy hiểm — từ chối nhẹ nhàng, không trách khách.",
             undefined,
             ["sauna", "alcohol"],
           ),
           alsoAccept: [
-            "I am sorry, madam. After alcohol, you cannot use the sauna today.",
-            "I am sorry, madam. You cannot go into the sauna after alcohol today.",
+            "I am sorry, madam. After alcohol, you cannot use the sauna.",
+            "I am sorry, madam. You cannot go into the sauna after alcohol.",
+            "I am sorry, sir. You cannot use the sauna after alcohol.",
+            "I am sorry, sir. The sauna is not safe after alcohol.",
           ],
         }),
         sp(
-          "Can my husband join me for a massage and a facial next week?",
-          "Of course, madam. I recommend the couple's combo, and I will send you a reminder.",
-          "Tuần 23 + 25: gợi ý đúng gói + lời nhắc.",
-          undefined,
-          ["recommend", "combo", "reminder"],
+          "Is the pool open after dinner?",
+          "Yes, madam. The pool is open from seven in the morning to nine at night.",
+          "Thông tin chính xác, đủ sáng và tối.",
         ),
         sp(
-          "When is my next appointment?",
-          "Your next appointment date is Friday the fourth, madam. I will send you a reminder.",
-          "Tuần 25: ngày hẹn + lời nhắc.",
+          "Is there anything you need to know before we start?",
+          "Yes, madam. Please tell me about any sensitive area I should avoid.",
+          "Ôn tuần 27: hỏi vùng cần tránh TRƯỚC khi bắt đầu.",
           undefined,
-          ["reminder"],
+          ["sensitive", "area"],
         ),
         sp(
           "Is the sauna working again?",
@@ -4435,9 +4748,23 @@ function week30(): LessonContent[] {
           "colleague",
           ["broken", "sauna", "heater", "maintenance", "log"],
         ),
+        sp(
+          "Did you print tomorrow's bookings?",
+          "Yes. The next day booking list is on the desk, and the product stock list is done.",
+          "Tuần 29: hai danh sách, mỗi thứ một chỗ.",
+          "manager",
+          ["next", "day", "booking", "list", "product", "stock"],
+        ),
+        sp(
+          "Is room three ready for the next guest?",
+          "Yes. I finished the treatment room checklist for room three at two.",
+          "Tuần 29: trả lời bằng bằng chứng — bảng kiểm xong lúc mấy giờ.",
+          "colleague",
+          ["treatment", "room", "checklist"],
+        ),
       ],
       reading: read(
-        `On a busy Friday, Vy feels confident. A guest asks what time Hoa finishes work, because he wants to take her to dinner. Vy does not tell him, and she does not book him with Hoa. She books his massage with another therapist and tells her supervisor at once. The supervisor speaks to the guest. Later, a guest feels dizzy in the sauna. Vy helps her out, gives her water and calls the hotel nurse.`,
+        `On a busy Friday, Vy stays calm. A guest asks what time Hoa finishes work, because he wants to take her to dinner. Vy does not tell him, and she does not book him with Hoa. She books his massage with another therapist, tells her supervisor at once and writes it in the handover. The supervisor speaks to the guest. Later, a guest feels dizzy in the sauna. Vy helps her out, calls the hotel nurse and gives her water.`,
         [
           {
             q: "Vì sao Vy không đặt lịch cho khách với Hoa?",
@@ -4455,18 +4782,18 @@ function week30(): LessonContent[] {
             options: ["Giám sát của Vy", "Chính Hoa, tại quầy spa", "Một kỹ thuật viên khác"],
             correct: 0,
             explanation:
-              "'tells her supervisor at once. The supervisor speaks to the guest' — chuyện này thuộc về giám sát.",
+              "'tells her supervisor at once… The supervisor speaks to the guest' — chuyện này thuộc về giám sát.",
           },
           {
             q: "Khi khách bị choáng trong phòng xông hơi, Vy làm gì?",
             options: [
               "Mời khách ngồi nghỉ ngay trong phòng xông hơi",
-              "Đưa khách ra, cho uống nước, gọi y tá",
+              "Đưa khách ra, gọi y tá, rồi cho uống nước",
               "Gọi điện cho người nhà của khách tới đón",
             ],
             correct: 1,
             explanation:
-              "'Vy helps her out, gives her water and calls the hotel nurse' — ra khỏi chỗ nóng trước, rồi người có chuyên môn.",
+              "'Vy helps her out, calls the hotel nurse and gives her water' — ra khỏi chỗ nóng, gọi người có chuyên môn, rồi chăm sóc.",
           },
         ],
       ),
