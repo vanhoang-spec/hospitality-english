@@ -2390,6 +2390,17 @@ export function utterancePassed(
     added.length === 0 &&
     inflection.length === 0 &&
     !FUNCTION_WORDISH.has(inserted[0]!) &&
+    // Not a plural noun pushed in after a word that takes a singular one:
+    // "EITHER TABLES is fine" passed "Either is fine" as one spare word.
+    !(
+      Number(sourceWeek) >= 23 &&
+      /s$/.test(inserted[0]!) &&
+      canonSpoken.some(
+        (t, i) =>
+          t === inserted[0] &&
+          /^(either|neither|each|every|another|a|an|one|this|that)$/.test(canonSpoken[i - 1] ?? ""),
+      )
+    ) &&
     !moneyAdded;
   const insertionFails = inserted.length > 0 && !oneSpareWord;
   const meaningPassed = saidInOtherWords({
@@ -2667,6 +2678,13 @@ function saidInOtherWords(p: {
   }
   for (let j = 0; j + 1 < rs.length; j++) {
     if ((MODALS.has(rs[j]!) || rs[j] === "cannot") && rs[j + 1] === "to") return false;
+    // A double comparative: "It is MORE bigger than the deluxe room."
+    if (
+      (rs[j] === "more" || rs[j] === "most") &&
+      /(er|est)$/.test(rs[j + 1]!) &&
+      rs[j + 1]!.length > 4
+    )
+      return false;
     if ((rs[j] === "are" || rs[j] === "were") && (rs[j + 1] === "a" || rs[j + 1] === "an"))
       return false;
     // A preposition pushed between a verb and its object: "ask TO my
