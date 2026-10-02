@@ -164,7 +164,7 @@ function formNoteHeld(target: string): string | null {
   // participles: "and that is everything" was being taught as a present
   // continuous. A note that names the wrong form is worse than no note.
   if ((m = s.match(/ (am|is|are) (\w+ing) /)) && !NOT_A_PARTICIPLE.test(m[2]))
-    return `Hiện tại tiếp diễn cho việc đang làm: ${m[1]} ${m[2]}.`;
+    return `Hiện tại tiếp diễn — việc đang làm hoặc đã sắp xếp: ${m[1]} ${m[2]}.`;
 
   // "Can someone bring…" — the subject sits between the modal and the verb,
   // and the old note quoted the subject as the verb ("can someone").
@@ -202,7 +202,7 @@ function formNoteHeld(target: string): string | null {
     // Adverbs and particles end it too: "a bellman up", "a message instead",
     // "a suite myself" and "a small table outside" were all printed as the
     // noun a learner should put the article in front of.
-    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|but|or|so|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|then|here|there|please|sir|madam|up|down|out|off|back|away|over|instead|again|myself|yourself|himself|herself|ourselves|themselves|outside|inside|first|later|tomorrow|tonight|soon|before|after|until|by|from|into|this|that|when|while|if|because|as|than|right|yet|already|still)(?![a-z]))/i;
+    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|but|or|so|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|then|here|there|please|sir|madam|up|down|out|off|back|away|over|instead|again|myself|yourself|himself|herself|ourselves|themselves|outside|inside|first|later|tomorrow|tonight|soon|before|after|until|by|from|into|this|that|when|while|if|because|as|than|right|yet|already|still|like|such)(?![a-z]))/i;
   // "a little", "a few", "a lot", "a bit" are quantities, not a countable
   // noun taking its article: "It costs a little more" was teaching "a little
   // more" as a singular noun in five tips across Phase 3.

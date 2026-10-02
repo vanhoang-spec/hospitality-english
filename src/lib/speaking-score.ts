@@ -150,6 +150,12 @@ export function normalize(s: string) {
   t = t
     .replace(/%/g, " percent ")
     .replace(/[^\w\s']/g, " ")
+    // An apostrophe at the edge of a word is a quote mark or a plural
+    // possessive, never part of the word a recogniser writes: "for our
+    // guests' safety" kept the token "guests'" and failed every typed reply,
+    // and "Say 'One moment, sir'" kept "'one" and "sir'".
+    .replace(/(^|\s)'+/g, "$1")
+    .replace(/'+(?=\s|$)/g, "")
     .replace(/\s+/g, " ");
   for (const [re, full] of SPELLING) t = t.replace(re, full);
   return t
@@ -1610,6 +1616,15 @@ const APOLOGY_OPENERS: string[][] = [
   ["i", "apologise", "for", "the", "inconvenience"],
   ["i", "apologize", "for", "the", "inconvenience"],
   ["sorry", "to", "hear", "that"],
+  // The week-27 card. Round 4 failed "I apologise, sir. …" on five of six
+  // must-be-right slots that open "I am sorry".
+  ["i", "apologise"],
+  ["i", "apologize"],
+  // "I'm afraid not, madam. You cannot use the sauna after alcohol." — the
+  // course's own week-22 refusal. Only ever lifted against a model that
+  // itself says no (stripCourtesyFrame checks), so the "not" it carries is
+  // never a negation the model does not have.
+  ["i", "am", "afraid", "not"],
   ["i", "am", "very", "sorry"],
   ["i", "am", "so", "sorry"],
   ["i", "am", "sorry"],
@@ -1731,6 +1746,9 @@ function stripCourtesyFrame(spoken: string, target: string, sourceWeek?: string 
     // Only with a sentence left after it: "Sorry sorry." against "I am very
     // sorry, sir." would otherwise become the model's own apology and pass.
     if (!theirs || !mine || theirs === mine || a.length - mine.length < 2) continue;
+    // "I am afraid not" stands in for the model's apology only where the
+    // model says no as well.
+    if (mine.includes("not") && !b.some((t) => NEGATES.has(t))) continue;
     const rest = a.slice(mine.length);
     // "I am sorry, I am afraid that is not allowed" already carries the
     // model's opener after the learner's own: drop the extra one, do not
@@ -1860,6 +1878,61 @@ export function utterancePassedAny(
   return own ?? utterancePassed(spoken, "", sourceWeek, undefined, guestPrompt);
 }
 
+/** "Yes" in answer to a yes/no question the model does not say yes to.
+ *
+ *  A refusal was already covered. Round 4 found the other half: the model
+ *  answers "Can he have the pasta?" with "I will check with the kitchen…",
+ *  and "Yes, sir. I will check with the kitchen…" passed — a yes to a nut
+ *  allergy before anyone has checked. Same on "Is the cake free?" and "Is the
+ *  tasting menu all right for her?": 13 of 30 must-be-right turns in one
+ *  department. A Vietnamese learner says "Yes" where Vietnamese says "Dạ",
+ *  so the reflex is real. From week 23, when the guest's last question is a
+ *  yes/no question and the model neither says yes nor opens by accepting
+ *  ("Of course", "Certainly"…), a reply that opens "Yes" fails. */
+function yesNotEarned(
+  asSaid: string,
+  target: string,
+  sourceWeek: string | number,
+  guestPrompt?: string,
+): boolean {
+  if (Number(sourceWeek) < ACKNOWLEDGE_FROM_WEEK || !guestPrompt) return false;
+  if (normalize(asSaid)[0] !== "yes") return false;
+  const t = normalize(target);
+  if (t.includes("yes") || ACCEPT_OPENERS.some((p) => opensWith(t, p))) return false;
+  // "Yes, madam. I am sorry, visitors have to wait in the lobby." — a yes in
+  // front of a model that opens by apologising says the opposite of it.
+  if (APOLOGY_OPENERS.some((p) => opensWith(t, p))) return true;
+  const questions = guestPrompt.match(/[^.?!]*\?/g);
+  const last = questions?.[questions.length - 1]?.trim().toLowerCase() ?? "";
+  return /^(is|are|am|was|were|can|could|do|does|did|will|would|may|might|shall|should|have|has)\b/.test(
+    last,
+  );
+}
+
+/** "No, please wait for first aid, madam." to "Should we give her some
+ *  water?" — the model redirects ("Please wait for first aid") and says no
+ *  by doing so; the learner says it outright. Round 4 failed that reply on
+ *  the anaphylaxis slot as an added negation. From week 23, when the guest's
+ *  last question is a yes/no question and the model opens with "Please" and
+ *  says no other no, a leading "No" is lifted off before grading. */
+function noBeforePlease(
+  spoken: string,
+  target: string,
+  sourceWeek: string | number,
+  guestPrompt?: string,
+): string {
+  if (Number(sourceWeek) < ACKNOWLEDGE_FROM_WEEK || !guestPrompt) return spoken;
+  const s = normalize(spoken);
+  const t = normalize(target);
+  if (s[0] !== "no" || t[0] !== "please" || t.some((x) => NEGATES.has(x))) return spoken;
+  const questions = guestPrompt.match(/[^.?!]*\?/g);
+  const last = questions?.[questions.length - 1]?.trim().toLowerCase() ?? "";
+  if (!/^(is|are|can|could|do|does|did|will|would|may|shall|should)\b/.test(last)) return spoken;
+  let rest = s.slice(1);
+  if (/^(sir|madam)$/.test(rest[0] ?? "") && rest[1] === "please") rest = rest.slice(1);
+  return rest.length >= 2 ? rest.join(" ") : spoken;
+}
+
 function yesAgainst(spoken: string, slotTarget: string, sourceWeek: string | number): boolean {
   const t = normalize(slotTarget);
   if (!t.some((x) => NEGATES.has(x)) || t.includes("yes")) return false;
@@ -1883,14 +1956,16 @@ export function utterancePassed(
   slotTarget?: string,
 ) {
   const asSaid = spoken;
+  spoken = noBeforePlease(spoken, target, sourceWeek, guestPrompt);
   spoken = stripCourtesyFrame(spoken, target, sourceWeek);
   // See stripCourtesyFrame: an answer that opens "Yes" to a model that says
   // no has answered the guest's question the wrong way round.
   const targetToks = normalize(target);
   const yesToARefusal =
-    normalize(spoken)[0] === "yes" &&
-    targetToks.some((t) => NEGATES.has(t)) &&
-    !targetToks.includes("yes");
+    (normalize(spoken)[0] === "yes" &&
+      targetToks.some((t) => NEGATES.has(t)) &&
+      !targetToks.includes("yes")) ||
+    yesNotEarned(asSaid, target, sourceWeek, guestPrompt);
   const th = passThresholds(sourceWeek);
   const free = honorificIsFree(guestPrompt);
   const dayFree = greetingIsFree(target, guestPrompt);
@@ -1998,8 +2073,14 @@ export function utterancePassed(
   // lesson cannot disagree about the error the course exists to unlearn.
   const articleIsTheLesson =
     (Number(sourceWeek) >= 15 && articlesRequired < 2) || Number(sourceWeek) >= 23;
+  // From week 23 a possessive goes the way of the article: "I will ask
+  // manager to call you" passed a must-be-right no-show turn, and dropping
+  // "my" is the same L1 error the article rule is there for.
   const unforgivable = missingFunction.filter(
-    (t) => !FORGIVABLE_FUNCTION_TOKENS.has(t) || (articleIsTheLesson && ARTICLES.has(t)),
+    (t) =>
+      !FORGIVABLE_FUNCTION_TOKENS.has(t) ||
+      (articleIsTheLesson && ARTICLES.has(t)) ||
+      (Number(sourceWeek) >= 23 && (t === "my" || t === "your" || t === "our")),
   );
   // WORDS THAT WERE NOT IN THE MODEL.
   //
@@ -2351,8 +2432,15 @@ export function utterancePassed(
     const raw = normalize(target).filter((r) => foldCourtesy([r])[0] === folded);
     return raw.length ? raw : [folded];
   };
+  // From week 23 a word that is plainly a verb form counts as the verb too:
+  // "The linen order has not ___ yet", "Thank you for ___ me", "I am very
+  // ___ you waited twice" passed the one-word allowance in round 4 because
+  // FINITE_VERBS is a closed list of base forms.
+  const verbal = (r: string) =>
+    Number(sourceWeek) >= 23 &&
+    (/(ed|ing)$/.test(r) || IRREGULAR[r] !== undefined || r === "sorry" || r === "use");
   const missingVerb = missingContent.some((t) =>
-    rawForms(t).some((r) => FINITE_VERBS.has(r) || holdsThePredicate(r, target)),
+    rawForms(t).some((r) => FINITE_VERBS.has(r) || holdsThePredicate(r, target) || verbal(r)),
   );
   const added = addedNegation(spoken, target);
   const inflection = inflectionErrors(spoken, target);
@@ -2582,6 +2670,17 @@ function saidInOtherWords(p: {
     extra.some((t) => MEANING_CHANGERS.has(t) || (VALUE_TOKENS.has(t) && !/^(sir|madam)$/.test(t)))
   )
     return false;
+  // Nor TAKEN AWAY. Round 4 passed 25 of 25 conditional turns said without
+  // their "if": "He is staying with us, and I can take a message for him"
+  // for "If he is staying with us, I can take a message" — confirming a guest
+  // is in the house — and "It is our mistake, so my supervisor will correct
+  // it", "A room is available, and I can extend your stay". A word that
+  // hedges, conditions or orders the model is said as often as the model
+  // says it.
+  const changerCount = new Map<string, number>();
+  for (const t of ft)
+    if (MEANING_CHANGERS.has(t)) changerCount.set(t, (changerCount.get(t) ?? 0) + 1);
+  for (const [w, n] of changerCount) if (fs.filter((t) => t === w).length < n) return false;
   const negs = (xs: string[]) => xs.filter((x) => NEGATES.has(x)).length;
   // "No, sir. I cannot…" on a refusal that does not open with "No" is the
   // same no said twice — but not when the model opens with "No" itself:
@@ -2661,11 +2760,17 @@ function saidInOtherWords(p: {
   // TO the executive housekeeper", "I can TO re-clean", "before you WILL
   // come back", "I recommend YOU the topper");
   const adjacent = new Set(rt.slice(1).map((t, i) => `${rt[i]} ${t}`));
+  // Except the indirect object a giving verb takes: "I cannot offer YOU the
+  // hot stone", "I will bring YOU a clean glass", "serve YOU alcohol" are what
+  // staff say, and round 4 failed them on exactly this check. "Recommend"
+  // stays out — "I recommend you the topper" is the near miss.
+  const GIVING = /^(offer|give|bring|serve|send|show|get|book|make|find)$/;
   for (let j = 1; j + 1 < rs.length; j++)
     if (
       INSERTABLE.has(rs[j]!) &&
       extraRaw.includes(rs[j]!) &&
-      adjacent.has(`${rs[j - 1]} ${rs[j + 1]}`)
+      adjacent.has(`${rs[j - 1]} ${rs[j + 1]}`) &&
+      !(rs[j] === "you" && GIVING.test(rs[j - 1]!))
     )
       return false;
   // "to" lost before the verb the model gives it ("ask the housekeeper call
@@ -2678,6 +2783,15 @@ function saidInOtherWords(p: {
   }
   for (let j = 0; j + 1 < rs.length; j++) {
     if ((MODALS.has(rs[j]!) || rs[j] === "cannot") && rs[j + 1] === "to") return false;
+    // A plural pushed in after a word that takes a singular: "Either TABLES
+    // is fine" (the same check the one-spare-word rule makes).
+    if (
+      j > 0 &&
+      /s$/.test(rs[j]!) &&
+      extraRaw.includes(rs[j]!) &&
+      /^(either|neither|each|every|another|a|an|one|this|that)$/.test(rs[j - 1]!)
+    )
+      return false;
     // A double comparative: "It is MORE bigger than the deluxe room."
     if (
       (rs[j] === "more" || rs[j] === "most") &&
@@ -2790,6 +2904,9 @@ const MODALS = new Set([
 const INSERTABLE = new Set([
   ...PREPOSITION_CLASS,
   ...AUXILIARY_CLASS,
+  // "Two amenities have not delivered yet" — the passive's "been" gone.
+  "been",
+  "being",
   "a",
   "an",
   "the",

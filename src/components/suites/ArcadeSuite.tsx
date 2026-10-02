@@ -221,7 +221,14 @@ function ArcadeSuiteInner({
       // and wrong for the job. Showing it over a broken-English bubble told
       // the learner their sentence was grammatical when it was not.
       const round = rounds[roundIdx % rounds.length];
-      const authored = round?.explanation;
+      // Authors wrote "Câu cuối…" / "Câu đầu…" against the source order, and
+      // the bubbles are shuffled: the feedback quotes the bubble it is about,
+      // so the position word becomes "Câu này". 63 of 64 Housekeeping
+      // explanations in Phase 3 opened that way.
+      const authored = round?.explanation?.replace(
+        /^Câu (cuối|đầu|giữa|thứ (nhất|hai|ba)|thứ nhất|thứ hai|thứ ba)\b/u,
+        "Câu này",
+      );
       const why =
         b.kind === "form"
           ? formWhy(

@@ -39,6 +39,8 @@ const SWAPS: [RegExp, string][] = [
   [/\bI will call\b/g, "I am calling"],
   [/\bI am bringing\b/g, "I will bring"],
   [/\bI will bring\b/g, "I am bringing"],
+  [/\bI am stopping\b/g, "I will stop"],
+  [/\bI will stop\b/g, "I am stopping"],
   [/\bthe manager\b/gi, "my manager"],
   [/\bmy manager\b/gi, "the manager"],
   [/\bour manager\b/gi, "the manager"],
@@ -137,8 +139,17 @@ function oneStep(t: string): string[] {
     const a = ss[i]!;
     const b = ss[i + 1]!;
     // Not when one half is only an opener — "No, sir." said last is not the
-    // same reply, and it hides the "no" from the polarity check.
-    if (a.split(" ").length > 3 && b.split(" ").length > 3)
+    // same reply, and it hides the "no" from the polarity check. And not when
+    // either half orders steps: "I reported it to security first … then I
+    // noted it in the log" said the other way round is the wrong procedure,
+    // and round 4 passed it on exactly that swapped shape.
+    const SEQUENCE = /\b(first|then|after|afterwards|before|next|finally|later|until|second)\b/i;
+    if (
+      a.split(" ").length > 3 &&
+      b.split(" ").length > 3 &&
+      !SEQUENCE.test(a) &&
+      !SEQUENCE.test(b)
+    )
       out.push([...ss.slice(0, i), b, a, ...ss.slice(i + 2)].join(" "));
     if (a.endsWith("."))
       for (const conj of ["but", "and", "so"])
@@ -154,7 +165,16 @@ function oneStep(t: string): string[] {
       m[3]!.split(" ").length >= 3 &&
       /^(I|we|you|he|she|they|it|my|our|the|please)\b/i.test(m[3]!)
     )
-      out.push([...ss.slice(0, i), `${m[1]}.`, cap(m[3]!), ...ss.slice(i + 1)].join(" "));
+      // "…, and then I noted it" splits into "… Then I noted it": the order
+      // word stays with the step it orders.
+      out.push(
+        [
+          ...ss.slice(0, i),
+          `${m[1]}.`,
+          m[2] === "and then" ? `Then ${low(m[3]!)}` : cap(m[3]!),
+          ...ss.slice(i + 1),
+        ].join(" "),
+      );
     // A discourse marker at the front of a sentence: "Then we need…". Not
     // "First": in "First, take the spill kit." it is the safety order, and
     // dropping it let "Take the spill kit. I will tell the supervisor." pass.
@@ -177,7 +197,7 @@ function oneStep(t: string): string[] {
         [...ss.slice(0, i), `${cap(frontFirst[1]!)} first${end}`, ...ss.slice(i + 1)].join(" "),
       );
     const back =
-      body.match(/^(.+?),? ((?:because|if|before|until|when|after|as soon as) .+)$/i) ??
+      body.match(/^(.+?),? ((?:because|if|before|until|when|after|as soon as|without) .+)$/i) ??
       body.match(/^(.+?), (for .+)$/i);
     if (back && back[1]!.split(" ").length >= 2)
       out.push(
@@ -186,7 +206,7 @@ function oneStep(t: string): string[] {
         ),
       );
     const front = body.match(
-      /^((?:If|Because|For|Before|Until|When|After|As soon as) [^,]+), (.+)$/,
+      /^((?:If|Because|For|Before|Until|When|After|As soon as|Without) [^,]+), (.+)$/,
     );
     if (front)
       out.push(
@@ -252,6 +272,13 @@ export function shapesOf(authored: Shape[]): Shape[] {
     // sentence, gave "I am sorry, sir. My manager can review it." — the
     // refusal gone, and "I can change the bill" passed against it.
     if (polarityOf(v) !== polarityOf(from)) return false;
+    // No shape says the same sentence twice, however it was made.
+    const parts = sentencesOf(v).map((s) =>
+      normalize(s)
+        .filter((w) => !/^(sir|madam)$/.test(w))
+        .join(" "),
+    );
+    if (new Set(parts).size < parts.length) return false;
     seen.add(v);
     out.push(locked(src, v));
     return true;
@@ -265,6 +292,22 @@ export function shapesOf(authored: Shape[]): Shape[] {
       for (let k = 0; k < split[i]!.length; k++) {
         const mix = [...split[i]!];
         mix[k] = split[j]![k]!;
+        // Never one sentence twice. When a paraphrase is the model with its
+        // sentences the other way round, mixing by position gave "I
+        // understand, sir. I understand." — and that passed the slot where a
+        // guest accuses a cleaner of theft, with nobody called at all.
+        const bare = (s: string) =>
+          normalize(s)
+            .filter((w) => !/^(sir|madam)$/.test(w))
+            .join(" ");
+        if (new Set(mix.map(bare)).size < mix.length) continue;
+        // Nor a mix that says only half of what the model asks for: when one
+        // source repeats the other's sentence at another place, the mix can
+        // lose a move entirely. Every content word the model locks must still
+        // be said.
+        const mixed = new Set(normalize(mix.join(" ")));
+        const ownLocks = (authored[0]!.requiredTokens ?? []).flatMap((t) => normalize(t));
+        if (i === 0 && !ownLocks.every((t) => mixed.has(t))) continue;
         // Locks of both sources, as far as the mix says them.
         add(
           {

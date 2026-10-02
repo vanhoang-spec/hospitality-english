@@ -2462,11 +2462,23 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
       "short staffed",
       "understaffed",
       "no staff",
-      "free",
+      // Round 4: "We do not have enough housekeepers today", "We will give
+      // you a complimentary dinner", "I guarantee it will be ready" and "room
+      // five hundred and twelve" all passed; "Please feel free to relax in
+      // the lobby" was blocked by the bare word "free".
+      "enough",
+      "for free",
+      "free of charge",
+      "free drink",
+      "free dinner",
+      "free upgrade",
+      "complimentary",
       "promise",
+      "guarantee",
       "512",
       "five one two",
       "five twelve",
+      "five hundred",
     ],
     modelAnswer:
       "I am sorry, madam. Your room is not ready yet. Housekeeping needs about twenty more minutes. Would you like a welcome drink in the lobby while you wait?",
