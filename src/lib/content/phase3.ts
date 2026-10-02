@@ -75,6 +75,7 @@ import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { FO_P3 } from "./p3/fo";
+import { FB_P3 } from "./p3/fb";
 import { HK_P3 } from "./p3/hk";
 import { SW_P3 } from "./p3/sw";
 import { GR_P3 } from "./p3/gr";
@@ -2276,6 +2277,7 @@ const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
   HK: HK_P3,
   SW: SW_P3,
   GR: GR_P3,
+  FB: FB_P3,
 };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
