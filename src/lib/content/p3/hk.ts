@@ -1,10 +1,8 @@
 // ============================================================
 // HOUSEKEEPING — PHASE 3 (weeks 23-30), written for the department.
 //
-// Round 1 of the blind audit (ac24e13) scored the frame-built HK weeks at
-// 6.28 (Academic Director) and 4.33 (Executive Housekeeper). What the
-// Executive Housekeeper could not accept was the room attendant being taught
-// to own decisions the floor does not own: "We have to apply the smoking
+// The frame-built HK weeks this replaces taught the room attendant to own
+// decisions the floor does not own: "We have to apply the smoking
 // penalty", "the missing towel charge applies here", "It was our mistake"
 // before anyone had looked, "We can move you to another room". So:
 //

@@ -47,6 +47,13 @@ desk`) → FO/FB/HK/SW chọn nhầm câu, GR không có câu nào (0/200 đề)
 - Cổng mới: không chuỗi `${` nào trong bất kỳ trường render của bất kỳ phase.
 - `form-note`: giữ nguyên động từ có gạch nối.
 
+**Đổi hướng sau đợt A (02/10):** không vá khung chung nữa mà **viết riêng P3 cho từng bộ phận**
+(`src/lib/content/p3/<bộ phận>.ts`, như P4 đã làm), thẻ vẫn lấy từ ngân hàng của bộ phận qua
+`p3/kit.ts`. Lý do: khung chỉ biết từ loại, không biết nghĩa — mọi đợt vá khung đều mở lại lỗ ở
+bộ phận khác. Nội dung của đợt B và C dưới đây vẫn là danh sách việc, chỉ thi công trong từng file
+bộ phận. Thứ tự: HK (xong `246bfe9`), rồi SW, FO, GR, FB song song. Ràng buộc mới khi viết: lượt
+`risk` phải ngắn và mọi từ nội dung đều khoá được, mà từ bị khoá phải có thẻ dạy trước (Layer S/T).
+
 **Đợt B — khung chung P3 (cả năm bộ phận cùng lúc):**
 
 - Viết lại khung tuần 24/27/28 theo thẩm quyền: giải thích được, áp/miễn/hoàn/chuyển phòng

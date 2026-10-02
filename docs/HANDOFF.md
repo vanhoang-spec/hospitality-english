@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **29/09/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **02/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -10,6 +10,7 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
 - Nhánh làm việc: **`content/p2-gates`**, PR đang mở:
   [vanhoang-spec/hospitality-english#9](https://github.com/vanhoang-spec/hospitality-english/pull/9)
   → `main`. **Chưa merge.** CI của nhánh xanh.
+- P3 làm trên nhánh **`content/p3`** (tách từ `content/p2-gates`), chưa có PR — xem §8.
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -33,7 +34,7 @@ Theo thứ tự yêu cầu gần nhất:
 | P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                     |
 | P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
 | P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
-| P3        | 23–30 | **Chưa từng qua cổng 10 auditor.** Tạm dừng                                                                                                                                                                              |
+| P3        | 23–30 | **Chưa qua cổng.** Đang sửa trên `content/p3` (§8)                                                                                                                                                                       |
 | P4        | 31–40 | FO/FB/HK/GR soạn tay đủ 10/10, qua cổng theo batch với chuẩn cũ. SW còn 9/10 tuần sinh tự động. Tạm dừng                                                                                                                 |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
@@ -155,28 +156,16 @@ Từ 27/09 người dùng luân phiên Claude Code và Codex (khi một bên h�
 một agent sửa repo. Cách mở phiên, giao việc, chuyển giao, và chạy auditor bằng Codex:
 [`docs/CODEX.md`](CODEX.md).
 
-**Việc đang làm dở:** người dùng đã duyệt chạy cả 6 bước P3 ngày 29/09. Đang chuẩn bị
-spec, phép đo và bản nguồn chấm mù vòng 1 theo `docs/p3-plan.md`; chưa sửa giáo trình.
-P3 đã mở lại, thay trạng thái tạm dừng P3 ở bảng §3. Mỗi ô phải >7,5, không bù điểm.
+**Việc đang làm dở (02/10, Claude Code):** người dùng tắt lịch Codex và giao hẳn P3 cho Claude
+Code. Nhánh **`content/p3`** (tách từ `content/p2-gates` @ `19410f7`), worktree
+`.claude/worktrees/content-p3`. Kế hoạch và lý do: [`docs/p3-fix-plan.md`](p3-fix-plan.md).
 
-Tiến độ 29/09: đã lưu/push `e35c017` (brief và kế hoạch), `54a6471` (spec, inventory
-160 bài, sửa probe học vẹt gọi production + tách mẫu). Các tầng CI đã đạt; self-pass
-100%, leak và orphans không đổi. Nguồn nội dung baseline vẫn `ac24e13`.
-Vòng đầu chỉ AC-HK nộp báo cáo, 9 lượt bị lỗi hạn mức/401; không tính các lượt lỗi.
-Lượt chạy lại có thêm HM-HK, AC-FO, AC-FB, AC-SW và AC-GR nộp hợp lệ; 4 ô còn lại chưa
-được tính.
-Điểm đã tính lại từ sáu tiêu chí: AC-HK **6,2833**, HM-HK **4,3333**, AC-FO
-**5,9333**, AC-FB **6,5000**, AC-SW **5,4167**, AC-GR **6,0667** — cả sáu không đạt.
-HM-FO đã đo gần xong nhưng hết hạn mức trước khi nộp; lượt này không hợp lệ và không được
-tính. Codex CLI báo mở lại lúc **03:31 ngày 04/10/2026**. Đã dời heartbeat sang 03:35 ngày
-04/10 để chạy lại HM-FO bằng phiên mới, rồi HM-FB, HM-SW, HM-GR, vẫn lần lượt và độc lập.
-Đã đối chiếu bằng `getWeekContent` và hàm production: các lỗi HK trọng yếu được trích là có thật;
-đặc biệt alternate “I will service your room within ten minutes, madam.” vẫn làm
-`utterancePassedAny` và `oralHalfPassed` trả `true` cho ô reserved “How long will that take?”
-→ “Just a moment. This part belongs to the front desk.” Không sửa giáo trình trước khi đủ 10 ô.
-Hạn mức Codex CLI đã mở lại. Heartbeat tiếp tục mỗi giờ, mỗi lần chỉ khởi chạy tối đa một
-auditor còn thiếu và không chạy chồng lên tiến trình đang sống.
-Thư mục báo cáo ngoài repo trên máy này: `%TEMP%/hospitality-p3-r1-ac24e13` (AC-HK),
-`%TEMP%/hospitality-p3-r1-ac24e13-retry3` (9 ô còn lại). Mỗi ô có source, manifest,
-work, events.jsonl và status.json; report.md chỉ xuất hiện khi auditor nộp.
-Chưa tổng hợp bảng đủ 10 ô hoặc sửa giáo trình. Không chạy chồng vòng khác khi các phiên này còn sống.
+- Vòng mù 1 trên `ac24e13`: 6/10 ô có báo cáo hợp lệ, cả 6 trượt. Bốn ô HM-FO/FB/SW/GR không
+  chạy tiếp — không đổi được kết luận. Báo cáo ngoài repo: `%TEMP%/hospitality-p3-r1-ac24e13*`.
+- Đã xong: engine (`c031900` — ô bắt buộc lấy từ lượt đánh dấu `risk`, lịch ôn xoay lát cắt,
+  gate chuỗi `${…}`, form-note); P3 Buồng phòng viết riêng (`246bfe9`, `67667c6`) trong
+  `src/lib/content/p3/hk.ts`; lint Layer S đọc thẳng `reservableTurns` của bài thi.
+- Đang làm: viết riêng SW, FO, GR, FB theo đúng khuôn `hk.ts`; bỏ ba override SW-23/FO-26/GR-27;
+  sửa mediation GR-26 (câu thu thêm phí đang qua). Sau đó: gate bể `risk` cho năm bộ phận, đóng
+  băng, chấm mù vòng 2 đủ 10 ô bằng [`docs/audit/brief-p3-r2.md`](audit/brief-p3-r2.md).
+- BO và SE ngoài phạm vi chấm P3, vẫn dùng khung chung.
