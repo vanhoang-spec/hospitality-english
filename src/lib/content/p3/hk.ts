@@ -96,9 +96,9 @@ function week23(): LessonContent[] {
           "Gợi ý món có phí thì báo luôn ai tính phí: lễ tân, không phải bạn.",
         ),
         sp(
-          "Actually, I do not like soft beds at all.",
+          "This pillow is much too soft for me.",
           "Of course, sir. Would you like a firmer pillow instead?",
-          "Khách không thích gợi ý đầu — đưa phương án thay thế bằng 'instead', không tranh luận.",
+          "Khách chê gối quá mềm — đưa phương án thay thế bằng 'instead', không tranh luận.",
         ),
       ],
       reading: read(
@@ -2075,7 +2075,7 @@ function week28(): LessonContent[] {
         ),
         sp(
           "Which is better for me, now or after six?",
-          "Either option works, madam. After six, you will be out at dinner.",
+          "Either option is fine, madam. If you go out for dinner, after six is easier.",
           "Giúp khách chọn bằng một lý do cụ thể.",
         ),
       ],
@@ -2315,7 +2315,7 @@ function week29(): LessonContent[] {
   const t3c = "I have checked the amenity stock sheet. Shampoo is low, so I ordered more.";
   const t4a = "Yes, madam. I found a gold ring in 712 after checkout.";
   const t4b = "I noted it in the lost item log and took it to my supervisor.";
-  const t4c = "No. My colleague Lan was with me, and she signed the log too.";
+  const t4c = "Yes. My colleague Lan was with me, and she signed the log too.";
   return [
     L(29, 1, "Handing Over the Shift", "Bàn giao ca", {
       vocabulary: [
