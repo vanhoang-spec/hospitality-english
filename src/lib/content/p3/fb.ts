@@ -133,15 +133,12 @@ function week23(): LessonContent[] {
           also(
             sp(
               "My wife is pregnant. Is the tasting menu all right for her?",
-              "I will check every course with the chef before you order, sir.",
-              "Khách mang thai: bạn không tự nói món nào ăn được. Hỏi bếp từng món trước khi khách gọi.",
+              "I will check with the chef before you order, sir.",
+              "Khách mang thai: bạn không tự nói món nào ăn được. Hỏi bếp trước khi khách gọi món.",
               undefined,
-              ["check", "course", "chef", "before", "order"],
+              ["check", "chef", "before", "order"],
             ),
-            [
-              "I will check each course with the chef before you order, sir.",
-              "Before you order, I will check every course with the chef, sir.",
-            ],
+            ["Let me check with the chef before you order, sir."],
           ),
         ),
       ],
@@ -332,8 +329,7 @@ function week23(): LessonContent[] {
             ),
             [
               "I will check with the chef before you order, madam.",
-              "Before you order, I will check with the chef, madam.",
-              "Thank you for telling me, madam. I will check with the chef before you order.",
+              "Let me check with the chef before you order, madam.",
             ],
           ),
         ),
@@ -389,7 +385,7 @@ function week23(): LessonContent[] {
         game(
           "My husband is allergic to nuts. Can he have the cheese board?",
           "I will check with the chef before you order, madam.",
-          "I will check with chef before you order, madam.",
+          "I will checking with the chef before you order, madam.",
           "Yes, madam, I am sure it is safe. Nobody has had a problem with it.",
           undefined,
           "Câu cuối hứa thay bếp — nhân viên không tự khẳng định món không có chất gây dị ứng. Câu đúng hỏi bếp trước khi khách gọi món.",
@@ -494,7 +490,7 @@ function week23(): LessonContent[] {
         game(
           "Thank you, but I will just have a soft drink.",
           "Of course, madam. A soft drink is a good choice.",
-          "Of course, madam. A soft drink is good choice.",
+          "Of course, madam. A soft drink are a good choice.",
           "Are you sure, madam? Our signature cocktail is much better than a soft drink.",
           undefined,
           "Câu cuối ép khách sau khi khách đã từ chối. Câu đúng chấp nhận ngay và khen lựa chọn của khách.",
@@ -502,7 +498,7 @@ function week23(): LessonContent[] {
         game(
           "It is our tenth anniversary tonight. What should we drink?",
           "I recommend the sparkling wine, sir. It is perfect for a celebration.",
-          "I recommend the sparkling wine, sir. It is perfect for celebration.",
+          "I recommends the sparkling wine, sir. It is perfect for a celebration.",
           "Anything you like, sir.",
           undefined,
           "Câu cuối không gợi ý gì. Câu đúng gợi ý đồ uống hợp đúng dịp của khách và nói vì sao.",
@@ -523,7 +519,7 @@ function week24(): LessonContent[] {
   const t3a = "I am sorry, madam. We have to follow the outside food rule because of food safety.";
   const t3b = "I understand, madam. I will ask my manager about the cake now.";
   const t3c = "Of course. I will come back to you in five minutes, madam.";
-  const t4a = "Do you have ID with you, sir? We have to check it for alcohol.";
+  const t4a = "May I check your ID, sir? We check ID before we serve alcohol.";
   const t4b = "I am sorry, sir. I cannot serve alcohol without ID.";
   const t4c = "I understand, sir. Would you like a soft drink or a fresh juice instead?";
   return [
@@ -531,7 +527,7 @@ function week24(): LessonContent[] {
       vocabulary: [
         c("Charge", "There is no charge for the filtered water on your table."),
         c("Corkage fee", "There is a corkage fee for each bottle you bring."),
-        c("Service charge", "The service charge is shared by all the restaurant staff."),
+        c("Service charge", "The service charge is printed on every menu in the restaurant."),
         c("Policy", "Our corkage policy is at the back of the drinks menu."),
       ],
       grammar: [
@@ -572,8 +568,8 @@ function week24(): LessonContent[] {
         ),
         sp(
           "What is this service charge on my bill?",
-          "It is shared by all the restaurant staff, madam. The service charge is on every bill.",
-          "Lý do thật của phí phục vụ: chia cho cả đội phục vụ — không giải thích bằng chính tên của khoản phí.",
+          "It is our service charge for table service, madam. It is printed on every menu.",
+          "Nói khoản phí dùng cho việc gì và khách xem ở đâu — đừng đoán chính sách chia phí của khách sạn.",
         ),
         sp(
           "Do we pay for this water?",
@@ -589,10 +585,7 @@ function week24(): LessonContent[] {
               undefined,
               ["change", "bill", "manager", "review"],
             ),
-            [
-              "I am sorry, sir, I cannot change the bill. The manager can review it with you.",
-              "I am sorry, sir. My manager can review the bill with you, but I cannot change it.",
-            ],
+            ["I am sorry, sir, I cannot change the bill. I will ask my manager to come."],
           ),
         ),
       ],
@@ -627,18 +620,18 @@ function week24(): LessonContent[] {
         game(
           "Can I bring my own wine to dinner tonight?",
           "Of course, sir. There is a corkage fee for each bottle.",
-          "Of course, sir. There is corkage fee for each bottle.",
+          "Of course, sir. There are a corkage fee for each bottle.",
           "Yes, sir, and do not worry. I will not put any fee on your bill.",
           undefined,
           "Câu cuối tự hứa bỏ phí — nhân viên không có quyền đó. Câu đúng đồng ý và báo trước là có phí.",
         ),
         game(
-          "Who gets the service charge?",
-          "It is shared by all the restaurant staff, madam.",
-          "It is shared by all the restaurant staffs, madam.",
-          "I do not know, madam. It is just the hotel rule.",
+          "Why is there a service charge on my bill?",
+          "It is our service charge for table service, madam. It is printed on every menu.",
+          "It is our service charge for table service, madam. It are printed on every menu.",
+          "The hotel adds it, madam, but I can take it off for you if you like.",
           undefined,
-          "Câu cuối không trả lời và đẩy cho 'quy định'. Câu đúng nói lý do thật của khoản phí.",
+          "Câu cuối tự hứa bỏ phí — quyết định về tiền của quản lý. Câu đúng nói khoản phí dùng cho việc gì và in ở đâu.",
         ),
       ],
     }),
@@ -664,7 +657,7 @@ function week24(): LessonContent[] {
           "Cancel, money gone.",
           "There is a cancellation fee because the kitchen has already ordered the food.",
           "'The kitchen' là một bộ phận: 'has ordered'. Hiện tại hoàn thành cho việc đã làm xong.",
-          "There is a cancellation fee because the kitchen have already ordered the food.",
+          "There is a cancellation fee because the kitchen has already order the food.",
         ),
       ],
       speaking: [
@@ -732,17 +725,17 @@ function week24(): LessonContent[] {
           "Why do I have to pay a deposit for a group dinner?",
           "Because the kitchen buys the food for your group early, madam.",
           "Because of the kitchen buys the food for your group early, madam.",
-          "Because the hotel needs the money first, madam.",
+          "Because it is our hotel rule, madam.",
           undefined,
-          "Câu cuối nêu một lý do làm khách thấy bị nghi ngờ. Câu đúng nói lý do thật: bếp mua nguyên liệu trước cho nhóm.",
+          "Câu cuối chỉ nói 'vì là quy định' — không phải lý do. Câu đúng nói lý do thật: bếp mua nguyên liệu trước cho nhóm.",
         ),
         game(
           "Is there a minimum spend for the private dining room?",
           "Yes, sir. It is five million dong, because the room is kept for you.",
           "Yes, sir. It is five million dong, because the room is keep for you.",
-          "Yes, sir, but do not worry about it. Nobody really checks it.",
+          "Yes, sir, but I think the manager will not mind if you spend less.",
           undefined,
-          "Câu cuối hứa bỏ qua quy định — không phải quyền của bạn. Câu đúng nói con số và lý do thật.",
+          "Câu cuối đoán thay quản lý về tiền. Câu đúng nói con số và lý do thật.",
         ),
       ],
     }),
@@ -838,17 +831,17 @@ function week24(): LessonContent[] {
           "The kitchen is closed? It is only twenty to eleven!",
           "I am sorry, sir. The last order time was half past ten.",
           "I am sorry, sir. The last order time were half past ten.",
-          "It is not my fault, sir. The chefs always want to go home early.",
+          "Let me ask the chef to make one more pizza for you, sir.",
           undefined,
-          "Câu cuối đổ lỗi cho đồng nghiệp trước mặt khách. Câu đúng nói quy định một cách lịch sự.",
+          "Câu cuối nghe chu đáo nhưng tự phá giờ nhận món cuối mà bếp đã đóng. Câu đúng nói quy định một cách lịch sự.",
         ),
         game(
           "Can we eat our own sandwiches at the pool table?",
           "I am sorry, madam. Our outside food rule is there for food safety.",
-          "I am sorry, madam. Our outside food rule is there for the food safety.",
-          "Of course, madam. Just eat them quickly before my manager sees.",
+          "I am sorry, madam. Our outside food rule are there for food safety.",
+          "Of course, madam. I will bring you some plates for them.",
           undefined,
-          "Câu cuối lén phá quy định sau lưng quản lý. Câu đúng nói quy định và lý do thật.",
+          "Câu cuối nghe tận tình nhưng phá quy định đồ ăn ngoài — ngoại lệ là việc của quản lý. Câu đúng nói quy định và lý do thật.",
         ),
       ],
     }),
@@ -890,12 +883,9 @@ function week24(): LessonContent[] {
               t4a,
               "Khách vừa thi xong ở trường — có thể chưa đủ 18 tuổi: hỏi giấy tờ TRƯỚC khi rót. Câu hỏi lịch sự, kèm lý do.",
               undefined,
-              ["id", "check", "alcohol"],
+              ["check", "id", "before", "serve", "alcohol"],
             ),
-            [
-              "May I see your ID, sir? We have to check it for alcohol.",
-              "Do you have ID, sir? We have to check it for alcohol.",
-            ],
+            ["May I see some ID, sir? It is the law here."],
           ),
         ),
         risk(
@@ -908,11 +898,7 @@ function week24(): LessonContent[] {
               ["serve", "alcohol", "without", "id"],
               t4a,
             ),
-            [
-              "I am sorry, sir. I cannot serve you alcohol without ID.",
-              "I am sorry, sir. Without ID, I cannot serve alcohol.",
-              "I am sorry, sir. I cannot serve you any alcohol without ID.",
-            ],
+            ["I am sorry, sir. I cannot serve you any alcohol without ID."],
           ),
         ),
         sp(
@@ -929,10 +915,7 @@ function week24(): LessonContent[] {
               undefined,
               ["legal", "drinking", "age", "serve"],
             ),
-            [
-              "I am sorry, madam. I cannot serve him, because the legal drinking age here is eighteen.",
-              "I am sorry, madam. The legal drinking age is eighteen here, so I cannot serve him.",
-            ],
+            ["I am sorry, madam, I cannot serve him alcohol. The legal drinking age is eighteen."],
           ),
         ),
         sp(
@@ -947,7 +930,7 @@ function week24(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Two young men order beers at the pool bar. They say they have just finished school. Khoa asks: "Do you have ID with you?" One of them has no ID. Khoa says politely that he cannot serve alcohol without ID, and he offers a soft drink instead. He explains the legal drinking age as the law, not as his own opinion.`,
+        `Two young men order beers at the pool bar. They say they have just finished school. Khoa asks: "May I check your ID?" One of them has no ID. Khoa says politely that he cannot serve alcohol without ID, and he offers a soft drink instead. He explains the legal drinking age as the law, not as his own opinion.`,
         [
           {
             q: "Vì sao Khoa hỏi giấy tờ trước khi rót bia?",
@@ -1001,11 +984,13 @@ function week25(): LessonContent[] {
   const t1b = "We will serve your main course by eight o'clock, sir.";
   const t1c = "Of course. I will bring more bread straight away, sir.";
   const t2a = "Not yet, madam. We are going to set up the private room by six o'clock.";
-  const t2b = "Of course, madam. There is a corkage fee, and we will chill it on arrival.";
+  const t2b =
+    "Of course, madam. There is a corkage fee in our policy, and we will chill it on arrival.";
   const t2c = "Yes, madam. We are going to put it in an ice bucket at your table.";
   const t3a = "I will check with the kitchen and call you back within ten minutes.";
   const t3b = "I am sorry, sir. I cannot confirm it before the chef checks.";
-  const t3c = "Thank you, sir. If the chef says yes, the kitchen will prepare a nut-free dish.";
+  const t3c =
+    "If the chef says yes, the kitchen will prepare a nut-free dish. Our kitchen does handle nuts, sir.";
   const t4a = "I am very sorry, sir. The kitchen says it will be here within five minutes.";
   const t4b = "You are right, sir. I will go to the kitchen and bring it myself.";
   const t4c = "I am sorry, sir. I will ask our sommelier to check if it is corked.";
@@ -1059,16 +1044,18 @@ function week25(): LessonContent[] {
           "Giờ của bếp thì nói rõ là bếp báo — bạn chỉ chuyển lời.",
         ),
         sp(
-          "We ordered the tasting menu. When does it start?",
-          "Your tasting menu starts within ten minutes, sir. I will serve the first course myself.",
-          "Ôn tuần 23: món đã gọi + mốc giờ bắt đầu.",
+          "We booked the chef's table. When does it start?",
+          "Your chef's table starts within ten minutes, sir. I will serve the first course myself.",
+          "Ôn tuần 23: bàn đã đặt + mốc giờ bắt đầu.",
           undefined,
-          ["tasting", "menu"],
+          ["chef's", "table"],
         ),
         sp(
-          "Is there a table for two? We can wait a little.",
-          "A table will be free within ten minutes, sir. I will call you from the bar.",
-          "Hứa có số, và nói bạn sẽ làm gì trong lúc khách chờ.",
+          "Is there a quieter table for two? We can wait a little.",
+          "A quieter table will be free within ten minutes, sir. I will call you from the bar.",
+          "Ôn tuần 23: so sánh hơn + hứa có số, và nói bạn sẽ làm gì trong lúc khách chờ.",
+          undefined,
+          ["quieter"],
         ),
         sp(
           "Can we still order a dessert? It is twenty past ten.",
@@ -1112,7 +1099,7 @@ function week25(): LessonContent[] {
         game(
           "We need the bill by half past eight. Is that possible?",
           "Of course, sir. I will bring your bill by half past eight.",
-          "Of course, sir. I will bring your bill until half past eight.",
+          "Of course, sir. I will brings your bill by half past eight.",
           "Maybe, sir. It depends on how busy we are.",
           undefined,
           "Câu cuối không hứa gì. Câu đúng nhận việc của mình và nói mốc giờ cụ thể.",
@@ -1159,7 +1146,7 @@ function week25(): LessonContent[] {
           t2b,
           "Ôn tuần 24: báo phí mở rượu TRƯỚC, rồi hứa việc của bạn — ướp lạnh khi khách tới.",
           undefined,
-          ["corkage", "fee"],
+          ["corkage", "fee", "policy"],
           t2a,
         ),
         sp(
@@ -1172,8 +1159,15 @@ function week25(): LessonContent[] {
         ),
         sp(
           "What if two more friends come?",
-          "Please call me by five o'clock, madam. Then we can add chairs.",
-          "Cho khách một mốc rõ để báo thêm người.",
+          "Please call the reservations team by five o'clock, madam. Then we can add chairs.",
+          "Cho khách một mốc rõ và đúng nơi để báo thêm người.",
+        ),
+        sp(
+          "How long can we stay in the private room?",
+          "There is no table time limit in the private room, madam. It is yours all evening.",
+          "Ôn tuần 24: tên quy định đã học, nói rõ áp dụng hay không.",
+          undefined,
+          ["table", "time", "limit"],
         ),
         sp(
           "We would like dessert, but the table is a mess.",
@@ -1215,7 +1209,7 @@ function week25(): LessonContent[] {
         game(
           "When will our private room be ready?",
           "We are going to set it up by six o'clock, madam.",
-          "We are going to set it up until six o'clock, madam.",
+          "We are going to sets it up by six o'clock, madam.",
           "Do not worry, madam. It will be ready when you arrive tonight.",
           undefined,
           "Câu cuối nghe yên tâm nhưng không có mốc giờ. Câu đúng nói kế hoạch và giờ cụ thể.",
@@ -1223,7 +1217,7 @@ function week25(): LessonContent[] {
         game(
           "We are bringing two bottles of our own wine tonight.",
           "Of course, madam. There is a corkage fee, and we will chill them on arrival.",
-          "Of course, madam. There is corkage fee, and we will chill them on arrival.",
+          "Of course, madam. There is a corkage fee, and we will chilling them on arrival.",
           "No problem, madam. Bring as many as you like.",
           undefined,
           "Câu cuối không báo phí — khách sẽ bất ngờ trên hóa đơn. Câu đúng báo phí trước và nói việc bạn sẽ làm.",
@@ -1241,7 +1235,7 @@ function week25(): LessonContent[] {
         ]),
         c(
           "Prepare a nut-free dish",
-          "The chef decides if the kitchen can prepare a nut-free dish.",
+          "The chef decides if we can prepare a nut-free dish; our kitchen still handles nuts.",
         ),
         c("Speed up your order", "I will ask the kitchen to speed up your order."),
       ],
@@ -1269,10 +1263,7 @@ function week25(): LessonContent[] {
               undefined,
               ["check", "kitchen", "call", "back", "within"],
             ),
-            [
-              "I will check with the kitchen and call you back within ten minutes, sir.",
-              "I will call you back within ten minutes, after I check with the kitchen.",
-            ],
+            ["Let me check with the kitchen. I will call you back within ten minutes."],
           ),
         ),
         risk(
@@ -1285,10 +1276,7 @@ function week25(): LessonContent[] {
               ["confirm", "before", "chef", "checks"],
               t3a,
             ),
-            [
-              "I am sorry, sir. I cannot confirm it before the chef checks it.",
-              "I am sorry, sir. Before the chef checks, I cannot confirm it.",
-            ],
+            ["I am sorry, sir. The chef has to check it before I can confirm."],
           ),
         ),
         sp(
@@ -1305,18 +1293,15 @@ function week25(): LessonContent[] {
               undefined,
               ["check", "allergens", "chef", "before", "order"],
             ),
-            [
-              "Before you order, I will check the allergens with the chef, madam.",
-              "I will check the allergens with the chef before you order.",
-            ],
+            ["Let me check the allergens with the chef before you order, madam."],
           ),
         ),
         sp(
-          "Can you send two signature cocktails to Room 914?",
-          "Of course, sir. Your two signature cocktails will arrive within thirty minutes.",
+          "Can you send two signature cocktails and a seafood platter to Room 914?",
+          "Of course, sir. Two signature cocktails and a seafood platter, within thirty minutes.",
           "Ôn tuần 23: nhắc lại đúng món, kèm mốc giờ giao.",
           undefined,
-          ["signature", "cocktails"],
+          ["signature", "cocktails", "seafood", "platter"],
         ),
         sp(
           "We ordered forty minutes ago. Where is our food?",
@@ -1332,7 +1317,7 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Novak calls room service from Room 1206. His son has a nut allergy and wants the pasta. Phuong does not say yes at once. She checks with the kitchen and calls back within ten minutes: the chef can prepare a nut-free dish. Only then does Phuong send the order.`,
+        `Mr Novak calls room service from Room 1206. His son has a nut allergy and wants the pasta. Phuong does not say yes at once. She checks with the kitchen and calls back within ten minutes: the chef can prepare a nut-free dish, but the kitchen does handle nuts. Phuong tells Mr Novak both things, and only then sends the order.`,
         [
           {
             q: "Vì sao Phương không nhận món ngay?",
@@ -1354,7 +1339,7 @@ function week25(): LessonContent[] {
             ],
             correct: 2,
             explanation:
-              "'the chef can prepare a nut-free dish. Only then does Phuong send the order' — bếp xác nhận trước, chuyển phiếu sau.",
+              "'the chef can prepare a nut-free dish, but the kitchen does handle nuts… only then sends the order' — bếp xác nhận trước, nói cả cảnh báo nhiễm chéo, rồi mới chuyển phiếu.",
           },
         ],
       ),
@@ -1362,7 +1347,7 @@ function week25(): LessonContent[] {
         game(
           "My daughter cannot eat nuts. Is the chicken curry safe for her?",
           "I will check with the kitchen and call you back within ten minutes.",
-          "I will check with kitchen and call you back within ten minutes.",
+          "I will check with the kitchen and calling you back within ten minutes.",
           "Yes, madam. It is a mild dish, so it does not have any nuts in it.",
           undefined,
           "Câu cuối đoán thành phần — món cay nhẹ vẫn có thể có hạt. Câu đúng hỏi bếp và hứa gọi lại có mốc giờ.",
@@ -1394,7 +1379,7 @@ function week25(): LessonContent[] {
           "Sorry late. Busy.",
           "I am very sorry for the delay. The kitchen says five more minutes.",
           "Xin lỗi + mốc MỚI mà bếp đã xác nhận. 'the delay' cần 'the'.",
-          "I am very sorry for the delay. The kitchen say five more minutes.",
+          "I am very sorry for the delay. The kitchen saying five more minutes.",
         ),
         g(
           "Dessert wait.",
@@ -1442,6 +1427,13 @@ function week25(): LessonContent[] {
           undefined,
           ["cheese", "board"],
         ),
+        sp(
+          "We will be thirty minutes late tonight.",
+          "Our late arrival rule holds tables for fifteen minutes, sir. I will tell the host now.",
+          "Ôn tuần 24: nói quy định thật, rồi việc bạn làm ngay.",
+          undefined,
+          ["late", "arrival", "rule"],
+        ),
       ],
       reading: read(
         `Table nine waited half an hour for their main course. Son apologises and checks with the kitchen first. Then he gives the new time from the kitchen: five minutes. He goes to the kitchen and brings it himself. When the guest says the wine tastes strange, Son does not argue. He asks the sommelier to check if it is corked.`,
@@ -1474,7 +1466,7 @@ function week25(): LessonContent[] {
         game(
           "We have been waiting forty minutes for our mains!",
           "I am very sorry, sir. The kitchen says five more minutes.",
-          "I am very sorry, sir. The kitchen say five more minutes.",
+          "I am very sorry, sir. The kitchen saying five more minutes.",
           "I am sorry, sir. Can I offer you a free dessert to say sorry?",
           undefined,
           "Câu cuối tự mời món miễn phí — việc của quản lý — và đổi sang việc khác. Câu đúng giữ đúng việc khách chờ và đưa mốc bếp đã xác nhận.",
@@ -1499,7 +1491,7 @@ function week26(): LessonContent[] {
   const t1c = "Take your time, sir. I will be back within five minutes.";
   const t2a = "Of course, sir. I will ask the pastry section to make a small cake.";
   const t2b = "Yes, sir. I will arrange it with them before six o'clock.";
-  const t2c = "I will ask my manager about that, sir. She will tell you before dinner.";
+  const t2c = "I will ask my manager about that, sir, and she will tell you.";
   const t3a = "I am very sorry, sir. I will check with the reservations team now.";
   const t3b = "Yes, sir. I have called them, and they are checking your email now.";
   const t3c = "Of course. I will ask the host to seat you at table eight now.";
@@ -1542,8 +1534,8 @@ function week26(): LessonContent[] {
               ["check", "head", "chef"],
             ),
             [
-              "I am not sure, sir. Let me check with the head chef.",
-              "I will check with the head chef, sir. I am not sure.",
+              "I am not sure, sir. I will ask the head chef.",
+              "Let me check with the head chef for you, sir.",
             ],
           ),
         ),
@@ -1557,10 +1549,7 @@ function week26(): LessonContent[] {
               ["head", "chef", "confirm", "before", "order"],
               t1a,
             ),
-            [
-              "Of course, sir. Before you order, the head chef will confirm it.",
-              "Of course, sir. The head chef will confirm it before you order anything.",
-            ],
+            ["Of course, sir. I will ask the head chef to confirm it before you order."],
           ),
         ),
         sp(
@@ -1595,9 +1584,16 @@ function week26(): LessonContent[] {
           undefined,
           ["corkage", "fee"],
         ),
+        sp(
+          "Does the satay sauce have any allergens?",
+          "I am not sure, madam. I will ask the head chef about the allergens.",
+          "Ôn tuần 25: chất gây dị ứng là câu trả lời của bếp trưởng.",
+          undefined,
+          ["head", "chef", "allergens"],
+        ),
       ],
       reading: read(
-        `Mr Ahmed asks Duc if the lamb curry is halal. Duc is not sure, so he does not guess. He says: "I will check with the head chef." The head chef confirms that the lamb is halal, but the sauce has wine in it. Duc tells Mr Ahmed exactly that. Mr Ahmed thanks him and chooses the grilled chicken instead. Before the next table, Duc writes the sauce on his notepad. Next time, he can tell guests at once.`,
+        `Mr Ahmed asks Duc if the lamb curry is halal. Duc is not sure, so he does not guess. He says: "I will check with the head chef." The head chef confirms that the lamb is halal, but the sauce has wine in it. Duc tells Mr Ahmed exactly that. Mr Ahmed asks about the grilled chicken instead, so Duc checks that with the head chef too. The chicken is halal, and Mr Ahmed orders it.`,
         [
           {
             q: "Vì sao Đức không trả lời ngay?",
@@ -1634,7 +1630,7 @@ function week26(): LessonContent[] {
         game(
           "Is there any pork in the dumplings?",
           "I am not sure, madam. I will check with the head chef.",
-          "I am not sure, madam. I will check with head chef.",
+          "I am not sure, madam. I will checking with the head chef.",
           "No, madam, I do not think so. Our dumplings are usually chicken.",
           undefined,
           "Câu cuối đoán thành phần — 'usually' không phải câu trả lời cho khách không ăn thịt heo. Câu đúng nói thật và hỏi bếp trưởng.",
@@ -1643,9 +1639,9 @@ function week26(): LessonContent[] {
           "Can you put my call through to reservations?",
           "Of course, sir. I will transfer your call to the reservations team.",
           "Of course, sir. I will transfer your call for the reservations team.",
-          "Please call them yourself, sir.",
+          "The reservations team is busy now, sir. Please call them again later.",
           undefined,
-          "Câu cuối đẩy việc sang khách. Câu đúng nhận việc và chuyển máy đúng bộ phận.",
+          "Câu cuối nghe có lý nhưng đẩy việc lại cho khách. Câu đúng nhận việc và chuyển máy đúng bộ phận.",
         ),
       ],
     }),
@@ -1685,13 +1681,17 @@ function week26(): LessonContent[] {
           undefined,
           t2a,
         ),
-        sp(
-          "Is the cake free?",
-          t2c,
-          "Miễn phí là quyết định về tiền: bạn không tự trả lời. Nói ai trả lời và khi nào.",
-          undefined,
-          undefined,
-          t2b,
+        risk(
+          also(
+            sp(
+              "Is the cake free?",
+              t2c,
+              "Miễn phí là quyết định về tiền: bạn không tự trả lời. Hỏi quản lý — người trả lời khách.",
+              undefined,
+              ["ask", "manager", "tell"],
+            ),
+            ["I am not sure, sir. I will ask my manager to tell you about the cake."],
+          ),
         ),
         sp(
           "This cocktail is much too sweet for me.",
@@ -1699,21 +1699,23 @@ function week26(): LessonContent[] {
           "Đúng người làm lại: tổ pha chế.",
         ),
         sp(
-          "Who sets up the room for our conference lunch?",
-          "The banquet team sets it up, sir. I will ask them to call you today.",
-          "Nói rõ bộ phận phụ trách, rồi nhờ họ liên hệ khách.",
+          "We want to bring our own cake to the conference lunch.",
+          "Our outside food rule is the same for every room, sir. I will ask my manager about it.",
+          "Ôn tuần 24: quy định đã học; ngoại lệ là việc của quản lý.",
+          undefined,
+          ["outside", "food", "rule"],
         ),
         sp(
           "Who will set up the private room for our party on Friday?",
-          "The banquet team will set up the private room, madam. I will arrange it today.",
+          "The banquet team is going to set up the private room, madam.",
           "Ôn tuần 25: việc đã học + bộ phận làm việc đó.",
           undefined,
           ["private", "room"],
         ),
         sp(
           "Can the banquet team put flowers on the sunset view table?",
-          "Of course, madam. I will arrange flowers on the sunset view table before six.",
-          "Ôn tuần 23: tên bàn đã học + việc sắp xếp, có mốc giờ.",
+          "Of course, madam. There is a small charge, and I will put them on the sunset view table.",
+          "Ôn tuần 23: tên bàn đã học; hoa có tính phí thì nói trước.",
           undefined,
           ["sunset", "view", "table"],
         ),
@@ -1757,17 +1759,17 @@ function week26(): LessonContent[] {
           "Could someone make my cocktail a bit less strong?",
           "Of course, madam. I will ask the bar team to make a new one.",
           "Of course, madam. I will ask the bar team to making a new one.",
-          "Please tell the bartender yourself, madam. He is just over there at the bar.",
+          "Of course, madam. I will add some water to it for you.",
           undefined,
-          "Câu cuối đẩy việc sang khách. Câu đúng nhận yêu cầu và giao cho đúng tổ làm.",
+          "Câu cuối tự sửa đồ uống thay vì nhờ tổ pha chế làm lại. Câu đúng giao cho đúng tổ làm.",
         ),
         game(
           "Can you arrange some flowers on our table for tonight?",
-          "Of course, sir. I will arrange flowers for your table before six.",
-          "Of course, sir. I will arranging flowers for your table before six.",
-          "Flowers are not my job, sir.",
+          "Of course, sir. There is a small charge, and I will arrange them before six.",
+          "Of course, sir. There is a small charge, and I will arranging them before six.",
+          "Of course, sir. Flowers are free for our hotel guests.",
           undefined,
-          "Câu cuối từ chối thay vì chuyển đúng người. Câu đúng nhận việc và hẹn giờ.",
+          "Câu cuối tự hứa miễn phí — không phải quyền của bạn. Câu đúng nhận việc, báo trước có phí, hẹn giờ.",
         ),
       ],
     }),
@@ -1820,14 +1822,21 @@ function week26(): LessonContent[] {
           "I am sorry, madam. I will ask the room service team to bring the right dish.",
           "Đúng tổ sửa lỗi của tổ mình.",
         ),
-        sp(
-          "I want a discount for all this trouble.",
-          "I am sorry, sir, I cannot change the price. The restaurant manager will speak with you.",
-          "Giảm giá là của quản lý nhà hàng. Bạn chuyển lời, không hứa.",
+        risk(
+          also(
+            sp(
+              "I want a discount for all this trouble.",
+              "I am sorry, sir, I cannot change the price. The manager will speak with you.",
+              "Giảm giá là của quản lý nhà hàng. Bạn chuyển lời, không hứa.",
+              undefined,
+              ["change", "price", "manager", "speak"],
+            ),
+            ["I am sorry, sir, I cannot give a discount. The manager will speak with you."],
+          ),
         ),
         sp(
           "Has anyone told the kitchen about my allergy?",
-          "Yes, madam. I have told the kitchen team, and the chef has your note.",
+          "Yes, madam. The kitchen team has your note, and I told the restaurant manager too.",
           "Báo việc đã làm + ai đang giữ thông tin.",
         ),
         sp(
@@ -1836,6 +1845,13 @@ function week26(): LessonContent[] {
           "Ôn tuần 25: một việc, đúng người làm.",
           undefined,
           ["speed", "order"],
+        ),
+        sp(
+          "We could not come on Friday. Why is there a no-show charge?",
+          "The reservations team will explain the no-show charge, sir. I will check it with them now.",
+          "Ôn tuần 24: khoản phí đã học + bộ phận giải thích.",
+          undefined,
+          ["show", "charge"],
         ),
       ],
       reading: read(
@@ -1881,14 +1897,14 @@ function week26(): LessonContent[] {
           "Has anyone checked my booking yet?",
           "Yes, sir. I have called the reservations team, and they are checking it now.",
           "Yes, sir. I have call the reservations team, and they are checking it now.",
-          "Not yet, sir. They are always very slow on Friday nights, I am afraid.",
+          "Not yet, sir. Maybe you booked it for another night?",
           undefined,
-          "Câu cuối than phiền đồng nghiệp trước mặt khách và không làm gì. Câu đúng báo việc đã làm và việc đang làm.",
+          "Câu cuối đổ ngược cho khách trước khi kiểm tra. Câu đúng báo việc đã làm và việc đang làm.",
         ),
         game(
           "This evening was a mess. I expect a discount.",
-          "I am sorry, sir, I cannot change the price. The restaurant manager will speak with you.",
-          "I am sorry, sir, I cannot changing the price. The restaurant manager will speak with you.",
+          "I am sorry, sir, I cannot change the price. The manager will speak with you.",
+          "I am sorry, sir, I cannot changing the price. The manager will speak with you.",
           "Of course, sir. I will take twenty percent off your bill.",
           undefined,
           "Câu cuối tự giảm giá — quyết định của quản lý nhà hàng. Câu đúng xin lỗi và chuyển đúng người.",
@@ -1926,10 +1942,7 @@ function week26(): LessonContent[] {
               undefined,
               ["serve", "alcohol"],
             ),
-            [
-              "I am sorry, sir. I cannot serve you any more alcohol.",
-              "I am sorry, sir. I cannot serve any more alcohol to you.",
-            ],
+            ["I am sorry, sir. I cannot serve you any more alcohol."],
           ),
         ),
         risk(
@@ -1942,10 +1955,7 @@ function week26(): LessonContent[] {
               ["bring", "water", "coffee"],
               t4a,
             ),
-            [
-              "Not at all, sir. May I bring you some water or a coffee?",
-              "May I bring you some water or a coffee, sir?",
-            ],
+            ["No, sir. Would you like some water or a coffee?"],
           ),
         ),
         sp(
@@ -1971,6 +1981,20 @@ function week26(): LessonContent[] {
           "Ôn tuần 23: món đã học + tổ làm món đó.",
           undefined,
           ["cocktail", "day"],
+        ),
+        sp(
+          "Is there a cover charge at the pool bar tonight?",
+          "Yes, sir, for the band. The bar team can tell you the cover charge.",
+          "Ôn tuần 24: khoản phí đã học + người báo giá.",
+          undefined,
+          ["cover", "charge"],
+        ),
+        sp(
+          "A young guest at the bar has no ID.",
+          "Then we do not serve him alcohol. The legal drinking age here is eighteen.",
+          "Ôn tuần 24: nói với đồng nghiệp — luật về tuổi, không có ngoại lệ.",
+          "colleague",
+          ["legal", "drinking", "age"],
         ),
       ],
       reading: read(
@@ -2020,9 +2044,9 @@ function week26(): LessonContent[] {
           "Table five is still waiting for their mains.",
           "I will ask the food runner to bring them now.",
           "I will ask the food runner bring them now.",
-          "That is not my table. Ask the kitchen yourself.",
+          "I will tell them it is coming soon.",
           "colleague",
-          "Câu cuối đẩy việc cho đồng nghiệp và khách vẫn chờ. Câu đúng giao đúng người làm ngay.",
+          "Câu cuối chỉ hứa suông, không ai mang món ra. Câu đúng giao đúng người làm ngay.",
         ),
       ],
     }),
@@ -2033,18 +2057,17 @@ function week26(): LessonContent[] {
 function week27(): LessonContent[] {
   const t1a = "I am very sorry about the cold food and the wait, sir. I will bring a hot soup now.";
   const t1b = "I apologise, sir. I will tell the restaurant manager about the slow service.";
-  const t1c =
-    "I understand, sir. I will ask the kitchen for a time and come back within two minutes.";
+  const t1c = "I understand, sir. I will check with the kitchen and come back within two minutes.";
   const t2a = "I am very sorry, sir. Shall I call first aid for her now?";
   const t2b = "Of course, sir. I am calling the manager now.";
   const t2c = "I will take the plate to the manager, sir. She has to check it.";
-  const t2d = "I do not know, sir. The manager will look into it with the head chef.";
+  const t2d = "I cannot say yet, sir. The manager will look into it with the head chef.";
   const t3a = "I am sorry, sir. I will bring you an itemised bill, so we can check it together.";
   const t3b = "Thank you, sir. I will ask the manager to check it with the cashier now.";
   const t3c = "I will come back to you within five minutes, sir.";
   const t4a = "I am calling first aid and the manager now, madam.";
   const t4b = "Does he have his own allergy medicine with him, madam?";
-  const t4c = "Please help him use it now, madam. First aid is on the way.";
+  const t4c = "Please help him use it now, madam. The manager is calling an ambulance.";
   return [
     L(27, 1, "Listen First", "Lắng nghe trước", {
       vocabulary: [
@@ -2091,16 +2114,18 @@ function week27(): LessonContent[] {
         ),
         sp(
           "All right. Thank you for listening.",
-          "Thank you for your patience, sir. I will check on your table again soon.",
+          "Thank you for your patience, sir. We will serve your main course next.",
           "Khép lại cuộc nói chuyện: cảm ơn sự kiên nhẫn của khách và hứa theo dõi tiếp.",
           undefined,
           undefined,
           t1c,
         ),
         sp(
-          "We have waited twenty minutes for the bill.",
-          "I apologise for the slow service, madam. Here is your bill.",
-          "Xin lỗi đúng điều khách gặp, rồi giải quyết ngay.",
+          "We have waited half an hour for our starters.",
+          "I apologise, madam. I will ask the food runner to bring your starter now.",
+          "Ôn tuần 25–26: xin lỗi, rồi giao đúng người mang món ra.",
+          undefined,
+          ["food", "runner", "starter"],
         ),
         sp(
           "I am worried the food here is too spicy for my mother.",
@@ -2158,17 +2183,17 @@ function week27(): LessonContent[] {
           "We have waited so long, and now the food is cold.",
           "I apologise for the slow service, sir. I will bring hot food now.",
           "I apologise the slow service, sir. I will bring hot food now.",
-          "I am sorry, sir. The kitchen is very slow tonight because the chef is new.",
+          "I am sorry, sir. If you like, I can take the soup off your bill.",
           undefined,
-          "Câu cuối đổ lỗi cho bếp trước mặt khách. Câu đúng xin lỗi về điều khách gặp và làm ngay.",
+          "Câu cuối nghe chu đáo nhưng tự bỏ món khỏi hóa đơn — việc của quản lý. Câu đúng xin lỗi về điều khách gặp và làm ngay.",
         ),
         game(
           "Somebody should know how bad tonight was.",
           "Thank you for telling me, sir. I will tell the restaurant manager now.",
           "Thank you for tell me, sir. I will tell the restaurant manager now.",
-          "Please write it on the website, sir. Everybody reads it.",
+          "Thank you, sir. I promise it will never happen again.",
           undefined,
-          "Câu cuối đẩy lời phàn nàn ra ngoài. Câu đúng cảm ơn khách và báo người có trách nhiệm.",
+          "Câu cuối hứa điều bạn không kiểm soát được. Câu đúng cảm ơn khách và báo người có trách nhiệm.",
         ),
       ],
     }),
@@ -2241,14 +2266,14 @@ function week27(): LessonContent[] {
           ["head", "chef"],
         ),
         sp(
-          "What is wrong on your tables?",
+          "Any problems on your tables?",
           "Table four sent back an overcooked steak, and table six has a missing dish.",
           "Nói với bếp: bàn nào, món gì — ngắn, không trách ai.",
           "colleague",
         ),
         sp(
           "This is not what I ordered. I asked for the fish.",
-          "I am so sorry, madam, that is the wrong order. Your fish is my first job now.",
+          "I am so sorry, madam, that is the wrong order. I will check with the kitchen team now.",
           "Không giải thích ai ghi nhầm — xin lỗi và nhận việc sửa.",
         ),
         sp(
@@ -2299,7 +2324,7 @@ function week27(): LessonContent[] {
         game(
           "Everyone at my table has eaten, but my dish never came.",
           "I am sorry, madam. I will check your dish with the kitchen now.",
-          "I am sorry, madam. I will check your dish with kitchen now.",
+          "I am sorry, madam. I will checking your dish with the kitchen now.",
           "It was our mistake, madam. The kitchen forgot your order again tonight.",
           undefined,
           "Câu cuối nhận lỗi và đổ cho bếp khi chưa ai kiểm tra. Câu đúng xin lỗi về điều khách gặp và đi kiểm tra.",
@@ -2386,6 +2411,13 @@ function week27(): LessonContent[] {
           undefined,
           ["minimum", "spend"],
         ),
+        sp(
+          "I want to ask about last night's bill.",
+          "Of course, sir. I will transfer your call to the cashier now.",
+          "Ôn tuần 26: đúng người giải thích hóa đơn — chuyển máy, đừng đoán.",
+          undefined,
+          ["transfer", "cashier"],
+        ),
       ],
       reading: read(
         `Mr Okafor finds two bottles of red wine on his bill, but his table had one. Hai brings him an itemised bill, and they check it together. Hai does not change the bill himself. He asks the manager, who checks the order with the cashier. The second bottle was from another table, so the manager corrects the bill. Hai comes back within five minutes, as he promised. Mr Okafor thanks him, because nobody argued with him about the bill.`,
@@ -2437,10 +2469,10 @@ function week27(): LessonContent[] {
         game(
           "Why is my beer not cold?",
           "I am sorry, sir. I will bring you a cold one from the bar.",
-          "I am sorry, sir. I will bring you cold one from the bar.",
-          "Our beer is always served like that here, sir.",
+          "I am sorry, sir. I will brings you a cold one from the bar.",
+          "Local beer is often served cool, not cold, sir.",
           undefined,
-          "Câu cuối cãi lại khách. Câu đúng xin lỗi và thay ngay.",
+          "Câu cuối nghe có lý nhưng bác điều khách cảm thấy. Câu đúng xin lỗi và thay ngay.",
         ),
       ],
     }),
@@ -2489,8 +2521,9 @@ function week27(): LessonContent[] {
               ["calling", "first", "aid", "manager"],
             ),
             [
-              "I am calling first aid and my manager now, madam.",
-              "I am calling the manager and first aid now, madam.",
+              "I will call first aid and the manager now, madam.",
+              "I am calling an ambulance and the manager now, madam.",
+              "Please sit down, madam. I am calling our manager and first aid now.",
             ],
           ),
         ),
@@ -2519,32 +2552,29 @@ function week27(): LessonContent[] {
               undefined,
               ["calling", "first", "aid", "bringing", "cold", "water"],
             ),
-            [
-              "I am very sorry, sir. I am bringing cold water and calling first aid now.",
-              "I am very sorry, sir. I am calling first aid and bringing you cold water now.",
-            ],
+            ["I am very sorry, sir. I will call first aid and bring cold water now."],
           ),
         ),
         sp(
           "Careful! Someone spilled juice by the buffet.",
-          "Thank you, madam. I am putting a wet floor sign there now.",
+          "Thank you, madam. I am putting a wet floor sign there straight away.",
           "An toàn trước: biển báo sàn ướt, rồi mới lau.",
         ),
         sp(
           "My glass has a small crack at the top.",
-          "I am sorry, madam, that is a chipped glass. I will bring you a new one.",
+          "I am sorry, madam, that is a chipped glass. I will bring a new one and tell the stewarding team.",
           "Ly sứt mẻ không bao giờ dùng tiếp — thay ngay.",
         ),
         sp(
           "Why is that man shouting at the door?",
-          "He has a lost reservation. I have called the reservations team.",
+          "It is a lost reservation. I have called the reservations team.",
           "Ôn tuần 26: báo quản lý ngắn gọn — chuyện gì, bạn đã gọi ai.",
           "manager",
           ["reservations", "team"],
         ),
       ],
       reading: read(
-        `At table seven, Mr Chen eats a prawn and suddenly cannot breathe well. His wife shouts for help. Thu does not try to treat him. She calls first aid and the manager at once, and then she asks if he has his own allergy medicine. First aid arrives in two minutes. Thu stays with the family until then, and a colleague puts a wet floor sign by the spilled water. After service, the manager thanks Thu for staying calm.`,
+        `At table seven, Mr Chen eats a prawn and suddenly cannot breathe well. His wife shouts for help. Thu does not try to treat him. She calls first aid and the manager at once, and then she asks if he has his own allergy medicine. The manager calls 115 for an ambulance, and first aid arrives in two minutes. Thu stays with the family until then, and a colleague puts a wet floor sign by the spilled water. After service, the manager thanks Thu for staying calm.`,
         [
           {
             q: "Thu làm gì đầu tiên?",
@@ -2608,12 +2638,12 @@ function week28(): LessonContent[] {
   const t1a = "I am sorry, sir. If you like, I can replace the dish.";
   const t1b = "The kitchen says ten minutes, sir. I will bring it straight to you.";
   const t1c = "Of course, sir. If there is any delay, I will tell you at once.";
-  const t2a = "I am very sorry, sir. I will tell the manager about it now.";
-  const t2b = "You can have a new steak or a different dish, sir. Either option is fine.";
+  const t2a = "I am very sorry, sir. I will tell the manager about the overcooked steak now.";
+  const t2b = "You can choose either option, sir: a new steak or a different dish.";
   const t2c = "A different dish is quicker, sir. A new steak takes fifteen minutes.";
   const t2d = "Of course, sir. I will ask the host to move you to another table.";
   const t3a = "I am sorry, madam. If you like, I will bring a different drink.";
-  const t3b = "Of course, madam. I will bring you a fresh juice now.";
+  const t3b = "Of course, madam. I will ask the bar team for a fresh juice now.";
   const t3c = "If you do not like it, please tell me. I will bring you the drinks menu.";
   const t4a = "I am sorry, madam, I cannot remove it from the bill. I will ask my manager to come.";
   const t4b = "I am sorry, madam, I cannot offer anything complimentary. My manager is coming now.";
@@ -2683,10 +2713,17 @@ function week28(): LessonContent[] {
         ),
         sp(
           "My soup is cold again.",
-          "I am sorry, madam. Cold food goes back, so I will replace the dish now.",
-          "Ôn tuần 27: tên vấn đề + việc bạn làm ngay.",
+          "I apologise for the cold food, madam. I will replace the dish now.",
+          "Ôn tuần 27: xin lỗi đúng điều khách gặp + việc bạn làm ngay.",
           undefined,
-          ["cold", "food"],
+          ["cold", "food", "apologise"],
+        ),
+        sp(
+          "This is not the soup I ordered from room service.",
+          "I am sorry, madam, that is the wrong order. The room service team will replace the dish.",
+          "Ôn tuần 26–27: tên vấn đề + đúng tổ sửa lỗi.",
+          undefined,
+          ["wrong", "order", "room", "service", "team"],
         ),
       ],
       reading: read(
@@ -2821,6 +2858,13 @@ function week28(): LessonContent[] {
           undefined,
           ["hold", "dessert"],
         ),
+        sp(
+          "My son cannot eat nuts. Can he still have a dessert?",
+          "If you like, the chef can prepare a nut-free dish. Our kitchen does handle nuts, madam.",
+          "Ôn tuần 25: đề nghị có điều kiện, và luôn nói cảnh báo nhiễm chéo.",
+          undefined,
+          ["prepare", "nut", "free", "dish"],
+        ),
       ],
       reading: read(
         `Mr Weber's steak comes back overcooked a second time. Khoa apologises and tells the manager at once, because it has happened twice. Then he gives Mr Weber two options: a new steak in fifteen minutes, or a different dish now. Mr Weber chooses the steak and asks to sit away from the door. Khoa asks the host, who moves them to a table by the window. The manager visits before the new steak arrives. Mr Weber says he will come back next week.`,
@@ -2933,11 +2977,18 @@ function week28(): LessonContent[] {
           "Thanh toán tại bàn: khách không phải đứng dậy.",
         ),
         sp(
-          "If I pay by card, can I still have an itemised bill?",
-          "Of course, sir. If you pay by card, I will print an itemised bill too.",
-          "Ôn tuần 27: câu điều kiện + hóa đơn chi tiết.",
+          "Can we have dessert now? The table is still messy.",
+          "Of course, madam. If you like, I will reset your table first.",
+          "Ôn tuần 25: đề nghị có điều kiện cho việc nhỏ của bạn.",
           undefined,
-          ["itemised", "bill"],
+          ["reset", "table"],
+        ),
+        sp(
+          "One more whisky, then I will drive home.",
+          "I am sorry, sir, I cannot serve you more alcohol. May I arrange a taxi?",
+          "Ôn tuần 26: khách đã uống và định lái xe — không rót thêm, đề nghị gọi xe.",
+          undefined,
+          ["serve", "alcohol", "arrange"],
         ),
         risk(
           also(
@@ -2976,15 +3027,15 @@ function week28(): LessonContent[] {
               "'Phuong brings the card machine and an itemised bill to the table' — thanh toán tại bàn.",
           },
           {
-            q: "Vì sao bà Rossi để lại lời cảm ơn?",
+            q: "Vì sao bà Rossi không phải đứng dậy lần nào?",
             options: [
               "Vì nhà hàng đã tặng bà một món tráng miệng miễn phí cuối bữa",
               "Vì bà được giảm giá ly cocktail",
-              "Vì mọi việc nhỏ đều được làm trước khi bà phải hỏi",
+              "Vì máy quẹt thẻ và hóa đơn được mang ra tận bàn",
             ],
             correct: 2,
             explanation:
-              "Bài không nói thẳng, nhưng từ đồ uống, món mang về đến thanh toán tại bàn — bà không phải đứng dậy lần nào.",
+              "'Phuong brings the card machine and an itemised bill to the table' — mọi việc khách cần đều được mang tới bàn.",
           },
         ],
       ),
@@ -3049,17 +3100,22 @@ function week28(): LessonContent[] {
             ),
             [
               "I am sorry, madam, I cannot remove it from the bill. I will ask the manager to come.",
-              "I am sorry, madam. I will ask my manager to come, because I cannot remove it from the bill.",
+              "I am sorry, madam, I cannot take it off the bill. I will ask my manager to come.",
             ],
           ),
         ),
-        sp(
-          "Then give us a free dessert at least.",
-          t4b,
-          "Đồ miễn phí cũng là quyết định của quản lý. Từ chối ngắn, không tranh luận.",
-          undefined,
-          undefined,
-          t4a,
+        risk(
+          also(
+            sp(
+              "Then give us a free dessert at least.",
+              t4b,
+              "Đồ miễn phí cũng là quyết định của quản lý. Từ chối ngắn, không tranh luận.",
+              undefined,
+              ["offer", "anything", "complimentary", "manager", "coming"],
+              t4a,
+            ),
+            ["I am sorry, madam, I cannot offer a free dessert. My manager is coming now."],
+          ),
         ),
         sp(
           "What can you do while we wait for your manager?",
@@ -3068,10 +3124,26 @@ function week28(): LessonContent[] {
           undefined,
           ["top", "water"],
         ),
+        risk(
+          also(
+            sp(
+              "The service was slow. Take off the service charge.",
+              "I am sorry, sir, I cannot take off the service charge. My manager can review it with you.",
+              "Phí phục vụ cũng là tiền — chuyển quản lý xem xét.",
+              undefined,
+              ["take", "service", "charge", "manager", "review"],
+            ),
+            [
+              "I am sorry, sir, I cannot take off the service charge. I will ask my manager to come.",
+            ],
+          ),
+        ),
         sp(
-          "The service was slow. Take off the service charge.",
-          "I am sorry, sir, I cannot take off the service charge. My manager can review it with you.",
-          "Phí phục vụ cũng là tiền — chuyển quản lý xem xét.",
+          "You spilled red wine on my dress!",
+          "I am very sorry, madam, are you all right? I will ask my manager about the dry cleaning.",
+          "Lo cho khách trước; tiền giặt là quyết định của quản lý — bạn không tự hứa.",
+          undefined,
+          ["ask", "manager"],
         ),
         sp(
           "I am so disappointed with this evening.",
@@ -3124,7 +3196,7 @@ function week28(): LessonContent[] {
           "Just remove the wine from the bill, and we will be happy.",
           "I am sorry, madam, I cannot remove it from the bill. I will ask my manager to come.",
           "I am sorry, madam, I cannot to remove it from the bill. I will ask my manager to come.",
-          "Of course, madam. I will remove it myself, and nobody will notice.",
+          "Of course, madam. I will remove it from the bill now.",
           undefined,
           "Câu cuối tự sửa hóa đơn và giấu cấp trên — vượt quyền. Câu đúng không hứa, chuyển ngay cho quản lý.",
         ),
@@ -3132,7 +3204,7 @@ function week28(): LessonContent[] {
           "Our dinner was late, so the coffee is free, right?",
           "I am sorry, sir, I cannot offer anything complimentary. My manager is coming now.",
           "I am sorry, sir, I cannot offering anything complimentary. My manager is coming now.",
-          "Yes, sir. Coffee is always free when the food is late.",
+          "Of course, sir. The coffee is on us tonight.",
           undefined,
           "Câu cuối tự hứa miễn phí — việc của quản lý. Câu đúng từ chối lịch sự và mời quản lý.",
         ),
@@ -3144,7 +3216,7 @@ function week28(): LessonContent[] {
 // ── Week 29 — Handover between servers and up to the supervisor ─────────
 function week29(): LessonContent[] {
   const t1a = "We were very busy. Six walk-ins came while I was setting up the terrace.";
-  const t1b = "Yes. The chef has the allergy note for table twelve.";
+  const t1b = "I am not sure. I will take the allergy note to the chef now.";
   const t1c =
     "The Lim family is coming at seven for a birthday. The pastry section has their cake.";
   const t2a = "I was serving the soup when a guest suddenly started coughing badly.";
@@ -3195,14 +3267,11 @@ function week29(): LessonContent[] {
             sp(
               "Table twelve has a nut allergy tonight. Does the chef know?",
               t1b,
-              "Câu an toàn của bàn giao: bếp đã có ghi chú dị ứng của đúng bàn đó chưa.",
+              "Câu an toàn của bàn giao: chưa chắc thì không nói 'có' — mang ngay ghi chú dị ứng tới bếp.",
               "colleague",
-              ["chef", "allergy", "note", "table"],
+              ["take", "allergy", "note", "chef"],
             ),
-            [
-              "Yes, the chef has the allergy note for table twelve.",
-              "Yes. The allergy note for table twelve is with the chef.",
-            ],
+            ["I will check now and take the allergy note to the chef."],
           ),
         ),
         sp(
@@ -3221,16 +3290,23 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Did the Lim family call again?",
-          "They called while I was updating the table plan. They will be ten now.",
+          "They called while I was updating the table plan. There will be ten of them now.",
           "Quá khứ tiếp diễn + thông tin mới cho ca sau.",
           "colleague",
         ),
         sp(
           "Any special diets in tonight's bookings?",
-          "There is a vegan guest at table four. The chef has checked the dishes.",
-          "Ôn tuần 28: chế độ ăn đặc biệt + bếp đã kiểm tra.",
+          "There is a vegan guest at table four. I told the chef about her concern.",
+          "Ôn tuần 27–28: chế độ ăn đặc biệt + đã báo bếp.",
           "colleague",
-          ["vegan"],
+          ["vegan", "concern"],
+        ),
+        sp(
+          "Any complaints at lunch?",
+          "One table complained about slow service while we were waiting for the kitchen.",
+          "Ôn tuần 27: quá khứ tiếp diễn + tên vấn đề đã học.",
+          "colleague",
+          ["slow", "service"],
         ),
       ],
       reading: read(
@@ -3270,8 +3346,8 @@ function week29(): LessonContent[] {
       game: [
         game(
           "Before you go, is there anything special tonight?",
-          "Yes. The chef has the allergy note for table twelve.",
-          "Yes. The chef have the allergy note for table twelve.",
+          "Table twelve has a nut allergy, and I took the note to the chef.",
+          "Table twelve has a nut allergy, and I taked the note to the chef.",
           "Nothing special, I think. You can read the book later if you have time.",
           "colleague",
           "Câu cuối bỏ sót một ghi chú dị ứng — ca sau sẽ phục vụ mà không biết. Câu đúng nói bàn nào và bếp đã có ghi chú.",
@@ -3325,10 +3401,7 @@ function week29(): LessonContent[] {
               ["called", "first", "aid", "guest", "time"],
               t2a,
             ),
-            [
-              "I called first aid and I was with the guest all the time.",
-              "I was with the guest all the time, and I called first aid.",
-            ],
+            ["I called first aid, and I stayed with the guest all the time."],
           ),
         ),
         sp(
@@ -3352,6 +3425,13 @@ function week29(): LessonContent[] {
           "manager",
         ),
         sp(
+          "What happened with table eight?",
+          "They were leaving early, so I asked the kitchen to cancel the order.",
+          "Ôn tuần 28: quá khứ tiếp diễn + việc đã nhờ bếp.",
+          "manager",
+          ["cancel", "order"],
+        ),
+        sp(
           "Mr Ito is at table four tonight. Anything I should know?",
           "Yes. The special guest note says he does not eat beef.",
           "Đọc đúng ghi chú cho đồng nghiệp trước khi họ phục vụ.",
@@ -3366,7 +3446,7 @@ function week29(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Nam was serving the soup at table six when a guest suddenly started coughing badly. Nam called first aid, and he was with the guest all the time. First aid came in two minutes. After service, Nam was writing the report in the handover book when the manager arrived. She read it and thanked him, because it had every time in it. The next day, she used it to speak with the family. Nam feels calm, because he followed every step.`,
+        `Nam was serving the soup at table six when a guest suddenly started coughing badly. Nam called first aid, and he was with the guest all the time. First aid came in two minutes. After service, Nam was writing the report in the handover book when the manager arrived. She read it and thanked him, because it had the exact times. The next day, she used it to speak with the family. Nam feels calm, because he followed every step.`,
         [
           {
             q: "Nam đang làm gì khi khách bị ho sặc?",
@@ -3395,7 +3475,7 @@ function week29(): LessonContent[] {
             ],
             correct: 0,
             explanation:
-              "'it had every time in it… she used it to speak with the family' — báo cáo có giờ giấc là thứ quản lý dùng được.",
+              "'it had the exact times… she used it to speak with the family' — báo cáo có giờ giấc là thứ quản lý dùng được.",
           },
         ],
       ),
@@ -3404,7 +3484,7 @@ function week29(): LessonContent[] {
           "Tell me what you did when the guest started coughing.",
           "I called first aid, and I was with the guest all the time.",
           "I call first aid, and I was with the guest all the time.",
-          "I hit him hard on the back many times until he was okay.",
+          "I gave him some water and waited to see if he felt better.",
           "manager",
           "Câu cuối tự làm sơ cứu khi không được đào tạo. Câu đúng gọi sơ cứu và ở cạnh khách.",
         ),
@@ -3412,9 +3492,9 @@ function week29(): LessonContent[] {
           "What were you doing when the glasses broke?",
           "I was clearing the bar when two glasses fell.",
           "I was clear the bar when two glasses fell.",
-          "Nothing. Glasses break every night, so I did not write it down.",
+          "I was clearing the bar when two glasses fell, so I threw them away.",
           "manager",
-          "Câu cuối bỏ qua sổ báo cáo đồ vỡ. Câu đúng kể việc đang làm khi chuyện xảy ra.",
+          "Câu cuối đúng ngữ pháp nhưng bỏ qua sổ báo cáo đồ vỡ. Câu đúng kể việc đang làm khi chuyện xảy ra.",
         ),
       ],
     }),
@@ -3465,7 +3545,7 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Anything else before you go?",
-          "Table nine was waiting for their bill when I left. Please check it.",
+          "Table nine was waiting for a missing dish when I left. Please check it.",
           "Quá khứ tiếp diễn: việc đang dở khi bạn rời sàn, và việc ca sau cần làm.",
           "colleague",
           undefined,
@@ -3490,6 +3570,13 @@ function week29(): LessonContent[] {
           "Ôn tuần 25–26: kể lại việc đã xử lý, đúng người đã làm.",
           "colleague",
           ["corked", "sommelier"],
+        ),
+        sp(
+          "Is the beer cold again?",
+          "Not yet. Two guests had a warm beer while I was checking the fridge.",
+          "Ôn tuần 27: quá khứ tiếp diễn + tên vấn đề đã học.",
+          "colleague",
+          ["warm", "beer"],
         ),
       ],
       reading: read(
@@ -3538,7 +3625,7 @@ function week29(): LessonContent[] {
         game(
           "Can my table still order the sea bass?",
           "No, it is on the sold-out list. Please offer the snapper.",
-          "No, it is in the sold-out list. Please offer the snapper.",
+          "No, it are on the sold-out list. Please offer the snapper.",
           "Maybe. Let the guest order it, and we will see what the kitchen says.",
           "colleague",
           "Câu cuối để khách gọi một món đã hết rồi mới báo. Câu đúng báo trước và đưa món thay thế.",
@@ -3598,9 +3685,10 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Where do I write a new booking?",
-          "New bookings go in the reservation book, not the handover book.",
-          "Chỉ đúng sổ cho đồng nghiệp.",
+          "New bookings go in the reservation book, so we never get a lost reservation.",
+          "Ôn tuần 27: đúng sổ cho đúng việc, và vì sao.",
           "colleague",
+          ["lost", "reservation"],
         ),
         sp(
           "Who took the call about the Lee party?",
@@ -3615,6 +3703,13 @@ function week29(): LessonContent[] {
           "Ôn tuần 27: sự việc + ai đã xử lý.",
           "manager",
           ["billing", "mistake"],
+        ),
+        sp(
+          "Anything from the kitchen tonight?",
+          "Table two sent back a salty soup, and the chef made a new one.",
+          "Ôn tuần 27: báo cấp trên — món gì, bàn nào, ai đã xử lý.",
+          "manager",
+          ["salty", "soup"],
         ),
       ],
       reading: read(
@@ -3666,10 +3761,10 @@ function week29(): LessonContent[] {
         game(
           "Where did you write the new booking for Friday?",
           "In the reservation book, with the guest's phone number.",
-          "In reservation book, with the guest's phone number.",
-          "On a piece of paper in my pocket. I will remember it.",
+          "I writed it in the reservation book, with the guest's phone number.",
+          "In my notebook. I will copy it into the reservation book later.",
           "manager",
-          "Câu cuối giữ đặt bàn ngoài sổ — ca sau không ai biết. Câu đúng ghi đúng sổ, đủ thông tin.",
+          "Câu cuối nghe cẩn thận nhưng đặt bàn chưa vào sổ — ca sau không ai biết. Câu đúng ghi đúng sổ ngay.",
         ),
       ],
     }),
@@ -3677,38 +3772,43 @@ function week29(): LessonContent[] {
 }
 
 // ── Week 30 — Checkpoint: putting it together ───────────────────────────
+// The checkpoint adds no new trade words. Nine cards present again week 23-29
+// words that no later lesson had said (the steak, the sold-out list, the
+// refusals about the bill, the handover books), each said at least twice
+// here; the other seven are the event words Phase 4 recycles (special
+// occasion, final headcount, set menu price…), kept so its review finds them.
 function week30(): LessonContent[] {
   const t1a = "For a special occasion like that, I recommend the tasting menu, madam.";
   const t1b = "Of course, madam. Our cake delivery time is nine o'clock, after the main course.";
-  const t1c = "I will take your wine order after you choose the food, madam.";
-  const t2a = "Because the room is kept only for your group, sir. The deposit payment holds it.";
-  const t2b = "Could you send the final headcount by Thursday, sir? The kitchen orders on Friday.";
-  const t2c = "Yes, sir. I will ask the banquet team to change the table layout.";
-  const t3a =
-    "I am very sorry, madam. The banquet team says the private room setup will finish by half past seven.";
-  const t3b =
-    "I understand, madam. If you like, I can serve your drinks in the bar while you wait.";
-  const t3c = "I will ask my manager about that, madam. She is coming to see you now.";
+  const t1d = "Of course, sir. I will ask the kitchen for medium rare.";
+  const t1e = "I am sorry, sir. The kitchen will cook a new steak, medium rare this time.";
+  const t2a = "Because the room is kept only for your group, sir. The deposit holds it.";
+  const t2b =
+    "Could you send the final headcount and table layout by Thursday, sir? The banquet team needs them.";
   return [
     L(30, 1, "Recommend and Promise", "Gợi ý và cam kết", {
       vocabulary: [
         c("Special occasion", "Is this dinner for a special occasion, madam?"),
-        c("Menu choice", "Please send us your menu choice by Thursday."),
         c("Cake delivery time", "The cake delivery time is nine o'clock, after the main course."),
         c("Wine order", "I will take your wine order after you choose the food."),
+        c("Medium rare", "A medium rare steak is pink in the middle.", [
+          "/ˈmiːdiəm reə/",
+          "Tái vừa (thịt bò chín tới, giữa còn hồng)",
+          "🥩",
+        ]),
       ],
       grammar: [
         g(
-          "This menu good for party.",
-          "For a special occasion, I recommend the tasting menu, madam.",
-          "Tuần 23: 'I recommend + the + món', không chen 'you' vào giữa.",
-          "For a special occasion, I recommend you the tasting menu, madam.",
+          "Steak pink. Okay.",
+          "I will ask the kitchen to cook it medium rare, sir.",
+          "Tuần 26: 'ask + người + to + động từ' — thiếu 'to' là sai.",
+          "I will ask the kitchen cook it medium rare, sir.",
         ),
         g(
           "Cake nine, ok.",
-          "We are going to bring the cake at nine, after the main course.",
-          "Tuần 25: 'be going to + động từ dạng gốc' cho kế hoạch đã định.",
-          "We are going to bringing the cake at nine, after the main course.",
+          "Our cake delivery time is nine o'clock, after the main course.",
+          "Một mốc giờ là số ít: 'is', không phải 'are'.",
+          "Our cake delivery time are nine o'clock, after the main course.",
         ),
       ],
       speaking: [
@@ -3728,120 +3828,121 @@ function week30(): LessonContent[] {
           t1a,
         ),
         sp(
-          "And the wine?",
-          t1c,
-          "Thứ tự hợp lý: chọn món trước, chọn rượu sau.",
+          "My father cannot eat gluten. Will the kitchen know?",
+          "Yes, madam. I will write it in the allergy note and the special guest note.",
+          "Tuần 29: ghi đúng sổ để bếp và ca sau cùng biết.",
           undefined,
-          undefined,
-          t1b,
+          ["allergy", "note", "special", "guest"],
         ),
         sp(
-          "My father cannot eat gluten. Can he have the tasting menu?",
-          "I will check your dietary request with the chef before you order, madam.",
-          "Tuần 23 và 26: không tự trả lời về thành phần — hỏi bếp trước khi khách gọi món.",
-        ),
-        sp(
-          "When do you need our menu choice?",
-          "Please send your menu choice by Thursday, madam. The kitchen orders on Friday.",
-          "Mốc + lý do thật của mốc đó.",
-        ),
-        sp(
-          "Can we have sparkling wine when the cake comes?",
-          "Of course, madam. I will put the sparkling wine in an ice bucket for nine o'clock.",
-          "Tuần 23 và 25: đồ uống hợp dịp + việc bạn chuẩn bị, có mốc giờ.",
+          "I like my steak pink in the middle.",
+          t1d,
+          "Tuần 28: nói đúng tên mức chín với bếp.",
           undefined,
-          ["sparkling", "wine", "ice", "bucket"],
+          ["medium", "rare"],
         ),
         sp(
-          "My mother is diabetic. Will the kitchen know tonight?",
-          "Yes, madam. I will write it in the special guest note for the kitchen.",
-          "Tuần 29: ghi đúng chỗ để bếp và ca sau cùng biết.",
+          "It came back well done.",
+          t1e,
+          "Tuần 27–28: xin lỗi, làm lại món, nhắc lại mức chín.",
           undefined,
-          ["special", "guest", "note"],
+          ["cook", "new", "steak", "medium", "rare"],
+          t1d,
+        ),
+        sp(
+          "This red wine is too heavy for me.",
+          "I am sorry, madam. If you like, I will change your wine order and bring a different drink.",
+          "Tuần 28: đổi đồ uống là việc trong quyền của bạn.",
+          undefined,
+          ["wine", "order", "bring", "different", "drink"],
         ),
       ],
       reading: read(
-        `Mrs Lee is planning her parents' fortieth anniversary. Hieu asks if it is a special occasion and recommends the tasting menu. He writes the cake delivery time on the order: nine o'clock, after the main course. Mrs Lee's father cannot eat gluten, so Hieu checks the dietary request with the chef before she chooses. Finally, he asks for her menu choice by Thursday, because the kitchen orders on Friday. Mrs Lee sends it on Wednesday.`,
+        `Mr Chen orders a steak, medium rare. It comes back well done, so Hieu apologises and asks the kitchen to cook a new steak. Mrs Chen wants the sea bass, but it is on the sold-out list, so Hieu recommends the snapper. Later, she finds her red wine too heavy, and Hieu offers to bring a different drink. He does not argue about the wine, and he does not promise anything free. The Chens thank him at the end of the night.`,
         [
           {
-            q: "Hiếu hẹn mang bánh ra lúc nào?",
+            q: "Hiếu làm gì khi món bò bị chín quá?",
             options: [
-              "Ngay khi khách vừa tới nhà hàng",
-              "Lúc chín giờ, sau món chính",
-              "Trước món khai vị của bữa tiệc",
+              "Giải thích rằng bò chín kỹ vẫn ngon",
+              "Xin lỗi và nhờ bếp làm phần bò mới",
+              "Bỏ món bò khỏi hóa đơn cho khách",
             ],
             correct: 1,
             explanation:
-              "'the cake delivery time on the order: nine o'clock, after the main course' — lời hứa có mốc, và được ghi lại.",
+              "'Hieu apologises and asks the kitchen to cook a new steak' — làm lại món là việc trong quyền của bạn.",
           },
           {
-            q: "Hiếu làm gì với chuyện bố của bà Lee không ăn được gluten?",
+            q: "Vì sao Hiếu gợi ý cá hồng?",
             options: [
-              "Tự chọn món khác cho ông",
-              "Khuyên ông ăn ít đi một chút",
-              "Hỏi bếp về yêu cầu ăn kiêng",
+              "Vì cá hồng rẻ hơn cá vược",
+              "Vì bà Chen không thích cá vược",
+              "Vì cá vược đã có trong danh sách món đã hết",
             ],
             correct: 2,
             explanation:
-              "'Hieu checks the dietary request with the chef' — thành phần món ăn là câu trả lời của bếp.",
+              "'it is on the sold-out list, so Hieu recommends the snapper' — báo món hết, đưa ngay món thay thế.",
           },
           {
-            q: "Vì sao Hiếu cần lựa chọn thực đơn trước thứ Năm?",
+            q: "Vì sao Hiếu không hứa gì miễn phí?",
             options: [
-              "Vì bếp đặt nguyên liệu vào thứ Sáu",
-              "Vì thứ Năm nhà hàng đóng cửa",
-              "Vì giá thực đơn tăng sau thứ Năm",
+              "Vì đồ miễn phí là quyết định của quản lý",
+              "Vì khách không đòi gì miễn phí",
+              "Vì món bò mới đã đủ để xin lỗi",
             ],
             correct: 0,
             explanation:
-              "'because the kitchen orders on Friday' — hạn chót có lý do thật, khách hiểu được.",
+              "Bài không nói thẳng, nhưng cả giai đoạn ba dạy: đổi món thì được, mời miễn phí là việc của quản lý.",
           },
         ],
       ),
       game: [
         game(
-          "We are celebrating our wedding anniversary. Any ideas?",
-          "How wonderful, sir. For a special occasion, I recommend the tasting menu.",
-          "How wonderful, sir. For a special occasion, I recommend you the tasting menu.",
-          "Everything here is special, sir.",
+          "My steak is grey inside. I wanted it pink.",
+          "I am sorry, sir. The kitchen will cook a new steak, medium rare this time.",
+          "I am sorry, sir. The kitchen will cooks a new steak, medium rare this time.",
+          "It is still a good steak, sir. Most guests prefer it like this.",
           undefined,
-          "Câu cuối không gợi ý gì cụ thể. Câu đúng vui cùng khách và gợi ý theo dịp của khách.",
+          "Câu cuối bảo khách chấp nhận món sai. Câu đúng xin lỗi, làm lại, nhắc đúng mức chín.",
         ),
         game(
-          "When will the birthday cake come out?",
-          "Our cake delivery time is nine o'clock, after the main course.",
-          "Our cake delivery time is nine o'clock, after main course.",
-          "When it is ready, madam. The kitchen decides that.",
+          "This white wine is far too dry for me.",
+          "I am sorry, madam. If you like, I will bring a different drink.",
+          "I am sorry, madam. If you like, I will brings a different drink.",
+          "It is our best wine, madam. Please give it a second chance.",
           undefined,
-          "Câu cuối không cho khách mốc nào. Câu đúng nói giờ đã hẹn và thứ tự món.",
+          "Câu cuối bảo khách cố uống thứ khách không thích. Câu đúng xin lỗi và đổi đồ uống — việc trong quyền của bạn.",
         ),
       ],
     }),
 
     L(30, 2, "Explain and Coordinate", "Giải thích và điều phối", {
       vocabulary: [
-        c("Deposit payment", "Your deposit payment keeps the room for your group."),
         c("Final headcount", "Please send the final headcount by Thursday."),
         c("Table layout", "The banquet team will change the table layout to one long table."),
         c("Set menu price", "The set menu price is per person, with soft drinks."),
+        c("Take off the service charge", "Only the manager can take off the service charge.", [
+          "/teɪk ɒf ðə ˈsɜːvɪs tʃɑːdʒ/",
+          "Bỏ phí phục vụ khỏi hóa đơn",
+          "💵",
+        ]),
       ],
       grammar: [
         g(
-          "Pay first, rule.",
-          "We have to take a deposit payment because the room is kept for you.",
-          "Tuần 24: 'because' + mệnh đề; 'because of' chỉ đi với danh từ.",
-          "We have to take a deposit payment because of the room is kept for you.",
+          "Price, each person.",
+          "The set menu price is per person, sir.",
+          "'The set menu price' là một mức giá: 'is', không phải 'are'.",
+          "The set menu price are per person, sir.",
         ),
         g(
-          "Number people, tell me.",
-          "Could you send the final headcount by Thursday, sir?",
-          "'by Thursday' = không muộn hơn thứ Năm. 'until' là kéo dài tới lúc đó — sai nghĩa ở đây.",
-          "Could you send the final headcount until Thursday, sir?",
+          "Table, send me.",
+          "Could you send the table layout by Thursday, sir?",
+          "Sau 'Could you' động từ ở dạng gốc: 'send', không thêm -ing.",
+          "Could you sending the table layout by Thursday, sir?",
         ),
       ],
       speaking: [
         sp(
-          "Why do you need a deposit payment for the private room?",
+          "Why do you need a deposit for the private room?",
           t2a,
           "Tuần 24: lý do thật bằng 'because'.",
         ),
@@ -3853,42 +3954,52 @@ function week30(): LessonContent[] {
           undefined,
           t2a,
         ),
-        sp(
-          "Can we have one long table for everyone?",
-          t2c,
-          "Tuần 26: một yêu cầu, một bộ phận làm.",
-          undefined,
-          ["banquet", "team"],
-          t2b,
-        ),
         risk(
           also(
             sp(
               "Can you give us ten percent off the set menu price?",
-              "I am sorry, sir, I cannot change the set menu price. I will ask the restaurant manager to call you.",
-              "Giảm giá là của quản lý nhà hàng. Từ chối rõ, và hứa điều bạn làm được: nhờ quản lý gọi lại.",
+              "I am sorry, sir, I cannot change the price. I will ask the manager to call you.",
+              "Giảm giá là của quản lý. Từ chối rõ, và hứa điều bạn làm được: nhờ quản lý gọi lại.",
               undefined,
-              ["change", "set", "menu", "price", "ask", "restaurant", "manager", "call"],
+              ["change", "price", "ask", "manager", "call"],
+            ),
+            ["I am sorry, sir, I cannot change the price. The manager will speak with you."],
+          ),
+        ),
+        risk(
+          also(
+            sp(
+              "The service was slow tonight. Please take off the service charge.",
+              "I am sorry, sir, I cannot take off the service charge. I will ask my manager to come.",
+              "Tuần 28: phí phục vụ là tiền — bạn không bỏ. Mời quản lý tới.",
+              undefined,
+              ["take", "service", "charge", "ask", "manager", "come"],
             ),
             [
-              "I am sorry, sir, I cannot change the set menu price. I will ask our restaurant manager to call you.",
-              "I am sorry, sir. I will ask the restaurant manager to call you, because I cannot change the set menu price.",
+              "I am sorry, sir, I cannot take off the service charge. My manager can review it with you.",
             ],
           ),
         ),
         sp(
-          "We will bring our own champagne. Is that all right?",
-          "Of course, sir. The corkage fee is per bottle, and it is on the drinks menu.",
-          "Tuần 24: đồng ý, báo phí trước, chỉ chỗ có giá.",
+          "Is the coffee complimentary with the set menu?",
+          "I am not sure, sir. I will ask my manager if it is complimentary.",
+          "Tuần 28: không chắc thì không hứa — hỏi người có quyền.",
           undefined,
-          ["corkage", "fee"],
+          ["ask", "manager", "complimentary"],
         ),
         sp(
-          "Who can explain the bill to our accountant?",
-          "Our cashier can explain the itemised bill, sir.",
-          "Tuần 26 và 27: đúng người giải thích, đúng loại hóa đơn.",
-          undefined,
-          ["cashier", "itemised", "bill"],
+          "How was lunch today?",
+          "Busy. The covers report says sixty, and every booking was in the reservation book.",
+          "Tuần 29: báo cấp trên bằng con số và đúng sổ.",
+          "manager",
+          ["covers", "report", "reservation", "book"],
+        ),
+        sp(
+          "Where do I write the Lee party booking?",
+          "Please write it in the reservation book, with the set menu price.",
+          "Tuần 29: đúng sổ cho đúng việc.",
+          "colleague",
+          ["reservation", "book", "set", "menu", "price"],
         ),
         sp(
           "What happens if we cancel the dinner?",
@@ -3899,204 +4010,231 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Patel books the private room for a team dinner. Vy explains the deposit payment: the room is kept only for his group. She asks for the final headcount by Thursday, and she asks the banquet team for one long table. When Mr Patel asks for ten percent off the set menu price, Vy says she cannot change it. She asks the restaurant manager to call him, and the manager calls that afternoon. The group later books the room for a second dinner.`,
+        `Mr Patel books the private room for a team dinner. Vy explains the deposit and asks for the final numbers by Thursday. When he asks for ten percent off, she says she cannot change the price and asks the manager to call him. On the night, Mr Patel asks Vy to take off the service charge. She explains that she cannot, and her manager comes to the table. After service, Vy writes the numbers in the covers report.`,
         [
           {
-            q: "Vy nhờ ai sắp xếp một bàn dài?",
-            options: ["Bếp trưởng", "Bộ phận đặt bàn của nhà hàng", "Tổ tiệc của khách sạn"],
-            correct: 2,
-            explanation:
-              "'she asks the banquet team for one long table' — một yêu cầu, đúng một bộ phận làm.",
-          },
-          {
-            q: "Ai trả lời ông Patel về việc giảm giá?",
+            q: "Vy trả lời thế nào khi khách xin giảm mười phần trăm?",
             options: [
-              "Quản lý nhà hàng, qua điện thoại",
-              "Vy, ngay tại bàn khi khách vừa hỏi",
-              "Thu ngân, khi in hóa đơn cuối buổi",
-            ],
-            correct: 0,
-            explanation:
-              "'She asks the restaurant manager to call him' — giảm giá là quyết định của quản lý.",
-          },
-          {
-            q: "Vy hứa điều gì với ông Patel về giảm giá?",
-            options: [
-              "Hứa giảm mười phần trăm nếu đoàn đông",
-              "Chỉ hứa nhờ quản lý gọi lại cho ông",
-              "Hứa quản lý sẽ đồng ý giảm giá",
+              "Đồng ý giảm vì đoàn khách đông",
+              "Không đổi giá, nhờ quản lý gọi lại",
+              "Hứa sẽ giảm vào lần đặt sau",
             ],
             correct: 1,
             explanation:
-              "Vy chỉ hứa việc của mình — nhờ quản lý gọi — không hứa thay quản lý điều gì.",
+              "'she cannot change the price and asks the manager to call him' — giá là việc của quản lý.",
+          },
+          {
+            q: "Khi khách đòi bỏ phí phục vụ, ai tới bàn?",
+            options: ["Thu ngân của nhà hàng", "Đồng nghiệp ở quầy bar", "Quản lý của Vy"],
+            correct: 2,
+            explanation:
+              "'She explains that she cannot, and her manager comes to the table' — từ chối rõ, rồi người có quyền tới.",
+          },
+          {
+            q: "Việc nào Vy làm SAU CÙNG?",
+            options: [
+              "Ghi số khách vào báo cáo lượt khách",
+              "Hỏi số khách chốt trước thứ Năm",
+              "Giải thích tiền cọc phòng riêng",
+            ],
+            correct: 0,
+            explanation:
+              "Thứ tự: tiền cọc → số khách → giảm giá → phí phục vụ → sau ca mới ghi báo cáo lượt khách.",
           },
         ],
       ),
       game: [
         game(
-          "Could you knock ten percent off the set menu price for our group?",
-          "I am sorry, sir, I cannot change the set menu price. I will ask the restaurant manager to call you.",
-          "I am sorry, sir, I cannot changing the set menu price. I will ask the restaurant manager to call you.",
-          "Of course, sir. For a big group like yours, I can give you ten percent off myself.",
+          "Could you knock ten percent off the price for our group?",
+          "I am sorry, sir, I cannot change the price. I will ask the manager to call you.",
+          "I am sorry, sir, I cannot changing the price. I will ask the manager to call you.",
+          "Of course, sir. I will put ten percent off on the bill for you.",
           undefined,
           "Câu cuối tự giảm giá — vượt quyền. Câu đúng từ chối lịch sự và chuyển đúng người.",
         ),
         game(
-          "Do you really need the final headcount so early?",
-          "Yes, sir, because the kitchen orders the food on Friday.",
-          "Yes, sir, because of the kitchen orders the food on Friday.",
-          "Not really, sir. Send it whenever you like.",
+          "Is the coffee free with the set menu?",
+          "I am not sure, sir. I will ask my manager if it is complimentary.",
+          "I am not sure, sir. I will asking my manager if it is complimentary.",
+          "Yes, sir. Coffee is always included.",
           undefined,
-          "Câu cuối bỏ qua hạn chót có lý do thật. Câu đúng nói lý do để khách hiểu.",
+          "Câu cuối đoán chính sách giá. Câu đúng không hứa, hỏi người có quyền.",
         ),
       ],
     }),
 
     L(30, 3, "Apologise and Solve", "Xin lỗi và giải quyết", {
       vocabulary: [
-        c("Private room setup", "The private room setup takes about two hours."),
-        c("Final bill", "The final bill comes after the last drink."),
-        c("Split the bill", "We can split the bill for each guest at the table.", [
-          "/splɪt ðə bɪl/",
-          "Chia hóa đơn",
-          "➗",
+        c("Remove it from the bill", "Only the manager can remove it from the bill."),
+        c("Complimentary", "Anything complimentary is the manager's decision.", [
+          "/ˌkɒmplɪˈmentri/",
+          "Miễn phí (nhà hàng mời)",
+          "🎁",
+        ]),
+        c("Sold-out list", "The sea bass is on the sold-out list tonight."),
+        c("Chipped glass", "A chipped glass is never served to a guest.", [
+          "/tʃɪpt ɡlɑːs/",
+          "Ly bị sứt mẻ",
+          "🥂",
         ]),
       ],
       grammar: [
         g(
-          "Room not ready, sorry.",
-          "I am very sorry the room is late. It will be ready by half past seven.",
-          "Tuần 25 và 27: xin lỗi + mốc mới. 'will be ready' — không được bỏ 'be'.",
-          "I am very sorry the room is late. It will ready by half past seven.",
+          "Bill? I fix.",
+          "I am sorry, I cannot remove it from the bill myself.",
+          "Tuần 28: sau 'cannot' động từ ở dạng gốc, không thêm -ing.",
+          "I am sorry, I cannot removing it from the bill myself.",
         ),
         g(
-          "Bill wrong? Not me.",
-          "If there is a mistake on the final bill, the manager will check it.",
-          "Tuần 28: mệnh đề 'If' dùng hiện tại ('there is'), không dùng 'will'.",
-          "If there will be a mistake on the final bill, the manager will check it.",
+          "Glass broken, no problem.",
+          "That glass is chipped, so I will replace it now.",
+          "'chipped' (bị sứt) cần -ed. Cảnh báo trước, thay ngay.",
+          "That glass is chip, so I will replace it now.",
         ),
       ],
       speaking: [
-        sp(
-          "We arrived at seven, and the room is still not ready!",
-          t3a,
-          "Tuần 27: xin lỗi về điều khách gặp + mốc giờ mà tổ tiệc đã báo.",
+        risk(
+          also(
+            sp(
+              "We waited an hour for our room. Are the drinks in the bar free?",
+              "I am not sure if they are complimentary, madam. I will ask my manager to come.",
+              "Miễn phí hay không là quyết định của quản lý — bạn không hứa, bạn mời quản lý tới.",
+              undefined,
+              ["complimentary", "ask", "manager", "come"],
+            ),
+            ["I will ask my manager about that, madam. She is coming to your table now."],
+          ),
+        ),
+        risk(
+          also(
+            sp(
+              "The fish was terrible. Take it off my bill.",
+              "I am sorry, sir, I cannot remove it from the bill. My manager can review it with you.",
+              "Tuần 28: bạn không sửa hóa đơn — quản lý xem xét.",
+              undefined,
+              ["remove", "bill", "manager", "review"],
+            ),
+            ["I am sorry, sir, I cannot remove it from the bill. I will ask my manager to come."],
+          ),
         ),
         sp(
-          "This is a special night for us.",
-          t3b,
-          "Tuần 28: một việc trong quyền của bạn, để khách chọn.",
+          "There is a hair in my soup!",
+          "I am so sorry, madam. I will replace the dish and tell my manager now.",
+          "Dị vật trong món: xin lỗi, thay món, báo quản lý — không tranh luận.",
           undefined,
-          undefined,
-          t3a,
+          ["replace", "dish", "manager"],
         ),
         sp(
-          "Will we have to pay for those drinks?",
-          t3c,
-          "Miễn phí hay không là quyết định của quản lý — bạn không hứa.",
+          "My glass has a small crack.",
+          "I am sorry, sir, that is a chipped glass. I will replace it straight away.",
+          "Tuần 27: ly sứt không bao giờ dùng tiếp — thay ngay.",
           undefined,
-          undefined,
-          t3b,
+          ["chipped", "glass"],
         ),
         sp(
-          "I think there is a mistake on the final bill.",
-          "I am sorry, sir. The manager will check the final bill with you now.",
-          "Bạn không tự sửa hóa đơn: quản lý kiểm tra cùng khách.",
+          "What did you tell table five about their bill?",
+          "I said I cannot remove it from the bill or take off the service charge.",
+          "Báo cấp trên đúng điều bạn đã nói với khách.",
+          "manager",
+          ["remove", "bill", "service", "charge"],
         ),
         sp(
-          "Can we pay separately? There are four of us.",
-          "Of course, sir. I will split the bill and bring our card machine.",
-          "Tuần 28: thanh toán tại bàn, đúng cách khách muốn.",
-          undefined,
-          ["card", "machine"],
+          "Your machine says my card is declined.",
+          "I am sorry, sir. Would you like to try another card, or pay in cash?",
+          "Thẻ bị từ chối: nói nhỏ, lịch sự, đưa lựa chọn — không làm khách ngượng.",
         ),
         sp(
-          "Careful, the floor by the door is wet.",
-          "Thank you, sir. I will put a wet floor sign by the door now.",
-          "Tuần 27: an toàn trước, rồi mới lau.",
+          "Is the sea bass still available tonight?",
+          "I am sorry, madam, it is on the sold-out list. Would you like the snapper instead?",
+          "Tuần 29: món đã hết + món thay thế.",
           undefined,
-          ["wet", "floor", "sign"],
+          ["sold", "list"],
         ),
         sp(
-          "We could not finish the cake. Can we take it home?",
-          "Of course, madam. I will wrap it to take away.",
-          "Tuần 28: việc nhỏ trong quyền của bạn.",
-          undefined,
-          ["wrap", "take", "away"],
+          "Table six wants the sea bass and a new steak.",
+          "The sea bass is on the sold-out list, and the kitchen will cook a new steak.",
+          "Nói với đồng nghiệp: món đã hết + việc bếp làm.",
+          "colleague",
+          ["sold", "list", "cook", "steak"],
         ),
       ],
       reading: read(
-        `Mrs Kim's group arrives at seven, but the private room setup is not finished. Thu apologises and checks with the banquet team: the room will be ready by half past seven. While they wait, she offers to serve their drinks in the bar. Mrs Kim asks if the drinks will be free. Thu does not promise anything. She asks her manager, who comes to speak with Mrs Kim before dinner. The group sits down a little before half past seven.`,
+        `At table nine, Mrs Kim finds a hair in her soup. Thu apologises at once, replaces the dish and tells her manager. Then Mrs Kim notices a chipped glass, and Thu replaces it straight away. Mrs Kim asks Thu to take the soup off the bill. Thu explains that she cannot remove it from the bill herself, and she asks her manager to come. The manager speaks with Mrs Kim before dessert. Mrs Kim later thanks Thu for staying so calm.`,
         [
           {
-            q: "Thu đưa ra giải pháp gì trong lúc khách chờ?",
+            q: "Thu làm gì khi khách thấy sợi tóc trong súp?",
             options: [
-              "Mời khách về phòng nghỉ trước",
-              "Phục vụ đồ uống ở quầy bar",
-              "Cho khách ngồi tạm ở sảnh",
-            ],
-            correct: 1,
-            explanation:
-              "'she offers to serve their drinks in the bar' — giải pháp trong quyền của người phục vụ.",
-          },
-          {
-            q: "Khi khách hỏi đồ uống có miễn phí không, Thu làm gì?",
-            options: ["Hứa miễn phí luôn", "Nói rằng khách phải trả hết", "Không hứa, hỏi quản lý"],
-            correct: 2,
-            explanation:
-              "'Thu does not promise anything. She asks her manager' — đồ miễn phí là việc của quản lý.",
-          },
-          {
-            q: "Thu làm gì TRƯỚC khi đưa mốc bảy giờ rưỡi?",
-            options: [
-              "Hỏi tổ tiệc khi nào phòng xong",
-              "Mời khách vào quầy bar",
-              "Gọi quản lý tới gặp khách",
+              "Xin lỗi, thay món và báo quản lý",
+              "Vớt sợi tóc ra rồi để khách ăn tiếp",
+              "Hỏi khách có chắc đó là tóc không",
             ],
             correct: 0,
             explanation:
-              "'checks with the banquet team: the room will be ready by half past seven' — mốc của bộ phận khác phải hỏi họ trước.",
+              "'Thu apologises at once, replaces the dish and tells her manager' — dị vật thì thay món và báo người có quyền.",
+          },
+          {
+            q: "Thu trả lời gì khi khách muốn bỏ món súp khỏi hóa đơn?",
+            options: [
+              "Đồng ý bỏ ngay vì lỗi rõ ràng",
+              "Nói không thể và để khách tự trả",
+              "Không tự bỏ, mời quản lý tới",
+            ],
+            correct: 2,
+            explanation:
+              "'she cannot remove it from the bill herself, and she asks her manager to come' — sửa hóa đơn là việc của quản lý.",
+          },
+          {
+            q: "Vì sao Thu thay ly ngay?",
+            options: [
+              "Vì khách muốn dùng ly to hơn",
+              "Vì ly sứt có thể làm khách đứt tay, miệng",
+              "Vì quản lý sắp tới bàn",
+            ],
+            correct: 1,
+            explanation:
+              "Bài không nói thẳng, nhưng ly sứt là rủi ro an toàn — không bao giờ để khách dùng tiếp.",
           },
         ],
       ),
       game: [
         game(
-          "Our room was not ready, so the drinks are free, right?",
-          "I will ask my manager about that, madam. She is coming to see you now.",
-          "I will ask my manager about that, madam. She is come to see you now.",
-          "Yes, madam. All your drinks are free.",
+          "I found a hair in my pasta.",
+          "I am so sorry, madam. I will replace the dish and tell my manager now.",
+          "I am so sorry, madam. I will replacing the dish and tell my manager now.",
+          "I am sorry, madam. I will take the hair out for you.",
           undefined,
-          "Câu cuối tự hứa miễn phí — việc của quản lý. Câu đúng không hứa và mời quản lý tới ngay.",
+          "Câu cuối chỉ vớt dị vật rồi để khách ăn tiếp. Câu đúng thay món và báo quản lý.",
         ),
         game(
-          "We want to pay separately, please.",
-          "Of course, sir. I will split the bill and bring our card machine.",
-          "Of course, sir. I will splitting the bill and bring our card machine.",
-          "Sorry, sir. One table, one bill.",
+          "Please take the soup off our bill.",
+          "I am sorry, sir, I cannot remove it from the bill. My manager can review it with you.",
+          "I am sorry, sir, I cannot to remove it from the bill. My manager can review it with you.",
+          "Of course, sir. I will remove it from the bill now.",
           undefined,
-          "Câu cuối từ chối một việc nhà hàng làm được. Câu đúng chia hóa đơn và thanh toán tại bàn.",
+          "Câu cuối tự sửa hóa đơn — việc của quản lý. Câu đúng từ chối lịch sự và chuyển đúng người.",
         ),
       ],
     }),
 
     L(30, 4, "End of Phase Three", "Kết thúc giai đoạn ba", {
       vocabulary: [
-        c("Confident", "I feel confident with difficult guests now."),
-        c("Reservation time", "The reservation time for the Lee party is eight o'clock."),
-        c("Dietary request", "Please tell us any dietary request before the dinner."),
+        c("Menu choice", "Please send us your menu choice by Thursday."),
+        c("Handover book", "I wrote the open items in the handover book."),
+        c("Fridge temperature log", "We fill in the fridge temperature log twice a day."),
+        c("Bar count", "We do the bar count after the last order."),
       ],
       grammar: [
         g(
-          "I know everything now.",
-          "I feel more confident now, and I still ask my manager when I am not sure.",
-          "Tự tin nhưng biết giới hạn. 'ask my manager' — không có 'to' sau 'ask'.",
-          "I feel more confident now, and I still ask to my manager when I am not sure.",
+          "Count not finish.",
+          "The bar count from my shift has not been finished yet.",
+          "Tuần 29: hiện tại hoàn thành bị động — 'has not been finished', cần -ed.",
+          "The bar count from my shift has not been finish yet.",
         ),
         g(
-          "Time eight.",
-          "Can we check the reservation time for the Lee party?",
-          "Sau 'Can we' động từ ở dạng gốc: 'check', không thêm -ing.",
-          "Can we checking the reservation time for the Lee party?",
+          "Fridge? I write.",
+          "I was checking the fridge temperature log when the chef called.",
+          "Tuần 29: quá khứ tiếp diễn 'was checking' cho việc đang làm.",
+          "I was check the fridge temperature log when the chef called.",
         ),
       ],
       speaking: [
@@ -4106,81 +4244,99 @@ function week30(): LessonContent[] {
           "Câu chốt giai đoạn ba: tự tin, và vẫn hỏi đúng người.",
           "manager",
         ),
-        sp(
-          "Can you confirm our reservation time for tomorrow?",
-          "Of course, sir. Your reservation time is eight o'clock, for twelve guests.",
-          "Xác nhận đủ: giờ + số khách.",
-        ),
         risk(
           also(
             sp(
               "A guest at table three is very drunk and wants more wine.",
-              "Please do not serve him more alcohol. I will call the restaurant manager.",
-              "Tuần 26: không rót thêm, gọi quản lý nhà hàng. Nói với đồng nghiệp: ngắn, rõ.",
+              "Please do not serve him more alcohol. I will call the manager.",
+              "Tuần 26: không rót thêm, gọi quản lý. Nói với đồng nghiệp: ngắn, rõ.",
               "colleague",
-              ["serve", "alcohol", "call", "restaurant", "manager"],
+              ["serve", "alcohol", "call", "manager"],
             ),
-            [
-              "Please do not serve him any more alcohol. I will call the restaurant manager.",
-              "I will call the restaurant manager. Please do not serve him more alcohol.",
-            ],
+            ["Please stop serving him alcohol. I will call the manager now."],
           ),
         ),
         sp(
-          "Can we look back at tonight? What was the hardest moment?",
-          "A guest wanted a discount. I did not promise it, and I asked you to come.",
-          "Nhìn lại ca với quản lý: chuyện gì, bạn đã làm gì, theo đúng thẩm quyền.",
-          "manager",
-        ),
-        sp(
           "Before service, what should we check?",
-          "Every dietary request, and the allergy notes for tonight's bookings.",
-          "Tuần 29: trước giờ phục vụ, đọc ghi chú dị ứng và yêu cầu ăn kiêng.",
+          "The menu choice for the Lee party, the station checklist and the fridge temperature log.",
+          "Tuần 29: trước giờ phục vụ, đọc đúng sổ.",
           "manager",
-          ["allergy", "notes"],
+          ["menu", "choice", "station", "checklist", "fridge", "temperature", "log"],
         ),
         sp(
-          "Anything about the walk-ins tonight?",
-          "Two walk-ins were waiting at eight, so I put them in the table plan.",
-          "Tuần 29: quá khứ tiếp diễn + việc đã làm.",
+          "Anything open from your shift?",
+          "The bar count from my shift has not been finished yet. It is in the handover book.",
+          "Tuần 29: việc còn mở + đã ghi ở đâu.",
           "manager",
-          ["walk", "table", "plan"],
+          ["bar", "count", "handover", "book"],
+        ),
+        sp(
+          "What happened at the bar tonight?",
+          "I was doing the bar count when the fridge suddenly stopped. It is in the fridge temperature log.",
+          "Tuần 29: quá khứ tiếp diễn + đã ghi đúng sổ.",
+          "manager",
+          ["bar", "count", "fridge", "temperature", "log"],
+        ),
+        sp(
+          "Where do I write the wine delivery?",
+          "Please write it in the handover book and update the wine stock list.",
+          "Tuần 29: đúng sổ cho đồng nghiệp.",
+          "colleague",
+          ["handover", "book", "wine", "stock", "list"],
+        ),
+        sp(
+          "Did you finish the station checklist?",
+          "Yes. I was finishing the station checklist when two walk-ins arrived, so I updated the table plan.",
+          "Tuần 29: quá khứ tiếp diễn + việc chen vào.",
+          "colleague",
+          ["station", "checklist"],
+        ),
+        sp(
+          "Can we look back at tonight? What went well?",
+          "A guest disliked her wine, so I offered to bring a different drink.",
+          "Nhìn lại ca với quản lý: chuyện gì, bạn đã làm gì trong quyền của mình.",
+          "manager",
+          ["bring", "different", "drink"],
+        ),
+        sp(
+          "Anything else from table nine?",
+          "A guest found a hair in her salad, so I replaced the dish. One chipped glass is in the breakage report.",
+          "Báo cấp trên: sự việc + việc đã làm + sổ đã ghi.",
+          "manager",
+          ["chipped", "glass", "breakage", "report"],
         ),
       ],
       reading: read(
-        `After eight weeks, Hieu looks back at his notes with his manager. He feels more confident now. He recommends dishes, explains each charge with its real reason, and promises only times he can keep. When a guest asks for a discount, something complimentary or an allergy answer, he still asks the right person. His manager says that this is not a weakness. It is the job. Next month, Hieu will help to train two new waiters on the terrace.`,
+        `At the end of the evening, Hieu hands over to his manager. The bar count from his shift has not been finished yet, so he writes it in the handover book. He was checking the fridge temperature log when the bar fridge suddenly stopped, so he moved the food and told the chef. One chipped glass is in the breakage report. His manager reads the handover book and says he did the job well. Next month, Hieu will help to train two new waiters.`,
         [
           {
-            q: "Hiếu vẫn hỏi người khác trong những trường hợp nào?",
-            options: [
-              "Khi khách hỏi giờ mở cửa nhà hàng",
-              "Khi khách hỏi giảm giá, món miễn phí hay chuyện dị ứng",
-              "Khi khách muốn xem thực đơn rượu",
-            ],
-            correct: 1,
-            explanation:
-              "'a discount, something complimentary or an allergy answer, he still asks the right person' — những việc không thuộc quyền của người phục vụ.",
-          },
-          {
-            q: "Hiếu hứa thời gian như thế nào?",
-            options: [
-              "Hứa thật sớm để khách vui",
-              "Không bao giờ hứa giờ cụ thể",
-              "Chỉ hứa những mốc mình giữ được",
-            ],
+            q: "Việc nào chưa xong khi Hiếu hết ca?",
+            options: ["Sổ nhiệt độ tủ lạnh", "Báo cáo đồ vỡ", "Kiểm kê quầy bar"],
             correct: 2,
-            explanation: "'promises only times he can keep' — lời hứa có số và có trách nhiệm.",
+            explanation:
+              "'The bar count from his shift has not been finished yet' — việc còn mở được ghi vào sổ bàn giao.",
           },
           {
-            q: "Quản lý muốn nói gì khi bảo 'It is the job'?",
+            q: "Tủ lạnh quầy bar hỏng khi Hiếu đang làm gì?",
             options: [
-              "Hỏi đúng người là một phần của nghề, không phải điểm yếu",
-              "Hiếu cần tự quyết định nhiều việc hơn nữa trong những ca tối bận rộn",
-              "Hiếu chưa đủ tự tin để làm ca tối",
+              "Đang kiểm tra sổ nhiệt độ tủ lạnh",
+              "Đang bàn giao ca cho quản lý",
+              "Đang dọn ly bị sứt",
             ],
             correct: 0,
             explanation:
-              "'this is not a weakness. It is the job' — biết giới hạn của mình là một kỹ năng nghề.",
+              "'He was checking the fridge temperature log when the bar fridge suddenly stopped' — quá khứ tiếp diễn.",
+          },
+          {
+            q: "Vì sao quản lý khen Hiếu?",
+            options: [
+              "Vì Hiếu làm thêm giờ để kiểm kê xong",
+              "Vì mọi việc đều được ghi đúng sổ và xử lý kịp",
+              "Vì Hiếu tự sửa được tủ lạnh",
+            ],
+            correct: 1,
+            explanation:
+              "Bài không nói thẳng, nhưng việc còn mở, tủ lạnh hỏng và ly sứt đều đã được ghi đúng sổ — ca sau không phải đoán.",
           },
         ],
       ),
@@ -4195,11 +4351,11 @@ function week30(): LessonContent[] {
         ),
         game(
           "The man at table three wants another bottle, but he is very drunk.",
-          "Please do not serve him more alcohol. I will call the restaurant manager.",
-          "Please not serve him more alcohol. I will call the restaurant manager.",
-          "It is his money. Just bring him a small bottle.",
+          "Please do not serve him more alcohol. I will call the manager.",
+          "Please not serve him more alcohol. I will call the manager.",
+          "Just one more small glass, then we can stop.",
           "colleague",
-          "Câu cuối rót thêm cho khách đã uống quá nhiều. Câu đúng dừng phục vụ rượu và gọi quản lý.",
+          "Câu cuối vẫn rót thêm cho khách đã uống quá nhiều. Câu đúng dừng phục vụ rượu và gọi quản lý.",
         ),
       ],
     }),
@@ -4227,5 +4383,5 @@ export const FB_P3_CAN_DO: Record<number, string> = {
   27: "Tiếp nhận phàn nàn: lắng nghe, xin lỗi đúng điều khách gặp mà không nhận lỗi, hỏi cho rõ sự việc, gọi sơ cứu và quản lý khi khách gặp nạn.",
   28: "Đề nghị điều mình được làm (làm lại món, đổi đồ uống, gói mang về, thanh toán tại bàn) bằng câu điều kiện, và từ chối rõ ràng việc bỏ món khỏi hóa đơn hay mời miễn phí.",
   29: "Bàn giao ca và báo cáo sự cố với đồng nghiệp, quản lý bằng quá khứ tiếp diễn: ghi chú dị ứng, việc còn mở, ghi đúng sổ cho đúng việc.",
-  30: "Kết hợp cả giai đoạn: gợi ý cho dịp đặc biệt, giải thích phí và hạn chót, xin lỗi và giải quyết, từ chối giảm giá rồi chuyển quản lý — tự tin nhưng biết khi nào phải hỏi.",
+  30: "Kết hợp cả giai đoạn, không thêm từ mới: gợi ý cho dịp đặc biệt, giải thích phí và hạn chót, xin lỗi và thay món, từ chối giảm giá, bỏ phí hay bỏ món khỏi hoá đơn rồi mời quản lý, ngừng phục vụ rượu cho khách say — tự tin nhưng biết khi nào phải hỏi.",
 };
