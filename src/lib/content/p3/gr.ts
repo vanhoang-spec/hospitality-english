@@ -51,6 +51,15 @@
 //    to words of the trade: discretion, itinerary, inconvenience,
 //    valuables, lost and found, escalate, goodwill gesture.
 //  · The course spells British: apologise, personalised.
+//  · Every card of weeks 23-28 is said again in a later week before the
+//    checkpoint, mostly in the "Ôn tuần" turns of weeks 26-29, and each week
+//    says one phase-2 word again (afternoon tea, lounge hours, wake-up time…).
+//  · In half the game rounds the broken-English option is a broken copy of
+//    the wrong-for-the-job reply, not of the key, so the near-identical pair
+//    is not always where the answer is.
+//  · Nothing is promised "never again", nothing a guest has not agreed to is
+//    filed, and no model reply leans on a card before the week that
+//    teaches it (the courtesy call, the bell desk, the guest preference file).
 //
 // Cards keep the reviewed GR bank entries (kit.ts looks them up), because
 // Phase 4 recycles them; words the course already teaches earlier
@@ -80,7 +89,7 @@ function week23(): LessonContent[] {
   const t3b = "It is bigger than the welcome amenity: flowers, a cake and a card.";
   const t3c =
     "I am sorry, I cannot offer a free spa credit. The front office can tell you the price.";
-  const t4a = "Lounge breakfast is a privilege of your room. So is the evening cocktail hour.";
+  const t4a = "Lounge breakfast and the evening cocktail hour are privileges of your room.";
   const t4b = "Of course, sir. The lounge also serves tea and coffee in the evening.";
   const t4c = "No problem, sir. The main restaurant is also very good.";
   return [
@@ -134,6 +143,7 @@ function week23(): LessonContent[] {
             ),
             "I cannot change the price, madam. The front office will call you.",
             "I am sorry, I cannot change the price myself. The front office will call you about it.",
+            "I cannot change the price, but the front office will call you.",
           ),
         ),
         sp(
@@ -191,7 +201,7 @@ function week23(): LessonContent[] {
         game(
           "Can I have the club floor room at my old price?",
           "I am sorry, I cannot change the price. The front office will call you.",
-          "I am sorry, I cannot changing the price. The front office will call you.",
+          "For you, madam, the old price are fine.",
           "For you, madam, the old price is fine.",
           undefined,
           "Câu cuối tự quyết giá — việc của lễ tân. Câu đúng từ chối nhẹ nhàng và nói ai sẽ gọi lại.",
@@ -289,7 +299,7 @@ function week23(): LessonContent[] {
         game(
           "Is the limousine worth it, or is the normal car fine?",
           "The limousine is more comfortable, sir, but the normal car is also good.",
-          "The limousine is more comfortabler, sir, but the normal car is also good.",
+          "I will booking the limousine for you now, sir, and add it to your bill.",
           "I will book the limousine for you now, sir, and add it to your bill.",
           undefined,
           "Câu cuối đặt dịch vụ có phí khi khách chưa chọn. Câu đúng so sánh trung thực và để khách chọn.",
@@ -401,8 +411,8 @@ function week23(): LessonContent[] {
         game(
           "It is my husband's birthday tomorrow.",
           "How lovely, madam! I recommend a cake and a card in your room.",
-          "How lovely, madam! I recommend a cake and a card in you room.",
-          "That is nice, madam. There is a good bakery across the street.",
+          "That is nice, madam. There is a very good bakery across of the street.",
+          "That is nice, madam. There is a very good bakery across the street.",
           undefined,
           "Câu cuối đẩy khách ra ngoài khách sạn. Câu đúng chúc mừng và gợi ý một điều cụ thể khách sạn làm được.",
         ),
@@ -484,6 +494,11 @@ function week23(): LessonContent[] {
             "Private check-in is quieter, madam, but the lobby desk is also quick today.",
             "So sánh trung thực, không ép khách chọn dịch vụ cao hơn.",
           ),
+          sp(
+            "Is there anything in the lounge before the cocktail hour?",
+            "Yes, madam. Afternoon tea is served in the lounge from three o'clock.",
+            "Nhắc lại một quyền lợi đã học từ trước (afternoon tea) và nói rõ giờ.",
+          ),
         ],
         reading: read(
           `Mr Novak is new to the club floor. Bao explains that lounge breakfast and the evening cocktail hour are privileges of his room. Mr Novak does not drink, so Bao mentions the tea and coffee in the lounge. Mr Novak also likes the main restaurant better for breakfast. Bao agrees at once and does not suggest anything a third time.`,
@@ -524,7 +539,7 @@ function week23(): LessonContent[] {
           game(
             "Is the cocktail hour part of my room?",
             "Yes, sir. It is a privilege of your club floor room.",
-            "Yes, sir. It is a privilege of you club floor room.",
+            "Yes, sir, and you can bring all you friends with you for free.",
             "Yes, sir, and you can bring all your friends with you for free.",
             undefined,
             "Câu cuối hứa điều sai quy định — khách thêm người phải trả phí vào phòng chờ. Câu đúng nói đúng quyền lợi của phòng.",
@@ -614,6 +629,11 @@ function week24(): LessonContent[] {
           "Nói rõ có phí hay không, và vì sao.",
         ),
         sp(
+          "When can I use the lounge?",
+          "Our lounge hours are from seven in the morning to ten at night, sir. The evening cocktail hour starts at six.",
+          "Nhắc lại giờ mở cửa (lounge hours, đã học) và một mốc giờ khách hay hỏi.",
+        ),
+        sp(
           "Can I come to the lounge in shorts this evening?",
           "In the evening, the lounge dress code asks for long trousers, sir. Shorts are fine in the morning.",
           "Nói quy định và đưa luôn điều khách CÓ THỂ làm.",
@@ -657,7 +677,7 @@ function week24(): LessonContent[] {
         game(
           "Can I wear my swimsuit in the lounge?",
           "I am sorry, madam. The lounge dress code asks for day clothes.",
-          "I am sorry, madam. The lounge dress code ask for day clothes.",
+          "Of course, madam. Nobody will says anything if you sit in the corner.",
           "Of course, madam. Nobody will say anything if you sit in the corner.",
           undefined,
           "Câu cuối tự bẻ quy định cho khách — khách khác sẽ thấy và hỏi. Câu đúng nói quy định nhẹ nhàng.",
@@ -665,7 +685,7 @@ function week24(): LessonContent[] {
         game(
           "Please take the lounge fee off my bill.",
           "I am sorry, I cannot change your bill. The front office can check it with you.",
-          "I am sorry, I cannot change your bill. The front office can checks it with you.",
+          "No problem, sir. I will tell the lounge forget it.",
           "No problem, sir. I will tell the lounge to forget it.",
           undefined,
           "Câu cuối tự xóa một khoản phí — quyết định về tiền không thuộc GRO. Câu đúng chuyển lễ tân kiểm tra cùng khách.",
@@ -897,7 +917,7 @@ function week24(): LessonContent[] {
         game(
           "Just put my eight thousand points back, please.",
           "I cannot change your points, sir. The loyalty office will check them for you.",
-          "I cannot change your points, sir. The loyalty office will checks them for you.",
+          "Of course, sir. I add eight thousand points back right now.",
           "Of course, sir. I will add the eight thousand points back to your account right now.",
           undefined,
           "Câu cuối tự cộng điểm — việc của bộ phận hội viên. Câu đúng từ chối và chuyển đúng người kiểm tra.",
@@ -942,6 +962,9 @@ function week24(): LessonContent[] {
             ),
             "I am sorry, sir. I cannot confirm who is staying with us.",
             "I cannot confirm who is staying at the hotel, sir.",
+            "I am sorry, I cannot confirm if he is staying with us.",
+            "I cannot confirm whether he is staying here, sir.",
+            "I am afraid I cannot give out any information about our guests.",
           ),
         ),
         risk(
@@ -956,6 +979,7 @@ function week24(): LessonContent[] {
             ),
             "Room numbers are confidential, sir.",
             "I am sorry, room numbers are confidential, even when it is urgent.",
+            "I am sorry, sir. I cannot give out room numbers. They are confidential.",
           ),
         ),
         risk(
@@ -970,6 +994,7 @@ function week24(): LessonContent[] {
             ),
             "I can take a message, sir. If the guest is staying here, we will tell them.",
             "If the guest is staying with us, we will tell them. I can take a message, sir.",
+            "I can take a message, sir. If he is staying with us, we will tell him.",
           ),
         ),
         risk(
@@ -987,7 +1012,7 @@ function week24(): LessonContent[] {
         ),
         sp(
           "Why do I have to sign this form at check-in?",
-          "The consent form asks your permission, madam, because your preferences go in a guest preference file.",
+          "The consent form asks your permission, madam, because we keep your preferences on file.",
           "Lý do thật: khách sạn lưu sở thích của khách, nên phải hỏi trước.",
         ),
         sp(
@@ -999,6 +1024,11 @@ function week24(): LessonContent[] {
           "Why did you not tell my friend that I was here?",
           "Our guest privacy rule protects you, madam. I tell visitors only when you ask me to.",
           "Giải thích quy định bảo mật như một điều bảo vệ chính khách.",
+        ),
+        sp(
+          "The lady at the desk was so kind. Can I have her phone number?",
+          "I am sorry, sir. I cannot give out staff phone numbers, but I will pass on your thanks.",
+          "Số điện thoại của nhân viên cũng là thông tin riêng — từ chối nhẹ, rồi chuyển lời cảm ơn.",
         ),
         sp(
           "Please do not tell anyone that I am staying here.",
@@ -1037,7 +1067,7 @@ function week24(): LessonContent[] {
         game(
           "I am his wife. Just tell me which room he is in.",
           "I am sorry, madam. Room numbers are confidential.",
-          "I am sorry, madam. Room numbers is confidential.",
+          "If you are his wife, madam, he in 1205.",
           "If you are his wife, madam, he is in 1205.",
           undefined,
           "Câu cuối tin lời người lạ và cho số phòng — không ai kiểm chứng được người đó là vợ khách. Câu đúng giữ bảo mật, lịch sự.",
@@ -1062,14 +1092,14 @@ function week25(): LessonContent[] {
   const t1c = "Of course, sir. I will call your room in ten minutes, with or without news.";
   const s1a = "I am sorry, madam. Guest details are confidential.";
   const s1b = "I understand it is urgent, madam. I can take a message for the guest.";
-  const s1c = "Of course, madam. Your message will go to the front office straight away.";
+  const s1c = "Of course, madam. If he is staying with us, he will get your message straight away.";
   const t2a = "Housekeeping is going to finish your room by three o'clock, madam.";
   const t2b = "You are welcome in the lounge, madam. I will reserve a table for you now.";
   const t2c = "Yes, madam. I am going to escort you to your room at three.";
   const t3a = "Of course, sir. I will ask the executive chef and call you back by five.";
   const t3b = "Then I will bring you the menu choices by five, sir, and you can choose.";
   const t3c = "Thank you, sir. I will tell the chef about her dietary requirement now.";
-  const t3d = "With your consent, I will note it in your guest preference file, sir.";
+  const t3d = "With your consent, I will note it in your guest file, sir.";
   const t4a = "I cannot confirm the upgrade myself, sir. The front office will call you.";
   const t4b = "I understand, sir. I will speak to the duty manager now.";
   const t4c = "I will come to the lounge with an answer in fifteen minutes, sir.";
@@ -1141,6 +1171,7 @@ function week25(): LessonContent[] {
               ),
               "I am sorry, guest details are confidential, madam.",
               "I am sorry, madam. I cannot give out guest details. They are confidential.",
+              "I am sorry, madam. I cannot give out guest details.",
             ),
           ),
           risk(
@@ -1160,7 +1191,7 @@ function week25(): LessonContent[] {
           sp(
             "Fine. Please ask him to call me at once.",
             s1c,
-            "Không hứa khách sẽ gọi lại — chỉ hứa lời nhắn đi ngay tới lễ tân.",
+            "Không hứa khách sẽ gọi lại, không xác nhận khách ở đây — chỉ hứa lời nhắn tới khách nếu khách đang lưu trú.",
             undefined,
             undefined,
             s1b,
@@ -1212,7 +1243,7 @@ function week25(): LessonContent[] {
           game(
             "I am his assistant. Which flight is Mr Kim on?",
             "I am sorry, madam. Guest details are confidential.",
-            "I am sorry, madam. Guest details is confidential.",
+            "He on the morning flight, madam, at seven.",
             "He is on the morning flight, madam, at seven.",
             undefined,
             "Câu cuối nói lịch bay của khách cho một người chưa ai kiểm chứng. Câu đúng giữ bảo mật, lịch sự.",
@@ -1282,6 +1313,11 @@ function week25(): LessonContent[] {
           "Chưa biết thì hứa mốc gọi lại, không hứa thay phòng chờ.",
         ),
         sp(
+          "We have an early tour tomorrow. Can you wake us up?",
+          "Of course, madam. What wake-up time would you like?",
+          "Hỏi lại đúng thông tin cần (wake-up time, đã học) trước khi nhận lời.",
+        ),
+        sp(
           "Can I see the plan for tomorrow before dinner?",
           "Of course, sir. Your itinerary for tomorrow is going to be ready by six.",
           "Kế hoạch đã định: 'going to' + mốc giờ.",
@@ -1332,7 +1368,7 @@ function week25(): LessonContent[] {
         game(
           "Roughly what time can I have my room?",
           "Your room is going to be ready by three o'clock, sir.",
-          "Your room is going to ready by three o'clock, sir.",
+          "Soon, sir. Housekeeping team always very fast.",
           "Soon, sir. Our housekeeping team is always very fast in the afternoon.",
           undefined,
           "'Soon' không phải lời hứa: khách không biết chờ đến khi nào. Câu đúng có mốc: 'by three o'clock'.",
@@ -1376,9 +1412,9 @@ function week25(): LessonContent[] {
         ),
         g(
           "I write it.",
-          "With your consent, I will note it in your guest preference file, so we remember next time.",
+          "With your consent, I will note it in your guest file, so we remember next time.",
           "Hỏi ý khách trước khi lưu. 'we' đi với động từ không thêm -s.",
-          "With your consent, I will note it in your guest preference file, so we remembers next time.",
+          "With your consent, I will note it in your guest file, so we remembers next time.",
         ),
       ],
       speaking: [
@@ -1410,16 +1446,16 @@ function week25(): LessonContent[] {
               t3d,
               "Ôn tuần 24: chỉ lưu sở thích khi khách đồng ý — hỏi trước, ghi sau.",
               undefined,
-              ["consent", "note", "guest", "preference", "file"],
+              ["consent", "note", "guest", "file"],
               t3c,
             ),
-            "With your consent, sir, I will note it in your guest preference file.",
-            "I will note it in your guest preference file, sir, with your consent.",
+            "With your consent, sir, I will note it in your guest file.",
+            "I will note it in your guest file, sir, with your consent.",
           ),
         ),
         sp(
           "Will anyone check on us after we move in?",
-          "Yes, madam. I am going to make a courtesy call at five o'clock.",
+          "Yes, madam. I am going to call your room at five o'clock.",
           "Kế hoạch có sẵn: 'going to' + mốc giờ.",
         ),
         sp(
@@ -1438,11 +1474,12 @@ function week25(): LessonContent[] {
             ),
             "Thank you, sir. I will tell the executive chef about your shellfish allergy now.",
             "I will tell the chef about your shellfish allergy straight away, sir.",
+            "Thank you, sir. I will inform the chef about your shellfish allergy now.",
           ),
         ),
       ],
       reading: read(
-        `Mr Silva says his wife eats no meat, but she eats fish. Quan asks the executive chef and promises to call back by five. At half past four, the chef sends two choices, and Quan calls Mr Silva. Mrs Silva agrees, so Quan notes her dietary requirement in her guest preference file.`,
+        `Mr Silva says his wife eats no meat, but she eats fish. Quan asks the executive chef and promises to call back by five. At half past four, the chef sends two choices, and Quan calls Mr Silva. Mrs Silva agrees, so Quan notes her dietary requirement in her guest file.`,
         [
           {
             q: "Quân hứa báo cho khách lúc nào?",
@@ -1468,16 +1505,16 @@ function week25(): LessonContent[] {
         game(
           "Will somebody tell me what the kitchen says?",
           "Yes, madam. I will call you back personally by five.",
-          "Yes, madam. I will call you back personal by five.",
+          "Please calling the kitchen yourself, madam. Their number is on the room menu.",
           "Please call the kitchen yourself, madam. Their number is on the room menu.",
           undefined,
           "Câu cuối đẩy việc sang khách. Câu đúng nhận việc báo tin, kèm mốc giờ.",
         ),
         game(
           "Please remember that I do not eat pork.",
-          "With your consent, I will note it in your guest preference file, sir.",
-          "With your consent, I will notes it in your guest preference file, sir.",
-          "Of course, sir. I will put it on the staff board for the whole team.",
+          "With your consent, I will note it in your guest file, sir.",
+          "With your consent, I will notes it in your guest file, sir.",
+          "Of course, sir. I will put it on the staff board.",
           undefined,
           "Câu cuối dán thông tin của khách ở nơi ai cũng đọc được. Câu đúng hỏi ý khách và lưu đúng hồ sơ.",
         ),
@@ -1557,11 +1594,11 @@ function week25(): LessonContent[] {
         ),
         sp(
           "Can someone carry my shopping up to the room?",
-          "Of course, madam. I am going to ask the bell desk now.",
-          "Kế hoạch ngay: 'going to' + đúng bàn phụ trách.",
+          "Of course, madam. Someone is going to bring it up within ten minutes.",
+          "Kế hoạch ngay: 'going to' + một mốc giờ khách chờ được.",
         ),
         sp(
-          "Can I add one night to my suite booking this Saturday?",
+          "Can I book the suite for just this Saturday night?",
           "There is a two-night minimum at weekends, sir. I am going to check a weekday.",
           "Ôn tuần 24: nói đúng quy định, rồi việc bạn sắp làm cho khách.",
           undefined,
@@ -1599,7 +1636,7 @@ function week25(): LessonContent[] {
         game(
           "So is my upgrade confirmed or not?",
           "I cannot confirm the upgrade myself, sir. The front office will call you.",
-          "I cannot confirming the upgrade myself, sir. The front office will call you.",
+          "Yes, sir, it confirmed. I will telling the front office later.",
           "Yes, sir, it is confirmed. I will tell the front office later.",
           undefined,
           "Câu cuối tự xác nhận việc của lễ tân — nếu lễ tân không có phòng, khách bị hứa suông. Câu đúng nói ai xác nhận.",
@@ -1622,7 +1659,7 @@ function week26(): LessonContent[] {
   const t1a = "Let me check with the reservations team for you, sir.";
   const t1b =
     "The reservations team can see which rooms are available, sir. I will call you back within ten minutes.";
-  const t1c = "Enjoy the pool, sir. I will leave a message on your room phone.";
+  const t1c = "Enjoy the pool, sir. I am going to leave a message on your room phone.";
   const t2a = "Of course, sir. I will arrange it with the pastry chef for eight o'clock.";
   const t2b = "Thank you, sir. I will note the allergy for the pastry chef now.";
   const t2c =
@@ -1689,8 +1726,22 @@ function week26(): LessonContent[] {
         ),
         sp(
           "Can you book us a cooking class for Saturday?",
-          "Let me check with the concierge desk, sir. They book all our tours and classes.",
-          "Một việc, đúng bàn phụ trách.",
+          "Let me check with the concierge desk about the cooking class, sir.",
+          "Một việc, đúng bàn phụ trách — và nhắc lại đúng việc khách cần (cooking class, đã học).",
+        ),
+        sp(
+          "Who can book our car to the airport on Friday?",
+          "The concierge desk can arrange your airport transfer, madam. Let me check a time with them.",
+          "Ôn tuần 23: gọi đúng tên dịch vụ, và đúng bàn sắp xếp.",
+          undefined,
+          ["airport", "transfer"],
+        ),
+        sp(
+          "Can I use my points for the suite at New Year?",
+          "New Year is in the blackout period, sir. Let me check with the reservations team for other dates.",
+          "Ôn tuần 24: nói đúng quy định, rồi nhận việc tìm ngày khác.",
+          undefined,
+          ["blackout", "period"],
         ),
         sp(
           "We land late tomorrow. Is anyone from the hotel at the airport?",
@@ -1747,7 +1798,7 @@ function week26(): LessonContent[] {
         game(
           "I need two tickets for the water puppet show tonight.",
           "Let me check with the concierge desk for you, madam.",
-          "Let me check to the concierge desk for you, madam.",
+          "Show always full, madam. Try another night.",
           "I think that show is always full, madam. Maybe try another night.",
           undefined,
           "Câu cuối đoán và từ chối thay bộ phận khác. Câu đúng nhận việc và hỏi đúng bàn phụ trách.",
@@ -1832,6 +1883,13 @@ function week26(): LessonContent[] {
           "Hỏi đúng người làm bánh, hứa mốc gọi lại — không tự hứa.",
         ),
         sp(
+          "I cannot eat shellfish. Is the set menu all right for me?",
+          "Thank you for telling me, madam. I will ask the executive chef to check every dish for shellfish.",
+          "Ôn tuần 25: không tự hứa món an toàn — nhờ bếp trưởng kiểm tra.",
+          undefined,
+          ["shellfish"],
+        ),
+        sp(
           "Does the chef know about my vegetarian diet?",
           "Yes, madam. Your dietary requirement is with the executive chef now.",
           "Ôn tuần 25: gọi đúng tên thông tin và nói nó đang ở tay ai.",
@@ -1840,7 +1898,7 @@ function week26(): LessonContent[] {
         ),
         sp(
           "My mother walks slowly. Can someone take her to the restaurant?",
-          "Of course, madam. The bell desk will escort her there now.",
+          "Of course, madam. I will ask the bell desk to escort her.",
           "Ôn tuần 25: đúng người đưa khách đi, làm ngay.",
           undefined,
           ["escort"],
@@ -1888,7 +1946,7 @@ function week26(): LessonContent[] {
         game(
           "My son has a nut allergy. Is the birthday cake all right for him?",
           "Thank you, madam. I will note the allergy for the pastry chef now.",
-          "Thank you, madam. I will notes the allergy for the pastry chef now.",
+          "Of course, madam. All of our cake are always safe for children.",
           "Of course, madam. All of our cakes are always safe for children.",
           undefined,
           "Câu cuối hứa điều bạn không biết chắc — về dị ứng, đó là rủi ro thật. Câu đúng ghi lại và báo đúng người làm bánh.",
@@ -1966,6 +2024,18 @@ function week26(): LessonContent[] {
           "Trả lời chắc chắn, rồi báo trước cho tổ đang phục vụ.",
         ),
         sp(
+          "My sister wants to join me in the lounge. Is that all right?",
+          "Of course, madam. She is within the guest limit, so there is no lounge access fee.",
+          "Ôn tuần 24: nói đúng giới hạn khách và vì sao không có phí.",
+          undefined,
+          ["guest", "limit", "lounge", "access", "fee"],
+        ),
+        sp(
+          "Can you add a room decoration for our anniversary?",
+          "Of course, madam. I will ask the flower team about a room decoration today.",
+          "Nhắc lại đúng việc khách xin (room decoration, đã học) và giao đúng tổ.",
+        ),
+        sp(
           "Can you keep a lounge table for us at six?",
           "I will ask the lounge team to reserve a table for six o'clock, madam.",
           "Ôn tuần 25: một việc, đúng tổ, đúng giờ khách cần.",
@@ -2025,8 +2095,8 @@ function week26(): LessonContent[] {
         game(
           "Did anyone call the flower team about our room?",
           "Yes, madam. I have asked them, and they are coming at noon.",
-          "Yes, madam. I have ask them, and they are coming at noon.",
-          "I think so, madam. Somebody usually calls them in the morning.",
+          "I think so, madam. Somebody usually call them.",
+          "I think so, madam. Somebody usually calls them.",
           undefined,
           "Câu cuối đoán thay vì biết chắc. Câu đúng báo việc đã làm và giờ tổ tới.",
         ),
@@ -2116,6 +2186,11 @@ function week26(): LessonContent[] {
           ["unattended", "stay", "security"],
         ),
         sp(
+          "The fire alarm is ringing! Can I go back to my room for my laptop?",
+          "Please leave it, sir. Follow me down the stairs now, and do not use the lift.",
+          "Báo cháy: khách không quay lại lấy đồ, không đi thang máy — bạn dẫn khách xuống bằng cầu thang.",
+        ),
+        sp(
           "I cannot find my husband, and he does not have a phone.",
           "I am sorry, madam. I will ask security to help us look, and I will stay with you.",
           "Khách lo lắng: ở lại với khách, nhờ đúng bộ phận giúp tìm.",
@@ -2127,7 +2202,7 @@ function week26(): LessonContent[] {
         ),
         sp(
           "My mother is very weak, and it is urgent. Can somebody help her upstairs?",
-          "I understand it is urgent, madam. The bell desk will give her assistance now.",
+          "I understand it is urgent, madam. I will ask the bell desk to give her assistance now.",
           "Ôn tuần 25: công nhận việc gấp, rồi nói ai giúp ngay.",
           undefined,
           ["urgent"],
@@ -2188,7 +2263,7 @@ function week26(): LessonContent[] {
         game(
           "A small girl is crying by the lift. I think she is lost.",
           "Thank you, sir. I will stay with her and call security now.",
-          "Thank you, sir. I will stays with her and call security now.",
+          "Do not worry, sir. I will walking her around to find them.",
           "Do not worry, sir. I will walk her around to find them.",
           undefined,
           "Câu cuối nghe tận tình nhưng đưa em bé đi khỏi chỗ cha mẹ sẽ quay lại tìm. Câu đúng ở lại với em và gọi an ninh.",
@@ -2289,6 +2364,16 @@ function week27(): LessonContent[] {
           t1c,
         ),
         sp(
+          "I asked for a window table, but you gave me one by the kitchen door.",
+          "I am sorry, madam. I will ask the restaurant for a window table now.",
+          "Xin lỗi đúng điều khách gặp, rồi nhắc lại đúng điều khách đã xin (window table, đã học).",
+        ),
+        sp(
+          "The guests next door are shouting, and it is after midnight.",
+          "I am so sorry, madam. I will ask security to speak to them now.",
+          "Phàn nàn về khách khác: xin lỗi, không tự sang phòng bên — nhờ an ninh xử lý ngay.",
+        ),
+        sp(
           "I want everyone in this lobby to hear how bad this is!",
           "I understand, sir. Shall we talk in the lounge, where it is quieter?",
           "Khách giận giữa sảnh: mời sang chỗ yên tĩnh để nói chuyện, không tranh luận trước mặt người khác.",
@@ -2361,7 +2446,7 @@ function week27(): LessonContent[] {
         game(
           "My name is spelled wrong on the welcome card.",
           "I am so sorry, madam. I will print a new card now.",
-          "I am so sorry, madam. I will printing a new card now.",
+          "That is the system fault, madam. Someone at reservations type it wrong.",
           "That is the system's fault, madam. Someone at reservations typed it wrong.",
           undefined,
           "Câu cuối đổ lỗi cho hệ thống và đồng nghiệp trước mặt khách. Câu đúng xin lỗi và sửa ngay.",
@@ -2435,6 +2520,13 @@ function week27(): LessonContent[] {
           "Phàn nàn về thái độ nhân viên: xin lỗi, không bênh, không nêu tên — chuyển lên quản lý.",
         ),
         sp(
+          "Our limousine pick-up is twenty minutes late, and our flight is at six!",
+          "I am so sorry for the delay with your limousine pick-up, madam. I will arrange the transfer myself.",
+          "Ôn tuần 23–25: xin lỗi về sự chậm trễ, nhận việc về mình — không đổ cho hãng xe.",
+          undefined,
+          ["delay", "limousine", "arrange", "transfer", "myself"],
+        ),
+        sp(
           "The kitchen forgot my vegetarian meal again.",
           "I am so sorry, madam. I will speak to the executive chef now.",
           "Ôn tuần 25: lỗi lặp lại thì nói với người phụ trách bếp, ngay.",
@@ -2491,7 +2583,7 @@ function week27(): LessonContent[] {
         game(
           "Whose fault was it that my fruit basket came so late?",
           "I am finding out now, sir. I am sorry it was late.",
-          "I am find out now, sir. I am sorry it was late.",
+          "Our mistake, sir. New boy at bell desk forget it.",
           "It was our mistake, sir. The new boy at the bell desk forgot all about it.",
           undefined,
           "Câu cuối kết luận lỗi khi chưa ai kiểm tra và nêu tên đồng nghiệp. Câu đúng xin lỗi và nói bạn đang tìm hiểu.",
@@ -2579,13 +2671,20 @@ function week27(): LessonContent[] {
         ),
         sp(
           "It is so busy tonight. There are no seats in the lounge.",
-          "It is a crowded lounge tonight, sir. I will find you a table now.",
-          "Công nhận điều khách thấy, rồi giải quyết ngay.",
+          "I am sorry about the crowded lounge, sir. I recommend the library, which is quieter.",
+          "Xin lỗi đúng điều khách thấy, rồi gợi ý một chỗ có thật — không hứa một cái bàn chưa chắc có.",
         ),
         sp(
           "I left my sunglasses in the lounge yesterday.",
           "Let me check with lost and found, madam. What colour are they?",
           "Hỏi một chi tiết để tìm đúng món, rồi hỏi đúng bộ phận.",
+        ),
+        sp(
+          "Can I leave my suitcase here in the lobby after check-out?",
+          "The bell desk can keep it for you, sir. Please do not leave it unattended.",
+          "Ôn tuần 26: đúng bàn giữ hành lý, và không để túi không người trông.",
+          undefined,
+          ["bell", "desk", "unattended"],
         ),
         sp(
           "Where should I keep my jewellery tonight?",
@@ -2630,8 +2729,8 @@ function week27(): LessonContent[] {
       game: [
         game(
           "The lounge is so crowded that I cannot find a seat.",
-          "I am sorry, sir. I will find you a table now.",
-          "I am sorry, sir. I will found you a table now.",
+          "I am sorry, sir. The library is quieter tonight, if you like.",
+          "I am sorry, sir. The library is more quieter tonight, if you like.",
           "Everyone comes at six, sir. You should come at five next time, when it is quiet.",
           undefined,
           "Câu cuối biến vấn đề thành lỗi của khách. Câu đúng xin lỗi và giải quyết ngay.",
@@ -2701,6 +2800,7 @@ function week27(): LessonContent[] {
               ),
               "I am calling first aid and the duty manager now. I will stay with her.",
               "I will stay with you both. I am calling first aid and the duty manager now.",
+              "I am calling an ambulance and the duty manager now. I will stay with you both.",
             ),
           ),
           risk(
@@ -2715,6 +2815,7 @@ function week27(): LessonContent[] {
               ),
               "Please wait for first aid, madam. First aid is on the way.",
               "First aid is on its way, madam. Please wait for them.",
+              "Please do not give her anything, madam. First aid is on the way.",
             ),
           ),
           sp(
@@ -2805,7 +2906,7 @@ function week27(): LessonContent[] {
           game(
             "A man at the bar is shouting and pushing the chairs over.",
             "He is disruptive, so please call security and the duty manager now.",
-            "He is disruptive, so please calls security and the duty manager now.",
+            "I will going over and tell him to leave the hotel right now.",
             "I will go over and tell him to leave the hotel right now.",
             "colleague",
             "Câu cuối tự ra đối đầu một mình với người đang say — nguy hiểm cho bạn và khách khác. Câu đúng gọi an ninh và quản lý trực.",
@@ -2813,7 +2914,7 @@ function week27(): LessonContent[] {
           game(
             "A lady in the lounge says her throat is closing!",
             "I am calling first aid and the duty manager now. I will stay with her.",
-            "I am call first aid and the duty manager now. I will stay with her.",
+            "Let me get her glass of water, and then I call someone.",
             "Let me get her a glass of water, and then I will call someone.",
             undefined,
             "Câu cuối tự xử lý y tế và để chậm cuộc gọi. Câu đúng gọi sơ cứu và quản lý trực ngay, rồi ở lại.",
@@ -2826,7 +2927,8 @@ function week27(): LessonContent[] {
 
 // ── Week 28 — "If you like, I can…": what is yours to offer ─────────────
 function week28(): LessonContent[] {
-  const t1a = "I am very sorry, madam. If you like, I can reprint the welcome card now.";
+  const t1a =
+    "I am very sorry about the spelling mistake, madam. If you like, I can reprint the welcome card now.";
   const t1b = "Of course, madam. The new card will be in your room by seven tonight.";
   const t1c = "If you come back after seven, the card will already be on your desk.";
   const t2a = "I am sorry, sir. I will ask the front office about a quieter room now.";
@@ -2836,7 +2938,7 @@ function week28(): LessonContent[] {
   const t3a = "I am so sorry, madam. The flower team can finish it while you are at dinner.";
   const t3b = "If it is not ready by nine, please call me, and I will come up myself.";
   const t3c =
-    "I understand, madam, and I am sorry for the inconvenience. I will ask my manager to speak with you.";
+    "I understand, madam, and I am sorry for the inconvenience. I will speak to the duty manager today.";
   const t4a =
     "I am very sorry about your stay, sir. I cannot offer a free night, but the duty manager will speak with you.";
   const t4b = "If you like, I can check the availability of a quiet table for dinner tonight.";
@@ -2908,8 +3010,20 @@ function week28(): LessonContent[] {
         ),
         sp(
           "The lounge is full. Where else can we have a quiet drink?",
-          "If you like, the library is a quiet alternative, madam.",
-          "Không có chỗ khách muốn: đưa một phương án thay thế trong quyền của bạn.",
+          "I am sorry about the crowded lounge, madam. If you like, the library is a quiet alternative.",
+          "Ôn tuần 27: xin lỗi đúng điều khách gặp, rồi đưa một phương án thay thế trong quyền của bạn.",
+        ),
+        sp(
+          "Is breakfast free on this one-night stay?",
+          "If you stay two nights, madam, breakfast is free. That is the benefit condition.",
+          "Ôn tuần 24: câu điều kiện nói đúng điều kiện ưu đãi, không tự tặng.",
+          undefined,
+          ["benefit", "condition"],
+        ),
+        sp(
+          "Is there anything nice to do this evening?",
+          "If you like, I can ask the concierge desk about a sunset cruise, sir.",
+          "Đề nghị có điều kiện, nhắc lại một dịch vụ đã học (sunset cruise) và đúng bàn đặt.",
         ),
         sp(
           "Can we sit inside or on the terrace?",
@@ -2968,7 +3082,7 @@ function week28(): LessonContent[] {
         game(
           "Should we take the new card now or tonight?",
           "Either is fine, madam. Which is easier for you?",
-          "Either are fine, madam. Which is easier for you?",
+          "Tonight, madam, because we are very busy in the desk right now.",
           "Tonight, madam, because we are very busy at the desk right now.",
           undefined,
           "Câu cuối chọn theo sự tiện của nhân viên, không theo khách. Câu đúng để khách chọn.",
@@ -3073,7 +3187,7 @@ function week28(): LessonContent[] {
         ),
         sp(
           "Can we stay one more night in this room?",
-          "If the room is available, the front office can extend your stay, madam.",
+          "If the room is available, the reservations team can extend your stay, madam.",
           "Câu điều kiện: điều kiện thật trước, người quyết sau.",
           undefined,
           ["extend"],
@@ -3124,7 +3238,7 @@ function week28(): LessonContent[] {
         game(
           "You can see the suite is empty. Just put me in it.",
           "I cannot move you myself, madam. A room move is for the front office.",
-          "I cannot moving you myself, madam. A room move is for the front office.",
+          "Of course, madam. I will gives you the suite key.",
           "Of course, madam. I will give you the suite key.",
           undefined,
           "Câu cuối tự quyết đổi phòng — việc của lễ tân. Câu đúng từ chối gọn và nói ai quyết.",
@@ -3196,6 +3310,13 @@ function week28(): LessonContent[] {
           t3b,
         ),
         sp(
+          "Will you tell us when the set-up is ready?",
+          "Yes, madam. I will make a courtesy call as soon as I check the room.",
+          "Ôn tuần 26: cuộc gọi hỏi thăm sau khi chính bạn đã kiểm tra.",
+          undefined,
+          ["courtesy", "call", "check"],
+        ),
+        sp(
           "Our welcome fruit is still not in the room.",
           "I am sorry, sir. The room is ready, so I will deliver the amenity now.",
           "Xin lỗi, và làm ngay việc trong quyền của bạn.",
@@ -3262,7 +3383,7 @@ function week28(): LessonContent[] {
         game(
           "Can you do the whole set-up again tomorrow, for free?",
           "If my manager agrees, we can redo the set-up tomorrow, madam.",
-          "If my manager agree, we can redo the set-up tomorrow, madam.",
+          "Of course, madam. I will booking it for tomorrow at no cost.",
           "Of course, madam. I will book it for tomorrow at no cost.",
           undefined,
           "Câu cuối tự tặng một món có giá trị tiền. Câu đúng nói rõ điều kiện: quản lý đồng ý.",
@@ -3357,6 +3478,20 @@ function week28(): LessonContent[] {
           "Điều kiện thật trước, việc bạn làm ngay sau.",
         ),
         sp(
+          "If I stay five more nights this year, do I keep my Gold card?",
+          "If you reach twenty nights, sir, the tier renewal rule keeps you at Gold.",
+          "Ôn tuần 24: câu điều kiện nói đúng quy định giữ hạng.",
+          undefined,
+          ["tier", "renewal", "rule"],
+        ),
+        sp(
+          "My bag is missing from the airport car!",
+          "I am so sorry, sir. If you like, I can call our airport representative now.",
+          "Ôn tuần 26: xin lỗi, rồi đề nghị gọi đúng người của khách sạn ở sân bay.",
+          undefined,
+          ["airport", "representative"],
+        ),
+        sp(
           "If I go to the beach, where can I leave my passport and money?",
           "If you like, madam, you can keep your valuables in the room safe.",
           "Ôn tuần 27: gọi đúng tên đồ có giá trị, chỉ chỗ an toàn.",
@@ -3365,7 +3500,7 @@ function week28(): LessonContent[] {
         ),
         sp(
           "If the lounge is crowded again tonight, where can we go?",
-          "If it is a crowded lounge night, I can reserve a table in the library, sir.",
+          "If the lounge is crowded again, I can reserve a table in the library, sir.",
           "Ôn tuần 25–27: câu điều kiện, gọi đúng tên tình huống, đưa phương án trong quyền của bạn.",
           undefined,
           ["crowded", "lounge", "reserve"],
@@ -3413,7 +3548,7 @@ function week28(): LessonContent[] {
         game(
           "Just cancel the charge. You work here, don't you?",
           "I cannot cancel the extra charge myself, sir. The duty manager will check it.",
-          "I cannot cancel extra charge myself, sir. The duty manager will check it.",
+          "Of course, sir. I will tell the front office take it off right now.",
           "Of course, sir. I will tell the front office to take it off right now.",
           undefined,
           "Câu cuối tự hứa hủy phí — vượt quyền. Câu đúng nói rõ ai kiểm tra.",
@@ -3530,10 +3665,31 @@ function week29(): LessonContent[] {
         ),
         sp(
           "The canapé tray in the lounge is empty again.",
-          "Please ask the lounge team to replenish it now.",
+          "Please ask the lounge team to replenish the canapés now.",
           "Ôn tuần 27: giao đúng tổ, gọi đúng việc cần làm.",
           "colleague",
           ["replenish"],
+        ),
+        sp(
+          "Is Mr Ito happy with his new room?",
+          "Yes. The front office moved him to a club floor room last night.",
+          "Ôn tuần 23: bàn giao việc đã xong bằng quá khứ đơn, gọi đúng tên loại phòng.",
+          "colleague",
+          ["club", "floor", "room"],
+        ),
+        sp(
+          "Mr Sato's mother uses a wheelchair. Is anything arranged?",
+          "Yes. The bell desk will give her assistance when they arrive at six.",
+          "Ôn tuần 26: ai giúp, lúc nào — đủ để ca sau yên tâm.",
+          "colleague",
+          ["bell", "desk", "assistance"],
+        ),
+        sp(
+          "Mrs Grant is back with us today. Anything I should know?",
+          "She had a long wait at check-in last time. Please do a lobby check before she arrives.",
+          "Ôn tuần 27: điều khách đã gặp lần trước, và việc ca sau làm (lobby check, đã học).",
+          "colleague",
+          ["long", "wait", "check-in"],
         ),
       ],
       reading: read(
@@ -3582,7 +3738,7 @@ function week29(): LessonContent[] {
         game(
           "A caller wants Mr Sato's arrival time. Shall I tell him?",
           "No, guest arrival times are confidential. Please take a message for him.",
-          "No, guest arrival times is confidential. Please take a message for him.",
+          "Yes, but only time, not room number.",
           "Yes, but only the time, not the room number.",
           "colleague",
           "Câu cuối nghĩ rằng chỉ số phòng mới là bí mật. Câu đúng: giờ đến cũng là thông tin bảo mật.",
@@ -3650,7 +3806,7 @@ function week29(): LessonContent[] {
         ),
         sp(
           "What were you doing when Mr Lee came back to the desk?",
-          "I was printing his new card when he came back, madam.",
+          "I was checking the reprint of his card when he came back, madam.",
           "Quá khứ tiếp diễn kể đúng việc đang làm lúc khách quay lại.",
           "manager",
         ),
@@ -3667,6 +3823,27 @@ function week29(): LessonContent[] {
           "Ôn tuần 28: quá khứ tiếp diễn kể lại đúng hai yêu cầu của khách.",
           "manager",
           ["cancel", "missing", "points"],
+        ),
+        sp(
+          "Why is room 1405 in the complaint log?",
+          "There was a late amenity delivery last night, madam. I am going to escalate it today.",
+          "Ôn tuần 27: gọi đúng tên sự việc, rồi bước bạn sắp làm.",
+          "manager",
+          ["late", "amenity", "delivery", "escalate"],
+        ),
+        sp(
+          "What went wrong for Mrs Okoye's daughter?",
+          "It was a forgotten birthday, madam. A preference note was lost between two shifts.",
+          "Ôn tuần 27: gọi đúng tên sự việc, rồi nguyên nhân đã được kiểm tra.",
+          "manager",
+          ["forgotten", "birthday"],
+        ),
+        sp(
+          "Mr Fischer is shouting at the desk. He wants a manager now.",
+          "Please stay with him. I will bring the manager to you.",
+          "Ôn tuần 28: đồng nghiệp ở lại với khách, bạn đưa quản lý tới — không giữ khách chờ.",
+          "colleague",
+          ["bring", "manager"],
         ),
         sp(
           "Why was Mr Lee so angry yesterday?",
@@ -3714,7 +3891,7 @@ function week29(): LessonContent[] {
         game(
           "What were you doing when the guest felt dizzy?",
           "I was serving coffee in the lounge, madam.",
-          "I was serve coffee in the lounge, madam.",
+          "Nothing much, madam. I was just check my phone for a minute.",
           "Nothing much, madam. I was just checking my phone for a minute.",
           "manager",
           "Câu cuối thật thà nhưng kể một việc không nên làm khi trực. Câu đúng dùng quá khứ tiếp diễn kể đúng việc đang làm.",
@@ -3732,7 +3909,11 @@ function week29(): LessonContent[] {
 
     L(29, 3, "Open Items", "Những việc còn mở", {
       vocabulary: [
-        c("Yet", "The fruit basket for 1206 has not gone up yet."),
+        c("Yet", "The fruit basket for 1206 has not gone up yet.", [
+          "/jet/",
+          "Chưa — đứng cuối câu phủ định hoặc câu hỏi",
+          "⏳",
+        ]),
         c("Amenity delivery list", "Two rooms are still on the amenity delivery list."),
         c("Birthday calendar", "The birthday calendar shows two birthdays tomorrow."),
         c("Upgrade waiting list", "Mrs Patel is first on the upgrade waiting list."),
@@ -3788,10 +3969,10 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Room 1508 wants to stay until three tomorrow.",
-          "Late check-out depends on availability. Please ask the front office to extend it.",
+          "Late check-out will depend on availability. Please ask the front office to extend it.",
           "Ôn tuần 28: điều kiện thật, đúng người quyết.",
           "colleague",
-          ["depends", "availability", "extend"],
+          ["depend", "availability", "extend"],
         ),
         sp(
           "Why is 1206 still on the amenity delivery list?",
@@ -3801,10 +3982,10 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Did the front office approve the room move for the Dubois family?",
-          "Yes, madam. The front office approved the room move at noon.",
-          "Ôn tuần 28: ai duyệt, việc gì, lúc nào.",
+          "Not yet, madam. The front office has to approve the room move first.",
+          "Ôn tuần 28: chưa duyệt thì nói chưa, và ai là người duyệt.",
           "manager",
-          ["approved", "room", "move"],
+          ["approve", "room", "move"],
         ),
         sp(
           "Room 1206 wants the terrace or the library tonight. Which is better?",
@@ -3860,7 +4041,7 @@ function week29(): LessonContent[] {
         game(
           "Are there any birthdays tomorrow?",
           "Two, on the birthday calendar.",
-          "Two, on the birthdays calendar.",
+          "I not sure. We can asking the guests at breakfast.",
           "I am not sure. We can ask the guests at breakfast.",
           "colleague",
           "Câu cuối bỏ qua lịch sinh nhật đã có, để khách mất bất ngờ. Câu đúng tra đúng chỗ ghi.",
@@ -3927,10 +4108,17 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Did the Dubois family get their apology letter?",
-          "Yes, madam. I delivered the apology letter to their room at noon.",
+          "Yes, madam. I went up to deliver the apology letter at noon.",
           "Ôn tuần 28: việc đã làm, quá khứ đơn, kèm giờ.",
           "manager",
-          ["delivered", "apology", "letter"],
+          ["deliver", "apology", "letter"],
+        ),
+        sp(
+          "The guest in 1602 is a famous singer. What should I tell the team?",
+          "Treat her stay with discretion. Write nothing about her on the lounge duty roster.",
+          "Ôn tuần 25: sự kín đáo — và thông tin khách không nằm ở chỗ ai cũng đọc được.",
+          "colleague",
+          ["discretion"],
         ),
         sp(
           "Is everything ready for the anniversary in 1508?",
@@ -3940,10 +4128,10 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Is anything planned for the Dubois family?",
-          "Yes. We redo the set-up tomorrow at seven, and the manager will send an apology.",
-          "Ôn tuần 28: việc đã được duyệt, ai làm, lúc nào.",
+          "Yes. Their recovery plan is to redo the set-up tomorrow at seven.",
+          "Ôn tuần 27–28: kế hoạch bù đắp đã được duyệt, làm gì, lúc nào.",
           "colleague",
-          ["redo", "apology"],
+          ["recovery", "plan", "redo"],
         ),
       ],
       reading: read(
@@ -3988,7 +4176,7 @@ function week29(): LessonContent[] {
         game(
           "Where did you put Mrs Ford's tea preference?",
           "In the guest preference file, madam, with her consent.",
-          "In the guest preference file, madam, with she consent.",
+          "On the lounge duty roster, madam, so every colleague can sees it easily.",
           "On the lounge duty roster, madam, so every colleague can see it easily.",
           "manager",
           "Câu cuối để thông tin khách ở nơi ai cũng đọc được. Câu đúng: đúng hồ sơ, có sự đồng ý của khách.",
@@ -4009,7 +4197,7 @@ function week29(): LessonContent[] {
 // ── Week 30 — Checkpoint: the phase's words, said again ─────────────────
 // The checkpoint teaches nothing new. Its sixteen cards are words of weeks
 // 23-29 that the phase had stopped saying, presented again with the gloss
-// they were first taught with, and every one is said at least twice below.
+// they were first taught with, and every one is said again below.
 function week30(): LessonContent[] {
   const t1a =
     "I recommend the evening cocktail hour in the lounge, sir. It is quieter than the bar.";
@@ -4020,7 +4208,6 @@ function week30(): LessonContent[] {
   const t2b = "I cannot confirm who is staying with us, sir.";
   const t2c = "You are welcome in the lobby, sir. I will let the duty manager know you are here.";
   const t3a = "I am very sorry for the spelling mistake, sir. I will reprint the card myself.";
-  const t3b = "You are right, sir. I will bring a new card within ten minutes.";
   const t3c = "I understand, sir. I will escalate it to my manager today.";
   const t4a = "Do not move her. I am calling first aid and the duty manager now.";
   const t4b = "Please ask him to wait for first aid. I will stay with them.";
@@ -4123,7 +4310,7 @@ function week30(): LessonContent[] {
         ),
         sp(
           "What do I do after a VIP checks in?",
-          "Make a courtesy call within an hour, and update the guest preference file.",
+          "Make a courtesy call within an hour. With the guest's consent, update the guest preference file.",
           "Tuần 26 và 29: nói với đồng nghiệp — hai việc, có mốc.",
           "colleague",
           ["courtesy", "update"],
@@ -4232,7 +4419,7 @@ function week30(): LessonContent[] {
               t2a,
             ),
             "I am sorry, sir. Because of our guest privacy rule, I cannot confirm who is staying with us.",
-            "I cannot confirm who is staying with us, sir. Security checks every gift.",
+            "I am sorry, sir. I cannot confirm if he is staying here.",
           ),
         ),
         sp(
@@ -4252,7 +4439,7 @@ function week30(): LessonContent[] {
         ),
         sp(
           "Why is there a blackout period at all?",
-          "Because the hotel is full then, sir. The blackout period keeps rooms for paying guests.",
+          "Because the hotel is full in the blackout period, sir. The rooms are kept for bookings then.",
           "Tuần 24: 'because' + lý do thật.",
           undefined,
           ["blackout", "period"],
@@ -4280,7 +4467,7 @@ function week30(): LessonContent[] {
         ),
         sp(
           "What do you keep about me, and is it private?",
-          "With your consent, your preferences are in your guest preference file, madam. We treat it with discretion.",
+          "We keep your preferences in your guest preference file only with your consent, madam. We treat it with discretion.",
           "Tuần 24 và 29: có đồng ý mới lưu, và thông tin ấy được bảo mật.",
           undefined,
           ["consent", "guest", "preference", "file", "discretion"],
@@ -4333,12 +4520,12 @@ function week30(): LessonContent[] {
       ),
       game: [
         game(
-          "Which room is the minister in? I have a gift for him.",
-          "I cannot confirm who is staying with us, sir. Security checks every gift.",
-          "I cannot confirm who are staying with us, sir. Security checks every gift.",
+          "Is the minister staying here? I have a gift for him.",
+          "I am sorry, sir. I cannot confirm if he is staying here.",
+          "He in the suite on top floor, sir.",
           "He is in the suite on the top floor, sir. I can take the gift up for you.",
           undefined,
-          "Câu cuối cho người lạ biết khách ở đâu và mang quà chưa kiểm tra lên phòng. Câu đúng không xác nhận gì, và quà đi qua an ninh.",
+          "Câu cuối cho người lạ biết khách ở đâu và mang quà chưa kiểm tra lên phòng. Câu đúng không xác nhận gì.",
         ),
         game(
           "What time does the minister land? I want to take photos.",
@@ -4380,14 +4567,6 @@ function week30(): LessonContent[] {
           undefined,
           ["spelling", "mistake", "reprint"],
         ),
-        sp(
-          "It is L-E-E. Three letters. How hard is that?",
-          t3b,
-          "Công nhận khách đúng, mốc bằng số phút.",
-          undefined,
-          undefined,
-          t3a,
-        ),
         risk(
           also(
             sp(
@@ -4396,38 +4575,31 @@ function week30(): LessonContent[] {
               "Bù đắp có giá trị là quyết định của quản lý. Không tự hứa quà — chuyển lên.",
               undefined,
               ["understand", "escalate", "manager", "today"],
-              t3b,
+              t3a,
             ),
             "I understand, sir. My manager has to approve that, and I will ask today.",
           ),
         ),
         sp(
           "Last year you forgot my birthday, and this year too!",
-          "I am so sorry, madam. I will add your date to the birthday calendar, so there is no forgotten birthday again.",
-          "Tuần 27 và 29: xin lỗi, rồi sửa đúng chỗ ghi để không lặp lại.",
+          "I am so sorry about the forgotten birthday, madam. Would you like me to add your date to the birthday calendar?",
+          "Tuần 27 và 29: xin lỗi đúng điều khách gặp, rồi HỎI khách trước khi ghi ngày sinh vào lịch.",
           undefined,
           ["forgotten", "birthday", "calendar"],
         ),
         sp(
           "My fruit basket came at midnight again.",
-          "I am sorry, sir. I will check the amenity delivery list, so there is no late amenity delivery again.",
-          "Tuần 27 và 29: xin lỗi, kiểm tra đúng danh sách.",
+          "I am sorry about the late amenity delivery, sir. I will check the amenity delivery list now.",
+          "Tuần 27 và 29: xin lỗi, gọi đúng tên sự việc, kiểm tra đúng danh sách — không hứa 'không bao giờ lặp lại'.",
           undefined,
           ["late", "amenity", "delivery"],
         ),
         sp(
-          "I waited forty minutes at check-in again!",
-          "I am very sorry, madam. I will report the long wait at check-in to the front office manager.",
-          "Tuần 27: xin lỗi, gọi đúng tên sự việc, báo đúng người sửa được.",
+          "Our anniversary set-up has no cake!",
+          "I am so sorry, madam. I will check the set-up checklist and bring the cake up myself.",
+          "Tuần 29: xin lỗi, kiểm tra đúng danh sách chuẩn bị, rồi tự làm phần còn thiếu.",
           undefined,
-          ["long", "wait"],
-        ),
-        sp(
-          "My booking shows the wrong dates!",
-          "I am sorry, sir. The reservations team will correct it, and I will call you within ten minutes.",
-          "Tuần 25–26: đúng bộ phận sửa, bạn hứa mốc gọi lại.",
-          undefined,
-          ["reservations", "team"],
+          ["set-up", "checklist"],
         ),
         sp(
           "What is the recovery plan for Mr Lee?",
@@ -4435,11 +4607,6 @@ function week30(): LessonContent[] {
           "Báo cấp trên: các bước, ai làm bước nào.",
           "manager",
           ["recovery", "plan", "reservations", "team"],
-        ),
-        sp(
-          "I want to see your manager right now.",
-          "Of course, sir. I will bring the manager to you straight away.",
-          "Khách muốn gặp cấp trên: đồng ý ngay, không giữ khách lại.",
         ),
         sp(
           "Where did you record Mr Lee's complaint?",
@@ -4508,8 +4675,8 @@ function week30(): LessonContent[] {
         ),
         game(
           "You forgot my birthday again this year!",
-          "I am so sorry, madam. I will add your date to the birthday calendar now.",
-          "I am so sorry, madam. I will add your date to birthday calendar now.",
+          "I am so sorry, madam. Would you like me to add your date to the birthday calendar?",
+          "That was the night team, madam. They never checks the calendar.",
           "That was the night team, madam. They never check the calendar.",
           undefined,
           "Câu cuối đổ lỗi cho đồng nghiệp trước mặt khách. Câu đúng xin lỗi và sửa đúng chỗ ghi.",
@@ -4584,15 +4751,8 @@ function week30(): LessonContent[] {
           ["unattended"],
         ),
         sp(
-          "Her bags are still on the steps.",
-          "Please ask the bell desk for assistance with her bags. Do not leave them unattended.",
-          "Tuần 26: đúng bàn giúp, và không bỏ đồ của khách không người trông.",
-          "colleague",
-          ["bell", "desk", "assistance", "unattended"],
-        ),
-        sp(
           "What should I read before my first shift?",
-          "Please read the VIP arrival list and the departure schedule before you start.",
+          "Please read the VIP arrival list and the lounge duty roster before you start.",
           "Tuần 29: nói với đồng nghiệp mới, chỉ đúng chỗ cần đọc trước ca.",
           "colleague",
           ["vip", "arrival", "list"],
@@ -4605,13 +4765,6 @@ function week30(): LessonContent[] {
           ["departure", "schedule", "suddenly"],
         ),
         sp(
-          "Which guests leave early tomorrow?",
-          "Two guests are on the departure schedule, madam. Their cars come at five.",
-          "Tuần 29: số lượng, nơi ghi, mốc giờ.",
-          "manager",
-          ["departure", "schedule"],
-        ),
-        sp(
           "Is anything still open for tonight?",
           "Mrs Patel is still on the upgrade waiting list. I left a follow-up note about it.",
           "Tuần 29: việc còn mở + bạn đã để lại ghi chú.",
@@ -4620,22 +4773,15 @@ function week30(): LessonContent[] {
         ),
         sp(
           "Is my upgrade ready yet?",
-          "Not yet, madam. You are first on the upgrade waiting list, and the front office will call you.",
-          "Tuần 29: đang chờ khác với đã xác nhận — không hứa thay lễ tân.",
+          "Not yet, madam. The front office will call you as soon as it is confirmed.",
+          "Tuần 29: đang chờ khác với đã xác nhận — không hứa thay lễ tân, không kể thứ tự trong danh sách chờ.",
           undefined,
-          ["upgrade", "waiting", "list"],
-        ),
-        sp(
-          "Where are the open items for the morning team?",
-          "In my follow-up note: one late amenity delivery, the set-up checklist and the lounge duty roster.",
-          "Tuần 29: đúng ghi chú, đúng chỗ.",
-          "colleague",
-          ["note", "late", "amenity", "delivery", "checklist", "roster"],
+          ["yet", "confirmed"],
         ),
         sp(
           "We are back for our anniversary on the fourteenth of May. Did you remember?",
-          "Of course, madam! It is in your guest preference file, and we are ready to celebrate with you.",
-          "Mừng cùng khách — thông tin đã lưu là để phục vụ khách, không phải để đọc lại như văn bản.",
+          "Happy anniversary, madam! Let me check your guest preference file now.",
+          "Mừng cùng khách trước, rồi xem đúng hồ sơ — không hứa điều mình chưa kiểm tra.",
         ),
       ],
       reading: read(
@@ -4680,7 +4826,7 @@ function week30(): LessonContent[] {
         game(
           "A lady slipped by the pool door. Should we help her stand up?",
           "Do not move her. I am calling first aid and the duty manager now.",
-          "Do not move her. I calling first aid and the duty manager now.",
+          "Yes, let us helping her to a chair, so she is feeling more comfortable.",
           "Yes, let us help her to a chair, so she is more comfortable.",
           "colleague",
           "Câu cuối nghe tử tế nhưng di chuyển người vừa ngã. Câu đúng giữ nguyên tư thế và gọi sơ cứu ngay.",
@@ -4688,7 +4834,7 @@ function week30(): LessonContent[] {
         game(
           "Can I tell Mrs Patel that her upgrade is ready?",
           "Not yet. She is first on the upgrade waiting list, so please do not tell her.",
-          "Not yet. She is first on upgrade waiting list, so please do not tell her.",
+          "Yes, you tell her now. I am sure the front office will probably says yes for her.",
           "Yes, tell her now. The front office will probably say yes.",
           "colleague",
           "Câu cuối hứa thay lễ tân dựa trên phỏng đoán. Câu đúng phân biệt rõ đang chờ với đã xác nhận.",
