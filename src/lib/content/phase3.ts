@@ -77,7 +77,7 @@ import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
 import { FO_P3, FO_P3_CAN_DO } from "./p3/fo";
 import { FB_P3, FB_P3_CAN_DO } from "./p3/fb";
 import { HK_P3 } from "./p3/hk";
-import { SW_P3 } from "./p3/sw";
+import { SW_P3, SW_P3_CAN_DO } from "./p3/sw";
 import { GR_P3, GR_P3_CAN_DO } from "./p3/gr";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
@@ -2285,6 +2285,7 @@ const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
   FO: FO_P3_CAN_DO,
   FB: FB_P3_CAN_DO,
   GR: GR_P3_CAN_DO,
+  SW: SW_P3_CAN_DO,
 };
 
 function lessonsOf(lx: Ctx, week: number): LessonContent[] {
@@ -2544,30 +2545,80 @@ export const WEEK26_MEDIATION_TASKS: Record<string, MediationTask> = {
   },
   SW: {
     colleagueNoteVi:
-      "Kỹ thuật viên phụ trách khách hẹn 3 giờ chiều đang bị ốm, phải đổi sang kỹ thuật viên khác hoặc dời giờ hẹn.",
+      "Kỹ thuật viên phụ trách khách hẹn 3 giờ chiều đang bị ốm, phải đổi sang kỹ thuật viên khác hoặc dời giờ hẹn. Đổi giờ hay đổi người đều không tính phí.",
     promptVi:
-      "Khách đã đặt massage lúc 3 giờ chiều. Hãy nói lại bằng tiếng Anh, truyền đạt đủ ba ý bên dưới.",
+      "Khách đã đặt massage lúc 3 giờ chiều. Hãy nói lại bằng tiếng Anh, truyền đạt đủ các ý bên dưới.",
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies"] },
       {
-        labelVi: "Kỹ thuật viên phụ trách không thể làm hôm nay",
-        any: ["therapist", "unwell", "unavailable", "is ill", "is sick"],
+        labelVi: "Xin lỗi khách",
+        any: ["sorry", "apologise", "apologize", "apologies", "afraid"],
+      },
+      {
+        labelVi: "Kỹ thuật viên phụ trách không làm được hôm nay",
+        any: [
+          "not available",
+          "unavailable",
+          "unwell",
+          "is ill",
+          "is sick",
+          "cannot come",
+          "cannot work",
+          "not working today",
+          "not here today",
+        ],
       },
       {
         labelVi: "Đưa lựa chọn: người khác hoặc đổi giờ",
+        required: true,
         any: [
-          "reschedule",
-          "another time",
           "another therapist",
           "different therapist",
+          "other therapist",
+          "another time",
+          "different time",
           "change the time",
+          "move your massage",
+          "move your booking",
+          "move your appointment",
+          "reschedule",
+        ],
+      },
+      {
+        labelVi: "Không tính thêm phí khi đổi",
+        any: [
+          "no charge",
+          "no extra charge",
+          "no fee",
+          "free of charge",
+          "at no cost",
+          "no extra cost",
+          "will not pay",
+          "do not need to pay",
+          "same price",
         ],
       },
     ],
+    // Phrase-matched, so each entry is something a correct relay never says:
+    // naming the colleague's illness, blaming her, charging for the change, or
+    // promising compensation that is the manager's to give.
+    mustAvoid: [
+      "her fault",
+      "she is lazy",
+      "a fever",
+      "the flu",
+      "cancellation fee",
+      "change fee",
+      "an extra charge",
+      "pay extra",
+      "free massage",
+      "free upgrade",
+      "a discount",
+      "half price",
+    ],
     modelAnswer:
-      "I'm sorry, madam, your therapist for the 3 o'clock appointment is unwell today. We can offer you another qualified therapist at the same time, or reschedule to a time that suits you better — which would you prefer?",
+      "I am sorry, madam. Your three o'clock therapist is not available today. We can give you another therapist at three, or move your massage to another time. There is no charge for the change.",
     explanationVi:
-      "Đưa ra hai lựa chọn cụ thể (đổi kỹ thuật viên khác HOẶC đổi giờ) thay vì chỉ báo tin xấu — giúp khách cảm thấy vẫn được chủ động quyết định.",
+      "Xin lỗi, báo kỹ thuật viên không làm được (không kể bệnh của đồng nghiệp), đưa hai lựa chọn cụ thể và nói rõ không tính phí. Quà bù đắp hay giảm giá là việc của quản lý — đừng tự hứa.",
   },
   GR: {
     colleagueNoteVi:
