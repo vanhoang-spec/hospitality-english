@@ -49,6 +49,8 @@ import {
   utterancePassedAny,
 } from "../src/lib/speaking-score";
 import { acceptedAnswers } from "../src/lib/speaking-alternates";
+import { answersOf, reservableTurns, type OralItem } from "../src/lib/checkpoint-oral";
+import { weeksInPhase } from "../src/lib/phases";
 import { P1_BANKS } from "../src/lib/content/phase1-lexicon";
 import { P2_BANKS } from "../src/lib/content/phase2-lexicon";
 import { P3_BANKS } from "../src/lib/content/phase3-lexicon";
@@ -2716,6 +2718,27 @@ function droppableQuotedWordsIn(key: string, week: WeekContent, lesson: LessonCo
   return out;
 }
 
+/** MỘT PHASE ĐÃ ĐÁNH DẤU `risk` THÌ Ô DỰ TRỮ LÀ CÁC LƯỢT ĐƯỢC ĐÁNH DẤU, không
+ *  phải các lượt khớp mẫu. Từ khi `buildOral` rút ô bắt buộc trong số lượt có
+ *  `SpeakingItem.risk`, đọc mẫu ở đây sẽ đo một bể kỳ thi không còn dùng: P3
+ *  Buồng phòng báo "rơi" ở những câu không bao giờ vào ô dự trữ, và im ở đúng
+ *  những câu vào. Nên với phase đã đánh dấu, bể và danh sách đáp án (đã thu hẹp)
+ *  đến thẳng từ `reservableTurns` — cùng một hàm `buildOral` gọi. Phase chưa
+ *  đánh dấu vẫn đi đường mẫu cũ. */
+const reservedByMark = new Map<string, Map<string, OralItem> | null>();
+function markedReservations(dep: string, weekNumber: number): Map<string, OralItem> | null {
+  const checkpoint = Math.max(...weeksInPhase(weekNumber));
+  const k = `${dep}|${checkpoint}`;
+  if (!reservedByMark.has(k)) {
+    const { byMark, turns } = reservableTurns(dep, String(checkpoint));
+    reservedByMark.set(
+      k,
+      byMark ? new Map(turns.map((t) => [`${t.sourceWeek}|${t.target}`, t])) : null,
+    );
+  }
+  return reservedByMark.get(k)!;
+}
+
 function fragileReservedTurnsIn(
   key: string,
   week: WeekContent,
@@ -2724,12 +2747,15 @@ function fragileReservedTurnsIn(
 ): string[] {
   const out: string[] = [];
   const dep = week.departmentId.toUpperCase();
+  const marked = markedReservations(week.departmentId, week.weekNumber);
   lesson.speaking.forEach((item, i) => {
-    const hit =
-      patterns.authority.exec(item.targetResponse) ??
-      patterns.topic[dep]?.exec(item.targetResponse);
+    const served = marked?.get(`${week.weekNumber}|${item.targetResponse}`);
+    const hit = marked
+      ? served && ["risk"]
+      : (patterns.authority.exec(item.targetResponse) ??
+        patterns.topic[dep]?.exec(item.targetResponse));
     if (!hit) return;
-    const answers = examAnswersFor(week, item);
+    const answers = served ? answersOf(served) : examAnswersFor(week, item);
     for (const word of contentWordsOf(item.targetResponse, S_EXPRESSIVE)) {
       const without = targetWithout(item.targetResponse, word);
       if (!without) continue;

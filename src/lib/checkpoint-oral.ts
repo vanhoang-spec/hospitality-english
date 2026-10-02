@@ -94,7 +94,7 @@ export function oralHalfPassed(results: { item: OralItem; passed: boolean }[]): 
   return results.filter((r) => r.passed).length >= oralPassMin(results.length);
 }
 
-export function buildOral(dep: string, week: string): OralItem[] {
+function oralSetup(dep: string, week: string) {
   // Carried beside each item and never exported: which LESSON printed it. A
   // `follows` is a within-lesson contract (see the resolution below), and the
   // flattened phase-wide list is the only place that fact is lost.
@@ -272,16 +272,6 @@ export function buildOral(dep: string, week: string): OralItem[] {
   }
   const pool = heads.filter((i) => answersTo.get(flat(items[i].guestPrompt))!.size === 1);
 
-  // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
-  // its three turns in a row the way the lesson taught them.
-  const picked: typeof items = [];
-  const used = new Set<number>();
-  let units = 0;
-  const take = (i: number) => {
-    for (const it of chainAt(i)) picked.push(it);
-    for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
-    units++;
-  };
   // ONE draw is reserved, and it goes first so it never has to be taken back
   // out of a chain: a decision the speaker does not own, or the department's
   // own risk.
@@ -428,10 +418,49 @@ export function buildOral(dep: string, week: string): OralItem[] {
   // just its head. The search stays only for phases that mark nothing yet.
   const marked = pool.filter((i) => chainAt(i).some((it) => it.risk));
   const riskTargets = new Set(items.filter((it) => it.risk).map((it) => it.target));
+  /** What a reserved draw headed at `head` makes must-be-right, as the
+   *  sitting serves it: index and narrowed item. ONE place, read by the draw
+   *  below and by reservableTurns(), so the gate that measures the reserved
+   *  slot and the slot that ships cannot become two rules. */
+  const reservedAt = (head: number): [number, OralItem][] => {
+    if (marked.length === 0) return [[head, narrowed(items[head]!, carries)]];
+    const out: [number, OralItem][] = [];
+    for (let cur: number | undefined = head; cur !== undefined; cur = nextOf.get(cur))
+      if (items[cur]!.risk) out.push([cur, narrowed(items[cur]!, (t) => riskTargets.has(t))]);
+    return out;
+  };
+  return { items, pool, nextOf, chainAt, carries, marked, reservedAt };
+}
+
+/** Every turn the reserved draw can make must-be-right, exactly as a sitting
+ *  would serve it (alternates already narrowed). `byMark` says whether the
+ *  phase marks its turns (`SpeakingItem.risk`) or still falls back on the
+ *  substring search. Exported for the content lint: a measurement of the
+ *  reserved slot has to call the thing that ships. */
+export function reservableTurns(dep: string, week: string): { byMark: boolean; turns: OralItem[] } {
+  const { items, pool, carries, marked, reservedAt } = oralSetup(dep, week);
+  const heads = marked.length > 0 ? marked : pool.filter((i) => carries(items[i]!.target));
+  return {
+    byMark: marked.length > 0,
+    turns: heads.flatMap((h) => reservedAt(h).map(([, it]) => it)),
+  };
+}
+
+export function buildOral(dep: string, week: string): OralItem[] {
+  const { items, pool, nextOf, chainAt, carries, marked, reservedAt } = oralSetup(dep, week);
+  // Counted in UNITS, not turns: a chain is one draw, and the learner speaks
+  // its three turns in a row the way the lesson taught them.
+  const picked: typeof items = [];
+  const used = new Set<number>();
+  let units = 0;
+  const take = (i: number) => {
+    for (const it of chainAt(i)) picked.push(it);
+    for (let cur: number | undefined = i; cur !== undefined; cur = nextOf.get(cur)) used.add(cur);
+    units++;
+  };
   if (marked.length > 0) {
     const head = shuffle(marked)[0]!;
-    for (let cur: number | undefined = head; cur !== undefined; cur = nextOf.get(cur))
-      if (items[cur]!.risk) items[cur] = narrowed(items[cur]!, (t) => riskTargets.has(t));
+    for (const [j, it] of reservedAt(head)) items[j] = it;
     take(head);
   }
   const reserved =
@@ -443,7 +472,7 @@ export function buildOral(dep: string, week: string): OralItem[] {
     // item wrong and the other four right passed 100% of the time. Reserving a
     // draw for "I cannot decide that — may I ask my manager?" and then not
     // minding the answer is not an assessment of it.
-    items[reserved] = narrowed(items[reserved]!, carries);
+    for (const [j, it] of reservedAt(reserved)) items[j] = it;
     take(reserved);
   }
   for (const i of shuffle(pool)) {

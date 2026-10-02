@@ -74,6 +74,7 @@
 import type { LessonContent, MediationTask, WeekContent } from "./week-content";
 import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
 import { P3_BANKS, type P3Bank, type P3Word } from "./phase3-lexicon";
+import { HK_P3 } from "./p3/hk";
 
 type Ctx = P0Lexicon & { bank: P3Bank };
 
@@ -2263,12 +2264,22 @@ const WEEK_META: Record<number, { en: string; vi: string; build: (lx: Ctx) => Le
   },
 };
 
+/** Departments whose Phase 3 is written for them rather than read out of
+ *  the shared frames (round 1 of the blind audit, ac24e13: a frame knows
+ *  a part of speech, never a meaning). Their cards still come from the
+ *  department's bank, so Phase 4's recycling finds the same headwords. */
+const AUTHORED: Record<string, Record<number, LessonContent[]>> = { HK: HK_P3 };
+
+function lessonsOf(lx: Ctx, week: number): LessonContent[] {
+  return AUTHORED[lx.code]?.[week] ?? WEEK_META[week].build(lx);
+}
+
 /** Headwords a department ACTUALLY meets in a week. Three slots in this
  *  range are served by hand-authored payloads instead of the spine, so
  *  recycling must read those, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
   const override = overrides[`${lx.code}-${week}`];
-  const lessons = override ? override.lessons : WEEK_META[week].build(lx);
+  const lessons = override ? override.lessons : lessonsOf(lx, week);
   return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
@@ -2515,7 +2526,7 @@ function buildWeek(
     weekTitleVi: meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx), review),
+    lessons: lockWeekHeadwords(lessonsOf(lx, week), review),
     reviewWords: review,
     mediation: week === 26 ? WEEK26_MEDIATION_TASKS[lx.code] : undefined,
   };
