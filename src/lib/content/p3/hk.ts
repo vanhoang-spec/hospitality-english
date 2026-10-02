@@ -17,13 +17,16 @@
 //    to offer (re-clean, replace, bring, a time they control), and passes
 //    everything else on — naming who decides, never promising for them.
 //  · The FLOOR SUPERVISOR checks a room before any charge, inspects a
-//    re-clean, takes found items and the reports of the shift.
+//    re-clean, takes found items and the reports of the shift, approves a
+//    free re-wash, and takes a guest's complaint about the room or the
+//    cleaning. A guest who asks for someone senior, or who was not called
+//    back, gets the executive housekeeper.
 //  · The FRONT DESK explains prices, puts charges on the bill and checks the
 //    bill, moves guests between rooms, checks ID, issues key cards and gives
 //    lost property back.
 //  · The DUTY MANAGER decides money: a damage charge amount, a smoking
-//    penalty, a refund, anything free. A guest who wants "someone senior"
-//    about the cleaning gets the executive housekeeper.
+//    penalty, a refund. Minibar items are the minibar attendant's, laundry
+//    the laundry team's, bags the bell desk's.
 //  · SECURITY comes for safety and for accusations: a stranger at a door, a
 //    lost master key, a search, a guest who harasses staff, and — with the
 //    supervisor — the welfare check when a Do Not Disturb sign stays on past
@@ -43,6 +46,11 @@
 // ("Use a quieter vacuum", "Return your ironed shirt") gave way to words of
 // the trade (spill kit, welfare check, stayover, dehumidifier, pick-up), and
 // two cards weeks 1-22 already taught (Colleague, Prefer) gave way too.
+//
+// Round 3 (a166936) counted 57 of 104 week-23-29 headwords that no later
+// week said again. Every later week now says the dead words of the weeks
+// before it, and week 30 — the checkpoint — teaches no new word: its cards
+// re-present sixteen of them, each said twice that week.
 // ============================================================
 import type { LessonContent } from "../week-content";
 import { game, g, read, sp } from "../phase0";
@@ -54,7 +62,7 @@ const L = lessonsFor("HK");
 // ── Week 23 — Recommending from the pillow menu ─────────────────────────
 function week23(): LessonContent[] {
   const t1a = "I recommend the memory foam topper, madam. It is softer than the mattress.";
-  const t1b = "It is free from our pillow menu. I can put it on your bed this afternoon.";
+  const t1b = "There is no charge, madam. I can put it on your bed this afternoon.";
   const t1c = "Then I also recommend a down duvet, madam. It is warmer than the blanket.";
   const t2a = "I recommend our soft earplugs, sir. The room is much quieter with them.";
   const t2b = "Then I also recommend an eye mask. It keeps the light out better than the curtain.";
@@ -77,6 +85,7 @@ function week23(): LessonContent[] {
           "🪶",
         ]),
         c("Premium toiletries", "The front desk adds a small charge for the premium toiletries."),
+        c("Pillow choice", "I will note your pillow choice for the evening team."),
       ],
       grammar: [
         g(
@@ -134,7 +143,7 @@ function week23(): LessonContent[] {
         ),
         sp(
           "Can I have a memory foam topper and a firmer pillow?",
-          "Of course, madam. I will bring both to your room this afternoon.",
+          "Of course, madam. I will note your pillow choice and bring both this afternoon.",
           "Khách chọn cả hai — xác nhận và hứa thời điểm bạn tự giữ được.",
         ),
         sp(
@@ -149,9 +158,9 @@ function week23(): LessonContent[] {
           {
             q: "Vì sao Hoa gợi ý tấm đệm cao su non?",
             options: [
-              "Vì đó là món đắt nhất trong thực đơn gối",
+              "Vì khách nói bị lạnh vào ban đêm",
               "Vì khách nói giường cứng và bị đau lưng",
-              "Vì trưởng bộ phận yêu cầu bán món đó",
+              "Vì đệm cao su non là món không tính thêm phí",
             ],
             correct: 1,
             explanation:
@@ -172,8 +181,8 @@ function week23(): LessonContent[] {
             q: "Vì sao Hoa nói về khoản phí TRƯỚC khi khách chọn?",
             options: [
               "Để khách không bất ngờ khi xem hóa đơn",
-              "Để khách chọn món miễn phí cho rẻ hơn",
-              "Vì khách sạn bắt nhân viên buồng bán thêm",
+              "Vì khách đã hỏi giá của bộ đồ cao cấp",
+              "Vì khoản phí đã có sẵn trên hóa đơn của khách",
             ],
             correct: 0,
             explanation:
@@ -193,7 +202,7 @@ function week23(): LessonContent[] {
         game(
           "I feel cold at night. Is there anything warmer?",
           "I recommend a down duvet, sir. It is warmer than the blanket.",
-          "I recommend a down duvet, sir. It is more warm than the blanket.",
+          "I recommend a down duvet, sir. It is warmer then the blanket.",
           "The blankets are the same in every room, sir, I am afraid.",
           undefined,
           "Câu cuối nói đúng một sự thật nhưng bỏ khách lạnh cả đêm. Câu đúng gợi ý một món trong thực đơn gối và so sánh rõ: warmer than.",
@@ -293,8 +302,8 @@ function week23(): LessonContent[] {
             q: "Bài đọc cho thấy điều gì về cách Mai gợi ý?",
             options: [
               "Mỗi gợi ý đi theo một vấn đề khách nêu",
-              "Mai luôn gợi ý món đắt nhất trước tiên",
-              "Mai chỉ gợi ý khi trưởng ca có mặt",
+              "Mai gợi ý cả ba món cho mỗi vấn đề",
+              "Mai chờ khách hỏi rồi mới nói về máy lọc không khí",
             ],
             correct: 0,
             explanation:
@@ -359,6 +368,7 @@ function week23(): LessonContent[] {
           ),
           alsoAccept: [
             "Of course, madam. Do you have any allergies?",
+            "Are you allergic to anything?",
             "It has lavender in it, madam. Does anyone have an allergy?",
           ],
         }),
@@ -394,7 +404,7 @@ function week23(): LessonContent[] {
             options: [
               "Vì xịt thơm gối là món khách phải trả thêm tiền",
               "Vì xịt có tinh dầu oải hương",
-              "Vì chỉ phòng có trẻ nhỏ mới được dùng xịt",
+              "Vì em bé mới mười tháng tuổi",
             ],
             correct: 1,
             explanation:
@@ -403,7 +413,7 @@ function week23(): LessonContent[] {
           {
             q: "Lan làm gì sau khi biết người cha dị ứng bụi?",
             options: [
-              "Khuyên cả gia đình đổi sang một khách sạn khác",
+              "Không mang xịt thơm lên vì người cha bị dị ứng",
               "Mang thêm xịt thơm để át đi mùi bụi",
               "Gợi ý chăn ga chống dị ứng, ghi chú cho phòng",
             ],
@@ -416,7 +426,7 @@ function week23(): LessonContent[] {
             options: [
               "Để ca sau biết, không mang nhầm đồ lên",
               "Để lễ tân tính thêm phí chăn ga",
-              "Để khách phải ký xác nhận bị dị ứng",
+              "Để khách nhớ không dùng xịt thơm gối nữa",
             ],
             correct: 0,
             explanation:
@@ -635,9 +645,9 @@ function week24(): LessonContent[] {
           "Chỉ chỗ đọc quy định, và người giải thích được.",
         ),
         sp(
-          "Do you charge for the baby cot too?",
-          "No, madam. The baby cot is free, but the rollaway bed has a charge.",
-          "Phân biệt rõ món miễn phí và món có phí trong cùng một câu.",
+          "Do you charge for the bath things for my baby?",
+          "No, madam. The baby bath set is free, but the bath salt set has a charge.",
+          "Phân biệt rõ món miễn phí và món có phí trong cùng một câu — hai món của tuần 23.",
         ),
         sp(
           "Is the extra bed charge for one night or every night?",
@@ -753,6 +763,11 @@ function week24(): LessonContent[] {
           ],
         }),
         sp(
+          "Why do the premium toiletries cost extra?",
+          "Because the premium toiletries come from a spa brand, madam. The front desk adds the charge.",
+          "Món của tuần 23 + because: lý do thật, và ai tính phí.",
+        ),
+        sp(
           "What is this deep cleaning fee for?",
           "There is a deep cleaning fee because smoke stays in the curtains and carpet, sir.",
           "Lý do cụ thể khách hiểu được: khói bám vào rèm và thảm.",
@@ -766,7 +781,7 @@ function week24(): LessonContent[] {
             ["decide", "decides", "duty", "manager", "smoking", "penalty"],
           ),
           alsoAccept: [
-            "The duty manager decides on any smoking penalty, sir. I cannot decide that.",
+            "I cannot decide that, sir. May I ask the duty manager?",
             "I am sorry, I cannot decide that. The duty manager decides on any smoking penalty.",
             "I cannot decide that, sir. I will ask the duty manager.",
           ],
@@ -780,7 +795,7 @@ function week24(): LessonContent[] {
             options: [
               "Để bán thêm đồ uống cho khách",
               "Để phí minibar luôn chính xác",
-              "Để xem nhân viên có tự lấy đồ không",
+              "Vì khách yêu cầu kiểm minibar mỗi ngày",
             ],
             correct: 1,
             explanation:
@@ -798,7 +813,7 @@ function week24(): LessonContent[] {
             options: [
               "Vì lúc đó chưa ai kiểm lại số đếm",
               "Vì Linh nghĩ là khách nói dối",
-              "Vì minibar không bao giờ đếm sai",
+              "Vì Linh đã thấy một chai nước bị mở",
             ],
             correct: 0,
             explanation:
@@ -855,7 +870,7 @@ function week24(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Why is there a missing towel charge? I did not take anything!",
+          "Why did you report missing towels? I did not take anything!",
           t3a,
           "Bạn chỉ báo số đã đếm — không kết luận, không buộc tội.",
         ),
@@ -931,7 +946,7 @@ function week24(): LessonContent[] {
             q: "Câu chuyện cho thấy vì sao phải kiểm tra TRƯỚC khi tính phí?",
             options: [
               "Vì giám sát phải ký vào mọi hóa đơn",
-              "Vì khách luôn nói thật về đồ trong phòng",
+              "Vì khách đã ký nhận đủ khăn lúc nhận phòng",
               "Vì đồ có thể chỉ bị để nhầm chỗ",
             ],
             correct: 2,
@@ -1025,8 +1040,13 @@ function week24(): LessonContent[] {
         ),
         sp(
           "Can I leave my bags in the room after twelve?",
-          "There is a late checkout fee after twelve, sir. The front desk can keep your bags.",
+          "There is a late checkout fee after twelve, sir. The bell desk can keep your bags.",
           "Báo phí, rồi chỉ một lựa chọn khác của bộ phận khác — không tự hứa giữ phòng.",
+        ),
+        sp(
+          "Can I take the silk pillowcase home with me?",
+          "The silk pillowcase stays in the room, sir. The front desk can tell you the price.",
+          "Món của tuần 23: nói rõ quy định, và ai báo giá — không tự bán, không tự cho.",
         ),
         sp(
           "Why does the front desk need my passport for a lost item?",
@@ -1042,7 +1062,7 @@ function week24(): LessonContent[] {
             options: [
               "Nhân viên buồng đã nhặt được món đồ",
               "Quầy lễ tân, sau khi kiểm tra giấy tờ",
-              "Bất kỳ ai đang giữ chìa khóa kho",
+              "Giám sát buồng phòng của ca đó",
             ],
             correct: 1,
             explanation:
@@ -1062,7 +1082,7 @@ function week24(): LessonContent[] {
           {
             q: "Vì sao quy định cần kiểm tra giấy tờ?",
             options: [
-              "Để thu thêm phí giữ đồ của khách",
+              "Để lễ tân biết khách đã trả phòng chưa",
               "Để lễ tân biết khách ở lại bao lâu",
               "Để không trả nhầm đồ cho người khác",
             ],
@@ -1085,7 +1105,7 @@ function week24(): LessonContent[] {
           "Can I check out at three without paying more?",
           "There is a late checkout fee after twelve, madam. The front desk can confirm it.",
           "There is a late checkout fee after twelve, madam. The front desk can confirms it.",
-          "Yes, madam. Housekeeping can wait, so three is fine.",
+          "Yes, madam. Housekeeping can wait for you, so three o'clock is no problem at all today.",
           undefined,
           "Câu cuối tự cho trả phòng muộn miễn phí — quyết định của lễ tân. Câu đúng báo phí và chỉ người xác nhận.",
         ),
@@ -1104,11 +1124,11 @@ function week25(): LessonContent[] {
   const t2c = "Then we will knock twice and wait. If you say no, we will come back later.";
   const dnd = "Then we will not knock. I will call the room and ask the guest.";
   const t3a = "Laundry pick-up is at ten, sir, and we return it by six.";
-  const t3b = "Then I will ask the laundry team for pressing only. It is much faster.";
+  const t3b = "If you like, we can do pressing only, sir. It is much faster than washing.";
   const t3c = "Of course. If there is a delay, I will call you before three.";
   const t4a = "I am very sorry, sir. I am on my way, and I will be there within five minutes.";
-  const t4b = "You are right, sir. I am bringing the items myself now.";
-  const t4c = "We will turn down your bed at seven o'clock, sir.";
+  const t4b = "You are right, sir. I am bringing the cot myself now.";
+  const t4c = "Your turndown time is seven o'clock, sir, the same as every evening.";
   return [
     L(25, 1, "Within Ten Minutes", "Cam kết trong bao lâu", {
       vocabulary: [
@@ -1172,11 +1192,11 @@ function week25(): LessonContent[] {
           "Mang đủ bộ (bàn là và cầu là) và hứa có mốc.",
         ),
         sp(
-          "Can I also have earplugs? The street is loud tonight.",
-          "Of course, madam. I will bring soft earplugs within ten minutes.",
+          "Can I also have a down duvet? The air conditioning feels cold.",
+          "Of course, madam. I will bring a down duvet within ten minutes.",
           "Món của tuần 23, lời hứa của tuần 25: đồng ý + món + mốc giờ.",
           undefined,
-          ["earplugs"],
+          ["down", "duvet"],
         ),
       ],
       reading: read(
@@ -1229,7 +1249,7 @@ function week25(): LessonContent[] {
         game(
           "My shirt is creased, and I have a meeting soon.",
           "Of course, sir. I will bring an ironing board within ten minutes.",
-          "Of course, sir. I will bring a ironing board within ten minutes.",
+          "Of course, sir. I will bring ironing board within ten minutes.",
           "There is a dry cleaner on the next street, sir.",
           undefined,
           "Câu cuối đẩy khách ra ngoài khách sạn. Câu đúng nhận việc và hứa có mốc giờ.",
@@ -1293,7 +1313,7 @@ function week25(): LessonContent[] {
           ),
           alsoAccept: [
             "Then we do not knock. I will call the guest on the phone first.",
-            "I will call the room and ask the guest. We will not knock.",
+            "Then we do not knock. I will call the room and ask the guest.",
           ],
         }),
         sp(
@@ -1302,16 +1322,23 @@ function week25(): LessonContent[] {
           "Chỉ đúng tấm biển, rồi hứa một mốc giờ.",
         ),
         sp(
+          "Can I keep the Do Not Disturb sign on all day tomorrow?",
+          "Of course, madam. Our policy is to call you at three if the sign is still on.",
+          "Thẻ tuần 24: nói quy định bằng một mốc giờ cụ thể — không vào phòng, chỉ gọi hỏi.",
+          undefined,
+          ["policy"],
+        ),
+        sp(
           "The shower curtain has black spots on it.",
           "I am sorry, sir. I will change the shower curtain before you come back.",
           "Xin lỗi + làm ngay, theo mốc của khách.",
         ),
         sp(
           "My husband has a dust allergy. When can you change the bedding?",
-          "We are going to put on anti-allergy bedding by two o'clock, madam.",
+          "We are going to put on anti-allergy bedding and bring an air purifier by two.",
           "Món của tuần 23, kế hoạch của tuần 25: going to + món + mốc giờ.",
           undefined,
-          ["anti-allergy", "bedding"],
+          ["anti-allergy", "bedding", "air", "purifier"],
         ),
       ],
       reading: read(
@@ -1409,13 +1436,13 @@ function week25(): LessonContent[] {
         sp(
           "I need my shirt for a dinner at five.",
           t3b,
-          "Khách có mốc riêng — chọn dịch vụ nhanh hơn, không hứa thay tổ giặt.",
+          "Khách có mốc riêng — gợi ý dịch vụ nhanh hơn và để khách chọn, không tự đổi dịch vụ.",
           undefined,
           undefined,
           t3a,
         ),
         sp(
-          "Can you tell me if there is a problem?",
+          "Yes, please. Can you tell me if there is a problem?",
           t3c,
           "Hứa báo trước nếu trễ, kèm mốc. Khách không phải tự đi hỏi.",
           undefined,
@@ -1438,6 +1465,13 @@ function week25(): LessonContent[] {
           "Mốc đi kèm điều kiện: trả trước sáu giờ nếu lấy trước mười giờ.",
         ),
         sp(
+          "My shirt came back with a burn mark. Who pays for it?",
+          "I am very sorry, sir. I will report it, and the duty manager will decide on it.",
+          "Đồ giặt bị hỏng: xin lỗi, báo cáo, người quyết là quản lý trực — không tự hứa đền.",
+          undefined,
+          ["report", "duty", "manager", "decide"],
+        ),
+        sp(
           "How much is pressing for a suit?",
           "The price is on the laundry price list in your wardrobe, sir.",
           "Thẻ tuần 24: chỉ đúng bảng giá, không đọc giá theo trí nhớ.",
@@ -1446,10 +1480,10 @@ function week25(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Tan needs his shirt for a dinner at five, but laundry usually comes back at six. Hai asks the laundry team for pressing only, which is much faster. He promises to call Mr Tan before three if there is a delay. At two, the laundry team confirms the time. Hai calls Mr Tan to say the shirt is on time, and he brings it up at four.`,
+        `Mr Tan needs his shirt for a dinner at five, but laundry usually comes back at six. Hai offers pressing only, which is much faster, and Mr Tan agrees. He promises to call Mr Tan before three if there is a delay. At two, the laundry team confirms the time. Hai calls Mr Tan to say the shirt is on time, and he brings it up at four.`,
         [
           {
-            q: "Vì sao Hải xin tổ giặt chỉ là áo?",
+            q: "Vì sao Hải gợi ý chỉ là áo?",
             options: [
               "Vì tổ giặt hôm đó không giặt áo sơ mi",
               "Vì khách cần áo cho bữa tối lúc năm giờ",
@@ -1510,6 +1544,7 @@ function week25(): LessonContent[] {
           "Đang trên đường tới",
           "🏃",
         ]),
+        c("Turndown time", "Your turndown time is seven o'clock."),
         c("Kettle", "The kettle in your room boils water for tea.", [
           "/ˈketl/",
           "Ấm đun nước",
@@ -1542,7 +1577,7 @@ function week25(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "You said ten minutes for the minibar. It has been thirty.",
+          "You said ten minutes for the baby cot. It has been thirty.",
           t4a,
           "Xin lỗi, giữ ĐÚNG việc khách chờ, đưa mốc mới ngắn hơn.",
         ),
@@ -1586,15 +1621,15 @@ function week25(): LessonContent[] {
           "Yêu cầu nhỏ, mốc ngắn.",
         ),
         sp(
-          "The plush towels did not come. You promised them by noon.",
-          "I am very sorry, madam. I will bring your plush towel set within ten minutes.",
+          "The plush towels and the pillow spray did not come. You promised them by noon.",
+          "I am very sorry, madam. I will bring your plush towel set and pillow spray within ten minutes.",
           "Món của tuần 23: xin lỗi + đúng món đã hứa + mốc mới.",
           undefined,
-          ["plush", "towel", "set"],
+          ["plush", "towel", "set", "pillow", "spray"],
         ),
       ],
       reading: read(
-        `Room 309 asked for minibar items thirty minutes ago, and the promise was ten minutes. Kien apologises, keeps the same task and gives a new time: five minutes. He does not offer a different service instead. Then he brings the items himself. That evening he checks that the turndown starts at seven, as usual, so the guest does not wait again.`,
+        `Room 309 asked for a baby cot thirty minutes ago, and the promise was ten minutes. Kien apologises, keeps the same task and gives a new time: five minutes. He does not offer a different service instead. Then he brings the cot himself. That evening he checks that the turndown starts at seven, as usual, so the guest does not wait again.`,
         [
           {
             q: "Kiên làm gì khi trễ hẹn?",
@@ -1605,7 +1640,7 @@ function week25(): LessonContent[] {
             ],
             correct: 2,
             explanation:
-              "'keeps the same task and gives a new time' — khách chờ minibar thì giải pháp là minibar, không phải việc khác.",
+              "'keeps the same task and gives a new time' — khách chờ nôi em bé thì giải pháp là nôi em bé, không phải việc khác.",
           },
           {
             q: "Mốc thời gian mới Kiên đưa ra là bao lâu?",
@@ -1628,10 +1663,10 @@ function week25(): LessonContent[] {
       ),
       game: [
         game(
-          "You promised the minibar items thirty minutes ago!",
+          "You promised the baby cot thirty minutes ago!",
           "I am very sorry, sir. I am on my way, and I will be there within five minutes.",
           "I am very sorry, sir. I am on my way, and I will be there in within five minutes.",
-          "I am very sorry, sir. I will turn down your bed now instead, and the minibar can wait.",
+          "I am very sorry, sir. I will turn down your bed now instead, and the cot can wait.",
           undefined,
           "Câu cuối đổi sang một việc khách không yêu cầu. Câu đúng giữ đúng việc khách đang chờ và đưa mốc mới.",
         ),
@@ -1728,7 +1763,7 @@ function week26(): LessonContent[] {
           ),
           alsoAccept: [
             "I am sorry, I cannot open the door. Please go to the front desk with your ID.",
-            "I am sorry, sir, I cannot open the door for you. The front desk will check your ID.",
+            "I am sorry, I cannot do that. The front desk will check your ID.",
             "I am sorry, sir. I cannot open the door. Please ask the front desk.",
           ],
         }),
@@ -1754,6 +1789,20 @@ function week26(): LessonContent[] {
           "Who takes housekeeping calls at night?",
           "The housekeeping coordinator takes them, madam. Just press five on your phone.",
           "Chỉ đúng người nhận việc và cách gọi.",
+        ),
+        sp(
+          "Can I smoke on the balcony?",
+          "I am sorry, sir. Our policy is no smoking, and the duty manager decides any smoking penalty.",
+          "Thẻ tuần 24: quy định + người quyết khoản phạt. Bạn không đoán số tiền.",
+          undefined,
+          ["policy", "smoking", "duty", "manager", "penalty"],
+        ),
+        sp(
+          "Will I pay a late checkout fee if I stay until two?",
+          "Let me check with the front desk about the late checkout fee, madam.",
+          "Thẻ tuần 24 + Let me check with: phí do lễ tân xác nhận, bạn không đoán.",
+          undefined,
+          ["late", "checkout", "fee"],
         ),
         sp(
           "Can you bring the rollaway bed up now?",
@@ -1878,11 +1927,18 @@ function week26(): LessonContent[] {
         ),
         sp(
           "Can it be ready by six tomorrow?",
-          "I will ask the laundry team, sir, and I will call you before noon.",
+          "I will ask the laundry team about pressing, sir, and call you before noon.",
           "Không hứa thay tổ giặt; hứa việc bạn tự làm: hỏi và gọi lại có mốc.",
           undefined,
           undefined,
           "I will ask the laundry team to collect it at ten, sir.",
+        ),
+        sp(
+          "I think the missing towel charge on my bill is wrong.",
+          "I will ask my supervisor to check the missing towel charge with you, madam.",
+          "Thẻ tuần 24 + ask … to: giám sát kiểm lại, bạn không tự xoá phí.",
+          undefined,
+          ["supervisor", "missing", "towel", "charge"],
         ),
         sp(
           "Can my dress come back today?",
@@ -2011,8 +2067,9 @@ function week26(): LessonContent[] {
             ["ask", "supervisor", "security", "welfare", "check"],
           ),
           alsoAccept: [
+            "We will not go in. I will call the supervisor and security for a welfare check.",
+            "We will not go in alone. I will call the supervisor and security for a welfare check.",
             "I will call the supervisor and security for a welfare check.",
-            "We will not go in. I will ask the supervisor and security to do a welfare check.",
           ],
         }),
         sp(
@@ -2021,9 +2078,23 @@ function week26(): LessonContent[] {
           "Ca đêm có người phụ trách — nhờ đúng người, không hứa giờ thay họ.",
         ),
         sp(
+          "My bag is at lost property. Can you bring it up?",
+          "Under our lost property rule, the front desk returns it after an ID check.",
+          "Thẻ tuần 24: một đầu mối trả đồ, có kiểm tra giấy tờ.",
+          undefined,
+          ["lost", "property", "rule", "front", "desk", "ID", "check"],
+        ),
+        sp(
+          "Nobody brought the ice bucket I asked for.",
+          "I am very sorry, madam. I am on my way with the ice bucket now.",
+          "Thẻ tuần 25: xin lỗi và nói rõ bạn đang mang tới.",
+          undefined,
+          ["way", "ice", "bucket"],
+        ),
+        sp(
           "The spare kettle is not working either.",
-          "I am very sorry, sir. I will ask engineering to check the spare kettle today.",
-          "Thẻ tuần 25 + ask … to: đồ dự phòng cũng hỏng thì chuyển kỹ thuật.",
+          "I am very sorry, sir. I will bring another spare kettle now and report both to engineering.",
+          "Thẻ tuần 25: mang ngay ấm khác cho khách, rồi báo kỹ thuật cả hai chiếc hỏng.",
           undefined,
           ["spare", "kettle"],
         ),
@@ -2078,7 +2149,7 @@ function week26(): LessonContent[] {
         game(
           "Room 604 has had the DND sign on all day. Nobody answers the phone.",
           "I will call the supervisor and security for a welfare check.",
-          "I will calls the supervisor and security for a welfare check.",
+          "I will call the supervisor and security for welfare check.",
           "Then let us open the door and look inside quickly.",
           "colleague",
           "Câu cuối vào phòng mà không có giám sát và an ninh. Câu đúng gọi đúng người để kiểm tra an toàn cùng nhau.",
@@ -2095,6 +2166,7 @@ function week26(): LessonContent[] {
           "🔂",
         ]),
         c("Uniform room staff", "The uniform room staff give out clean uniforms."),
+        c("Room inspection result", "The room inspection result for 302 is good."),
       ],
       grammar: [
         g(
@@ -2136,9 +2208,23 @@ function week26(): LessonContent[] {
         ),
         sp(
           "Is room 302 ready for the VIP guest?",
-          "Yes. The room inspector has checked it, and it is ready.",
+          "Yes. The room inspection result is good, and the room is ready.",
           "Báo cấp trên: kết quả + ai đã kiểm tra.",
           "manager",
+        ),
+        sp(
+          "Did 512 get the ironing board it asked for?",
+          "Yes. I took the ironing board up at nine, and I noted it.",
+          "Thẻ tuần 25 trong một câu báo cáo: việc đã làm + giờ.",
+          "manager",
+          ["ironing", "board"],
+        ),
+        sp(
+          "Who decides the charge for the torn sheet in 708?",
+          "The duty manager will decide on the damaged linen charge. I took photos of the sheet.",
+          "Thẻ tuần 24: bạn báo cáo có bằng chứng, người quyết là quản lý trực.",
+          "manager",
+          ["duty", "manager", "decide", "damaged", "linen", "charge"],
         ),
         sp(
           "Did you change the shower curtain in 410?",
@@ -2214,7 +2300,7 @@ function week27(): LessonContent[] {
   const t1c = "I apologise for the inconvenience, madam. I will report it to my supervisor today.";
   const t1d = "Of course, madam. I will ask my supervisor to take your complaint now.";
   const t2a = "I am sorry you found hair in the bathtub, madam. I will re-clean it now.";
-  const t2b = "I will clean the whole bathroom again and ask my supervisor to inspect it.";
+  const t2b = "I am going to clean the whole bathroom again and ask my supervisor to check it.";
   const t2c = "I understand you are disappointed, madam. Thank you for your patience.";
   const t3a = "I am sorry. When did you first notice it, sir?";
   const t3b = "Thank you. I will clean it now and tell my supervisor about it.";
@@ -2287,6 +2373,20 @@ function week27(): LessonContent[] {
           "I have a concern about the cleaning in my room.",
           "Thank you for telling me about your concern, madam. What did you find?",
           "Mời khách nói tiếp bằng một câu hỏi mở. Lắng nghe trước khi xử lý.",
+        ),
+        sp(
+          "There is a deep cleaning fee on my bill, but I did not smoke!",
+          "I apologise for the inconvenience, sir. I will ask the front desk to check the deep cleaning fee.",
+          "Thẻ tuần 24 trong lời xin lỗi: không tranh luận, chuyển đúng người kiểm hóa đơn.",
+          undefined,
+          ["deep", "cleaning", "fee"],
+        ),
+        sp(
+          "Can I speak to the duty manager about this?",
+          "Of course, madam. I will transfer your call to the duty manager now.",
+          "Thẻ tuần 26: khách xin gặp đúng người thì chuyển máy ngay, không giữ khách lại.",
+          undefined,
+          ["transfer"],
         ),
         sp(
           "Nobody has called me back about my complaint.",
@@ -2370,7 +2470,7 @@ function week27(): LessonContent[] {
           "Our mistake.",
           "I am sorry you found hair in the bathtub, madam. I will re-clean it now.",
           "Xin lỗi về điều khách gặp phải. Chưa kiểm tra thì chưa kết luận lỗi của ai.",
-          "I am sorry you find hair in the bathtub, madam. I will re-clean it now.",
+          "I am sorry you finded hair in the bathtub, madam. I will re-clean it now.",
         ),
         g(
           "You disappointed? Sorry.",
@@ -2430,8 +2530,8 @@ function week27(): LessonContent[] {
           {
             q: "Vì sao Đức không nói 'It was our mistake'?",
             options: [
-              "Vì khách sạn cấm nhân viên xin lỗi khách",
-              "Vì Đức nghĩ chính khách để tóc lại",
+              "Vì Đức đã biết đó là lỗi của ca sáng",
+              "Vì khách không hỏi đó là lỗi của ai",
               "Vì lúc đó chưa ai kiểm tra nguyên nhân",
             ],
             correct: 2,
@@ -2466,7 +2566,7 @@ function week27(): LessonContent[] {
         game(
           "There is hair in my bathtub. This is disgusting.",
           "I am sorry you found hair in the bathtub, madam. I will re-clean it now.",
-          "I am sorry you find hair in the bathtub, madam. I will re-clean it now.",
+          "I am sorry you finded hair in the bathtub, madam. I will re-clean it now.",
           "It was our mistake, madam. The cleaner was lazy.",
           undefined,
           "Câu cuối kết luận lỗi và đổ cho đồng nghiệp trước mặt khách. Câu đúng xin lỗi về điều khách gặp và làm ngay.",
@@ -2539,11 +2639,18 @@ function week27(): LessonContent[] {
         ),
         sp(
           "After eleven, please. I sleep late.",
-          "Of course, madam. I will note eleven o'clock for your room.",
+          "Of course, madam. I will arrange your cleaning for eleven o'clock.",
           "Ghi lại đúng giờ khách chọn để ca sau làm đúng.",
           undefined,
           undefined,
           "I am sorry, madam. What time suits you tomorrow?",
+        ),
+        sp(
+          "The minibar charge on my bill is wrong.",
+          "I am sorry, sir. Which item in the minibar charge is wrong?",
+          "Thẻ tuần 24: hỏi điều khách chưa nói — món nào sai — trước khi chuyển lễ tân.",
+          undefined,
+          ["minibar", "charge"],
         ),
         sp(
           "The shampoo dispenser in the shower is empty.",
@@ -2614,7 +2721,7 @@ function week27(): LessonContent[] {
           "There is no shampoo in the shower.",
           "I am sorry, sir. I will refill the shampoo dispenser within five minutes.",
           "I am sorry, sir. I will refills the shampoo dispenser within five minutes.",
-          "Guests often use a lot of shampoo, sir.",
+          "Guests often use a lot of shampoo here, sir, so it runs out quickly every day.",
           undefined,
           "Câu cuối ngầm trách khách dùng nhiều. Câu đúng xin lỗi và làm ngay, có mốc giờ.",
         ),
@@ -2664,7 +2771,7 @@ function week27(): LessonContent[] {
             ["careful", "wet", "floor", "sign"],
           ),
           alsoAccept: [
-            "Please be careful, the floor is wet, madam. I will put out a wet floor sign now.",
+            "Please be careful, madam, the floor is wet. I will put out a wet floor sign now.",
             "I will bring a wet floor sign now, madam. Please be careful.",
             "Careful, madam, the floor is wet. I will put the wet floor sign out now.",
           ],
@@ -2704,16 +2811,20 @@ function week27(): LessonContent[] {
             "colleague",
             ["take", "spill", "kit", "first", "tell", "supervisor"],
           ),
-          alsoAccept: [
-            "First, take the spill kit. I will tell the supervisor.",
-            "I will tell the supervisor. Take the spill kit first.",
-          ],
+          alsoAccept: ["Take the spill kit first and wear the gloves. I will tell the supervisor."],
         }),
         sp(
           "What is the spill kit for?",
           "It is for any body fluid, like blood. Always wear the gloves inside it.",
           "Nói rõ công dụng: bộ xử lý tràn đổ dùng cho dịch cơ thể, luôn đeo găng có sẵn trong bộ.",
           "colleague",
+        ),
+        sp(
+          "It is late, and the corridor floor outside my room is wet.",
+          "Please be careful, madam. I will ask the night cleaner to dry it now.",
+          "Thẻ tuần 26: cảnh báo trước, rồi nhờ đúng người của ca đêm.",
+          undefined,
+          ["night", "cleaner"],
         ),
         sp(
           "The hairdryer does not work.",
@@ -2747,7 +2858,7 @@ function week27(): LessonContent[] {
             options: [
               "Vì di chuyển có thể làm nặng thêm",
               "Vì Sơn đang bận đặt biển cảnh báo ngoài cửa",
-              "Vì quy định cấm nhân viên chạm vào khách nữ",
+              "Vì người mẹ nói không muốn ai đỡ mình dậy",
             ],
             correct: 0,
             explanation:
@@ -2803,7 +2914,7 @@ function week28(): LessonContent[] {
   const t4a = "I am sorry, I cannot offer a refund. I will ask the duty manager to call you.";
   const t4b = "If you like, we can clean while you are out, with a quieter vacuum.";
   const t4c = "Thank you, sir. We will finish your room before nine.";
-  const free = "I cannot offer it free of charge, madam. I will ask the duty manager.";
+  const free = "I cannot offer it free of charge, madam. I will ask my supervisor.";
   const harass = "That is inappropriate, sir. I am going now, and I will tell my supervisor.";
   return [
     L(28, 1, "If You Like, I Can…", "Nếu quý khách muốn, tôi có thể…", {
@@ -2867,6 +2978,20 @@ function week28(): LessonContent[] {
           undefined,
           undefined,
           t1c,
+        ),
+        sp(
+          "The shampoo dispenser is empty again.",
+          "I am sorry, madam. If you like, I can refill the shampoo dispenser now.",
+          "Thẻ tuần 27 trong lời đề nghị có điều kiện.",
+          undefined,
+          ["shampoo", "dispenser"],
+        ),
+        sp(
+          "There is a cobweb in the corner again.",
+          "Sorry, madam, I will take it down now. If you notice another cobweb, please call me.",
+          "Thẻ tuần 27 + câu điều kiện: làm ngay, rồi hẹn khách báo nếu còn.",
+          undefined,
+          ["notice", "cobweb"],
         ),
         sp(
           "The bed sheets smell of smoke.",
@@ -2943,7 +3068,7 @@ function week28(): LessonContent[] {
           "Everything in this room feels wet and sticky.",
           "If you like, I can bring a dehumidifier, sir. It makes the air drier.",
           "If you like, I can bringing a dehumidifier, sir. It makes the air drier.",
-          "That is just the weather here, sir.",
+          "That is just the weather in this city, sir. Everyone feels it in the rainy season.",
           undefined,
           "Câu cuối nói đúng nhưng bỏ mặc khách. Câu đúng đề nghị một món trong quyền của bạn, kèm lợi ích.",
         ),
@@ -3007,6 +3132,13 @@ function week28(): LessonContent[] {
           "Which is better for me, now or after six?",
           "Either option is fine, madam. If you go out for dinner, after six is easier.",
           "Giúp khách chọn bằng một lý do cụ thể.",
+        ),
+        sp(
+          "What if the shower drain blocks again?",
+          "If you have a blocked shower drain again, please call me straight away.",
+          "Thẻ tuần 27 trong câu điều kiện If … again.",
+          undefined,
+          ["blocked", "shower", "drain"],
         ),
         sp(
           "What if the mould comes back after the repair?",
@@ -3158,6 +3290,20 @@ function week28(): LessonContent[] {
           "Đề nghị có điều kiện + món trong quyền của buồng phòng.",
         ),
         sp(
+          "I have one more concern about the room.",
+          "Thank you for telling me about your concern, sir. If you like, I can check it now.",
+          "Thẻ tuần 27: cảm ơn và mời khách nói, rồi đề nghị việc trong quyền của bạn.",
+          undefined,
+          ["concern"],
+        ),
+        sp(
+          "Can the pillow spray come with the turndown?",
+          "If you like, I will ask the turndown attendant to bring it at seven.",
+          "Thẻ tuần 26 trong lời đề nghị có điều kiện: một việc, đúng người làm.",
+          undefined,
+          ["turndown", "attendant"],
+        ),
+        sp(
           "Did anyone fix the noisy fan?",
           "Engineering fixed it this morning, sir. If it is noisy again, I will follow up.",
           "Thẻ tuần 26: báo việc đã xong, và hứa theo dõi tiếp nếu vấn đề quay lại.",
@@ -3208,7 +3354,7 @@ function week28(): LessonContent[] {
           "And if the smell comes back tonight?",
           "If it smells again, please call me. I will tell my supervisor straight away.",
           "If it will smell again, please call me. I will tell my supervisor straight away.",
-          "It will not come back, sir. I promise.",
+          "It will not come back, sir. I promise you, because we cleaned everything very well.",
           undefined,
           "Câu cuối hứa điều bạn không chắc. Câu đúng đưa cách xử lý nếu vấn đề quay lại.",
         ),
@@ -3230,7 +3376,7 @@ function week28(): LessonContent[] {
           "Hoàn tiền",
           "💸",
         ]),
-        c("Free of charge", "Only the duty manager can make it free of charge.", [
+        c("Free of charge", "Only my supervisor can make a wash free of charge.", [
           "/ˌfriː əv ˈtʃɑːdʒ/",
           "Miễn phí",
           "🆓",
@@ -3245,13 +3391,14 @@ function week28(): LessonContent[] {
           "Giờ yên tĩnh",
           "🌙",
         ]),
+        c("Damage charge amount", "The duty manager decides the damage charge amount."),
       ],
       grammar: [
         g(
           "Free? No.",
-          "I cannot offer it free of charge. I will ask the duty manager.",
-          "Miễn phí là quyết định về tiền: bạn không tự hứa, chuyển người có quyền.",
-          "I cannot offering it free of charge. I will ask the duty manager.",
+          "I cannot offer it free of charge. I will ask my supervisor.",
+          "Miễn phí là quyết định của cấp trên: bạn không tự hứa, chuyển người có quyền.",
+          "I cannot offering it free of charge. I will ask my supervisor.",
         ),
         g(
           "I cannot. Bye.",
@@ -3294,13 +3441,13 @@ function week28(): LessonContent[] {
           ...sp(
             "There is coffee on my dress. Can you wash it free of charge?",
             free,
-            "Miễn phí là quyết định về tiền — chuyển quản lý trực, không tự hứa.",
+            "Miễn phí là quyết định của cấp trên — chuyển giám sát, không tự hứa.",
             undefined,
-            ["offer", "free", "charge", "ask", "duty", "manager"],
+            ["offer", "free", "charge", "ask", "supervisor"],
           ),
           alsoAccept: [
-            "I am sorry, I cannot wash it free of charge. I will ask the duty manager.",
-            "I will ask the duty manager, madam. I cannot offer it free of charge.",
+            "I am sorry, I cannot wash it free of charge. I will ask my supervisor.",
+            "I cannot offer it free of charge, madam. I will ask the duty manager.",
           ],
         }),
         risk({
@@ -3318,12 +3465,22 @@ function week28(): LessonContent[] {
         }),
         sp(
           "Someone vacuumed outside my room at seven this morning!",
-          "I am very sorry, madam, that was during quiet hours. I will tell my supervisor today.",
-          "Xin lỗi về điều khách gặp, nói rõ quy định giờ yên tĩnh, báo giám sát.",
+          "I am very sorry, madam. I will tell my supervisor about the noise today.",
+          "Xin lỗi về điều khách gặp, báo giám sát — chưa kiểm tra thì chưa kết luận ai sai.",
+        ),
+        sp(
+          "When do you vacuum the corridor?",
+          "We do not vacuum during quiet hours, sir, so we start after eight.",
+          "Nói quy định giờ yên tĩnh bằng một mốc giờ cụ thể.",
+        ),
+        sp(
+          "Will you charge me for the cup I broke?",
+          "The duty manager decides the damage charge amount, sir. I will report the cup today.",
+          "Từ chối quyết thay: nói ai quyết số tiền, và việc bạn tự làm — báo cáo.",
         ),
         sp(
           "I want to make a complaint about the noise.",
-          "Of course, sir. I will ask the duty manager to take your complaint.",
+          "Of course, sir. I will ask my supervisor to take your complaint.",
           "Thẻ tuần 27: khiếu nại đi đúng người nhận — không giữ lại, không tự hứa gì.",
           undefined,
           ["complaint"],
@@ -3379,7 +3536,7 @@ function week28(): LessonContent[] {
         game(
           "Come in and close the door. Nobody will know.",
           "No, sir, that is inappropriate. I am going now, and I will tell my supervisor.",
-          "No, sir, that is inappropriate. I am go now, and I will tell my supervisor.",
+          "No, sir, that is inappropriate. I am going now, and I will tells my supervisor.",
           "Of course, sir. I will close the door and clean very quickly.",
           undefined,
           "Câu cuối đóng cửa ở lại với một vị khách đang có lời mời không đúng mực — mất an toàn. Câu đúng từ chối, rời đi, báo giám sát.",
@@ -3397,7 +3554,7 @@ function week29(): LessonContent[] {
   const t2a = "I was cleaning room 508 when I noticed my master key was missing.";
   const t2b = "I reported it to security first, and then I noted it in the master key log.";
   const t2c = "Yes. I was checking the last room when security arrived.";
-  const t2d = "Security is changing the locks on my floor, and I have a new key now.";
+  const t2d = "Security has cancelled the old key, and I have a new key now.";
   const t3a = "Yes, the turndown list has not been finished yet. Six rooms are left.";
   const t3b = "Two rooms are on the late checkout list, 304 and 517, until two.";
   const t3c = "I have checked the amenity stock sheet. Shampoo is low, so I ordered more.";
@@ -3410,7 +3567,7 @@ function week29(): LessonContent[] {
       vocabulary: [
         c("Room status board", "The room status board shows which rooms are ready."),
         c("Out-of-order list", "Room 410 is on the out-of-order list."),
-        c("Stayover", "Room 615 is a stayover, so we only refresh it.", [
+        c("Stayover", "Room 615 is a stayover, so we clean it and change the linen on request.", [
           "/ˈsteɪəʊvə/",
           "Phòng khách ở tiếp (chưa trả phòng)",
           "🛏️",
@@ -3426,7 +3583,7 @@ function week29(): LessonContent[] {
           "Many thing today.",
           "I updated the room status board at two. Room 410 is out of order.",
           "Bàn giao: việc ĐÃ làm (quá khứ đơn) + việc còn mở (hiện tại).",
-          "I update the room status board at two. Room 410 is out of order.",
+          "I have updated the room status board at two. Room 410 is out of order.",
         ),
         g(
           "I clean, guest come back.",
@@ -3465,6 +3622,13 @@ function week29(): LessonContent[] {
           "colleague",
         ),
         sp(
+          "Does 410 still smell of paint?",
+          "A little. I will air out the room again and check back in one hour.",
+          "Thẻ tuần 28 trong câu bàn giao với đồng nghiệp.",
+          "colleague",
+          ["air", "out", "check", "back"],
+        ),
+        sp(
           "Is 615 a checkout or a stayover?",
           "It is a stayover. The room is occupied until Friday.",
           "Trả lời đúng trạng thái phòng — ca sau dựa vào đó để xếp việc.",
@@ -3472,8 +3636,8 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Then what do we do in 615 today?",
-          "We only refresh it: fresh towels, empty bins and a quick tidy.",
-          "Phòng khách ở tiếp: làm gọn, không dọn như phòng trả.",
+          "We clean it fully, and we change the sheets if the guest asks.",
+          "Phòng khách ở tiếp vẫn dọn đầy đủ; ga giường thay khi khách yêu cầu.",
           "colleague",
           undefined,
           "It is a stayover. The room is occupied until Friday.",
@@ -3534,7 +3698,7 @@ function week29(): LessonContent[] {
         game(
           "Before you leave, what do I need to know?",
           t1a,
-          "I update the room status board at two, and Room 410 is out of order.",
+          "I have updated the room status board at two, and Room 410 is out of order.",
           "Nothing much. Everything is fine on this floor today.",
           "colleague",
           "Câu cuối bỏ sót phòng đang hỏng — ca sau sẽ xếp khách vào đó. Câu đúng nêu việc đã làm và việc còn mở.",
@@ -3589,6 +3753,7 @@ function week29(): LessonContent[] {
           ),
           alsoAccept: [
             "First I reported it to security, and then I noted it in the master key log.",
+            "I reported it to security first, and then I wrote it in the master key log.",
             "I reported it to security first and noted it in the master key log.",
           ],
         }),
@@ -3607,6 +3772,26 @@ function week29(): LessonContent[] {
           "manager",
           undefined,
           t2c,
+        ),
+        sp(
+          "What happened in 220 this morning?",
+          "The guest was getting out of the shower when she slipped. I called first aid.",
+          "Quá khứ tiếp diễn + thẻ tuần 27: việc đang diễn ra, việc chen vào, việc bạn đã làm.",
+          "manager",
+          ["first", "aid"],
+        ),
+        sp(
+          "Where did you get a new uniform today?",
+          "The uniform room staff gave me one. I was cleaning 508 when my shirt tore.",
+          "Thẻ tuần 26 + quá khứ tiếp diễn.",
+          "manager",
+          ["uniform", "room", "staff"],
+        ),
+        sp(
+          "What happened to the guest's glasses in 610?",
+          "I was dusting the desk when they fell and broke. I reported it to my supervisor at once.",
+          "Nhân viên làm hỏng đồ của khách: kể đúng sự việc bằng quá khứ tiếp diễn, báo ngay — không tự hứa đền.",
+          "manager",
         ),
         sp(
           "Where did you write what happened during the shift?",
@@ -3628,7 +3813,7 @@ function week29(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Nhung was cleaning room 508 when she noticed her master key was missing. Nhung did not try to find the key alone first. She reported it to security straight away and noted the time in the master key log. Then she checked her trolley and every room she had cleaned. Security changed the locks on the floor that afternoon and gave Nhung a new key. Her supervisor read the log and had the whole story.`,
+        `Nhung was cleaning room 508 when she noticed her master key was missing. Nhung did not try to find the key alone first. She reported it to security straight away and noted the time in the master key log. Then she checked her trolley and every room she had cleaned. Security cancelled the lost key in the system that afternoon and gave Nhung a new one. Her supervisor read the log and had the whole story.`,
         [
           {
             q: "Nhung đang làm gì khi phát hiện mất chìa khóa tổng?",
@@ -3641,18 +3826,18 @@ function week29(): LessonContent[] {
             q: "Vì sao Nhung báo an ninh ngay mà không tự tìm trước?",
             options: [
               "Vì an ninh sẽ tìm nhanh hơn Nhung",
-              "Vì giám sát đang nghỉ trưa ở căng tin của nhân viên",
+              "Vì an ninh là bộ phận giữ sổ theo dõi chìa khóa tổng",
               "Vì chìa khóa tổng mở được mọi phòng trên tầng",
             ],
             correct: 2,
             explanation:
-              "Mất chìa khóa tổng là rủi ro cho cả tầng — vì vậy an ninh đổi khóa ngay buổi chiều.",
+              "Mất chìa khóa tổng là rủi ro cho cả tầng — vì vậy an ninh huỷ chìa đó trên hệ thống ngay buổi chiều.",
           },
           {
             q: "Sau khi báo an ninh, Nhung làm gì?",
             options: [
               "Kiểm tra xe đẩy và các phòng đã dọn",
-              "Về nhà sớm vì không còn chìa khóa",
+              "Ghi thời gian vào sổ ca làm",
               "Mượn chìa khóa của đồng nghiệp để làm tiếp",
             ],
             correct: 0,
@@ -3665,7 +3850,7 @@ function week29(): LessonContent[] {
         game(
           "Your master key is missing? What did you do?",
           t2b,
-          "I report it to security first, and then I noted it in the master key log.",
+          "I reporting it to security first, and then I noted it in the master key log.",
           "I looked for it for two hours first, so I did not bother anyone.",
           "manager",
           "Câu cuối giữ im lặng hai tiếng trong khi chìa khóa tổng có thể mở mọi phòng. Câu đúng: báo an ninh ngay và ghi sổ.",
@@ -3719,6 +3904,12 @@ function week29(): LessonContent[] {
         ),
         sp("And supplies?", t3c, "Đã kiểm gì + kết quả + đã làm gì.", "colleague", undefined, t3b),
         sp(
+          "Can I mix these two cleaners? It is faster.",
+          "No. We never mix two chemicals, because the gas is dangerous.",
+          "Ôn an toàn hoá chất (tuần 19) với đồng nghiệp: từ chối rõ + lý do thật.",
+          "colleague",
+        ),
+        sp(
           "Why is the turndown list not finished?",
           "We were helping in 610 when two more requests came in.",
           "Báo cấp trên lý do thật, bằng quá khứ tiếp diễn — không đổ cho ai.",
@@ -3726,10 +3917,10 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Is the spill kit ready for tonight?",
-          "Not yet. I was refilling the spill kit when you called.",
+          "Not yet. I was refilling the spill kit for body fluid when you called.",
           "Thẻ tuần 27 + quá khứ tiếp diễn.",
           "colleague",
-          ["spill", "kit"],
+          ["spill", "kit", "body", "fluid"],
         ),
         sp(
           "Is 304 still on the late checkout list?",
@@ -3789,8 +3980,8 @@ function week29(): LessonContent[] {
         game(
           "Are we low on anything?",
           t3c,
-          "I have checked the amenity stock sheet. Shampoo is low, so I order more.",
-          "I did not look, but we are probably fine.",
+          "I have checked the amenity stock sheet. Shampoo is low, so I have order more.",
+          "I did not look at the sheet today, but I think we are probably fine for tonight.",
           "colleague",
           "Câu cuối đoán thay vì kiểm. Câu đúng nói đã kiểm gì, thấy gì, và đã làm gì.",
         ),
@@ -3812,7 +4003,7 @@ function week29(): LessonContent[] {
           "I remember, no write.",
           "I wrote the pending guest request in the shift log book.",
           "Việc đã làm trong ca kể bằng quá khứ đơn: wrote. Yêu cầu chưa xong ghi vào sổ ca để ca sau làm tiếp.",
-          "I write the pending guest request in the shift log book.",
+          "I writed the pending guest request in the shift log book.",
         ),
         g(
           "Found ring, I keep.",
@@ -3838,6 +4029,7 @@ function week29(): LessonContent[] {
             t4a,
           ),
           alsoAccept: [
+            "I wrote it in the lost item log and took it to my supervisor.",
             "I wrote it in the lost item log and gave it to my supervisor.",
             "I logged it in the lost item log and gave it to my supervisor.",
             "I logged the item as lost property and took it to my supervisor.",
@@ -3871,6 +4063,13 @@ function week29(): LessonContent[] {
           ],
         }),
         sp(
+          "Should I charge 509 for the unscented set?",
+          "No, the unscented set is free of charge.",
+          "Thẻ tuần 28: trả lời đồng nghiệp ngắn, đúng.",
+          "colleague",
+          ["unscented", "free", "charge"],
+        ),
+        sp(
           "Where can I see the guest requests from today?",
           "The pending guest requests are in the shift log book, on page two.",
           "Yêu cầu của khách ở sổ ca — sổ đồ thất lạc chỉ dành cho đồ thất lạc.",
@@ -3901,9 +4100,9 @@ function week29(): LessonContent[] {
           {
             q: "Vì sao Lan cũng ký vào sổ?",
             options: [
-              "Để Lan được ghi công vào hồ sơ",
+              "Vì Lan là người tìm thấy chiếc nhẫn",
               "Để có người làm chứng việc giao nhận",
-              "Vì Hải không biết viết tiếng Anh",
+              "Vì Lan sẽ mang chiếc nhẫn xuống quầy lễ tân",
             ],
             correct: 1,
             explanation: "Đồ quý tìm thấy cần người làm chứng — bảo vệ cả khách lẫn nhân viên.",
@@ -3944,35 +4143,44 @@ function week29(): LessonContent[] {
 }
 
 // ── Week 30 — Checkpoint: putting it together ───────────────────────────
+// The checkpoint teaches no new word. Its sixteen cards bring back headwords
+// of weeks 23-29 that no later lesson said again (round 3 counted 57 of 104),
+// with the card they were first taught on, and each is said at least twice
+// this week.
 function week30(): LessonContent[] {
-  const t1a = "I recommend a firmer pillow, madam. I will bring one within ten minutes.";
+  const t1a = "I recommend a memory foam topper, madam. I will bring one within ten minutes.";
   const t1b = "Of course. I will change your turndown time to nine o'clock.";
-  const t1c = "Yes, madam. I will write it in the shift log book now.";
-  const t2a = "There is a rollaway bed charge because we bring linen and set it up, madam.";
-  const t2b = "Fresh linen arrives at seven, so I will have the bed ready by eight, madam.";
-  const t2c = "Of course. I will ask the front desk to call you about the price.";
-  const t3a = "I understand you are disappointed, madam. If you like, I can clean it now.";
-  const t3b = "Our cleaning schedule was not updated. I will tell my supervisor today.";
+  const t1c = "Yes, madam. I will put it on the turndown list now.";
+  const t2a = "There is a late checkout fee because the next guest needs the room, madam.";
+  const t2b = "I will ask the front desk to check the late checkout fee with you.";
+  const t2c = "Yes, madam. I will put your room on the late checkout list until two.";
+  const t3a = "I am very sorry, madam. If you like, I can clean it now.";
+  const t3b = "Our cleaning list was not updated. I will tell my supervisor today.";
   const t3c = "I will note your times, and I will check your room myself at noon tomorrow.";
   const t4a = "I understand, sir. I am calling security and the duty manager now.";
   const t4b = "I am sorry, I cannot do that. Security will check it with the duty manager.";
   const t4c = "Please wait here with me, sir. Security is on the way.";
-  const damage = "I cannot decide that, sir. The duty manager decides the damage charge amount.";
+  const damage = "I cannot decide on that, sir. The duty manager decides the damage charge amount.";
   const dnd = "We will not go in. I will call the supervisor and security for a welfare check.";
+  const ill = "I am calling first aid and the duty manager now, madam.";
   return [
     L(30, 1, "Offer and Promise", "Gợi ý và cam kết", {
       vocabulary: [
-        c("Review", "Please review the room assignment sheet before you start."),
-        c("Room assignment sheet", "Your rooms are on the room assignment sheet."),
-        c("Pillow choice", "I noted her pillow choice: a firm pillow."),
-        c("Turndown time", "I will change your turndown time to nine o'clock."),
+        c("Memory foam topper", "The memory foam topper makes a hard bed softer."),
+        c("Eye mask", "An eye mask keeps the morning light out.", [
+          "/ˈaɪ mɑːsk/",
+          "Miếng bịt mắt khi ngủ",
+          "😴",
+        ]),
+        c("Turndown list", "The new time goes on the turndown list."),
+        c("Room status board", "The room status board shows which rooms are ready."),
       ],
       grammar: [
         g(
           "Pillow, I bring.",
-          "I will bring a firmer pillow within ten minutes, madam.",
+          "I will bring a memory foam topper within ten minutes, madam.",
           "Tuần 25: lời hứa có mốc cụ thể.",
-          "I will bringing a firmer pillow within ten minutes, madam.",
+          "I will bringing a memory foam topper within ten minutes, madam.",
         ),
         g(
           "Turndown nine.",
@@ -3983,9 +4191,9 @@ function week30(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "My neck hurts. Is there a better pillow?",
+          "My neck hurts, and the bed is too hard.",
           t1a,
-          "Kết hợp tuần 23 và 25: gợi ý + cam kết thời gian.",
+          "Tuần 23 và 25: gợi ý đúng nhu cầu + cam kết có mốc.",
         ),
         sp(
           "And can you come at nine instead of seven?",
@@ -3998,36 +4206,52 @@ function week30(): LessonContent[] {
         sp(
           "Will the evening team know?",
           t1c,
-          "Thay đổi phải được ghi lại để ca tối biết.",
+          "Tuần 29: thay đổi ghi đúng danh sách để ca tối biết.",
           undefined,
-          undefined,
+          ["turndown", "list"],
           t1b,
         ),
         sp(
-          "Which rooms are mine today?",
-          "Your rooms are on the room assignment sheet. Please review it before you start.",
-          "Nói với đồng nghiệp mới: chỉ đúng chỗ tra, nhắc xem trước.",
-          "colleague",
+          "The street light keeps me awake.",
+          "I recommend an eye mask, sir. It keeps the light out better than the curtain.",
+          "Tuần 23: món đúng vấn đề, lợi ích bằng so sánh hơn.",
+          undefined,
+          ["eye", "mask"],
+        ),
+        sp(
+          "It is noisy too. Do you have earplugs?",
+          "Yes, madam. I will bring soft earplugs with the eye mask.",
+          "Tuần 23: mang đủ hai món trong một lần.",
+          undefined,
+          ["earplugs", "eye", "mask"],
         ),
         sp(
           "What did 905 ask for?",
-          "A firmer pillow. I noted her pillow choice in the shift log book.",
-          "Bàn giao với đồng nghiệp: món khách chọn + chỗ đã ghi.",
+          "A memory foam topper and an eye mask. I noted her pillow choice too.",
+          "Bàn giao với đồng nghiệp: món khách chọn + đã ghi lại.",
           "colleague",
+          ["memory", "foam", "topper", "eye", "mask"],
         ),
         sp(
-          "A guest left a watch in 905. What do I do?",
-          "Note it in the lost item log and take it to the supervisor.",
-          "Tuần 29: đồ khách bỏ quên vào đúng sổ, giao đúng người.",
+          "What should I check first this evening?",
+          "Please check the turndown list first, then the room status board.",
+          "Tuần 29: thứ tự rõ ràng cho ca tối.",
           "colleague",
-          ["lost", "item", "log"],
+          ["turndown", "list", "room", "status", "board"],
         ),
         sp(
-          "The street is so noisy. Is there a quieter room?",
-          "I can bring earplugs now, madam. The front desk can tell you about a quieter room.",
-          "Tuần 23 và 26: làm ngay việc của mình, việc đổi phòng chuyển lễ tân.",
-          undefined,
-          ["earplugs", "quieter", "front", "desk"],
+          "Is 905 a checkout today?",
+          "No, 905 is a stayover until Friday. I noted it on the turndown list.",
+          "Tuần 29: trạng thái phòng đúng tên gọi, và đã ghi ở đâu.",
+          "colleague",
+          ["stayover", "turndown", "list"],
+        ),
+        sp(
+          "Is 905 ready on the board?",
+          "Not yet. I will mark it on the room status board when I finish.",
+          "Chưa xong thì nói chưa, kèm việc bạn sẽ làm.",
+          "colleague",
+          ["room", "status", "board"],
         ),
         sp(
           "Who do I call for an ironing board tonight?",
@@ -4038,113 +4262,143 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Ms Kim's neck hurts. Ngan recommends a firmer pillow and brings it within ten minutes. Ms Kim also asks for turndown at nine instead of seven. Ngan changes the turndown time and writes it in the shift log book, with the guest's pillow choice. That evening, the turndown attendant reviews the log and comes at nine. Ms Kim says the stay feels easy, because nobody asks her twice. Ngan does not have to stay late to tell anyone.`,
+        `Ms Kim's neck hurts and the bed is too hard, so Ngan recommends a memory foam topper. She brings it within ten minutes, with an eye mask for the street light. Ms Kim also asks for turndown at nine instead of seven. Ngan puts the new time on the turndown list and writes the pillow choice in the shift log book. That evening, the turndown attendant reads the list and comes at nine. Nobody asks Ms Kim twice.`,
         [
           {
-            q: "Ngân mang gối mới lên trong bao lâu?",
-            options: ["Trước chín giờ tối", "Trong vòng mười phút", "Ngay sau giờ ăn trưa"],
+            q: "Ngân mang những gì lên phòng?",
+            options: [
+              "Một chăn lông vũ và nút bịt tai cho tiếng ồn",
+              "Tấm đệm cao su non và miếng bịt mắt",
+              "Cầu là và xô đá cho khách",
+            ],
             correct: 1,
-            explanation: "'brings it within ten minutes' — lời hứa có mốc, và được giữ.",
+            explanation:
+              "'recommends a memory foam topper… with an eye mask for the street light' — hai món cho đúng hai vấn đề của khách.",
           },
           {
-            q: "Vì sao Ngân ghi giờ chỉnh giường mới vào sổ ca?",
+            q: "Ngân ghi giờ chỉnh giường mới vào đâu?",
             options: [
-              "Để ca tối biết đổi giờ theo khách",
-              "Để giám sát tính thêm phí cho khách",
-              "Để khách tự kiểm tra lại giờ tối",
+              "Vào danh sách chỉnh giường tối",
+              "Vào bảng trạng thái các phòng ở văn phòng",
+              "Vào sổ đồ thất lạc của tầng",
             ],
             correct: 0,
             explanation:
-              "'writes it in the shift log book' — thay đổi không được ghi lại là thay đổi ca sau không biết.",
+              "'puts the new time on the turndown list' — giờ chỉnh giường ở danh sách chỉnh giường; món khách chọn ở sổ ca.",
           },
           {
             q: "Chi tiết nào cho thấy việc ghi lại đã có tác dụng?",
             options: [
-              "Ngân mang gối lên rất nhanh",
-              "Khách hỏi thêm một chiếc gối nữa",
+              "Ngân mang đồ lên trong vòng mười phút",
+              "Khách gọi xuống để nhắc lại giờ",
               "Nhân viên ca tối đến đúng chín giờ",
             ],
             correct: 2,
             explanation:
-              "'the turndown attendant reviews the log and comes at nine' — người ca tối không nghe khách nói, nhưng vẫn làm đúng.",
+              "'the turndown attendant reads the list and comes at nine' — người ca tối không nghe khách nói, nhưng vẫn làm đúng.",
           },
         ],
       ),
       game: [
         game(
-          "Do you have a firmer pillow? My neck hurts.",
-          t1a,
-          "I recommend a firmer pillow, madam. I will bring one within ten minute.",
-          "All our pillows are the same, madam, I am afraid.",
+          "Do you have something for the street light at night?",
+          "I recommend an eye mask, sir. It keeps the light out better than the curtain.",
+          "I recommend an eye mask, sir. It keep the light out better than the curtain.",
+          "The street light goes off at midnight, sir, so most guests do not mind it at all.",
           undefined,
-          "Câu cuối không giúp gì. Câu đúng gợi ý đúng nhu cầu và hứa có mốc thời gian.",
+          "Câu cuối giải thích thay vì giúp. Câu đúng gợi ý một món cụ thể, kèm lợi ích so sánh.",
         ),
         game(
-          "Where do I check my rooms for today?",
-          "Your rooms are on the room assignment sheet. Please review it before you start.",
-          "Your rooms is on the room assignment sheet. Please review it before you start.",
-          "Just start anywhere. Somebody will tell you later.",
+          "What do I check first when the evening shift starts?",
+          "Please check the turndown list first, then the room status board.",
+          "Please checks the turndown list first, then the room status board.",
+          "Just start with any room. The board does not matter much.",
           "colleague",
-          "Câu cuối để đồng nghiệp mới làm mò. Câu đúng chỉ đúng tờ phân công và nhắc xem trước.",
+          "Câu cuối để ca tối làm mò. Câu đúng chỉ đúng hai chỗ phải xem, theo thứ tự.",
         ),
       ],
     }),
 
     L(30, 2, "Explain and Coordinate", "Giải thích và điều phối", {
       vocabulary: [
-        c("Linen delivery time", "The linen delivery time is seven o'clock."),
-        c("Cleaning standard", "Every room must meet our cleaning standard."),
-        c("Guest laundry order", "The guest laundry order for 517 went at ten."),
+        c("Laundry team", "The laundry team collects guest laundry at ten."),
+        c("Pest control team", "The pest control team is coming at three."),
+        c("Late checkout list", "Room 304 is on the late checkout list."),
+        c("Out-of-order list", "Room 410 is on the out-of-order list."),
       ],
       grammar: [
         g(
           "Pay because rule.",
-          "There is a charge because we bring linen and set it up, madam.",
+          "There is a late checkout fee because we have to prepare the room.",
           "Tuần 24: because + lý do thật.",
-          "There is a charge because of we bring linen and set it up, madam.",
+          "There is a late checkout fee because of we have to prepare the room.",
         ),
         g(
-          "Not ready.",
-          "The bathroom is not at our cleaning standard yet. I will re-clean it now.",
-          "Tuần 29 và 27: not … yet + giải pháp trong quyền.",
-          "The bathroom is not at our cleaning standard yet. I will re-cleaning it now.",
+          "Laundry man check.",
+          "I will ask the laundry team to check your shirt today.",
+          "Tuần 26: ask + người + to + động từ.",
+          "I will ask the laundry team check your shirt today.",
         ),
       ],
       speaking: [
-        sp("Why do I have to pay for the extra bed?", t2a, "Lý do thật, bằng because."),
+        sp("Why do I have to pay a late checkout fee?", t2a, "Tuần 24: lý do thật, bằng because."),
         sp(
-          "Fine. When will it come?",
+          "Can the front desk remove it for me?",
           t2b,
-          "Mốc của bộ phận khác quyết định mốc của bạn — nói bằng lời khách hiểu.",
+          "Tuần 26: một việc, đúng người kiểm — bạn không tự bỏ phí.",
           undefined,
           undefined,
           t2a,
         ),
         sp(
-          "Can you ask the front desk to confirm the price?",
+          "Fine. Will you clean my room after two?",
           t2c,
-          "Một việc, một người làm: nhờ lễ tân gọi khách về giá.",
+          "Tuần 29: ghi đúng danh sách để cả ca biết.",
           undefined,
-          undefined,
+          ["late", "checkout", "list"],
           t2b,
         ),
         sp(
-          "Is room 205 at our cleaning standard?",
-          "Not yet. The bathroom is not at our cleaning standard, so I will re-clean it.",
-          "Báo cấp trên thật: chưa đạt + bước tiếp theo.",
-          "manager",
+          "Why is 304 not cleaned yet?",
+          "It is on the late checkout list. The guest suddenly asked to stay until two.",
+          "Tuần 29: trạng thái + lý do, có từ chỉ việc bất ngờ.",
+          "colleague",
+          ["late", "checkout", "list", "suddenly"],
         ),
         sp(
-          "When does the clean linen come up today?",
-          "The linen delivery time is seven, so make the extra bed after that.",
-          "Giờ giao khăn ga là chuyện nội bộ — nói với đồng nghiệp, không nói với khách.",
-          "colleague",
+          "My shirt came back from the laundry with a hole!",
+          "I am very sorry, sir. I will ask the laundry team to check it today.",
+          "Đồ giặt bị hỏng: xin lỗi, chuyển đúng tổ kiểm — không tự hứa đền.",
+          undefined,
+          ["laundry", "team"],
         ),
         sp(
           "Did the laundry for 517 go out?",
-          "Yes. The guest laundry order went at ten, and it comes back by six.",
-          "Thuật ngữ nội bộ dùng giữa đồng nghiệp: đã làm gì + lịch trả.",
+          "Yes. The laundry team took it at ten, and it comes back by six.",
+          "Báo đồng nghiệp: đã làm gì + lịch trả.",
           "colleague",
+          ["laundry", "team"],
+        ),
+        sp(
+          "I saw ants near the minibar.",
+          "I am sorry, madam. I will ask the pest control team to come today.",
+          "Tuần 26: xin lỗi + đúng đội.",
+          undefined,
+          ["pest", "control", "team"],
+        ),
+        sp(
+          "Is 410 still on the out-of-order list?",
+          "Yes. It stays on the out-of-order list until the pest control team finishes.",
+          "Báo cấp trên: trạng thái + đang chờ ai.",
+          "manager",
+          ["out-of-order", "list", "pest", "control", "team"],
+        ),
+        sp(
+          "Can I give 412 to the next guest?",
+          "No, 412 is on the out-of-order list. The toilet is leaking.",
+          "Phòng hỏng không được giao — nói rõ danh sách và lý do.",
+          "colleague",
+          ["out-of-order", "list"],
         ),
         sp(
           "Why is there a minibar charge? I only had water.",
@@ -4155,59 +4409,77 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Lee asks why the extra bed has a charge. Phong explains that there is a rollaway bed charge because the hotel brings linen and sets it up. Fresh linen arrives at seven, so Phong promises the bed by eight. Before Mr Lee returns, the room inspector checks the room against the cleaning standard. Phong also asks the front desk to call Mr Lee about the price. Mr Lee gets a call before dinner, and the bed is ready on time.`,
+        `Mr Lee asks why there is a late checkout fee. Phong explains that the room must be ready for the next guest, and he asks the front desk to check the fee with Mr Lee. Phong puts Room 304 on the late checkout list until two. Then a guest reports ants, so Phong asks the pest control team to come. Room 410 stays on the out-of-order list until they finish. Phong also tells the evening team.`,
         [
           {
-            q: "Vì sao Phong hứa giường xong trước tám giờ?",
+            q: "Vì sao có phí trả phòng muộn?",
             options: [
-              "Vì khách sẽ về phòng lúc tám giờ",
-              "Vì lễ tân chỉ xác nhận sau tám giờ",
-              "Vì khăn ga sạch tới lúc bảy giờ",
+              "Vì phòng phải sẵn sàng cho khách sau",
+              "Vì khách đã dùng đồ trong minibar",
+              "Vì đội diệt côn trùng phải tới kiểm tra",
             ],
+            correct: 0,
+            explanation:
+              "'the room must be ready for the next guest' — lý do thật, không phải 'vì đó là quy định'.",
+          },
+          {
+            q: "Ai kiểm tra khoản phí với khách?",
+            options: ["Phong", "Đội diệt côn trùng", "Quầy lễ tân"],
             correct: 2,
             explanation:
-              "'Fresh linen arrives at seven, so…' — lời hứa dựa trên giờ thật của bộ phận khác.",
+              "'he asks the front desk to check the fee with Mr Lee' — phí là việc của lễ tân.",
           },
           {
-            q: "Ai kiểm tra phòng theo tiêu chuẩn trước khi khách về?",
-            options: ["Nhân viên kiểm tra phòng", "Chính vị khách đó", "Nhân viên quầy lễ tân"],
-            correct: 0,
-            explanation: "'the room inspector checks the room against the cleaning standard'.",
-          },
-          {
-            q: "Ai sẽ nói với khách về số tiền cụ thể?",
-            options: ["Phong", "Quầy lễ tân", "Nhân viên kiểm tra phòng"],
+            q: "Vì sao phòng 410 vẫn trong danh sách phòng hỏng?",
+            options: [
+              "Vì khách phòng 410 trả phòng muộn",
+              "Vì đội diệt côn trùng chưa làm xong",
+              "Vì Phong quên cập nhật danh sách cho ca tối",
+            ],
             correct: 1,
             explanation:
-              "'asks the front desk to call Mr Lee about the price' — buồng phòng giải thích lý do, lễ tân nói giá.",
+              "'stays on the out-of-order list until they finish' — phòng chỉ ra khỏi danh sách khi đội đã làm xong.",
           },
         ],
       ),
       game: [
         game(
-          "Why is there a charge for the extra bed?",
+          "Why is there a late checkout fee on my bill?",
           t2a,
-          "There is a rollaway bed charge because we brings linen and set it up, madam.",
-          "I do not know, madam. I just bring the beds.",
+          "There is a late checkout fee because the next guest need the room, madam.",
+          "I do not know, sir. The front desk likes to add fees.",
           undefined,
-          "Câu cuối không trả lời và tự hạ mình. Câu đúng nêu lý do thật.",
+          "Câu cuối không trả lời và nói xấu bộ phận khác. Câu đúng nêu lý do thật.",
         ),
         game(
-          "Is 205 ready for the guest?",
-          "Not yet. The bathroom is not at our cleaning standard, so I will re-clean it.",
-          "Not yet. The bathroom is not at our cleaning standard, so I will re-cleaned it.",
-          "Yes, it is fine. The guest will not see the small things.",
-          "manager",
-          "Câu cuối báo xong khi chưa đạt chuẩn. Câu đúng nói thật và đưa bước tiếp theo.",
+          "There are ants on my desk!",
+          "I am sorry, madam. I will ask the pest control team to come today.",
+          "I am sorry, madam. I will ask the pest control team come today.",
+          "Ants are very common in this city, madam. Just keep your food closed.",
+          undefined,
+          "Câu cuối coi chuyện của khách là bình thường và bắt khách tự lo. Câu đúng xin lỗi và gọi đúng đội.",
         ),
       ],
     }),
 
     L(30, 3, "Apologise and Solve", "Xin lỗi và giải quyết", {
       vocabulary: [
-        c("Cleaning schedule", "Our cleaning schedule was not updated."),
-        c("Privacy", "We respect your privacy, madam.", ["/ˈprɪvəsi/", "Sự riêng tư", "🔒"]),
-        c("Room inspection result", "The room inspection result for 512 is good."),
+        c("Damp smell", "I will report the damp smell to engineering."),
+        c("Spot clean", "I can spot clean the stain now.", [
+          "/ˈspɒt kliːn/",
+          "Làm sạch tại chỗ (một vết)",
+          "🎯",
+        ]),
+        c("Rewash", "If you like, we will rewash the towels tonight.", [
+          "/ˌriːˈwɒʃ/",
+          "Giặt lại",
+          "🌀",
+        ]),
+        c("Quiet hours", "We do not vacuum during quiet hours.", [
+          "/ˈkwaɪət ˌaʊəz/",
+          "Giờ yên tĩnh",
+          "🌙",
+        ]),
       ],
       grammar: [
         g(
@@ -4217,17 +4489,17 @@ function week30(): LessonContent[] {
           "I am very sorry, madam. If you like, I can cleaning it now.",
         ),
         g(
-          "Schedule wrong.",
-          "Our cleaning schedule was not updated. I will tell my supervisor today.",
-          "Nói sự thật về nguyên nhân, không đổ lỗi cho người cụ thể.",
-          "Our cleaning schedule were not updated. I will tell my supervisor today.",
+          "Carpet dirty, clean.",
+          "If you like, I can spot clean the carpet before you come back.",
+          "Tuần 28: If you like, I can + việc của bạn; sau 'before' dùng hiện tại.",
+          "If you like, I can spot clean the carpet before you will come back.",
         ),
       ],
       speaking: [
         sp(
           "I took the sign off at noon, but nobody cleaned my room.",
           t3a,
-          "Xin lỗi + giải pháp ngay.",
+          "Xin lỗi về điều khách gặp, rồi giải pháp ngay.",
         ),
         sp(
           "Why did nobody notice?",
@@ -4246,23 +4518,60 @@ function week30(): LessonContent[] {
           t3b,
         ),
         sp(
-          "What was the room inspection result for 512?",
-          "The room inspection result was good, madam. Only the bathroom fan is noisy.",
-          "Báo cấp trên: kết quả + điều còn tồn tại.",
+          "The room has a damp smell again.",
+          "I am sorry, sir. If you like, I can air out the room and report the damp smell.",
+          "Tuần 27 và 28: xin lỗi + việc trong quyền + báo đúng bộ phận.",
+          undefined,
+          ["damp", "smell"],
+        ),
+        sp(
+          "What is wrong in 512?",
+          "There is a damp smell from a small leak. Engineering is fixing it today.",
+          "Báo cấp trên: vấn đề + ai đang xử lý.",
           "manager",
+          ["damp", "smell"],
         ),
         sp(
-          "Please do not knock before eleven. I work at night.",
-          "Of course, madam. We will respect your privacy and clean after eleven.",
-          "Tôn trọng sự riêng tư của khách và nói rõ giờ mới.",
+          "There is wine on the carpet.",
+          "I am sorry, madam. If you like, I can spot clean it now.",
+          "Tuần 28: đề nghị có điều kiện, việc của bạn.",
+          undefined,
+          ["spot", "clean"],
         ),
         sp(
-          "Can you leave fresh towels at my door before then?",
-          "Of course, madam. I will leave them at your door at nine, without knocking.",
-          "Làm đúng điều khách xin, không gõ cửa, có mốc giờ.",
+          "The towels smell of smoke.",
+          "I am sorry, sir. If you like, we will rewash the towels tonight.",
+          "Tuần 28: đề nghị có điều kiện + mốc.",
           undefined,
+          ["rewash"],
+        ),
+        sp(
+          "The towels in 305 smell bad, and the sofa has a mark.",
+          "Then rewash the towels and spot clean the sofa before three.",
+          "Nói với đồng nghiệp: hai việc, một mốc giờ.",
+          "colleague",
+          ["rewash", "spot", "clean"],
+        ),
+        sp(
+          "When are your quiet hours?",
+          "Our quiet hours are from ten at night to eight in the morning, madam.",
+          "Tuần 28: nói quy định bằng mốc giờ cụ thể.",
           undefined,
-          "Of course, madam. We will respect your privacy and clean after eleven.",
+          ["quiet", "hours"],
+        ),
+        sp(
+          "Can I vacuum the corridor now? It is half past seven.",
+          "No, not yet. Quiet hours end at eight, so please wait.",
+          "Nhắc đồng nghiệp quy định giờ yên tĩnh, kèm mốc.",
+          "colleague",
+          ["quiet", "hours"],
+        ),
+        sp(
+          "The smell is still there. I cannot sleep here.",
+          "I understand you are disappointed, madam. I will ask the front desk if they can move you to another room.",
+          "Tuần 27 và 28: công nhận cảm xúc, đổi phòng chuyển lễ tân — không tự hứa.",
+          undefined,
+          ["front", "desk", "move", "another", "room"],
         ),
         sp(
           "This is the second time nobody came!",
@@ -4270,6 +4579,12 @@ function week30(): LessonContent[] {
           "Tuần 27 và 28: xin lỗi về sự bất tiện + hai lựa chọn.",
           undefined,
           ["inconvenience", "either", "option"],
+        ),
+        sp(
+          "What was the room inspection result for 512?",
+          "The room inspection result was good, madam. Only the bathroom fan is noisy.",
+          "Báo cấp trên: kết quả + điều còn tồn tại.",
+          "manager",
         ),
         sp(
           "The guest in 808 is unhappy about the cleaning time.",
@@ -4280,38 +4595,38 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mrs Silva removed her Do Not Disturb sign at noon, but her room was not cleaned. Oanh apologises and offers to clean it now. The reason was simple: the cleaning schedule was not updated after the sign came off. Oanh tells her supervisor. She also notes that Mrs Silva works at night, so the room is cleaned after eleven to respect her privacy. The next day, Oanh checks the room herself at noon. Mrs Silva is happy with the plan.`,
+        `Mrs Silva removed her Do Not Disturb sign at noon, but her room was not cleaned. Oanh apologises and offers to clean it now. The cleaning list was not updated after the sign came off, so Oanh tells her supervisor. Mrs Silva also mentions a damp smell and a wine mark on the carpet. Oanh airs out the room, reports the damp smell and spot cleans the carpet. The next day, Oanh checks the room herself at noon.`,
         [
           {
-            q: "Nguyên nhân phòng không được dọn là gì?",
+            q: "Vì sao phòng không được dọn?",
             options: [
-              "Nhân viên ca chiều hôm đó nghỉ làm",
-              "Lịch dọn chưa cập nhật khi khách gỡ biển",
-              "Khách không gọi xuống yêu cầu dọn",
+              "Mrs Silva treo lại biển Không làm phiền lúc trưa",
+              "Danh sách dọn phòng chưa được cập nhật",
+              "Oanh đang bận xử lý vết rượu vang",
             ],
             correct: 1,
             explanation:
-              "'the cleaning schedule was not updated after the sign came off' — lỗi quy trình, không đổ cho người.",
+              "'The cleaning list was not updated after the sign came off' — lỗi quy trình, không đổ cho người.",
           },
           {
-            q: "Oanh làm gì để chuyện không lặp lại?",
+            q: "Oanh làm gì với mùi ẩm?",
             options: [
-              "Treo biển 'Hãy dọn phòng' lên cửa phòng khách",
-              "Dặn khách gọi lễ tân mỗi khi gỡ biển",
-              "Báo giám sát và ghi lại giờ khách muốn",
+              "Làm thoáng phòng và báo mùi ẩm",
+              "Giặt lại toàn bộ khăn trong phòng",
+              "Làm sạch vết rượu trên thảm",
             ],
-            correct: 2,
+            correct: 0,
             explanation:
-              "Báo lên + ghi lại thói quen của khách — sửa từ gốc, không bắt khách làm thêm việc.",
+              "'airs out the room, reports the damp smell' — việc trong quyền của buồng phòng, rồi báo đúng bộ phận. Vết rượu là chuyện khác: 'spot cleans the carpet'.",
           },
           {
             q: "Ngày hôm sau Oanh làm gì?",
             options: [
+              "Báo lại giám sát về danh sách dọn phòng hôm trước",
+              "Giặt sâu tấm thảm sau sáu giờ",
               "Tự kiểm tra phòng lúc mười hai giờ trưa",
-              "Gõ cửa phòng khách lúc chín giờ sáng",
-              "Xin lỗi khách thêm một lần nữa",
             ],
-            correct: 0,
+            correct: 2,
             explanation:
               "'The next day, Oanh checks the room herself at noon' — giữ đúng lời hứa mình tự làm được.",
           },
@@ -4327,39 +4642,43 @@ function week30(): LessonContent[] {
           "Câu cuối hỏi vặn lại khách. Câu đúng xin lỗi và đưa giải pháp ngay.",
         ),
         game(
-          "How did 512 do in the inspection?",
-          "The room inspection result was good, madam. Only the bathroom fan is noisy.",
-          "The room inspection result were good, madam. Only the bathroom fan is noisy.",
-          "Fine, I think. I did not read it.",
-          "manager",
-          "Câu cuối đoán khi được hỏi kết quả. Câu đúng báo kết quả và điều còn tồn tại.",
+          "Can I start vacuuming the corridor? It is seven.",
+          "No, not yet. Quiet hours end at eight, so please wait.",
+          "No, not yet. Quiet hours ends at eight, so please wait.",
+          "Yes, go ahead. Most guests are awake by seven anyway.",
+          "colleague",
+          "Câu cuối phá giờ yên tĩnh — khách sẽ bị đánh thức. Câu đúng nhắc quy định kèm mốc giờ.",
         ),
       ],
     }),
 
     L(30, 4, "End of Phase Three", "Kết thúc giai đoạn ba", {
       vocabulary: [
-        c("Confident", "I feel confident on a busy shift now."),
-        c("Damage charge amount", "The duty manager decides the damage charge amount."),
-        c("Checkout room priority", "Follow the checkout room priority for early arrivals."),
-        c("Escalate", "I escalate a problem when the decision is not mine.", [
-          "/ˈeskəleɪt/",
-          "Chuyển lên cấp có thẩm quyền",
-          "⬆️",
+        c("Valuables", "Do not move a guest's valuables. Call the supervisor.", [
+          "/ˈvæljuəblz/",
+          "Đồ có giá trị (tiền, trang sức…)",
+          "💎",
+        ]),
+        c("Master key log", "Every master key goes in the master key log."),
+        c("Discrepancy report", "A discrepancy report shows a room with the wrong status."),
+        c("Occupied", "The room is occupied until Friday.", [
+          "/ˈɒkjupaɪd/",
+          "Đang có khách ở",
+          "🧳",
         ]),
       ],
       grammar: [
         g(
           "Charge, I write.",
           "I took photos and reported it. The duty manager decides the damage charge amount.",
-          "Tuần 24: buồng phòng báo cáo có bằng chứng; số tiền do quản lý trực quyết.",
+          "Tuần 24 và 28: buồng phòng báo cáo có bằng chứng; số tiền do quản lý trực quyết.",
           "I took photos and reported it. The duty manager decide the damage charge amount.",
         ),
         g(
-          "Not mine, I ask.",
-          "I escalate a problem when the decision is not mine.",
-          "'escalate' = chuyển lên cấp có quyền. Chủ ngữ 'I' nên động từ giữ nguyên dạng gốc.",
-          "I escalates a problem when the decision is not mine.",
+          "Jewellery, I keep safe.",
+          "We do not move valuables. I will call the supervisor now.",
+          "Đồ giá trị của khách: không động vào, gọi giám sát. Sau 'do not' động từ ở dạng gốc.",
+          "We do not moving valuables. I will call the supervisor now.",
         ),
       ],
       speaking: [
@@ -4408,7 +4727,7 @@ function week30(): LessonContent[] {
           ),
           alsoAccept: [
             "The duty manager decides the damage charge amount, sir. I cannot decide that.",
-            "I am sorry, I cannot decide that. The duty manager decides the damage charge amount.",
+            "I cannot decide that, sir. I will ask the duty manager.",
             "I cannot decide that, sir. May I ask the duty manager?",
           ],
         }),
@@ -4421,50 +4740,115 @@ function week30(): LessonContent[] {
             ["go", "call", "supervisor", "security", "welfare", "check"],
           ),
           alsoAccept: [
-            "I will call the supervisor and security for a welfare check. We will not go in.",
-            "We will not go in. I will ask the supervisor and security to do a welfare check.",
+            "We will not go in alone. I will call the supervisor and security for a welfare check.",
+            "I will ask the supervisor and security to do a welfare check now.",
+            "I will call the supervisor and security for a welfare check.",
+          ],
+        }),
+        risk({
+          ...sp(
+            "My husband feels very ill and dizzy.",
+            ill,
+            "Khách ốm trong phòng: gọi sơ cứu và quản lý trực ngay, không tự cho thuốc.",
+            undefined,
+            ["calling", "first", "aid", "duty", "manager"],
+          ),
+          alsoAccept: [
+            "I will call first aid and the duty manager now, madam.",
+            "Please stay with him, madam. I am calling first aid and the duty manager.",
           ],
         }),
         sp(
-          "Which rooms do we do first after checkout?",
-          "We follow the checkout room priority, and then we do the stayovers.",
-          "Ưu tiên theo khách sắp đến.",
+          "Room 1203 has jewellery on the bed. Should I put it in the safe?",
+          "No, we do not move valuables. I will call the supervisor now.",
+          "Đồ giá trị trong phòng có khách: không động vào, gọi giám sát.",
           "colleague",
+          ["move", "valuables", "supervisor"],
         ),
         sp(
-          "When do you escalate a problem?",
-          "I escalate it when the decision is not mine, like a refund or a complaint.",
-          "Câu chốt về thẩm quyền: tiền và khiếu nại không phải việc tự quyết.",
+          "What did you do with the cash in 702?",
+          "I did not move the valuables, and the supervisor checked them with me.",
+          "Báo cấp trên: việc không làm + ai đã kiểm cùng.",
           "manager",
-          ["refund", "complaint"],
+          ["move", "valuables", "supervisor"],
         ),
         sp(
-          "Do you feel confident on busy shifts now?",
-          "Yes. I feel confident, and I still ask my supervisor when I am unsure.",
-          "Tự tin nhưng biết giới hạn của mình — câu chốt giai đoạn ba.",
+          "I cannot find my master key!",
+          "Report it to security now, and note it in the master key log.",
+          "Tuần 29: chìa khóa tổng mất là việc an ninh — báo trước, ghi sổ sau.",
+          "colleague",
+          ["security", "note", "master", "key", "log"],
+        ),
+        sp(
+          "Where do you sign for the master key?",
+          "In the master key log, with my name and the time.",
+          "Đúng sổ cho đúng việc.",
           "manager",
+          ["master", "key", "log"],
+        ),
+        sp(
+          "Room 612 shows occupied, but nobody is in it.",
+          "Then 612 may not be occupied. We write a discrepancy report for the front desk.",
+          "Tuần 29: phòng lệch trạng thái — báo cáo lệch cho lễ tân.",
+          "colleague",
+          ["occupied", "discrepancy", "report"],
+        ),
+        sp(
+          "Why did you write a discrepancy report for 714?",
+          "I wrote a discrepancy report because 714 was occupied, not vacant.",
+          "Báo cấp trên lý do thật, bằng because.",
+          "manager",
+          ["discrepancy", "report", "occupied"],
+        ),
+        sp(
+          "Do we have enough shampoo for tonight?",
+          "Yes. I checked the amenity stock sheet at four.",
+          "Tuần 29: đã kiểm gì + giờ.",
+          "manager",
+          ["amenity", "stock", "sheet"],
+        ),
+        sp(
+          "I want a refund for last night. The noise was terrible.",
+          "I cannot offer a refund, madam, but the duty manager can review it today.",
+          "Tuần 28: không tự hứa hoàn tiền, nói rõ ai xem xét.",
+          undefined,
+          ["offer", "refund", "duty", "manager"],
+        ),
+        sp(
+          "A guest left a watch in 905. What do I do?",
+          "Note it in the lost item log and take it to the supervisor.",
+          "Tuần 29: đồ khách bỏ quên vào đúng sổ, giao đúng người.",
+          "colleague",
+          ["lost", "item", "log"],
+        ),
+        sp(
+          "Why does the front desk need my passport for my ring?",
+          "The ID check keeps your ring safe, madam. It is our lost property rule.",
+          "Tuần 24: lý do thật của bước kiểm tra giấy tờ.",
+          undefined,
+          ["ID", "check", "lost", "property", "rule"],
         ),
       ],
       reading: read(
-        `A guest shouts that a laptop is missing and that the room attendant was in the room. Vy does not argue and does not search anything herself. She calls security and the duty manager at once, and waits with the guest. Security and the duty manager check the room together. The laptop is in the room safe, where the guest had locked it. Vy writes what happened in the shift log book. Nobody argued, and nobody was blamed.`,
+        `A guest shouts that a laptop is missing and that the room attendant was in the room. Vy does not argue and does not search anything herself. She calls security and the duty manager at once, and waits with the guest. Security and the duty manager check the room together. The laptop is in the room safe, where the guest had locked it. Vy did not move any valuables, and she writes what happened in the shift log book.`,
         [
           {
             q: "Vy làm gì khi khách tố nhân viên lấy máy tính?",
             options: [
               "Tự lục xe đẩy cho khách xem",
               "Gọi an ninh và quản lý trực ngay",
-              "Khẳng định nhân viên không lấy gì",
+              "Ghi vào sổ ca trước rồi mới gọi an ninh",
             ],
             correct: 1,
             explanation:
-              "'calls security and the duty manager at once' — không tranh cãi, không tự xử lý.",
+              "'calls security and the duty manager at once' — không tranh cãi, không tự xử lý; ghi sổ là việc sau cùng.",
           },
           {
             q: "Cuối cùng chiếc máy tính ở đâu?",
             options: [
               "Trong két sắt của phòng",
-              "Trên xe đẩy của buồng phòng",
-              "Ở quầy lễ tân tầng trệt",
+              "Trên xe đẩy của nhân viên",
+              "Ở quầy đồ thất lạc của lễ tân",
             ],
             correct: 0,
             explanation: "'The laptop is in the room safe, where the guest had locked it.'",
@@ -4472,13 +4856,13 @@ function week30(): LessonContent[] {
           {
             q: "Vì sao Vy không tranh cãi với khách?",
             options: [
-              "Vì Vy sợ bị khách phàn nàn lên quản lý",
-              "Vì Vy chắc chắn đồng nghiệp đã lấy",
+              "Vì quản lý trực đã có mặt trong phòng",
+              "Vì Vy biết máy tính ở trong két",
               "Vì lời tố chưa chắc đúng",
             ],
             correct: 2,
             explanation:
-              "Máy tính nằm trong két — lời tố sai. Tranh cãi không tìm ra sự thật; an ninh và quản lý trực kiểm tra thì có.",
+              "Máy tính nằm trong két — lời tố sai, nhưng lúc đầu không ai biết. Tranh cãi không tìm ra sự thật; an ninh và quản lý trực kiểm tra thì có.",
           },
         ],
       ),
@@ -4526,5 +4910,5 @@ export const HK_P3_CAN_DO: Record<number, string> = {
   27: "Tiếp nhận phàn nàn: lắng nghe, xin lỗi về điều khách gặp mà không nhận lỗi vội, hỏi thêm sự việc, và xử lý an toàn trước tiên khi sàn ướt, có người ngã hay có dịch cơ thể.",
   28: "Đề nghị giải pháp trong quyền của mình bằng 'If you like, I can…', đưa hai lựa chọn, và từ chối rõ ràng việc vượt quyền (đổi phòng, hoàn tiền, miễn phí) hay một lời mời không đúng mực.",
   29: "Bàn giao ca và báo cáo sự việc với đồng nghiệp, cấp trên bằng quá khứ tiếp diễn: phòng hỏng, việc còn mở, mất chìa khóa tổng, đồ tìm thấy và đồ giá trị để ngoài.",
-  30: "Kết hợp cả giai đoạn trong một ca: gợi ý và hứa có mốc, giải thích phí và người quyết, xin lỗi và giải quyết, gọi đúng người khi bị tố mất đồ hay khi biển Không làm phiền treo quá lâu.",
+  30: "Ôn cả giai đoạn trong một ca: gợi ý và hứa có mốc, giải thích phí và người quyết, xin lỗi và giải quyết, bàn giao bằng đúng danh sách, đúng sổ, và gọi đúng người khi bị tố mất đồ, khi khách ốm hay khi biển Không làm phiền treo quá lâu.",
 };
