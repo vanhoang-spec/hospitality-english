@@ -2333,29 +2333,44 @@ function reviewWordsFor(
     const a = Math.ceil(ws.length / 3);
     return [ws.slice(0, a), ws.slice(a, 2 * a), ws.slice(2 * a)];
   };
+  // EVERY THIRD COMES BACK TWICE. Once was the floor, and two blind reviews
+  // measured what once is worth: each headword of weeks 23-27 sat in exactly
+  // one list before the checkpoint, and the quiz draws 10 of 35-58, so the
+  // expected number of times a word was asked again was 0.19. Lags 1 and 3
+  // now take overlapping thirds — first+middle, then middle+last, then
+  // last+first — so every third is retrieved at two spacings.
   const reach: [lag: number, part: number][] =
     week === 29
       ? [
           [1, 0],
           [1, 1],
+          [1, 2],
           [2, 1],
           [2, 2],
           [3, 2],
+          [3, 0],
         ]
       : [
           [1, 0],
+          [1, 1],
           [2, 1],
+          [2, 2],
           [3, 2],
+          [3, 0],
         ];
   for (const [lag, part] of reach) {
     const back = week - lag;
     if (back >= 23) out.push(...thirds(headwordsOf(lx, back, overrides))[part]!);
   }
 
+  // NEWEST FIRST. Walked oldest-first, week 23 — the opening week of an A2+
+  // phase — reviewed nothing but Phase 0: "Good morning", "Thirteen",
+  // "Goodbye". The weeks just before this phase are the ones at risk.
   const slots = 7; // weeks 23..29
-  const size = Math.ceil(priorWords.length / slots);
+  const newest = [...priorWords].reverse();
+  const size = Math.ceil(newest.length / slots);
   const start = (week - 23) * size;
-  out.push(...priorWords.slice(start, start + size));
+  out.push(...newest.slice(start, start + size));
 
   return Array.from(new Set(out));
 }

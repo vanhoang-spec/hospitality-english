@@ -239,7 +239,11 @@ function OralStage({
         {/* Gợi ý chỉ hiện SAU khi đã nói. Trong lúc chờ nói, nó là đáp án:
             một tip in trọn con số bị khoá ("forty-five") biến ô nói thành ô
             đọc-lại, đúng thứ mà việc giấu câu mẫu sinh ra để chặn. */}
-        {item.tip && said && (
+        {/* …và ở ô dự trữ thì không hiện giữa hai lần nói: tip của ô ấy nói
+            thẳng việc phải làm ("không hứa, chuyển quản lý trực"), nên lần
+            nói thứ hai thành đọc lại gợi ý — một auditor mù chụp được đúng
+            cảnh đó trên ô "đêm miễn phí". */}
+        {item.tip && said && !item.reserved && (
           <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
             💡 {item.tip}
           </p>

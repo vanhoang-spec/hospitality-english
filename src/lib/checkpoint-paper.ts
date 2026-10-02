@@ -843,7 +843,13 @@ export function buildPaper(dep: string, week: string): Question[] {
   const speakPool = shuffle(
     phaseLessons.flatMap((l) => l.speaking.map((s) => ({ ...s, lessonId: l.lessonId }))),
   );
-  const listeningQs: Question[] = speakPool.slice(0, MIX.listening).map((s) => {
+  // A turn that continues an exchange is not a listening item on its own:
+  // "And supplies?" or "This morning, right after the cleaning." heard cold
+  // has no right answer to pick. A blind review measured 41.5% of Phase 3's
+  // listening questions built on such a tail once the phase was written as
+  // three-turn exchanges. Tails stay in the pool as distractors.
+  const heard = speakPool.filter((s) => !s.follows);
+  const listeningQs: Question[] = heard.slice(0, MIX.listening).map((s) => {
     // Distractors are the replies that share the most words with the correct
     // one, for the same reason the grammar block picks its distractors that
     // way: an unrelated reply is eliminable without hearing anything.

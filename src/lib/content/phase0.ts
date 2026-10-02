@@ -535,6 +535,26 @@ const HEADWORD_FUNCTION_WORDS = new Set([
   "morning",
   "afternoon",
   "evening",
+  // A phrase card carries its pronouns and prepositions with it — "Bring
+  // your starter", "Check with the kitchen", "Thank you" — and the lock
+  // minted every one: a blind review measured "I will bring the starter
+  // within ten minutes" failing on "your" (16/16 such swaps), and a
+  // must-be-right allergy turn failing "I will check with the chef before
+  // you order, madam." for not opening with "Thank you".
+  "your",
+  "our",
+  "their",
+  "his",
+  "her",
+  "him",
+  "them",
+  "they",
+  "with",
+  "for",
+  "from",
+  "this",
+  "that",
+  "thank",
 ]);
 
 // ============================================================

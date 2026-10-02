@@ -58,7 +58,10 @@ export function askedKey(prompt: string): string {
  *  lockWeekHeadwords(); it is short, and duplicating it is cheaper than
  *  exporting a content internal into the grader. */
 const HEADWORDS_LEFT_OPEN = new Set(
-  "you are here the and else past sir madam maam good morning afternoon evening".split(" "),
+  (
+    "you are here the and else past sir madam maam good morning afternoon evening " +
+    "your our their his her him them they with for from this that thank"
+  ).split(" "),
 );
 
 /** A COURTESY MARKER IS NEVER MINTED AS A HEADWORD LOCK — not carried
@@ -127,6 +130,9 @@ type PhaseIndex = {
   /** Per model sentence, the headwords of the week that prints it which the
    *  sentence actually contains. */
   headwordsIn: Map<string, string[]>;
+  /** Per model sentence, the paraphrases its author accepts
+   *  (`SpeakingItem.alsoAccept`). */
+  alsoFor: Map<string, AcceptedAnswer[]>;
 };
 
 const INDEX = new Map<string, PhaseIndex>();
@@ -138,10 +144,36 @@ function indexFor(dep: string, week: string | number): PhaseIndex {
   if (cached) return cached;
   const answers = new Map<string, AcceptedAnswer[]>();
   const headwordsIn = new Map<string, string[]>();
+  const alsoFor = new Map<string, AcceptedAnswer[]>();
   for (const w of weeks) {
     const heads = headwordsOf(dep, w);
+    const noteHeadwords = (sentence: string) => {
+      const said = new Set(normalize(sentence));
+      const locked = [...heads]
+        .map((h) =>
+          said.has(h) ? h : said.has(h + "s") ? h + "s" : said.has(h + "es") ? h + "es" : null,
+        )
+        .filter((h): h is string => h !== null);
+      if (locked.length)
+        headwordsIn.set(sentence, [...new Set([...(headwordsIn.get(sentence) ?? []), ...locked])]);
+    };
     for (const l of getWeekContent(dep, String(w))?.lessons ?? [])
       for (const s of l.speaking) {
+        // An accepted paraphrase is graded like the model: the week's
+        // headwords it says are locked, and so is every word the author
+        // locked on the model that the paraphrase also says. A word it does
+        // not say cannot be required of it — that is the point of it.
+        if (s.alsoAccept?.length) {
+          const alts = s.alsoAccept.map((alt) => {
+            noteHeadwords(alt);
+            const said = new Set(normalize(alt));
+            const keep = (s.requiredTokens ?? []).filter((t) =>
+              normalize(t).every((x) => said.has(x)),
+            );
+            return { target: alt, ...(keep.length ? { requiredTokens: keep } : {}) };
+          });
+          alsoFor.set(s.targetResponse, [...(alsoFor.get(s.targetResponse) ?? []), ...alts]);
+        }
         // THE WEEK'S OWN WORDS ARE NOT WHAT THE ONE-WORD ALLOWANCE IS FOR.
         //
         // The allowance forgives a long model one ordinary word, and it did
@@ -173,7 +205,7 @@ function indexFor(dep: string, week: string | number): PhaseIndex {
         answers.set(key, list);
       }
   }
-  const built = { answers, headwordsIn };
+  const built = { answers, headwordsIn, alsoFor };
   INDEX.set(cacheKey, built);
   return built;
 }
@@ -198,6 +230,7 @@ export function acceptedAnswers(
       : a;
   };
   const own = lock({ target, requiredTokens });
+  const also = (idx.alsoFor.get(target) ?? []).map(lock);
   const k = askedKey(guestPrompt);
   // ONE CONTENT WORD IS NOT A QUESTION. A key of one word — "Do I have to do
   // that?" reduces to `have`, "Do I sign here?" to `sign` — groups lines that
@@ -205,9 +238,9 @@ export function acceptedAnswers(
   // Phase 2 pulled in somebody else's answers: "Do I have to do that?" was
   // accepting "We also have sparkling water." Two content words is the point
   // where the cluster is about a subject rather than a word.
-  if (k.split(" ").filter(Boolean).length < 2) return [own];
+  if (k.split(" ").filter(Boolean).length < 2) return [own, ...also];
   const others = (idx.answers.get(`${speakerRole ?? "guest"}|${k}`) ?? [])
-    .filter((a) => a.target !== target)
+    .filter((a) => a.target !== target && !also.some((x) => x.target === a.target))
     .map(lock);
-  return [own, ...others];
+  return [own, ...also, ...others];
 }

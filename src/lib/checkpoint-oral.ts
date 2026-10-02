@@ -53,6 +53,10 @@ export type OralItem = {
   /** The author marked this turn as a must-be-right one — see
    *  `SpeakingItem.risk`. */
   risk?: boolean;
+  /** The author's accepted paraphrases of this turn (`SpeakingItem.alsoAccept`).
+   *  Already among `alternates`; carried so the reserved slot can tell them
+   *  from other turns' answers. */
+  alsoAccept?: string[];
 };
 
 /** Five spoken items drawn from across the phase, same pool the written
@@ -130,6 +134,7 @@ function oralSetup(dep: string, week: string) {
             alternates: accepted.slice(1),
             sourceWeek: c.weekNumber,
             ...(s.risk ? { risk: true } : {}),
+            ...(s.alsoAccept?.length ? { alsoAccept: s.alsoAccept } : {}),
           } as OralItem,
         };
       }),
@@ -417,7 +422,9 @@ function oralSetup(dep: string, week: string) {
   // 3. A chain is drawn whole, so every marked turn in it is required, not
   // just its head. The search stays only for phases that mark nothing yet.
   const marked = pool.filter((i) => chainAt(i).some((it) => it.risk));
-  const riskTargets = new Set(items.filter((it) => it.risk).map((it) => it.target));
+  const riskTargets = new Set(
+    items.filter((it) => it.risk).flatMap((it) => [it.target, ...(it.alsoAccept ?? [])]),
+  );
   /** What a reserved draw headed at `head` makes must-be-right, as the
    *  sitting serves it: index and narrowed item. ONE place, read by the draw
    *  below and by reservableTurns(), so the gate that measures the reserved

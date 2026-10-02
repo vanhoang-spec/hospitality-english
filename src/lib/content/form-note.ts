@@ -48,7 +48,7 @@ const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
  *  calling them passive (or perfect) teaches a structure the sentence does
  *  not contain. Shared by the passive, perfect and modal-passive branches. */
 const ADJECTIVE_ED =
-  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly)$/;
+  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly|disappointed|satisfied|delighted|annoyed|confused|upset)$/;
 
 /** A hyphenated verb is ONE verb. Stripping punctuation used to turn
  *  "can re-clean" into "can re clean", and the modal rule printed "Sau
@@ -56,7 +56,15 @@ const ADJECTIVE_ED =
  *  and 30. The hyphen is held as "_" — which `\w` matches — while the rules
  *  run, and put back on the way out. */
 export function formNote(target: string): string | null {
-  return formNoteHeld(target)?.replace(/_/g, "-") ?? null;
+  // "deep clean" is one verb as well, written open: "We can deep clean the
+  // carpet" was printed "Sau 'can' động từ giữ nguyên dạng gốc: can deep."
+  const held = target.replace(/\b(deep) (clean)/gi, "$1·$2");
+  return (
+    formNoteHeld(held)
+      ?.replace(/deep_clean/g, "deep clean")
+      .replace(/·/g, " ")
+      .replace(/_/g, "-") ?? null
+  );
 }
 
 function formNoteHeld(target: string): string | null {
@@ -64,7 +72,7 @@ function formNoteHeld(target: string): string | null {
     " " +
     target
       .toLowerCase()
-      .replace(/([a-z])-([a-z])/g, "$1_$2")
+      .replace(/([a-z])[-·]([a-z])/g, "$1_$2")
       .replace(/[^a-z'_ ]/g, " ")
       .replace(/\s+/g, " ") +
     " ";
@@ -180,7 +188,7 @@ function formNoteHeld(target: string): string | null {
   // A finite verb ends the phrase too, or "A towel cover stays on at all
   // times." hands back "a towel cover stays" as the noun.
   const nounPhrase =
-    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|here|there|please|sir|madam)(?![a-z]))/i;
+    /\b(an?) ((?:\w+ ){0,2}?\w+?)(?=[.,?!]|$| (?:for|today|too|to|in|on|at|with|of|and|is|are|was|were|has|have|stays|opens|closes|costs|needs|includes|takes|now|then|here|there|please|sir|madam)(?![a-z]))/i;
   // "a little", "a few", "a lot", "a bit" are quantities, not a countable
   // noun taking its article: "It costs a little more" was teaching "a little
   // more" as a singular noun in five tips across Phase 3.
@@ -208,10 +216,17 @@ function formNoteHeld(target: string): string | null {
  *  starts being a paragraph the learner will skip. */
 const MAX_TIP = 190;
 
-export function tipWithFormNote(tip: string, target: string): string {
+/** `seen` is the lesson's notes so far, by kind (the text before the colon).
+ *  A note says something the first time; "Sau 'will' động từ giữ nguyên dạng
+ *  gốc" on 58 of Front Office's 176 Phase 3 tips was a blind review's example
+ *  of feedback that stops being read. Once per lesson per kind. */
+export function tipWithFormNote(tip: string, target: string, seen?: Set<string>): string {
   if (NAMES_A_FORM.test(tip)) return tip;
   const note = formNote(target);
   if (!note) return tip;
+  const kind = note.split(":")[0]!;
+  if (seen?.has(kind)) return tip;
+  seen?.add(kind);
   const joined = tip ? `${tip.replace(/\s+$/, "")} ${note}` : note;
   return joined.length > MAX_TIP ? tip : joined;
 }

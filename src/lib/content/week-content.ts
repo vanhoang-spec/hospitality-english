@@ -81,6 +81,17 @@ export type SpeakingItem = {
    *  front desk" — and Guest Relations had none at all in 200/200. A flag set
    *  by the author who knows what the turn is for cannot drift that way. */
   risk?: true;
+  /** Other ways of saying THIS turn that the course accepts, written by the
+   *  author who knows which differences do not matter: two phrases swapped
+   *  ("stay with him at the pool"), the same refusal in other words ("I
+   *  cannot tell you his room number"), the condition after the offer. They
+   *  are graded exactly like the model, each with the model's locked words it
+   *  contains, and on a `risk` turn they count as risk answers too.
+   *
+   *  Five blind reviews of Phase 3 measured the cost of having none: 10/10
+   *  correct paraphrases failed a Spa must-be-right slot, 17/26 at the front
+   *  desk — and failing that one slot fails the whole spoken half. */
+  alsoAccept?: string[];
 };
 /** The label every suite prints above the prompt. "manager" exists because a
  *  week that trains reporting UPWARD is a week about register, and calling a
@@ -25527,9 +25538,11 @@ export function getWeekContent(dep: string, week: string | number): WeekContent 
 // identity. Idempotent: a decorated tip already names a form, so a second
 // pass leaves it alone.
 for (const built of Object.values(REGISTRY))
-  for (const lesson of built.lessons)
+  for (const lesson of built.lessons) {
+    const seen = new Set<string>();
     for (const item of lesson.speaking)
-      item.helpTip = tipWithFormNote(item.helpTip, item.targetResponse);
+      item.helpTip = tipWithFormNote(item.helpTip, item.targetResponse, seen);
+  }
 
 // A guest prompt that opens with a back-reference — "And what happens after
 // that?", "But I am his brother.", "So can I have it or not?" — only means

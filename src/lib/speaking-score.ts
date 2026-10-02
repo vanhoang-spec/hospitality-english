@@ -1612,7 +1612,15 @@ const ACCEPT_OPENERS: string[][] = [
 ];
 const COURTESY_OPENERS: string[][] = [
   ["thank", "you", "very", "much"],
+  // Longer first: find() takes the first match, and "thank you" alone would
+  // leave "for telling me" behind as three inserted words. The course teaches
+  // both of these as the opening of a reply (weeks 27 and 25-30), and a blind
+  // review measured "I understand." or "Thank you for telling me." in front of
+  // a model failing 16/16 must-be-right slots.
+  ["thank", "you", "for", "telling", "me"],
+  ["thank", "you", "for", "letting", "me", "know"],
   ["thank", "you"],
+  ["i", "understand"],
   ...APOLOGY_OPENERS,
   ...ACCEPT_OPENERS,
   ["yes"],
