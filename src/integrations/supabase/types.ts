@@ -356,6 +356,123 @@ export type Database = {
           },
         ];
       };
+      orders: {
+        Row: {
+          amount: number;
+          code: string;
+          confirmed_by: string | null;
+          created_at: string;
+          currency: string;
+          discount_pct: number;
+          id: string;
+          link_id: string | null;
+          list_price: number;
+          org_id: string;
+          paid_at: string | null;
+          partner_id: string | null;
+          payment_ref: string | null;
+          plan_code: string;
+          status: string;
+          term: string;
+          user_id: string | null;
+        };
+        Insert: {
+          amount: number;
+          code: string;
+          confirmed_by?: string | null;
+          created_at?: string;
+          currency?: string;
+          discount_pct?: number;
+          id?: string;
+          link_id?: string | null;
+          list_price: number;
+          org_id: string;
+          paid_at?: string | null;
+          partner_id?: string | null;
+          payment_ref?: string | null;
+          plan_code: string;
+          status?: string;
+          term: string;
+          user_id?: string | null;
+        };
+        Update: {
+          amount?: number;
+          code?: string;
+          confirmed_by?: string | null;
+          created_at?: string;
+          currency?: string;
+          discount_pct?: number;
+          id?: string;
+          link_id?: string | null;
+          list_price?: number;
+          org_id?: string;
+          paid_at?: string | null;
+          partner_id?: string | null;
+          payment_ref?: string | null;
+          plan_code?: string;
+          status?: string;
+          term?: string;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      partners: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          note: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          note?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          note?: string | null;
+        };
+        Relationships: [];
+      };
+      payment_accounts: {
+        Row: {
+          account_name: string | null;
+          account_no: string | null;
+          bank_bin: string | null;
+          bank_name: string | null;
+          id: number;
+          note: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          account_name?: string | null;
+          account_no?: string | null;
+          bank_bin?: string | null;
+          bank_name?: string | null;
+          id?: number;
+          note?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          account_name?: string | null;
+          account_no?: string | null;
+          bank_bin?: string | null;
+          bank_name?: string | null;
+          id?: number;
+          note?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       organizations: {
         Row: {
           created_at: string;
@@ -363,6 +480,8 @@ export type Database = {
           name: string;
           seat_limit: number;
           updated_at: string;
+          kind: string;
+          partner_id: string | null;
         };
         Insert: {
           created_at?: string;
@@ -370,6 +489,8 @@ export type Database = {
           name: string;
           seat_limit?: number;
           updated_at?: string;
+          kind?: string;
+          partner_id?: string | null;
         };
         Update: {
           created_at?: string;
@@ -377,6 +498,8 @@ export type Database = {
           name?: string;
           seat_limit?: number;
           updated_at?: string;
+          kind?: string;
+          partner_id?: string | null;
         };
         Relationships: [];
       };
@@ -620,6 +743,9 @@ export type Database = {
           id: string;
           kind: string;
           label: string | null;
+          discount_pct: number | null;
+          partner_id: string | null;
+          trial_days: number | null;
           max_uses: number | null;
           org_id: string | null;
           plan_code: string | null;
@@ -638,6 +764,9 @@ export type Database = {
           id?: string;
           kind: string;
           label?: string | null;
+          discount_pct?: number | null;
+          partner_id?: string | null;
+          trial_days?: number | null;
           max_uses?: number | null;
           org_id?: string | null;
           plan_code?: string | null;
@@ -656,6 +785,9 @@ export type Database = {
           id?: string;
           kind?: string;
           label?: string | null;
+          discount_pct?: number | null;
+          partner_id?: string | null;
+          trial_days?: number | null;
           max_uses?: number | null;
           org_id?: string | null;
           plan_code?: string | null;
@@ -814,6 +946,9 @@ export type Database = {
           id: string;
           kind: string;
           label: string | null;
+          discount_pct: number | null;
+          partner_id: string | null;
+          trial_days: number | null;
           max_uses: number | null;
           org_id: string | null;
           plan_code: string | null;

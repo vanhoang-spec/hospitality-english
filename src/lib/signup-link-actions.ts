@@ -53,7 +53,9 @@ function linkProblem(link: LinkRow | null): string | null {
   if (!link) return "Link không tồn tại. Hãy kiểm tra lại, hoặc xin người gửi một link mới.";
   if (link.revoked_at) return "Link này đã bị thu hồi. Hãy xin người gửi một link mới.";
   if (link.expires_at && new Date(link.expires_at) <= new Date()) {
-    return "Link này đã hết hạn. Hãy xin người gửi một link mới.";
+    return link.kind === "retail"
+      ? "Chương trình đăng ký qua link này đã kết thúc."
+      : "Link này đã hết hạn. Hãy xin người gửi một link mới.";
   }
   if (link.max_uses !== null && link.use_count >= link.max_uses) {
     return link.kind === "organization"
@@ -252,7 +254,17 @@ export type SignupLinkInfo =
       groupName: string | null;
       department: string | null;
     }
-  | { ok: true; kind: "organization"; seats: number; term: string };
+  | { ok: true; kind: "organization"; seats: number; term: string }
+  | {
+      ok: true;
+      kind: "retail";
+      partnerName: string;
+      discountPct: number;
+      trialDays: number;
+      /** When the offer ends — the link's expiry. */
+      until: string | null;
+      options: { term: string; months: number; listPrice: number; amount: number }[];
+    };
 
 export const getSignupLinkInfo = createServerFn({ method: "POST" })
   .inputValidator(z.object({ token: TOKEN }))
@@ -270,6 +282,39 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
         .eq("code", link.plan_code ?? "")
         .maybeSingle();
       return { ok: true, kind: "organization", seats: plan?.seats ?? 0, term: link.term ?? "" };
+    }
+
+    if (link.kind === "retail") {
+      const { retailQuote } = await import("@/lib/account-provisioning.server");
+      const { RETAIL_TERMS, RETAIL_TERM_MONTHS } = await import("@/lib/retail-pricing");
+      const discountPct = Number(link.discount_pct ?? 0);
+      const { data: partner } = await supabaseAdmin
+        .from("partners")
+        .select("name")
+        .eq("id", link.partner_id ?? "")
+        .maybeSingle();
+      const options = [];
+      for (const term of RETAIL_TERMS) {
+        // A term without a list price is not offered rather than offered at 0.
+        try {
+          const q = await retailQuote(term, discountPct);
+          options.push({ term, months: RETAIL_TERM_MONTHS[term], ...q });
+        } catch {
+          /* no list price for this term */
+        }
+      }
+      if (options.length === 0) {
+        return { ok: false, reason: "Chương trình chưa có bảng giá. Vui lòng quay lại sau." };
+      }
+      return {
+        ok: true,
+        kind: "retail",
+        partnerName: partner?.name ?? "",
+        discountPct,
+        trialDays: link.trial_days ?? 0,
+        until: link.expires_at,
+        options,
+      };
     }
 
     const orgId = link.org_id as string;
@@ -393,4 +438,155 @@ export const redeemOrganizationLink = createServerFn({ method: "POST" })
     await supabaseAdmin.from("signup_links").update({ org_id: orgId }).eq("id", link.id);
 
     return { success: true as const };
+  });
+
+// ── Retail: one learner, through a partner ───────────────────
+
+const RETAIL_TERM = z.enum(["m3", "m6", "m9", "m12"]);
+
+export const createRetailLink = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    z.object({
+      partnerName: z.string().trim().min(2, "Hãy nhập tên đối tác.").max(120),
+      label: z.string().trim().max(80).optional(),
+      discountPct: z.number().min(0).max(90),
+      trialDays: z.number().int().min(1).max(60),
+      /** Last day of the offer, YYYY-MM-DD, Vietnam time. */
+      until: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ngày kết thúc không hợp lệ."),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    await requireSuperAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { logAdminAction } = await import("@/lib/account-provisioning.server");
+
+    // The offer runs through the whole of its last day in Vietnam.
+    const expiresAt = new Date(`${data.until}T23:59:59+07:00`);
+    if (Number.isNaN(expiresAt.getTime()) || expiresAt <= new Date()) {
+      throw new Error("Ngày kết thúc phải ở tương lai.");
+    }
+
+    // One row per partner, found by name regardless of case.
+    const { data: existing } = await supabaseAdmin
+      .from("partners")
+      .select("id")
+      // Escaped: in ILIKE a "_" or "%" in a name would match other names.
+      .ilike(
+        "name",
+        data.partnerName.replace(/[\\%_]/g, (c) => `\\${c}`),
+      )
+      .maybeSingle();
+    let partnerId = existing?.id;
+    if (!partnerId) {
+      const { data: created, error } = await supabaseAdmin
+        .from("partners")
+        .insert({ name: data.partnerName, created_by: context.userId })
+        .select("id")
+        .single();
+      if (error || !created) throw new Error(error?.message ?? "Không tạo được đối tác.");
+      partnerId = created.id;
+    }
+
+    const token = newToken();
+    const { data: link, error } = await supabaseAdmin
+      .from("signup_links")
+      .insert({
+        token,
+        kind: "retail",
+        label: data.label || null,
+        partner_id: partnerId,
+        discount_pct: data.discountPct,
+        trial_days: data.trialDays,
+        expires_at: expiresAt.toISOString(),
+        created_by: context.userId,
+      })
+      .select("id")
+      .single();
+    if (error || !link) throw new Error(error?.message ?? "Không tạo được link.");
+
+    await logAdminAction({
+      actorId: context.userId,
+      orgId: null,
+      action: "link.create",
+      meta: {
+        link_id: link.id,
+        kind: "retail",
+        partner_id: partnerId,
+        discount_pct: data.discountPct,
+        trial_days: data.trialDays,
+        until: data.until,
+      },
+    });
+
+    return { id: link.id, token };
+  });
+
+/** Move the end date of a retail offer — how the owner extends it past
+ *  31/12/2026 without anyone touching code. */
+export const extendRetailLink = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    z.object({
+      id: z.string().uuid(),
+      until: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ngày kết thúc không hợp lệ."),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    await requireSuperAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { logAdminAction } = await import("@/lib/account-provisioning.server");
+
+    const expiresAt = new Date(`${data.until}T23:59:59+07:00`);
+    if (Number.isNaN(expiresAt.getTime()) || expiresAt <= new Date()) {
+      throw new Error("Ngày kết thúc phải ở tương lai.");
+    }
+    const { error } = await supabaseAdmin
+      .from("signup_links")
+      .update({ expires_at: expiresAt.toISOString() })
+      .eq("id", data.id)
+      .eq("kind", "retail");
+    if (error) throw new Error(error.message);
+
+    await logAdminAction({
+      actorId: context.userId,
+      orgId: null,
+      action: "link.extend",
+      meta: { link_id: data.id, until: data.until },
+    });
+    return { success: true as const };
+  });
+
+export const redeemRetailLink = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      token: TOKEN,
+      fullName: z.string().trim().min(2, "Hãy nhập họ tên.").max(120),
+      phone: z.string().min(1),
+      password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
+      department: DEPARTMENT,
+      term: RETAIL_TERM,
+    }),
+  )
+  .handler(async ({ data }) => {
+    const phone = toPhone(data.phone);
+    const link = await claimLink(data.token, "retail");
+
+    const { provisionIndividual } = await import("@/lib/account-provisioning.server");
+    try {
+      return await provisionIndividual({
+        fullName: data.fullName,
+        phone,
+        password: data.password,
+        department: data.department,
+        term: data.term,
+        partnerId: link.partner_id as string,
+        linkId: link.id,
+        discountPct: Number(link.discount_pct ?? 0),
+        trialDays: link.trial_days ?? 7,
+      });
+    } catch (e) {
+      await releaseLink(link.id);
+      throw e;
+    }
   });

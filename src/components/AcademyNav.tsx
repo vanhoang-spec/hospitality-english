@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import logoSrc from "@/assets/Logo_EmbassyHospitality_filetrong.png";
 import { useAcademy } from "@/lib/academy-store";
 import { useSession, useProfile, signOut } from "@/lib/auth";
+import { useOrgSubscription } from "@/lib/subscription";
 
 export function AcademyNav() {
   const location = useLocation();
@@ -29,6 +30,7 @@ export function AcademyNav() {
   const orgName = profile?.organizations?.name;
   const isOrgAdmin = profile?.role === "org_admin";
   const isPlatformAdmin = profile?.role === "super_admin";
+  const isIndividual = profile?.organizations?.kind === "individual";
 
   return (
     <>
@@ -111,6 +113,8 @@ export function AcademyNav() {
         </div>
       </header>
 
+      {isIndividual && <TrialBar orgId={profile?.org_id ?? null} />}
+
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -144,6 +148,15 @@ export function AcademyNav() {
                     Team
                   </Link>
                 )}
+                {isIndividual && (
+                  <Link
+                    to="/thanh-toan"
+                    onClick={() => setMenuOpen(false)}
+                    className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
+                  >
+                    Gói học của tôi
+                  </Link>
+                )}
                 <Link
                   to="/change-password"
                   onClick={() => setMenuOpen(false)}
@@ -173,6 +186,29 @@ export function AcademyNav() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+/** For someone on a free trial they bought themself: how long is left, and
+ *  the way to pay — so the end of the trial is never a surprise. */
+function TrialBar({ orgId }: { orgId: string | null }) {
+  const { data: sub } = useOrgSubscription(orgId);
+  if (!sub || sub.kind !== "trial" || !sub.active) return null;
+  const days = Math.max(0, sub.daysLeft);
+  return (
+    <div className="border-b border-primary/30 bg-primary/10">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm md:px-8">
+        <span>
+          Bạn đang học thử — còn <strong className="text-primary">{days} ngày</strong>.
+        </span>
+        <Link
+          to="/thanh-toan"
+          className="text-xs uppercase tracking-[0.2em] text-primary hover:underline"
+        >
+          Thanh toán để học tiếp →
+        </Link>
+      </div>
+    </div>
   );
 }
 

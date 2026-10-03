@@ -7,11 +7,12 @@ import { useSession, signOut } from "@/lib/auth";
 import { clearSessionId } from "@/lib/single-session";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 import { SHIPPING_DEPARTMENTS, getDepartment } from "@/lib/departments";
-import { TERM_LABEL } from "@/lib/subscription";
+import { TERM_LABEL, formatMoney } from "@/lib/subscription";
 import {
   getSignupLinkInfo,
   redeemLearnerLink,
   redeemOrganizationLink,
+  redeemRetailLink,
 } from "@/lib/signup-link-actions";
 
 // A learner opening their hotel's link, or a hotel opening the link the
@@ -78,15 +79,154 @@ function JoinPage() {
     );
   }
 
-  return info.kind === "learner" ? (
-    <LearnerForm
-      token={token}
-      orgName={info.orgName}
-      groupName={info.groupName}
-      department={info.department}
-    />
-  ) : (
-    <HotelForm token={token} seats={info.seats} term={info.term} />
+  if (info.kind === "learner") {
+    return (
+      <LearnerForm
+        token={token}
+        orgName={info.orgName}
+        groupName={info.groupName}
+        department={info.department}
+      />
+    );
+  }
+  if (info.kind === "retail") {
+    return (
+      <RetailForm
+        token={token}
+        partnerName={info.partnerName}
+        discountPct={info.discountPct}
+        trialDays={info.trialDays}
+        until={info.until}
+        options={info.options}
+      />
+    );
+  }
+  return <HotelForm token={token} seats={info.seats} term={info.term} />;
+}
+
+/** One member of hotel staff, buying for themself through a partner. */
+function RetailForm({
+  token,
+  partnerName,
+  discountPct,
+  trialDays,
+  until,
+  options,
+}: {
+  token: string;
+  partnerName: string;
+  discountPct: number;
+  trialDays: number;
+  until: string | null;
+  options: { term: string; months: number; listPrice: number; amount: number }[];
+}) {
+  const [term, setTerm] = useState(options[0]?.term ?? "m3");
+  const [fullName, setFullName] = useState("");
+  const [department, setDepartment] = useState(SHIPPING_DEPARTMENTS[0]?.code ?? "");
+  const account = useAccountFields();
+  const navigate = useNavigate();
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    const ok = await account.run(async (phone) => {
+      await redeemRetailLink({
+        data: {
+          token,
+          fullName,
+          phone,
+          password: account.password,
+          department,
+          term: term as "m3" | "m6" | "m9" | "m12",
+        },
+      });
+    });
+    if (ok) navigate({ to: "/thanh-toan" });
+  }
+
+  const untilText = until ? new Date(until).toLocaleDateString("vi-VN") : null;
+
+  return (
+    <Card title="Đăng ký học tiếng Anh khách sạn">
+      <div className="mt-4 border border-primary/40 bg-primary/10 p-3 text-sm">
+        {partnerName ? (
+          <>
+            Ưu đãi dành cho khách hàng của{" "}
+            <strong className="text-foreground">{partnerName}</strong>:{" "}
+          </>
+        ) : null}
+        <strong className="text-primary">giảm {discountPct}%</strong>, học thử{" "}
+        <strong className="text-foreground">{trialDays} ngày</strong> miễn phí
+        {untilText ? <> · áp dụng đến hết {untilText}</> : null}.
+      </div>
+      <form onSubmit={submit} className="mt-6 space-y-4">
+        <fieldset>
+          <legend className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+            Chọn gói học
+          </legend>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {options.map((o) => {
+              const selected = o.term === term;
+              return (
+                <label
+                  key={o.term}
+                  className={`cursor-pointer border p-3 text-sm ${
+                    selected
+                      ? "border-primary bg-primary/10"
+                      : "border-primary/30 hover:border-primary"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="term"
+                    value={o.term}
+                    checked={selected}
+                    onChange={() => setTerm(o.term)}
+                    className="sr-only"
+                  />
+                  <div className="font-display text-base">{o.months} tháng</div>
+                  {o.listPrice > o.amount && (
+                    <div className="text-xs text-foreground/50 line-through">
+                      {formatMoney(o.listPrice)}
+                    </div>
+                  )}
+                  <div className="text-primary">{formatMoney(o.amount)}</div>
+                  <div className="text-[11px] text-foreground/60">
+                    ≈ {formatMoney(Math.round(o.amount / o.months / 1000) * 1000)}/tháng
+                  </div>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+        <Field label="Họ và tên">
+          <input
+            required
+            autoComplete="name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Bộ phận bạn đang làm">
+          <select
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            className={INPUT}
+          >
+            {SHIPPING_DEPARTMENTS.map((d) => (
+              <option key={d.code} value={d.code}>
+                {d.name_vi}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <AccountFields account={account} submitLabel={`Đăng ký và học thử ${trialDays} ngày`} />
+        <p className="text-xs text-foreground/60">
+          Bạn vào học được ngay. Thanh toán trong {trialDays} ngày học thử để học tiếp — hướng dẫn
+          thanh toán hiện ở bước sau, và luôn xem lại được trong mục “Gói học của tôi”.
+        </p>
+      </form>
+    </Card>
   );
 }
 

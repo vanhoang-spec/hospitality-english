@@ -4,7 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
 import { createOrganization, setSubscription, setPlanPrice } from "@/lib/platform-admin-actions";
-import { HotelLinksSection } from "@/components/SignupLinks";
+import { HotelLinksSection, RetailLinksSection } from "@/components/SignupLinks";
+import { RetailOrdersSection, PaymentAccountSection } from "@/components/RetailAdmin";
 import { MoneyInput } from "@/components/MoneyInput";
 import {
   PLAN_LABEL,
@@ -20,6 +21,9 @@ export const Route = createFileRoute("/admin-console")({
 });
 
 const PLANS = ["p50", "p100", "p200", "p300", "p500"] as const;
+/** The price grid also carries the one-person retail list price, which no
+ *  hotel can be put on — hence a separate list. */
+const GRID_PLANS = ["p1", ...PLANS] as const;
 const TERMS = ["trial", "m3", "m6", "m9", "m12"] as const;
 
 type OrgRow = {
@@ -57,7 +61,11 @@ function AdminConsolePage() {
     queryKey: ["platform-orgs"] as const,
     queryFn: async (): Promise<OrgRow[]> => {
       const [{ data: organizations }, { data: profiles }, { data: subs }] = await Promise.all([
-        supabase.from("organizations").select("id, name, seat_limit").order("name"),
+        supabase
+          .from("organizations")
+          .select("id, name, seat_limit")
+          .eq("kind", "hotel")
+          .order("name"),
         supabase.from("profiles").select("org_id, role"),
         supabase
           .from("subscriptions")
@@ -271,6 +279,10 @@ function AdminConsolePage() {
 
       <HotelLinksSection orgNames={new Map((orgs ?? []).map((o) => [o.id, o.name]))} />
 
+      <RetailOrdersSection onMessage={setMessage} />
+      <RetailLinksSection />
+      <PaymentAccountSection onMessage={setMessage} />
+
       <PriceGrid onSaved={(m) => setMessage(m)} />
     </Shell>
   );
@@ -288,7 +300,7 @@ function PriceGrid({ onSaved }: { onSaved: (message: string) => void }) {
 
   const save = useMutation({
     mutationFn: (v: {
-      planCode: (typeof PLANS)[number];
+      planCode: (typeof GRID_PLANS)[number];
       term: (typeof TERMS)[number];
       price: number;
     }) => setPlanPrice({ data: { ...v, currency: "VND" } }),
@@ -306,7 +318,9 @@ function PriceGrid({ onSaved }: { onSaved: (message: string) => void }) {
       <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Bảng giá theo gói</h2>
       <p className="mt-2 text-sm text-foreground/70">
         Giá niêm yết cho mỗi gói và kỳ hạn, tính bằng đồng. Gói dùng thử một tháng là miễn phí nên
-        không có ô nhập. Sửa bảng này không làm đổi số tiền của hợp đồng đã ký.
+        không có ô nhập. Sửa bảng này không làm đổi số tiền của hợp đồng đã ký. Dòng{" "}
+        <em>Bán lẻ · 1 người</em> là giá gốc khi một người tự mua qua link đối tác; mức giảm nằm
+        trên từng link.
       </p>
 
       {isLoading ? (
@@ -325,7 +339,7 @@ function PriceGrid({ onSaved }: { onSaved: (message: string) => void }) {
               </tr>
             </thead>
             <tbody>
-              {PLANS.map((p) => (
+              {GRID_PLANS.map((p) => (
                 <tr key={p} className="border-t border-primary/10">
                   <td className="px-2 py-2 whitespace-nowrap">{PLAN_LABEL[p]}</td>
                   {paidTerms.map((t) => {
