@@ -65,8 +65,10 @@ const also = (s: SpeakingItem, alts: string[]): SpeakingItem => ({ ...s, alsoAcc
 function week23(): LessonContent[] {
   const t1a = "I recommend the tasting menu, madam. It has five small courses from our chef.";
   const t1b = "Not at all. The courses are small, so it is lighter than it sounds.";
-  const t1c = "I recommend the wine pairing, madam. You get one small glass with each course.";
-  const t2a = "I recommend the sunset view table, sir. It is more romantic than the main room.";
+  const t1c =
+    "I recommend the wine pairing, madam. It is six hundred thousand dong, with one small glass for each course.";
+  const t2a =
+    "For a special occasion, I recommend the sunset view table, sir. It is more romantic than the main room.";
   const t2b = "It is quieter than inside, sir. There are only six tables on the terrace.";
   const t2c = "Of course, sir. I will book it with the host for eight o'clock.";
   const t3a = "For four people, I recommend the seafood platter, madam. It is good for sharing.";
@@ -99,7 +101,7 @@ function week23(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "It is our first night here. What do you suggest?",
+          "It is our first night here. We want to try many small dishes.",
           t1a,
           "Gợi ý MỘT món cụ thể bằng 'I recommend', rồi nói một điều về món đó.",
         ),
@@ -114,7 +116,7 @@ function week23(): LessonContent[] {
         sp(
           "And what about wine?",
           t1c,
-          "Gợi ý thêm một món đi kèm, vẫn bằng 'I recommend', và nói rõ khách nhận được gì.",
+          "Gợi ý bán thêm vẫn bằng 'I recommend', và luôn nói giá cùng điều khách nhận được — khách không phải tự hỏi giá.",
           undefined,
           undefined,
           t1b,
@@ -195,6 +197,7 @@ function week23(): LessonContent[] {
         c("Private dining room", "The private dining room is good for a business dinner."),
         c("Chef's table", "At the chef's table, you can watch the cooks at work."),
         c("Sunset view table", "The sunset view table is on the terrace, by the river."),
+        c("Special occasion", "Is this dinner for a special occasion, madam?"),
       ],
       grammar: [
         g(
@@ -214,7 +217,7 @@ function week23(): LessonContent[] {
         sp(
           "It is our anniversary tonight. Where should we sit?",
           t2a,
-          "Gợi ý bàn theo dịp của khách, và so sánh bằng 'more + tính từ dài + than'.",
+          "Gợi ý bàn theo dịp đặc biệt của khách (a special occasion), và so sánh bằng 'more + tính từ dài + than'.",
         ),
         sp(
           "Is it noisy out there?",
@@ -559,7 +562,7 @@ function week24(): LessonContent[] {
           t1a,
         ),
         sp(
-          "Fine. How much is it?",
+          "Fine. How much is the corkage fee?",
           t1c,
           "Chỉ chỗ có giá in sẵn, đừng đọc giá theo trí nhớ.",
           undefined,
@@ -585,7 +588,11 @@ function week24(): LessonContent[] {
               undefined,
               ["change", "bill", "manager", "review"],
             ),
-            ["I am sorry, sir, I cannot change the bill. I will ask my manager to come."],
+            [
+              "I am sorry, sir, I cannot change the bill. I will ask my manager to come.",
+              "I am sorry, sir, I cannot take it off the bill. My manager can review it with you.",
+              "I am sorry, sir, I cannot take it off the bill. I will ask my manager to come.",
+            ],
           ),
         ),
       ],
@@ -645,6 +652,7 @@ function week24(): LessonContent[] {
           "Cancellation fee",
           "There is a cancellation fee because the kitchen has ordered the food.",
         ),
+        c("Set menu price", "The set menu price is per person, with soft drinks."),
       ],
       grammar: [
         g(
@@ -691,6 +699,11 @@ function week24(): LessonContent[] {
           "Why is there a cancellation fee at all?",
           "Because the kitchen has already ordered the food for your group, sir.",
           "Lý do thật bằng 'because' + mệnh đề.",
+        ),
+        sp(
+          "What does the set menu price include?",
+          "The set menu price is per person, madam, and it includes soft drinks.",
+          "Nói rõ giá tính thế nào và gồm những gì — khách không phải đoán.",
         ),
       ],
       reading: read(
@@ -836,7 +849,7 @@ function week24(): LessonContent[] {
           "Câu cuối nghe chu đáo nhưng tự phá giờ nhận món cuối mà bếp đã đóng. Câu đúng nói quy định một cách lịch sự.",
         ),
         game(
-          "Can we eat our own sandwiches at the pool table?",
+          "Can we eat our own sandwiches at a table by the pool?",
           "I am sorry, madam. Our outside food rule is there for food safety.",
           "I am sorry, madam. Our outside food rule are there for food safety.",
           "Of course, madam. I will bring you some plates for them.",
@@ -859,7 +872,6 @@ function week24(): LessonContent[] {
           "🍺",
         ]),
         c("No-show charge", "There is a no-show charge if a group does not come."),
-        c("Cover charge", "The cover charge pays for the live music tonight."),
       ],
       grammar: [
         g(
@@ -885,7 +897,7 @@ function week24(): LessonContent[] {
               undefined,
               ["check", "id", "before", "serve", "alcohol"],
             ),
-            ["May I see some ID, sir? It is the law here."],
+            ["May I see some ID, sir? It is the law here.", "May I see your ID, please, sir?"],
           ),
         ),
         risk(
@@ -924,7 +936,7 @@ function week24(): LessonContent[] {
           "Lý do thật bằng 'because', rồi nói khoản phí trả cho gì.",
         ),
         sp(
-          "Our group of twelve could not come last night. Do we have to pay?",
+          "Our group of twelve did not come last night, and we did not call. Do we have to pay?",
           "I am sorry, sir, there is a no-show charge. The reservations team will explain it.",
           "Báo có phí, chuyển chi tiết cho bộ phận đặt bàn.",
         ),
@@ -985,7 +997,7 @@ function week25(): LessonContent[] {
   const t1c = "Of course. I will bring more bread straight away, sir.";
   const t2a = "Not yet, madam. We are going to set up the private room by six o'clock.";
   const t2b =
-    "Of course, madam. There is a corkage fee in our policy, and we will chill it on arrival.";
+    "Of course, madam. Our corkage policy includes a fee for each bottle, and we will chill it on arrival.";
   const t2c = "Yes, madam. We are going to put it in an ice bucket at your table.";
   const t3a = "I will check with the kitchen and call you back within ten minutes.";
   const t3b = "I am sorry, sir. I cannot confirm it before the chef checks.";
@@ -999,8 +1011,10 @@ function week25(): LessonContent[] {
       vocabulary: [
         c("Within", "Your starter will be on the table within ten minutes."),
         c("Straight away", "I will bring more bread straight away."),
-        c("Bring your starter", "I will bring your starter within ten minutes."),
-        c("Serve your main course", "We will serve your main course after the starter."),
+        c(
+          "Cake delivery time",
+          "The cake delivery time is half past eight, after the main course.",
+        ),
       ],
       grammar: [
         g(
@@ -1045,7 +1059,7 @@ function week25(): LessonContent[] {
         ),
         sp(
           "We booked the chef's table. When does it start?",
-          "Your chef's table starts within ten minutes, sir. I will serve the first course myself.",
+          "Your chef's table will be ready within ten minutes, sir. I will serve the first course myself.",
           "Ôn tuần 23: bàn đã đặt + mốc giờ bắt đầu.",
           undefined,
           ["chef's", "table"],
@@ -1063,6 +1077,13 @@ function week25(): LessonContent[] {
           "Ôn tuần 24: báo giờ nhận món cuối, rồi làm ngay.",
           undefined,
           ["last", "order", "time"],
+        ),
+        sp(
+          "We ordered a birthday cake for my wife. When will it come?",
+          "The cake delivery time is half past eight, sir. I will bring it out myself.",
+          "Một mốc giờ rõ cho món khách đã đặt, rồi việc của chính bạn.",
+          undefined,
+          ["cake", "delivery", "time"],
         ),
       ],
       reading: read(
@@ -1120,6 +1141,7 @@ function week25(): LessonContent[] {
           "🧊",
         ]),
         c("Reset your table", "We are going to reset your table for dessert."),
+        c("Final headcount", "Please send the final headcount by Thursday."),
       ],
       grammar: [
         g(
@@ -1180,6 +1202,13 @@ function week25(): LessonContent[] {
           "Ôn tuần 24: going to + việc + mốc giờ.",
           undefined,
           ["group", "deposit"],
+        ),
+        sp(
+          "Our group may be ten or twelve. Is that a problem?",
+          "Not at all, madam. Please send the final headcount by Thursday, so we can set up the room.",
+          "Mốc rõ ('by' + ngày) cho thông tin bạn cần, kèm lý do của mốc.",
+          undefined,
+          ["final", "headcount"],
         ),
       ],
       reading: read(
@@ -1304,8 +1333,8 @@ function week25(): LessonContent[] {
           ["signature", "cocktails", "seafood", "platter"],
         ),
         sp(
-          "We ordered forty minutes ago. Where is our food?",
-          "I am very sorry, madam. I will ask the kitchen to speed up your order.",
+          "This is Room 914 again. We ordered forty minutes ago.",
+          "I am very sorry, sir. I will ask the kitchen to speed up your order for Room 914.",
           "Xin lỗi, rồi nhờ đúng nơi làm nhanh hơn.",
         ),
         sp(
@@ -1390,7 +1419,7 @@ function week25(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "You said ten minutes for the main course. It has been half an hour!",
+          "You said ten minutes for the main course. It is already half past eight!",
           t4a,
           "Xin lỗi, hỏi bếp TRƯỚC, rồi mới đưa mốc mới — mốc của bếp, nói là của bếp.",
         ),
@@ -1491,7 +1520,7 @@ function week26(): LessonContent[] {
   const t1c = "Take your time, sir. I will be back within five minutes.";
   const t2a = "Of course, sir. I will ask the pastry section to make a small cake.";
   const t2b = "Yes, sir. I will arrange it with them before six o'clock.";
-  const t2c = "I will ask my manager about that, sir, and she will tell you.";
+  const t2c = "I will ask my manager about the cake, sir, and she will tell you.";
   const t3a = "I am very sorry, sir. I will check with the reservations team now.";
   const t3b = "Yes, sir. I have called them, and they are checking your email now.";
   const t3c = "Of course. I will ask the host to seat you at table eight now.";
@@ -1536,6 +1565,7 @@ function week26(): LessonContent[] {
             [
               "I am not sure, sir. I will ask the head chef.",
               "Let me check with the head chef for you, sir.",
+              "I will check with the head chef, sir.",
             ],
           ),
         ),
@@ -1579,8 +1609,8 @@ function week26(): LessonContent[] {
         ),
         sp(
           "The corkage fee on my bill looks wrong. Who can explain it?",
-          "Our cashier can explain the corkage fee, sir. I will bring her to your table.",
-          "Ôn tuần 24: khoản phí đã học + người giải thích đúng: thu ngân.",
+          "I will ask our cashier to check the corkage fee, sir, and come back to explain it.",
+          "Ôn tuần 24: khoản phí đã học + người kiểm đúng: thu ngân. Thu ngân ở lại quầy — bạn đi hỏi rồi quay lại.",
           undefined,
           ["corkage", "fee"],
         ),
@@ -1652,6 +1682,7 @@ function week26(): LessonContent[] {
         c("Pastry section", "The pastry section makes all our cakes."),
         c("Bar team", "I will ask the bar team to make your cocktail less sweet."),
         c("Banquet team", "The banquet team sets up the ballroom for weddings."),
+        c("Table layout", "The banquet team will change the table layout to one long table."),
       ],
       grammar: [
         g(
@@ -1688,7 +1719,7 @@ function week26(): LessonContent[] {
               t2c,
               "Miễn phí là quyết định về tiền: bạn không tự trả lời. Hỏi quản lý — người trả lời khách.",
               undefined,
-              ["ask", "manager", "tell"],
+              ["ask", "manager", "cake", "tell"],
             ),
             ["I am not sure, sir. I will ask my manager to tell you about the cake."],
           ),
@@ -1718,6 +1749,13 @@ function week26(): LessonContent[] {
           "Ôn tuần 23: tên bàn đã học; hoa có tính phí thì nói trước.",
           undefined,
           ["sunset", "view", "table"],
+        ),
+        sp(
+          "We want one long table for our party.",
+          "Of course, madam. I will ask the banquet team to change the table layout.",
+          "'ask + tổ + to + động từ': giao đúng tổ làm việc đó.",
+          undefined,
+          ["table", "layout", "banquet", "team"],
         ),
       ],
       reading: read(
@@ -1780,6 +1818,7 @@ function week26(): LessonContent[] {
         c("Restaurant manager", "The restaurant manager decides on any discount."),
         c("Room service team", "The room service team takes food to the rooms."),
         c("Kitchen team", "I have told the kitchen team, and they are cooking it now."),
+        c("Menu choice", "Please send us your menu choice by Thursday."),
       ],
       grammar: [
         g(
@@ -1831,13 +1870,26 @@ function week26(): LessonContent[] {
               undefined,
               ["change", "price", "manager", "speak"],
             ),
-            ["I am sorry, sir, I cannot give a discount. The manager will speak with you."],
+            [
+              "I am sorry, sir, I cannot give a discount. The manager will speak with you.",
+              "I am sorry, sir, I cannot change the price. I will ask my manager to come.",
+              "I am sorry, sir, I cannot change the price. My manager can review it with you.",
+              "I am sorry, sir, I cannot give you a discount. I will ask my manager to come.",
+              "I am sorry, sir, I cannot give you a discount. My manager can review it with you.",
+            ],
           ),
         ),
         sp(
           "Has anyone told the kitchen about my allergy?",
           "Yes, madam. The kitchen team has your note, and I told the restaurant manager too.",
           "Báo việc đã làm + ai đang giữ thông tin.",
+        ),
+        sp(
+          "Has the kitchen got our menu choice for Saturday?",
+          "Yes, sir. I have sent your menu choice to the kitchen team.",
+          "Báo việc ĐÃ làm (have sent) và đã gửi cho ai.",
+          undefined,
+          ["menu", "choice"],
         ),
         sp(
           "We have a flight at nine. Can the kitchen hurry?",
@@ -1936,7 +1988,7 @@ function week26(): LessonContent[] {
         risk(
           also(
             sp(
-              "Another whisky! Make it a double!",
+              "I have had five already, but I am fine! Another whisky, a double!",
               t4a,
               "Khách đã uống quá nhiều: KHÔNG rót thêm. Từ chối ngắn, lịch sự, không tranh cãi.",
               undefined,
@@ -1955,7 +2007,10 @@ function week26(): LessonContent[] {
               ["bring", "water", "coffee"],
               t4a,
             ),
-            ["No, sir. Would you like some water or a coffee?"],
+            [
+              "No, sir. Would you like some water or a coffee?",
+              "No, sir. May I bring you some water?",
+            ],
           ),
         ),
         sp(
@@ -2058,8 +2113,8 @@ function week27(): LessonContent[] {
   const t1a = "I am very sorry about the cold food and the wait, sir. I will bring a hot soup now.";
   const t1b = "I apologise, sir. I will tell the restaurant manager about the slow service.";
   const t1c = "I understand, sir. I will check with the kitchen and come back within two minutes.";
-  const t2a = "I am very sorry, sir. Shall I call first aid for her now?";
-  const t2b = "Of course, sir. I am calling the manager now.";
+  const t2a = "I am very sorry, sir. Shall I call first aid for her? I am telling my manager now.";
+  const t2b = "Yes, sir. My manager is coming to your table now.";
   const t2c = "I will take the plate to the manager, sir. She has to check it.";
   const t2d = "I cannot say yet, sir. The manager will look into it with the head chef.";
   const t3a = "I am sorry, sir. I will bring you an itemised bill, so we can check it together.";
@@ -2097,7 +2152,7 @@ function week27(): LessonContent[] {
           "Lắng nghe hết, xin lỗi ĐÚNG hai điều khách gặp — món nguội và chờ lâu — rồi làm ngay.",
         ),
         sp(
-          "This is the second problem tonight.",
+          "And this is the second problem tonight. The service is so slow!",
           t1b,
           "Ôn tuần 26: lỗi lặp lại thì báo quản lý nhà hàng, không hứa suông lần nữa.",
           undefined,
@@ -2225,20 +2280,20 @@ function week27(): LessonContent[] {
             sp(
               "My wife feels sick after eating this fish.",
               t2a,
-              "Khách nói bị mệt sau khi ăn: hỏi ngay có cần sơ cứu không. Không đoán nguyên nhân.",
+              "Khách nói bị mệt sau khi ăn: hỏi ngay có cần sơ cứu không, và báo quản lý luôn. Không đoán nguyên nhân.",
               undefined,
-              ["call", "first", "aid"],
+              ["call", "first", "aid", "manager"],
             ),
             [
-              "I am very sorry, sir. Shall I call first aid for her?",
-              "I am very sorry, sir. Shall I call first aid now?",
+              "I am very sorry, sir. Shall I call first aid? I am telling my manager now.",
+              "I am very sorry, sir. Shall I call first aid for her? I am calling my manager now.",
             ],
           ),
         ),
         sp(
-          "No, she just needs some air. But I want to see the manager.",
+          "No, she just needs some air. Will the manager come?",
           t2b,
-          "Khách muốn gặp quản lý: đồng ý ngay, không giữ khách lại.",
+          "Quản lý đã được báo: nói rõ quản lý đang tới bàn. Hiện tại tiếp diễn cho việc đang diễn ra: is coming.",
           undefined,
           undefined,
           t2a,
@@ -2283,7 +2338,7 @@ function week27(): LessonContent[] {
         ),
       ],
       reading: read(
-        `At table four, Mrs Novak feels sick after eating the fish. Duc first asks her husband if she needs first aid. She only needs some air, but Mr Novak wants the manager, so Duc calls her at once. He does not say the fish was bad, and he does not blame the kitchen. He takes the plate to the manager, so she can check it with the head chef. Later, the manager calls Mr Novak to ask how his wife is feeling.`,
+        `At table four, Mrs Novak feels sick after eating the fish. Duc first asks her husband if she needs first aid, and he tells the manager at once. She only needs some air, and the manager comes to the table. He does not say the fish was bad, and he does not blame the kitchen. He takes the plate to the manager, so she can check it with the head chef. Later, the manager calls Mr Novak to ask how his wife is feeling.`,
         [
           {
             q: "Đức làm gì ĐẦU TIÊN?",
@@ -2331,9 +2386,9 @@ function week27(): LessonContent[] {
         ),
         game(
           "I think the prawns made my wife ill.",
-          "I am very sorry, sir. Shall I call first aid for her now?",
-          "I am very sorry, sir. Shall I calling first aid for her now?",
-          "The prawns are always fresh here, sir. It must be something else.",
+          "I am very sorry, sir. Shall I call first aid for her? I am telling my manager now.",
+          "I am very sorry, sir. Shall I calling first aid for her? I am telling my manager now.",
+          "The prawns are always fresh here, sir. It must be something else she ate today.",
           undefined,
           "Câu cuối cãi lại và đoán nguyên nhân. Câu đúng lo cho khách trước: hỏi có cần sơ cứu không.",
         ),
@@ -2353,7 +2408,7 @@ function week27(): LessonContent[] {
       ],
       grammar: [
         g(
-          "When? Tell me.",
+          "Which food? Tell me.",
           "Which dish was too salty, madam?",
           "Hỏi điều khách CHƯA nói. 'Which dish' là một món: 'was', không phải 'were'.",
           "Which dish were too salty, madam?",
@@ -2417,6 +2472,11 @@ function week27(): LessonContent[] {
           "Ôn tuần 26: đúng người giải thích hóa đơn — chuyển máy, đừng đoán.",
           undefined,
           ["transfer", "cashier"],
+        ),
+        sp(
+          "Can I charge dinner to my room? It is 712.",
+          "Of course, sir. May I have your name, so I can check it with the room?",
+          "Hỏi cho rõ trước khi ghi nợ vào phòng: tên khách phải khớp với số phòng.",
         ),
       ],
       reading: read(
@@ -2712,7 +2772,7 @@ function week28(): LessonContent[] {
           "Đề nghị có điều kiện + thời gian làm lại đúng một con số cho cả khoá: mười lăm phút.",
         ),
         sp(
-          "My soup is cold again.",
+          "This soup is only warm, not hot.",
           "I apologise for the cold food, madam. I will replace the dish now.",
           "Ôn tuần 27: xin lỗi đúng điều khách gặp + việc bạn làm ngay.",
           undefined,
@@ -2847,7 +2907,7 @@ function week28(): LessonContent[] {
           ["check", "chef", "dishes", "vegan"],
         ),
         sp(
-          "We have to leave now. Our food is not here yet.",
+          "We have to leave now, so we cannot wait for our food.",
           "I am sorry, sir. I will ask the kitchen if we can still cancel the order.",
           "Hủy món tuỳ bếp đã nấu hay chưa — bạn hỏi, không tự hứa.",
         ),
@@ -2858,12 +2918,19 @@ function week28(): LessonContent[] {
           undefined,
           ["hold", "dessert"],
         ),
-        sp(
-          "My son cannot eat nuts. Can he still have a dessert?",
-          "If you like, the chef can prepare a nut-free dish. Our kitchen does handle nuts, madam.",
-          "Ôn tuần 25: đề nghị có điều kiện, và luôn nói cảnh báo nhiễm chéo.",
-          undefined,
-          ["prepare", "nut", "free", "dish"],
+        risk(
+          also(
+            sp(
+              "My son cannot eat nuts. Can he still have a dessert?",
+              "I will ask the chef about a nut-free dessert. Our kitchen does handle nuts, madam.",
+              "Ôn tuần 25: món không hạt là bếp quyết — bạn hỏi bếp, không tự hứa thay bếp. Luôn nói cảnh báo nhiễm chéo.",
+              undefined,
+              ["ask", "chef", "nut", "free", "dessert", "kitchen"],
+            ),
+            [
+              "I will check with the chef about a nut-free dessert. Our kitchen does handle nuts, madam.",
+            ],
+          ),
         ),
       ],
       reading: read(
@@ -2924,6 +2991,7 @@ function week28(): LessonContent[] {
       vocabulary: [
         c("Bring a different drink", "If you do not like it, I will bring a different drink."),
         c("Wrap it to take away", "If you cannot finish it, I can wrap it to take away."),
+        c("Wine order", "I will take your wine order after you choose the food."),
         c("Card machine", "I will bring our card machine to your table.", [
           "/kɑːd məˈʃiːn/",
           "Máy quẹt thẻ",
@@ -2975,6 +3043,13 @@ function week28(): LessonContent[] {
           "Can I pay by card here at the table?",
           "Of course, sir. I will bring our card machine to your table now.",
           "Thanh toán tại bàn: khách không phải đứng dậy.",
+        ),
+        sp(
+          "Can we change our wine order? We would like white, not red.",
+          "Of course, sir. If the bottle is not open yet, I can change your wine order.",
+          "Câu điều kiện: chai chưa mở thì đổi rượu là việc trong quyền của bạn.",
+          undefined,
+          ["change", "wine", "order"],
         ),
         sp(
           "Can we have dessert now? The table is still messy.",
@@ -3101,6 +3176,8 @@ function week28(): LessonContent[] {
             [
               "I am sorry, madam, I cannot remove it from the bill. I will ask the manager to come.",
               "I am sorry, madam, I cannot take it off the bill. I will ask my manager to come.",
+              "I am sorry, madam, I cannot remove it from the bill. My manager can review it with you.",
+              "I am sorry, madam, I cannot take it off the bill. My manager can review it with you.",
             ],
           ),
         ),
@@ -3114,7 +3191,11 @@ function week28(): LessonContent[] {
               ["offer", "anything", "complimentary", "manager", "coming"],
               t4a,
             ),
-            ["I am sorry, madam, I cannot offer a free dessert. My manager is coming now."],
+            [
+              "I am sorry, madam, I cannot offer a free dessert. My manager is coming now.",
+              "I am sorry, madam, I cannot offer anything complimentary. I will ask my manager to come.",
+              "I am sorry, madam, I cannot offer anything complimentary. My manager can review it with you.",
+            ],
           ),
         ),
         sp(
@@ -3251,8 +3332,8 @@ function week29(): LessonContent[] {
         g(
           "Allergy table twelve.",
           "Please read the allergy note for table twelve before service.",
-          "Nói với đồng nghiệp: một việc, một bàn, một mốc. Ghi chú 'for' bàn nào.",
-          "Please read the allergy note of table twelve before service.",
+          "'Please' + động từ dạng gốc: 'Please read', không dùng -ing. Ghi chú 'for' bàn nào.",
+          "Please reading the allergy note for table twelve before service.",
         ),
       ],
       speaking: [
@@ -3275,7 +3356,15 @@ function week29(): LessonContent[] {
           ),
         ),
         sp(
-          "Good. Anything else for tonight?",
+          "What did the chef say about table twelve?",
+          "The chef can prepare a nut-free dish, but our kitchen does handle nuts.",
+          "Ôn tuần 25: nói lại đúng điều bếp đã xác nhận, kèm cảnh báo nhiễm chéo.",
+          "colleague",
+          ["prepare", "nut", "free", "dish", "kitchen"],
+          t1b,
+        ),
+        sp(
+          "Good. Any birthdays tonight?",
           t1c,
           "Khách đặc biệt tối nay: ai, mấy giờ, đồ đã chuẩn bị ở đâu.",
           "colleague",
@@ -3401,7 +3490,10 @@ function week29(): LessonContent[] {
               ["called", "first", "aid", "guest", "time"],
               t2a,
             ),
-            ["I called first aid, and I stayed with the guest all the time."],
+            [
+              "I called first aid, and I stayed with the guest all the time.",
+              "I called first aid and stayed with the guest.",
+            ],
           ),
         ),
         sp(
@@ -3432,7 +3524,7 @@ function week29(): LessonContent[] {
           ["cancel", "order"],
         ),
         sp(
-          "Mr Ito is at table four tonight. Anything I should know?",
+          "Mr Ito is at table four tonight. Is there a special guest note?",
           "Yes. The special guest note says he does not eat beef.",
           "Đọc đúng ghi chú cho đồng nghiệp trước khi họ phục vụ.",
           "colleague",
@@ -3490,11 +3582,11 @@ function week29(): LessonContent[] {
         ),
         game(
           "What were you doing when the glasses broke?",
-          "I was clearing the bar when two glasses fell.",
-          "I was clear the bar when two glasses fell.",
-          "I was clearing the bar when two glasses fell, so I threw them away.",
+          "I was clearing the bar when they fell. They are in the breakage report.",
+          "I was clear the bar when they fell. They are in the breakage report.",
+          "I was clearing the bar when they fell, so I threw them away quickly.",
           "manager",
-          "Câu cuối đúng ngữ pháp nhưng bỏ qua sổ báo cáo đồ vỡ. Câu đúng kể việc đang làm khi chuyện xảy ra.",
+          "Câu cuối đúng ngữ pháp nhưng vứt ly vỡ mà không ghi sổ báo cáo đồ vỡ. Câu đúng kể việc đang làm khi chuyện xảy ra và đã ghi đúng sổ.",
         ),
       ],
     }),
@@ -3516,8 +3608,8 @@ function week29(): LessonContent[] {
         g(
           "Fish finish.",
           "The sea bass is on the sold-out list tonight.",
-          "Món nằm 'on' một danh sách — giới từ là 'on'.",
-          "The sea bass is in the sold-out list tonight.",
+          "Câu cần động từ 'is': món + is + on the sold-out list. Món nằm 'on' một danh sách.",
+          "The sea bass on the sold-out list tonight.",
         ),
       ],
       speaking: [
@@ -3544,7 +3636,7 @@ function week29(): LessonContent[] {
           t3b,
         ),
         sp(
-          "Anything else before you go?",
+          "Is any table still waiting for food?",
           "Table nine was waiting for a missing dish when I left. Please check it.",
           "Quá khứ tiếp diễn: việc đang dở khi bạn rời sàn, và việc ca sau cần làm.",
           "colleague",
@@ -3572,9 +3664,9 @@ function week29(): LessonContent[] {
           ["corked", "sommelier"],
         ),
         sp(
-          "Is the beer cold again?",
-          "Not yet. Two guests had a warm beer while I was checking the fridge.",
-          "Ôn tuần 27: quá khứ tiếp diễn + tên vấn đề đã học.",
+          "Has the bar fridge been fixed yet?",
+          "Not yet. Two guests had a warm beer, so I moved the beer to the kitchen fridge.",
+          "Ôn tuần 27: việc còn mở (not yet) + tên vấn đề đã học + việc bạn đã làm.",
           "colleague",
           ["warm", "beer"],
         ),
@@ -3670,7 +3762,7 @@ function week29(): LessonContent[] {
           t4a,
         ),
         sp(
-          "Good. Where did you write it?",
+          "Good. Where did you write the temperature?",
           t4c,
           "Đúng sổ cho đúng việc: sổ nhiệt độ cho tủ lạnh, sổ bàn giao cho ca sau.",
           "manager",
@@ -3699,17 +3791,24 @@ function week29(): LessonContent[] {
         ),
         sp(
           "Anything from the cashier tonight?",
-          "There was a billing mistake at table nine. The cashier has corrected it.",
-          "Ôn tuần 27: sự việc + ai đã xử lý.",
+          "There was a billing mistake at table nine. The manager has corrected it with the cashier.",
+          "Ôn tuần 27: sự việc + ai đã xử lý — sửa hóa đơn là việc của quản lý.",
           "manager",
           ["billing", "mistake"],
         ),
         sp(
-          "Anything from the kitchen tonight?",
+          "Did any table send a dish back tonight?",
           "Table two sent back a salty soup, and the chef made a new one.",
           "Ôn tuần 27: báo cấp trên — món gì, bàn nào, ai đã xử lý.",
           "manager",
           ["salty", "soup"],
+        ),
+        sp(
+          "A guest left her phone on table seven.",
+          "Please give it to the manager, and write it in the handover book.",
+          "Đồ khách để quên: giao quản lý, ghi sổ bàn giao — không tự giữ.",
+          "colleague",
+          ["handover", "book"],
         ),
       ],
       reading: read(
@@ -3772,30 +3871,39 @@ function week29(): LessonContent[] {
 }
 
 // ── Week 30 — Checkpoint: putting it together ───────────────────────────
-// The checkpoint adds no new trade words. Nine cards present again week 23-29
-// words that no later lesson had said (the steak, the sold-out list, the
-// refusals about the bill, the handover books), each said at least twice
-// here; the other seven are the event words Phase 4 recycles (special
-// occasion, final headcount, set menu price…), kept so its review finds them.
+// The checkpoint adds no new trade words. Its sixteen cards present again
+// week 24-29 words, and week 30 says each of them at least twice: the trade
+// words of weeks 24-26 (allergen, sommelier, head chef, corkage fee, minimum
+// spend, group deposit, legal drinking age) and the steak, the bill refusals,
+// the sold-out list and the handover books. The event words Phase 4 recycles
+// are taught in the week they belong to (special occasion in week 23, set
+// menu price in 24, cake delivery time and final headcount in 25, table
+// layout and menu choice in 26, wine order in 28) and said again here.
 function week30(): LessonContent[] {
   const t1a = "For a special occasion like that, I recommend the tasting menu, madam.";
   const t1b = "Of course, madam. Our cake delivery time is nine o'clock, after the main course.";
-  const t1d = "Of course, sir. I will ask the kitchen for medium rare.";
-  const t1e = "I am sorry, sir. The kitchen will cook a new steak, medium rare this time.";
-  const t2a = "Because the room is kept only for your group, sir. The deposit holds it.";
+  const t1d = "I will check the allergens with the kitchen before you order, madam.";
+  const t1f = "Of course, sir. I will ask the kitchen for medium rare.";
+  const t1g = "I am sorry, sir. The kitchen will cook a new steak, medium rare this time.";
+  const t2a = "Because the room is kept only for your group, sir. The group deposit holds it.";
   const t2b =
     "Could you send the final headcount and table layout by Thursday, sir? The banquet team needs them.";
+  const t4a = "The bar count from my shift has not been finished yet. It is in the handover book.";
   return [
     L(30, 1, "Recommend and Promise", "Gợi ý và cam kết", {
       vocabulary: [
-        c("Special occasion", "Is this dinner for a special occasion, madam?"),
-        c("Cake delivery time", "The cake delivery time is nine o'clock, after the main course."),
-        c("Wine order", "I will take your wine order after you choose the food."),
         c("Medium rare", "A medium rare steak is pink in the middle.", [
           "/ˈmiːdiəm reə/",
           "Tái vừa (thịt bò chín tới, giữa còn hồng)",
           "🥩",
         ]),
+        c("Allergen", "Nuts and shellfish are common allergens.", [
+          "/ˈælədʒən/",
+          "Chất gây dị ứng",
+          "⚠️",
+        ]),
+        c("Sommelier", "Our sommelier checks any wine that tastes wrong."),
+        c("Head chef", "Only the head chef can confirm what is in a dish."),
       ],
       grammar: [
         g(
@@ -3805,56 +3913,98 @@ function week30(): LessonContent[] {
           "I will ask the kitchen cook it medium rare, sir.",
         ),
         g(
-          "Cake nine, ok.",
-          "Our cake delivery time is nine o'clock, after the main course.",
-          "Một mốc giờ là số ít: 'is', không phải 'are'.",
-          "Our cake delivery time are nine o'clock, after the main course.",
+          "Gluten? Kitchen know.",
+          "I will check the allergens with the kitchen before you order, madam.",
+          "Sau 'before' (chỉ thời gian tương lai) dùng hiện tại: 'before you order', không dùng 'will'.",
+          "I will check the allergens with the kitchen before you will order, madam.",
         ),
       ],
       speaking: [
         sp(
           "It is our parents' fortieth anniversary next week. What do you suggest?",
           t1a,
-          "Tuần 23: gợi ý theo đúng dịp của khách.",
+          "Tuần 23: gợi ý theo đúng dịp đặc biệt của khách.",
           undefined,
-          ["tasting", "menu"],
+          ["tasting", "menu", "special", "occasion"],
         ),
         sp(
           "Lovely. Can the cake come out at the end?",
           t1b,
-          "Tuần 25: kế hoạch có mốc giờ cụ thể.",
+          "Tuần 25: mốc giờ cụ thể cho món khách đã đặt.",
           undefined,
-          undefined,
+          ["cake", "delivery", "time"],
           t1a,
         ),
         sp(
-          "My father cannot eat gluten. Will the kitchen know?",
-          "Yes, madam. I will write it in the allergy note and the special guest note.",
-          "Tuần 29: ghi đúng sổ để bếp và ca sau cùng biết.",
+          "Perfect. Can we have sparkling wine with the cake?",
+          "Of course, madam. I will bring a bottle of sparkling wine in an ice bucket at nine.",
+          "Tuần 23 và 25: món đã học + việc của bạn, có mốc giờ.",
           undefined,
-          ["allergy", "note", "special", "guest"],
+          ["sparkling", "wine", "ice", "bucket"],
+          t1b,
+        ),
+        risk(
+          also(
+            sp(
+              "My father cannot eat gluten. Will the kitchen know?",
+              t1d,
+              "Tuần 25: gluten là một chất gây dị ứng — hỏi bếp TRƯỚC khi khách gọi món, không tự trả lời 'có'.",
+              undefined,
+              ["check", "allergens", "kitchen", "before", "order"],
+            ),
+            ["Let me check the allergens with the kitchen before you order, madam."],
+          ),
+        ),
+        sp(
+          "Thank you. Will you tell the kitchen about my father?",
+          "Yes, madam. I will tell the head chef and write it in the allergy note.",
+          "Tuần 26 và 29: đúng người (bếp trưởng) và đúng sổ (ghi chú dị ứng).",
+          undefined,
+          ["head", "chef", "allergy", "note"],
+          t1d,
+        ),
+        sp(
+          "My husband cannot eat nuts. Is the birthday cake safe for him?",
+          "I will ask the head chef about the allergens in the cake. Our kitchen does handle nuts, madam.",
+          "Tuần 25–26: chất gây dị ứng là câu trả lời của bếp trưởng; luôn nói cảnh báo nhiễm chéo.",
+          undefined,
+          ["head", "chef", "allergens", "cake"],
+        ),
+        sp(
+          "Which wine goes well with the tasting menu?",
+          "Our sommelier can recommend a wine for each course, madam.",
+          "Tuần 25–26: rượu vang là việc của chuyên viên rượu vang.",
+          undefined,
+          ["sommelier", "recommend"],
         ),
         sp(
           "I like my steak pink in the middle.",
-          t1d,
+          t1f,
           "Tuần 28: nói đúng tên mức chín với bếp.",
           undefined,
           ["medium", "rare"],
         ),
         sp(
           "It came back well done.",
-          t1e,
+          t1g,
           "Tuần 27–28: xin lỗi, làm lại món, nhắc lại mức chín.",
           undefined,
           ["cook", "new", "steak", "medium", "rare"],
-          t1d,
+          t1f,
         ),
         sp(
-          "This red wine is too heavy for me.",
+          "This glass of red wine is too heavy for me.",
           "I am sorry, madam. If you like, I will change your wine order and bring a different drink.",
           "Tuần 28: đổi đồ uống là việc trong quyền của bạn.",
           undefined,
           ["wine", "order", "bring", "different", "drink"],
+        ),
+        sp(
+          "We are too full to finish the birthday cake.",
+          "No problem, madam. I can wrap it to take away for you.",
+          "Tuần 28: đề nghị nhỏ, đúng lúc, để khách chọn.",
+          undefined,
+          ["wrap", "take", "away"],
         ),
       ],
       reading: read(
@@ -3917,9 +4067,9 @@ function week30(): LessonContent[] {
 
     L(30, 2, "Explain and Coordinate", "Giải thích và điều phối", {
       vocabulary: [
-        c("Final headcount", "Please send the final headcount by Thursday."),
-        c("Table layout", "The banquet team will change the table layout to one long table."),
-        c("Set menu price", "The set menu price is per person, with soft drinks."),
+        c("Corkage fee", "There is a corkage fee for each bottle you bring."),
+        c("Minimum spend", "The private dining room has a minimum spend of five million dong."),
+        c("Group deposit", "The group deposit holds the date for your party."),
         c("Take off the service charge", "Only the manager can take off the service charge.", [
           "/teɪk ɒf ðə ˈsɜːvɪs tʃɑːdʒ/",
           "Bỏ phí phục vụ khỏi hóa đơn",
@@ -3942,17 +4092,33 @@ function week30(): LessonContent[] {
       ],
       speaking: [
         sp(
-          "Why do you need a deposit for the private room?",
+          "Why do you need a group deposit for the private room?",
           t2a,
           "Tuần 24: lý do thật bằng 'because'.",
+          undefined,
+          ["group", "deposit", "because"],
         ),
         sp(
           "Fine. When do you need the final numbers?",
           t2b,
-          "Mốc + lý do của mốc.",
+          "Tuần 25: mốc + lý do của mốc.",
           undefined,
-          undefined,
+          ["final", "headcount", "table", "layout"],
           t2a,
+        ),
+        sp(
+          "Is there a minimum spend for the private room?",
+          "Yes, sir. The minimum spend is five million dong, and we also take a group deposit.",
+          "Tuần 24: con số thật + điều kiện đi kèm, nói trước để khách không bất ngờ.",
+          undefined,
+          ["minimum", "spend", "group", "deposit"],
+        ),
+        sp(
+          "We will bring two bottles of our own wine.",
+          "Of course, sir. There is a corkage fee for each bottle, and our sommelier will serve them.",
+          "Tuần 24–25: báo phí trước, rồi nói ai phục vụ rượu.",
+          undefined,
+          ["corkage", "fee", "sommelier"],
         ),
         risk(
           also(
@@ -3963,7 +4129,14 @@ function week30(): LessonContent[] {
               undefined,
               ["change", "price", "ask", "manager", "call"],
             ),
-            ["I am sorry, sir, I cannot change the price. The manager will speak with you."],
+            [
+              "I am sorry, sir, I cannot change the price. The manager will speak with you.",
+              "I am sorry, sir, I cannot change the price. I will ask my manager to come.",
+              "I am sorry, sir, I cannot change the price. My manager can review it with you.",
+              "I am sorry, sir, I cannot give you a discount. I will ask the manager to call you.",
+              "I am sorry, sir, I cannot give you a discount. I will ask my manager to come.",
+              "I am sorry, sir, I cannot give you a discount. My manager can review it with you.",
+            ],
           ),
         ),
         risk(
@@ -3982,10 +4155,10 @@ function week30(): LessonContent[] {
         ),
         sp(
           "Is the coffee complimentary with the set menu?",
-          "I am not sure, sir. I will ask my manager if it is complimentary.",
-          "Tuần 28: không chắc thì không hứa — hỏi người có quyền.",
+          "No, sir, coffee is not complimentary. The set menu price includes soft drinks only.",
+          "Tuần 24 và 28: set menu gồm những gì là điều bạn phải biết — nói rõ, không đoán, không đẩy đi hỏi.",
           undefined,
-          ["ask", "manager", "complimentary"],
+          ["complimentary", "set", "menu", "price"],
         ),
         sp(
           "How was lunch today?",
@@ -3996,10 +4169,10 @@ function week30(): LessonContent[] {
         ),
         sp(
           "Where do I write the Lee party booking?",
-          "Please write it in the reservation book, with the set menu price.",
-          "Tuần 29: đúng sổ cho đúng việc.",
+          "Please write it in the reservation book, with the minimum spend and the corkage fee.",
+          "Tuần 24 và 29: đúng sổ, đủ các khoản tiền đã báo khách.",
           "colleague",
-          ["reservation", "book", "set", "menu", "price"],
+          ["reservation", "book", "minimum", "spend", "corkage", "fee"],
         ),
         sp(
           "What happens if we cancel the dinner?",
@@ -4010,7 +4183,7 @@ function week30(): LessonContent[] {
         ),
       ],
       reading: read(
-        `Mr Patel books the private room for a team dinner. Vy explains the deposit and asks for the final numbers by Thursday. When he asks for ten percent off, she says she cannot change the price and asks the manager to call him. On the night, Mr Patel asks Vy to take off the service charge. She explains that she cannot, and her manager comes to the table. After service, Vy writes the numbers in the covers report.`,
+        `Mr Patel books the private room for a team dinner. Vy explains the minimum spend and the group deposit, and she asks for the final numbers by Thursday. When he asks for ten percent off, she says she cannot change the price and asks the manager to call him. On the night, Mr Patel asks Vy to take off the service charge. She explains that she cannot, and her manager comes to the table. After service, Vy writes the numbers in the covers report.`,
         [
           {
             q: "Vy trả lời thế nào khi khách xin giảm mười phần trăm?",
@@ -4035,11 +4208,11 @@ function week30(): LessonContent[] {
             options: [
               "Ghi số khách vào báo cáo lượt khách",
               "Hỏi số khách chốt trước thứ Năm",
-              "Giải thích tiền cọc phòng riêng",
+              "Giải thích mức chi tối thiểu và tiền cọc",
             ],
             correct: 0,
             explanation:
-              "Thứ tự: tiền cọc → số khách → giảm giá → phí phục vụ → sau ca mới ghi báo cáo lượt khách.",
+              "Thứ tự: mức chi tối thiểu và tiền cọc → số khách → giảm giá → phí phục vụ → sau ca mới ghi báo cáo lượt khách.",
           },
         ],
       ),
@@ -4054,11 +4227,11 @@ function week30(): LessonContent[] {
         ),
         game(
           "Is the coffee free with the set menu?",
-          "I am not sure, sir. I will ask my manager if it is complimentary.",
-          "I am not sure, sir. I will asking my manager if it is complimentary.",
+          "No, sir. The set menu price includes soft drinks, but not coffee.",
+          "No, sir. The set menu price include soft drinks, but not coffee.",
           "Yes, sir. Coffee is always included.",
           undefined,
-          "Câu cuối đoán chính sách giá. Câu đúng không hứa, hỏi người có quyền.",
+          "Câu cuối đoán sai điều set menu bao gồm. Câu đúng nói rõ — đây là thông tin nhân viên phải biết.",
         ),
       ],
     }),
@@ -4102,19 +4275,26 @@ function week30(): LessonContent[] {
               undefined,
               ["complimentary", "ask", "manager", "come"],
             ),
-            ["I will ask my manager about that, madam. She is coming to your table now."],
+            [
+              "I will ask my manager about that, madam. She is coming to your table now.",
+              "I am not sure if they are complimentary, madam. My manager can review it with you.",
+            ],
           ),
         ),
         risk(
           also(
             sp(
               "The fish was terrible. Take it off my bill.",
-              "I am sorry, sir, I cannot remove it from the bill. My manager can review it with you.",
-              "Tuần 28: bạn không sửa hóa đơn — quản lý xem xét.",
+              "I am sorry, sir, I cannot take it off the bill. I will ask my manager to come.",
+              "Tuần 28: bạn không sửa hóa đơn — mời quản lý tới.",
               undefined,
-              ["remove", "bill", "manager", "review"],
+              ["take", "bill", "ask", "manager", "come"],
             ),
-            ["I am sorry, sir, I cannot remove it from the bill. I will ask my manager to come."],
+            [
+              "I am sorry, sir, I cannot take it off the bill. My manager can review it with you.",
+              "I am sorry, sir, I cannot remove it from the bill. I will ask my manager to come.",
+              "I am sorry, sir, I cannot remove it from the bill. My manager can review it with you.",
+            ],
           ),
         ),
         sp(
@@ -4126,17 +4306,17 @@ function week30(): LessonContent[] {
         ),
         sp(
           "My glass has a small crack.",
-          "I am sorry, sir, that is a chipped glass. I will replace it straight away.",
-          "Tuần 27: ly sứt không bao giờ dùng tiếp — thay ngay.",
+          "I am sorry, sir, that is a chipped glass. I will bring a fresh one straight away.",
+          "Tuần 27–28: ly sứt không bao giờ dùng tiếp — thay ngay bằng ly mới.",
           undefined,
-          ["chipped", "glass"],
+          ["chipped", "glass", "fresh"],
         ),
         sp(
           "What did you tell table five about their bill?",
-          "I said I cannot remove it from the bill or take off the service charge.",
-          "Báo cấp trên đúng điều bạn đã nói với khách.",
+          "They did not like the fish. I told them only the manager could remove it from the bill.",
+          "Báo cấp trên đúng điều bạn đã nói với khách. Kể lại lời đã nói thì lùi thì: can → could.",
           "manager",
-          ["remove", "bill", "service", "charge"],
+          ["remove", "bill", "manager"],
         ),
         sp(
           "Your machine says my card is declined.",
@@ -4145,10 +4325,10 @@ function week30(): LessonContent[] {
         ),
         sp(
           "Is the sea bass still available tonight?",
-          "I am sorry, madam, it is on the sold-out list. Would you like the snapper instead?",
-          "Tuần 29: món đã hết + món thay thế.",
+          "I am sorry, madam, it is on the sold-out list. You can choose either the snapper or the prawns.",
+          "Tuần 28–29: món đã hết + hai lựa chọn thay thế để khách chọn.",
           undefined,
-          ["sold", "list"],
+          ["sold", "list", "either"],
         ),
         sp(
           "Table six wants the sea bass and a new steak.",
@@ -4156,6 +4336,20 @@ function week30(): LessonContent[] {
           "Nói với đồng nghiệp: món đã hết + việc bếp làm.",
           "colleague",
           ["sold", "list", "cook", "steak"],
+        ),
+        sp(
+          "Before I pay, can I see everything we ordered?",
+          "Of course, sir. I will bring you an itemised bill.",
+          "Tuần 27: hóa đơn chi tiết để khách tự kiểm từng món.",
+          undefined,
+          ["itemised", "bill"],
+        ),
+        sp(
+          "There is a cold wind from the door here.",
+          "I am sorry, madam. I will ask the host to move you to another table.",
+          "Tuần 28: đổi bàn — nhờ người đón khách, không tự hứa bàn nào.",
+          undefined,
+          ["move", "another", "table", "host"],
         ),
       ],
       reading: read(
@@ -4218,7 +4412,11 @@ function week30(): LessonContent[] {
 
     L(30, 4, "End of Phase Three", "Kết thúc giai đoạn ba", {
       vocabulary: [
-        c("Menu choice", "Please send us your menu choice by Thursday."),
+        c("Legal drinking age", "The legal drinking age in Vietnam is eighteen.", [
+          "/ˈliːɡl ˈdrɪŋkɪŋ eɪdʒ/",
+          "Tuổi được phép uống rượu bia theo luật",
+          "🔞",
+        ]),
         c("Handover book", "I wrote the open items in the handover book."),
         c("Fridge temperature log", "We fill in the fridge temperature log twice a day."),
         c("Bar count", "We do the bar count after the last order."),
@@ -4238,12 +4436,6 @@ function week30(): LessonContent[] {
         ),
       ],
       speaking: [
-        sp(
-          "How do you feel about busy nights now?",
-          "I feel confident, and I still ask the manager when I am not sure.",
-          "Câu chốt giai đoạn ba: tự tin, và vẫn hỏi đúng người.",
-          "manager",
-        ),
         risk(
           also(
             sp(
@@ -4257,25 +4449,47 @@ function week30(): LessonContent[] {
           ),
         ),
         sp(
+          "The boy at table four wants a beer. He looks about sixteen.",
+          "Please check his ID first. The legal drinking age here is eighteen.",
+          "Tuần 24: nói với đồng nghiệp — kiểm giấy tờ trước, luật về tuổi không có ngoại lệ.",
+          "colleague",
+          ["check", "id", "legal", "drinking", "age"],
+        ),
+        sp(
+          "Table six wants the fish off the bill and no service charge.",
+          "Please do not remove it from the bill yourself. Only the manager can take off the service charge.",
+          "Tuần 28: nói với đồng nghiệp — tiền trên hóa đơn là việc của quản lý.",
+          "colleague",
+          ["remove", "bill", "manager", "take", "service", "charge"],
+        ),
+        sp(
           "Before service, what should we check?",
-          "The menu choice for the Lee party, the station checklist and the fridge temperature log.",
-          "Tuần 29: trước giờ phục vụ, đọc đúng sổ.",
+          "The menu choice for the Lee party, the special guest note and the fridge temperature log.",
+          "Tuần 26 và 29: trước giờ phục vụ, đọc đúng sổ.",
           "manager",
-          ["menu", "choice", "station", "checklist", "fridge", "temperature", "log"],
+          ["menu", "choice", "special", "guest", "note", "fridge", "temperature", "log"],
         ),
         sp(
           "Anything open from your shift?",
-          "The bar count from my shift has not been finished yet. It is in the handover book.",
+          t4a,
           "Tuần 29: việc còn mở + đã ghi ở đâu.",
           "manager",
           ["bar", "count", "handover", "book"],
         ),
         sp(
-          "What happened at the bar tonight?",
-          "I was doing the bar count when the fridge suddenly stopped. It is in the fridge temperature log.",
-          "Tuần 29: quá khứ tiếp diễn + đã ghi đúng sổ.",
+          "Who will finish the bar count?",
+          "Tam will finish the bar count after the last order, as we agreed at handover.",
+          "Tuần 29: ai làm tiếp việc còn mở, và khi nào.",
           "manager",
-          ["bar", "count", "fridge", "temperature", "log"],
+          ["bar", "count"],
+          t4a,
+        ),
+        sp(
+          "What happened at the bar tonight?",
+          "I was checking the fridge temperature log when the bar fridge suddenly stopped. I moved the food and told the chef.",
+          "Tuần 29: quá khứ tiếp diễn + việc an toàn thực phẩm đã làm ngay.",
+          "manager",
+          ["fridge", "temperature", "log", "moved", "food", "chef"],
         ),
         sp(
           "Where do I write the wine delivery?",
@@ -4292,18 +4506,18 @@ function week30(): LessonContent[] {
           ["station", "checklist"],
         ),
         sp(
-          "Can we look back at tonight? What went well?",
-          "A guest disliked her wine, so I offered to bring a different drink.",
-          "Nhìn lại ca với quản lý: chuyện gì, bạn đã làm gì trong quyền của mình.",
-          "manager",
-          ["bring", "different", "drink"],
-        ),
-        sp(
           "Anything else from table nine?",
           "A guest found a hair in her salad, so I replaced the dish. One chipped glass is in the breakage report.",
           "Báo cấp trên: sự việc + việc đã làm + sổ đã ghi.",
           "manager",
           ["chipped", "glass", "breakage", "report"],
+        ),
+        sp(
+          "Can my daughter have a glass of wine with us? She is seventeen.",
+          "I am sorry, sir. The legal drinking age here is eighteen, so I cannot serve her.",
+          "Tuần 24: cha mẹ cho phép cũng không đổi được luật.",
+          undefined,
+          ["legal", "drinking", "age", "serve"],
         ),
       ],
       reading: read(
@@ -4383,5 +4597,5 @@ export const FB_P3_CAN_DO: Record<number, string> = {
   27: "Tiếp nhận phàn nàn: lắng nghe, xin lỗi đúng điều khách gặp mà không nhận lỗi, hỏi cho rõ sự việc, gọi sơ cứu và quản lý khi khách gặp nạn.",
   28: "Đề nghị điều mình được làm (làm lại món, đổi đồ uống, gói mang về, thanh toán tại bàn) bằng câu điều kiện, và từ chối rõ ràng việc bỏ món khỏi hóa đơn hay mời miễn phí.",
   29: "Bàn giao ca và báo cáo sự cố với đồng nghiệp, quản lý bằng quá khứ tiếp diễn: ghi chú dị ứng, việc còn mở, ghi đúng sổ cho đúng việc.",
-  30: "Kết hợp cả giai đoạn, không thêm từ mới: gợi ý cho dịp đặc biệt, giải thích phí và hạn chót, xin lỗi và thay món, từ chối giảm giá, bỏ phí hay bỏ món khỏi hoá đơn rồi mời quản lý, ngừng phục vụ rượu cho khách say — tự tin nhưng biết khi nào phải hỏi.",
+  30: "Kết hợp cả giai đoạn, không thêm từ mới: gợi ý cho dịp đặc biệt, hỏi bếp về chất gây dị ứng trước khi khách gọi món, giải thích phí mở rượu, mức chi tối thiểu và tiền cọc, từ chối giảm giá hay bỏ món khỏi hoá đơn rồi mời quản lý, kiểm tuổi trước khi phục vụ rượu, bàn giao đúng sổ — tự tin nhưng biết khi nào phải hỏi.",
 };
