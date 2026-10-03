@@ -39,6 +39,7 @@ function MediationSuiteInner({
       ideas: task.mustConvey,
       minWords: MIN_WORDS,
       minSentences: MIN_SENTENCES,
+      avoid: task.mustAvoid,
     });
 
     setHits(r.hits);

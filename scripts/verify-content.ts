@@ -18,6 +18,7 @@ import { ALL_WEEKS } from "../src/lib/content/week-content";
 import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
+import { reservableTurns } from "../src/lib/checkpoint-oral";
 
 type Phase = {
   name: string;
@@ -405,6 +406,14 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
   for (const bad of KNOWN_BAD_STRINGS) {
     if (haystack.includes(bad)) errors.push(`${key}: known-bad string regressed: "${bad}"`);
   }
+  // A frame written in quotes instead of backticks ships its own source code:
+  // Phase 3 round 1 found a reading explanation that printed, to every
+  // department, `'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}'`.
+  // No rendered string, in any phase, may still hold a placeholder.
+  for (const t of texts) {
+    const m = /\$\{[^}]*\}/.exec(t);
+    if (m) errors.push(`${key}: unrendered template placeholder ${m[0]} in "${t.slice(0, 80)}"`);
+  }
 }
 
 // ============================================================
@@ -488,7 +497,11 @@ for (const dep of DEPS) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
         // Weeks 39-40 are the course's own revision weeks: the matrix asks
         // them to reuse material, so a repeat there is reported, not blocked.
-        const revision = w >= 39 || earlier >= 39;
+        // So is week 30 — "Checkpoint P3 · Ôn W23-29" in the matrix — and four
+        // blind reviews of Phase 3 marked down the sixteen NEW cards it used
+        // to teach two screens before the checkpoint. Its cards re-present
+        // weeks 23-29.
+        const revision = w >= 39 || earlier >= 39 || w === 30;
         if (revision || HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
           spiralIntoLegacy.push(msg);
         else if (w > 22 || earlier > 22)
@@ -686,6 +699,49 @@ if (legacyGameDupes.length) {
 }
 
 // ============================================================
+// GATE 4b — Phase 3's must-be-right turn is one an author marked
+//
+// buildOral used to find the reserved turn by searching model sentences for
+// substrings, which match filing as readily as risk: on Phase 3 it reserved
+// a rooming-list check for Front Office in every sitting, an allergy-NOTE
+// filing line for the Spa, and found nothing at all for Guest Relations.
+// Each audited department's Phase 3 now marks its hard cases
+// (`SpeakingItem.risk`), and buildOral reserves from those. This holds
+// every one of them to it: the phase draws by mark, the pool is wide enough
+// that memorising it is not the same as passing, and no week is without a
+// hard case. Read through reservableTurns — the function the draw uses.
+// ============================================================
+{
+  const P3_MARKED = ["FO", "FB", "HK", "SW", "GR"];
+  const POOL_MIN = 10;
+  const sizes: string[] = [];
+  for (const dep of P3_MARKED) {
+    const { byMark, turns } = reservableTurns(dep, "30");
+    if (!byMark) {
+      errors.push(
+        `${dep} Phase 3 marks no risk turn — its checkpoint falls back to the substring search`,
+      );
+      continue;
+    }
+    const distinct = new Set(turns.map((t) => t.target)).size;
+    sizes.push(`${dep} ${distinct}`);
+    if (distinct < POOL_MIN)
+      errors.push(
+        `${dep} Phase 3 reserved pool holds ${distinct} turns — the floor is ${POOL_MIN}`,
+      );
+    for (let w = 23; w <= 30; w++) {
+      const marked = (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        .flatMap((l) => l.speaking)
+        .filter((s) => s.risk).length;
+      if (marked === 0) errors.push(`${dep}-${w} has no risk-marked speaking turn`);
+    }
+  }
+  console.log(
+    `Phase 3 reserved pools (marked turns) — ${sizes.join(" · ")}  (floor ${POOL_MIN}, ≥ 1 a week)`,
+  );
+}
+
+// ============================================================
 // GATE 5 — active vocabulary total per department
 //
 // The matrix carried "~560-620 từ" for months with nothing checking it, and
@@ -796,6 +852,11 @@ if (legacyGameDupes.length) {
       `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
       `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
   );
+  const READING_LONGEST_MAX = 0.56;
+  if (longShare > READING_LONGEST_MAX)
+    errors.push(
+      `the keyed reading answer is the longest option ${(longShare * 100).toFixed(0)}% of the time, up from ${(READING_LONGEST_MAX * 100).toFixed(0)}% — long enough to be a strategy`,
+    );
   if (worstPos > POSITION_MAX)
     errors.push(
       `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
@@ -866,7 +927,7 @@ if (legacyGameDupes.length) {
   // Phase 0, worse than the 70% pass mark it was supposed to protect. The
   // honest measure is the best of the three length positions, so no rewrite
   // can improve one rank by quietly loading another.
-  const GAME_RANK_MAX = 0.64; // 663/1053 today, carried by the untouched P2-P4
+  const GAME_RANK_MAX = 0.47; // 46% today; was 0.64 while Phase 2 sat at 100% longest
   const rank = [0, 0, 0];
   let gTotal = 0;
   for (const wk of Object.values(ALL_WEEKS))
@@ -888,6 +949,89 @@ if (legacyGameDupes.length) {
   if (gShare > GAME_RANK_MAX)
     errors.push(
       `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
+    );
+
+  // Length is not the only shape a bubble has. Two more strategies win without
+  // reading, and both were measured at Phase 2 before this: "tap the bubble
+  // with sir or madam in it" (65.8% of rounds carried the honorific ONLY in
+  // the correct answer) and, when the learner taps wrong, no way to learn why
+  // (95.9% of rounds had no `explanation`, so the arcade said "Chưa đúng —
+  // thử bong bóng khác nhé." and stopped). A distractor that is correct
+  // English and wrong for the job is the hardest thing in the course to work
+  // out alone, and it is exactly the one that was never explained.
+  const HONORIFIC_KEY_MAX = 220; // 92 today across 1439 rounds
+  const NO_EXPLANATION_MAX = 522; // 522 today; Phase 2 is at 0
+  let honKeyOnly = 0;
+  let noExplanation = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        const key = round.options.find((o) => o.correct);
+        if (
+          key &&
+          /\b(sir|madam)\b/i.test(key.text) &&
+          !round.options.some((o) => !o.correct && /\b(sir|madam)\b/i.test(o.text))
+        )
+          honKeyOnly++;
+        if (!round.explanation) noExplanation++;
+      }
+  console.log(
+    `Game surface tells — honorific only in the answer ${honKeyOnly}, rounds with no explanation ${noExplanation}`,
+  );
+  if (honKeyOnly > HONORIFIC_KEY_MAX)
+    errors.push(
+      `${honKeyOnly} game rounds put "sir"/"madam" only in the correct answer, up from ${HONORIFIC_KEY_MAX} — tapping the polite bubble must not be a strategy`,
+    );
+  // The reading block had the mirror-image problem the arcade had: the second
+  // question of nearly every generated lesson was a Vietnamese maxim — "Vì sao
+  // nên nói rõ về phí ngay từ đầu?" — whose distractors are absurd in
+  // Vietnamese, so it was answerable without touching the English passage at
+  // all. Three auditors classified their department by hand and found 36-39%
+  // of questions in that shape, and the checkpoint's reading block draws from
+  // exactly this pool, so its 50% floor could be cleared without reading.
+  //
+  // A machine cannot mark a question "answerable from common sense". What it
+  // CAN check is whether the explanation quotes the passage: an answer the
+  // learner is meant to find in the text has a sentence in the text to point
+  // at, and a maxim has none. Both numbers are ratchets — Phase 2 sits at 0
+  // unexplained and 67% anchored; the older phases have not been through this.
+  const READING_NO_EXPLANATION_MAX = 322;
+  const READING_ANCHORED_MIN = 553;
+  const rnorm = (t: string) =>
+    t
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let rNoExp = 0;
+  let rAnchored = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading?.questions ?? []) {
+        const e = (q as { explanation?: string }).explanation;
+        if (!e) {
+          rNoExp++;
+          continue;
+        }
+        const quotes = [...e.matchAll(/"([^"]{6,})"/g)].map((m) => m[1]!);
+        if (quotes.length && quotes.every((x) => rnorm(lesson.reading.text).includes(rnorm(x))))
+          rAnchored++;
+      }
+  console.log(
+    `Reading questions — ${rAnchored} anchored in their own passage, ${rNoExp} with no explanation`,
+  );
+  if (rNoExp > READING_NO_EXPLANATION_MAX)
+    errors.push(
+      `${rNoExp} reading questions have no explanation, up from ${READING_NO_EXPLANATION_MAX} — a wrong answer teaches nothing without one`,
+    );
+  if (rAnchored < READING_ANCHORED_MIN)
+    errors.push(
+      `only ${rAnchored} reading questions quote their own passage, down from ${READING_ANCHORED_MIN} — a question whose answer is not in the text is not a reading question`,
+    );
+
+  if (noExplanation > NO_EXPLANATION_MAX)
+    errors.push(
+      `${noExplanation} game rounds have no explanation, up from ${NO_EXPLANATION_MAX} — a learner who taps the correct-English-wrong-job bubble is told nothing`,
     );
 }
 if (warnings.length) {

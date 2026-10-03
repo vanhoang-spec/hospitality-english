@@ -30,6 +30,10 @@ export function AuthGate({ children }: { children: ReactNode }) {
   // speed bump rather than a lock.
   useSingleSession(session?.user.id, !!session && !isPublicPath);
 
+  // One live session per account — see single-session.ts for why this is a
+  // speed bump rather than a lock.
+  useSingleSession(session?.user.id, !!session && !isPublicPath);
+
   useEffect(() => {
     if (sessionLoading) return;
 
@@ -63,6 +67,19 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (sessionLoading) return <FullScreenLoader />;
   if (!session && !isPublicPath) return <FullScreenLoader />;
   if (session && isPublicPath && !isJoinPath) return <FullScreenLoader />;
+
+  // A lapsed contract stops the LEARNERS; HR keeps its dashboard so the
+  // hotel can still read and export what it paid for. The same rule is a
+  // RESTRICTIVE policy on the progress tables, so this screen is the
+  // courteous half of a limit the database enforces anyway.
+  if (
+    session &&
+    profile?.role === "member" &&
+    !orgIsActive(subscription, subFetched) &&
+    !isPublicPath
+  ) {
+    return <SubscriptionLapsed endsAt={subscription?.endsAt} kind={subscription?.kind} />;
+  }
 
   // A lapsed contract stops the LEARNERS; HR keeps its dashboard so the
   // hotel can still read and export what it paid for. The same rule is a

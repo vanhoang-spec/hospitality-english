@@ -96,7 +96,14 @@ export function scoreFreeText({
     // A forbidden phrase blocks the answer outright. Coverage cannot buy its way
     // past this: a public reply that admits fault is wrong however complete it is.
     const banned = (avoid ?? []).find((expr) => containsExpression(draft, expr));
-    if (banned) blockedByVi = `Phản hồi công khai không được viết: "${banned}".`;
+    // Neutral wording: the Mediation suite (a spoken relay to a guest) blocks
+    // through this line too, and it is not a public reply.
+    if (banned) blockedByVi = `Câu trả lời không được có cụm: "${banned}".`;
+    else {
+      // An idea marked `required` cannot be traded for the others.
+      const missed = ideas.find((idea, i) => idea.required && !hits[i]);
+      if (missed) blockedByVi = `Câu trả lời bắt buộc phải có ý: "${missed.labelVi}".`;
+    }
   }
 
   // A blocked answer still shows its coverage so the learner can see which

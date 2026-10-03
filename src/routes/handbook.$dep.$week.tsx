@@ -101,6 +101,12 @@ function HandbookPage() {
         {content && (
           <p className="hb-muted mt-2 text-sm text-foreground/70">{content.weekTitleVi}</p>
         )}
+        {content?.canDoVi && (
+          <p className="mt-2 text-sm text-foreground/85">
+            <span className="font-semibold">Nói được: </span>
+            {content.canDoVi}
+          </p>
+        )}
       </motion.div>
 
       {!content ? (
