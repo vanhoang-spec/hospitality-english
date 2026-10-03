@@ -7,10 +7,14 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
 
 ## 1. Nhánh và PR
 
-- Nhánh làm việc: **`content/p2-gates`**, PR đang mở:
-  [vanhoang-spec/hospitality-english#9](https://github.com/vanhoang-spec/hospitality-english/pull/9)
-  → `main`. **Chưa merge.** CI của nhánh xanh.
-- P3 làm trên nhánh **`content/p3`** (tách từ `content/p2-gates`), chưa có PR — xem §8.
+- **03/10: PR [vanhoang-spec/hospitality-english#9](https://github.com/vanhoang-spec/hospitality-english/pull/9)
+  đã merge vào `main`** (`698d2b1`) theo chỉ đạo người dùng ("PR P2 cho merge luôn… xong hết thì
+  deploy"). Trước khi merge, `content/p2-gates` được fast-forward tới `content/p3`, nên `main` nay
+  có cả P2 lẫn P3 đã duyệt, cộng nền tảng quản trị của PR #11, #12.
+- **Production đã deploy** từ `main`: https://hospitality-english.netlify.app (Netlify build chạy
+  `bun run ci && bun run build`). Đã kiểm 03/10: bundle production chứa câu nội dung vòng 4, trang
+  đăng nhập không lỗi console.
+- `content/p3` = `main` sau merge. Người dùng nói không cần mở PR riêng cho P3 nữa.
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -24,8 +28,8 @@ Theo thứ tự yêu cầu gần nhất:
 3. **(28/09) Người dùng cho mở lại P3 (tuần 23–30)**, yêu cầu khảo sát kỹ và báo kế hoạch trước.
    Mỗi ô trong 10 ô Academic Director/Hotel Manager phải **trên 7,5** mới pass; auditor độc lập,
    không thấy kết quả của nhau. P2 vẫn đóng, P4 vẫn tạm dừng. Kế hoạch: `docs/p3-plan.md`.
-4. **(03/10) Người dùng cho P3 đạt ở vòng 4** (8/10 ô). Việc kế tiếp chưa được giao: hỏi người
-   dùng trước khi mở PR `content/p3` → `main` hay mở lại P4.
+4. **(03/10) Người dùng cho P3 đạt ở vòng 4** (8/10 ô), rồi cho merge PR #9 và deploy — đã xong.
+   Việc kế tiếp chưa được giao: hỏi trước khi mở lại P4.
 
 ---
 
@@ -36,7 +40,7 @@ Theo thứ tự yêu cầu gần nhất:
 | P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                     |
 | P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
 | P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
-| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Trên `content/p3` (§8), chưa có PR                                               |
+| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                |
 | P4        | 31–40 | FO/FB/HK/GR soạn tay đủ 10/10, qua cổng theo batch với chuẩn cũ. SW còn 9/10 tuần sinh tự động. Tạm dừng                                                                                                                 |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
@@ -58,18 +62,12 @@ Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùn
 - Bảng giá niêm yết (`plan_prices`) và giá thực thu trên từng hợp đồng (`subscriptions.price`)
 - Nhật ký quản trị (`admin_actions`)
 
-### ⚠️ Chưa có trên production
+### Production
 
-Đo chỉ đọc trên dự án Supabase `Hospitality English_App` ngày 24/09:
-
-- **Bốn migration chưa áp dụng:** `20260923120000`, `20260923130000`, `20260923140000`,
-  `20260924090000`. Cho tới khi chạy, mọi màn hình quản trị sẽ lỗi.
-- `organizations`: **0 dòng**. `profiles`: **1 dòng**, vai trò `super_admin`.
-- `src/integrations/supabase/types.ts` đang **viết tay** cho khớp bốn migration — phải sinh lại
-  sau khi áp dụng.
-- **Bảng giá chưa có số nào.** Lưới 25 ô, đều trống. Người dùng chưa đưa giá — **không tự đoán.**
-
-Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.html), mục 2.
+Theo commit `2de39b8` trên `main` (01/10): năm migration nền tảng **đã áp dụng lên production**,
+bảng giá đã được người dùng điền trên site thật, `types.ts` sinh từ production. Mục "bốn
+migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn quản trị:
+[`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.html).
 
 ### Giới hạn đã biết — đừng hứa với khách hàng
 
@@ -84,10 +82,8 @@ Các bước đưa lên: [`docs/huong-dan-quan-tri.html`](huong-dan-quan-tri.htm
 
 Không tự làm những việc này.
 
-1. **Áp dụng bốn migration lên production.** Ghi thật lên database — cần người dùng đồng ý.
-2. **Điền bảng giá.**
-3. **Có quay lại nội dung không, và làm phần nào trước** — xem §6.
-4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+1. **Có mở lại P4 không, và làm phần nào trước** — xem §6.
+2. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 
