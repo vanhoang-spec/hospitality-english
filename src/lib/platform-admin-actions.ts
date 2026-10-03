@@ -9,38 +9,10 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 import type { Database } from "@/integrations/supabase/types";
 
-const TERM_MONTHS: Record<string, number> = { trial: 1, m3: 3, m6: 6, m9: 9, m12: 12 };
-
-async function requireSuperAdmin(supabase: SupabaseClient<Database>, userId: string) {
+export async function requireSuperAdmin(supabase: SupabaseClient<Database>, userId: string) {
   const { data, error } = await supabase.from("profiles").select("role").eq("id", userId).single();
   if (error || !data) throw new Error("Unauthorized: profile not found");
   if (data.role !== "super_admin") throw new Error("Forbidden: super_admin role required");
-}
-
-/** Giá niêm yết của (gói × kỳ hạn) tại thời điểm ký. Trả về null nếu
- *  chưa ai điền bảng giá — null nghĩa là "chưa biết", khác hẳn 0 là
- *  "miễn phí", nên đừng thay bằng 0. */
-async function listPrice(
-  admin: SupabaseClient<Database>,
-  planCode: string,
-  term: string,
-): Promise<number | null> {
-  const { data } = await admin
-    .from("plan_prices")
-    .select("price")
-    .eq("plan_code", planCode)
-    .eq("term", term)
-    .maybeSingle();
-  if (!data) return null;
-  const n = Number((data as { price: number | string }).price);
-  return Number.isFinite(n) ? n : null;
-}
-
-function endsAt(kind: string, from: Date): string {
-  const months = TERM_MONTHS[kind] ?? 1;
-  const end = new Date(from);
-  end.setMonth(end.getMonth() + months);
-  return end.toISOString();
 }
 
 export const createOrganization = createServerFn({ method: "POST" })
@@ -66,64 +38,22 @@ export const createOrganization = createServerFn({ method: "POST" })
       throw new Error(e instanceof InvalidPhoneError ? e.message : "Số điện thoại không hợp lệ.");
     }
 
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { provisionOrganization } = await import("@/lib/account-provisioning.server");
 
-    const { data: plan, error: planErr } = await supabaseAdmin
-      .from("plans")
-      .select("seats")
-      .eq("code", data.planCode)
-      .single();
-    if (planErr || !plan) throw new Error("Gói không hợp lệ.");
-
-    // seat_limit stays in step with the plan so the legacy fallback in
-    // org_seat_limit() never disagrees with the subscription.
-    const { data: org, error: orgErr } = await supabaseAdmin
-      .from("organizations")
-      .insert({ name: data.name, seat_limit: plan.seats })
-      .select("id")
-      .single();
-    if (orgErr || !org) throw new Error(orgErr?.message ?? "Không tạo được khách sạn.");
-
-    const now = new Date();
-    const agreed = data.price ?? (await listPrice(supabaseAdmin, data.planCode, data.term));
-    const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
-      org_id: org.id,
-      plan_code: data.planCode,
-      kind: data.term,
-      starts_at: now.toISOString(),
-      ends_at: endsAt(data.term, now),
-      price: agreed,
-      created_by: context.userId,
-    });
-    if (subErr) throw new Error(subErr.message);
-
-    const { data: created, error: userErr } = await supabaseAdmin.auth.admin.createUser({
-      phone,
-      password: data.hrPassword,
-      phone_confirm: true,
-      user_metadata: {
-        full_name: data.hrFullName,
-        org_id: org.id,
-        role: "org_admin",
-      },
-    });
-    if (userErr || !created.user) {
-      throw new Error(userErr?.message ?? "Không tạo được tài khoản HR.");
-    }
-    await supabaseAdmin
-      .from("profiles")
-      .update({ must_change_password: true })
-      .eq("id", created.user.id);
-
-    await supabaseAdmin.from("admin_actions").insert({
-      actor_id: context.userId,
-      org_id: org.id,
+    // The owner typed this password on HR's behalf — HR sets their own at
+    // first login.
+    return provisionOrganization({
+      name: data.name,
+      planCode: data.planCode,
+      term: data.term,
+      price: data.price,
+      hrPhone: phone,
+      hrFullName: data.hrFullName,
+      hrPassword: data.hrPassword,
+      mustChangePassword: true,
+      actorId: context.userId,
       action: "org.create",
-      target_user_id: created.user.id,
-      meta: { plan: data.planCode, term: data.term, price: agreed } as never,
     });
-
-    return { orgId: org.id, hrUserId: created.user.id };
   });
 
 /** Renew or change a hotel's plan. The old contract is closed first, so
@@ -142,6 +72,7 @@ export const setSubscription = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await requireSuperAdmin(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { endsAt, listPrice } = await import("@/lib/account-provisioning.server");
 
     const { data: plan } = await supabaseAdmin
       .from("plans")
@@ -171,7 +102,7 @@ export const setSubscription = createServerFn({ method: "POST" })
         .eq("id", current.id);
     }
 
-    const agreed = data.price ?? (await listPrice(supabaseAdmin, data.planCode, data.term));
+    const agreed = data.price ?? (await listPrice(data.planCode, data.term));
     const { error } = await supabaseAdmin.from("subscriptions").insert({
       org_id: data.orgId,
       plan_code: data.planCode,

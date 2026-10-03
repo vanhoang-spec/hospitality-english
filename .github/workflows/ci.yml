@@ -47,6 +47,11 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: Typecheck
         run: bun run typecheck
+      # Every migration on an empty embedded Postgres, then the account
+      # rules (who a new account is, seat quota, signup links, RLS) run as
+      # real SQL. No Supabase project or Docker needed.
+      - name: Database schema & rules
+        run: bun run test:db
       - name: Lint
         run: bun run lint
       - name: Format check

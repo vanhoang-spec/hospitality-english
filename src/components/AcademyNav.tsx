@@ -23,7 +23,7 @@ export function AcademyNav() {
     }
   }, [state.service_stars]);
 
-  if (location.pathname === "/login") return null;
+  if (location.pathname === "/login" || location.pathname.startsWith("/join/")) return null;
 
   const displayName = profile?.full_name || "Esteemed Apprentice";
   const orgName = profile?.organizations?.name;

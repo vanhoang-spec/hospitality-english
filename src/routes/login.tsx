@@ -58,7 +58,8 @@ function LoginPage() {
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Embassy Hospitality</div>
         <h1 className="font-display mt-2 text-3xl text-foreground">Đăng nhập</h1>
         <p className="mt-2 text-sm text-foreground/70">
-          Nhập số điện thoại và mật khẩu do quản trị viên nhóm của bạn cấp.
+          Nhập số điện thoại và mật khẩu của bạn — do bộ phận nhân sự cấp, hoặc do bạn tự đặt khi
+          đăng ký qua link.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">

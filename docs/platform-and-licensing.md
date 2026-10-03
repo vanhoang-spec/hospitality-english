@@ -73,20 +73,21 @@ lại được phần của khách sạn mình.
 
 ## 6. Áp dụng lên Supabase
 
-Ba migration mới (chưa chạy trên project thật tại thời điểm viết):
+**Đã xong 01/10/2026.** Năm migration nền tảng đã chạy trên production bằng
+`supabase db push`:
 
 ```
 supabase/migrations/20260923120000_plans_subscriptions_sessions.sql
 supabase/migrations/20260923130000_learning_telemetry.sql
 supabase/migrations/20260923140000_groups_and_access.sql
+supabase/migrations/20260924090000_plan_pricing.sql
+supabase/migrations/20260929090000_signup_links.sql
 ```
 
-Chạy bằng `supabase db push` (hoặc dán lần lượt trong SQL editor theo đúng thứ
-tự). Sau khi chạy, **sinh lại** `src/integrations/supabase/types.ts` từ project —
-các bảng mới hiện đang được khai báo tay trong file đó để `tsc` có kiểu đúng.
+`src/integrations/supabase/types.ts` đã sinh lại từ production. Tài khoản
+`super_admin` đầu tiên đã có sẵn. Bảng giá đã điền. Mỗi migration mới sau này:
+chạy `supabase db push`, rồi sinh lại `types.ts` bằng
+`supabase gen types typescript --linked`.
 
-Tạo `super_admin` đầu tiên bằng tay một lần:
-
-```sql
-update public.profiles set role = 'super_admin' where phone = '+84…';
-```
+`bun run test:db` chạy toàn bộ chuỗi migration trên Postgres nhúng và kiểm các
+luật tài khoản bằng SQL thật — chạy nó trước khi đẩy một migration mới.
