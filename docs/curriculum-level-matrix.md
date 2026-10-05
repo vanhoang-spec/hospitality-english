@@ -367,6 +367,23 @@ mẫu kiểm tra và báo riêng tỷ lệ đề có ô dự trữ. Không thu b
 > chấm là SAI, vì nó bảo người ta cảm thấy một điều thay vì cho họ một việc để làm. Thay vào đó
 > là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
 
+> **Tuần 37–38 theo bộ phận (chốt 06/10/2026, khi viết lại Phase 4).** Bảng trên giao tuần 37
+> cho "Thương lượng B2B" và tuần 38 cho "Trình bày đề xuất/báo giá". Chức năng ngôn ngữ giữ
+> nguyên — **điều khoản có điều kiện, tỷ lệ, thời hạn** ở tuần 37 và **pitch ngắn ba phần** ở
+> tuần 38 — nhưng người nghe là người mà bộ phận đó thật sự thương lượng hoặc trình bày:
+>
+> | Bộ phận | Tuần 37                                                                                                                     | Tuần 38                                                                                  |
+> | ------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+> | FO      | Điều khoản khách đoàn/doanh nghiệp: giá corporate, allotment, hạn chốt rooming list, cọc, huỷ                               | Báo giá phòng + phòng họp cho người đặt doanh nghiệp                                     |
+> | FB      | Điều khoản tiệc/sự kiện: cọc, số khách đảm bảo, hạn chốt, huỷ, minimum spend, corkage                                       | Đề xuất thực đơn/tiệc, giá plus-plus, hiệu lực báo giá                                   |
+> | HK      | Điều khoản dịch vụ có điều kiện: lịch dọn khách lưu trú dài, DND, đồ thất lạc, giặt là                                      | Kế hoạch/đề xuất (bố trí phòng dịp đặc biệt, lịch dọn) trình bày cho khách hoặc giám sát |
+> | SW      | Điều khoản gói và thẻ thành viên, huỷ/no-show, và điều kiện của một liệu trình (đồng thuận, che phủ, yêu cầu kỹ thuật viên) | Kế hoạch liệu trình/gói trình bày cho khách                                              |
+> | GR      | Cấp cứu y tế (ngoại lệ ở trên)                                                                                              | Bão và gián đoạn lịch trình (ngoại lệ ở trên)                                            |
+>
+> Buồng phòng và Spa không bán hợp đồng; quầy Guest Relations cũng không. Bắt họ học điều
+> khoản B2B là dạy một việc họ không bao giờ làm, nên bảng này là phần của spec, không phải
+> lệch spec.
+
 > **Chú thích tuần 39 (cả sáu bộ phận).** Bảng ghi "Tổng duyệt role-play liên tình huống —
 > Kết hợp mọi chức năng". Một tuần 39 đúng nghĩa còn phải dạy thêm **hai luật mới** mà không
 > tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến cùng lúc, (2) luật "mười lăm

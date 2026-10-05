@@ -3095,27 +3095,58 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewMeta: "★★☆☆☆ · Google Reviews · 2 ngày trước",
     reviewText:
       "I was charged twice for the same night and nobody has explained why. I've emailed three times with no reply. Disappointing for a hotel that calls itself five-star.",
+    // The first blind round of the reopened phase passed a reply that named
+    // the card's last four digits and the room, blamed the night auditor and
+    // guaranteed a refund in 24 hours — at 100%, because nothing here could
+    // forbid anything, and the model itself promised three business days
+    // against a week that teaches the SLOWEST case for a card reversal.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+      "Trong vai Quản lý Lễ tân, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không được viết ra chỗ công khai: số thẻ hay số phòng của khách, tên hay chức danh đồng nghiệp bị đổ lỗi, và lời bảo đảm thời hạn hoàn tiền nhanh hơn thời hạn chậm nhất của ngân hàng.",
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Thừa nhận khoản phí bị tính trùng",
+        labelVi: "Xin lỗi khách",
+        any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
+      },
+      {
+        labelVi: "Nhắc tới khoản phí bị tính trùng",
         any: ["double charge", "charged twice", "duplicate charge", "billing error", "the charge"],
       },
       {
-        labelVi: "Cam kết hoàn tiền kèm mốc thời gian",
-        any: ["refund", "reimburse", "return the amount", "credit back"],
+        labelVi: "Hoàn tiền kèm mốc chậm nhất của ngân hàng",
+        any: ["working days", "business days", "up to", "depending on your bank"],
+        required: true,
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      "card ending",
+      "ending in",
+      "last four",
+      "room number",
+      "your room",
+      "night auditor",
+      "night audit",
+      "receptionist",
+      "my colleague",
+      "our colleague",
+      "the cashier",
+      "guarantee",
+      "guaranteed",
+      "within 24 hours",
+      "within twenty-four hours",
+      "within 48 hours",
+      "within forty-eight hours",
+      "today",
+      "tomorrow",
+    ],
     modelReply:
-      "Dear guest, we are very sorry for the double charge on your bill and for the delay in replying to your emails. We have identified the error and will process a full refund within three business days. Please contact our Front Office Manager directly so we can resolve this personally and welcome you back with the experience you deserve.",
+      "Dear guest, I am very sorry for the double charge and that our replies to your emails were so slow. The refund has been requested, and a card refund can take up to fifteen working days to appear, depending on your bank. Please contact me directly at the hotel and ask for the Front Office Manager, so I can follow it until it reaches you.",
     explanationVi:
-      "Phản hồi tốt luôn có đủ 4 phần: xin lỗi cụ thể (không chung chung), nêu hành động khắc phục kèm mốc thời gian, cho một kênh liên hệ trực tiếp, và khép lại bằng lời mời quay lại.",
+      "Thư công khai đứng tên Quản lý Lễ tân. Bốn ý: xin lỗi cụ thể, nhắc đúng khoản phí, nói mốc hoàn tiền CHẬM NHẤT (thẻ có thể mất tới mười lăm ngày làm việc, tuỳ ngân hàng — hứa nhanh hơn rồi trễ là khiếu nại thứ hai), và một kênh liên hệ trực tiếp. Không viết số thẻ, số phòng, không đổ lỗi một đồng nghiệp, không 'bảo đảm' một ngày cụ thể.",
   },
   FB: {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 4 ngày trước",
@@ -3127,12 +3158,17 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     // the file — and it apologises for the experience, states the review of
     // procedures, and moves the conversation to a direct channel. It never
     // promises a free dinner in public.
+    // Round 1 of the reopened phase passed "Our chicken was undercooked and
+    // it made you sick, which is our fault… we will refund your whole dinner"
+    // at 100%, and "your illness cannot be from our chicken" too: the label
+    // said "do not confirm the cause" and nothing enforced it.
     promptVi:
-      "Trong vai Quản lý nhà hàng — SAU khi Duty Manager đã xử lý hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý nhà hàng — SAU khi Duty Manager đã xử lý hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nhận hay chối nguyên nhân khách bị ốm, hứa hoàn tiền hay bữa ăn miễn phí, và tên hay vị trí đồng nghiệp.",
     mustConvey: [
       {
         labelVi: "Xin lỗi về trải nghiệm, không xác nhận nguyên nhân",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
         labelVi: "Đã cùng bếp rà soát quy trình an toàn thực phẩm",
@@ -3143,6 +3179,32 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         any: ["contact", "reach me", "get in touch", "call", "email"],
       },
     ],
+    mustAvoid: [
+      // admitting or denying the cause
+      "undercooked",
+      "raw",
+      "our fault",
+      "our mistake",
+      "made you sick",
+      "made you ill",
+      "food poisoning",
+      "cannot be",
+      "not from our",
+      "nothing to do with",
+      // settling in public
+      "refund",
+      "free dinner",
+      "free meal",
+      "complimentary",
+      "on the house",
+      "voucher",
+      "compensation",
+      "compensate",
+      // a colleague
+      "the waiter",
+      "our waiter",
+      "the server",
+    ],
     modelReply:
       "We are very sorry to read about your experience, and that you felt unwell after your visit — and I am sorry nobody followed up as they should have. Our kitchen team and I have reviewed our food safety procedures in full. Please contact me directly at the restaurant so I can hear the details from you personally.",
     explanationVi:
@@ -3152,58 +3214,104 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewMeta: "★★☆☆☆ · Booking.com · 3 ngày trước",
     reviewText:
       "The laundry service ruined my silk dress — it came back with a bleach mark and the hotel only offered a small credit. Very disappointing for the price we paid.",
+    // This task REQUIRED "make it right / put it right / compensation" while
+    // the department's own compensation week forbids promising a guest that
+    // anything will be made right — 32.5% of final papers then marked the
+    // withdrawn line correct (round 1 of the reopened phase). The idea it
+    // asks for now is the manager's personal look at the case, nothing paid.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý Buồng phòng, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nguyên nhân hư hại, lời hứa đền bù hay 'make it right', và nhận xét về mức đền bù đã đưa.",
     mustConvey: [
       {
-        labelVi: "Xin lỗi vì món đồ bị hư hại",
+        labelVi: "Xin lỗi vì trải nghiệm với món đồ",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
-        labelVi: "Sẽ xem lại mức đền bù cho thoả đáng",
-        any: [
-          "compensation",
-          "reimburse",
-          "cover the cost",
-          "make it right",
-          "put it right",
-          "review the offer",
-        ],
+        labelVi: "Quản lý Buồng phòng sẽ trực tiếp xem lại sự việc",
+        any: ["housekeeping manager", "look into", "looking into", "review", "personally"],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      "make it right",
+      "put it right",
+      "compensation",
+      "compensate",
+      "reimburse",
+      "refund",
+      "replace your",
+      "full value",
+      "cover the cost",
+      "small credit",
+      "bleach",
+      "our fault",
+      "our mistake",
+      "the laundry team",
+      "our laundry team",
+    ],
     modelReply:
-      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. Our Housekeeping Manager would like to look at this with you personally. Please contact us directly so that we can put it right.",
+      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. As Housekeeping Manager, I am looking into what happened myself. Please contact me directly at the hotel so we can talk it through in private.",
     explanationVi:
-      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Đừng viết ra nguyên nhân do mình, và đừng thừa nhận mức đền bù cũ là thấp — cả hai câu đó nằm lại trên internet và thành bằng chứng cho một yêu cầu lớn hơn.",
+      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Không viết nguyên nhân (vết tẩy, bộ phận giặt là), không hứa 'make it right' hay đền bù, và không nhận mức đền bù cũ là thấp — mọi câu đó nằm lại trên internet và thành cam kết. Việc định mức đền bù là của quản lý, nói riêng với khách.",
   },
   SW: {
     reviewMeta: "★★☆☆☆ · Google Reviews · 1 tuần trước",
     reviewText:
       "I had a skin reaction after my facial and the therapist didn't seem to know what products were used. Nobody has followed up since I left.",
+    // Round 1 of the reopened phase passed "We regret nothing. Our therapist
+    // was right and your skin was the problem…" at 100%: no mustAvoid at all.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý Spa, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nhận hay chối nguyên nhân phản ứng da, đổ lỗi cho kỹ thuật viên hay cho làn da của khách, hứa hoàn tiền hay liệu trình miễn phí, và câu xem nhẹ vấn đề sức khoẻ.",
     mustConvey: [
       {
-        labelVi: "Xin lỗi vì phản ứng trên da",
+        labelVi: "Xin lỗi vì trải nghiệm sau liệu trình",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
-        labelVi: "Khẳng định an toàn của khách là ưu tiên",
-        any: ["safety", "well-being", "wellbeing", "health", "comfort and care"],
+        labelVi: "Khẳng định sức khoẻ, an toàn của khách là ưu tiên",
+        any: ["safety", "well-being", "wellbeing", "health"],
       },
       {
-        labelVi: "Mời khách liên hệ để được hỗ trợ",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        labelVi: "Mời khách liên hệ Quản lý Spa",
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      // a cause, either way
+      "caused by",
+      "our product",
+      "the product caused",
+      "your skin was",
+      "sensitive skin",
+      "not our",
+      "nothing to do with",
+      // fault and blame
+      "our fault",
+      "our mistake",
+      "the therapist",
+      "our therapist",
+      "regret nothing",
+      // settling in public
+      "refund",
+      "free treatment",
+      "complimentary",
+      "voucher",
+      "compensation",
+      // making light of a health matter
+      "nothing serious",
+      "harmless",
+      "no danger",
+      "not our concern",
+    ],
     modelReply:
-      "We are very sorry to hear about the skin reaction after your facial — your safety is always our top priority, and we should have followed up with you immediately. Please contact our Spa Manager directly so we can review exactly which products were used and support you with any follow-up you may need.",
+      "We are very sorry to hear about the skin reaction after your facial, and that nobody followed up with you after your visit. Your health and safety come first for us. Please contact me directly at the spa and ask for the Spa Manager, so we can go through your treatment record with you.",
     explanationVi:
-      "Phản ứng da là vấn đề sức khỏe, không chỉ trải nghiệm dịch vụ — phản hồi phải nêu rõ ưu tiên an toàn và mời khách liên hệ ngay.",
+      "Phản ứng da là chuyện sức khoẻ: xin lỗi về trải nghiệm, nói rõ sức khoẻ của khách là ưu tiên, và mời khách liên hệ Quản lý Spa để cùng xem hồ sơ liệu trình. Không viết nguyên nhân (sản phẩm, làn da của khách), không đổ lỗi kỹ thuật viên, không hứa hoàn tiền hay liệu trình miễn phí ở chỗ công khai.",
   },
   GR: {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 5 ngày trước",
