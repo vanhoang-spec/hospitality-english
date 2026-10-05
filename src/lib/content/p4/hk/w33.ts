@@ -442,7 +442,7 @@ const lesson3 = L(
         t3b,
         "Mẫu của tuần: 'Our policy allows up to' — nhưng chỉ chỉ vào giới hạn IN SẴN trên phiếu khách đã ký, không tự nói một con số. 'Liability' /ˌlaɪəˈbɪləti/ — nhấn âm tiết thứ ba.",
         undefined,
-        undefined,
+        ["policy"],
         t3a,
       ),
       sp(

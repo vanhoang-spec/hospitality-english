@@ -595,6 +595,8 @@ const lesson4 = L(
           "Four more friends have just arrived. Can they join our dinner?",
           t4a,
           "Không hứa chỗ trước khi hỏi bếp. Điều kiện ('If they can') và cách tính tiền ('per head', ngoài 'guaranteed number') nói ngay từ đầu.",
+          undefined,
+          ["per", "head"],
         ),
         [
           "I will ask the kitchen now, madam. If they can, your friends are welcome, charged per head on top of the guaranteed number.",

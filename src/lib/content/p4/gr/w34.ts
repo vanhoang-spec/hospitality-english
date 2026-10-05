@@ -119,6 +119,8 @@ const lessons = [
           "Could you help us with a nice table for Saturday evening?",
           t1a,
           "Hỏi về DỊP của buổi tối, không hỏi về con người: 'a special occasion'. Đặt bàn vẫn là việc của concierge — câu hỏi này giúp bạn gợi ý đúng.",
+          undefined,
+          ["special"],
         ),
         "Of course, sir. May I ask if Saturday is a special occasion?",
       ),

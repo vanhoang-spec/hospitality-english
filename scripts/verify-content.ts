@@ -783,6 +783,101 @@ if (legacyGameDupes.length) {
 }
 
 // ============================================================
+// GATE 4d — Phase 4 reading and game cannot be answered by their shape.
+//
+// Round 2 of the Phase 4 reviews: the right reading option was the LONGEST
+// of its three in 0-6 of 105-120 questions a department (so "pick the
+// shortest" cleared the paper's reading floor on 80-92% of papers), and the
+// game's `form` option was always a near copy of the answer, so the
+// `register` option was the odd one out in 80 of 80 rounds and the move —
+// the thing Phase 4 teaches — never had to be judged. Rebuilt per
+// department; this holds it. Also: no game answer copies a speaking model of
+// its own lesson (matrix rule "Game ≠ Speaking").
+// ============================================================
+{
+  const toks = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}' ]+/gu, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+  const lev = (a: string[], b: string[]) => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [
+      i,
+      ...Array<number>(b.length).fill(0),
+    ]);
+    for (let j = 1; j <= b.length; j++) d[0]![j] = j;
+    for (let i = 1; i <= a.length; i++)
+      for (let j = 1; j <= b.length; j++)
+        d[i]![j] = Math.min(
+          d[i - 1]![j]! + 1,
+          d[i]![j - 1]! + 1,
+          d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1),
+        );
+    return d[a.length]![b.length]!;
+  };
+  const sim = (x: string, y: string) => {
+    const a = toks(x);
+    const b = toks(y);
+    return 1 - lev(a, b) / Math.max(a.length, b.length, 1);
+  };
+  const rows: string[] = [];
+  for (const dep of ["FO", "FB", "HK", "SW", "GR"]) {
+    let authored = true;
+    for (let w = 31; w <= 40; w++) if (!isAuthoredP4(`${dep}-${w}`)) authored = false;
+    if (!authored) continue;
+    let nq = 0;
+    let longest = 0;
+    let shortest = 0;
+    let ng = 0;
+    let odd = 0;
+    const copies: string[] = [];
+    for (let w = 31; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${dep}-${w}`]?.lessons ?? []) {
+        for (const q of l.reading?.questions ?? []) {
+          nq++;
+          const len = q.options.map((o) => o.length);
+          const v = len[q.correct]!;
+          if (len.every((x, i) => i === q.correct || x < v)) longest++;
+          if (len.every((x, i) => i === q.correct || x > v)) shortest++;
+        }
+        for (const [gi, g] of (l.game ?? []).entries()) {
+          if (g.options.length !== 3) continue;
+          ng++;
+          const t = g.options.map((o) => o.text);
+          const ans = g.options.findIndex((o) => o.correct);
+          const s01 = sim(t[0]!, t[1]!);
+          const s02 = sim(t[0]!, t[2]!);
+          const s12 = sim(t[1]!, t[2]!);
+          const tot = [s01 + s02, s01 + s12, s02 + s12];
+          if (tot.indexOf(Math.min(...tot)) === ans) odd++;
+          if (l.speaking.some((s) => sim(s.targetResponse, t[ans]!) >= 0.75))
+            copies.push(`${l.lessonId} G${gi}`);
+        }
+      }
+    const pct = (n: number, d: number) => Math.round((100 * n) / Math.max(1, d));
+    rows.push(
+      `${dep} reading longest ${pct(longest, nq)}% shortest ${pct(shortest, nq)}% · game odd-one-out ${pct(odd, ng)}%`,
+    );
+    if (pct(longest, nq) < 25)
+      errors.push(
+        `${dep} Phase 4 reading: the answer is the longest option in only ${pct(longest, nq)}% of questions (floor 25%)`,
+      );
+    if (pct(shortest, nq) > 45)
+      errors.push(
+        `${dep} Phase 4 reading: the answer is the shortest option in ${pct(shortest, nq)}% of questions (ceiling 45%)`,
+      );
+    if (pct(odd, ng) < 30)
+      errors.push(
+        `${dep} Phase 4 game: the answer is the odd one out in only ${pct(odd, ng)}% of rounds (floor 30%)`,
+      );
+    for (const c of copies)
+      errors.push(`${dep} ${c}: game answer copies a speaking model of its lesson`);
+  }
+  console.log(`Phase 4 surface shape — ${rows.join(" · ")}`);
+}
+
+// ============================================================
 // GATE 5 — active vocabulary total per department
 //
 // The matrix carried "~560-620 từ" for months with nothing checking it, and

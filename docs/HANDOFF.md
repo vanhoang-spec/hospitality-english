@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **03/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **06/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -56,6 +56,18 @@ Theo thứ tự yêu cầu gần nhất:
    **06/10 sáng: viết lại xong cả 10 tuần × 5 bộ phận** (`e22d5af`, CI xanh): mỗi bộ phận
    242–278 lượt nói, 25–48 lượt `risk`, học thuộc 60 câu qua nửa nói 21–25% (vòng 1: 74–100%).
    Vòng chấm mù 2 chạy trên `e22d5af` với `docs/audit/brief-p4-r2.md`; chưa merge vào `main`.
+   **06/10 vòng 2: 5/10 ô đạt** — HM cả năm ô ≥ 7,5 (FO 7,92 · FB 8,00 · HK 8,25 · SW 8,05 ·
+   GR 7,93), AC chưa ô nào (FO 7,43 · FB 7,08 · HK 7,08 · SW 7,38 · GR 7,48). Báo cáo:
+   `%TEMP%/hospitality-p4-r2-e22d5af/<ô>/report.md`. Lỗi chung và việc đã làm sau vòng 2:
+   (1) bài đọc — đáp án gần như không bao giờ là phương án dài nhất; game — `form` luôn là bản
+   sao đáp án nên câu `register` luôn lạc loài (80/80 vòng): đã cân lại cả 5 bộ phận, Gate 4d
+   giữ; (2) bộ chấm: "Of course/Sure + từ chối" qua 23/23 lượt risk, chèn câu 3 từ gây hại ("He
+   is here.", "We will pay.") qua tới 92%, câu đúng nói khác lời bị trượt nhiều — đã vá, đo bằng
+   bộ hồi quy dựng từ script của chính 10 auditor (`%TEMP%/p4bench-r2/run.sh`); (3) từ P4 chỉ
+   26–39% được nói lại ở tuần sau (P3: ~100%) — đo bằng `resaid.ts --phase 4`; (4) lịch ôn tuần
+   37–39 rơi vào từ A1 — đã sửa; (5) ghi chú ngữ pháp tự sinh gắn nhãn sai — đã sửa; (6) bài
+   viết tuần 33 chấm bằng từ khoá cho qua bản nháp nguy hiểm — đã chặn; (7) bài thi tuần 40
+   mở lần đầu mất 7,6 giây — còn 0,17 giây.
 
 ---
 
@@ -67,7 +79,7 @@ Theo thứ tự yêu cầu gần nhất:
 | P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
 | P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
 | P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                |
-| P4        | 31–40 | **05/10 mở lại để chấm mù vòng 1** (`7ed3254`): **0/10 ô đạt 7,5** — AC TB 5,08, HM TB 6,17, thấp nhất HM-SW 3,33. Tóm tắt và lỗi chung: `docs/audit/p4-r1-summary.md`. Chưa giao việc sửa; hỏi người dùng               |
+| P4        | 31–40 | **Đang sửa tới 10/10 ≥ 7,5** (nhánh `content/p4`). Vòng 1 (`7ed3254`): 0/10. Viết lại toàn bộ (`e22d5af`). Vòng 2: **5/10** — HM 5/5, AC 0/5 (7,08–7,48). Đang sửa sau vòng 2, xem mục 2.5                               |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
 đạt ngoại lệ. **Không tự suy rộng một ngoại lệ sang phase khác — hỏi lại.**

@@ -444,7 +444,7 @@ Some things stay outside the range whatever your manager says. The room the gues
         t3c,
         "Hạng thẻ không bao giờ nằm trong một cuộc đàm phán: 'not mine to trade'. Nói ai giữ nó — 'the loyalty office decides' — và việc bạn làm hôm nay.",
         undefined,
-        ["tier", "today"],
+        ["tier", "today", "loyalty"],
         t3b,
       ),
       sp(

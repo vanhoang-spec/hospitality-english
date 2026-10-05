@@ -3044,39 +3044,46 @@ function reviewWordsFor(
     const a = Math.ceil(ws.length / 3);
     return [ws.slice(0, a), ws.slice(a, 2 * a), ws.slice(2 * a)];
   };
+  // EXPANDING, NOT ADJACENT. Lags of one, two and three weeks put every
+  // headword back within three weeks and then never again until the week-40
+  // sweep — round 2 measured the last review of a Phase 4 word at 2.06 weeks
+  // after it was taught, on average. Lags of one, three and six spread the
+  // same two returns per third further apart, which is what spacing is for:
+  // part 0 comes back at +1 and +6, part 1 at +1 and +3, part 2 at +3 and +6.
   const reach: [lag: number, part: number][] =
     week === 39
       ? [
           [1, 0],
           [1, 1],
           [1, 2],
-          [2, 1],
-          [2, 2],
+          [3, 1],
           [3, 2],
-          [3, 0],
+          [6, 2],
+          [6, 0],
         ]
       : [
           [1, 0],
           [1, 1],
-          [2, 1],
-          [2, 2],
+          [3, 1],
           [3, 2],
-          [3, 0],
+          [6, 2],
+          [6, 0],
         ];
   for (const [lag, part] of reach) {
     const back = week - lag;
     if (back >= 31) out.push(...thirds(headwordsOf(lx, back, overrides))[part]!);
   }
 
-  // Newest first, and not Phase 0 — the same two reasons as Phase 3: walked
-  // oldest-first the opening weeks review "Good morning", and Phase 0's
-  // chunks have been said in every lesson since week 1.
-  const slots = 9; // weeks 31..39
+  // The long-spacing slice: Phases 2-3 only (see PRIOR_WORDS_P2_P3_BY_DEP in
+  // week-content.ts), newest first, and a dozen a week taken in a stride
+  // across the list rather than a block of forty down it. A block of forty
+  // made the old phases most of every list — the review quiz draws ten at
+  // random, so a Phase 4 word due that week had about one chance in seven of
+  // being asked — and walked the slice back into Phase 1 by week 37.
   const p0 = new Set(PHASE0_WORDS_BY_DEP[lx.code] ?? []);
   const newest = [...priorWords].reverse().filter((w) => !p0.has(w));
-  const size = Math.ceil(newest.length / slots);
-  const start = (week - 31) * size;
-  out.push(...newest.slice(start, start + size));
+  // Week 31 has no Phase 4 week behind it, so its whole review is this slice.
+  out.push(...newest.filter((_, i) => i % 9 === week - 31).slice(0, week === 31 ? 24 : 12));
 
   return Array.from(new Set(out));
 }
@@ -3101,7 +3108,7 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     // forbid anything, and the model itself promised three business days
     // against a week that teaches the SLOWEST case for a card reversal.
     promptVi:
-      "Trong vai Quản lý Lễ tân, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không được viết ra chỗ công khai: số thẻ hay số phòng của khách, tên hay chức danh đồng nghiệp bị đổ lỗi, và lời bảo đảm thời hạn hoàn tiền nhanh hơn thời hạn chậm nhất của ngân hàng.",
+      "Trong vai Quản lý Lễ tân, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không được viết ra chỗ công khai: số thẻ hay số phòng của khách, tên hay chức danh đồng nghiệp bị đổ lỗi (hay đổ cho chính khách), và lời bảo đảm thời hạn hoàn tiền nhanh hơn thời hạn chậm nhất của ngân hàng (ba mươi ngày làm việc, tuỳ ngân hàng).",
     mustConvey: [
       {
         labelVi: "Xin lỗi khách",
@@ -3112,9 +3119,19 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         labelVi: "Nhắc tới khoản phí bị tính trùng",
         any: ["double charge", "charged twice", "duplicate charge", "billing error", "the charge"],
       },
+      // "up to" or "working days" alone used to satisfy this, whatever the
+      // number: "…in three days, up to the end of the week" scored 100% in
+      // round 2. The slowest case the week teaches is thirty working days.
       {
         labelVi: "Hoàn tiền kèm mốc chậm nhất của ngân hàng",
-        any: ["working days", "business days", "up to", "depending on your bank"],
+        any: [
+          "thirty working days",
+          "30 working days",
+          "thirty business days",
+          "30 business days",
+          "depending on your bank",
+          "depends on your bank",
+        ],
         required: true,
       },
       {
@@ -3140,13 +3157,31 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "within twenty-four hours",
       "within 48 hours",
       "within forty-eight hours",
-      "today",
+      // A faster date than the bank's slowest, in any wording. ("today" and
+      // "your room" used to be here and blocked correct replies: "I requested
+      // the refund today", "…for your room".)
+      "two days",
+      "three days",
+      "five days",
+      "two working days",
+      "three working days",
+      "five working days",
+      "within a week",
+      "end of the week",
+      "refund today",
+      "back today",
       "tomorrow",
+      // a colleague, or the guest, blamed
+      "night team",
+      "the agent",
+      "front desk agent",
+      "misread",
+      "your mistake",
     ],
     modelReply:
-      "Dear guest, I am very sorry for the double charge and that our replies to your emails were so slow. The refund has been requested, and a card refund can take up to fifteen working days to appear, depending on your bank. Please contact me directly at the hotel and ask for the Front Office Manager, so I can follow it until it reaches you.",
+      "Dear guest, I am very sorry for the double charge and that our replies to your emails were so slow. The refund has been requested, and a card refund can take up to thirty working days to appear, depending on your bank. Please contact me directly at the hotel and ask for the Front Office Manager, so I can follow it until it reaches you.",
     explanationVi:
-      "Thư công khai đứng tên Quản lý Lễ tân. Bốn ý: xin lỗi cụ thể, nhắc đúng khoản phí, nói mốc hoàn tiền CHẬM NHẤT (thẻ có thể mất tới mười lăm ngày làm việc, tuỳ ngân hàng — hứa nhanh hơn rồi trễ là khiếu nại thứ hai), và một kênh liên hệ trực tiếp. Không viết số thẻ, số phòng, không đổ lỗi một đồng nghiệp, không 'bảo đảm' một ngày cụ thể.",
+      "Thư công khai đứng tên Quản lý Lễ tân. Bốn ý: xin lỗi cụ thể, nhắc đúng khoản phí, nói mốc hoàn tiền CHẬM NHẤT (thẻ phát hành ở nước ngoài có thể mất tới ba mươi ngày làm việc, tuỳ ngân hàng — hứa nhanh hơn rồi trễ là khiếu nại thứ hai), và một kênh liên hệ trực tiếp. Không viết số thẻ, số phòng, không đổ lỗi một đồng nghiệp hay chính khách, không 'bảo đảm' một ngày cụ thể.",
   },
   FB: {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 4 ngày trước",
@@ -3189,12 +3224,26 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "made you ill",
       "food poisoning",
       "cannot be",
+      "cannot have",
       "not from our",
+      "came from our",
+      "come from our",
       "nothing to do with",
+      "somewhere else",
+      "something else you ate",
+      "probably",
+      "not cooked",
+      "cooked properly",
+      "our responsibility",
+      "made a mistake",
       // settling in public
       "refund",
+      "money back",
+      "pay you back",
       "free dinner",
       "free meal",
+      "free lunch",
+      "free of charge",
       "complimentary",
       "on the house",
       "voucher",
@@ -3204,6 +3253,10 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "the waiter",
       "our waiter",
       "the server",
+      "our server",
+      "the cook",
+      "our cook",
+      "our new",
     ],
     modelReply:
       "We are very sorry to read about your experience, and that you felt unwell after your visit — and I am sorry nobody followed up as they should have. Our kitchen team and I have reviewed our food safety procedures in full. Please contact me directly at the restaurant so I can hear the details from you personally.",
@@ -3307,6 +3360,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "harmless",
       "no danger",
       "not our concern",
+      "is common",
+      "goes away",
+      "go away",
+      "perfectly safe",
+      "products are safe",
+      "we are sure",
     ],
     modelReply:
       "We are very sorry to hear about the skin reaction after your facial, and that nobody followed up with you after your visit. Your health and safety come first for us. Please contact me directly at the spa and ask for the Spa Manager, so we can go through your treatment record with you.",
@@ -3368,7 +3427,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "our error",
       "our oversight",
       "at fault",
+      "misunderstanding",
+      "was wrong",
       // naming a cause, a department or a colleague
+      "reception",
+      "staff on duty",
+      "the staff",
       "front office",
       "front desk",
       "housekeeping",
@@ -3396,6 +3460,8 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "spa credit",
       "room upgrade",
       "upgrade you",
+      "complimentary upgrade",
+      "free upgrade",
       "voucher",
       "credit you",
       "restore your tier",
@@ -3410,6 +3476,8 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "Diamond",
       "Platinum",
       "Gold member",
+      "Gold guest",
+      "as a Gold",
       "your tier",
       "your status",
       "entitled to",

@@ -34,12 +34,25 @@ const PAST =
 
 /** Words that can follow a modal without being the verb it governs — an
  *  elliptical "My manager can, sir." must not be read as "can sir". */
+// "rather" ("would rather" is not a modal and a verb), the object pronouns
+// ("I am going to HIM now" is a continuous of "go") and the prepositions ("I
+// can, IN exchange for…") are on it since Phase 4 round 2 found each printed
+// as the verb a learner should keep bare.
 const NOT_A_VERB = new Set(
   (
     "sir madam please and but or not also too now then today i you we he she they it the a an my your our " +
-    "always never often usually sometimes just still only really certainly perhaps of"
+    "always never often usually sometimes just still only really certainly perhaps of rather " +
+    "him her them me us in on at for with to from by after before"
   ).split(" "),
 );
+
+/** A verb that ends a noun phrase: "a guest FELL", "I saw a guest COLLAPSE",
+ *  "a card hold LOOKS", "a fee APPLIES" were each printed as the noun the
+ *  article belongs to. */
+// Only words that cannot be the noun: "a long WAIT" and "a quick CALL" are
+// nouns, so the bare forms that double as nouns are left off.
+const ENDS_A_NOUN_PHRASE =
+  /^(fell|falls|collapse|collapses|collapsed|looks|applies|comes|goes|arrives|says|happens|seems|gets|leaves|\w+ed)$/;
 
 const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
 
@@ -47,15 +60,20 @@ const capitaliseI = (s: string) => s.replace(/\bi\b/g, "I");
  *  "unlimited" and "unhurried" are adjectives that never had a verb, and
  *  calling them passive (or perfect) teaches a structure the sentence does
  *  not contain. Shared by the passive, perfect and modal-passive branches. */
+// Phase 4 round 2 added the feelings and states its tips called passive:
+// "is relaxed", "will be thrilled", "are short-staffed", "is light-headed",
+// "is uncovered" (the course's own week-31 lesson teaches -ed adjectives).
 const ADJECTIVE_ED =
-  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly|disappointed|satisfied|delighted|annoyed|confused|upset|corked|stained|chipped|cracked|scratched)$/;
+  /^(unlimited|unhurried|unfinished|tired|pleased|interested|worried|surprised|excited|crowded|complicated|detailed|dedicated|talented|elderly|disappointed|satisfied|delighted|annoyed|confused|upset|corked|stained|chipped|cracked|scratched|relaxed|thrilled|amazed|stressed|scared|frightened|exhausted|overwhelmed|embarrassed|concerned|uncovered|short_staffed|\w+_headed)$/;
 
 /** Words ending in -ing that are not a verb's -ing form. "that was DURING
  *  quiet hours" was taught as a past continuous ("was during") in a week-28
  *  tip, and "everything", "morning" and their kin were the same mistake
  *  earlier. Shared by both continuous branches. */
+// …and the -ing adjectives and nouns Phase 4 printed as continuous: "is
+// soothing", "is refreshing", "There is lightning".
 const NOT_A_PARTICIPLE =
-  /^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing|spring|during|including|according|regarding|concerning|pending|following|building|ceiling|wedding|clothing|bedding|pudding|sibling|stuffing)$/;
+  /^((every|some|no|any)thing|(morn|even)ing|nothing|string|ring|king|thing|spring|during|including|according|regarding|concerning|pending|following|building|ceiling|wedding|clothing|bedding|pudding|sibling|stuffing|soothing|relaxing|refreshing|lightning|amazing|interesting|exciting|charming|boring|welcoming|calming|comforting|stunning|surprising|disappointing|worrying|annoying|tiring|missing)$/;
 
 /** A hyphenated verb is ONE verb. Stripping punctuation used to turn
  *  "can re-clean" into "can re clean", and the modal rule printed "Sau
@@ -87,8 +105,30 @@ function formNoteHeld(target: string): string | null {
 
   // "The Do Not Disturb sign was on the door." names a sign, and the note
   // taught it as a negative with a bare verb.
-  if ((m = s.match(/ (do not|does not) (\w+) /)) && !/do not disturb/i.test(target))
+  // "…, I do not, madam" has no verb after the "not" ("do not madam").
+  if (
+    (m = s.match(/ (do not|does not) (\w+) /)) &&
+    !/do not disturb/i.test(target) &&
+    !NOT_A_VERB.has(m[2])
+  )
     return `Phủ định: '${m[1]}' rồi tới động từ gốc — ${m[1]} ${m[2]}.`;
+
+  // "What if we SERVED the shorter set menu?" is week 35's suggestion frame,
+  // and the past-simple branch below taught it as a past tense.
+  // Only when the verb is in the past: "What if we BOOK two rooms" is a plain
+  // present and needs no note about it.
+  if (
+    (m = s.match(/ what if (we|i|you|they) (\w+) /)) &&
+    /(ed|^took|^made|^gave|^sent|^kept|^held|^brought|^left|^told|^put|^ran|^came|^went|^split)$/.test(
+      m[2],
+    )
+  )
+    return `Gợi ý lịch sự: What if + động từ quá khứ (nói về khả năng, không phải quá khứ) — ${capitaliseI(`what if ${m[1]} ${m[2]}`)}.`;
+
+  // "The steak is being remade" is a passive in the continuous, not a
+  // present continuous of "be".
+  if ((m = s.match(/ (is|are) being (\w+ed|\w*made|taken|sent|done|given|kept|held|shown) /)))
+    return `Bị động tiếp diễn: '${m[1]} being' + phân từ hai — ${m[1]} being ${m[2]}.`;
 
   // The four branches below exist because the ones further down claimed
   // their sentences first, and always as the wrong form. This file runs on
@@ -114,11 +154,13 @@ function formNoteHeld(target: string): string | null {
   // not be a modal — "should not have happened" is a modal perfect, and
   // calling it a present tense is the exact class of error this file was
   // rewritten to stop making.
+  // The word before "has" may be a room number the cleaner stripped: "1207
+  // has had no entry…" was taught as a past simple of "had".
   if (
     (m = s.match(
-      / (\w+) (has|have) (not |already |just )?(\w+ed|been|done|gone|made|taken|given|sent|put|shown|held|kept|written|seen|come|left|found|told|brought|read|set) /,
+      /(?: (\w+))? (has|have) (not |already |just )?(\w+ed|been|done|gone|made|taken|given|sent|put|shown|held|kept|written|seen|come|left|found|told|brought|read|set|had|smelt|felt|lost|paid|bought|heard|met|spent|slept|understood|forgotten|eaten|broken|chosen|spoken) /,
     )) &&
-    !/^(should|would|could|may|might|must|will|can|shall|to|not)$/.test(m[1]) &&
+    !/^(should|would|could|may|might|must|will|can|shall|to|not)$/.test(m[1] ?? "") &&
     !ADJECTIVE_ED.test(m[4])
   )
     return `Hiện tại hoàn thành: '${m[2]}' + phân từ hai — ${m[2]} ${m[3] ?? ""}${m[4]}.`;
@@ -156,14 +198,25 @@ function formNoteHeld(target: string): string | null {
     (m = s.match(
       / (is|are|was|were) (not |fully |already |now |just )?(\w+ed|given|taken|made|sent|put|shown|held|kept|written|done) /,
     )) &&
-    !ADJECTIVE_ED.test(m[3])
+    !ADJECTIVE_ED.test(m[3]) &&
+    // "What I can DO IS PUT it to my manager" is a cleft with a bare verb.
+    !/ do (is|was) /.test(s)
   )
-    return `Bị động: '${m[1]}' + phân từ hai — ${m[1]} ${m[2] ?? ""}${m[3]}.`;
+    // "We are fully booked" — the -ed word is the state the week teaches as
+    // an adjective, and no note is better than calling it passive (or, one
+    // branch further down, a past tense).
+    return m[2] === "fully "
+      ? null
+      : `Bị động: '${m[1]}' + phân từ hai — ${m[1]} ${m[2] ?? ""}${m[3]}.`;
 
   // "everything", "morning", "evening" and their kin end in -ing and are not
   // participles: "and that is everything" was being taught as a present
   // continuous. A note that names the wrong form is worse than no note.
-  if ((m = s.match(/ (am|is|are) (\w+ing) /)) && !NOT_A_PARTICIPLE.test(m[2]))
+  if (
+    (m = s.match(/ (am|is|are) (\w+ing) /)) &&
+    !NOT_A_PARTICIPLE.test(m[2]) &&
+    !new RegExp(` there ${m[1]} ${m[2]} `).test(s)
+  )
     return `Hiện tại tiếp diễn — việc đang làm hoặc đã sắp xếp: ${m[1]} ${m[2]}.`;
 
   // "Can someone bring…" — the subject sits between the modal and the verb,
@@ -206,10 +259,21 @@ function formNoteHeld(target: string): string | null {
   // "a little", "a few", "a lot", "a bit" are quantities, not a countable
   // noun taking its article: "It costs a little more" was teaching "a little
   // more" as a singular noun in five tips across Phase 3.
-  if ((m = target.match(nounPhrase)) && !/^(little|few|lot|bit)\b/i.test(m[2]))
-    return m[1].toLowerCase() === "an"
-      ? `Mạo từ 'an' đứng trước âm nguyên âm: an ${m[2].toLowerCase()}.`
-      : `Danh từ đếm được số ít cần mạo từ: a ${m[2].toLowerCase()}.`;
+  // "in a row" and "a great deal more" are set phrases, not a noun taking
+  // its article.
+  if (
+    (m = target.match(nounPhrase)) &&
+    !/^(little|few|lot|bit|great deal|good deal)\b/i.test(m[2]) &&
+    !/\bin a row\b/i.test(target)
+  ) {
+    const words = m[2].toLowerCase().split(" ");
+    while (words.length > 1 && ENDS_A_NOUN_PHRASE.test(words[words.length - 1]!)) words.pop();
+    const phrase = words.join(" ");
+    if (!ENDS_A_NOUN_PHRASE.test(phrase))
+      return m[1].toLowerCase() === "an"
+        ? `Mạo từ 'an' đứng trước âm nguyên âm: an ${phrase}.`
+        : `Danh từ đếm được số ít cần mạo từ: a ${phrase}.`;
+  }
 
   if ((m = s.match(/ (i|we|you|they) (always|never|often|usually|sometimes) (\w+) /)))
     return capitaliseI(`Trạng từ tần suất đứng trước động từ chính: ${m[1]} ${m[2]} ${m[3]}.`);

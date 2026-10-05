@@ -25455,13 +25455,22 @@ const P4_OVERRIDES: Record<string, WeekContent> = {
   "HK-37": HK_WEEK_37,
 };
 
-/** Everything a department met in Phases 0-3 — the pool Phase 4 walks
- *  across weeks 31-39. */
-const PRIOR_WORDS_THROUGH_P3_BY_DEP: Record<string, string[]> = (() => {
+/** What a department met in Phases 2-3 — the long-spacing pool Phase 4 walks
+ *  across weeks 31-39.
+ *
+ *  It was everything from Phase 0 on, walked newest first, so the slice
+ *  reached Phase 1 by week 37 and the review lists of weeks 37-39 filled
+ *  with "Right | Left | Near | Very | Umbrella | Taxi": four blind reviews in
+ *  round 2 of Phase 4 counted 30-36 such words a week, counted toward the
+ *  40% quota and learned before week 15. */
+const PRIOR_WORDS_P2_P3_BY_DEP: Record<string, string[]> = (() => {
   const p3 = phase3WordsByDep(P3_OVERRIDES);
   const out: Record<string, string[]> = {};
   for (const code of Object.keys(PRIOR_WORDS_THROUGH_P2_BY_DEP)) {
-    out[code] = [...PRIOR_WORDS_THROUGH_P2_BY_DEP[code], ...(p3[code] ?? [])];
+    const before = new Set(PRIOR_WORDS_BY_DEP[code] ?? []);
+    out[code] = [...PRIOR_WORDS_THROUGH_P2_BY_DEP[code], ...(p3[code] ?? [])].filter(
+      (w) => !before.has(w),
+    );
   }
   return out;
 })();
@@ -25476,7 +25485,7 @@ const REGISTRY: Record<string, WeekContent> = {
   ...buildPhase1(PHASE0_WORDS_BY_DEP),
   ...buildPhase2(PRIOR_WORDS_BY_DEP, P2_OVERRIDES),
   ...buildPhase3(PRIOR_WORDS_THROUGH_P2_BY_DEP, P3_OVERRIDES),
-  ...buildPhase4(PRIOR_WORDS_THROUGH_P3_BY_DEP, P4_OVERRIDES),
+  ...buildPhase4(PRIOR_WORDS_P2_P3_BY_DEP, P4_OVERRIDES),
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,

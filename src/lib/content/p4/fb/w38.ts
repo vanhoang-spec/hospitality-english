@@ -123,7 +123,7 @@ const lesson1 = L(38, 1, "The Shape of a Pitch", "Hình dạng của một bài 
         t1c,
         "Phần hai và phần ba: nhắc lại con số khách vừa đọc kèm 'plus service and VAT', rồi chuyển sang 'next steps' ngay — không để khoảng lặng sau con số.",
         undefined,
-        undefined,
+        ["service"],
         t1b,
       ),
       [

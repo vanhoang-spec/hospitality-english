@@ -461,6 +461,8 @@ const lesson3 = L(34, 3, "Words for the Moment", "Lời chúc đúng khoảnh kh
         "I am going to propose tonight. Can you help me?",
         "What wonderful news, sir. Tell me the moment you want, and we will be discreet and step back.",
         "Lời cầu hôn: nhân viên kín đáo ('discreet'), không vỗ tay, không tụ tập xem. Khách chọn thời điểm.",
+        undefined,
+        ["discreet"],
       ),
       [
         "What wonderful news, sir. Tell me the moment you want, and we will step back and be discreet.",
