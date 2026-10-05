@@ -400,7 +400,7 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
         "🔄",
       ]),
       c("Your usual", "Your usual table, madam, or somewhere different tonight?", [
-        "/jɔːr ˈjuːʒuəl/",
+        "/jɔː ˈjuːʒuəl/",
         "như mọi lần của quý khách",
         "🪑",
       ]),
