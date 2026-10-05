@@ -98,11 +98,39 @@ export function oralHalfPassed(results: { item: OralItem; passed: boolean }[]): 
   return results.filter((r) => r.passed).length >= oralPassMin(results.length);
 }
 
-function oralSetup(dep: string, week: string) {
+/** The phase's turns, per department and week, with their accepted answers
+ *  built only when something reads them.
+ *
+ *  Building the answer lists is the whole cost of a sitting: from week 23
+ *  every turn's answers include its generated shapes, and a week-40 paper
+ *  built all ~270 of them to draw five to thirteen — 8.5 s the first time it
+ *  opened, ~1.1 s on every draw after, ~0.8 s at week 30, the wait a learner
+ *  sat through on opening the test and longer on a phone. The draw reads
+ *  only the target, the guest line, `follows` and `risk`; the answer lists
+ *  are built for the turns it serves (and for the reserved pool when the slot
+ *  is narrowed), once each, from the same single acceptedAnswers() call as
+ *  before. `items` is still rebuilt from this list on every call, so the
+ *  reserved slot's narrowing never leaks from one sitting into the next. */
+const BUILT = new Map<string, ReturnType<typeof buildTurns>>();
+
+function withAnswers(
+  item: Omit<OralItem, "requiredTokens" | "alternates">,
+  build: () => AcceptedAnswer[],
+): OralItem {
+  let accepted: AcceptedAnswer[] | undefined;
+  let rest: AcceptedAnswer[] | undefined;
+  const get = () => (accepted ??= build());
+  return Object.defineProperties(item as OralItem, {
+    requiredTokens: { get: () => get()[0]!.requiredTokens, enumerable: true, configurable: true },
+    alternates: { get: () => (rest ??= get().slice(1)), enumerable: true, configurable: true },
+  });
+}
+
+function buildTurns(dep: string, week: string) {
   // Carried beside each item and never exported: which LESSON printed it. A
   // `follows` is a within-lesson contract (see the resolution below), and the
   // flattened phase-wide list is the only place that fact is lost.
-  const built = weeksInPhase(week).flatMap((w) => {
+  return weeksInPhase(week).flatMap((w) => {
     const c = getWeekContent(dep, String(w));
     if (!c) return [];
     return c.lessons.flatMap((l) =>
@@ -112,34 +140,45 @@ function oralSetup(dep: string, week: string) {
         // headword lock — and taking only `.slice(1)` while rebuilding [0]
         // from the raw frame tokens is exactly how the exam ended up grading
         // more leniently than the practice drill.
-        const accepted = acceptedAnswers(
-          dep,
-          week,
-          s.guestPrompt,
-          s.targetResponse,
-          s.requiredTokens,
-          s.speakerRole,
-        );
+        const accepted = () =>
+          acceptedAnswers(
+            dep,
+            week,
+            s.guestPrompt,
+            s.targetResponse,
+            s.requiredTokens,
+            s.speakerRole,
+          );
         return {
           lesson: `${c.weekNumber}/${l.lessonId}`,
-          item: {
-            key: `s:${w}:${s.guestPrompt}`,
-            guestPrompt: s.guestPrompt,
-            who: speakerLabel(s),
-            audioWho: speakerAudioLabel(s),
-            target: s.targetResponse,
-            tip: s.helpTip,
-            requiredTokens: accepted[0]!.requiredTokens,
-            follows: s.follows,
-            alternates: accepted.slice(1),
-            sourceWeek: c.weekNumber,
-            ...(s.risk ? { risk: true } : {}),
-            ...(s.alsoAccept?.length ? { alsoAccept: s.alsoAccept } : {}),
-          } as OralItem,
+          item: withAnswers(
+            {
+              key: `s:${w}:${s.guestPrompt}`,
+              guestPrompt: s.guestPrompt,
+              who: speakerLabel(s),
+              audioWho: speakerAudioLabel(s),
+              target: s.targetResponse,
+              tip: s.helpTip,
+              follows: s.follows,
+              sourceWeek: c.weekNumber,
+              ...(s.risk ? { risk: true } : {}),
+              ...(s.alsoAccept?.length ? { alsoAccept: s.alsoAccept } : {}),
+            },
+            accepted,
+          ),
         };
       }),
     );
   });
+}
+
+function oralSetup(dep: string, week: string) {
+  const key = `${dep}|${week}`;
+  let built = BUILT.get(key);
+  if (!built) {
+    built = buildTurns(dep, week);
+    BUILT.set(key, built);
+  }
   const items: OralItem[] = built.map((b) => b.item);
   const lessonOf = (i: number) => built[i]!.lesson;
   // One reserved draw, then a flat draw from the whole phase. This used to be

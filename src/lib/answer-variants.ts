@@ -33,6 +33,45 @@ export type Shape = { target: string; requiredTokens?: string[] };
 
 export const SHAPES_FROM_WEEK = 23;
 
+/** Steps a reply says it is taking, as "-ing" and as the bare verb. */
+const PROGRESSIVE: Record<string, string> = {
+  asking: "ask",
+  telling: "tell",
+  writing: "write",
+  handing: "hand",
+  taking: "take",
+  going: "go",
+  staying: "stay",
+  checking: "check",
+  sending: "send",
+  putting: "put",
+  getting: "get",
+  phoning: "phone",
+  dialling: "dial",
+  knocking: "knock",
+  coming: "come",
+  passing: "pass",
+  waiting: "wait",
+  giving: "give",
+  holding: "hold",
+  moving: "move",
+  switching: "switch",
+  opening: "open",
+  closing: "close",
+  keeping: "keep",
+  noting: "note",
+  logging: "log",
+  reporting: "report",
+  following: "follow",
+  informing: "inform",
+  speaking: "speak",
+  looking: "look",
+  clearing: "clear",
+  showing: "show",
+  walking: "walk",
+  telephoning: "telephone",
+};
+
 /** One word or phrase for another that the floor treats as the same move. */
 const SWAPS: [RegExp, string][] = [
   [/\bI am calling\b/g, "I will call"],
@@ -77,6 +116,30 @@ const SWAPS: [RegExp, string][] = [
   [/\b([Ww]e|[Tt]hey) are going to\b/g, "$1 will"],
   [/\b([Hh]e|[Ss]he) will\b(?! not)/g, "$1 is going to"],
   [/\b([Hh]e|[Ss]he) is going to\b/g, "$1 will"],
+  // The escalation said as "can", "will" or "am asking": "…but I CAN ask my
+  // Duty Manager now" and "…but I WILL ask…" make the same move, and round 2
+  // failed each for the other (13 of 37 frame swaps passed in one
+  // department). Only before ask/check — "I can offer" is a different promise
+  // from "I will offer".
+  [/\bI can (ask|check)\b/g, "I will $1"],
+  [/\bI will (ask|check)\b/g, "I can $1"],
+  // Someone else's decision, now or to come.
+  [
+    /\b(manager|supervisor|chef|insurer|office|team|[Ff]irst aid|[Hh]e|[Ss]he) decides\b/g,
+    "$1 will decide",
+  ],
+  [
+    /\b(manager|supervisor|chef|insurer|office|team|[Ff]irst aid|[Hh]e|[Ss]he) will decide\b/g,
+    "$1 decides",
+  ],
+  // "I am asking my Duty Manager now" / "I will ask…": the progressive and
+  // the promise of the same step. Round 2 failed 25 of 35 in one department.
+  ...Object.entries(PROGRESSIVE).flatMap(([ing, base]): [RegExp, string][] => [
+    [new RegExp(`\\bI will ${base}\\b`, "g"), `I am ${ing}`],
+    [new RegExp(`\\bI am ${ing}\\b`, "g"), `I will ${base}`],
+    [new RegExp(`\\bWe are ${ing}\\b`, "g"), `We will ${base}`],
+    [new RegExp(`\\b[Ww]e will ${base}\\b`, "g"), `we are ${ing}`],
+  ]),
 ];
 
 /** In a refusal the verb is not the commitment — "I cannot change / remove /
@@ -114,9 +177,20 @@ function sentencesOf(t: string): string[] {
 }
 const HONORIFIC_END = /,\s*(sir|madam)([.?!])$/i;
 
-/** Shapes one step away from `t`. */
-function oneStep(t: string): string[] {
-  const out: string[] = [];
+/** Shapes one step away from `t`, each with whether it may still be put in
+ *  another sentence order. A split at "and" or a dropped "Then" loses what
+ *  ordered the steps, so the sentences it leaves keep their order.
+ *
+ *  Two steps of shapes compose, and the order guard below only sees the step
+ *  it is in: "Please call 115 for an ambulance now. Then please tell the Duty
+ *  Manager." lost its "Then" in the first step and was swapped in the second,
+ *  and "Please tell the Duty Manager. Please call 115…" passed the slot whose
+ *  whole lesson is danger first. Same for "Please step out of the pool now,
+ *  and we will check the water": split, then swapped. */
+function oneStep(t: string, reorder = true): [string, boolean][] {
+  const all: [string, boolean][] = [];
+  const out = { push: (s: string) => all.push([s, true]) };
+  const frozen = { push: (s: string) => all.push([s, false]) };
   for (const [re, to] of SWAPS) out.push(t.replace(re, to));
   for (const m of t.matchAll(REFUSED))
     for (const v of REFUSAL_VERBS)
@@ -145,13 +219,18 @@ function oneStep(t: string): string[] {
     // and round 4 passed it on exactly that swapped shape.
     const SEQUENCE = /\b(first|then|after|afterwards|before|next|finally|later|until|second)\b/i;
     if (
+      reorder &&
       a.split(" ").length > 3 &&
       b.split(" ").length > 3 &&
       !SEQUENCE.test(a) &&
       !SEQUENCE.test(b)
     )
       out.push([...ss.slice(0, i), b, a, ...ss.slice(i + 2)].join(" "));
-    if (a.endsWith("."))
+    // Not an opener joined on: "Of course, sir, and before I order it…" is
+    // nobody's English, and moved about by the next step it became "…have an
+    // allergy, of course, sir, and?" — a shape whose stray words let a whole
+    // inserted clause read as a substitution.
+    if (a.endsWith(".") && a.split(" ").length > 3)
       for (const conj of ["but", "and", "so"])
         out.push(
           [...ss.slice(0, i), `${a.slice(0, -1)}, ${conj} ${low(b)}`, ...ss.slice(i + 2)].join(" "),
@@ -166,8 +245,9 @@ function oneStep(t: string): string[] {
       /^(I|we|you|he|she|they|it|my|our|the|please)\b/i.test(m[3]!)
     )
       // "…, and then I noted it" splits into "… Then I noted it": the order
-      // word stays with the step it orders.
-      out.push(
+      // word stays with the step it orders. An "and" can order steps as
+      // plainly as "then" does, so the halves keep their order (frozen).
+      (m[2] === "but" ? out : frozen).push(
         [
           ...ss.slice(0, i),
           `${m[1]}.`,
@@ -178,8 +258,11 @@ function oneStep(t: string): string[] {
     // A discourse marker at the front of a sentence: "Then we need…". Not
     // "First": in "First, take the spill kit." it is the safety order, and
     // dropping it let "Take the spill kit. I will tell the supervisor." pass.
+    // "Then" only where it opens the reply ("Then we can hold your luggage"):
+    // after another sentence it is the second step.
     const d = s.match(/^(Then|So|Now|Also),?\s+(.+)$/);
-    if (d) out.push([...ss.slice(0, i), cap(d[2]!), ...ss.slice(i + 1)].join(" "));
+    if (d && (i === 0 || d[1] !== "Then"))
+      frozen.push([...ss.slice(0, i), cap(d[2]!), ...ss.slice(i + 1)].join(" "));
     // A reason or a condition said first, or said last.
     const h = s.match(HONORIFIC_END);
     const body = h ? s.slice(0, h.index) : s.replace(/[.?!]+$/, "");
@@ -199,7 +282,7 @@ function oneStep(t: string): string[] {
     const back =
       body.match(/^(.+?),? ((?:because|if|before|until|when|after|as soon as|without) .+)$/i) ??
       body.match(/^(.+?), (for .+)$/i);
-    if (back && back[1]!.split(" ").length >= 2)
+    if (back && back[1]!.split(" ").length >= 2 && !/\b(and|so|but|then|or),?$/i.test(back[1]!))
       out.push(
         [...ss.slice(0, i), `${cap(back[2]!)}, ${low(back[1]!)}${end}`, ...ss.slice(i + 1)].join(
           " ",
@@ -215,7 +298,7 @@ function oneStep(t: string): string[] {
         ),
       );
   });
-  return out.filter((v) => v && v !== t);
+  return all.filter(([v]) => v && v !== t);
 }
 
 /** Every word the source locks that the shape still says — and every word
@@ -322,10 +405,11 @@ export function shapesOf(authored: Shape[]): Shape[] {
         );
       }
     }
-  const first: Shape[] = [];
+  const first: [Shape, boolean][] = [];
   for (const a of authored)
-    for (const t of oneStep(a.target)) if (add(a, t)) first.push(out[out.length - 1]!);
-  for (const a of first) for (const t of oneStep(a.target)) add(a, t);
+    for (const [t, reorder] of oneStep(a.target))
+      if (add(a, t)) first.push([out[out.length - 1]!, reorder]);
+  for (const [a, reorder] of first) for (const [t] of oneStep(a.target, reorder)) add(a, t);
   MEMO.set(key, out);
   return out;
 }

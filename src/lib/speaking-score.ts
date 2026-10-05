@@ -1281,8 +1281,10 @@ export function addedNegation(spoken: string, target: string): string[] {
 // turned an honest "I am sorry, madam." into a FAIL, on the one frame whose
 // whole subject is refusing to discuss another guest. Exactly the coin-flip
 // this helper exists to prevent, arriving through the back door.
+// Not "This is Mr Tan's OFFICE": the caller is someone in it, of either sex
+// (round 2 failed "…staying here, sir" on that must-be-right turn).
 const GENDER_CUE =
-  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\b|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister)\b|\b(sir|madam|ma'am)\b/i;
+  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\.?\s+[a-z]+\b(?!['’]s)|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister)\b|\b(sir|madam|ma'am)\b/i;
 const HONORIFIC = /^(sir|madam|ma'am|maam)$/;
 
 export function honorificIsFree(guestPrompt?: string): boolean {
@@ -1370,6 +1372,14 @@ const SYNONYMS: Record<string, string> = {
   began: "opened",
   free: "ready",
   available: "ready",
+  // The same word in another register, or the American one. Round 2 of the
+  // Phase 4 reviews failed "Is ANYBODY allergic to anything?" (0 of 4) and
+  // "Please do not use the ELEVATOR" (0 of 11) on exactly these.
+  anybody: "anyone",
+  somebody: "someone",
+  everybody: "everyone",
+  elevator: "lift",
+  elevators: "lifts",
 };
 
 function foldCourtesy(input: string[]) {
@@ -1417,8 +1427,13 @@ function foldCourtesy(input: string[]) {
     // beside "I cannot give a room number"). Three manager reviews had the
     // other form fail in the authority items that matter most.
     const be = (t?: string) => t === "am" || t === "is" || t === "are";
+    // "I am not ALLOWED to waive that charge" is the same refusal again: a
+    // blind review of Housekeeping failed it on every must-be-right turn it
+    // tried. ("permitted" has already become "allowed" above.)
     const refusal =
-      toks[i] === "not" && toks[i + 1] === "able" && toks[i + 2] === "to"
+      toks[i] === "not" &&
+      (toks[i + 1] === "able" || toks[i + 1] === "allowed") &&
+      toks[i + 2] === "to"
         ? 3
         : toks[i] === "unable" && toks[i + 1] === "to"
           ? 2
@@ -1435,6 +1450,38 @@ function foldCourtesy(input: string[]) {
     if (toks[i] === "let" && toks[i + 1] === "me") {
       out.push("i", "will");
       i++;
+      continue;
+    }
+    // "No one goes back in" is "Nobody goes back in" — one "no" either way.
+    if (toks[i] === "no" && toks[i + 1] === "one") {
+      out.push("nobody");
+      i++;
+      continue;
+    }
+    // "Can you…?" and "Could you…?" ask the same favour, as "May I" and
+    // "Could I" do above.
+    if (
+      toks[i] === "can" &&
+      toks[i + 1] === "you" &&
+      (i === 0 || !/^(i|we|you)$/.test(toks[i - 1]!))
+    ) {
+      out.push("could");
+      continue;
+    }
+    // "I will GET back to you" / "COME back to you"; "in the next hour" /
+    // "within the hour".
+    if (toks[i] === "get" && toks[i + 1] === "back" && toks[i + 2] === "to") {
+      out.push("come");
+      continue;
+    }
+    if (
+      toks[i] === "in" &&
+      toks[i + 1] === "the" &&
+      toks[i + 2] === "next" &&
+      toks[i + 3] === "hour"
+    ) {
+      out.push("within", "the", "hour");
+      i += 3;
       continue;
     }
     out.push(toks[i]!);
@@ -1666,9 +1713,23 @@ const ACCEPT_OPENERS: string[][] = [
   ["certainly"],
   ["absolutely"],
   ["no", "problem"],
+  ["with", "pleasure"],
   ["my", "pleasure"],
   ["sure"],
 ];
+/** A reply that opens by saying yes: "Yes", or any acceptance — "Of course",
+ *  "Certainly", "Sure", "No problem". To a guest who has just asked "Is the
+ *  cake safe for her?" they all say the same thing.
+ *
+ *  Only "Yes" used to count. A blind review put "Of course, madam." in front
+ *  of every must-be-right model of a department and passed 23 of 23, the nut
+ *  allergy and "Can you drop the service charge?" among them, while "Yes,
+ *  madam." in the same place failed every one: the acceptances were lifted
+ *  off as courtesy. A Vietnamese learner reaches for "Dạ, được ạ" — "Of
+ *  course" is the reflex as often as "Yes" is. */
+function opensAccepting(toks: string[]): boolean {
+  return toks[0] === "yes" || ACCEPT_OPENERS.some((p) => opensWith(toks, p));
+}
 const THANK_OPENERS: string[][] = [
   // Longer first: find() takes the first match, and "thank you" alone would
   // leave "for telling me" behind as three inserted words. The course teaches
@@ -1925,18 +1986,74 @@ function yesNotEarned(
   guestPrompt?: string,
 ): boolean {
   if (Number(sourceWeek) < ACKNOWLEDGE_FROM_WEEK || !guestPrompt) return false;
-  if (normalize(asSaid)[0] !== "yes") return false;
+  if (!opensAccepting(normalize(asSaid))) return false;
   const t = normalize(target);
-  if (t.includes("yes") || ACCEPT_OPENERS.some((p) => opensWith(t, p))) return false;
+  if (t.includes("yes") || opensAccepting(t)) return false;
   // "Yes, madam. I am sorry, visitors have to wait in the lobby." — a yes in
   // front of a model that opens by apologising says the opposite of it.
   if (APOLOGY_OPENERS.some((p) => opensWith(t, p))) return true;
+  // Nor in front of a model that hands the decision to someone else, or turns
+  // the guest down another way ("I would rather…", "…only with written
+  // permission", "May I call a taxi instead?") — whatever the guest said.
+  // "I want the spa included too." / "Just give us the upgrade now." are not
+  // questions, and "Of course, sir. That goes back to my manager." agreed to
+  // both. Unless the guest named that person or word first: "Could you ask
+  // your manager?" — "Certainly, I will ask my manager now."
+  // "An upgrade is my manager's to give" hands it on as plainly as "manager".
+  const bare = (x: string) => x.replace(/'s$/, "");
+  const g = normalize(guestPrompt).map(bare);
+  if (t.map(bare).some((x) => (HANDS_ON.has(x) || TURNS_DOWN.has(x)) && !g.includes(x)))
+    return true;
+  // WHICH QUESTIONS "YES" ANSWERS.
+  //
+  // It used to be only a question that opens on its verb ("Is…?", "Can…?"),
+  // and a review found what that misses on must-be-right turns: "Surely the
+  // champagne is on the house?", "Move it? And would the deposit move with
+  // it?", "…and now you want me to pay full price for it?" — "Yes, madam."
+  // passed all three. So a verb after "and / so / but…" counts, and so does
+  // "surely". A statement asked as a question ("Any complaints today?",
+  // "So it will be ready when we come back?") is answered with "Yes" as often
+  // as not — "Yes, two guests reported a noisy corridor." — and there the
+  // yes is only wrong where the model hands the decision to someone else.
   const questions = guestPrompt.match(/[^.?!]*\?/g);
-  const last = questions?.[questions.length - 1]?.trim().toLowerCase() ?? "";
-  return /^(is|are|am|was|were|can|could|do|does|did|will|would|may|might|shall|should|have|has)\b/.test(
-    last,
-  );
+  let last = questions?.[questions.length - 1]?.trim().toLowerCase() ?? "";
+  if (!last) return false;
+  if (/\bsurely\b/.test(last)) return true;
+  last = last.replace(/^((and|so|but|then|or|well|okay|ok|now|really|oh)\b[\s,]*)+/, "");
+  if (
+    /^(is|are|am|was|were|can|could|do|does|did|will|would|may|might|shall|should|have|has)\b/.test(
+      last,
+    )
+  )
+    return true;
+  // "You are a pretty one, aren't you?" — a tag asks for a yes.
+  if (
+    /,\s*(right|(is|are|do|does|did|was|were|can|could|will|would|have|has)n't\s+\w+)\s*\??$/.test(
+      last,
+    )
+  )
+    return true;
+  return false;
 }
+
+/** Ways a model turns the guest down without saying no. */
+const TURNS_DOWN = new Set(["rather", "only", "instead"]);
+
+/** Words of a model that leaves the decision to someone else, or says no. */
+const HANDS_ON = new Set([
+  "manager",
+  "supervisor",
+  "approval",
+  "approve",
+  "approves",
+  "decide",
+  "decides",
+  "decision",
+  "cannot",
+  "not",
+  "never",
+  "afraid",
+]);
 
 /** "No, please wait for first aid, madam." to "Should we give her some
  *  water?" — the model redirects ("Please wait for first aid") and says no
@@ -1965,7 +2082,13 @@ function noBeforePlease(
 function yesAgainst(spoken: string, slotTarget: string, sourceWeek: string | number): boolean {
   const t = normalize(slotTarget);
   if (!t.some((x) => NEGATES.has(x)) || t.includes("yes")) return false;
-  return normalize(stripCourtesyFrame(spoken, slotTarget, sourceWeek))[0] === "yes";
+  if (normalize(stripCourtesyFrame(spoken, slotTarget, sourceWeek))[0] === "yes") return true;
+  // An acceptance is lifted off as courtesy above; read it as said.
+  return (
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    !opensAccepting(t) &&
+    opensAccepting(normalize(spoken))
+  );
 }
 
 /** How many times a sentence says no. */
@@ -1990,10 +2113,15 @@ export function utterancePassed(
   // See stripCourtesyFrame: an answer that opens "Yes" to a model that says
   // no has answered the guest's question the wrong way round.
   const targetToks = normalize(target);
+  const refusesHere = targetToks.some((t) => NEGATES.has(t)) && !targetToks.includes("yes");
   const yesToARefusal =
-    (normalize(spoken)[0] === "yes" &&
-      targetToks.some((t) => NEGATES.has(t)) &&
-      !targetToks.includes("yes")) ||
+    (normalize(spoken)[0] === "yes" && refusesHere) ||
+    // "Of course, sir. Not the lift, sir…" — the acceptance was lifted off as
+    // courtesy by stripCourtesyFrame, so it is read from what was said.
+    (refusesHere &&
+      Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+      !opensAccepting(targetToks) &&
+      opensAccepting(normalize(asSaid))) ||
     yesNotEarned(asSaid, target, sourceWeek, guestPrompt);
   const th = passThresholds(sourceWeek);
   const free = honorificIsFree(guestPrompt);
@@ -2307,6 +2435,20 @@ export function utterancePassed(
     "promise",
     "waive",
     "upgrade",
+    // Taking the blame is a promise of money too: "It is our FAULT", "We will
+    // PAY", "The hotel is RESPONSIBLE" turn an injury report into an
+    // admission, and the model that leaves them out is the lesson — "do not
+    // admit fault at the desk".
+    "pay",
+    "pays",
+    "paid",
+    "compensate",
+    "compensation",
+    "reimburse",
+    "fault",
+    "responsible",
+    "liable",
+    "blame",
   ]);
   // Checked on the RAW stream, before foldCourtesy: the synonym fold turns
   // "free" into "ready", and reading the ban list off folded tokens would let
@@ -2561,6 +2703,18 @@ export function utterancePassed(
   const said = normalize(spoken);
   const branchesKept =
     ifBranchesKept(target, said) && (!slotTarget || ifBranchesKept(slotTarget, said));
+  // "…; however, BUT the rate…" and "Although the transfer is not mine to
+  // give, BUT I can ask…" — the double link Vietnamese ("tuy… nhưng") puts
+  // in, and the error week 35 exists to unteach. Both passed the drill of
+  // that very lesson in round 2.
+  const tgt = normalize(target);
+  const doubleLink =
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    ((said.some((t, i) => t === "however" && said[i + 1] === "but") &&
+      !tgt.some((t, i) => t === "however" && tgt[i + 1] === "but")) ||
+      (said.includes("although") &&
+        said.includes("but") &&
+        !(tgt.includes("although") && tgt.includes("but"))));
   return {
     ...cmp,
     missingRequired,
@@ -2570,8 +2724,8 @@ export function utterancePassed(
     addedNegation: added,
     inflectionErrors: inflection,
     /** Passed only as the model's meaning, not as its wording. */
-    byMeaning: meaningPassed && !strictPassed && branchesKept,
-    passed: (strictPassed || meaningPassed) && branchesKept,
+    byMeaning: meaningPassed && !strictPassed && branchesKept && !doubleLink,
+    passed: (strictPassed || meaningPassed) && branchesKept && !doubleLink,
     threshold: th,
   };
 }
@@ -2744,6 +2898,64 @@ const DETERMINERS = new Set<string>([
  *    so a stock line that happens to name the locks does not.
  *  The ten reviews' 700 dangerous answers, the course's own wrong options and
  *  every cheat profile in scripts/probes were re-run against it. */
+/** Irregular past forms ("left" is not one here: it is also a direction). */
+const PAST_FORMS = new Set(
+  (
+    "went gone had was were been did done found took taken brought told said made gave given came " +
+    "saw seen got sent kept held wrote written spoke spoken broke broken bought paid felt knew known " +
+    "thought ran sat stood lost met wore worn chose chosen began begun drank ate eaten forgot fell " +
+    "fallen heard slept spent understood"
+  ).split(" "),
+);
+
+const AUXILIARY_VERBS = new Set(
+  "is are am was were be been being will would can could shall should may might must has have had do does did".split(
+    " ",
+  ),
+);
+
+/** Runs of the reply that the model has nothing in place of: words inserted,
+ *  not words said instead of the model's. Aligned by longest common
+ *  subsequence; a stretch of unmatched reply facing unmatched model words is
+ *  a substitution and is not returned. */
+function insertionRuns(said: string[], model: string[]): string[][] {
+  const n = said.length;
+  const m = model.length;
+  const L = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      L[i]![j] =
+        said[i] === model[j] ? L[i + 1]![j + 1]! + 1 : Math.max(L[i + 1]![j]!, L[i]![j + 1]!);
+  const runs: string[][] = [];
+  let run: string[] = [];
+  let facing = 0;
+  // A substitution says about as much as it replaces: three words of a new
+  // clause facing one stray model word ("…check with her NOW" against "…check
+  // with her. HE IS HERE.") are an insertion that happened to land there.
+  const flush = () => {
+    if (run.length && facing < Math.max(1, run.length - 1)) runs.push(run);
+    run = [];
+    facing = 0;
+  };
+  let i = 0;
+  let j = 0;
+  while (i < n && j < m) {
+    if (said[i] === model[j]) {
+      flush();
+      i++;
+      j++;
+    } else if (L[i + 1]![j]! >= L[i]![j + 1]!) run.push(said[i++]!);
+    else {
+      facing++;
+      j++;
+    }
+  }
+  while (i < n) run.push(said[i++]!);
+  facing += m - j;
+  flush();
+  return runs;
+}
+
 function saidInOtherWords(p: {
   sourceWeek: string | number;
   spoken: string;
@@ -2880,8 +3092,50 @@ function saidInOtherWords(p: {
   // A joined shape's connector left out does not pay for a word added:
   // "…contamination. There is no danger. YOU CAN KEEP SWIMMING." came in
   // under "…contamination, AND there is no danger" at exactly three.
-  const missingUnjoined = missingRaw.filter((t) => !/^(and|so|but|then)$/.test(t));
-  if (extraRaw.length - missingUnjoined.length > 3) return false;
+  const joining = (t: string) => /^(and|so|but|then)$/.test(t);
+  const missingUnjoined = missingRaw.filter((t) => !joining(t));
+  // Nor does an "and" or "so" said: "…I will ask my manager today AND call
+  // you back" adds a step of three words, not four. (What a three-word clause
+  // may not be is decided just below.) "Then" still counts — it orders a new
+  // step, and "Please wait in the room, THEN take the stairwell" is the
+  // guest's own wrong plan put first.
+  if (extraRaw.filter((t) => t !== "and" && t !== "so").length - missingUnjoined.length > 3)
+    return false;
+  // Nor a short one slipped in whole. Under the line above, two round-2
+  // reviews put a sentence of three words into every must-be-right model of
+  // a department and it passed: "HE IS HERE. I cannot confirm who is staying
+  // with us…" (565 of 615 placements), "I am sorry, sir. WE WILL PAY. I am
+  // calling first aid…" (75 of 75), "IT IS OUR FAULT.", "THE HOTEL PAYS.",
+  // "IT IS SAFE." A paraphrase says the model's clauses in other words; a
+  // run of words inserted where the model has nothing, and carrying a verb,
+  // is a clause the model does not have.
+  // Without the honorifics, which move: "…with us, sir." against "I am sorry,
+  // sir, …with us. HE IS HERE." left the model's closing "sir" facing the
+  // inserted clause, and it read as a substitution.
+  // Nor the joining words a shape adds: "I am sorry, sir, AND I am calling…"
+  // faced "HE IS HERE" with its "and".
+  const noHon = (xs: string[]) => xs.filter((x) => !/^(sir|madam|and|so|but|then)$/.test(x));
+  // What makes it a claim is a statement about someone or something else:
+  // "he IS here", "it IS safe", "the floor WAS wet", "she is in her room".
+  // A step the speaker adds is not one — "…and call you back", "…so the chef
+  // knows", "…and then I WILL come back to you" all passed before and are what
+  // good staff say; the money in "we will pay" / "the hotel pays" is caught
+  // as money (MONEY_WORDS). So a run fails when it carries an auxiliary and
+  // no "I", or names a third person with a verb.
+  // Or a past event nobody here did: "Reception FORGOT it", "He CHECKED out".
+  const PERSON = new Set(["he", "she", "they"]);
+  const past = (x: string) =>
+    (x.length >= 5 && /[^e]ed$/.test(x) && x !== "hundred") || PAST_FORMS.has(x);
+  for (const run of insertionRuns(noHon(rs), noHon(rt))) {
+    const mine = run.includes("i");
+    if (
+      (run.some((x) => AUXILIARY_VERBS.has(x)) && !mine) ||
+      (run.some(past) && !mine && !run.includes("you")) ||
+      (run.some((x) => PERSON.has(x)) &&
+        run.some((x) => FINITE_VERBS.has(x) || AUXILIARY_VERBS.has(x) || past(x)))
+    )
+      return false;
+  }
   // Nor does it only take them away. The model with a word cut out — "I am
   // security and the duty manager now", "Ask him to let of you" — is an
   // unfinished sentence, not another way of saying it, and the strict
