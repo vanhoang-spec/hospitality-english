@@ -8,7 +8,7 @@ import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP, lockWeekHeadwords } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
 import { buildPhase2, phase2WordsByDep } from "./phase2";
 import { buildPhase3, phase3WordsByDep } from "./phase3";
-import { buildPhase4, WEEK33_WRITING_TASKS } from "./phase4";
+import { buildPhase4, isAuthoredP4, WEEK33_WRITING_TASKS } from "./phase4";
 
 /** Everything a department met in Phases 0-1, in teaching order — the
  *  long-spacing recycling pool Phase 2 draws on. */
@@ -25480,26 +25480,32 @@ const REGISTRY: Record<string, WeekContent> = {
   "FO-17": FO_WEEK_17,
   "FB-15": FB_WEEK_15,
   "HK-15": HK_WEEK_15,
-  "BO-37": BO_WEEK_37,
-  "FB-31": FB_WEEK_31,
-  "HK-33": HK_WEEK_33,
   "SW-19": SW_WEEK_19,
-  "GR-31": GR_WEEK_31,
-  "GR-32": GR_WEEK_32,
-  "GR-33": GR_WEEK_33,
-  "GR-34": GR_WEEK_34,
-  "GR-35": GR_WEEK_35,
-  "GR-36": GR_WEEK_36,
-  "GR-39": GR_WEEK_39,
-  "GR-40": GR_WEEK_40,
-  "BO-38": BO_WEEK_38,
-  "FO-37": FO_WEEK_37,
-  "FO-38": FO_WEEK_38,
-  "GR-37": GR_WEEK_37,
-  "GR-38": GR_WEEK_38,
-  "FB-37": FB_WEEK_37,
-  "SW-37": SW_WEEK_37,
-  "HK-37": HK_WEEK_37,
+  // The older Phase 4 payloads, except where p4/<dep>/ now writes the week:
+  // spread last they would put the old week straight back over the new one.
+  ...Object.fromEntries(
+    Object.entries({
+      "BO-37": BO_WEEK_37,
+      "FB-31": FB_WEEK_31,
+      "HK-33": HK_WEEK_33,
+      "GR-31": GR_WEEK_31,
+      "GR-32": GR_WEEK_32,
+      "GR-33": GR_WEEK_33,
+      "GR-34": GR_WEEK_34,
+      "GR-35": GR_WEEK_35,
+      "GR-36": GR_WEEK_36,
+      "GR-39": GR_WEEK_39,
+      "GR-40": GR_WEEK_40,
+      "BO-38": BO_WEEK_38,
+      "FO-37": FO_WEEK_37,
+      "FO-38": FO_WEEK_38,
+      "GR-37": GR_WEEK_37,
+      "GR-38": GR_WEEK_38,
+      "FB-37": FB_WEEK_37,
+      "SW-37": SW_WEEK_37,
+      "HK-37": HK_WEEK_37,
+    }).filter(([key]) => !isAuthoredP4(key)),
+  ),
 };
 
 // Every phase builder locks its own headwords into the speaking grader, and

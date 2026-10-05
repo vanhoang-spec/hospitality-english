@@ -58,8 +58,23 @@
 // ============================================================
 
 import type { LessonContent, WeekContent, WritingTask } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
+import {
+  LEXICONS,
+  game,
+  g,
+  read,
+  sp,
+  v,
+  type P0Lexicon,
+  lockWeekHeadwords,
+  PHASE0_WORDS_BY_DEP,
+} from "./phase0";
 import { P4_BANKS, type P4Bank, type P4Word } from "./phase4-lexicon";
+import { FO_P4, FO_P4_CAN_DO, FO_P4_TITLES } from "./p4/fo";
+import { FB_P4, FB_P4_CAN_DO, FB_P4_TITLES } from "./p4/fb";
+import { HK_P4, HK_P4_CAN_DO, HK_P4_TITLES } from "./p4/hk";
+import { SW_P4, SW_P4_CAN_DO, SW_P4_TITLES } from "./p4/sw";
+import { GR_P4, GR_P4_CAN_DO, GR_P4_TITLES } from "./p4/gr";
 
 type Ctx = P0Lexicon & { bank: P4Bank };
 
@@ -2955,12 +2970,43 @@ const WEEK_META: Record<
   40: { en: "Final Assessment", vi: "Đánh giá cuối khoá", build: week40 },
 };
 
-/** Headwords a department ACTUALLY meets in a week. Five slots in this
- *  range are served by hand-authored payloads instead of the spine, so
- *  recycling must read those, or it schedules words never taught. */
+/** Departments whose Phase 4 is written week by week for them (p4/<dep>/),
+ *  the way Phase 3's is. The first blind round of the reopened phase
+ *  (7ed3254, 0 of 10 cells at 7.5) found the spine printing safety lines
+ *  that were false ("Nobody has been hurt by the severe allergic reaction")
+ *  and the older hand-written batches contradicting each other week to week.
+ *  A week only counts as authored once its file has lessons; until then it
+ *  falls back to the override or the spine that served it before. */
+const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
+  FO: FO_P4,
+  FB: FB_P4,
+  HK: HK_P4,
+  SW: SW_P4,
+  GR: GR_P4,
+};
+
+const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
+  FO: FO_P4_CAN_DO,
+  FB: FB_P4_CAN_DO,
+  HK: HK_P4_CAN_DO,
+  SW: SW_P4_CAN_DO,
+  GR: GR_P4_CAN_DO,
+};
+
+/** Whether `${DEP}-${week}` is served by a p4/<dep>/ file — the registry
+ *  uses it to stop spreading the older hand-written payload over it. */
+export function isAuthoredP4(key: string): boolean {
+  const [dep, week] = key.split("-");
+  return Boolean(AUTHORED[dep ?? ""]?.[Number(week)]);
+}
+
+/** Headwords a department ACTUALLY meets in a week: the authored week, else
+ *  the hand-written override, else the spine. Recycling reads the same
+ *  source the learner sees, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
+  const authored = AUTHORED[lx.code]?.[week];
   const override = overrides[`${lx.code}-${week}`];
-  const lessons = override ? override.lessons : WEEK_META[week].build(lx, overrides);
+  const lessons = authored ?? (override ? override.lessons : WEEK_META[week].build(lx, overrides));
   return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
@@ -2987,16 +3033,50 @@ function reviewWordsFor(
 
   const out: string[] = [];
 
-  const oneBack = week - 1;
-  if (oneBack >= 31) out.push(...headwordsOf(lx, oneBack, overrides).slice(0, 6));
+  // Phase 3's schedule, one phase on (phase3.ts reviewWordsFor has the
+  // measurements). This used to take `.slice(0, 6)` one week back and
+  // `.slice(0, 5)` three weeks back — the same front of every week twice —
+  // and the first blind round of the reopened phase measured it: 89 of 136
+  // Spa headwords, and 106 of 128 at the front desk, met again only in the
+  // week-40 sweep. Each lag now reaches a different third, overlapping, so
+  // every third of a week comes back twice before the final week.
+  const thirds = (ws: string[]) => {
+    const a = Math.ceil(ws.length / 3);
+    return [ws.slice(0, a), ws.slice(a, 2 * a), ws.slice(2 * a)];
+  };
+  const reach: [lag: number, part: number][] =
+    week === 39
+      ? [
+          [1, 0],
+          [1, 1],
+          [1, 2],
+          [2, 1],
+          [2, 2],
+          [3, 2],
+          [3, 0],
+        ]
+      : [
+          [1, 0],
+          [1, 1],
+          [2, 1],
+          [2, 2],
+          [3, 2],
+          [3, 0],
+        ];
+  for (const [lag, part] of reach) {
+    const back = week - lag;
+    if (back >= 31) out.push(...thirds(headwordsOf(lx, back, overrides))[part]!);
+  }
 
-  const threeBack = week - 3;
-  if (threeBack >= 31) out.push(...headwordsOf(lx, threeBack, overrides).slice(0, 5));
-
+  // Newest first, and not Phase 0 — the same two reasons as Phase 3: walked
+  // oldest-first the opening weeks review "Good morning", and Phase 0's
+  // chunks have been said in every lesson since week 1.
   const slots = 9; // weeks 31..39
-  const size = Math.ceil(priorWords.length / slots);
+  const p0 = new Set(PHASE0_WORDS_BY_DEP[lx.code] ?? []);
+  const newest = [...priorWords].reverse().filter((w) => !p0.has(w));
+  const size = Math.ceil(newest.length / slots);
   const start = (week - 31) * size;
-  out.push(...priorWords.slice(start, start + size));
+  out.push(...newest.slice(start, start + size));
 
   return Array.from(new Set(out));
 }
@@ -3274,23 +3354,38 @@ function buildWeek(
   // builder that still destructures fourteen entries forces fourteen entries
   // to exist even when nothing a learner sees comes from them. Returning the
   // override here is what lets those banks be trimmed.
-  const override = overrides[`${lx.code}-${week}`];
-  if (override) return override;
-
   const meta = WEEK_META[week];
+  const authored = AUTHORED[lx.code]?.[week];
+  const override = overrides[`${lx.code}-${week}`];
+  if (override && !authored) return override;
+
   const review = reviewWordsFor(lx, week, priorWords, overrides);
+  const canDo = AUTHORED_CAN_DO[lx.code]?.[week];
   return {
     departmentId: lx.code,
     weekNumber: week,
-    weekTitleEn: meta.en,
-    weekTitleVi: meta.vi,
+    weekTitleEn: AUTHORED_TITLES[lx.code]?.[week]?.en ?? meta.en,
+    weekTitleVi: AUTHORED_TITLES[lx.code]?.[week]?.vi ?? meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx, overrides), review),
+    lessons: lockWeekHeadwords(authored ?? meta.build(lx, overrides), review),
     reviewWords: review,
     writing: week === 33 ? WEEK33_WRITING_TASKS[lx.code] : undefined,
+    ...(canDo ? { canDoVi: canDo } : {}),
   };
 }
+
+/** Week titles a department gives its own Phase 4 weeks where the shared
+ *  one does not fit what it teaches (Guest Relations' 36-38 crisis block,
+ *  and the 37-38 contract and proposal weeks of departments that do not
+ *  sell contracts) — the matrix records each one. */
+const AUTHORED_TITLES: Record<string, Record<number, { en: string; vi: string }>> = {
+  FO: FO_P4_TITLES,
+  FB: FB_P4_TITLES,
+  HK: HK_P4_TITLES,
+  SW: SW_P4_TITLES,
+  GR: GR_P4_TITLES,
+};
 
 /**
  * Phase 4 weeks (6 departments × weeks 31-40). Five of these keys are
