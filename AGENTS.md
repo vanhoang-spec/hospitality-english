@@ -45,7 +45,9 @@ quản trị: [`docs/huong-dan-quan-tri.html`](docs/huong-dan-quan-tri.html).
 
 ## 2. Stack và lệnh
 
-TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deploy qua Netlify.
+TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deploy qua Netlify, đang
+chuyển sang Vercel — cùng một build chạy được ở cả hai, xem
+[`docs/deploy-vercel.md`](docs/deploy-vercel.md).
 
 ```bash
 bun install
@@ -133,12 +135,16 @@ Chạy từ gốc repo. Tất cả gọi hàm production.
 | `bun scripts/probes/oralmeasure.ts [N]`             | Học thuộc 20/40/60/80 câu hay ra nhất thì qua nửa nói bao nhiêu                     |
 | `bun scripts/probes/orphans2.ts`                    | Cụm bắt nói mà không có thẻ ở tuần nào                                              |
 | `bun scripts/probes/resaid.ts [DEP] [--list]`       | Headword P3 tuần 23–29 không được nói lại ở tuần P3 nào sau                         |
+| `bun scripts/probes/swapone.ts [w1] [w2]`           | Thay một từ nội dung bằng "window": bao nhiêu lượt vẫn qua bộ chấm, chỉ nhờ nghĩa   |
 | `LINT_CONTENT_FULL=1 bun run lint:content`          | In trọn danh sách vi phạm của mọi cổng ratchet                                      |
 
 Mức chuẩn hiện tại để đối chiếu (đo 2026-09-27): `leakall` — câu mẫu tự qua **100%** ở cả 5
 phase; đáp án sai lọt P0 23/349 · P1 10/494 · P2–P4 **0**. `orphans2` — **0**.
 `oralmeasure 2000` (tuần 22) — bể 263–288 câu, học thuộc 60 câu qua nửa nói **21–26%**.
 Đo với N nhỏ (vd 200) cho số cao giả tạo vì "60 câu hay ra nhất" bị tính trên chính mẫu nhỏ đó.
+`swapone` (đo 2026-10-05, sau bản vá lớp nghĩa): "chỉ nhờ nghĩa" P2 **0%**, P3 **22–30%**, P4
+23–53% — phần còn lại là thay đại từ/từ hạn định ("her passport" → "window passport"). Trước bản
+vá P3 là 69–77%: lớp nghĩa cho đổi một từ nội dung lấy bất kỳ từ nào ("Please use the LIFT").
 **Một thay đổi làm xấu bất kỳ số nào ở đây là hồi quy**, kể cả khi CI xanh.
 
 ## 7. Kiểm định nội dung

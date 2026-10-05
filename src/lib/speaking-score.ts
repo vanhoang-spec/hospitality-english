@@ -2525,6 +2525,13 @@ export function utterancePassed(
     inflection.length === 0 &&
     !yesToARefusal &&
     !danglingArticle;
+  // Both readings: the branch swap reads as the model's words and its meaning.
+  // Read the branches off the slot's own model as well: a shape that moves a
+  // result in front of its "if" ("I am dialling 115…, if he is not, and if
+  // he is…") no longer shows which result is whose.
+  const said = normalize(spoken);
+  const branchesKept =
+    ifBranchesKept(target, said) && (!slotTarget || ifBranchesKept(slotTarget, said));
   return {
     ...cmp,
     missingRequired,
@@ -2534,11 +2541,108 @@ export function utterancePassed(
     addedNegation: added,
     inflectionErrors: inflection,
     /** Passed only as the model's meaning, not as its wording. */
-    byMeaning: meaningPassed && !strictPassed,
-    passed: strictPassed || meaningPassed,
+    byMeaning: meaningPassed && !strictPassed && branchesKept,
+    passed: (strictPassed || meaningPassed) && branchesKept,
     threshold: th,
   };
 }
+
+/** WHICH "THEN" GOES WITH WHICH "IF". A two-branch model said with its
+ *  branches swapped keeps every word, every negation and nearly every word
+ *  pair, so neither reading notices: "If he is, I am dialling 115… If he is
+ *  not, my Duty Manager" passed for the model that dials 115 when he is NOT
+ *  breathing (Phase 4 audit, GR_39_1 and GR_40_2). Each "if" clause of the
+ *  model must be followed by its own result — or, moved behind that result,
+ *  preceded by it. */
+function ifBranchesKept(target: string, said: string[]): boolean {
+  // A joined shape opens the clause with its connector: "…your room, AND if
+  // he is, my Duty Manager".
+  const clauses = target
+    .split(/[.!?;,—–]+/)
+    .map((c) => normalize(c))
+    .map((c) => (/^(and|so|but|then)$/.test(c[0] ?? "") && c[1] === "if" ? c.slice(1) : c))
+    .filter((c) => c.length > 0);
+  const branches = clauses.flatMap((c, i) =>
+    c[0] === "if" && clauses[i + 1]
+      ? [
+          {
+            cond: c,
+            then: new Set(
+              clauses[i + 1]!.filter((t) => isContentToken(t) && !SOFT_TRADE.has(t)).flatMap(
+                stemsOf,
+              ),
+            ),
+          },
+        ]
+      : [],
+  );
+  if (branches.length === 0) return true;
+  for (let k = 0; k < said.length; k++) {
+    if (said[k] !== "if") continue;
+    const own = branches
+      .filter((b) => b.cond.every((t, j) => said[k + j] === t))
+      .sort((a, b) => b.cond.length - a.cond.length)[0];
+    if (!own || own.then.size === 0) continue;
+    const isOwn = (w: string) => stemsOf(w).some((s) => own.then.has(s));
+    // Only another branch's result is a swap. "Ask her IF he is breathing" is
+    // a question, not a branch, and what follows it belongs to no branch.
+    const isOthers = (w: string) =>
+      branches.some((b) => b !== own && stemsOf(w).some((s) => b.then.has(s)));
+    const next = said
+      .slice(k + own.cond.length)
+      .find((t) => isContentToken(t) && !SOFT_TRADE.has(t));
+    if (!next || isOwn(next) || !isOthers(next)) continue;
+    if (said.slice(Math.max(0, k - 8), k).some(isOwn)) continue;
+    return false;
+  }
+  return true;
+}
+
+/** Words a paraphrase may leave out for any word of its own: who is meant
+ *  ("him" → "the boy", "them" → "the family"), how clauses join ("which" →
+ *  "because"), and "cannot" said as "not able" — the negation count is
+ *  checked on its own. */
+const SOFT_TRADE = new Set<string>([
+  "him",
+  "her",
+  "his",
+  "hers",
+  "them",
+  "their",
+  "they",
+  "she",
+  "its",
+  "you",
+  "your",
+  "our",
+  "this",
+  "that",
+  "these",
+  "those",
+  "both",
+  "all",
+  "any",
+  "each",
+  "then",
+  "but",
+  "which",
+  "who",
+  "cannot",
+]);
+
+/** The trades a paraphrase may make for a content word, and only these. Each
+ *  set is one thing said two ways in this course's own replies; it is not a
+ *  thesaurus, and a pair goes in when a reviewer's correct answer needs it. */
+const SAME_SENSE: Set<string>[] = [
+  ["manager", "supervisor"],
+  ["check", "look", "read"],
+  ["give", "share"],
+  ["come", "way"],
+  ["procedure", "operation"],
+  ["call", "ring", "phone", "telephone"],
+  ["usually", "normally"],
+  ["happen", "start"],
+].map((g) => new Set(g));
 
 /** Words an answer may not ADD to a model and still be said to mean it:
  *  each hedges, delays, offers an alternative or changes who acts. */
@@ -2744,7 +2848,11 @@ function saidInOtherWords(p: {
   // or a clause the model does not have: "YOUR FRIEND IS HERE, madam, but
   // because of our guest privacy rule that is confidential." A paraphrase
   // trades words; it does not add a sentence's worth of them.
-  if (extraRaw.length - missingRaw.length > 3) return false;
+  // A joined shape's connector left out does not pay for a word added:
+  // "…contamination. There is no danger. YOU CAN KEEP SWIMMING." came in
+  // under "…contamination, AND there is no danger" at exactly three.
+  const missingUnjoined = missingRaw.filter((t) => !/^(and|so|but|then)$/.test(t));
+  if (extraRaw.length - missingUnjoined.length > 3) return false;
   // Nor does it only take them away. The model with a word cut out — "I am
   // security and the duty manager now", "Ask him to let of you" — is an
   // unfinished sentence, not another way of saying it, and the strict
@@ -2752,6 +2860,23 @@ function saidInOtherWords(p: {
   // the reply leaves out has to be traded for one it says instead.
   const content = (xs: string[]) => xs.filter((t) => isContentToken(t)).length;
   if (content(missingRaw) > content(extraRaw)) return false;
+  // And a trade has to be a trade of the SAME thing. Counting alone let any
+  // word stand in for any other: the Phase 4 audit passed "Please use the
+  // LIFT" for "…the stairs" at a fire alarm, "Please STAY HERE" for "follow
+  // me", "Please TAKE your bags" for "leave", and "Of WINDOW, sir" — one
+  // off-topic word for one content word went through on 69-77% of Phase 3
+  // turns (0% in Phase 2, which has no meaning layer). What the ten round-3
+  // reviewers actually traded was a pronoun for its noun ("him" → "the
+  // boy"), "cannot" for "not able", or a handful of real synonyms. So a
+  // content word left out must come back as one of those.
+  const dropsCourtesy = missingRaw.includes("of") && missingRaw.includes("course");
+  for (const m of missingRaw) {
+    if (!isContentToken(m) || SOFT_TRADE.has(m)) continue;
+    if (m === "course" && dropsCourtesy) continue;
+    const mine = new Set(stemsOf(m));
+    const groups = SAME_SENSE.filter((g) => [...mine].some((s) => g.has(s)));
+    if (!extraRaw.some((x) => stemsOf(x).some((s) => groups.some((g) => g.has(s))))) return false;
+  }
   // one function word traded for another of its class ("ask security FOR
   // check", "I AM stop now", "in the pool" for "at the pool");
   for (const cls of [PREPOSITION_CLASS, AUXILIARY_CLASS])
