@@ -166,9 +166,9 @@ Who is trained, where the first-aid kit is, and who calls 115 are your own hotel
       {
         q: "Ba động từ của người phục vụ khi khách bị hóc là gì?",
         options: [
-          "Gọi người, dọn chỗ, ở lại",
+          "Gọi người sơ cứu, dọn khoảng trống, ở lại",
           "Vỗ lưng khách, cho uống nước ấm, dìu khách ra ngoài",
-          "Hỏi chuyện người nhà, ghi chép, chờ quản lý tới quyết",
+          "Hỏi người nhà, ghi chép, chờ quản lý",
         ],
         correct: 0,
         explanation:
@@ -178,7 +178,7 @@ Who is trained, where the first-aid kit is, and who calls 115 are your own hotel
         q: "Câu trấn an người nhà khách theo bài có hình dạng nào?",
         options: [
           "Một lời khuyên khách hãy cố gắng bình tĩnh lại",
-          "Một việc và một mốc giờ",
+          "Một việc và một mốc giờ, như 'người sơ cứu đang tới — một phút'",
           "Một lời hứa rằng mọi chuyện rồi sẽ ổn cả thôi",
         ],
         correct: 1,
@@ -200,19 +200,19 @@ Who is trained, where the first-aid kit is, and who calls 115 are your own hotel
   ),
   game: [
     round(
-      "My husband is choking — why are you just standing there?",
-      "The first aider is coming now, madam. I am clearing a space for her.",
-      "The first aider is come now, madam. I am clear a space for her.",
-      "Let me try pressing on his stomach, madam — I once saw how it is done on television.",
-      "'is come… I am clear' sai: hiện tại tiếp diễn cần V-ing (coming, clearing). Câu tự làm sơ cứu theo TV đúng tiếng Anh nhưng là kỹ thuật người phục vụ chưa được học — có thể làm khách nguy hơn. Đáp án gọi đúng người và dọn chỗ cho người đó.",
+      "My friend has gone red and cannot speak — he was eating the fish! Help him!",
+      "Our first aider is coming, sir — thirty seconds. Please move your chair back.",
+      "Our first aider is coming, sir — thirty second. Please move your chair back.",
+      "Let me try pressing on his stomach, sir — I once saw how it is done on television.",
+      "'thirty second' thiếu -s: sau số đếm từ hai trở lên là 'seconds'. Câu tự ấn bụng khách theo TV đúng tiếng Anh nhưng là kỹ thuật người phục vụ chưa được học — có thể làm khách nguy hơn. Đáp án theo khung một việc + một mốc giờ: người sơ cứu đang tới, ba mươi giây, và một việc khách làm được ngay để dọn chỗ.",
       1,
     ),
     round(
       "The man at table eight is breathing again. Shall I bring him a glass of water?",
       "Not yet — the first aider decides that. Please stay with him and write down when it happened.",
-      "Not yet — the first aider decide that. Please write down when it happen.",
+      "Yes, and a free dessert as well, so the whole table forget about it quickly.",
       "Yes, and a free dessert as well, so the whole table forgets about it quickly.",
-      "'the first aider decide… it happen' sai: chủ ngữ số ít cần 'decides', và chuyện đã xảy ra dùng quá khứ 'happened'. Câu tặng tráng miệng đúng ngữ pháp nhưng cho nước khi người sơ cứu chưa cho phép và hứa quà vượt quyền. Đáp án để người được huấn luyện quyết, ở lại với khách và ghi lại giờ.",
+      "'the whole table forget' thiếu -s: 'the whole table' số ít nên 'forgets'. Cả câu đó lẫn câu đúng ngữ pháp 'Yes, and a free dessert as well…' đều cho nước khi người sơ cứu chưa cho phép và hứa quà vượt quyền. Đáp án để người được huấn luyện quyết, ở lại với khách và ghi lại giờ.",
       0,
       "colleague",
     ),
@@ -383,9 +383,9 @@ At the table, say "I hear you". Do not admit a mistake, do not deny one, and do 
     round(
       "She is allergic to shellfish, and she says the soup tastes strange. What is in it?",
       "I will not answer from memory, sir. The chef is checking now — how does she feel?",
-      "I will not answering from memory, sir. The chef is check now — how does she feel?",
+      "Nothing with shellfish, sir — our soups are all make with vegetables, so please do not worry.",
       "Nothing with shellfish, sir — our soups are all made with vegetables, so please do not worry.",
-      "'will not answering… is check' sai dạng động từ: sau 'will not' là nguyên mẫu (answer), hiện tại tiếp diễn cần 'checking'. Câu khẳng định súp không có hải sản đúng tiếng Anh nhưng là lời hứa an toàn từ trí nhớ — đúng điều sảnh không được làm. Đáp án để bếp kiểm tra và hỏi ngay tình trạng khách.",
+      "'are all make' sai: bị động cần quá khứ phân từ 'made'. Cả câu đó lẫn câu đúng tiếng Anh 'Nothing with shellfish… please do not worry' đều là lời hứa an toàn từ trí nhớ — đúng điều sảnh không được làm. Đáp án để bếp kiểm tra và hỏi ngay tình trạng khách.",
       2,
     ),
     round(
@@ -546,7 +546,7 @@ A storm or a power cut is smaller, but the shape does not change. "Please come i
       {
         q: "Khách không đi cầu thang được thì xử lý thế nào?",
         options: [
-          "Chờ ở cửa cầu thang với đồng nghiệp",
+          "Chờ ở cửa cầu thang với một đồng nghiệp, và báo đội cứu hoả",
           "Đưa khách xuống bằng thang máy cho nhanh hơn",
           "Để khách ngồi lại bàn và hứa sẽ quay lại đón sau",
         ],
@@ -559,7 +559,7 @@ A storm or a power cut is smaller, but the shape does not change. "Please come i
         options: [
           "Người phục vụ đứng gần tủ báo cháy nhất",
           "Bếp trưởng, vì bếp là nơi có nhiều lửa nhất",
-          "Bộ phận an ninh",
+          "Bộ phận an ninh; sảnh chỉ lo đưa khách đi",
         ],
         correct: 2,
         explanation:
@@ -579,9 +579,9 @@ A storm or a power cut is smaller, but the shape does not change. "Please come i
     round(
       "The fire panel keeps beeping, and it is so loud. Shall I just switch it off?",
       "Do not touch it — Security deals with the panel. We move the guests.",
-      "Do not touching it — Security deal with the panel. We move the guests.",
+      "Yes, switch it off, and then the guests will stop worry and finish their dinner.",
       "Yes, switch it off, and then the guests will stop worrying and finish their dinner.",
-      "'Do not touching… Security deal' sai: sau 'Do not' là nguyên mẫu, và 'Security' số ít cần 'deals'. Câu tắt tủ báo cháy đúng ngữ pháp nhưng là điều cấm tuyệt đối — tủ báo cháy thuộc về an ninh. Đáp án giao đúng việc cho đúng người.",
+      "'stop worry' sai: sau 'stop' là V-ing (stop worrying). Cả câu đó lẫn câu đúng ngữ pháp 'Yes, switch it off…' đều tắt tủ báo cháy — điều cấm tuyệt đối, tủ báo cháy thuộc về an ninh. Đáp án giao đúng việc cho đúng người.",
       1,
       "colleague",
     ),
@@ -705,7 +705,7 @@ Your own hotel's serving rules, such as ages, hours and limits, come from your m
         options: [
           "Nói thẳng cho khách biết khách đã uống quá nhiều",
           "Hứa với khách sẽ phục vụ tiếp ở quầy bar sau đó",
-          "Không gọi tên tình trạng của khách",
+          "Không gọi tên tình trạng của khách; mời nước và đồ ăn trước",
         ],
         correct: 2,
         explanation:
@@ -714,7 +714,7 @@ Your own hotel's serving rules, such as ages, hours and limits, come from your m
       {
         q: "Ai quyết định ly tiếp theo khi khách cứ đòi?",
         options: [
-          "Giám sát",
+          "Giám sát, người có quyền từ chối rượu",
           "Người phục vụ đang lo bàn đó tối nay",
           "Người pha chế đứng ở quầy bar gần nhất",
         ],
@@ -739,9 +739,9 @@ Your own hotel's serving rules, such as ages, hours and limits, come from your m
     round(
       "Do not tell me what I have had. Bring the whisky, or I will complain to your manager.",
       "Then let me bring my supervisor to you, sir. She decides the next drink.",
-      "Then let me brings my supervisor to you, sir. She decide the next drink.",
+      "Complain if you like, sir — the rule is the rule, and it protect everybody here.",
       "Complain if you like, sir — the rule is the rule, and it protects everybody here.",
-      "'let me brings… She decide' sai: sau 'let me' là nguyên mẫu (bring), và 'She' cần 'decides'. Câu 'Complain if you like… the rule is the rule' đúng ngữ pháp nhưng thách thức khách và đẩy căng thẳng lên. Đáp án đưa đúng người có quyền tới.",
+      "'it protect' thiếu -s: 'it' đi với 'protects'. Cả câu đó lẫn câu đúng ngữ pháp 'Complain if you like… the rule is the rule' đều thách thức khách và đẩy căng thẳng lên. Đáp án đưa đúng người có quyền tới.",
       0,
     ),
     round(

@@ -155,7 +155,7 @@ Ask about age only if the guest offers it. A milestone the guest names is a gift
         options: [
           "Nhìn kỹ một lần rồi ghi nhanh vào phiếu đặt chỗ",
           "Để thợ làm bánh tự kiểm tra trước khi giao bánh",
-          "Đọc lại và nhờ khách đánh vần từng chữ",
+          "Đọc lại tên cho khách nghe, rồi nhờ khách đánh vần từng chữ",
         ],
         correct: 2,
         explanation:
@@ -175,7 +175,7 @@ Ask about age only if the guest offers it. A milestone the guest names is a gift
         q: "Theo bài, khi nào được nói tuổi của khách?",
         options: [
           "Khi nhân viên đoán khá chắc tuổi của khách",
-          "Khi chính khách nói ra trước",
+          "Khi chính khách tự nói ra tuổi mình trước",
           "Khi bánh có ghi tuổi để cả bàn cùng vui",
         ],
         correct: 1,
@@ -320,7 +320,7 @@ If one part fails, tell the guest early, with a choice. A late "sorry, no flower
         q: "Vì sao người nhận đặt chỗ nên làm đầu mối phối hợp?",
         options: [
           "Vì nhà hàng được tính thêm phí phối hợp với các bộ phận",
-          "Để khách chỉ làm việc với một người",
+          "Để khách chỉ làm việc với một người, không gọi bốn nơi",
           "Vì các bộ phận khác không được nói chuyện với khách",
         ],
         correct: 1,
@@ -496,7 +496,7 @@ A celebration does not change who decides money. A bottle on the house still nee
         q: "Lời chúc trang trọng của nhân viên có hình dạng thế nào?",
         options: [
           "Một bài phát biểu ngắn khoảng ba đến bốn câu",
-          "Một câu theo khung On behalf of hoặc May",
+          "Chỉ một câu, theo khung On behalf of the whole team hoặc May",
           "Một câu đùa vui để cả bàn cùng cười thoải mái",
         ],
         correct: 1,
@@ -531,17 +531,17 @@ A celebration does not change who decides money. A bottle on the house still nee
     round(
       "The cake is coming out now — should we all sing, or what do we do?",
       "That is your choice, madam. The cake comes in with the candles lit.",
-      "That is your choice, madam. The cake come in with the candles light.",
+      "Singing is not allow in the dining room, madam — the other tables must not be disturbed.",
       "Singing is not allowed in the dining room, madam — the other tables must not be disturbed.",
-      "'The cake come… candles light' sai: 'comes' (số ít) và 'lit' (quá khứ phân từ). Câu cấm hát đúng ngữ pháp nhưng lạnh lùng và lấy mất khoảnh khắc của khách. Đáp án trả quyền chọn cho khách.",
+      "'is not allow' sai: bị động cần quá khứ phân từ 'allowed'. Cả câu đó lẫn câu đúng ngữ pháp 'Singing is not allowed…' đều lạnh lùng và lấy mất khoảnh khắc của khách. Đáp án trả quyền chọn cho khách.",
       0,
     ),
     round(
       "It is my parents' fiftieth wedding anniversary. Could you say something?",
       "On behalf of all of us, congratulations on fifty years together.",
-      "On behalf for all of us, congratulation on fifty years together.",
-      "Fifty years! Was it love at first sight, or did it take a while?",
-      "'On behalf for… congratulation' sai: cụm cố định là 'on behalf of', và 'congratulations' luôn có -s. Câu hỏi 'love at first sight' đúng tiếng Anh nhưng là câu hỏi đời tư, đùa quá trớn. Đáp án: một câu chúc trang trọng.",
+      "Fifty years! Was it love at first sight for you two, or did it took a while?",
+      "Fifty years! Was it love at first sight for you two, or did it take a while?",
+      "'did it took' sai: sau 'did' là động từ nguyên mẫu 'take'. Cả câu đó lẫn câu đúng tiếng Anh 'Was it love at first sight…' đều là câu hỏi đời tư, đùa quá trớn. Đáp án: một câu chúc trang trọng.",
       2,
     ),
   ],
@@ -661,7 +661,7 @@ Afterwards, write what happened on the slip: the fact, the fix and the time.`,
       {
         q: "Bàn giao một bất ngờ cho ca sau gồm những việc gì?",
         options: [
-          "Trao phiếu cho một người có tên, dẫn tới chỗ bánh",
+          "Trao phiếu cho một người có tên, dẫn tới chỗ bánh và chỉ mặt chủ tiệc",
           "Ghi vào sổ chung của ca và nhắn tin cho cả nhóm trực tối",
           "Nói nhanh với cả ca trong giờ họp ngay tại khu vực pass",
         ],
@@ -685,7 +685,7 @@ Afterwards, write what happened on the slip: the fact, the fix and the time.`,
         options: [
           "Vì luật về lửa mỗi khách sạn một khác",
           "Vì pháo bông luôn tính thêm phí rất cao",
-          "Vì bếp bánh không thích cắm pháo bông",
+          "Vì bếp bánh không thích pháo bông",
         ],
         correct: 0,
         explanation:
@@ -705,9 +705,9 @@ Afterwards, write what happened on the slip: the fact, the fix and the time.`,
     round(
       "The pastry team says a new cake takes twenty minutes. What do I tell the host?",
       "Tell the host quietly, away from the table, and offer a plated dessert with candles now as plan B.",
-      "Tell the host quietly, away from table, and offer plated dessert now as plan B.",
+      "Tell the whole table it will be twenty minute, so everybody knows why they are waiting.",
       "Tell the whole table it will be twenty minutes, so everybody knows why they are waiting.",
-      "'away from table… offer plated dessert' thiếu mạo từ 'the' và 'a'. Câu báo cả bàn đúng tiếng Anh nhưng làm lộ bất ngờ và làm hỏng khoảnh khắc. Đáp án: chỉ chủ tiệc biết, kèm phương án B.",
+      "'twenty minute' thiếu -s: sau số đếm từ hai trở lên là 'minutes'. Cả câu đó lẫn câu đúng tiếng Anh 'Tell the whole table…' đều làm lộ bất ngờ và làm hỏng khoảnh khắc. Đáp án: chỉ chủ tiệc biết, kèm phương án B.",
       1,
       "colleague",
     ),

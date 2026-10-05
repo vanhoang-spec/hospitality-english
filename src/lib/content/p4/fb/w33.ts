@@ -160,7 +160,7 @@ Prevention is cheaper than a remake. Confirm the steak doneness when you take th
       {
         q: "Bốn bước xử lý khi món bị trả về theo thứ tự nào?",
         options: [
-          "Lắng nghe – xin lỗi – giải quyết – cảm ơn",
+          "Lắng nghe – xin lỗi – giải quyết – cảm ơn khách",
           "Xin lỗi – giải thích công thức – giảm giá – cảm ơn",
           "Giải quyết – lắng nghe – báo cho bếp – xin lỗi",
         ],
@@ -173,7 +173,7 @@ Prevention is cheaper than a remake. Confirm the steak doneness when you take th
         options: [
           "Chờ món được sửa lại, hoặc bỏ hẳn không dùng nữa",
           "Nhận tráng miệng miễn phí, hoặc phiếu giảm giá lần sau",
-          "Làm lại món đó, hoặc đổi món khác cùng lượt",
+          "Cả hai lựa chọn, mỗi lần: làm lại món đó, hoặc đổi món khác cùng lượt",
         ],
         correct: 2,
         explanation:
@@ -183,7 +183,7 @@ Prevention is cheaper than a remake. Confirm the steak doneness when you take th
         q: "Người phục vụ nói gì với bếp về món bị trả?",
         options: [
           "Nhận xét rằng khách ở bàn đó là người rất khó tính",
-          "Sự việc: gọi tái vừa, ra chín kỹ",
+          "Sự việc: gọi tái vừa, ra chín kỹ, không trách ai",
           "Lời trách: bếp nấu sai nên khách mới phàn nàn",
         ],
         correct: 1,
@@ -196,9 +196,9 @@ Prevention is cheaper than a remake. Confirm the steak doneness when you take th
     round(
       "There is a piece of glass in my salad. Glass! Look at it!",
       "Are you hurt, sir? I am so sorry. I will keep the plate for my manager, and he is coming now.",
-      "Are you hurt, sir? I am so sorry. I keeping the plate for my manager, and he coming now.",
+      "I am terribly sorry, sir — a fresh salad and a free dessert is coming right away.",
       "I am terribly sorry, sir — a fresh salad and a free dessert are coming right away.",
-      "'I keeping… he coming' thiếu động từ 'am/is'. Câu tặng salad mới và tráng miệng miễn phí đúng tiếng Anh nhưng bỏ qua câu hỏi quan trọng nhất (khách có bị thương không), hứa quà vượt quyền và để mất chiếc đĩa cần giữ lại. Đáp án hỏi thương tích trước, giữ đĩa, gọi quản lý.",
+      "'a fresh salad and a free dessert is coming' sai: hai thứ nối bằng 'and' nên dùng 'are'. Sửa ngữ pháp rồi vẫn sai việc: câu tặng salad mới và tráng miệng miễn phí bỏ qua câu hỏi quan trọng nhất (khách có bị thương không), hứa quà vượt quyền và để mất chiếc đĩa cần giữ lại. Đáp án hỏi thương tích trước, giữ đĩa, gọi quản lý.",
       2,
     ),
     round(
@@ -332,7 +332,7 @@ A promise above your tier, taken back later, becomes a second complaint, worse t
         q: "Người phục vụ được tự quyết những gì?",
         options: [
           "Bớt một món khỏi hoá đơn nếu khách phàn nàn hợp lý",
-          "Làm lại hoặc đổi món, giữ ấm các đĩa khác",
+          "Làm lại hoặc đổi món, thay ly đồ uống mới, giữ ấm các đĩa khác",
           "Mời cả bàn tráng miệng để thay cho lời xin lỗi",
         ],
         correct: 1,
@@ -355,7 +355,7 @@ A promise above your tier, taken back later, becomes a second complaint, worse t
         options: [
           "Vì con số này thay đổi theo từng ca làm việc",
           "Vì khách sạn chưa công bố bảng giá mới cho năm nay",
-          "Khách biết hạn mức sẽ đòi sát hạn mức",
+          "Vì khách biết hạn mức sẽ đòi sát dưới hạn mức",
         ],
         correct: 2,
         explanation:
@@ -375,9 +375,9 @@ A promise above your tier, taken back later, becomes a second complaint, worse t
     round(
       "Table nine wants the steak for free. What did you promise them?",
       "Nothing on the bill, only the remake. I said you would come to the table.",
-      "Nothing on the bill, only the remake. I say you will coming to the table.",
-      "I told them the whole dinner is free tonight, so they are happy now.",
-      "'I say you will coming' sai thì và dạng động từ (I said you would come). Câu 'I told them the whole dinner is free' đúng ngữ pháp nhưng là lời hứa vượt quyền — giám sát giờ phải rút lại, và khách có khiếu nại thứ hai. Đáp án báo đúng việc mình đã làm và việc để lại cho cấp trên.",
+      "I tell them the whole dinner is free, so they are happy now.",
+      "I told them the whole dinner is free, so they are happy now.",
+      "'I tell them' sai thì: việc đã làm phải dùng quá khứ 'told'. Cả câu đó lẫn câu đúng ngữ pháp 'I told them the whole dinner is free' đều là lời hứa vượt quyền — giám sát giờ phải rút lại, và khách có khiếu nại thứ hai. Đáp án báo đúng việc mình đã làm và việc để lại cho cấp trên.",
       2,
       "manager",
     ),
@@ -495,7 +495,7 @@ Never guess, and never blame "the computer". A machine only prints what someone 
         q: "Trước khi trao đổi về hoá đơn, cần làm gì?",
         options: [
           "Mời khách ra quầy thu ngân để nói chuyện riêng",
-          "Đứng sát khách và hạ giọng",
+          "Đứng sát khách và hạ giọng, trước khi nói gì về hoá đơn",
           "Đọc to từng dòng cho cả bàn cùng nghe rõ",
         ],
         correct: 1,
@@ -529,10 +529,10 @@ Never guess, and never blame "the computer". A machine only prints what someone 
   game: [
     round(
       "There is a bottle of wine on here that we never ordered. This is ridiculous.",
-      "Let me check the docket now, sir. If it is our error, it comes off.",
-      "Let me checking the docket now, sir. If it is our error, it come off.",
+      "Let me check the order slip now, sir. If it is our error, it comes off.",
+      "Somebody at your table may have order it, sir — perhaps while you were outside.",
       "Somebody at your table may have ordered it, sir — perhaps while you were outside.",
-      "'Let me checking… it come off' sai: sau 'let me' là động từ nguyên mẫu, và 'it comes'. Câu đoán người khác trong bàn đã gọi đúng ngữ pháp nhưng tranh cãi bằng phỏng đoán và đẩy lỗi sang khách. Đáp án kiểm tra docket trước.",
+      "'may have order it' sai: sau 'may have' là quá khứ phân từ 'ordered'. Cả câu đó lẫn câu đúng ngữ pháp 'Somebody at your table may have ordered it' đều tranh cãi bằng phỏng đoán và đẩy lỗi sang khách. Đáp án kiểm tra phiếu gọi món trước — nói với khách là 'order slip'; 'docket' là từ trong nội bộ.",
       2,
     ),
     round(
@@ -673,8 +673,8 @@ However sure you are of tonight's kitchen, stay out of the argument. The guest n
         q: "Thứ tự đúng khi khách báo bị ốm sau bữa ăn là gì?",
         options: [
           "Kiểm tra lại với bếp, xin lỗi, rồi đề nghị một khoản bồi thường hợp lý",
-          "Hỏi thăm, mời bác sĩ, ghi chép, báo Duty Manager",
-          "Báo Duty Manager, đứng chờ chỉ đạo, rồi mới quay lại xin lỗi khách",
+          "Hỏi thăm, mời bác sĩ, ghi lời khách và giờ, báo Duty Manager",
+          "Báo Duty Manager, đứng chờ, rồi mới xin lỗi khách",
         ],
         correct: 1,
         explanation:
@@ -683,7 +683,7 @@ However sure you are of tonight's kitchen, stay out of the argument. The guest n
       {
         q: "Vì sao người phục vụ không được đề nghị bồi thường?",
         options: [
-          "Dàn xếp tại sảnh bị coi là nhận lỗi",
+          "Vì dàn xếp tại sảnh là nhận lỗi, mà sảnh không có quyền nhận lỗi",
           "Vì mức bồi thường luôn do bếp trưởng quyết định",
           "Vì mọi khoản bồi thường phải chờ bảo hiểm duyệt trước",
         ],
@@ -708,9 +708,9 @@ However sure you are of tonight's kitchen, stay out of the argument. The guest n
     round(
       "Your food made my wife sick. I want this dinner refunded right now.",
       "I am sorry she is unwell, sir. A doctor first, if she needs one — my Duty Manager is coming.",
-      "I am sorry she is unwell, sir. A doctor first, if she need one — my Duty Manager coming.",
+      "Of course, sir — the dinner is refund, and we are so sorry about the food.",
       "Of course, sir — the dinner is refunded, and we are so sorry about the food.",
-      "'if she need… my Duty Manager coming' sai: 'she needs', và thiếu 'is'. Câu hoàn tiền ngay đúng tiếng Anh nhưng vừa nhận lỗi ('sorry about the food') vừa hứa tiền — cả hai đều không phải quyền của sảnh. Đáp án: sức khoẻ trước, người có quyền tới sau.",
+      "'the dinner is refund' sai: bị động cần quá khứ phân từ 'refunded'. Cả câu đó lẫn câu đúng tiếng Anh 'the dinner is refunded…' đều vừa nhận lỗi ('sorry about the food') vừa hứa tiền — cả hai đều không phải quyền của sảnh. Đáp án: sức khoẻ trước, người có quyền tới sau.",
       1,
     ),
     round(

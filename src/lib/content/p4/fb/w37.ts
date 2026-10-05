@@ -167,7 +167,7 @@ If a host asks for different terms, such as no deposit, the answer belongs to th
       {
         q: "Một provisional booking giữ ngày trong bao lâu?",
         options: [
-          "Một tuần, miễn phí",
+          "Một tuần, miễn phí, có ghi ngày hết hạn",
           "Ba ngày, có thu một khoản phí giữ chỗ",
           "Tới khi có khách khác hỏi đặt cùng ngày đó",
         ],
@@ -179,7 +179,7 @@ If a host asks for different terms, such as no deposit, the answer belongs to th
         q: "Điều gì xác nhận chắc chắn bữa tiệc?",
         options: [
           "Một cuộc gọi lại của chủ tiệc trong tuần",
-          "Khoản cọc ba mươi phần trăm",
+          "Khoản cọc ba mươi phần trăm của tổng chi phí ước tính",
           "Chữ ký của bếp trưởng lên thực đơn tiệc",
         ],
         correct: 1,
@@ -211,9 +211,9 @@ If a host asks for different terms, such as no deposit, the answer belongs to th
     round(
       "The company dinner still has no deposit, and the week is over. What happened?",
       "I called the host yesterday, and I released the date this morning, in writing, as the terms say.",
-      "I call the host yesterday, and I release the date this morning, in writing.",
+      "Nothing yet. I gave the date to another party this morning without tell them.",
       "Nothing yet. I gave the date to another party this morning without telling them.",
-      "'I call… I release' sai thì: việc đã xong dùng quá khứ (called, released). Câu trao ngày cho tiệc khác mà không báo đúng ngữ pháp nhưng trái điều khoản — không bao giờ trả ngày trong im lặng. Đáp án báo đúng hai việc đã làm, có văn bản.",
+      "'without tell them' sai: sau giới từ 'without' là V-ing (telling). Cả câu đó lẫn câu đúng ngữ pháp 'I gave the date to another party… without telling them' đều trái điều khoản — không bao giờ trả ngày trong im lặng. Đáp án báo đúng hai việc đã làm, có văn bản.",
       0,
       "manager",
     ),
@@ -339,7 +339,7 @@ Write the guaranteed number on the booking, with the day the host gave it.`,
         q: "Vì sao bếp cần một con số khách đảm bảo?",
         options: [
           "Để tính trước tiền boa cho nhân viên phục vụ",
-          "Vì bếp đặt nguyên liệu nhiều ngày trước tiệc",
+          "Vì bếp đặt cá và thịt nhiều ngày trước tiệc",
           "Để sắp xếp chỗ đỗ xe cho khách tới dự tiệc",
         ],
         correct: 1,
@@ -360,7 +360,7 @@ Write the guaranteed number on the booking, with the day the host gave it.`,
       {
         q: "Chủ tiệc xin trả cho ít khách hơn số đảm bảo. Ai quyết định?",
         options: [
-          "Quản lý",
+          "Quản lý; người nhận đặt tiệc chỉ hỏi giúp chủ tiệc",
           "Người nhận đặt tiệc, nếu đó là khách quen",
           "Bếp trưởng, vì bếp đã chuẩn bị nguyên liệu",
         ],
@@ -374,9 +374,9 @@ Write the guaranteed number on the booking, with the day the host gave it.`,
     round(
       "We guaranteed sixty, but five cannot come now. We only want to pay for fifty-five.",
       "I understand, sir. That is my manager's decision, so may I ask her for you?",
-      "I understand, sir. That is my manager decision, so may I asking her for you?",
+      "Of course, sir — just pay for fifty-five, and I will changing the number in the system myself.",
       "Of course, sir — just pay for fifty-five, and I will change the number in the system myself.",
-      "'my manager decision… may I asking' sai: cần sở hữu cách 'manager's', và sau 'may I' là nguyên mẫu (ask). Câu tự đổi số trong hệ thống đúng tiếng Anh nhưng là quyết định về tiền của quản lý. Đáp án thông cảm và chuyển đúng người.",
+      "'I will changing' sai: sau 'will' là nguyên mẫu (change). Cả câu đó lẫn câu đúng tiếng Anh 'just pay for fifty-five…' đều tự đổi số trong hệ thống — quyết định về tiền của quản lý. Đáp án thông cảm và chuyển đúng người.",
       1,
     ),
     round(
@@ -529,7 +529,7 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
       {
         q: "Khi báo thời gian hoàn tiền về thẻ, nói mốc nào?",
         options: [
-          "Mốc chậm nhất",
+          "Mốc chậm nhất: 'muộn nhất mười bốn ngày'",
           "Mốc sớm nhất có thể, cho khách yên lòng",
           "Không nói mốc nào để tránh bị khách bắt lỗi",
         ],
@@ -542,7 +542,7 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
         options: [
           "Hứa hoàn lại một nửa khoản cọc cho khách",
           "Khuyên khách vẫn giữ tiệc dù vắng nhiều người",
-          "Dời ngày, và hỏi quản lý về khoản cọc",
+          "Dời ngày, và hỏi quản lý khoản cọc có được dời theo không",
         ],
         correct: 2,
         explanation:
@@ -562,9 +562,9 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
     round(
       "The Le family asked when their refund will arrive. What did you tell them?",
       "Fourteen days at the latest, and I said it may come sooner.",
-      "Fourteen days at the latest, and I say it may comes sooner.",
+      "Tomorrow morning. I wanted them to feel better, so I promise the earliest date.",
       "Tomorrow morning. I wanted them to feel better, so I promised the earliest date.",
-      "'I say… may comes' sai: chuyện đã nói dùng quá khứ 'said', và sau 'may' là nguyên mẫu 'come'. Câu hứa sáng mai đúng tiếng Anh nhưng hứa mốc sớm nhất — tiền về muộn là khiếu nại mới. Đáp án nói mốc chậm nhất.",
+      "'I promise' sai thì: việc đã làm dùng quá khứ 'promised'. Cả câu đó lẫn câu đúng tiếng Anh 'Tomorrow morning… I promised the earliest date' đều hứa mốc sớm nhất — tiền về muộn là khiếu nại mới. Đáp án nói mốc chậm nhất.",
       2,
       "manager",
     ),
@@ -707,7 +707,7 @@ A lower minimum spend or a waived fee is the manager's decision. Ask on the host
         {
           q: "Tổng chi tiêu thấp hơn mức chi tối thiểu thì sao?",
           options: [
-            "Phần thiếu tính là phí thuê phòng",
+            "Phần còn thiếu được tính là phí thuê phòng",
             "Nhà hàng bỏ qua vì khách đã đặt cọc trước",
             "Khách phải gọi thêm món cho đủ ngay tại bàn",
           ],
@@ -720,7 +720,7 @@ A lower minimum spend or a waived fee is the manager's decision. Ask on the host
           options: [
             "Người phục vụ nhớ những món nào không có thịt heo",
             "Khách tự kiểm tra danh sách nguyên liệu từng món",
-            "Bếp trưởng xác nhận từng món bằng văn bản",
+            "Đặt trước hạn chốt; bếp trưởng xác nhận từng món bằng văn bản",
           ],
           correct: 2,
           explanation:

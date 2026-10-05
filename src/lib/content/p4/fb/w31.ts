@@ -140,7 +140,7 @@ One rule never bends: the story never replaces the facts. If a guest asks what i
         q: "Theo bài, câu chuyện về một món ăn gồm những phần nào?",
         options: [
           "Giá món, thời gian chờ và món nên gọi kèm theo",
-          "Món gì, làm thế nào, vì sao tự hào",
+          "Ba phần ngắn: món gì, làm thế nào, và vì sao mình tự hào về món",
           "Toàn bộ nguyên liệu, đọc theo đúng thứ tự thực đơn",
         ],
         correct: 1,
@@ -163,7 +163,7 @@ One rule never bends: the story never replaces the facts. If a guest asks what i
         options: [
           "Kể tiếp câu chuyện để khách quên đi câu hỏi về nguyên liệu",
           "Mời khách tự đọc phần mô tả trên thực đơn tiếng Anh",
-          "Nói rõ nguyên liệu; chưa chắc thì hỏi bếp",
+          "Nói rõ nguyên liệu; chưa chắc thì hỏi bếp trước khi gọi",
         ],
         correct: 2,
         explanation:
@@ -175,9 +175,9 @@ One rule never bends: the story never replaces the facts. If a guest asks what i
     round(
       "These spring rolls look lovely. What is the story behind them?",
       "They are a family favourite, madam, and we roll them by hand every afternoon.",
-      "They is family favourite, madam, and we roll them by hand every afternoon.",
+      "Only meat and vegetable inside, madam — try one and you will see.",
       "Only meat and vegetables inside, madam — try one and you will see.",
-      "'They is family favourite' sai hai chỗ: 'they' đi với 'are', và 'favourite' cần mạo từ 'a'. 'Only meat and vegetables inside… try one and you will see' đúng tiếng Anh nhưng trả lời cụt và đẩy việc tìm hiểu sang khách — không có câu chuyện nào. Đáp án kể bằng câu ghép hai vế: món là gì, làm thế nào.",
+      "'meat and vegetable' thiếu -s: rau nhiều loại nên là 'vegetables'. Nhưng sửa ngữ pháp vẫn chưa đủ: 'Only meat and vegetables inside… try one and you will see' đúng tiếng Anh mà vẫn trả lời cụt và đẩy việc tìm hiểu sang khách — không có câu chuyện nào. Đáp án kể bằng câu ghép hai vế: món là gì, làm thế nào.",
       1,
     ),
     round(
@@ -299,7 +299,7 @@ If a guest is in a hurry, say so honestly. A phin takes a few minutes, and the b
         q: "Vì sao cà phê Việt thường dùng sữa đặc?",
         options: [
           "Vì sữa đặc rẻ hơn sữa tươi và quán nào cũng có sẵn",
-          "Vì ngày trước sữa tươi hiếm, sữa đặc để được lâu",
+          "Vì ngày trước sữa tươi hiếm, còn sữa đặc để được lâu",
           "Vì khách nước ngoài luôn thích vị thật ngọt và thật béo",
         ],
         correct: 1,
@@ -320,9 +320,9 @@ If a guest is in a hurry, say so honestly. A phin takes a few minutes, and the b
       {
         q: "Khách đang vội thì người phục vụ nói gì?",
         options: [
-          "Nói thật phin mất vài phút",
+          "Nói thật phin mất vài phút, rồi gợi ý pha espresso cho nhanh hơn",
           "Nói rằng phin chỉ mất vài giây để khách yên tâm chờ",
-          "Rút phin ra sớm và rót luôn phần cà phê đã nhỏ xuống",
+          "Rút phin ra sớm, rót luôn phần cà phê đã nhỏ",
         ],
         correct: 0,
         explanation:
@@ -342,9 +342,9 @@ If a guest is in a hurry, say so honestly. A phin takes a few minutes, and the b
     round(
       "What is the difference between your two iced coffees?",
       "The brown one has condensed milk, madam, and the black one has only sugar.",
-      "The brown one have condensed milk, madam, and the black one have only sugar.",
+      "They are almost the same, madam. Most guest cannot really taste any difference at all.",
       "They are almost the same, madam. Most guests cannot really taste any difference at all.",
-      "'The brown one have' sai: 'one' là số ít nên dùng 'has'. Câu 'They are almost the same… cannot really taste any difference' đúng tiếng Anh nhưng không giúp khách chọn và ngầm chê khẩu vị khách. Đáp án so sánh hai ly bằng một câu ghép.",
+      "'Most guest' thiếu -s: sau 'most' là danh từ số nhiều 'guests'. Cả câu đó lẫn câu đúng ngữ pháp 'They are almost the same… cannot really taste any difference' đều không giúp khách chọn và ngầm chê khẩu vị khách. Đáp án so sánh hai ly bằng một câu ghép.",
       0,
     ),
   ],
@@ -482,7 +482,7 @@ Vegetarian guests need the same care. A vegetarian broth may still use fish sauc
           q: "Vì sao câu chuyện món ăn phải nói kèm thành phần dễ gây dị ứng?",
           options: [
             "Để món ăn nghe sang trọng và đắt giá hơn trong mắt khách",
-            "Để giữ an toàn cho khách",
+            "Để giữ an toàn: khách phải nghe thấy mọi thứ có thể gây phản ứng",
             "Vì quy định bắt đọc toàn bộ công thức của bếp cho khách",
           ],
           correct: 1,
@@ -492,7 +492,7 @@ Vegetarian guests need the same care. A vegetarian broth may still use fish sauc
         {
           q: "Khách nói mình bị dị ứng, người phục vụ làm gì?",
           options: [
-            "Cảm ơn, ghi vào phiếu cho bếp, bếp xác nhận món",
+            "Cảm ơn, ghi vào phiếu cho bếp, bếp trưởng xác nhận món",
             "Tự chọn món an toàn nhất và mang ra ngay cho khách",
             "Khuyên khách gọi món chay vì món chay không có gì nguy hiểm",
           ],
@@ -525,9 +525,9 @@ Vegetarian guests need the same care. A vegetarian broth may still use fish sauc
       round(
         "The guest at table nine is allergic to prawns. I will just pick the prawns out, OK?",
         "No — write it on the order and let the chef make a fresh plate, without prawns.",
-        "No — write it on order and let chef makes a fresh plate.",
+        "Fine, but be quick about it, and there is no need tell the guest.",
         "Fine, but be quick about it, and there is no need to tell the guest.",
-        "'on order… let chef makes' thiếu mạo từ 'the' và sai dạng động từ (let + động từ nguyên mẫu: make). Câu 'Fine, but be quick… no need to tell the guest' đúng tiếng Anh nhưng nhặt tôm ra khỏi đĩa không làm món hết tôm — món phải làm lại từ đầu. Đáp án đưa việc về đúng bếp.",
+        "'no need tell the guest' thiếu 'to': phải là 'no need TO tell'. Cả câu đó lẫn câu đúng ngữ pháp 'Fine, but be quick… no need to tell the guest' đều sai việc: nhặt tôm ra khỏi đĩa không làm món hết tôm — món phải làm lại từ đầu, và không được giấu khách. Đáp án đưa việc về đúng bếp.",
         2,
         "colleague",
       ),
@@ -641,7 +641,7 @@ Keep it honest. If the beef has run out, say so at once and recommend the next b
       {
         q: "Theo bài, món đặc trưng (signature dish) là món như thế nào?",
         options: [
-          "Món bếp trưởng sẽ nấu cho gia đình mình",
+          "Món bếp trưởng sẽ nấu cho chính gia đình mình",
           "Món đắt nhất trong thực đơn của nhà hàng",
           "Món được nhiều khách nước ngoài gọi nhất mỗi tối",
         ],
@@ -652,8 +652,8 @@ Keep it honest. If the beef has run out, say so at once and recommend the next b
       {
         q: "Biết món nào đang vào mùa giúp người phục vụ điều gì?",
         options: [
-          "Bán được nhiều món tráng miệng đắt tiền hơn mỗi ngày",
-          "Nói chuyện như người địa phương",
+          "Bán được nhiều món tráng miệng đắt tiền hơn",
+          "Nói chuyện như người địa phương, không như người đọc thực đơn",
           "Không cần hỏi bếp xem hôm nay còn món gì không",
         ],
         correct: 1,
@@ -684,9 +684,9 @@ Keep it honest. If the beef has run out, say so at once and recommend the next b
     round(
       "Is the mango dessert any good? I have never tried it.",
       "Mango is in season now, sir, so tonight it is at its best.",
-      "Mango is in the season now, sir, so tonight it is at it best.",
+      "Everybody order it, sir, so you really have to try it tonight as well.",
       "Everybody orders it, sir, so you really have to try it tonight as well.",
-      "'in the season… at it best' sai hai chỗ: thành ngữ là 'in season' (không có 'the'), và sở hữu là 'its'. Câu 'Everybody orders it… you really have to try it' đúng tiếng Anh nhưng ép khách theo đám đông. Đáp án đưa lý do thật: món đang vào mùa.",
+      "'Everybody order it' thiếu -s: 'everybody' là số ít nên 'orders'. Cả câu đó lẫn câu đúng ngữ pháp 'Everybody orders it… you really have to try it' đều ép khách theo đám đông. Đáp án đưa lý do thật: món đang vào mùa.",
       1,
     ),
   ],

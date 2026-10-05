@@ -164,7 +164,7 @@ Finish with the next steps and a date, not with pressure. Then stop talking. The
       {
         q: "Bài trình bày đề xuất nên mở đầu bằng gì?",
         options: [
-          "Tấm bản đồ: ba phần sẽ trình bày",
+          "Tấm bản đồ: ba phần — thực đơn, giá và bước tiếp theo",
           "Con số đắt nhất để khách quen dần với giá",
           "Một câu chuyện dài về lịch sử của khách sạn",
         ],
@@ -188,7 +188,7 @@ Finish with the next steps and a date, not with pressure. Then stop talking. The
         options: [
           "Thúc khách ký ngay để giữ được ngày đẹp",
           "Giảm thêm một chút để khách quyết nhanh hơn",
-          "Nêu bước tiếp theo, rồi dừng nói",
+          "Nêu bước tiếp theo và ngày, rồi dừng nói",
         ],
         correct: 2,
         explanation:
@@ -200,17 +200,17 @@ Finish with the next steps and a date, not with pressure. Then stop talking. The
     round(
       "Just give me the bottom line. I do not need the whole story.",
       "Of course, madam — seven hundred thousand plus-plus per head, and the date is held for a week.",
-      "Of course, madam — seven hundred thousand plus-plus per head, and the date is hold for a week.",
+      "Of course, madam — seven hundred thousand plus-plus per head, and the date is holded for a week.",
       "It depends on many things, madam — the menu, the drinks, the room and even the season.",
-      "'the date is hold' sai: bị động cần quá khứ phân từ 'held'. Câu 'It depends on many things' đúng tiếng Anh nhưng né đúng điều khách vừa hỏi — một con số. Đáp án đưa con số và một mốc ngày.",
+      "'the date is holded' sai: 'hold' là động từ bất quy tắc, bị động dùng quá khứ phân từ 'held'. Câu 'It depends on many things' đúng tiếng Anh nhưng né đúng điều khách vừa hỏi — một con số. Đáp án đưa con số và một mốc ngày.",
       2,
     ),
     round(
       "How do I start a proposal meeting? I usually just hand over the document.",
       "Start with the map: three parts — the menu, the price and the next steps, in that order.",
-      "Start with the map: three part — the menu, the price and the next step.",
+      "Hand it over and wait. If the host have any questions, they will ask them.",
       "Hand it over and wait. If the host has any questions, they will ask them.",
-      "'three part… the next step' sai số nhiều: 'three parts', 'next steps'. Câu 'Hand it over and wait' đúng ngữ pháp nhưng bỏ mất việc chính của buổi gặp — dẫn khách qua đề xuất. Đáp án đưa khung ba phần.",
+      "'the host have' sai: 'the host' số ít nên 'has'. Cả câu đó lẫn câu đúng ngữ pháp 'Hand it over and wait' đều bỏ mất việc chính của buổi gặp — dẫn khách qua đề xuất. Đáp án đưa khung ba phần.",
       0,
       "colleague",
     ),
@@ -341,7 +341,7 @@ Never quote a number you cannot hold. Every proposal carries the date it is vali
         q: "'Plus-plus' nghĩa là gì?",
         options: [
           "Giá đã gồm mọi khoản phí và thuế",
-          "Cộng thêm phí phục vụ và VAT",
+          "Cộng thêm 5% phí phục vụ và 10% VAT",
           "Giá riêng cho khách đặt từ hai bàn trở lên",
         ],
         correct: 1,
@@ -351,7 +351,7 @@ Never quote a number you cannot hold. Every proposal carries the date it is vali
       {
         q: "Khách nêu ngân sách trước thì người trình bày làm gì?",
         options: [
-          "Tính ngược từ ngân sách",
+          "Tính ngược từ ngân sách của khách, trên giấy, trước mặt họ",
           "Thuyết phục khách tăng ngân sách cho xứng tầm tiệc",
           "Hứa xin quản lý giảm giá cho vừa túi tiền khách",
         ],
@@ -503,7 +503,7 @@ What the package holds and what it costs are on this season's banquet card. Quot
       {
         q: "Gói đồ uống hợp với bữa tiệc như thế nào?",
         options: [
-          "Tiệc dài, khách uống nhiều",
+          "Một buổi tối dài, khách uống nhiều",
           "Bữa trưa ngắn, khách uống rất ít",
           "Tiệc có nhiều trẻ em và người lớn tuổi",
         ],
@@ -527,7 +527,7 @@ What the package holds and what it costs are on this season's banquet card. Quot
         options: [
           "Một khoản cọc bằng giá của cả gói đồ uống",
           "Một nhân viên đứng đếm chai ở cửa phòng tiệc",
-          "Một mức giới hạn do chủ tiệc đặt",
+          "Một mức giới hạn do chủ tiệc đặt, bar hỏi trước khi vượt",
         ],
         correct: 2,
         explanation:
@@ -539,17 +539,17 @@ What the package holds and what it costs are on this season's banquet card. Quot
     round(
       "Is the drinks package just a way to make us spend more?",
       "Not for your group, sir — for forty guests over three hours, it works out cheaper. Let me show you how.",
-      "Not for your group, sir — for forty guests over three hours, it work out cheaper.",
+      "Every group takes the package, sir, so it must to be the right choice for you as well.",
       "Every group takes the package, sir, so it must be the right choice for you as well.",
-      "'it work out' thiếu -s: 'it' đi với 'works'. Câu 'Every group takes the package' đúng ngữ pháp nhưng ép khách theo đám đông thay vì tính cho chính bàn này. Đáp án trả lời bằng con số của khách và mời khách xem cách tính.",
+      "'must to be' sai: sau 'must' là động từ nguyên mẫu, không có 'to'. Cả câu đó lẫn câu đúng ngữ pháp 'Every group takes the package' đều ép khách theo đám đông thay vì tính cho chính bàn này. Đáp án trả lời bằng con số của khách và mời khách xem cách tính.",
       2,
     ),
     round(
       "The host wants the package for a ninety-minute lunch. Shall I just sell it?",
       "Run her numbers first. For a short lunch, we recommend against it.",
-      "Run her numbers first. For a short lunch, we recommends against it.",
+      "Yes, sell it — the package are the best number on our sales report this month.",
       "Yes, sell it — the package is the best number on our sales report this month.",
-      "'we recommends' sai: chủ ngữ 'we' không thêm -s. Câu bán vì doanh số tháng này đúng ngữ pháp nhưng đặt lợi của nhà hàng lên trên lợi của khách. Đáp án tính cho khách trước.",
+      "'the package are' sai: 'the package' số ít nên 'is'. Cả câu đó lẫn câu đúng ngữ pháp 'Yes, sell it…' đều bán vì doanh số tháng này — đặt lợi của nhà hàng lên trên lợi của khách. Đáp án tính cho khách trước.",
       0,
       "colleague",
     ),
@@ -684,7 +684,7 @@ When the answer is no, thank the host, ask for nothing, and leave the door open.
         {
           q: "Ba mốc ngày trên một bản đề xuất là gì?",
           options: [
-            "Nếm thử, hạn giá, hạn giữ chỗ",
+            "Buổi nếm thử, hạn của giá, và hạn giữ chỗ tạm",
             "Ngày ký, ngày thanh toán, ngày tổ chức tiệc",
             "Ngày gặp đầu, ngày gọi lại, ngày nhận tiền cọc",
           ],
@@ -696,7 +696,7 @@ When the answer is no, thank the host, ask for nothing, and leave the door open.
           q: "Vì sao chỉ gọi lại khách đúng một lần?",
           options: [
             "Vì gọi nhiều lần tốn tiền điện thoại của nhà hàng",
-            "Gọi hai lần là đeo bám",
+            "Vì gọi hai lần là đeo bám, khách sẽ nghĩ phòng không ai đặt",
             "Vì quản lý cấm nhân viên gọi điện cho khách",
           ],
           correct: 1,

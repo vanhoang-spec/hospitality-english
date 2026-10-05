@@ -169,7 +169,7 @@ Other tables hear one honest sentence: a guest needs help, and you will be back 
         q: "Thứ tự ưu tiên khi nhiều việc tới cùng lúc là gì?",
         options: [
           "Khách quen trước, khách mới sau",
-          "An toàn, rồi tiền, rồi sự thoải mái",
+          "An toàn trước, rồi tới tiền, rồi sự thoải mái",
           "Việc dễ trước để giảm nhanh số việc",
         ],
         correct: 1,
@@ -179,9 +179,9 @@ Other tables hear one honest sentence: a guest needs help, and you will be back 
       {
         q: "'Nguy hiểm trước' nghĩa là làm gì?",
         options: [
-          "Gọi người cứu, báo quản lý, ở lại",
+          "Gọi người cứu, báo quản lý, ở lại với khách",
           "Hỏi kỹ khách gặp nạn xem đã có chuyện gì xảy ra",
-          "Đưa khách gặp nạn ra khỏi phòng ăn thật nhanh",
+          "Đưa khách ra khỏi phòng ăn",
         ],
         correct: 0,
         explanation:
@@ -213,9 +213,9 @@ Other tables hear one honest sentence: a guest needs help, and you will be back 
     round(
       "Why is the whole team running to that table? Our main course is late!",
       "A guest needs help, sir, so that comes first. I will be back with you in five minutes.",
-      "A guest need help, sir, so that come first. I will be back with you in five minutes.",
-      "The lady over there is having an allergic reaction, sir, so I am afraid you must wait.",
-      "'A guest need… that come' thiếu -s ở cả hai động từ. Câu kể khách kia bị dị ứng đúng tiếng Anh nhưng tiết lộ chuyện sức khoẻ của người khác và bảo khách phải chờ. Đáp án nói thật, kín đáo, kèm một mốc giờ.",
+      "The lady over there is have an allergic reaction, sir, so you must wait.",
+      "The lady over there is having an allergic reaction, sir, so you must wait.",
+      "'is have' sai: hiện tại tiếp diễn cần V-ing (is having). Cả câu đó lẫn câu đúng tiếng Anh 'The lady over there is having an allergic reaction…' đều tiết lộ chuyện sức khoẻ của người khác và bảo khách phải chờ. Đáp án nói thật, kín đáo, kèm một mốc giờ.",
       0,
     ),
   ],
@@ -348,7 +348,7 @@ One thing never waits for the next shift: danger. If a guest falls or chokes at 
       {
         q: "Vì sao 'ở lại thêm mười phút' không phải cách tốt?",
         options: [
-          "Nó giấu việc khỏi cả nhóm và quản lý",
+          "Vì nó giấu việc khỏi cả nhóm và khỏi quản lý",
           "Vì khách sạn không trả tiền làm thêm giờ cho nhân viên",
           "Vì đồng nghiệp ca sau sẽ thấy phật ý",
         ],
@@ -361,7 +361,7 @@ One thing never waits for the next shift: danger. If a guest falls or chokes at 
         options: [
           "Một bàn muốn đặt bánh sinh nhật",
           "Một vị khách hỏi lại về hoá đơn",
-          "Một tình huống nguy hiểm",
+          "Một tình huống nguy hiểm, như có khách bị ngã",
         ],
         correct: 2,
         explanation:
@@ -381,9 +381,9 @@ One thing never waits for the next shift: danger. If a guest falls or chokes at 
     round(
       "You promised table twelve a photo with the chef, and you finish very soon.",
       "Then I hand it over to you by name now: table twelve, the photo, after dessert.",
-      "Then I hands it over to you by name now: table twelve, the photo, after dessert.",
-      "I will stay the extra ten minutes myself — it is quicker than explaining it to you.",
-      "'I hands' sai: chủ ngữ 'I' không thêm -s. Câu tự ở lại thêm mười phút đúng ngữ pháp nhưng trái luật cuối ca — việc dang dở phải được trao cho một người có tên. Đáp án bàn giao đủ ba ý: bàn nào, việc gì, khi nào.",
+      "I will just stay the extra ten minutes myself — it is more quick than explaining it all to you.",
+      "I will just stay the extra ten minutes myself — it is quicker than explaining it all to you.",
+      "'more quick' sai: tính từ ngắn so sánh hơn thì thêm -er (quicker), không dùng 'more'. Cả câu đó lẫn câu đúng ngữ pháp 'I will just stay the extra ten minutes myself…' đều trái luật cuối ca — việc dang dở phải được trao cho một người có tên. Đáp án bàn giao đủ ba ý: bàn nào, việc gì, khi nào.",
       0,
       "colleague",
     ),
@@ -514,7 +514,7 @@ Nothing she does is new. The skill is doing old things in the right order.`,
         q: "Chai rượu bị tính nhầm được xử lý thế nào?",
         options: [
           "Tự gạch bỏ chai rượu trên hoá đơn cũ cho khách",
-          "Kiểm tra docket, nhờ giám sát ký sửa",
+          "Kiểm tra docket, nhờ giám sát ký sửa trước khi in lại hoá đơn",
           "Đợi khách về rồi mới sửa lại trong máy",
         ],
         correct: 1,
@@ -538,17 +538,17 @@ Nothing she does is new. The skill is doing old things in the right order.`,
     round(
       "The steak was wrong, the bill was wrong — just take thirty percent off and we will forget it.",
       "I am sorry, sir. A discount needs my supervisor's approval, and she is on her way now.",
-      "I am sorry, sir. A discount need my supervisor's approval, and she is on her way now.",
-      "Thirty percent is fair, sir — I will take it off myself before I print the bill.",
-      "'A discount need' thiếu -s: chủ ngữ số ít cần 'needs'. Câu tự bớt ba mươi phần trăm đúng ngữ pháp nhưng là quyết định về tiền vượt quyền người phục vụ. Đáp án xin lỗi và đưa đúng người tới.",
+      "Thirty percent is fair, sir — I will takes it off before I print the bill.",
+      "Thirty percent is fair, sir — I will take it off before I print the bill.",
+      "'I will takes' sai: sau 'will' là động từ nguyên mẫu (take). Cả câu đó lẫn câu đúng ngữ pháp 'Thirty percent is fair…' đều tự bớt ba mươi phần trăm — quyết định về tiền vượt quyền người phục vụ. Đáp án xin lỗi và đưa đúng người tới.",
       1,
     ),
     round(
       "Table two asked if the birthday cake has nuts. I am sure it does not — shall I tell them?",
       "Do not guess. Ask the chef to check the cake before it goes out.",
-      "Do not guessing. Ask the chef to check the cake before it go out.",
+      "Yes, tell them it is safe — the pastry team never use nuts in birthday cakes.",
       "Yes, tell them it is safe — the pastry team never uses nuts in birthday cakes.",
-      "'Do not guessing… it go out' sai: sau 'Do not' là nguyên mẫu, và 'it' cần 'goes'. Câu bảo khách bánh an toàn đúng tiếng Anh nhưng là lời hứa từ trí nhớ về dị ứng. Đáp án đưa câu hỏi về bếp.",
+      "'the pastry team never use' thiếu -s: 'the pastry team' số ít nên 'uses'. Cả câu đó lẫn câu đúng tiếng Anh 'Yes, tell them it is safe…' đều là lời hứa từ trí nhớ về dị ứng. Đáp án đưa câu hỏi về bếp.",
       2,
       "colleague",
     ),
@@ -652,7 +652,7 @@ The bar server does not open a new task in her last fifteen minutes. She hands o
         {
           q: "Bốn khách đến thêm được xử lý thế nào?",
           options: [
-            "Bếp làm được thì xếp, tính theo đầu người",
+            "Bếp làm được thì xếp, tính theo đầu người ngoài số đảm bảo",
             "Từ chối vì bữa tiệc đã chốt sáu mươi khách",
             "Xếp chỗ miễn phí vì chủ tiệc là khách quen",
           ],
@@ -665,7 +665,7 @@ The bar server does not open a new task in her last fifteen minutes. She hands o
           options: [
             "Đúng giờ ghi trên phiếu đặt tiệc",
             "Khi chủ tiệc ra tín hiệu",
-            "Khi bếp bánh vừa làm xong bánh",
+            "Khi bánh làm xong",
           ],
           correct: 1,
           explanation:
@@ -694,11 +694,11 @@ The bar server does not open a new task in her last fifteen minutes. She hands o
         0,
       ),
       round(
-        "The cake has fallen in the pantry, and the host is about to give the signal!",
-        "Plan B: a plated dessert with candles. I will tell the host quietly, away from the table.",
-        "Plan B: a plated dessert with candles. I will telling the host quietly, away from the table.",
-        "Bring it out anyway — the guests will laugh, and the photos will be fun.",
-        "'I will telling' sai: sau 'will' là nguyên mẫu (tell). Câu mang bánh vỡ ra đúng ngữ pháp nhưng làm hỏng khoảnh khắc của chủ tiệc. Đáp án đưa phương án B, báo riêng chủ tiệc.",
+        "Table four's birthday cake is still in the bakery van, and the host is about to give the signal.",
+        "Let me tell the host alone, away from the table — plan B is ice cream with a candle.",
+        "Let me tell the host alone, away from the table — plan B is ice cream with candle.",
+        "Tell the whole table the bakery is late, so nobody is surprised when the cake does not come.",
+        "'with candle' thiếu mạo từ: 'candle' là danh từ đếm được số ít nên cần 'a candle'. Câu báo cả bàn đúng tiếng Anh nhưng làm lộ bất ngờ và làm hỏng khoảnh khắc của chủ tiệc. Đáp án: chỉ chủ tiệc biết, tránh xa bàn, kèm phương án B trong cùng một hơi.",
         2,
         "colleague",
       ),

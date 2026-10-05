@@ -142,7 +142,7 @@ Some guests love being known; others want to be left alone. Follow the guest, no
         q: "Thẻ preference card được ghi những gì?",
         options: [
           "Nhận xét của nhân viên về tính cách của khách",
-          "Sự thật khách thể hiện, như 'không rau mùi'",
+          "Sự thật khách thể hiện, như 'không rau mùi' hay 'bàn cạnh cửa sổ'",
           "Dự đoán những món khách sẽ gọi trong lần tới",
         ],
         correct: 1,
@@ -177,17 +177,17 @@ Some guests love being known; others want to be left alone. Follow the guest, no
     round(
       "How on earth did you know I always drink sparkling water?",
       "We noted it on your last visit, madam, but tastes change. Still sparkling tonight?",
-      "We note it on your last visit, madam. Still sparkling tonight?",
+      "Our system record everything every guest has ever ordered here, madam.",
       "Our system records everything every guest has ever ordered here, madam.",
-      "'We note it on your last visit' sai thì: chuyện lần trước phải dùng quá khứ 'noted'. 'Our system records everything every guest has ever ordered' đúng ngữ pháp nhưng làm khách thấy bị theo dõi. Đáp án nói thật nguồn thông tin, rồi hỏi lại vì khẩu vị có thể đã đổi.",
+      "'Our system record' thiếu -s: 'system' số ít nên 'records'. Cả câu đó lẫn câu đúng ngữ pháp 'Our system records everything every guest has ever ordered' đều làm khách thấy bị theo dõi. Đáp án nói thật nguồn thông tin, rồi hỏi lại vì khẩu vị có thể đã đổi.",
       0,
     ),
     round(
       "The card says table four hates coriander. I will just leave it out without asking.",
       "Ask first — tastes change, and most guests like to be asked. Then update the card.",
-      "Ask first — tastes changes, and most guest like to be asked.",
+      "Good, and write 'difficult guest' on the card so the next shift know.",
       "Good, and write 'difficult guest' on the card so the next shift knows.",
-      "'tastes changes… most guest' sai số ít/số nhiều: 'tastes change', 'most guests'. Câu 'write difficult guest on the card' đúng tiếng Anh nhưng ghi nhận xét thay cho sự thật — thẻ chỉ ghi điều khách thể hiện. Đáp án dùng thẻ như một câu hỏi, rồi cập nhật thẻ theo lời khách.",
+      "'the next shift know' thiếu -s: 'the next shift' số ít nên 'knows'. Cả câu đó lẫn câu đúng tiếng Anh 'write difficult guest on the card' đều ghi nhận xét thay cho sự thật — thẻ chỉ ghi điều khách thể hiện. Đáp án dùng thẻ như một câu hỏi, rồi cập nhật thẻ theo lời khách.",
       2,
       "colleague",
     ),
@@ -312,7 +312,7 @@ And what you notice stays at the table. What guests discuss, and who dines with 
         q: "Bàn có laptop và giấy tờ thì phục vụ thế nào?",
         options: [
           "Rót nước lặng lẽ, chờ khách ngừng nói",
-          "Mời món ngay để khách không phải chờ lâu hơn nữa",
+          "Mời món ngay để khách khỏi chờ",
           "Đề nghị khách dọn bớt giấy tờ để bày món ăn ra",
         ],
         correct: 0,
@@ -323,7 +323,7 @@ And what you notice stays at the table. What guests discuss, and who dines with 
         q: "Vì sao phải hỏi về nhịp độ bữa ăn chứ không chỉ hỏi món?",
         options: [
           "Vì bếp cần biết trước để chia ca cho nhân viên",
-          "Vì mỗi bàn cần một nhịp khác nhau",
+          "Vì bàn sắp bay muốn nhanh, còn bàn đi nghỉ muốn thong thả",
           "Vì khách đi máy bay luôn muốn gọi ít món hơn",
         ],
         correct: 1,
@@ -347,17 +347,17 @@ And what you notice stays at the table. What guests discuss, and who dines with 
     round(
       "We are celebrating a deal, but we still have emails to send tonight.",
       "Then shall I bring the courses quickly, sir, and coffee straight after?",
-      "Then shall I brings the courses quickly, sir, and coffee straight after?",
+      "Then I will brings our full tasting menu, sir, so you can celebrate this properly tonight.",
       "Then I will bring our full tasting menu, sir, so you can celebrate this properly tonight.",
-      "'shall I brings' sai: sau 'shall' là động từ nguyên mẫu 'bring'. Câu mang cả thực đơn nếm thử đúng ngữ pháp nhưng bỏ qua điều khách vừa nói — họ còn việc phải làm. Đáp án đọc đúng hoàn cảnh và hỏi lại nhịp độ.",
+      "'I will brings' sai: sau 'will' là động từ nguyên mẫu 'bring'. Sửa ngữ pháp rồi vẫn sai việc: mang cả thực đơn nếm thử là bỏ qua điều khách vừa nói — họ còn việc phải làm. Đáp án đọc đúng hoàn cảnh và hỏi lại nhịp độ.",
       1,
     ),
     round(
       "Who was the lady with Mr. Chen at table five last night?",
       "I am sorry, madam, I cannot talk about other guests.",
-      "I am sorry, madam, I cannot talking about other guests.",
+      "I did not saw her face, madam, but she came in just after he did.",
       "I did not see her face, madam, but she came in just after he did.",
-      "'cannot talking' sai: sau 'cannot' là động từ nguyên mẫu 'talk'. Câu 'I did not see her face… she came in just after he did' đúng tiếng Anh nhưng vẫn kể chuyện của khách khác. Đáp án từ chối ngắn gọn, không xác nhận gì.",
+      "'did not saw' sai: sau 'did not' là động từ nguyên mẫu 'see'. Cả câu đó lẫn câu đúng tiếng Anh 'I did not see her face… she came in just after he did' đều vẫn kể chuyện của khách khác. Đáp án từ chối ngắn gọn, không xác nhận gì.",
       2,
     ),
   ],
@@ -511,7 +511,7 @@ Prices are set by the restaurant, not by the floor. If a guest asks for a better
         {
           q: "Khách xin giá tốt hơn, người phục vụ làm gì?",
           options: [
-            "Tự giảm một ít để giữ không khí vui vẻ cho bàn",
+            "Tự giảm một ít cho bàn vui",
             "Đề nghị hỏi quản lý và gợi ý chai nhỏ hơn",
             "Giải thích rằng giá rượu ở đây đã là rẻ nhất phố",
           ],
@@ -670,7 +670,7 @@ Finally, tell the kitchen it is a "surprise me" table. The chef may want to send
         q: "Trước khi chọn món thay khách, phải hỏi hai điều gì?",
         options: [
           "Ngân sách của bàn và thời gian khách có",
-          "Dị ứng hoặc món kiêng, và mức muốn thử món lạ",
+          "Dị ứng hoặc món kiêng của cả bàn, và mức muốn thử món lạ",
           "Quốc tịch của khách và số lần đã đến nhà hàng",
         ],
         correct: 1,
@@ -680,7 +680,7 @@ Finally, tell the kitchen it is a "surprise me" table. The chef may want to send
       {
         q: "Vì sao nên chọn món ở tầm giữa của thực đơn?",
         options: [
-          "Khách trao niềm tin, không trao ví tiền",
+          "Vì khách trao niềm tin, không nhờ mình tiêu tiền",
           "Vì món tầm giữa luôn là những món ngon nhất của bếp",
           "Vì bếp chuẩn bị các món tầm giữa nhanh hơn hẳn",
         ],

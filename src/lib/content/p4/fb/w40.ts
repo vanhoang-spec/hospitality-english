@@ -162,7 +162,7 @@ By seven, every table has been asked the same safety question before anything wa
         q: "Khách báo dị ứng hải sản có vỏ. Ai xác nhận món?",
         options: [
           "Lan, dựa vào trí nhớ về thực đơn",
-          "Bếp trưởng kiểm tra từng món",
+          "Bếp trưởng, sau khi Lan ghi dị ứng cho bếp",
           "Khách tự chọn món trên thực đơn",
         ],
         correct: 1,
@@ -193,9 +193,9 @@ By seven, every table has been asked the same safety question before anything wa
     round(
       "The couple at table two say their card is wrong — they love coriander now.",
       "Then update the card tonight — tastes change, and the card follows the guest.",
-      "Then update the card tonight — tastes changes, and the card follow the guest.",
-      "Tell them the card is correct — we wrote it down last time, so it must be right.",
-      "'tastes changes… the card follow' sai số ít/số nhiều: 'tastes change', 'the card follows'. Câu cãi khách rằng thẻ đúng đúng ngữ pháp nhưng đặt tờ thẻ lên trên vị khách. Đáp án cập nhật thẻ theo khách.",
+      "Tell them the card is correct — we write it down last time.",
+      "Tell them the card is correct — we wrote it down last time.",
+      "'we write it down last time' sai thì: chuyện lần trước dùng quá khứ 'wrote'. Cả câu đó lẫn câu đúng ngữ pháp 'Tell them the card is correct…' đều cãi khách và đặt tờ thẻ lên trên vị khách. Đáp án cập nhật thẻ theo khách.",
       0,
       "colleague",
     ),
@@ -305,7 +305,7 @@ Busy is not a reason to skip a step. It is the reason the steps exist.`,
       {
         q: "Món cà ri bị trả về. Ai quyết định bỏ món khỏi hoá đơn?",
         options: [
-          "Giám sát",
+          "Giám sát; Lan hỏi ý trước khi hứa",
           "Lan, vì cô là người nhận món trả về",
           "Bếp trưởng, vì món ăn là của bếp",
         ],
@@ -317,7 +317,7 @@ Busy is not a reason to skip a step. It is the reason the steps exist.`,
         q: "Vì sao Lan đồng ý tách hoá đơn ngay?",
         options: [
           "Vì khách đang vội và đang không vui",
-          "Vì đó là quyền lợi công khai",
+          "Vì tách tối đa bốn thẻ là quyền lợi công khai",
           "Vì giám sát đang bận ở một bàn khác",
         ],
         correct: 1,
@@ -341,9 +341,9 @@ Busy is not a reason to skip a step. It is the reason the steps exist.`,
     round(
       "Just take the curry off the bill yourself. It is only a small amount.",
       "I would love to help, madam. My supervisor signs that, and she is coming to your table now.",
-      "I would love to help, madam. My supervisor sign that, and she coming now.",
+      "All right, madam, just this once — I will take it off before I will print the bill.",
       "All right, madam, just this once — I will take it off before I print the bill.",
-      "'My supervisor sign… she coming' sai: cần 'signs' và thiếu 'is'. Câu 'just this once' đúng tiếng Anh nhưng tự bớt tiền — việc của giám sát. Đáp án vẫn giúp khách, đúng quy trình.",
+      "'before I will print' sai: mệnh đề thời gian sau 'before' dùng hiện tại đơn (before I print), không dùng 'will'. Cả câu đó lẫn câu đúng tiếng Anh 'just this once — I will take it off…' đều tự bớt tiền — việc của giám sát. Đáp án vẫn giúp khách, đúng quy trình.",
       2,
     ),
     round(
@@ -478,7 +478,7 @@ At the assembly point, Lan counts her tables. Only then does she think about the
       {
         q: "Khi chuông báo cháy kêu, khách bàn bốn được lo thế nào?",
         options: [
-          "Có người ở lại; báo đội cứu hoả",
+          "Có người ở lại; báo đội cứu hoả chỗ khách đang ở",
           "Được đưa xuống bằng thang máy cho nhanh",
           "Được để lại tại bàn và hứa quay lại đón",
         ],
@@ -491,7 +491,7 @@ At the assembly point, Lan counts her tables. Only then does she think about the
         options: [
           "Mang ngay vì đó là dịp vui của khách",
           "Từ chối thẳng và mời khách ra về",
-          "Nước, đồ ăn; giám sát quyết",
+          "Mời nước và đồ ăn; giám sát quyết",
         ],
         correct: 2,
         explanation:
@@ -503,17 +503,17 @@ At the assembly point, Lan counts her tables. Only then does she think about the
     round(
       "Is this alarm real? We have only just sat down.",
       "We treat every alarm as real, madam. Please leave everything and walk with me.",
-      "We treat every alarm as real, madam. Please leaving everything and walk with me.",
-      "Probably not, madam — it is usually a drill on Fridays, so please finish your starter.",
-      "'Please leaving' sai: sau 'Please' là động từ nguyên mẫu. Câu đoán là diễn tập đúng tiếng Anh nhưng giữ khách lại trong phòng khi chuông kêu. Đáp án: mọi chuông báo đều là thật.",
+      "Probably not, madam — it is usually drill on Fridays, so please finish your starter first.",
+      "Probably not, madam — it is usually a drill on Fridays, so please finish your starter first.",
+      "'usually drill' thiếu mạo từ: 'drill' là danh từ đếm được số ít nên cần 'a drill'. Cả câu đó lẫn câu đúng tiếng Anh 'Probably not… a drill on Fridays' đều giữ khách lại trong phòng khi chuông kêu. Đáp án: mọi chuông báo đều là thật.",
       0,
     ),
     round(
       "The guest at table four is reacting. Shall I clear her plate so it does not upset her?",
       "No — keep the plate, the docket and the sauce together for the doctor.",
-      "No — keeps the plate, the docket and the sauce together for the doctor.",
-      "Yes, clear it quickly, and bring her a fresh plate of something else instead.",
-      "'keeps' sai: mệnh lệnh dùng động từ nguyên mẫu (keep). Câu dọn đĩa và mang món mới đúng ngữ pháp nhưng làm mất thứ bác sĩ có thể cần, và cho khách đang phản ứng ăn tiếp. Đáp án giữ nguyên ba thứ.",
+      "Yes, clear it quick, and bring her a fresh plate of something else to eat instead.",
+      "Yes, clear it quickly, and bring her a fresh plate of something else to eat instead.",
+      "'clear it quick' sai: bổ nghĩa cho động từ cần trạng từ 'quickly'. Cả câu đó lẫn câu đúng ngữ pháp 'Yes, clear it quickly…' đều làm mất thứ bác sĩ có thể cần, và cho khách đang phản ứng ăn tiếp. Đáp án giữ nguyên ba thứ.",
       2,
       "colleague",
     ),
@@ -622,7 +622,7 @@ Before she leaves, Lan tells her manager what she handed over and to whom. Nothi
         q: "Khi nào khách được báo phí khui rượu?",
         options: [
           "Khi in hoá đơn vào cuối buổi tối",
-          "Trước khi mở nút chai",
+          "Trước khi mở nút chai, tính theo từng chai",
           "Khi khách tự hỏi tới khoản phí đó",
         ],
         correct: 1,
@@ -632,7 +632,7 @@ Before she leaves, Lan tells her manager what she handed over and to whom. Nothi
       {
         q: "Vì sao Lan không tự sắp xếp xe ra sân bay?",
         options: [
-          "Vì đó là mười lăm phút cuối ca của cô",
+          "Vì đó là mười lăm phút cuối ca làm của cô",
           "Vì khách sạn không có dịch vụ xe ra sân bay",
           "Vì khách chưa trả trước tiền xe cho cô",
         ],

@@ -157,7 +157,7 @@ Write every agreed trade on the booking. A trade that lives only in a conversati
         options: [
           "Ngày và giờ ngồi của bàn tiệc",
           "Số món trong thực đơn của khách",
-          "Giá niêm yết của thực đơn",
+          "Giá niêm yết ghi trên thực đơn",
         ],
         correct: 2,
         explanation:
@@ -166,7 +166,7 @@ Write every agreed trade on the booking. A trade that lives only in a conversati
       {
         q: "Mỗi lời từ chối nên đi cùng điều gì?",
         options: [
-          "Một phương án 'what if'",
+          "Một phương án 'what if', như giữ Chủ nhật",
           "Một lời xin lỗi thật dài và chân thành",
           "Một lời giải thích chi tiết về chính sách giá",
         ],
@@ -190,9 +190,9 @@ Write every agreed trade on the booking. A trade that lives only in a conversati
     round(
       "Nobody told us about a minimum spend for this room. We are not paying it.",
       "You are right to ask, sir. Let me bring my supervisor and the booking slip.",
-      "You are right to ask, sir. Let me bringing my supervisor and the booking slip.",
+      "Then I will take the difference off tonight, sir — it was our mistake not to mentioned it.",
       "Then I will take the difference off tonight, sir — it was our mistake not to mention it.",
-      "'Let me bringing' sai: sau 'let me' là động từ nguyên mẫu. Câu tự bỏ phần chênh lệch đúng tiếng Anh nhưng là quyết định về tiền của giám sát, và còn nhận lỗi trước khi xem phiếu. Đáp án mời đúng người, kèm bằng chứng.",
+      "'not to mentioned' sai: sau 'to' là động từ nguyên mẫu 'mention'. Cả câu đó lẫn câu đúng tiếng Anh 'Then I will take the difference off tonight…' đều tự bỏ phần chênh lệch — quyết định về tiền của giám sát — và còn nhận lỗi trước khi xem phiếu. Đáp án mời đúng người, kèm bằng chứng.",
       1,
     ),
     round(
@@ -318,11 +318,7 @@ Whether outside bottles are welcome at all, the fee, the limit per table, and wh
     [
       {
         q: "Phí corkage được báo cho khách vào lúc nào?",
-        options: [
-          "Sau khi bữa ăn đã kết thúc",
-          "Trước khi mở nút chai",
-          "Chỉ khi khách tự hỏi tới phí",
-        ],
+        options: ["Sau khi bữa ăn đã kết thúc", "Trước khi mở nút chai", "Khi khách tự hỏi"],
         correct: 1,
         explanation:
           "'quoted before the cork moves, never after' — khách không bị bất ngờ ở hoá đơn.",
@@ -330,7 +326,7 @@ Whether outside bottles are welcome at all, the fee, the limit per table, and wh
       {
         q: "Ai có quyền miễn phí corkage, và thường thế nào?",
         options: [
-          "Giám sát, thường kèm một điều kiện trao đổi",
+          "Giám sát, thường đổi lại việc khách gọi thêm một chai của hầm",
           "Người phục vụ, nếu khách là khách quen của quán",
           "Không ai cả, vì khoản phí này không bao giờ được miễn",
         ],
@@ -487,7 +483,7 @@ If one table really blocks tomorrow's set-up, the supervisor decides and the sup
           q: "Lượt gọi món cuối được thông báo như thế nào?",
           options: [
             "Nhiều lần để chắc chắn mọi khách đều nghe thấy",
-            "Một lần, tại bàn, kèm một lời mời",
+            "Một lần, tại bàn, nói khẽ, kèm một lời mời",
             "Qua loa chung của phòng ăn cho nhanh gọn",
           ],
           correct: 1,
@@ -528,11 +524,11 @@ If one table really blocks tomorrow's set-up, the supervisor decides and the sup
         0,
       ),
       round(
-        "Last orders were ten minutes ago. Tell table six the kitchen is closed.",
-        "What if they have one quick dish, in exchange for this being their last order?",
-        "What if they has one quick dish, in exchange of this being their last order?",
-        "Then you tell them yourself, because I am not going to be the one who says no.",
-        "'they has… in exchange of' sai: 'they have', và cụm cố định là 'in exchange for'. Câu 'you tell them yourself' đúng ngữ pháp nhưng đẩy việc và gây căng thẳng trong ca. Đáp án thương lượng một giải pháp hai bên cùng chấp nhận.",
+        "The pastry team is cleaning down. Table eleven wants three more desserts, so just say no.",
+        "What if they share one dessert plate, in exchange for it being their final order?",
+        "Fine, I will tell them the kitchen is closed, and next time they should to order much earlier.",
+        "Fine, I will tell them the kitchen is closed, and next time they should order much earlier.",
+        "'should to order' sai: sau 'should' là động từ nguyên mẫu, không có 'to'. Cả câu đó lẫn câu đúng ngữ pháp 'Fine, I will tell them the kitchen is closed…' đều từ chối cụt và trách khách gọi muộn. Đáp án thương lượng bằng 'What if… in exchange for': một đĩa tráng miệng dùng chung, đổi lại đó là lượt gọi cuối.",
         2,
         "colleague",
       ),
@@ -681,7 +677,7 @@ Here is a warning from every long bar in this business. When a regular says the 
         {
           q: "Hai nhân viên đổi khu vực phục vụ để khách quen có người quen phục vụ. Phải làm gì nữa?",
           options: [
-            "Báo giám sát trước giờ phục vụ",
+            "Báo giám sát trước giờ phục vụ, vì sơ đồ bàn là của giám sát",
             "Không cần làm gì vì đổi trong nhóm là chuyện riêng",
             "Ghi vào hồ sơ khách quen để lần sau tự đổi",
           ],
@@ -693,7 +689,7 @@ Here is a warning from every long bar in this business. When a regular says the 
           q: "Vì sao phải ghi lại mọi điều đã hứa với khách quen?",
           options: [
             "Để tính thêm phí cho các yêu cầu đặc biệt",
-            "Người hứa có thể đã nghỉ việc",
+            "Vì người hứa ân huệ đó thường đã nghỉ việc",
             "Vì khách quen thường nhớ sai những gì được hứa",
           ],
           correct: 1,
@@ -714,9 +710,9 @@ Here is a warning from every long bar in this business. When a regular says the 
       round(
         "Can you take my break at eight? I will take yours at nine.",
         "What if we trade at half past eight instead? The terrace is busiest at eight.",
-        "What if we trades at half past eight instead? The terrace is busiest at eight.",
-        "No, eight is not good for me, and you should have asked the supervisor anyway.",
-        "'we trades' sai: chủ ngữ 'we' không thêm -s. Câu 'you should have asked the supervisor anyway' đúng tiếng Anh nhưng từ chối cụt và trách đồng nghiệp. Đáp án mở một phương án ở giữa bằng 'What if'.",
+        "No, eight is not good for me at all, and you really should have ask the supervisor first.",
+        "No, eight is not good for me at all, and you really should have asked the supervisor first.",
+        "'should have ask' sai: sau 'should have' là quá khứ phân từ 'asked'. Cả câu đó lẫn câu đúng tiếng Anh 'you really should have asked the supervisor first' đều từ chối cụt và trách đồng nghiệp. Đáp án mở một phương án ở giữa bằng 'What if'.",
         1,
         "colleague",
       ),
