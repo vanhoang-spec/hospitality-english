@@ -340,7 +340,7 @@ Busy is not a reason to skip a step. It is the reason the steps exist.`,
   game: [
     round(
       "Just take the curry off the bill yourself. It is only a small amount.",
-      "I would love to help, madam. My supervisor signs that, and she is coming now.",
+      "I would love to help, madam. My supervisor signs that, and she is coming to your table now.",
       "I would love to help, madam. My supervisor sign that, and she coming now.",
       "All right, madam, just this once — I will take it off before I print the bill.",
       "'My supervisor sign… she coming' sai: cần 'signs' và thiếu 'is'. Câu 'just this once' đúng tiếng Anh nhưng tự bớt tiền — việc của giám sát. Đáp án vẫn giúp khách, đúng quy trình.",

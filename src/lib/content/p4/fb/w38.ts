@@ -207,7 +207,7 @@ Finish with the next steps and a date, not with pressure. Then stop talking. The
     ),
     round(
       "How do I start a proposal meeting? I usually just hand over the document.",
-      "Start with the map: three parts — the menu, the price and the next steps.",
+      "Start with the map: three parts — the menu, the price and the next steps, in that order.",
       "Start with the map: three part — the menu, the price and the next step.",
       "Hand it over and wait. If the host has any questions, they will ask them.",
       "'three part… the next step' sai số nhiều: 'three parts', 'next steps'. Câu 'Hand it over and wait' đúng ngữ pháp nhưng bỏ mất việc chính của buổi gặp — dẫn khách qua đề xuất. Đáp án đưa khung ba phần.",
@@ -538,10 +538,10 @@ What the package holds and what it costs are on this season's banquet card. Quot
   game: [
     round(
       "Is the drinks package just a way to make us spend more?",
-      "Not for your group, sir — for forty guests over three hours, it works out cheaper.",
+      "Not for your group, sir — for forty guests over three hours, it works out cheaper. Let me show you how.",
       "Not for your group, sir — for forty guests over three hours, it work out cheaper.",
       "Every group takes the package, sir, so it must be the right choice for you as well.",
-      "'it work out' thiếu -s: 'it' đi với 'works'. Câu 'Every group takes the package' đúng ngữ pháp nhưng ép khách theo đám đông thay vì tính cho chính bàn này. Đáp án trả lời bằng con số của khách.",
+      "'it work out' thiếu -s: 'it' đi với 'works'. Câu 'Every group takes the package' đúng ngữ pháp nhưng ép khách theo đám đông thay vì tính cho chính bàn này. Đáp án trả lời bằng con số của khách và mời khách xem cách tính.",
       2,
     ),
     round(
@@ -719,10 +719,10 @@ When the answer is no, thank the host, ask for nothing, and leave the door open.
     game: [
       round(
         "We are ninety percent sure, but our director wants to taste the menu first.",
-        "Then the tasting session is for her, madam, and your date stays held until then.",
+        "Then the tasting session is for her, madam, and your date stays held until then. Which day suits her best?",
         "Then the tasting session is for her, madam, and your date stay held until then.",
         "Then perhaps a small deposit today, madam — just between us, so nobody takes your date.",
-        "'your date stay' thiếu -s: 'your date' số ít nên 'stays'. Câu xin cọc 'just between us' đúng ngữ pháp nhưng là áp lực và một thoả thuận ngoài quy trình. Đáp án mời người quyết định tới buổi nếm thử.",
+        "'your date stay' thiếu -s: 'your date' số ít nên 'stays'. Câu xin cọc 'just between us' đúng ngữ pháp nhưng là áp lực và một thoả thuận ngoài quy trình. Đáp án mời người quyết định tới buổi nếm thử và hỏi ngày hợp với bà ấy.",
         1,
       ),
       round(

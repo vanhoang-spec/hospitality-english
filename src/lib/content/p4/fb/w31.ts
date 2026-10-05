@@ -524,7 +524,7 @@ Vegetarian guests need the same care. A vegetarian broth may still use fish sauc
       ),
       round(
         "The guest at table nine is allergic to prawns. I will just pick the prawns out, OK?",
-        "No — write it on the order and let the chef make a fresh plate.",
+        "No — write it on the order and let the chef make a fresh plate, without prawns.",
         "No — write it on order and let chef makes a fresh plate.",
         "Fine, but be quick about it, and there is no need to tell the guest.",
         "'on order… let chef makes' thiếu mạo từ 'the' và sai dạng động từ (let + động từ nguyên mẫu: make). Câu 'Fine, but be quick… no need to tell the guest' đúng tiếng Anh nhưng nhặt tôm ra khỏi đĩa không làm món hết tôm — món phải làm lại từ đầu. Đáp án đưa việc về đúng bếp.",

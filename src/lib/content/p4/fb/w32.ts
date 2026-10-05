@@ -176,7 +176,7 @@ Some guests love being known; others want to be left alone. Follow the guest, no
   game: [
     round(
       "How on earth did you know I always drink sparkling water?",
-      "We noted it on your last visit, madam. Still sparkling tonight?",
+      "We noted it on your last visit, madam, but tastes change. Still sparkling tonight?",
       "We note it on your last visit, madam. Still sparkling tonight?",
       "Our system records everything every guest has ever ordered here, madam.",
       "'We note it on your last visit' sai thì: chuyện lần trước phải dùng quá khứ 'noted'. 'Our system records everything every guest has ever ordered' đúng ngữ pháp nhưng làm khách thấy bị theo dõi. Đáp án nói thật nguồn thông tin, rồi hỏi lại vì khẩu vị có thể đã đổi.",
@@ -184,10 +184,10 @@ Some guests love being known; others want to be left alone. Follow the guest, no
     ),
     round(
       "The card says table four hates coriander. I will just leave it out without asking.",
-      "Ask first — tastes change, and most guests like to be asked.",
+      "Ask first — tastes change, and most guests like to be asked. Then update the card.",
       "Ask first — tastes changes, and most guest like to be asked.",
       "Good, and write 'difficult guest' on the card so the next shift knows.",
-      "'tastes changes… most guest' sai số ít/số nhiều: 'tastes change', 'most guests'. Câu 'write difficult guest on the card' đúng tiếng Anh nhưng ghi nhận xét thay cho sự thật — thẻ chỉ ghi điều khách thể hiện. Đáp án dùng thẻ như một câu hỏi.",
+      "'tastes changes… most guest' sai số ít/số nhiều: 'tastes change', 'most guests'. Câu 'write difficult guest on the card' đúng tiếng Anh nhưng ghi nhận xét thay cho sự thật — thẻ chỉ ghi điều khách thể hiện. Đáp án dùng thẻ như một câu hỏi, rồi cập nhật thẻ theo lời khách.",
       2,
       "colleague",
     ),

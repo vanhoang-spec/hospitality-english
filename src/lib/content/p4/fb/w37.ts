@@ -210,7 +210,7 @@ If a host asks for different terms, such as no deposit, the answer belongs to th
     ),
     round(
       "The company dinner still has no deposit, and the week is over. What happened?",
-      "I called the host yesterday, and I released the date this morning, in writing.",
+      "I called the host yesterday, and I released the date this morning, in writing, as the terms say.",
       "I call the host yesterday, and I release the date this morning, in writing.",
       "Nothing yet. I gave the date to another party this morning without telling them.",
       "'I call… I release' sai thì: việc đã xong dùng quá khứ (called, released). Câu trao ngày cho tiệc khác mà không báo đúng ngữ pháp nhưng trái điều khoản — không bao giờ trả ngày trong im lặng. Đáp án báo đúng hai việc đã làm, có văn bản.",
@@ -553,7 +553,7 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
   game: [
     round(
       "Can I just cancel over the phone with you now?",
-      "Of course you can tell me now, madam. We also need written notice — an email is enough.",
+      "Of course you can tell me now, madam. We also need written notice — an email is enough, and I will confirm it.",
       "Of course you can tell me now, madam. We also needs written notice — an email is enough.",
       "No, madam. Phone calls do not count here, so please hang up and write to us instead.",
       "'We also needs' sai: chủ ngữ 'We' không thêm -s. Câu bảo khách cúp máy đúng ngữ pháp nhưng lạnh lùng — cuộc gọi vẫn được đón nhận, chỉ cần thêm văn bản. Đáp án nhận lời khách và nói điều khoản nhẹ nhàng.",
@@ -742,7 +742,7 @@ A lower minimum spend or a waived fee is the manager's decision. Ask on the host
     game: [
       round(
         "Fifteen million minimum? Can you not just drop it for us this once?",
-        "The minimum spend is my manager's to change, sir. Shall I ask her for you?",
+        "The minimum spend is my manager's to change, sir. Shall I ask her for you right now?",
         "The minimum spend is my manager to change, sir. Shall I asking her for you?",
         "For you, sir, yes. I will drop it quietly, and nobody else needs to know.",
         "'my manager to change… Shall I asking' sai: cần sở hữu cách 'manager's', và sau 'Shall I' là nguyên mẫu (ask). Câu bỏ mức chi tối thiểu 'quietly' đúng ngữ pháp nhưng vượt quyền và biến nó thành bí mật với chính nhà hàng. Đáp án hỏi đúng người.",

@@ -704,7 +704,7 @@ Afterwards, write what happened on the slip: the fact, the fix and the time.`,
     ),
     round(
       "The pastry team says a new cake takes twenty minutes. What do I tell the host?",
-      "Tell the host quietly, away from the table, and offer a plated dessert now as plan B.",
+      "Tell the host quietly, away from the table, and offer a plated dessert with candles now as plan B.",
       "Tell the host quietly, away from table, and offer plated dessert now as plan B.",
       "Tell the whole table it will be twenty minutes, so everybody knows why they are waiting.",
       "'away from table… offer plated dessert' thiếu mạo từ 'the' và 'a'. Câu báo cả bàn đúng tiếng Anh nhưng làm lộ bất ngờ và làm hỏng khoảnh khắc. Đáp án: chỉ chủ tiệc biết, kèm phương án B.",
