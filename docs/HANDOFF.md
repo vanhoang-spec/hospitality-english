@@ -46,7 +46,7 @@ Theo thứ tự yêu cầu gần nhất:
 | P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
 | P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
 | P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                |
-| P4        | 31–40 | FO/FB/HK/GR soạn tay đủ 10/10, qua cổng theo batch với chuẩn cũ. SW còn 9/10 tuần sinh tự động. Tạm dừng                                                                                                                 |
+| P4        | 31–40 | **05/10 mở lại để chấm mù vòng 1** (`7ed3254`): **0/10 ô đạt 7,5** — AC TB 5,08, HM TB 6,17, thấp nhất HM-SW 3,33. Tóm tắt và lỗi chung: `docs/audit/p4-r1-summary.md`. Chưa giao việc sửa; hỏi người dùng               |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
 đạt ngoại lệ. **Không tự suy rộng một ngoại lệ sang phase khác — hỏi lại.**
