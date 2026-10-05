@@ -115,6 +115,8 @@ Mâu thuẫn giữa các tuần là lỗi nặng nhất vòng 1 (GR-37 vs GR-40,
 - Câu vô nghĩa do ghép danh từ; chính tả Mỹ (dùng apologise, colour, favourite, centre).
 - Bài đọc > 300 từ; thẻ không nằm trong bài; tip dạy chữ không có trong câu đích.
 - Lời đồng nghiệp/quản lý gắn vai khách.
+- Trong game, câu chứa "you cannot", "what do you say", "the guest asks/says…" bị QA T6b chặn vì
+  đọc như đề bài. Từ chối bằng "We cannot let you…", "I am afraid … is not possible".
 
 ## 6. Quy trình cho người viết (subagent)
 

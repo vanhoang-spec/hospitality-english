@@ -410,14 +410,14 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
     risk({
       ...sp(
         "I had wine at lunch, but I want the sauna. Just this once?",
-        "I am sorry, madam. You cannot use the sauna after alcohol; however, you can rest in the quiet corner.",
-        "Luật an toàn không thương lượng, kể cả 'chỉ một lần'. Từ chối rõ, rồi '; however,' đưa một chỗ nghỉ thay thế.",
+        "I am sorry, madam. We cannot let you use the sauna after alcohol; however, you can rest in the quiet corner.",
+        "Luật an toàn không thương lượng, kể cả 'chỉ một lần'. 'We cannot let you use' từ chối rõ mà vẫn lịch sự, rồi '; however,' đưa một chỗ nghỉ thay thế.",
         undefined,
         ["use", "sauna", "alcohol", "however", "rest", "quiet", "corner"],
       ),
       alsoAccept: [
-        "I am sorry, madam. You cannot use the sauna after alcohol. However, you can rest in the quiet corner.",
-        "I am sorry, madam. After alcohol, you cannot use the sauna; however, you can rest in the quiet corner.",
+        "I am sorry, madam. We cannot let you use the sauna after alcohol. However, you can rest in the quiet corner.",
+        "I am sorry, madam. After alcohol, we cannot let you use the sauna; however, you can rest in the quiet corner.",
       ],
     }),
   ],
@@ -470,11 +470,11 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
     ),
     game(
       "I had two beers at lunch. Can I use the sauna now?",
-      "I am sorry, sir. You cannot use the sauna after alcohol; however, you can rest in the quiet corner.",
-      "I am sorry, sir. You cannot to use the sauna after alcohol; however, you can rest in the quiet corner.",
+      "I am sorry, sir. We cannot let you use the sauna after alcohol; however, you can rest in the quiet corner.",
+      "I am sorry, sir. We cannot let you to use the sauna after alcohol; however, you can rest in the quiet corner.",
       "Just a short visit then, sir. Drink some water first, and come out if you feel dizzy.",
       undefined,
-      "Câu thứ hai thừa 'to': sau 'cannot' là động từ nguyên mẫu không 'to'. Câu thứ ba thương lượng một luật an toàn — rượu và nhiệt có thể làm khách ngất. Câu đúng từ chối rõ và đưa chỗ nghỉ thay thế.",
+      "Câu thứ hai thừa 'to': sau 'let you' là động từ nguyên mẫu không 'to' ('let you use'). Câu thứ ba thương lượng một luật an toàn — rượu và nhiệt có thể làm khách ngất. Câu đúng từ chối rõ và đưa chỗ nghỉ thay thế.",
     ),
   ],
 });
