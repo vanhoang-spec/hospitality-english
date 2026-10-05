@@ -176,8 +176,8 @@ If the guest still prefers the other price, accept it graciously. Record the EVE
             q: "Khách đòi khớp giá trang trung gian thì lễ tân làm gì?",
             options: [
               "Khớp giá ngay để giữ khách",
-              "Hỏi ý kiến cấp trên",
-              "Nói rằng khách sạn không bao giờ khớp giá với bất kỳ trang nào",
+              "Hỏi ý kiến cấp trên, vì quầy không tự khớp giá",
+              "Nói khách sạn không bao giờ khớp giá",
             ],
             correct: 1,
             explanation:
@@ -189,10 +189,10 @@ If the guest still prefers the other price, accept it graciously. Record the EVE
         game(
           "Your own website is cheaper than the price you just gave me.",
           "May I look at the screen with you, madam? If the conditions are the same, I will check with my supervisor.",
-          "May I looking at the screen with you, madam? If the conditions are the same, I will check with my supervisor.",
+          "The desk rate and the online rate are set by different team, madam, so they can be quite different from each other.",
           "The desk rate and the online rate are set by different teams, madam, so they can be quite different from each other.",
           undefined,
-          "Sau 'May I' là động từ nguyên thể 'look'. Câu 'set by different teams' đúng tiếng Anh nhưng gạt khách đi — trước hết phải cùng khách xem điều kiện có giống nhau không.",
+          "Hai câu 'set by different teams' đều gạt khách đi — trước hết phải cùng khách xem điều kiện có giống nhau không. Câu 'different team' còn thiếu -s số nhiều: 'different teams'.",
         ),
         game(
           "So your price is just higher. Why should I pay it?",
@@ -324,24 +324,24 @@ A promise you then have to take back costs more than the discount would have.`,
           {
             q: "Vì sao không được nói 'I will hold this rate'?",
             options: [
-              "Vì đó là việc của Duty Manager",
+              "Vì đó là việc của Duty Manager; quầy chỉ nói 'I will ask'",
               "Vì khách sẽ nghĩ mức giá này quá rẻ",
               "Vì hệ thống đặt phòng không cho giữ giá",
             ],
             correct: 0,
             explanation:
-              'Tài liệu ghi "let the Duty Manager decide" và "A promise you then have to take back costs more than the discount would have."',
+              'Tài liệu ghi "let the Duty Manager decide", "Say \'I will ask\'" và "A promise you then have to take back costs more than the discount would have."',
           },
         ],
       ),
       game: [
         game(
-          "Can you do anything at all on the price?",
-          "I cannot change the rate, sir. However, I can offer you a higher floor in the same category.",
-          "I cannot change the rate, sir. However, I can offer you higher floor in the same category.",
-          "Of course, sir. As a regular guest, you can have ten percent off tonight.",
+          "I stay here every month. Surely you can do something on the price?",
+          "I am afraid the rate stays as it is, sir, but I can put you on the quieter side, with a welcome drink.",
+          "Of course, sir. As a regular guest, you can having ten percent off the rate tonight.",
+          "Of course, sir. As a regular guest, you can have ten percent off the rate tonight.",
           undefined,
-          "Thiếu mạo từ: phải là 'a higher floor'. Câu cho giảm mười phần trăm đúng tiếng Anh nhưng vượt quyền: quầy không đổi giá, chỉ đưa thứ quầy tự cho được.",
+          "Hai câu cho khách quen giảm mười phần trăm đều vượt quyền: quầy không đổi giá, chỉ đưa thứ của quầy — phía yên tĩnh, đồ uống chào mừng. Câu 'you can having' còn sai: sau 'can' là động từ nguyên thể 'have'.",
         ),
         game(
           "If I stay an extra night, will you give me a better rate?",
@@ -480,7 +480,11 @@ Record every request in the profile, with the date and the name of whoever decid
           },
           {
             q: "Giữ giá cho một lần ở sau là quyết định của ai?",
-            options: ["Lễ tân đang trực", "Duty Manager", "Bộ phận kế toán"],
+            options: [
+              "Lễ tân đang trực",
+              "Duty Manager — quầy chỉ hỏi, không bao giờ hứa",
+              "Bộ phận kế toán",
+            ],
             correct: 1,
             explanation:
               'Tài liệu ghi "Holding a rate for a future stay is the Duty Manager\'s decision. The desk asks; it never promises."',
@@ -489,20 +493,20 @@ Record every request in the profile, with the date and the name of whoever decid
       ),
       game: [
         game(
-          "Fine, I will book somewhere else.",
-          "I understand, madam. If you change your mind, I am happy to look at a midweek date with you.",
-          "I understand, madam. If you will change your mind, I am happy to look at a midweek date with you.",
-          "That is your choice, madam. Have a good evening.",
+          "Forget it. We will stay with my sister in town instead.",
+          "Of course, madam. If a weekday suits you better, our midweek rate is lower, and I am happy to check dates.",
+          "Of course, madam. If a weekday will suit you better, our midweek rate is lower, and I am happy to check dates.",
+          "That is your choice, madam. Enjoy your stay with your sister.",
           undefined,
-          "Sau 'If' (điều kiện loại 1) dùng hiện tại đơn, không dùng 'will'. Câu 'That is your choice' đúng ngữ pháp nhưng đóng sập cửa — tài liệu dặn luôn để ngỏ một phương án khác.",
+          "Sau 'If' (điều kiện loại 1) dùng hiện tại đơn 'suits', không dùng 'will suit'. Câu 'That is your choice' đúng ngữ pháp nhưng đóng sập cửa — tài liệu dặn luôn để ngỏ một phương án khác, như một ngày giữa tuần.",
         ),
         game(
           "Can you promise me this price for my next visit?",
           "I cannot promise that, sir, but I will ask my Duty Manager to hold the rate.",
-          "I cannot promise that, sir, but I will ask my Duty Manager to holding the rate.",
-          "Of course, sir. I will hold this rate for you, whenever you come back to us.",
+          "Of course, sir. I will holding this rate for you, whenever you decide to come back to us.",
+          "Of course, sir. I will hold this rate for you, whenever you decide to come back to us.",
           undefined,
-          "Sau 'to' là động từ nguyên thể 'hold'. Câu 'I will hold this rate for you' nghe chiều khách nhưng vượt quyền — đúng câu tài liệu cấm.",
+          "Hai câu 'I will hold this rate for you' đều nghe chiều khách nhưng vượt quyền — đúng câu tài liệu cấm; giữ giá cho lần sau là việc Duty Manager quyết. Câu 'I will holding' còn sai: sau 'will' là động từ nguyên thể 'hold'.",
         ),
       ],
     }),
@@ -636,11 +640,11 @@ Nothing verbal. A deal nobody wrote down was never agreed.`,
       game: [
         game(
           "Housekeeping says your guest's room needs another two hours.",
-          "What if we give her a clean room in the same category? I can ask her now.",
-          "What if we gives her a clean room in the same category? I can ask her now.",
-          "Then the guest just has to wait in the lobby for two hours. That is not my problem.",
+          "What if we move her to a clean room in the same category? I can ask her now.",
+          "Then the guest just have to wait in the lobby for another two hours. That is not my problem.",
+          "Then the guest just has to wait in the lobby for another two hours. That is not my problem.",
           "colleague",
-          "Sau 'What if we' là động từ nguyên thể 'give'. Câu 'That is not my problem' đúng tiếng Anh nhưng đóng cuộc thương lượng — đề nghị một phương án bằng câu hỏi thì bên kia mới đồng ý được.",
+          "Hai câu 'the guest… has to wait… That is not my problem' đều đóng cuộc thương lượng — đề nghị một phương án bằng câu hỏi thì bên kia mới đồng ý được. Câu 'the guest just have' còn sai: 'the guest' số ít đi với 'has'.",
         ),
         game(
           "Can you just remember what we agreed? I trust you.",

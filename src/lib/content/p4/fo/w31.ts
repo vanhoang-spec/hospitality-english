@@ -166,8 +166,8 @@ If you do not know the answer, say so, and offer the history folder kept at the 
           {
             q: "Khách hỏi điều bạn không biết thì phải làm gì?",
             options: [
-              "Đoán câu trả lời nghe hợp lý nhất để khách khỏi phải chờ",
-              "Nói là mình không biết, mời xem tập tư liệu",
+              "Đoán câu trả lời hợp lý nhất để khách khỏi chờ",
+              "Nói là mình không biết, rồi mời khách xem tập tư liệu ở quầy",
               "Hẹn khách hỏi lại người ca sau, vì họ biết nhiều hơn",
             ],
             correct: 1,
@@ -191,10 +191,10 @@ If you do not know the answer, say so, and offer the history folder kept at the 
         game(
           "Is this a real old building, or is it new and made to look old?",
           "It is a heritage building, sir, and the lobby tiles are original.",
-          "It is a heritage building, sir, and the lobby tiles is original.",
+          "It old, sir. Please ask my manager about the details.",
           "It is old, sir. Please ask my manager about the details.",
           undefined,
-          "'the lobby tiles is' sai: chủ ngữ số nhiều đi với 'are'. Câu đẩy sang quản lý thì đúng tiếng Anh nhưng sai việc: một câu hỏi về toà nhà là việc của quầy, và thẻ lịch sử ở quầy đã có câu trả lời.",
+          "Hai câu đẩy sang quản lý đều sai việc: một câu hỏi về toà nhà là việc của quầy, và thẻ lịch sử ở quầy đã có câu trả lời. Câu 'It old' còn thiếu động từ 'is'.",
         ),
         game(
           "My guidebook says a famous poet wrote here. Which room was it?",
@@ -316,8 +316,8 @@ After 22:00, sell the courtyard room on the QUIET, never on the view. A guest of
           {
             q: "Theo hướng dẫn, phải mở đầu lời mời nâng hạng bằng gì?",
             options: [
-              "Mức chênh lệch giá giữa hai hạng phòng, để khách cân nhắc ngay từ đầu",
-              "Một điều khách sẽ nhận thấy, rồi mời khách xem phòng",
+              "Mức chênh lệch giá giữa hai hạng phòng, nói ngay từ đầu",
+              "Một điều khách sẽ nhận thấy, như ánh nắng buổi sáng, rồi mời khách xem phòng",
               "Danh sách mọi ưu điểm của phòng, càng nhiều càng tốt",
             ],
             correct: 1,
@@ -483,10 +483,10 @@ A guest who says no today may say yes on day two. Note in the profile that the s
         game(
           "We are quite tired, actually.",
           "Then let me get you upstairs, madam. Your keys are ready, and the lift is on the left.",
-          "Then let me getting you upstairs, madam. Your keys are ready, and the lift is on the left.",
-          "It only takes two minutes, madam. Most guests really enjoy hearing about the building.",
+          "It only take two minutes, madam, and most of our guests really enjoy hearing about the building.",
+          "It only takes two minutes, madam, and most of our guests really enjoy hearing about the building.",
           undefined,
-          "Sau 'let me' là động từ nguyên thể 'get'. Câu 'It only takes two minutes' đúng tiếng Anh nhưng giữ một vị khách đã nói mình mệt ở lại quầy — đọc sai khách.",
+          "Hai câu 'It only takes two minutes' đều giữ một vị khách đã nói mình mệt ở lại quầy — đọc sai khách. Câu 'It only take' còn thiếu -s: chủ ngữ 'it' đi với 'takes'.",
         ),
         game(
           "My taxi leaves in five minutes. Is there time for the story?",
@@ -622,7 +622,7 @@ A guest told at the desk asks a question. A guest who finds out upstairs makes a
             options: [
               "Nói tên khách nếu đó là người nổi tiếng",
               "Gợi ý khéo để khách tự đoán ra",
-              "Không bao giờ nói ai đang lưu trú",
+              "Không bao giờ nói ai đang ở, đêm nay hay đêm nào khác",
             ],
             correct: 2,
             explanation:
@@ -642,10 +642,10 @@ A guest told at the desk asks a question. A guest who finds out upstairs makes a
         game(
           "We booked the old wing for the charm. Will we be happy there?",
           "It is charming, sir, but compact. In all honesty, it suits two people with light luggage.",
-          "It is charming, sir, but compact. In all honesty, it suit two people with light luggage.",
+          "You will love it, sir. Every guest say it is the most charming part.",
           "You will love it, sir. Every guest says it is the most charming part.",
           undefined,
-          "'it suit' thiếu -s. Câu 'You will love it… every single guest' đúng ngữ pháp nhưng hứa thay căn phòng — hứa quá là cách chắc nhất để có một khiếu nại.",
+          "Hai câu 'You will love it… every guest' đều hứa thay căn phòng — hứa quá là cách chắc nhất để có một khiếu nại, và không nói trước rằng phòng nhỏ gọn. Câu 'Every guest say' còn thiếu -s: 'every guest' số ít đi với 'says'.",
         ),
       ],
     }),

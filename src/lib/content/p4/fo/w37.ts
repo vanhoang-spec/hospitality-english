@@ -171,7 +171,7 @@ Never read one company's rate to another company. Every agreement is private.`,
             q: "Theo tài liệu, giá doanh nghiệp được tính thế nào?",
             options: [
               "Một mức cố định cho cả năm, không đổi theo mùa hay theo ngày",
-              "Thấp hơn mười phần trăm so với giá công bố trong ngày",
+              "Thấp hơn mười phần trăm so với giá công bố trong ngày, nên lên xuống theo giá đó",
               "Bằng giá trên các trang đặt phòng trung gian vào cùng ngày đó",
             ],
             correct: 1,
@@ -214,10 +214,10 @@ Never read one company's rate to another company. Every agreement is private.`,
         game(
           "Another company told me they get a bigger discount. What is their rate exactly?",
           "I am sorry, sir, every agreement is private. I can only talk about your own company's rate, and I am happy to explain that.",
-          "I am sorry, sir, every agreement is private. I can only talking about your own company's rate.",
+          "They do get a little more, sir, but they book many more rooms with us every year than your company do.",
           "They do get a little more, sir, but they book many more rooms with us every year than your company does.",
           undefined,
-          "Sau 'can' là động từ nguyên thể 'talk'. Câu xác nhận công ty kia được giảm nhiều hơn đúng tiếng Anh nhưng làm lộ một thoả thuận riêng — mỗi thoả thuận là chuyện riêng của từng công ty.",
+          "Hai câu xác nhận công ty kia được giảm nhiều hơn đều làm lộ một thoả thuận riêng — mỗi thoả thuận là chuyện riêng của từng công ty. Câu 'your company do' còn sai: 'your company' số ít đi với 'does'.",
         ),
       ],
     }),
@@ -358,8 +358,8 @@ Never move the cut-off date yourself. A later date is the Sales Manager's decisi
           {
             q: "Người đặt xin dời ngày chốt thêm một tuần. Ai quyết?",
             options: [
-              "Lễ tân đang nghe điện thoại, nếu đoàn đủ lớn",
-              "Sales Manager",
+              "Lễ tân đang nghe máy, nếu đoàn lớn",
+              "Sales Manager; quầy không bao giờ tự dời ngày chốt",
               "Trưởng đoàn, vì đoàn đã ký hợp đồng",
             ],
             correct: 1,
@@ -389,12 +389,12 @@ Never move the cut-off date yourself. A later date is the Sales Manager's decisi
           "'no later than' cần đủ chữ 'than'. Câu 'whenever is easy… sort it out at the desk' nghe dễ chịu nhưng sai điều khoản: không có tên trước ngày chốt, phòng sẽ được mở bán lại.",
         ),
         game(
-          "The booker wants three more rooms, but the cut-off date was yesterday. Same group rate?",
-          "Not automatically. After the cut-off date, extra rooms are subject to availability, at the published rate.",
-          "Not automatically. After the cut-off date, extra rooms is subject to availability, at the published rate.",
-          "Yes, of course. They are the same group, so just add the rooms to the block at the group rate and tell them it is done.",
+          "The tour leader wants two extra rooms for the drivers, and the cut-off date was last week. Same group rate?",
+          "Only if rooms are free, and at the published rate, because the cut-off date has passed.",
+          "Yes. Same group, same rate, so adds them to the block.",
+          "Yes. Same group, same rate, so add them to the block.",
           "colleague",
-          "'rooms' số nhiều đi với 'are'. Câu cho luôn giá đoàn đúng tiếng Anh nhưng sai điều khoản và vượt quyền: sau ngày chốt, phòng thêm tuỳ phòng trống và theo giá công bố.",
+          "Hai câu 'Same group, same rate' đều sai điều khoản và vượt quyền: sau ngày chốt, phòng thêm tuỳ phòng trống và theo giá công bố. Câu 'so adds them' còn sai: mệnh lệnh dùng động từ nguyên thể 'add'.",
         ),
       ],
     }),
@@ -516,7 +516,7 @@ The desk explains these terms and never changes them. A waived deposit or a smal
             q: "Đoàn huỷ toàn bộ, báo bằng văn bản bốn mươi ngày trước ngày đến. Tiền cọc thì sao?",
             options: [
               "Bị giữ lại toàn bộ, vì hợp đồng đã được ký từ trước",
-              "Được hoàn lại đầy đủ",
+              "Được hoàn lại đầy đủ, vì báo bằng văn bản hơn ba mươi ngày trước ngày đến",
               "Được hoàn một nửa, phần còn lại tính là phí huỷ",
             ],
             correct: 1,
@@ -551,10 +551,10 @@ The desk explains these terms and never changes them. A waived deposit or a smal
         game(
           "If only eighteen of our twenty people come, do we pay for the empty rooms?",
           "Not if you tell us before the cut-off date, madam. You can drop up to ten per cent without a charge.",
-          "Not if you tell us before the cut-off date, madam. You can drops up to ten per cent without a charge.",
+          "Yes, madam, every room in the block is charged in full, whatever happens, because the contract has already been sign.",
           "Yes, madam, every room in the block is charged in full, whatever happens, because the contract has already been signed.",
           undefined,
-          "Sau 'can' là động từ nguyên thể 'drop'. Câu 'every room is charged in full, whatever happens' đúng tiếng Anh nhưng sai điều khoản: trước ngày chốt, đoàn được bớt tới mười phần trăm mà không mất phí.",
+          "Hai câu 'every room is charged in full, whatever happens' đều sai điều khoản: trước ngày chốt, đoàn được bớt tới mười phần trăm mà không mất phí. Câu 'has already been sign' còn sai: bị động cần phân từ hai 'signed'.",
         ),
         game(
           "The booker cancelled twenty days before arrival and wants the deposit back. Can I say yes?",
@@ -693,13 +693,13 @@ Never say "I am sure they will agree." The answer may be no, and the booker will
             {
               q: "Người đặt nói Sales Manager đã hứa thêm một phòng miễn phí. Lễ tân làm gì?",
               options: [
-                "Thêm ngay một phòng miễn phí vào hợp đồng để giữ quan hệ tốt với khách",
-                "Xin lời hứa đó bằng văn bản, rồi hỏi Sales Manager",
-                "Nói thẳng là Sales Manager không bao giờ hứa những điều như vậy",
+                "Thêm ngay một phòng miễn phí vào hợp đồng",
+                "Xin lời hứa đó bằng văn bản, rồi hỏi Sales Manager ngay hôm nay",
+                "Nói Sales Manager không bao giờ hứa như vậy",
               ],
               correct: 1,
               explanation:
-                'Tài liệu ghi "If a booker says someone promised a change, ask for it in writing. A promise that is not in the contract is not a term."',
+                'Tài liệu ghi "If a booker says someone promised a change, ask for it in writing. A promise that is not in the contract is not a term." và dặn nói "I will ask our Sales Manager today."',
             },
             {
               q: "Khi hứa gọi lại cho người đặt, lễ tân hứa mốc giờ của ai?",
@@ -718,10 +718,10 @@ Never say "I am sure they will agree." The answer may be no, and the booker will
           game(
             "Can you just add a second free room? We are your best customer.",
             "I am sorry, madam, that is not mine to give. I will ask our Sales Manager today and call you back by five, whatever the answer is.",
-            "I am sorry, madam, that is not mine to give. I will asking our Sales Manager today and call you back by five.",
+            "Of course, madam. You are a very important customer, so I will adding the second room to your contract myself right now.",
             "Of course, madam. You are a very important customer, so I will add the second room to your contract myself right now.",
             undefined,
-            "Sau 'will' là động từ nguyên thể 'ask'. Câu tự thêm phòng miễn phí vào hợp đồng nghe chiều khách nhưng vượt quyền — mọi thay đổi hợp đồng là quyết định của Sales Manager.",
+            "Hai câu tự thêm phòng miễn phí vào hợp đồng đều nghe chiều khách nhưng vượt quyền — mọi thay đổi hợp đồng là quyết định của Sales Manager. Câu 'I will adding' còn sai: sau 'will' là động từ nguyên thể 'add'.",
           ),
           game(
             "Your quote ran out yesterday. Is the price still the same?",

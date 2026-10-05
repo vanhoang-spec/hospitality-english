@@ -173,8 +173,8 @@ Anything that has a price, such as a cake or wine, is quoted first. Giving it fr
           {
             q: "Khách nói chuyến đi không có dịp gì đặc biệt thì làm gì?",
             options: [
-              "Không ghi gì vào hồ sơ, và không nhắc lại",
-              "Ghi chú là khách đã từ chối, rồi hỏi lại vào hôm sau",
+              "Không ghi gì vào hồ sơ, và không bao giờ nhắc lại chuyện đó",
+              "Ghi là khách từ chối, rồi hỏi lại hôm sau",
               "Vẫn chuẩn bị một món quà nhỏ bất ngờ trong phòng",
             ],
             correct: 0,
@@ -197,10 +197,10 @@ Anything that has a price, such as a cake or wine, is quoted first. Giving it fr
         game(
           "It is my wife's birthday tomorrow, but please do not tell her I said so.",
           "Of course, sir. We will keep it quiet, and nobody will mention it to her at the desk or on the phone.",
-          "Of course, sir. We will keep it quietly, and nobody will mention it at the desk.",
+          "Wonderful, sir! We will greeting her with a birthday cake the moment she arrives.",
           "Wonderful, sir! We will greet her with a birthday cake the moment she arrives.",
           undefined,
-          "'keep it quiet' giữ tính từ 'quiet', không dùng trạng từ 'quietly'. Câu chào đón bằng bánh ngay khi tới đúng tiếng Anh nhưng phá đúng điều khách vừa xin giữ kín.",
+          "Hai câu chào đón bằng bánh ngay khi khách tới đều phá đúng điều khách vừa xin giữ kín — điều bất ngờ bị lễ tân nói ra thì không còn là bất ngờ. Câu 'We will greeting' còn sai: sau 'will' là động từ nguyên thể 'greet'.",
         ),
         game(
           "Why do you ask if this trip is special?",
@@ -337,7 +337,7 @@ No candles in guest rooms. The smoke detector does not know it is a birthday, so
             {
               q: "Trước khi đặt bánh hay hoa, phải hỏi khách điều gì?",
               options: [
-                "Khách có bị dị ứng gì không",
+                "Khách có bị dị ứng gì không, kể cả với hoa hay mùi hương",
                 "Khách muốn thanh toán bằng thẻ hay tiền mặt",
                 "Khách sẽ ở thêm bao nhiêu đêm nữa",
               ],
@@ -350,7 +350,7 @@ No candles in guest rooms. The smoke detector does not know it is a birthday, so
               options: [
                 "Chưa gồm phí phục vụ và thuế",
                 "Đã gồm mọi khoản phí phục vụ và thuế",
-                "Giá dành riêng cho hai người",
+                "Giá riêng cho hai người",
               ],
               correct: 0,
               explanation:
@@ -370,10 +370,10 @@ No candles in guest rooms. The smoke detector does not know it is a birthday, so
           game(
             "Just put the cake on our bill. How much will that be?",
             "That price is before tax and service, madam, so let me quote the total before I order.",
-            "That price is before tax and service, madam, so let me quoting the total before I order.",
-            "Please do not worry about the price, madam. You will see it all on the bill at check-out.",
+            "Please do not worrying about the price, madam. You will see it all on your bill when you check out.",
+            "Please do not worry about the price, madam. You will see it all on your bill when you check out.",
             undefined,
-            "Sau 'let me' là động từ nguyên thể 'quote'. Câu 'You will see it all on the bill at check-out' lịch sự nhưng để khách bất ngờ với tổng tiền — giá phải nói TRƯỚC khi đặt.",
+            "Hai câu 'You will see it all on your bill' đều lịch sự nhưng để khách bất ngờ với tổng tiền — giá phải nói TRƯỚC khi đặt. Câu 'do not worrying' còn sai: sau 'do not' là động từ nguyên thể 'worry'.",
           ),
         ],
       },
@@ -514,10 +514,10 @@ The desk keeps the slip until the guest confirms it happened.`,
         game(
           "Have you told the kitchen about the cake?",
           "Yes, sir. The pastry chef has it, and I will chase it up before you go to dinner.",
-          "Yes, sir. The pastry chef has it, and I will chase it up before you will go to dinner.",
-          "I think so, sir. Someone from the kitchen should have it on their list somewhere.",
+          "I think so, sir. I believe someone from the kitchen should has it on their list somewhere.",
+          "I think so, sir. I believe someone from the kitchen should have it on their list somewhere.",
           undefined,
-          "Sau 'before' (chỉ thời gian) dùng hiện tại đơn, không dùng 'will'. Câu 'Someone… should have it' đúng tiếng Anh nhưng không có ai chịu trách nhiệm — đó là hy vọng, không phải bàn giao.",
+          "Hai câu 'someone… should have it' đều không có ai chịu trách nhiệm — đó là hy vọng, không phải bàn giao. Câu 'should has' còn sai: sau 'should' là động từ nguyên thể 'have'.",
         ),
       ],
     }),
@@ -640,8 +640,8 @@ Formal wishes, "On behalf of everyone at the hotel…", are said quietly to the 
             {
               q: "Khi điều bất ngờ bị lộ, phải xin lỗi ai và ở đâu?",
               options: [
-                "Người tổ chức, một cách kín đáo",
-                "Cả hai vị khách, ngay tại quầy lễ tân cho rõ ràng",
+                "Người tổ chức, kín đáo, rồi đề nghị dời sang tối khác",
+                "Cả hai vị khách, ngay tại quầy",
                 "Người được nhận bất ngờ, trong bữa tối",
               ],
               correct: 0,

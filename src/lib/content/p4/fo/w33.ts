@@ -163,12 +163,12 @@ A guest who feels heard will accept a slower answer.`,
             q: "Trong lúc khách đang nói, lễ tân KHÔNG được làm gì?",
             options: [
               "Ghi lại những gì khách đang trình bày",
-              "Ngắt lời khách, hoặc tra hệ thống",
+              "Ngắt lời khách, hoặc tra hệ thống trước khi khách nói hết",
               "Nhìn thẳng vào khách khi lắng nghe",
             ],
             correct: 1,
             explanation:
-              'Bước 1 ghi "Do not interrupt, and do not check the system while the guest is speaking."',
+              'Bước 1 ghi "Listen to the end. Do not interrupt, and do not check the system while the guest is speaking."',
           },
           {
             q: "Khách báo bị trừ tiền hai lần. Một khả năng thường gặp là gì?",
@@ -195,10 +195,10 @@ A guest who feels heard will accept a slower answer.`,
         game(
           "I have not finished! Let me speak!",
           "I am sorry, sir. Please go on — I will not interrupt again.",
-          "I am sorry, sir. Please go on — I will not interrupting again.",
+          "I understand, sir, but there is queue behind you, so please make it quick.",
           "I understand, sir, but there is a queue behind you, so please make it quick.",
           undefined,
-          "Sau 'will not' là động từ nguyên thể 'interrupt'. Câu giục khách vì hàng chờ đúng ngữ pháp nhưng lại ngắt lời lần nữa — khách đang khiếu nại cần được nói hết.",
+          "Hai câu giục khách vì hàng chờ đều ngắt lời khách lần nữa — khách đang khiếu nại cần được nói hết. Câu 'there is queue' còn thiếu mạo từ: 'there is a queue'.",
         ),
       ],
     }),
@@ -324,7 +324,11 @@ Never read our internal approval limits to a guest.`,
           },
           {
             q: "Ai quyết định miễn phí huỷ phòng cho khách?",
-            options: ["Lễ tân đang trực", "Duty Manager", "Bộ phận đặt phòng"],
+            options: [
+              "Lễ tân đang trực",
+              "Duty Manager — quầy chỉ giải thích chính sách",
+              "Bộ phận đặt phòng",
+            ],
             correct: 1,
             explanation:
               'Tài liệu ghi "A waiver, a refund or an exception is the Duty Manager\'s decision" — quầy giải thích, không thay đổi chính sách.',
@@ -341,10 +345,10 @@ Never read our internal approval limits to a guest.`,
         game(
           "So I lose a whole night because I cancelled three hours late?",
           "I am sorry, sir. Our policy allows free cancellation up to six, but let me check with my supervisor.",
-          "I am sorry, sir. Our policy allow free cancellation up to six, but let me check with my supervisor.",
+          "Rules are rules, sir. Every guest pay the same fee after six.",
           "Rules are rules, sir. Every guest pays the same fee after six.",
           undefined,
-          "'Our policy allow' thiếu -s. Câu 'Rules are rules' đúng ngữ pháp nhưng là đúng câu tài liệu cấm — nó biến một lời giải thích thành một cuộc cãi.",
+          "Hai câu 'Rules are rules' đều là đúng câu tài liệu cấm — nó biến một lời giải thích thành một cuộc cãi. Câu 'Every guest pay' còn thiếu -s: 'every guest' số ít đi với 'pays'.",
         ),
         game(
           "The receptionist yesterday said she would waive it. Will you?",
@@ -477,7 +481,7 @@ Tell the guest the process and the time, never the number. A guest who learns th
             q: "Khách báo bị thương trong phòng tắm và đòi bồi thường. Lễ tân làm gì?",
             options: [
               "Xử lý tại quầy nếu số tiền nhỏ",
-              "Chuyển ngay cho Duty Manager",
+              "Chuyển ngay cho Duty Manager, dù số tiền lớn hay nhỏ",
               "Hướng dẫn khách gửi email cho kế toán",
             ],
             correct: 1,
@@ -646,7 +650,7 @@ A guest chased by the hotel tells a different story from a guest who had to chas
             options: [
               "Ngay trong ngày, giống tiền mặt tại quầy",
               "Đúng ba ngày làm việc với mọi loại thẻ",
-              "Tối đa ba mươi ngày làm việc",
+              "Tối đa ba mươi ngày làm việc, vì tuỳ ngân hàng của khách",
             ],
             correct: 2,
             explanation:
@@ -668,10 +672,10 @@ A guest chased by the hotel tells a different story from a guest who had to chas
         game(
           "I have heard promises like this before, and nothing happened.",
           "Then let me put it in writing, sir. Your case number is on the slip, and I will follow up next week.",
-          "Then let me put it in writing, sir. Your case number is on the slip, and I will following up next week.",
+          "I understand, sir, but this time it really will be done properly, I promise you. You can trusting me completely.",
           "I understand, sir, but this time it really will be done properly, I promise you. You can trust me completely.",
           undefined,
-          "Sau 'will' là động từ nguyên thể 'follow up'. Câu 'You can trust me' đúng ngữ pháp nhưng chỉ là thêm một lời hứa — khách cần văn bản và mã hồ sơ.",
+          "Hai câu 'I promise you… trust me' đều chỉ là thêm một lời hứa — khách cần văn bản và mã hồ sơ. Câu 'You can trusting me' còn sai: sau 'can' là động từ nguyên thể 'trust'.",
         ),
         game(
           "How fast will the refund reach my card? I need the money.",

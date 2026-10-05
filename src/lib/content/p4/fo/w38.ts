@@ -160,9 +160,9 @@ A price list sent before these questions is a price list that gets compared, not
           {
             q: "Theo tài liệu, phần lớn các báo giá hỏng ở đâu?",
             options: [
-              "Ở phần giá, vì giá của khách sạn thường cao hơn mức khách mong đợi",
+              "Ở phần giá, vì giá cao hơn khách mong đợi",
               "Ở phần một, vì quầy nói giá trước khi hỏi khách cần gì",
-              "Ở phần cuối, vì quầy quên hẹn bước tiếp theo với khách",
+              "Ở phần cuối, vì quầy quên hẹn bước tiếp theo",
             ],
             correct: 1,
             explanation:
@@ -196,18 +196,18 @@ A price list sent before these questions is a price list that gets compared, not
         game(
           "Just tell me your cheapest meeting room price.",
           "Of course, sir. May I first ask how many delegates you expect, so the price fits your meeting?",
-          "Of course, sir. May I first asking how many delegates you expect, so the price fits your meeting?",
+          "Our cheapest room is the boardroom, sir, and it is very good price, so I can book it for you right now if you like.",
           "Our cheapest room is the boardroom, sir, and it is a very good price, so I can book it for you right now if you like.",
           undefined,
-          "Sau 'May I' là động từ nguyên thể 'ask'. Câu đọc ngay giá phòng rẻ nhất đúng tiếng Anh nhưng bỏ qua phần một: chưa biết bao nhiêu người, phòng rẻ nhất có thể không vừa.",
+          "Hai câu đọc ngay giá phòng rẻ nhất đều bỏ qua phần một: chưa biết bao nhiêu người, phòng rẻ nhất có thể không vừa. Câu 'it is very good price' còn thiếu mạo từ: 'a very good price'.",
         ),
         game(
           "The booker said forty people, then thirty-five. Which number do I quote for?",
           "The highest one. Then agree a date with the booker for the final headcount.",
-          "The highest one. Then agrees a date with the booker for the final headcount.",
-          "Just quote for thirty, to keep the price low. If more people come, we can always add them on the day.",
+          "Quote for thirty-five. It keep the price low.",
+          "Quote for thirty-five. It keeps the price low.",
           "colleague",
-          "Mệnh lệnh dùng động từ nguyên thể 'agree', không thêm -s. Câu báo giá theo số thấp cho rẻ đúng tiếng Anh nhưng sai cách làm: lập kế hoạch theo con số cao nhất, rồi hẹn ngày chốt số người.",
+          "Hai câu báo giá theo số thấp cho rẻ đều sai cách làm: lập kế hoạch theo con số cao nhất, rồi hẹn ngày chốt số người. Câu 'It keep' còn thiếu -s: 'it' đi với 'keeps'.",
         ),
       ],
     }),
@@ -336,8 +336,8 @@ Offer to show the room. A booker who has stood in it signs faster than one who h
           {
             q: "Lý do nào đúng kiểu tài liệu dạy?",
             options: [
-              "Vì đây là phòng đẹp nhất và đắt nhất của khách sạn",
-              "Vì phòng này đang trống vào đúng ngày khách cần",
+              "Vì đây là phòng đẹp nhất",
+              "Vì phòng này đang trống",
               "Vì đại biểu nào cũng nhìn thấy màn hình",
             ],
             correct: 2,
@@ -512,11 +512,11 @@ The desk quotes the published package. A discount on it is the Sales Manager's d
             options: [
               "Lễ tân đang trình bày báo giá",
               "Bộ phận bếp, vì gói có bữa trưa",
-              "Sales Manager",
+              "Sales Manager; quầy chỉ báo giá gói đã công bố",
             ],
             correct: 2,
             explanation:
-              "Tài liệu ghi \"A discount on it is the Sales Manager's decision, never the desk's.\"",
+              "Tài liệu ghi \"The desk quotes the published package. A discount on it is the Sales Manager's decision, never the desk's.\"",
           },
         ],
       ),
@@ -532,10 +532,10 @@ The desk quotes the published package. A discount on it is the Sales Manager's d
         game(
           "The booker wants our price for forty people. Do I just send the per person figure?",
           "No. Quote the total, with service charge and VAT, so there are no surprises on the bill.",
-          "No. Quotes the total, with service charge and VAT, so there are no surprises on the bill.",
-          "Yes, send the figure per person. It looks much cheaper that way, and the booker can work out the total later.",
+          "Yes, send the figure per person. It look much cheaper that way.",
+          "Yes, send the figure per person. It looks much cheaper that way.",
           "colleague",
-          "Mệnh lệnh dùng động từ nguyên thể 'Quote'. Câu gửi giá một người cho trông rẻ hơn đúng tiếng Anh nhưng giấu tổng tiền — tài liệu dặn báo tổng số khách sẽ thấy trên hoá đơn.",
+          "Hai câu gửi giá một người cho trông rẻ hơn đều giấu tổng tiền — tài liệu dặn báo tổng số khách sẽ thấy trên hoá đơn. Câu 'It look' còn thiếu -s: 'it' đi với 'looks'.",
         ),
       ],
     }),
@@ -679,9 +679,9 @@ Close with the next step and a time of your own: "I will send the quote in writi
             {
               q: "Đang giữ chỗ tạm thì một khách khác hỏi cùng ngày. Lễ tân làm gì?",
               options: [
-                "Gọi cho người đặt đầu tiên trước khi nhả phòng",
-                "Bán ngay cho khách mới vì họ đã sẵn sàng ký hợp đồng",
-                "Giữ cho cả hai bên rồi chọn bên nào đặt cọc trước",
+                "Gọi cho người đặt đầu tiên trước khi nhả phòng cho khách mới",
+                "Bán ngay cho khách mới đã sẵn sàng ký",
+                "Giữ cho cả hai, rồi chọn bên đặt cọc trước",
               ],
               correct: 0,
               explanation: 'Tài liệu ghi "call the first booker before you release the room."',
