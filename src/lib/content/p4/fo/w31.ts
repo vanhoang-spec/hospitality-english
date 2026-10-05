@@ -348,7 +348,7 @@ After 22:00, sell the courtyard room on the QUIET, never on the view. A guest of
         ),
         game(
           "I am not paying more. Please stop selling to me.",
-          "Of course, madam. Your room is very comfortable, and I will not offer it again.",
+          "Of course, madam. Your room is very comfortable, and I will not offer it again during your stay.",
           "Of course, madam. Your room is very comfortable, and I will not offering it again.",
           "That is a shame, madam. Most guests say the courtyard room is worth the difference.",
           undefined,

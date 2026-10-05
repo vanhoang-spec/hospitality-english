@@ -495,7 +495,7 @@ A profile that has not changed in three stays is usually a profile nobody is rea
       game: [
         game(
           "Last time someone wrote down my preferences. Did that go anywhere?",
-          "It did, madam. Your room is on a high floor, with a firm pillow, as before.",
+          "It did, madam. Your room is on a high floor, with a firm pillow, just as you asked last time.",
           "It did, madam. Your room are on a high floor, with a firm pillow, as before.",
           "We keep all guest notes in the system, madam, so they should be there somewhere.",
           undefined,

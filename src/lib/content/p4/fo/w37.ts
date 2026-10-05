@@ -213,7 +213,7 @@ Never read one company's rate to another company. Every agreement is private.`,
         ),
         game(
           "Another company told me they get a bigger discount. What is their rate exactly?",
-          "I am sorry, sir, every agreement is private. I can only talk about your own company's rate.",
+          "I am sorry, sir, every agreement is private. I can only talk about your own company's rate, and I am happy to explain that.",
           "I am sorry, sir, every agreement is private. I can only talking about your own company's rate.",
           "They do get a little more, sir, but they book many more rooms with us every year than your company does.",
           undefined,
@@ -717,7 +717,7 @@ Never say "I am sure they will agree." The answer may be no, and the booker will
         game: [
           game(
             "Can you just add a second free room? We are your best customer.",
-            "I am sorry, madam, that is not mine to give. I will ask our Sales Manager today and call you back by five.",
+            "I am sorry, madam, that is not mine to give. I will ask our Sales Manager today and call you back by five, whatever the answer is.",
             "I am sorry, madam, that is not mine to give. I will asking our Sales Manager today and call you back by five.",
             "Of course, madam. You are a very important customer, so I will add the second room to your contract myself right now.",
             undefined,

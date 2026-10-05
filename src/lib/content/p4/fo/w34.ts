@@ -196,7 +196,7 @@ Anything that has a price, such as a cake or wine, is quoted first. Giving it fr
       game: [
         game(
           "It is my wife's birthday tomorrow, but please do not tell her I said so.",
-          "Of course, sir. We will keep it quiet, and nobody will mention it at the desk.",
+          "Of course, sir. We will keep it quiet, and nobody will mention it to her at the desk or on the phone.",
           "Of course, sir. We will keep it quietly, and nobody will mention it at the desk.",
           "Wonderful, sir! We will greet her with a birthday cake the moment she arrives.",
           undefined,

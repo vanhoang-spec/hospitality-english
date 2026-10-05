@@ -345,7 +345,7 @@ A promise you then have to take back costs more than the discount would have.`,
         ),
         game(
           "If I stay an extra night, will you give me a better rate?",
-          "In exchange for an extra night, madam, my Duty Manager may look at the rate. Shall I ask?",
+          "In exchange for an extra night, madam, my Duty Manager may look at the rate. Shall I ask for you now?",
           "In exchange for an extra night, madam, my Duty Manager may looks at the rate. Shall I ask?",
           "Yes, madam. If you stay an extra night, I will give you twenty percent off the whole stay.",
           undefined,

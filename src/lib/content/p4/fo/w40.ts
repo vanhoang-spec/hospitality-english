@@ -193,7 +193,7 @@ After that, offer to store the bags. We keep luggage for up to seven days.`,
       game: [
         game(
           "My flight to Singapore is at noon. Leaving at eleven is fine, yes?",
-          "I would leave earlier, sir. For an international flight, it is safest to leave three hours before take-off.",
+          "I would leave earlier, sir. For an international flight, it is safest to leave three hours before take-off. Shall I book you a car?",
           "I would leave earlier, sir. For an international flight, it is safest to leaving three hours before take-off.",
           "That should be fine, sir. The airport is quite close, and the traffic is usually light at that time of day.",
           undefined,
@@ -347,7 +347,7 @@ Nobody is turned away because of a list.`,
       game: [
         game(
           "Could you put a chocolate cake in our room tonight? Just add it to the bill.",
-          "With pleasure, madam. Is anyone allergic to anything? Then I will quote the total before I order.",
+          "With pleasure, madam. First, is anyone allergic to anything? Then I will quote you the total before I order the cake.",
           "With pleasure, madam. Is anyone allergic to anything? Then I will quoting the total before I order.",
           "With pleasure, madam. It will be there tonight, and you can see the price on your bill when you check out.",
           undefined,
@@ -672,7 +672,7 @@ Through all of it, the order holds: someone in danger first, then the guest in f
         ),
         game(
           "It is five to ten. A guest wants to change his booking dates. Shall I start?",
-          "No. Write it in the log and give it to a night colleague by name, so the guest knows who will call.",
+          "No. Write it in the handover log and give it to a night-shift colleague by name, so the guest knows who will call.",
           "No. Write it in the log and gives it to a night colleague by name, so the guest knows who will call.",
           "Leave it for tomorrow. The guest can come back to the desk in the morning and ask whoever is on then.",
           "colleague",

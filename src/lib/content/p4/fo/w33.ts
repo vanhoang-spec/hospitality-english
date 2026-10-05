@@ -500,7 +500,7 @@ Tell the guest the process and the time, never the number. A guest who learns th
       game: [
         game(
           "So you think one of my children drank a two-hundred-thousand-dong beer?",
-          "Not at all, sir. It was posted in error, and my supervisor is removing it now.",
+          "Not at all, sir, and I am sorry. It was posted in error, and my supervisor is removing it now.",
           "Not at all, sir. It was posting in error, and my supervisor is removing it now.",
           "I am only telling you what the system recorded, sir. You could ask your children.",
           undefined,

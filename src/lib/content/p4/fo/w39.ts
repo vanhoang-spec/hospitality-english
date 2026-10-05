@@ -550,7 +550,7 @@ Every request is in the log before the hour ends.`,
       game: [
         game(
           "Why is there a second payment on my card? I only stayed one night.",
-          "Let me look into it now, madam. It may be a card hold from check-in, and I will check the folio first.",
+          "Let me look into it now, madam. It may be a card hold from check-in, and I will check the folio first, so we know for certain.",
           "Let me look into it now, madam. It may be a card hold from check-in, and I will checking the folio first.",
           "That is not a payment, madam, it is only a hold, so there is nothing to worry about and nothing for me to check.",
           undefined,
@@ -736,7 +736,7 @@ Before he leaves, every open item is in the log, with a named person beside it.`
         ),
         game(
           "The booker wants the boardroom for next month. Should I just confirm it?",
-          "Not yet. Offer a tentative hold for seven days, and it becomes definite with the contract and the deposit.",
+          "Not yet. Offer the booker a tentative hold for seven days, and it becomes definite with the signed contract and the deposit.",
           "Not yet. Offers a tentative hold for seven days, and it becomes definite with the contract and the deposit.",
           "Yes, confirm it now. The booker sounded serious, and we can send the contract and ask for the deposit later.",
           "colleague",
