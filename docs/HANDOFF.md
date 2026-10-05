@@ -29,8 +29,12 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   [`docs/deploy-vercel.md`](deploy-vercel.md). Code đã sẵn trên `content/p3`: `vite.config.ts` ra
   bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Project Vercel
   `hospitality-english` (team Pro của người dùng, đã nối GitHub, đủ 7 biến môi trường) build
-  production thành công 05/10. Netlify vẫn là production cho tới khi người dùng đổi CNAME
-  `hospitality.embassy.edu.vn` ở PA Việt Nam — đang ở bước 4 của tài liệu. Sau khi
+  production thành công 05/10. **05/10 tối: đã đổi CNAME** `hospitality.embassy.edu.vn` →
+  `1a4ac82df7c5e2a2.vercel-dns-016.com` ở PA Việt Nam; đã kiểm: máy chủ PA và Google DNS trả đúng,
+  chứng chỉ Let's Encrypt do Vercel cấp, header `server: Vercel`, function `sin1`, trang đăng
+  nhập không lỗi console. **Production giờ là Vercel.** Còn bước 6–7 của tài liệu: sau 1–2 ngày
+  ổn định thì người dùng bấm Stop builds trên Netlify và gỡ tên miền khỏi Netlify; giữ site
+  Netlify làm đường lùi tới khoảng 19/10, rồi agent dọn `netlify.toml` và các ghi chú Netlify. Sau khi
   chuyển xong: dọn `netlify.toml` và các ghi chú Netlify (bước 6 của tài liệu).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
