@@ -389,7 +389,7 @@ Which box, which bag and which nurse your hotel uses are questions for your Exec
     round(
       0,
       "I got a tiny needle prick, but it is nothing. I will finish my rooms first.",
-      "Wash it under running water now, and tell the supervisor it is a needle injury.",
+      "Please stop and wash it under running water now, and tell the supervisor it is a needle injury.",
       "Wash it under running water now, and tell the supervisor it are a needle injury.",
       "Finish your rooms first, then write it in the log before you go home tonight.",
       "Phương án 'Finish your rooms first' để thuốc phòng nhiễm trùng mất đúng những giờ nó còn tác dụng. Phương án 'it are' sai: chủ ngữ 'it' đi với 'is'. Câu đúng: rửa ngay, báo ngay, gọi đúng tên chấn thương.",

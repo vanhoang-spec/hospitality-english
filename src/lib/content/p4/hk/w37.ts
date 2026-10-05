@@ -215,7 +215,7 @@ The details above are one hotel's. Ask your Executive Housekeeper what your long
     round(
       0,
       "1508 is a long-stay room on light service. Shall I change the sheets anyway?",
-      "No, light service means towels, bins and water. The sheets are done every second day.",
+      "No, leave them. Light service means towels, bins and water. The sheets are done every second day.",
       "No, light service mean towels, bins and water. The sheets are done every second day.",
       "Yes, change everything every day — long-stay guests never notice the difference anyway.",
       "Phương án 'never notice the difference' coi nhẹ điều khách đã chọn và làm sai kế hoạch đã ghi. Phương án 'light service mean' sai: chủ ngữ số ít cần 'means'. Câu đúng nhắc lại đúng điều kiện của gói.",
@@ -372,7 +372,7 @@ Your own hotel's hours may differ from these. Ask your Floor Supervisor.`,
       round(
         2,
         "Can you slip the fresh towels under the door tonight? Our sign is up.",
-        "Nothing goes under a door at night, madam. May I bring them when you take the sign down?",
+        "I am sorry, madam, nothing goes under a door at night. May I bring them when you take the sign down?",
         "Nothing goes under a door at night, madam. May I bringing them when you take the sign down?",
         "Of course, madam — I will open the door very quietly and leave them on the chair inside.",
         "Phương án 'open the door very quietly' vào một phòng đang treo biển — đúng điều không ai được làm. Phương án 'May I bringing' sai: sau 'may I' là động từ nguyên mẫu. Câu đúng giữ luật và hẹn một thời điểm khách tự chọn.",

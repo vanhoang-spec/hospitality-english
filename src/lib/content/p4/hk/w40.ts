@@ -313,7 +313,7 @@ A mistake reported at once is a mistake. One that somebody else finds is a diffe
     round(
       2,
       "Your trolley cracked my case. You will pay for it, won't you?",
-      "I am so sorry, sir. I cannot decide that, but I am calling the Duty Manager to you now.",
+      "I am so sorry about your case, sir. I cannot decide that, but I am calling the Duty Manager to you now.",
       "I am so sorry, sir. I cannot decides that, but I am calling the Duty Manager to you now.",
       "Of course, sir — it was clearly our trolley, so the hotel will buy you a new one today.",
       "Phương án 'the hotel will buy you a new one' hứa tiền thay Duty Manager. Phương án 'cannot decides' sai: sau 'cannot' là động từ nguyên mẫu. Câu đúng xin lỗi trước, rồi gọi đúng người quyết.",
@@ -321,7 +321,7 @@ A mistake reported at once is a mistake. One that somebody else finds is a diffe
     round(
       1,
       "Ms Lan here. Did you tell the guest in 1408 that we will replace his case?",
-      "No, Ms Lan. I apologised, took photographs and called the Duty Manager.",
+      "No, Ms Lan. I apologised, took photographs of the case and called the Duty Manager to him.",
       "No, Ms Lan. I apologised, take photographs and called the Duty Manager.",
       "Yes, madam — he was very angry, so I promised him a new one to calm him down.",
       "Phương án 'I promised him a new one' hứa thay Duty Manager và gọi cấp trên là 'madam'. Phương án 'take photographs' sai thì: ba việc đã xảy ra đều ở quá khứ (took). Câu đúng tường thuật đúng ba việc đã làm.",

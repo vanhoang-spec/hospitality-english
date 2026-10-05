@@ -345,7 +345,7 @@ If a guest asks for incense, it is usually a memorial, not decoration. Do not an
       1,
       "My son wants the room full of balloons tomorrow. Can you manage that?",
       "The desk will check latex for your son first, sir, and balloons need a full day. May I ask them to call you?",
-      "The desk will check latex for your son first, sir, and balloons needs a full day. May I ask them to call you?",
+      "The desk will check latex first, sir, and balloons needs a full day. May I ask them to call you?",
       "Of course, sir — I will fill the room with balloons and have it all ready well before four.",
       "Phương án 'fill the room… well before four' tự nhận một đơn có tính tiền và hứa giờ, bỏ qua bước kiểm dị ứng cao su. Phương án 'balloons needs' sai: chủ ngữ số nhiều đi với 'need'. Câu đúng chuyển cho quầy và nói lead time thật.",
     ),

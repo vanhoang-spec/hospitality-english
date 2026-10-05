@@ -351,7 +351,7 @@ Ask your Executive Housekeeper what your hotel keeps: anti-allergy bedding, a fr
       0,
       "Is the spray you use in here safe for small children?",
       "I cannot promise that for every child, sir, so I will air out the room and keep it scent-free from today.",
-      "I cannot promise that for every child, sir, so I will air out the room and keeping it scent-free from today.",
+      "I cannot promise that, sir, so I will air out the room and keeping it scent-free from today.",
       "Of course, sir — it is completely natural, so it is perfectly safe for children and babies.",
       "Phương án 'perfectly safe for children' là lời hứa an toàn tuyệt đối — đúng điều không được nói. Phương án 'will keeping' sai: sau 'will' là động từ nguyên mẫu. Câu đúng nói thật là không hứa được, rồi làm điều chắc chắn.",
     ),

@@ -367,7 +367,7 @@ A guest who says money is missing gets your supervisor at once. Say what you are
     round(
       0,
       "Just pull the door shut — I do not want people looking in while I rest.",
-      "I am sorry, sir, the door stays open while I work. May I come back after your rest?",
+      "I am sorry, sir, the door stays open while I work. May I come back after your rest and finish the room then?",
       "I am sorry, sir, the door stay open while I work. May I come back after your rest?",
       "I am stepping outside now, sir, and I am calling my supervisor up to your room straight away.",
       "Phương án 'stepping outside… calling my supervisor' dùng cách xử lý dành cho khách ÉP, trong khi khách chỉ nhờ — khách đang nghỉ sẽ thấy bị coi như người có lỗi. Phương án 'the door stay' sai: chủ ngữ số ít cần 'stays'. Câu đúng nêu luật rồi đề nghị quay lại.",

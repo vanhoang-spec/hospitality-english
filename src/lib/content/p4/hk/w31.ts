@@ -195,7 +195,7 @@ These details are one hotel's. Ask your Executive Housekeeper for yours, and lea
     round(
       2,
       "Do you know who made this runner? It looks handmade.",
-      "It is hand-woven in a village near here, sir, but I can find out the family's name for you.",
+      "It is hand-woven in a village near here, sir, but I can find out the family's name and leave you a note.",
       "It is hand-woven in a village near here, sir, but I can found out the family's name for you.",
       "A lady called Mrs Hoa makes every one herself, sir, I believe — she is very famous here.",
       "Phương án 'Mrs Hoa, I believe' đoán một cái tên và thêm lời khen không kiểm chứng — khách sẽ kể lại, và sai thì khách sạn mất uy tín. Phương án 'can found out' sai ngữ pháp: sau 'can' là động từ nguyên mẫu (can find out). Câu đúng nói điều chắc chắn rồi hẹn tìm hiểu.",
@@ -360,7 +360,7 @@ How often your own hotel changes linen is your Executive Housekeeper's answer, s
       round(
         2,
         "So if I keep my towels on the rail, I never get fresh ones?",
-        "You get fresh ones whenever you ask, sir — the towel rail only tells us which to keep.",
+        "Not at all, sir. You get fresh ones whenever you ask — the towel rail only tells us which to keep.",
         "You get fresh ones whenever you asks, sir — the towel rail only tells us which to keep.",
         "That is right, sir — under the eco programme, fresh towels come only every third day.",
         "Phương án 'only every third day' bịa ra một luật cắt giảm dịch vụ — chương trình xanh nào cũng phải để khách được xin. Phương án 'whenever you asks' sai chia động từ: chủ ngữ 'you' không thêm -s. Câu đúng giữ quyền chọn cho khách.",
