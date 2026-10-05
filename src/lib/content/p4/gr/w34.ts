@@ -226,7 +226,10 @@ An occasion goes on the guest file only if the guest says yes. A guest who is su
       round(
         "A couple just checked in with a big bouquet. Shall I write 'honeymoon' on their file?",
         [
-          ["No. Ask about their stay, and write only what they tell us.", "answer"],
+          [
+            "No. Ask about their stay, and write only what they tell us, in their own words.",
+            "answer",
+          ],
           ["Yes — a bouquet like that almost always means a honeymoon.", "register"],
           ["No. Ask about their stay, and write only what they tells us.", "form"],
         ],

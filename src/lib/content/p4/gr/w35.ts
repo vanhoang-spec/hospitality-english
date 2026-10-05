@@ -200,7 +200,10 @@ And what you trade must be yours: your time, your desk, your phone call to the g
         "Housekeeping. I cannot do your VIP room first — my list is full.",
         [
           ["Then just do it anyway. The guest is a VIP, so he comes first.", "register"],
-          ["What if we swap it with the next room? I will look after that guest.", "answer"],
+          [
+            "What if we swap it with the next room on your list? I will look after that guest.",
+            "answer",
+          ],
           ["What if we swapping it with the next room? I will look after that guest.", "form"],
         ],
         "Câu này ra lệnh cho đồng nghiệp — mệnh lệnh thì nhận về một lời từ chối. Câu sai ngữ pháp dùng 'What if we swapping'; sau 'what if we' là động từ nguyên mẫu: 'swap'. Đáp án đề xuất và đưa lại một việc của chính mình.",
@@ -364,7 +367,10 @@ Some things stay outside the range whatever your manager says. The room the gues
       round(
         "Mr Pham is waiting in the lounge. Just go in — we can sort out the range later.",
         [
-          ["Not without the range. Money off a bill is the Duty Manager's to set.", "answer"],
+          [
+            "Not without the range. Money off a bill is the Duty Manager's to set, not mine.",
+            "answer",
+          ],
           ["Fine — I will see what he asks for and decide as we go.", "register"],
           ["Not without the range. Money off a bill are the Duty Manager's to set.", "form"],
         ],
@@ -685,7 +691,10 @@ The case stays open until the guest says it is right. Not when they sign. Not wh
         [
           ["Yes — he looked happy, so my manager will surely agree to it.", "register"],
           ["No. The spa went back to my manager, so write it as still opening.", "form"],
-          ["No. The spa went back to my manager, so write it as still open.", "answer"],
+          [
+            "No. The spa went back to my manager, so write it as still open until we hear back.",
+            "answer",
+          ],
         ],
         "Câu này ghi 'đã đồng ý' cho một thứ quản lý chưa trả lời — hứa thay người khác. Câu sai ngữ pháp dùng 'still opening'; 'open' ở đây là tính từ (còn để ngỏ). Đáp án ghi đúng tình trạng: còn treo.",
         "colleague",

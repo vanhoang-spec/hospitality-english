@@ -543,7 +543,7 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
       round(
         "The airline will pay for our extra nights, won't they?",
         [
-          ["Only the airline can say that, madam. May I help you call them?", "answer"],
+          ["I am afraid only the airline can say that, madam. May I help you call them?", "answer"],
           ["Of course, madam — that is what airlines always do in a storm.", "register"],
           ["Only the airline can says that, madam. May I help you call them?", "form"],
         ],

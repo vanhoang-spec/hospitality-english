@@ -220,7 +220,10 @@ Never serve the loudest first. Do it once in a full lobby, and every guest learn
         "I have been waiting longer than anyone here, and I am in a hurry.",
         [
           ["You have, madam, so let me take yours first, before anybody else.", "register"],
-          ["You have, madam, and I am sorry. One guest before you, then you.", "answer"],
+          [
+            "You have, madam, and I am sorry for the wait. One guest before you, then you.",
+            "answer",
+          ],
           ["You has, madam, and I am sorry. One guest before you, then you.", "form"],
         ],
         "Câu này đổi thứ tự vì khách sốt ruột — làm một lần là cả hàng học cách đòi. Câu sai ngữ pháp dùng 'You has'; với 'you' là 'have'. Đáp án ghi nhận khách, xin lỗi, rồi nói rõ khách là người kế tiếp.",
@@ -558,7 +561,10 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
       round(
         "Just give her the upgrade. It is easier than arguing with her.",
         [
-          ["An upgrade is my manager's to give. Four things first, then I ask her.", "answer"],
+          [
+            "An upgrade is my manager's to give. Four things in the log first, then I ask her.",
+            "answer",
+          ],
           ["You are right — it is quicker, and I will tell the manager tomorrow.", "register"],
           ["An upgrade is my manager's to give. Four things first, then I asks her.", "form"],
         ],
@@ -730,9 +736,12 @@ Quarter to is one house's line. Ask your manager where yours falls.`,
         [
           ["Yes, madam — the evening shift will see it in the book sooner or later.", "register"],
           ["Yes, madam. I am hand it over by name, with what you expect next.", "form"],
-          ["Yes, madam. I am handing it over by name, with what you expect next.", "answer"],
+          [
+            "Yes, madam. I am handing it over by name, with what you expect next and by when.",
+            "answer",
+          ],
         ],
-        "Câu này giao việc cho một quyển sổ — 'sớm hay muộn' không phải một lời hứa. Câu sai ngữ pháp dùng 'I am hand'; phải là 'I am handing'. Đáp án bàn giao đích danh, kèm điều khách đang chờ.",
+        "Câu này giao việc cho một quyển sổ — 'sớm hay muộn' không phải một lời hứa. Câu sai ngữ pháp dùng 'I am hand'; phải là 'I am handing'. Đáp án bàn giao đích danh, kèm điều khách đang chờ và mốc giờ.",
       ),
     ],
   }),

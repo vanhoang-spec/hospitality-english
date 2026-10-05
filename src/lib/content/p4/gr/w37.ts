@@ -386,7 +386,10 @@ Then stay beside them until that is true.`,
         "His mouth is so dry. Should I give him some water?",
         [
           ["Yes, a little water should help him feel better, sir.", "register"],
-          ["Please give him nothing to drink, sir, until first aid has seen him.", "answer"],
+          [
+            "Please do not give him anything to eat or drink, sir, until first aid has seen him.",
+            "answer",
+          ],
           ["Please give him nothing to drink, sir, until first aid have see him.", "form"],
         ],
         "Câu này cho uống nước — bác sĩ có thể cần dạ dày trống. Câu sai ngữ pháp dùng 'have see'; phải là 'has seen' (has + quá khứ phân từ). Đáp án nói rõ không ăn uống cho tới khi sơ cứu đã xem.",
@@ -693,7 +696,10 @@ When the guest comes back, keep it short: a quiet room, and the morning knock st
         "Was it a heart attack? The man next door, I mean.",
         [
           ["It was his heart, I think, sir, but he is fine now.", "register"],
-          ["I cannot talk about another guest, sir. Can I help you with anything?", "answer"],
+          [
+            "I am afraid I cannot talk about another guest, sir. Can I help you with anything?",
+            "answer",
+          ],
           ["I cannot talk about another guest, sir. Can I helping you with anything?", "form"],
         ],
         "Câu này kể bệnh của một vị khách khác — vừa lộ thông tin, vừa là một chẩn đoán không ai có quyền đưa ra. Câu sai ngữ pháp dùng 'Can I helping'; sau 'can' là động từ nguyên mẫu. Đáp án từ chối gọn rồi mời giúp.",
