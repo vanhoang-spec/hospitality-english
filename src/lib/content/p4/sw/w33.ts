@@ -117,7 +117,7 @@ const lesson1 = L(33, 1, "Listen First, Then Apologise", "Lắng nghe trước, 
         q: "Bước 'A — Apologise' yêu cầu điều gì?",
         options: [
           "Nhận lỗi về phía spa ngay để khách bớt giận",
-          "Xin lỗi điều khách gặp, chưa kết luận lỗi",
+          "Xin lỗi về điều khách gặp, nhưng chưa kết luận đó là lỗi của ai",
           "Xin lỗi rồi chuyển ngay cho quản lý xử lý",
         ],
         correct: 1,
@@ -150,12 +150,12 @@ const lesson1 = L(33, 1, "Listen First, Then Apologise", "Lắng nghe trước, 
   ),
   game: [
     game(
-      "This bill is wrong, and I am very angry about it.",
-      "I am sorry about this, madam. Could you tell me the details of the problem, please?",
-      "I am sorry about this, madam. Could you telling me the details, please?",
-      "Please calm down, madam. Our system never makes mistakes with the bills.",
+      "The music in my treatment room was so loud that I could not relax at all.",
+      "I am sorry about the music, sir. Could you tell me which room you were in, and when it started?",
+      "That is strange, sir. Our music always quiet, so perhaps you were just tired.",
+      "That is strange, sir. Our music is always quiet, so perhaps you were just tired.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'Could you' là động từ nguyên mẫu 'tell'. Câu thứ ba bảo khách bình tĩnh và cãi rằng hệ thống không sai — trái với bước Listen. Câu đúng xin lỗi về chuyện khách gặp và mời khách kể chi tiết.",
+      "Câu thứ hai thiếu động từ 'is' ('Our music always quiet'). Cả câu thứ hai lẫn câu thứ ba đều cãi lại khách và đổ cho khách mệt — trái với bước Listen. Câu đúng xin lỗi về chuyện khách gặp và hỏi chi tiết; câu hỏi lồng sau 'Could you tell me' giữ trật tự câu kể: 'which room you were in'.",
     ),
     game(
       "You charged me twice for the same massage!",
@@ -269,7 +269,7 @@ const lesson2 = L(33, 2, "What Our Policy Allows", "Chính sách cho phép đế
       {
         q: "Vì sao phiếu của bà Nakamura không còn hiệu lực?",
         options: [
-          "Vì ngày hết hạn đã qua",
+          "Vì ngày hết hạn in trên phiếu là thứ Sáu tuần trước, nay đã qua",
           "Vì phiếu không dùng được cho chăm sóc da mặt",
           "Vì phiếu do công ty tặng chứ không phải khách sạn",
         ],
@@ -289,7 +289,11 @@ const lesson2 = L(33, 2, "What Our Policy Allows", "Chính sách cho phép đế
       },
       {
         q: "Ai quyết định nhận phiếu lần này?",
-        options: ["Chính bà Nakamura", "Tuấn, sau khi xin lỗi khách", "Giám sát của Tuấn"],
+        options: [
+          "Chính bà Nakamura",
+          "Tuấn, sau khi xin lỗi khách",
+          "Giám sát của Tuấn, như một cử chỉ thiện chí",
+        ],
         correct: 2,
         explanation:
           "'the supervisor… agrees to accept the voucher this one time, as a goodwill gesture' — ngoại lệ về tiền là quyết định của cấp trên.",
@@ -298,20 +302,20 @@ const lesson2 = L(33, 2, "What Our Policy Allows", "Chính sách cho phép đế
   ),
   game: [
     game(
-      "Can I move my massage to tomorrow? It starts in six hours.",
-      "Yes, madam. Our policy allows you to reschedule at no charge up to four hours before your massage.",
-      "Yes, madam. Our policy allow you to reschedule at no charge up to four hours before.",
-      "Yes, madam, but there is a charge for every change, because the room was kept for you.",
+      "I bought a package of five massages last month. How long can I use it?",
+      "Our policy allows you to use it up to three months after you buy it, madam.",
+      "Our policy allows you to using it up to three months after you buy it, madam.",
+      "As long as you like, madam. There is no time limit, so you can come back any time next year.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'Our policy' số ít → 'allows'. Câu thứ ba nói sai chính sách — khách đổi lịch trước bốn tiếng thì không mất phí. Câu đúng nêu đúng điều chính sách cho phép.",
+      "Câu thứ hai sai dạng: sau 'allows you to' là động từ nguyên mẫu 'use', không phải 'using'. Câu thứ ba nói sai chính sách — gói chỉ dùng được tối đa ba tháng kể từ ngày mua, và một lời hứa sai hôm nay là tranh chấp ngày mai. Câu đúng nêu đúng điều chính sách cho phép, với 'allows' và 'up to'.",
     ),
     game(
-      "My voucher expired yesterday. Can you accept it anyway?",
-      "I cannot accept it, madam, but let me check with my supervisor now.",
-      "I cannot accept it, madam, but let me to check with my supervisor now.",
-      "Of course, madam. One day is nothing, so I will accept it for you this time.",
+      "My voucher is for one facial. Can it pay for a massage as well?",
+      "The voucher only covers the value on it, madam, so the massage is extra.",
+      "Of course, madam. I can puts the massage on the voucher too, as a small gift from me.",
+      "Of course, madam. I can put the massage on the voucher too, as a small gift from me.",
       undefined,
-      "Câu thứ hai sai cấu trúc: sau 'let me' là động từ nguyên mẫu, không có 'to'. Câu thứ ba thân thiện nhưng tự quyết một chuyện tiền — nhận phiếu hết hạn là việc của giám sát. Câu đúng nói rõ giới hạn của mình và hỏi giám sát ngay.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'put', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều tự tặng thêm một liệu trình — quà có giá trị tiền không phải việc nhân viên quầy tự quyết. Câu đúng nói rõ phiếu chỉ trả tới giá trị in trên phiếu, phần còn lại khách trả thêm.",
     ),
   ],
 });
@@ -456,10 +460,10 @@ const lesson3 = L(33, 3, "Let Me Check With My Supervisor", "Để tôi hỏi gi
     game(
       "Your oil ruined my dress. I want compensation now.",
       "I am very sorry, madam. Compensation is my manager's decision, so let me check with her now.",
-      "I am very sorry, madam. Compensation is my manager decision, so let me check with her now.",
-      "I am very sorry, madam. The hotel will pay for a new dress, so please send me the receipt.",
+      "I am very sorry, madam. The hotel will buys you a new dress, of course.",
+      "I am very sorry, madam. The hotel will buy you a new dress, of course.",
       undefined,
-      "Câu thứ hai thiếu sở hữu cách: 'my manager's decision'. Câu thứ ba lịch sự nhưng tự hứa tiền thay quản lý — một lời hứa không ai duyệt. Câu đúng nói rõ ai quyết và hỏi ngay.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'buy', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều lịch sự nhưng tự hứa tiền thay quản lý — một lời hứa không ai duyệt. Câu đúng nói rõ ai quyết và hỏi ngay.",
     ),
     game(
       "What did you promise the guest about her bracelet?",
@@ -608,7 +612,7 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
         options: [
           "Nhận lỗi ngay để khách bớt giận hơn",
           "Hứa spa sẽ trả mọi chi phí cho khách",
-          "Không bàn lỗi hay tiền, chờ quản lý",
+          "Không bàn lỗi hay tiền; quản lý sẽ nói chuyện sau khi y tá xem",
         ],
         correct: 2,
         explanation:
@@ -629,12 +633,12 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
   ),
   game: [
     game(
-      "Ouch! The stone is too hot!",
-      "I will stop now, madam, and clean the burn with cool water.",
-      "I will stopping now, madam, and clean the burn with cool water.",
-      "I am sorry, madam. Please stay calm. It is only a small burn, and it is not serious at all.",
+      "Ow! The stone on my shoulder is far too hot!",
+      "I will stop now, sir, and put cool water on the burn straight away.",
+      "I am sorry, sir. Please stay calm. It is only a small burn, and it not serious at all.",
+      "I am sorry, sir. Please stay calm. It is only a small burn, and it is not serious at all.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'stop'. Câu thứ ba bảo khách bình tĩnh và tự kết luận 'không nghiêm trọng' — nhân viên không chẩn đoán, và trấn an phải bằng một việc cụ thể. Câu đúng dừng ngay và làm mát vết bỏng.",
+      "Câu thứ hai thiếu động từ 'is' ('it not serious'). Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự kết luận 'không nghiêm trọng' — nhân viên không chẩn đoán, và trấn an phải bằng một việc cụ thể. Câu đúng dừng ngay và cho nước mát lên vết bỏng.",
     ),
     game(
       "Is the hotel going to pay for my burn?",

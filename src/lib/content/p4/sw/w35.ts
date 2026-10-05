@@ -129,7 +129,7 @@ const lesson1 = L(35, 1, "What If We…?", "Đề xuất phương án khác", {
         options: [
           "Giảm giá cho phòng đôi",
           "Hai phòng cạnh nhau lúc sáu giờ",
-          "Bắt đầu sớm hơn vào buổi chiều",
+          "Bắt đầu sớm hơn vào buổi chiều, thay vì lúc sáu giờ",
         ],
         correct: 2,
         explanation:
@@ -159,18 +159,18 @@ const lesson1 = L(35, 1, "What If We…?", "Đề xuất phương án khác", {
     game(
       "The couple's suite is full? That is a disaster.",
       "I am sorry, madam. What if we book two rooms side by side as an alternative?",
-      "I am sorry, madam. What if we booking two rooms side by side as an alternative?",
+      "Sorry, madam, there is nothing I can do. It is fully book, so please try another day.",
       "Sorry, madam, there is nothing I can do. It is fully booked, so please try another day.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'What if we' là động từ nguyên mẫu 'book'. Câu thứ ba đúng ngữ pháp nhưng đóng cửa thương lượng khi bạn vẫn còn phương án. Câu đúng mở ra một lựa chọn khác.",
+      "Câu thứ hai sai hình thái: 'fully booked' luôn có -ed. Cả câu thứ hai lẫn câu thứ ba đều đóng cửa thương lượng khi bạn vẫn còn phương án. Câu đúng mở ra một lựa chọn khác bằng 'What if we…?'.",
     ),
     game(
-      "Give me a discount, and I will take the other room.",
-      "I am sorry, madam. I cannot offer a discount, but I will ask my manager and come back to you.",
-      "I am sorry, madam. I cannot offering a discount, but I will ask my manager.",
-      "It is a deal, madam. I will take twenty percent off if you take the other room now.",
+      "We will take the two rooms, but then you should add thirty minutes for free.",
+      "I am afraid extra time at no charge is my manager's decision, madam, so I will ask her now.",
+      "It is a deal, madam. I will adds thirty minutes if you take the two rooms now.",
+      "It is a deal, madam. I will add thirty minutes if you take the two rooms now.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là 'offer'. Câu thứ ba thương lượng bằng tiền — giảm giá không phải việc của lễ tân. Câu đúng nói rõ giới hạn và hỏi quản lý.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'add', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều thương lượng bằng thứ có giá trị tiền — thêm giờ miễn phí không phải việc của lễ tân. Câu đúng nói rõ ai quyết và hỏi ngay.",
     ),
   ],
 });
@@ -277,7 +277,7 @@ const lesson2 = L(35, 2, "In Exchange For…", "Đổi ca, đổi việc với �
       {
         q: "Vì sao việc đổi ca cần giám sát duyệt?",
         options: [
-          "Vì giám sát phải biết ai có mặt",
+          "Vì giám sát phải biết ai có mặt ở spa trong từng ngày",
           "Vì giám sát trả lương làm thêm giờ",
           "Vì Lan còn đang trong thời gian thử việc",
         ],
@@ -299,7 +299,7 @@ const lesson2 = L(35, 2, "In Exchange For…", "Đổi ca, đổi việc với �
   game: [
     game(
       "Can you take my Sunday shift? I will owe you one.",
-      "Yes, in exchange for your Saturday morning, if the supervisor agrees.",
+      "Yes, in exchange for your Saturday morning, if the supervisor agrees. Let us ask her together today.",
       "Yes, in exchange of your Saturday morning, if the supervisor agrees.",
       "Sure, no problem at all. Let us just swap the shifts, and we do not need to tell anyone.",
       "colleague",
@@ -427,7 +427,7 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
       {
         q: "Vì sao Thanh không tự miễn phí hủy cho khách?",
         options: [
-          "Vì miễn phí là việc quản lý quyết",
+          "Vì miễn phí là việc quản lý quyết, nên Thanh hứa sẽ hỏi quản lý",
           "Vì khách hủy quá trễ, sau cả giờ hẹn",
           "Vì khách không phải là khách quen",
         ],
@@ -461,20 +461,20 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
   ),
   game: [
     game(
-      "I cancelled late, but please waive the fee for me.",
-      "I am sorry, sir. I cannot waive the fee; however, I will ask my manager today and come back to you.",
-      "I am sorry, sir. I cannot waives the fee; however, I will ask my manager today.",
-      "No problem at all, sir. I will just delete the fee from your bill this time, as a favour.",
+      "I missed my facial this morning because my flight was late. Can you cancel the charge?",
+      "I am sorry about your flight, madam. Only my manager can cancel the charge; however, I will ask her this afternoon.",
+      "I am sorry about your flight, madam. Only my manager can cancel charge; however, I will ask her this afternoon.",
+      "No problem at all, madam. A late flight is not your fault, so I will cancel the charge now.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là 'waive', không thêm -s. Câu thứ ba chiều khách nhưng tự xoá một khoản phí — việc của quản lý. Câu đúng giữ luật và nói việc bạn sẽ làm.",
+      "Câu thứ hai thiếu mạo từ: 'cancel the charge'. Câu thứ ba chiều khách nhưng tự xoá một khoản phí — việc của quản lý. Câu đúng giữ luật, nói rõ ai quyết, và '; however,' nói việc bạn sẽ làm kèm mốc giờ.",
     ),
     game(
-      "I had two beers at lunch. Can I use the sauna now?",
-      "I am sorry, sir. We cannot let you use the sauna after alcohol; however, you can rest in the quiet corner.",
-      "I am sorry, sir. We cannot let you to use the sauna after alcohol; however, you can rest in the quiet corner.",
-      "Just a short visit then, sir. Drink some water first, and come out if you feel dizzy.",
+      "We had champagne at the wedding lunch. Can we just sit in the steam room for ten minutes?",
+      "I am sorry, sir. After alcohol, the steam room is not possible; however, we can make you some ginger tea.",
+      "I am sorry, sir. After alcohol, the steam room is not possible; however, we can making you some ginger tea.",
+      "Just ten minutes then, sir. Drink some water first, and come out if you feel dizzy.",
       undefined,
-      "Câu thứ hai thừa 'to': sau 'let you' là động từ nguyên mẫu không 'to' ('let you use'). Câu thứ ba thương lượng một luật an toàn — rượu và nhiệt có thể làm khách ngất. Câu đúng từ chối rõ và đưa chỗ nghỉ thay thế.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'make', không phải 'making'. Câu thứ ba thương lượng một luật an toàn — rượu và nhiệt có thể làm khách ngất, dù chỉ mười phút. Câu đúng từ chối rõ và đưa một lựa chọn thay thế.",
     ),
   ],
 });
@@ -591,7 +591,11 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
       },
       {
         q: "Hạn chót để khách trả lời là khi nào?",
-        options: ["Hai giờ chiều thứ Sáu", "Trưa thứ Tư", "Sáng thứ Ba"],
+        options: [
+          "Hai giờ chiều thứ Sáu",
+          "Trưa thứ Tư, khi hết thời gian giữ phòng",
+          "Sáng thứ Ba",
+        ],
         correct: 1,
         explanation:
           "'Trang offers to hold the rooms until noon on Wednesday, and she explains that this is the deadline for an answer.'",
@@ -613,18 +617,18 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
     game(
       "Can you keep the rooms for us until we decide?",
       "Yes, madam. I can hold the rooms until noon tomorrow.",
-      "Yes, madam. I can holding the rooms until noon tomorrow.",
+      "Of course, madam. Take as long as you like; we will keeping them for you all week.",
       "Of course, madam. Take as long as you like; we will keep them for you all week.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'can' là 'hold'. Câu thứ ba hào phóng nhưng giữ phòng không có hạn — khách khác mất chỗ, và spa không biết khi nào nhóm trả lời. Câu đúng giữ phòng kèm hạn chót.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'keep'. Cả câu thứ hai lẫn câu thứ ba đều hào phóng nhưng giữ phòng không có hạn — khách khác mất chỗ, và spa không biết khi nào nhóm trả lời. Câu đúng giữ phòng kèm hạn chót.",
     ),
     game(
-      "We want a twenty percent group discount.",
-      "Thank you, madam. I cannot offer a group discount, but I will ask my manager today.",
-      "Thank you, madam. I cannot offer a group discount, but I will asking my manager today.",
-      "Of course, madam. Twenty percent is fine for a group of twelve, and I will put it in writing now.",
+      "For twelve people, you should give us the steam room for free.",
+      "Thank you, madam. A free steam room is my manager's decision, so I will ask her today.",
+      "Thank you, madam. A free steam room is my manager's decision, so I will asking her today.",
+      "Of course, madam. For twelve guests, the steam room is free, and I will put that in writing now.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là 'ask'. Câu thứ ba đồng ý một con số giảm giá và còn hứa ghi thành văn bản — lễ tân không có quyền đó. Câu đúng nói rõ giới hạn và hỏi quản lý.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'ask'. Câu thứ ba đồng ý cho miễn phí và còn hứa ghi thành văn bản — lễ tân không có quyền đó. Câu đúng nói rõ ai quyết và hỏi quản lý trong ngày.",
     ),
   ],
 });

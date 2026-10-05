@@ -158,7 +158,7 @@ const lesson1 = L(38, 1, "A Plan in Three Parts", "Kế hoạch ba phần", {
       {
         q: "Vì sao Thu đổi liệu trình ngày thứ Bảy?",
         options: [
-          "Vì khách bị huyết áp cao",
+          "Vì khách ghi trên phiếu là bị huyết áp cao, nên không ngâm bồn được",
           "Vì khách muốn tiết kiệm tiền hơn",
           "Vì kỹ thuật viên ngày thứ Bảy đã kín lịch",
         ],
@@ -182,15 +182,15 @@ const lesson1 = L(38, 1, "A Plan in Three Parts", "Kế hoạch ba phần", {
   game: [
     game(
       "So what is your plan for my week?",
-      "First a foot soak, then a deep tissue massage, and finally the signature ritual.",
-      "First a foot soak, then a deep tissue massage, and at last the signature ritual.",
+      "First a foot soak, then a massage, and finally the signature ritual.",
+      "Our most expensive package, sir. It have everything, so you do not need to choose.",
       "Our most expensive package, sir. It has everything, so you do not need to choose.",
       undefined,
-      "Câu thứ hai dùng 'at last' cho bước cuối của danh sách — 'at last' nghĩa là 'cuối cùng thì cũng', sau một lúc chờ lâu. Câu thứ ba không có kế hoạch nào, chỉ có giá — và chọn thay khách. Câu đúng trình bày ba bước theo thứ tự.",
+      "Câu thứ hai sai hoà hợp: chủ ngữ 'It' → 'has', không phải 'have'. Cả câu thứ hai lẫn câu thứ ba đều không có kế hoạch nào, chỉ có giá — và chọn thay khách. Câu đúng trình bày ba bước theo thứ tự với 'First… then… and finally'.",
     ),
     game(
       "Why do you suggest a foot soak tonight?",
-      "It is short and warm, which helps your recovery after golf.",
+      "It is short and warm, sir, which helps your recovery after a long morning of golf.",
       "It is short and warm, it helps your recovery after golf.",
       "Because it is the only free time we have tonight, sir, so please take it.",
       undefined,
@@ -333,7 +333,7 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
       {
         q: "Vì sao sâm panh được phục vụ sau nghi thức?",
         options: [
-          "Vì rượu và nhiệt không đi cùng nhau",
+          "Vì rượu và nhiệt không đi cùng nhau, kể cả trong tuần trăng mật",
           "Vì quầy bar của khách sạn chỉ mở cửa sau tám giờ",
           "Vì quản lý muốn tặng kèm bánh cùng lúc",
         ],
@@ -354,10 +354,10 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
     game(
       "Is the package really worth it?",
       "Yes, madam. It is better value for money than three single treatments.",
-      "Yes, madam. It is more better value for money than three single treatments.",
+      "Of course, madam. Everybody buy it, so it must be the best choice for you as well.",
       "Of course, madam. Everybody buys it, so it must be the best choice for you as well.",
       undefined,
-      "Câu thứ hai sai so sánh: 'better' đã là so sánh hơn, không thêm 'more'. Câu thứ ba ép khách bằng 'ai cũng mua' thay cho lý do thật. Câu đúng so sánh với giá ba liệu trình lẻ.",
+      "Câu thứ hai sai hoà hợp: 'Everybody' đi với động từ số ít 'buys'. Cả câu thứ hai lẫn câu thứ ba đều ép khách bằng 'ai cũng mua' thay cho lý do thật. Câu đúng so sánh với giá ba liệu trình lẻ.",
     ),
     game(
       "Can we have the champagne in the herbal bath?",
@@ -505,7 +505,7 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
         q: "Khi kế hoạch vượt ngân sách của khách, Minh làm gì?",
         options: [
           "Giảm giá ngay để giữ chân khách",
-          "Đưa phiên bản ngắn hơn",
+          "Đưa phiên bản ngắn hơn, không có bồn ngâm thảo dược",
           "Khuyên khách quay lại khi có thêm tiền",
         ],
         correct: 1,
@@ -517,7 +517,7 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
         options: [
           "Kế hoạch ba ngày, được giảm mười phần trăm",
           "Kế hoạch ba ngày đầy đủ, giá không đổi",
-          "Phiên bản ngắn hơn",
+          "Phiên bản ngắn hơn, chốt vào sáng hôm sau",
         ],
         correct: 2,
         explanation:
@@ -536,11 +536,11 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
     ),
     game(
       "The spa next door is much cheaper than yours.",
-      "You are welcome to compare, sir. Our price includes the herbal bath and tea.",
-      "You are welcome to compare, sir. Our price include the herbal bath and tea.",
+      "You are welcome to compare, sir. Our price includes the herbal bath and the tea.",
+      "That spa is not very clean, sir, so I would never going there myself.",
       "That spa is not very clean, sir, so I would never go there myself.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'Our price' số ít → 'includes'. Câu thứ ba chê một doanh nghiệp khác trước mặt khách — thiếu chuyên nghiệp, và khách không tin thêm vào spa của bạn. Câu đúng mời so sánh và nói giá gồm gì.",
+      "Câu thứ hai sai dạng: sau 'would never' là động từ nguyên mẫu 'go', không phải 'going'. Cả câu thứ hai lẫn câu thứ ba đều chê một doanh nghiệp khác trước mặt khách — thiếu chuyên nghiệp, và khách không tin thêm vào spa của bạn. Câu đúng mời so sánh và nói giá gồm gì.",
     ),
   ],
 });
@@ -665,7 +665,7 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
         options: [
           "Vì phòng xông hơi đang được bảo trì cả tuần",
           "Vì bà Rossi nói bà không thích chỗ nóng",
-          "Vì kế hoạch không dùng nhiệt",
+          "Vì quản lý chọn một kế hoạch không có liệu trình dùng nhiệt",
         ],
         correct: 2,
         explanation:
@@ -687,10 +687,10 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
     game(
       "Has anyone looked at my health form yet?",
       "Yes, madam. My manager has checked it, and she suggests a prenatal massage.",
-      "Yes, madam. My manager has check it, and she suggests a prenatal massage.",
-      "Not yet, madam, but I am sure everything is fine, so let us start now.",
+      "Not yet, madam, but I am sure everything are fine, so let us start your massage now.",
+      "Not yet, madam, but I am sure everything is fine, so let us start your massage now.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'has' là phân từ hai 'checked'. Câu thứ ba bắt đầu liệu trình cho khách mang thai khi quản lý chưa xem phiếu — trái luật. Câu đúng nói ai đã xem phiếu và kế hoạch là gì.",
+      "Câu thứ hai sai hoà hợp: 'everything' đi với động từ số ít 'is'. Cả câu thứ hai lẫn câu thứ ba đều bắt đầu liệu trình cho khách mang thai khi quản lý chưa xem phiếu — trái luật. Câu đúng nói ai đã xem phiếu và kế hoạch là gì.",
     ),
     game(
       "My friend says hot stones are fine when you are pregnant.",

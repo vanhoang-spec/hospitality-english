@@ -120,7 +120,7 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
         q: "Nghi thức đặc trưng gồm những gì, theo thứ tự nào?",
         options: [
           "Massage toàn thân trước, rồi ngâm bồn lá thuốc",
-          "Ngâm bồn lá thuốc trước, rồi massage toàn thân",
+          "Bắt đầu bằng ngâm bồn lá thuốc, rồi mới tới massage toàn thân",
           "Chỉ ngâm bồn lá thuốc theo truyền thống vùng núi",
         ],
         correct: 1,
@@ -142,7 +142,7 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
         q: "Bồn lá thuốc bắt nguồn từ đâu?",
         options: [
           "Từ truyền thống vùng núi phía Bắc",
-          "Từ một spa nổi tiếng ở nước ngoài",
+          "Từ một spa nổi tiếng ở châu Âu",
           "Từ công thức riêng của quản lý spa",
         ],
         correct: 0,
@@ -155,7 +155,7 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
     game(
       "What makes your signature ritual special?",
       "It begins with a herbal bath from a mountain tradition, and then we do a massage.",
-      "It begin with herbal bath from a mountain tradition, and then we doing a massage.",
+      "It begin with herbal bath from a mountain tradition, and then we doing massage.",
       "It is the most expensive treatment we have, madam, so it is certainly the best choice for you.",
       undefined,
       "Câu thứ hai sai hình thái: 'It begin' thiếu -s, 'we doing' thiếu động từ chính. Câu thứ ba đúng ngữ pháp nhưng lấy GIÁ thay cho câu chuyện — 'đắt nhất nên tốt nhất' là ép bán, và khách hỏi điều gì làm liệu trình đặc biệt. Câu đúng kể nguồn gốc và trình tự.",
@@ -163,10 +163,10 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
     game(
       "I am pregnant. Will the herbal bath be safe for me?",
       "Thank you for telling me, madam. I will check with my manager first, and then come back to you.",
-      "Thank you for tell me, madam. I will checking with my manager first.",
+      "Of course, madam. The herbs is all natural, so the bath is perfectly safe for you.",
       "Of course, madam. The herbs are all natural, so the bath is perfectly safe for you.",
       undefined,
-      "Câu thứ hai sai dạng động từ: 'for tell' (phải là 'for telling') và 'will checking'. Câu thứ ba trôi chảy nhưng tự hứa an toàn: thảo dược tự nhiên không có nghĩa là an toàn khi mang thai, và lễ tân không quyết chuyện này. Câu đúng cảm ơn khách rồi hỏi quản lý.",
+      "Câu thứ hai sai hoà hợp: 'The herbs' số nhiều → 'are', không phải 'is'. Nhưng lỗi lớn hơn nằm ở cả câu thứ hai lẫn câu thứ ba: cả hai tự hứa an toàn — thảo dược tự nhiên không có nghĩa là an toàn khi mang thai, và lễ tân không quyết chuyện này. Câu đúng cảm ơn khách rồi hỏi quản lý.",
     ),
   ],
 });
@@ -280,7 +280,7 @@ const lesson2 = L(31, 2, "Where It Comes From", "Nguồn gốc nguyên liệu", 
       {
         q: "Khi khách nói bị dị ứng hạt, Mai làm gì trước tiên?",
         options: [
-          "Đọc nhãn và kiểm tra dầu massage",
+          "Đọc nhãn và kiểm tra dầu massage cho bước tiếp theo",
           "Trả lời ngay vì chị nhớ rõ công thức",
           "Đổi liệu trình của khách sang ngâm chân",
         ],
@@ -312,10 +312,10 @@ const lesson2 = L(31, 2, "Where It Comes From", "Nguồn gốc nguyên liệu", 
     game(
       "Who grows the lemongrass you use?",
       "Our gardeners harvest it here at the hotel, sir.",
-      "Our gardeners harvests it here at the hotel, sir.",
+      "I has no idea, sir. You will have to ask the garden team about that.",
       "I have no idea, sir. You will have to ask the garden team about that.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'gardeners' số nhiều → 'harvest', không thêm -s. Câu thứ ba đúng ngữ pháp nhưng đẩy khách đi và bỏ lỡ câu chuyện về khu vườn. Câu đúng trả lời ngắn và tự hào.",
+      "Câu thứ hai sai hoà hợp: chủ ngữ 'I' đi với 'have', không phải 'has'. Câu thứ hai và câu thứ ba cùng một cách xử lý sai: đẩy khách sang bộ phận khác và bỏ lỡ câu chuyện về khu vườn. Câu đúng trả lời ngắn và tự hào.",
     ),
   ],
 });
@@ -431,7 +431,7 @@ const lesson3 = L(31, 3, "The Right Story for the Guest", "Kể đúng chuyện 
         options: [
           "Vì đó là liệu trình rẻ nhất trong thực đơn",
           "Vì đó là liệu trình duy nhất còn chỗ trống",
-          "Vì khách có họp và cần liệu trình ngắn",
+          "Vì khách có họp lúc bốn giờ, không đủ thời gian cho nghi thức đầy đủ",
         ],
         correct: 2,
         explanation:
@@ -473,10 +473,10 @@ const lesson3 = L(31, 3, "The Right Story for the Guest", "Kể đúng chuyện 
     game(
       "I have high blood pressure, but I really want the herbal bath.",
       "I am sorry, sir. With high blood pressure, I cannot offer the herbal bath, but I can suggest a warm foot soak.",
-      "I am sorry, sir. With high blood pressure, I cannot offering the herbal bath.",
+      "A short bath should be fine, sir. Just come out if you starts to feel dizzy.",
       "A short bath should be fine, sir. Just come out if you start to feel dizzy.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là động từ nguyên mẫu 'offer'. Câu thứ ba tự quyết là 'chắc không sao' — nhiệt là chống chỉ định với huyết áp cao, nhân viên không tự bỏ qua. Câu đúng từ chối rõ ràng, rồi gợi ý ngâm chân nước ấm thay thế.",
+      "Câu thứ hai sai hoà hợp: chủ ngữ 'you' đi với 'start', không thêm -s. Câu thứ hai và câu thứ ba cùng tự quyết là 'chắc không sao' — nhiệt là chống chỉ định với huyết áp cao, nhân viên không tự bỏ qua. Câu đúng từ chối rõ ràng, rồi gợi ý ngâm chân nước ấm thay thế.",
     ),
   ],
 });
@@ -595,7 +595,7 @@ const lesson4 = L(31, 4, "A True Story, Not a Promise", "Kể thật, không h�
         options: [
           "Đổi ngay sang một liệu trình ngắn hơn",
           "Gọi y tá đến kiểm tra lưng cho khách ngay",
-          "Nhờ khách ghi vào phiếu khai sức khoẻ",
+          "Nhờ khách ghi vào phiếu khai sức khoẻ để kỹ thuật viên đọc trước",
         ],
         correct: 2,
         explanation:
@@ -626,10 +626,10 @@ const lesson4 = L(31, 4, "A True Story, Not a Promise", "Kể thật, không h�
     game(
       "That facial was wonderful. Thank you so much.",
       "I am delighted you enjoyed it, madam. Thank you for coming.",
-      "I am delighting you enjoyed it, madam. Thank you for coming.",
+      "You are welcome, madam. Please writing us a five-star review online before you go.",
       "You are welcome, madam. Please write us a five-star review online before you go.",
       undefined,
-      "Câu thứ hai sai dạng: cảm xúc của người nói là 'delighted', không phải 'delighting'. Câu thứ ba đúng ngữ pháp nhưng đòi khách viết đánh giá ngay lúc khách đang cảm ơn — biến khoảnh khắc thành giao dịch. Câu đúng đón lời khen và cảm ơn khách.",
+      "Câu thứ hai sai dạng động từ: sau 'Please' là động từ nguyên mẫu 'write', không phải 'writing'. Câu thứ hai và câu thứ ba cùng đòi khách viết đánh giá ngay lúc khách đang cảm ơn — biến khoảnh khắc thành giao dịch. Câu đúng đón lời khen và cảm ơn khách.",
     ),
   ],
 });

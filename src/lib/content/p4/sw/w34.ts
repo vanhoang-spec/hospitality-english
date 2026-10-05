@@ -150,18 +150,18 @@ const lesson1 = L(34, 1, "Finding Out the Occasion", "Tìm hiểu dịp đặc b
     game(
       "We are here for something special this weekend.",
       "How lovely, madam. May I ask if you are celebrating a special occasion this weekend?",
-      "How lovely, madam. May I ask if are you celebrating an occasion?",
+      "Is it your birthday today, madam? May I ask how old are you this year?",
       "Is it your birthday today, madam? May I ask how old you are this year?",
       undefined,
-      "Câu thứ hai sai trật tự: sau 'if' giữ trật tự câu kể 'you are'. Câu thứ ba lịch sự về hình thức nhưng hỏi tuổi của khách — chuyện riêng khách không nói ra. Câu đúng hỏi mở, để khách tự kể.",
+      "Câu thứ hai sai trật tự: trong câu hỏi lồng sau 'May I ask', giữ trật tự câu kể 'how old you are'. Cả câu thứ hai lẫn câu thứ ba đều lịch sự về hình thức nhưng hỏi tuổi của khách — chuyện riêng khách không nói ra. Câu đúng hỏi mở, để khách tự kể.",
     ),
     game(
-      "It is our anniversary, but my husband hates a fuss.",
-      "Of course, madam. We will keep it simple and discreet.",
-      "Of course, madam. We will keeping it simple and discreet.",
-      "Wonderful, madam! The whole team will come in and sing for you both at the end.",
+      "It is my wife's fiftieth birthday, but she does not want anyone to know.",
+      "Certainly, sir. Nobody will mention her birthday, and the team will be discreet.",
+      "Certainly, sir. Nobody will mentions her birthday, and the team will be discreet.",
+      "How wonderful, sir! We will put a big birthday sign on the door of her treatment room.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'keep'. Câu thứ ba nhiệt tình nhưng làm đúng điều khách vừa nói là không muốn. Câu đúng giữ kín đáo như khách yêu cầu.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'mention', không thêm -s. Câu thứ ba nhiệt tình nhưng làm đúng điều khách vừa nói là không muốn. Câu đúng hứa kín đáo như khách yêu cầu.",
     ),
   ],
 });
@@ -299,7 +299,7 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
         options: [
           "Gọi điện và dặn đầu bếp thật kỹ nhiều lần",
           "Nhờ bà Khan tự nói với bếp",
-          "Ghi thành văn bản trên phiếu đặt bánh",
+          "Ghi dị ứng thành văn bản ngay trên phiếu đặt bánh gửi bếp",
         ],
         correct: 2,
         explanation:
@@ -308,7 +308,7 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
       {
         q: "Vì sao Ngọc không hứa bánh sẽ có lúc bảy giờ?",
         options: [
-          "Vì giờ làm bánh là việc của bếp",
+          "Vì giờ làm bánh là việc của bếp, nên Ngọc phải hỏi bếp trước",
           "Vì khách chưa trả tiền bánh sinh nhật",
           "Vì bếp đóng cửa lúc năm giờ chiều",
         ],
@@ -331,20 +331,20 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
   ),
   game: [
     game(
-      "Can the cake be in our room at seven?",
-      "I will ask the kitchen now and come back to you by five.",
-      "I will ask the kitchen now and coming back to you by five.",
-      "Yes, madam. The cake will definitely be there at seven o'clock, I promise.",
+      "Can Housekeeping put rose petals in our room before six?",
+      "I will ask Housekeeping now, madam, and call you back by four.",
+      "Yes, madam. The petals will definitely be there by six o'clock, I promises.",
+      "Yes, madam. The petals will definitely be there by six o'clock, I promise.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là 'come', không phải 'coming'. Câu thứ ba hứa giờ thay cho bếp — nếu bếp không kịp, lời hứa của bạn thành lời nói sai. Câu đúng hỏi bếp và hẹn giờ báo lại.",
+      "Câu thứ hai sai hoà hợp: chủ ngữ 'I' → 'promise', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều hứa giờ thay cho buồng phòng — nếu họ không kịp, lời hứa của bạn thành lời nói sai. Câu đúng hỏi buồng phòng và hẹn giờ gọi lại.",
     ),
     game(
-      "Can we have champagne in the suite before the herbal bath?",
-      "We will serve it after the herbal bath, madam, because alcohol before the heat is not safe.",
-      "We will serve it after the herbal bath, madam, because alcohol before the heat are not safe.",
-      "Of course, madam. A glass of champagne in the warm water is very relaxing.",
+      "Can we have a glass of wine in the steam room before our massage?",
+      "We will serve the wine after the steam room, sir, because alcohol and heat are not safe together.",
+      "We will serving the wine after the steam room, sir, because alcohol and heat are not safe together.",
+      "Of course, sir. A glass of wine in the steam room is very relaxing.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'alcohol' không đếm được → 'is'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trước nhiệt — không an toàn. Câu đúng giữ niềm vui của khách, chỉ đổi thời điểm.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'serve', không phải 'serving'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trong nhiệt — không an toàn. Câu đúng giữ niềm vui của khách, chỉ đổi thời điểm.",
     ),
   ],
 });
@@ -442,7 +442,7 @@ const lesson3 = L(34, 3, "The Right Words at the Right Moment", "Lời chúc đ�
         q: "Vì sao cô dâu phải thử trên da vài ngày trước khi làm mặt?",
         options: [
           "Vì da cô ấy từng bị dị ứng trước đây",
-          "Vì da khoẻ vẫn có thể phản ứng",
+          "Vì ngay cả da khoẻ vẫn có thể phản ứng với một sản phẩm mới",
           "Vì spa cần thời gian chuẩn bị sản phẩm",
         ],
         correct: 1,
@@ -485,10 +485,10 @@ const lesson3 = L(34, 3, "The Right Words at the Right Moment", "Lời chúc đ�
     game(
       "Thank you for making our anniversary so special.",
       "It was our pleasure, sir. Wishing you both a very happy anniversary. We hope to see you again.",
-      "It was our pleasure, sir. Wish you both a very happy anniversary.",
+      "No problem, sir. Please leaving us a good review on the hotel website.",
       "No problem, sir. Please leave us a good review on the hotel website.",
       undefined,
-      "Câu thứ hai mở lời chúc bằng 'Wish you…' — lỗi dịch thẳng 'Chúc anh chị'; phải là 'Wishing you…'. Câu thứ ba biến lời cảm ơn của khách thành lời xin đánh giá. Câu đúng nhận lời cảm ơn và chúc trang trọng.",
+      "Câu thứ hai sai dạng: sau 'Please' là động từ nguyên mẫu 'leave', không phải 'leaving'. Cả câu thứ hai lẫn câu thứ ba đều biến lời cảm ơn của khách thành lời xin đánh giá. Câu đúng nhận lời cảm ơn và chúc trang trọng bằng 'Wishing you…'.",
     ),
   ],
 });
@@ -617,7 +617,7 @@ const lesson4 = L(34, 4, "When a Surprise Needs Care", "Khi điều bất ngờ 
       {
         q: "Khi người gọi điện hỏi số phòng của bạn mình, Quân làm gì?",
         options: [
-          "Không cho số phòng, không xác nhận gì",
+          "Không cho số phòng, cũng không nói người bạn có đang ở khách sạn hay không",
           "Cho số phòng vì đó là quà sinh nhật bất ngờ",
           "Hứa sẽ mang quà lên tận phòng",
         ],
@@ -661,10 +661,10 @@ const lesson4 = L(34, 4, "When a Surprise Needs Care", "Khi điều bất ngờ 
     game(
       "My husband filled the room with lilies. Are they all right for the massage?",
       "They are beautiful, madam. May I ask if you have any allergy to pollen first?",
-      "They are beautiful, madam. May I ask if you have any allergy with pollen first?",
+      "They are beautiful, madam, and flowers is natural, so they are fine for every guest.",
       "They are beautiful, madam, and flowers are natural, so they are fine for every guest.",
       undefined,
-      "Câu thứ hai sai giới từ: 'allergy to', không phải 'allergy with'. Câu thứ ba cho rằng tự nhiên là an toàn — phấn hoa là nguyên nhân dị ứng phổ biến. Câu đúng khen, rồi hỏi về dị ứng trước.",
+      "Câu thứ hai sai hoà hợp: 'flowers' số nhiều → 'are', không phải 'is'. Cả câu thứ hai lẫn câu thứ ba đều cho rằng tự nhiên là an toàn — phấn hoa là nguyên nhân dị ứng phổ biến. Câu đúng khen, rồi hỏi về dị ứng trước.",
     ),
   ],
 });

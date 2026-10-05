@@ -152,7 +152,7 @@ const lesson1 = L(
         {
           q: "Khi khách muốn tạm ngưng thẻ suốt mùa hè, Vy làm gì?",
           options: [
-            "Hỏi quản lý spa trước khi trả lời",
+            "Hỏi quản lý spa trước, vì điều khoản chỉ cho tạm ngưng một tháng mỗi năm",
             "Đồng ý ngay vì khách vừa đăng ký hội viên tuần trước",
             "Từ chối và đề nghị khách huỷ thẻ rồi đăng ký lại sau",
           ],
@@ -183,12 +183,12 @@ const lesson1 = L(
         "Câu thứ hai sai giới từ: thời hạn hiệu lực là 'valid for three months'. Câu thứ ba nói sai điều khoản — gói chỉ dùng được ba tháng, và một lời hứa 'thoải mái' hôm nay thành khiếu nại vào tháng thứ tư. Câu đúng nói rõ thời hạn.",
       ),
       game(
-        "Can my sister use my membership while I am away?",
-        "I am sorry, madam. The membership is non-transferable, but I can ask my manager.",
-        "I am sorry, madam. The membership is non-transferable, but I can asking my manager.",
+        "Can I bring my friend to the pool on my membership card?",
+        "I am afraid the membership is for you only, madam, but I can ask my manager.",
+        "Of course, madam. Just give her your card, and nobody at the desk will checks her name.",
         "Of course, madam. Just give her your card, and nobody at the desk will check her name.",
         undefined,
-        "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'ask'. Câu thứ ba chiều khách bằng cách bỏ qua điều khoản và hứa thay cả quầy lễ tân. Câu đúng nói rõ thẻ không chuyển nhượng được và hỏi quản lý cho ngoại lệ.",
+        "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'check', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều chiều khách bằng cách bỏ qua điều khoản và hứa thay cả quầy lễ tân. Câu đúng nói rõ thẻ chỉ dành cho chủ thẻ và hỏi quản lý cho ngoại lệ.",
       ),
     ],
   },
@@ -317,7 +317,7 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
       {
         q: "Vì sao đồng nghiệp của Lan ghi lại giờ khách gọi?",
         options: [
-          "Vì đó là huỷ muộn",
+          "Vì khách gọi lúc một giờ cho lịch ba giờ, tức là huỷ muộn",
           "Vì khách muốn đổi sang một kỹ thuật viên khác",
           "Vì quản lý dặn phải gọi lại cho mọi khách",
         ],
@@ -330,7 +330,7 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
         options: [
           "Lan, theo đúng điều khoản đã giải thích",
           "Đồng nghiệp đã nghe máy hôm thứ Năm",
-          "Quản lý của Lan",
+          "Quản lý của Lan, sau khi xem lại lịch",
         ],
         correct: 2,
         explanation:
@@ -342,18 +342,18 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
     game(
       "What happens if I cancel two hours before my massage?",
       "That is a late cancellation, sir, so there is a fifty per cent fee for the massage.",
-      "That is a late cancellation, sir, so there are a fifty per cent fee.",
+      "Nothing at all, sir. We only charge the guests who forgets to call us.",
       "Nothing at all, sir. We only charge the guests who forget to call us.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'a fifty per cent fee' số ít → 'there is'. Câu thứ ba nói sai điều khoản — huỷ dưới bốn tiếng vẫn có phí, dù khách có gọi. Câu đúng gọi đúng tên trường hợp và nói mức phí.",
+      "Câu thứ hai sai hoà hợp: 'the guests' số nhiều → 'forget', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều nói sai điều khoản — huỷ dưới bốn tiếng vẫn có phí, dù khách có gọi. Câu đúng gọi đúng tên trường hợp và nói mức phí.",
     ),
     game(
       "I missed my massage. Please just take the charge off.",
       "I am sorry, madam. I will ask my manager about the charge today.",
-      "I am sorry, madam. I will asking my manager about the charge today.",
+      "Of course, madam. I will takes it off the bill now, and nobody will notice.",
       "Of course, madam. I will take it off the bill now, and nobody will notice.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'ask'. Câu thứ ba tự xoá một khoản phí — việc đó là của quản lý, và 'không ai để ý' là lời của người biết mình đang làm sai. Câu đúng chuyển cho quản lý kèm mốc hôm nay.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'take', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều tự xoá một khoản phí — việc đó là của quản lý, và 'không ai để ý' là lời của người biết mình đang làm sai. Câu đúng chuyển cho quản lý kèm mốc hôm nay.",
     ),
   ],
 });
@@ -478,7 +478,7 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
         q: "Vì sao Đức gọi cho bà Lee từ mười giờ sáng?",
         options: [
           "Để nhắc bà nhớ mang theo áo choàng xuống spa",
-          "Để báo sớm, trước khi bà tới spa",
+          "Để báo tin sớm, trước khi bà mặc áo choàng xuống tới spa",
           "Để mời bà nâng hạng liệu trình buổi chiều",
         ],
         correct: 1,
@@ -499,7 +499,7 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
       {
         q: "Kỹ thuật viên làm gì với phong bì tiền của bà Lee?",
         options: [
-          "Bỏ vào hộp tiền boa chung",
+          "Bỏ vào hộp tiền boa chung của cả đội",
           "Giữ riêng vì khách đưa tận tay mình",
           "Trả lại vì nhân viên không được nhận tiền",
         ],
@@ -663,7 +663,7 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
         q: "Khoa kiểm tra lực ấn khi nào?",
         options: [
           "Chỉ một lần, lúc vừa bắt đầu",
-          "Sau năm phút đầu tiên",
+          "Sau năm phút đầu, kèm lời nhắc khách có thể xin dừng bất cứ lúc nào",
           "Chỉ khi khách kêu đau thành tiếng",
         ],
         correct: 1,
@@ -675,7 +675,7 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
         options: [
           "Làm thử một chút cho khách vui lòng",
           "Im lặng, rồi tiếp tục massage lưng như không có gì xảy ra",
-          "Dừng buổi, ra ngoài và báo quản lý",
+          "Dừng buổi, ra khỏi phòng và báo quản lý spa ngay",
         ],
         correct: 2,
         explanation:
@@ -695,10 +695,10 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
     game(
       "Do I have to take everything off?",
       "No, madam. Please undress only as far as you feel comfortable.",
-      "No, madam. Please undress only as far as you feel comfortably.",
+      "Yes, madam. It is much easier for the therapist, so please taking everything off.",
       "Yes, madam. It is much easier for the therapist, so please take everything off.",
       undefined,
-      "Câu thứ hai sai từ loại: sau 'feel' là tính từ 'comfortable'. Câu thứ ba đặt sự tiện của kỹ thuật viên lên trên quyền của khách. Câu đúng để khách tự quyết.",
+      "Câu thứ hai sai dạng: sau 'please' là động từ nguyên mẫu 'take', không phải 'taking'. Cả câu thứ hai lẫn câu thứ ba đều đặt sự tiện của kỹ thuật viên lên trên quyền của khách. Câu đúng để khách tự quyết.",
     ),
   ],
 });

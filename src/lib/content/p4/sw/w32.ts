@@ -122,7 +122,7 @@ const lesson1 = L(32, 1, "Based on What You Told Me", "Tư vấn dựa trên l�
         options: [
           "Đưa thực đơn để khách tự chọn liệu trình",
           "Giới thiệu liệu trình đặc trưng của spa",
-          "Hỏi chỗ căng cứng và lực ấn khách thích",
+          "Hỏi hai câu: chỗ căng cứng nhất và lực ấn khách thích",
         ],
         correct: 2,
         explanation:
@@ -132,7 +132,7 @@ const lesson1 = L(32, 1, "Based on What You Told Me", "Tư vấn dựa trên l�
         q: "Vì sao kỹ thuật viên sẽ tránh vai phải của khách?",
         options: [
           "Vì khách nói vai phải không bị căng cứng",
-          "Vì khách ghi vai phải là vùng nhạy cảm",
+          "Vì khách ghi trên phiếu rằng vai phải nhạy cảm sau chấn thương cũ",
           "Vì khách chỉ đặt massage cổ trong buổi đó",
         ],
         correct: 1,
@@ -164,10 +164,10 @@ const lesson1 = L(32, 1, "Based on What You Told Me", "Tư vấn dựa trên l�
     game(
       "I am pregnant. Can I have the hot stone massage?",
       "Thank you, madam. The hot stone is not suitable, and I will check with my manager first.",
-      "Thank you, madam. The hot stone are not suitable, and I will check with my manager first.",
+      "Of course, madam. We simply uses cooler stones for pregnant guests, so it is completely safe for you.",
       "Of course, madam. We simply use cooler stones for pregnant guests, so it is completely safe for you.",
       undefined,
-      "Câu thứ hai sai hoà hợp: 'The hot stone' số ít → 'is'. Câu thứ ba tự nghĩ ra một cách làm và hứa 'hoàn toàn an toàn' — đá nóng là chống chỉ định khi mang thai, và quản lý mới là người quyết. Câu đúng nói rõ không phù hợp rồi hỏi quản lý.",
+      "Câu thứ hai sai hoà hợp: chủ ngữ 'We' → 'use', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều tự nghĩ ra một cách làm và hứa 'hoàn toàn an toàn' — đá nóng là chống chỉ định khi mang thai, và quản lý mới là người quyết. Câu đúng nói rõ không phù hợp rồi hỏi quản lý.",
     ),
   ],
 });
@@ -263,7 +263,7 @@ const lesson2 = L(32, 2, "Since You Mentioned…", "Nhắc lại điều khách 
         q: "Thói quen của Lan với cả hai vị khách là gì?",
         options: [
           "Giới thiệu liệu trình đắt nhất trước",
-          "Nghe trước, rồi dùng lại lời của khách",
+          "Nghe khách trước, rồi khi tư vấn thì dùng lại chính lời của khách",
           "Đưa phiếu góp ý cho khách ngay khi khách đến",
         ],
         correct: 1,
@@ -306,10 +306,10 @@ const lesson2 = L(32, 2, "Since You Mentioned…", "Nhắc lại điều khách 
     game(
       "My guest says her legs are sore after running. What do you suggest?",
       "Check her health form first, and then use firm pressure only if she says she wants it.",
-      "Check her form first, and then using firm pressure only if she wants it.",
+      "Just use your strongest pressure. Runners always wants it hard.",
       "Just use your strongest pressure. Runners always want it hard.",
       "colleague",
-      "Câu thứ hai sai dạng: sau 'and then' là động từ nguyên mẫu 'use', như vế đầu 'Check'. Câu thứ ba đúng ngữ pháp nhưng đoán thay khách và bỏ qua phiếu sức khoẻ. Câu đúng: phiếu trước, lực ấn theo ý khách.",
+      "Câu thứ hai sai hoà hợp: 'Runners' số nhiều → 'want', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều đoán thay khách và bỏ qua phiếu sức khoẻ. Câu đúng: phiếu trước, lực ấn theo ý khách.",
     ),
   ],
 });
@@ -455,7 +455,7 @@ const lesson3 = L(32, 3, "Returning Guests: Ask Again", "Khách quen: vẫn hỏ
         q: "Cuối buổi, bà Dubois nghĩ gì về phiếu mới?",
         options: [
           "Phiếu mới làm bà mất thời gian vô ích",
-          "Là ý hay, vì bà đã quên nhắc tới đầu gối",
+          "Là ý hay, vì bà đã quên nhắc tới ca mổ đầu gối của mình",
           "Phiếu mới chỉ cần cho khách lần đầu tới spa",
         ],
         correct: 1,
@@ -466,20 +466,20 @@ const lesson3 = L(32, 3, "Returning Guests: Ask Again", "Khách quen: vẫn hỏ
   ),
   game: [
     game(
-      "I was here in May. Do I need to fill in the form again?",
-      "Yes, please, sir. Health can change in a few months, so the form must be up to date.",
-      "Yes, please, sir. Health can changes, so the form must be up to date.",
-      "No, sir. You look very healthy, so we can use your old form.",
+      "I filled in a form here three weeks ago. Can we use that one?",
+      "I am afraid we need a new form today, sir. It must be up to date, even after three weeks.",
+      "Of course, sir. It was only three weeks ago, so we can used your old form.",
+      "Of course, sir. It was only three weeks ago, so we can use your old form.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'change'. Câu thứ ba đúng ngữ pháp nhưng đoán sức khoẻ qua vẻ ngoài và bỏ bước an toàn. Câu đúng giữ phiếu mới và nói lý do.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'use', không phải 'used'. Cả câu thứ hai lẫn câu thứ ba đều bỏ phiếu mới vì 'mới ba tuần' — nhưng phiếu sức khoẻ được kiểm tra ở mỗi lần đến, vì sức khoẻ thay đổi bất cứ lúc nào. Câu đúng xin phiếu mới và nói lý do.",
     ),
     game(
-      "I take medicine for my heart.",
-      "Thank you, madam. Please add it to the health declaration form, and I will check with my supervisor.",
-      "Thank you, madam. Please add it to the health declaration form, and I will checking with my supervisor.",
-      "That is fine, madam. Many guests take that medicine, so we can start the hot stones now.",
+      "I started some new tablets for my blood pressure last week.",
+      "Thank you, madam. Please write the tablets on your health form, and my supervisor will look at it first.",
+      "Thank you, madam. Please write the tablets on your health form, and my supervisor will looks at it first.",
+      "No problem, madam. Many guests take those tablets, so we can start the hot stones now.",
       undefined,
-      "Câu thứ hai sai dạng: 'will checking' — sau 'will' là động từ nguyên mẫu. Câu thứ ba tự kết luận 'không sao' về thuốc tim mạch — kỹ thuật viên không tự quyết, và đá nóng có thể là chống chỉ định. Câu đúng ghi vào phiếu và hỏi giám sát.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'look', không thêm -s. Câu thứ ba tự kết luận 'không sao' về thuốc huyết áp — kỹ thuật viên không tự quyết, và đá nóng có thể là chống chỉ định. Câu đúng mời khách ghi thuốc vào phiếu và để giám sát xem trước.",
     ),
   ],
 });
@@ -619,18 +619,18 @@ const lesson4 = L(32, 4, "Advice for After the Treatment", "Lời khuyên sau li
     game(
       "What should I do after my facial tonight?",
       "Please avoid the sun and the sauna this evening, madam.",
-      "Please avoid to go in the sun and the sauna this evening, madam.",
+      "Nothing special, madam. Your skin will be perfect, so you can doing anything you like.",
       "Nothing special, madam. Your skin will be perfect, so you can do anything you like.",
       undefined,
-      "Câu thứ hai sai cấu trúc: sau 'avoid' là danh từ hoặc V-ing, không phải 'to go'. Câu thứ ba đúng ngữ pháp nhưng bỏ phần chăm sóc sau liệu trình và hứa 'da sẽ hoàn hảo'. Câu đúng cho một lời khuyên cụ thể.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'do', không phải 'doing'. Cả câu thứ hai lẫn câu thứ ba đều bỏ phần chăm sóc sau liệu trình và hứa 'da sẽ hoàn hảo'. Câu đúng cho một lời khuyên cụ thể.",
     ),
     game(
-      "What did my wife write on her health form?",
-      "I am sorry, sir. I cannot tell you about her health form, but you can ask her.",
-      "I am sorry, sir. I cannot telling you about her health form, but you can ask her.",
-      "Let me have a look for you, sir. She wrote that she has high blood pressure and a bad knee.",
+      "My mother had a facial here this morning. Did she write anything about allergies?",
+      "I am sorry, madam. Her form is private, but your mother can tell you herself.",
+      "I am sorry, madam. Her form is private, but your mother can tells you herself.",
+      "Of course, madam. Let me check her form. She wrote that she is allergic to nuts and lavender.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là động từ nguyên mẫu 'tell'. Câu thứ ba lịch sự nhưng đọc thông tin sức khoẻ của một khách cho người khác — vi phạm quyền riêng tư, kể cả giữa vợ chồng. Câu đúng từ chối và mời ông hỏi vợ.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'tell', không thêm -s. Câu thứ ba lịch sự nhưng đọc thông tin sức khoẻ của một khách cho người khác — vi phạm quyền riêng tư, kể cả giữa mẹ và con. Câu đúng từ chối và để chính người mẹ kể.",
     ),
   ],
 });

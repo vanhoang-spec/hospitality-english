@@ -151,7 +151,7 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
         q: "Việc đầu tiên Hạnh làm khi nghe tin có người ngã là gì?",
         options: [
           "Nghe điện thoại đang đổ chuông",
-          "Nhờ gọi 115 và y tá, rồi tới chỗ khách",
+          "Nhờ đồng nghiệp gọi 115 và y tá, rồi đi ngay tới chỗ khách bị ngã",
           "Làm thủ tục nhanh cho cặp khách đang chờ",
         ],
         correct: 1,
@@ -186,18 +186,18 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
     game(
       "The phone is ringing, and a guest has fallen by the pool. Which first?",
       "The guest by the pool first. The phone can wait.",
-      "The guest by the pool first. The phone can waits.",
+      "Answer the phone first, because it might is a booking for tonight.",
       "Answer the phone first, because it might be a booking for tonight.",
       "colleague",
-      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'wait'. Câu thứ ba đặt một cuộc gọi có thể là đặt lịch lên trên một người bị ngã. Câu đúng: nguy hiểm trước, điện thoại sau.",
+      "Câu thứ hai sai dạng: sau 'might' là động từ nguyên mẫu 'be'. Cả câu thứ hai lẫn câu thứ ba đều đặt một cuộc gọi có thể là đặt lịch lên trên một người bị ngã. Câu đúng: nguy hiểm trước, điện thoại sau.",
     ),
     game(
-      "We have been waiting for five minutes. What is going on?",
-      "I am sorry, madam. There is an urgent problem, and I will be with you in five minutes.",
-      "I am sorry, madam. There is a urgent problem, and I will be with you in five minutes.",
-      "A man fainted in the steam room, madam, and we think he has a problem with his heart.",
+      "Our facial was at four, and we are still waiting. What is happening?",
+      "I am very sorry, sir. We have an urgent situation, and your therapist will be with you in ten minutes.",
+      "I am very sorry, sir. We have an urgent situation, and your therapist will being with you in ten minutes.",
+      "A guest collapsed in the steam room, sir, and we think it is his heart.",
       undefined,
-      "Câu thứ hai sai mạo từ: trước nguyên âm 'urgent' là 'an'. Câu thứ ba kể chuyện sức khoẻ của một khách khác và còn đoán bệnh. Câu đúng: một câu xin lỗi, một mốc giờ.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'be', không phải 'being'. Câu thứ ba kể chuyện sức khoẻ của một khách khác và còn đoán bệnh. Câu đúng: một câu xin lỗi, một mốc giờ.",
     ),
   ],
 });
@@ -330,7 +330,7 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       {
         q: "Luật mười lăm phút cuối ca là gì?",
         options: [
-          "Ghi lại, bàn giao đích danh cho ca sau",
+          "Không mở việc mới; ghi vào sổ bàn giao và giao đích danh cho ca sau",
           "Làm thật nhanh mọi việc khách yêu cầu trước khi về",
           "Nhờ khách quay lại vào hôm sau cho chắc chắn",
         ],
@@ -351,7 +351,11 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       },
       {
         q: "Ai gọi cho bà Fox, và khi nào?",
-        options: ["Thu, ngay trước ba giờ", "Quản lý, vào sáng hôm sau", "Mai, lúc ba giờ rưỡi"],
+        options: [
+          "Thu, ngay trước ba giờ",
+          "Quản lý, vào sáng hôm sau",
+          "Mai, lúc ba giờ rưỡi, trước mốc bốn giờ đã hứa",
+        ],
         correct: 2,
         explanation:
           "'Mai calls Mrs Fox at half past three' — đúng người được bàn giao, trước mốc bốn giờ đã hứa với khách.",
@@ -362,16 +366,16 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
     game(
       "It is ten to three. Could you plan a spa day for my six friends?",
       "Of course, madam. I will write down your request, and Mai will plan it with you at three.",
-      "Of course, madam. I will write it down, and Mai will plans it with you at three.",
+      "Yes, madam. Let me starting the whole plan now, even if I have to stay late.",
       "Yes, madam. Let me start the whole plan now, even if I have to stay late.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'plan'. Câu thứ ba nghe nhiệt tình nhưng mở một việc lớn ở phút cuối ca — việc dễ bị bỏ dở, và ca sau không biết gì. Câu đúng ghi lại và giao đích danh cho Mai.",
+      "Câu thứ hai sai dạng: sau 'Let me' là động từ nguyên mẫu 'start'. Cả câu thứ hai lẫn câu thứ ba đều nghe nhiệt tình nhưng mở một việc lớn ở phút cuối ca — việc dễ bị bỏ dở, và ca sau không biết gì. Câu đúng ghi lại và giao đích danh cho Mai.",
     ),
     game(
       "Who should I give Mrs Fox's request to?",
       "Give it to Mai by name, and write it in the handover note.",
       "Give it to Mai by name, and writing it in the handover note.",
-      "Just leave it on the desk. Somebody from the next shift will see it.",
+      "Just leave it on the desk for somebody.",
       "colleague",
       "Câu thứ hai sai dạng: 'and' nối hai động từ cùng dạng mệnh lệnh, 'Give… write'. Câu thứ ba giao việc cho 'ai đó' — tức là không ai cả. Câu đúng giao đích danh và ghi vào sổ bàn giao.",
     ),
@@ -504,7 +508,7 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
         q: "Khi người gọi điện nói là chồng của bà Chen, Kim làm gì?",
         options: [
           "Cho số phòng vì đó là người nhà của khách",
-          "Không cho số phòng, đề nghị nhận lời nhắn",
+          "Không cho số phòng, không nói bà có ở khách sạn, và đề nghị nhận lời nhắn",
           "Hỏi bà Chen trước rồi gọi lại cho ông",
         ],
         correct: 1,
@@ -524,7 +528,7 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
       },
       {
         q: "Bà Chen được huỷ miễn phí tới mấy giờ?",
-        options: ["Tới ba giờ chiều", "Tới mười hai giờ trưa", "Tới mười một giờ sáng"],
+        options: ["Tới ba giờ chiều", "Tới mười hai giờ trưa hôm đó", "Tới mười một giờ sáng"],
         correct: 2,
         explanation:
           "'she can cancel at no charge until eleven; after that, it is a late cancellation' — bốn tiếng trước giờ hẹn ba giờ.",
@@ -535,10 +539,10 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
     game(
       "I am her husband. Just tell me which room she is in.",
       "I am sorry, sir. I cannot tell you the room number of any guest.",
-      "I am sorry, sir. I cannot telling you the room number of any guest.",
+      "Of course, sir. As her husband, you can goes straight up to room five hundred and two.",
       "Of course, sir. As her husband, you can go straight up to room five hundred and two.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là động từ nguyên mẫu 'tell'. Câu thứ ba tin lời người gọi và đọc số phòng — nhân viên không biết người đó có thật là chồng khách hay không. Câu đúng không đọc số phòng của bất kỳ ai.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều tin lời người gọi và đọc số phòng — nhân viên không biết người đó có thật là chồng khách hay không. Câu đúng không đọc số phòng của bất kỳ ai.",
     ),
     game(
       "A guest was charged twice for her facial. Shall I just fix it myself?",
@@ -684,7 +688,7 @@ const lesson4 = L(
         {
           q: "Khi khách bị bỏng vì đá nóng, Tuấn làm gì đầu tiên?",
           options: [
-            "Dừng lại và làm mát vết bỏng",
+            "Dừng lại ngay và cho nước mát lên vết bỏng trên vai khách",
             "Hỏi khách có muốn đổi sang loại đá khác không",
             "Gọi quản lý tới xin lỗi khách trước",
           ],
@@ -708,7 +712,7 @@ const lesson4 = L(
           options: [
             "Mở phòng nhưng giảm nhiệt độ xuống",
             "Từ chối và mời khách về phòng nghỉ ngơi",
-            "Hỏi quản lý trước",
+            "Hỏi quản lý trước khi mở phòng xông",
           ],
           correct: 2,
           explanation:
@@ -728,10 +732,10 @@ const lesson4 = L(
       game(
         "The lights went out! Are you leaving me?",
         "No, madam. I am right here, and my torch is on.",
-        "No, madam. I am right here, and my torch are on.",
+        "One moment, madam. I will go and find out what happen, and then I will come back.",
         "One moment, madam. I will go and find out what happened, and then I will come back.",
         undefined,
-        "Câu thứ hai sai hoà hợp: 'my torch' số ít → 'is'. Câu thứ ba bỏ khách lại một mình trong bóng tối để đi hỏi chuyện. Câu đúng ở lại và bật đèn pin.",
+        "Câu thứ hai sai thì: việc đã xảy ra nên là 'what happened', không phải 'what happen'. Cả câu thứ hai lẫn câu thứ ba đều bỏ khách lại một mình trong bóng tối để đi hỏi chuyện. Câu đúng ở lại và bật đèn pin.",
       ),
     ],
   },

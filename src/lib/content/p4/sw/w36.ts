@@ -160,8 +160,8 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
       {
         q: "Hiền nhờ đồng nghiệp làm hai việc theo thứ tự nào?",
         options: [
-          "Gọi 115 trước, rồi báo Quản lý trực",
-          "Báo Quản lý trực trước, rồi chờ quyết định gọi 115",
+          "Gọi 115 xin xe cấp cứu trước, rồi mới báo Quản lý trực",
+          "Báo Quản lý trực trước, rồi chờ quyết định",
           "Gọi chồng khách trước, rồi gọi y tá",
         ],
         correct: 0,
@@ -173,7 +173,7 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
         options: [
           "Vì quản lý chưa cho phép khách rời spa",
           "Vì ông chưa ký phiếu sự cố",
-          "Vì xe cấp cứu đang tới",
+          "Vì xe cấp cứu đang trên đường tới",
         ],
         correct: 2,
         explanation:
@@ -185,18 +185,18 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
     game(
       "My lips feel tight, and my face is swelling.",
       "I will stop now, madam, and clean the cream off with cool water.",
-      "I will stopping now, madam, and clean the cream off with cool water.",
+      "Please stay calm, madam. It is only a small reaction, and it will goes away in a few minutes.",
       "Please stay calm, madam. It is only a small reaction, and it will go away in a few minutes.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'stop'. Câu thứ ba bảo khách bình tĩnh và tự đoán 'chỉ là phản ứng nhẹ' — nhân viên không chẩn đoán, và môi sưng có thể là dị ứng nặng. Câu đúng dừng ngay và lau sạch kem.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự đoán 'chỉ là phản ứng nhẹ' — nhân viên không chẩn đoán, và môi sưng có thể là dị ứng nặng. Câu đúng dừng ngay và lau sạch kem.",
     ),
     game(
-      "I heard the emergency button. The guest is short of breath.",
-      "Please call 115 for an ambulance, and then tell the Duty Manager.",
-      "Please call 115 for an ambulance, and then telling the Duty Manager.",
-      "Let us tell the Duty Manager first and wait for her to decide about the ambulance.",
+      "The guest in room two has chest pain. Should I call the Duty Manager?",
+      "Call 115 first, please, and then the Duty Manager. I will stay with her.",
+      "Let us call the Duty Manager first and wait for her to decides about the ambulance.",
+      "Let us call the Duty Manager first and wait for her to decide about the ambulance.",
       "colleague",
-      "Câu thứ hai sai dạng: 'and then' nối hai động từ cùng dạng nguyên mẫu, 'call… tell'. Câu thứ ba đảo thứ tự: chờ quản lý quyết trong khi khách đang khó thở. Nguy hiểm trước, báo cáo sau.",
+      "Câu thứ hai sai dạng: sau 'to' là động từ nguyên mẫu 'decide', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều đảo thứ tự: chờ quản lý quyết trong khi khách đang đau ngực. Nguy hiểm trước, báo cáo sau — gọi 115 trước, rồi mới báo Quản lý trực, và có người ở lại với khách.",
     ),
   ],
 });
@@ -304,7 +304,7 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
         q: "Việc đầu tiên Long làm khi thấy bà Park choáng váng là gì?",
         options: [
           "Gọi y tá rồi đứng chờ ở cửa phòng xông hơi",
-          "Đưa bà ra ngay khu vực mát",
+          "Đưa bà ra khỏi phòng xông hơi ngay, tới nghỉ ở khu vực mát",
           "Hỏi bà đã ngồi trong phòng xông bao lâu rồi",
         ],
         correct: 1,
@@ -327,7 +327,7 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
         options: [
           "Vì bà Park muốn khiếu nại về phòng xông",
           "Vì đã tới giờ đóng cửa buổi chiều",
-          "Vì nhiệt cao hơn bình thường",
+          "Vì nhiệt cao hơn bình thường, phải chờ kỹ thuật kiểm tra",
         ],
         correct: 2,
         explanation:
@@ -339,18 +339,18 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
     game(
       "I feel light-headed in this heat.",
       "Please walk out with me now, sir, and rest in the cool area.",
-      "Please walk out with me now, sir, and resting in the cool area.",
+      "Just close your eyes for a few minutes, sir. The heat are very good for your muscles.",
       "Just close your eyes for a few minutes, sir. The heat is very good for your muscles.",
       undefined,
-      "Câu thứ hai sai dạng: 'and' nối hai động từ cùng dạng, nên là 'rest', không phải 'resting'. Câu thứ ba giữ khách ở lại trong nhiệt khi khách đã choáng — trái luật an toàn. Câu đúng đưa khách ra khỏi chỗ nóng và cho nghỉ ở khu vực mát.",
+      "Câu thứ hai sai hoà hợp: 'The heat' không đếm được → 'is', không phải 'are'. Cả câu thứ hai lẫn câu thứ ba đều giữ khách ở lại trong nhiệt khi khách đã choáng — trái luật an toàn. Câu đúng đưa khách ra khỏi chỗ nóng và cho nghỉ ở khu vực mát.",
     ),
     game(
       "I feel fine now. Can I go back into the sauna?",
-      "Please rest here until the nurse comes, madam.",
-      "Please rest here until the nurse will come, madam.",
+      "Not yet, madam. Please rest here until the nurse comes and checks you.",
+      "Not yet, madam. Please rest here until the nurse come and check you.",
       "Of course, madam. Just stay for a shorter time than before, and drink some water.",
       undefined,
-      "Câu thứ hai sai thì: sau 'until' dùng hiện tại đơn 'comes', không dùng 'will come'. Câu thứ ba chiều khách và tự quyết thay y tá — khách vừa bị quá nóng không quay lại nhiệt trước khi y tá xem. Câu đúng giữ khách nghỉ và chờ y tá.",
+      "Câu thứ hai sai hoà hợp: 'the nurse' số ít → 'comes… checks', có -s. Câu thứ ba chiều khách và tự quyết thay y tá — khách vừa bị quá nóng không quay lại nhiệt trước khi y tá xem. Câu đúng giữ khách nghỉ và chờ y tá.",
     ),
   ],
 });
@@ -511,7 +511,7 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
         options: [
           "Hồ trong nhà đóng cửa suốt cả ngày hôm đó",
           "Bà Ruiz đưa các con sang hồ bơi ngoài trời",
-          "Trẻ em bơi lại trước bốn giờ",
+          "Kiểm tra nước đạt lúc ba giờ rưỡi, trẻ em bơi lại trước bốn giờ",
         ],
         correct: 2,
         explanation:
@@ -521,12 +521,12 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
   ),
   game: [
     game(
-      "The pool smells very strongly of chemicals today.",
-      "Thank you, madam. Please step out of the pool now, and our engineering team will check the water.",
-      "Thank you, madam. Please step out of the pool now, and we will checking the water.",
-      "Thank you, madam. That is normal after cleaning, so you can keep swimming.",
+      "There is a broken glass at the bottom of the pool.",
+      "Thank you for telling me, sir. I will ask everyone to step out, and we will close off the pool.",
+      "Thank you, sir. Our cleaner will takes it out later, so please just swim around it.",
+      "Thank you, sir. Our cleaner will take it out later, so please just swim around it.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'check'. Câu thứ ba đoán là 'bình thường' và để khách tiếp tục bơi trong nước có mùi lạ — chưa ai kiểm tra. Câu đúng mời khách lên bờ trước, kiểm tra sau.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'take', không thêm -s. Cả câu thứ hai lẫn câu thứ ba đều để khách tiếp tục bơi cạnh mảnh thuỷ tinh vỡ — người phải lên bờ trước, rồi mới xử lý hồ. Câu đúng cảm ơn khách, mời mọi người lên bờ và rào hồ lại.",
     ),
     game(
       "Engineering says the water test is not clear yet. Can we open the pool?",
@@ -663,7 +663,7 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
         q: "Khi mất điện, Nga làm gì?",
         options: [
           "Ra quầy lễ tân hỏi bao giờ có điện lại",
-          "Đưa bà Weiss ra khu vực thư giãn chờ",
+          "Đưa bà Weiss ra ngoài chờ",
           "Ở lại trong phòng và bật đèn pin",
         ],
         correct: 2,
@@ -693,12 +693,12 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
       "Câu thứ hai dịch thẳng 'mở đèn': bật đèn pin là 'switch on'. Câu thứ ba hứa giờ thay bộ phận kỹ thuật — bạn không biết bao giờ có điện. Câu đúng nói điều đang xảy ra và một việc bạn làm ngay.",
     ),
     game(
-      "It is just a little rain. I want to finish my swim.",
-      "I am sorry, sir. There is lightning near the hotel, so please step out of the pool now.",
-      "I am sorry, sir. Have lightning, so please step out of the pool now.",
-      "Of course, sir. Please swim close to the steps, so you can get out quickly.",
+      "I can hear thunder, but my son wants to stay in the pool a little longer.",
+      "I am sorry, madam. During a thunderstorm, everyone must come out of the pool now.",
+      "I am sorry, madam. During thunderstorm, everyone must come out of the pool now.",
+      "Of course, madam. He can stay near the steps, so he can get out quickly.",
       undefined,
-      "Câu thứ hai dịch thẳng 'Có sét' thành 'Have lightning'; phải là 'There is lightning'. Câu thứ ba chiều khách và để khách ở dưới nước khi có sét. Câu đúng mời khách lên bờ ngay và nói lý do.",
+      "Câu thứ hai thiếu mạo từ: 'During a thunderstorm'. Câu thứ ba chiều khách và để trẻ ở dưới nước khi có giông. Câu đúng mời mọi người lên bờ ngay và nói lý do.",
     ),
   ],
 });
