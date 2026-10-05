@@ -16,13 +16,21 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   đăng nhập không lỗi console.
 - `content/p3` = `main` sau merge. Người dùng nói không cần mở PR riêng cho P3 nữa.
 - **05/10: vá bộ chấm nói `5ab507d`** (lớp nghĩa cho đổi một từ nội dung lấy bất kỳ từ nào — lỗ
-  vòng P4-r1 tìm ra, ảnh hưởng P3 đang chạy). Nằm trong PR
+  vòng P4-r1 tìm ra, ảnh hưởng P3 đang chạy). Đã merge cùng phần Vercel qua PR
   [vanhoang-spec/hospitality-english#14](https://github.com/vanhoang-spec/hospitality-english/pull/14)
-  cùng phần Vercel; **chờ người dùng nói "merge"**. Mức chuẩn mới của `swapone` ở AGENTS §6.
+  (`6220200`). Mức chuẩn mới của `swapone` ở AGENTS §6.
+- **05/10: vá bảo mật TanStack Start 1.167.50 → 1.168.60** (XSS nghiêm trọng GHSA-qx66-fv34-fjm8;
+  Vercel chặn build vì nó). PR
+  [vanhoang-spec/hospitality-english#15](https://github.com/vanhoang-spec/hospitality-english/pull/15)
+  merge `34017ec`. Netlify production đã chạy bản này (bundle `index-kzk9d8M4.js`, trùng deploy
+  preview của PR). **Vercel production Ready** từ cùng commit. `.prettierignore` bỏ qua
+  `vercel.json` vì Vercel tự viết lại file này trước khi chạy CI.
 - **05/10: người dùng chuyển deploy sang Vercel**, tự làm trên giao diện theo
   [`docs/deploy-vercel.md`](deploy-vercel.md). Code đã sẵn trên `content/p3`: `vite.config.ts` ra
-  bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Netlify vẫn là
-  production cho tới khi người dùng đổi CNAME `hospitality.embassy.edu.vn` ở PA Việt Nam. Sau khi
+  bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Project Vercel
+  `hospitality-english` (team Pro của người dùng, đã nối GitHub, đủ 7 biến môi trường) build
+  production thành công 05/10. Netlify vẫn là production cho tới khi người dùng đổi CNAME
+  `hospitality.embassy.edu.vn` ở PA Việt Nam — đang ở bước 4 của tài liệu. Sau khi
   chuyển xong: dọn `netlify.toml` và các ghi chú Netlify (bước 6 của tài liệu).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
