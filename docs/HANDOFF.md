@@ -53,6 +53,9 @@ Theo thứ tự yêu cầu gần nhất:
 5. **(06/10) Sửa Phase 4 tới khi cả 10 ô ≥ 7,5**, mốc như P3, chấm mù liên tục, làm qua đêm.
    Nhánh `content/p4`. Chuẩn soạn: `docs/p4-plan.md`. Mỗi bộ phận viết lại trong
    `src/lib/content/p4/<dep>/w31.ts`–`w40.ts`; tự kiểm bằng `scripts/probes/p4check.ts`.
+   **06/10 sáng: viết lại xong cả 10 tuần × 5 bộ phận** (`e22d5af`, CI xanh): mỗi bộ phận
+   242–278 lượt nói, 25–48 lượt `risk`, học thuộc 60 câu qua nửa nói 21–25% (vòng 1: 74–100%).
+   Vòng chấm mù 2 chạy trên `e22d5af` với `docs/audit/brief-p4-r2.md`; chưa merge vào `main`.
 
 ---
 
