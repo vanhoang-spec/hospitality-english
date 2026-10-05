@@ -189,7 +189,7 @@ Who is trained on your floor, and where the nearest AED is kept, differ by hotel
       {
         q: "Khách còn thở nhưng gọi, lay đều không tỉnh thì làm gì?",
         options: [
-          "Đặt khách nằm nghiêng, đầu, vai và hông xoay cùng lúc",
+          "Đặt khách nằm nghiêng, đầu, vai và hông xoay cùng lúc để cổ họng thông",
           "Đỡ khách ngồi dậy, dựa lưng vào thành giường cho dễ thở hơn",
           "Cho khách uống một ngụm nước nhỏ để khách tỉnh lại",
         ],
@@ -356,9 +356,9 @@ Which box, which bag and which nurse your hotel uses are questions for your Exec
       {
         q: "Bị kim đâm vào tay, việc ĐẦU TIÊN là gì?",
         options: [
-          "Rửa ngay dưới vòi nước chảy, để vết thương chảy máu nhẹ",
+          "Rửa ngay dưới vòi nước chảy, để vết thương chảy máu nhẹ, không bóp",
           "Bóp mạnh cho máu ra hết rồi dán băng cá nhân lại",
-          "Làm nốt phòng đang dở rồi cuối ca mới báo cho giám sát tầng biết",
+          "Làm nốt phòng đang dở rồi cuối ca mới báo giám sát",
         ],
         correct: 0,
         explanation:
@@ -382,17 +382,17 @@ Which box, which bag and which nurse your hotel uses are questions for your Exec
       2,
       "I dropped a glass by the bath. Can you just vacuum it up later?",
       "Please keep your shoes on, madam. I am sweeping it into a rigid box now, not into a bag.",
-      "Please keep your shoes on, madam. I am sweep it into a rigid box now, not into a bag.",
-      "Of course, madam — I will run the vacuum over it later, when I come back to do the room.",
-      "Phương án 'run the vacuum over it later' để mảnh vỡ nằm đó trong phòng có khách đi chân trần, và máy hút không gom hết thuỷ tinh. Phương án 'I am sweep' thiếu đuôi -ing của hiện tại tiếp diễn. Câu đúng giữ khách an toàn trước, rồi làm ngay.",
+      "Of course, madam — I will runs the vacuum over it later, when I come back to clean the room.",
+      "Of course, madam — I will run the vacuum over it later, when I come back to clean the room.",
+      "Phương án 'I will run the vacuum over it later' để mảnh vỡ nằm đó trong phòng có khách đi chân trần, và máy hút không gom hết thuỷ tinh. Phương án 'I will runs the vacuum' cũng để mảnh vỡ nằm đó, lại sai: sau 'will' là động từ nguyên mẫu, không thêm -s (will run). Câu đúng giữ khách an toàn trước, rồi làm ngay.",
     ),
     round(
       0,
       "I got a tiny needle prick, but it is nothing. I will finish my rooms first.",
       "Please stop and wash it under running water now, and tell the supervisor it is a needle injury.",
-      "Wash it under running water now, and tell the supervisor it are a needle injury.",
+      "Finish your rooms first, then write it in log before you go home tonight.",
       "Finish your rooms first, then write it in the log before you go home tonight.",
-      "Phương án 'Finish your rooms first' để thuốc phòng nhiễm trùng mất đúng những giờ nó còn tác dụng. Phương án 'it are' sai: chủ ngữ 'it' đi với 'is'. Câu đúng: rửa ngay, báo ngay, gọi đúng tên chấn thương.",
+      "Phương án 'Finish your rooms first… in the log' để thuốc phòng nhiễm trùng mất đúng những giờ nó còn tác dụng. Phương án 'write it in log' cũng bảo đồng nghiệp làm tiếp như vậy, lại thiếu mạo từ: cuốn sổ cụ thể của tầng cần 'the' (in the log). Câu đúng: rửa ngay, báo ngay, gọi đúng tên chấn thương.",
       "colleague",
     ),
   ],
@@ -541,7 +541,7 @@ At the assembly point, hand the floor keys to Security or the Duty Manager, and 
         q: "Ngửi thấy mùi gas thì gọi điện từ đâu?",
         options: [
           "Từ điện thoại ngay trong phòng đó, vì đó là cách gọi nhanh nhất",
-          "Từ lồng cầu thang, không dùng thứ gì trên tầng đó",
+          "Từ lồng cầu thang, không chạm công tắc, điện thoại hay bộ đàm trên tầng đó",
           "Từ bộ đàm, để cả tầng cùng nghe và cùng ra ngoài",
         ],
         correct: 1,
@@ -566,9 +566,9 @@ At the assembly point, hand the floor keys to Security or the Duty Manager, and 
       1,
       "Is this a real fire, or just another drill? I am in the bath.",
       "We treat every alarm as real, sir. Please leave by the stairwell on your left now.",
-      "We treats every alarm as real, sir. Please leave by the stairwell on your left now.",
+      "It is almost certainly a drill, sir — they tests it most months, so please take your time.",
       "It is almost certainly a drill, sir — they test it most months, so please take your time.",
-      "Phương án 'almost certainly a drill… take your time' đoán thay cho tủ báo cháy và giữ khách lại trong phòng. Phương án 'We treats' sai chia động từ: chủ ngữ 'we' không thêm -s. Câu đúng coi mọi chuông là thật và chỉ đường thoát.",
+      "Phương án 'almost certainly a drill… take your time' đoán thay cho tủ báo cháy và giữ khách lại trong phòng. Phương án 'they tests it' cũng đoán và giữ khách lại như vậy, lại sai chia động từ: chủ ngữ 'they' không thêm -s. Câu đúng coi mọi chuông là thật và chỉ đường thoát.",
     ),
     round(
       2,
@@ -719,7 +719,7 @@ Never promise anything about the weather, the airport or the roads. That belongs
         options: [
           "Lấy hộ chiếu trên bàn cho khách rồi mới cùng ra ngoài",
           "Kéo rèm che kín lại rồi để khách tự quyết có ra ngoài hay không",
-          "Đưa khách ra hành lang, đóng cửa, không ai quay lại lấy đồ",
+          "Đưa khách ra hành lang trước, đóng cửa, và không ai quay lại lấy đồ, kể cả hộ chiếu",
         ],
         correct: 2,
         explanation:
@@ -740,9 +740,9 @@ Never promise anything about the weather, the airport or the roads. That belongs
       1,
       "Will the airport close tomorrow? What have you heard?",
       "I could not say, sir. May I ask the front desk to call your room with any news?",
-      "I could not say, sir. May I asking the front desk to call your room with any news?",
+      "It usually close in a storm like this, sir, so I would expect your flight to be cancelled.",
       "It usually closes in a storm like this, sir, so I would expect your flight to be cancelled.",
-      "Phương án 'I would expect your flight to be cancelled' đoán thay cho sân bay — khách có thể đổi cả kế hoạch vì một câu đoán. Phương án 'May I asking' sai: sau 'may I' là động từ nguyên mẫu. Câu đúng không đoán và chuyển cho quầy lễ tân.",
+      "Phương án 'I would expect your flight to be cancelled' đoán thay cho sân bay — khách có thể đổi cả kế hoạch vì một câu đoán. Phương án 'It usually close' cũng đoán như vậy, lại sai chia động từ: chủ ngữ 'it' cần 'closes'. Câu đúng không đoán và chuyển cho quầy lễ tân.",
     ),
   ],
 });

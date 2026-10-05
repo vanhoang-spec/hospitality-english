@@ -159,7 +159,7 @@ By ten, four rooms are done and nothing on the profiles has been missed. None of
         options: [
           "Dọn xung quanh két thật cẩn thận, không nhìn vào bên trong",
           "Tự đóng két lại cho khách rồi bắt đầu dọn phòng",
-          "Đề nghị quay lại sau mười phút, khi két đã đóng",
+          "Đề nghị quay lại sau mười phút, khi khách đã đóng két, và ghi giờ vào báo cáo",
         ],
         correct: 2,
         explanation:
@@ -289,7 +289,7 @@ A mistake reported at once is a mistake. One that somebody else finds is a diffe
         q: "Ai quyết chuyện bồi thường chiếc vali?",
         options: [
           "Giám sát tầng, nếu số tiền còn dưới hạn mức của chị ấy",
-          "Duty Manager, ngay từ đầu, vì vali không phải đồ giặt là",
+          "Duty Manager, ngay từ đồng đầu tiên, vì vali không phải đồ giặt là",
           "Chính nhân viên đã làm nứt vali, vì người đó biết rõ nhất",
         ],
         correct: 1,
@@ -469,11 +469,11 @@ Every one of those moments ended in the same place: the room report, with the ti
     ),
     round(
       2,
-      "Hoa here. Can you take two of my rooms? I am short today.",
-      "What if I took one now, in exchange for your help with my turndown list tonight?",
-      "What if I took one now, in exchange of your help with my turndown list tonight?",
-      "Sure — I will skip the bathrooms in my own rooms, and then I can do all of yours as well.",
-      "Phương án 'skip the bathrooms in my own rooms' đổi tiêu chuẩn lấy thời gian — điều không bao giờ đem ra trao đổi. Phương án 'in exchange of' sai giới từ: in exchange FOR. Câu đúng đề nghị một trao đổi công bằng.",
+      "Mai here. Could you do my rush room on ten? I am running late.",
+      "Yes, once Ms Lan knows. In exchange, could you take my two stayovers after lunch?",
+      "Yes, once Ms Lan knows. In exchange, could you take my two stayover after lunch?",
+      "Sure — I will do your room quickly and skip the bathroom check, so nobody needs to know.",
+      "Phương án 'skip the bathroom check, so nobody needs to know' vừa đổi tiêu chuẩn lấy thời gian, vừa giấu việc đổi phòng với giám sát — hai điều không bao giờ đem ra trao đổi. Phương án 'my two stayover' thiếu số nhiều: sau 'two' danh từ phải thêm -s (two stayovers). Câu đúng báo giám sát trước và đề nghị một trao đổi công bằng.",
       "colleague",
     ),
   ],
@@ -578,7 +578,7 @@ Then the trolley is restocked, the master key is signed in, and Linh goes home o
       {
         q: "Nhẫn vàng tìm thấy dưới giường sau khi khách trả phòng thì xử lý thế nào?",
         options: [
-          "Cho vào túi áo mình cho an toàn, cuối ca mới mang xuống văn phòng",
+          "Cho vào túi áo, cuối ca mang xuống văn phòng",
           "Gọi giám sát, niêm phong, hai người ký, rồi ghi vào sổ",
           "Để nguyên dưới giường cho ca sau tự phát hiện",
         ],
@@ -602,11 +602,11 @@ Then the trolley is restocked, the master key is signed in, and Linh goes home o
   game: [
     round(
       1,
-      "Here is something for you. Just forget about the broken lamp, please.",
-      "I cannot take that, sir, and the lamp has to be reported. I am calling my supervisor now.",
-      "I cannot take that, sir, and the lamp have to be reported. I am calling my supervisor now.",
-      "Thank you, sir — it is only a small lamp, so I will write it down as an accident.",
-      "Phương án 'I will write it down as an accident' nhận tiền để sửa biên bản — đúng điều không bao giờ làm. Phương án 'the lamp have' sai: chủ ngữ số ít cần 'has'. Câu đúng từ chối, vẫn báo, và gọi giám sát.",
+      "Keep this for yourself, and please do not mention the burn on the desk.",
+      "Thank you, madam, but I cannot accept this. The burn must be reported, and I am calling my supervisor.",
+      "How kind of you, madam — it is only a small burn, so I will just polishing the desk and say nothing about it.",
+      "How kind of you, madam — it is only a small burn, so I will just polish the desk and say nothing about it.",
+      "Phương án 'How kind of you… say nothing about it' nhận tiền để giấu một hư hỏng — đúng điều không bao giờ làm. Phương án 'I will just polishing' cũng nhận tiền như vậy, lại sai: sau 'will' là động từ nguyên mẫu (will just polish). Câu đúng từ chối một lần, rõ ràng, vẫn báo vết cháy, và gọi giám sát.",
     ),
     round(
       2,

@@ -171,7 +171,7 @@ The details above are one hotel's. Ask your Executive Housekeeper for your own l
       {
         q: "Khách vội và bảo cứ lấy đồ đi, không cần kiểm thì sao?",
         options: [
-          "Vẫn kiểm cùng khách, vì chỉ mất một chút thời gian",
+          "Vẫn kiểm cùng khách, vì lượt đếm bỏ qua thì sau này không ai chứng minh được",
           "Lấy đồ đi rồi kiểm sau ở phòng giặt cho nhanh",
           "Nhờ khách tự viết danh sách để mình mang đồ đi trước",
         ],
@@ -205,9 +205,9 @@ The details above are one hotel's. Ask your Executive Housekeeper for your own l
       0,
       "What does express actually cost? I do not want a surprise on my bill.",
       "The surcharge is printed on the laundry list, madam, so you can see it before you sign.",
-      "The surcharge is print on the laundry list, madam, so you can see it before you sign.",
+      "It is only small amount, madam, so please do not worry about it at all.",
       "It is only a small amount, madam, so please do not worry about it at all.",
-      "Phương án 'only a small amount' đoán giá và gạt câu hỏi của khách — đúng cách tạo ra một bất ngờ trên hoá đơn. Phương án 'is print' thiếu đuôi bị động: is printed. Câu đúng chỉ vào con số in sẵn trên phiếu khách sẽ ký.",
+      "Phương án 'only a small amount' đoán giá và gạt câu hỏi của khách — đúng cách tạo ra một bất ngờ trên hoá đơn. Phương án 'only small amount' gạt câu hỏi y như vậy, lại thiếu mạo từ: danh từ số ít đếm được cần 'a' (a small amount). Câu đúng chỉ vào con số in sẵn trên phiếu khách sẽ ký.",
     ),
   ],
 });
@@ -333,7 +333,7 @@ Finally, give the guest one time you will keep, such as "before six". If you hav
       {
         q: "Đến mốc giờ đã hứa mà chưa có câu trả lời thì sao?",
         options: [
-          "Vẫn quay lại gặp khách và nói thật là chưa có",
+          "Vẫn quay lại gặp khách đúng mốc giờ và nói thật là chưa có câu trả lời",
           "Chờ đến khi có câu trả lời đầy đủ rồi mới quay lại gặp khách",
           "Nhờ đồng nghiệp ca sau gọi cho khách giúp",
         ],
@@ -348,17 +348,17 @@ Finally, give the guest one time you will keep, such as "before six". If you hav
       1,
       "My favourite sweater has shrunk. It does not even fit me now!",
       "I am so sorry, madam. May I photograph it now and take it to my supervisor today?",
-      "I am so sorry, madam. May I photographing it now and take it to my supervisor today?",
-      "Wool often does that, madam, especially when the label inside was not very clear.",
-      "Phương án 'Wool often does that' đổ lỗi cho món đồ và cho khách ngay khi khách đang buồn — chưa ai xem xét gì cả. Phương án 'May I photographing' sai: sau 'may I' là động từ nguyên mẫu. Câu đúng xin lỗi về trải nghiệm rồi làm hai việc cụ thể.",
+      "Wool often do that, madam, especially when the care label inside was not clear enough.",
+      "Wool often does that, madam, especially when the care label inside was not clear enough.",
+      "Phương án 'Wool often does that' đổ lỗi cho món đồ và cho khách ngay khi khách đang buồn — chưa ai xem xét gì cả. Phương án 'Wool often do that' cũng đổ lỗi như vậy, lại sai chia động từ: 'wool' là danh từ không đếm được, đi với 'does'. Câu đúng xin lỗi về trải nghiệm rồi làm hai việc cụ thể.",
     ),
     round(
       0,
       "Is your laundry going to admit this was their mistake?",
       "I cannot say why it happened yet, sir, but I will report it today and come back to you.",
-      "I cannot say why it happen yet, sir, but I will report it today and come back to you.",
+      "Yes, sir — I am sure it was our mistake, and the hotel will pays for a new one.",
       "Yes, sir — I am sure it was our mistake, and the hotel will pay for a new one.",
-      "Phương án 'it was our mistake… will pay' vừa nhận lỗi khi chưa ai kiểm, vừa hứa tiền thay cấp trên. Phương án 'why it happen' thiếu đuôi quá khứ: happened. Câu đúng không kết luận, chỉ hứa việc của mình và một lần quay lại.",
+      "Phương án 'it was our mistake… will pay' vừa nhận lỗi khi chưa ai kiểm, vừa hứa tiền thay cấp trên. Phương án 'will pays' cũng nhận lỗi và hứa tiền như vậy, lại sai: sau 'will' là động từ nguyên mẫu, không thêm -s (will pay). Câu đúng không kết luận, chỉ hứa việc của mình và một lần quay lại.",
     ),
   ],
 });
@@ -504,7 +504,7 @@ If a colleague has already promised something, do not argue in front of the gues
         {
           q: "Vì sao không được hứa 'make it right'?",
           options: [
-            "Vì người có quyền quyết có thể quyết khác đi",
+            "Vì mình không biết 'right' sẽ là gì, và người có quyền quyết có thể quyết khác đi",
             "Vì câu đó nghe quá thân mật với khách nước ngoài",
             "Vì khách sạn không bao giờ bồi thường đồ giặt",
           ],
@@ -648,8 +648,8 @@ Before your shift ends, write the dispute on your report in factual words: times
       {
         q: "Khách dọa viết đánh giá xấu trên mạng thì sao?",
         options: [
-          "Xin khách đừng viết, và hứa sẽ có một món quà nhỏ gửi lên phòng",
-          "Đó là quyền của khách; không xin khách đừng viết",
+          "Xin khách đừng viết, và hứa gửi một món quà nhỏ",
+          "Đó là quyền của khách, nên không bao giờ xin khách đừng viết",
           "Báo khách rằng đánh giá đó sẽ bị khách sạn xoá",
         ],
         correct: 1,
@@ -674,9 +674,9 @@ Before your shift ends, write the dispute on your report in factual words: times
       0,
       "Thank you for listening. It is still a ruined shirt, though.",
       "I understand, sir, and thank you for telling me. My supervisor will write to you about the next step.",
-      "I understand, sir, and thank you for tell me. My supervisor will write to you about the next step.",
+      "I am sure we can making it right for you, sir, so please do not worry about it any more.",
       "I am sure we can make it right for you, sir, so please do not worry about it any more.",
-      "Phương án 'make it right' là lời hứa không ai trên tầng giữ được — người quyết có thể quyết khác. Phương án 'for tell me' sai: sau 'for' là động từ đuôi -ing (for telling). Câu đúng cảm ơn và nói bước tiếp theo.",
+      "Phương án 'we can make it right' là lời hứa không ai trên tầng giữ được — người quyết có thể quyết khác. Phương án 'we can making it right' hứa y như vậy, lại sai: sau 'can' là động từ nguyên mẫu (can make). Câu đúng cảm ơn và nói bước tiếp theo.",
     ),
     round(
       2,

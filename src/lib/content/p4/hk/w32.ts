@@ -167,7 +167,7 @@ Use "Based on…" or "Since you mentioned…" only for what the guest really sai
         options: [
           "Coi là ý thích của khách và mở cửa sổ cho thoáng",
           "Hỏi khách có cần gạt tàn không, rồi ghi vào hồ sơ",
-          "Báo giám sát tầng ngay trong giờ đó",
+          "Báo giám sát tầng ngay trong giờ đó, vì đây là chuyện an toàn chứ không phải ý thích",
         ],
         correct: 2,
         explanation:
@@ -191,9 +191,9 @@ Use "Based on…" or "Since you mentioned…" only for what the guest really sai
       1,
       "How did you know I like the curtains half open? Did someone tell you?",
       "The curtains were half open each morning, sir, so I left them that way. Shall I keep doing that?",
-      "The curtains was half open each morning, sir, so I left them that way. Shall I keep doing that?",
+      "The front desk pass us notes on every guest, sir, so we usually know these little things.",
       "The front desk passes us notes on every guest, sir, so we usually know these little things.",
-      "Phương án 'notes on every guest' vừa sai sự thật vừa làm khách thấy bị theo dõi. Phương án 'The curtains was' sai hoà hợp: chủ ngữ số nhiều cần 'were'. Câu đúng nói điều căn phòng cho thấy rồi hỏi khách.",
+      "Phương án 'The front desk passes us notes' vừa sai sự thật vừa làm khách thấy bị theo dõi. Phương án 'The front desk pass us notes' cũng làm khách thấy bị theo dõi như vậy, lại sai chia động từ: chủ ngữ số ít 'the front desk' cần 'passes'. Câu đúng nói điều căn phòng cho thấy rồi hỏi khách.",
     ),
     round(
       0,
@@ -319,7 +319,7 @@ Ask your Executive Housekeeper what your hotel keeps: anti-allergy bedding, a fr
         options: [
           "Ghi vào hồ sơ như một ý thích về mùi hương",
           "Đổi sản phẩm rồi theo dõi thêm vài ngày",
-          "Báo lên Duty Manager ngay trong ca đó",
+          "Báo lên Duty Manager ngay trong ca đó, vì việc này không bao giờ chỉ ghi lại là xong",
         ],
         correct: 2,
         explanation:
@@ -351,9 +351,9 @@ Ask your Executive Housekeeper what your hotel keeps: anti-allergy bedding, a fr
       0,
       "Is the spray you use in here safe for small children?",
       "I cannot promise that for every child, sir, so I will air out the room and keep it scent-free from today.",
-      "I cannot promise that, sir, so I will air out the room and keeping it scent-free from today.",
+      "Of course, sir — it is completely natural, so it perfectly safe for children and babies.",
       "Of course, sir — it is completely natural, so it is perfectly safe for children and babies.",
-      "Phương án 'perfectly safe for children' là lời hứa an toàn tuyệt đối — đúng điều không được nói. Phương án 'will keeping' sai: sau 'will' là động từ nguyên mẫu. Câu đúng nói thật là không hứa được, rồi làm điều chắc chắn.",
+      "Phương án 'it is perfectly safe for children' là lời hứa an toàn tuyệt đối — đúng điều không được nói. Phương án 'so it perfectly safe' hứa y như vậy, lại thiếu động từ 'is' trước tính từ (it is perfectly safe). Câu đúng nói thật là không hứa được, rồi làm điều chắc chắn.",
     ),
   ],
 });
@@ -505,7 +505,7 @@ Never open your trolley or a bag to prove anything until your supervisor is ther
         {
           q: "Thấy tiền mặt trên bàn làm việc của khách thì làm gì?",
           options: [
-            "Để nguyên tại chỗ và dọn xung quanh",
+            "Để nguyên tại chỗ và dọn xung quanh, vì trên camera bàn tay giúp đỡ trông như kẻ gian",
             "Cất vào ngăn kéo cho an toàn rồi báo khách sau",
             "Bỏ vào két sắt trong phòng và ghi lại giờ đã cất",
           ],
@@ -531,9 +531,9 @@ Never open your trolley or a bag to prove anything until your supervisor is ther
         2,
         "My wife's ring was on the shelf yesterday, and now it is on the desk. Who moved it?",
         "I did not move it, sir, and valuables are left as found. I am calling my supervisor to check it with you.",
-        "I did not moved it, sir, and valuables are left as found. I am calling my supervisor to check it with you.",
-        "It may have been the night cleaner, sir — several of us go into the room every day, so it is hard to say.",
-        "Phương án 'the night cleaner' đoán và đổ cho đồng nghiệp — đúng điều làm một vụ khiếu nại thành hai. Phương án 'did not moved' sai: sau 'did not' là động từ nguyên mẫu (did not move). Câu đúng nói điều mình chắc, nêu luật đồ giá trị, rồi gọi giám sát.",
+        "It may have been the night cleaner, sir — several of us goes into this room every day, so it is hard to say.",
+        "It may have been the night cleaner, sir — several of us go into this room every day, so it is hard to say.",
+        "Phương án 'the night cleaner… several of us go' đoán và đổ cho đồng nghiệp — đúng điều làm một vụ khiếu nại thành hai. Phương án 'several of us goes' cũng đổ cho đồng nghiệp như vậy, lại sai chia động từ: 'several of us' là số nhiều, cần 'go'. Câu đúng nói điều mình chắc, nêu luật đồ giá trị, rồi gọi giám sát.",
       ),
       round(
         1,
@@ -649,7 +649,7 @@ Preferences carry over between stays. Ask your Executive Housekeeper who types t
         q: "Dị ứng của khách được ghi vào đâu?",
         options: [
           "Vào hồ sơ phòng, để ai vào phòng đó cũng biết",
-          "Vào hồ sơ khách, theo đúng lời khách nói",
+          "Vào hồ sơ khách, theo đúng lời khách nói, vì hồ sơ này theo khách sang lần ở sau",
           "Vào sổ giao ca, để ca sau đọc trong ngày",
         ],
         correct: 1,
@@ -682,9 +682,9 @@ Preferences carry over between stays. Ask your Executive Housekeeper who types t
       2,
       "Do you keep notes about guests? I would rather not be in a file somewhere.",
       "Only service times and what you tell us yourself, madam. Shall I ask my supervisor to explain it to you?",
-      "Only service times and what you tells us yourself, madam. Shall I ask my supervisor to explain it to you?",
-      "We write down whatever we notice in each room, madam, so that the next team always knows what to expect.",
-      "Phương án 'whatever we notice' đúng là điều khách đang lo — và sai luật ghi chép. Phương án 'what you tells us' sai chia động từ: 'you' không thêm -s. Câu đúng nói rõ ghi những gì, rồi đưa người có thẩm quyền giải thích.",
+      "We writes down whatever we notice in every room, madam, so that the next team always knows what to expect.",
+      "We write down whatever we notice in every room, madam, so that the next team always knows what to expect.",
+      "Phương án 'We write down whatever we notice' đúng là điều khách đang lo — và sai luật ghi chép. Phương án 'We writes down' cũng nói ghi lại mọi thứ, lại sai chia động từ: chủ ngữ 'we' không thêm -s. Câu đúng nói rõ ghi những gì, rồi đưa người có thẩm quyền giải thích.",
     ),
   ],
 });

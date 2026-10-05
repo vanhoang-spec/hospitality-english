@@ -166,7 +166,7 @@ A guest who simply asks you to close the door hears the rule and an offer to com
         q: "Khách xin không dọn phòng cả tuần thì sao?",
         options: [
           "Đồng ý không dọn cả tuần, vì đó là quyền của khách khi ở",
-          "Đồng ý cho hôm nay; quá hai ngày phải có người vào kiểm tra",
+          "Đồng ý cho hôm nay; quá hai ngày không ai vào thì giám sát sắp xếp kiểm tra",
           "Từ chối, vì ngày nào phòng cũng phải được dọn đầy đủ như nhau",
         ],
         correct: 1,
@@ -202,17 +202,17 @@ A guest who simply asks you to close the door hears the rule and an offer to com
       0,
       "Could you do just ten minutes now? I have a call at half past.",
       "Ten minutes now, madam. However, what if I came back at four for the rest of the room?",
-      "Ten minutes now, madam. However, what if I coming back at four for the rest of the room?",
+      "Ten minutes is not really enough for room, madam, so I will come back this afternoon instead.",
       "Ten minutes is not really enough for a room, madam, so I will come back this afternoon instead.",
-      "Phương án 'not really enough… come back this afternoon' từ chối thẳng mà không đưa khách lựa chọn nào. Phương án 'what if I coming' sai: sau 'what if I' là quá khứ đơn (came) hoặc hiện tại đơn, không phải -ing. Câu đúng nhận phần làm được ngay và đề nghị phần còn lại.",
+      "Phương án 'not really enough for a room… this afternoon' từ chối thẳng mà không đưa khách lựa chọn nào. Phương án 'enough for room' cũng từ chối thẳng như vậy, lại thiếu mạo từ: danh từ số ít đếm được cần 'a' (for a room). Câu đúng nhận phần làm được ngay và đề nghị phần còn lại.",
     ),
     round(
       2,
       "Just shut the door while you do the bathroom. I am trying to sleep.",
       "I am sorry, madam, I keep the door open while I work. May I come back when you are awake?",
-      "I am sorry, madam, I keeps the door open while I work. May I come back later?",
+      "I am stepping outside now, madam, and I calling my supervisor to your room.",
       "I am stepping outside now, madam, and I am calling my supervisor to your room.",
-      "Phương án 'stepping outside… calling my supervisor' dùng cách xử lý dành cho khách ép hoặc vượt ranh giới, trong khi khách chỉ nhờ — khách đang ngủ sẽ thấy bị đối xử như người có lỗi. Phương án 'I keeps' sai chia động từ: 'I' không thêm -s. Câu đúng nêu luật rồi đề nghị quay lại.",
+      "Phương án 'I am stepping outside… calling my supervisor' dùng cách xử lý dành cho khách ép hoặc vượt ranh giới, trong khi khách chỉ nhờ — khách đang ngủ sẽ thấy bị đối xử như người có lỗi. Phương án 'and I calling' cũng xử lý quá tay như vậy, lại thiếu 'am' của thì tiếp diễn (I am calling). Câu đúng nêu luật rồi đề nghị quay lại.",
     ),
   ],
 });
@@ -333,7 +333,7 @@ Giving generously inside your own tier is the cheapest guest satisfaction a hote
         options: [
           "Nhân viên buồng phòng, vì đó là việc trên tầng",
           "Quầy lễ tân, vì có thể tính thêm phí",
-          "Giám sát tầng, sau khi nhân viên trình lên",
+          "Giám sát tầng, sau khi nhân viên trình lên ngay trong ngày và hẹn giờ với khách",
         ],
         correct: 2,
         explanation:
@@ -342,7 +342,7 @@ Giving generously inside your own tier is the cheapest guest satisfaction a hote
       {
         q: "Vì sao không nói hạn mức của mình cho khách?",
         options: [
-          "Vì khách sẽ xin đúng bằng con số hạn mức vừa nghe",
+          "Vì khách sẽ xin đúng con số vừa nghe — nghe 'ba áo choàng' là xin đủ ba",
           "Vì hạn mức đổi theo từng mùa cao điểm trong năm",
           "Vì chỉ quản lý mới được biết hạn mức của nhân viên",
         ],
@@ -365,9 +365,9 @@ Giving generously inside your own tier is the cheapest guest satisfaction a hote
       0,
       "Could we have the bed made again this afternoon? We are taking a nap.",
       "I will put it forward to my supervisor today, madam, and come back to you before three.",
-      "I will put it forward to my supervisor, madam, and coming back before three.",
+      "Of course, madam — a second bed service is something I can approving myself.",
       "Of course, madam — a second bed service is something I can approve myself.",
-      "Phương án 'I can approve myself' tự nhận một quyền của giám sát. Phương án 'and coming back' sai: hai động từ sau 'will' nối bằng 'and' đều ở dạng nguyên mẫu (will put… and come). Câu đúng trình lên và hẹn giờ quay lại.",
+      "Phương án 'I can approve myself' tự nhận một quyền của giám sát. Phương án 'I can approving myself' cũng tự nhận quyền đó, lại sai: sau 'can' là động từ nguyên mẫu (can approve). Câu đúng trình lên và hẹn giờ quay lại.",
     ),
   ],
 });
@@ -679,7 +679,7 @@ One number you may read aloud is a price printed on a list the guest can also se
         q: "Khách đưa tiền để 'xoá' khoản phí thì làm gì?",
         options: [
           "Nhận tạm rồi mang xuống đưa cho Duty Manager xử lý sau",
-          "Từ chối một lần, gọi Duty Manager, báo giám sát",
+          "Từ chối một lần, gọi Duty Manager, và báo giám sát trước khi hết ca",
           "Cười cho qua chuyện, vì có thể khách chỉ đang nói đùa",
         ],
         correct: 1,
@@ -701,9 +701,9 @@ One number you may read aloud is a price printed on a list the guest can also se
       2,
       "Your colleague charged us for a towel we never took. Fix it, or I will speak to the manager.",
       "The front desk can take it off if it was our error, madam. Shall I ask them to call you?",
-      "The front desk can takes it off if it was our error, madam. Shall I ask them to call you?",
+      "I will take it off the bill for you myself, madam, as I can see it were a mistake on our side.",
       "I will take it off the bill for you myself, madam, as I can see it was a mistake on our side.",
-      "Phương án 'take it off the bill… myself' vừa tự sửa hoá đơn vừa kết luận lỗi khi chưa ai kiểm. Phương án 'can takes' sai: sau 'can' là động từ nguyên mẫu. Câu đúng nói ai sửa được và giữ việc trong tay mình.",
+      "Phương án 'take it off the bill… myself' vừa tự sửa hoá đơn vừa kết luận lỗi khi chưa ai kiểm. Phương án 'it were a mistake' cũng tự sửa hoá đơn như vậy, lại sai chia động từ: chủ ngữ 'it' đi với 'was'. Câu đúng nói ai sửa được và giữ việc trong tay mình.",
     ),
   ],
 });
