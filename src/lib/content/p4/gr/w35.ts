@@ -178,7 +178,7 @@ And what you trade must be yours: your time, your desk, your phone call to the g
           options: [
             "Một bữa tối miễn phí cho khách của bộ phận kia",
             "Một mức giảm giá nhỏ",
-            "Thời gian và công việc của chính bạn",
+            "Thời gian, quầy của bạn, hay cuộc gọi của chính bạn cho khách",
           ],
           correct: 2,
           explanation: `Bài đọc: "And what you trade must be yours: your time, your desk, your phone call to the guest."`,
@@ -187,7 +187,7 @@ And what you trade must be yours: your time, your desk, your phone call to the g
           q: "Hai đồng nghiệp đổi giờ trực lounge cho nhau. Cần làm gì?",
           options: [
             "Không cần báo ai nếu hai người đồng ý",
-            "Báo quản lý trước khi đổi",
+            "Báo quản lý trước khi đổi, không phải sau khi đã đổi xong",
             "Báo quản lý vào cuối tuần",
           ],
           correct: 1,
@@ -204,9 +204,9 @@ And what you trade must be yours: your time, your desk, your phone call to the g
             "What if we swap it with the next room on your list? I will look after that guest.",
             "answer",
           ],
-          ["What if we swapping it with the next room? I will look after that guest.", "form"],
+          ["Then just do it anyway. The guest is VIP, so he comes first.", "form"],
         ],
-        "Câu này ra lệnh cho đồng nghiệp — mệnh lệnh thì nhận về một lời từ chối. Câu sai ngữ pháp dùng 'What if we swapping'; sau 'what if we' là động từ nguyên mẫu: 'swap'. Đáp án đề xuất và đưa lại một việc của chính mình.",
+        "Câu này ra lệnh cho đồng nghiệp — mệnh lệnh thì nhận về một lời từ chối. Câu sai ngữ pháp cũng ra lệnh y như thế, lại thiếu mạo từ: phải là 'is a VIP', không phải 'is VIP'. Đáp án đề xuất và đưa lại một việc của chính mình.",
         "colleague",
       ),
       round(
@@ -214,9 +214,9 @@ And what you trade must be yours: your time, your desk, your phone call to the g
         [
           ["In exchange, I will ask the front office to give your guest a free night.", "register"],
           ["In exchange, I will take your next airport call.", "answer"],
-          ["In exchange, I will taking your next airport call.", "form"],
+          ["In exchange, I will ask the front office give your guest a free night.", "form"],
         ],
-        "Câu này đem một đêm miễn phí ra trao đổi — thứ đó chưa bao giờ là của bạn. Câu sai ngữ pháp dùng 'I will taking'; sau 'will' là động từ nguyên mẫu. Đáp án đổi bằng công việc của chính bạn.",
+        "Câu này đem một đêm miễn phí ra trao đổi — thứ đó chưa bao giờ là của bạn. Câu sai ngữ pháp cũng đem đêm miễn phí ra đổi y như thế, lại thiếu 'to': 'ask the front office TO give'. Đáp án đổi bằng công việc của chính bạn.",
         "colleague",
       ),
     ],
@@ -348,7 +348,11 @@ Some things stay outside the range whatever your manager says. The room the gues
         },
         {
           q: "Khách đòi đổi sang phòng khác trong lúc thương lượng. Ai quyết phòng nào?",
-          options: ["Front office", "Bạn, nếu nằm trong khung", "Loyalty office"],
+          options: [
+            "Front office — phòng khách chuyển sang là việc của họ",
+            "Bạn, nếu nằm trong khung",
+            "Loyalty office",
+          ],
           correct: 0,
           explanation: `Bài đọc: "The room the guest moves into is the front office's."`,
         },
@@ -372,9 +376,9 @@ Some things stay outside the range whatever your manager says. The room the gues
             "answer",
           ],
           ["Fine — I will see what he asks for and decide as we go.", "register"],
-          ["Not without the range. Money off a bill are the Duty Manager's to set.", "form"],
+          ["Fine — I will see what he ask for and decide as we go.", "form"],
         ],
-        "Câu này vào bàn tay không rồi tự quyết giữa chừng — khung nhớ trong đầu sẽ bị nới ra. Câu sai ngữ pháp dùng 'money … are'; 'money' không đếm được nên đi với 'is'. Đáp án xin khung trước khi ngồi xuống.",
+        "Câu này vào bàn tay không rồi tự quyết giữa chừng — khung nhớ trong đầu sẽ bị nới ra. Câu sai ngữ pháp cũng vào bàn tay không y như thế, lại thiếu -s: 'he' đi với 'asks'. Đáp án xin khung trước khi ngồi xuống.",
         "colleague",
       ),
     ],
@@ -497,7 +501,7 @@ Say one refusal at a time. Three refusals in one breath sound like a policy; one
           options: [
             "Đặt 'although' ở cuối câu thay vì đầu câu như tiếng Việt",
             "Dùng 'although' và 'but' trong cùng một câu",
-            "Quên dấu phẩy sau 'although'",
+            "Quên dấu phẩy sau mệnh đề 'although' ở đầu câu",
           ],
           correct: 1,
           explanation: `Bài đọc: "Vietnamese lets you say tuy and nhưng in one sentence; English does not."`,
@@ -657,12 +661,12 @@ The case stays open until the guest says it is right. Not when they sign. Not wh
         {
           q: "Khách xin thêm một thứ sau khi đã bắt tay. Xử lý ra sao?",
           options: [
-            "Nói nó thuộc về quản lý, và hẹn giờ quay lại",
+            "Nói phần đó quay về quản lý, và hẹn quay lại trong vòng một tiếng",
             "Đồng ý luôn cho nhanh, vì phần đó nhỏ và khách đang vui",
             "Nói đã chốt xong, không nhận thêm",
           ],
           correct: 0,
-          explanation: `Bài đọc: "This is the moment ranges get stretched. Do not stretch it to get home."`,
+          explanation: `Bài đọc: "This is the moment ranges get stretched. Do not stretch it to get home." Câu cần nói: "That goes back to my manager, and I will come back to you within the hour."`,
         },
         {
           q: "Hồ sơ đóng lại khi nào?",
@@ -680,11 +684,11 @@ The case stays open until the guest says it is right. Not when they sign. Not wh
       round(
         "Yes, that works for me.",
         [
-          ["Wonderful, sir. I will email you everything we discussed tonight.", "register"],
+          ["Wonderful, sir. I will email you everything we discussed later tonight.", "register"],
           ["Shall we agree on those two, sir? I will write them down now.", "answer"],
-          ["Shall we agree on those two, sir? I will writing them down now.", "form"],
+          ["Wonderful, sir. I will email you everything we discuss later tonight.", "form"],
         ],
-        "Câu này để thoả thuận sống bằng miệng tới tối — khách đã bị lỡ hẹn một lần thì không nhận lời hứa miệng lần hai. Câu sai ngữ pháp dùng 'I will writing'; phải là 'I will write'. Đáp án chốt rõ hai điều và viết ngay.",
+        "Câu này để thoả thuận sống bằng miệng tới tối — khách đã bị lỡ hẹn một lần thì không nhận lời hứa miệng lần hai. Câu sai ngữ pháp cũng hẹn gửi email y như thế, lại sai thì: việc vừa bàn xong phải là 'we discussed', không phải 'we discuss'. Đáp án chốt rõ hai điều và viết ngay.",
       ),
       round(
         "The guest has gone up happy. Shall I write 'agreed' for the spa as well?",

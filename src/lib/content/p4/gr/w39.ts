@@ -197,18 +197,18 @@ Never serve the loudest first. Do it once in a full lobby, and every guest learn
           q: "Sau người gặp nguy hiểm, thứ tự tiếp theo là gì?",
           options: [
             "Điện thoại, rồi người đứng trước mặt, rồi tin nhắn",
-            "Người đứng trước mặt, rồi điện thoại, rồi tin nhắn",
-            "Người to tiếng nhất, để cả sảnh yên lại cho mọi người cùng được phục vụ",
+            "Người đứng trước mặt, rồi điện thoại, rồi tin nhắn — người gọi thì chờ máy được",
+            "Người to tiếng nhất, để cả sảnh yên lại",
           ],
           correct: 1,
-          explanation: `Bài đọc: "After danger comes the person in front of you. Then the telephone, and after it the messages."`,
+          explanation: `Bài đọc: "After danger comes the person in front of you. Then the telephone, and after it the messages. A caller can be asked to hold, but a guest at the desk cannot be left standing unseen."`,
         },
         {
           q: "Bàn ăn bảy giờ tối nay và tour ngày mai — việc nào làm trước?",
           options: [
             "Tour, vì khách nhắc tới nó trước tiên",
             "Việc nào dễ hơn thì làm trước cho nhanh",
-            "Bàn ăn, vì mốc giờ sớm hơn",
+            "Bàn ăn, vì mốc giờ sớm hơn — dù khách nhắc tới tour trước",
           ],
           correct: 2,
           explanation: `Bài đọc: "the soonest hour goes first. A table at seven tonight comes before a tour tomorrow, even when the tour was mentioned first."`,
@@ -224,9 +224,9 @@ Never serve the loudest first. Do it once in a full lobby, and every guest learn
             "You have, madam, and I am sorry for the wait. One guest before you, then you.",
             "answer",
           ],
-          ["You has, madam, and I am sorry. One guest before you, then you.", "form"],
+          ["You have, madam, so let me takes yours first, before anybody else.", "form"],
         ],
-        "Câu này đổi thứ tự vì khách sốt ruột — làm một lần là cả hàng học cách đòi. Câu sai ngữ pháp dùng 'You has'; với 'you' là 'have'. Đáp án ghi nhận khách, xin lỗi, rồi nói rõ khách là người kế tiếp.",
+        "Câu này đổi thứ tự vì khách sốt ruột — làm một lần là cả hàng học cách đòi. Câu sai ngữ pháp cũng cho khách chen lên y như thế, lại dùng 'let me takes'; sau 'let me' là động từ nguyên mẫu: 'let me take'. Đáp án ghi nhận khách, xin lỗi, rồi nói rõ khách là người kế tiếp.",
       ),
       round(
         "There is a smell of burning on the fourth floor, and two guests are waiting here.",
@@ -367,7 +367,7 @@ One line on the file is never a preference: an allergy. It goes to the chef on a
         {
           q: "Khách nói bếp đã biết khách dị ứng hạt. Bạn làm gì?",
           options: [
-            "Vẫn viết phiếu dị ứng cho bếp trưởng",
+            "Vẫn viết phiếu dị ứng cho bếp trưởng — lần nào cũng viết, dù bếp đã biết",
             "Tin lời khách, vì hồ sơ đã có ghi chú về dị ứng",
             "Hỏi lại khách xem có chắc là bếp đã biết không",
           ],
@@ -517,11 +517,11 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
           q: "Khách nhắc một lời hứa mà bạn không tìm thấy. Bạn nói gì?",
           options: [
             "'Nobody would have said that', vì hồ sơ không ghi",
-            "'That is a promise I cannot find yet'",
-            "'It must have been a misunderstanding', cho khách đỡ mất mặt trước người đi cùng",
+            "'That is a promise I cannot find yet', rồi hỏi ai nói và khi nào",
+            "'It must have been a misunderstanding', cho êm chuyện",
           ],
           correct: 1,
-          explanation: `Bài đọc: "What you say is what is true: 'That is a promise I cannot find yet.'" Hai câu kia đều là phán quyết.`,
+          explanation: `Bài đọc: "What you say is what is true: 'That is a promise I cannot find yet.' Then ask for the facts you are missing: who said it and when." Hai câu kia đều là phán quyết.`,
         },
         {
           q: "Vì sao nên hỏi 'ghi trên giấy hay nói miệng'?",
@@ -550,13 +550,16 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
         "Your staff told us the spa was included. Are you calling us liars?",
         [
           [
-            "Of course not, madam. I am sure my colleague simply made an honest mistake.",
+            "Of course not, madam. I am quite sure my colleague simply made an honest mistake.",
             "register",
           ],
           ["Not at all, madam. I cannot find it yet — was it written or spoken?", "answer"],
-          ["Not at all, madam. I cannot found it yet — was it written or spoken?", "form"],
+          [
+            "Of course not, madam. I am quite sure my colleague simply make an honest mistake.",
+            "form",
+          ],
         ],
-        "Câu này đổ lỗi cho đồng nghiệp trước mặt khách — một phán quyết khi chưa ai kiểm, và một khiếu nại thành hai. Câu sai ngữ pháp dùng 'cannot found'; sau 'cannot' là động từ nguyên mẫu. Đáp án nói thật là chưa tìm thấy, rồi hỏi câu chỉ đường.",
+        "Câu này đổ lỗi cho đồng nghiệp trước mặt khách — một phán quyết khi chưa ai kiểm, và một khiếu nại thành hai. Câu sai ngữ pháp cũng đổ lỗi y như thế, lại sai thì: việc đã xảy ra phải là 'made', không phải 'make'. Đáp án nói thật là chưa tìm thấy, rồi hỏi câu chỉ đường.",
       ),
       round(
         "Just give her the upgrade. It is easier than arguing with her.",
@@ -711,9 +714,9 @@ Quarter to is one house's line. Ask your manager where yours falls.`,
         {
           q: "Vì sao dòng 'khách đã thôi hỏi' lại quan trọng nhất khi bàn giao?",
           options: [
-            "Vì thôi hỏi nghĩa là khách đã hài lòng với cách giải quyết của quầy",
+            "Vì thôi hỏi nghĩa là khách đã hài lòng",
             "Vì ca sau không cần gọi lại cho khách đó nữa",
-            "Vì thôi hỏi không phải là hết bận tâm",
+            "Vì thôi hỏi không phải là hết bận tâm — và chính khách đó sẽ viết đánh giá",
           ],
           correct: 2,
           explanation: `Bài đọc: "She has not stopped minding, and she is the one who writes the review."`,
@@ -735,13 +738,13 @@ Quarter to is one house's line. Ask your manager where yours falls.`,
         "Before you go — will somebody ring me about the cake tonight?",
         [
           ["Yes, madam — the evening shift will see it in the book sooner or later.", "register"],
-          ["Yes, madam. I am hand it over by name, with what you expect next.", "form"],
+          ["Yes, madam — the evening shift will sees it in the book sooner or later.", "form"],
           [
             "Yes, madam. I am handing it over by name, with what you expect next and by when.",
             "answer",
           ],
         ],
-        "Câu này giao việc cho một quyển sổ — 'sớm hay muộn' không phải một lời hứa. Câu sai ngữ pháp dùng 'I am hand'; phải là 'I am handing'. Đáp án bàn giao đích danh, kèm điều khách đang chờ và mốc giờ.",
+        "Câu này giao việc cho một quyển sổ — 'sớm hay muộn' không phải một lời hứa. Câu sai ngữ pháp cũng phó mặc cho quyển sổ y như thế, lại dùng 'will sees'; sau 'will' là động từ nguyên mẫu: 'will see'. Đáp án bàn giao đích danh, kèm điều khách đang chờ và mốc giờ.",
       ),
     ],
   }),

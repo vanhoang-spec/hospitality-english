@@ -185,7 +185,7 @@ An occasion goes on the guest file only if the guest says yes. A guest who is su
         {
           q: "Khách muốn giữ bí mật bữa tối bất ngờ cho vợ. Bạn liên lạc với ai?",
           options: [
-            "Chỉ với vị khách đã lên kế hoạch",
+            "Chỉ với vị khách đã lên kế hoạch, vì bất ngờ thuộc về chính người đó",
             "Với cả hai vợ chồng, để không ai bị bất ngờ quá",
             "Với bất kỳ ai nghe máy ở phòng",
           ],
@@ -197,7 +197,7 @@ An occasion goes on the guest file only if the guest says yes. A guest who is su
           options: [
             "Báo giá bánh cho khách",
             "Ghi ngay dịp kỷ niệm vào hồ sơ khách để ca sau biết",
-            "Hỏi về dị ứng của mọi người ở bàn",
+            "Hỏi về dị ứng của mọi người ở bàn, rồi viết phiếu dị ứng cho bếp bánh",
           ],
           correct: 2,
           explanation: `Bài đọc: "Before anything is ordered from the kitchen, ask about allergies for everyone at the table"`,
@@ -209,7 +209,7 @@ An occasion goes on the guest file only if the guest says yes. A guest who is su
         "We are here for our honeymoon, actually!",
         [
           [
-            "I thought so, madam — I noticed the bouquet. Shall I send up our honeymoon cake?",
+            "I thought so, madam — I noticed the bouquet at check-in. Shall I send up our honeymoon cake?",
             "register",
           ],
           [
@@ -217,11 +217,11 @@ An occasion goes on the guest file only if the guest says yes. A guest who is su
             "answer",
           ],
           [
-            "Congratulations to you both, madam! Is there anything we can arranging for you?",
+            "I thought so, madam — I notice the bouquet at check-in. Shall I send up our honeymoon cake?",
             "form",
           ],
         ],
-        "Câu này thú nhận đã đoán từ bó hoa, rồi còn tự gửi bánh lên — vừa đoán về con người vừa chốt hộ khách. Câu sai ngữ pháp dùng 'can arranging'; sau 'can' là động từ nguyên mẫu: 'can arrange'. Đáp án chúc mừng rồi hỏi khách muốn gì.",
+        "Câu này thú nhận đã đoán từ bó hoa, rồi còn tự gửi bánh lên — vừa đoán về con người vừa chốt hộ khách. Câu sai ngữ pháp cũng đoán rồi chốt hộ y như thế, lại sai thì: việc đã xảy ra lúc nhận phòng phải là 'I noticed', không phải 'I notice'. Đáp án chúc mừng rồi hỏi khách muốn gì.",
       ),
       round(
         "A couple just checked in with a big bouquet. Shall I write 'honeymoon' on their file?",
@@ -350,12 +350,12 @@ Never promise the guest a time that belongs to another team. Promise your own: "
         {
           q: "Buồng phòng vào phòng trang trí khi nào?",
           options: [
-            "Một lần, sau giờ khách cho biết sẽ ra ngoài",
+            "Một lần, sau giờ khách cho biết sẽ ra ngoài — rồi bạn kiểm phòng trước khi khách về",
             "Khi khách đang ngủ trong phòng và chưa treo biển DND",
             "Bất cứ lúc nào tổ đã có chìa khoá",
           ],
           correct: 0,
-          explanation: `Bài đọc: "Nobody enters while the guests are inside, and nobody guesses when they will leave."`,
+          explanation: `Bài đọc: "Nobody enters while the guests are inside, and nobody guesses when they will leave." Rồi: "Housekeeping goes in once, after that time, and you check the room before the guests return."`,
         },
         {
           q: "Bạn được hứa với khách mốc giờ nào?",
@@ -383,9 +383,9 @@ Never promise the guest a time that belongs to another team. Promise your own: "
       round(
         "What time will the cake be ready? I want to tell my wife's sister.",
         [
-          ["I will call you as soon as the pastry chef confirms, madam.", "answer"],
-          ["It will be ready at seven exactly, madam — you can tell her that.", "register"],
-          ["I will call you as soon as the pastry chef confirm, madam.", "form"],
+          ["I will call you as soon as the pastry chef confirms, sir.", "answer"],
+          ["It will be ready at seven exactly, sir — you can tell her that.", "register"],
+          ["I will call you as soon as the pastry chef confirm, sir.", "form"],
         ],
         "Câu này hứa giờ thay bếp — giờ đó không phải của bạn. Câu sai ngữ pháp dùng 'the pastry chef confirm'; chủ ngữ số ít nên phải là 'confirms'. Đáp án hứa giờ của chính bạn: gọi lại khi bếp xác nhận.",
       ),
@@ -493,7 +493,7 @@ If the guest asks for something more, like champagne on the house, that is a gif
         {
           q: "Vì sao nói 'On behalf of everyone at the hotel' thay vì chỉ 'Happy anniversary'?",
           options: [
-            "Vì nó cho khách thấy cả khách sạn đang chúc mừng",
+            "Vì nó cho khách thấy cả khách sạn đang chúc mừng, không chỉ riêng bạn",
             "Vì câu ngắn nghe thiếu tôn trọng khách",
             "Vì quy định của khách sạn bắt buộc mọi nhân viên phải nói",
           ],
@@ -502,7 +502,11 @@ If the guest asks for something more, like champagne on the house, that is a gif
         },
         {
           q: "Lỗi nào trên thiệp chúc mừng khách nhớ lâu nhất?",
-          options: ["Thiệp quá ngắn", "Thiệp in trên giấy không đúng màu", "Tên khách bị viết sai"],
+          options: [
+            "Thiệp quá ngắn, chỉ có một dòng chúc",
+            "Thiệp in trên giấy không đúng màu",
+            "Tên khách bị viết sai",
+          ],
           correct: 2,
           explanation: `Bài đọc: "A misspelt name on a card is the mistake guests remember longest."`,
         },
@@ -535,10 +539,10 @@ If the guest asks for something more, like champagne on the house, that is a gif
         "Shall I write 'Happy Birthday Mr Tom' on the cake? That is what his wife calls him.",
         [
           ["Yes — if his wife calls him that, he will love it.", "register"],
-          ["Use the name exactly as the booking spell it, and check it twice.", "form"],
+          ["Yes — if his wife call him that, he will love it.", "form"],
           ["Use the name exactly as the booking spells it, and check it twice.", "answer"],
         ],
-        "Câu này lấy tên gọi thân mật để in lên bánh — tên sai hay quá thân là lỗi khách nhớ lâu nhất. Câu sai ngữ pháp dùng 'the booking spell'; chủ ngữ số ít nên phải là 'spells'. Đáp án in đúng tên trên booking và kiểm hai lần.",
+        "Câu này lấy tên gọi thân mật để in lên bánh — tên sai hay quá thân là lỗi khách nhớ lâu nhất. Câu sai ngữ pháp cũng in tên gọi thân mật y như thế, lại thiếu -s: 'his wife' số ít nên phải là 'calls'. Đáp án in đúng tên trên booking và kiểm hai lần.",
         "colleague",
       ),
     ],
@@ -669,7 +673,11 @@ Anything on top of the replacement is not yours. A bottle on the house is your m
         },
         {
           q: "Khách đòi miễn tiền cả bữa tối. Ai quyết?",
-          options: ["Bạn, vì lỗi thuộc về bên bạn", "Bếp trưởng", "Duty Manager"],
+          options: [
+            "Bạn, vì lỗi thuộc về bên bạn",
+            "Bếp trưởng",
+            "Duty Manager — miễn hay bớt tiền trên hoá đơn là việc của họ",
+          ],
           correct: 2,
           explanation: `Bài đọc: "money off the bill is the Duty Manager's to decide."`,
         },
@@ -677,13 +685,19 @@ Anything on top of the replacement is not yours. A bottle on the house is your m
     ),
     game: [
       round(
-        "This is not the cake I ordered. I asked for chocolate.",
+        "Your card says 'Mrs Hoa'. My wife's name is Hoai!",
         [
-          ["It is still a lovely cake, sir. Shall we just keep this one and enjoy it?", "register"],
-          ["I am so sorry about the mix-up, sir. I am asking for a replacement now.", "answer"],
-          ["I am so sorry about the mix-up, sir. I am ask for a replacement now.", "form"],
+          [
+            "It is very close, sir. Shall we just leave it — your wife may not even notice it?",
+            "register",
+          ],
+          ["I am so sorry about the mix-up, sir. I will reprint the card myself now.", "answer"],
+          [
+            "It is very close, sir. Shall we just leave it — your wife may not even notices it?",
+            "form",
+          ],
         ],
-        "Câu này bắt khách nhận thứ sai — thay đúng thứ bị hỏng là việc của bạn, không phải một ân huệ. Câu sai ngữ pháp dùng 'I am ask'; phải là 'I am asking'. Đáp án xin lỗi về sự nhầm lẫn và thay ngay.",
+        "Câu này bắt khách nhận một tấm thiệp sai tên — tên viết sai là lỗi khách nhớ lâu nhất, và in lại thiệp là việc của bạn, không phải một ân huệ. Câu sai ngữ pháp cũng bảo khách để nguyên y như thế, lại dùng 'may not even notices'; sau 'may' là động từ nguyên mẫu: 'notice'. Đáp án xin lỗi về sự nhầm lẫn và tự in lại ngay.",
       ),
       round(
         "The kitchen has no more chocolate cake. Shall I send vanilla and tell the guest after?",

@@ -188,7 +188,7 @@ One more thing: a feeling must be true. If you call a room fascinating, be ready
           options: [
             "Vì quản lý sẽ kiểm tra lại từng câu bạn nói với khách",
             "Vì khách nào cũng đã đọc sách hướng dẫn du lịch",
-            "Vì năm sai lan đi, thành dữ kiện không ai tra được",
+            "Vì khách kể lại năm sai trong bữa tối, rồi nó thành dữ kiện không ai tra ra được",
           ],
           correct: 2,
           explanation: `Bài đọc: "A wrong date travels: the guest repeats it at dinner, and soon the house has a fact that nobody can find."`,
@@ -207,13 +207,16 @@ One more thing: a feeling must be true. If you call a room fascinating, be ready
     ),
     game: [
       round(
-        "Is the floor in the lobby original?",
+        "Were these tiles in the lobby here when the hotel first opened?",
         [
-          ["I think so, sir — maybe it is older than the house, more or less.", "register"],
-          ["Yes, sir, it is original, and we are very proud of it.", "answer"],
-          ["Yes, sir, it is original, and we are very proud for it.", "form"],
+          ["I think so, sir — maybe they are older than the house, more or less.", "register"],
+          [
+            "They were, sir — the tiles are original, and the whole team is proud of them.",
+            "answer",
+          ],
+          ["I think so, sir — maybe they is older than the house, more or less.", "form"],
         ],
-        "Câu này đoán bừa tuổi của sàn nhà — một câu đoán sẽ được khách kể lại như sự thật. Câu sai ngữ pháp dùng 'proud for'; phải là 'proud of'. Đáp án nói thẳng dữ kiện chắc chắn rồi thêm một vế cảm xúc.",
+        "Câu này đoán bừa tuổi của gạch lát — một câu đoán sẽ được khách kể lại như sự thật. Câu sai ngữ pháp cũng đoán bừa y như thế, lại thêm lỗi 'they is'; chủ ngữ số nhiều phải đi với 'are'. Đáp án nói thẳng dữ kiện chắc chắn rồi thêm một vế cảm xúc.",
       ),
       round(
         "A guest asked who painted the picture by the lift. I have no idea. What do I tell her?",
@@ -331,7 +334,7 @@ A guest who is reading, eating or on the telephone is not waiting for a story. S
           q: "Vì sao nên nói 'do stop me' trước khi kể?",
           options: [
             "Để mình có cớ dừng lại khi bận việc khác",
-            "Để khách không bao giờ phải ngắt lời bạn",
+            "Để khách có sẵn lối dừng từ trước, không bao giờ phải ngắt lời bạn",
             "Để khách biết trước rằng câu chuyện sẽ rất dài",
           ],
           correct: 1,
@@ -355,9 +358,9 @@ A guest who is reading, eating or on the telephone is not waiting for a story. S
         [
           ["Of course, madam. Let me start again from the very beginning, then.", "register"],
           ["There is more, madam — do stop me whenever you like.", "answer"],
-          ["There is more, madam — do stop me whenever you liking.", "form"],
+          ["Of course, madam. Let me starting again from the very beginning, then.", "form"],
         ],
-        "Câu này kể lại từ đầu — kể tràn, và khách không có nút dừng. Câu sai ngữ pháp dùng 'you liking'; phải là 'whenever you like'. Đáp án kể tiếp nhưng trao cho khách nút dừng.",
+        "Câu này kể lại từ đầu — kể tràn, và khách không có nút dừng. Câu sai ngữ pháp cũng kể lại từ đầu như thế, lại dùng 'Let me starting'; sau 'let me' là động từ nguyên mẫu: 'let me start'. Đáp án kể tiếp nhưng trao cho khách nút dừng.",
       ),
       round(
         "The gentleman in the corner waved me away. Did I do something wrong?",
@@ -482,7 +485,7 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
         {
           q: "Khách muốn xem phòng khiêu vũ. Ai giữ chìa khoá?",
           options: [
-            "Bộ phận tiệc (the banquet team)",
+            "Bộ phận tiệc (the banquet team) — phòng khiêu vũ không phải của bạn mở",
             "Duty Manager, vì mọi khu vực chung là của ông ấy",
             "Guest Relations, vì phòng đang trống",
           ],
@@ -518,13 +521,13 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
         "We are both chefs. Could we have a quick look in your kitchen?",
         [
           ["Of course, sir. Follow me — the chef will not mind a short visit.", "register"],
-          ["I am afraid it is not open for guests, sir, but I can ask the chef come out.", "form"],
+          ["Of course, sir. Follow me — the chef will not minds a short visit.", "form"],
           [
             "I am afraid it is not open to guests, sir, but I can ask the chef to come out.",
             "answer",
           ],
         ],
-        "Câu này tự đưa khách vào bếp — khu vực không mở cho khách vì an toàn và vệ sinh. Câu sai ngữ pháp có hai lỗi: 'open for guests' phải là 'open to guests', và 'ask the chef come out' thiếu 'to'. Đáp án từ chối rồi mở một cánh cửa khác.",
+        "Câu này tự đưa khách vào bếp — khu vực không mở cho khách vì an toàn và vệ sinh. Câu sai ngữ pháp cũng dẫn khách vào bếp y như thế, lại dùng 'will not minds'; sau 'will not' là động từ nguyên mẫu: 'will not mind'. Đáp án từ chối rồi mở một cánh cửa khác.",
       ),
     ],
   }),
@@ -675,7 +678,7 @@ And when you do not know an answer, say "I would rather find out than guess", an
           options: [
             "'I am afraid I cannot connect you'",
             "'There is nobody in that room at the moment'",
-            "'She does not want to see you'",
+            "'She does not want to see anybody right now'",
           ],
           correct: 0,
           explanation: `Bài đọc: "If nobody answers, or the answer is no, say the same sentence" — câu đó đúng trong mọi trường hợp và không xác nhận ai đang ở đây.`,
@@ -684,11 +687,11 @@ And when you do not know an answer, say "I would rather find out than guess", an
           q: "Một người nói mình từ cơ quan chức năng, đòi xem danh sách khách. Làm gì?",
           options: [
             "Rời quầy để đi tìm Duty Manager cho nhanh, nhờ họ đứng đợi",
-            "Gọi Duty Manager từ quầy, ngay trước mặt họ",
+            "Gọi Duty Manager từ quầy, ngay trước mặt họ, rồi khoá màn hình và úp giấy xuống",
             "Cho xem danh sách, vì họ mặc đồng phục",
           ],
           correct: 1,
-          explanation: `Bài đọc: "You call your Duty Manager from the desk, in front of them." Và khoá màn hình, úp mọi tờ giấy xuống.`,
+          explanation: `Bài đọc: "You call your Duty Manager from the desk, in front of them. Lock the screen, turn every paper face down, and stay at the desk." Rời quầy là để màn hình và giấy tờ không ai trông.`,
         },
       ],
     ),
@@ -709,10 +712,13 @@ And when you do not know an answer, say "I would rather find out than guess", an
         "Can I just say the tower is about a hundred years old? It roughly is.",
         [
           ["No. Say what the history folder says, and check the rest.", "answer"],
-          ["Yes, roughly is fine — nobody ever checks a welcome talk anyway.", "register"],
-          ["No. Say what the history folder says, and checking the rest.", "form"],
+          [
+            "Yes, roughly is fine — nobody ever checks the dates in a welcome talk anyway.",
+            "register",
+          ],
+          ["Yes, roughly is fine — nobody ever check the dates in a welcome talk anyway.", "form"],
         ],
-        "Câu này cho phép nói con số phỏng chừng — con số đoán sẽ lan đi như sự thật. Câu sai ngữ pháp dùng 'and checking the rest'; hai mệnh lệnh song song phải cùng dạng: 'say… and check…'. Đáp án: nói đúng điều hồ sơ ghi, phần còn lại thì đi tra.",
+        "Câu này cho phép nói con số phỏng chừng — con số đoán sẽ lan đi như sự thật. Câu sai ngữ pháp cũng cho đoán y như thế, lại thiếu -s: 'nobody' đi với động từ số ít, nên phải là 'nobody ever checks'. Đáp án: nói đúng điều hồ sơ ghi, phần còn lại thì đi tra.",
         "colleague",
       ),
     ],

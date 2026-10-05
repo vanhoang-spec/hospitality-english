@@ -194,7 +194,7 @@ A guest who asks whether her husband is still upstairs does not get a guess eith
           q: "Ai là người KHÔNG có trong danh sách phòng?",
           options: [
             "Khách vãng lai trong lounge và khách dự tiệc cưới",
-            "Khách lưu trú đang ngủ trên phòng của mình",
+            "Khách lưu trú đang ngủ say trên phòng của mình lúc báo động",
             "Đoàn khách lưu trú đang đi thuyền ngoài vịnh cả buổi sáng",
           ],
           correct: 0,
@@ -205,7 +205,7 @@ A guest who asks whether her husband is still upstairs does not get a guess eith
           options: [
             "Trấn an rằng ông ấy chắc đã xuống bằng lối khác",
             "Tự lên tận phòng xem giúp khách rồi quay xuống báo lại",
-            "Xin tên ông ấy và số phòng, đưa cho Duty Manager",
+            "Xin tên ông ấy và số phòng của bà, đưa cho Duty Manager — người giữ danh sách đầy đủ",
           ],
           correct: 2,
           explanation: `Bài đọc: "does not get a guess either way. Take his name and her room number to the Duty Manager."`,
@@ -221,9 +221,9 @@ A guest who asks whether her husband is still upstairs does not get a guess eith
             "register",
           ],
           ["Nine. I counted them onto the boat, and I wrote it down.", "answer"],
-          ["Nine. I counted them onto the boat, and I writed it down.", "form"],
+          ["Around nine or ten, I would say — it look like a big group this morning.", "form"],
         ],
-        "Câu này đoán 'khoảng chín, mười' — đội ứng phó sẽ đi tìm một con số không ai đếm. Câu sai ngữ pháp dùng 'writed'; quá khứ của 'write' là 'wrote'. Đáp án nói con số đã đếm và nguồn của nó.",
+        "Câu này đoán 'khoảng chín, mười' — đội ứng phó sẽ đi tìm một con số không ai đếm. Câu sai ngữ pháp cũng đoán y như thế, lại sai thì: chuyện sáng nay phải là 'it looked', không phải 'it look'. Đáp án nói con số đã đếm và nguồn của nó.",
         "manager",
       ),
       round(
@@ -347,7 +347,7 @@ Rumours arrive as questions: "Somebody said the kitchen is on fire." Do not argu
         {
           q: "Mốc giờ bạn đưa ra là lời hứa về điều gì?",
           options: [
-            "Rằng chính bạn sẽ quay lại nói tiếp",
+            "Rằng chính bạn sẽ quay lại nói tiếp, dù lúc đó đã có tin mới hay chưa",
             "Rằng lúc đó chắc chắn sẽ có tin mới từ Duty Manager",
             "Rằng sự cố sẽ xong trước lúc đó, theo lời bảo vệ",
           ],
@@ -374,19 +374,19 @@ Rumours arrive as questions: "Somebody said the kitchen is on fire." Do not argu
             "It should not be long, sir — these things are usually over in a few minutes.",
             "register",
           ],
-          ["I do not know that yet, sir. I will speak again on ten past.", "form"],
+          ["I do not know that yet, sir. I will be speak again at ten past.", "form"],
           ["I do not know that yet, sir. I will speak again at ten past.", "answer"],
         ],
-        "Câu này đoán thời gian — nếu sai, cả sảnh thôi tin mọi câu sau của bạn. Câu sai ngữ pháp dùng 'on ten past'; giờ đồng hồ đi với 'at'. Đáp án nói thật là chưa biết và đưa một mốc giờ của chính bạn.",
+        "Câu này đoán thời gian — nếu sai, cả sảnh thôi tin mọi câu sau của bạn. Câu sai ngữ pháp dùng 'will be speak'; sau 'will' chỉ cần động từ nguyên mẫu: 'will speak'. Đáp án nói thật là chưa biết và đưa một mốc giờ của chính bạn.",
       ),
       round(
         "Tell them it is a false alarm, so the lobby clears faster.",
         [
           ["Not until the Duty Manager says so. They get the garden and a time from me.", "answer"],
-          ["Good idea — they will move much faster once they hear it is nothing.", "register"],
-          ["Not until the Duty Manager say so. They get the garden and a time from me.", "form"],
+          ["Good idea — they will move faster once they hear it is nothing.", "register"],
+          ["Good idea — they will move faster once they hears it is nothing.", "form"],
         ],
-        "Câu này nói một điều chưa ai xác nhận — nếu không phải báo giả, khách sạn sẽ bị hỏi ai đã nói câu đó. Câu sai ngữ pháp dùng 'the Duty Manager say'; chủ ngữ số ít thì động từ thêm -s: 'says'. Đáp án chờ Duty Manager, và cho khách một chỗ cùng một mốc giờ.",
+        "Câu này nói một điều chưa ai xác nhận — nếu không phải báo giả, khách sạn sẽ bị hỏi ai đã nói câu đó. Câu sai ngữ pháp cũng đồng ý nói 'báo giả' y như thế, lại dùng 'they hears'; 'they' đi với 'hear'. Đáp án chờ Duty Manager, và cho khách một chỗ cùng một mốc giờ.",
         "colleague",
       ),
     ],
@@ -517,12 +517,12 @@ And nobody touches the fire panel except security and the fire team.`,
         {
           q: "Khách nói mẹ mình không tự đi cầu thang được. Bạn làm gì?",
           options: [
-            "Bảo khách đưa mẹ vào thang máy, vì thang máy nhanh hơn cầu thang",
-            "Lấy số phòng, chuyển cho đội chữa cháy",
+            "Bảo khách đưa mẹ đi thang máy cho nhanh hơn cầu thang",
+            "Lấy số phòng, chuyển cho đội chữa cháy — không hứa là đã có người lên",
             "Tự lên phòng đưa bà xuống, nhờ đồng nghiệp trông quầy",
           ],
           correct: 1,
-          explanation: `Bài đọc: "A guest who cannot manage the stairs: take the room number to the fire team. Never send them to a lift."`,
+          explanation: `Bài đọc: "A guest who cannot manage the stairs: take the room number to the fire team. Never send them to a lift, and never promise that somebody is on the way."`,
         },
         {
           q: "Tủ báo cháy kêu liên tục. Ai được chạm vào nó?",
@@ -540,11 +540,11 @@ And nobody touches the fire panel except security and the fire team.`,
       round(
         "I will just take the lift up for my laptop. Two minutes!",
         [
-          ["Of course, madam, but please be quick — the lifts may stop soon.", "register"],
+          ["Of course, madam, but please be quick — the lifts may stop working soon.", "register"],
           ["Please do not go back up, madam. Leave it and come with me.", "answer"],
-          ["Please do not go back up, madam. Leave it and coming with me.", "form"],
+          ["Of course, madam, but please be quick — the lifts may stops working soon.", "form"],
         ],
-        "Câu này cho khách quay lên, lại bằng thang máy — sai cả hai luật sơ tán. Câu sai ngữ pháp dùng 'and coming'; hai mệnh lệnh nối bằng 'and' phải cùng dạng: 'leave… and come'. Đáp án cấm rồi đưa ngay việc thay thế.",
+        "Câu này cho khách quay lên, lại bằng thang máy — sai cả hai luật sơ tán. Câu sai ngữ pháp cũng cho khách quay lên y như thế, lại dùng 'may stops'; sau 'may' là động từ nguyên mẫu: 'may stop'. Đáp án cấm rồi đưa ngay việc thay thế.",
       ),
       round(
         "The panel is still beeping. Shall I switch it off so we can hear?",
@@ -669,9 +669,9 @@ An hour later, somebody may arrive with a phone or a microphone. Say "That is no
         {
           q: "Cuộc sơ tán được ghi vào đâu?",
           options: [
-            "Complaint log, vì có khách phàn nàn phải đứng chờ lâu ngoài vườn",
+            "Complaint log, vì có khách phàn nàn phải chờ",
             "Cả hai quyển, để ca sau mở quyển nào cũng thấy",
-            "Incident report, viết ngay trong ca của bạn",
+            "Incident report — đây là việc đã xảy ra, viết ngay trong ca của bạn",
           ],
           correct: 2,
           explanation: `Bài đọc: "An evacuation is a thing that happened, so it goes on an incident report, not in the complaint log. Write what happened and when, in your own shift."`,
@@ -692,14 +692,14 @@ An hour later, somebody may arrive with a phone or a microphone. Say "That is no
       round(
         "The bell has stopped and people are drifting back in. Shall we let them?",
         [
-          ["Not yet. The bell is not the all-clear, and the fire officer has not give it.", "form"],
+          ["Yes — the bell has stop, so the building must be clear by now.", "form"],
           ["Yes — the bell has stopped, so the building must be clear by now.", "register"],
           [
             "Not yet. The bell is not the all-clear, and the fire officer has not given it.",
             "answer",
           ],
         ],
-        "Câu này coi chuông tắt là lệnh vào lại — lệnh đó chỉ cán bộ chữa cháy mới đưa ra. Câu sai ngữ pháp dùng 'has not give'; sau 'has' là quá khứ phân từ: 'has not given'. Đáp án giữ khách lại và nói ai cho phép vào.",
+        "Câu này coi chuông tắt là lệnh vào lại — lệnh đó chỉ cán bộ chữa cháy mới đưa ra. Câu sai ngữ pháp cũng cho khách vào lại y như thế, lại dùng 'has stop'; sau 'has' là quá khứ phân từ: 'has stopped'. Đáp án giữ khách lại và nói ai cho phép vào.",
         "colleague",
       ),
       round(
@@ -707,9 +707,9 @@ An hour later, somebody may arrive with a phone or a microphone. Say "That is no
         [
           ["Write what she did: she would not stand up until you asked twice.", "answer"],
           ["Yes — the next shift should know she is a difficult guest.", "register"],
-          ["Write what she did: she would not stood up until you asked twice.", "form"],
+          ["Write what she did: she would not standing up until you asked twice.", "form"],
         ],
-        "Câu này giữ một nhận xét về con người trong biên bản — người đọc sau sẽ mang theo thái độ đó. Câu sai ngữ pháp dùng 'would not stood'; sau 'would not' là động từ nguyên mẫu: 'stand'. Đáp án ghi việc đã xảy ra.",
+        "Câu này giữ một nhận xét về con người trong biên bản — người đọc sau sẽ mang theo thái độ đó. Câu sai ngữ pháp dùng 'would not standing'; sau 'would not' là động từ nguyên mẫu: 'stand'. Đáp án ghi việc đã xảy ra.",
         "colleague",
       ),
     ],

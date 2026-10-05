@@ -218,13 +218,16 @@ Read from the notice the Duty Manager gives you. Do not add to it, and do not gu
         "Is it safe to stay here tonight? Just tell me honestly.",
         [
           [
-            "Absolutely, madam — the hotel is built for storms like this one, so please relax.",
+            "Absolutely, madam — the hotel is built for storms like this one, so please just relax.",
             "register",
           ],
           ["I cannot promise that, madam. Please stay indoors, away from the windows.", "answer"],
-          ["I cannot promise that, madam. Please stay indoor, away from the windows.", "form"],
+          [
+            "Absolutely, madam — the hotel is build for storms like this one, so please just relax.",
+            "form",
+          ],
         ],
-        "Câu này hứa toà nhà an toàn — lời hứa không ai ở quầy giữ được. Câu sai ngữ pháp dùng 'stay indoor'; trạng từ là 'indoors', có -s. Đáp án không hứa, và cho khách một việc để làm.",
+        "Câu này hứa toà nhà an toàn — lời hứa không ai ở quầy giữ được. Câu sai ngữ pháp cũng hứa an toàn y như thế, lại dùng 'is build'; bị động là 'is built' (be + quá khứ phân từ). Đáp án không hứa, và cho khách một việc để làm.",
       ),
       round(
         "The radio says it will all be over by Friday. Shall I tell the guests?",
@@ -363,10 +366,10 @@ Do not promise the weather either. "The boat will surely go on Saturday" is a fo
           options: [
             "Bạn, ngay tại quầy, trả bằng tiền mặt cho nhanh",
             "Duty Manager, sau khi nghe khách trình bày",
-            "Quầy concierge",
+            "Quầy concierge — hoàn tiền trong chương trình đã được duyệt sẵn, bạn dẫn khách sang",
           ],
           correct: 2,
-          explanation: `Bài đọc: "The concierge desk books the new date and does the refund. You walk the guest over."`,
+          explanation: `Bài đọc: "The concierge desk books the new date and does the refund. The refund in the programme is already approved… You walk the guest over, and you never take money back at your own desk."`,
         },
         {
           q: "Khách xin thêm một lớp học nấu ăn miễn phí cho bọn trẻ. Đó là gì?",
@@ -394,13 +397,13 @@ Do not promise the weather either. "The boat will surely go on Saturday" is a fo
         "Câu này tự hoàn tiền tại quầy và còn tặng thêm bữa tối — tiền và quà đều không phải của bạn. Câu sai ngữ pháp dùng 'the concierge desk handle'; chủ ngữ số ít thì động từ thêm -s: 'handles'. Đáp án đọc đúng chương trình và chỉ đúng nơi làm.",
       ),
       round(
-        "The family lost their boat trip. Shall I give them the cooking class as our guests?",
+        "The family's boat trip is off. Shall I send them dinner on the house tonight?",
         [
-          ["Yes — they have had a bad day, and the class has empty places anyway.", "register"],
-          ["Only if the manager agrees. A free class is hers to give.", "answer"],
-          ["Only if the manager agree. A free class is hers to give.", "form"],
+          ["Yes — they have had a bad day, so a free dinner is the least we can do.", "register"],
+          ["Ask the manager first. A dinner on the house is hers to give.", "answer"],
+          ["Yes — they has had a bad day, so a free dinner is the least we can do.", "form"],
         ],
-        "Câu này tự tặng một lớp học có giá tiền — quà là của quản lý, dù lớp còn chỗ. Câu sai ngữ pháp dùng 'the manager agree'; chủ ngữ số ít thì 'agrees'. Đáp án đề xuất với quản lý trước.",
+        "Câu này tự tặng một bữa tối miễn phí để bù — quà có giá tiền là của quản lý, dù khách đáng thương đến đâu. Câu sai ngữ pháp cũng tự tặng y như thế, lại dùng 'they has'; 'they' đi với 'have'. Đáp án hỏi quản lý trước.",
         "colleague",
       ),
     ],
@@ -511,7 +514,7 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
           q: "Khách bị kẹt có ba nỗi lo. Bạn xử lý theo thứ tự nào?",
           options: [
             "Chuyến bay, giá phòng, rồi chỗ ngủ",
-            "Chỗ ngủ, giá phòng, rồi chuyến bay",
+            "Chỗ ngủ trước, vì đó là điều làm khách sợ nhất; rồi giá phòng, rồi chuyến bay",
             "Giá phòng trước tiên, vì khách nào cũng hỏi về tiền nhiều nhất",
           ],
           correct: 1,
@@ -520,12 +523,12 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
         {
           q: "Ai xác nhận giá cho những đêm khách ở thêm?",
           options: [
-            "Front office",
+            "Front office — họ biết phòng nào còn trống, và trống với giá nào",
             "Hãng bay, vì chuyến bay bị huỷ là việc của hãng",
             "Bạn, dựa theo giá khách đã đặt lần đầu",
           ],
           correct: 0,
-          explanation: `Bài đọc: "'The front office will confirm the rate.' A rate you guessed becomes a rate you promised."`,
+          explanation: `Bài đọc: front office "know which rooms are free and at what rate", nên "'The front office will confirm the rate.' A rate you guessed becomes a rate you promised."`,
         },
         {
           q: "Công ty bảo hiểm của khách cần giấy tờ chứng minh. Bạn làm gì?",
@@ -553,10 +556,10 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
         "A stranded guest wants the same rate for two more nights. Can I just say yes?",
         [
           ["Yes — it is not his fault, so the same rate is only fair.", "register"],
-          ["No, the front office confirm the rate. Ask them, and come back to him.", "form"],
+          ["Yes — it is not his fault, so same rate is only fair.", "form"],
           ["No, the front office confirms the rate. Ask them, and come back to him.", "answer"],
         ],
-        "Câu này tự hứa giá — giá phòng là của front office, dù lý do nghe công bằng. Câu sai ngữ pháp dùng 'the front office confirm'; chủ ngữ số ít thì 'confirms'. Đáp án hỏi đúng người rồi quay lại với khách.",
+        "Câu này tự hứa giá — giá phòng là của front office, dù lý do nghe công bằng. Câu sai ngữ pháp cũng tự hứa giá y như thế, lại thiếu mạo từ: phải là 'so THE same rate'. Đáp án hỏi đúng người rồi quay lại với khách.",
         "colleague",
       ),
     ],
@@ -675,9 +678,9 @@ A storm keeps people in, not out. If the Duty Manager gathers guests, it is in t
         {
           q: "Thang máy dừng giữa hai tầng, có khách bên trong. Bạn làm gì?",
           options: [
-            "Giữ khách trên máy và gọi bảo vệ",
+            "Giữ khách trên máy và gọi bảo vệ; cửa thang máy để bảo vệ mở",
             "Chạy lên tự cạy cửa thang máy cho khách ra",
-            "Hẹn khách chờ, rồi quay lại trả lời những cuộc gọi khác",
+            "Hẹn khách chờ, rồi nghe các cuộc gọi khác",
           ],
           correct: 0,
           explanation: `Bài đọc: "If a lift stops with a guest inside, keep them on the line and call security. Do not try to open the doors yourself."`,
@@ -698,11 +701,17 @@ A storm keeps people in, not out. If the Duty Manager gathers guests, it is in t
       round(
         "When is the power coming back? I need to charge my phone.",
         [
-          ["In ten minutes or so, sir — it never lasts long here.", "register"],
+          [
+            "In ten minutes or so, sir — a power cut never lasts very long in this part of town.",
+            "register",
+          ],
           ["I do not know that yet, sir. The next update is within the hour.", "answer"],
-          ["I do not know that yet, sir. The next update is within the hours.", "form"],
+          [
+            "In ten minutes or so, sir — a power cut never last very long in this part of town.",
+            "form",
+          ],
         ],
-        "Câu này đoán giờ có điện — nếu sai, khách sẽ gọi lại mỗi mười phút. Câu sai ngữ pháp dùng 'within the hours'; cụm cố định là 'within the hour', số ít. Đáp án nói thật và đưa mốc cập nhật.",
+        "Câu này đoán giờ có điện — nếu sai, khách sẽ gọi lại mỗi mười phút. Câu sai ngữ pháp cũng đoán giờ y như thế, lại thiếu -s: 'a power cut' số ít nên phải là 'lasts'. Đáp án nói thật và đưa mốc cập nhật.",
       ),
       round(
         "The lift seems to be working again. Can we take it down to dinner?",

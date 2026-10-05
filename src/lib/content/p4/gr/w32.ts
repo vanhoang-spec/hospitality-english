@@ -168,7 +168,7 @@ Booking it is not yours. The concierge desk books the boat, the table and the ca
         {
           q: "Gợi ý được phép mọc ra từ những nguồn nào?",
           options: [
-            "Lời khách, hồ sơ có xin phép, và chuyện của ngày mai",
+            "Lời khách, hồ sơ khách đã cho phép ghi, và điều khách sạn biết về ngày mai",
             "Điều bạn quan sát được về tuổi tác và người đi cùng khách",
             "Kinh nghiệm của bạn với những vị khách trông giống họ",
           ],
@@ -188,7 +188,7 @@ Booking it is not yours. The concierge desk books the boat, the table and the ca
         {
           q: "Khách đồng ý đi thuyền chiều mai. Ai đặt chỗ?",
           options: [
-            "The concierge desk — bạn dẫn khách tới",
+            "The concierge desk đặt thuyền, bàn và xe — bạn chỉ dẫn khách tới quầy",
             "Bạn tự gọi hãng thuyền đặt luôn, cho khách đỡ phải chờ",
             "Khách tự gọi cho hãng thuyền",
           ],
@@ -202,10 +202,16 @@ Booking it is not yours. The concierge desk books the boat, the table and the ca
         "We love local food. Any advice for tomorrow?",
         [
           ["Since you mentioned local food, sir, I would go to the morning market.", "answer"],
-          ["Most guests of your age prefer the museum, sir, so I would start there.", "register"],
-          ["Since you mentioned about local food, sir, I would go to the morning market.", "form"],
+          [
+            "Most guests of your age prefer the museum to the market, sir, so I would start there.",
+            "register",
+          ],
+          [
+            "Most guests of your age prefers the museum to the market, sir, so I would start there.",
+            "form",
+          ],
         ],
-        "Câu này gợi ý dựa vào tuổi của khách — điều bạn nhìn thấy, không phải điều khách nói. Câu sai ngữ pháp thừa 'about': 'mentioned' không đi với 'about'. Đáp án dựa vào chính lời khách.",
+        "Câu này gợi ý dựa vào tuổi của khách — điều bạn nhìn thấy, không phải điều khách nói. Câu sai ngữ pháp cũng đoán theo tuổi y như thế, lại chia sai động từ: 'most guests' số nhiều nên phải là 'prefer', không phải 'prefers'. Đáp án dựa vào chính lời khách.",
       ),
       round(
         "The couple in 905 look like honeymooners. Shall I send up the romance package?",
@@ -345,7 +351,7 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
         {
           q: "Khách không muốn nói lý do xin tầng yên tĩnh. Hồ sơ ghi gì?",
           options: [
-            "Ghi yêu cầu, để trống phần lý do",
+            "Ghi yêu cầu, để trống phần lý do — ô trống chính là câu trả lời của khách",
             "Không ghi gì, vì thiếu lý do thì hồ sơ vô dụng",
             "Ghi phỏng đoán của mình để ca sau hiểu hoàn cảnh",
           ],
@@ -355,7 +361,7 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
         {
           q: "Khách xin xem hồ sơ của mình. Bạn làm gì?",
           options: [
-            "Xoay màn hình cho khách tự xem",
+            "Xoay màn hình cho khách tự xem ngay tại quầy",
             "Hứa in một bản sao gửi lên phòng tối nay",
             "Báo Duty Manager ngay trong phút đó",
           ],
@@ -369,10 +375,10 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
         "Shall I write 'very demanding guest' so the evening shift is ready?",
         [
           ["Write it in the internal notes instead — no guest will ever read those.", "register"],
-          ["Write what the guest asked for and how much times — that is the fact.", "form"],
+          ["Write what guest asked for and how many times — that is the fact.", "form"],
           ["Write what the guest asked for and how many times — that is the fact.", "answer"],
         ],
-        "Câu này vẫn ghi một nhận xét về con người — ghi chú nội bộ cũng là hồ sơ, và người đọc sau sẽ mang thái độ đó. Câu sai ngữ pháp dùng 'how much times'; 'times' đếm được nên phải là 'how many times'. Đáp án ghi việc đã xảy ra.",
+        "Câu này vẫn ghi một nhận xét về con người — ghi chú nội bộ cũng là hồ sơ, và người đọc sau sẽ mang thái độ đó. Câu sai ngữ pháp thiếu mạo từ: 'what guest asked for' phải là 'what the guest asked for' — đây là một vị khách cụ thể. Đáp án ghi việc đã xảy ra.",
         "colleague",
       ),
       round(
@@ -383,12 +389,9 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
             "With pleasure, madam, on your own phone. For our file, I would need a signed consent form.",
             "answer",
           ],
-          [
-            "With pleasure, madam, on your own phone. For our file, I would need a sign consent form.",
-            "form",
-          ],
+          ["Of course, madam. I will keeping a copy on your file for your next visit.", "form"],
         ],
-        "Câu này lưu ảnh khách vào hồ sơ mà không có giấy đồng ý — ảnh cần phiếu đồng ý có chữ ký. Câu sai ngữ pháp dùng 'a sign consent form'; phải là 'a signed consent form'. Đáp án chụp bằng máy của khách, và nói rõ điều kiện để lưu.",
+        "Câu này lưu ảnh khách vào hồ sơ mà không có giấy đồng ý — ảnh cần phiếu đồng ý có chữ ký. Câu sai ngữ pháp cũng lưu ảnh không cần giấy y như thế, lại dùng 'will keeping'; sau 'will' là động từ nguyên mẫu: 'will keep'. Đáp án chụp bằng máy của khách, và nói rõ điều kiện để lưu.",
       ),
     ],
   }),
@@ -531,16 +534,16 @@ And a returning guest is still a private guest. A caller who asks whether he is 
     ),
     game: [
       round(
-        "Do you remember how I like my room?",
+        "Back again! You must know my usual dinner table by now.",
         [
           [
-            "Of course, sir — corner table, firm pillow and black coffee at seven. All set.",
+            "Of course, madam — I have already booked the corner table for you at eight.",
             "register",
           ],
-          ["We do, sir. Is everything still the same, or shall I change anything?", "answer"],
-          ["We do, sir. Is everything still the same, or shall I changing anything?", "form"],
+          ["We do, madam. The corner table tonight, or somewhere different?", "answer"],
+          ["Of course, madam — I have already book the corner table for you at eight.", "form"],
         ],
-        "Câu này đọc lại sở thích như một màn trình diễn và chốt hộ khách — khách không còn đường nào ngoài gật. Câu sai ngữ pháp dùng 'shall I changing'; sau 'shall' là động từ nguyên mẫu: 'shall I change'. Đáp án xác nhận là nhớ, rồi hỏi lại.",
+        "Câu này tự đặt bàn và chốt giờ hộ khách — bàn ăn có ngày, có giờ, nên lần nào cũng phải hỏi lại. Câu sai ngữ pháp cũng chốt hộ y như thế, lại dùng 'have already book'; thì hiện tại hoàn thành là 'have + V3': 'have already booked'. Đáp án xác nhận là nhớ, rồi đưa bàn cũ ra như một lời mời.",
       ),
       round(
         "A returning guest's file says 'roses in the room'. Shall I put them in before she arrives?",
@@ -645,7 +648,7 @@ Write things down while you remember them. At the end of a shift the names blur,
           q: "Khách lần đầu, hồ sơ trống. Nên hỏi bao nhiêu câu?",
           options: [
             "Năm câu để dựng hồ sơ đầy đủ",
-            "Một câu, có sẵn hai lựa chọn",
+            "Một câu, có sẵn hai lựa chọn như 'Beach or town?'",
             "Không hỏi gì, để khách tự nói ra",
           ],
           correct: 1,
@@ -690,9 +693,9 @@ Write things down while you remember them. At the end of a shift the names blur,
             "Only if you know for sure. If not, say somebody will know, and give an hour.",
             "answer",
           ],
-          ["Only if you know. If not, say somebody will knows, and give an hour.", "form"],
+          ["Yes — it usually does, and the timetable hardly ever change.", "form"],
         ],
-        "Câu này nói 'thường thì có' — một phỏng đoán đội lốt dữ kiện; khách lỡ chuyến thì lỗi là của khách sạn. Câu sai ngữ pháp: sau 'will' là 'know', không phải 'knows'. Đáp án: chỉ nói điều mình biết chắc, còn lại thì hẹn giờ.",
+        "Câu này nói 'thường thì có' — một phỏng đoán đội lốt dữ kiện; khách lỡ chuyến thì lỗi là của khách sạn. Câu sai ngữ pháp cũng đoán y như thế, lại thiếu -s: 'the timetable' số ít nên phải là 'changes'. Đáp án: chỉ nói điều mình biết chắc, còn lại thì hẹn giờ.",
         "colleague",
       ),
     ],

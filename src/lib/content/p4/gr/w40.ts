@@ -202,13 +202,16 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
         "Câu này gợi ý dựa vào tuổi của khách — điều bạn nhìn thấy, không phải điều khách nói. Câu sai ngữ pháp thừa 'about' sau 'mentioned'. Đáp án dựa vào chính lời khách, và chỉ đưa một gợi ý.",
       ),
       round(
-        "This is his office. Can you just tell me if Mr Tan has arrived?",
+        "This is his company calling. Has Mr Binh checked out yet, or is he still with you?",
         [
-          ["He arrived this morning, madam — shall I connect you to his room?", "register"],
-          ["I cannot confirm who is staying here, madam, but I can take a message.", "answer"],
-          ["I cannot confirm who is staying here, madam, but I can taking a message.", "form"],
+          [
+            "He is still with us until Sunday, sir — shall I put you through to his room?",
+            "register",
+          ],
+          ["I cannot confirm that, sir, but I can take a message for him.", "answer"],
+          ["He is still with us until Sunday, sir — shall I put you through his room?", "form"],
         ],
-        "Câu này xác nhận khách đang ở và còn đề nghị nối máy — lộ thông tin với một người chỉ tự xưng. Câu sai ngữ pháp dùng 'can taking'; sau 'can' là động từ nguyên mẫu. Đáp án không xác nhận, và nhận lời nhắn.",
+        "Câu này xác nhận khách đang ở, lộ cả ngày đi, rồi còn đề nghị nối máy — lộ thông tin với một người chỉ tự xưng. Câu sai ngữ pháp cũng lộ thông tin y như thế, lại thiếu 'to': 'put you through TO his room'. Đáp án không xác nhận, và nhận lời nhắn.",
       ),
     ],
   }),
@@ -322,7 +325,7 @@ Before the Halls go up, they have it in writing, with a copy for them. The case 
           options: [
             "Nhà hàng, vì nhà hàng làm mất bàn",
             "Hoa, nếu khách đã chờ quá lâu ở quầy",
-            "Duty Manager",
+            "Duty Manager — Hoa nói đó là phần mình không dời được",
           ],
           correct: 2,
           explanation: `Bài đọc: "she says it is the part she cannot move. Money off the bill is the Duty Manager's."`,
@@ -343,11 +346,11 @@ Before the Halls go up, they have it in writing, with a copy for them. The case 
       round(
         "Just admit the restaurant got it wrong and give us dinner free.",
         [
-          ["You are right, sir — it was our fault, so dinner tonight is on us.", "register"],
+          ["You are right, sir — it was our fault, so dinner is on us.", "register"],
           ["I am sorry that happened, sir. Let me check with my manager about dinner.", "answer"],
-          ["I am sorry that happen, sir. Let me check with my manager about dinner.", "form"],
+          ["You are right, sir — it were our fault, so dinner is on us.", "form"],
         ],
-        "Câu này vừa nhận lỗi thay cả khách sạn, vừa tự tặng bữa tối — hai quyết định không phải của bạn. Câu sai ngữ pháp dùng 'that happen'; việc đã xảy ra là 'that happened'. Đáp án xin lỗi về sự việc và hỏi đúng người quyết.",
+        "Câu này vừa nhận lỗi thay cả khách sạn, vừa tự tặng bữa tối — hai quyết định không phải của bạn. Câu sai ngữ pháp cũng nhận lỗi và tặng bữa y như thế, lại dùng 'it were'; với 'it', quá khứ của 'be' là 'was'. Đáp án xin lỗi về sự việc và hỏi đúng người quyết.",
       ),
       round(
         "He has his table now and he is smiling. Shall I close the case?",
@@ -465,8 +468,8 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
         {
           q: "Người nhà không chắc ông ấy còn thở. Hoa làm gì?",
           options: [
-            "Coi như không thở: gọi 115, giữ người nhà trên máy",
-            "Gửi Duty Manager lên phòng trước để xem tình hình rồi mới quyết định gọi ai",
+            "Coi như không thở: đồng nghiệp gọi 115, Hoa giữ người nhà trên máy",
+            "Gửi Duty Manager lên phòng xem trước rồi mới gọi",
             "Bảo người nhà đỡ ông ấy dậy cho dễ thở",
           ],
           correct: 0,
@@ -615,9 +618,9 @@ Then she goes through what is still open with Tuan. The line she says out loud i
         {
           q: "Người viết cho tạp chí hỏi về xe cấp cứu tối qua. Hoa làm gì?",
           options: [
-            "Kể ngắn gọn những gì đã xảy ra để người đó khỏi viết sai về khách sạn",
+            "Kể ngắn gọn chuyện đã xảy ra cho khỏi bị viết sai",
             "Trả lời 'no comment' rồi quay đi",
-            "Nói đó không phải việc của mình, rồi mời Duty Manager",
+            "Nói đó không phải việc của mình, không kể gì về khách khác, rồi mời Duty Manager",
           ],
           correct: 2,
           explanation: `Bài đọc: "Hoa says it is not hers to handle, says nothing about another guest, and asks the Duty Manager to come."`,
@@ -626,7 +629,7 @@ Then she goes through what is still open with Tuan. The line she says out loud i
           q: "Vì sao Hoa nói to dòng 'khách đã thôi hỏi' khi bàn giao?",
           options: [
             "Vì thôi hỏi nghĩa là khách đã chấp nhận, nên ca sau có thể đóng hồ sơ",
-            "Vì khách thôi hỏi không có nghĩa là đã hết bận tâm",
+            "Vì khách thôi hỏi không có nghĩa là đã hết bận tâm, nên Tuan sẽ gọi lại tối nay",
             "Vì Duty Manager yêu cầu đọc to mọi dòng trong sổ",
           ],
           correct: 1,
@@ -638,11 +641,14 @@ Then she goes through what is still open with Tuan. The line she says out loud i
       round(
         "I am her husband. Is she in her room or not?",
         [
-          ["She went out an hour ago, sir, but she should be back for dinner.", "register"],
+          [
+            "She went out about an hour ago, sir, but she should be back in time for dinner.",
+            "register",
+          ],
           ["I cannot connect you, sir, but I can take a message for her.", "answer"],
-          ["I cannot connect you, sir, but I can taking a message for her.", "form"],
+          ["She go out about an hour ago, sir, but she should be back in time for dinner.", "form"],
         ],
-        "Câu này nói khách đã ra ngoài và giờ về — vừa xác nhận khách ở đây, vừa lộ lịch của khách. Câu sai ngữ pháp dùng 'can taking'; sau 'can' là động từ nguyên mẫu. Đáp án không xác nhận gì, và nhận lời nhắn.",
+        "Câu này nói khách đã ra ngoài và giờ về — vừa xác nhận khách ở đây, vừa lộ lịch của khách. Câu sai ngữ pháp cũng lộ lịch của khách y như thế, lại sai thì: việc một tiếng trước phải là 'she went out', không phải 'she go out'. Đáp án không xác nhận gì, và nhận lời nhắn.",
       ),
       round(
         "I am off at six. Can I just leave the bill question in the book?",

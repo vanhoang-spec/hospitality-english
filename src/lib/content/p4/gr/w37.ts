@@ -195,12 +195,12 @@ Last, ask your own manager two questions now, not on the night. Which inside num
         {
           q: "Người nhà không chắc khách còn thở hay không. Bạn làm gì?",
           options: [
-            "Coi như không thở: gọi 115 trước",
-            "Chờ đội sơ cứu lên xem rồi mới quyết định có gọi xe cấp cứu",
+            "Coi như không thở: gọi 115 trước, hoặc nêu tên đồng nghiệp sẽ gọi",
+            "Chờ đội sơ cứu lên xem rồi mới gọi",
             "Gọi Duty Manager hỏi xem có cần gọi xe cấp cứu không",
           ],
           correct: 0,
-          explanation: `Bài đọc: "If he is not breathing, or nobody there is sure, treat it as not breathing. Call an ambulance first."`,
+          explanation: `Bài đọc: "If he is not breathing, or nobody there is sure, treat it as not breathing. Call an ambulance first: dial 115 yourself, or name the colleague who will."`,
         },
         {
           q: "Gọi 115, bạn nói điều gì trước tiên?",
@@ -216,25 +216,25 @@ Last, ask your own manager two questions now, not on the night. Which inside num
     ),
     game: [
       round(
-        "My husband has collapsed! Please, somebody help!",
+        "Come quickly — my mother has fallen in the bathroom and she is not moving!",
         [
-          ["Do not worry, madam, he will be fine. I am sending somebody up now.", "register"],
-          ["Is he breathing, madam? Please stay on the line with me.", "answer"],
-          ["Is he breath, madam? Please stay on the line with me.", "form"],
+          ["Please do not worry, sir — she will be fine. Somebody is coming up now.", "register"],
+          ["Is she breathing, sir? I am staying on the line with you.", "answer"],
+          ["Please do not worry, sir — she will be fine. Somebody coming up now.", "form"],
         ],
-        "Câu này hứa 'he will be fine' — điều không ai biết — và hứa có người lên trước khi biết phải gọi số nào. Câu sai ngữ pháp dùng 'Is he breath'; 'breath' là danh từ, câu hỏi cần 'Is he breathing'. Đáp án hỏi một câu trước, và giữ người nhà trên máy.",
+        "Câu này hứa 'she will be fine' — điều không ai biết — và hứa có người lên trước khi biết phải gọi số nào. Câu sai ngữ pháp cũng hứa suông y như thế, lại thiếu 'is': phải là 'somebody IS coming up'. Đáp án hỏi một câu trước, và ở lại trên máy với người nhà.",
       ),
       round(
-        "The wife says he is breathing but he will not wake up. Shall I dial 115?",
+        "The wife says he fainted, but he is awake and talking now. Shall I dial 115?",
         [
-          ["No need — if he is breathing, he probably just needs to sleep it off.", "register"],
-          ["Call first aid and the Duty Manager now. First aid decide on the ambulance.", "form"],
+          ["No need — if he is talking now, he probably just needs a good rest.", "register"],
+          ["No need — if he is talking now, he probably just need a good rest.", "form"],
           [
             "Call first aid and the Duty Manager now. First aid decides on the ambulance.",
             "answer",
           ],
         ],
-        "Câu này tự chẩn đoán là 'ngủ một giấc là khỏi' — chuyện của người có chuyên môn, không phải của quầy. Câu sai ngữ pháp dùng 'First aid decide'; 'first aid' ở đây là một đội, chia số ít: 'decides'. Đáp án: còn thở thì gọi sơ cứu và Duty Manager, và để sơ cứu quyết chuyện xe cấp cứu.",
+        "Câu này tự chẩn đoán là 'nghỉ một chút là khỏi' — chuyện của người có chuyên môn, không phải của quầy. Câu sai ngữ pháp cũng tự chẩn đoán y như thế, lại thiếu -s: 'he' đi với 'needs'. Đáp án: khách đã tỉnh và nói chuyện được thì gọi sơ cứu và Duty Manager, để sơ cứu đánh giá và quyết chuyện xe cấp cứu. Nếu khách không tỉnh, hay không ai chắc là còn thở, thì gọi 115 ngay.",
         "colleague",
       ),
     ],
@@ -344,11 +344,11 @@ Then stay beside them until that is true.`,
           q: "Bạn cần một chiếc xe lăn trong lúc đang ở cạnh khách. Bạn làm gì?",
           options: [
             "Chạy đi lấy thật nhanh, rồi quay lại ngay",
-            "Nhờ đồng nghiệp hoặc bell desk mang tới",
+            "Ở lại bên khách, và nhờ đồng nghiệp hoặc bell desk mang xe tới",
             "Nhờ người nhà khách chạy đi lấy giúp cho nhanh hơn",
           ],
           correct: 1,
-          explanation: `Bài đọc: "Never leave a guest to fetch something yourself. Send a colleague, or ask the bell desk."`,
+          explanation: `Bài đọc: "Your job in those minutes is to stay. Never leave a guest to fetch something yourself. Send a colleague, or ask the bell desk."`,
         },
         {
           q: "Vì sao không cho khách ăn uống gì trong lúc chờ?",
@@ -377,7 +377,7 @@ Then stay beside them until that is true.`,
         "Please tell me he is going to be all right.",
         [
           ["First aid is on the way, madam, and I am staying here with you.", "answer"],
-          ["He is in very good hands, madam — it is surely nothing serious.", "register"],
+          ["He is in very good hands, madam — I am sure it is nothing serious.", "register"],
           ["First aid is on the way, madam, and I staying here with you.", "form"],
         ],
         "Câu này hứa về kết quả ('good hands', 'nothing serious') — điều không ai ở quầy biết. Câu sai ngữ pháp thiếu 'am': phải là 'I am staying'. Đáp án nói một việc thật đang xảy ra, và bạn ở lại.",
@@ -520,7 +520,7 @@ One thing you can always say: "Please ask the doctor for a medical report in Eng
           options: [
             "'You would pay nothing today', để khách yên tâm đi khám",
             "Đoán theo loại bảo hiểm khách nước ngoài hay mua nhất",
-            "Công ty bảo hiểm quyết — bạn không đoán",
+            "Công ty bảo hiểm quyết họ chi trả gì — bạn không biết, và không được đoán",
           ],
           correct: 2,
           explanation: `Bài đọc: "You do not know, and you must not guess… The insurer decides what it covers."`,
@@ -548,13 +548,13 @@ One thing you can always say: "Please ask the doctor for a medical report in Eng
         "Câu này đoán bảo hiểm sẽ trả — một lời hứa về tiền của công ty khác. Câu sai ngữ pháp dùng 'Your insurer decide'; chủ ngữ số ít thì động từ thêm -s: 'decides'. Đáp án nói ai quyết, và không đoán.",
       ),
       round(
-        "A guest wants paracetamol from our first aid box. Shall I give her two?",
+        "The gentleman in 512 has a bad stomach. Shall I take him some tablets from our first aid box?",
         [
-          ["No. We never gives medicine, but I can ask the doctor on call to see her.", "form"],
-          ["No. We never give medicine, but I can ask the doctor on call to see her.", "answer"],
-          ["Yes, two is the normal dose for an adult, so it is quite safe.", "register"],
+          ["Yes — stomach tablets is quite safe, so just take him two from the box.", "form"],
+          ["Not from our box. The doctor on call can see him if he wishes.", "answer"],
+          ["Yes — stomach tablets are quite safe, so just take him two from the box.", "register"],
         ],
-        "Câu này tự chọn thuốc và liều cho khách — việc của bác sĩ, không bao giờ của quầy. Câu sai ngữ pháp dùng 'We never gives'; với 'we' động từ không thêm -s. Đáp án từ chối và mời bác sĩ trực.",
+        "Câu này tự chọn thuốc cho khách vì cho là 'an toàn' — chọn thuốc là việc của bác sĩ, không bao giờ của quầy. Câu sai ngữ pháp cũng tự đưa thuốc y như thế, lại chia sai động từ: 'tablets' số nhiều nên phải là 'are', không phải 'is'. Đáp án không đưa thuốc, và mời bác sĩ trực.",
         "colleague",
       ),
     ],
@@ -672,12 +672,12 @@ When the guest comes back, keep it short: a quiet room, and the morning knock st
         {
           q: "Chuyện sức khoẻ của khách được ghi vào đâu?",
           options: [
-            "Không ghi vào hồ sơ khách",
+            "Không ghi vào hồ sơ khách; sự việc thì vào biên bản sự cố",
             "Hồ sơ khách, để lần sau phục vụ chu đáo hơn",
             "Sổ bàn giao ca, để mọi người cùng biết mà để ý",
           ],
           correct: 0,
-          explanation: `Bài đọc: "The guest file is a different piece of paper. Health does not go on it."`,
+          explanation: `Bài đọc: "The guest file is a different piece of paper. Health does not go on it." Điều đã xảy ra thì vào biên bản: "Write the incident report in your own shift. Facts only."`,
         },
         {
           q: "Khách phòng bên hỏi chuyện xe cấp cứu tối qua. Bạn nói gì?",
@@ -700,9 +700,9 @@ When the guest comes back, keep it short: a quiet room, and the morning knock st
             "I am afraid I cannot talk about another guest, sir. Can I help you with anything?",
             "answer",
           ],
-          ["I cannot talk about another guest, sir. Can I helping you with anything?", "form"],
+          ["It was his heart, I think, sir, but he fine now.", "form"],
         ],
-        "Câu này kể bệnh của một vị khách khác — vừa lộ thông tin, vừa là một chẩn đoán không ai có quyền đưa ra. Câu sai ngữ pháp dùng 'Can I helping'; sau 'can' là động từ nguyên mẫu. Đáp án từ chối gọn rồi mời giúp.",
+        "Câu này kể bệnh của một vị khách khác — vừa lộ thông tin, vừa là một chẩn đoán không ai có quyền đưa ra. Câu sai ngữ pháp cũng kể bệnh của khách y như thế, lại thiếu 'is': phải là 'he IS fine now'. Đáp án từ chối gọn rồi mời giúp.",
       ),
       round(
         "Shall I write 'drunk' on the report? He could hardly stand.",
