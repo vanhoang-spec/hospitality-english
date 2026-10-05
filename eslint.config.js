@@ -21,6 +21,7 @@ export default tseslint.config(
       ".output",
       ".vinxi",
       ".netlify",
+      ".vercel",
       ".tanstack",
       ".lovable",
       "src/routeTree.gen.ts",

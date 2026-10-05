@@ -15,6 +15,11 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   `bun run ci && bun run build`). Đã kiểm 03/10: bundle production chứa câu nội dung vòng 4, trang
   đăng nhập không lỗi console.
 - `content/p3` = `main` sau merge. Người dùng nói không cần mở PR riêng cho P3 nữa.
+- **05/10: người dùng chuyển deploy sang Vercel**, tự làm trên giao diện theo
+  [`docs/deploy-vercel.md`](deploy-vercel.md). Code đã sẵn trên `content/p3`: `vite.config.ts` ra
+  bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Netlify vẫn là
+  production cho tới khi người dùng đổi CNAME `hospitality.embassy.edu.vn` ở PA Việt Nam. Sau khi
+  chuyển xong: dọn `netlify.toml` và các ghi chú Netlify (bước 6 của tài liệu).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 

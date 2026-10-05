@@ -45,7 +45,9 @@ quản trị: [`docs/huong-dan-quan-tri.html`](docs/huong-dan-quan-tri.html).
 
 ## 2. Stack và lệnh
 
-TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deploy qua Netlify.
+TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deploy qua Netlify, đang
+chuyển sang Vercel — cùng một build chạy được ở cả hai, xem
+[`docs/deploy-vercel.md`](docs/deploy-vercel.md).
 
 ```bash
 bun install

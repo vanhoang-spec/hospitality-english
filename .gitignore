@@ -24,6 +24,9 @@ dist-ssr
 # Netlify
 .netlify/
 
+# Vercel (build output + `vercel link`)
+.vercel/
+
 # Supabase CLI local cache
 supabase/.temp/
 
