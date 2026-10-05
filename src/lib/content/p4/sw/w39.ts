@@ -103,7 +103,9 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
         undefined,
         t1b,
       ),
-      alsoAccept: ["I cannot say more, madam, but the nurse is on her way. Thank you for your patience."],
+      alsoAccept: [
+        "I cannot say more, madam, but the nurse is on her way. Thank you for your patience.",
+      ],
     },
     risk({
       ...sp(
@@ -131,7 +133,9 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
         "Nói với đồng nghiệp — không dùng sir hay madam. Xếp thứ tự bằng một câu: nguy hiểm trước, điện thoại để sau.",
         "colleague",
       ),
-      alsoAccept: ["Danger first: the guest in the steam room is our priority, and the phone can wait."],
+      alsoAccept: [
+        "Danger first: the guest in the steam room is our priority, and the phone can wait.",
+      ],
     },
     sp(
       "Tell me what happened, in order.",
@@ -207,11 +211,11 @@ const t2c =
 
 const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối ca", {
   vocabulary: [
-    c("End of shift", "In the last fifteen minutes before the end of shift, we do not start a new job.", [
-      "/ˌend əv ˈʃɪft/",
-      "Cuối ca làm việc",
-      "🕒",
-    ]),
+    c(
+      "End of shift",
+      "In the last fifteen minutes before the end of shift, we do not start a new job.",
+      ["/ˌend əv ˈʃɪft/", "Cuối ca làm việc", "🕒"],
+    ),
     c("Handover note", "Every open request goes in the handover note.", [
       "/ˈhændəʊvə nəʊt/",
       "Ghi chú bàn giao ca",
@@ -267,7 +271,9 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
         undefined,
         t2a,
       ),
-      alsoAccept: ["Yes, madam. I will hand it over to Mai by name, and she will call your room before four."],
+      alsoAccept: [
+        "Yes, madam. I will hand it over to Mai by name, and she will call your room before four.",
+      ],
     },
     {
       ...sp(
@@ -345,11 +351,7 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       },
       {
         q: "Ai gọi cho bà Fox, và khi nào?",
-        options: [
-          "Thu, ngay trước ba giờ",
-          "Quản lý, vào sáng hôm sau",
-          "Mai, lúc ba giờ rưỡi",
-        ],
+        options: ["Thu, ngay trước ba giờ", "Quản lý, vào sáng hôm sau", "Mai, lúc ba giờ rưỡi"],
         correct: 2,
         explanation:
           "'Mai calls Mrs Fox at half past three' — đúng người được bàn giao, trước mốc bốn giờ đã hứa với khách.",
@@ -555,175 +557,185 @@ const t4b =
   "I cannot say, sir, but the hotel nurse will be here in two minutes, and I will stay with you.";
 const t4c = "The nurse comes first, sir, and my manager will speak with you after that.";
 
-const lesson4 = L(39, 4, "Rehearsal: An Evening in the Treatment Rooms", "Tổng duyệt: buổi tối ở khu trị liệu", {
-  vocabulary: [
-    c("Hot stone", "Before every massage, the therapist checks the heat of each hot stone.", [
-      "/ˌhɒt ˈstəʊn/",
-      "Đá nóng (dùng trong massage)",
-      "🪨",
-    ]),
-    c("Wine", "After a glass of wine at dinner, a guest does not use the sauna.", [
-      "/waɪn/",
-      "Rượu vang",
-      "🍷",
-    ]),
-    c("Stay covered", "During the massage, the guest can stay covered with a towel at all times.", [
-      "/ˌsteɪ ˈkʌvəd/",
-      "Luôn được che phủ (bằng khăn)",
-      "🛏️",
-    ]),
-    c("Closing time", "Closing time at the spa is ten o'clock at night.", [
-      "/ˈkləʊzɪŋ taɪm/",
-      "Giờ đóng cửa",
-      "🔒",
-    ]),
-  ],
-  grammar: [
-    g(
-      "No sauna. You drink wine.",
-      "We cannot let you use the sauna after alcohol, sir.",
-      "Sau 'let you' là động từ nguyên mẫu KHÔNG 'to': 'let you use'. Người Việt hay thêm 'to' vì dịch 'để bạn dùng'.",
-      "We cannot let you to use the sauna after alcohol, sir.",
-    ),
-    g(
-      "Pregnant? I ask manager.",
-      "I will check with my manager first, madam.",
-      "'check with + người' = hỏi ý kiến ai. Bỏ 'with' ('check my manager') thì nghĩa thành 'kiểm tra quản lý của tôi'.",
-      "I will check my manager first, madam.",
-    ),
-  ],
-  speaking: [
-    {
-      ...sp(
-        "Ow! That stone is far too hot on my shoulder.",
-        t4a,
-        "Bỏng: dừng ngay và làm mát vết bỏng bằng nước mát — đúng thứ tự đã học, không giải thích, không xin lỗi dài.",
+const lesson4 = L(
+  39,
+  4,
+  "Rehearsal: An Evening in the Treatment Rooms",
+  "Tổng duyệt: buổi tối ở khu trị liệu",
+  {
+    vocabulary: [
+      c("Hot stone", "Before every massage, the therapist checks the heat of each hot stone.", [
+        "/ˌhɒt ˈstəʊn/",
+        "Đá nóng (dùng trong massage)",
+        "🪨",
+      ]),
+      c("Wine", "After a glass of wine at dinner, a guest does not use the sauna.", [
+        "/waɪn/",
+        "Rượu vang",
+        "🍷",
+      ]),
+      c(
+        "Stay covered",
+        "During the massage, the guest can stay covered with a towel at all times.",
+        ["/ˌsteɪ ˈkʌvəd/", "Luôn được che phủ (bằng khăn)", "🛏️"],
       ),
-      alsoAccept: ["I am stopping now, sir, and I will put cool water on the burn at once."],
-    },
-    {
-      ...sp(
-        "It still stings. Is it bad?",
-        t4b,
-        "Không chẩn đoán. Một mốc giờ có thật (y tá, hai phút) và một lời hứa (bạn ở lại).",
-        undefined,
-        undefined,
-        t4a,
-      ),
-      alsoAccept: [
-        "I am not sure, sir, but the hotel nurse will be here in two minutes, and I will stay with you.",
-      ],
-    },
-    {
-      ...sp(
-        "Is the spa going to pay for this?",
-        t4c,
-        "Không bàn lỗi hay tiền bên giường trị liệu: y tá trước, quản lý nói chuyện sau.",
-        undefined,
-        undefined,
-        t4b,
-      ),
-      alsoAccept: ["The nurse comes first, sir, and my manager will speak with you after the nurse."],
-    },
-    risk({
-      ...sp(
-        "I had two glasses of wine at dinner. Can I use the sauna now?",
-        "I am sorry, sir. After wine, we cannot let you use the sauna, but the relaxing area is open.",
-        "Rượu rồi nhiệt là luật an toàn, không thương lượng — một ly hay hai ly cũng vậy. Từ chối rõ, rồi một chỗ khác khách dùng được.",
-        undefined,
-        ["wine", "use", "sauna", "relaxing", "area", "open"],
-      ),
-      alsoAccept: [
-        "I am sorry, sir. We cannot let you use the sauna after alcohol, but the relaxing area is open.",
-        "I am afraid we cannot let you use the sauna after wine, sir, but the relaxing area is open.",
-      ],
-    }),
-    {
-      ...sp(
-        "The lights have gone out again! Are you still there?",
-        "Yes, madam, I am right here. My torch is on, and I will not leave the room.",
-        "Mất điện: một câu cho khách biết bạn vẫn ở đây, đèn pin đang bật, và bạn không rời phòng.",
-      ),
-      alsoAccept: ["Yes, madam, I am right here. My torch is on, and I am not leaving the room."],
-    },
-    sp(
-      "The guest in room four is pregnant, and she wants to use the sauna.",
-      "She is a mother-to-be, so please check with the manager before she uses the sauna.",
-      "Nói với đồng nghiệp — không dùng sir hay madam. Khách mang thai và nhiệt: quản lý quyết, đồng nghiệp không tự mở phòng xông.",
-      "colleague",
-    ),
-    {
-      ...sp(
-        "I am a bit nervous. Can I stop the massage if I do not like it?",
-        "Of course, madam. You can ask me to stop at any moment, and you will stay covered.",
-        "Hai bảo đảm cụ thể thay cho lời động viên: được dừng bất cứ lúc nào, và luôn được che phủ.",
-      ),
-      alsoAccept: ["Of course, madam. You can ask me to stop at any time, and you will stay covered."],
-    },
-    sp(
-      "How was the evening in the treatment rooms?",
-      "It was busy until closing time. A guest had a burn from a hot stone, so I stopped, cooled it and called the nurse.",
-      "Báo cáo cho quản lý bằng thì quá khứ — không dùng sir hay madam: việc quan trọng nhất, rồi ba việc bạn đã làm theo thứ tự.",
-      "manager",
-    ),
-  ],
-  reading: read(
-    `Tuan works the evening shift in the treatment rooms, and it is a long evening. At seven, a hot stone is too hot on a guest's shoulder. Tuan stops at once and puts cool water on the burn. The guest asks if it is bad. Tuan does not guess. He says the hotel nurse will be there in two minutes, and he stays with him. When the guest asks who will pay, Tuan says the nurse comes first and the manager will speak with him later. At eight, another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly, and offers the relaxing area. At half past eight, a guest who is pregnant wants to use the sauna. Tuan checks with the manager first. At nine, the power goes off. Tuan is with a nervous guest, so he switches on his torch and stays in the room. At closing time, he writes everything in the handover note.`,
-    [
-      {
-        q: "Khi khách bị bỏng vì đá nóng, Tuấn làm gì đầu tiên?",
-        options: [
-          "Dừng lại và làm mát vết bỏng",
-          "Hỏi khách có muốn đổi sang loại đá khác không",
-          "Gọi quản lý tới xin lỗi khách trước",
-        ],
-        correct: 0,
-        explanation:
-          "'Tuan stops at once and puts cool water on the burn' — dừng và làm mát trước, mọi chuyện khác để sau.",
-      },
-      {
-        q: "Vì sao Tuấn không mở phòng xông hơi cho vị khách lúc tám giờ?",
-        options: [
-          "Vì phòng xông hơi đang được sửa chữa",
-          "Vì khách vừa uống rượu",
-          "Vì khách chưa đặt lịch trước ở quầy",
-        ],
-        correct: 1,
-        explanation:
-          "'another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly' — rượu rồi nhiệt là luật an toàn.",
-      },
-      {
-        q: "Tuấn làm gì khi khách mang thai muốn vào phòng xông hơi?",
-        options: [
-          "Mở phòng nhưng giảm nhiệt độ xuống",
-          "Từ chối và mời khách về phòng nghỉ ngơi",
-          "Hỏi quản lý trước",
-        ],
-        correct: 2,
-        explanation:
-          "'a guest who is pregnant wants to use the sauna. Tuan checks with the manager first' — khách mang thai và nhiệt là việc quản lý quyết.",
-      },
+      c("Closing time", "Closing time at the spa is ten o'clock at night.", [
+        "/ˈkləʊzɪŋ taɪm/",
+        "Giờ đóng cửa",
+        "🔒",
+      ]),
     ],
-  ),
-  game: [
-    game(
-      "I only had one glass of wine. Can I use the sauna?",
-      "I am sorry, sir. We cannot let you use the sauna after alcohol.",
-      "I am sorry, sir. We cannot let you to use the sauna after alcohol.",
-      "One glass is fine, sir. Just stay for a shorter time than usual.",
-      undefined,
-      "Câu thứ hai thừa 'to': sau 'let you' là 'use'. Câu thứ ba tự quyết 'một ly thì không sao' — luật an toàn không có mức 'một ly'. Câu đúng từ chối rõ ràng.",
+    grammar: [
+      g(
+        "No sauna. You drink wine.",
+        "We cannot let you use the sauna after alcohol, sir.",
+        "Sau 'let you' là động từ nguyên mẫu KHÔNG 'to': 'let you use'. Người Việt hay thêm 'to' vì dịch 'để bạn dùng'.",
+        "We cannot let you to use the sauna after alcohol, sir.",
+      ),
+      g(
+        "Pregnant? I ask manager.",
+        "I will check with my manager first, madam.",
+        "'check with + người' = hỏi ý kiến ai. Bỏ 'with' ('check my manager') thì nghĩa thành 'kiểm tra quản lý của tôi'.",
+        "I will check my manager first, madam.",
+      ),
+    ],
+    speaking: [
+      {
+        ...sp(
+          "Ow! That stone is far too hot on my shoulder.",
+          t4a,
+          "Bỏng: dừng ngay và làm mát vết bỏng bằng nước mát — đúng thứ tự đã học, không giải thích, không xin lỗi dài.",
+        ),
+        alsoAccept: ["I am stopping now, sir, and I will put cool water on the burn at once."],
+      },
+      {
+        ...sp(
+          "It still stings. Is it bad?",
+          t4b,
+          "Không chẩn đoán. Một mốc giờ có thật (y tá, hai phút) và một lời hứa (bạn ở lại).",
+          undefined,
+          undefined,
+          t4a,
+        ),
+        alsoAccept: [
+          "I am not sure, sir, but the hotel nurse will be here in two minutes, and I will stay with you.",
+        ],
+      },
+      {
+        ...sp(
+          "Is the spa going to pay for this?",
+          t4c,
+          "Không bàn lỗi hay tiền bên giường trị liệu: y tá trước, quản lý nói chuyện sau.",
+          undefined,
+          undefined,
+          t4b,
+        ),
+        alsoAccept: [
+          "The nurse comes first, sir, and my manager will speak with you after the nurse.",
+        ],
+      },
+      risk({
+        ...sp(
+          "I had two glasses of wine at dinner. Can I use the sauna now?",
+          "I am sorry, sir. After wine, we cannot let you use the sauna, but the relaxing area is open.",
+          "Rượu rồi nhiệt là luật an toàn, không thương lượng — một ly hay hai ly cũng vậy. Từ chối rõ, rồi một chỗ khác khách dùng được.",
+          undefined,
+          ["wine", "use", "sauna", "relaxing", "area", "open"],
+        ),
+        alsoAccept: [
+          "I am sorry, sir. We cannot let you use the sauna after alcohol, but the relaxing area is open.",
+          "I am afraid we cannot let you use the sauna after wine, sir, but the relaxing area is open.",
+        ],
+      }),
+      {
+        ...sp(
+          "The lights have gone out again! Are you still there?",
+          "Yes, madam, I am right here. My torch is on, and I will not leave the room.",
+          "Mất điện: một câu cho khách biết bạn vẫn ở đây, đèn pin đang bật, và bạn không rời phòng.",
+        ),
+        alsoAccept: ["Yes, madam, I am right here. My torch is on, and I am not leaving the room."],
+      },
+      sp(
+        "The guest in room four is pregnant, and she wants to use the sauna.",
+        "She is a mother-to-be, so please check with the manager before she uses the sauna.",
+        "Nói với đồng nghiệp — không dùng sir hay madam. Khách mang thai và nhiệt: quản lý quyết, đồng nghiệp không tự mở phòng xông.",
+        "colleague",
+      ),
+      {
+        ...sp(
+          "I am a bit nervous. Can I stop the massage if I do not like it?",
+          "Of course, madam. You can ask me to stop at any moment, and you will stay covered.",
+          "Hai bảo đảm cụ thể thay cho lời động viên: được dừng bất cứ lúc nào, và luôn được che phủ.",
+        ),
+        alsoAccept: [
+          "Of course, madam. You can ask me to stop at any time, and you will stay covered.",
+        ],
+      },
+      sp(
+        "How was the evening in the treatment rooms?",
+        "It was busy until closing time. A guest had a burn from a hot stone, so I stopped, cooled it and called the nurse.",
+        "Báo cáo cho quản lý bằng thì quá khứ — không dùng sir hay madam: việc quan trọng nhất, rồi ba việc bạn đã làm theo thứ tự.",
+        "manager",
+      ),
+    ],
+    reading: read(
+      `Tuan works the evening shift in the treatment rooms, and it is a long evening. At seven, a hot stone is too hot on a guest's shoulder. Tuan stops at once and puts cool water on the burn. The guest asks if it is bad. Tuan does not guess. He says the hotel nurse will be there in two minutes, and he stays with him. When the guest asks who will pay, Tuan says the nurse comes first and the manager will speak with him later. At eight, another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly, and offers the relaxing area. At half past eight, a guest who is pregnant wants to use the sauna. Tuan checks with the manager first. At nine, the power goes off. Tuan is with a nervous guest, so he switches on his torch and stays in the room. At closing time, he writes everything in the handover note.`,
+      [
+        {
+          q: "Khi khách bị bỏng vì đá nóng, Tuấn làm gì đầu tiên?",
+          options: [
+            "Dừng lại và làm mát vết bỏng",
+            "Hỏi khách có muốn đổi sang loại đá khác không",
+            "Gọi quản lý tới xin lỗi khách trước",
+          ],
+          correct: 0,
+          explanation:
+            "'Tuan stops at once and puts cool water on the burn' — dừng và làm mát trước, mọi chuyện khác để sau.",
+        },
+        {
+          q: "Vì sao Tuấn không mở phòng xông hơi cho vị khách lúc tám giờ?",
+          options: [
+            "Vì phòng xông hơi đang được sửa chữa",
+            "Vì khách vừa uống rượu",
+            "Vì khách chưa đặt lịch trước ở quầy",
+          ],
+          correct: 1,
+          explanation:
+            "'another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly' — rượu rồi nhiệt là luật an toàn.",
+        },
+        {
+          q: "Tuấn làm gì khi khách mang thai muốn vào phòng xông hơi?",
+          options: [
+            "Mở phòng nhưng giảm nhiệt độ xuống",
+            "Từ chối và mời khách về phòng nghỉ ngơi",
+            "Hỏi quản lý trước",
+          ],
+          correct: 2,
+          explanation:
+            "'a guest who is pregnant wants to use the sauna. Tuan checks with the manager first' — khách mang thai và nhiệt là việc quản lý quyết.",
+        },
+      ],
     ),
-    game(
-      "The lights went out! Are you leaving me?",
-      "No, madam. I am right here, and my torch is on.",
-      "No, madam. I am right here, and my torch are on.",
-      "One moment, madam. I will go and find out what happened, and then I will come back.",
-      undefined,
-      "Câu thứ hai sai hoà hợp: 'my torch' số ít → 'is'. Câu thứ ba bỏ khách lại một mình trong bóng tối để đi hỏi chuyện. Câu đúng ở lại và bật đèn pin.",
-    ),
-  ],
-});
+    game: [
+      game(
+        "I only had one glass of wine. Can I use the sauna?",
+        "I am sorry, sir. We cannot let you use the sauna after alcohol.",
+        "I am sorry, sir. We cannot let you to use the sauna after alcohol.",
+        "One glass is fine, sir. Just stay for a shorter time than usual.",
+        undefined,
+        "Câu thứ hai thừa 'to': sau 'let you' là 'use'. Câu thứ ba tự quyết 'một ly thì không sao' — luật an toàn không có mức 'một ly'. Câu đúng từ chối rõ ràng.",
+      ),
+      game(
+        "The lights went out! Are you leaving me?",
+        "No, madam. I am right here, and my torch is on.",
+        "No, madam. I am right here, and my torch are on.",
+        "One moment, madam. I will go and find out what happened, and then I will come back.",
+        undefined,
+        "Câu thứ hai sai hoà hợp: 'my torch' số ít → 'is'. Câu thứ ba bỏ khách lại một mình trong bóng tối để đi hỏi chuyện. Câu đúng ở lại và bật đèn pin.",
+      ),
+    ],
+  },
+);
 
 export const week: AuthoredWeek = {
   title: {

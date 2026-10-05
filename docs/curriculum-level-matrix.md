@@ -394,11 +394,10 @@ mẫu kiểm tra và báo riêng tỷ lệ đề có ô dự trữ. Không thu b
 > phải dạy chúng đủ một bài có từ vựng, ngữ pháp, luyện nói, game và câu hỏi đọc — không được
 > nhét vào một dòng văn xuôi.
 >
-> **Hiện trạng đo được (6 lượt kiểm định độc lập, 2026-09-01), không phải mô tả mong muốn:**
-> chỉ **GR-39 và HK-39** dạy đủ cả hai luật. **FO-39 và FB-39 không có luật "mười lăm phút
-> cuối"** ở bất kỳ đâu — cả sáu lượt đều đo lại và cùng kết luận như nhau. Bản trước của
-> chú thích này khẳng định cả bốn tuần đều đủ; đó là mô tả sai, đã sửa. Xem GR-AQ trong
-> `docs/academic-review-backlog.md`.
+> **Hiện trạng:** từ lần viết lại Phase 4 (10/2026), tuần 39 của cả năm bộ phận FO, FB, HK, SW,
+> GR dạy mỗi luật bằng một bài đủ cụm (thẻ, ngữ pháp, lượt nói, game, câu đọc). Trước đó (đo
+> 2026-09-01) chỉ GR-39 và HK-39 có đủ; FO-39 và FB-39 thiếu hẳn luật "mười lăm phút cuối", và
+> tuần 39 của Spa là khung máy ghép.
 >
 > Kèm theo, luật ưu tiên phải nói rõ **"nguy hiểm trước" nghĩa là LÀM GÌ**, không chỉ là một
 > chỗ trong hàng chờ: nó dẫn về tuần 37 (y tế) và tuần 33 (an toàn → bảo vệ trước, Duty

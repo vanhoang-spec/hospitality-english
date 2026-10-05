@@ -44,8 +44,7 @@ const round = (
 });
 
 // ── Lesson 1 — danger first ────────────────────────────────────────────────
-const t1a =
-  "May I take them in order, madam? The table first, because it has the soonest hour.";
+const t1a = "May I take them in order, madam? The table first, because it has the soonest hour.";
 const t1b = "I am coming back to that within the hour, madam, and to the tour after it.";
 const t1c =
   "Tonight's table has the soonest hour, madam, so it comes first. The tour is still on my list.";
@@ -59,8 +58,7 @@ const t2c = "What I can do meanwhile is keep you a quiet table in the lounge, ma
 // ── Lesson 3 — the promise you cannot find ─────────────────────────────────
 const t3a = "That is a promise I cannot find yet, sir. I would rather find out than guess.";
 const t3b = "Who said it and when, sir? And was it written or spoken?";
-const t3c =
-  "Thank you, sir. I am writing it all down, and the upgrade is my manager's to give.";
+const t3c = "Thank you, sir. I am writing it all down, and the upgrade is my manager's to give.";
 
 // ── Lesson 4 — the last fifteen minutes ────────────────────────────────────
 const t4a =
@@ -379,7 +377,10 @@ One line on the file is never a preference: an allergy. It goes to the chef on a
       round(
         "My file says late check-out every time. So it is mine, isn't it?",
         [
-          ["Of course, sir — anything on your file is yours, so I will extend it myself now.", "register"],
+          [
+            "Of course, sir — anything on your file is yours, so I will extend it myself now.",
+            "register",
+          ],
           ["The file says it, sir, but the front office gives it. I am asking them now.", "answer"],
           ["The file says it, sir, but the front office give it. I am asking them now.", "form"],
         ],
@@ -390,7 +391,10 @@ One line on the file is never a preference: an allergy. It goes to the chef on a
         [
           ["It is theirs to give. I am ask first.", "form"],
           ["It is theirs to give. I am asking first.", "answer"],
-          ["Fine — she will calm down, and the restaurant can always move somebody later.", "register"],
+          [
+            "Fine — she will calm down, and the restaurant can always move somebody later.",
+            "register",
+          ],
         ],
         "Câu này hứa trước thay nhà hàng — nếu nhà hàng nói không, quầy đã nói sai với khách. Câu sai ngữ pháp dùng 'I am ask'; phải là 'I am asking'. Đáp án nói đúng ai quyết, và xin trước khi trả lời khách.",
         "colleague",
@@ -542,7 +546,10 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
       round(
         "Your staff told us the spa was included. Are you calling us liars?",
         [
-          ["Of course not, madam. I am sure my colleague simply made an honest mistake.", "register"],
+          [
+            "Of course not, madam. I am sure my colleague simply made an honest mistake.",
+            "register",
+          ],
           ["Not at all, madam. I cannot find it yet — was it written or spoken?", "answer"],
           ["Not at all, madam. I cannot found it yet — was it written or spoken?", "form"],
         ],
@@ -578,11 +585,11 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
         "bàn giao đích danh cho một người",
         "🤝",
       ]),
-      c(
-        "What the guest expects next",
-        "What the guest expects next is a call this evening.",
-        ["/wɒt ðə ɡest ɪkˈspekts nekst/", "điều khách đang chờ tiếp theo", "👀"],
-      ),
+      c("What the guest expects next", "What the guest expects next is a call this evening.", [
+        "/wɒt ðə ɡest ɪkˈspekts nekst/",
+        "điều khách đang chờ tiếp theo",
+        "👀",
+      ]),
       c("Stopped asking", "She has stopped asking, and that is the one to watch.", [
         "/stɒpt ˈɑːskɪŋ/",
         "đã thôi hỏi (nhưng vẫn còn bận tâm)",

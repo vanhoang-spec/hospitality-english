@@ -130,7 +130,9 @@ const lesson1 = L(38, 1, "A Plan in Three Parts", "Kế hoạch ba phần", {
         "Of course, sir. I will send you the proposal by email tonight, with every day and time.",
         "Đề xuất bằng văn bản: khách có lịch rõ ràng, và không ai phải nhớ.",
       ),
-      alsoAccept: ["Of course, sir. I will email you the proposal tonight, with every day and time."],
+      alsoAccept: [
+        "Of course, sir. I will email you the proposal tonight, with every day and time.",
+      ],
     },
     sp(
       "Mr Ito wanted a plan for his golf week. What did you suggest?",
@@ -371,7 +373,8 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
 // ── Lesson 3 — Questions after the plan ────────────────────────────────
 const t3a =
   "I understand, madam. If the plan is over your budget, we can offer a shorter version without the herbal bath.";
-const t3b = "It takes one hour instead of two, and it still includes the back massage and herbal tea.";
+const t3b =
+  "It takes one hour instead of two, and it still includes the back massage and herbal tea.";
 const t3c =
   "You do not have to book today, madam. There is no obligation, and I can hold the time until noon tomorrow.";
 
@@ -567,11 +570,7 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
       "Liệu trình dùng nhiệt (xông hơi, ngâm nóng, đá nóng)",
       "♨️",
     ]),
-    c("Summary", "Here is a short summary of your plan.", [
-      "/ˈsʌməri/",
-      "Bản tóm tắt",
-      "📝",
-    ]),
+    c("Summary", "Here is a short summary of your plan.", ["/ˈsʌməri/", "Bản tóm tắt", "📝"]),
   ],
   grammar: [
     g(
@@ -631,7 +630,9 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
         "Of course, madam. Here is a short summary of your plan, with both days and times.",
         "Một bản tóm tắt ('summary') bằng văn bản — khách mang về, không phải nhớ.",
       ),
-      alsoAccept: ["Of course, madam. Here is a short summary of your plan, with both days and both times."],
+      alsoAccept: [
+        "Of course, madam. Here is a short summary of your plan, with both days and both times.",
+      ],
     },
     sp(
       "What if I feel uncomfortable during the massage?",

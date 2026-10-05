@@ -55,12 +55,12 @@ const t1c =
 
 // ── Lesson 2 — a lobby that wants answers ──────────────────────────────────
 const t2a = "I do not know that yet, madam. Please move to the garden with me.";
-const t2b = "Nobody has told me that, madam, so I will not say it. Please keep walking to the garden.";
+const t2b =
+  "Nobody has told me that, madam, so I will not say it. Please keep walking to the garden.";
 const t2c = "I will speak again at ten past, madam, whatever I know by then.";
 
 // ── Lesson 3 — instructions people follow ──────────────────────────────────
-const t3a =
-  "Please do not go back up, sir. Leave it and come with me to the assembly point.";
+const t3a = "Please do not go back up, sir. Leave it and come with me to the assembly point.";
 const t3b = "Nobody goes back in until we are told, sir, and that includes me.";
 const t3c = "To the assembly point in the garden, sir. Please use the stairs.";
 
@@ -216,7 +216,10 @@ A guest who asks whether her husband is still upstairs does not get a guess eith
       round(
         "Duty Manager. How many are out on the boat?",
         [
-          ["Around nine or ten, I would say — it looked like a big group this morning.", "register"],
+          [
+            "Around nine or ten, I would say — it looked like a big group this morning.",
+            "register",
+          ],
           ["Nine. I counted them onto the boat, and I wrote it down.", "answer"],
           ["Nine. I counted them onto the boat, and I writed it down.", "form"],
         ],
@@ -367,7 +370,10 @@ Rumours arrive as questions: "Somebody said the kitchen is on fire." Do not argu
       round(
         "How long is this going to take? We have a dinner booked at eight.",
         [
-          ["It should not be long, sir — these things are usually over in a few minutes.", "register"],
+          [
+            "It should not be long, sir — these things are usually over in a few minutes.",
+            "register",
+          ],
           ["I do not know that yet, sir. I will speak again on ten past.", "form"],
           ["I do not know that yet, sir. I will speak again at ten past.", "answer"],
         ],
@@ -688,7 +694,10 @@ An hour later, somebody may arrive with a phone or a microphone. Say "That is no
         [
           ["Not yet. The bell is not the all-clear, and the fire officer has not give it.", "form"],
           ["Yes — the bell has stopped, so the building must be clear by now.", "register"],
-          ["Not yet. The bell is not the all-clear, and the fire officer has not given it.", "answer"],
+          [
+            "Not yet. The bell is not the all-clear, and the fire officer has not given it.",
+            "answer",
+          ],
         ],
         "Câu này coi chuông tắt là lệnh vào lại — lệnh đó chỉ cán bộ chữa cháy mới đưa ra. Câu sai ngữ pháp dùng 'has not give'; sau 'has' là quá khứ phân từ: 'has not given'. Đáp án giữ khách lại và nói ai cho phép vào.",
         "colleague",

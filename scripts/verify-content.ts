@@ -19,6 +19,7 @@ import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 import { reservableTurns } from "../src/lib/checkpoint-oral";
+import { isAuthoredP4 } from "../src/lib/content/phase4";
 
 type Phase = {
   name: string;
@@ -738,6 +739,46 @@ if (legacyGameDupes.length) {
   }
   console.log(
     `Phase 3 reserved pools (marked turns) — ${sizes.join(" · ")}  (floor ${POOL_MIN}, ≥ 1 a week)`,
+  );
+}
+
+// ============================================================
+// GATE 4c — the same for Phase 4, once a department has written all ten
+// weeks in p4/<dep>/. The first blind round of the reopened phase found the
+// week-40 must-be-right slot drawing from one turn at the front desk (in
+// every sitting, chosen because "You may not have to" contains "may not"),
+// three in Guest Relations and four, all faulty, in the Spa. A department
+// still mid-rewrite is not held to it yet; one that has finished is.
+// ============================================================
+{
+  const POOL_MIN = 20;
+  const sizes: string[] = [];
+  for (const dep of ["FO", "FB", "HK", "SW", "GR"]) {
+    let authored = true;
+    for (let w = 31; w <= 40; w++) if (!isAuthoredP4(`${dep}-${w}`)) authored = false;
+    if (!authored) continue;
+    const { byMark, turns } = reservableTurns(dep, "40");
+    if (!byMark) {
+      errors.push(
+        `${dep} Phase 4 marks no risk turn — its checkpoint falls back to the substring search`,
+      );
+      continue;
+    }
+    const distinct = new Set(turns.map((t) => t.target)).size;
+    sizes.push(`${dep} ${distinct}`);
+    if (distinct < POOL_MIN)
+      errors.push(
+        `${dep} Phase 4 reserved pool holds ${distinct} turns — the floor is ${POOL_MIN}`,
+      );
+    for (let w = 31; w <= 40; w++) {
+      const marked = (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        .flatMap((l) => l.speaking)
+        .filter((s) => s.risk).length;
+      if (marked === 0) errors.push(`${dep}-${w} has no risk-marked speaking turn`);
+    }
+  }
+  console.log(
+    `Phase 4 reserved pools (marked turns) — ${sizes.length ? sizes.join(" · ") : "no department fully rewritten yet"}  (floor ${POOL_MIN}, ≥ 1 a week)`,
   );
 }
 

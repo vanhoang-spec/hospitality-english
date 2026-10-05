@@ -132,7 +132,9 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
         "Of course, madam. I will put it on file today, so nobody uses it on you again.",
         "Ghi vào hồ sơ của khách để lần sau không ai dùng lại — hứa một việc bạn làm được ngay hôm nay.",
       ),
-      alsoAccept: ["Of course, madam. I will note it on file today, so nobody uses it on you again."],
+      alsoAccept: [
+        "Of course, madam. I will note it on file today, so nobody uses it on you again.",
+      ],
     },
     sp(
       "What happened in room three this afternoon?",
@@ -538,10 +540,8 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
 });
 
 // ── Lesson 4 — Storms and power cuts ───────────────────────────────────
-const t4a =
-  "There is a power cut, madam. Please stay on the bed, and I will switch on my torch.";
-const t4b =
-  "I am not sure, madam. Engineering is checking it now, and I will stay here with you.";
+const t4a = "There is a power cut, madam. Please stay on the bed, and I will switch on my torch.";
+const t4b = "I am not sure, madam. Engineering is checking it now, and I will stay here with you.";
 const t4c = "I will put a warm blanket over you now, madam, and the torch will stay on.";
 
 const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện", {
@@ -614,7 +614,9 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
         undefined,
         t4b,
       ),
-      alsoAccept: ["I will put a warm blanket over you now, madam, and the torch will stay on here."],
+      alsoAccept: [
+        "I will put a warm blanket over you now, madam, and the torch will stay on here.",
+      ],
     },
     risk({
       ...sp(
@@ -652,11 +654,7 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
     [
       {
         q: "Vì sao Bảo mời khách lên khỏi hồ ngoài trời dù trời chỉ mưa nhỏ?",
-        options: [
-          "Vì có sét",
-          "Vì nước hồ có mùi hoá chất",
-          "Vì sắp tới giờ đóng cửa hồ bơi",
-        ],
+        options: ["Vì có sét", "Vì nước hồ có mùi hoá chất", "Vì sắp tới giờ đóng cửa hồ bơi"],
         correct: 0,
         explanation:
           "'there is lightning, so the guest must step out now' — có sét là lên bờ, mưa to hay nhỏ không quan trọng.",

@@ -48,8 +48,7 @@ const t1b =
 const t1c = "Only with your permission, madam. Shall I put his birthday on your file?";
 
 // ── Lesson 2 — a complaint before dinner ───────────────────────────────────
-const t2a =
-  "I am sorry that happened, sir, on such a special evening. Please take me through it.";
+const t2a = "I am sorry that happened, sir, on such a special evening. Please take me through it.";
 const t2b = "Do you remember who took it, sir? I am writing it all down.";
 const t2c =
   "I am asking the restaurant for a table now, sir. Let me check with my manager about the dinner.";
@@ -64,8 +63,7 @@ const t3c = "Please use the stairs if the power goes, madam. The stair lights st
 const t4a =
   "Thank you for telling me, madam. I am writing it down and handing it over by name now.";
 const t4b = "Yes, madam. She will have it in your own words, and what you expect next.";
-const t4c =
-  "That is my Duty Manager's decision, madam, and I am taking it to her before I leave.";
+const t4c = "That is my Duty Manager's decision, madam, and I am taking it to her before I leave.";
 
 const lessons = [
   L(40, 1, "Saturday Afternoon", "Chiều thứ Bảy ở quầy", {

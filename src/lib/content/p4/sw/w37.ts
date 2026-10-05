@@ -28,163 +28,171 @@ const t1b = "It is valid for one year, madam, and you can renew it in the last m
 const t1c =
   "You can freeze your membership for one month a year, as long as you tell us in writing.";
 
-const lesson1 = L(37, 1, "Membership and Package Terms", "Điều khoản thẻ hội viên và gói liệu trình", {
-  vocabulary: [
-    c("Membership", "A spa membership includes the pool, the gym and the sauna.", [
-      "/ˈmembəʃɪp/",
-      "Thẻ hội viên, tư cách hội viên",
-      "💳",
-    ]),
-    c("Per cent", "Members receive ten per cent off every treatment.", [
-      "/pə ˈsent/",
-      "Phần trăm",
-      "💯",
-    ]),
-    c("Renew", "You can renew your membership in the last month.", [
-      "/rɪˈnjuː/",
-      "Gia hạn",
-      "🔁",
-    ]),
-    c("Freeze", "Members can freeze the membership for one month a year.", [
-      "/friːz/",
-      "Tạm ngưng (thẻ hội viên) trong một thời gian",
-      "🧊",
-    ]),
-    c("Non-transferable", "The package is non-transferable, so only the buyer can use it.", [
-      "/ˌnɒn trænsˈfɜːrəbl/",
-      "Không chuyển nhượng được (không cho người khác dùng)",
-      "🚫",
-    ]),
-  ],
-  grammar: [
-    g(
-      "Package three months.",
-      "The package is valid for three months from the day you buy it.",
-      "'valid for + khoảng thời gian'. Người Việt hay nói 'valid in three months' (dịch 'có giá trị trong ba tháng') — nghe như ba tháng nữa mới dùng được.",
-      "The package is valid in three months from the day you buy it.",
-    ),
-    g(
-      "Member discount ten.",
-      "Members receive ten per cent off every treatment on the menu.",
-      "'ten per cent off' = giảm mười phần trăm. Chủ ngữ 'Members' số nhiều → 'receive', không thêm -s. Đây là quyền lợi in sẵn trong điều khoản thẻ, không phải giảm giá bạn tự đưa ra.",
-      "Members receives ten per cent off every treatment on the menu.",
-    ),
-  ],
-  speaking: [
-    sp(
-      "What does the spa membership include?",
-      t1a,
-      "Kể quyền lợi đúng như điều khoản in sẵn: ba khu dùng hằng ngày, và một tỷ lệ giảm cho liệu trình — mười phần trăm ('per cent').",
-    ),
-    {
-      ...sp(
-        "And how long is the membership valid for?",
-        t1b,
-        "Một thời hạn (một năm) và một điều kiện gia hạn ('renew' trong tháng cuối cùng).",
-        undefined,
-        undefined,
-        t1a,
-      ),
-      alsoAccept: ["It is valid for one year, madam, and you can renew it during the last month."],
-    },
-    {
-      ...sp(
-        "I travel a lot for work. What if I am away for a month?",
-        t1c,
-        "Một điều kiện nối bằng cụm 'miễn là' (as long as): được tạm ngưng thẻ một tháng mỗi năm, miễn là khách báo bằng văn bản.",
-        undefined,
-        undefined,
-        t1b,
-      ),
-      alsoAccept: [
-        "You can freeze your membership for one month a year, as long as you ask us in writing.",
-      ],
-    },
-    risk({
-      ...sp(
-        "Can my husband use the last two sessions of my package?",
-        "I am sorry, madam. The package is non-transferable, but I can ask my manager.",
-        "Gói không chuyển nhượng được: nói rõ điều khoản. Ngoại lệ là việc của quản lý — bạn hỏi giúp, không tự hứa.",
-        undefined,
-        ["package", "non", "transferable", "ask", "manager"],
-      ),
-      alsoAccept: [
-        "I am sorry, madam. The package is non-transferable, but I will ask my manager.",
-        "I am afraid the package is non-transferable, madam, but I can ask my manager.",
-      ],
-    }),
-    {
-      ...sp(
-        "I am joining next month. Can I pay member prices today?",
-        "I am afraid the member price starts on the day your membership starts, sir.",
-        "Giá hội viên bắt đầu cùng ngày thẻ có hiệu lực — nói đúng điều khoản, giọng phục vụ, không mặc cả.",
-      ),
-      alsoAccept: ["I am afraid the member price begins on the day your membership starts, sir."],
-    },
-    sp(
-      "A member wants to freeze her membership for the whole summer. Is that all right?",
-      "Our terms allow one month a year, so please ask the spa manager about a longer freeze.",
-      "Nói với đồng nghiệp — không dùng sir hay madam. Điều khoản cho một tháng; hơn thế là ngoại lệ, quản lý spa quyết.",
-      "colleague",
-    ),
-  ],
-  reading: read(
-    `Ms Hall is working in the city for six months, and she asks about the spa membership. Vy, the spa receptionist, explains the terms one by one. The membership includes the pool, the gym and the sauna every day. Members also receive ten per cent off every treatment. The membership is valid for one year, and members can renew it in the last month. Ms Hall travels a lot, so she asks what happens when she is away. Vy explains that she can freeze the membership for one month a year, as long as she asks in writing. Then Ms Hall asks if her husband can use the last two sessions of her old massage package. Vy says the package is non-transferable, but she can ask her manager. She also explains that the member price starts on the day the membership starts. Ms Hall joins that afternoon. The next week, she asks to freeze her membership for the whole summer. Vy does not say yes or no. She asks the spa manager, because the terms allow only one month a year.`,
-    [
-      {
-        q: "Thẻ hội viên có giá trị bao lâu?",
-        options: [
-          "Ba tháng kể từ ngày mua",
-          "Một năm, gia hạn trong tháng cuối",
-          "Sáu tháng, đúng bằng thời gian khách làm việc ở đây",
-        ],
-        correct: 1,
-        explanation:
-          "'The membership is valid for one year, and members can renew it in the last month.' Ba tháng là thời hạn của gói liệu trình, không phải của thẻ.",
-      },
-      {
-        q: "Khi khách muốn tạm ngưng thẻ suốt mùa hè, Vy làm gì?",
-        options: [
-          "Hỏi quản lý spa trước khi trả lời",
-          "Đồng ý ngay vì khách vừa đăng ký hội viên tuần trước",
-          "Từ chối và đề nghị khách huỷ thẻ rồi đăng ký lại sau",
-        ],
-        correct: 0,
-        explanation:
-          "'She asks the spa manager, because the terms allow only one month a year' — vượt điều khoản là ngoại lệ, quản lý quyết.",
-      },
-      {
-        q: "Chồng khách có dùng được hai buổi còn lại trong gói của bà không?",
-        options: [
-          "Được, vì hai người là vợ chồng",
-          "Được, nếu trả thêm một khoản phí chuyển nhượng nhỏ",
-          "Theo điều khoản thì không; Vy sẽ hỏi quản lý",
-        ],
-        correct: 2,
-        explanation:
-          "'Vy says the package is non-transferable, but she can ask her manager' — nói đúng điều khoản, và ngoại lệ thì hỏi quản lý.",
-      },
+const lesson1 = L(
+  37,
+  1,
+  "Membership and Package Terms",
+  "Điều khoản thẻ hội viên và gói liệu trình",
+  {
+    vocabulary: [
+      c("Membership", "A spa membership includes the pool, the gym and the sauna.", [
+        "/ˈmembəʃɪp/",
+        "Thẻ hội viên, tư cách hội viên",
+        "💳",
+      ]),
+      c("Per cent", "Members receive ten per cent off every treatment.", [
+        "/pə ˈsent/",
+        "Phần trăm",
+        "💯",
+      ]),
+      c("Renew", "You can renew your membership in the last month.", [
+        "/rɪˈnjuː/",
+        "Gia hạn",
+        "🔁",
+      ]),
+      c("Freeze", "Members can freeze the membership for one month a year.", [
+        "/friːz/",
+        "Tạm ngưng (thẻ hội viên) trong một thời gian",
+        "🧊",
+      ]),
+      c("Non-transferable", "The package is non-transferable, so only the buyer can use it.", [
+        "/ˌnɒn trænsˈfɜːrəbl/",
+        "Không chuyển nhượng được (không cho người khác dùng)",
+        "🚫",
+      ]),
     ],
-  ),
-  game: [
-    game(
-      "How long can I use this package?",
-      "It is valid for three months from the day you buy it, madam.",
-      "It is valid in three months from the day you buy it, madam.",
-      "As long as you like, madam. We never really check the dates on our packages.",
-      undefined,
-      "Câu thứ hai sai giới từ: thời hạn hiệu lực là 'valid for three months'. Câu thứ ba nói sai điều khoản — gói chỉ dùng được ba tháng, và một lời hứa 'thoải mái' hôm nay thành khiếu nại vào tháng thứ tư. Câu đúng nói rõ thời hạn.",
+    grammar: [
+      g(
+        "Package three months.",
+        "The package is valid for three months from the day you buy it.",
+        "'valid for + khoảng thời gian'. Người Việt hay nói 'valid in three months' (dịch 'có giá trị trong ba tháng') — nghe như ba tháng nữa mới dùng được.",
+        "The package is valid in three months from the day you buy it.",
+      ),
+      g(
+        "Member discount ten.",
+        "Members receive ten per cent off every treatment on the menu.",
+        "'ten per cent off' = giảm mười phần trăm. Chủ ngữ 'Members' số nhiều → 'receive', không thêm -s. Đây là quyền lợi in sẵn trong điều khoản thẻ, không phải giảm giá bạn tự đưa ra.",
+        "Members receives ten per cent off every treatment on the menu.",
+      ),
+    ],
+    speaking: [
+      sp(
+        "What does the spa membership include?",
+        t1a,
+        "Kể quyền lợi đúng như điều khoản in sẵn: ba khu dùng hằng ngày, và một tỷ lệ giảm cho liệu trình — mười phần trăm ('per cent').",
+      ),
+      {
+        ...sp(
+          "And how long is the membership valid for?",
+          t1b,
+          "Một thời hạn (một năm) và một điều kiện gia hạn ('renew' trong tháng cuối cùng).",
+          undefined,
+          undefined,
+          t1a,
+        ),
+        alsoAccept: [
+          "It is valid for one year, madam, and you can renew it during the last month.",
+        ],
+      },
+      {
+        ...sp(
+          "I travel a lot for work. What if I am away for a month?",
+          t1c,
+          "Một điều kiện nối bằng cụm 'miễn là' (as long as): được tạm ngưng thẻ một tháng mỗi năm, miễn là khách báo bằng văn bản.",
+          undefined,
+          undefined,
+          t1b,
+        ),
+        alsoAccept: [
+          "You can freeze your membership for one month a year, as long as you ask us in writing.",
+        ],
+      },
+      risk({
+        ...sp(
+          "Can my husband use the last two sessions of my package?",
+          "I am sorry, madam. The package is non-transferable, but I can ask my manager.",
+          "Gói không chuyển nhượng được: nói rõ điều khoản. Ngoại lệ là việc của quản lý — bạn hỏi giúp, không tự hứa.",
+          undefined,
+          ["package", "non", "transferable", "ask", "manager"],
+        ),
+        alsoAccept: [
+          "I am sorry, madam. The package is non-transferable, but I will ask my manager.",
+          "I am afraid the package is non-transferable, madam, but I can ask my manager.",
+        ],
+      }),
+      {
+        ...sp(
+          "I am joining next month. Can I pay member prices today?",
+          "I am afraid the member price starts on the day your membership starts, sir.",
+          "Giá hội viên bắt đầu cùng ngày thẻ có hiệu lực — nói đúng điều khoản, giọng phục vụ, không mặc cả.",
+        ),
+        alsoAccept: ["I am afraid the member price begins on the day your membership starts, sir."],
+      },
+      sp(
+        "A member wants to freeze her membership for the whole summer. Is that all right?",
+        "Our terms allow one month a year, so please ask the spa manager about a longer freeze.",
+        "Nói với đồng nghiệp — không dùng sir hay madam. Điều khoản cho một tháng; hơn thế là ngoại lệ, quản lý spa quyết.",
+        "colleague",
+      ),
+    ],
+    reading: read(
+      `Ms Hall is working in the city for six months, and she asks about the spa membership. Vy, the spa receptionist, explains the terms one by one. The membership includes the pool, the gym and the sauna every day. Members also receive ten per cent off every treatment. The membership is valid for one year, and members can renew it in the last month. Ms Hall travels a lot, so she asks what happens when she is away. Vy explains that she can freeze the membership for one month a year, as long as she asks in writing. Then Ms Hall asks if her husband can use the last two sessions of her old massage package. Vy says the package is non-transferable, but she can ask her manager. She also explains that the member price starts on the day the membership starts. Ms Hall joins that afternoon. The next week, she asks to freeze her membership for the whole summer. Vy does not say yes or no. She asks the spa manager, because the terms allow only one month a year.`,
+      [
+        {
+          q: "Thẻ hội viên có giá trị bao lâu?",
+          options: [
+            "Ba tháng kể từ ngày mua",
+            "Một năm, gia hạn trong tháng cuối",
+            "Sáu tháng, đúng bằng thời gian khách làm việc ở đây",
+          ],
+          correct: 1,
+          explanation:
+            "'The membership is valid for one year, and members can renew it in the last month.' Ba tháng là thời hạn của gói liệu trình, không phải của thẻ.",
+        },
+        {
+          q: "Khi khách muốn tạm ngưng thẻ suốt mùa hè, Vy làm gì?",
+          options: [
+            "Hỏi quản lý spa trước khi trả lời",
+            "Đồng ý ngay vì khách vừa đăng ký hội viên tuần trước",
+            "Từ chối và đề nghị khách huỷ thẻ rồi đăng ký lại sau",
+          ],
+          correct: 0,
+          explanation:
+            "'She asks the spa manager, because the terms allow only one month a year' — vượt điều khoản là ngoại lệ, quản lý quyết.",
+        },
+        {
+          q: "Chồng khách có dùng được hai buổi còn lại trong gói của bà không?",
+          options: [
+            "Được, vì hai người là vợ chồng",
+            "Được, nếu trả thêm một khoản phí chuyển nhượng nhỏ",
+            "Theo điều khoản thì không; Vy sẽ hỏi quản lý",
+          ],
+          correct: 2,
+          explanation:
+            "'Vy says the package is non-transferable, but she can ask her manager' — nói đúng điều khoản, và ngoại lệ thì hỏi quản lý.",
+        },
+      ],
     ),
-    game(
-      "Can my sister use my membership while I am away?",
-      "I am sorry, madam. The membership is non-transferable, but I can ask my manager.",
-      "I am sorry, madam. The membership is non-transferable, but I can asking my manager.",
-      "Of course, madam. Just give her your card, and nobody at the desk will check her name.",
-      undefined,
-      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'ask'. Câu thứ ba chiều khách bằng cách bỏ qua điều khoản và hứa thay cả quầy lễ tân. Câu đúng nói rõ thẻ không chuyển nhượng được và hỏi quản lý cho ngoại lệ.",
-    ),
-  ],
-});
+    game: [
+      game(
+        "How long can I use this package?",
+        "It is valid for three months from the day you buy it, madam.",
+        "It is valid in three months from the day you buy it, madam.",
+        "As long as you like, madam. We never really check the dates on our packages.",
+        undefined,
+        "Câu thứ hai sai giới từ: thời hạn hiệu lực là 'valid for three months'. Câu thứ ba nói sai điều khoản — gói chỉ dùng được ba tháng, và một lời hứa 'thoải mái' hôm nay thành khiếu nại vào tháng thứ tư. Câu đúng nói rõ thời hạn.",
+      ),
+      game(
+        "Can my sister use my membership while I am away?",
+        "I am sorry, madam. The membership is non-transferable, but I can ask my manager.",
+        "I am sorry, madam. The membership is non-transferable, but I can asking my manager.",
+        "Of course, madam. Just give her your card, and nobody at the desk will check her name.",
+        undefined,
+        "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'ask'. Câu thứ ba chiều khách bằng cách bỏ qua điều khoản và hứa thay cả quầy lễ tân. Câu đúng nói rõ thẻ không chuyển nhượng được và hỏi quản lý cho ngoại lệ.",
+      ),
+    ],
+  },
+);
 
 // ── Lesson 2 — Cancellation and no-show terms ──────────────────────────
 const t2a = "You can cancel at no charge up to four hours before your treatment, sir.";
@@ -526,8 +534,7 @@ const t4a =
   "Please undress only as far as you feel comfortable, madam. I will step outside while you get ready.";
 const t4b =
   "Yes, madam. Only the area I am working on is uncovered, and you can ask me to stop at any moment.";
-const t4c =
-  "Please tell me at any moment, madam, and I will use a lighter pressure straight away.";
+const t4c = "Please tell me at any moment, madam, and I will use a lighter pressure straight away.";
 const t4d = "I am sorry, sir. I must decline, because that is a sensitive area.";
 
 const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng thuận trong liệu trình", {
@@ -600,7 +607,9 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
         undefined,
         t4b,
       ),
-      alsoAccept: ["Please tell me at any moment, madam, and I will use a lighter pressure at once."],
+      alsoAccept: [
+        "Please tell me at any moment, madam, and I will use a lighter pressure at once.",
+      ],
     },
     risk({
       ...sp(
@@ -695,7 +704,10 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
 });
 
 export const week: AuthoredWeek = {
-  title: { en: "Terms and Conditions at the Spa", vi: "Điều khoản gói, thẻ hội viên và điều kiện liệu trình" },
+  title: {
+    en: "Terms and Conditions at the Spa",
+    vi: "Điều khoản gói, thẻ hội viên và điều kiện liệu trình",
+  },
   lessons: [lesson1, lesson2, lesson3, lesson4],
   canDo:
     "Nói được: giải thích điều khoản bằng điều kiện, tỷ lệ và thời hạn ('valid for…', 'ten per cent off', 'as long as…', 'If you cancel less than four hours before…') — thẻ hội viên (gia hạn, tạm ngưng, không chuyển nhượng), phí huỷ muộn và không đến; nhận yêu cầu kỹ thuật viên nữ như một câu hỏi thủ tục và đưa ba lựa chọn khi không đáp ứng được; nói về tiền boa mà không nêu con số; giữ đồng thuận và che phủ khăn — từ chối vùng nhạy cảm, dừng buổi nếu khách đòi tiếp; mọi miễn phí hay ngoại lệ đều hỏi quản lý.",

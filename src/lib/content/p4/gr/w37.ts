@@ -49,12 +49,10 @@ const round = (
 const t1a = "Is he breathing, madam? Please stay on the line with me.";
 const t1b =
   "Then I am calling an ambulance now, madam. Please do not move him, and stay on the line.";
-const t1c =
-  "First aid is on the way too, madam, and I am staying on the line until they knock.";
+const t1c = "First aid is on the way too, madam, and I am staying on the line until they knock.";
 
 // ── Lesson 2 — until help arrives ──────────────────────────────────────────
-const t2a =
-  "I do not know that yet, sir. First aid is on the way, and I am staying here with you.";
+const t2a = "I do not know that yet, sir. First aid is on the way, and I am staying here with you.";
 const t2b = "Please give her nothing to eat or drink, sir, until first aid has seen her.";
 const t2c = "That is for first aid to decide, sir. Please keep her own medicine ready for them.";
 
@@ -231,7 +229,10 @@ Last, ask your own manager two questions now, not on the night. Which inside num
         [
           ["No need — if he is breathing, he probably just needs to sleep it off.", "register"],
           ["Call first aid and the Duty Manager now. First aid decide on the ambulance.", "form"],
-          ["Call first aid and the Duty Manager now. First aid decides on the ambulance.", "answer"],
+          [
+            "Call first aid and the Duty Manager now. First aid decides on the ambulance.",
+            "answer",
+          ],
         ],
         "Câu này tự chẩn đoán là 'ngủ một giấc là khỏi' — chuyện của người có chuyên môn, không phải của quầy. Câu sai ngữ pháp dùng 'First aid decide'; 'first aid' ở đây là một đội, chia số ít: 'decides'. Đáp án: còn thở thì gọi sơ cứu và Duty Manager, và để sơ cứu quyết chuyện xe cấp cứu.",
         "colleague",

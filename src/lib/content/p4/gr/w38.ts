@@ -48,8 +48,7 @@ const round = (
 // ── Lesson 1 — the warning and the next update ─────────────────────────────
 const t1a =
   "A weather warning has been issued, madam, so please stay indoors, away from the windows.";
-const t1b =
-  "I cannot promise that, madam. The next update is within the hour, at the lounge desk.";
+const t1b = "I cannot promise that, madam. The next update is within the hour, at the lounge desk.";
 const t1c =
   "Please stay indoors until then. The lounge and the restaurant are open as normal, madam.";
 
@@ -218,7 +217,10 @@ Read from the notice the Duty Manager gives you. Do not add to it, and do not gu
       round(
         "Is it safe to stay here tonight? Just tell me honestly.",
         [
-          ["Absolutely, madam — the hotel is built for storms like this one, so please relax.", "register"],
+          [
+            "Absolutely, madam — the hotel is built for storms like this one, so please relax.",
+            "register",
+          ],
           ["I cannot promise that, madam. Please stay indoors, away from the windows.", "answer"],
           ["I cannot promise that, madam. Please stay indoor, away from the windows.", "form"],
         ],
@@ -254,11 +256,11 @@ Read from the notice the Duty Manager gives you. Do not add to it, and do not gu
         "ngày đầu tiên trời quang",
         "🌤️",
       ]),
-      c("The storm programme", "The storm programme is printed, and it is the same for every guest.", [
-        "/ðə stɔːm ˈprəʊɡræm/",
-        "chương trình in sẵn cho ngày bão",
-        "📋",
-      ]),
+      c(
+        "The storm programme",
+        "The storm programme is printed, and it is the same for every guest.",
+        ["/ðə stɔːm ˈprəʊɡræm/", "chương trình in sẵn cho ngày bão", "📋"],
+      ),
       c("Refund", "The concierge desk does the refund under the storm programme.", [
         "/ˈriːfʌnd/",
         "khoản hoàn tiền",
@@ -382,7 +384,10 @@ Do not promise the weather either. "The boat will surely go on Saturday" is a fo
       round(
         "We fly home on Friday. What good is a new date to us?",
         [
-          ["Then I will refund it myself right now, sir, and add a free dinner for you both.", "register"],
+          [
+            "Then I will refund it myself right now, sir, and add a free dinner for you both.",
+            "register",
+          ],
           ["Then a rain check or a refund, sir. The concierge desk handle both.", "form"],
           ["Then a rain check or a refund, sir. The concierge desk handles both.", "answer"],
         ],
@@ -559,11 +564,7 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
 
   L(38, 4, "The Storm Night", "Đêm bão — mất điện và thang máy", {
     vocabulary: [
-      c("Power cut", "It is a power cut from the storm, sir.", [
-        "/ˈpaʊə kʌt/",
-        "mất điện",
-        "🔌",
-      ]),
+      c("Power cut", "It is a power cut from the storm, sir.", ["/ˈpaʊə kʌt/", "mất điện", "🔌"]),
       c("Generator", "The generator keeps the corridors and the stair lights on.", [
         "/ˈdʒenəreɪtə/",
         "máy phát điện",
