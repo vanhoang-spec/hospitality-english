@@ -305,7 +305,7 @@ const lesson2 = L(32, 2, "Since You Mentioned…", "Nhắc lại điều khách 
     ),
     game(
       "My guest says her legs are sore after running. What do you suggest?",
-      "Check her form first, and then use firm pressure only if she wants it.",
+      "Check her health form first, and then use firm pressure only if she says she wants it.",
       "Check her form first, and then using firm pressure only if she wants it.",
       "Just use your strongest pressure. Runners always want it hard.",
       "colleague",
@@ -467,7 +467,7 @@ const lesson3 = L(32, 3, "Returning Guests: Ask Again", "Khách quen: vẫn hỏ
   game: [
     game(
       "I was here in May. Do I need to fill in the form again?",
-      "Yes, please, sir. Health can change, so the form must be up to date.",
+      "Yes, please, sir. Health can change in a few months, so the form must be up to date.",
       "Yes, please, sir. Health can changes, so the form must be up to date.",
       "No, sir. You look very healthy, so we can use your old form.",
       undefined,

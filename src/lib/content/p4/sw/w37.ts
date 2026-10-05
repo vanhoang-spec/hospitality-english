@@ -341,7 +341,7 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
   game: [
     game(
       "What happens if I cancel two hours before my massage?",
-      "That is a late cancellation, sir, so there is a fifty per cent fee.",
+      "That is a late cancellation, sir, so there is a fifty per cent fee for the massage.",
       "That is a late cancellation, sir, so there are a fifty per cent fee.",
       "Nothing at all, sir. We only charge the guests who forget to call us.",
       undefined,
@@ -686,11 +686,11 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
   game: [
     game(
       "Could you work a little higher, near the top of my leg?",
-      "I am sorry, sir. I must decline, because that is a sensitive area.",
+      "I am sorry, sir. I must decline, because that is a sensitive area. I will continue on your back.",
       "I am sorry, sir. I must declining, because that is a sensitive area.",
       "All right, sir, just this once, but please do not mention it to anyone.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'must' là động từ nguyên mẫu 'decline'. Câu thứ ba đồng ý làm một việc vượt ranh giới nghề và còn xin khách giữ bí mật. Câu đúng từ chối lịch sự, kèm lý do ngắn.",
+      "Câu thứ hai sai dạng: sau 'must' là động từ nguyên mẫu 'decline'. Câu thứ ba đồng ý làm một việc vượt ranh giới nghề và còn xin khách giữ bí mật. Câu đúng từ chối lịch sự, kèm lý do ngắn, rồi làm tiếp ở lưng.",
     ),
     game(
       "Do I have to take everything off?",

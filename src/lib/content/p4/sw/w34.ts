@@ -149,7 +149,7 @@ const lesson1 = L(34, 1, "Finding Out the Occasion", "Tìm hiểu dịp đặc b
   game: [
     game(
       "We are here for something special this weekend.",
-      "How lovely, madam. May I ask if you are celebrating an occasion?",
+      "How lovely, madam. May I ask if you are celebrating a special occasion this weekend?",
       "How lovely, madam. May I ask if are you celebrating an occasion?",
       "Is it your birthday today, madam? May I ask how old you are this year?",
       undefined,
@@ -484,7 +484,7 @@ const lesson3 = L(34, 3, "The Right Words at the Right Moment", "Lời chúc đ�
     ),
     game(
       "Thank you for making our anniversary so special.",
-      "It was our pleasure, sir. Wishing you both a very happy anniversary.",
+      "It was our pleasure, sir. Wishing you both a very happy anniversary. We hope to see you again.",
       "It was our pleasure, sir. Wish you both a very happy anniversary.",
       "No problem, sir. Please leave us a good review on the hotel website.",
       undefined,

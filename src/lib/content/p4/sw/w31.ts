@@ -162,7 +162,7 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
     ),
     game(
       "I am pregnant. Will the herbal bath be safe for me?",
-      "Thank you for telling me, madam. I will check with my manager first.",
+      "Thank you for telling me, madam. I will check with my manager first, and then come back to you.",
       "Thank you for tell me, madam. I will checking with my manager first.",
       "Of course, madam. The herbs are all natural, so the bath is perfectly safe for you.",
       undefined,
@@ -472,11 +472,11 @@ const lesson3 = L(31, 3, "The Right Story for the Guest", "Kể đúng chuyện 
     ),
     game(
       "I have high blood pressure, but I really want the herbal bath.",
-      "I am sorry, sir. With high blood pressure, I cannot offer the herbal bath.",
+      "I am sorry, sir. With high blood pressure, I cannot offer the herbal bath, but I can suggest a warm foot soak.",
       "I am sorry, sir. With high blood pressure, I cannot offering the herbal bath.",
       "A short bath should be fine, sir. Just come out if you start to feel dizzy.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'cannot' là động từ nguyên mẫu 'offer'. Câu thứ ba tự quyết là 'chắc không sao' — nhiệt là chống chỉ định với huyết áp cao, nhân viên không tự bỏ qua. Câu đúng từ chối rõ ràng.",
+      "Câu thứ hai sai dạng: sau 'cannot' là động từ nguyên mẫu 'offer'. Câu thứ ba tự quyết là 'chắc không sao' — nhiệt là chống chỉ định với huyết áp cao, nhân viên không tự bỏ qua. Câu đúng từ chối rõ ràng, rồi gợi ý ngâm chân nước ấm thay thế.",
     ),
   ],
 });

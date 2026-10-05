@@ -151,7 +151,7 @@ const lesson1 = L(33, 1, "Listen First, Then Apologise", "Lắng nghe trước, 
   game: [
     game(
       "This bill is wrong, and I am very angry about it.",
-      "I am sorry about this, madam. Could you tell me the details, please?",
+      "I am sorry about this, madam. Could you tell me the details of the problem, please?",
       "I am sorry about this, madam. Could you telling me the details, please?",
       "Please calm down, madam. Our system never makes mistakes with the bills.",
       undefined,
@@ -299,7 +299,7 @@ const lesson2 = L(33, 2, "What Our Policy Allows", "Chính sách cho phép đế
   game: [
     game(
       "Can I move my massage to tomorrow? It starts in six hours.",
-      "Yes, madam. Our policy allows you to reschedule at no charge up to four hours before.",
+      "Yes, madam. Our policy allows you to reschedule at no charge up to four hours before your massage.",
       "Yes, madam. Our policy allow you to reschedule at no charge up to four hours before.",
       "Yes, madam, but there is a charge for every change, because the room was kept for you.",
       undefined,

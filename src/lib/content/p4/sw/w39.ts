@@ -361,7 +361,7 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
   game: [
     game(
       "It is ten to three. Could you plan a spa day for my six friends?",
-      "Of course, madam. I will write it down, and Mai will plan it with you at three.",
+      "Of course, madam. I will write down your request, and Mai will plan it with you at three.",
       "Of course, madam. I will write it down, and Mai will plans it with you at three.",
       "Yes, madam. Let me start the whole plan now, even if I have to stay late.",
       undefined,
@@ -719,11 +719,11 @@ const lesson4 = L(
     game: [
       game(
         "I only had one glass of wine. Can I use the sauna?",
-        "I am sorry, sir. We cannot let you use the sauna after alcohol.",
+        "I am sorry, sir. We cannot let you use the sauna after alcohol, even after one glass.",
         "I am sorry, sir. We cannot let you to use the sauna after alcohol.",
         "One glass is fine, sir. Just stay for a shorter time than usual.",
         undefined,
-        "Câu thứ hai thừa 'to': sau 'let you' là 'use'. Câu thứ ba tự quyết 'một ly thì không sao' — luật an toàn không có mức 'một ly'. Câu đúng từ chối rõ ràng.",
+        "Câu thứ hai thừa 'to': sau 'let you' là 'use'. Câu thứ ba tự quyết 'một ly thì không sao' — luật an toàn không có mức 'một ly'. Câu đúng từ chối rõ ràng, kể cả khi khách chỉ uống một ly.",
       ),
       game(
         "The lights went out! Are you leaving me?",

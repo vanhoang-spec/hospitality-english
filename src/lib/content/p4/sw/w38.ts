@@ -694,11 +694,11 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
     ),
     game(
       "My friend says hot stones are fine when you are pregnant.",
-      "Thank you, madam. Your plan has no heat treatments, so we will not use hot stones.",
+      "Thank you, madam. My manager chose a plan with no heat treatments, so we will not use hot stones.",
       "Thank you, madam. Your plan has no heat treatments, so we will not using hot stones.",
       "Then your friend is probably right, madam. Let us add a few, just to try.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will not' là động từ nguyên mẫu 'use'. Câu thứ ba bỏ kế hoạch quản lý đã duyệt vì lời một người bạn. Câu đúng giữ kế hoạch, lịch sự, không tranh luận.",
+      "Câu thứ hai sai dạng: sau 'will not' là động từ nguyên mẫu 'use'. Câu thứ ba bỏ kế hoạch quản lý đã duyệt vì lời một người bạn. Câu đúng nhắc rằng quản lý đã chọn kế hoạch, giữ kế hoạch, lịch sự, không tranh luận.",
     ),
   ],
 });

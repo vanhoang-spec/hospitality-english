@@ -166,7 +166,7 @@ const lesson1 = L(35, 1, "What If We…?", "Đề xuất phương án khác", {
     ),
     game(
       "Give me a discount, and I will take the other room.",
-      "I am sorry, madam. I cannot offer a discount, but I will ask my manager.",
+      "I am sorry, madam. I cannot offer a discount, but I will ask my manager and come back to you.",
       "I am sorry, madam. I cannot offering a discount, but I will ask my manager.",
       "It is a deal, madam. I will take twenty percent off if you take the other room now.",
       undefined,
@@ -462,7 +462,7 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
   game: [
     game(
       "I cancelled late, but please waive the fee for me.",
-      "I am sorry, sir. I cannot waive the fee; however, I will ask my manager today.",
+      "I am sorry, sir. I cannot waive the fee; however, I will ask my manager today and come back to you.",
       "I am sorry, sir. I cannot waives the fee; however, I will ask my manager today.",
       "No problem at all, sir. I will just delete the fee from your bill this time, as a favour.",
       undefined,

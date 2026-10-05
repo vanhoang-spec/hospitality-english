@@ -522,7 +522,7 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
   game: [
     game(
       "The pool smells very strongly of chemicals today.",
-      "Thank you, madam. Please step out of the pool now, and we will check the water.",
+      "Thank you, madam. Please step out of the pool now, and our engineering team will check the water.",
       "Thank you, madam. Please step out of the pool now, and we will checking the water.",
       "Thank you, madam. That is normal after cleaning, so you can keep swimming.",
       undefined,
@@ -694,7 +694,7 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
     ),
     game(
       "It is just a little rain. I want to finish my swim.",
-      "I am sorry, sir. There is lightning, so please step out of the pool now.",
+      "I am sorry, sir. There is lightning near the hotel, so please step out of the pool now.",
       "I am sorry, sir. Have lightning, so please step out of the pool now.",
       "Of course, sir. Please swim close to the steps, so you can get out quickly.",
       undefined,

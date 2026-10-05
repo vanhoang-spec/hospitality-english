@@ -171,7 +171,7 @@ const lesson1 = L(40, 1, "Morning: Consultations", "Buổi sáng: tư vấn cho 
     ),
     game(
       "I am pregnant. Is the signature ritual safe for me?",
-      "Thank you, madam. The ritual has a hot herbal bath, so I will check with my manager first.",
+      "Thank you for telling me, madam. The ritual has a hot herbal bath, so I will check with my manager first.",
       "Thank you, madam. The ritual have a hot herbal bath, so I will check with my manager first.",
       "Yes, madam. The herbs are all natural, so the ritual is safe for everyone.",
       undefined,
@@ -663,11 +663,11 @@ const lesson4 = L(
       ),
       game(
         "It is ten to ten. A guest wants to book a facial for tomorrow.",
-        "Please write it in the handover note and give it to Lan by name.",
+        "Please write it in the handover note and give it to Lan by name. She starts at ten.",
         "Please write it in the handover note and gives it to Lan by name.",
         "Just book it quickly yourself, and do not worry about the note.",
         "colleague",
-        "Câu thứ hai sai dạng: 'and' nối hai động từ mệnh lệnh cùng dạng, 'write… give'. Câu thứ ba mở việc mới ở phút cuối ca và bỏ qua sổ bàn giao — ca sau không biết gì. Câu đúng ghi lại và giao đích danh.",
+        "Câu thứ hai sai dạng: 'and' nối hai động từ mệnh lệnh cùng dạng, 'write… give'. Câu thứ ba mở việc mới ở phút cuối ca và bỏ qua sổ bàn giao — ca sau không biết gì. Câu đúng ghi lại, giao đích danh và nói Lan vào ca lúc nào.",
       ),
     ],
   },
