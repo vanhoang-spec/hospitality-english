@@ -126,6 +126,8 @@ const lesson1 = L(
         alsoAccept: [
           "Not yet. First aid comes first, then the manager on duty, and I am staying with the guest.",
           "Not yet. First aid comes first, then the Duty Manager, and I am staying here with the guest.",
+          "Not yet. First aid comes first, and the Duty Manager comes after. I am staying with the guest.",
+          "Not yet. First aid comes first, then the Duty Manager. I will stay with the guest.",
         ],
       }),
       sp(
@@ -148,21 +150,30 @@ const lesson1 = L(
       },
       sp(
         "Ms Lan here. Why is 905 not done? The guest is in the lobby.",
-        "A guest fell on nine, Ms Lan, so he was my priority. 905 is my next room, in ten minutes.",
-        "Báo cấp trên: gọi tên một lần, không kính ngữ. Lý do bằng một sự việc, rồi một mốc giờ. 'Priority' /praɪˈɒrəti/ — nhấn âm tiết hai.",
+        "A guest fell on nine, Ms Lan, so he was my priority. The rush room in 905 is next, in ten minutes.",
+        "Báo cấp trên: gọi tên một lần, không kính ngữ. Lý do bằng một sự việc, rồi một mốc giờ cho đúng phòng đang có khách chờ ('rush room'). 'Priority' /praɪˈɒrəti/ — nhấn âm tiết hai.",
         "manager",
+        ["rush"],
       ),
       risk({
         ...sp(
           "There is smoke coming from under the door next to mine!",
-          "Please go to the stairs now, madam. I am calling the operator, and then I am knocking on that door.",
-          "Nguy hiểm trước: đưa khách ra cầu thang, gọi tổng đài từ hành lang, rồi mới gõ cửa phòng có khói. Không mở cửa phòng đó.",
+          "Please go down the stairwell to the assembly point now, madam. I am calling the operator, and then I am knocking on that door.",
+          "Nguy hiểm trước: đưa khách xuống lồng cầu thang thoát hiểm ('stairwell') tới điểm tập kết ('assembly point'), gọi tổng đài từ hành lang, rồi mới gõ cửa phòng có khói. Không mở cửa phòng đó, không đi thang máy.",
         ),
         alsoAccept: [
           "Please go to the stairs now, madam. I am calling the operator, and then I will knock on that door.",
           "Please go to the stairs now, madam. I am phoning the operator, and then I am knocking on that door.",
+          "Please take the stairs to the assembly point now, madam. I am calling the operator, and then I am knocking on that door.",
+          "Please leave by the stairs now, madam. I am phoning the operator, and then I will knock on that door.",
         ],
       }),
+      sp(
+        "Housekeeping desk. 1108 wants towels, and 1110 has a gas smell. Which do you take first?",
+        "The gas smell comes first, so I am going to 1110 now. The towels can wait ten minutes.",
+        "Hai việc cùng tới: mùi gas là nguy hiểm nên làm trước ('comes first'); khăn tắm 'can wait', kèm một mốc giờ. Tới nơi thì làm đúng luật mùi gas: đưa khách ra, để cửa như cũ, không chạm công tắc. Bàn buồng phòng là đồng nghiệp: không kính ngữ.",
+        "colleague",
+      ),
     ],
     reading: read(
       `WHEN EVERYTHING ARRIVES AT ONCE — THE ORDER
@@ -279,6 +290,9 @@ const lesson2 = L(39, 2, "When Two Rules Meet", "Khi hai quy tắc gặp nhau", 
       alsoAccept: [
         "I am stepping outside now, madam. I can come back after lunch.",
         "I will step outside now, madam. I could come back after lunch.",
+        "I am going to step outside now, madam. I can come back after lunch.",
+        "I will step outside now, madam, and I can come back after lunch.",
+        "Excuse me, madam, I will step outside now and come back after lunch.",
       ],
     }),
     sp(
@@ -292,10 +306,13 @@ const lesson2 = L(39, 2, "When Two Rules Meet", "Khi hai quy tắc gặp nhau", 
     {
       ...sp(
         "Just move those papers off the desk so you can wipe it properly.",
-        "Of course, sir. Would you lift them for me, and I will wipe underneath?",
-        "Giấy tờ của khách không bị gom thành chồng. Chính chủ đang đứng đó thì mời khách tự nhấc. Khách vẫn bảo bạn làm thì ghi vào báo cáo phòng.",
+        "Of course, sir. Could you lift them for a moment? Then I will wipe underneath.",
+        "Giấy tờ của khách không bị gom thành chồng. Chính chủ đang đứng đó thì mời khách tự nhấc — một câu hỏi lịch sự, rồi một câu nói việc của bạn ('Then I will wipe underneath'). Khách vẫn bảo bạn làm thì ghi vào báo cáo phòng.",
       ),
-      alsoAccept: ["Of course, sir. Could you lift them for me, and I will wipe underneath?"],
+      alsoAccept: [
+        "Of course, sir. Would you lift them for a moment? Then I will wipe underneath.",
+        "Of course, sir. Could you lift them for me? Then I will wipe underneath.",
+      ],
     },
     {
       ...sp(
@@ -316,6 +333,9 @@ const lesson2 = L(39, 2, "When Two Rules Meet", "Khi hai quy tắc gặp nhau", 
       alsoAccept: [
         "I am afraid I cannot open a room for you, sir. The front desk will check your name and give you a key.",
         "I am sorry, sir, I am not able to open a room for you. The front desk will check your name and give you a key.",
+        "I am sorry, sir, I cannot open the room. The front desk will check your name and give you a key.",
+        "I am sorry, sir, I am not able to open the room. The front desk will check your name and give you a new key.",
+        "I am sorry, sir, I cannot open a room. The front desk will check your name.",
       ],
     }),
     risk({
@@ -327,8 +347,24 @@ const lesson2 = L(39, 2, "When Two Rules Meet", "Khi hai quy tắc gặp nhau", 
       alsoAccept: [
         "I am sorry, sir. I am asking my supervisor to come to your room now, and everything I moved is on my room report.",
         "I understand, sir. I am calling my supervisor to your room now, and everything I moved is on my room report.",
+        "I am sorry, sir. My supervisor is coming to your room now, and everything I moved is on my room report.",
+        "I am sorry, sir. I am calling my supervisor to your room now. Everything I moved is on my room report.",
+        "I understand, sir. I am calling my supervisor to your room now.",
       ],
     }),
+    sp(
+      "Hoa here. I pricked my finger on a needle in 1206, but it is my last fifteen minutes. Can it wait?",
+      "No, a needle injury cannot wait. Go to the nurse now, and I will take the sharps box and tongs to 1206.",
+      "Hai luật gặp nhau: mười lăm phút cuối không mở việc mới, nhưng nguy hiểm không bao giờ chờ hết ca — bị kim đâm là gặp y tá ngay trong ca này. Rồi việc của bạn: mang hộp vật sắc và kẹp TỚI chỗ cây kim, không mang kim tới hộp. Đồng nghiệp: không kính ngữ.",
+      "colleague",
+    ),
+    sp(
+      "Why did you telephone my room? The sign is on the door!",
+      "I am sorry, sir. We respect your privacy, but if the sign is still up at three, we telephone to check you are well.",
+      "Hai luật gặp nhau: riêng tư ('privacy') và an toàn. Xin lỗi vì làm phiền, nói khách sạn tôn trọng riêng tư, rồi nêu đúng điều kiện — ba giờ chiều mà biển còn treo thì gọi điện hỏi thăm. Không giảng thêm.",
+      undefined,
+      ["privacy"],
+    ),
   ],
   reading: read(
     `WHEN TWO RULES MEET IN ONE MINUTE
@@ -368,7 +404,7 @@ A guest who says money is missing gets your supervisor at once. Say what you are
       0,
       "Just pull the door shut — I do not want people looking in while I rest.",
       "I am sorry, sir, the door stays open while I work. May I come back after your rest and finish the room then?",
-      "I am sorry, sir, the door stay open while I work. May I come back after your rest?",
+      "I am sorry, sir, the door stay open while I work. May I come back after your rest and finish the room then?",
       "I am stepping outside now, sir, and I am calling my supervisor up to your room straight away.",
       "Phương án 'stepping outside… calling my supervisor' dùng cách xử lý dành cho khách ÉP, trong khi khách chỉ nhờ — khách đang nghỉ sẽ thấy bị coi như người có lỗi. Phương án 'the door stay' sai: chủ ngữ số ít cần 'stays'. Câu đúng nêu luật rồi đề nghị quay lại.",
     ),
@@ -385,7 +421,7 @@ A guest who says money is missing gets your supervisor at once. Say what you are
 
 // ── Lesson 3 — one door, three requests ───────────────────────────────────
 const t3a =
-  "I am so sorry, sir. I will photograph the collar now and take the shirt to my supervisor today.";
+  "I am so sorry, sir. I will photograph the stain and the missing button now and take the shirt to my supervisor today.";
 const t3b =
   "I cannot waive a charge, sir. I am asking the Duty Manager now, and I will come back before six.";
 const t3c =
@@ -426,12 +462,13 @@ const lesson3 = L(39, 3, "One Door, Three Requests", "Một cửa phòng, ba yê
   speaking: [
     {
       ...sp(
-        "My white shirt came back with a grey mark on the collar.",
+        "My white shirt came back with a stain on the collar and a button missing.",
         t3a,
-        "Phần của tầng làm NGAY: xin lỗi về điều khách gặp, chụp ảnh, mang lên giám sát. Không đoán lỗi của ai. 'Photograph' /ˈfəʊtəɡrɑːf/.",
+        "Phần của tầng làm NGAY: xin lỗi về điều khách gặp, chụp ảnh đúng hai lỗi khách chỉ ra ('the stain', 'the missing button'), mang lên giám sát. Không đoán lỗi của ai. 'Photograph' /ˈfəʊtəɡrɑːf/.",
       ),
       alsoAccept: [
-        "I am so sorry, sir. I will photograph the collar now and take the shirt to my supervisor this morning.",
+        "I am so sorry, sir. I will photograph the stain and the missing button now and take the shirt to my supervisor this morning.",
+        "I am so sorry, sir. I will photograph the collar now and take the shirt to my supervisor today.",
       ],
     },
     risk({
@@ -446,6 +483,9 @@ const lesson3 = L(39, 3, "One Door, Three Requests", "Một cửa phòng, ba yê
       alsoAccept: [
         "I am not able to waive a charge, sir. I am asking the Duty Manager now, and I will come back before six.",
         "I cannot waive a charge, sir. I am asking the manager on duty now, and I will come back before six.",
+        "I am sorry, sir, I cannot waive the charge. I am asking the Duty Manager now, and I will come back before six.",
+        "I cannot waive that charge, sir. I will ask the Duty Manager now and come back to you before six.",
+        "Waiving a charge is the Duty Manager's decision, sir. I am asking her now, and I will come back before six.",
       ],
     }),
     sp(
@@ -459,12 +499,13 @@ const lesson3 = L(39, 3, "One Door, Three Requests", "Một cửa phòng, ba yê
     {
       ...sp(
         "Hoa here. Can you take my last two rooms? I have a class at four.",
-        "Yes, as long as Ms Lan agrees first, in exchange for your help with my turndown list tomorrow.",
-        "Đồng nghiệp: không kính ngữ. Trao đổi công bằng bằng 'in exchange for' — chỉ dùng trong tổ, không dùng với khách — và giám sát biết trước.",
+        "Yes, as long as Ms Lan agrees to the swap, in exchange for your help with my turndown list tomorrow.",
+        "Đồng nghiệp: không kính ngữ. Trao đổi công bằng bằng 'in exchange for' — chỉ dùng trong tổ, không dùng với khách — và giám sát đồng ý việc đổi phòng ('the swap') trước.",
         "colleague",
       ),
       alsoAccept: [
-        "Yes, if Ms Lan agrees first, in exchange for your help with my turndown list tomorrow.",
+        "Yes, if Ms Lan agrees to the swap, in exchange for your help with my turndown list tomorrow.",
+        "Yes, as long as Ms Lan agrees first, in exchange for your help with my turndown list tomorrow.",
       ],
     },
     sp(
@@ -481,8 +522,23 @@ const lesson3 = L(39, 3, "One Door, Three Requests", "Một cửa phòng, ba yê
       alsoAccept: [
         "Thank you, madam, you are very kind. May I ask my supervisor before I accept it?",
         "You are very kind, madam. Could I ask my supervisor before I accept it?",
+        "That is very kind of you, madam. May I ask my supervisor before I accept it?",
+        "Thank you, madam, that is very kind. May I ask my supervisor first, before I accept it?",
+        "You are very kind, madam. I need to ask my supervisor before I accept it.",
       ],
     }),
+    sp(
+      "Someone came in last night and turned our bed down. Was that you?",
+      "Yes, madam, it is our evening ritual: we fold back the bed and switch on the bedside light. You may always decline it.",
+      "Khách hỏi vì lo: nói đó là việc gì ('evening ritual'), kể hai việc cụ thể ('fold back', 'bedside light'), rồi trao quyền từ chối ('decline'). Không xin lỗi như thể đã làm sai.",
+      undefined,
+      ["ritual", "fold", "back", "bedside", "decline"],
+    ),
+    sp(
+      "Before you go — where are this tea set and the runner on the bed from?",
+      "An artisan in the old town made the tea set, madam, and our boutique sells it. The runner is hand-woven in a weaving village nearby.",
+      "Kể lại câu chuyện đồ trong phòng bằng hai câu ngắn: ai làm và mua ở đâu; vải dệt tay từ làng dệt gần đây. Không đoán giá — giá là việc của cửa hàng. 'Artisan' /ˌɑːtɪˈzæn/ — nhấn âm cuối.",
+    ),
   ],
   reading: read(
     `ONE DOOR, THREE REQUESTS
@@ -627,14 +683,15 @@ const lesson4 = L(39, 4, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       "colleague",
     ),
     sp(
-      "Ms Lan here. Ten minutes left. Can you start 812 before you go?",
-      "Ten minutes is not enough for 812, Ms Lan. May I leave it for the late shift and write why?",
-      "Với cấp trên: gọi tên một lần, không kính ngữ. Nói thật về thời gian, rồi xin phép bằng một câu hỏi. 'Late shift' — nói liền hai từ.",
+      "Ms Lan here. Ten minutes left. Can you start 812 before you go? They had a party last night.",
+      "Ten minutes is not enough to reset 812, Ms Lan. May I leave it for the late shift and write why?",
+      "Với cấp trên: gọi tên một lần, không kính ngữ. Nói thật về thời gian — một phòng sau tiệc cần lâu hơn để đưa về chuẩn ('reset') — rồi xin phép bằng một câu hỏi. 'Late shift' — nói liền hai từ.",
       "manager",
+      ["reset"],
     ),
     sp(
       "Mai here, on the late shift. What do I pick up from you?",
-      "1205 wants a clean after four, and 1210 is waiting for a cot from the front desk. Both are in the log.",
+      "1205 wants a clean after four, and 1210 is waiting for a cot from the linen store. Both are in the log.",
       "Đồng nghiệp nhận ca: không kính ngữ. Phòng CÒN việc nói trước, mỗi phòng một việc và một mốc, rồi chỉ chỗ đã ghi.",
       "colleague",
     ),
@@ -647,6 +704,9 @@ const lesson4 = L(39, 4, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       alsoAccept: [
         "I am phoning Engineering now, madam, and I am staying here until they arrive.",
         "I am calling Engineering now, madam, and I will stay here until they arrive.",
+        "I am phoning Engineering now, madam, and I will stay here until they come.",
+        "I am calling Engineering right now, madam, and I am staying with you until they arrive.",
+        "I am so sorry, madam. I am calling Engineering now, and I will stay here until they arrive.",
       ],
     }),
   ],

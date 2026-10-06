@@ -46,7 +46,8 @@ const round = (
 // ── Lesson 1 — the morning rooms ──────────────────────────────────────────
 const t1a =
   "I am sorry, madam. Based on what you said, your room will be scent-free from this morning.";
-const t1b = "It goes on your guest profile now, madam, so nobody sprays anything in here again.";
+const t1b =
+  "It goes on your guest profile now, madam, so every attendant knows, and it will carry over to your next stay.";
 const t1c = "Of course, madam. It is before the cut-off time, so they will be back this evening.";
 
 // ── Lesson 2 — midday: when something goes wrong ─────────────────────────
@@ -94,7 +95,7 @@ const lesson1 = L(40, 1, "The Morning Rooms", "Những phòng buổi sáng", {
     sp(
       "Will the next attendant know, or will I have to say it all again?",
       t1b,
-      "Hồ sơ khách đi theo người, nên khách không phải nhắc lần hai. 'Guest profile' /ˈprəʊfaɪl/ — nhấn âm tiết đầu.",
+      "Hồ sơ khách đi theo người, nên khách không phải nhắc lần hai — cả với người dọn sau lẫn lần ở sau ('carry over'). 'Guest profile' /ˈprəʊfaɪl/ — nhấn âm tiết đầu.",
       undefined,
       undefined,
       t1a,
@@ -118,9 +119,19 @@ const lesson1 = L(40, 1, "The Morning Rooms", "Những phòng buổi sáng", {
       ],
     },
     sp(
+      "And this silk dress? Can it go in with the shirts?",
+      "The care label says dry clean only, madam, so it goes for dry cleaning, charged per item.",
+      "Đọc nhãn trước khi nhận ('care label'): đồ chỉ giặt khô thì đi giặt khô ('dry cleaning'), tính theo từng món ('per item') theo giá in trên phiếu. Không đoán giá.",
+    ),
+    sp(
+      "I have left my tablets all over the desk. Please do not move them.",
+      "Of course, madam. Your medication stays where it is, and discretion is part of my job.",
+      "Thuốc của khách: không xếp, không dọn đi — lau xung quanh và để nguyên. 'Discretion' (sự kín đáo) nghĩa là cũng không hỏi, không nhắc tới thuốc của khách với ai.",
+    ),
+    sp(
       "The guest in 1104 wants her room after two from now on. Where do I note it?",
-      "On her guest profile, as her service window, so the late shift sees it as well.",
-      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Khung giờ của khách nằm ở hồ sơ khách, không nằm trong đầu một người.",
+      "Go ahead and put it on her guest profile as her service window, so the late shift sees it.",
+      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. 'Go ahead' — cứ làm đi. Khung giờ của khách nằm ở hồ sơ khách, không nằm trong đầu một người.",
       "colleague",
     ),
     risk({
@@ -132,6 +143,9 @@ const lesson1 = L(40, 1, "The Morning Rooms", "Những phòng buổi sáng", {
       alsoAccept: [
         "I would prefer to clean when the safe is closed, sir. May I come back in ten minutes?",
         "I would rather clean when the safe is closed, sir. Could I come back in ten minutes?",
+        "I am sorry, sir, I would rather clean when the safe is closed. May I come back in ten minutes?",
+        "I would rather clean once the safe is closed, sir. May I come back in ten minutes?",
+        "Could you close the room safe first, sir? Then I can clean straight away.",
       ],
     }),
   ],
@@ -231,6 +245,9 @@ const lesson2 = L(40, 2, "Midday: When Something Goes Wrong", "Giữa ca: khi c�
       alsoAccept: [
         "I am not able to decide that, sir. I am calling the Duty Manager to you now.",
         "I cannot decide that, sir. I am calling the manager on duty to you now.",
+        "That is not my decision, sir. I am calling the Duty Manager to you now.",
+        "I am sorry, sir, I cannot decide that. I am calling the Duty Manager now.",
+        "Compensation is the Duty Manager's decision, sir. I am calling her to you now.",
       ],
     }),
     sp(
@@ -243,8 +260,8 @@ const lesson2 = L(40, 2, "Midday: When Something Goes Wrong", "Giữa ca: khi c�
     ),
     sp(
       "1205 says the minibar charge is wrong. Can you take it off?",
-      "No. The front desk corrects the folio, and I am taking my restock list to them now.",
-      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Tầng ghi nhận, quầy sửa hoá đơn. 'Folio' /ˈfəʊliəʊ/ — ba âm tiết.",
+      "No. The front desk corrects the folio, and I am taking them my restock list from the minibar check.",
+      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Tầng ghi nhận (bảng 'restock list' của lượt kiểm minibar, có giờ), quầy sửa hoá đơn. 'Folio' /ˈfəʊliəʊ/ — ba âm tiết.",
       "colleague",
     ),
     risk({
@@ -256,13 +273,20 @@ const lesson2 = L(40, 2, "Midday: When Something Goes Wrong", "Giữa ca: khi c�
       alsoAccept: [
         "I am sorry, sir, I am not able to promise that. Smoking in this room is reported to my supervisor today.",
         "I am afraid I cannot promise that, sir. Smoking in this room is reported to my supervisor today.",
+        "I am sorry, sir, I cannot promise that. I have to report smoking in this room to my supervisor today.",
+        "I am afraid I cannot promise that, sir. I have to report smoking in this room to my supervisor today.",
       ],
     }),
     sp(
       "Ms Lan here. What happened with the suitcase in 1408?",
-      "My trolley touched it in the corridor, Ms Lan. I have the photographs, and the Duty Manager is with the guest.",
-      "Báo cấp trên bằng sự việc, kể cả khi đó là xe đẩy của chính mình — nói thẳng, ngay trong ca. Gọi tên một lần, không kính ngữ.",
+      "My trolley touched it in the corridor, Ms Lan. I have the photographs, and the Duty Manager is discussing compensation with the guest.",
+      "Báo cấp trên bằng sự việc, kể cả khi đó là xe đẩy của chính mình — nói thẳng, ngay trong ca. Chuyện bồi thường ('compensation') là của Duty Manager, bạn chỉ báo ai đang lo. Gọi tên một lần, không kính ngữ.",
       "manager",
+    ),
+    sp(
+      "If you find my sunglasses, my brother will collect them tomorrow. Is that all right?",
+      "The office can release them to him with your written permission, sir, if he shows his proof of identity.",
+      "Đồ thất lạc chỉ trao cho chính khách, hoặc người khách cho phép bằng văn bản ('written permission'), và người nhận phải đưa giấy tờ tuỳ thân ('proof of identity'). Việc trao là của văn phòng ('the office can release') — bạn không tự hứa.",
     ),
   ],
   reading: read(
@@ -314,7 +338,7 @@ A mistake reported at once is a mistake. One that somebody else finds is a diffe
       2,
       "Your trolley cracked my case. You will pay for it, won't you?",
       "I am so sorry about your case, sir. I cannot decide that, but I am calling the Duty Manager to you now.",
-      "I am so sorry, sir. I cannot decides that, but I am calling the Duty Manager to you now.",
+      "I am so sorry about your case, sir. I cannot decides that, but I am calling the Duty Manager to you now.",
       "Of course, sir — it was clearly our trolley, so the hotel will buy you a new one today.",
       "Phương án 'the hotel will buy you a new one' hứa tiền thay Duty Manager. Phương án 'cannot decides' sai: sau 'cannot' là động từ nguyên mẫu. Câu đúng xin lỗi trước, rồi gọi đúng người quyết.",
     ),
@@ -322,7 +346,7 @@ A mistake reported at once is a mistake. One that somebody else finds is a diffe
       1,
       "Ms Lan here. Did you tell the guest in 1408 that we will replace his case?",
       "No, Ms Lan. I apologised, took photographs of the case and called the Duty Manager to him.",
-      "No, Ms Lan. I apologised, take photographs and called the Duty Manager.",
+      "No, Ms Lan. I apologised, take photographs of the case and called the Duty Manager to him.",
       "Yes, madam — he was very angry, so I promised him a new one to calm him down.",
       "Phương án 'I promised him a new one' hứa thay Duty Manager và gọi cấp trên là 'madam'. Phương án 'take photographs' sai thì: ba việc đã xảy ra đều ở quá khứ (took). Câu đúng tường thuật đúng ba việc đã làm.",
       "manager",
@@ -339,11 +363,12 @@ const t3c =
   "I cannot say why yet, madam. I will ask the Duty Manager to speak with you once he has been seen.";
 
 // ── Lesson 4 — the end of the shift ───────────────────────────────────────
-const t4a = "1207 has had no entry for two days in a row, Ms Lan, and nobody answers the phone.";
+const t4a =
+  "First of all, the sign on 1207 was still up at three, Ms Lan, and nobody answered the phone. Could you look in with Security?";
 const t4b =
   "A gold ring under the bed in 1210, after checkout. It is sealed, signed by two of us, and logged.";
 const t4c =
-  "One thing face to face: the guest in 1115 made me uneasy, so I did not go back in alone.";
+  "Finally, one thing face to face: the guest in 1115 made me uneasy, so I did not go back in alone.";
 
 const lesson3 = L(40, 3, "The Afternoon", "Buổi chiều", {
   vocabulary: [
@@ -395,33 +420,52 @@ const lesson3 = L(40, 3, "The Afternoon", "Buổi chiều", {
       alsoAccept: [
         "I am not able to say why yet, madam. I will ask the Duty Manager to speak with you once he has been seen.",
         "I cannot say why yet, madam. I will ask the manager on duty to speak with you once he has been seen.",
+        "I do not know why yet, madam. I will ask the Duty Manager to speak with you after he has been seen.",
+        "I am sorry, madam, I cannot say why yet. I will ask the Duty Manager to talk to you once he has been seen.",
       ],
     }),
-    {
-      ...sp(
-        "Guest Relations. Can 906 have petals and towel art by six?",
-        "Yes, as long as the room is empty by half past five. Please give me the cue when they leave.",
-        "Guest Relations là đồng nghiệp: không kính ngữ. Nhận lời có điều kiện, rồi xin đúng một thứ: tín hiệu khi khách rời phòng. 'Cue' /kjuː/.",
-        "colleague",
-      ),
-      alsoAccept: [
-        "Yes, as long as the room is empty by half past five. Please give me the cue as they leave.",
-      ],
-    },
     sp(
-      "Hoa here. We are short-staffed on eight. Can you take one of my checkouts?",
-      "What if I took 812 now, in exchange for your help with my turndown list tonight?",
-      "Đồng nghiệp: không kính ngữ. Đề nghị trao đổi trong tổ — 'What if I took' (quá khứ đơn sau 'what if'). Nhớ báo giám sát trước khi đổi.",
+      "He is resting now. Could you make the bathroom easier for him tonight?",
+      "I can bring a shower chair, a non-slip mat and a night light, madam. May I ask the front desk about an accessible room?",
+      "Sau một cú ngã: đưa đúng ba vật dụng tầng tự mang được ('shower chair', 'non-slip mat', 'night light'), không hứa 'an toàn'. Đổi sang phòng tiếp cận ('accessible room') là việc của quầy lễ tân — bạn xin giúp khách.",
+    ),
+    sp(
+      "Housekeeping desk. 1204 wants more towels right now. Can you go?",
+      "Stand by. A guest has fallen, so first aid comes first, and 1204 can wait ten minutes.",
+      "Bàn buồng phòng là đồng nghiệp: không kính ngữ. 'Stand by' trước, rồi thứ tự: nguy hiểm trước ('comes first'), khăn tắm 'can wait' — kèm một mốc giờ. Không đọc số phòng của khách bị ngã lên bộ đàm.",
       "colleague",
     ),
     {
       ...sp(
-        "We are staying another two weeks. Could our sheets be changed every day?",
-        "Of course, madam, and there is no charge. It goes on your guest profile today.",
-        "Ga thay mỗi ngày theo yêu cầu là dịch vụ có sẵn, không tính phí. Ghi vào hồ sơ khách để ai trên tầng cũng làm đúng.",
+        "Guest Relations. Can 906 have petals and towel art by six? It is a surprise for his wife.",
+        "Yes, as long as the room is empty by half past five. I will keep it low-key, so give me the cue when they leave.",
+        "Guest Relations là đồng nghiệp: không kính ngữ. Nhận lời có điều kiện, hứa làm kín đáo ('low-key'), rồi xin đúng một thứ: tín hiệu khi khách rời phòng. 'Cue' /kjuː/.",
+        "colleague",
       ),
       alsoAccept: [
-        "Certainly, madam, and there is no charge. It goes on your guest profile today.",
+        "Yes, as long as the room is empty by half past five. I will keep it low-key, so please give me the cue as they leave.",
+        "Yes, as long as the room is empty by half past five. Please give me the cue when they leave.",
+      ],
+    },
+    {
+      ...sp(
+        "Hoa here. I am on my own on eight today. Can you take one of my checkouts?",
+        "Since you are short-staffed, I can be a second pair of hands. What if I took 812 now, and you took my turndown list tonight?",
+        "Đồng nghiệp: không kính ngữ. Nhận lời ('a second pair of hands' — thêm một người phụ), rồi đề nghị trao đổi trong tổ: 'What if I took 812 now' (quá khứ đơn sau 'what if'). Nhớ báo giám sát trước khi đổi.",
+        "colleague",
+      ),
+      alsoAccept: [
+        "Since you are short-staffed, I can be a second pair of hands. What if I took 812 now, in exchange for your help with my turndown list tonight?",
+      ],
+    },
+    {
+      ...sp(
+        "We are staying two more weeks. Could nobody come in tomorrow or the day after?",
+        "For tomorrow, of course, madam. But never two days in a row: someone looks in the day after, for your safety.",
+        "Vẫn một luật như mọi lần: bỏ một ngày thì được, không bao giờ hai ngày liền ('in a row') — ngày sau phải có người ghé ('looks in'), vì an toàn. Nhận lời cho ngày mai trước, rồi nói điều kiện.",
+      ),
+      alsoAccept: [
+        "For tomorrow, of course, madam. However, never two days in a row: someone looks in the day after, for your safety.",
       ],
     },
   ],
@@ -481,10 +525,7 @@ Every one of those moments ended in the same place: the room report, with the ti
 
 const lesson4 = L(40, 4, "The End of the Shift", "Cuối ca", {
   vocabulary: [
-    c(
-      "In a row",
-      "A sign that has been up two days in a row goes to my supervisor before I leave.",
-    ),
+    c("In a row", "After two days in a row with no entry, someone must look in, sign or no sign."),
     c("Hand over", "Before three I hand over every open request to the late shift."),
     c("By name", "I give the late shift each room by name, with the time the guest asked."),
     c("Signed in", "My master key is signed in at the desk before I take off my uniform."),
@@ -507,7 +548,7 @@ const lesson4 = L(40, 4, "The End of the Shift", "Cuối ca", {
     sp(
       "Ms Lan here. Anything I need to know before you go?",
       t4a,
-      "Báo cấp trên: việc nguy cơ nhất nói trước. Hai ngày liền không ai vào là chuyện an toàn, không phải chuyện dọn phòng. 'In a row' — đọc liền.",
+      "Báo cấp trên: việc nguy cơ nhất nói trước ('First of all'). Biển còn treo lúc ba giờ mà gọi không ai nghe là chuyện an toàn, không phải chuyện dọn phòng — báo ngay hôm nay, và xin giám sát cùng An ninh vào xem ('look in'). Bạn không vào một mình.",
       "manager",
     ),
     sp(
@@ -521,7 +562,7 @@ const lesson4 = L(40, 4, "The End of the Shift", "Cuối ca", {
     sp(
       "Good. And the last thing?",
       t4c,
-      "Điều không ghi vào sổ tầng thì nói TRỰC TIẾP với giám sát. Không vào lại một mình — ai vào phòng đó là việc giám sát quyết.",
+      "Phần cuối mở bằng 'Finally'. Điều không ghi vào sổ tầng thì nói TRỰC TIẾP với giám sát. Không vào lại một mình — ai vào phòng đó là việc giám sát quyết.",
       "manager",
       undefined,
       t4b,
@@ -529,10 +570,11 @@ const lesson4 = L(40, 4, "The End of the Shift", "Cuối ca", {
     {
       ...sp(
         "Could you bring us more towels and do the bathroom before you go?",
-        "I am bringing fresh towels now, madam, and I will hand over the bathroom by name to the late shift.",
-        "Mười lăm phút cuối: việc khách đang chờ và làm trong một phút thì làm (khăn); việc mới thì bàn giao đích danh. 'Hand over' — nhấn ở 'over'.",
+        "It is my last fifteen minutes, madam. I am bringing towels now, and I will hand over the bathroom by name to the late shift.",
+        "Mười lăm phút cuối ('last fifteen minutes'): việc khách đang chờ và làm trong một phút thì làm (khăn); việc mới thì bàn giao đích danh. 'Hand over' — nhấn ở 'over'.",
       ),
       alsoAccept: [
+        "It is my last fifteen minutes, madam. I am bringing you towels now, and I will hand over the bathroom by name to the late shift.",
         "I am bringing you fresh towels now, madam, and I will hand over the bathroom by name to the late shift.",
       ],
     },
@@ -545,12 +587,20 @@ const lesson4 = L(40, 4, "The End of the Shift", "Cuối ca", {
       alsoAccept: [
         "I am sorry, sir, I cannot take that, and the lamp has to be reported. I am calling my supervisor now.",
         "I am not able to take that, sir, and the lamp has to be reported. I am calling my supervisor now.",
+        "I am sorry, sir, I cannot accept that, and I must report the lamp. I am calling my supervisor now.",
+        "No, thank you, sir. I cannot take that, and the lamp has to be reported. I am calling my supervisor now.",
       ],
     }),
     sp(
       "Mai here. Is the master key for nine still with you?",
       "No, it is signed in at the desk, with my name and the time.",
       "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Chìa tổng không bao giờ trao tay ngoài sổ. 'Signed in' — chữ g câm.",
+      "colleague",
+    ),
+    sp(
+      "Mai here. The radio says a storm is coming tonight. Anything I should know?",
+      "Yes, it is a typhoon, so the balconies are your priority. Keep a torch on your trolley in case of a power cut.",
+      "Bàn giao một mối nguy sắp tới: bão ('typhoon') thì ban công làm trước ('priority' — đồ ngoài ban công mang vào trong), rồi một vật dụng mang theo: đèn pin ('torch') phòng khi mất điện ('power cut'). Đồng nghiệp: không kính ngữ.",
       "colleague",
     ),
   ],
@@ -560,7 +610,7 @@ At twenty to three Linh opens no new room. The last fifteen minutes are for clos
 The guest in 1105 wants more towels and the bathroom done. Linh brings the towels at once, because that takes a minute. The bathroom she writes down and hands over by name: "Mai, 1105, bathroom, asked at ten to three."
 In 1210, after checkout, she finds a gold ring under the bed. She does not pocket it, even for a minute. Her supervisor comes, the ring is sealed, two people sign, and it goes into the log.
 A guest offers her money to forget a broken lamp. She refuses once, plainly, and reports both the lamp and the offer.
-Room 1207 has had its sign up for two days in a row, and nobody answers the phone. That goes to Ms Lan, who takes Security up with her. Linh does not open that door alone.
+Room 1207 still had its sign up at three, and nobody answered the phone. That goes to Ms Lan, who takes Security up with her. Linh does not open that door alone.
 Last, one thing that is not for the floor log: the guest in 1115 made her uneasy. She says it to Ms Lan face to face.
 Then the trolley is restocked, the master key is signed in, and Linh goes home on time.`,
     [

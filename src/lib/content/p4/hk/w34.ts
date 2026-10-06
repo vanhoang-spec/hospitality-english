@@ -50,7 +50,7 @@ const t2a =
 const t2b =
   "Yes, madam. Rose petals go on the bed and along the bath, but never on the floor, so nobody slips.";
 const t2c =
-  "A latex balloon needs a check first, madam, because some children are allergic. May I ask the desk to call you?";
+  "A latex balloon needs a check first, madam, because some children have a reaction to latex. May I ask the desk to call you?";
 
 const lesson1 = L(34, 1, "The Set-Up Slip Reaches the Floor", "Phiếu dựng phòng về tới tầng", {
   vocabulary: [
@@ -284,6 +284,8 @@ const lesson2 = L(34, 2, "What May Go Into a Room", "Thứ gì được phép v�
       alsoAccept: [
         "I am so sorry, madam, incense is not allowed in the rooms. May I ask my supervisor to speak with you?",
         "I am so sorry, madam, we cannot have incense in the rooms. May I ask my supervisor to come and speak with you?",
+        "I am so sorry for your loss, madam. We cannot have incense in the rooms, but may I ask my supervisor to speak with you?",
+        "I am very sorry, madam, we cannot light incense in the rooms. May I ask my supervisor to speak with you?",
       ],
     }),
     sp(
@@ -293,20 +295,21 @@ const lesson2 = L(34, 2, "What May Go Into a Room", "Thứ gì được phép v�
     ),
     sp(
       "906 asked for helium balloons. Shall I bring them up?",
-      "No helium in the rooms: a floating balloon can reach the smoke detector. Air-filled ones are fine.",
-      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Một luật + một lý do + phương án được phép.",
+      "No, helium stays out of our rooms here: a floating balloon can reach the smoke detector. Air-filled ones are fine.",
+      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Một luật + một lý do + phương án được phép. Nói rõ đây là luật của khách sạn mình — khách sạn khác có thể cho bóng heli có dây buộc tạ.",
       "colleague",
     ),
   ],
   reading: read(
     `WHAT MAY GO INTO A ROOM — AND WHAT MAY NOT
 YES: rose petals, towel art, an LED candle, a card, fruit, chocolates, a bath salt set, and air-filled balloons. Balloons still need a full day.
-NO, in every room and for every occasion: real flames, incense, sparklers, glitter that blocks a drain, and helium. A floating balloon reaches the smoke detector and the sprinkler head.
+NO, in this hotel's rooms on any occasion: real flames, incense, sparklers, glitter that blocks a drain, and helium. A floating balloon reaches the smoke detector and the sprinkler head.
 CHECK THE SLIP FIRST. It must state allergies before petals, fruit, chocolate or any scent, pillow spray included, and latex before a latex balloon. If it does not say, send it back to the desk.
 A child in the room changes the list: no latex where a young child sleeps, no scent, and no bath run in advance.
 A drawn bath is not ours to run alone. Hot water standing in an empty room means burns and floods, so your supervisor arranges it with the desk, or it does not happen.
 Petals never go on a floor, and nothing loose goes on a bathroom floor.
-If a guest asks for incense, it is usually a memorial, not decoration. Do not answer with a candle. Say it is not allowed, then ask your supervisor to come up; the Duty Manager may find a proper place for it.`,
+If a guest asks for incense, it is usually a memorial, not decoration. Do not answer with a candle. Say it is not allowed, then ask your supervisor to come up; the Duty Manager may find a proper place for it.
+These lists are one hotel's. Ask your Executive Housekeeper for yours.`,
     [
       {
         q: "Vì sao không dùng bóng bay bơm khí heli?",
@@ -317,7 +320,7 @@ If a guest asks for incense, it is usually a memorial, not decoration. Do not an
         ],
         correct: 0,
         explanation:
-          "'A floating balloon reaches the smoke detector and the sprinkler head' — luật an toàn, không phải chuyện giá.",
+          "'A floating balloon reaches the smoke detector and the sprinkler head' — luật an toàn của khách sạn này, không phải chuyện giá.",
       },
       {
         q: "Khách xin thắp nhang trong phòng thì làm gì?",
@@ -412,6 +415,9 @@ const lesson3 = L(34, 3, "Setting a Room Without Being Seen", "Dựng phòng mà
       alsoAccept: [
         "I am sorry, sir, I am not able to take your valuables. May I ask my supervisor to come and sign for it?",
         "I am afraid I cannot take your valuables, sir. May I ask my supervisor to come and sign for it?",
+        "I am sorry, sir, I am not allowed to take your valuables. May I ask my supervisor to come and sign for it?",
+        "I cannot take your valuables, sir, but my supervisor can come and sign for it. May I call her?",
+        "I am sorry, sir, I cannot take the ring myself. May I ask my supervisor to come and sign for it?",
       ],
     }),
     sp(
@@ -472,7 +478,7 @@ If the guest asks you to close the door, say the rule kindly and offer to come b
 A set-up room is never left unattended with the door open. If you must step away, close and lock it.
 A guest's own ring or envelope never travels on a trolley. Your supervisor signs for it, two people place it, and it goes on your room report.
 If the guests walk in early, name an ordinary task and ask for ten more minutes. Keep it low-key, and never say birthday, anniversary or surprise.
-Steering away is allowed; a false denial is not. "I could not say, madam" survives being checked, and a denial does not.`,
+Steering away is allowed; a false denial is not. "I could not say, madam" is still true when the surprise comes out; a denial is not.`,
     [
       {
         q: "Khách đang ở trong phòng nhờ khép cửa lại thì làm gì?",
@@ -586,6 +592,9 @@ const lesson4 = L(34, 4, "The Morning After", "Buổi sáng sau bữa tiệc", {
       alsoAccept: [
         "I am not able to decide that, madam. I will photograph it now, and my supervisor will see it today.",
         "That is not my decision, madam. I will photograph it now, and my supervisor will see it today.",
+        "I cannot decide that, madam. I will take a photograph now, and my supervisor will look at it today.",
+        "That is my supervisor's decision, madam. I will photograph it now, and she will see it today.",
+        "I am sorry, madam, I cannot decide that. I will photograph the carpet now, and my supervisor will see it today.",
       ],
     }),
     {
@@ -606,8 +615,8 @@ const lesson4 = L(34, 4, "The Morning After", "Buổi sáng sau bữa tiệc", {
     ),
     sp(
       "Can we keep the cards and ribbons from last night?",
-      "Of course, madam. I will leave them on the desk for you, and our own decorations are never chargeable.",
-      "Giữ lại cho khách những thứ khách có thể muốn giữ. 'Chargeable' /ˈtʃɑːdʒəbl/ — nhấn âm tiết đầu.",
+      "Of course, madam, they are yours to keep. I will leave them on the desk, and our own decorations are never chargeable.",
+      "Giữ lại cho khách những thứ khách có thể muốn giữ, và nói bằng câu tặng lịch sự 'yours to keep'. 'Chargeable' /ˈtʃɑːdʒəbl/ — nhấn âm tiết đầu.",
     ),
   ],
   reading: read(
@@ -616,7 +625,7 @@ Before anything else, look for glass. Put on cut-resistant gloves, sweep the pie
 Then strip the decoration: petals, paper hearts and balloons. Put aside anything the guests may want to keep, such as cards and ribbons, and leave it on the desk.
 A dressed room takes longer to reset to standard, so tell your supervisor early, with a number of minutes. Do a final check before you call it ready.
 NEVER CHARGEABLE: petals and paper hearts from our own set-up, extra linen, and an untidy room.
-POSSIBLY CHARGEABLE, and only by the Duty Manager: a burn, a wax mark, a broken item, or a stain that survives professional cleaning.
+POSSIBLY CHARGEABLE, and only by the Duty Manager: a burn, a wax mark, a broken item, or a stain that stays after professional cleaning.
 Three steps are yours: notice it, photograph it on the department device, and report it. You never quote a figure, and you never promise there will be no charge.
 Congratulate a guest only on an occasion they have named. If they mention a memorial, say good morning, work quietly, and ask what should stay.`,
     [

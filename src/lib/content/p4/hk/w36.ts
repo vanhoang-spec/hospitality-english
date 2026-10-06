@@ -123,6 +123,9 @@ const lesson1 = L(36, 1, "A Guest Who Will Not Wake", "Khách không tỉnh", {
         "I am not able to say, madam. The first aider will be here in two minutes, and I am staying with you.",
         "I cannot tell you that, madam. The first aider will be here in two minutes, and I am staying with you.",
         "I cannot say, madam. The first aider will be here in two minutes, and I am staying here with you.",
+        "I do not know, madam. The first aider will be here in two minutes, and I am staying with you.",
+        "I cannot say, madam, but the first aider will be here in two minutes. I am staying with you.",
+        "I cannot say, madam. The first aider will be here in two minutes, and I will stay with you.",
       ],
     }),
     sp(
@@ -147,13 +150,17 @@ const lesson1 = L(36, 1, "A Guest Who Will Not Wake", "Khách không tỉnh", {
     risk({
       ...sp(
         "I have brought the AED from the lobby. What do I do with it?",
-        "Switch the AED on and do exactly what it says. I am doing chest compressions until it is ready.",
+        "Switch the AED on and do what it says. I am doing chest compressions until it is ready.",
         "Đồng nghiệp chạy tới: không kính ngữ. Máy tự quyết có sốc hay không — việc của người cầm máy là bật lên và làm theo lời máy. 'AED' đọc từng chữ cái.",
         "colleague",
       ),
       alsoAccept: [
+        "Switch the AED on and do exactly what it says. I am doing chest compressions until it is ready.",
         "Switch the AED on and do exactly what it tells you. I am doing chest compressions until it is ready.",
         "Turn the AED on and do exactly what it says. I am doing chest compressions until it is ready.",
+        "Switch the AED on and do what it tells you. I am doing chest compressions until it is ready.",
+        "Turn the AED on and follow what it says. I am doing chest compressions until it is ready.",
+        "Switch the AED on and do what it says. I will keep doing chest compressions until it is ready.",
       ],
     }),
     sp(
@@ -287,6 +294,9 @@ const lesson2 = L(36, 2, "Sharps, Blood and Broken Glass", "Kim tiêm, máu và 
       alsoAccept: [
         "No. A needle injury is seen by a nurse in this shift, not later.",
         "No, I cannot wait. A needle injury is seen by a nurse in this shift, not after lunch.",
+        "No. A needle injury has to be seen by a nurse in this shift, not after lunch.",
+        "No. A needle injury must be seen by a nurse in this shift, not after lunch.",
+        "No, I am going now. A needle injury is seen by a nurse in this shift.",
       ],
     }),
     sp(
@@ -300,11 +310,12 @@ const lesson2 = L(36, 2, "Sharps, Blood and Broken Glass", "Kim tiêm, máu và 
     {
       ...sp(
         "There is a razor blade loose in the bin. Can you just empty it?",
-        "I will not lift that bag by hand, sir. The blade goes into a sharps box, and I am fetching tongs now.",
-        "Lưỡi dao trong túi rác xuyên qua nilon như xuyên qua giấy. Mang hộp tới chỗ vật sắc, gắp bằng kẹp. 'Sharps box' — /ʃɑːps/, âm /ʃ/ như chữ s nặng.",
+        "For safety, I do not lift that bag by hand, sir. The blade goes into a sharps box, and I am fetching tongs now.",
+        "Lưỡi dao trong túi rác xuyên qua nilon như xuyên qua giấy. Mở bằng lý do an toàn (For safety) để khách hiểu đây là luật, không phải bạn từ chối khách. Mang hộp tới chỗ vật sắc, gắp bằng kẹp. 'Sharps box' — /ʃɑːps/, âm /ʃ/ như chữ s nặng.",
       ),
       alsoAccept: [
         "I am not lifting that bag by hand, sir. The blade goes into a sharps box, and I am fetching tongs now.",
+        "For safety, I never lift that bag by hand, sir. The blade goes into a sharps box, and I am fetching tongs now.",
       ],
     },
     sp(
@@ -404,7 +415,7 @@ const t3a =
 const t3b =
   "I cannot promise that, madam. I am giving Security your room number, and the fire team moves guests who cannot walk.";
 const t3c =
-  "Keep the door closed and put a wet towel along the gap, madam. I will stay outside this door.";
+  "Keep the door closed and put a wet towel along the gap, madam. Security has your room number now.";
 
 // ── Lesson 4 — the storm shift ────────────────────────────────────────────
 const t4a =
@@ -460,7 +471,7 @@ const lesson3 = L(36, 3, "The Alarm and the Smell", "Chuông báo cháy và mùi
     sp(
       "I use a wheelchair, and the lifts have stopped. I cannot do eleven floors.",
       t3a,
-      "Khách không đi cầu thang được thì KHÔNG vào lồng cầu thang — đó là lối thoát của mọi tầng phía trên. Một việc bạn đang làm và một mốc giờ bạn tự giữ: quay lại sau một phút.",
+      "Khách không đi cầu thang được thì KHÔNG vào lồng cầu thang — đó là lối thoát của mọi tầng phía trên. Một việc bạn đang làm và một mốc giờ bạn tự giữ: gọi An ninh từ điện thoại tầng, quay lại sau một phút để nói khách biết phải làm gì — rồi bạn mới đi tiếp.",
     ),
     risk({
       ...sp(
@@ -474,16 +485,24 @@ const lesson3 = L(36, 3, "The Alarm and the Smell", "Chuông báo cháy và mùi
       alsoAccept: [
         "I am not able to promise that, madam. I am giving Security your room number, and the fire team moves guests who cannot walk.",
         "I cannot promise that, madam, but I am giving Security your room number, and the fire team moves guests who cannot walk.",
+        "I am sorry, madam, I cannot promise that. I am telling Security your room number now, and the fire team moves guests who cannot walk.",
+        "I cannot promise that, madam. I am giving your room number to Security, and the fire team moves guests who cannot walk.",
+        "I cannot promise that, madam. Security is getting your room number now, and the fire team helps guests who cannot walk.",
       ],
     }),
-    sp(
-      "And what should I do while I wait here?",
-      t3c,
-      "Hai việc cụ thể cho khách tự làm: cửa đóng, khăn ướt chèn khe. Rồi việc của bạn: đứng ngoài cửa cho tới khi An ninh hoặc đội cứu hoả tới.",
-      undefined,
-      undefined,
-      t3b,
-    ),
+    {
+      ...sp(
+        "And what should I do while I wait here?",
+        t3c,
+        "Hai việc cụ thể cho khách tự làm: cửa đóng, khăn ướt chèn khe. Rồi một câu cho khách biết ai đang lo cho mình: An ninh đã có số phòng. Bạn không đứng lại ở tầng có chuông — bạn xuống bằng cầu thang và báo An ninh ở điểm tập kết khách ở sau cánh cửa nào.",
+        undefined,
+        undefined,
+        t3b,
+      ),
+      alsoAccept: [
+        "Keep the door closed and put a wet towel along the gap, madam. Security already has your room number.",
+      ],
+    },
     sp(
       "Security. The panel shows your floor. What can you smell up there?",
       "A burning smell outside 1104, not a gas smell. The fire door is closed, and the corridor is clear.",
@@ -499,6 +518,9 @@ const lesson3 = L(36, 3, "The Alarm and the Smell", "Chuông báo cháy và mùi
       alsoAccept: [
         "Please step outside with me now, sir. Please do not touch the window or the lights.",
         "Please come out with me now, sir. Do not touch the window or the lights.",
+        "Please come outside with me now, sir, and do not touch the window or the lights.",
+        "Please step outside with me now, sir, and do not touch the window or the light switch.",
+        "Do not touch the window or the lights, sir. Please step outside with me now.",
       ],
     }),
     sp(
@@ -523,7 +545,7 @@ A gas smell is the other way round. Get everyone out and leave the door exactly 
 When the alarm sounds, you are a guide, not a searcher. Knock, call "Housekeeping — please leave by the stairs", and move on. The lifts stop, and nobody goes back for a bag or a phone. Never reset or silence the fire panel.
 A guest who cannot manage the stairs does not wait in the stairwell. It is the escape route for every floor above. If your corridor is clear, the guest stays in the room with the door closed and a wet towel along the gap.
 Give Security three things: the floor, "cannot walk", and the state of the corridor. The room number goes on the floor phone, never on the radio.
-Never promise that guest a rescue time. Promise what you are doing, and stay at that door until Security or the fire team reaches you.
+Never promise that guest a rescue time. Promise what you are doing, then leave by the stairs and tell Security at the assembly point which door the guest is behind.
 At the assembly point, hand the floor keys to Security or the Duty Manager, and say whom you gave them to.`,
     [
       {
@@ -557,7 +579,7 @@ At the assembly point, hand the floor keys to Security or the Duty Manager, and 
         ],
         correct: 0,
         explanation:
-          "'does not wait in the stairwell. It is the escape route for every floor above… stays in the room with the door closed' — và bạn đứng ngoài cửa đó.",
+          "'does not wait in the stairwell. It is the escape route for every floor above… stays in the room with the door closed' — rồi bạn xuống bằng cầu thang và báo An ninh ở điểm tập kết khách đang ở sau cánh cửa nào.",
       },
     ],
   ),
@@ -671,6 +693,9 @@ const lesson4 = L(36, 4, "The Storm Shift", "Ca trực ngày bão", {
       alsoAccept: [
         "Please come out to the corridor with me now, sir. Nobody goes back inside until Engineering says so.",
         "Please come out to the corridor with me, sir. Nobody goes back in until Engineering says so.",
+        "Please come out to the corridor with me now, sir. Nobody goes back in until Engineering says it is safe.",
+        "Please leave the room with me now, sir. Nobody goes back in until Engineering says so.",
+        "Please come into the corridor with me now, sir. No one goes back inside until Engineering says so.",
       ],
     }),
     {

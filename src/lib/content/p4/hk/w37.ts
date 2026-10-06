@@ -52,11 +52,11 @@ const round = (
 
 // ── Lesson 1 — the long-stay plan ─────────────────────────────────────────
 const t1a =
-  "Not every day, madam. A long-stay guest can choose light service on some days, as long as someone looks in every second day.";
+  "Not every day, madam. A long-stay guest can choose light service on some days, as long as someone looks in every other day.";
 const t1b =
   "Fresh towels, empty bins and fresh water, madam, but the sheets stay. It takes about ten minutes.";
 const t1c =
-  "Your sheets are changed every second day, madam, or daily if you ask, and there is no charge.";
+  "Our eco programme changes your sheets every second day, madam, or daily if you ask, and there is no charge.";
 
 // ── Lesson 2 — Do Not Disturb, with conditions ────────────────────────────
 const t2a = "Not at all, sir. We respect the sign, and nobody comes in while it is up.";
@@ -107,11 +107,13 @@ const lesson1 = L(37, 1, "The Long-Stay Plan", "Lịch dọn cho khách ở dài
       ...sp(
         "We are here for a whole month. Does someone have to come in every single day?",
         t1a,
-        "Đồng ý có điều kiện: phần khách được chọn, rồi 'as long as' + điều không đổi. 'Long-stay guest' /ˌlɒŋ ˈsteɪ ˈɡest/ — ba trọng âm đều nhau.",
+        "Đồng ý có điều kiện: phần khách được chọn, rồi 'as long as' + điều không đổi — bỏ một ngày thì được, hai ngày liền thì không ('every other day' = cách một ngày). 'Long-stay guest' /ˌlɒŋ ˈsteɪ ˈɡest/ — ba trọng âm đều nhau.",
+        undefined,
+        ["every", "other"],
       ),
       alsoAccept: [
-        "No, madam. A long-stay guest can choose light service on some days, as long as someone looks in every second day.",
-        "Not every day, madam. A long-stay guest can choose light service on some days, as long as someone looks in every other day.",
+        "No, madam. A long-stay guest can choose light service on some days, as long as someone looks in every other day.",
+        "Not every day, madam. A long-stay guest can choose light service on some days, as long as someone looks in every second day.",
       ],
     },
     sp(
@@ -126,13 +128,14 @@ const lesson1 = L(37, 1, "The Long-Stay Plan", "Lịch dọn cho khách ở dài
       ...sp(
         "And the sheets? I do not want them left for a week.",
         t1c,
-        "Cùng một luật với chương trình xanh: cách một ngày, hoặc mỗi ngày nếu khách xin, không tính phí. Bị động 'are changed' — giữ đuôi -ed.",
+        "Cùng một luật với chương trình xanh ('eco programme') của tuần đầu: cách một ngày, hoặc mỗi ngày nếu khách xin, không tính phí. Chủ ngữ số ít 'our eco programme' cần 'changes'.",
         undefined,
         undefined,
         t1b,
       ),
       alsoAccept: [
-        "Your sheets are changed every other day, madam, or daily if you ask, and there is no charge.",
+        "Our eco programme changes your sheets every other day, madam, or daily if you ask, and there is no charge.",
+        "Your sheets are changed every second day, madam, or daily if you ask, and there is no charge.",
       ],
     },
     sp(
@@ -149,11 +152,14 @@ const lesson1 = L(37, 1, "The Long-Stay Plan", "Lịch dọn cho khách ở dài
     {
       ...sp(
         "We will be away in Hanoi for three nights. Must you still come in?",
-        "We look in every second day while you are away, sir, but nothing of yours is moved.",
-        "Điều kiện an toàn không đổi khi khách đi vắng: vẫn có người ghé phòng cách một ngày. Rồi một lời yên tâm bạn giữ được: đồ của khách để nguyên.",
+        "We look in every other day while you are away, sir. Nothing of yours is moved, not even the thermostat.",
+        "Điều kiện an toàn không đổi khi khách đi vắng: vẫn có người ghé phòng cách một ngày. Rồi một lời yên tâm bạn giữ được: đồ của khách để nguyên — kể cả nhiệt độ khách đặt trên 'thermostat'.",
+        undefined,
+        ["thermostat"],
       ),
       alsoAccept: [
-        "We look in every other day while you are away, sir, but nothing of yours is moved.",
+        "We look in every second day while you are away, sir. Nothing of yours is moved, not even the thermostat.",
+        "We look in every other day while you are away, sir, but nothing of yours is moved, not even the thermostat.",
       ],
     },
   ],
@@ -163,7 +169,7 @@ A guest staying a week or more may choose a lighter plan. The plan changes the v
 Full service is the daily clean. Light service is fresh towels, empty bins and fresh water, and it takes about ten minutes.
 Sheets are changed every second day, on departure, and daily whenever the guest asks. There is no charge either way.
 A deep clean happens once a week and takes about an hour. The guest chooses the morning, and you write it on the guest profile the same day.
-A room may skip a day at the guest's request, as long as someone looks in the next day. After two days with no entry, your supervisor arranges a check.
+A room may skip one day at the guest's request, never two in a row, so someone looks in the next day. If nobody can get in, your supervisor arranges a check.
 While a guest is away for a few nights, the room is still looked in on every second day. Nothing of the guest's is moved, and the visit goes on the room report.
 Never promise a guest that nobody will enter for a week. That is the one condition the plan cannot drop.
 The details above are one hotel's. Ask your Executive Housekeeper what your long-stay plan includes.`,
@@ -172,12 +178,12 @@ The details above are one hotel's. Ask your Executive Housekeeper what your long
         q: "Khách ở dài ngày xin không ai vào dọn trong cả tuần thì sao?",
         options: [
           "Đồng ý không vào phòng cả tuần, vì đó là quyền của khách lưu trú dài",
-          "Được bỏ vài ngày, miễn có người ghé kiểm tra cách một ngày",
+          "Được bỏ một ngày, nhưng không bao giờ bỏ hai ngày liền",
           "Từ chối; phòng nào cũng phải dọn đầy đủ mỗi ngày",
         ],
         correct: 1,
         explanation:
-          "'A room may skip a day… as long as someone looks in the next day… Never promise a guest that nobody will enter for a week' — lịch thì đổi được, kiểm tra an toàn thì không.",
+          "'A room may skip one day… never two in a row, so someone looks in the next day… Never promise a guest that nobody will enter for a week' — lịch thì đổi được, kiểm tra an toàn thì không.",
       },
       {
         q: "Light service gồm những gì?",
@@ -207,10 +213,10 @@ The details above are one hotel's. Ask your Executive Housekeeper what your long
     round(
       1,
       "Can we skip cleaning for the whole week? We hate being disturbed.",
-      "We can skip some days, madam, as long as someone looks in every second day.",
-      "We can skip some days, madam, as long as someone look in every second day.",
+      "We can skip one day at a time, madam, as long as someone looks in every other day.",
+      "We can skip one day at a time, madam, as long as someone look in every other day.",
       "Of course, madam — nobody will come in at all until you check out, whatever happens.",
-      "Phương án 'nobody will come in at all until you check out' hứa đúng điều không ai được hứa — một căn phòng không ai vào quá hai ngày là rủi ro an toàn. Phương án 'someone look in' sai: chủ ngữ số ít cần 'looks'. Câu đúng đồng ý có điều kiện.",
+      "Phương án 'nobody will come in at all until you check out' hứa đúng điều không ai được hứa — một căn phòng không ai vào quá hai ngày liền là rủi ro an toàn. Phương án 'someone look in' sai: chủ ngữ số ít cần 'looks'. Câu đúng đồng ý có điều kiện: bỏ từng ngày một, không bao giờ hai ngày liền.",
     ),
     round(
       0,
@@ -302,17 +308,20 @@ const lesson2 = L(
         alsoAccept: [
           "Of course, sir, for today. However, after two days in a row, somebody must look in for your safety.",
           "Certainly, sir, for today. However, after two days in a row, someone must look in for your safety.",
+          "Of course, sir, for today. But after two days in a row, someone must look in for your safety.",
+          "Certainly, sir, for today. However, after two days in a row someone has to look in for your safety.",
+          "For today, of course, sir. However, after two days someone must look in for your safety.",
         ],
       }),
       {
         ...sp(
-          "Ms Lan here. Why has 1207 had no service since Monday?",
-          "The sign has been up two days in a row, Ms Lan, and nobody answers the phone. Could you arrange a check with Security?",
-          "Báo cấp trên: gọi tên một lần, không kính ngữ. Hai sự việc có mốc, rồi một đề nghị — kiểm tra là việc của giám sát và An ninh, không phải của bạn.",
+          "Ms Lan here. Why has 1207 had no service today?",
+          "The sign was still up at three, Ms Lan, and nobody answered the phone. Could you arrange a check with Security?",
+          "Báo cấp trên: gọi tên một lần, không kính ngữ. Hai sự việc có mốc — biển còn treo lúc ba giờ, gọi không ai nghe — rồi một đề nghị. Đó là ngưỡng: báo ngay trong ngày, không chờ sang hôm sau. Kiểm tra là việc của giám sát và An ninh, không phải của bạn.",
           "manager",
         ),
         alsoAccept: [
-          "The sign has been up two days in a row, Ms Lan, and nobody answers the phone. Can you arrange a check with Security?",
+          "The sign was still up at three, Ms Lan, and nobody answered the phone. Could you look in with Security?",
         ],
       },
       sp(
@@ -379,7 +388,7 @@ Your own hotel's hours may differ from these. Ask your Floor Supervisor.`,
       ),
       round(
         1,
-        "Ms Lan here. 1207 has had the sign up since yesterday, and nobody answers. What do you suggest?",
+        "Ms Lan here. 1207 still has the sign up at three, and nobody answers the phone. What do you suggest?",
         "Could you look in with Security, Ms Lan? I will wait in the corridor.",
         "I will go in alone and check it quickly, Ms Lan, so that we do not have to bothering Security.",
         "I will go in alone and check it quickly, Ms Lan, so that we do not have to bother Security.",
@@ -394,14 +403,14 @@ Your own hotel's hours may differ from these. Ask your Floor Supervisor.`,
 const t3a =
   "I will check the lost item log for you now, madam. Could you describe the watch for me first?";
 const t3b =
-  "The office can send it by courier at your cost, madam, once they have your proof of identity.";
+  "If it is in the log, the office can send it by courier at your cost, madam. They will need your proof of identity first.";
 const t3c = "Valuables are kept for six months, madam, so there is plenty of time to arrange it.";
 
 // ── Lesson 4 — laundry terms ──────────────────────────────────────────────
 const t4a = "The cut-off time is ten, sir, so if it goes now, it comes back this evening.";
 const t4b = "Pressing is charged per item, sir, and the price is printed on the laundry list.";
 const t4c =
-  "Anything marked dry clean only on the care label goes for dry cleaning, at its own price on the list.";
+  "Any garment marked dry clean only on the care label goes for dry cleaning, at its own price on the list.";
 
 const lesson3 = L(37, 3, "Lost Property, With Conditions", "Đồ thất lạc và điều kiện trả lại", {
   vocabulary: [
@@ -459,7 +468,7 @@ const lesson3 = L(37, 3, "Lost Property, With Conditions", "Đồ thất lạc v
     sp(
       "It is gold, with a brown leather strap. Can you post it to me in Singapore?",
       t3b,
-      "Một câu nói đủ ba điều: ai gửi (văn phòng, không phải bạn hứa), ai trả phí, và gửi khi nào — sau khi đã kiểm giấy tờ. 'Courier' /ˈkʊriə/ — hai âm tiết, không đọc thành 'cu-ri-ơ'.",
+      "Chưa ai biết chiếc đồng hồ có trong sổ hay không, nên mở bằng điều kiện 'If it is in the log' — không hứa gửi. Rồi đủ ba điều: ai gửi (văn phòng, không phải bạn), ai trả phí, và cần gì trước (giấy tờ tuỳ thân). 'Courier' /ˈkʊriə/ — ba âm tiết ngắn, nhấn âm đầu: KU-ri-ə.",
       undefined,
       undefined,
       t3a,
@@ -481,6 +490,9 @@ const lesson3 = L(37, 3, "Lost Property, With Conditions", "Đồ thất lạc v
       alsoAccept: [
         "We can only release it with written permission from your friend, madam. May I give you the form for her?",
         "I am afraid we can release it only with written permission from your friend, madam. May I give you the form for her?",
+        "We can release it only with your friend's written permission, madam. May I give you the form for her?",
+        "We need written permission from your friend before we can release it, madam. May I give you the form for her?",
+        "I am sorry, madam, we can release it only with written permission from your friend. May I give you the form for her?",
       ],
     }),
     risk({
@@ -492,6 +504,9 @@ const lesson3 = L(37, 3, "Lost Property, With Conditions", "Đồ thất lạc v
       alsoAccept: [
         "I am sorry, sir, I am not able to show you the box. Could you describe yours, and I will check the log?",
         "I am afraid I cannot show you the box, sir. Could you describe yours, and I will check the log?",
+        "I am afraid I cannot show you the box, sir. Can you describe yours? Then I will check the log.",
+        "I am sorry, sir, I cannot show you the box. Could you describe your sunglasses, and I will check the log?",
+        "I am sorry, sir, I am not allowed to show you the box. Could you describe yours, and I will check the log?",
       ],
     }),
     {
@@ -638,22 +653,25 @@ const lesson4 = L(37, 4, "Laundry Terms", "Điều kiện giặt là", {
     {
       ...sp(
         "It is half past ten. Can this dress still come back today?",
-        "Only by express, madam: back within four hours, with the surcharge printed on the list.",
-        "Quá giờ chót thì chỉ còn dịch vụ nhanh — nói thời hạn và chỉ vào phụ phí in sẵn. Không hứa giờ nào nhanh hơn phiếu in.",
+        "Only by express service, madam: back within four hours, with the surcharge printed on the list.",
+        "Quá giờ chót thì chỉ còn dịch vụ nhanh ('express service') — nói thời hạn và chỉ vào phụ phí in sẵn. Không hứa giờ nào nhanh hơn phiếu in.",
+        undefined,
+        ["express"],
       ),
       alsoAccept: [
+        "Only by express service, madam: it comes back within four hours, with the surcharge printed on the list.",
         "Only by express, madam: it comes back within four hours, with the surcharge printed on the list.",
       ],
     },
     {
       ...sp(
         "This silk jacket was very expensive. If you ruin it, will you pay the full price?",
-        "I cannot promise that, madam. The hotel covers up to the limit printed on this list, and we note its condition together first.",
-        "Không hứa đền toàn bộ, cũng không đọc con số nào ngoài con số in trên phiếu khách sẽ ký. Rồi bước lắng nghe: kiểm và ghi tình trạng cùng khách.",
+        "I cannot promise that, madam. Our liability is the limit printed on this list, and we note its condition together first.",
+        "Không hứa đền toàn bộ, cũng không đọc con số nào ngoài con số in trên phiếu khách sẽ ký — 'our liability' (trách nhiệm đền bù của khách sạn) là đúng con số đó. Rồi bước lắng nghe: kiểm và ghi tình trạng cùng khách.",
       ),
       alsoAccept: [
-        "I am not able to promise that, madam. The hotel covers up to the limit printed on this list, and we note its condition together first.",
-        "I cannot promise that, madam, but the hotel covers up to the limit printed on this list, and we note its condition together first.",
+        "I am not able to promise that, madam. Our liability is the limit printed on this list, and we note its condition together first.",
+        "I cannot promise that, madam. The hotel covers up to the limit printed on this list, and we note its condition together first.",
       ],
     },
     sp(

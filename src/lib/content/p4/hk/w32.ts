@@ -279,6 +279,8 @@ const lesson2 = L(32, 2, "Asking Instead of Guessing", "Hỏi thay vì đoán", 
       alsoAccept: [
         "I am sorry, madam, I am not able to promise that. If he has any reaction, please call us and we will get help.",
         "I cannot promise that, madam. If he has any reaction, please call us and we will get help.",
+        "I am sorry, madam, I cannot promise that, but if he has any reaction, please call us and we will get help.",
+        "I am afraid I cannot promise that, madam. Please call us if he has any reaction, and we will get help.",
       ],
     }),
     {
@@ -429,6 +431,9 @@ const lesson3 = L(
           "I understand, madam. I am asking my supervisor to come to your room now.",
           "I am sorry, madam. I am calling my supervisor to your room now.",
           "I understand, madam. I am calling my supervisor now.",
+          "I understand, madam. I am calling my supervisor now, and she will come to your room.",
+          "I am sorry, madam. My supervisor is coming to your room now.",
+          "I am sorry, madam. I am calling my supervisor to your room now, and everything I moved is on my room report.",
         ],
       }),
       sp(
@@ -466,6 +471,9 @@ const lesson3 = L(
         alsoAccept: [
           "I am sorry, madam, I cannot take your jewellery. I can see it by the bath — may I show you where it is?",
           "I can see it by the bath, madam, but I am not able to take your jewellery. May I show you where it is?",
+          "I am sorry, madam, I am not allowed to take your jewellery. May I show you where it is by the bath?",
+          "I am sorry, madam, I cannot take your jewellery, but it is by the bath. May I show you where it is?",
+          "I am sorry, madam, I cannot take your valuables. I can see it by the bath. May I show you where it is?",
         ],
       }),
       sp(
@@ -638,7 +646,7 @@ const lesson4 = L(32, 4, "Writing It Down for Tomorrow", "Ghi lại cho ngày ma
     `THE GUEST PROFILE — THREE LINES, WRITTEN WELL
 There are two files, not one. The guest profile follows the person between stays: pillow, allergies in the guest's own words, service time, and whether turndown is wanted.
 The room profile stays with the room: no carpet spray here, this bathroom holds damp so the dehumidifier runs, this balcony door sticks.
-Put a person's preference on a room, and the next guest inherits it. That is meaningless at best, and with an allergy it is worse.
+Put a person's preference on a room, and the next guest inherits it. That helps nobody, and with an allergy it is dangerous.
 What stays out: opinions about the guest, guesses about health, anything about visitors, and anything you would not read aloud to the guest's face.
 Health details go on a profile only with the guest's agreement, so ask first and then write.
 Test the wording three ways. Is it factual? Is it useful tomorrow? Could the guest read it without being hurt? If a line fails any of the three, rewrite it.

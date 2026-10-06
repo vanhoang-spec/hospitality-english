@@ -49,17 +49,17 @@ const round = (
 const t1a =
   "I propose a plan in three parts, sir: service after two, light service on weekdays, and a Saturday deep clean.";
 const t1b =
-  "Since you mentioned your night shifts, sir, two o'clock means nobody knocks while you are asleep.";
+  "Since you mentioned your night shifts, sir, nobody knocks while you are asleep, unless you call us.";
 const t1c =
-  "Only a yes, sir. Then it goes on your guest profile today, so every attendant follows it.";
+  "Just your go-ahead, sir. Then it goes on your guest profile today, so every attendant follows it.";
 
 // ── Lesson 2 — a set-up plan for the desk ─────────────────────────────────
 const t2a =
-  "First of all, petals on the bed and along the bath, then towel art and two LED candles.";
+  "First of all, rose petals on the bed and along the bath, then towel art and two LED candles.";
 const t2b =
   "The timing is thirty minutes once the room is empty, so I need your cue when they leave.";
 const t2c =
-  "Finally, please check their profile for allergies before the petals go in. I will report back when it is ready.";
+  "Finally, please put any allergies from their profile on the set-up slip before the petals go in. I will report back when it is ready.";
 
 const lesson1 = L(
   38,
@@ -112,37 +112,44 @@ const lesson1 = L(
         ),
         alsoAccept: [
           "I would propose a plan in three parts, sir: service after two, light service on weekdays, and a Saturday deep clean.",
+          "I propose a plan in three parts, sir: service after two, light service on weekdays, and a deep clean on Saturday.",
         ],
       },
-      sp(
-        "Why after two, exactly?",
-        t1b,
-        "Phần hai — VÌ SAO: dựa đúng vào điều khách đã kể. 'Since you mentioned' chỉ dùng cho điều khách TỰ nói ra.",
-        undefined,
-        undefined,
-        t1a,
-      ),
+      {
+        ...sp(
+          "Why after two, exactly?",
+          t1b,
+          "Phần hai — VÌ SAO: dựa đúng vào điều khách đã kể. 'Since you mentioned' chỉ dùng cho điều khách TỰ nói ra. 'unless you call us' (trừ khi khách gọi) giữ quyền đổi ý cho khách.",
+          undefined,
+          undefined,
+          t1a,
+        ),
+        alsoAccept: [
+          "Since you mentioned your night shifts, sir, two o'clock means nobody knocks while you are asleep.",
+        ],
+      },
       {
         ...sp(
           "That sounds right. What do you need from me?",
           t1c,
-          "Phần ba — MÌNH CẦN GÌ: một cái gật đầu. Rồi một việc bạn làm ngay hôm nay để kế hoạch không nằm trong đầu một người. 'Guest profile' /ˈprəʊfaɪl/.",
+          "Phần ba — MÌNH CẦN GÌ: chỉ một lời đồng ý ('your go-ahead'). Rồi một việc bạn làm ngay hôm nay để kế hoạch không nằm trong đầu một người. 'Guest profile' /ˈprəʊfaɪl/.",
           undefined,
           undefined,
           t1b,
         ),
         alsoAccept: [
           "Just a yes, sir. Then it goes on your guest profile today, so every attendant follows it.",
+          "Only your agreement, sir. Then it goes on your guest profile today, so every attendant follows it.",
         ],
       },
       {
         ...sp(
           "Can the plan include the bed made twice a day?",
-          "I can put it forward to my supervisor today, sir, and come back to you before six.",
-          "Lượt dọn giường thứ hai là quyền của giám sát, nên không nằm trong kế hoạch của bạn cho tới khi được duyệt. 'Put it forward' — đọc nối ba từ.",
+          "I can put a second bed service forward to my supervisor today, sir, and come back to you before six.",
+          "Lượt dọn giường thứ hai ('a second bed service') là quyền của giám sát, nên không nằm trong kế hoạch của bạn cho tới khi được duyệt. 'put a second bed service forward' — 'put' và 'forward' đứng hai bên cụm danh từ: trình lên.",
         ),
         alsoAccept: [
-          "I will put it forward to my supervisor today, sir, and come back to you before six.",
+          "I will put a second bed service forward to my supervisor today, sir, and come back to you before six.",
         ],
       },
       sp(
@@ -153,8 +160,8 @@ const lesson1 = L(
       ),
       sp(
         "Why does 1508 get service after two? It breaks my order for the floor.",
-        "It is his service window, agreed with Ms Lan and on his profile. I can take 1508 myself if it helps you.",
-        "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Nói lý do bằng việc đã được duyệt, không kể chuyện riêng của khách, rồi đề nghị đỡ việc.",
+        "He is a long-stay guest, and his service window after two is agreed with Ms Lan. I can take 1508 myself if it helps.",
+        "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Nói lý do bằng việc đã được duyệt (khách ở dài ngày, khung giờ đã có giám sát đồng ý), không kể chuyện riêng của khách, rồi đề nghị đỡ việc.",
         "colleague",
       ),
     ],
@@ -271,28 +278,31 @@ const lesson2 = L(38, 2, "A Set-Up Plan for the Desk", "Trình bày phương án
       ...sp(
         "Fine. Is there anything else you need from us?",
         t2c,
-        "Phần ba mở bằng 'Finally': điều quầy phải làm cho bạn (kiểm dị ứng), rồi điều bạn hứa lại — báo lại người gửi phiếu khi phòng xong. 'Finally' /ˈfaɪnəli/ — ba âm tiết.",
+        "Phần ba mở bằng 'Finally': điều quầy phải làm cho bạn (ghi dị ứng từ hồ sơ khách lên phiếu dựng phòng — 'set-up slip'), rồi điều bạn hứa lại — báo lại người gửi phiếu khi phòng xong. 'Finally' /ˈfaɪnəli/ — ba âm tiết.",
         "colleague",
         undefined,
         t2b,
       ),
       alsoAccept: [
-        "Finally, please check their profile for allergies before the petals go in. I will report back once it is ready.",
+        "Finally, please put any allergies from their profile on the set-up slip before the petals go in. I will report back once it is ready.",
+        "Finally, please check their profile for allergies before the petals go in. I will report back when it is ready.",
       ],
     },
     {
       ...sp(
         "I want to surprise my wife tomorrow. What could the room look like?",
-        "May I suggest petals on the bed and towel art, sir? The front desk will take the details and the price.",
-        "Gợi ý đúng thứ tầng làm được, rồi chuyển đơn và giá cho quầy lễ tân. Tầng không nhận đơn có tính tiền.",
+        "May I suggest petals on the bed and towel art for the occasion, sir? The front desk will take the details and the price.",
+        "Gợi ý đúng thứ tầng làm được ('for the occasion' — cho dịp này, không đoán là dịp gì), rồi chuyển đơn và giá cho quầy lễ tân. Tầng không nhận đơn có tính tiền.",
+        undefined,
+        ["occasion"],
       ),
       alsoAccept: [
-        "Could I suggest petals on the bed and towel art, sir? The front desk will take the details and the price.",
+        "Could I suggest petals on the bed and towel art for the occasion, sir? The front desk will take the details and the price.",
       ],
     },
     sp(
       "Balloons would be fun as well. Can you add some tonight?",
-      "As an alternative tonight, sir, towel art takes fifteen minutes, because balloons need a full day's lead time.",
+      "As an alternative tonight, sir, towel art takes fifteen minutes, because latex balloons need a full day's lead time.",
       "Không nói 'không' rồi dừng: đưa 'alternative' trước, lý do sau. Thời gian chuẩn bị là luật tầng đã có: bóng bay cần cả ngày.",
     ),
     sp(
@@ -305,7 +315,7 @@ const lesson2 = L(38, 2, "A Set-Up Plan for the Desk", "Trình bày phương án
   reading: read(
     `PRESENTING A SET-UP — WHAT, WHEN, AND WHAT YOU NEED
 The desk or Guest Relations takes the order and the price. Your part is the room, and your plan for it should take less than a minute to say.
-First of all, what goes into the room, in the order you will place it: petals, towel art, LED candles. Name only what may go into a room. Real flames and helium never appear in a plan.
+First of all, what goes into the room, in the order you will place it: petals, towel art, LED candles. Name only what this hotel allows in a room, so real flames and helium never appear in a plan.
 Then the timing. Count from the moment the room is empty, never from the dinner booking. Petals and towel art take fifteen minutes; flowers and balloons need a full day.
 Finally, what you need from the desk: the cue when the guests leave. You also need an allergy check on the profile before petals or fruit go in.
 If something on the request cannot be done in time, offer an alternative in the same breath. "Balloons need a full day, so towel art tonight" is a plan; "no balloons" is not.
@@ -440,19 +450,22 @@ const lesson3 = L(38, 3, "Proposing a Change Upwards", "Đề xuất một thay 
     risk({
       ...sp(
         "This room smells damp. Can you not just spray something nice?",
-        "I am sorry, madam. I am reporting the damp smell now, and may I ask the front desk about another room?",
-        "Mùi ẩm được BÁO, không xịt che. Đổi phòng là việc của quầy lễ tân: bạn xin giúp khách, không tự xếp phòng. Chữ damp đọc /dæmp/, âm /p/ cuối nhẹ.",
+        "I am sorry, madam. I am reporting the damp smell now. May I ask the front desk about another room?",
+        "Mùi ẩm được BÁO, không xịt che. Hai câu tách rời: một câu báo việc bạn đang làm, một câu hỏi xin giúp khách. Đổi phòng là việc của quầy lễ tân: bạn xin giúp khách, không tự xếp phòng. Chữ damp đọc /dæmp/, âm /p/ cuối nhẹ.",
       ),
       alsoAccept: [
         "I am sorry, madam. I am reporting the damp smell now. Shall I ask the front desk about another room?",
-        "I am so sorry, madam. I am reporting the damp smell now, and may I ask the front desk about another room?",
+        "I am so sorry, madam. I am reporting the damp smell now. May I ask the front desk about another room?",
+        "I am sorry, madam. I am reporting the damp smell now. May I ask the front desk about another room for you?",
+        "I am sorry, madam, a damp smell is reported, not sprayed. May I ask the front desk about another room?",
       ],
     }),
     sp(
       "1408 smells damp again. Just spray it — it is quicker.",
-      "No, a damp smell is reported, not sprayed. I have put it forward to Ms Lan as a trial.",
-      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Một luật, rồi việc đã làm. 'Put it forward' — trình lên cấp trên.",
+      "No, the signature scent never covers a damp smell. I have put it forward to Ms Lan as a trial.",
+      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Một luật, rồi việc đã làm: mùi hương riêng của khách sạn ('signature scent') không bao giờ dùng để che mùi ẩm. 'Put it forward' — trình lên cấp trên.",
       "colleague",
+      ["signature"],
     ),
     sp(
       "Ms Lan here. The trial in 1408 is over. What did you find?",
@@ -600,6 +613,8 @@ const lesson4 = L(
         alsoAccept: [
           "I am not able to promise that, sir, but everything she needs will be within reach before she arrives.",
           "I cannot promise that, sir. Everything she needs will be within reach before she arrives.",
+          "I cannot promise that, sir. I will make sure everything she needs is within reach before she arrives.",
+          "I am afraid I cannot promise that, sir, but everything she needs will be within reach before she arrives.",
         ],
       }),
       {

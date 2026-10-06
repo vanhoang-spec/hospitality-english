@@ -137,6 +137,7 @@ const lesson1 = L(35, 1, "The Hour the Guest Wants", "Khung giờ khách muốn"
         "I am stepping outside now, sir.",
         "I am going to step outside now, sir.",
         "I am stepping out now, sir.",
+        "Excuse me, sir. I will step outside now.",
       ],
     }),
     sp(
@@ -356,10 +357,10 @@ Giving generously inside your own tier is the cheapest guest satisfaction a hote
     round(
       1,
       "Can we have extra coffee capsules and two more bottles of water?",
-      "Of course, madam. Those are part of the daily allowance, and I will bring them now.",
-      "Of course, madam. Those are part of the daily allowance, and I will brings them now.",
+      "Of course, madam. Extra coffee and water are mine to give, and I will bring them now.",
+      "Of course, madam. Extra coffee and water are mine to give, and I will brings them now.",
       "I will have to ask my supervisor first, madam, as extras like that are not usually free.",
-      "Phương án 'ask my supervisor first' đẩy lên trên một việc bạn được tự làm — khách phải chờ vì một gói cà phê. Phương án 'will brings' sai: sau 'will' là động từ nguyên mẫu. Câu đúng cho ngay trong định mức của mình.",
+      "Phương án 'ask my supervisor first' đẩy lên trên một việc bạn được tự làm — khách phải chờ vì một gói cà phê. Phương án 'will brings' sai: sau 'will' là động từ nguyên mẫu. Câu đúng cho ngay: cà phê và nước THÊM nằm trong phần nhân viên được tự cho ('THE ATTENDANT GIVES FREELY'), không phải trong định mức hằng ngày ('daily allowance') — định mức là phần phòng vốn có mỗi ngày.",
     ),
     round(
       0,
@@ -473,13 +474,17 @@ const lesson3 = L(35, 3, "Negotiating With Your Own Team", "Thương lượng tr
       alsoAccept: [
         "No, my key never leaves me. Please sign for your own key in the master key log.",
         "I am sorry, my key never leaves me. Please sign for one in the master key log.",
+        "Sorry, my master key never leaves me. Please sign for your own key in the master key log.",
+        "No, I cannot lend it. My key never leaves me. Please sign for one in the master key log.",
+        "No, my key never leaves me. You can sign for one in the master key log.",
       ],
     }),
     sp(
       "The linen room is short of king sheets. Can I take two from your trolley?",
-      "Yes, take two now. What if you gave me two back when the linen delivery comes?",
-      "Đồng nghiệp: trao đổi nhỏ, công bằng, không kính ngữ. 'What if you gave' — quá khứ đơn sau 'what if'.",
+      "Yes, take two now. What if you set aside two for me when the linen delivery comes?",
+      "Đồng nghiệp: trao đổi nhỏ, công bằng, không kính ngữ. 'What if you set aside' — sau 'what if' dùng quá khứ đơn, và quá khứ của 'set' vẫn là 'set'. 'Set aside' = để riêng ra cho mình.",
       "colleague",
+      ["aside"],
     ),
   ],
   reading: read(
@@ -597,6 +602,9 @@ const lesson4 = L(35, 4, "When the Guest Wants It Waived", "Khi khách xin miễ
         "I am not able to waive that charge, madam. I will ask the Duty Manager now and come back to you before six.",
         "I cannot waive that charge, madam, but I will ask the Duty Manager now and come back to you before six.",
         "I cannot waive that charge, madam. I will ask the manager on duty now and come back to you before six.",
+        "I am sorry, madam, I am not allowed to waive that charge. I will ask the Duty Manager now and come back to you before six.",
+        "That charge is not mine to waive, madam. I will ask the Duty Manager now and come back to you before six.",
+        "I cannot waive a charge, madam. I am asking the Duty Manager now, and I will come back before six.",
       ],
     }),
     sp(
@@ -625,16 +633,19 @@ const lesson4 = L(35, 4, "When the Guest Wants It Waived", "Khi khách xin miễ
         "I am sorry, sir, I cannot take that, and I cannot change the charge. I am calling the Duty Manager now.",
         "I am not able to take that, sir, and I cannot change the charge. I am calling the Duty Manager now.",
         "I cannot take that, sir, and I cannot change the charge. I am calling the manager on duty now.",
+        "I am sorry, sir, I cannot accept that, and I cannot change the charge. I am calling the Duty Manager now.",
+        "No, thank you, sir. I cannot take that, and I cannot change the charge. I am calling the Duty Manager now.",
       ],
     }),
     {
       ...sp(
         "Two beers on my bill. We never touched the minibar, not once.",
-        "I record what I find at the minibar check, sir, with the time. Shall I ask the front desk to call you?",
-        "Không nói khách sai, không nói khách sạn sai — bạn không biết bên nào. Nói việc của mình (ghi nhận, có giờ), rồi chuyển cho quầy.",
+        "I am sorry, sir. Every minibar check is recorded with the time, so may I ask the front desk to call you?",
+        "Không nói khách sai, không nói khách sạn sai — bạn không biết bên nào. Mở bằng một lời xin lỗi vì phiền phức của khách — xin lỗi không phải là nhận lỗi. Rồi nói việc của mình (ghi nhận, có giờ) và chuyển cho quầy.",
       ),
       alsoAccept: [
-        "I record what I find at the minibar check, sir, with the time. May I ask the front desk to call you?",
+        "I am sorry, sir. Every minibar check is recorded with the time, so shall I ask the front desk to call you?",
+        "I am sorry, sir. I record what I find at the minibar check, so may I ask the front desk to call you?",
       ],
     },
     sp(

@@ -137,6 +137,9 @@ const lesson1 = L(31, 1, "The Linen Has a Story", "Tấm vải cũng có câu ch
       alsoAccept: [
         "I am so sorry, sir. It is our room scent, so I will make your room scent-free from today.",
         "I am sorry, sir. That is our room scent, and from today your room will be scent-free.",
+        "I am sorry, sir. It is our room scent, so your room will be scent-free from today.",
+        "I am sorry, sir. It is our room scent, and we will keep your room scent-free from today.",
+        "I am sorry, sir. From today your room will be scent-free.",
       ],
     }),
     sp(
@@ -306,7 +309,7 @@ const lesson2 = L(
       `THE TOWEL CARD — WHAT IT REALLY MEANS
 On the towel rail, a towel stays with the guest. On the floor or in the basket, it goes to the laundry.
 One thing overrides the card: anything marked or soiled is laundered, wherever it is hanging.
-Under the eco programme, sheets are changed every second day, on departure, and whenever a guest asks. There is no charge for that, and there is no raised eyebrow either.
+Under the eco programme, sheets are changed every second day, on departure, and whenever a guest asks. There is no charge for that, and the guest never has to explain why.
 Some guests test us with one question: "Do you really wash them?" The honest answer is short, and it is always the same.
 Never teach the environment to a guest. They booked a room, not a lesson, so tell the story only when they ask for it.
 When they do ask, the true story is short. Our laundry team counted the clean, unused towels going into the wash each morning, and they asked us to stop.
@@ -614,6 +617,10 @@ const lesson4 = L(31, 4, "The Evening Ritual", "Nghi thức buổi tối", {
       alsoAccept: [
         "I am sorry, sir, I cannot take your valuables, but I can show you how the room safe works.",
         "I am afraid I cannot take your valuables, sir. I can show you how the room safe works.",
+        "I am sorry, sir, I am not allowed to take your valuables. Let me show you how the room safe in the wardrobe works.",
+        "I am sorry, sir, I cannot take your valuables. The room safe is in the wardrobe, and I can show you how to use it.",
+        "I am sorry, sir, I cannot take your passport or your cash. Let me show you how the room safe works.",
+        "I am sorry, sir, I cannot touch your valuables, but I can show you how to use the room safe.",
       ],
     }),
     sp(

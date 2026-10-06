@@ -107,6 +107,7 @@ const lesson1 = L(33, 1, "Listen First: Taking the Laundry In", "Lắng nghe tr�
       ),
       alsoAccept: [
         "Of course, sir. Could I inspect each garment with you first? It only takes a moment.",
+        "Of course, sir. May I inspect each garment with you first? It will only take a moment.",
       ],
     },
     sp(
@@ -142,8 +143,8 @@ const lesson1 = L(33, 1, "Listen First: Taking the Laundry In", "Lắng nghe tr�
     },
     sp(
       "1508 wants his shirts by six, but the express list is closed. What do I tell him?",
-      "Tell him the honest time from the list, and ask the laundry team before you promise anything else.",
-      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Không hứa giờ thay bộ phận giặt là — hỏi họ trước.",
+      "Tell him the next time printed on the list, and ask the laundry team before you promise anything else.",
+      "Đồng nghiệp hỏi: trả lời thẳng, không kính ngữ. Chỉ nói giờ in trên phiếu; không hứa giờ thay bộ phận giặt là — hỏi họ trước.",
       "colleague",
     ),
   ],
@@ -267,6 +268,9 @@ const lesson2 = L(33, 2, "Apologise for What the Guest Met", "Xin lỗi về đi
       alsoAccept: [
         "I am not able to say why yet, madam. I will photograph it now and take it to my supervisor today.",
         "I cannot say why yet, madam, but I will photograph it now and take it to my supervisor today.",
+        "I do not know why yet, madam. I will photograph it now and take it to my supervisor today.",
+        "I am sorry, madam, I cannot say why yet. I will take a photograph now and bring it to my supervisor today.",
+        "I cannot say why yet, madam. I will photograph it now, and my supervisor will see it today.",
       ],
     }),
     sp(
@@ -435,6 +439,9 @@ const lesson3 = L(
           "I am sorry, sir, I am not able to decide the amount. Let me check with my supervisor now.",
           "I cannot decide the amount, sir. Let me check with my supervisor now.",
           "I am sorry, sir, I cannot decide the amount. I am checking with my supervisor now.",
+          "I am sorry, sir, the amount is not my decision. Let me check with my supervisor now.",
+          "The amount is my supervisor's decision, sir. Let me check with her now.",
+          "I am sorry, sir, I cannot decide that. Let me check with my supervisor now.",
         ],
       }),
       sp(
@@ -609,6 +616,9 @@ const lesson4 = L(33, 4, "Thank the Guest and Close", "Cảm ơn khách và khé
         "I am sorry, sir, I am not able to give a free night. I am calling the Duty Manager for you now.",
         "I cannot give a free night, sir, but I am calling the Duty Manager for you now.",
         "I am sorry, sir, I cannot give a free night. I am calling the manager on duty for you now.",
+        "I am sorry, sir, a free night is not my decision. I am calling the Duty Manager for you now.",
+        "I am sorry, sir, I am not able to offer a free night. I am calling the Duty Manager now.",
+        "A free night is the Duty Manager's decision, sir. I am calling her for you now.",
       ],
     }),
     sp(
