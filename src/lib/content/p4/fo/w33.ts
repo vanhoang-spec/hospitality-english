@@ -25,7 +25,7 @@ const L = lessonsFor("FO");
 const t1a =
   "I am sorry you have had to mention it again, sir. Please tell me exactly what you see.";
 const t1b =
-  "Thank you, sir. Let me look into it now. Sometimes a card hold looks like a second charge.";
+  "Thank you, sir. Let me look into it now. Sometimes a card hold looks like a double charge.";
 const t1c =
   "Not at all, sir. Based on what you told me, I will check where each payment came from.";
 
@@ -68,7 +68,7 @@ export const week: AuthoredWeek = {
           "Xem xét, tìm hiểu kỹ",
           "🔍",
         ]),
-        c("Card hold", "Sometimes a card hold looks like a second charge.", [
+        c("Card hold", "Sometimes a card hold looks like a double charge.", [
           "/kɑːd həʊld/",
           "Khoản tạm giữ trên thẻ",
           "💳",
@@ -83,9 +83,9 @@ export const week: AuthoredWeek = {
         ),
         g(
           "Our system never makes mistakes.",
-          "Let me look into it now, madam. Sometimes a card hold looks like a second charge.",
+          "Let me look into it now, madam. Sometimes a card hold looks like a double charge.",
           "'Let me + động từ nguyên thể' nhận việc ngay. Không bảo vệ hệ thống; nêu một khả năng có thật mà không đổ cho khách.",
-          "Let me looking into it now, madam. Sometimes a card hold looks like a second charge.",
+          "Let me looking into it now, madam. Sometimes a card hold looks like a double charge.",
         ),
       ],
       speaking: [
@@ -119,11 +119,11 @@ export const week: AuthoredWeek = {
         {
           ...sp(
             "And nobody answered my three emails!",
-            "I am sorry nobody answered, madam. That should not have happened, and I will reply to you myself today.",
+            "I am sorry nobody answered, sir. That should not have happened, and I will reply to you myself today.",
             "Xin lỗi về trải nghiệm, không đổ cho ca khác. 'should not have happened' nhận đúng điều sai mà không kể lý do.",
           ),
           alsoAccept: [
-            "I am sorry nobody answered, madam. That should not have happened, and I will reply myself today.",
+            "I am sorry nobody answered, sir. That should not have happened, and I will reply myself today.",
           ],
         },
         sp(
@@ -280,6 +280,8 @@ A guest who feels heard will accept a slower answer.`,
             "I am sorry, sir. I am not able to waive the fee, but I will check with my supervisor now.",
             "I am sorry, sir. I cannot waive the fee, but let me check with my supervisor now.",
             "I am sorry, sir. I cannot remove the fee myself, but I will check with my supervisor now.",
+            "I am sorry, sir. I cannot make an exception myself, but let me check with my supervisor now.",
+            "I am sorry, sir. I cannot waive the fee. That needs my supervisor's approval, so I will check now.",
           ],
         }),
         {
@@ -437,11 +439,13 @@ Never read our internal approval limits to a guest.`,
             "I am not able to authorise a refund, sir, but I will ask my Duty Manager now.",
             "I cannot authorise a refund, sir. I will escalate it to my Duty Manager now.",
             "I cannot authorise a refund, sir, but I will ask the manager on duty now.",
+            "I cannot authorise a refund, sir. That is my Duty Manager's decision, so I will ask now.",
+            "I am sorry, sir. I cannot authorise a refund, but I will ask my Duty Manager now.",
           ],
         }),
         {
           ...sp(
-            "So do you think my children drank it?",
+            "Do you think my children drank the minibar drinks?",
             "Not at all, sir. It was posted in error, and I would never suggest that.",
             "Phủ nhận ngay và rõ. Không ám chỉ người đi cùng, trẻ em hay khách ở trước.",
           ),
@@ -449,8 +453,8 @@ Never read our internal approval limits to a guest.`,
         },
         sp(
           "Three minibar disputes on the fifth floor this week. What do you make of it?",
-          "It looks like a stock problem, not three dishonest guests. I have escalated it to housekeeping with the room numbers.",
-          "Báo cáo lên cấp trên, không gọi sir hay madam. Báo mẫu lặp lại, không báo về khách.",
+          "It looks like a stock problem, not three dishonest guests. I have passed it to housekeeping with the room numbers.",
+          "Báo cáo lên cấp trên, không gọi sir hay madam. Báo mẫu lặp lại, không báo về khách; việc kiểm kho minibar thì chuyển ngang cho buồng phòng ('passed it to'), không phải chuyển lên cấp trên.",
           "manager",
         ),
       ],
@@ -612,6 +616,8 @@ Tell the guest the process and the time, never the number. A guest who learns th
             "I am so sorry, sir. I am calling first aid and the Duty Manager now, and I will stay with you.",
             "I am sorry, sir. I will call first aid and the Duty Manager now, and I will stay with you.",
             "I am sorry, sir. I am calling first aid and the manager on duty now, and I will stay with you.",
+            "I am sorry, sir. I am calling our first aider and the Duty Manager now, and I will stay with you.",
+            "I am sorry, sir. I will stay with you, and I am calling first aid and the Duty Manager now.",
           ],
         }),
         sp(

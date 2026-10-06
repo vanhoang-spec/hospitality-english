@@ -123,6 +123,8 @@ export const week: AuthoredWeek = {
             "Thank you, sir. I will ask housekeeping to change the pillows now.",
             "Of course, sir. I will ask housekeeping to change your pillows straight away.",
             "Thank you, sir. I am asking housekeeping to change your pillows now.",
+            "Thank you, sir. I will ask housekeeping to replace your pillows now.",
+            "Thank you, sir. I am asking housekeeping to replace your pillows now.",
           ],
         }),
         sp(
@@ -434,6 +436,8 @@ Night calls or a light sleeper: a room AWAY from the lift.`,
             "I am not able to offer a free upgrade, sir, but I can ask my Duty Manager for you.",
             "I cannot offer a free upgrade, sir. May I ask my Duty Manager for you?",
             "I cannot promise a free upgrade, sir, but I can ask my Duty Manager.",
+            "I cannot offer a free upgrade, sir. That is my Duty Manager's decision, so I will ask now.",
+            "I cannot offer a free upgrade myself, sir, but I will ask my Duty Manager now.",
           ],
         }),
         sp(
@@ -579,15 +583,20 @@ A profile that has not changed in three stays is usually a profile nobody is rea
         risk({
           ...sp(
             "My business partner Mr Tan is staying here too. Put me on his floor.",
-            "I am sorry, sir, I cannot tell you where another guest is staying.",
+            "I am sorry, sir, I cannot tell you where other guests are staying.",
             "Câu phải đúng của tuần: không nói khách khác ở đâu, kể cả với người nói là quen. Không xác nhận, không gợi ý tầng.",
             undefined,
-            ["guest", "staying"],
+            ["guests", "staying"],
           ),
           alsoAccept: [
-            "I am sorry, sir, I am not able to tell you where another guest is staying.",
-            "I am afraid I cannot tell you where another guest is staying, sir.",
-            "I am sorry, sir, I cannot say where another guest is staying.",
+            "I am sorry, sir, I am not able to tell you where other guests are staying.",
+            "I am afraid I cannot tell you where other guests are staying, sir.",
+            "I am sorry, sir, I cannot say where other guests are staying.",
+            "I am sorry, sir, I cannot tell you who is staying with us.",
+            "I am sorry, sir, I cannot say who is staying with us, but you are welcome to leave a message.",
+            "I am sorry, sir, I cannot say who is staying with us. May I take a message?",
+            "I am sorry, sir, I cannot tell you anything about another guest.",
+            "I am sorry, sir, I cannot tell you where another guest is staying.",
           ],
         }),
         {
@@ -619,7 +628,7 @@ A profile that has not changed in three stays is usually a profile nobody is rea
 2. Offer the next best, and say WHY it is near: double glazing, a top floor, away from the lift.
 3. Hold the right room for the next night, and say that you have done so. Say "held"; "blocked" is an internal word.
 4. Log the failure. Three failures for one guest is a Duty Manager conversation, not a desk one.
-5. Do not explain occupancy to the guest. It is our problem to solve, not theirs to understand.
+5. "Fully occupied" is all the guest needs. Never give occupancy figures or internal reasons: that is our problem to solve, not theirs to understand.
 NOTES THE NEXT SHIFT CAN USE: what, how many and when, in the guest's own words.
 "Firm pillow x2, placed before arrival" is usable. "Fussy guest" is not.
 Mark a standing request only when the guest has confirmed it twice. Never write an opinion about a guest.`,

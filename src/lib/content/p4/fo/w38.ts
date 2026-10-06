@@ -449,8 +449,8 @@ Offer to show the room. A booker who has stood in it signs faster than one who h
         risk({
           ...sp(
             "Take fifteen per cent off the whole quote and we will sign today.",
-            "I cannot change the price, sir, but I will ask our Sales Manager today.",
-            "Câu phải đúng của tuần: giảm giá gói hội nghị là quyết định của Sales Manager. Quầy không mặc cả, chỉ hỏi — và hỏi ngay hôm nay.",
+            "I cannot change the price, sir, but I will ask our Sales Manager now.",
+            "Câu phải đúng của tuần: giảm giá gói hội nghị là quyết định của Sales Manager. Quầy không mặc cả, chỉ hỏi — và hỏi ngay, bây giờ hay trong hôm nay.",
             undefined,
             ["price", "sales", "manager"],
           ),
@@ -458,6 +458,9 @@ Offer to show the room. A booker who has stood in it signs faster than one who h
             "I am not able to change the price, sir, but I will ask our Sales Manager today.",
             "I cannot change the price myself, sir, but I will ask our Sales Manager today.",
             "I cannot change the price, sir. I will ask our Sales Manager today.",
+            "I cannot change the price, sir, but I will ask our Sales Manager today.",
+            "I cannot give you a discount, sir, but I will ask our Sales Manager today.",
+            "I cannot change the price, sir. A discount is our Sales Manager's decision, so I will ask today.",
           ],
         }),
         sp(
@@ -607,8 +610,8 @@ The desk quotes the published package. A discount on it is the Sales Manager's d
           risk({
             ...sp(
               "Can you hold the room for a month, just in case?",
-              "I cannot hold it that long, sir, but I will ask our Sales Manager today.",
-              "Câu phải đúng của tuần: giữ chỗ lâu hơn mức chuẩn là quyết định của Sales Manager. Nói điều mình không làm, rồi việc làm ngay hôm nay.",
+              "I cannot hold it that long, sir, but I will ask our Sales Manager now.",
+              "Câu phải đúng của tuần: giữ chỗ lâu hơn mức chuẩn là quyết định của Sales Manager. Nói điều mình không làm, rồi việc làm ngay — bây giờ hay trong hôm nay.",
               undefined,
               ["hold", "long", "sales", "manager"],
             ),
@@ -616,6 +619,9 @@ The desk quotes the published package. A discount on it is the Sales Manager's d
               "I am not able to hold it that long, sir, but I will ask our Sales Manager today.",
               "I cannot hold it for that long, sir, but I will ask our Sales Manager today.",
               "I cannot hold it that long, sir. I will ask our Sales Manager today.",
+              "I cannot hold it that long, sir, but I will ask our Sales Manager today.",
+              "I cannot hold it for a month, sir, but I will ask our Sales Manager today.",
+              "I can hold it for seven days, sir. For longer, I will ask our Sales Manager today.",
             ],
           }),
           {

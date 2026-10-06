@@ -126,15 +126,18 @@ export const week: AuthoredWeek = {
         risk({
           ...sp(
             "It is our honeymoon. The hotel gives a free cake, yes?",
-            "I cannot offer it free of charge, madam, but I will ask my Duty Manager now.",
-            "Câu phải đúng của tuần: món có giá trị tiền mà miễn phí là quyền của Duty Manager. Quầy hỏi, không hứa.",
+            "Congratulations, madam. I cannot offer it free of charge, but I will ask my Duty Manager now.",
+            "Câu phải đúng của tuần: chúc mừng TRƯỚC — khách vừa báo tuần trăng mật — rồi mới nói điều mình không làm được. Món có giá trị tiền mà miễn phí là quyền của Duty Manager: quầy hỏi, không hứa.",
             undefined,
             ["offer", "free", "charge", "duty", "manager"],
           ),
           alsoAccept: [
-            "I am not able to offer it free of charge, madam, but I will ask my Duty Manager now.",
-            "I cannot offer a cake free of charge, madam. May I ask my Duty Manager?",
-            "I cannot offer it free of charge, madam, but I will ask the manager on duty now.",
+            "Congratulations, madam. I am not able to offer it free of charge, but I will ask my Duty Manager now.",
+            "Congratulations on your honeymoon, madam. I cannot offer it free of charge, but I will ask my Duty Manager now.",
+            "Congratulations to you both, madam. I cannot offer a cake free of charge, but I will ask my Duty Manager now.",
+            "Congratulations, madam. I cannot offer it free of charge, but I will ask the manager on duty now.",
+            "Congratulations, madam. I cannot offer it free of charge. That is my Duty Manager's decision, so I will ask now.",
+            "Congratulations, madam. I cannot offer a cake free of charge. May I ask my Duty Manager?",
           ],
         }),
         sp(
@@ -280,6 +283,9 @@ Anything that has a price, such as a cake or wine, is quoted first. Giving it fr
               "Of course, madam. Before I call the pastry chef, may I ask if anyone is allergic to anything?",
               "Certainly, madam. Before I call the pastry chef, is anyone allergic to anything?",
               "Of course, madam. Is anyone allergic to anything, before I call the pastry chef?",
+              "Of course, madam. Before I call the pastry chef, does anyone have any allergies?",
+              "May I ask if anyone has any allergies before I call the pastry chef?",
+              "Of course, madam. Is anyone allergic to anything?",
             ],
           }),
           sp(
@@ -302,7 +308,7 @@ Anything that has a price, such as a cake or wine, is quoted first. Giving it fr
           },
           sp(
             "Can we light candles in the room for the surprise?",
-            "I am sorry, madam, candles are not allowed in the rooms, but the pastry chef can send LED candles.",
+            "I am sorry, madam, candles are not allowed in the rooms, but I can arrange LED candles instead.",
             "Từ chối điều không an toàn (báo khói), rồi đưa ngay phương án thay thế để điều bất ngờ vẫn còn.",
           ),
           sp(
@@ -603,6 +609,8 @@ The desk keeps the slip until the guest confirms it happened.`,
               "I am so sorry, sir. I will ask my Duty Manager to remove the charge now.",
               "I am sorry, sir. I will ask the manager on duty to remove the charge now.",
               "I am sorry, sir. May I ask my Duty Manager to remove the charge now?",
+              "I am sorry, sir. I will ask my Duty Manager to take the charge off now.",
+              "I am sorry, sir. I cannot remove it myself, but I will ask my Duty Manager now.",
             ],
           }),
           {
@@ -626,6 +634,17 @@ The desk keeps the slip until the guest confirms it happened.`,
             "Báo cáo lên cấp trên, không gọi sir hay madam: điều đã hỏng, việc đã làm, và việc sẽ tìm hiểu.",
             "manager",
           ),
+          {
+            ...sp(
+              "The cake for room 405 never arrived, and the guest is coming down now. What do I say?",
+              "Own the mistake before the guest has to describe it. Then offer to bring the cake up now.",
+              "Nói với đồng nghiệp, không gọi sir hay madam. Nhận lỗi về mình trước khi khách phải kể ('Own the mistake'), rồi một việc sửa ngay: mang bánh lên.",
+              "colleague",
+            ),
+            alsoAccept: [
+              "Own the mistake before she describes it. Then offer to bring the cake up now.",
+            ],
+          },
         ],
         reading: read(
           `WHEN AN OCCASION FAILS — FRONT DESK

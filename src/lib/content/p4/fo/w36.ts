@@ -126,6 +126,8 @@ export const week: AuthoredWeek = {
             "Please use the stairwell, sir, not the lift. The lifts are out of use.",
             "Please take the stairs, sir, not the lift. The lifts are out of use.",
             "Please take the stairwell, sir, not the lift. The lift is out of use.",
+            "Please take the stairwell down to the assembly point, sir, not the lift. The lifts are out of use.",
+            "No, sir. Please take the stairwell, not the lift. The lifts are out of use.",
           ],
         }),
         {
@@ -456,6 +458,8 @@ Only the fire officer gives the all-clear. The desk never sends guests back insi
             "I am calling our first aider now, madam, and I am staying with you.",
             "I will call our first aider now, madam, and I will stay with you.",
             "I am calling the first aider now, madam, and I will stay with you.",
+            "I am calling first aid now, madam, and I will stay with you.",
+            "I will stay with you, madam, and I am calling our first aider now.",
           ],
         }),
         sp(
@@ -649,6 +653,8 @@ Nobody at the desk talks about cause, blame or compensation. That is the Duty Ma
               "Please do not try to open the doors, sir. Engineering is on the way now.",
               "Please do not open the lift doors, sir. Engineering is on the way now.",
               "Please do not open the doors, sir. Our engineering team is on the way now.",
+              "Please do not open the doors, sir. Engineering is coming now.",
+              "Please do not open the doors, sir. I have called Engineering, and they are on the way.",
             ],
           }),
           sp(

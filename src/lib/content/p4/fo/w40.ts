@@ -95,6 +95,8 @@ export const week: AuthoredWeek = {
             "I am sorry, madam. It may have been posted in error, so I will check with my supervisor now.",
             "I am sorry, madam. It may have been posted in error, so let me check with my supervisor now.",
             "I am so sorry, madam. It may have been posted in error, so I am checking with my supervisor now.",
+            "Then it may have been posted in error, madam, and I am sorry. Let me check with my supervisor now.",
+            "I am sorry, madam. It may have been posted in error, so I am asking my supervisor now.",
           ],
         }),
         {
@@ -112,37 +114,66 @@ export const week: AuthoredWeek = {
         {
           ...sp(
             "You agreed to refund the second night. When will it reach my card?",
-            "It can take up to thirty working days, sir, because it depends on your bank, and I will follow up with you.",
-            "Nói mốc CHẬM NHẤT ('working days'), lý do, rồi việc của chính mình: tự theo dõi tiếp ('follow up').",
+            "A card refund can take up to thirty working days, sir, depending on your bank. I will follow up, and your case number is on the slip.",
+            "Nói mốc CHẬM NHẤT ('working days') và lý do (ngân hàng của khách), rồi việc của chính mình: tự theo dõi tiếp ('follow up'), kèm mã hồ sơ ('case number') trên phiếu.",
             undefined,
             ["follow"],
           ),
           alsoAccept: [
+            "A card refund can take up to thirty working days, sir, because it depends on your bank. I will follow up, and your case number is on the slip.",
+            "It can take up to thirty working days, sir, because it depends on your bank, and I will follow up with you.",
             "It can take up to thirty working days, sir, depending on your bank, and I will follow up with you.",
           ],
         },
         {
           ...sp(
             "We leave at five tomorrow morning. Can we settle the bill tonight?",
-            "Of course, sir. With an early start, it is best to settle tonight, and I will have your itemised bill ready.",
-            "Khách phải đi sớm ('early start'): đồng ý ngay, và hứa việc của quầy — hoá đơn kê chi tiết sẵn sàng.",
+            "Of course, sir. With an early start, it is best to settle tonight. May I also book you a breakfast box?",
+            "Khách phải đi sớm ('early start'): đồng ý ngay, rồi đề nghị thêm một việc quầy làm được cho người đi sớm — đặt hộp ăn sáng ('breakfast box').",
           ),
           alsoAccept: [
-            "Of course, sir. With an early start, it is best to settle tonight, and your itemised bill will be ready.",
+            "Of course, sir. With an early start, it is best to settle tonight. Shall I also book you a breakfast box?",
+            "Of course, sir. With an early start, it is best to settle tonight, and I will have your itemised bill ready.",
+          ],
+        },
+        {
+          ...sp(
+            "The guest in 610 says a laundry charge is wrong. It is only two hundred thousand. Can I take it off?",
+            "Only the Shift Leader can authorise it. Call for approval first, then post the correction and write the name on the folio.",
+            "Nói với đồng nghiệp, không gọi sir hay madam. Khoản nhỏ vẫn cần người duyệt ('authorise'): gọi Trưởng ca, sửa, rồi ghi tên người duyệt.",
+            "colleague",
+          ),
+          alsoAccept: [
+            "Call the Shift Leader for approval first, then post the correction and write the name on the folio.",
           ],
         },
         sp(
-          "The guest in 610 says a laundry charge is wrong. It is only two hundred thousand. Can I take it off?",
-          "Call the Shift Leader for approval first, then post the correction and write the name on the folio.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Khoản nhỏ vẫn cần người duyệt: gọi Trưởng ca, sửa, rồi ghi tên người duyệt.",
-          "colleague",
-        ),
-        sp(
           "How was the morning check-out?",
-          "It was busy but smooth. One minibar charge had been posted in error, and my supervisor approved the correction.",
-          "Báo cáo lên cấp trên, không gọi sir hay madam: một câu tổng quát, rồi đúng một việc đáng báo và ai đã duyệt.",
+          "It was busy but smooth. One guest thought a card hold on the statement was a second charge, and one minibar charge was posted in error.",
+          "Báo cáo lên cấp trên, không gọi sir hay madam: một câu tổng quát, rồi đúng hai việc đáng báo — khoản tạm giữ trên sao kê ('statement') bị tưởng là thu trùng ('second charge'), và một khoản ghi nhầm ('posted in error').",
           "manager",
         ),
+        {
+          ...sp(
+            "We have been waiting ten minutes just to pay our bill!",
+            "I am sorry for the wait, madam. Please bear with me; I am serving guests one at a time, and you are next.",
+            "Hàng chờ trả phòng buổi sáng: xin lỗi vì phải chờ, xin khách chờ thêm ('bear with me'), nói cách làm ('one at a time') và cho khách biết mình là người tiếp theo.",
+          ),
+          alsoAccept: [
+            "I am sorry for the wait, madam. Please bear with me. I am helping guests one at a time, and you are next.",
+            "I am sorry, madam. Please bear with me — I am serving guests one at a time, and you are next.",
+          ],
+        },
+        {
+          ...sp(
+            "Thank you for everything. It was a lovely anniversary.",
+            "I am so glad, sir. On behalf of everyone at the hotel, thank you for celebrating the occasion with us.",
+            "Lời tiễn khách trang trọng: vui cùng khách, rồi 'On behalf of' + người mình đại diện, và lời cảm ơn gắn với dịp của khách ('occasion').",
+          ),
+          alsoAccept: [
+            "I am so glad, sir. On behalf of everyone at the hotel, thank you for staying with us.",
+          ],
+        },
       ],
       reading: read(
         `MORNING DEPARTURES — 07:00 TO 11:00
@@ -256,10 +287,12 @@ After that, offer to store the bags. We keep luggage for up to seven days.`,
         {
           ...sp(
             "We booked the old wing for the charm. Is it right for us with a baby?",
-            "In all honesty, sir, a room in the new wing near the lift would be easier with a baby.",
-            "Nói thật ngay ở quầy ('In all honesty'), và khuyên phòng hợp với nhu cầu khách vừa nói: em bé thì gần thang máy.",
+            "In all honesty, sir, the old wing is charming but compact. A room in the new wing, near the lift, would be easier with a baby.",
+            "Nói thật ngay ở quầy ('In all honesty'): cánh cũ 'charming but compact' — hạn chế đi cùng điểm cộng — rồi khuyên phòng hợp với nhu cầu khách vừa nói: em bé thì gần thang máy.",
           ),
           alsoAccept: [
+            "In all honesty, sir, the old wing is charming but compact. A new-wing room near the lift would be easier with a baby.",
+            "In all honesty, sir, a room in the new wing near the lift would be easier with a baby.",
             "In all honesty, sir, a room in the new wing, near the lift, would be easier with a baby.",
           ],
         },
@@ -296,6 +329,27 @@ After that, offer to store the bags. We keep luggage for up to seven days.`,
           "Báo cáo lên cấp trên, không gọi sir hay madam: việc gì, và mình đã làm đúng hai bước bắt buộc trước khi đặt bánh.",
           "manager",
         ),
+        {
+          ...sp(
+            "What a beautiful lobby. Can you tell me a little about this building?",
+            "It is a heritage building, madam, and the floor tiles are original. The staircase was restored by hand.",
+            "Kể ngắn như đã học: loại công trình ('heritage building'), một chi tiết khách đang đứng trên ('original'), một câu bị động ('was restored') — rồi dừng, để khách hỏi tiếp nếu muốn.",
+          ),
+          alsoAccept: [
+            "It is a heritage building, madam, and these floor tiles are original. The staircase was restored by hand.",
+            "Of course, madam. It is a heritage building, and these floor tiles are original. The staircase was restored by hand.",
+          ],
+        },
+        {
+          ...sp(
+            "I am with Lotus Pharma, and we have a corporate rate with you.",
+            "Welcome, sir. May I see a business card or a company ID, so I can confirm you are eligible?",
+            "Giá doanh nghiệp cần một bằng chứng nhẹ nhàng: danh thiếp ('business card') hoặc thẻ nhân viên ('company ID'), kèm lý do — để xác nhận khách 'eligible'. Không hỏi gì thêm.",
+          ),
+          alsoAccept: [
+            "Welcome, sir. May I see a business card or a company ID, so I can confirm that you are eligible?",
+          ],
+        },
       ],
       reading: read(
         `MIDDAY ARRIVALS — 12:00 TO 16:00
@@ -390,23 +444,29 @@ Nobody is turned away because of a list.`,
         ),
       ],
       speaking: [
-        sp(
-          "We need a meeting room for thirty people next month. What would you suggest?",
-          "May I ask what the meeting is for first, sir? Then I can propose the right room and layout.",
-          "Phần một của báo giá: hỏi nhu cầu trước khi đề xuất. Chưa nói phòng, chưa nói giá.",
-        ),
+        {
+          ...sp(
+            "We need a meeting room for thirty people next month. What would you suggest?",
+            "May I ask what the meeting is for first, sir? Then my proposal will fit what you need.",
+            "Phần một của báo giá: hỏi nhu cầu trước, để bản đề xuất ('proposal') vừa với khách. Chưa nói phòng, chưa nói giá.",
+          ),
+          alsoAccept: [
+            "May I ask what the meeting is for first, sir? Then I can propose the right room and layout.",
+            "May I ask what the meeting is for first, sir? Then my proposal can fit what you need.",
+          ],
+        },
         sp(
           "Workshops, so lots of discussion in small teams.",
           "Then I would propose the Garden Room with U-shape seating, sir, and the breakout room for the small teams.",
           "Một phòng, một cách xếp ('U-shape'), và phòng phụ cho đúng nhu cầu làm việc nhóm.",
           undefined,
           undefined,
-          "May I ask what the meeting is for first, sir? Then I can propose the right room and layout.",
+          "May I ask what the meeting is for first, sir? Then my proposal will fit what you need.",
         ),
         sp(
           "And the price per person?",
-          "The day delegate rate covers the room, coffee breaks and lunch, sir. I will quote the total, with service charge and VAT.",
-          "Nói tên gói ('day delegate rate') và cái đã gồm, rồi hứa báo tổng — giá gói chưa gồm phí phục vụ và VAT.",
+          "The day delegate rate covers the room, the projector, coffee breaks and lunch, per person, sir. I will quote the total, with service charge and VAT.",
+          "Nói tên gói ('day delegate rate'), cái đã gồm và đơn vị tính ('per person'), rồi hứa báo tổng — giá gói chưa gồm phí phục vụ và VAT.",
           undefined,
           undefined,
           "Then I would propose the Garden Room with U-shape seating, sir, and the breakout room for the small teams.",
@@ -414,45 +474,76 @@ Nobody is turned away because of a list.`,
         {
           ...sp(
             "Your rooms are cheaper on a booking website than on your own site.",
-            "I have checked, madam, and that rate is non-refundable. May we compare like with like before you decide?",
-            "Không cãi con số khách thấy: nói điều kiện khác biệt, rồi mời so sánh cùng điều kiện ('like with like').",
+            "I have checked, madam: that third-party rate is room only and non-refundable. May we compare like with like?",
+            "Không cãi con số khách thấy: nói hai điều kiện khác biệt của giá bên thứ ba ('third-party', 'room only'), rồi mời so sánh cùng điều kiện ('like with like').",
           ),
           alsoAccept: [
+            "I have checked, madam: that third-party rate is room only and non-refundable. Shall we compare like with like?",
+            "I have checked, madam, and that rate is non-refundable. May we compare like with like before you decide?",
             "I have checked, madam, and that rate is non-refundable. Shall we compare like with like before you decide?",
           ],
         },
         {
           ...sp(
             "Our list is late. Can we still add three more people?",
-            "The cut-off date has passed, madam, so extra rooms depend on availability, at the published rate.",
-            "Mốc đã qua ('cut-off date'): nói điều khoản áp dụng từ giờ — tuỳ phòng trống, theo giá công bố — không trách khách.",
+            "The cut-off date has passed, madam, so unnamed rooms went back on sale. Extra rooms now depend on availability, at the published rate.",
+            "Mốc đã qua ('cut-off date'): phòng chưa có tên đã được mở bán lại ('back on sale'), còn phòng thêm thì tuỳ phòng trống, theo giá công bố — nói như một sự việc, không trách khách.",
           ),
           alsoAccept: [
+            "The cut-off date has passed, madam, so rooms without a name went back on sale. Extra rooms are now subject to availability, at the published rate.",
+            "The cut-off date has passed, madam, so extra rooms depend on availability, at the published rate.",
             "The cut-off date has passed, madam, so extra rooms are subject to availability, at the published rate.",
           ],
         },
         {
           ...sp(
-            "So, have we agreed on everything?",
-            "I believe so, sir. May I read it back to you before I send the quote in writing?",
-            "Chốt thoả thuận: đọc lại ('read it back') trước, rồi gửi bằng văn bản.",
+            "Have we agreed on everything, then?",
+            "I believe so, madam. May I read back the agreed rate and terms before I send the quote in writing?",
+            "Chốt thoả thuận: đọc lại mức giá đã thống nhất ('agreed rate') và các điều khoản trước, rồi mới gửi bằng văn bản.",
           ),
           alsoAccept: [
-            "I believe so, sir. Shall I read it back to you before I send the quote in writing?",
+            "I believe so, madam. Shall I read back the agreed rate and terms before I send the quote in writing?",
+            "I believe so, madam. May I read back the agreed rate and terms before I send them in writing?",
+            "I believe so, madam. May I read it back to you before I send the quote in writing?",
+            "I believe so, madam. May I read it back to you before I send it in writing?",
+            "I think so, madam. May I read back the agreed rate and terms before I send the quote in writing?",
           ],
         },
         sp(
           "The booker wants the boardroom held for two weeks. Can I do that?",
-          "Our tentative hold is seven days. For longer, ask the Sales Manager before you promise anything.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Giữ chỗ tạm có hạn; dài hơn là việc của Sales Manager.",
+          "Our tentative hold is seven days. Anything longer is an exception, so ask the Sales Manager before you promise.",
+          "Nói với đồng nghiệp, không gọi sir hay madam. Giữ chỗ tạm có hạn; dài hơn là một ngoại lệ ('exception') — việc của Sales Manager.",
           "colleague",
         ),
         sp(
           "Did the workshop booker get everything today?",
-          "Yes. I read it back to them, sent the quote in writing, and put a tentative hold on the Garden Room.",
-          "Báo cáo lên cấp trên, không gọi sir hay madam: ba việc đã làm, theo đúng thứ tự chốt một báo giá.",
+          "Yes. I read it back to them and sent the proposal in writing, so the next step is their signed contract.",
+          "Báo cáo lên cấp trên, không gọi sir hay madam: việc đã làm theo đúng thứ tự chốt một báo giá, rồi bước tiếp theo ('next step').",
           "manager",
         ),
+        {
+          ...sp(
+            "Can you give us your weekday price for a Saturday meeting?",
+            "We are firm on the rate, sir, because it is a peak weekend. What if we look at a midweek date?",
+            "Nói không MỘT lần, kèm lý do thị trường ('firm on', 'peak weekend'), rồi mở một cánh cửa bằng 'What if we' với một ngày giữa tuần ('midweek').",
+          ),
+          alsoAccept: [
+            "We are firm on the rate, sir, because it is a peak weekend. What if we look at a midweek date instead?",
+            "We are firm on the rate at the weekend, sir. What if we look at a midweek date?",
+          ],
+        },
+        {
+          ...sp(
+            "Your contract says a thirty per cent deposit. When is it due, and when do we pay the rest?",
+            "Thirty per cent is due on signing, madam, and the balance is paid when the group checks out.",
+            "Điều khoản tiền: bao nhiêu ('per cent'), khi nào ('on signing'), và phần còn lại ('balance') trả lúc nào.",
+          ),
+          alsoAccept: [
+            "The thirty per cent deposit is due on signing, madam, and the balance is paid when the group checks out.",
+            "It is due on signing, madam, and the balance is paid when the group checks out.",
+            "Thirty per cent is due on signing, madam, and the balance when the group checks out.",
+          ],
+        },
       ],
       reading: read(
         `AFTERNOON CALLS — 14:00 TO 18:00
@@ -539,9 +630,9 @@ Before a call ends, read it back. Then send it in writing the same afternoon.`,
         ),
         g(
           "Leave it, the night shift will see it.",
-          "I have written it in the log, and I am handing it to Minh by name.",
+          "I have written it in the log, and I am handing it to Huy by name.",
           "Cuối ca: hiện tại hoàn thành 'have written' cho việc đã ghi xong, rồi giao đích danh ('by name'). Không để việc cho 'ca sau' chung chung.",
-          "I have write it in the log, and I am handing it to Minh by name.",
+          "I have write it in the log, and I am handing it to Huy by name.",
         ),
       ],
       speaking: [
@@ -557,6 +648,9 @@ Before a call ends, read it back. Then send it in writing the same afternoon.`,
             "No, madam. Please use the stairwell to the assembly point now.",
             "No, madam. Please take the stairs to the assembly point now.",
             "No, madam. Please go to the assembly point now, by the stairwell.",
+            "No, madam. Please leave now and take the stairwell to the assembly point.",
+            "No, madam. Please take the stairwell to the assembly point now, and we will update you there.",
+            "No, madam. Please take the stairwell, not the lift, to the assembly point now.",
           ],
         }),
         sp(
@@ -585,39 +679,70 @@ Before a call ends, read it back. Then send it in writing the same afternoon.`,
             "There is a power cut, sir. The generator is starting now, and I will call you back in fifteen minutes with news.",
           ],
         },
-        sp(
-          "The fire panel is beeping, a guest wants his bill, and the phone is ringing. What first?",
-          "The fire panel is the priority. Report the zone to Security now, and then the guest and the phone.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Nguy hiểm là ưu tiên ('priority'), rồi khách trước mặt, rồi điện thoại.",
-          "colleague",
-        ),
+        {
+          ...sp(
+            "The fire panel is beeping, a guest wants his bill, and the phone is ringing. What first?",
+            "Someone in danger is the priority, so report the zone on the fire panel to Security now. Then the guest, then the phone.",
+            "Nói với đồng nghiệp, không gọi sir hay madam. Tủ báo cháy ('fire panel') reo nghĩa là có thể có người gặp nguy ('someone in danger') — đó là ưu tiên ('priority'), rồi khách trước mặt, rồi điện thoại.",
+            "colleague",
+          ),
+          alsoAccept: [
+            "The fire panel is the priority. Report the zone to Security now, and then the guest and the phone.",
+          ],
+        },
         sp(
           "One guest refused to leave and another did not answer. How do I report them?",
-          "Both rooms are not accounted for. Tell the fire officer the floors, and that one guest refused to leave.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Không đoán khách nào đã ra ngoài: cả hai phòng là 'not accounted for'.",
+          "Both rooms are not accounted for. Give the fire officer both room numbers, and say that one guest refused to evacuate.",
+          "Nói với đồng nghiệp, không gọi sir hay madam. Không đoán khách nào đã ra ngoài: cả hai phòng là 'not accounted for'. Với đội cứu hoả thì nói SỐ PHÒNG ('room numbers'), không chỉ nói tầng.",
           "colleague",
         ),
         {
           ...sp(
             "I know it is late, but can you arrange a car to the airport for six?",
-            "Certainly, sir. It is in the log now, and my night-shift colleague has it by name and will confirm it with you.",
-            "Việc mới lúc cuối ca: ghi sổ, giao đích danh ('by name'), và nói cho khách ai sẽ xác nhận.",
+            "Certainly, sir. It is in the log now, and Huy on the night shift will confirm the car with you before eleven.",
+            "Việc mới lúc cuối ca: ghi sổ, giao cho một người có tên, và nói cho khách TÊN người sẽ xác nhận và khi nào — không nói chung chung là một đồng nghiệp.",
           ),
           alsoAccept: [
-            "Certainly, sir. It is in the log now, and my colleague on the night shift has it by name and will confirm it with you.",
+            "Certainly, sir. It is in the log now, and my colleague Huy on the night shift will confirm the car with you before eleven.",
           ],
         },
-        sp(
-          "Before you go, what is still open?",
-          "One airport car, handed over by name and in the log. Nothing else is open.",
-          "Báo cáo lên cấp trên, không gọi sir hay madam: việc còn mở, đã giao cho ai, ghi ở đâu — rồi xác nhận không còn gì khác.",
-          "manager",
-        ),
+        {
+          ...sp(
+            "Before you go, what is still open?",
+            "One open item: an airport car, handed to Huy by name. It is in the log for the incoming shift.",
+            "Báo cáo lên cấp trên, không gọi sir hay madam: việc còn dở ('open item'), đã giao cho ai ('by name'), và ghi ở đâu cho ca sau ('incoming shift').",
+            "manager",
+          ),
+          alsoAccept: [
+            "One open item: an airport car, handed to Huy by name and in the log for the incoming shift.",
+          ],
+        },
+        {
+          ...sp(
+            "We are freezing out here. Can we go back to our room now?",
+            "Not yet, sir. Only the fire officer gives the all-clear, and I will tell you the moment we have it.",
+            "Ở điểm tập kết: chỉ cán bộ phòng cháy cho quay vào ('all-clear'). Không đoán thay; hứa việc của mình — báo khách ngay khi có tín hiệu.",
+          ),
+          alsoAccept: [
+            "Not yet, sir. Only the fire officer can give the all-clear, and I will tell you as soon as we have it.",
+          ],
+        },
+        {
+          ...sp(
+            "Is my colleague Mr Lee back in his room yet? I have a document for him.",
+            "I am sorry, sir, I cannot tell you anything about another guest, but you are welcome to leave a message.",
+            "Riêng tư, cả lúc đêm khuya: không xác nhận khách khác có ở đây hay đã về chưa ('another guest'), nhưng mời người hỏi để lại lời nhắn.",
+          ),
+          alsoAccept: [
+            "I am sorry, sir, I cannot say who is staying with us, but you are welcome to leave a message.",
+            "I am sorry, sir, I cannot tell you anything about another guest. May I take a message?",
+          ],
+        },
       ],
       reading: read(
         `THE LAST HOURS — 21:30 TO 02:00
 At 21:50, a guest asks for an airport car. It is a new task in the last fifteen minutes.
-So it goes in the log, and to a night-shift colleague by name.
+So it goes in the log, and to Huy on the night shift, by name. The guest is told it is Huy who will call.
 At 23:10, the fire alarm sounds on the sixth floor. The desk stays at the desk, reads the zone and confirms that 114 has been called.
 Every caller hears the same words: take the stairwell, not the lift, and go to the assembly point.
 A guest who uses a wheelchair stays in the room with the door closed. The fire team gets the room number.
@@ -635,7 +760,7 @@ Through all of it, the order holds: someone in danger first, then the guest in f
             ],
             correct: 1,
             explanation:
-              'Bài đọc ghi "It is a new task in the last fifteen minutes. So it goes in the log, and to a night-shift colleague by name."',
+              'Bài đọc ghi "It is a new task in the last fifteen minutes. So it goes in the log, and to Huy on the night shift, by name." — và khách được báo tên người sẽ gọi.',
           },
           {
             q: "Khi chuông báo cháy reo, lễ tân nói gì với mọi người gọi tới?",

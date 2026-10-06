@@ -36,9 +36,9 @@ const t1c =
   "Not at all, madam — the guest at the desk is always my first priority. Have a good flight.";
 
 const t2a =
-  "Of course, madam. I am writing it in the handover log now, and my colleague on the night shift will book it.";
+  "Of course, madam. I am writing it in the handover log now, and Huy on the night shift will book it.";
 const t2b =
-  "Yes, madam. I am handing it over by name, and my colleague will call you to confirm before eleven tonight.";
+  "Yes, madam. I am handing it to Huy by name, and he will call you to confirm before eleven tonight.";
 const t2c =
   "Then please call the desk. Your request is in the log with your name and the time, so any colleague can see it.";
 
@@ -126,6 +126,8 @@ export const week: AuthoredWeek = {
             "Call the first aider now and stay with the guest. I am calling the Duty Manager.",
             "Call the first aider now, and stay with the guest. I will call the Duty Manager.",
             "Please call the first aider now and stay with the guest. I will call the Duty Manager.",
+            "Stay with the guest and call the first aider now. I will call the Duty Manager.",
+            "Call the first aider now and stay with the guest. Then I will call the Duty Manager.",
           ],
         }),
         {
@@ -151,10 +153,21 @@ export const week: AuthoredWeek = {
         },
         sp(
           "Why did you leave the desk with guests waiting?",
-          "Someone in danger comes first. A guest had collapsed in the lobby, so I called the first aider, then you.",
+          "Someone in danger comes first. I saw a guest collapse in the lobby, so I called the first aider, then you.",
           "Báo cáo lên Duty Manager, không gọi sir hay madam: nói luật trước ('someone in danger'), rồi việc đã làm theo đúng thứ tự.",
           "manager",
         ),
+        {
+          ...sp(
+            "The guest by the pool is not responding. Do I call the Duty Manager first?",
+            "No. Call 115 for an ambulance first, then the Duty Manager. I will stay with the guest.",
+            "Nói với đồng nghiệp, không gọi sir hay madam. Khách không phản ứng thì gọi 115 xin xe cấp cứu ('ambulance') TRƯỚC, Duty Manager sau — và luôn có người ở lại với khách.",
+            "colleague",
+          ),
+          alsoAccept: [
+            "No. First call 115 for an ambulance, then the Duty Manager. I will stay with the guest.",
+          ],
+        },
       ],
       reading: read(
         `WHEN EVERYTHING ARRIVES AT ONCE — THE ORDER AT THE DESK
@@ -256,9 +269,9 @@ Serve people one at a time, and tell each one where they are in the order.`,
       grammar: [
         g(
           "My shift is finished. Ask somebody else.",
-          "I will hand this to my colleague by name, madam, and they will call you before eleven.",
-          "Việc mới tới trong mười lăm phút cuối ca: không tự mở, nhưng không đẩy khách đi. Giao đích danh ('by name') và nói cho khách ai sẽ làm, khi nào. Sau 'will' là động từ nguyên thể.",
-          "I will hand this to my colleague by name, madam, and they will calls you before eleven.",
+          "I will hand this to Huy by name, madam, and he will call you before eleven.",
+          "Việc mới tới trong mười lăm phút cuối ca: không tự mở, nhưng không đẩy khách đi. Giao đích danh ('by name') và nói cho khách TÊN người sẽ làm, và khi nào. Sau 'will' là động từ nguyên thể.",
+          "I will hand this to Huy by name, madam, and he will calls you before eleven.",
         ),
         g(
           "Someone from the night team will do it.",
@@ -271,14 +284,14 @@ Serve people one at a time, and tell each one where they are in the order.`,
         sp(
           "Could you book me an airport car for five tomorrow morning?",
           t2a,
-          "Gần hết ca thì không tự mở việc mới: ghi ngay vào sổ bàn giao ('handover log') và nói rõ ai sẽ làm.",
+          "Gần hết ca thì không tự mở việc mới: ghi ngay vào sổ bàn giao ('handover log') và nói TÊN người sẽ làm — không bao giờ chỉ nói chung chung là một đồng nghiệp.",
           undefined,
           ["handover", "log"],
         ),
         sp(
-          "Will they remember? I cannot miss this flight.",
+          "Will he remember? I cannot miss this flight.",
           t2b,
-          "Trấn an bằng cách làm, không bằng lời hứa suông: giao đích danh ('by name'), và một mốc xác nhận cho khách.",
+          "Trấn an bằng cách làm, không bằng lời hứa suông: giao đích danh ('by name') cho một người có tên, và một mốc xác nhận cho khách.",
           undefined,
           undefined,
           t2a,
@@ -306,8 +319,8 @@ Serve people one at a time, and tell each one where they are in the order.`,
         },
         sp(
           "It is five to ten. A guest wants a refund for his minibar. Should I start it?",
-          "No, it is a new task. Write it in the log, hand it to the night shift by name, and tell the guest who will call.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Việc mới tới lúc cuối ca: ghi sổ, giao đích danh, báo khách — không tự mở.",
+          "No, it is a new task. Log it, hand it to a named person on the night shift, and tell the guest who will call.",
+          "Nói với đồng nghiệp, không gọi sir hay madam. Việc mới tới lúc cuối ca: ghi sổ, giao cho một người có tên ('a named person') — cả ca đêm không phải là một cái tên — rồi báo khách ai sẽ gọi. Không tự mở.",
           "colleague",
         ),
         sp(
@@ -379,8 +392,8 @@ The incoming shift reads the log before taking the first call.`,
       game: [
         game(
           "I know it is late, but I need to dispute a charge on my bill.",
-          "Of course, sir. I am writing it in the log now, and my colleague will look into it with you tonight.",
-          "Of course, sir. I am write it in the log now, and my colleague will look into it with you tonight.",
+          "Of course, sir. I am writing it in the log now, and Huy will look into it with you tonight.",
+          "Of course, sir. I am write it in the log now, and Huy will look into it with you tonight.",
           "I am sorry, sir, my shift ends in ten minutes, so please come back tomorrow and ask whoever is on duty then.",
           undefined,
           "Sau 'am' phải là V-ing 'writing'. Câu bảo khách mai quay lại hỏi người trực lúc đó đúng tiếng Anh nhưng đẩy khách đi và không giao cho ai cả — luật cuối ca là giao đích danh, không phải từ chối.",
@@ -460,25 +473,27 @@ The incoming shift reads the log before taking the first call.`,
         {
           ...sp(
             "Last time I asked for a quiet room. Do you still have that?",
-            "Yes, madam. It is on file, so your room tonight is on a high floor, away from the lift.",
-            "Sở thích đã lưu ('on file') thì nói luôn kết quả khách sẽ thấy tối nay — không bắt khách nhắc lại.",
+            "Yes, madam. It is a standing request on file, so your room tonight is on a high floor, away from the lift.",
+            "Sở thích đã thành yêu cầu cố định trong hồ sơ ('standing request', 'on file') thì nói luôn kết quả khách sẽ thấy tối nay — không bắt khách nhắc lại.",
             undefined,
             ["file"],
           ),
           alsoAccept: [
-            "Yes, madam. It is on file, so your room tonight is on a high floor and away from the lift.",
+            "Yes, madam. It is a standing request on file, so your room tonight is on a high floor and away from the lift.",
+            "Yes, madam. It is on file, so your room tonight is on a high floor, away from the lift.",
           ],
         },
         {
           ...sp(
             "It is our wedding anniversary today. Could you do something small for us?",
-            "Congratulations to you both, madam. A handwritten card from the desk will be in your room tonight.",
-            "Thứ quầy tự cho được thì cho ngay ('handwritten card'); món có giá thì báo giá trước.",
+            "Congratulations to you both, madam. To mark the occasion, a handwritten card from the desk will be in your room tonight.",
+            "Chúc mừng trước, rồi thứ quầy tự cho được thì cho ngay để đánh dấu dịp đặc biệt ('occasion', 'handwritten card'); món có giá thì báo giá trước.",
             undefined,
             ["handwritten"],
           ),
           alsoAccept: [
-            "Congratulations to you both, madam. There will be a handwritten card from the desk in your room tonight.",
+            "Congratulations to you both, madam. To mark the occasion, there will be a handwritten card from the desk in your room tonight.",
+            "Congratulations to you both, madam. A handwritten card from the desk will be in your room tonight.",
           ],
         },
         {
@@ -493,12 +508,32 @@ The incoming shift reads the log before taking the first call.`,
             "In exchange for two more nights, sir, my Duty Manager may look at the rate. Shall I ask?",
           ],
         },
-        sp(
-          "The guest with the double charge is getting louder. Should I just refund it?",
-          "No, check the folio first. If it really is a second charge, any card refund needs the Duty Manager.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Hai bước: kiểm tra trước; hoàn tiền vào thẻ thì luôn cần Duty Manager.",
-          "colleague",
-        ),
+        {
+          ...sp(
+            "The guest with the double charge is getting louder. Should I just refund it?",
+            "No. Do not interrupt him; write his claim down and check the folio. Any card refund needs the Duty Manager.",
+            "Nói với đồng nghiệp, không gọi sir hay madam. Khách to tiếng thì làm đúng bước đầu của khiếu nại: không ngắt lời ('interrupt'), ghi lại điều khách nói ('claim'), kiểm tra hoá đơn; hoàn tiền vào thẻ thì luôn cần Duty Manager.",
+            "colleague",
+          ),
+          alsoAccept: [
+            "No. Let him finish, write his claim down and check the folio. Any card refund needs the Duty Manager.",
+            "No, check the folio first. If it really is a second charge, any card refund needs the Duty Manager.",
+          ],
+        },
+        {
+          ...sp(
+            "Is there really nothing you can do on the rate?",
+            "I am not able to change the rate, sir. However, I can offer you a higher floor at no extra charge.",
+            "Như Lan trong bài đọc: giá không phải của quầy, nhưng tầng cao hơn thì quầy tự cho được. 'However' mở câu thứ hai, và nói rõ 'at no extra charge'.",
+            undefined,
+            ["rate", "however", "higher", "floor", "extra", "charge"],
+          ),
+          alsoAccept: [
+            "I cannot change the rate myself, sir. However, I can offer you a higher floor at no extra charge.",
+            "I am not able to change the rate myself, sir. However, I can offer you a higher floor at no extra charge.",
+            "I cannot change the rate myself, sir, but I can still offer you a higher floor at no extra charge.",
+          ],
+        },
       ],
       reading: read(
         `ONE BUSY HOUR AT THE DESK — 18:00 TO 19:00
@@ -622,8 +657,8 @@ Every request is in the log before the hour ends.`,
         ),
         sp(
           "Good. And my colleague arrives tomorrow without a booking.",
-          "I will check what we have for tomorrow, sir. If the booking is made under your company's agreement, the corporate rate applies.",
-          "Không hứa phòng trước khi kiểm tra; điều kiện của giá nói bằng một mệnh đề 'If', đúng điều khoản doanh nghiệp.",
+          "I will check what we have for tomorrow, sir. Provided that the booking is made under your company's agreement, the corporate rate applies.",
+          "Không hứa phòng trước khi kiểm tra; điều kiện của giá nói bằng 'Provided that' + một mệnh đề, đúng điều khoản doanh nghiệp.",
           undefined,
           undefined,
           "Of course, sir. Your wife is welcome to share your room at the same corporate rate.",
@@ -640,6 +675,10 @@ Every request is in the log before the hour ends.`,
             "I am sorry, madam, I am not able to tell you anything about another guest.",
             "I am afraid I cannot tell you anything about another guest, madam.",
             "I am sorry, madam, I cannot say anything about another guest.",
+            "I am sorry, madam, I cannot tell you who is staying with us.",
+            "I am afraid I cannot say who is staying with us, madam.",
+            "I am sorry, madam, I cannot say who is staying with us, but you are welcome to leave a message.",
+            "I am sorry, madam, I cannot say who is staying with us. May I take a message?",
           ],
         }),
         {
@@ -668,8 +707,8 @@ Every request is in the log before the hour ends.`,
         },
         sp(
           "A booker called about the boardroom for next month. Can I promise it to them?",
-          "Not yet. Offer a tentative hold for seven days, and send the quote in writing today.",
-          "Nói với đồng nghiệp, không gọi sir hay madam. Giữ chỗ tạm có hạn bảy ngày, và báo giá luôn gửi bằng văn bản.",
+          "Not yet. Offer a tentative hold for seven days, and send the proposal in writing today.",
+          "Nói với đồng nghiệp, không gọi sir hay madam. Giữ chỗ tạm có hạn bảy ngày, và bản đề xuất ('proposal') luôn gửi bằng văn bản.",
           "colleague",
         ),
         sp(

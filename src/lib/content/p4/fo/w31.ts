@@ -41,7 +41,7 @@ const t4a =
 const t4b =
   "In all honesty, madam, a room in the new wing would suit you better. May I check if one is free?";
 const t4c =
-  "If it is the same category, there is no extra charge, madam. If not, I will tell you the difference first.";
+  "If it is the same type of room, there is no extra charge, madam. If not, I will tell you the difference first.";
 
 export const week: AuthoredWeek = {
   canDo:
@@ -291,15 +291,19 @@ If you do not know the answer, say so, and offer the history folder kept at the 
         risk({
           ...sp(
             "It is our anniversary. Could you give us the courtyard suite at our price?",
-            "I cannot change the rate, madam, but I can ask my Duty Manager now.",
-            "Câu phải đúng của tuần: giữ phòng tốt hơn với giá cũ là quyết định của Duty Manager, không phải của quầy. Nói rõ điều mình không làm được, rồi điều mình làm ngay.",
+            "Congratulations, madam. I cannot change the rate, but I will ask my Duty Manager now.",
+            "Câu phải đúng của tuần: chúc mừng TRƯỚC — đây là dịp vui của khách — rồi mới nói điều mình không làm được. Giữ phòng tốt hơn với giá cũ là quyết định của Duty Manager, không phải của quầy, nên nói việc mình làm ngay: 'I will ask my Duty Manager now'.",
             undefined,
             ["rate", "duty", "manager"],
           ),
           alsoAccept: [
-            "I am not able to change the rate, madam, but I can ask my Duty Manager now.",
-            "I cannot change the rate myself, madam. May I ask my Duty Manager?",
-            "I cannot change the rate, madam, but I can ask the manager on duty now.",
+            "Happy anniversary, madam. I cannot change the rate, but I will ask my Duty Manager now.",
+            "Happy anniversary, madam. I am not able to change the rate myself, but I will ask my Duty Manager now.",
+            "Congratulations to you both, madam. I cannot change the rate myself, but I will ask my Duty Manager now.",
+            "Happy anniversary, madam. I am afraid I cannot change the rate, but I will ask my Duty Manager now.",
+            "Happy anniversary, madam. I cannot change the rate myself, but I will ask the manager on duty now.",
+            "Happy anniversary, madam. I cannot change the rate. That is my Duty Manager's decision, so I will ask now.",
+            "Happy anniversary, madam. I cannot change the rate myself. May I ask my Duty Manager?",
           ],
         }),
       ],
@@ -560,7 +564,7 @@ A guest who says no today may say yes on day two. Note in the profile that the s
             t4b,
           ),
           alsoAccept: [
-            "If it is the same category, there is no extra charge, madam. If it is not, I will tell you the difference first.",
+            "If it is the same type of room, there is no extra charge, madam. If it is not, I will tell you the difference first.",
           ],
         },
         {
@@ -586,6 +590,11 @@ A guest who says no today may say yes on day two. Note in the profile that the s
             "I am sorry, sir, I am not able to tell you who is staying with us.",
             "I am afraid I cannot tell you who is staying with us, sir.",
             "I am sorry, sir, I cannot say who is staying with us.",
+            "I am afraid I cannot say who is staying with us, sir.",
+            "I am sorry, sir, I cannot tell you who is staying here.",
+            "I am sorry, sir, I cannot say who is staying with us, but you are welcome to leave a message.",
+            "I am sorry, sir, I cannot say who is staying with us. May I take a message?",
+            "I am sorry, sir, I cannot tell you anything about another guest.",
           ],
         }),
         sp(
