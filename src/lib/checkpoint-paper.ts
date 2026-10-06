@@ -1464,7 +1464,23 @@ export function buildPaper(dep: string, week: string): Question[] {
           Number(sameApologyPromise(b.t, s.targetResponse)),
       )
       .slice(0, 2 - clean.length);
-    const others = [...clean, ...filler].map((x) => x.t);
+    // A reply to a colleague carries no "sir" or "madam", and the distractors
+    // — replies written for guests — nearly all do: on 57% of a Phase 4
+    // department's colleague-and-manager listening items the key was the one
+    // option without an honorific (round 3). When the key has none, neither do
+    // the distractors.
+    const HONORIFIC_IN = /,?\s*\b(sir|madam)\b(?=[\s,.?!—-]|$)/gi;
+    const keyHasHonorific = /\b(sir|madam)\b/i.test(s.targetResponse);
+    const plain = (t: string) =>
+      keyHasHonorific
+        ? t
+        : t
+            .replace(HONORIFIC_IN, "")
+            .replace(/\s+([,.?!])/g, "$1")
+            .replace(/,\s*([.?!])/g, "$1")
+            .replace(/\s{2,}/g, " ")
+            .trim();
+    const others = [...clean, ...filler].map((x) => plain(x.t));
     const options = shuffle([s.targetResponse, ...others]);
     return {
       kind: "listening" as const,

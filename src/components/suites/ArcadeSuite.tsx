@@ -22,6 +22,52 @@ type Bubble = {
 
 type Stage = "rules" | "playing" | "done";
 
+/** The part of a round's explanation that is about the bubble the learner
+ *  popped.
+ *
+ *  An explanation covers the whole round, and authors open it with the
+ *  broken-English option. Shown over a correct-English bubble, the first
+ *  thing the learner read was a grammar error their sentence did not have —
+ *  «…The herbs ARE all natural…» — "sai hoà hợp: 'The herbs' số nhiều →
+ *  'are'" (round 3 of the Phase 4 reviews: 78 of 80 Spa explanations). So a
+ *  sentence whose quotes are all from the `form` option, and not from this
+ *  bubble, is left out; and position words ("câu thứ hai"), which point at
+ *  nothing once the bubbles are shuffled, are made neutral. */
+export function aboutThisBubble(
+  explanation: string | undefined,
+  options: { text: string; kind?: string; correct?: boolean }[],
+  bubble: string,
+): string | undefined {
+  if (!explanation) return explanation;
+  // Position words are written against the AUTHORED order, which the round
+  // keeps; the bubbles on screen are a shuffle of it.
+  const POSITION = /\b([Cc])âu (cuối|đầu|giữa|thứ nhất|thứ hai|thứ ba)\b/gu;
+  const indexOf = (p: string) =>
+    p === "đầu" || p === "thứ nhất" ? 0 : p === "giữa" || p === "thứ hai" ? 1 : options.length - 1;
+  const mine = options.findIndex((o) => o.text === bubble);
+  const kindAt = (i: number) => (options[i]?.correct ? "answer" : options[i]?.kind);
+  const sentences = explanation.match(/[^.!?]+(?:[.!?]+(?=\s|$)|$)/g) ?? [explanation];
+  const kept = sentences.filter((s) => {
+    const refs = [...s.matchAll(POSITION)].map((m) => indexOf(m[2]!));
+    // A sentence that opens on the broken-English option and never names
+    // this bubble is about the other one.
+    return !(refs.length && kindAt(refs[0]!) === "form" && !refs.includes(mine));
+  });
+  const text = (kept.length ? kept : sentences).join("").trim();
+  return text.replace(POSITION, (_, c: string, p: string) => {
+    const i = indexOf(p);
+    const name =
+      i === mine
+        ? "câu này"
+        : kindAt(i) === "form"
+          ? "câu sai ngữ pháp"
+          : kindAt(i) === "answer"
+            ? "câu đúng"
+            : "câu kia";
+    return c === "C" ? name[0]!.toUpperCase() + name.slice(1) : name;
+  });
+}
+
 /** Why a "form" bubble is wrong, said about THAT sentence.
  *
  *  Every broken-English bubble used to get one message — "it is missing words
@@ -222,20 +268,16 @@ function ArcadeSuiteInner({
       // the learner their sentence was grammatical when it was not.
       const round = rounds[roundIdx % rounds.length];
       // Authors wrote "Câu cuối…" / "Câu đầu…" against the source order, and
-      // the bubbles are shuffled: the feedback quotes the bubble it is about,
-      // so the position word becomes "Câu này". 63 of 64 Housekeeping
-      // explanations in Phase 3 opened that way.
-      const authored = round?.explanation?.replace(
-        /^Câu (cuối|đầu|giữa|thứ (nhất|hai|ba)|thứ nhất|thứ hai|thứ ba)\b/u,
-        "Câu này",
-      );
+      // the bubbles are shuffled (63 of 64 Housekeeping explanations in Phase
+      // 3 opened that way): aboutThisBubble() names each position for what it
+      // is to THIS bubble, and leaves out what is only about the form option.
       const why =
         b.kind === "form"
           ? formWhy(
               b.text,
               (round?.options ?? []).filter((o) => o.text !== b.text).map((o) => o.text),
             )
-          : authored;
+          : aboutThisBubble(round?.explanation, round?.options ?? [], b.text);
       // Name the bubble by quoting it, never by its position. The three
       // options are Fisher-Yates shuffled above and the bubbles carry no
       // numbers, so an explanation opening "Câu thứ ba…" pointed at nothing

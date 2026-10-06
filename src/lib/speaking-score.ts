@@ -1283,8 +1283,10 @@ export function addedNegation(spoken: string, target: string): string[] {
 // this helper exists to prevent, arriving through the back door.
 // Not "This is Mr Tan's OFFICE": the caller is someone in it, of either sex
 // (round 2 failed "…staying here, sir" on that must-be-right turn).
+// "I am four months pregnant" says who is speaking as plainly as a title
+// does; "Thank you, sir." passed it (round 3).
 const GENDER_CUE =
-  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\.?\s+[a-z]+\b(?!['’]s)|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister)\b|\b(sir|madam|ma'am)\b/i;
+  /\b(i am|i'm|this is)\s+(mr|mrs|ms|miss)\.?\s+[a-z]+\b(?!['’]s)|\bi am\b[^.?!]*\b(husband|wife|father|mother|son|daughter|brother|sister|pregnant)\b|\b(sir|madam|ma'am)\b/i;
 const HONORIFIC = /^(sir|madam|ma'am|maam)$/;
 
 export function honorificIsFree(guestPrompt?: string): boolean {
@@ -1450,6 +1452,13 @@ function foldCourtesy(input: string[]) {
     if (toks[i] === "let" && toks[i + 1] === "me") {
       out.push("i", "will");
       i++;
+      continue;
+    }
+    // "Thanks for telling me" is "Thank you for telling me": 0 of 9 turns
+    // took it in round 3, four of them must-be-right, so a learner who said
+    // every turn right failed the oral half on 11.8% of papers for it.
+    if (toks[i] === "thanks") {
+      out.push("thank", "you");
       continue;
     }
     // "No one goes back in" is "Nobody goes back in" — one "no" either way.
@@ -2715,6 +2724,69 @@ export function utterancePassed(
       (said.includes("although") &&
         said.includes("but") &&
         !(tgt.includes("although") && tgt.includes("but"))));
+  // WHAT THE NO IS ABOUT. Every reading counted negations, and one each
+  // passed "They do NOT contain shellfish, so I WOULD recommend them" for
+  // "They contain shellfish, so I would NOT recommend them" on the
+  // must-be-right allergy turn (round 3: 10 of 13 one-"not" models took a
+  // "not" moved to another clause). From week 23 the first content word after
+  // each negation has to be the same, against this answer or the slot's own
+  // model. A leading "No," that answers the guest is not counted.
+  const fSaid = foldCourtesy(said);
+  const fTgt = foldCourtesy(tgt);
+  const leadNo = fSaid[0] === "no" && fTgt[0] !== "no";
+  const saidNo = negatedWords(fSaid, leadNo);
+  const negationMoved =
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    !sameNegations(saidNo, negatedWords(fTgt, false)) &&
+    (!slotTarget ||
+      !sameNegations(saidNo, negatedWords(foldCourtesy(normalize(slotTarget)), false)));
+  // WHO IS CALLED FIRST. "Danger first: ask him where, then call the Duty
+  // Manager, and security after." passed for "…then call security, and the
+  // Duty Manager after." at an order ratio of exactly the 0.85 threshold —
+  // the order the week teaches, reversed (round 3). Where a model orders its
+  // calls (first, then, after, before, next), the reply calls the same people
+  // in the same order.
+  // "first aid" names a person, not an order.
+  const ordered = (xs: string[]) =>
+    xs.some(
+      (t, i) =>
+        /^(then|after|before|next)$/.test(t) ||
+        (t === "first" && !/^(aid|aider|aiders)$/.test(xs[i + 1] ?? "")),
+    );
+  const callsOutOfOrder = (model: string[]) => {
+    const want = partyOrder(model);
+    if (want.length < 2 || !ordered(model)) return false;
+    const got = partyOrder(fSaid).filter((id) => want.includes(id));
+    return got.length >= 2 && got.join(" ") !== want.filter((id) => got.includes(id)).join(" ");
+  };
+  // THE OTHER PARTICLE. "Switch the AED OFF and do what it says" passed the
+  // must-be-right AED turn, "…while it is DOWN" the Do Not Disturb rule,
+  // "Nobody goes back OUT" the burst-pipe turn: on→off passed 55 of 59
+  // tries, in→out 63 of 66 (round 3) — one word, the opposite instruction.
+  const FLIPS: [string, string][] = [
+    ["on", "off"],
+    ["in", "out"],
+    ["up", "down"],
+    ["inside", "outside"],
+    ["with", "without"],
+  ];
+  const count = (xs: string[], w: string) => xs.filter((x) => x === w).length;
+  const flippedAgainst = (model: string[]) =>
+    FLIPS.some(
+      ([a, b]) =>
+        (count(model, a) > count(said, a) && count(said, b) > count(model, b)) ||
+        (count(model, b) > count(said, b) && count(said, a) > count(model, a)),
+    );
+  const particleFlipped =
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    flippedAgainst(tgt) &&
+    (!slotTarget || flippedAgainst(normalize(slotTarget)));
+  // Read against the SLOT's model when there is one: an accepted answer that
+  // lost its "then", or a shape that swapped "X and Y", says nothing about
+  // order, and the reversed call passed against it.
+  const partiesSwapped =
+    Number(sourceWeek) >= ACKNOWLEDGE_FROM_WEEK &&
+    callsOutOfOrder(slotTarget ? foldCourtesy(normalize(slotTarget)) : fTgt);
   return {
     ...cmp,
     missingRequired,
@@ -2724,8 +2796,21 @@ export function utterancePassed(
     addedNegation: added,
     inflectionErrors: inflection,
     /** Passed only as the model's meaning, not as its wording. */
-    byMeaning: meaningPassed && !strictPassed && branchesKept && !doubleLink,
-    passed: (strictPassed || meaningPassed) && branchesKept && !doubleLink,
+    byMeaning:
+      meaningPassed &&
+      !strictPassed &&
+      branchesKept &&
+      !doubleLink &&
+      !negationMoved &&
+      !partiesSwapped &&
+      !particleFlipped,
+    passed:
+      (strictPassed || meaningPassed) &&
+      branchesKept &&
+      !doubleLink &&
+      !negationMoved &&
+      !partiesSwapped &&
+      !particleFlipped,
     threshold: th,
   };
 }
@@ -2902,6 +2987,80 @@ const DETERMINERS = new Set<string>([
  *    so a stock line that happens to name the locks does not.
  *  The ten reviews' 700 dangerous answers, the course's own wrong options and
  *  every cheat profile in scripts/probes were re-run against it. */
+/** Words between a negation and the thing it negates. */
+const NEGATION_SKIP = new Set(
+  "do does did be is are am was were been being have has had a an the to any sir madam please just yet even really".split(
+    " ",
+  ),
+);
+
+/** Who a sentence calls, in the order it calls them — first mention of each.
+ *  "115" (read out as "one one five") and "ambulance" are the same call. */
+function partyOrder(xs: string[]): string[] {
+  const ID: Record<string, string> = {
+    security: "security",
+    manager: "manager",
+    aid: "firstaid",
+    aider: "firstaid",
+    nurse: "nurse",
+    ambulance: "ambulance",
+    police: "police",
+    engineering: "engineering",
+    lifeguard: "lifeguard",
+    doctor: "doctor",
+    chef: "kitchen",
+    kitchen: "kitchen",
+  };
+  const out: string[] = [];
+  xs.forEach((t, i) => {
+    const id = t === "one" && xs[i + 1] === "one" && xs[i + 2] === "five" ? "ambulance" : ID[t];
+    if (id && !out.includes(id)) out.push(id);
+  });
+  return out;
+}
+
+/** "not able to", "not allowed to" say "cannot": the verb after "to" is what
+ *  the no is about. Without a "to" ("incense is not allowed in the rooms")
+ *  the thing refused came before the negation, so it stands for any word. */
+const CANNOT_WORDS = new Set(["able", "allowed", "permitted", "possible"]);
+
+/** What each "no" in a sentence is about: the first content word after
+ *  every negation, as stems, sorted ("*" for a bare "not allowed"). A leading
+ *  "No," answering the guest is left out when `dropLeadingNo` — it says no to
+ *  the question, not to a verb. */
+function negatedWords(xs: string[], dropLeadingNo: boolean): string {
+  const out: string[] = [];
+  xs.forEach((t, i) => {
+    if (!NEGATES.has(t) || (i === 0 && dropLeadingNo && t === "no")) return;
+    for (let j = i + 1; j < xs.length && j <= i + 4; j++) {
+      if (NEGATION_SKIP.has(xs[j]!)) continue;
+      if (CANNOT_WORDS.has(xs[j]!)) {
+        if (xs[j + 1] === "to") continue;
+        out.push("*");
+        break;
+      }
+      out.push(stemsOf(xs[j]!)[0] ?? xs[j]!);
+      break;
+    }
+  });
+  return out.sort().join("|");
+}
+
+/** Same number of negations, each about the same word; "*" matches any. */
+function sameNegations(a: string, b: string): boolean {
+  if (a === b) return true;
+  const xs = a ? a.split("|") : [];
+  const rest = b ? b.split("|") : [];
+  if (xs.length !== rest.length) return false;
+  for (const x of xs) {
+    if (x === "*") continue;
+    const k = rest.indexOf(x) >= 0 ? rest.indexOf(x) : rest.indexOf("*");
+    if (k < 0) return false;
+    rest.splice(k, 1);
+  }
+  return true;
+}
+
 /** Irregular past forms ("left" is not one here: it is also a direction). */
 const PAST_FORMS = new Set(
   (

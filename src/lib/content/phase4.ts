@@ -3144,7 +3144,6 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "ending in",
       "last four",
       "room number",
-      "your room",
       "night auditor",
       "night audit",
       "receptionist",
@@ -3157,20 +3156,46 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "within twenty-four hours",
       "within 48 hours",
       "within forty-eight hours",
-      // A faster date than the bank's slowest, in any wording. ("today" and
-      // "your room" used to be here and blocked correct replies: "I requested
-      // the refund today", "…for your room".)
+      // A faster date than the bank's slowest, in any wording, digits too
+      // ("within 3 business days" scored 100% in round 3). "today", "your
+      // room" and "tomorrow" used to be here and blocked correct replies: "I
+      // requested the refund today", "…on your room bill", "I will call you
+      // tomorrow to update you".
       "two days",
       "three days",
       "five days",
+      "seven days",
       "two working days",
       "three working days",
       "five working days",
+      "two business days",
+      "three business days",
+      "five business days",
+      "2 days",
+      "3 days",
+      "5 days",
+      "7 days",
+      "2 working days",
+      "3 working days",
+      "5 working days",
+      "2 business days",
+      "3 business days",
+      "5 business days",
+      "within two",
+      "within three",
+      "within five",
+      "within 2",
+      "within 3",
+      "within 5",
       "within a week",
+      "within one week",
+      "in one week",
+      "in a week",
       "end of the week",
       "refund today",
       "back today",
-      "tomorrow",
+      "refund tomorrow",
+      "back tomorrow",
       // a colleague, or the guest, blamed
       "night team",
       "the agent",
@@ -3257,6 +3282,21 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "the cook",
       "our cook",
       "our new",
+      // round 3, all at 100%: "…our chicken was not safe…", "…the chicken
+      // made you unwell…", "…our kitchen passed its inspection and our
+      // chicken is always safe…", "…we will gladly cover the cost of your
+      // dinner", "…our young staff member at the table…"
+      "made you",
+      "make you",
+      "not safe",
+      "is safe",
+      "always safe",
+      "was safe",
+      "inspection",
+      "cover the cost",
+      "cover your",
+      "pay for",
+      "staff member",
     ],
     modelReply:
       "We are very sorry to read about your experience, and that you felt unwell after your visit — and I am sorry nobody followed up as they should have. Our kitchen team and I have reviewed our food safety procedures in full. Please contact me directly at the restaurant so I can hear the details from you personally.",
@@ -3478,12 +3518,26 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "Gold member",
       "Gold guest",
       "as a Gold",
+      // Round 3: "As one of our loyalty members you should have had the
+      // lounge, and you will have it free on your next stay…" and "A guest
+      // at your loyalty level…" confirm the tier as plainly as naming it, and
+      // "two nights on us" is the compensation in other words.
+      "loyalty member",
+      "loyalty members",
+      "loyalty level",
+      "should have had",
+      "next stay",
+      "on us",
+      "for free",
+      "free on",
+      "receptionist",
+      "checked you in",
       "your tier",
       "your status",
       "entitled to",
     ],
     modelReply:
-      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
+      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. I am looking into what happened on the night myself. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
       "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Bốn điều KHÔNG viết ra chỗ công khai: đừng nêu nguyên nhân hay tên bộ phận ('the front office did not pass it on'); đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
   },

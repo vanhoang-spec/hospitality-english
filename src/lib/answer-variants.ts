@@ -230,8 +230,17 @@ function oneStep(t: string, reorder = true): [string, boolean][] {
     // nobody's English, and moved about by the next step it became "…have an
     // allergy, of course, sir, and?" — a shape whose stray words let a whole
     // inserted clause read as a substitution.
-    if (a.endsWith(".") && a.split(" ").length > 3)
-      for (const conj of ["but", "and", "so"])
+    // Nor an acknowledgement: "Thank you for telling me, madam, SO they
+    // contain shellfish…" says the thanks caused the fact, and its stray
+    // "so" let a moved "not" through on the allergy turn (round 3). An
+    // apology still takes "but": "I am so sorry for your loss, madam, but
+    // incense is not allowed…" is how a refusal is said.
+    const ACKNOWLEDGES =
+      /^(thank you|thanks|of course|certainly|congratulations|with pleasure|how lovely|what wonderful)\b/i;
+    const APOLOGISES =
+      /^(i am sorry|i'm sorry|sorry|i am so sorry|i am very sorry|i understand)\b/i;
+    if (a.endsWith(".") && a.split(" ").length > 3 && !ACKNOWLEDGES.test(a))
+      for (const conj of APOLOGISES.test(a) ? ["but"] : ["but", "and", "so"])
         out.push(
           [...ss.slice(0, i), `${a.slice(0, -1)}, ${conj} ${low(b)}`, ...ss.slice(i + 2)].join(" "),
         );
