@@ -48,7 +48,9 @@ const t1a =
 const t1b =
   "Since you mentioned the sea bass, madam, the fish of the day may suit you. It is in season tonight.";
 const t1c =
-  "Thank you for telling me, madam. I will write her shellfish allergy for the kitchen, and the chef will check every dish.";
+  "Thank you for telling me, madam. I will write down her shellfish allergy for the kitchen, and the chef will check every dish.";
+const t1d =
+  "Try our pho, madam. It is a heritage dish: the broth simmers overnight, and it is comforting after a long flight.";
 
 const lesson1 = L(40, 1, "Opening the Floor", "Mở ca: những bàn đầu tiên", {
   vocabulary: [
@@ -106,24 +108,26 @@ const lesson1 = L(40, 1, "Opening the Floor", "Mở ca: những bàn đầu tiê
         sp(
           "That sounds perfect. Oh — my friend here is allergic to shellfish.",
           t1c,
-          "Cảm ơn khách đã nói, ghi dị ứng cho bếp ('shellfish allergy'), và bếp trưởng kiểm tra từng món. Không tự hứa món nào an toàn.",
+          "Cảm ơn khách đã nói, ghi lại dị ứng cho bếp ('write down her shellfish allergy'), và bếp trưởng kiểm tra từng món. Không tự hứa món nào an toàn.",
           undefined,
           ["kitchen", "chef"],
           t1b,
         ),
         [
-          "Thank you for telling me, madam. I will write her shellfish allergy for the kitchen, and the chef will check each dish.",
-          "Thank you for telling me. I will write her shellfish allergy for the kitchen, madam, and the chef will check every dish.",
+          "Thank you for telling me, madam. I will write down her shellfish allergy for the kitchen, and the chef will check each dish.",
+          "Thank you for telling me. I will write down her shellfish allergy for the kitchen, madam, and the chef will check every dish.",
+          "Thank you for telling me, madam. I will note her shellfish allergy for the kitchen, and the chef will check every dish.",
+          "Thank you for telling me, madam. I will tell the kitchen about her shellfish allergy, and the chef will check every dish.",
         ],
       ),
     ),
     also(
       sp(
         "There are two of us, and we are not wine experts. Something simple, please.",
-        "Our house wine is a lovely choice, sir, and a half bottle is just right for two.",
-        "Gợi ý vang nhà tự tin, không xin lỗi vì nó rẻ; 'half bottle' là lời tư vấn, không phải hạ cấp. Không đọc giá thành tiếng.",
+        "Our house wine is a lovely dry white, sir, and a half bottle is just right for two.",
+        "Gợi ý vang nhà tự tin, kèm một chữ tả vị ('dry'), không xin lỗi vì nó rẻ; 'half bottle' là lời tư vấn, không phải hạ cấp. Không đọc giá thành tiếng.",
       ),
-      ["Our house wine is a lovely choice, sir, and a half bottle is perfect for two."],
+      ["Our house wine is a lovely dry white, sir, and a half bottle is perfect for two."],
     ),
     sp(
       "What is the chef most proud of on the menu?",
@@ -132,9 +136,32 @@ const lesson1 = L(40, 1, "Opening the Floor", "Mở ca: những bàn đầu tiê
     ),
     sp(
       "Table three is a business dinner. Anything I should know before I go over?",
-      "It is a business dinner, so be discreet: serve from the side, refill quietly, and wait for a pause.",
-      "Nói với đồng nghiệp: không sir/madam. Ba việc cụ thể sau dấu hai chấm, nối bằng dấu phẩy và 'and'.",
+      "It is a business dinner, so be discreet: serve from the side, keep a slow dining pace, and wait for a pause.",
+      "Nói với đồng nghiệp: không sir/madam. Ba việc cụ thể sau dấu hai chấm, nối bằng dấu phẩy và 'and'; 'dining pace' chậm cho bàn đang bàn công việc.",
       "colleague",
+    ),
+    also(
+      sp(
+        "We flew in from London today, and we are tired. Something local, but not heavy?",
+        t1d,
+        "Kể món bằng câu ghép: tên món, một chi tiết thật ('heritage dish', nước dùng ninh qua đêm — 'broth', 'simmers'), rồi lý do món hợp với khách đang mệt ('comforting').",
+        undefined,
+        ["heritage", "broth", "simmers", "comforting"],
+      ),
+      [
+        "Try our pho, madam. It is a heritage dish: the broth simmers overnight, and it is comforting after a long journey.",
+        "Then try our pho, madam. It is a heritage dish: the broth simmers overnight, and it is comforting after a long flight.",
+      ],
+    ),
+    also(
+      sp(
+        "We would like to try something adventurous. What would you eat?",
+        "If you feel adventurous, sir, try the fish in a clay pot. It is my personal favourite, rich and peppery.",
+        "Tư vấn từ lời khách ('adventurous'), rồi một món thật kèm dấu ấn riêng ('my personal favourite') và một chi tiết vị.",
+      ),
+      [
+        "If you are feeling adventurous, sir, try the fish in a clay pot. It is my personal favourite, rich and peppery.",
+      ],
     ),
   ],
   reading: read(
@@ -205,7 +232,7 @@ By seven, every table has been asked the same safety question before anything wa
 // ── Lesson 2 — the busy hour ─────────────────────────────────────────────────
 const t2a =
   "I am so sorry, madam. May I send back the curry for a milder one, or bring you something else?";
-const t2b = "Of course, madam. I will bring the menu now, and check the bill with my supervisor.";
+const t2b = "I am sorry, madam. I will bring the menu now, and check the bill with my supervisor.";
 const t2c =
   "Certainly, madam — four ways is fine. I will split the bill by seat and bring four bills.";
 
@@ -225,9 +252,9 @@ const lesson2 = L(40, 2, "The Busy Hour", "Giờ cao điểm", {
     ),
     g(
       "Bill correct. Computer printed it.",
-      "May I go through the bill with you line by line, sir? The docket shows every order.",
-      "Đối chiếu theo docket, không theo trí nhớ hay 'cái máy'. 'The docket' số ít nên 'shows' có -s.",
-      "May I go through the bill with you line by line, sir? The docket show every order.",
+      "May I go through the bill with you line by line, sir? The order slip shows every dish.",
+      "Đối chiếu theo phiếu gọi món ('order slip' — với khách không nói 'docket'), không theo trí nhớ hay 'cái máy'. 'The order slip' số ít nên 'shows' có -s.",
+      "May I go through the bill with you line by line, sir? The order slip show every dish.",
     ),
   ],
   speaking: [
@@ -246,14 +273,15 @@ const lesson2 = L(40, 2, "The Busy Hour", "Giờ cao điểm", {
         sp(
           "Something else, please. And I do not want to pay for that curry.",
           t2b,
-          "Món mới là việc của bạn — làm ngay. Hoá đơn là việc của giám sát — bạn hỏi, không tự hứa bớt.",
+          "Không mở bằng lời đồng ý — khách sẽ nghe thành khỏi trả tiền. Món mới là việc của bạn — làm ngay. Hoá đơn là việc của giám sát — bạn hỏi, không tự hứa bớt.",
           undefined,
           ["supervisor"],
           t2a,
         ),
         [
-          "Of course, madam. I will bring the menu now and check the bill with my supervisor.",
-          "Of course, madam. I will bring the menu now, and I will check the bill with my supervisor.",
+          "I am sorry, madam. I will bring the menu now and check the bill with my supervisor.",
+          "I am so sorry, madam. I will bring you the menu now, and I will check the bill with my supervisor.",
+          "I will bring the menu now, madam, and check the bill with my supervisor.",
         ],
       ),
     ),
@@ -273,11 +301,11 @@ const lesson2 = L(40, 2, "The Busy Hour", "Giờ cao điểm", {
     also(
       sp(
         "This bill has three desserts on it. We only had two.",
-        "Let me check the docket line by line, sir. If a dessert was charged in error, it comes off.",
-        "Đối chiếu 'line by line' bằng docket — không bằng trí nhớ của ai. Câu điều kiện cam kết theo sự thật: món 'charged in error' thì được bỏ ra.",
+        "Let me check the order slips line by line, sir. If a dessert was charged in error, it comes off.",
+        "Đối chiếu 'line by line' bằng phiếu gọi món ('order slips') — không bằng trí nhớ của ai. Câu điều kiện cam kết theo sự thật: món 'charged in error' thì được bỏ ra.",
       ),
       [
-        "Let me check the docket line by line, sir. If a dessert was charged in error, it will come off.",
+        "Let me check the order slips line by line, sir. If a dessert was charged in error, it will come off.",
       ],
     ),
     sp(
@@ -341,9 +369,9 @@ Busy is not a reason to skip a step. It is the reason the steps exist.`,
     round(
       "Just take the curry off the bill yourself. It is only a small amount.",
       "I would love to help, madam. My supervisor signs that, and she is coming to your table now.",
-      "All right, madam, just this once — I will take it off before I will print the bill.",
-      "All right, madam, just this once — I will take it off before I print the bill.",
-      "'before I will print' sai: mệnh đề thời gian sau 'before' dùng hiện tại đơn (before I print), không dùng 'will'. Cả câu đó lẫn câu đúng tiếng Anh 'just this once — I will take it off…' đều tự bớt tiền — việc của giám sát. Đáp án vẫn giúp khách, đúng quy trình.",
+      "Fine, madam — I will leave the curry off the bill before my supervisor will see it.",
+      "Fine, madam — I will leave the curry off the bill before my supervisor sees it.",
+      "'before my supervisor will see' sai: mệnh đề thời gian sau 'before' dùng hiện tại đơn (before she sees), không dùng 'will'. Cả câu đó lẫn câu đúng tiếng Anh 'I will leave the curry off the bill before my supervisor sees it' đều tự bớt tiền và giấu cấp trên — việc của giám sát. Đáp án vẫn giúp khách, đúng quy trình.",
       2,
     ),
     round(
@@ -363,7 +391,7 @@ const t3a =
 const t3b =
   "Please help her use her own medication, madam, if she has it. My colleague is calling 115 now.";
 const t3c =
-  "I am not able to say, madam. We keep the plate for the doctor, and my manager is coming now.";
+  "I am not able to say what caused the reaction, madam. We keep the plate for the doctor, and my manager is coming now.";
 
 const lesson3 = L(40, 3, "When Something Goes Wrong", "Khi có sự cố", {
   vocabulary: [
@@ -400,6 +428,9 @@ const lesson3 = L(40, 3, "When Something Goes Wrong", "Khi có sự cố", {
         [
           "Your friend first, madam. The first aider is coming now, and your bill will wait with me.",
           "Your friend comes first, madam. The first aider is coming now, and the bill will wait with me.",
+          "Your friend first, madam. The first aider is on the way now, and the bill will wait with me.",
+          "Your friend first, madam. I am calling the first aider now, and the bill can wait.",
+          "Your friend first, madam. The first aider is coming now, and the bill can wait.",
         ],
       ),
     ),
@@ -420,13 +451,14 @@ const lesson3 = L(40, 3, "When Something Goes Wrong", "Khi có sự cố", {
       sp(
         "Was it the sauce? Who is responsible for this?",
         t3c,
-        "Không nhận, không chối: chưa nói được nguyên nhân. Việc đang làm — giữ đĩa ('keep the plate') cho bác sĩ — và người có quyền đang tới.",
+        "Không nhận, không chối: chưa nói được điều gì gây ra phản ứng ('what caused the reaction'). Việc đang làm — giữ đĩa ('keep the plate') cho bác sĩ — và người có quyền đang tới.",
         undefined,
         undefined,
         t3b,
       ),
       [
-        "I am not able to say yet, madam. We keep the plate for the doctor, and my manager is coming now.",
+        "I am not able to say what caused the reaction yet, madam. We keep the plate for the doctor, and my manager is coming now.",
+        "I cannot say what caused the reaction, madam. We keep the plate for the doctor, and my manager is coming now.",
       ],
     ),
     sp(
@@ -446,6 +478,7 @@ const lesson3 = L(40, 3, "When Something Goes Wrong", "Khi có sự cố", {
         [
           "Not the lift, sir — the stairs, please. Leave everything and come with me.",
           "Not the lift, sir. We take the stairs. Please leave everything and walk with me.",
+          "Not the lift, sir — we take the stairs. Leave everything and walk with me.",
         ],
       ),
     ),
@@ -453,6 +486,12 @@ const lesson3 = L(40, 3, "When Something Goes Wrong", "Khi có sự cố", {
       "Table nine is on their fourth bottle and getting loud, and table two needs their bill.",
       "Danger first: slow the pace at table nine and call the supervisor — only she can refuse service. Then table two's bill.",
       "Nói với đồng nghiệp: không sir/madam. Bàn quá chén là chuyện an toàn nên đi trước; hoá đơn đi sau. 'Slow the pace' là việc của sảnh; 'refuse service' là việc của giám sát.",
+      "colleague",
+    ),
+    sp(
+      "A man at the bar is choking! Should I try to help him myself?",
+      "Only if you are trained. Call the first aider now, and clear a space around the guest.",
+      "Nói với đồng nghiệp: không sir/madam. Chỉ người đã được huấn luyện ('trained') mới sơ cứu; việc của mọi người là gọi người sơ cứu và dọn chỗ ('clear a space').",
       "colleague",
     ),
   ],
@@ -572,6 +611,8 @@ const lesson4 = L(40, 4, "Closing the Night", "Khép lại buổi tối", {
         [
           "My supervisor decides that, madam. May I ask her for you now?",
           "That is my supervisor's decision, madam. Shall I ask her for you now?",
+          "I cannot waive it, madam, but I will ask my supervisor now, before we open the bottle.",
+          "My supervisor decides that, madam. May I ask her now?",
         ],
       ),
     ),
@@ -608,6 +649,21 @@ const lesson4 = L(40, 4, "Closing the Night", "Khép lại buổi tối", {
       "Yes. Every new task from my last fifteen minutes went to the next shift by name.",
       "Báo cáo lên quản lý: không sir/madam. Quá khứ đơn (went) cho việc đã xong; 'by name' là bằng chứng không lời hứa nào bị bỏ rơi.",
       "manager",
+    ),
+    sp(
+      "Two Vietnamese coffees to finish, please — we are in no hurry tonight.",
+      "Lovely, madam. Since you are in no hurry, the phin filter can drip slowly, and the aroma comes first.",
+      "Nhắc lại lời khách ('Since you are in no hurry'), rồi kể ngắn về ly cà phê: 'phin filter' nhỏ giọt chậm, 'aroma' tới trước.",
+    ),
+    also(
+      sp(
+        "Tomorrow is our anniversary. Could there be flowers in our room when we come back from dinner?",
+        "How lovely, sir. My colleague on the next shift will coordinate it with Housekeeping and the florist, and confirm it with you.",
+        "Việc mới lúc cuối ca: nhận lời ấm áp, nhưng người làm là đồng nghiệp ca sau. Hoa trong phòng cần 'coordinate' với Housekeeping và 'florist' — không ai hứa giờ thay họ.",
+      ),
+      [
+        "How lovely, sir. My colleague on the next shift will coordinate it with the florist and Housekeeping, and confirm it with you.",
+      ],
     ),
   ],
   reading: read(

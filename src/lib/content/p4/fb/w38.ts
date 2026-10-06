@@ -218,7 +218,8 @@ Finish with the next steps and a date, not with pressure. Then stop talking. The
 });
 
 // ── Lesson 2 — plus-plus, said in full ───────────────────────────────────────
-const t2a = "It means a five percent service charge and ten percent VAT on top, madam.";
+const t2a =
+  "It means a service charge and VAT on top of the menu price, madam, as printed on our banquet card.";
 const t2b =
   "About eight hundred and ten thousand all in, madam. I will print that number on the proposal.";
 const t2c =
@@ -270,7 +271,9 @@ const lesson2 = L(38, 2, "Plus-Plus, Said in Full", "Giá plus-plus, nói thành
     sp(
       "Your quote says seven hundred thousand plus-plus. What does plus-plus mean?",
       t2a,
-      "Định nghĩa ngắn, đủ hai khoản: phí phục vụ và VAT, 'on top' — cộng thêm vào giá thực đơn.",
+      "Định nghĩa ngắn, đủ hai khoản: phí phục vụ và VAT, 'on top' — cộng thêm vào giá thực đơn. Mức phí nói theo thẻ giá tiệc ('banquet card'), không theo trí nhớ.",
+      undefined,
+      ["service", "charge", "top", "banquet", "card"],
     ),
     also(
       sp(
@@ -318,6 +321,8 @@ const lesson2 = L(38, 2, "Plus-Plus, Said in Full", "Giá plus-plus, nói thành
         [
           "The service charge is set by my manager, sir. However, I can make a menu for your budget instead.",
           "My manager sets the service charge, sir. However, I can make a menu for your budget.",
+          "The service charge is my manager's decision, sir. However, I can make a menu for your budget.",
+          "The service charge is set by my manager, sir. However, I can plan a menu for your budget.",
         ],
       ),
     ),
@@ -331,7 +336,7 @@ const lesson2 = L(38, 2, "Plus-Plus, Said in Full", "Giá plus-plus, nói thành
   reading: read(
     `THE NUMBERS CONVERSATION
 Quote in dong, always. The menu is priced in dong, and the contract is signed in dong.
-"Plus-plus" means a five percent service charge and ten percent VAT on top of the menu price. Translate it in the same breath: "seven hundred thousand plus-plus — about eight hundred and ten thousand all in."
+"Plus-plus" means a service charge and VAT on top of the menu price: here, five percent and ten percent, as printed on the banquet card. Translate it in the same breath: "seven hundred thousand plus-plus — about eight hundred and ten thousand all in."
 Give the host one round number they can repeat in their own office. The committee will remember the last number you said, so make it the honest, full one.
 A host who starts with a budget gets respect, not pressure. Work backwards from their number, on paper, in front of them: thirty million for forty guests is seven hundred and fifty thousand per head, all in. Then show the menu that fits.
 The service charge and VAT are not yours to drop. If a host asks, the answer is the manager's, and the honest help you can give is a menu that fits the budget.
@@ -346,7 +351,7 @@ Never quote a number you cannot hold. Every proposal carries the date it is vali
         ],
         correct: 1,
         explanation:
-          "'Plus-plus means a five percent service charge and ten percent VAT on top of the menu price.' Vì vậy phải dịch ngay ra số cuối cùng.",
+          "'Plus-plus means a service charge and VAT on top of the menu price: here, five percent and ten percent, as printed on the banquet card.' Vì vậy phải dịch ngay ra số cuối cùng.",
       },
       {
         q: "Khách nêu ngân sách trước thì người trình bày làm gì?",
@@ -395,10 +400,10 @@ Never quote a number you cannot hold. Every proposal carries the date it is vali
 
 // ── Lesson 3 — the drinks question ───────────────────────────────────────────
 const t3a =
-  "Yes, madam — for forty guests over three hours, it will work out cheaper. For a short lunch, I would recommend against it.";
+  "Based on forty guests over three hours, madam, it will work out cheaper. For a short lunch, I would recommend against it.";
 const t3b = "Because a host who believes my numbers comes back, madam. Today, the numbers say yes.";
 const t3c =
-  "The beverage package covers beer, house wine and soft drinks for three hours, madam. Cocktails are added by consumption.";
+  "The beverage package covers beer, house wine and soft drinks for three hours, madam. Cocktails and wines from our cellar are added by consumption.";
 
 const lesson3 = L(38, 3, "The Drinks Question", "Câu hỏi về đồ uống", {
   vocabulary: [
@@ -442,10 +447,11 @@ const lesson3 = L(38, 3, "The Drinks Question", "Câu hỏi về đồ uống", 
       sp(
         "Be honest — for forty of us over three hours, is the drinks package worth it?",
         t3a,
-        "Câu trả lời trung thực có HAI vế: khi nào đáng ('work out cheaper'), khi nào không ('recommend against'). Con số do khách nêu nên được nhắc lại.",
+        "Câu trả lời trung thực có HAI vế: khi nào đáng ('Based on' con số của khách, 'work out cheaper'), khi nào không ('recommend against'). Con số do khách nêu nên được nhắc lại.",
       ),
       [
-        "Yes, madam — for forty guests over three hours, it will work out cheaper. For a short lunch, I would recommend against it, though.",
+        "Based on forty guests over three hours, madam, it will work out cheaper. For a short lunch, I would recommend against it, though.",
+        "Yes, madam — for forty guests over three hours, it will work out cheaper. For a short lunch, I would recommend against it.",
       ],
     ),
     sp(
@@ -460,13 +466,13 @@ const lesson3 = L(38, 3, "The Drinks Question", "Câu hỏi về đồ uống", 
       sp(
         "All right. What exactly does the package cover?",
         t3c,
-        "Nói rõ BIÊN của gói (đồ gì, bao lâu), rồi cái nằm ngoài gói được tính 'by consumption'. Vang nhà là lựa chọn đáng tự hào, không phải lựa chọn rẻ.",
+        "Nói rõ BIÊN của gói (đồ gì, bao lâu), rồi cái nằm ngoài gói — cocktail, vang trong hầm rượu ('cellar') — được tính 'by consumption'. Vang nhà là lựa chọn đáng tự hào, không phải lựa chọn rẻ.",
         undefined,
         undefined,
         t3b,
       ),
       [
-        "The beverage package covers beer, house wine and soft drinks for three hours, madam. Cocktails can be added by consumption.",
+        "The beverage package covers beer, house wine and soft drinks for three hours, madam. Cocktails and wines from our cellar can be added by consumption.",
       ],
     ),
     also(
@@ -581,7 +587,7 @@ const lesson4 = L(
         "📅",
       ]),
       c("Follow up", "Follow up once, on the day you promised.", [
-        "/ˈfɒləʊ ʌp/",
+        "/ˌfɒləʊ ˈʌp/",
         "Liên lạc lại một lần để hỏi kết quả",
         "📞",
       ]),
@@ -662,6 +668,8 @@ const lesson4 = L(
           [
             "My manager decides that, sir. Shall I ask her on your behalf?",
             "That is for my manager to decide, sir. May I ask her on your behalf?",
+            "That is my manager's decision, sir. May I ask her on your behalf?",
+            "I am sorry, sir. My manager decides that, so may I ask her on your behalf?",
           ],
         ),
       ),

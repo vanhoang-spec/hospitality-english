@@ -104,6 +104,7 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước", {
         [
           "Your mother first, madam. I am calling the first aider now, and my colleague will talk to the driver.",
           "Your mother comes first, madam. I am calling the first aider now, and my colleague will speak to the driver.",
+          "Your mother first, madam. I am calling the first aider now, and my colleague will tell the driver.",
         ],
       ),
     ),
@@ -153,6 +154,33 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước", {
       ),
       [
         "I am sorry, sir — a guest needs help, and that is our priority. I will be with you in a few minutes.",
+      ],
+    ),
+    risk(
+      also(
+        sp(
+          "The fire alarm is ringing, but it is probably just a test. Shall I keep serving?",
+          "No — we treat every alarm as real. Stop the service and walk your tables to the stairs.",
+          "Nói với đồng nghiệp: không sir/madam. Nguy hiểm trước: mọi chuông báo đều là thật. Hai mệnh lệnh ngắn: 'stop the service', rồi dẫn khách bàn mình tới cầu thang bộ.",
+          "colleague",
+          ["alarm", "stop", "service", "stairs"],
+        ),
+        [
+          "No — every alarm is real. Stop the service and walk your tables to the stairs.",
+          "No — we treat every alarm as real. Stop the service and take your tables to the stairs.",
+          "No — we treat every alarm as real. Stop the service and walk your guests to the stairs.",
+        ],
+      ),
+    ),
+    also(
+      sp(
+        "The man at table nine has had too much, and now he is asking for his car keys.",
+        "If he has had one too many, call the supervisor and offer a taxi, so he can get home safely.",
+        "Nói với đồng nghiệp: không sir/madam. Khách quá chén ('one too many') đòi lái xe là chuyện an toàn: gọi giám sát, mời gọi taxi — lý do là để khách 'get home safely'.",
+        "colleague",
+      ),
+      [
+        "If he has had one too many, call the supervisor and offer him a taxi, so he can get home safely.",
       ],
     ),
   ],
@@ -304,11 +332,17 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       "Nói với đồng nghiệp ca sau: không sir/madam. Một câu nói việc gì, một câu nói việc đã ở đâu và khách đã biết ai lo.",
       "colleague",
     ),
-    sp(
-      "It is ten to ten. Table eight wants a cocktail tasting. Will you start it?",
-      "Not a new task in my last fifteen minutes. I will hand over the request by name to the next shift.",
-      "Trả lời quản lý: không sir/madam. Nói luật một câu ('new task', 'last fifteen minutes'), rồi việc bạn làm: 'hand over' có tên.",
-      "manager",
+    also(
+      sp(
+        "It is ten to ten. Table eight wants a cocktail tasting. Will you start it?",
+        "It is my last fifteen minutes, so I should not open a new task. May I hand it over to the next shift by name?",
+        "Trả lời quản lý: không sir/madam, nhưng vẫn lịch sự — không cãi lệnh. Một câu nói lý do bằng luật ('last fifteen minutes', 'new task'), một câu đề nghị việc bạn làm: bàn giao có tên cho ca sau.",
+        "manager",
+      ),
+      [
+        "It is my last fifteen minutes, so I should not open a new task. Shall I hand it over to the next shift by name?",
+        "It is my last fifteen minutes, so I should not start a new task. May I hand it over to the next shift by name?",
+      ],
     ),
     risk(
       also(
@@ -322,6 +356,8 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
         [
           "No — danger never waits. I am calling the first aider now, and I will stay until she comes.",
           "Danger never waits. I am calling the first aider now, and I will stay until she arrives.",
+          "No, danger never waits. I will call the first aider now and stay until she arrives.",
+          "No — danger first. I am calling the first aider now, and I will stay until she arrives.",
         ],
       ),
     ),
@@ -396,7 +432,7 @@ const t3a =
 const t3b =
   "The remake is on its way, sir. Taking it off the bill needs my supervisor's approval, so let me ask her now.";
 const t3c =
-  "Let me check the docket now, sir. If it is our error, it comes off, and I will reprint the bill.";
+  "Let me check the order slip now, sir. If it is our error, it comes off, and I will reprint the bill.";
 
 const lesson3 = L(39, 3, "Rehearsal: The Busy Hour", "Tổng duyệt: giờ cao điểm", {
   vocabulary: [
@@ -408,9 +444,9 @@ const lesson3 = L(39, 3, "Rehearsal: The Busy Hour", "Tổng duyệt: giờ cao 
   grammar: [
     g(
       "Steak late, bill wrong, cake later. Too many problems!",
-      "Three things, sir, and I have all of them: the remake, the docket and the cake.",
+      "Three things, sir, and I have all of them: the remake, the bill and the cake.",
       "Tổng duyệt luật đầu tuần: gọi tên mọi việc, xếp thứ tự, nói 'I have all of them'. Số nhiều 'three things' có -s.",
-      "Three thing, sir, and I have all of them: the remake, the docket and the cake.",
+      "Three thing, sir, and I have all of them: the remake, the bill and the cake.",
     ),
     g(
       "You are regular, so OK, no corkage tonight.",
@@ -447,13 +483,13 @@ const lesson3 = L(39, 3, "Rehearsal: The Busy Hour", "Tổng duyệt: giờ cao 
       sp(
         "And while you are here — we never ordered this second bottle.",
         t3c,
-        "Kiểm tra trước, cam kết sau: đối chiếu 'docket', nếu là lỗi của nhà hàng thì bỏ ra và in lại hoá đơn sạch.",
+        "Kiểm tra trước, cam kết sau: đối chiếu phiếu gọi món ('order slip' — với khách không dùng từ nội bộ docket), nếu là lỗi của nhà hàng thì bỏ ra và in lại hoá đơn sạch.",
         undefined,
         undefined,
         t3b,
       ),
       [
-        "Let me check the docket now, sir. If it is our error, it comes off, and I will print a new bill.",
+        "Let me check the order slip now, sir. If it is our error, it comes off, and I will print a new bill.",
       ],
     ),
     risk(
@@ -468,6 +504,8 @@ const lesson3 = L(39, 3, "Rehearsal: The Busy Hour", "Tổng duyệt: giờ cao 
         [
           "Thank you for telling me, madam. I will ask the chef to check the cake before we bring it out.",
           "Thank you for telling me, madam. I will ask the chef to check the cake before it is served.",
+          "Thank you for telling me, madam. I will write down her allergy and ask the chef to check the cake before we serve it.",
+          "Thank you for telling me, madam. Our kitchen handles nuts, so I will ask the chef to check the cake before we serve it.",
         ],
       ),
     ),
@@ -483,13 +521,21 @@ const lesson3 = L(39, 3, "Rehearsal: The Busy Hour", "Tổng duyệt: giờ cao 
         [
           "My supervisor decides that, sir, and I will ask her before we open your bottle.",
           "That is my supervisor's decision, sir, and I will ask her before we open the bottle.",
+          "I cannot waive the corkage, sir, but I will ask my supervisor before we open the bottle.",
+          "My supervisor decides that, sir. May I ask her before we open the bottle?",
         ],
       ),
     ),
     sp(
       "Table four wants the corkage waived and a free dessert. What can I promise them?",
-      "Nothing yet. Only the supervisor can waive the corkage or approve a dessert, so bring her to the table.",
-      "Nói với đồng nghiệp: không sir/madam. Hai yêu cầu, một người có quyền: 'waive' và duyệt món tặng đều là việc của giám sát.",
+      "Nothing yet. Only the floor supervisor can waive the corkage or approve a dessert, so bring her to the table.",
+      "Nói với đồng nghiệp: không sir/madam. Hai yêu cầu, một người có quyền: 'waive' và duyệt món tặng đều là việc của giám sát sảnh ('floor supervisor').",
+      "colleague",
+    ),
+    sp(
+      "Table five sent their steak back again. What do I write for the kitchen?",
+      "Write the steak doneness on the docket and mark it as a remake, so the kitchen fires it first.",
+      "Nói với đồng nghiệp: không sir/madam. Với bếp dùng từ nội bộ — 'docket', 'remake', 'fire'. Ghi rõ 'steak doneness' để món không bị trả lần nữa.",
       "colleague",
     ),
   ],
@@ -538,9 +584,9 @@ Nothing she does is new. The skill is doing old things in the right order.`,
     round(
       "The steak was wrong, the bill was wrong — just take thirty percent off and we will forget it.",
       "I am sorry, sir. A discount needs my supervisor's approval, and she is on her way now.",
-      "Thirty percent is fair, sir — I will takes it off before I print the bill.",
-      "Thirty percent is fair, sir — I will take it off before I print the bill.",
-      "'I will takes' sai: sau 'will' là động từ nguyên mẫu (take). Cả câu đó lẫn câu đúng ngữ pháp 'Thirty percent is fair…' đều tự bớt ba mươi phần trăm — quyết định về tiền vượt quyền người phục vụ. Đáp án xin lỗi và đưa đúng người tới.",
+      "Thirty percent sounds fair, sir, so I will asks the cashier to change the bill now.",
+      "Thirty percent sounds fair, sir, so I will ask the cashier to change the bill now.",
+      "'I will asks' sai: sau 'will' là động từ nguyên mẫu (ask). Cả câu đó lẫn câu đúng ngữ pháp 'Thirty percent sounds fair…' đều tự bớt ba mươi phần trăm — nhờ thu ngân sửa hoá đơn vẫn là quyết định về tiền vượt quyền người phục vụ. Đáp án xin lỗi và đưa đúng người tới.",
       1,
     ),
     round(
@@ -559,9 +605,11 @@ Nothing she does is new. The skill is doing old things in the right order.`,
 const t4a =
   "I will ask the kitchen now, madam. If they can, your friends are welcome, charged per head on top of your guaranteed number.";
 const t4b =
-  "It waits out of sight until your signal, madam. Just catch my eye whenever you are ready.";
+  "It waits out of sight until your signal, madam. The timing is yours — just catch my eye whenever you are ready.";
 const t4c =
   "Then plan B: a plated dessert with candles, and I will tell you quietly, away from the table.";
+const t4d =
+  "Congratulations to you both! On behalf of the whole team, may you have many happy years together.";
 
 const lesson4 = L(
   39,
@@ -606,12 +654,14 @@ const lesson4 = L(
         sp(
           "And the cake? We have not given you the signal yet.",
           t4b,
-          "Chủ tiệc giữ khoảnh khắc, nhà hàng lo phần thực hiện: bánh chờ khuất tầm mắt tới khi có 'signal'.",
+          "Chủ tiệc giữ khoảnh khắc ('The timing is yours'), nhà hàng lo phần thực hiện: bánh chờ khuất tầm mắt tới khi có 'signal'.",
           undefined,
           undefined,
           t4a,
         ),
-        ["It waits out of sight until your signal, madam. Just catch my eye when you are ready."],
+        [
+          "It waits out of sight until your signal, madam. The timing is yours — just catch my eye when you are ready.",
+        ],
       ),
       also(
         sp(
@@ -628,8 +678,10 @@ const lesson4 = L(
       ),
       sp(
         "Last orders already? We would like one more round of drinks.",
-        "The kitchen has closed, sir, but drinks are still served. Would you like a nightcap while you finish?",
-        "Bếp đóng nhưng buổi tối chưa hết: mời một ly cuối bằng câu hỏi. Chỉ mời khi bàn còn tỉnh táo — bàn quá chén thì nước và đồ ăn.",
+        "The kitchen will wind down soon, sir, but drinks are still served. Would you like a nightcap while you finish?",
+        "Bếp sắp nghỉ ('wind down') nhưng buổi tối chưa hết: mời một ly cuối bằng câu hỏi. Chỉ mời khi bàn còn tỉnh táo — bàn quá chén thì nước và đồ ăn.",
+        undefined,
+        ["wind", "down", "nightcap"],
       ),
       sp(
         "Could you organise a cake for my wife's breakfast tomorrow?",
@@ -641,6 +693,26 @@ const lesson4 = L(
         "Charge the extra guests per head, and write all sixty-four on the event order before I go.",
         "Nói với đồng nghiệp: không sir/madam. Con số do đồng nghiệp nêu: tính theo đầu người, và ghi lên phiếu sự kiện trước khi hết ca.",
         "colleague",
+      ),
+      sp(
+        "We have just got engaged — right here at your table!",
+        t4d,
+        "Lời chúc trang trọng theo khung 'On behalf of' cả đội — một câu là đủ. Nói xong thì lùi lại: khoảnh khắc là của khách.",
+        undefined,
+        ["congratulations", "behalf", "team"],
+      ),
+      also(
+        sp(
+          "Thank you! Could we have two glasses of champagne to celebrate?",
+          "With pleasure, sir. I will bring them now, and then step back so you can raise a glass together.",
+          "Phục vụ rồi lùi lại ('step back'): lúc nâng ly ('raise a glass') là của hai vị khách, không phải của nhân viên.",
+          undefined,
+          ["step", "back", "raise", "glass"],
+          t4d,
+        ),
+        [
+          "With pleasure, sir. I will bring them now, then step back so you can raise a glass together.",
+        ],
       ),
     ],
     reading: read(

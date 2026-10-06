@@ -295,6 +295,9 @@ const lesson2 = L(32, 2, "Reading the Table", "Đọc bàn khách", {
         [
           "I am sorry, sir, but I cannot talk about other guests. How may I help you tonight?",
           "I am afraid I cannot talk about other guests, sir. How may I help you tonight?",
+          "I am afraid I cannot share information about other guests, sir. How can I help you tonight?",
+          "I am sorry, sir, I cannot discuss other guests. How may I help you tonight?",
+          "I am sorry, sir, I cannot talk about other guests. How can I help you this evening?",
         ],
       ),
     ),
@@ -473,6 +476,8 @@ const lesson3 = L(
           [
             "I am not able to change the price, sir. May I check with my manager, or show you a half bottle?",
             "I cannot change the price, sir. May I show you a half bottle, or check with my manager?",
+            "I cannot change the price, sir, but I can ask my manager, or show you a half bottle.",
+            "I am sorry, sir, I cannot lower the price. May I check with my manager, or show you a half bottle?",
           ],
         ),
       ),
@@ -548,9 +553,10 @@ const t4a =
 const t4b = "Not at all, sir. It is braised with pepper and fish sauce, so it is rich, not hot.";
 const t4c = "Since you are not very hungry, sir, one clay pot to share would be enough.";
 const t4d = "With pleasure, sir. Does anyone at the table have an allergy?";
-const t4e = "Then how adventurous shall I go, sir — something local and bold, or something gentle?";
+const t4e =
+  "Then how adventurous are you feeling, sir — something local and bold, or something gentle?";
 const t4f =
-  "Wonderful, sir. I will tell the chef this is a “surprise me” table, and he will choose with me.";
+  'Wonderful, sir. I will tell the chef this is a "surprise me" table, and he will choose with me.';
 
 const lesson4 = L(32, 4, "When the Guest Says: You Choose", "Khi khách nói: bạn chọn giúp tôi", {
   vocabulary: [
@@ -631,6 +637,8 @@ const lesson4 = L(32, 4, "When the Guest Says: You Choose", "Khi khách nói: b�
         [
           "Of course, sir. Does anyone at the table have an allergy?",
           "With pleasure. Does anyone at the table have an allergy, sir?",
+          "With pleasure, sir. Does anyone at the table have any allergies?",
+          "With pleasure, sir. Is anyone at the table allergic to anything?",
         ],
       ),
     ),
@@ -652,14 +660,14 @@ const lesson4 = L(32, 4, "When the Guest Says: You Choose", "Khi khách nói: b�
         t4e,
       ),
       [
-        "Wonderful, sir. I will tell the chef this is a “surprise me” table, and we will choose together.",
+        'Wonderful, sir. I will tell the chef this is a "surprise me" table, and we will choose together.',
       ],
     ),
   ],
   reading: read(
     `'SURPRISE ME' — A PRIVILEGE WITH RULES
 A guest who hands you the menu is giving you trust, not their wallet.
-Ask two things before anything moves. First: does anyone at the table have an allergy, or anything they do not eat? Second: how adventurous should you go? One cautious eater changes the whole order.
+Ask two things before anything moves. First: does anyone at the table have an allergy, or anything they do not eat? Second: how adventurous is the table feeling tonight? One cautious eater changes the whole order.
 Choose from the middle of the menu. A guest who trusts you with the choice is not asking you to spend their money. A guest who wants the most expensive dish orders it without help.
 Give a personal favourite only if it is true. "My personal favourite is the fish in a clay pot" works because you really eat it on your day off.
 Name each dish as it arrives. A surprise the guest cannot name later is a story they cannot retell.
@@ -675,7 +683,7 @@ Finally, tell the kitchen it is a "surprise me" table. The chef may want to send
         ],
         correct: 1,
         explanation:
-          "'does anyone at the table have an allergy… how adventurous should you go?' Câu hỏi dị ứng luôn đứng đầu.",
+          "'does anyone at the table have an allergy… how adventurous is the table feeling tonight?' Câu hỏi dị ứng luôn đứng đầu.",
       },
       {
         q: "Vì sao nên chọn món ở tầm giữa của thực đơn?",

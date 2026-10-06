@@ -356,7 +356,7 @@ const t3a =
 const t3b =
   "Thank you for telling me, madam. They contain shellfish, so I would not recommend them for you.";
 const t3c =
-  "I will write your allergy for the kitchen, madam, and the chef will check the vegetarian roll before you order.";
+  "I will write down your allergy for the kitchen, madam, and the chef will check the vegetarian roll before you order.";
 
 const lesson3 = L(
   31,
@@ -395,9 +395,9 @@ const lesson3 = L(
       ),
       g(
         "No problem, it is safe for you.",
-        "I will write your allergy for the kitchen, and the chef will confirm each dish.",
-        "Không bao giờ tự hứa 'safe'. Nói hai việc thật: bạn ghi giấy cho bếp, bếp trưởng xác nhận. Sau 'will' là động từ nguyên mẫu: will confirm.",
-        "I will write your allergy for the kitchen, and the chef will confirms each dish.",
+        "I will write down your allergy for the kitchen, and the chef will confirm each dish.",
+        "Không bao giờ tự hứa 'safe'. Nói hai việc thật: bạn ghi giấy cho bếp ('write down'), bếp trưởng xác nhận. Sau 'will' là động từ nguyên mẫu: will confirm.",
+        "I will write down your allergy for the kitchen, and the chef will confirms each dish.",
       ),
     ],
     speaking: [
@@ -419,6 +419,8 @@ const lesson3 = L(
           [
             "Thank you for telling me, madam. They contain shellfish, so I would not recommend them.",
             "Thank you for telling me. They contain shellfish, madam, so I would not recommend them for you.",
+            "Thank you for telling me, madam. They have shellfish in them, so I would not recommend them for you.",
+            "Thank you for telling me, madam. They contain shellfish, so I do not recommend them for you.",
           ],
         ),
       ),
@@ -427,14 +429,16 @@ const lesson3 = L(
           sp(
             "Then what can I have? Is the vegetarian roll all right for me?",
             t3c,
-            "Không tự nói món nào ăn được. Hai việc: ghi dị ứng cho bếp ('write your allergy for the kitchen'), và bếp trưởng kiểm tra món trước khi khách gọi.",
+            "Không tự nói món nào ăn được. Hai việc: ghi dị ứng lại cho bếp ('write down your allergy for the kitchen'), và bếp trưởng kiểm tra món trước khi khách gọi.",
             undefined,
             ["allergy", "kitchen", "chef", "vegetarian"],
             t3b,
           ),
           [
-            "The chef will check the vegetarian roll before you order, madam, and I will write your allergy for the kitchen.",
-            "I will write your allergy for the kitchen, and the chef will check the vegetarian roll before you order.",
+            "The chef will check the vegetarian roll before you order, madam, and I will write down your allergy for the kitchen.",
+            "I will write down your allergy for the kitchen, and the chef will check the vegetarian roll before you order.",
+            "I will note your allergy for the kitchen, madam, and the chef will check the vegetarian roll before you order.",
+            "I will tell the kitchen about your allergy, madam, and the chef will check the vegetarian roll before you order.",
           ],
         ),
       ),
@@ -464,6 +468,22 @@ const lesson3 = L(
           [
             "Please do not guess. Check with the kitchen — the salad comes with crushed peanuts.",
             "Do not guess. The salad comes with crushed peanuts, so check with the kitchen.",
+            "Please do not guess. The salad has crushed peanuts, so check with the kitchen.",
+          ],
+        ),
+      ),
+      risk(
+        also(
+          sp(
+            "I have a nut allergy, but only a mild one. Can the chef just leave the peanuts off the salad?",
+            "Thank you for telling me, sir. Our kitchen handles nuts, so I will ask the chef before I promise anything.",
+            "Dị ứng nhẹ vẫn là dị ứng. Cảm ơn khách, nói thật nguy cơ lây chéo — bếp có dùng các loại hạt — rồi đưa câu hỏi về bếp trưởng. Bỏ đậu phộng ra khỏi đĩa chưa đủ, và sảnh không tự hứa.",
+          ),
+          [
+            "Thank you for telling me, sir. Our kitchen handles nuts, so I will ask the chef before you order.",
+            "Thank you for telling me, sir. Our kitchen uses nuts, so I will ask the chef before I promise anything.",
+            "Thank you for telling me, sir. Our kitchen handles nuts, so I will check with the chef before I promise anything.",
+            "Thank you for telling me, sir. Our kitchen handles nuts, so I will ask the chef first.",
           ],
         ),
       ),

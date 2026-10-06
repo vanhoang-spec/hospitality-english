@@ -311,6 +311,7 @@ const lesson2 = L(37, 2, "The Guaranteed Number", "Số khách đảm bảo", {
         [
           "The guaranteed number stays at sixty, madam. However, I can ask my manager about it on your behalf.",
           "The guaranteed number is still sixty, madam. However, I can ask my manager on your behalf.",
+          "The guaranteed number stays at sixty, madam. However, I can speak to my manager on your behalf.",
         ],
       ),
     ),
@@ -396,7 +397,7 @@ const t3a = "No, madam. With two months to go, the deposit is refunded in full."
 const t3b =
   "We need written notice, madam — an email is fine — and I will confirm the day we received it.";
 const t3c =
-  "Fourteen days is the latest, madam. The refund may reach your card sooner, but never later.";
+  "We process the refund in fourteen days at the latest, madam; your bank may take a few more days.";
 const t3d =
   "I am sorry, madam. With two weeks to go, the deposit is non-refundable, but what if we move the date?";
 const t3e = "My manager decides that, madam. I will ask her today and confirm in writing.";
@@ -464,13 +465,15 @@ const lesson3 = L(37, 3, "If the Party Is Cancelled", "Khi bữa tiệc bị hu�
       sp(
         "Your email says refunds take up to fourteen days. Is that the earliest or the latest?",
         t3c,
-        "Luật hoàn tiền thẻ: luôn nói mốc CHẬM NHẤT. Con số do khách đọc nên được nhắc lại; tiền có thể về sớm hơn, không bao giờ muộn hơn.",
+        "Luật hoàn tiền thẻ: nói mốc CHẬM NHẤT của khách sạn ('fourteen days at the latest'), và nói thật phần của ngân hàng — không hứa ngày tiền về tới thẻ. Con số do khách đọc nên được nhắc lại.",
         undefined,
         undefined,
         t3b,
       ),
       [
-        "Fourteen days is the latest, madam. The refund may reach your card earlier, but never later.",
+        "We process the refund in fourteen days at the latest, madam, but your bank may take a few more days.",
+        "We send the refund in fourteen days at the latest, madam; your bank may take a few more days.",
+        "Fourteen days at the latest from us, madam; your bank may take a few more days.",
       ],
     ),
     also(
@@ -496,6 +499,7 @@ const lesson3 = L(37, 3, "If the Party Is Cancelled", "Khi bữa tiệc bị hu�
         [
           "My manager decides that, madam. I will ask her today and confirm it in writing.",
           "That is for my manager to decide, madam. I will ask her today and confirm in writing.",
+          "That is my manager's decision, madam. I will ask her today and confirm in writing.",
         ],
       ),
     ),
@@ -511,7 +515,7 @@ const lesson3 = L(37, 3, "If the Party Is Cancelled", "Khi bữa tiệc bị hu�
 Plans change, and a good cancellation policy is written for the day they do.
 A cancellation needs written notice, and an email is enough. A phone call is welcome, but the date on the email is the date that counts. Reply the same day, so the host knows it arrived.
 More than thirty days before the event, the deposit is refunded in full. Within thirty days, the deposit is non-refundable, because the room has been held and the kitchen has started to plan.
-A refund goes back to the card that paid it. Always give the latest date, never the earliest: "fourteen days at the latest". A refund that arrives early is good news; one that arrives late is a complaint.
+A refund goes back to the card that paid it. Always give the latest date, never the earliest: "we process it in fourteen days at the latest". The bank may add a few days, so never promise the day the money reaches the card. A refund that arrives early is good news; one that arrives late is a complaint.
 A host close to the event often has a better choice than losing the deposit. What if they move the date instead? Whether the deposit can move with it is the manager's decision, so ask on the host's behalf.
 Never promise a refund the terms do not give. Sympathy is free; money is the manager's.`,
     [
@@ -535,7 +539,7 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
         ],
         correct: 0,
         explanation:
-          "'Always give the latest date, never the earliest… A refund that arrives early is good news; one that arrives late is a complaint.'",
+          "'Always give the latest date, never the earliest… The bank may add a few days, so never promise the day the money reaches the card.'",
       },
       {
         q: "Khách sắp tới ngày tiệc muốn huỷ thì nên gợi ý gì?",
@@ -561,10 +565,10 @@ Never promise a refund the terms do not give. Sympathy is free; money is the man
     ),
     round(
       "The Le family asked when their refund will arrive. What did you tell them?",
-      "Fourteen days at the latest, and I said it may come sooner.",
+      "Fourteen days at the latest from us, and I said their bank may take a few more.",
       "Tomorrow morning. I wanted them to feel better, so I promise the earliest date.",
       "Tomorrow morning. I wanted them to feel better, so I promised the earliest date.",
-      "'I promise' sai thì: việc đã làm dùng quá khứ 'promised'. Cả câu đó lẫn câu đúng tiếng Anh 'Tomorrow morning… I promised the earliest date' đều hứa mốc sớm nhất — tiền về muộn là khiếu nại mới. Đáp án nói mốc chậm nhất.",
+      "'I promise' sai thì: việc đã làm dùng quá khứ 'promised'. Cả câu đó lẫn câu đúng tiếng Anh 'Tomorrow morning… I promised the earliest date' đều hứa mốc sớm nhất — tiền về muộn là khiếu nại mới. Đáp án nói mốc chậm nhất của khách sạn và nói thật phần của ngân hàng.",
       2,
       "manager",
     ),
@@ -577,7 +581,7 @@ const t4a =
 const t4b =
   "At least that, madam. However, we can plan the menu and wine so it all goes on your table.";
 const t4c =
-  "You are welcome to, madam. Corkage is charged per bottle, and I will write it on the event order.";
+  "Our policy allows it, madam. Corkage is charged per bottle, and I will write it on the event order.";
 
 const lesson4 = L(
   37,
@@ -649,27 +653,29 @@ const lesson4 = L(
         sp(
           "We would like to bring our own wine. Is that part of the deal?",
           t4c,
-          "Nói CÓ trước, điều kiện sau: phí tính theo từng chai, và mọi thứ ghi lên 'event order' trước tối tiệc.",
+          "Nói CÓ trước bằng quyền lợi công khai ('Our policy allows it'), điều kiện sau: phí tính theo từng chai, và mọi thứ ghi lên 'event order' trước tối tiệc.",
           undefined,
-          undefined,
+          ["policy", "allows", "per", "bottle"],
           t4b,
         ),
         [
-          "You are welcome to, madam. Corkage is charged per bottle, and I will put it on the event order.",
+          "Our policy allows it, madam. Corkage is charged per bottle, and I will put it on the event order.",
+          "Our policy allows it, madam. Corkage is charged per bottle, and I will write it on the event order for you.",
         ],
       ),
       risk(
         also(
           sp(
             "Six of our guests eat halal. Can the kitchen do a halal menu for them?",
-            "Yes, sir. Please order the halal menu by the cut-off date, and the chef will confirm each dish in writing.",
-            "Không tự nói món nào đạt halal: khách đặt trước hạn chốt, bếp trưởng xác nhận TỪNG món bằng văn bản.",
+            "Please order the halal menu by the cut-off date, sir, and the chef will confirm each dish in writing.",
+            "Không mở bằng lời đồng ý, và không tự nói món nào đạt halal: khách đặt trước hạn chốt, bếp trưởng xác nhận TỪNG món bằng văn bản.",
             undefined,
             ["chef"],
           ),
           [
-            "Yes, sir. Please order the halal menu by the cut-off date, and the chef will confirm every dish in writing.",
-            "Of course, sir. Please order the halal menu by the cut-off date, and the chef will confirm each dish in writing.",
+            "Please order the halal menu by the cut-off date, sir, and the chef will confirm every dish in writing.",
+            "Please order the halal menu before the cut-off date, sir, and the chef will confirm each dish in writing.",
+            "The chef will confirm each dish in writing, sir, if you order the halal menu by the cut-off date.",
           ],
         ),
       ),
@@ -685,6 +691,8 @@ const lesson4 = L(
           [
             "The minimum spend is set by my manager, sir. Shall I ask her on your behalf?",
             "My manager sets the minimum spend, sir. May I ask her on your behalf?",
+            "The minimum spend is my manager's decision, sir. May I ask her on your behalf?",
+            "I cannot change the minimum spend, sir. May I ask my manager on your behalf?",
           ],
         ),
       ),

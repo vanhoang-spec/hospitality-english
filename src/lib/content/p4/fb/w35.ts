@@ -127,6 +127,8 @@ const lesson1 = L(35, 1, "Trade, Don't Drop", "Đổi, đừng bớt", {
         [
           "I am not able to change the price, sir. However, I can ask my manager on your behalf.",
           "I cannot change the price, sir. However, I can ask my manager about it on your behalf.",
+          "I cannot change the price, sir. However, I can speak to my manager on your behalf.",
+          "I cannot change the price, sir. May I ask my manager on your behalf?",
         ],
       ),
     ),
@@ -285,16 +287,20 @@ const lesson2 = L(35, 2, "The Corkage Conversation", "Câu chuyện phí khui r�
         [
           "I am not able to waive it, madam, but I will ask my supervisor now, before the cork comes out.",
           "I cannot waive it, madam, but I will ask my supervisor before the cork comes out.",
+          "I cannot waive it, madam, but I will ask my supervisor now, before we open the bottle.",
+          "I am not able to waive it, madam, but I will ask my supervisor before we open the bottle.",
         ],
       ),
     ),
     also(
       sp(
         "Should we open our red now? It is quite old.",
-        "Shall we decant it first, sir? An older wine often needs a little air before the first glass.",
-        "Gợi ý bằng một câu hỏi với 'decant', rồi một lý do ngắn. Không bình luận về chất lượng chai rượu của khách.",
+        "Shall we decant it first, sir? An older full-bodied red often needs a little air before the first glass.",
+        "Gợi ý bằng một câu hỏi với 'decant', rồi một lý do ngắn: vang đỏ đậm ('full-bodied') để lâu cần thở. Không bình luận về chất lượng chai rượu của khách.",
       ),
-      ["Shall we decant it first, sir? An older wine often needs some air before the first glass."],
+      [
+        "Shall we decant it first, sir? An older full-bodied red often needs some air before the first glass.",
+      ],
     ),
     sp(
       "We have three bottles with us. How much is corkage for all of them?",
@@ -382,7 +388,7 @@ const lesson3 = L(
   {
     vocabulary: [
       c("Wind down", "The kitchen starts to wind down after ten.", [
-        "/waɪnd daʊn/",
+        "/ˌwaɪnd ˈdaʊn/",
         "Thu dần về cuối buổi",
         "🌙",
       ]),
@@ -397,7 +403,7 @@ const lesson3 = L(
         "🍸",
       ]),
       c("Carry on", "The evening can carry on at the bar after the dining room closes.", [
-        "/ˈkæri ɒn/",
+        "/ˌkæri ˈɒn/",
         "Tiếp tục",
         "➡️",
       ]),
@@ -461,8 +467,10 @@ const lesson3 = L(
       ),
       sp(
         "Are you trying to get rid of us? The waiters keep circling our table.",
-        "Not at all, madam. Please linger as long as you like. May I bring more coffee while you talk?",
-        "Trấn an ngay ('Not at all'), mời khách 'linger', rồi một việc phục vụ cụ thể. Không giải thích chuyện dọn phòng.",
+        "Not at all, madam. Please linger as long as you like. May I bring you an egg coffee while you talk?",
+        "Trấn an ngay ('Not at all'), mời khách 'linger', rồi một việc phục vụ cụ thể — mời một ly 'egg coffee'. Không giải thích chuyện dọn phòng.",
+        undefined,
+        ["linger", "egg", "coffee"],
       ),
       sp(
         "Table nine is still here, and breakfast set-up starts soon.",
@@ -540,7 +548,7 @@ If one table really blocks tomorrow's set-up, the supervisor decides and the sup
 const t4a =
   "Your loyalty is worth more than that to us, sir. A discount is my manager's decision, so I will ask her on your behalf.";
 const t4b =
-  "Tonight you have your usual table, sir, and I will ask the chef to say hello — a small gesture of thanks.";
+  "Your usual order is coming now, sir, and I will ask the chef to say hello — a small gesture of thanks.";
 const t4c = "I will give her your request tonight, sir, and ask her to come back to you tomorrow.";
 
 const lesson4 = L(
@@ -606,9 +614,9 @@ const lesson4 = L(
       sp(
         "And until then? Nothing for a regular?",
         t4b,
-        "Đáp ơn bằng điều sảnh tự làm được: bàn quen, lời chào của bếp — một 'gesture' nhỏ. Không thêm món miễn phí.",
+        "Đáp ơn bằng điều sảnh tự làm được: món quen ('usual order') mang ra ngay, lời chào của bếp — một 'gesture' nhỏ. Không thêm món miễn phí.",
         undefined,
-        undefined,
+        ["usual", "order", "gesture"],
         t4a,
       ),
       also(
@@ -634,6 +642,8 @@ const lesson4 = L(
           [
             "A drink on the house needs approval from my manager, sir. May I ask her for you?",
             "A drink on the house needs approval from my manager, sir, so shall I ask her for you?",
+            "A drink on the house needs my manager's approval, sir, so may I ask her for you?",
+            "A drink on the house needs my manager's approval, sir. May I ask her for you?",
           ],
         ),
       ),

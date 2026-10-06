@@ -127,12 +127,15 @@ const lesson1 = L(34, 1, "Taking the Occasion Brief", "Nhận đặt chỗ cho m
         [
           "Seventy is a wonderful milestone, madam. Does anyone at the table have an allergy?",
           "Seventy is a lovely milestone, madam. Does anyone at the table have an allergy I should know about?",
+          "Seventy is a lovely milestone, madam. Does anyone at the table have any allergies?",
+          "Seventy is a real milestone, madam. Does anyone at the table have an allergy?",
+          "What a lovely milestone, madam. Does anyone at the table have an allergy?",
         ],
       ),
     ),
     sp(
       "When should the cake come out? I have no idea.",
-      "The timing is yours, madam. Many guests like it after the main course, when the table is relaxed.",
+      "The timing is yours, madam. Many guests like it once the main course is cleared.",
       "'The timing is yours' — chủ tiệc quyết thời điểm, nhà hàng lo phần thực hiện. Gợi ý một lựa chọn, không quyết thay.",
     ),
     sp(
@@ -230,7 +233,7 @@ const lesson2 = L(34, 2, "Working With Other Departments", "Phối hợp với c
       "🛏️",
     ]),
     c("Come back to you", "I will ask the florist and come back to you within the hour.", [
-      "/kʌm bæk tə juː/",
+      "/ˌkʌm ˈbæk tə juː/",
       "Quay lại báo cho khách, kèm một mốc thời gian",
       "↪️",
     ]),
@@ -273,6 +276,9 @@ const lesson2 = L(34, 2, "Working With Other Departments", "Phối hợp với c
         [
           "Housekeeping sets that time, madam, so I will ask them now and confirm it with you during dinner.",
           "Housekeeping sets the time, madam, so I will ask them now and confirm it with you at dinner.",
+          "Housekeeping decides that time, madam, so I will ask them now and confirm it with you at dinner.",
+          "That time is set by Housekeeping, madam, so I will ask them now and confirm it with you at dinner.",
+          "Housekeeping sets that time, madam. I will ask them now and come back to you at dinner.",
         ],
       ),
     ),
@@ -397,7 +403,7 @@ const lesson3 = L(34, 3, "Words for the Moment", "Lời chúc đúng khoảnh kh
       "🥂",
     ]),
     c("Step back", "Serve the champagne, then step back from the table.", [
-      "/step bæk/",
+      "/ˌstep ˈbæk/",
       "Lùi lại — nhường khoảnh khắc cho khách",
       "👣",
     ]),
@@ -480,6 +486,9 @@ const lesson3 = L(34, 3, "Words for the Moment", "Lời chúc đúng khoảnh kh
         [
           "A bottle on the house needs approval from my supervisor, madam. May I ask her now?",
           "A bottle on the house needs approval from my supervisor, madam. Shall I ask her for you?",
+          "A bottle on the house needs my supervisor's approval, madam. May I ask her for you?",
+          "A bottle on the house needs my supervisor's approval, madam. Shall I ask her for you?",
+          "A bottle on the house needs my supervisor's approval, madam, so may I ask her now?",
         ],
       ),
     ),
@@ -570,7 +579,7 @@ const lesson4 = L(34, 4, "The Cake, the Signal and Plan B", "Chiếc bánh, tín
       "🙈",
     ]),
     c("Pass it on", "Going off shift? Pass it on to one named colleague.", [
-      "/pɑːs ɪt ɒn/",
+      "/ˌpɑːs ɪt ˈɒn/",
       "Bàn giao lại cho đúng một người kế tiếp",
       "📨",
     ]),

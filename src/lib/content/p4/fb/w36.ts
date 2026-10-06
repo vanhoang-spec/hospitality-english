@@ -126,6 +126,8 @@ const lesson1 = L(36, 1, "The Guest Who Cannot Breathe", "Vị khách bị hóc 
         [
           "My colleague is calling 115 now, madam, and my manager is coming.",
           "My colleague is calling 115 now, madam, and the manager on duty is on the way.",
+          "My colleague is calling an ambulance now, madam, and my manager is on the way.",
+          "No need, madam — my colleague is calling 115 now, and my manager is on the way.",
         ],
       ),
     ),
@@ -288,6 +290,8 @@ const lesson2 = L(36, 2, "The Allergy That Gets Through", "Ca dị ứng lọt q
         [
           "Does she carry her medication, sir? Please help her use it. My colleague is calling 115 now.",
           "Does she have her medication with her, sir? Please help her take it. My colleague is calling 115 now.",
+          "Does she carry medication, sir? Please help her take it. My colleague is calling 115 now.",
+          "Please help her use her own medication, sir, if she has it. My colleague is calling 115 now.",
         ],
       ),
     ),
@@ -317,13 +321,15 @@ const lesson2 = L(36, 2, "The Allergy That Gets Through", "Ca dị ứng lọt q
         [
           "No — keep the plate, the docket and the sauce together. The doctor may need all three.",
           "Please keep the plate, the docket and the sauce. The doctor may need all three.",
+          "No — keep the plate, the docket and the sauce. The doctor may need them.",
+          "Do not clear it — keep the plate, the docket and the sauce. The doctor may need all three.",
         ],
       ),
     ),
     sp(
       "Table two has just ordered the same satay. Shall I send it out?",
-      "Stop the service of the satay until the chef clears it.",
-      "Một mệnh lệnh, một điều kiện: 'stop the service' cho tới khi bếp trưởng cho phép. Sau 'until' dùng hiện tại đơn: clears.",
+      "Stop the service of the satay until the chef clears it — a guest is having a reaction.",
+      "Một mệnh lệnh, một điều kiện, một lý do: 'stop the service' cho tới khi bếp trưởng cho phép, vì có khách đang bị phản ứng ('reaction'). Sau 'until' dùng hiện tại đơn: clears.",
       "colleague",
     ),
     sp(
@@ -475,6 +481,8 @@ const lesson3 = L(36, 3, "When the Whole Room Must Move", "Khi cả phòng ăn p
         [
           "Not the lift, sir. We take the stairs, and I will walk with you.",
           "Not the lift, sir. We use the stairs, and I will walk with you both.",
+          "Not the lift, sir. We will take the stairs, and I will walk with you both.",
+          "We cannot use the lift, sir. We take the stairs, and I will walk with you both.",
         ],
       ),
     ),
@@ -490,6 +498,7 @@ const lesson3 = L(36, 3, "When the Whole Room Must Move", "Khi cả phòng ăn p
         [
           "My colleague will wait with you by the door, madam, and the firefighters will know where you are.",
           "My colleague will stay with you by the door, madam. The firefighters will know where you are.",
+          "My colleague will wait with you by the door, madam, and we will tell the firefighters where you are.",
         ],
       ),
     ),
@@ -533,15 +542,15 @@ At the assembly point, count your own tables and tell your manager who is there.
 A storm or a power cut is smaller, but the shape does not change. "Please come inside with me now. Your new table will be ready in two minutes."`,
     [
       {
-        q: "Mọi hướng dẫn khẩn trong bài có chung hình dạng nào?",
+        q: "Đang sơ tán, khách muốn quay lại bàn lấy túi thì sao?",
         options: [
-          "Một lời xin lỗi kèm một lời giải thích lý do",
-          "Một việc cần làm và một mốc giờ",
-          "Một mệnh lệnh nói thật to cho cả phòng nghe",
+          "Được quay lại nếu đi thật nhanh và có nhân viên đi cùng",
+          "Không ai vào lại cho tới khi đội cứu hoả cho phép",
+          "Nhân viên quay lại lấy giúp sau khi khách đã ra ngoài",
         ],
         correct: 1,
         explanation:
-          "'Every instruction has the same shape: one thing to do, and one time.' Cả chuông báo cháy, bão và mất điện đều theo khung này.",
+          "'Nobody goes back in for a bag or a phone until the fire team says so.' Kể cả nhân viên cũng không quay lại lấy đồ giúp khách.",
       },
       {
         q: "Khách không đi cầu thang được thì xử lý thế nào?",
@@ -681,6 +690,8 @@ const lesson4 = L(36, 4, "One Too Many", "Khi khách đã quá chén", {
         [
           "May I call you a taxi instead, sir? We want you to get home safely.",
           "May I book a taxi for you instead, sir? We want you to get home safely.",
+          "May I call you a taxi, sir? We want you to get home safely.",
+          "We want you to get home safely, sir. May I call a taxi for you instead?",
         ],
       ),
     ),

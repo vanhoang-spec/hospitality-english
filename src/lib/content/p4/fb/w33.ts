@@ -58,7 +58,7 @@ const t1c =
 const lesson1 = L(33, 1, "The Dish That Comes Back", "Món ăn bị trả về", {
   vocabulary: [
     c("Send back", "A guest may send back any dish that is not right.", [
-      "/send bæk/",
+      "/ˌsend ˈbæk/",
       "Trả món về bếp",
       "↩️",
     ]),
@@ -145,6 +145,21 @@ const lesson1 = L(33, 1, "The Dish That Comes Back", "Món ăn bị trả về",
       [
         "I am sorry, madam. I will send back the soup and bring you a hot one, or something else if you prefer.",
       ],
+    ),
+    risk(
+      also(
+        sp(
+          "The young waiter at the door was very rude to my wife. I want him punished.",
+          "I am so sorry, sir, and thank you for telling me. My supervisor will come and hear everything from you.",
+          "Khiếu nại về một đồng nghiệp: xin lỗi, cảm ơn khách đã nói, rồi đưa người có quyền tới. Không bênh đồng nghiệp, không hứa kỷ luật ai — đó là việc của cấp trên.",
+        ),
+        [
+          "Thank you for telling me, sir, and I am so sorry. My supervisor will come and hear everything from you.",
+          "I am so sorry, sir, and thank you for telling me. My supervisor will come and listen to you now.",
+          "I am very sorry, sir. Thank you for telling me — my supervisor will come and hear everything from you.",
+          "I am sorry, sir, and thank you for telling me. My supervisor will come and talk to you now.",
+        ],
+      ),
     ),
   ],
   reading: read(
@@ -233,7 +248,7 @@ const lesson2 = L(33, 2, "What the Floor Can Put Right", "Quyền của người
       "✅",
     ]),
     c("Put right", "Tell me what happened, and we will put it right.", [
-      "/pʊt raɪt/",
+      "/ˌpʊt ˈraɪt/",
       "Sửa cho đúng, khắc phục",
       "🔧",
     ]),
@@ -275,6 +290,9 @@ const lesson2 = L(33, 2, "What the Floor Can Put Right", "Quyền của người
         [
           "The bill needs approval from my supervisor, sir. Let me check with her now.",
           "Let me check with my supervisor now, sir — the bill needs her approval.",
+          "The bill needs my supervisor's approval, sir, so let me check with her now.",
+          "The bill needs my supervisor's approval, sir. Let me check with her now.",
+          "Taking it off the bill needs my supervisor's approval, sir, so let me check with her now.",
         ],
       ),
     ),
@@ -317,6 +335,20 @@ const lesson2 = L(33, 2, "What the Floor Can Put Right", "Quyền của người
       "Just bring me a free dessert and we will forget about it.",
       "I would love to help, madam. A dessert on the house needs my supervisor's approval, so may I ask her now?",
       "Món tặng là quyết định về tiền: nói nó cần 'approval', và xin phép đi hỏi. Không hứa trước khi được duyệt.",
+    ),
+    risk(
+      also(
+        sp(
+          "You have just spilled red wine on my jacket! Who is paying for the dry cleaning?",
+          "I am so sorry, sir. Paying for the cleaning needs approval from my manager, and she is coming to you now.",
+          "Đồ của khách bị hỏng: xin lỗi trước, rồi nói thật tiền giặt là cần 'approval' của quản lý — không phải giám sát, càng không phải bạn. Không tự hứa trả tiền giặt.",
+        ),
+        [
+          "I am so sorry, sir. Paying for the cleaning needs my manager's approval, and she is coming to you now.",
+          "I am so sorry, sir. That needs approval from my manager, and she is coming to you now.",
+          "I am so sorry, sir. Paying for the cleaning needs approval from the manager on duty, and he is coming now.",
+        ],
+      ),
     ),
   ],
   reading: read(
@@ -386,9 +418,9 @@ A promise above your tier, taken back later, becomes a second complaint, worse t
 
 // ── Lesson 3 — the bill at the end of the night ──────────────────────────────
 const t3a =
-  "Of course, madam. I will be discreet, and we can check the bill against the dockets line by line.";
+  "Of course, madam. I will be discreet, and we can check the bill against the order slips line by line.";
 const t3b =
-  "Let me check that docket now, madam. If the half bottle was charged in error, it comes off and I will reprint the bill.";
+  "Let me check that order slip now, madam. If the half bottle was charged in error, it comes off and I will reprint the bill.";
 const t3c = "It was charged in error, madam, and I am sorry. The new bill is printing now.";
 
 const lesson3 = L(33, 3, "The Bill at the End of the Night", "Hoá đơn cuối bữa", {
@@ -423,9 +455,9 @@ const lesson3 = L(33, 3, "The Bill at the End of the Night", "Hoá đơn cuối 
     ),
     g(
       "It says three beers here. You drank three beers.",
-      "Let me check it against the dockets, sir. If it is our error, it comes off at once.",
-      "Câu điều kiện 'If it is our error, it comes off' cam kết theo sự thật trên docket, không tranh cãi bằng trí nhớ. Chủ ngữ 'it' nên dùng 'comes'.",
-      "Let me check it against the dockets, sir. If it is our error, it come off at once.",
+      "Let me check it against the order slips, sir. If it is our error, it comes off at once.",
+      "Câu điều kiện 'If it is our error, it comes off' cam kết theo sự thật trên phiếu gọi món, không tranh cãi bằng trí nhớ. Với khách gọi là order slip; docket là từ nội bộ. Chủ ngữ 'it' nên dùng 'comes'.",
+      "Let me check it against the order slips, sir. If it is our error, it come off at once.",
     ),
   ],
   speaking: [
@@ -433,10 +465,10 @@ const lesson3 = L(33, 3, "The Bill at the End of the Night", "Hoá đơn cuối 
       sp(
         "This total cannot be right. We did not order all of this.",
         t3a,
-        "Hạ giọng và đứng sát khách — chuyện tiền phải 'discreet'. Rồi mời rà cùng nhau, đối chiếu với 'dockets', không đối chiếu với trí nhớ.",
+        "Hạ giọng và đứng sát khách — chuyện tiền phải 'discreet'. Rồi mời rà cùng nhau, đối chiếu với phiếu gọi món ('order slips'), không đối chiếu với trí nhớ. Với khách gọi là order slip; docket là từ trong nội bộ.",
       ),
       [
-        "Of course, madam. I will be discreet, and we can check the bill against the dockets, line by line.",
+        "Of course, madam. I will be discreet, and we can check the bill against the order slips, line by line.",
       ],
     ),
     sp(
@@ -461,11 +493,11 @@ const lesson3 = L(33, 3, "The Bill at the End of the Night", "Hoá đơn cuối 
     also(
       sp(
         "We never ordered that second bottle. I am sure of it.",
-        "May I show you the docket, sir? The second bottle is here, ordered after the main course.",
-        "Khi khoản phí đúng: cho khách xem docket thật nhẹ nhàng. Không có giọng thắng cuộc — mục tiêu là giữ khách, không phải đúng.",
+        "May I show you the order slip, sir? The second bottle is here, ordered after the main course.",
+        "Khi khoản phí đúng: cho khách xem phiếu gọi món ('order slip') thật nhẹ nhàng. Không có giọng thắng cuộc — mục tiêu là giữ khách, không phải đúng.",
       ),
       [
-        "May I show you the docket, sir? The second bottle is on it, ordered after the main course.",
+        "May I show you the order slip, sir? The second bottle is on it, ordered after the main course.",
       ],
     ),
     sp(
@@ -487,7 +519,7 @@ const lesson3 = L(33, 3, "The Bill at the End of the Night", "Hoá đơn cuối 
 Step close to the guest and lower your voice before any talk about the bill. A dispute across the room becomes every table's dinner story.
 Check against the dockets, not against memory, yours or the guest's. The docket shows what was ordered, for which seat, and when.
 If an item was charged in error, your supervisor signs the correction at once, and the bill is reprinted. The guest leaves with a clean bill, not a corrected one.
-If the charge is right, show the docket gently: "The second bottle is here, ordered after the main course." Keep any triumph out of your voice. Being right is not the goal; keeping the guest is.
+If the charge is right, show the order slip gently: "The second bottle is here, ordered after the main course." To a guest it is the order slip; "docket" is a kitchen word. Keep any triumph out of your voice. Being right is not the goal; keeping the guest is.
 Splitting the bill is service, not a favour. Any table may split by seat or by amount. Confirm card or cash for each part before you print, so nobody waits twice.
 Never guess, and never blame "the computer". A machine only prints what someone keyed in.`,
     [
@@ -597,6 +629,9 @@ const lesson4 = L(33, 4, "The Claim You Must Not Settle", "Khiếu nại bạn k
         [
           "I am very sorry he is unwell, madam. May I call a doctor for him now?",
           "I am so sorry he is unwell, madam. Shall I call a doctor for him now?",
+          "I am so sorry he is ill, madam. May I call a doctor for him now?",
+          "I am so sorry he is unwell, madam. Would you like me to call a doctor for him now?",
+          "I am so sorry, madam. Shall I call a doctor for him now?",
         ],
       ),
     ),
@@ -651,6 +686,22 @@ const lesson4 = L(33, 4, "The Claim You Must Not Settle", "Khiếu nại bạn k
         [
           "No offers on the floor. Write down what she ate, and call the Duty Manager now.",
           "No offers on the floor. Call the manager on duty now, and write down what she ate.",
+          "Do not offer anything on the floor. Write down what she ate, and call the manager on duty now.",
+        ],
+      ),
+    ),
+    risk(
+      also(
+        sp(
+          "There was a small stone in my rice, and I think I have cracked a tooth!",
+          "I am so sorry, madam. May I call a doctor for you, and keep the dish for my manager?",
+          "Có thể là thương tích: sức khoẻ trước — mời bác sĩ; giữ lại món ăn cho quản lý xem. Không nhận lỗi, không chối, không hứa bồi thường.",
+        ),
+        [
+          "I am so sorry, madam. Shall I call a doctor for you, and keep the dish for my manager?",
+          "I am so sorry, madam. May I call a doctor for you? I will keep the dish for my manager.",
+          "I am very sorry, madam. May I call a doctor for you, and keep the dish for the manager on duty?",
+          "I am so sorry, madam. Are you hurt? May I call a doctor for you, and keep the dish for my manager?",
         ],
       ),
     ),
