@@ -89,7 +89,10 @@ nói là các tình huống ca làm việc thật trộn mọi chức năng. **K
 
 - **Y tế / thương tích**: dừng việc → gọi sơ cứu/y tá/115 → ở lại với khách → báo quản lý. Không
   bao giờ nói "Nobody has been hurt", "There is no danger", "Please stay calm", "he is in good
-  hands". Trấn an bằng **một việc + một mốc giờ** ("The nurse is coming — two minutes.").
+  hands". Trấn an bằng **một việc + một mốc giờ** ("Our first aider is coming — two minutes.")
+  khi mốc đó là của người trong ca vừa được gọi; giờ của y tá, xe cấp cứu hay kỹ thuật thì không
+  hứa bằng con số — "The nurse is on her way" (vòng 2: HM-SW bắt "will be here in two minutes"
+  ở sáu lượt Spa, trái canDo "không hứa giờ thay bộ phận khác"; Spa đã đổi).
   Thương tích không bàn bồi thường tại chỗ, không nhận lỗi.
 - **Cháy / sơ tán**: cầu thang, không thang máy; không quay lại lấy đồ; không tắt/reset tủ báo
   cháy; điểm tập kết; người không đi được → báo số phòng cho đội cứu hoả, không tự hứa an toàn.

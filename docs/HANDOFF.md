@@ -67,7 +67,12 @@ Theo thứ tự yêu cầu gần nhất:
    26–39% được nói lại ở tuần sau (P3: ~100%) — đo bằng `resaid.ts --phase 4`; (4) lịch ôn tuần
    37–39 rơi vào từ A1 — đã sửa; (5) ghi chú ngữ pháp tự sinh gắn nhãn sai — đã sửa; (6) bài
    viết tuần 33 chấm bằng từ khoá cho qua bản nháp nguy hiểm — đã chặn; (7) bài thi tuần 40
-   mở lần đầu mất 7,6 giây — còn 0,17 giây.
+   mở lần đầu mất 7,6 giây — còn 0,17 giây. Rồi mỗi bộ phận một agent sửa lượt nói: từ P4 được
+   nói lại FO 69% · FB 64% · HK 77% · SW 75% · GR 63%; alsoAccept ở lượt risk gấp đôi; blocker
+   GR (người không tỉnh hẳn thì gọi 115) và SW (115 khi ngất trong sauna, không hứa giờ y tá)
+   đã sửa. Bộ hồi quy từ script của 10 auditor: câu sai lọt 0 ở mọi ô; câu đúng được nhận tăng
+   (HM-SW bị trượt 17/25 → 1/25, HM-HK nhận 28/79 → 64/79, AC-SW 42/111 → 82/111). Vòng 3 chấm
+   trên bản đóng băng sau commit này, brief `docs/audit/brief-p4-r3.md` (y hệt r2).
 
 ---
 

@@ -2850,6 +2850,10 @@ const MEANING_CHANGERS = new Set<string>([
   "yes",
   "if",
   "unless",
+  // "…and SOMEONE will call you" for "…and he will call you": the handover
+  // the week-39 rule forbids word for word ("Never say someone will call
+  // you"), and it passed as a pronoun traded for a pronoun.
+  "someone",
 ]);
 const DETERMINERS = new Set<string>([
   "a",

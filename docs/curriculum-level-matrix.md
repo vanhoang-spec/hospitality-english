@@ -110,6 +110,10 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 | Speaking items / tuần          | 4 (chunk nhắc lại)    | 4              | 4–6              | 6                  | 6–8               |
 | Dạng speaking                  | nghe–nhắc lại chunk   | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở      |
 
+"Speaking items / tuần" là **sàn mỗi BÀI** (mỗi tuần 4 bài), không phải trần của cả tuần: P3 viết
+7–13 lượt/bài, P4 6–8 lượt/bài (24–32 lượt/tuần). Cả mười auditor vòng 2 của P4 phải tự đoán
+cách đọc dòng này.
+
 ### Thang chấm nói (từ 2026-08-01)
 
 `passThresholds()` trong `speaking-score.ts`: **60% (P0–P1) → 65/70/75/80% trải đều P2 →
