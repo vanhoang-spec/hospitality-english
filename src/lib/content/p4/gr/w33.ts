@@ -42,7 +42,7 @@ const round = (
 // ── Lesson 1 — listen: four things ─────────────────────────────────────────
 const t1a =
   "I am sorry, madam. Please take me through it from the beginning, and I will write it all down.";
-const t1b = "Thank you, madam. May I ask who promised it, and when?";
+const t1b = "Thank you, madam. One question: who promised it, and when?";
 const t1c =
   "Thank you, madam. I have all four things in your own words — may I read them back to you?";
 
@@ -98,8 +98,8 @@ const lessons = [
       g(
         "I am sure there was a misunderstanding.",
         "What happened instead, sir? I will write it all down before I say anything.",
-        "Đừng gọi tên nguyên nhân khi chưa có dữ kiện. Hỏi vế THỰC TẾ, ghi lại, rồi mới nói. Khi 'what' là chủ ngữ của câu hỏi, không dùng trợ động từ: 'What happened?', không phải 'What did happen?'.",
-        "What did happen instead, sir? I will write it all down before I say anything.",
+        "Đừng gọi tên nguyên nhân khi chưa có dữ kiện. Hỏi vế THỰC TẾ, ghi lại, rồi mới nói. Khi 'what' là chủ ngữ của câu hỏi, động từ chia quá khứ ngay sau nó: 'What happened?'. Tiếng Việt không chia thì nên người Việt hay quên đuôi -ed: 'What happen?' là sai.",
+        "What happen instead, sir? I will write it all down before I say anything.",
       ),
     ],
     speaking: [
@@ -111,13 +111,16 @@ const lessons = [
         ),
         "I am sorry, madam. Please take me through it from the beginning. I will write it all down.",
       ),
-      sp(
-        "I was promised lounge access until ten, and it closed at eight.",
-        t1b,
-        "Khách vừa cho hai dữ kiện: hứa gì, và thực tế ra sao. Còn thiếu hai: AI hứa, và KHI NÀO. Hỏi đúng hai điều đó, không hỏi thêm.",
-        undefined,
-        undefined,
-        t1a,
+      also(
+        sp(
+          "I was promised lounge access until ten, and it closed at eight.",
+          t1b,
+          "Khách vừa cho hai dữ kiện: hứa gì, và thực tế ra sao. Còn thiếu hai: AI hứa, và KHI NÀO. Gói cả hai vào 'one question', không hỏi thêm.",
+          undefined,
+          ["question"],
+          t1a,
+        ),
+        "Thank you, madam. May I ask who promised it, and when?",
       ),
       sp(
         "The man at reception, on Tuesday when I checked in.",
@@ -292,13 +295,16 @@ When you have all four, read them back: "You were promised the lounge until ten,
         also(
           sp(
             "Your night man went through my bag. I want him out here now.",
-            "That is not mine to handle, sir. I am asking my Duty Manager to come to you now.",
-            "Một lời tố cáo nhân viên KHÔNG phải khiếu nại — bốn bước không áp dụng. Đừng gọi người bị nêu tên ra quầy, đừng cãi, đừng bào chữa. Nói 'not mine to handle', rồi mời Duty Manager tới.",
+            "I am sorry, sir, but that is not mine to handle. I am asking my Duty Manager to come to you now.",
+            "Một lời tố cáo nhân viên KHÔNG phải khiếu nại — bốn bước không áp dụng. Mở bằng 'I am sorry' để ghi nhận điều khách vừa nói, nhưng đừng gọi người bị nêu tên ra quầy, đừng cãi, đừng bào chữa. Nói 'not mine to handle', rồi mời Duty Manager tới.",
             undefined,
             ["duty", "manager"],
           ),
           "That is not mine to handle, sir. My Duty Manager is coming to you now.",
           "I am sorry, sir, that is not mine to handle. I am calling my Duty Manager to come to you now.",
+          "That is not mine to handle, sir. I am asking my Duty Manager to come to you now.",
+          "I am sorry, sir. I am asking my Duty Manager to come to you now.",
+          "I am sorry, sir. That is for my Duty Manager, and I am asking her to come to you now.",
         ),
       ),
       risk(
@@ -312,6 +318,7 @@ When you have all four, read them back: "You were promised the lounge until ten,
           ),
           "Are you hurt, madam? Do you need a doctor? I am calling my Duty Manager now.",
           "Are you hurt now, madam, and do you need a doctor? My Duty Manager is coming to you now.",
+          "Let me call the doctor on call first, madam. The bill is my Duty Manager's to decide.",
         ),
       ),
     ],
@@ -445,6 +452,8 @@ Some things that arrive at this desk are not complaints at all, and the four ste
           ),
           "I am not able to promise a figure, sir. Let me check with my Duty Manager, and I will come back to you this evening.",
           "I cannot promise a figure, sir. I will check with my Duty Manager and come back to you this evening.",
+          "I cannot promise an amount, sir. Let me check with my Duty Manager, and I will come back to you this evening.",
+          "I cannot promise a figure, sir. My Duty Manager decides the amount, and I will come back to you this evening.",
         ),
       ),
       sp(
@@ -463,6 +472,8 @@ Some things that arrive at this desk are not complaints at all, and the four ste
           ),
           "A dinner is my manager's to give, madam. Let me check with her, and I will come back within the hour.",
           "Let me check with my manager, madam. A dinner is my manager's to give. I will come back within the hour.",
+          "Let me check with my manager, madam. A dinner is my manager's decision, and I will come back within the hour.",
+          "Let me check with my manager, madam. Dinner is my manager's to give, and I will come back to you within the hour.",
         ),
       ),
       sp(

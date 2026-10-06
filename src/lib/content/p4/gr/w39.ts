@@ -11,8 +11,10 @@
 // fifteen minutes of a shift: it is written down and handed over by name,
 // and danger never waits for the clock. What changed:
 //  · the collapse is the medical week's script word for word — "Is he
-//    breathing?", not breathing or not sure: an ambulance; breathing: first
-//    aid and the Duty Manager — so the two weeks can no longer disagree;
+//    breathing?", not breathing, not waking up or not sure: an ambulance;
+//    breathing and awake: first aid and the Duty Manager — so the two weeks
+//    can no longer disagree (the fainted guest in the spa is awake, as in
+//    the medical week, so first aid is the right call there);
 //  · one page of reading per lesson (the old ones ran to 741 words and
 //    quoted week numbers), five to seven turns per lesson with a chain, and
 //    every game round explained;
@@ -56,7 +58,8 @@ const t2b = "I am asking, not promising, madam. I will come back to you within t
 const t2c = "What I can do meanwhile is keep you a quiet table in the lounge, madam.";
 
 // ── Lesson 3 — the promise you cannot find ─────────────────────────────────
-const t3a = "That is a promise I cannot find yet, sir. I would rather find out than guess.";
+const t3a =
+  "That is a promise I cannot find yet, sir, but somebody will know. I would rather find out than guess.";
 const t3b = "Who said it and when, sir? And was it written or spoken?";
 const t3c = "Thank you, sir. I am writing it all down, and the upgrade is my manager's to give.";
 
@@ -138,12 +141,14 @@ const lessons = [
           sp(
             "A lady says her husband has collapsed in his room, and three guests are waiting at my desk.",
             "Danger first: ask her if he is breathing. If he is not, or she is not sure, call an ambulance.",
-            "ĐỒNG NGHIỆP hỏi. Ba khách đang chờ không đổi được thứ tự: 'Danger first'. Rồi đúng kịch bản y tế đã học — một câu hỏi trước, không thở hoặc không chắc thì gọi xe cấp cứu. Còn thở thì sơ cứu và Duty Manager.",
+            "ĐỒNG NGHIỆP hỏi. Ba khách đang chờ không đổi được thứ tự: 'Danger first'. Rồi đúng kịch bản y tế đã học — một câu hỏi trước, không thở, không tỉnh hẳn hoặc không chắc thì gọi xe cấp cứu. Còn thở và đã tỉnh thì sơ cứu và Duty Manager.",
             "colleague",
             ["danger", "first", "ask", "breathing", "call", "ambulance"],
           ),
           "Danger first: ask her if he is breathing. If he is not, or if she is not sure, call an ambulance.",
           "Danger first. Ask her if he is breathing, and if he is not, or she is not sure, call an ambulance.",
+          "Danger first: ask her if he is breathing. If not, or if she is not sure, call an ambulance.",
+          "Danger first: ask her if he is breathing. If he is not, or if she is not sure, call 115.",
         ),
       ),
       risk(
@@ -157,14 +162,18 @@ const lessons = [
           ),
           "Thank you, sir. I am going to him now, and I am calling security on my way.",
           "Thank you for telling me, sir. I am going to him now, and calling security on the way.",
+          "Thank you, sir. I am calling security on the way, and I am going to him now.",
         ),
       ),
-      sp(
-        "There is a smell of burning on the fourth floor, and the phone is ringing. Which first?",
+      also(
+        sp(
+          "There is a smell of burning on the fourth floor, and the phone is ringing. Which first?",
+          "The burning: ask whereabouts on the floor, then security first and the Duty Manager after. The phone can wait.",
+          "ĐỒNG NGHIỆP hỏi. Mối nguy trong nhà đi trước mọi cuộc gọi: tầng đã có, nên hỏi chỗ nào trên tầng — 'whereabouts' — rồi bảo vệ trước, Duty Manager sau. Điện thoại chờ được; một hành lang có khói thì không.",
+          "colleague",
+          ["floor", "whereabouts", "security", "first", "duty", "manager", "wait"],
+        ),
         "The burning: which floor, then security first and the Duty Manager after. The phone can wait.",
-        "ĐỒNG NGHIỆP hỏi. Mối nguy trong nhà đi trước mọi cuộc gọi: hỏi tầng, rồi bảo vệ trước, Duty Manager sau. Điện thoại chờ được; một hành lang có khói thì không.",
-        "colleague",
-        ["floor", "security", "first", "duty", "manager", "wait"],
       ),
       sp(
         "The gentleman at the back is shouting. Shall I serve him first to calm him down?",
@@ -177,7 +186,7 @@ const lessons = [
     reading: read(
       `DANGER FIRST
 Some evenings three things arrive together: a guest with three requests, a telephone, and somebody shouting at the back. Here is the order.
-Anyone in danger comes first, and "first" means an action, not a place in the queue. A guest who has collapsed: ask if he is breathing, and if he is not, or nobody is sure, call an ambulance. A smell of burning: which floor, then security first and the Duty Manager after. A child alone by the pool: go to the child, and call security as you go. Then stay until somebody takes over.
+Anyone in danger comes first, and "first" means an action, not a place in the queue. A collapsed guest: ask if he is breathing; if he is not, will not wake up, or nobody is sure, call an ambulance. A smell of burning: which floor, then security first and the Duty Manager after. A child alone by the pool: go to the child, and call security as you go. Then stay until somebody takes over.
 After danger comes the person in front of you. Then the telephone, and after it the messages. A caller can be asked to hold, but a guest at the desk cannot be left standing unseen.
 Among everything else, the soonest hour goes first. A table at seven tonight comes before a tour tomorrow, even when the tour was mentioned first.
 Say the order out loud: "May I take them in order?" Name the one you are parking, and give it an hour: "I am coming back to that within the hour."
@@ -319,13 +328,14 @@ Never serve the loudest first. Do it once in a full lobby, and every guest learn
         also(
           sp(
             "The file says I am allergic to nuts. You do not need to tell the kitchen again.",
-            "Thank you, madam, but I am writing an allergy slip for the chef now, every time.",
+            "Thank you, madam, but I am writing an allergy slip for the chef, as I do every time.",
             "Dị ứng không phải sở thích: phiếu tới tay bếp trưởng MỖI LẦN, kể cả khi hồ sơ đã có và khách nói bếp đã biết. Đây là dòng duy nhất trong hồ sơ không ai được bỏ qua.",
             undefined,
             ["writing", "allergy", "slip", "chef", "time"],
           ),
           "Thank you, madam, but I am writing an allergy slip for the chef now, as I do every time.",
-          "Thank you, madam. I am still writing an allergy slip for the chef now, every time.",
+          "Thank you, madam, but I still write an allergy slip for the chef every time.",
+          "Thank you, madam. I am writing an allergy slip for the chef now, and I will come back to confirm.",
         ),
       ),
       sp(
@@ -443,12 +453,15 @@ One line on the file is never a preference: an allergy. It goes to the chef on a
       ),
     ],
     speaking: [
-      sp(
-        "We were promised a free upgrade when we booked. It was definitely said.",
-        t3a,
-        "Không chối, không xác nhận: 'a promise I cannot find' — chưa tìm thấy. Rồi câu đã học từ tuần kể chuyện: 'I would rather find out than guess'.",
-        undefined,
-        ["promise", "find", "rather", "out"],
+      also(
+        sp(
+          "We were promised a free upgrade when we booked. It was definitely said.",
+          t3a,
+          "Không chối, không xác nhận: 'a promise I cannot find' — chưa tìm thấy — 'but somebody will know'. Rồi câu đã học từ tuần kể chuyện: 'I would rather find out than guess'.",
+          undefined,
+          ["promise", "find", "rather", "out", "somebody"],
+        ),
+        "That is a promise I cannot find yet, sir. I would rather find out than guess.",
       ),
       also(
         sp(
@@ -480,6 +493,9 @@ One line on the file is never a preference: an allergy. It goes to the chef on a
           ),
           "An upgrade is my manager's to give, sir. Let me check with her, and I will come back within the hour.",
           "I am afraid an upgrade is my manager's to give, sir. Let me check with her within the hour.",
+          "An upgrade is my manager's decision, sir. Let me check with her within the hour.",
+          "An upgrade is my manager's to give, sir. Let me check with her and come back within the hour.",
+          "An upgrade is my manager's to give, sir. Let me check with her and get back to you within the hour.",
         ),
       ),
       sp(
@@ -647,11 +663,11 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
         t4b,
       ),
       sp(
-        "Duty Manager. Anything I should know before you go?",
-        "The lady in the lounge has stopped asking. What the guest expects next is a call tonight.",
-        "Báo lên cấp trên thì không cần sir. Bàn giao là kể việc CÒN MỞ, kèm điều khách đang chờ — và dòng 'stopped asking' là dòng quan trọng nhất: thôi hỏi không phải là hết bận tâm.",
+        "Duty Manager. Anything I should know about 1204 before you go?",
+        "Room 1204 has stopped asking about the postponed tour, and I am worried about that. What the guest expects next is a call within the hour.",
+        "Báo lên cấp trên thì không cần sir. Mỗi dòng bàn giao đủ bốn thứ: phòng (Room 1204), tình trạng ('stopped asking'), điều khách đang chờ ('What the guest expects next') và giờ ('within the hour'). Dòng 'stopped asking' quan trọng nhất: thôi hỏi không phải là hết bận tâm.",
         "manager",
-        ["lounge", "stopped", "asking", "expects", "next", "call"],
+        ["stopped", "asking", "expects", "next", "call"],
       ),
       sp(
         "It is quarter to six, and a guest wants a complaint opened. Shall I start it?",
@@ -670,9 +686,9 @@ And a guest who shouts at a colleague, or takes hold of one, is no longer a comp
       risk(
         also(
           sp(
-            "It is ten to six. A guest says her friend has fainted in the spa, but she is breathing. Shall I leave it for the next shift?",
+            "It is ten to six. A guest says her friend fainted in the spa; she is awake now, but very pale. Shall I leave it for the next shift?",
             "Danger does not wait for quarter to: call first aid and the Duty Manager now.",
-            "ĐỒNG NGHIỆP hỏi. Luật cuối ca không chạm tới nguy hiểm. Khách còn thở: đúng kịch bản y tế — sơ cứu và Duty Manager, ngay bây giờ, và ở lại với khách.",
+            "ĐỒNG NGHIỆP hỏi. Luật cuối ca không chạm tới nguy hiểm. Khách đã tỉnh và còn thở: đúng kịch bản y tế — sơ cứu và Duty Manager, ngay bây giờ, và ở lại với khách. (Không tỉnh hẳn, hay không chắc còn thở, thì gọi 115.)",
             "colleague",
             ["danger", "wait", "quarter", "call", "first", "aid", "duty", "manager"],
           ),

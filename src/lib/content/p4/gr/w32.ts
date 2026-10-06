@@ -43,7 +43,8 @@ const t1a =
   "May I ask one thing first, madam? Would you like something lively or something low-key?";
 const t1b =
   "Since you mentioned the long flight, I would take tea in the peaceful library, madam. Would that suit you?";
-const t1c = "Wonderful, madam. I will ask the lounge team to keep you a quiet table there.";
+const t1c =
+  "Wonderful, madam. I will ask the lounge team for a quiet table, and then leave you to it.";
 
 // ── Lesson 2 — what goes on the file ───────────────────────────────────────
 const t2a =
@@ -61,7 +62,7 @@ const t3c =
 // ── Lesson 4 — the empty file ──────────────────────────────────────────────
 const t4a = "As this is your first stay, madam, may I ask one question? Beach or town?";
 const t4b =
-  "Since you mentioned old buildings, madam, I would start with our own courtyard, and then the old quarter.";
+  "Since you mentioned old buildings, madam, I would start with our restored courtyard, and then the old quarter.";
 const t4c =
   "I would rather find out than guess, madam. Somebody will know, and I will have it by this evening.";
 
@@ -128,7 +129,7 @@ const lessons = [
       sp(
         "Yes, that would be perfect.",
         t1c,
-        "Khách đã chọn — giờ mới là việc của bạn: nhờ đúng tổ giữ chỗ. Bạn không hứa thay tổ lounge một giờ cụ thể.",
+        "Khách đã chọn — giờ mới là việc của bạn: nhờ đúng tổ giữ chỗ, rồi 'leave you to it' — để khách nghỉ. Bạn không hứa thay tổ lounge một giờ cụ thể.",
         undefined,
         undefined,
         t1b,
@@ -136,10 +137,11 @@ const lessons = [
       also(
         sp(
           "We love markets. Any ideas for tomorrow?",
-          "Since you mentioned markets, sir, I would go tomorrow morning, because it is market day.",
-          "Một dữ kiện khách đã cho, một gợi ý, một lý do — rồi dừng. Đừng liệt kê ba chỗ: khách hỏi ý của bạn, không xin một thực đơn.",
+          "Since you mentioned markets, sir, I would go tomorrow morning: it is market day, and guests find it fascinating.",
+          "Một dữ kiện khách đã cho, một gợi ý, một lý do — rồi dừng. Đừng liệt kê ba chỗ: khách hỏi ý của bạn, không xin một thực đơn. 'Fascinating' tả CHỢ (vật gây hứng thú) nên dùng đuôi -ing.",
         ),
-        "Since you mentioned markets, sir, I would go tomorrow morning. It is market day.",
+        "Since you mentioned markets, sir, I would go tomorrow morning. It is market day, and guests find it fascinating.",
+        "Since you mentioned markets, sir, I would go tomorrow morning, because it is market day.",
       ),
       sp(
         "The lady in 604 looks like she would enjoy the spa. Shall I offer it?",
@@ -149,11 +151,12 @@ const lessons = [
       ),
       also(
         sp(
-          "Could you plan the whole day for us? Something special.",
-          "Of course, madam. Based on what you told me, I will draft a tailor-made itinerary by this evening.",
-          "Mở bằng 'Based on' + lời khách, để khách thấy kế hoạch là của riêng họ: 'tailor-made'. Bạn SOẠN lịch trình; đặt chỗ vẫn là việc của concierge. Và gắn một mốc giờ.",
+          "Could you plan the whole day for us? We love food and old buildings.",
+          "Of course, madam. Based on that, I will draft a tailor-made itinerary by this evening.",
+          "Mở bằng 'Based on that' — 'that' là điều khách vừa nói — để khách thấy kế hoạch là của riêng họ: 'tailor-made'. Bạn SOẠN lịch trình; đặt chỗ vẫn là việc của concierge. Và gắn một mốc giờ.",
         ),
         "Of course, madam. Based on what you have told me, I will draft a tailor-made itinerary by this evening.",
+        "Of course, madam. Based on what you told me, I will draft a tailor-made itinerary by this evening.",
       ),
     ],
     reading: read(
@@ -326,6 +329,7 @@ Booking it is not yours. The concierge desk books the boat, the table and the ca
           ),
           "Of course, madam. I will pass that to my Duty Manager, and she will come to you about it today.",
           "Certainly, madam. I am passing that to my Duty Manager now, and she will come to you today.",
+          "Of course, madam. I will ask my Duty Manager to come to you about it today.",
         ),
       ),
     ],
@@ -488,6 +492,8 @@ A guest may ask to see the file, or to take a line out. Both go to the Duty Mana
           ),
           "I am sorry, sir, I cannot confirm who is staying with us. May I take a message?",
           "I am not able to confirm who is staying with us, sir, but I can take a message.",
+          "I cannot confirm who is staying with us, sir. Would you like to leave a message?",
+          "I am afraid I cannot confirm who is staying here, sir, but I can take a message.",
         ),
       ),
     ],
@@ -600,12 +606,13 @@ And a returning guest is still a private guest. A caller who asks whether he is 
         sp(
           "Town, definitely. We love old buildings.",
           t4b,
-          "Câu trả lời của khách chính là nguyên liệu: 'Since you mentioned' + lời khách, rồi MỘT gợi ý bắt đầu từ chính khách sạn.",
+          "Câu trả lời của khách chính là nguyên liệu: 'Since you mentioned' + lời khách, rồi MỘT gợi ý bắt đầu từ chính khách sạn — khoảng sân 'restored', đã được trùng tu.",
           undefined,
           undefined,
           t4a,
         ),
         "Since you mentioned old buildings, madam, I would start with our courtyard, and then the old quarter.",
+        "Since you mentioned old buildings, madam, I would start with our own courtyard, and then the old quarter.",
       ),
       sp(
         "Is the old quarter open on Mondays?",

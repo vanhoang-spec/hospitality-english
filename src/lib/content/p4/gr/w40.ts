@@ -42,27 +42,32 @@ const round = (
 });
 
 // ── Lesson 1 — Saturday afternoon ──────────────────────────────────────────
-const t1a = "Of course, madam. Shall we keep it a surprise, so that I speak only to you?";
+const t1a =
+  "Of course, madam. Shall we keep it a surprise, so that I can be discreet and speak only to you?";
 const t1b =
   "Before I order it, may I ask about allergies at the table? I will write an allergy slip for the pastry chef.";
 const t1c = "Only with your permission, madam. Shall I put his birthday on your file?";
 
 // ── Lesson 2 — a complaint before dinner ───────────────────────────────────
-const t2a = "I am sorry that happened, sir, on such a special evening. Please take me through it.";
+const t2a = "I am sorry that happened, sir, on such a special occasion. Please take me through it.";
 const t2b = "Do you remember who took it, sir? I am writing it all down.";
 const t2c =
-  "I am asking the restaurant for a table now, sir. Let me check with my manager about the dinner.";
+  "I am asking the restaurant now, sir, as the table is theirs to give. Let me check with my manager about the dinner.";
+const t2d =
+  "I am asking, not promising, sir. What I can do meanwhile is find you a quiet seat in the lounge.";
 
 // ── Lesson 3 — the evening goes wrong ──────────────────────────────────────
 const t3a =
-  "Please stay indoors tonight, madam. The next update is within the hour, at the lounge desk.";
-const t3b = "I do not know that yet, madam. If it does, there is a torch in your wardrobe.";
-const t3c = "Please use the stairs if the power goes, madam. The stair lights stay on.";
+  "Please stay indoors, away from the windows, madam. The next update is within the hour, at the lounge desk.";
+const t3b =
+  "I do not know that yet, madam. If there is a power cut, you will find a torch in your wardrobe.";
+const t3c =
+  "As a precaution, please use the stairs tonight, madam. The generator keeps the stair lights on.";
 
 // ── Lesson 4 — before you go home ──────────────────────────────────────────
 const t4a =
-  "Thank you for telling me, madam. I am writing it down and handing it over by name now.";
-const t4b = "Yes, madam. She will have it in your own words, and what you expect next.";
+  "Thank you for telling us, madam. I am writing it down and handing it over by name now.";
+const t4b = "Yes, madam. I am writing down what you want, in your own words, for my colleague.";
 const t4c = "That is my Duty Manager's decision, madam, and I am taking it to her before I leave.";
 
 const lessons = [
@@ -89,12 +94,15 @@ const lessons = [
       ),
     ],
     speaking: [
-      sp(
-        "It is my husband's birthday tomorrow. Can you help me plan something?",
-        t1a,
-        "Bất ngờ là của người lên kế hoạch: hỏi có giữ bí mật không — 'keep it a surprise' — và từ đó chỉ liên lạc với chính người này.",
-        undefined,
-        ["keep", "surprise", "speak"],
+      also(
+        sp(
+          "It is my husband's birthday tomorrow. Can you help me plan something?",
+          t1a,
+          "Bất ngờ là của người lên kế hoạch: hỏi có giữ bí mật không — 'keep it a surprise' — rồi hứa 'discreet': từ đó chỉ liên lạc với chính người này.",
+          undefined,
+          ["keep", "surprise", "speak"],
+        ),
+        "Of course, madam. Shall we keep it a surprise, so that I speak only to you?",
       ),
       risk(
         also(
@@ -108,6 +116,9 @@ const lessons = [
           ),
           "Before I order it, may I ask about allergies at the table? I will write an allergy slip for the pastry chef now.",
           "Before I order the cake, may I ask about allergies at the table? I will write an allergy slip for the pastry chef.",
+          "Before I order it, does anyone at the table have any allergies? I will write an allergy slip for the pastry chef.",
+          "Before I order it, does anyone at the table have an allergy? I will write an allergy slip for the pastry chef.",
+          "Of course, madam. Before I order it, does anyone at the table have an allergy?",
         ),
       ),
       sp(
@@ -121,22 +132,39 @@ const lessons = [
       also(
         sp(
           "Is that painting in the lobby an original?",
-          "As far as I know, it is, sir, but I would rather find out than guess.",
-          "Bạn không chắc: 'As far as I know' cho người nghe biết phần nào bạn chắc, rồi câu đã học — 'I would rather find out' — thay cho một câu đoán.",
+          "As far as I know, it is original, sir, but I would rather check the history folder than guess.",
+          "Bạn không chắc: 'As far as I know' cho người nghe biết phần nào bạn chắc, rồi câu đã học — 'I would rather check' — tra 'the history folder' thay cho một câu đoán.",
           undefined,
-          ["far", "know", "rather", "find", "out"],
+          ["far", "know", "rather"],
         ),
         "As far as I know, it is original, sir, but I would rather find out than guess.",
+        "As far as I know, it is, sir, but I would rather find out than guess.",
       ),
       also(
         sp(
           "We drove six hours today. Any ideas for a quiet evening?",
-          "Since you mentioned the long drive, madam, I would take dinner in the garden. Would that suit you?",
-          "Mở bằng chính lời khách — 'Since you mentioned' — rồi MỘT gợi ý với 'I would', và trả quyền quyết định: 'Would that suit you?'.",
+          "Since you mentioned the long drive, madam, I would keep it low-key, with dinner in the garden. Would that suit you?",
+          "Mở bằng chính lời khách — 'Since you mentioned' — rồi MỘT gợi ý với 'I would' ('low-key': nhẹ nhàng, yên tĩnh), và trả quyền quyết định: 'Would that suit you?'.",
           undefined,
           ["since", "mentioned", "dinner", "garden", "suit"],
         ),
+        "Since you mentioned the long drive, madam, I would take dinner in the garden. Would that suit you?",
         "Since you mentioned the long drive, madam, I would have dinner in the garden. Would that suit you?",
+      ),
+      sp(
+        "It is our first time here. What should we not miss tonight?",
+        "As this is your first stay, madam, I would not miss our signature lantern lighting. It is best seen at dusk.",
+        "Khách lần đầu thì hồ sơ trống — nói thẳng điều đó bằng 'As this is your first stay', rồi MỘT gợi ý: 'our signature' — trải nghiệm đặc trưng — kèm một mốc: 'best seen at dusk'.",
+        undefined,
+        ["this", "first", "stay", "signature"],
+      ),
+      also(
+        sp(
+          "We are back for the third time! The same as always, please.",
+          "Welcome back, madam. Is everything still the same, or has anything changed since your last stay?",
+          "Khách quay lại nói 'như mọi lần' — vẫn hỏi một câu trước khi làm theo hồ sơ: 'still the same', hay 'has anything changed'. Hồ sơ cũ có thể đã sai.",
+        ),
+        "Welcome back, madam. Is it all still the same, or has anything changed since your last stay?",
       ),
       risk(
         also(
@@ -149,13 +177,15 @@ const lessons = [
           ),
           "I am sorry, I cannot confirm who is staying here, madam, but I can take a message.",
           "I am afraid I am not able to confirm who is staying here, madam, but I can take a message.",
+          "I cannot confirm who is staying with us, madam, but I can take a message.",
+          "I am afraid I cannot confirm who is staying here, madam. Would you like to leave a message?",
         ),
       ),
     ],
     reading: read(
       `SATURDAY AFTERNOON
-Hoa starts at two. By half past, a guest is standing under the painting in the lobby, asking whether it is original. Hoa knows the three facts of the house, and the painting is not one of them. "As far as I know, it is, sir, but I would rather find out than guess." The history folder has the answer, and she brings it to him before four.
-At three, a couple who have driven six hours ask for ideas. Hoa does not look at them and guess. She uses what they said: "Since you mentioned the long drive, I would take dinner in the garden." They say yes, and the concierge desk books the table.
+Hoa starts at two. By half past, a guest is standing under the painting in the lobby, asking whether it is original. Hoa knows the three facts of the house, and the painting is not one of them. "As far as I know, it is original, sir, but I would rather check the history folder than guess." The folder has the answer, and she brings it to him before four.
+At three, a couple who have driven six hours ask for ideas. Hoa does not look at them and guess. She uses what they said: "Since you mentioned the long drive, I would keep it low-key, with dinner in the garden." They say yes, and the concierge desk books the table.
 At four, Mrs Hall asks for help with her husband's birthday. Hoa asks one question first: "Shall we keep it a surprise?" Then, before she orders a cake, she asks about allergies at the table. Mr Hall cannot eat nuts, so an allergy slip goes into the pastry chef's hand at once.
 At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying. Hoa cannot confirm who is staying, so she offers to take a message.`,
       [
@@ -167,7 +197,7 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
             "Nói rằng mình không biết, và để khách tự tìm hiểu thêm trên mạng",
           ],
           correct: 1,
-          explanation: `Bài đọc: "'As far as I know, it is, sir, but I would rather find out than guess.' The history folder has the answer."`,
+          explanation: `Bài đọc: "'As far as I know, it is original, sir, but I would rather check the history folder than guess.' The folder has the answer."`,
         },
         {
           q: "Trước khi đặt bánh sinh nhật, Hoa làm gì?",
@@ -193,13 +223,14 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
     ),
     game: [
       round(
-        "We love good food. Any idea for tonight?",
+        "Mrs Hall wants a chocolate birthday cake. Shall I just order it now?",
         [
-          ["Since you mentioned good food, sir, I would try the night market.", "answer"],
-          ["Guests of your age usually prefer the hotel restaurant, sir.", "register"],
-          ["Since you mentioned about good food, sir, I would try the night market.", "form"],
+          ["Not before we ask about allergies at the table and write the slip.", "answer"],
+          ["Order it now — hardly anybody is allergic to chocolate anyway.", "register"],
+          ["Not before we ask about allergies at the table and writing the slip.", "form"],
         ],
-        "Câu này gợi ý dựa vào tuổi của khách — điều bạn nhìn thấy, không phải điều khách nói. Câu sai ngữ pháp thừa 'about' sau 'mentioned'. Đáp án dựa vào chính lời khách, và chỉ đưa một gợi ý.",
+        "Câu này tự đoán là bánh an toàn — dị ứng thì phải hỏi, không bao giờ đoán thay khách. Câu sai ngữ pháp dùng 'and writing'; hai động từ nối bằng 'and' sau 'we' phải cùng dạng: 'ask… and write'. Đáp án: hỏi dị ứng của mọi người ở bàn và viết phiếu cho bếp, rồi mới đặt bánh.",
+        "colleague",
       ),
       round(
         "This is his company calling. Has Mr Binh checked out yet, or is he still with you?",
@@ -241,7 +272,7 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
       sp(
         "Your restaurant lost our booking for tonight, and it is our anniversary.",
         t2a,
-        "Bước một và hai: xin lỗi về SỰ VIỆC — 'I am sorry that happened' — không nhận lỗi, không đổ cho ai; rồi mời khách kể từ đầu: 'take me through it'.",
+        "Bước một và hai: xin lỗi về SỰ VIỆC — 'I am sorry that happened', lại đúng vào 'a special occasion' — không nhận lỗi, không đổ cho ai; rồi mời khách kể từ đầu: 'take me through it'.",
         undefined,
         ["sorry", "happened", "special", "take", "through"],
       ),
@@ -257,12 +288,21 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
         sp(
           "A young man, I think. Look, we want a table tonight, and dinner on the house.",
           t2c,
-          "Tách hai việc: cái bàn là của nhà hàng — bạn đang xin; bữa tối miễn phí là của quản lý — 'Let me check with my manager'. Không hứa phần nào.",
+          "Tách hai việc: cái bàn là của nhà hàng — 'theirs to give', bạn đang xin; bữa tối miễn phí là của quản lý — 'Let me check with my manager'. Không hứa phần nào.",
           undefined,
           ["asking", "restaurant", "table", "check", "manager", "dinner"],
           t2b,
         ),
         "I am asking the restaurant for a table now, sir, and let me check with my manager about the dinner.",
+        "I am asking the restaurant for a table now, sir. Let me check with my manager about the dinner.",
+      ),
+      sp(
+        "So that is a yes to both? We are starving.",
+        t2d,
+        "Khách muốn nghe chữ 'có'. Nói thật: 'I am asking, not promising'. Rồi một việc bạn làm được NGAY trong lúc chờ: 'What I can do meanwhile'.",
+        undefined,
+        undefined,
+        t2c,
       ),
       risk(
         also(
@@ -275,14 +315,18 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
           ),
           "I am afraid the room charge is the part I cannot move, sir. My Duty Manager decides that, today.",
           "The room charge is the part I cannot move, sir. My Duty Manager will decide that today.",
+          "The room charge is the part I cannot move, sir. That is my Duty Manager's decision, today.",
         ),
       ),
-      sp(
-        "He keeps asking which of us lost the booking. Shall I tell him it was the new boy?",
+      also(
+        sp(
+          "He keeps asking which of us lost the booking. Shall I tell him it was the new boy?",
+          "Not a name, not a team. Tell him how we will put it right.",
+          "ĐỒNG NGHIỆP hỏi. 'Not a name, not a team' trước mặt khách — nguyên nhân là việc của sổ khiếu nại. Khách cần nghe việc đang được sửa: 'put it right'.",
+          "colleague",
+          ["right", "name"],
+        ),
         "No. Tell him what we are putting right, and leave the name out of it.",
-        "ĐỒNG NGHIỆP hỏi. Không nêu tên người, không nêu tên bộ phận trước mặt khách — nguyên nhân là việc của sổ khiếu nại.",
-        "colleague",
-        ["right", "name"],
       ),
       sp(
         "Will we get any of this in writing, or just your word again?",
@@ -294,12 +338,18 @@ At five, a caller says she is from Mr Tan's office and asks if Mr Tan is staying
       also(
         sp(
           "We have a table now. So is that the end of it?",
-          "Only when you tell me it is right, sir. I will check with you after dinner.",
-          "Hồ sơ khiếu nại đóng khi KHÁCH nói đã ổn — không phải khi có bàn. Hẹn một lần hỏi lại của chính bạn.",
+          "I will close the case once you agree it is right, sir. I will check with you after dinner.",
+          "Hồ sơ khiếu nại đóng khi KHÁCH nói đã ổn — 'once you agree' — không phải khi có bàn. Hẹn một lần hỏi lại của chính bạn.",
           undefined,
           ["right", "check", "dinner"],
         ),
+        "Only when you tell me it is right, sir. I will check with you after dinner.",
         "Only when you tell me it is right, sir. I will check with you after your dinner.",
+      ),
+      sp(
+        "Thank you. It has turned into a lovely anniversary after all.",
+        "I am delighted, sir. On behalf of everyone at the hotel, warmest congratulations on your anniversary.",
+        "Khép lại bằng lời chúc trang trọng đã học: 'On behalf of' cả khách sạn, rồi 'warmest congratulations' — không kèm quà hay lời hứa nào.",
       ),
     ],
     reading: read(
@@ -392,11 +442,12 @@ Before the Halls go up, they have it in writing, with a copy for them. The case 
         sp(
           "The storm warning is on the television. What happens now?",
           t3a,
-          "Một việc và một mốc giờ: 'stay indoors', rồi 'The next update' — khi nào, ở đâu. Không đoán cơn bão, không nói an toàn.",
+          "Một việc và một mốc giờ: 'stay indoors', 'away from the windows', rồi 'The next update' — khi nào, ở đâu. Không đoán cơn bão, không nói an toàn.",
           undefined,
           ["stay", "indoors", "next", "update", "within", "hour", "lounge", "desk"],
         ),
         "Please stay indoors tonight, madam. The next update is within the hour, at the lounge desk downstairs.",
+        "Please stay indoors tonight, madam. The next update is within the hour, at the lounge desk.",
       ),
       sp(
         "The lights just flickered. Is the power going to go?",
@@ -406,25 +457,30 @@ Before the Halls go up, they have it in writing, with a copy for them. The case 
         ["yet", "torch"],
         t3a,
       ),
-      sp(
-        "And if it goes, can we still take the lift down for dinner?",
-        t3c,
-        "Khi mất điện thì không đi thang máy: 'use the stairs'. Một lệnh, một lý do — đèn cầu thang vẫn sáng.",
-        undefined,
-        ["stairs", "power"],
-        t3b,
+      also(
+        sp(
+          "And if it goes, can we still take the lift down for dinner?",
+          t3c,
+          "Khi điện chưa ổn thì không đi thang máy: 'As a precaution', 'use the stairs'. Một lệnh, một lý do — 'the generator' giữ đèn cầu thang sáng.",
+          undefined,
+          ["stairs", "generator"],
+          t3b,
+        ),
+        "Please use the stairs if the power goes, madam. The stair lights stay on.",
       ),
       risk(
         also(
           sp(
             "Please! My father has collapsed in the bathroom, and he is not moving!",
             "Is he breathing, madam? Please stay on the line, and do not move him.",
-            "Đúng kịch bản y tế: MỘT câu hỏi trước — 'Is he breathing' — rồi giữ người nhà trên máy và không di chuyển ông ấy. Không thở hoặc không chắc thì xe cấp cứu; còn thở thì sơ cứu và Duty Manager.",
+            "Đúng kịch bản y tế: MỘT câu hỏi trước — 'Is he breathing' — rồi giữ người nhà trên máy và không di chuyển ông ấy. Không thở, không tỉnh hoặc không chắc thì xe cấp cứu; còn thở và đã tỉnh thì sơ cứu và Duty Manager.",
             undefined,
             ["breathing", "stay", "line", "move"],
           ),
           "Is he breathing, madam? Please stay on the line with me, and do not move him.",
           "Is he breathing, madam? Please stay on the line and do not move him.",
+          "Is he breathing, madam? Please do not move him, and stay on the line.",
+          "I am calling an ambulance now, madam. Please stay on the line, and do not move him.",
         ),
       ),
       risk(
@@ -438,19 +494,29 @@ Before the Halls go up, they have it in writing, with a copy for them. The case 
           ),
           "Danger first: ask him where, then call security and the Duty Manager after.",
           "Danger first. Ask him where, then call security, and the Duty Manager after that.",
+          "Danger first: ask him whereabouts, then call security, and the Duty Manager after.",
+          "Danger first: ask him where it is, then call security, and the Duty Manager after.",
         ),
       ),
+      also(
+        sp(
+          "The alarm is ringing! Shall I run back up for my handbag?",
+          "Leave it and come with me to the assembly point, madam. Please use the stairs.",
+          "Cấm quay lại, rồi đưa việc thay thế ngay trong cùng một hơi: 'Leave it and come with me', tới 'the assembly point'. Không ai quay vào toà nhà cho tới khi có lệnh — kể cả bạn.",
+          undefined,
+          ["leave", "come", "stairs"],
+        ),
+        "Leave it, madam, and come with me. Please use the stairs.",
+      ),
       sp(
-        "The alarm is ringing! Shall I run back up for my children's passports?",
-        "Leave the passports, madam, and come with me. Please use the stairs.",
-        "Cấm quay lại, rồi đưa việc thay thế ngay trong cùng một hơi. Không ai quay vào toà nhà cho tới khi có lệnh — kể cả bạn.",
-        undefined,
-        ["leave", "come", "stairs"],
+        "Our boat trip is tomorrow morning. Will it still go in this storm?",
+        "If it is postponed, madam, the storm programme offers the first clear day or a rain check.",
+        "Đừng đoán thời tiết, cũng đừng quyết thay công ty tàu. Nói đúng điều chương trình ngày bão in sẵn: 'the first clear day' hoặc 'a rain check'.",
       ),
     ],
     reading: read(
       `THE EVENING GOES WRONG
-At eight, a weather warning comes on the television, and the lobby fills with questions. Hoa gives every guest the same three parts: what has happened, what it means for them, and the next update. "Please stay indoors tonight. The next update is within the hour, at the lounge desk." She does not say it is safe, and she does not guess when it will end.
+At eight, a weather warning comes on the television, and the lobby fills with questions. Hoa gives every guest the same three parts: what has happened, what it means for them, and the next update. "Please stay indoors, away from the windows. The next update is within the hour, at the lounge desk." She does not say it is safe, and she does not guess when it will end.
 At twenty past eight, the lights flicker. Hoa does not know if the power will go. She tells guests where the torch is, and she sends them to the stairs, not the lift.
 At half past, the desk telephone rings. A woman's father has collapsed in their bathroom. Hoa asks one question first: "Is he breathing?" The woman is not sure, so Hoa treats it as not breathing. Her colleague dials 115 while Hoa keeps the woman on the line and asks her not to move him.
 Two guests are still waiting at the desk when a man from the bar says he can smell smoke. Danger first. Hoa asks where, calls security, and then the Duty Manager. The two guests wait, and nobody complains.`,
@@ -489,13 +555,16 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
     ),
     game: [
       round(
-        "My father has collapsed! Please send somebody up!",
+        "My husband slipped in the bath and hit his head. He is talking, and he says he is fine.",
         [
-          ["Is he breathing, madam? Please stay on the line with me.", "answer"],
-          ["Somebody is on the way, madam, and he will be absolutely fine.", "register"],
-          ["Is he breathe, madam? Please stay on the line with me.", "form"],
+          [
+            "Please keep him lying still, sir. I am calling first aid and the Duty Manager.",
+            "answer",
+          ],
+          ["If he is talking, sir, a good night's sleep is probably all he needs.", "register"],
+          ["Please keep him lying still, sir. I calling first aid and the Duty Manager.", "form"],
         ],
-        "Câu này hứa có người đang tới khi chưa ai bấm số, và hứa 'sẽ ổn' — hai điều không ai biết. Câu sai ngữ pháp dùng 'Is he breathe'; câu hỏi hiện tại tiếp diễn cần 'breathing'. Đáp án hỏi một câu trước, và giữ người nhà trên máy.",
+        "Câu này tự chẩn đoán — 'ngủ một giấc là khỏi' — trong khi khách vừa bị đập đầu; đánh giá là việc của người có chuyên môn. Câu sai ngữ pháp thiếu 'am': hiện tại tiếp diễn phải là 'I am calling'. Đáp án: khách tỉnh và nói chuyện được thì gọi sơ cứu và Duty Manager, và giữ khách nằm yên.",
       ),
       round(
         "Is it safe to take the lift? The lights keep flickering.",
@@ -534,16 +603,16 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
       sp(
         "Before you go, there is something wrong with my bill.",
         t4a,
-        "Cuối ca: không từ chối, không tự mở việc. Cảm ơn khách bằng câu đã học, rồi nói việc bạn làm — ghi lại và bàn giao đích danh.",
+        "Cuối ca: không từ chối, không tự mở việc. Cảm ơn khách bằng câu đã học — 'Thank you for telling us' — rồi nói việc bạn làm: ghi lại và bàn giao đích danh.",
         undefined,
         ["telling", "writing", "handing", "name"],
       ),
       sp(
         "Will the next person know exactly what I want?",
         t4b,
-        "Khách sợ phải kể lại từ đầu. Người nhận ca sẽ có đúng lời khách — 'in your own words' — và điều khách đang chờ.",
+        "Khách sợ phải kể lại từ đầu. Bạn ghi đúng điều khách muốn, bằng chính lời khách — 'in your own words' — cho người nhận ca.",
         undefined,
-        ["own", "words", "expect", "next"],
+        ["own", "words"],
         t4a,
       ),
       also(
@@ -557,17 +626,29 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
         ),
         "That is my Duty Manager's decision, madam. I am taking it to her before I leave.",
       ),
-      sp(
-        "My shift ends at six, and the guest in the lounge is still waiting for the Duty Manager.",
+      also(
+        sp(
+          "My shift ends at six, and the guest in the lounge is still waiting for the Duty Manager.",
+          "Hand it over by name in the last fifteen minutes. A note on the desk belongs to nobody.",
+          "ĐỒNG NGHIỆP hỏi. Một việc không gắn tên người nhận là việc không ai làm. Bàn giao cho đúng một người trong 'the last fifteen minutes' của ca.",
+          "colleague",
+          ["hand", "name", "note", "desk"],
+        ),
         "Hand it over by name before six. A note on the desk belongs to nobody.",
-        "ĐỒNG NGHIỆP hỏi. Một việc không gắn tên người nhận là việc không ai làm. Bàn giao cho đúng một người, trước giờ hết ca.",
-        "colleague",
-        ["hand", "name", "note", "desk"],
+      ),
+      also(
+        sp(
+          "It is ten to six, and a guest wants his room changed tonight. Shall I start it?",
+          "Nothing new after quarter to. Write down what the guest expects next, and hand it over by name.",
+          "ĐỒNG NGHIỆP hỏi. Luật cuối ca: không mở việc mới. Nhưng ghi đúng điều khách đang chờ — 'what the guest expects next' — rồi bàn giao đích danh.",
+          "colleague",
+        ),
+        "Nothing new after quarter to. Write it down, and hand it over by name.",
       ),
       sp(
-        "Duty Manager. Which guest should I worry about tonight?",
-        "The guest with the lost booking has stopped asking. He is the one I would call tonight.",
-        "Báo lên cấp trên thì không cần sir. Khách thôi hỏi không phải là hết bận tâm — 'stopped asking' là dòng quan trọng nhất của buổi bàn giao.",
+        "Duty Manager. Anything on Mr Hall before you go?",
+        "Mr Hall has stopped asking about the lost booking. He expects a call tonight, after dinner.",
+        "Báo lên cấp trên thì không cần sir. Một dòng bàn giao đủ bốn thứ: khách nào (Mr Hall), tình trạng ('stopped asking'), điều khách chờ (một cuộc gọi) và giờ ('after dinner'). Khách thôi hỏi không phải là hết bận tâm.",
         "manager",
         ["booking", "stopped", "asking", "call"],
       ),
@@ -582,6 +663,8 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
           ),
           "I am sorry, that is not mine to handle, madam, and I cannot talk about another guest. My Duty Manager is coming.",
           "That is not mine to handle, madam, and I cannot talk about another guest. My Duty Manager is coming now.",
+          "That is not mine to handle, madam, and I cannot talk about another guest. I am bringing my Duty Manager to you now.",
+          "I am sorry, madam, I cannot talk about another guest, and that is not mine to handle. My Duty Manager is coming.",
         ),
       ),
       risk(
@@ -595,6 +678,9 @@ Two guests are still waiting at the desk when a man from the bar says he can sme
           ),
           "I am afraid I cannot connect you, sir, but I can take your name and a message.",
           "I cannot connect you, sir. May I take your name and a message?",
+          "I am afraid I cannot connect you, sir. May I take a message for her?",
+          "I cannot connect you, sir. Would you like to leave a message?",
+          "I cannot connect you, sir, but I can take a message.",
         ),
       ),
     ],

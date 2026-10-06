@@ -9,11 +9,15 @@
 // both as right. There is now ONE script, taught here and used unchanged in
 // weeks 39 and 40:
 //   1. one question first — "Is he breathing?";
-//   2. not breathing, or nobody is sure: an ambulance, 115, dialled by you or
-//      by a colleague you name — the hotel's name and street first;
-//   3. breathing: first aid and the Duty Manager on the inside line, the way
-//      Phase 3 taught it ("I am calling first aid and the duty manager
-//      now") — and first aid, not the desk, decides on the ambulance;
+//   2. not breathing, not waking up, or nobody is sure: an ambulance, 115,
+//      dialled by you or by a colleague you name — the hotel's name and
+//      street first;
+//   3. breathing AND awake: first aid and the Duty Manager on the inside
+//      line, the way Phase 3 taught it ("I am calling first aid and the duty
+//      manager now") — and first aid, not the desk, decides on the ambulance;
+//      (round 2 of the reopened P4 caught the old line 3 sending a guest who
+//      "is breathing, but will not wake up" to first aid instead of 115 —
+//      the turn now has a guest who is awake, and the reading names the case);
 //   4. either way: stay on the line, do not move him, nothing to eat or
 //      drink, the guest's own medicine kept ready for first aid, and comfort
 //      that is one true thing happening — never "he is in good hands".
@@ -59,20 +63,21 @@ const t2c = "That is for first aid to decide, sir. Please keep her own medicine 
 // ── Lesson 3 — the doctor, the clinic and the bill ─────────────────────────
 const t3a = "Of course, madam. May I ask the doctor on call to see you in your room?";
 const t3b =
-  "Your insurer decides that, madam. Please ask the doctor for a medical report in English.";
+  "Your insurer decides that, madam. One more thing: please ask the doctor for a medical report in English.";
 const t3c =
   "Then I will call ahead so the clinic expects you, madam, and ask the concierge desk for a car.";
 
 // ── Lesson 4 — afterwards ──────────────────────────────────────────────────
 const t4a = "I am glad you are back, madam. Is there anything I can do for you tonight?";
-const t4b = "Of course, madam. I will ask housekeeping not to knock until you call them.";
+const t4b =
+  "Of course, madam. Shall I put that down, and ask housekeeping not to knock until you call them?";
 const t4c =
   "It is our pleasure, madam. May I check on you tomorrow afternoon, or would you rather call me?";
 
 const lessons = [
   L(37, 1, "One Question First", "Một câu hỏi trước tiên", {
     vocabulary: [
-      c("Collapsed", "A guest has collapsed in his room, and he is breathing.", [
+      c("Collapsed", "A guest has collapsed in his room, and he is not breathing.", [
         "/kəˈlæpst/",
         "ngã quỵ, gục xuống đột ngột",
         "🆘",
@@ -135,6 +140,9 @@ const lessons = [
           ),
           "Then I am calling an ambulance now, madam. Please do not move him, and please stay on the line.",
           "I am calling an ambulance now, madam. Please do not move him, and stay on the line with me.",
+          "Then I am calling an ambulance now, madam. Please stay on the line, and do not move him.",
+          "I am calling an ambulance now, madam. Please stay on the line with me and do not move him.",
+          "I am calling 115 now, madam. Please do not move him, and stay on the line.",
         ),
       ),
       sp(
@@ -148,27 +156,31 @@ const lessons = [
       risk(
         also(
           sp(
-            "My wife fainted in the bathroom. She is breathing, but she will not wake up properly.",
+            "My wife fainted in the bathroom. She is awake now, but she feels very weak.",
             "I am calling first aid and the Duty Manager now, sir. Please do not move her.",
-            "Khách CÒN THỞ: gọi sơ cứu và Duty Manager qua đường nội bộ, kèm số phòng — đúng câu đã học ở các tuần trước. Xe cấp cứu thì sơ cứu quyết, không phải bạn. Rồi một việc cho người nhà: 'do not move her'.",
+            "Khách ĐÃ TỈNH và còn thở: gọi sơ cứu và Duty Manager qua đường nội bộ, kèm số phòng — đúng câu đã học ở các tuần trước. Sơ cứu đánh giá và quyết chuyện xe cấp cứu. (Nếu khách KHÔNG tỉnh hẳn, hay không ai chắc còn thở, thì gọi 115 ngay.) Rồi một việc cho người nhà: 'do not move her'.",
             undefined,
             ["calling", "first", "aid", "duty", "manager", "move"],
           ),
           "I am calling first aid and the Duty Manager now, sir. Please do not move her at all.",
           "Thank you, sir. I am calling first aid and the Duty Manager now, and please do not move her.",
+          "Please do not move her, sir. I am calling first aid and the Duty Manager now.",
         ),
       ),
-      sp(
-        "I have the wife on the phone. She is not sure if he is breathing.",
-        "Then dial 115 yourself: our name and street first, then the room number.",
-        "ĐỒNG NGHIỆP hỏi. Không chắc là coi như không thở, nên 115 trước. Gọi tên người bấm số — ở đây là chính đồng nghiệp — để không ai tưởng người kia đã gọi. 115 không phải đường nội bộ: 'our name and street' đi trước số phòng.",
-        "colleague",
-        ["name", "street", "room", "number"],
+      also(
+        sp(
+          "I have the wife on the phone. She is not sure if he is breathing.",
+          "Then dial 115 yourself: our name and street first, then the room number.",
+          "ĐỒNG NGHIỆP hỏi. Không chắc là coi như không thở, nên 115 trước. Gọi tên người bấm số — ở đây là chính đồng nghiệp — để không ai tưởng người kia đã gọi. 115 không phải đường nội bộ: 'our name and street' đi trước số phòng.",
+          "colleague",
+          ["name", "street", "room", "number"],
+        ),
+        "Then call an ambulance on 115 yourself: our name and street first, then the room number.",
       ),
       sp(
         "Duty Manager. You rang about 1108?",
-        "A guest has collapsed in his room. He is breathing, and first aid is on the way.",
-        "Báo lên cấp trên thì không cần sir: ba dữ kiện ngắn — chuyện gì, còn thở hay không, ai đang tới. 'Collapsed' /kəˈlæpst/ — đuôi -ed sau /p/ đọc thành /t/.",
+        "A guest has collapsed in his room. He is awake and breathing, and first aid is on the way.",
+        "Báo lên cấp trên thì không cần sir: ba dữ kiện ngắn — chuyện gì, còn tỉnh và còn thở hay không, ai đang tới. 'Collapsed' /kəˈlæpst/ — đuôi -ed sau /p/ đọc thành /t/.",
         "manager",
         ["collapsed", "breathing", "first", "aid", "way"],
       ),
@@ -176,8 +188,8 @@ const lessons = [
     reading: read(
       `ONE QUESTION FIRST
 A guest who rings to say somebody has collapsed needs help fast, and the fastest help starts with one question: "Is he breathing?" The answer decides which number you call.
-If he is not breathing, or nobody there is sure, treat it as not breathing. Call an ambulance first: dial 115 yourself, or name the colleague who will. 115 is not an inside line, so say the hotel's name and street first, then the room number.
-If he is breathing, call first aid and the Duty Manager on the inside line, with the room number. First aid decides whether an ambulance is needed. You do not.
+If he is not breathing, will not wake up, or nobody there is sure, call an ambulance first. Dial 115 yourself, or name the colleague who will. 115 is not an inside line, so say the hotel's name and street first, then the room number.
+If he is breathing and awake, call first aid and the Duty Manager on the inside line, with the room number. First aid decides whether an ambulance is needed. You do not.
 Either way, the person on the telephone stays with you. "Please stay on the line" keeps her talking, and it keeps you hearing what changes. Do not promise that help is coming before anybody has dialled.
 Then give her two things she can do: stay with him, and do not move him.
 Last, ask your own manager two questions now, not on the night. Which inside number reaches first aid? And who carries the first aid kit after midnight?`,
@@ -200,7 +212,7 @@ Last, ask your own manager two questions now, not on the night. Which inside num
             "Gọi Duty Manager hỏi xem có cần gọi xe cấp cứu không",
           ],
           correct: 0,
-          explanation: `Bài đọc: "If he is not breathing, or nobody there is sure, treat it as not breathing. Call an ambulance first: dial 115 yourself, or name the colleague who will."`,
+          explanation: `Bài đọc: "If he is not breathing, will not wake up, or nobody there is sure, call an ambulance first. Dial 115 yourself, or name the colleague who will."`,
         },
         {
           q: "Gọi 115, bạn nói điều gì trước tiên?",
@@ -315,6 +327,8 @@ Last, ask your own manager two questions now, not on the night. Which inside num
           ),
           "Please do not move him, sir. First aid decides that, and they are on the way now.",
           "Please do not move him at all, sir. First aid decides that, and they are on the way.",
+          "Please do not move him, sir. That is for first aid to decide, and they are on the way.",
+          "Please do not lift him, sir. First aid decides that, and they are on the way.",
         ),
       ),
       sp(
@@ -453,7 +467,7 @@ Then stay beside them until that is true.`,
       sp(
         "Yes, please. Will my travel insurance pay for it?",
         t3b,
-        "Đừng đoán bảo hiểm trả gì. Nói ai quyết — 'Your insurer decides' — rồi một điều luôn đúng: xin 'a medical report in English', vì công ty bảo hiểm sẽ cần nó.",
+        "Đừng đoán bảo hiểm trả gì. Nói ai quyết — 'Your insurer decides' — rồi 'One more thing' và một điều luôn đúng: xin 'a medical report in English', vì công ty bảo hiểm sẽ cần nó.",
         undefined,
         ["decides", "doctor", "medical", "report"],
         t3a,
@@ -480,6 +494,9 @@ Then stay beside them until that is true.`,
           ),
           "Let me call the doctor on call first, sir. The bill is for my Duty Manager to decide.",
           "I am calling the doctor on call first, sir. The bill is my Duty Manager's to decide.",
+          "Let me call the doctor on call first, sir. The bill is my Duty Manager's decision.",
+          "Let me call the doctor on call first, sir. My Duty Manager will decide about the bill.",
+          "Are you hurt now, sir, and do you need a doctor? I am calling my Duty Manager now.",
         ),
       ),
       sp(
@@ -604,13 +621,16 @@ One thing you can always say: "Please ask the doctor for a medical report in Eng
         "Sau bệnh viện, khách không cần lời hoa mỹ và không cần câu hỏi về bệnh. Một câu chào, một câu mời giúp — rồi để khách nói điều họ cần.",
         undefined,
       ),
-      sp(
-        "Just some quiet. Please do not let anyone knock in the morning.",
-        t4b,
-        "Bạn nhờ buồng phòng — 'I will ask housekeeping' — chứ không hứa thay họ. Câu phủ định với ask: ask somebody NOT to + động từ — chữ not đứng trước to.",
-        undefined,
-        ["housekeeping", "call"],
-        t4a,
+      also(
+        sp(
+          "Just some quiet. Please do not let anyone knock in the morning.",
+          t4b,
+          "Bạn nhờ buồng phòng — 'ask housekeeping' — chứ không hứa thay họ. Câu phủ định với ask: ask somebody NOT to + động từ — chữ not đứng trước to. Không gõ cửa là một sở thích, nên xin phép trước khi ghi: 'Shall I put that down'.",
+          undefined,
+          ["housekeeping", "call"],
+          t4a,
+        ),
+        "Of course, madam. I will ask housekeeping not to knock until you call them.",
       ),
       also(
         sp(
@@ -634,6 +654,8 @@ One thing you can always say: "Please ask the doctor for a medical report in Eng
           ),
           "I am afraid I cannot talk about another guest, sir. Is there anything I can do for you?",
           "I am sorry, sir, I am not able to talk about another guest. Is there anything I can do for you?",
+          "I am sorry, sir, I cannot talk about another guest. Is there anything I can help you with?",
+          "I am sorry, sir, I cannot talk about another guest. Can I help you with anything?",
         ),
       ),
       sp(
@@ -645,8 +667,8 @@ One thing you can always say: "Please ask the doctor for a medical report in Eng
       ),
       sp(
         "His wife told me about his heart problem. Shall I put it on his guest file?",
-        "Not on the guest file. Facts only, and they go on the incident report.",
-        "ĐỒNG NGHIỆP hỏi. Hồ sơ khách là thứ người khác sẽ đọc ở những lần lưu trú sau — sức khoẻ không thuộc về đó. Điều đã xảy ra thì vào 'incident report'.",
+        "Leave it blank: his health is not on the guest file. The facts go on the incident report.",
+        "ĐỒNG NGHIỆP hỏi. Hồ sơ khách là thứ người khác sẽ đọc ở những lần lưu trú sau — sức khoẻ không thuộc về đó, nên 'leave it blank'. Điều đã xảy ra thì vào 'incident report'.",
         "colleague",
         ["incident", "report"],
       ),
@@ -721,6 +743,6 @@ When the guest comes back, keep it short: a quiet room, and the morning knock st
 export const week: AuthoredWeek = {
   title: { en: "Medical Emergencies", vi: "Cấp cứu y tế — một kịch bản duy nhất" },
   canDo:
-    "Nói được: hỏi một câu trước tiên ('Is he breathing?'); không thở hoặc không chắc thì gọi xe cấp cứu 115, nói tên và đường của khách sạn trước số phòng; còn thở thì gọi sơ cứu và Duty Manager; giữ người nhà trên máy, không di chuyển khách, không cho ăn uống, không hứa 'sẽ ổn thôi'; chuyển câu hỏi về bảo hiểm cho đúng người quyết; và viết biên bản sự cố chỉ ghi sự việc, không đưa chuyện sức khoẻ vào hồ sơ khách.",
+    "Nói được: hỏi một câu trước tiên ('Is he breathing?'); không thở, không tỉnh hẳn hoặc không chắc thì gọi xe cấp cứu 115, nói tên và đường của khách sạn trước số phòng; còn thở và đã tỉnh thì gọi sơ cứu và Duty Manager; giữ người nhà trên máy, không di chuyển khách, không cho ăn uống, không hứa 'sẽ ổn thôi'; chuyển câu hỏi về bảo hiểm cho đúng người quyết; và viết biên bản sự cố chỉ ghi sự việc, không đưa chuyện sức khoẻ vào hồ sơ khách.",
   lessons,
 };

@@ -48,10 +48,10 @@ const round = (
 
 // ── Lesson 1 — the people only you can find ────────────────────────────────
 const t1a =
+  "The visitors in the lounge are my priority. They are not on the room list, and I am bringing them out now.";
+const t1b =
   "The boat tour is off site and accounted for. I counted them onto the boat this morning.";
-const t1b = "No. I counted them myself, and I wrote the number down when they left.";
-const t1c =
-  "Yes, the visitors in the lounge are my priority. They are not on the room list, and I am bringing them out.";
+const t1c = "No. I counted them myself, and I wrote the number down when they left.";
 
 // ── Lesson 2 — a lobby that wants answers ──────────────────────────────────
 const t2a = "I do not know that yet, madam. Please move to the garden with me.";
@@ -114,30 +114,31 @@ const lessons = [
       ),
     ],
     speaking: [
+      also(
+        sp(
+          "Duty Manager. The alarm is real. Where are your guests?",
+          t1a,
+          "Nói với Duty Manager thì không cần sir. Khách vãng lai trong lounge không có số phòng, nên danh sách phòng không bao giờ tìm ra họ — chỉ bạn tìm được. Nói họ TRƯỚC: 'my priority'. Rồi nói việc bạn đang làm ngay lúc này.",
+          "manager",
+          ["lounge", "bringing"],
+        ),
+        "The visitors in the lounge are my priority. They are not on the room list, and I am bringing them out.",
+      ),
       sp(
-        "Duty Manager. The alarm is real. Where are your guests?",
-        t1a,
-        "Nói với Duty Manager thì không cần sir. Lễ tân đếm phòng; bạn đếm những người BẠN đã xếp đi nơi khác. Đoàn đi thuyền đang 'off site', và nói luôn bạn biết bằng cách nào: 'I counted them'. Chữ accounted /əˈkaʊntɪd/ — trọng âm ở âm tiết hai.",
+        "Good. And your guests outside the building?",
+        t1b,
+        "Lễ tân đếm phòng; bạn đếm những người BẠN đã xếp đi nơi khác. Đoàn đi thuyền đang 'off site', và nói luôn bạn biết bằng cách nào: 'I counted them'. Chữ accounted /əˈkaʊntɪd/ — trọng âm ở âm tiết hai.",
         "manager",
+        undefined,
+        t1a,
       ),
       sp(
         "Nine on the boat. Is that a guess?",
-        t1b,
+        t1c,
         "Câu hỏi này là để kiểm NGUỒN của con số. Trả lời No, rồi nói bạn đã tự đếm — 'I counted them' — và đã ghi lại lúc nào. Quá khứ của write là wrote /rəʊt/; đừng nói writed.",
         "manager",
         ["counted", "number"],
-        t1a,
-      ),
-      also(
-        sp(
-          "Good. Is there anyone in the building who is not on the room list?",
-          t1c,
-          "Khách vãng lai trong lounge không có số phòng, nên danh sách phòng không bao giờ tìm ra họ — chỉ danh sách của bạn tìm được. Nói họ trước: 'my priority'. Rồi nói việc bạn đang làm ngay lúc này.",
-          "manager",
-          ["lounge", "bringing"],
-          t1b,
-        ),
-        "Yes, the visitors in the lounge are my priority. They are not on the room list, and I am bringing them out now.",
+        t1b,
       ),
       risk(
         also(
@@ -150,6 +151,7 @@ const lessons = [
           ),
           "Which floor, madam, and whereabouts on that floor? I am calling security now.",
           "Thank you, madam. Which floor, and whereabouts on it? I am calling security now.",
+          "Thank you, madam. Which floor is it, and whereabouts? I am calling security now.",
         ),
       ),
       risk(
@@ -163,6 +165,7 @@ const lessons = [
           ),
           "I am not able to confirm that from here, madam. May I have his name and your room number for my Duty Manager?",
           "I cannot confirm that from here, madam, but may I have his name and your room number for my Duty Manager?",
+          "I cannot confirm that from here, madam. May I have his name and room number for my Duty Manager?",
         ),
       ),
       sp(
@@ -478,6 +481,7 @@ Rumours arrive as questions: "Somebody said the kitchen is on fire." Do not argu
           ),
           "May I have her room number, please, madam? I am telling the fire team she cannot manage the stairs.",
           "Her room number, please, madam. I am telling the fire team that she cannot manage the stairs.",
+          "What is her room number, madam? I am telling the fire team she cannot manage the stairs.",
         ),
       ),
       sp(
@@ -646,6 +650,7 @@ And nobody touches the fire panel except security and the fire team.`,
           ["handle", "bringing", "duty", "manager"],
         ),
         "I am sorry, sir, that is not mine to handle. I am bringing my Duty Manager to you now.",
+        "That is not mine to handle, sir. My Duty Manager is coming to you now.",
       ),
     ],
     reading: read(

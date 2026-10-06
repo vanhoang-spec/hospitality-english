@@ -144,12 +144,14 @@ const lessons = [
           ),
           "Of course, sir. Before I order it, does anybody at the table have an allergy?",
           "Of course, sir. Before I order the cake, does anyone at the table have an allergy?",
+          "Of course, sir. Before I order it, does anyone at the table have any allergies?",
+          "Of course, sir. Before I order it, may I ask about allergies at the table? I will write an allergy slip for the pastry chef.",
         ),
       ),
       sp(
         "The couple in 812 have a big bouquet. Shall I send up a honeymoon cake?",
-        "Not from a bouquet. Ask if they are celebrating anything during their stay, and go from their answer.",
-        "ĐỒNG NGHIỆP hỏi. Một bó hoa không cho bạn biết hai người là ai của nhau. Hỏi về kỳ nghỉ — 'celebrating anything' — rồi làm theo câu trả lời.",
+        "Not from a bouquet. Ask if they are celebrating anything during their stay, and plan based on that.",
+        "ĐỒNG NGHIỆP hỏi. Một bó hoa không cho bạn biết hai người là ai của nhau. Hỏi về kỳ nghỉ — 'celebrating anything' — rồi lên kế hoạch 'based on that': dựa trên câu trả lời.",
         "colleague",
       ),
       also(
@@ -160,10 +162,13 @@ const lessons = [
         ),
         "You told us on your last stay, madam, and you were happy for us to keep it on file.",
       ),
-      sp(
-        "We are celebrating our tenth anniversary tonight!",
+      also(
+        sp(
+          "We are celebrating our tenth anniversary tonight!",
+          "Congratulations to you both, madam! May I arrange something tailor-made to make the evening special?",
+          "Chúc mừng trước, hỏi sau. 'May I arrange' là một câu HỎI — khách chọn, 'tailor-made' theo đúng ý khách; đừng tự gửi quà lên phòng.",
+        ),
         "Congratulations to you both, madam! Is there anything we can arrange to make the evening special?",
-        "Chúc mừng trước, hỏi sau. 'Is there anything we can arrange' để khách tự chọn — đừng tự gửi quà lên phòng.",
       ),
     ],
     reading: read(
@@ -480,6 +485,7 @@ Never promise the guest a time that belongs to another team. Promise your own: "
           ),
           "Many happy returns, sir! Let me check with my manager, as a bottle on the house is hers to give.",
           "Happy birthday, sir! A bottle on the house is my manager's to give, so let me check with her now.",
+          "Many happy returns, sir! A bottle on the house is my manager's decision, so let me check with her.",
         ),
       ),
     ],
@@ -640,6 +646,7 @@ If the guest asks for something more, like champagne on the house, that is a gif
             ["free", "dinner", "duty", "decide"],
           ),
           "I am sorry that happened, madam. A free dinner is for my Duty Manager to decide, and I am asking her now.",
+          "I am sorry that happened, madam. A free dinner is my Duty Manager's decision, and I am asking her now.",
           "I am so sorry that happened, madam. My Duty Manager decides on a free dinner, and I am asking her now.",
         ),
       ),

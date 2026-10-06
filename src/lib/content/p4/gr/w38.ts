@@ -58,7 +58,7 @@ const t2a =
 const t2b =
   "Then a rain check or a refund, sir. The concierge desk does both, and I will walk you over.";
 const t2c =
-  "Anything extra is my manager's to give, sir. Let me check with her while the concierge desk does the refund.";
+  "Anything extra is outside what I was given, sir, so it goes back to my manager. The concierge desk does the refund meanwhile.";
 
 // ── Lesson 3 — stranded ────────────────────────────────────────────────────
 const t3a = "I am sorry, madam. I am asking the front office to extend your stay now.";
@@ -68,7 +68,7 @@ const t3c = "Only the airline can change that, madam. May I help you call them f
 // ── Lesson 4 — the storm night ─────────────────────────────────────────────
 const t4a = "It is a power cut from the storm, madam. There is a torch in your wardrobe.";
 const t4b =
-  "I do not know that yet, madam. The generator keeps the corridors lit, and I will call you within the hour.";
+  "I do not know that yet, madam. The generator keeps the corridors lit, and I will check on you within the hour.";
 const t4c =
   "Please use the stairs tonight, madam, not the lift. The stair lights are on the generator.";
 
@@ -138,6 +138,7 @@ const lessons = [
           ),
           "I am not able to promise that, madam. The next update is within the hour, at the lounge desk.",
           "I cannot promise that, madam, but the next update is within the hour, at the lounge desk.",
+          "I cannot promise that, madam. You will have the next update within the hour, at the lounge desk.",
         ),
       ),
       sp(
@@ -151,19 +152,23 @@ const lessons = [
       also(
         sp(
           "Why is the beach closed? It is only a bit of wind.",
-          "A weather warning has been issued, sir, so the beach is closed as a precaution.",
+          "A weather warning has been issued, sir. As a precaution, the beach is not open to guests today.",
           "Nói lý do đến từ đâu — cảnh báo của cơ quan chức năng — rồi nói đó là 'a precaution'. Đừng cãi về cơn gió, và đừng đoán khi nào bãi biển mở lại.",
           undefined,
-          ["weather", "warning", "beach", "closed", "precaution"],
+          ["weather", "warning", "beach", "precaution"],
         ),
         "A weather warning has been issued, sir. The beach is closed as a precaution.",
+        "A weather warning has been issued, sir, so the beach is closed as a precaution.",
       ),
-      sp(
-        "The radio says it will be over by Friday. Shall I tell the guests that?",
+      also(
+        sp(
+          "The radio says it will be over by Friday. Shall I tell the guests that?",
+          "No. Facts only: what the warning says, and when the next update is.",
+          "ĐỒNG NGHIỆP hỏi. Dự báo của đài không phải thông báo của khách sạn. 'Facts only': bạn chỉ nói điều cảnh báo nói, và 'the next update'.",
+          "colleague",
+          ["warning", "next", "update"],
+        ),
         "No. We only say what the warning says, and when the next update is.",
-        "ĐỒNG NGHIỆP hỏi. Dự báo của đài không phải thông báo của khách sạn. Bạn chỉ nói điều cảnh báo nói, và 'the next update'.",
-        "colleague",
-        ["warning", "next", "update"],
       ),
       sp(
         "Duty Manager. What are guests asking at the lounge desk?",
@@ -304,12 +309,13 @@ Read from the notice the Duty Manager gives you. Do not add to it, and do not gu
         sp(
           "A refund, then. And maybe something for the children instead?",
           t2c,
-          "Thứ nằm NGOÀI chương trình — một món quà, một lớp học miễn phí — là của quản lý: 'my manager's to give'. Bạn xin, không hứa, và việc hoàn tiền vẫn đi đúng đường của nó.",
+          "Thứ nằm NGOÀI chương trình — một món quà, một lớp học miễn phí — là 'outside what I was given': nó 'goes back to my manager'. Bạn xin, không hứa, và việc hoàn tiền vẫn đi đúng đường của nó.",
           undefined,
-          ["manager's", "give", "check", "concierge", "desk", "refund"],
+          ["outside", "manager", "concierge", "desk", "refund"],
           t2b,
         ),
         "Anything extra is my manager's to give, sir. Let me check with her while the concierge desk does your refund.",
+        "Anything extra is my manager's to give, sir. Let me check with her while the concierge desk does the refund.",
       ),
       risk(
         also(
@@ -322,23 +328,30 @@ Read from the notice the Duty Manager gives you. Do not add to it, and do not gu
           ),
           "The concierge desk does the refund, madam, as the storm programme says. I can take you over to them now.",
           "The concierge desk does the refund, madam, just as the storm programme says. I can take you to them now.",
+          "The concierge desk does the refund, madam, as the storm programme says. I can walk you over now.",
+          "As the storm programme says, the concierge desk does the refund, madam. I can take you to them now.",
+          "The concierge desk does the refund, madam, as the storm programme says. May I take you to them now?",
         ),
       ),
-      sp(
-        "The cooking class has empty places. Shall I give it free to the family who lost their boat trip?",
+      also(
+        sp(
+          "The cooking class has empty places. Shall I give it free to the family who lost their boat trip?",
+          "What if we ask the manager first? A free class is hers to give, not ours.",
+          "ĐỒNG NGHIỆP hỏi. Một lớp học miễn phí là quà có giá tiền — của quản lý, dù lớp còn trống chỗ. Đề xuất với quản lý — 'What if we ask the manager first?' — đừng tự cho.",
+          "colleague",
+          ["manager", "give"],
+        ),
         "Only if the manager agrees. A free class is hers to give, not ours.",
-        "ĐỒNG NGHIỆP hỏi. Một lớp học miễn phí là quà có giá tiền — của quản lý, dù lớp còn trống chỗ. Đề xuất với quản lý, đừng tự cho.",
-        "colleague",
-        ["manager", "give"],
       ),
       also(
         sp(
           "Can the boat company not just go out this afternoon instead?",
-          "That is the boat company's decision, madam. I will ask the concierge desk and come back within the hour.",
-          "Giờ chạy tàu là của công ty tàu, không phải của bạn — đừng đoán. Nói ai quyết, rồi một mốc giờ của chính bạn: 'within the hour'.",
+          "Although that is the boat company's decision, madam, I will ask the concierge desk and come back within the hour.",
+          "Giờ chạy tàu là của công ty tàu, không phải của bạn — đừng đoán. 'Although' cho vế không phải của bạn, rồi một mốc giờ của chính bạn: 'within the hour'.",
           undefined,
           ["concierge", "desk", "back", "within", "hour"],
         ),
+        "That is the boat company's decision, madam. I will ask the concierge desk and come back within the hour.",
         "That is the boat company's decision, madam. I will ask the concierge desk and come back to you within the hour.",
       ),
     ],
@@ -481,7 +494,7 @@ Do not promise the weather either. "The boat will surely go on Saturday" is a fo
       ),
       sp(
         "Our insurance company wants proof that we were stuck here because of the storm.",
-        "I will ask the front office for a letter confirming your dates, sir, and bring it to you.",
+        "I will ask the front office for a letter confirming your dates, sir, and bring it to you for your insurer.",
         "Thư xác nhận do front office viết; bạn xin giúp khách và mang tới tận tay. Cụm 'confirming your dates' đứng ngay sau 'a letter' — một mệnh đề rút gọn.",
         undefined,
         ["front", "office", "letter", "confirming", "dates"],
@@ -495,8 +508,8 @@ Do not promise the weather either. "The boat will surely go on Saturday" is a fo
       ),
       sp(
         "Duty Manager. Where are we with the stranded guests?",
-        "I have every stranded guest on one sheet, with their rooms and flights, for the front office.",
-        "Báo lên cấp trên thì không cần sir. Một danh sách duy nhất cho front office và Duty Manager — để không vị khách nào phải kể lại chuyện của mình hai lần.",
+        "Every stranded guest is accounted for on one sheet, and I will coordinate their rooms with the front office.",
+        "Báo lên cấp trên thì không cần sir. Một danh sách duy nhất — 'accounted for' — rồi bạn 'coordinate' với front office, để không vị khách nào phải kể lại chuyện của mình hai lần.",
         "manager",
         ["stranded", "sheet", "front", "office"],
       ),
@@ -612,9 +625,9 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
       sp(
         "Found it. When will the power come back on?",
         t4b,
-        "Bạn không biết, và kỹ thuật có khi cũng chưa biết — nói đúng câu đã học: 'I do not know that yet'. Rồi thứ còn chạy ('the generator') và một mốc giờ của chính bạn.",
+        "Bạn không biết, và kỹ thuật có khi cũng chưa biết — nói đúng câu đã học: 'I do not know that yet'. Rồi thứ còn chạy ('the generator') và một mốc giờ của chính bạn: 'check on you' — tới hỏi thăm khách.",
         undefined,
-        ["yet", "generator", "call", "within", "hour"],
+        ["yet", "generator", "check", "within", "hour"],
         t4a,
       ),
       sp(
@@ -629,24 +642,26 @@ Keep one sheet of every stranded guest for the front office and the Duty Manager
         also(
           sp(
             "Hello? The lift has stopped between floors, and the light has gone off!",
-            "Please stay on the line, sir. I am calling security to you now.",
+            "Please stay on the line, sir. I am calling security now.",
             "Giữ khách trên máy bằng đúng câu đã học — 'stay on the line' — và gọi bảo vệ. Đừng tự đi mở cửa thang máy, và đừng hứa mấy phút nữa sẽ ra được.",
             undefined,
             ["stay", "line", "calling", "security"],
           ),
-          "Please stay on the line with me, sir. I am calling security to you now.",
+          "Please stay on the line with me, sir. I am calling security now.",
           "Please stay on the line, sir. I am calling security for you right now.",
+          "I am calling security now, sir. Please stay on the line.",
         ),
       ),
       also(
         sp(
           "I am worried about the windows. They are shaking in the wind.",
-          "I understand you are worried about the windows, madam. Please wait in the corridor, away from them.",
-          "Khách lo là đúng — đừng nói nothing to worry about. Nhắc lại đúng nỗi lo bằng 'worried about', rồi một việc để làm: chờ ở hành lang, tránh xa cửa kính.",
+          "I understand you are worried about the windows, madam. Please move to the corridor, away from them.",
+          "Khách lo là đúng — đừng nói nothing to worry about. Nhắc lại đúng nỗi lo bằng 'worried about', rồi một việc để làm: 'Please move to' hành lang, tránh xa cửa kính.",
           undefined,
           ["worried", "windows"],
         ),
         "I understand you are worried about the windows, madam. Please wait in the corridor, away from the windows.",
+        "I understand you are worried about the windows, madam. Please wait in the corridor, away from them.",
       ),
       sp(
         "Guests in the lounge keep asking when the power will be back on.",

@@ -579,6 +579,7 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
           ),
           "Other guests are not part of the story, madam. May I show you the history folder instead?",
           "I am not able to talk about other guests, madam, but may I show you the history folder?",
+          "Other guests are not part of the story, madam. Would you like to see the history folder?",
         ),
       ),
       risk(
@@ -593,6 +594,7 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
           ),
           "Not even then, madam. The guest privacy rule does not end at check-out.",
           "No, madam. The guest privacy rule does not end when a guest checks out.",
+          "I am afraid not, madam. The guest privacy rule does not end at check-out.",
         ),
       ),
       sp(
@@ -614,7 +616,7 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
         "May I have both names, madam, yours and your friend's? I will telephone from the desk.",
       ),
       sp(
-        "It is Mrs Lan. I am her sister.",
+        "I am Mai, and my friend is Mrs Lan.",
         t4e,
         "Mời khách ngồi, rồi gọi. Đừng nhắc lại tên và số phòng thành tiếng ở sảnh — người khác đang nghe.",
         undefined,
@@ -633,6 +635,10 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
           ),
           "I am afraid I am not able to connect you, madam. May I take a message for her?",
           "I am sorry, madam, I cannot connect you. May I take a message?",
+          "I am afraid I cannot connect you, madam. Would you like to leave a message?",
+          "I am afraid I cannot connect you, madam, but I can take your name and a message.",
+          "I cannot connect you, madam, but I can take your name and a message.",
+          "I cannot confirm who is staying with us, madam, but I can take a message.",
         ),
       ),
       risk(
@@ -646,6 +652,7 @@ And you describe; you do not book. A table, a boat or a city tour belongs to the
           ),
           "Of course, sir, I will help you. I am calling my Duty Manager for you from the desk now.",
           "Certainly, sir. I am calling my Duty Manager from the desk now, and he will help you.",
+          "Of course, sir. Let me call my Duty Manager for you from the desk.",
         ),
       ),
       sp(

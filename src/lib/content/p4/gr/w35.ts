@@ -43,17 +43,17 @@ const round = (
 const t1a = "What if we make his room the priority, and swap it with the next one on your list?";
 const t1b =
   "In exchange for that, I will look after the next guest in the lounge until the room is ready.";
-const t1c = "Can we meet halfway at one o'clock? I will tell the guest myself.";
+const t1c = "Can we meet halfway at one o'clock? I will tell the guest the timing myself.";
 
 // ── Lesson 2 — the range comes first ───────────────────────────────────────
 const t2a =
   "Before we sit down with him, I must have the range. Money off a bill is my Duty Manager's to set.";
 const t2b = "What I may offer, what I may not offer, and who signs it.";
-const t2c = "Thank you. I will write it down now, and the range stays with me.";
+const t2c = "Thank you. I will write it all down now, and the range stays with me.";
 
 // ── Lesson 3 — however: the part that does not move ────────────────────────
 const t3a = "I can put the suite to my manager; however, the rate is the part I cannot move, sir.";
-const t3b = "Although the transfer is not mine to give, I can ask my Duty Manager about it today.";
+const t3b = "Although the transfer is not my decision, I can ask my Duty Manager about it today.";
 const t3c =
   "Your tier is not mine to trade, sir. The loyalty office decides, and I will write to them today.";
 
@@ -124,7 +124,7 @@ const lessons = [
       sp(
         "Fine, but noon is impossible. Two o'clock, as normal.",
         t1c,
-        "ĐỒNG NGHIỆP hỏi. Không ai được trọn ý mình thì 'meet halfway'. Và giờ báo cho khách là việc của bạn — bạn tự nói, sau khi tổ đã nhận.",
+        "ĐỒNG NGHIỆP hỏi. Không ai được trọn ý mình thì 'meet halfway'. Và báo giờ mới — 'the timing' — cho khách là việc của bạn: bạn tự nói, sau khi tổ đã nhận.",
         "colleague",
         undefined,
         t1b,
@@ -132,11 +132,12 @@ const lessons = [
       also(
         sp(
           "Kitchen. You want the birthday cake at seven, but we are fully booked until nine.",
-          "What if we bring it out at nine, with dessert? I will ask the guest first, of course.",
-          "ĐỒNG NGHIỆP hỏi. Đề xuất một giờ khác bằng 'What if we', nhưng giờ của bữa tiệc là của KHÁCH — hỏi khách trước khi nhận.",
+          "What if we bring it out at nine, with dessert? I will ask the guest first, and then update the run sheet.",
+          "ĐỒNG NGHIỆP hỏi. Đề xuất một giờ khác bằng 'What if we', nhưng giờ của bữa tiệc là của KHÁCH — hỏi khách trước khi nhận, rồi mới sửa giờ trên 'the run sheet'.",
           "colleague",
         ),
         "What if we bring it out at nine, with the dessert? I will ask the guest first.",
+        "What if we bring it out at nine, with dessert? I will ask the guest first, of course.",
       ),
       sp(
         "Concierge. Two guests want the hotel car at ten, and we only have one.",
@@ -147,11 +148,13 @@ const lessons = [
       also(
         sp(
           "Can you take my lounge hour at six? I will do your arrivals in the morning.",
-          "Happy to swap, in exchange for my morning arrivals. Let us tell the manager first.",
-          "ĐỒNG NGHIỆP hỏi. Đổi việc giữa hai người thì được — 'swap' — nhưng phải báo quản lý TRƯỚC khi đổi, không phải sau.",
+          "Happy to swap, in exchange for my morning arrivals. One more thing: let us tell the manager first.",
+          "ĐỒNG NGHIỆP hỏi. Đổi việc giữa hai người thì được — 'swap' — nhưng 'one more thing': phải báo quản lý TRƯỚC khi đổi, không phải sau.",
           "colleague",
+          ["one", "more", "thing"],
         ),
         "Happy to swap, in exchange for my morning arrivals. Let us ask the manager first.",
+        "Happy to swap, in exchange for my morning arrivals. Let us tell the manager first.",
       ),
     ],
     reading: read(
@@ -294,6 +297,7 @@ And what you trade must be yours: your time, your desk, your phone call to the g
           ),
           "I am not able to give you a figure, sir. What I can do is put your request to my Duty Manager today.",
           "That is not a figure I can give, sir, but I can put your request to my Duty Manager today.",
+          "I cannot promise a figure, sir. I can put your request to my Duty Manager today.",
         ),
       ),
       risk(
@@ -307,6 +311,8 @@ And what you trade must be yours: your time, your desk, your phone call to the g
           ),
           "That is outside what I was given, sir. I will put it to my manager this afternoon.",
           "I am afraid that is outside what I was given, sir, but I will put it to my manager this afternoon.",
+          "That is outside what I was given, sir. I will ask my manager this afternoon.",
+          "An upgrade is outside what I was given, sir, and I will put it to my manager this afternoon.",
         ),
       ),
       also(
@@ -456,11 +462,12 @@ Some things stay outside the range whatever your manager says. The room the gues
       also(
         sp(
           "Can you waive the cancellation fee if we stay one more night?",
-          "Although the fee is not mine to waive, I can put it to my Duty Manager once you confirm the extra night.",
+          "Although the fee is not my decision, I can put it to my Duty Manager once you confirm the extra night.",
           "'Although' cho vế khó, rồi việc bạn làm được, gắn với điều kiện khách đưa ra. Phí huỷ là tiền — Duty Manager quyết.",
           undefined,
           ["fee", "duty", "manager"],
         ),
+        "Although the fee is not mine to waive, I can put it to my Duty Manager once you confirm the extra night.",
         "Although the fee is not mine to waive, I can put it to my Duty Manager if you confirm the extra night.",
       ),
       risk(
@@ -474,6 +481,7 @@ Some things stay outside the range whatever your manager says. The room the gues
           ),
           "I understand, madam; however, the rate is the part I cannot move. I will ask my manager about the rest.",
           "I understand, madam. The rate is the part I cannot move; however, I will ask my manager about the rest.",
+          "I understand, madam. However, the rate is the part I cannot move, and I will put the rest to my manager.",
         ),
       ),
     ],
@@ -605,6 +613,8 @@ Say one refusal at a time. Three refusals in one breath sound like a policy; one
           ),
           "That one goes back to my manager, sir. I will come back to you within the hour.",
           "The spa goes back to my manager, sir, and I will come back to you within the hour.",
+          "The spa is my manager's to give, sir, and I will come back to you within the hour.",
+          "That goes back to my manager, sir. I will come back within the hour.",
         ),
       ),
       sp(
@@ -632,6 +642,7 @@ Say one refusal at a time. Three refusals in one breath sound like a policy; one
           ),
           "I am not able to write that, madam. Once my manager agrees, it goes on the paper, and not before.",
           "I cannot write that yet, madam. It goes on the paper once my manager agrees.",
+          "I cannot write that, madam. It goes on the paper once my manager agrees, and not before.",
         ),
       ),
       sp(
