@@ -1,6 +1,8 @@
 // SW week 36 — Emergencies in the spa: an urgent instruction is ONE action
-// and ONE time ("The nurse will be here in two minutes"). Hand-authored
-// Phase 4, see ../kit.ts.
+// and ONE anchor the speaker owns ("Please rest here until the nurse comes";
+// "The nurse is on her way") — never a number of minutes promised for the
+// nurse, whose time is not the spa's to give. Hand-authored Phase 4, see
+// ../kit.ts.
 //
 // Every emergency below follows the house order that week 33 taught for a
 // burn: stop, call, stay. A guest who swells or is short of breath during a
@@ -25,7 +27,7 @@ const L = lessonsFor("SW");
 const t1a =
   "I can see the swelling, madam. I will stop now and clean the cream off with cool water.";
 const t1b = "I am pressing the emergency button now, madam, and I will stay with you.";
-const t1c = "I am not sure, madam, but the nurse will be here in two minutes.";
+const t1c = "I am not sure, madam, but the nurse is on her way.";
 
 const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở lại với khách", {
   vocabulary: [
@@ -63,10 +65,10 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
       "I pressing the emergency button now, madam.",
     ),
     g(
-      "Nurse come, two minute.",
-      "The nurse will be here in two minutes, madam.",
-      "Một mốc giờ: 'in two minutes' = hai phút NỮA, tính từ bây giờ. 'after two minutes' là lỗi dịch thẳng 'sau hai phút' và không dùng để báo ai sắp tới.",
-      "The nurse will be here after two minutes, madam.",
+      "Nurse come. Wait.",
+      "The nurse is on her way, madam.",
+      "'is' không được bỏ: 'The nurse is on her way' = y tá đang trên đường tới. Người Việt hay bỏ 'is' vì tiếng Việt chỉ nói 'Y tá đang tới'. Không hứa một số phút thay y tá — giờ y tá tới không phải việc của spa.",
+      "The nurse on her way, madam.",
     ),
   ],
   speaking: [
@@ -95,14 +97,17 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
       ...sp(
         "Is it serious? When is the nurse coming?",
         t1c,
-        "Không chẩn đoán. Trấn an bằng một mốc giờ có thật: y tá tới trong hai phút.",
+        "Không chẩn đoán, và không hứa số phút thay y tá. Trấn an bằng một điều có thật: y tá đang trên đường tới.",
         undefined,
-        ["nurse", "minutes"],
+        ["nurse"],
         t1b,
       ),
       alsoAccept: [
-        "I cannot say, madam, but the nurse will be here in two minutes.",
-        "I am not sure, madam. The nurse will be here in two minutes.",
+        "I cannot say, madam, but the nurse is on her way.",
+        "I am not sure, madam. The nurse is on her way.",
+        "I am not sure, madam, but the nurse is coming now.",
+        "I am not sure, madam. The hotel nurse is coming now, and I will stay with you.",
+        "I cannot say, madam, but the hotel nurse is on her way, and I will stay with you.",
       ],
     }),
     risk({
@@ -116,6 +121,7 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
       alsoAccept: [
         "Please call 115 for an ambulance now. Then please tell the Duty Manager.",
         "Please call 115 for an ambulance now, and then tell the manager on duty.",
+        "Please call 115 for an ambulance now. After that, please tell the Duty Manager.",
       ],
     }),
     {
@@ -144,7 +150,7 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
     ),
   ],
   reading: read(
-    `Ms Laurent is having a facial on Tuesday afternoon. After ten minutes, she says her lips feel strange. Hien, her therapist, looks closely and sees swelling on her lips. She stops at once and cleans the cream off with cool water. Then Ms Laurent says it is getting hard to breathe. Hien presses the emergency button, which calls the spa desk and the hotel nurse. She tells Ms Laurent that she will stay with her. Her colleague, Tam, runs in. Hien asks Tam to call 115 for an ambulance, and then to tell the Duty Manager. Ms Laurent asks if it is serious. Hien does not guess. She says she is not sure, and that the nurse will be there in two minutes. The nurse arrives in two minutes, and the ambulance arrives soon after. Ms Laurent's husband wants to drive her to the hospital himself. Hien asks him to wait with his wife until the ambulance arrives. Later, Hien writes every detail in an incident report. She also puts the cream on Ms Laurent's file, so nobody uses it on her again.`,
+    `Ms Laurent is having a facial on Tuesday afternoon. After ten minutes, she says her lips feel strange. Hien, her therapist, looks closely and sees swelling on her lips. She stops at once and cleans the cream off with cool water. Then Ms Laurent says it is getting hard to breathe. Hien presses the emergency button, which calls the spa desk and the hotel nurse. She tells Ms Laurent that she will stay with her. Her colleague, Tam, runs in. Hien asks Tam to call 115 for an ambulance, and then to tell the Duty Manager. Ms Laurent asks if it is serious. Hien does not guess. She says she is not sure, and that the nurse is on her way. The nurse arrives two minutes later, and the ambulance arrives soon after. Ms Laurent's husband wants to drive her to the hospital himself. Hien asks him to wait with his wife until the ambulance arrives. Later, Hien writes every detail in an incident report. She also puts the cream on Ms Laurent's file, so nobody uses it on her again.`,
     [
       {
         q: "Hiền làm gì ngay khi thấy môi khách sưng?",
@@ -183,12 +189,12 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
   ),
   game: [
     game(
-      "My lips feel tight, and my face is swelling.",
-      "I will stop now, madam, and clean the cream off with cool water.",
+      "My arms are itching badly, and red spots are coming up.",
+      "I will stop the scrub now, madam, and wash it off with cool water.",
       "Please stay calm, madam. It is only a small reaction, and it will goes away in a few minutes.",
       "Please stay calm, madam. It is only a small reaction, and it will go away in a few minutes.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự đoán 'chỉ là phản ứng nhẹ' — nhân viên không chẩn đoán, và môi sưng có thể là dị ứng nặng. Câu đúng dừng ngay và lau sạch kem.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự đoán 'chỉ là phản ứng nhẹ' — nhân viên không chẩn đoán, và da nổi mẩn có thể là dị ứng nặng. Câu đúng dừng ngay và rửa sạch sản phẩm bằng nước mát.",
     ),
     game(
       "The guest in room two has chest pain. Should I call the Duty Manager?",
@@ -204,7 +210,7 @@ const lesson1 = L(36, 1, "Stop, Call, Stay", "Dừng lại, gọi người, ở 
 // ── Lesson 2 — Too much heat ───────────────────────────────────────────
 const t2a = "Please walk out of the steam room with me, madam, and rest in the cool area.";
 const t2b = "Of course, madam. Please sip this water slowly, and I am calling the hotel nurse now.";
-const t2c = "Please rest here until the nurse comes, madam. She will be here in five minutes.";
+const t2c = "Please rest here until the nurse comes, madam. She is on her way.";
 
 const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
   vocabulary: [
@@ -251,6 +257,7 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
       alsoAccept: [
         "Please walk out of the steam room with me, madam, and sit in the cool area.",
         "Please come out of the steam room with me, madam, and rest in the cool area.",
+        "Please come out of the steam room with me now, madam, and sit down in the cool area.",
       ],
     }),
     {
@@ -270,26 +277,42 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
       ...sp(
         "I feel better already. Can I go back into the steam room?",
         t2c,
-        "Khách thấy đỡ vẫn chưa quay lại chỗ nóng. Một việc (nghỉ ở đây) và một mốc giờ (năm phút nữa y tá tới).",
+        "Khách thấy đỡ vẫn chưa quay lại chỗ nóng. Một việc (nghỉ ở đây) và một mốc bạn giữ được: tới khi y tá đến. Không hứa số phút thay y tá.",
         undefined,
         undefined,
         t2b,
       ),
       alsoAccept: [
-        "Please rest here until the nurse comes, madam. She will be here in five minutes' time.",
+        "Please rest here until the nurse comes, madam. She is coming now.",
+        "Please rest here until the nurse has seen you, madam. She is on her way.",
       ],
     },
-    sp(
-      "Come quickly! My husband passed out in the sauna!",
-      "I am coming with you now, madam, and my colleague is calling the hotel nurse.",
-      "Đi ngay cùng khách, và nói rõ ai đang gọi y tá — không ai phải tự đi tìm người giúp.",
-    ),
-    sp(
-      "A guest in the sauna says she is light-headed.",
-      "If she is light-headed, please walk her out to the cool area. I am calling the nurse now.",
-      "Nói với đồng nghiệp — không dùng sir hay madam. Giao một việc cụ thể cho đồng nghiệp, còn bạn gọi y tá.",
-      "colleague",
-    ),
+    risk({
+      ...sp(
+        "Come quickly! My husband passed out in the sauna!",
+        "I am coming with you now, madam, and my colleague is calling 115 and the hotel nurse.",
+        "Khách ngất trong chỗ nóng là cấp cứu: đi ngay cùng khách, và nói rõ đồng nghiệp đang gọi 115 và y tá — không ai phải tự đi tìm người giúp.",
+        undefined,
+        ["colleague", "calling", "nurse"],
+      ),
+      alsoAccept: [
+        "I am coming with you now, madam, and my colleague is calling the hotel nurse and 115.",
+        "I am coming with you now, madam. My colleague is calling 115 and the hotel nurse.",
+        "Please show me where he is, madam. My colleague is calling 115 and the hotel nurse now.",
+      ],
+    }),
+    {
+      ...sp(
+        "A guest in the sauna says she is light-headed.",
+        "If she is light-headed, please walk her out to the cool area. I am calling the nurse now.",
+        "Nói với đồng nghiệp — không dùng sir hay madam. Giao một việc cụ thể cho đồng nghiệp, còn bạn gọi y tá.",
+        "colleague",
+      ),
+      alsoAccept: [
+        "Please walk her out to the cool area, and I am calling the nurse now.",
+        "Please walk her to the cool area, and I will call the nurse now.",
+      ],
+    },
     sp(
       "Why is the steam room closed this afternoon?",
       "A guest was overheated, and the steam room was hotter than normal, so I closed it until engineering checks it.",
@@ -357,8 +380,7 @@ const lesson2 = L(36, 2, "Too Much Heat", "Khi khách bị quá nóng", {
 
 // ── Lesson 3 — Something wrong with the pool water ─────────────────────
 const t3a = "Thank you, madam. Please step out of the pool now, and we will check the water.";
-const t3b =
-  "Please rinse your eyes with fresh water, madam, and the nurse will see you in five minutes.";
+const t3b = "Please rinse your eyes with fresh water, madam, and the nurse is on her way.";
 const t3c =
   "I am sorry, madam. We will close off the pool until the water test is clear, and I will call your room by four.";
 
@@ -416,19 +438,21 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
       alsoAccept: [
         "Thank you for telling me, madam. Please step out of the pool now, and we will check the water.",
         "Thank you, madam. Please step out of the pool now while we check the water.",
+        "Thank you for telling me, madam. Please get out of the pool now, and we will check the water.",
       ],
     }),
     {
       ...sp(
         "My eyes are a bit red and itchy.",
         t3b,
-        "Một việc khách tự làm ngay (rửa mắt bằng nước sạch) và một mốc giờ (y tá tới trong năm phút).",
+        "Một việc khách tự làm ngay (rửa mắt bằng nước sạch), và nói thật: y tá đang trên đường tới — không hứa số phút thay y tá.",
         undefined,
         undefined,
         t3a,
       ),
       alsoAccept: [
-        "Please rinse your eyes with fresh water, madam. The nurse will see you in five minutes.",
+        "Please rinse your eyes with fresh water, madam. The nurse is on her way.",
+        "Please rinse your eyes with fresh water, madam, and the nurse is coming now.",
       ],
     },
     {
@@ -458,14 +482,15 @@ const lesson3 = L(36, 3, "Something Wrong With the Water", "Khi nước hồ bơ
     risk({
       ...sp(
         "Quick! A swimmer is in trouble in the deep end!",
-        "Thank you, sir. I am calling the lifeguard now, and I will stay at the pool.",
-        "Người bơi gặp nạn: gọi cứu hộ ('lifeguard') NGAY, và bạn ở lại bên hồ. Không tự nhảy xuống khi bạn không phải cứu hộ.",
+        "I am calling the lifeguard now, sir, and I will stay at the pool.",
+        "Người bơi gặp nạn: hành động trước, không cảm ơn, không hỏi lại. Gọi cứu hộ ('lifeguard') NGAY, và bạn ở lại bên hồ. Không tự nhảy xuống khi bạn không phải cứu hộ.",
         undefined,
         ["calling", "lifeguard", "stay", "pool"],
       ),
       alsoAccept: [
-        "Thank you, sir. I am calling the lifeguard right now, and I will stay at the pool.",
-        "Thank you, sir. I will call the lifeguard now, and I will stay at the pool.",
+        "I am calling the lifeguard right now, sir, and I will stay at the pool.",
+        "I will call the lifeguard now, sir, and I will stay at the pool.",
+        "I will call the lifeguard now and stay at the pool, sir.",
       ],
     }),
     sp(
@@ -629,6 +654,8 @@ const lesson4 = L(36, 4, "Storms and Power Cuts", "Giông bão và mất điện
       alsoAccept: [
         "I am sorry, sir. There is lightning near the hotel, so please step out of the pool now.",
         "I am sorry, sir. There is lightning, so please step out of the pool straight away.",
+        "I am sorry, sir. There is lightning, so please get out of the pool now.",
+        "I'm sorry, sir, there is lightning. Please get out of the pool now.",
       ],
     }),
     sp(
@@ -707,5 +734,5 @@ export const week: AuthoredWeek = {
   title: { en: "Emergencies in the Spa", vi: "Sự cố khẩn cấp ở spa" },
   lessons: [lesson1, lesson2, lesson3, lesson4],
   canDo:
-    "Nói được: xử lý sự cố khẩn cấp ở spa bằng hướng dẫn ngắn 'một việc + một mốc giờ' ('The nurse will be here in two minutes') — dừng liệu trình khi khách sưng hay khó thở, bấm nút khẩn cấp, nhờ đồng nghiệp gọi 115 trước rồi mới báo Quản lý trực, ở lại với khách; đưa khách choáng váng ra khu vực mát; mời khách lên bờ khi nước có mùi hoá chất hay khi có sét, gọi cứu hộ khi có người bơi gặp nạn; ở lại bên khách khi mất điện — không chẩn đoán, không bảo khách 'bình tĩnh', không hứa giờ thay bộ phận khác.",
+    "Nói được: xử lý sự cố khẩn cấp ở spa bằng hướng dẫn ngắn 'một việc + một mốc' ('Please rest here until the nurse comes') — dừng liệu trình khi khách sưng hay khó thở, bấm nút khẩn cấp, nhờ đồng nghiệp gọi 115 trước rồi mới báo Quản lý trực, ở lại với khách; khách ngất trong chỗ nóng thì gọi 115 và y tá; đưa khách choáng váng ra khu vực mát; mời khách lên bờ khi nước có mùi hoá chất hay khi có sét, gọi cứu hộ khi có người bơi gặp nạn; ở lại bên khách khi mất điện — không chẩn đoán, không bảo khách 'bình tĩnh', không hứa số phút thay y tá hay bộ phận khác ('The nurse is on her way').",
 };

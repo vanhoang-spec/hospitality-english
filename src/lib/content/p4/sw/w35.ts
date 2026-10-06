@@ -81,6 +81,7 @@ const lesson1 = L(35, 1, "What If We…?", "Đề xuất phương án khác", {
       ),
       alsoAccept: [
         "What if we start earlier in the afternoon instead? The couple's suite is free in the afternoon.",
+        "What if we start earlier in the afternoon? The couple's suite is free then.",
       ],
     },
     sp(
@@ -102,6 +103,9 @@ const lesson1 = L(35, 1, "What If We…?", "Đề xuất phương án khác", {
       alsoAccept: [
         "I am sorry, madam. I cannot offer a discount myself, but I will ask my manager.",
         "I am sorry, madam. I am not able to offer a discount, but I will ask my manager.",
+        "I am sorry, madam. I cannot give a discount, but I will ask my manager.",
+        "I am sorry, madam. I am not able to give a discount, but I will ask my manager.",
+        "I am sorry, madam. A discount is my manager's decision, so I will ask her.",
       ],
     }),
     {
@@ -369,6 +373,9 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
       alsoAccept: [
         "I am sorry, sir. I cannot waive the fee. However, I will ask my manager today.",
         "I am sorry, sir, I cannot waive the fee; however, I will ask my manager today.",
+        "I cannot waive the cancellation fee, sir, but I can ask my manager for you.",
+        "I understand, sir. I cannot waive the cancellation fee, but I will ask my manager this afternoon.",
+        "I am sorry, sir. Waiving the fee is my manager's decision, so I will ask her today.",
       ],
     }),
     sp(
@@ -418,6 +425,9 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
       alsoAccept: [
         "I am sorry, madam. We cannot let you use the sauna after alcohol. However, you can rest in the quiet corner.",
         "I am sorry, madam. After alcohol, we cannot let you use the sauna; however, you can rest in the quiet corner.",
+        "I am sorry, madam. You cannot use the sauna after alcohol; however, you can rest in the quiet corner.",
+        "I am sorry, madam. You cannot use the sauna after alcohol, but you can rest in the quiet corner.",
+        "I am sorry, madam. After wine, we cannot let you use the sauna, but the relaxing area is open.",
       ],
     }),
   ],
@@ -481,7 +491,7 @@ const lesson3 = L(35, 3, "However: Holding the Line", "'However' — giữ vữn
 
 // ── Lesson 4 — Agreeing and confirming ─────────────────────────────────
 const t4a =
-  "That is a lovely way to celebrate, madam. What if we split the group into two times, at two and at four?";
+  "That is a lovely way to celebrate, madam. What if we split the group into two time slots, at two and at four?";
 const t4b =
   "Yes, madam. I can hold the rooms until noon tomorrow, and that is the deadline for your answer.";
 
@@ -507,7 +517,11 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
       "Đặt chỗ theo nhóm",
       "👥",
     ]),
-    c("Split", "We can split the group into two times.", ["/splɪt/", "Chia ra, tách ra", "✂️"]),
+    c("Split", "We can split the group into two time slots.", [
+      "/splɪt/",
+      "Chia ra, tách ra",
+      "✂️",
+    ]),
   ],
   grammar: [
     g(
@@ -518,9 +532,9 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
     ),
     g(
       "Twelve people, two groups, okay?",
-      "What if we split the group into two times?",
+      "What if we split the group into two time slots?",
       "'What if we + động từ nguyên mẫu': 'split', không thêm -s. 'split… into…' = chia thành.",
-      "What if we splits the group into two times?",
+      "What if we splits the group into two time slots?",
     ),
   ],
   speaking: [
@@ -561,11 +575,12 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
       alsoAccept: [
         "Thank you, madam. I am not able to offer a group discount, but I will ask my manager today.",
         "Thank you, madam. I cannot offer a group discount myself, but I will ask my manager today.",
+        "Thank you, madam. A group discount is my manager's decision, so I will ask her today.",
       ],
     }),
     sp(
       "A group booking of twelve wants all the massages at the same time. Can we do it?",
-      "Not all at once. However, we can split the group into two times.",
+      "Not all at once. However, we can split the group into two time slots.",
       "Nói với đồng nghiệp — không dùng sir hay madam. Nói thật giới hạn, rồi 'However' đưa giải pháp.",
       "colleague",
     ),
@@ -577,7 +592,7 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
     ),
   ],
   reading: read(
-    `Ms Lopez calls the spa on Tuesday. She is organising a day for twelve friends before a wedding, and they all want massages at two on Friday. Trang knows the spa cannot give twelve massages at the same time. She congratulates Ms Lopez, and then she makes a suggestion: what if they split the group into two times, at two and at four? Ms Lopez likes the idea, but she must ask her friends. Trang offers to hold the rooms until noon on Wednesday, and she explains that this is the deadline for an answer. Ms Lopez also asks for a group discount. Trang says she cannot offer one, but she will ask her manager the same day. On Wednesday morning, Ms Lopez calls back and says yes to the two times. The manager offers complimentary herbal tea for the group, but no discount. Trang sends the agreement by email, so all twelve friends have the same times.`,
+    `Ms Lopez calls the spa on Tuesday. She is organising a day for twelve friends before a wedding, and they all want massages at two on Friday. Trang knows the spa cannot give twelve massages at the same time. She congratulates Ms Lopez, and then she makes a suggestion: what if they split the group into two time slots, at two and at four? Ms Lopez likes the idea, but she must ask her friends. Trang offers to hold the rooms until noon on Wednesday, and she explains that this is the deadline for an answer. Ms Lopez also asks for a group discount. Trang says she cannot offer one, but she will ask her manager the same day. On Wednesday morning, Ms Lopez calls back and says yes to the two time slots. The manager offers complimentary herbal tea for the group, but no discount. Trang sends the agreement by email, so all twelve friends have the same times.`,
     [
       {
         q: "Trang đề xuất gì cho nhóm mười hai người?",
@@ -587,7 +602,7 @@ const lesson4 = L(35, 4, "Agreeing and Confirming", "Chốt thoả thuận", {
           "Chia nhóm thành hai khung giờ",
         ],
         correct: 2,
-        explanation: "'what if they split the group into two times, at two and at four?'",
+        explanation: "'what if they split the group into two time slots, at two and at four?'",
       },
       {
         q: "Hạn chót để khách trả lời là khi nào?",

@@ -69,14 +69,19 @@ const lesson1 = L(32, 1, "Based on What You Told Me", "Tư vấn dựa trên l�
         "Welcome, madam. Many guests with jet lag find a gentle massage refreshing, and we can personalise it.",
       ],
     },
-    sp(
-      "What do you need to know?",
-      t1b,
-      "Hai câu hỏi tư vấn trong một lượt: chỗ căng cứng nhất, và lực ấn khách thích.",
-      undefined,
-      undefined,
-      t1a,
-    ),
+    {
+      ...sp(
+        "What do you need to know?",
+        t1b,
+        "Hai câu hỏi tư vấn trong một lượt: chỗ căng cứng nhất, và lực ấn khách thích.",
+        undefined,
+        undefined,
+        t1a,
+      ),
+      alsoAccept: [
+        "Where do you feel the most tension, and would you prefer light or firm pressure?",
+      ],
+    },
     {
       ...sp(
         "My neck and shoulders, and light pressure, please.",
@@ -106,6 +111,8 @@ const lesson1 = L(32, 1, "Based on What You Told Me", "Tư vấn dựa trên l�
       alsoAccept: [
         "Thank you, madam. Based on that, I will ask my manager first.",
         "Thank you for telling me, madam. Based on that, I will check with my manager first.",
+        "Thank you, madam. I will check with my manager first.",
+        "Congratulations, madam. I will check with my manager first.",
       ],
     }),
     sp(
@@ -399,6 +406,8 @@ const lesson3 = L(32, 3, "Returning Guests: Ask Again", "Khách quen: vẫn hỏ
       alsoAccept: [
         "I am sorry, madam. We check the form at every visit, because your health can change.",
         "I am sorry, madam. We check the health form at every visit, because health can change.",
+        "I am sorry, madam, we cannot skip it. We check the health form at every visit, because health can change.",
+        "I am sorry, madam. We check the form at every visit, because health can change in a year.",
       ],
     }),
     risk({
@@ -412,6 +421,9 @@ const lesson3 = L(32, 3, "Returning Guests: Ask Again", "Khách quen: vẫn hỏ
       alsoAccept: [
         "Thank you for telling me, sir. Please add your medication to the health declaration form, and I will check with my supervisor first.",
         "Thank you, sir. Please write your medication on the health declaration form, and I will check with my supervisor first.",
+        "Thank you, sir. Please write your medication on the health form, and I will check with my supervisor first.",
+        "Thank you for telling me, sir. Please add the medication to the form, and I will check with my supervisor first.",
+        "Thank you, sir. Please add your medication to the form, because the massage needs my supervisor's approval first.",
       ],
     }),
     sp(
@@ -575,6 +587,8 @@ const lesson4 = L(32, 4, "Advice for After the Treatment", "Lời khuyên sau li
       alsoAccept: [
         "I am sorry, sir. I cannot tell you what is on her health form, but you can ask her.",
         "I am sorry, sir. Her health form is private, but you can ask her.",
+        "I am sorry, sir. I cannot share her health form with you, but you can ask her.",
+        "I am sorry, sir. That is private, but you can ask your wife.",
       ],
     }),
   ],

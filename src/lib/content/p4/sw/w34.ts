@@ -5,8 +5,8 @@
 // A celebration changes nothing about the rules, and every lesson below
 // meets one of them on the way: another team's time is asked for, not
 // promised ("I will ask the kitchen and come back to you by five"); an
-// allergy goes to the kitchen IN WRITING; champagne is served after the heat,
-// never before it; a free bottle or a free cake is the manager's decision; a
+// allergy goes to the kitchen IN WRITING; champagne is served after the heat
+// and a rest with some water, never before it; a free bottle or a free cake is the manager's decision; a
 // caller who wants a guest's room number for a surprise is not given it, and
 // is not told whether the guest is staying; flowers mean asking about pollen
 // first; and a surprise massage for a mother-to-be still waits for the
@@ -90,11 +90,12 @@ const lesson1 = L(34, 1, "Finding Out the Occasion", "Tìm hiểu dịp đặc b
     {
       ...sp(
         "We are on our honeymoon!",
-        "Congratulations, madam! How can we make your honeymoon special at the spa?",
+        "Congratulations, madam! How can we make your honeymoon memorable at the spa?",
         "Chúc mừng ngắn, rồi hỏi khách muốn gì — chưa tự bày thêm.",
       ),
       alsoAccept: [
-        "Congratulations, madam! How can we make your honeymoon special here at the spa?",
+        "Congratulations, madam! How can we make your honeymoon memorable here at the spa?",
+        "Congratulations, madam! How can we make your honeymoon special at the spa?",
       ],
     },
     sp(
@@ -232,6 +233,7 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
       alsoAccept: [
         "Thank you for telling me, madam. I will put the nut allergy in writing for the kitchen.",
         "Thank you, madam. I will put his nut allergy in writing for the kitchen.",
+        "Thank you, madam. I will write the nut allergy on the kitchen order.",
       ],
     }),
     {
@@ -274,25 +276,28 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
       alsoAccept: [
         "I will ask my manager first, madam, and then I will call you in your room.",
         "Let me ask my manager first, madam, and then I will call your room.",
+        "I am sorry, madam, I cannot promise that. I will ask my manager first and call your room.",
+        "A free bottle is my manager's decision, madam, so I will ask her first and then call your room.",
       ],
     }),
     risk({
       ...sp(
         "And can we drink it in the couple's suite before the herbal bath?",
-        "We will serve it after the herbal bath, madam, because alcohol before the heat is not safe.",
-        "Rượu và nhiệt không đi cùng nhau — đúng luật phòng xông hơi đã học. Phục vụ SAU liệu trình nóng.",
+        "If my manager agrees, we will serve it after the herbal bath and some water, madam.",
+        "Chai rượu chưa được quản lý duyệt, nên nói điều kiện trước. Rượu và nhiệt không đi cùng nhau: phục vụ SAU bồn ngâm, khi khách đã nghỉ và uống nước.",
         undefined,
-        ["serve", "herbal", "bath", "alcohol", "heat"],
+        ["manager", "serve", "herbal", "bath", "water"],
         t2c,
       ),
       alsoAccept: [
-        "We will serve it after the herbal bath, madam, because alcohol before the heat is not safe for you.",
-        "We can serve it after the herbal bath, madam, because alcohol before the heat is not safe.",
+        "If my manager agrees, we can serve it after the herbal bath and some water, madam.",
+        "If my manager says yes, we will serve it after the herbal bath and some water, madam.",
+        "We will serve it after the herbal bath and some water, madam, if my manager agrees.",
       ],
     }),
   ],
   reading: read(
-    `Mrs Khan wants a surprise for her husband's birthday. After their afternoon massage, she would like a birthday cake in their room and some decoration. Ngoc at the spa desk cannot do this alone, so she coordinates with two teams. First, she calls the kitchen about the cake. Mrs Khan mentions that her husband is allergic to nuts, so Ngoc puts the allergy in writing on the kitchen order. She does not promise that the cake will be ready at seven. She asks the kitchen and comes back to Mrs Khan by five with their answer. Then she asks Housekeeping to decorate the room with rose petals while the couple are at the spa. Mrs Khan also asks for a free bottle of champagne before the herbal bath. Ngoc checks with her manager first. The manager agrees to a bottle as a gift, but the champagne is served after the treatment, because alcohol and heat are not safe together.`,
+    `Mrs Khan wants a surprise for her husband's birthday. After their afternoon massage, she would like a birthday cake in their room and some decoration. Ngoc at the spa desk cannot do this alone, so she coordinates with two teams. First, she calls the kitchen about the cake. Mrs Khan mentions that her husband is allergic to nuts, so Ngoc puts the allergy in writing on the kitchen order. She does not promise that the cake will be ready at seven. She asks the kitchen and comes back to Mrs Khan by five with their answer. Then she asks Housekeeping to decorate the room with rose petals while the couple are at the spa. Mrs Khan also asks for a free bottle of champagne before the herbal bath. Ngoc checks with her manager first. The manager agrees to a bottle as a gift. The champagne is served after the treatment, a rest and some water, because alcohol and heat are not safe together.`,
     [
       {
         q: "Ngọc báo dị ứng hạt cho bếp bằng cách nào?",
@@ -320,12 +325,12 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
         q: "Ai quyết định tặng chai sâm panh, và nó được phục vụ khi nào?",
         options: [
           "Ngọc quyết, phục vụ trước khi ngâm bồn",
-          "Quản lý quyết, phục vụ sau liệu trình",
+          "Quản lý quyết, phục vụ sau liệu trình, khi khách đã nghỉ và uống nước",
           "Bếp quyết, phục vụ cùng bánh sinh nhật",
         ],
         correct: 1,
         explanation:
-          "'The manager agrees to a bottle as a gift, but the champagne is served after the treatment, because alcohol and heat are not safe together.'",
+          "'The manager agrees to a bottle as a gift. The champagne is served after the treatment, a rest and some water, because alcohol and heat are not safe together.'",
       },
     ],
   ),
@@ -340,11 +345,11 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
     ),
     game(
       "Can we have a glass of wine in the steam room before our massage?",
-      "We will serve the wine after the steam room, sir, because alcohol and heat are not safe together.",
-      "We will serving the wine after the steam room, sir, because alcohol and heat are not safe together.",
+      "We will serve the wine after the steam room, sir, once you have rested and had some water.",
+      "We will serving the wine after the steam room, sir, once you have rested and had some water.",
       "Of course, sir. A glass of wine in the steam room is very relaxing.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'serve', không phải 'serving'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trong nhiệt — không an toàn. Câu đúng giữ niềm vui của khách, chỉ đổi thời điểm.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'serve', không phải 'serving'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trong nhiệt — không an toàn. Câu đúng giữ niềm vui của khách, chỉ đổi thời điểm: sau phòng xông, khi khách đã nghỉ và uống nước.",
     ),
   ],
 });
@@ -353,7 +358,7 @@ const lesson2 = L(34, 2, "Working With Other Teams", "Phối hợp với các b�
 const t3a =
   "Congratulations, madam! For a bride, we always do a patch test a few days before the facial.";
 const t3b =
-  "Even healthy skin can react to a new product, madam, and we want your wedding day to be perfect.";
+  "Every skin type can react to a new product, madam, and we want your wedding day to be perfect.";
 
 const lesson3 = L(34, 3, "The Right Words at the Right Moment", "Lời chúc đúng lúc", {
   vocabulary: [
@@ -394,14 +399,19 @@ const lesson3 = L(34, 3, "The Right Words at the Right Moment", "Lời chúc đ�
       t3a,
       "Chúc mừng trước, rồi nói một bước an toàn: thử trên da vài ngày trước khi làm mặt.",
     ),
-    sp(
-      "Why? I have never had a problem with my skin.",
-      t3b,
-      "Giải thích lý do bằng điều khách quan tâm nhất: ngày cưới.",
-      undefined,
-      undefined,
-      t3a,
-    ),
+    {
+      ...sp(
+        "Why? I have never had a problem with my skin.",
+        t3b,
+        "Giải thích lý do bằng điều khách quan tâm nhất: ngày cưới.",
+        undefined,
+        undefined,
+        t3a,
+      ),
+      alsoAccept: [
+        "Even healthy skin can react to a new product, madam, and we want your wedding day to be perfect.",
+      ],
+    },
     {
       ...sp(
         "That is very thoughtful. Thank you.",
@@ -547,6 +557,8 @@ const lesson4 = L(34, 4, "When a Surprise Needs Care", "Khi điều bất ngờ 
       alsoAccept: [
         "I am sorry, madam. I cannot give you the room number of any guest.",
         "I am sorry, madam, but I cannot tell you the room number of any guest.",
+        "I'm sorry, madam, I can't give out room numbers.",
+        "I am sorry, madam. I cannot share the room number of any guest.",
       ],
     }),
     {
@@ -581,6 +593,9 @@ const lesson4 = L(34, 4, "When a Surprise Needs Care", "Khi điều bất ngờ 
       alsoAccept: [
         "What a lovely surprise, sir. May I ask if your wife has any allergy to pollen?",
         "That is a lovely surprise, sir. May I ask if your wife has an allergy to pollen?",
+        "What a lovely idea, sir. May I ask if your wife is allergic to pollen?",
+        "That is a lovely surprise, sir. May I ask if your wife has any allergies?",
+        "They are lovely, sir, but may I ask first if your wife has an allergy to pollen?",
       ],
     }),
     risk({
@@ -594,6 +609,7 @@ const lesson4 = L(34, 4, "When a Surprise Needs Care", "Khi điều bất ngờ 
       alsoAccept: [
         "Congratulations, madam. Let me check with my manager first.",
         "Congratulations, madam. I will ask my manager first.",
+        "Thank you, madam. I will check with my manager first.",
       ],
     }),
     sp(

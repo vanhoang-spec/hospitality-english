@@ -118,6 +118,8 @@ const lesson1 = L(
         alsoAccept: [
           "I am sorry, madam. The package is non-transferable, but I will ask my manager.",
           "I am afraid the package is non-transferable, madam, but I can ask my manager.",
+          "I am sorry, madam. Only you can use the package, because it is non-transferable, but I can ask my manager.",
+          "I am sorry, madam. The package is for you only, but I can ask my manager.",
         ],
       }),
       {
@@ -183,7 +185,7 @@ const lesson1 = L(
         "Câu thứ hai sai giới từ: thời hạn hiệu lực là 'valid for three months'. Câu thứ ba nói sai điều khoản — gói chỉ dùng được ba tháng, và một lời hứa 'thoải mái' hôm nay thành khiếu nại vào tháng thứ tư. Câu đúng nói rõ thời hạn.",
       ),
       game(
-        "Can I bring my friend to the pool on my membership card?",
+        "My friend wants to swim here tomorrow. Can she use my membership card?",
         "I am afraid the membership is for you only, madam, but I can ask my manager.",
         "Of course, madam. Just give her your card, and nobody at the desk will checks her name.",
         "Of course, madam. Just give her your card, and nobody at the desk will check her name.",
@@ -195,7 +197,7 @@ const lesson1 = L(
 );
 
 // ── Lesson 2 — Cancellation and no-show terms ──────────────────────────
-const t2a = "You can cancel at no charge up to four hours before your treatment, sir.";
+const t2a = "The deadline to cancel at no charge is four hours before your treatment, sir.";
 const t2b =
   "A late cancellation has a fifty per cent fee, and a no-show is charged at the full price.";
 const t2c = "I cannot waive the cancellation fee, sir, but I can ask my manager for you.";
@@ -244,7 +246,10 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
         t2a,
         "Nói điều khoản công bố bằng một mốc: miễn phí nếu huỷ trước giờ hẹn từ bốn tiếng trở lên.",
       ),
-      alsoAccept: ["You can cancel at no charge up to four hours before the treatment, sir."],
+      alsoAccept: [
+        "You can cancel at no charge up to four hours before your treatment, sir.",
+        "You can cancel at no charge up to four hours before the treatment, sir.",
+      ],
     },
     {
       ...sp(
@@ -271,6 +276,9 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
       alsoAccept: [
         "I am not able to waive the cancellation fee, sir, but I can ask my manager for you.",
         "I cannot waive the cancellation fee myself, sir, but I can ask my manager for you.",
+        "I am sorry, sir. I cannot waive the fee; however, I will ask my manager today.",
+        "I understand, sir. I cannot waive the cancellation fee, but I will ask my manager this afternoon.",
+        "I am sorry, sir. Waiving the cancellation fee is my manager's decision, but I can ask her for you.",
       ],
     }),
     sp(
@@ -360,8 +368,9 @@ const lesson2 = L(37, 2, "Cancellation and No-Show Terms", "Điều khoản hu�
 
 // ── Lesson 3 — Therapist requests and gratuity ─────────────────────────
 const t3a =
-  "You are right, madam, and I am sorry. Our female therapists are fully booked at two, but one is free at five.";
-const t3b = "Then I can rebook you for tomorrow morning, or put you on the waiting list for today.";
+  "You are right, madam, and I am sorry. Our female therapists are fully booked at two, but if you are flexible, one is free at five.";
+const t3b =
+  "As an alternative, I can rebook you for tomorrow morning, or put you on the waiting list for today.";
 const t3c =
   "Of course, madam. You are on the waiting list, and I will call your room if a female therapist becomes free.";
 
@@ -415,7 +424,8 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
         "Công nhận khách đúng TRƯỚC, xin lỗi, rồi nói sự thật và một giờ cụ thể. Không bao giờ đề nghị khách 'thử' kỹ thuật viên nam.",
       ),
       alsoAccept: [
-        "You are right, madam, and I am very sorry. Our female therapists are fully booked at two, but one is free at five.",
+        "You are right, madam, and I am very sorry. Our female therapists are fully booked at two, but if you are flexible, one is free at five.",
+        "You are right, madam, and I am sorry. Our female therapists are fully booked at two, but one is free at five.",
       ],
     },
     {
@@ -428,7 +438,8 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
         t3a,
       ),
       alsoAccept: [
-        "Then I can rebook you for tomorrow morning, or I can put you on the waiting list for today.",
+        "As an alternative, I can rebook you for tomorrow morning, or I can put you on the waiting list for today.",
+        "Then I can rebook you for tomorrow morning, or put you on the waiting list for today.",
       ],
     },
     sp(
@@ -442,18 +453,24 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
     {
       ...sp(
         "Why do you ask if I prefer a man or a woman?",
-        "It is a routine question we ask every guest, sir, and I will note your answer on file.",
-        "Không giải thích dài, không hỏi lại lý do của khách. Câu hỏi thủ tục, hỏi mọi khách — và ghi hồ sơ để khách không phải nói lại.",
+        "It is a routine question we ask every guest, sir, and with your permission, I will note your answer on file.",
+        "Không giải thích dài, không hỏi lại lý do của khách. Câu hỏi thủ tục, hỏi mọi khách — và xin phép ghi hồ sơ để khách không phải nói lại.",
       ),
       alsoAccept: [
-        "It is a routine question we ask every guest, sir, and I will put your answer on file.",
+        "It is a routine question we ask every guest, sir, and with your permission, I will put your answer on file.",
+        "It is a routine question we ask every guest, sir, and I will note your answer on file.",
       ],
     },
-    sp(
-      "How much do people usually tip here?",
-      "There is no usual amount, madam. A gratuity is never expected, because service is included in the price.",
-      "Không bao giờ nêu con số. Nói rõ tiền boa không bắt buộc, và vì sao.",
-    ),
+    {
+      ...sp(
+        "How much do people usually tip here?",
+        "There is no usual amount, madam. A gratuity is never expected, because service is included in the price.",
+        "Không bao giờ nêu con số. Nói rõ tiền boa không bắt buộc, và vì sao.",
+      ),
+      alsoAccept: [
+        "There is no usual amount, madam. Service is included in the price, so a gratuity is never expected.",
+      ],
+    },
     {
       ...sp(
         "This is just for you. Please do not tell the others.",
@@ -466,7 +483,7 @@ const lesson3 = L(37, 3, "Therapist Requests and Gratuity", "Yêu cầu kỹ thu
     },
     sp(
       "Mrs Lee is asking why her female therapist changed. What should I tell her?",
-      "Please tell her the truth now, and offer her five today, tomorrow morning or the waiting list.",
+      "Please tell her the truth now and offer three choices: a female therapist at five, tomorrow morning or the waiting list.",
       "Nói với đồng nghiệp — không dùng sir hay madam. Báo sớm, nói thật, đưa ba lựa chọn.",
       "colleague",
     ),
@@ -622,6 +639,8 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
       alsoAccept: [
         "I am sorry, sir, but I must decline, because that is a sensitive area.",
         "I am sorry, sir. I have to decline, because that is a sensitive area.",
+        "I am sorry, sir. That is a sensitive area, so I must decline.",
+        "I am sorry, sir. I cannot do that, because it is a sensitive area.",
       ],
     }),
     risk({
@@ -636,6 +655,7 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
       alsoAccept: [
         "Then I am stopping the treatment now, sir, and I will step outside.",
         "Then I will stop the treatment now, sir, and I will step outside.",
+        "Then I will stop the treatment now, sir, and I will leave the room.",
       ],
     }),
     sp(
@@ -685,12 +705,12 @@ const lesson4 = L(37, 4, "Comfort and Consent", "Sự thoải mái và đồng t
   ),
   game: [
     game(
-      "Could you work a little higher, near the top of my leg?",
-      "I am sorry, sir. I must decline, because that is a sensitive area. I will continue on your back.",
-      "I am sorry, sir. I must declining, because that is a sensitive area.",
-      "All right, sir, just this once, but please do not mention it to anyone.",
+      "Could you massage my upper inner thigh as well? It feels tight.",
+      "I am sorry, madam, I must decline that area. I can work on your calf and knee instead.",
+      "I am sorry, madam, I must declining that area. I can work on your calf and knee instead.",
+      "All right, madam, just this once, but please do not mention it to anyone.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'must' là động từ nguyên mẫu 'decline'. Câu thứ ba đồng ý làm một việc vượt ranh giới nghề và còn xin khách giữ bí mật. Câu đúng từ chối lịch sự, kèm lý do ngắn, rồi làm tiếp ở lưng.",
+      "Câu thứ hai sai dạng: sau 'must' là động từ nguyên mẫu 'decline'. Câu thứ ba đồng ý làm một việc vượt ranh giới nghề và còn xin khách giữ bí mật. Câu đúng từ chối lịch sự vùng nhạy cảm đó, rồi đề nghị làm ở bắp chân và đầu gối.",
     ),
     game(
       "Do I have to take everything off?",

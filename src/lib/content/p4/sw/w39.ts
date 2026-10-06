@@ -13,7 +13,9 @@
 // across a morning at the desk and an evening in the treatment rooms, with
 // the same rules weeks 31-38 taught: a voucher is checked, a bill is corrected
 // by the supervisor, a room number is never given, a burn is cooled and the
-// nurse called, no sauna after alcohol, a mother-to-be waits for the manager.
+// nurse called, no sauna after alcohol, a mother-to-be is kept out of the heat
+// and the manager is told. A guest with chest pain does not walk anywhere:
+// 115 and an ambulance first, the Duty Manager after.
 import type { AuthoredWeek } from "../kit";
 import { cardsFor, lessonsFor, risk } from "../kit";
 import { game, g, read, sp } from "../../phase0";
@@ -66,8 +68,8 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
     g(
       "Wait five minutes. Drink tea.",
       "I will be with you in five minutes, madam. In the meantime, please have some tea.",
-      "'In the meantime' (trong lúc chờ) đứng đầu câu, rồi dấu phẩy. Người Việt hay nói 'In the meanwhile' — 'meanwhile' đứng một mình, không có 'the'.",
-      "I will be with you in five minutes, madam. In the meanwhile, please have some tea.",
+      "'In the meantime' (trong lúc chờ) đứng đầu câu, rồi dấu phẩy. Không bỏ 'the': 'In meantime' là sai — người Việt hay bỏ mạo từ vì tiếng Việt không có.",
+      "I will be with you in five minutes, madam. In meantime, please have some tea.",
     ),
   ],
   speaking: [
@@ -120,12 +122,20 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
         "Please show me where he is, sir. My colleague is calling the hotel nurse and 115 now.",
       ],
     }),
-    sp(
-      "I am with the man on the floor. What should I do?",
-      "Please stay with him and do not move him. The nurse will be here in two minutes.",
-      "Nói với đồng nghiệp — không dùng sir hay madam. Một việc (ở lại, không di chuyển khách) và một mốc giờ.",
-      "colleague",
-    ),
+    risk({
+      ...sp(
+        "I am with the man on the floor. What should I do?",
+        "Please switch off the steam, open the door and stay with him. Do not move him. The nurse is on her way.",
+        "Nói với đồng nghiệp — không dùng sir hay madam. Người nằm trong phòng xông: tắt hơi nóng, mở cửa, ở lại với khách; khách bị ngã thì không di chuyển. Y tá đang tới — không hứa số phút.",
+        "colleague",
+        ["off", "steam", "open", "door", "stay"],
+      ),
+      alsoAccept: [
+        "Please switch off the steam and open the door, and stay with him. Do not move him. The nurse is on her way.",
+        "Please turn off the steam, open the door and stay with him. Do not move him. The nurse is coming now.",
+        "Please switch off the steam, open the door and stay with him, but do not move him. The nurse is on her way.",
+      ],
+    }),
     {
       ...sp(
         "The phone is ringing, and two guests are waiting at the desk. Which first?",
@@ -143,9 +153,37 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
       "Báo cáo cho Quản lý trực đúng thứ tự đã làm — không dùng sir hay madam: 115 và y tá trước, quản lý sau.",
       "manager",
     ),
+    risk({
+      ...sp(
+        "My chest feels very tight. I think I will just walk back to my room.",
+        "Please sit down and stay here, sir. My colleague is calling 115 for an ambulance, and I will stay with you.",
+        "Đau ngực là cấp cứu: không để khách tự đi về phòng. Mời khách ngồi yên tại chỗ, nói rõ đồng nghiệp đang gọi 115 xin xe cấp cứu, và bạn ở lại với khách.",
+        undefined,
+        ["stay", "ambulance"],
+      ),
+      alsoAccept: [
+        "Please sit down and stay here, sir. My colleague is calling 115 for an ambulance now, and I will stay with you.",
+        "Please do not walk, sir. Sit down and stay here, and my colleague is calling 115 for an ambulance.",
+        "Please sit down here, sir, and do not walk to your room. My colleague is calling 115 for an ambulance.",
+      ],
+    }),
+    risk({
+      ...sp(
+        "A guest in the gym has chest pain and is short of breath. Shall I call the Duty Manager first?",
+        "No. He is short of breath, so call 115 for an ambulance first, and then the Duty Manager.",
+        "Nói với đồng nghiệp — không dùng sir hay madam. Đau ngực: 115 xin xe cấp cứu TRƯỚC, Quản lý trực SAU — đúng luật 'nguy hiểm trước'.",
+        "colleague",
+        ["ambulance", "first", "duty", "manager"],
+      ),
+      alsoAccept: [
+        "No. Please call 115 for an ambulance first, and then tell the Duty Manager.",
+        "Call 115 for an ambulance first, please, and then the Duty Manager.",
+        "No. Call 115 for an ambulance first, and then the manager on duty.",
+      ],
+    }),
   ],
   reading: read(
-    `It is five to three on Saturday, and the spa desk is busy. The phone is ringing, and a couple are waiting to check in for their massage at three. Then a guest runs in. A man has fallen in the steam room, and he is not moving. Hanh, the receptionist, knows the rule: danger first. She asks Son to call 115 and the hotel nurse, and she goes with the guest to the steam room. She asks the pool attendant to stay with the man and not move him. Then she calls the Duty Manager. On her way back, she speaks to the couple. She says there is an urgent problem, and she will be with them in five minutes. In the meantime, she offers them herbal tea in the relaxing area. The wife asks if everything is all right. Hanh does not talk about the other guest. She only says that the nurse is on her way. The phone stops ringing, and Hanh calls the number back at a quarter past three.`,
+    `It is five to three on Saturday, and the spa desk is busy. The phone is ringing, and a couple are waiting to check in for their massage at three. Then a guest runs in. A man has fallen in the steam room, and he is not moving. Hanh, the receptionist, knows the rule: danger first. She asks Son to call 115 and the hotel nurse, and she goes with the guest to the steam room. She asks the pool attendant to switch off the steam, open the door and stay with the man without moving him. Then she calls the Duty Manager. On her way back, she speaks to the couple. She says there is an urgent problem, and she will be with them in five minutes. In the meantime, she offers them herbal tea in the relaxing area. The wife asks if everything is all right. Hanh does not talk about the other guest. She only says that the nurse is on her way. The phone stops ringing, and Hanh calls the number back at a quarter past three.`,
     [
       {
         q: "Việc đầu tiên Hạnh làm khi nghe tin có người ngã là gì?",
@@ -204,7 +242,7 @@ const lesson1 = L(39, 1, "Danger First", "Nguy hiểm trước — thứ tự ư
 
 // ── Lesson 2 — The last fifteen minutes of a shift ─────────────────────
 const t2a =
-  "Of course, madam. Let me write down your details, and my colleague Mai, who starts at three, will plan it with you.";
+  "Of course, madam. Let me write down your details, and my colleague Mai, who starts at three, will plan the group booking with you.";
 const t2b = "Yes, madam. I will hand it over to Mai by name, and she will call your room by four.";
 const t2c =
   "My shift ends in ten minutes, madam, and a group plan needs time, so Mai can give it her full attention.";
@@ -259,7 +297,8 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
         "Mười lăm phút cuối ca: không tự mở việc mới. Ghi lại thông tin, rồi nói rõ ĐÍCH DANH người ca sau sẽ làm cùng khách.",
       ),
       alsoAccept: [
-        "Of course, madam. I will write down your details, and my colleague Mai, who starts at three, will plan it with you.",
+        "Of course, madam. I will write down your details, and my colleague Mai, who starts at three, will plan the group booking with you.",
+        "Of course, madam. Let me write down your details, and my colleague Mai, who starts at three, will plan it with you.",
       ],
     },
     {
@@ -315,6 +354,10 @@ const lesson2 = L(39, 2, "The Last Fifteen Minutes", "Mười lăm phút cuối 
       alsoAccept: [
         "That cannot wait for the next shift. Please walk her to the cool area, and I will call the nurse straight away.",
         "That cannot wait for the next shift. Please walk her to the cool area now, and I will call the nurse.",
+        "That cannot wait. Please walk her to the cool area, and I will call the nurse now.",
+        "Danger first. Please walk the light-headed guest to the cool area, and I will call the nurse.",
+        "If she is light-headed, please walk her out to the cool area. I am calling the nurse now.",
+        "Danger first: the light-headed guest is our priority. Please walk her to the cool area, and I will call the nurse.",
       ],
     }),
     sp(
@@ -471,6 +514,8 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
       alsoAccept: [
         "I am sorry, sir. I cannot give you the room number of any guest, but I can take a message.",
         "I am afraid I cannot tell you the room number of any guest, sir, but I can take a message.",
+        "I am sorry, sir. I cannot give out any guest's room number, but I can take a message for her.",
+        "I am sorry, sir. I cannot tell you the room number of any guest.",
       ],
     }),
     sp(
@@ -482,24 +527,50 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
     {
       ...sp(
         "There is a queue, and I have no booking. Can I still have a massage this morning?",
-        "Of course, sir. As a walk-in, the first free time is at eleven, and I can book it for you now.",
-        "Khách vãng lai: nói giờ trống thật gần nhất, rồi đề nghị đặt luôn. Hàng chờ không làm bạn trả lời cộc.",
+        "It is our peak time, sir. As a walk-in, the first free time is at eleven, and I can book it for you now.",
+        "Khách vãng lai giờ cao điểm: nói thật là đang đông, rồi giờ trống thật gần nhất, và đề nghị đặt luôn. Hàng chờ không làm bạn trả lời cộc.",
       ),
       alsoAccept: [
-        "Of course, sir. As a walk-in, the first free time is eleven o'clock, and I can book it for you now.",
+        "It is our peak time, sir. As a walk-in, the first free time is eleven o'clock, and I can book it for you now.",
+        "Of course, sir. As a walk-in, the first free time is at eleven, and I can book it for you now.",
+      ],
+    },
+    {
+      ...sp(
+        "I cancelled at noon for my two o'clock massage. Do I really have to pay?",
+        "I am sorry, madam. That is a late cancellation, and only my manager can make an exception, so I will ask her today.",
+        "Gọi đúng tên điều khoản, rồi nói rõ ai có quyền làm ngoại lệ — quản lý — và hỏi giúp kèm mốc hôm nay.",
+      ),
+      alsoAccept: [
+        "I am sorry, madam. That is a late cancellation, but I will ask my manager about the fee today.",
       ],
     },
     sp(
-      "I cancelled at noon for my two o'clock massage. Do I really have to pay?",
-      "I am sorry, madam. That is a late cancellation, but I will ask my manager about the fee today.",
-      "Gọi đúng tên điều khoản, rồi chuyển phần miễn phí cho quản lý kèm mốc hôm nay.",
-    ),
-    sp(
       "How was the morning at the desk?",
-      "It was busy: a queue at nine, a walk-in for a massage and a double charge, which the supervisor corrected.",
+      "It was busy: a queue at nine, a walk-in and a dispute about a double charge, which the supervisor corrected.",
       "Báo cáo cho quản lý — không dùng sir hay madam: kể ngắn từng việc, và ai đã xử lý phần tiền.",
       "manager",
     ),
+    {
+      ...sp(
+        "Can I buy the rice scrub you used on me this morning?",
+        "Of course, madam. It is handmade here with ginger from our own harvest, and every ingredient is on the label.",
+        "Bán khi khách hỏi: kể ngắn câu chuyện sản phẩm (làm tay, gừng tự trồng), và nhắc nhãn ghi đủ thành phần.",
+      ),
+      alsoAccept: [
+        "Of course, madam. It is handmade here with ginger from our own harvest, and all the ingredients are on the label.",
+      ],
+    },
+    {
+      ...sp(
+        "I had a facial this morning. Can I lie in the sun by the pool this afternoon?",
+        "Please use sunscreen if you go outside, madam, because your skin is sensitive after a facial.",
+        "Lời dặn sau làm mặt: một việc cụ thể (kem chống nắng), và lý do bằng 'because'.",
+      ),
+      alsoAccept: [
+        "Of course, madam. Please use sunscreen if you go outside, because your skin is sensitive after a facial.",
+      ],
+    },
   ],
   reading: read(
     `Kim works at the spa desk on Monday morning, and every request needs a different rule. At nine, there is a queue at the desk, and Mrs Chen shows a voucher from her company. Kim checks the expiry date first, and the voucher is valid. Mrs Chen asks for a female therapist, and one is free at three. Kim explains that she can cancel at no charge until eleven; after that, it is a late cancellation. At ten, a man calls and says he is Mrs Chen's husband. He wants her room number, because he would like to send flowers. Kim does not give the number, and she does not say whether Mrs Chen is staying at the hotel. She offers to take a message. A walk-in asks for a massage, and Kim books him at eleven. Then another guest says she was charged twice for her facial. Kim listens, notes the details of the double charge and asks the supervisor, who corrects the bill. At noon, a guest cancels a two o'clock massage. It is a late cancellation, so Kim asks her manager about the fee.`,
@@ -537,12 +608,12 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
   ),
   game: [
     game(
-      "I am her husband. Just tell me which room she is in.",
-      "I am sorry, sir. I cannot tell you the room number of any guest.",
-      "Of course, sir. As her husband, you can goes straight up to room five hundred and two.",
-      "Of course, sir. As her husband, you can go straight up to room five hundred and two.",
+      "I am her brother. Is she staying here, and which room is she in?",
+      "I am sorry, sir. We do not give out any guest details, but you can leave her a note at reception.",
+      "Of course, sir. As her brother, you can goes straight up to room five hundred and two.",
+      "Of course, sir. As her brother, you can go straight up to room five hundred and two.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều tin lời người gọi và đọc số phòng — nhân viên không biết người đó có thật là chồng khách hay không. Câu đúng không đọc số phòng của bất kỳ ai.",
+      "Câu thứ hai sai dạng: sau 'can' là động từ nguyên mẫu 'go', không thêm -es. Cả câu thứ hai lẫn câu thứ ba đều tin lời người hỏi và đọc số phòng — nhân viên không biết người đó có thật là anh trai của khách hay không. Câu đúng không xác nhận khách có ở đây, không đọc số phòng, và đưa một cách khác.",
     ),
     game(
       "A guest was charged twice for her facial. Shall I just fix it myself?",
@@ -557,8 +628,7 @@ const lesson3 = L(39, 3, "Rehearsal: A Morning at the Desk", "Tổng duyệt: bu
 
 // ── Lesson 4 — Rehearsal: an evening in the treatment rooms ────────────
 const t4a = "I am stopping now, sir, and I will put cool water on the burn straight away.";
-const t4b =
-  "I cannot say, sir, but the hotel nurse will be here in two minutes, and I will stay with you.";
+const t4b = "I cannot say, sir, but the hotel nurse is on her way, and I will stay with you.";
 const t4c = "The nurse comes first, sir, and my manager will speak with you after that.";
 
 const lesson4 = L(
@@ -610,19 +680,24 @@ const lesson4 = L(
           t4a,
           "Bỏng: dừng ngay và làm mát vết bỏng bằng nước mát — đúng thứ tự đã học, không giải thích, không xin lỗi dài.",
         ),
-        alsoAccept: ["I am stopping now, sir, and I will put cool water on the burn at once."],
+        alsoAccept: [
+          "I am stopping now, sir, and I will put cool water on the burn at once.",
+          "I will stop now, sir, and put cool water on the burn straight away.",
+        ],
       },
       {
         ...sp(
           "It still stings. Is it bad?",
           t4b,
-          "Không chẩn đoán. Một mốc giờ có thật (y tá, hai phút) và một lời hứa (bạn ở lại).",
+          "Không chẩn đoán, không hứa số phút thay y tá. Một sự thật (y tá đang tới) và một lời hứa (bạn ở lại).",
           undefined,
           undefined,
           t4a,
         ),
         alsoAccept: [
-          "I am not sure, sir, but the hotel nurse will be here in two minutes, and I will stay with you.",
+          "I am not sure, sir, but the hotel nurse is on her way, and I will stay with you.",
+          "I am not sure, sir. The hotel nurse is coming now, and I will stay with you.",
+          "I am not sure, sir, but the nurse is on her way.",
         ],
       },
       {
@@ -649,30 +724,44 @@ const lesson4 = L(
         alsoAccept: [
           "I am sorry, sir. We cannot let you use the sauna after alcohol, but the relaxing area is open.",
           "I am afraid we cannot let you use the sauna after wine, sir, but the relaxing area is open.",
+          "I am sorry, sir. You cannot use the sauna after wine, but the relaxing area is open.",
+          "I am sorry, sir. We cannot let you use the sauna after alcohol; however, you can rest in the quiet corner.",
         ],
       }),
       {
         ...sp(
           "The lights have gone out again! Are you still there?",
-          "Yes, madam, I am right here. My torch is on, and I will not leave the room.",
-          "Mất điện: một câu cho khách biết bạn vẫn ở đây, đèn pin đang bật, và bạn không rời phòng.",
+          "Yes, madam, I am right here. It is a power cut, my torch is on, and I will not leave the room.",
+          "Mất điện: một câu cho khách biết bạn vẫn ở đây, nói đúng tên sự việc, đèn pin đang bật, và bạn không rời phòng.",
         ),
-        alsoAccept: ["Yes, madam, I am right here. My torch is on, and I am not leaving the room."],
+        alsoAccept: [
+          "Yes, madam, I am right here. It is a power cut, my torch is on, and I am not leaving the room.",
+          "Yes, madam, I am right here. My torch is on, and I will not leave the room.",
+        ],
       },
-      sp(
-        "The guest in room four is pregnant, and she wants to use the sauna.",
-        "She is a mother-to-be, so please check with the manager before she uses the sauna.",
-        "Nói với đồng nghiệp — không dùng sir hay madam. Khách mang thai và nhiệt: quản lý quyết, đồng nghiệp không tự mở phòng xông.",
-        "colleague",
-      ),
+      risk({
+        ...sp(
+          "The guest in room four is pregnant, and she wants to use the sauna.",
+          "She is a mother-to-be, so she cannot use the sauna or any heat treatment; please tell the manager.",
+          "Nói với đồng nghiệp — không dùng sir hay madam. Khách mang thai thì không dùng phòng xông hay liệu trình dùng nhiệt — đúng kế hoạch quản lý đã duyệt; đồng nghiệp không tự mở phòng xông, và báo quản lý.",
+          "colleague",
+          ["sauna", "manager"],
+        ),
+        alsoAccept: [
+          "She is a mother-to-be, so she cannot use the sauna; please tell the manager.",
+          "She is pregnant, so she cannot use the sauna or any heat treatment. Please tell the manager.",
+          "She is a mother-to-be, so no sauna and no heat treatment; please tell the manager.",
+        ],
+      }),
       {
         ...sp(
           "I am a bit nervous. Can I stop the massage if I do not like it?",
-          "Of course, madam. You can ask me to stop at any moment, and you will stay covered.",
-          "Hai bảo đảm cụ thể thay cho lời động viên: được dừng bất cứ lúc nào, và luôn được che phủ.",
+          "Many guests feel nervous at first, madam. You can ask me to stop at any moment, and you will stay covered.",
+          "Công nhận cảm giác của khách bằng một câu, rồi hai bảo đảm cụ thể thay cho lời động viên: được dừng bất cứ lúc nào, và luôn được che phủ.",
         ),
         alsoAccept: [
-          "Of course, madam. You can ask me to stop at any time, and you will stay covered.",
+          "Many guests feel nervous at first, madam. You can ask me to stop at any time, and you will stay covered.",
+          "Of course, madam. You can ask me to stop at any moment, and you will stay covered.",
         ],
       },
       sp(
@@ -681,9 +770,37 @@ const lesson4 = L(
         "Báo cáo cho quản lý bằng thì quá khứ — không dùng sir hay madam: việc quan trọng nhất, rồi ba việc bạn đã làm theo thứ tự.",
         "manager",
       ),
+      risk({
+        ...sp(
+          "I had a small operation on my shoulder last month. Is a hot stone massage all right?",
+          "Thank you for telling me, sir. After a recent operation, we need a doctor's note before any massage.",
+          "Phẫu thuật gần đây: không tự nói có hay không. Cảm ơn khách, rồi nói đúng quy định — cần giấy bác sĩ trước mọi liệu trình massage.",
+          undefined,
+          ["recent", "doctor's", "note"],
+        ),
+        alsoAccept: [
+          "Thank you, sir. After a recent operation, we need a doctor's note before the massage.",
+          "Thank you for telling me, sir. We need a doctor's note before any massage after a recent operation.",
+          "Thank you for telling me, sir. After a recent operation, a massage needs a doctor's note first.",
+        ],
+      }),
+      risk({
+        ...sp(
+          "My earrings are not in my locker! The spa must pay for them.",
+          "I am very sorry, madam. I will look in lost property first, and then I will call my manager.",
+          "Đồ mất trong tủ: không hứa đền, không tranh luận. Kiểm tra nơi giữ đồ thất lạc trước, rồi gọi quản lý.",
+          undefined,
+          ["lost", "property", "first", "call", "manager"],
+        ),
+        alsoAccept: [
+          "I am very sorry, madam. Let me check lost property first, and I will call my manager now.",
+          "I am very sorry, madam. Payment is my manager's decision, so let me check lost property first and call her now.",
+          "I am so sorry, madam. I will check lost property first, and then I will call my manager.",
+        ],
+      }),
     ],
     reading: read(
-      `Tuan works the evening shift in the treatment rooms, and it is a long evening. At seven, a hot stone is too hot on a guest's shoulder. Tuan stops at once and puts cool water on the burn. The guest asks if it is bad. Tuan does not guess. He says the hotel nurse will be there in two minutes, and he stays with him. When the guest asks who will pay, Tuan says the nurse comes first and the manager will speak with him later. At eight, another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly, and offers the relaxing area. At half past eight, a guest who is pregnant wants to use the sauna. Tuan checks with the manager first. At nine, the power goes off. Tuan is with a nervous guest, so he switches on his torch and stays in the room. At closing time, he writes everything in the handover note.`,
+      `Tuan works the evening shift in the treatment rooms, and it is a long evening. At seven, a hot stone is too hot on a guest's shoulder. Tuan stops at once and puts cool water on the burn. The guest asks if it is bad. Tuan does not guess. He says the hotel nurse is on her way, and he stays with him. When the guest asks who will pay, Tuan says the nurse comes first and the manager will speak with him later. At eight, another guest has had wine at dinner and asks for the sauna. Tuan says no, kindly, and offers the relaxing area. At half past eight, a guest who is pregnant wants to use the sauna. Tuan explains that she cannot use it, and he tells the manager. At nine, the power goes off. Tuan is with a nervous guest, so he switches on his torch and stays in the room. At closing time, he writes everything in the handover note.`,
       [
         {
           q: "Khi khách bị bỏng vì đá nóng, Tuấn làm gì đầu tiên?",
@@ -711,12 +828,12 @@ const lesson4 = L(
           q: "Tuấn làm gì khi khách mang thai muốn vào phòng xông hơi?",
           options: [
             "Mở phòng nhưng giảm nhiệt độ xuống",
-            "Từ chối và mời khách về phòng nghỉ ngơi",
-            "Hỏi quản lý trước khi mở phòng xông",
+            "Cho khách vào nếu khách tự ký cam kết",
+            "Không cho dùng phòng xông, rồi báo quản lý",
           ],
           correct: 2,
           explanation:
-            "'a guest who is pregnant wants to use the sauna. Tuan checks with the manager first' — khách mang thai và nhiệt là việc quản lý quyết.",
+            "'Tuan explains that she cannot use it, and he tells the manager' — khách mang thai không dùng liệu trình dùng nhiệt, và quản lý được báo.",
         },
       ],
     ),
@@ -748,5 +865,5 @@ export const week: AuthoredWeek = {
   },
   lessons: [lesson1, lesson2, lesson3, lesson4],
   canDo:
-    "Nói được: xếp thứ tự khi nhiều việc tới cùng lúc — nguy hiểm trước (gọi 115 và y tá, có người ở lại với khách), Quản lý trực sau, khách đang chờ nhận một câu xin lỗi và một mốc giờ ('I will be with you in five minutes. In the meantime…'); giữ luật mười lăm phút cuối ca — không mở việc mới, ghi vào ghi chú bàn giao và giao đích danh cho ca sau, nhưng nguy hiểm không bao giờ để cho ca sau; và tổng duyệt cả phase ở quầy và ở khu trị liệu: phiếu quà tặng, kỹ thuật viên nữ, huỷ muộn, số phòng, hoá đơn, bỏng, rượu và phòng xông hơi, khách mang thai, mất điện.",
+    "Nói được: xếp thứ tự khi nhiều việc tới cùng lúc — nguy hiểm trước (gọi 115 và y tá, có người ở lại với khách; khách đau ngực thì ngồi yên, gọi 115 xin xe cấp cứu, không để khách tự đi), Quản lý trực sau, khách đang chờ nhận một câu xin lỗi và một mốc giờ ('I will be with you in five minutes. In the meantime…'); giữ luật mười lăm phút cuối ca — không mở việc mới, ghi vào ghi chú bàn giao và giao đích danh cho ca sau, nhưng nguy hiểm không bao giờ để cho ca sau; và tổng duyệt cả phase ở quầy và ở khu trị liệu: phiếu quà tặng, kỹ thuật viên nữ, huỷ muộn, số phòng, hoá đơn, bỏng, rượu và phòng xông hơi, khách mang thai, mất điện.",
 };

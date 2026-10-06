@@ -105,6 +105,8 @@ const lesson1 = L(31, 1, "The Signature Ritual", "Nghi thức đặc trưng củ
         "Thank you for telling me, madam. I will check with my manager first.",
         "Thank you, madam. Let me check with my manager first.",
         "Thank you, madam. I will ask my manager first.",
+        "Thank you for letting me know, madam. I need to ask my manager first.",
+        "Thank you, madam. I need to check with my manager first.",
       ],
     }),
     sp(
@@ -255,6 +257,8 @@ const lesson2 = L(31, 2, "Where It Comes From", "Nguồn gốc nguyên liệu", 
       alsoAccept: [
         "Thank you for telling me, madam. I will check the ingredients first and use a nut-free oil.",
         "Thank you, madam. I will check every ingredient first and use a nut-free oil.",
+        "Thank you for telling me, madam. I will check every ingredient on the label first, and we will use a nut-free oil.",
+        "Thank you, madam. I will check the label first, and the therapist will use a nut-free oil.",
       ],
     }),
     sp(
@@ -399,6 +403,8 @@ const lesson3 = L(31, 3, "The Right Story for the Guest", "Kể đúng chuyện 
       alsoAccept: [
         "I am sorry, sir. I cannot offer the herbal bath with high blood pressure.",
         "Thank you for telling me, sir. With high blood pressure, I cannot offer the herbal bath.",
+        "I am sorry, sir. The herbal bath is not safe with high blood pressure, so I cannot offer it.",
+        "I am sorry, sir. With high blood pressure, the herbal bath is not safe for you.",
       ],
     }),
     {

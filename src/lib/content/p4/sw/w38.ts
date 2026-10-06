@@ -106,11 +106,16 @@ const lesson1 = L(38, 1, "A Plan in Three Parts", "Kế hoạch ba phần", {
         "In total, it is three treatments. The next step is your health form, and then I can book them.",
       ],
     },
-    sp(
-      "Why not just one long massage tomorrow?",
-      "To be honest, sir, three shorter treatments are better for your recovery than one long massage.",
-      "Khách hỏi lại: trả lời thật, bằng một câu so sánh hơn, không bán thêm.",
-    ),
+    {
+      ...sp(
+        "Why not just one long massage tomorrow?",
+        "To be honest, sir, three shorter treatments are better for your muscles and your recovery than one long massage.",
+        "Khách hỏi lại: trả lời thật, bằng một câu so sánh hơn, không bán thêm.",
+      ),
+      alsoAccept: [
+        "To be honest, sir, three shorter treatments are better for your recovery than one long massage.",
+      ],
+    },
     risk({
       ...sp(
         "I should tell you that I have high blood pressure.",
@@ -122,6 +127,8 @@ const lesson1 = L(38, 1, "A Plan in Three Parts", "Kế hoạch ba phần", {
       alsoAccept: [
         "Thank you for telling me, sir. With high blood pressure, I cannot offer the herbal bath, so I will change the plan.",
         "Thank you, sir. I cannot offer the herbal bath with high blood pressure, so I will change the plan.",
+        "Thank you for telling me, sir. The herbal bath is not suitable with high blood pressure, so I will change the plan.",
+        "Thank you, sir. With high blood pressure, the herbal bath is not safe, so I will change the plan.",
       ],
     }),
     {
@@ -286,11 +293,16 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
         "Yes, madam. It is better value for money than three single treatments, and the herbal tea is included.",
       ],
     },
-    sp(
-      "Can we have champagne in the suite during the herbal bath?",
-      "Champagne comes after the ritual, sir, because alcohol and heat do not mix.",
-      "Rượu không đi cùng nhiệt — luật cũ, giữ nguyên trong gói trăng mật. Không bỏ niềm vui của khách, chỉ đổi thời điểm.",
-    ),
+    {
+      ...sp(
+        "Can we have champagne in the suite during the herbal bath?",
+        "Champagne comes after the ritual, a rest and some water, sir, because alcohol and heat do not mix.",
+        "Rượu không đi cùng nhiệt — luật cũ, giữ nguyên trong gói trăng mật. Không bỏ niềm vui của khách, chỉ đổi thời điểm: sau nghi thức, khi khách đã nghỉ và uống nước.",
+      ),
+      alsoAccept: [
+        "Champagne comes after the ritual, a rest and some water, sir, because alcohol and heat are not safe together.",
+      ],
+    },
     risk({
       ...sp(
         "It is our honeymoon. Is there a discount on the package?",
@@ -302,6 +314,9 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
       alsoAccept: [
         "Congratulations, sir. I am not able to offer a discount on the package, but I will ask my manager today.",
         "Congratulations, sir. I cannot offer a discount on the package myself, but I will ask my manager today.",
+        "Congratulations, sir. I cannot give a discount myself, but I will ask my manager today.",
+        "I am sorry, sir. I cannot offer a discount, but I will ask my manager.",
+        "Congratulations, sir. A discount on the package is my manager's decision, so I will ask her today.",
       ],
     }),
     sp(
@@ -317,7 +332,7 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
     ),
   ],
   reading: read(
-    `Mr and Mrs Bauer are on their honeymoon, and they ask Hoa for something special for their three nights. Hoa presents the wellness package for couples. On the first day, they will have a couple's massage. On the second day, they will have a rice scrub. The highlight comes on the last evening: the signature ritual in the couple's suite. Hoa explains that the package is better value for money than three single treatments, and herbal tea is included after each one. Mrs Bauer asks about a foot soak, and Hoa explains that it is a short add-on. Then Mr Bauer asks for champagne in the herbal bath. Hoa says the spa will serve it after the ritual, because alcohol and heat do not mix. Finally, he asks for a honeymoon discount. Hoa cannot offer one, so she asks her manager the same day. The manager keeps the price, but she sends a small honeymoon cake to their suite.`,
+    `Mr and Mrs Bauer are on their honeymoon, and they ask Hoa for something special for their three nights. Hoa presents the wellness package for couples. On the first day, they will have a couple's massage. On the second day, they will have a rice scrub. The highlight comes on the last evening: the signature ritual in the couple's suite. Hoa explains that the package is better value for money than three single treatments, and herbal tea is included after each one. Mrs Bauer asks about a foot soak, and Hoa explains that it is a short add-on. Then Mr Bauer asks for champagne in the herbal bath. Hoa says the spa will serve it after the ritual, a rest and some water, because alcohol and heat do not mix. Finally, he asks for a honeymoon discount. Hoa cannot offer one, so she asks her manager the same day. The manager keeps the price, but she sends a small honeymoon cake to their suite.`,
     [
       {
         q: "Điểm nổi bật nhất của gói là gì?",
@@ -339,7 +354,7 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
         ],
         correct: 0,
         explanation:
-          "'the spa will serve it after the ritual, because alcohol and heat do not mix' — luật an toàn không đổi vì là tuần trăng mật.",
+          "'the spa will serve it after the ritual, a rest and some water, because alcohol and heat do not mix' — luật an toàn không đổi vì là tuần trăng mật.",
       },
       {
         q: "Ai quyết định về yêu cầu giảm giá?",
@@ -361,11 +376,11 @@ const lesson2 = L(38, 2, "Presenting a Package", "Giới thiệu một gói li�
     ),
     game(
       "Can we have the champagne in the herbal bath?",
-      "We will serve it after the ritual, madam, because alcohol and heat do not mix.",
-      "We will serving it after the ritual, madam, because alcohol and heat do not mix.",
+      "We will serve it after the ritual, madam, once you have rested and had some water.",
+      "We will serving it after the ritual, madam, once you have rested and had some water.",
       "Of course, madam. A glass in the warm bath makes a perfect honeymoon photo.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'serve'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trong nhiệt — không an toàn. Câu đúng giữ niềm vui, chỉ đổi thời điểm.",
+      "Câu thứ hai sai dạng: sau 'will' là động từ nguyên mẫu 'serve'. Câu thứ ba chiều khách nhưng cho rượu vào ngay trong nhiệt — không an toàn. Câu đúng giữ niềm vui, chỉ đổi thời điểm: sau nghi thức, khi khách đã nghỉ và uống nước.",
     ),
   ],
 });
@@ -450,6 +465,7 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
       ),
       alsoAccept: [
         "You do not have to book today, madam. There is no obligation, and I can hold the time until tomorrow at noon.",
+        "There is no obligation, madam. You do not have to book today, and I can hold the time until noon tomorrow.",
       ],
     },
     {
@@ -473,6 +489,10 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
       alsoAccept: [
         "I am sorry, madam. I am not able to offer ten per cent off, but I will ask my manager today.",
         "I am sorry, madam. I cannot offer ten per cent off myself, but I will ask my manager today.",
+        "I am sorry, madam. I cannot give you ten per cent off, but I will ask my manager today.",
+        "I am sorry, madam. I cannot offer a discount, but I will ask my manager today.",
+        "I am sorry, madam. I cannot offer a discount, but I will ask my manager.",
+        "I am sorry, madam. A discount is my manager's decision, but I will ask her today.",
       ],
     }),
     sp(
@@ -535,12 +555,12 @@ const lesson3 = L(38, 3, "Questions After the Plan", "Trả lời thắc mắc s
       "Câu thứ hai sai: 'do not must' — 'không bắt buộc' là 'do not have to'. Câu thứ ba ép khách bằng một hạn chót bịa ra. Câu đúng để khách tự quyết.",
     ),
     game(
-      "The spa next door is much cheaper than yours.",
-      "You are welcome to compare, sir. Our price includes the herbal bath and the tea.",
-      "That spa is not very clean, sir, so I would never going there myself.",
-      "That spa is not very clean, sir, so I would never go there myself.",
+      "A hotel down the road sells the same facial for much less.",
+      "Please feel free to compare, sir. Our facial also includes a hand massage and a private room.",
+      "That hotel is not very clean, sir, so I would never going there myself.",
+      "That hotel is not very clean, sir, so I would never go there myself.",
       undefined,
-      "Câu thứ hai sai dạng: sau 'would never' là động từ nguyên mẫu 'go', không phải 'going'. Cả câu thứ hai lẫn câu thứ ba đều chê một doanh nghiệp khác trước mặt khách — thiếu chuyên nghiệp, và khách không tin thêm vào spa của bạn. Câu đúng mời so sánh và nói giá gồm gì.",
+      "Câu thứ hai sai dạng: sau 'would never' là động từ nguyên mẫu 'go', không phải 'going'. Cả câu thứ hai lẫn câu thứ ba đều chê một doanh nghiệp khác trước mặt khách — thiếu chuyên nghiệp, và khách không tin thêm vào spa của bạn. Câu đúng mời so sánh và nói liệu trình của mình gồm gì.",
     ),
   ],
 });
@@ -622,6 +642,8 @@ const lesson4 = L(38, 4, "A Plan the Manager Has Checked", "Kế hoạch đã đ
       alsoAccept: [
         "I am sorry, madam. Your plan has no heat treatments, so no sauna and no herbal bath.",
         "I am afraid there are no heat treatments in your plan, madam, so no sauna and no herbal bath.",
+        "I am sorry, madam. Your plan has no heat treatments, so you cannot use the sauna or the herbal bath.",
+        "I am sorry, madam. My manager's plan has no heat treatments, so no sauna and no herbal bath.",
       ],
     }),
     {

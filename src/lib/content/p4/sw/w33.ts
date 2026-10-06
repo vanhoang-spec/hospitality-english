@@ -61,11 +61,14 @@ const lesson1 = L(33, 1, "Listen First, Then Apologise", "Lắng nghe trước, 
     ),
   ],
   speaking: [
-    sp(
-      "I want to dispute this bill. It is wrong!",
-      t1a,
-      "Bước L — Listen: xin lỗi về chuyện khách gặp, rồi mời khách kể chi tiết. Chưa giải thích, chưa bào chữa.",
-    ),
+    {
+      ...sp(
+        "I want to dispute this bill. It is wrong!",
+        t1a,
+        "Bước L — Listen: xin lỗi về chuyện khách gặp, rồi mời khách kể chi tiết. Chưa giải thích, chưa bào chữa.",
+      ),
+      alsoAccept: ["I am sorry about this, madam. Could you tell me what happened, please?"],
+    },
     sp(
       "I had a sixty-minute massage, but you charged me for ninety minutes.",
       t1b,
@@ -240,6 +243,8 @@ const lesson2 = L(33, 2, "What Our Policy Allows", "Chính sách cho phép đế
       alsoAccept: [
         "I am sorry, I cannot accept it, madam, but let me check with my supervisor now.",
         "I cannot accept it, madam, but I will check with my supervisor now.",
+        "I am sorry, madam. The expiry date has passed, so I will ask my supervisor now.",
+        "I am sorry, madam. That is my supervisor's decision, so let me check with her now.",
       ],
     }),
     {
@@ -383,6 +388,7 @@ const lesson3 = L(33, 3, "Let Me Check With My Supervisor", "Để tôi hỏi gi
       ),
       alsoAccept: [
         "I will come back to you within the hour, madam, with an answer from my manager.",
+        "I will come back to you within the hour, madam, with an answer.",
       ],
     },
     risk({
@@ -396,6 +402,8 @@ const lesson3 = L(33, 3, "Let Me Check With My Supervisor", "Để tôi hỏi gi
       alsoAccept: [
         "I am very sorry, madam. I will check lost property first, and I will call my manager now.",
         "I am sorry, madam. Let me check lost property first, and then I will call my manager now.",
+        "I am very sorry, madam. Payment is my manager's decision, so let me check lost property first and call her now.",
+        "I am very sorry, madam. I will look in lost property first, and then I will call my manager.",
       ],
     }),
     risk({
@@ -409,6 +417,8 @@ const lesson3 = L(33, 3, "Let Me Check With My Supervisor", "Để tôi hỏi gi
       alsoAccept: [
         "I am very sorry, madam. I cannot offer compensation, but my manager will call you today.",
         "I am sorry, madam. I am not able to offer compensation, but my manager will call you today.",
+        "I am sorry, madam. Compensation is not my decision, but my manager will call you today.",
+        "I am sorry, madam. Compensation is my manager's decision, and she will call you today.",
       ],
     }),
     sp(
@@ -477,7 +487,7 @@ const lesson3 = L(33, 3, "Let Me Check With My Supervisor", "Để tôi hỏi gi
 });
 
 // ── Lesson 4 — An injury is not a dispute ──────────────────────────────
-const t4a = "I will stop now, madam, and clean the burn with cool water straight away.";
+const t4a = "I will stop now, madam, and put cool water on the burn straight away.";
 const t4b = "I am not sure, madam. The hotel nurse is coming now, and I will stay with you.";
 
 const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không phải là tranh chấp", {
@@ -527,13 +537,15 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
       ...sp(
         "Ouch! That stone is burning my back!",
         t4a,
-        "Bỏng là chuyện an toàn, không phải khiếu nại: dừng ngay, làm mát vết bỏng bằng nước mát.",
+        "Bỏng là chuyện an toàn, không phải khiếu nại: dừng ngay, cho nước mát lên vết bỏng để làm mát.",
         undefined,
-        ["stop", "clean", "burn", "cool", "water", "straight", "away"],
+        ["stop", "burn", "cool", "water", "straight", "away"],
       ),
       alsoAccept: [
-        "I will stop the treatment now, madam, and clean the burn with cool water straight away.",
-        "I will stop now and clean the burn with cool water straight away, madam.",
+        "I will stop the treatment now, madam, and put cool water on the burn straight away.",
+        "I will stop now and put cool water on the burn straight away, madam.",
+        "I am stopping now, madam, and I will put cool water on the burn straight away.",
+        "I will stop now, madam, and cool the burn with cool water straight away.",
       ],
     }),
     risk({
@@ -548,6 +560,8 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
       alsoAccept: [
         "I am not sure, madam. The hotel nurse is coming now, and I will stay here with you.",
         "I cannot say, madam. The hotel nurse is coming now, and I will stay with you.",
+        "I am not sure, madam, but the nurse is on her way, and I will stay with you.",
+        "I cannot say, madam, but the hotel nurse is on her way, and I will stay with you.",
       ],
     }),
     sp(
@@ -569,6 +583,7 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
       alsoAccept: [
         "Please stay with the guest. I will call the hotel nurse now.",
         "Please stay with the guest while I call the hotel nurse now.",
+        "Please stay with the guest. I am calling the hotel nurse now.",
       ],
     }),
     sp(
@@ -594,7 +609,7 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
     ),
   ],
   reading: read(
-    `During a hot stone massage, Mrs Tran suddenly cries out. One stone is too hot, and there is a red burn on her back. Her therapist, Vy, does not argue and does not explain. She stops at once, and she cleans the burn with cool water. She presses the call button, and her colleague comes in. Vy asks the colleague to stay with the guest while she calls the hotel nurse. The nurse arrives in a few minutes and looks at the burn. Mrs Tran is angry. She says it is the spa's fault, and she asks who will pay. Vy does not talk about fault or money. She says she is very sorry that Mrs Tran is hurt, and that the manager will speak with her after the nurse. Vy writes an incident report straight away. The next morning, the spa manager follows up with Mrs Tran in writing. She thanks her for telling the spa, and she invites her to a meeting.`,
+    `During a hot stone massage, Mrs Tran suddenly cries out. One stone is too hot, and there is a red burn on her back. Her therapist, Vy, does not argue and does not explain. She stops at once, and she puts cool water on the burn. She presses the call button, and her colleague comes in. Vy asks the colleague to stay with the guest while she calls the hotel nurse. The nurse arrives in a few minutes and looks at the burn. Mrs Tran is angry. She says it is the spa's fault, and she asks who will pay. Vy does not talk about fault or money. She says she is very sorry that Mrs Tran is hurt, and that the manager will speak with her after the nurse. Vy writes an incident report straight away. The next morning, the spa manager follows up with Mrs Tran in writing. She thanks her for telling the spa, and she invites her to a meeting.`,
     [
       {
         q: "Việc đầu tiên Vy làm khi khách bị bỏng là gì?",
@@ -605,7 +620,7 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
         ],
         correct: 2,
         explanation:
-          "'She stops at once, and she cleans the burn with cool water' — an toàn trước, giải thích sau.",
+          "'She stops at once, and she puts cool water on the burn' — an toàn trước, giải thích sau.",
       },
       {
         q: "Khi khách nói đó là lỗi của spa và hỏi ai trả tiền, Vy làm gì?",
@@ -633,12 +648,12 @@ const lesson4 = L(33, 4, "An Injury Is Not a Dispute", "Thương tích không ph
   ),
   game: [
     game(
-      "Ow! The stone on my shoulder is far too hot!",
-      "I will stop now, sir, and put cool water on the burn straight away.",
-      "I am sorry, sir. Please stay calm. It is only a small burn, and it not serious at all.",
-      "I am sorry, sir. Please stay calm. It is only a small burn, and it is not serious at all.",
+      "Ow! This hot towel is burning my face!",
+      "I am taking the towel off now, madam, and I will put cool water on your skin.",
+      "I am sorry, madam. Please stay calm. It is only a small burn, and it not serious at all.",
+      "I am sorry, madam. Please stay calm. It is only a small burn, and it is not serious at all.",
       undefined,
-      "Câu thứ hai thiếu động từ 'is' ('it not serious'). Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự kết luận 'không nghiêm trọng' — nhân viên không chẩn đoán, và trấn an phải bằng một việc cụ thể. Câu đúng dừng ngay và cho nước mát lên vết bỏng.",
+      "Câu thứ hai thiếu động từ 'is' ('it not serious'). Cả câu thứ hai lẫn câu thứ ba đều bảo khách bình tĩnh và tự kết luận 'không nghiêm trọng' — nhân viên không chẩn đoán, và trấn an phải bằng một việc cụ thể. Câu đúng bỏ khăn nóng ra ngay và cho nước mát lên da.",
     ),
     game(
       "Is the hotel going to pay for my burn?",
