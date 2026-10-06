@@ -73,18 +73,32 @@ Theo thứ tự yêu cầu gần nhất:
    đã sửa. Bộ hồi quy từ script của 10 auditor: câu sai lọt 0 ở mọi ô; câu đúng được nhận tăng
    (HM-SW bị trượt 17/25 → 1/25, HM-HK nhận 28/79 → 64/79, AC-SW 42/111 → 82/111). Vòng 3 chấm
    trên bản đóng băng sau commit này, brief `docs/audit/brief-p4-r3.md` (y hệt r2).
+6. **(06/10) Vòng 3 trên `80bfde0`: 8/10 ô** — AC FO 7,58 · FB 7,42 · HK 7,55 · SW 7,37 · GR
+   7,67 · HM FO 7,93 · FB 8,17 · HK 8,22 · SW 8,17 · GR 7,93. Báo cáo:
+   `%TEMP%/hospitality-p4-r3-80bfde0/<ô>/report.md`. **Người dùng chốt: "Tôi đồng ý cho pass FB
+   7.42 và SW 7.37" → P4 ĐẠT.** Không chấm lại P4, không vá P4 để nâng điểm. Sau vòng 3 vẫn gộp
+   các lỗi thật auditor tìm ra (`25a38b8`, không chấm lại): bộ chấm trượt câu dời "not" sang vế
+   khác ("They do NOT contain shellfish, so I WOULD recommend them" từng qua ô dị ứng bắt buộc
+   đúng), câu đảo thứ tự gọi người khi câu mẫu đặt thứ tự, câu lật tiểu từ ("Switch the AED OFF"
+   từng qua 55/59 lần); không nối "Thank you / Of course…" với but/and/so (lời xin lỗi vẫn nối
+   "but"); câu giải thích dưới bong bóng `register` của game không còn nói "câu đầu/câu cuối" sai
+   chỗ; phương án sai phần nghe bỏ sir/madam khi đáp án không có (HK: phương án duy nhất không kính
+   ngữ là đáp án 0/53 lần); bài viết tuần 33 FO/FB/GR chặn thêm hứa hẹn thời hạn, miễn phí, đổ lỗi
+   đồng nghiệp — mọi bản nháp xấu của vòng 2–3 bị chặn, mọi bài mẫu vẫn qua. Bộ hồi quy từ script
+   của 10 auditor khớp hoàn toàn bản đóng băng (câu sai lọt 0, không mất câu đúng nào).
+   **Chưa merge `content/p4` vào `main`** — chờ người dùng cho phép.
 
 ---
 
 ## 3. Nội dung — trạng thái từng giai đoạn
 
-| Giai đoạn | Tuần  | Trạng thái                                                                                                                                                                                                               |
-| --------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                     |
-| P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
-| P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
-| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                |
-| P4        | 31–40 | **Đang sửa tới 10/10 ≥ 7,5** (nhánh `content/p4`). Vòng 1 (`7ed3254`): 0/10. Viết lại toàn bộ (`e22d5af`). Vòng 2: **5/10** — HM 5/5, AC 0/5 (7,08–7,48). Đang sửa sau vòng 2, xem mục 2.5                               |
+| Giai đoạn | Tuần  | Trạng thái                                                                                                                                                                                                                  |
+| --------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                        |
+| P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                           |
+| P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.**    |
+| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                   |
+| P4        | 31–40 | **ĐẠT 06/10 theo quyết định của người dùng** ở vòng 3 (`80bfde0`): 8/10 ô ≥ 7,5; AC-FB 7,42 và AC-SW 7,37 được cho qua. Vòng 1 0/10, viết lại toàn bộ, vòng 2 5/10. Không chấm lại. Nhánh `content/p4`, **chưa lên `main`** |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
 đạt ngoại lệ. **Không tự suy rộng một ngoại lệ sang phase khác — hỏi lại.**
@@ -125,7 +139,8 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
 
 Không tự làm những việc này.
 
-1. **Có mở lại P4 không, và làm phần nào trước** — xem §6.
+1. **Merge `content/p4` vào `main` và deploy P4 lên production** (Vercel tự build khi `main`
+   đổi). P4 đã đạt; việc merge cần người dùng cho phép riêng.
 2. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
@@ -167,13 +182,15 @@ nội dung. In danh sách đầy đủ: `LINT_CONTENT_FULL=1 bun run lint:conten
 | P0  | 51–68     | **97,6–100%**                |
 | P1  | 147–158   | 51–61%                       |
 | P2  | 263–288   | 21–26%                       |
-| P3  | **43–45** | **100%**                     |
-| P4  | 44–74     | **97,6–100%**                |
+| P3  | 238–311   | 23–30% (tuần 30, đo 06/10)   |
+| P4  | 255–289   | 19–24% (tuần 40, đo 06/10)   |
 
-Nửa nói của P3 và P4 hiện **không đo được gì**. Gốc là số câu nói mỗi phase quá ít, không phải
-lỗi engine. P0 đã qua cổng dù mang nợ này.
+P3 và P4 trước khi viết lại chỉ có 43–74 câu và học thuộc 60 câu là qua 97–100%; nay đã ngang
+P2 (`bun scripts/probes/oralmeasure.ts 2000 FO,FB,HK,SW,GR <tuần>`). Còn P0 mang nợ này, và P0
+đã qua cổng dù mang nợ.
 
-Cộng thêm: P3 GR/BO và P4 BO không có câu nào vào được ô dự trữ (0% lượt thi); ~90 cặp câu
+Cộng thêm: P3 BO và P4 BO không có câu nào vào được ô dự trữ (0% lượt thi; P3 GR nay có ô dự
+trữ ở 2000/2000 đề, đo 06/10); ~90 cặp câu
 mẫu trùng nhau trong khung tuần 20/21 của P2, mỗi cặp ăn mất một vé rút đề.
 
 ---
