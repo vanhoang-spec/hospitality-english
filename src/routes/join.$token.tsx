@@ -9,10 +9,12 @@ import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 import { SHIPPING_DEPARTMENTS, getDepartment } from "@/lib/departments";
 import { TERM_LABEL, formatMoney } from "@/lib/subscription";
 import { firstProblem, newOrgDetailsSchema } from "@/lib/org-details";
+import { discountLabel } from "@/lib/retail-pricing";
 import {
   getSignupLinkInfo,
   redeemLearnerLink,
   redeemOrganizationLink,
+  redeemPartnerHotelLink,
   redeemRetailLink,
 } from "@/lib/signup-link-actions";
 
@@ -96,13 +98,14 @@ function JoinPage() {
         token={token}
         partnerName={info.partnerName}
         discountPct={info.discountPct}
+        discountAmount={info.discountAmount}
         trialDays={info.trialDays}
         until={info.until}
         options={info.options}
       />
     );
   }
-  return <HotelForm token={token} seats={info.seats} term={info.term} />;
+  return <HotelForm token={token} link={info} />;
 }
 
 /** One member of hotel staff, buying for themself through a partner. */
@@ -110,6 +113,7 @@ function RetailForm({
   token,
   partnerName,
   discountPct,
+  discountAmount,
   trialDays,
   until,
   options,
@@ -117,6 +121,7 @@ function RetailForm({
   token: string;
   partnerName: string;
   discountPct: number;
+  discountAmount: number;
   trialDays: number;
   until: string | null;
   options: { term: string; months: number; listPrice: number; amount: number }[];
@@ -155,8 +160,15 @@ function RetailForm({
             <strong className="text-foreground">{partnerName}</strong>:{" "}
           </>
         ) : null}
-        <strong className="text-primary">giảm {discountPct}%</strong>, học thử{" "}
-        <strong className="text-foreground">{trialDays} ngày</strong> miễn phí
+        {discountPct > 0 || discountAmount > 0 ? (
+          <>
+            <strong className="text-primary">
+              giảm {discountLabel({ pct: discountPct, amount: discountAmount })}
+            </strong>
+            ,{" "}
+          </>
+        ) : null}
+        học thử <strong className="text-foreground">{trialDays} ngày</strong> miễn phí
         {untilText ? <> · áp dụng đến hết {untilText}</> : null}.
       </div>
       <form onSubmit={submit} className="mt-6 space-y-4">
@@ -314,38 +326,113 @@ function LearnerForm({
   );
 }
 
-function HotelForm({ token, seats, term }: { token: string; seats: number; term: string }) {
+/** Which hotel link this is: the owner's single-use link with a plan and
+ *  term already agreed, or a partner's link where the hotel picks the plan
+ *  to try. */
+type HotelLink =
+  | { kind: "organization"; seats: number; term: string }
+  | {
+      kind: "partner_hotel";
+      partnerName: string;
+      discountPct: number;
+      discountAmount: number;
+      discountScope: string;
+      trialDays: number;
+      until: string | null;
+      plans: { code: string; seats: number }[];
+    };
+
+function HotelForm({ token, link }: { token: string; link: HotelLink }) {
   const [hotelName, setHotelName] = useState("");
   const [legalName, setLegalName] = useState("");
   const [taxCode, setTaxCode] = useState("");
   const [address, setAddress] = useState("");
   const [fullName, setFullName] = useState("");
   const [repEmail, setRepEmail] = useState("");
+  const [planCode, setPlanCode] = useState(
+    link.kind === "partner_hotel" ? (link.plans[1]?.code ?? link.plans[0]?.code ?? "p100") : "",
+  );
   const account = useAccountFields();
   const navigate = useNavigate();
 
   async function submit(e: FormEvent) {
     e.preventDefault();
     const company = { legalName, address, taxCode, repEmail };
+    const base = { token, hotelName, fullName, password: account.password, ...company };
     const ok = await account.run(
       async (phone) => {
-        await redeemOrganizationLink({
-          data: { token, hotelName, fullName, phone, password: account.password, ...company },
-        });
+        if (link.kind === "partner_hotel") {
+          await redeemPartnerHotelLink({
+            data: {
+              ...base,
+              phone,
+              planCode: planCode as "p50" | "p100" | "p200" | "p300" | "p500",
+            },
+          });
+        } else {
+          await redeemOrganizationLink({ data: { ...base, phone } });
+        }
       },
       () => firstProblem(newOrgDetailsSchema, company),
     );
     if (ok) navigate({ to: "/org-admin" });
   }
 
+  const partner = link.kind === "partner_hotel" ? link : null;
+  const untilText = partner?.until ? new Date(partner.until).toLocaleDateString("vi-VN") : null;
+  const hasDiscount = !!partner && (partner.discountPct > 0 || partner.discountAmount > 0);
+
   return (
     <Card title="Mở tài khoản khách sạn">
+      {partner ? (
+        <div className="mt-4 border border-primary/40 bg-primary/10 p-3 text-sm">
+          {partner.partnerName ? (
+            <>
+              Giới thiệu bởi <strong className="text-foreground">{partner.partnerName}</strong>
+              .{" "}
+            </>
+          ) : null}
+          Học thử <strong className="text-foreground">{partner.trialDays} ngày</strong> miễn phí
+          {hasDiscount ? (
+            <>
+              , ưu đãi{" "}
+              <strong className="text-primary">
+                giảm {discountLabel({ pct: partner.discountPct, amount: partner.discountAmount })}
+              </strong>{" "}
+              {partner.discountScope === "every"
+                ? "cho mọi lần mua và gia hạn"
+                : "cho hợp đồng đầu tiên"}
+            </>
+          ) : null}
+          {untilText ? <> · đăng ký đến hết {untilText}</> : null}.
+        </div>
+      ) : null}
       <p className="mt-3 text-sm text-foreground/75">
-        Gói <strong className="text-foreground">{seats} học viên</strong>, thời hạn{" "}
-        <strong className="text-foreground">{TERM_LABEL[term] ?? term}</strong>. Người điền form này
-        là người đại diện HR của khách sạn, và sẽ là tài khoản quản trị nhân sự (HR) đầu tiên.
+        {link.kind === "organization" ? (
+          <>
+            Gói <strong className="text-foreground">{link.seats} học viên</strong>, thời hạn{" "}
+            <strong className="text-foreground">{TERM_LABEL[link.term] ?? link.term}</strong>.{" "}
+          </>
+        ) : null}
+        Người điền form này là người đại diện HR của khách sạn, và sẽ là tài khoản quản trị nhân sự
+        (HR) đầu tiên.
       </p>
       <form onSubmit={submit} className="mt-6 space-y-4">
+        {partner ? (
+          <Field label="Gói muốn dùng thử (số nhân viên học)">
+            <select
+              value={planCode}
+              onChange={(e) => setPlanCode(e.target.value)}
+              className={INPUT}
+            >
+              {partner.plans.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.seats} học viên
+                </option>
+              ))}
+            </select>
+          </Field>
+        ) : null}
         <Field label="Tên khách sạn / resort (học viên sẽ thấy tên này)">
           <input
             required

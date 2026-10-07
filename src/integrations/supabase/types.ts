@@ -205,6 +205,27 @@ export type Database = {
           },
         ];
       };
+      crm_events: {
+        Row: {
+          du_lieu: Json;
+          id: number;
+          loai: string;
+          luc: string;
+        };
+        Insert: {
+          du_lieu: Json;
+          id?: never;
+          loai: string;
+          luc?: string;
+        };
+        Update: {
+          du_lieu?: Json;
+          id?: never;
+          loai?: string;
+          luc?: string;
+        };
+        Relationships: [];
+      };
       group_members: {
         Row: {
           added_at: string;
@@ -361,7 +382,9 @@ export type Database = {
           code: string;
           confirmed_by: string | null;
           created_at: string;
+          crm_ref: string | null;
           currency: string;
+          discount_amount: number;
           discount_pct: number;
           id: string;
           link_id: string | null;
@@ -380,7 +403,9 @@ export type Database = {
           code: string;
           confirmed_by?: string | null;
           created_at?: string;
+          crm_ref?: string | null;
           currency?: string;
+          discount_amount?: number;
           discount_pct?: number;
           id?: string;
           link_id?: string | null;
@@ -399,7 +424,9 @@ export type Database = {
           code?: string;
           confirmed_by?: string | null;
           created_at?: string;
+          crm_ref?: string | null;
           currency?: string;
+          discount_amount?: number;
           discount_pct?: number;
           id?: string;
           link_id?: string | null;
@@ -522,6 +549,7 @@ export type Database = {
           name: string;
           partner_id: string | null;
           seat_limit: number;
+          signup_link_id: string | null;
           updated_at: string;
         };
         Insert: {
@@ -531,6 +559,7 @@ export type Database = {
           name: string;
           partner_id?: string | null;
           seat_limit?: number;
+          signup_link_id?: string | null;
           updated_at?: string;
         };
         Update: {
@@ -540,9 +569,17 @@ export type Database = {
           name?: string;
           partner_id?: string | null;
           seat_limit?: number;
+          signup_link_id?: string | null;
           updated_at?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "organizations_signup_link_id_fkey";
+            columns: ["signup_link_id"];
+            isOneToOne: false;
+            referencedRelation: "signup_links";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "organizations_partner_id_fkey";
             columns: ["partner_id"];
@@ -556,6 +593,7 @@ export type Database = {
         Row: {
           created_at: string;
           created_by: string | null;
+          crm_ref: string | null;
           id: string;
           name: string;
           note: string | null;
@@ -563,6 +601,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           id?: string;
           name: string;
           note?: string | null;
@@ -570,6 +609,7 @@ export type Database = {
         Update: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           id?: string;
           name?: string;
           note?: string | null;
@@ -843,8 +883,11 @@ export type Database = {
         Row: {
           created_at: string;
           created_by: string | null;
+          crm_ref: string | null;
           department: string | null;
+          discount_amount: number | null;
           discount_pct: number | null;
+          discount_scope: string | null;
           expires_at: string | null;
           group_id: string | null;
           id: string;
@@ -864,8 +907,11 @@ export type Database = {
         Insert: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           department?: string | null;
+          discount_amount?: number | null;
           discount_pct?: number | null;
+          discount_scope?: string | null;
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
@@ -885,8 +931,11 @@ export type Database = {
         Update: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           department?: string | null;
+          discount_amount?: number | null;
           discount_pct?: number | null;
+          discount_scope?: string | null;
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
@@ -989,6 +1038,7 @@ export type Database = {
         Row: {
           created_at: string;
           created_by: string | null;
+          crm_ref: string | null;
           currency: string;
           ends_at: string;
           id: string;
@@ -1002,6 +1052,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           currency?: string;
           ends_at: string;
           id?: string;
@@ -1015,6 +1066,7 @@ export type Database = {
         Update: {
           created_at?: string;
           created_by?: string | null;
+          crm_ref?: string | null;
           currency?: string;
           ends_at?: string;
           id?: string;
@@ -1053,8 +1105,11 @@ export type Database = {
         Returns: {
           created_at: string;
           created_by: string | null;
+          crm_ref: string | null;
           department: string | null;
+          discount_amount: number | null;
           discount_pct: number | null;
+          discount_scope: string | null;
           expires_at: string | null;
           group_id: string | null;
           id: string;
@@ -1077,6 +1132,41 @@ export type Database = {
           isOneToOne: false;
           isSetofReturn: true;
         };
+      };
+      crm_cap_goi: {
+        Args: {
+          p_crm_ref: string;
+          p_org: string;
+          p_plan: string;
+          p_price: number;
+          p_term: string;
+        };
+        Returns: {
+          bat_dau: string;
+          da_xu_ly_truoc: boolean;
+          ket_thuc: string;
+        }[];
+      };
+      crm_luu_link: {
+        Args: {
+          p_crm_ref: string;
+          p_discount_amount: number;
+          p_discount_pct: number;
+          p_discount_scope: string;
+          p_expires_at: string;
+          p_kind: string;
+          p_max_uses: number;
+          p_new_token: string;
+          p_open: boolean;
+          p_partner_name: string;
+          p_partner_ref: string;
+          p_trial_days: number;
+        };
+        Returns: {
+          link_id: string;
+          link_token: string;
+          tao_moi: boolean;
+        }[];
       };
       current_org_id: { Args: never; Returns: string };
       is_org_admin: { Args: { target_org: string }; Returns: boolean };

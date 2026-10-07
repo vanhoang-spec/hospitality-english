@@ -20,6 +20,7 @@ import { Route as OrgAdminRouteImport } from './routes/org-admin'
 import { Route as OrgReportsRouteImport } from './routes/org-reports'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ThanhToanRouteImport } from './routes/thanh-toan'
+import { Route as ApiCrmRouteImport } from './routes/api/crm'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$week'
@@ -81,6 +82,11 @@ const ThanhToanRoute = ThanhToanRouteImport.update({
   path: '/thanh-toan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCrmRoute = ApiCrmRouteImport.update({
+  id: '/api/crm',
+  path: '/api/crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DepartmentDepRoute = DepartmentDepRouteImport.update({
   id: '/department/$dep',
   path: '/department/$dep',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/org-reports': typeof OrgReportsRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/thanh-toan'
+    | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/thanh-toan'
+    | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/org-reports'
     | '/review'
     | '/thanh-toan'
+    | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
     | '/handbook/$dep/$week'
@@ -231,6 +243,7 @@ export interface RootRouteChildren {
   OrgReportsRoute: typeof OrgReportsRoute
   ReviewRoute: typeof ReviewRoute
   ThanhToanRoute: typeof ThanhToanRoute
+  ApiCrmRoute: typeof ApiCrmRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   JoinTokenRoute: typeof JoinTokenRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThanhToanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/crm': {
+      id: '/api/crm'
+      path: '/api/crm'
+      fullPath: '/api/crm'
+      preLoaderRoute: typeof ApiCrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/department/$dep': {
       id: '/department/$dep'
       path: '/department/$dep'
@@ -367,6 +387,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrgReportsRoute: OrgReportsRoute,
   ReviewRoute: ReviewRoute,
   ThanhToanRoute: ThanhToanRoute,
+  ApiCrmRoute: ApiCrmRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   JoinTokenRoute: JoinTokenRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,

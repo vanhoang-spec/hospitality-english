@@ -539,5 +539,172 @@ check(
 const goodDetails = await detailsInsert("0312345678-002", "+84900000077", "a@b.vn");
 check("control: valid company details are accepted", goodDetails === null, goodDetails ?? "");
 
+// ── CRM integration (20261007120000): partner links for hotels, the two
+// CRM commands that change several rows at once, the event log.
+const partnerRow = (await one<{ id: string }>(
+  `insert into public.partners (name) values ('Đối tác thử CRM') returning id`,
+))!.id;
+check(
+  "a partner hotel link without discount_scope is refused",
+  /signup_links_shape/.test(
+    (await raises(
+      `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days)
+       values ('t-ph-1', 'partner_hotel', $1, 10, 30)`,
+      [partnerRow],
+    )) ?? "",
+  ),
+);
+check(
+  "a partner hotel link with both a percent and an amount off is refused",
+  /signup_links_shape/.test(
+    (await raises(
+      `insert into public.signup_links (token, kind, partner_id, discount_pct, discount_amount, discount_scope, trial_days)
+       values ('t-ph-2', 'partner_hotel', $1, 10, 50000, 'first', 30)`,
+      [partnerRow],
+    )) ?? "",
+  ),
+);
+const goodPh = await raises(
+  `insert into public.signup_links (token, kind, partner_id, discount_amount, discount_scope, trial_days)
+   values ('t-ph-3', 'partner_hotel', $1, 50000, 'every', 30)`,
+  [partnerRow],
+);
+check(
+  "control: a partner hotel link with an amount off is accepted",
+  goodPh === null,
+  goodPh ?? "",
+);
+
+const luu = (ref: string, kind: string, partnerRef: string, partnerName: string, open = true) =>
+  db.query<{ link_id: string; link_token: string; tao_moi: boolean }>(
+    `select * from public.crm_luu_link($1, $2, $3, $4, 30, null, 'every', 7, null, null, $5, $6)`,
+    [ref, kind, partnerRef, partnerName, open, `tok-${ref}`],
+  );
+const l1 = (await luu("crm-link-1", "retail", "crm-partner-9", "Đối tác thử CRM")).rows[0]!;
+const adopted = await one<{ crm_ref: string; n: number }>(
+  `select max(crm_ref) as crm_ref, count(*)::int as n from public.partners where lower(name) = lower('Đối tác thử CRM')`,
+);
+check(
+  "crm_luu_link adopts the same-named partner made in the app instead of a second one",
+  l1.tao_moi === true && adopted?.n === 1 && adopted?.crm_ref === "crm-partner-9",
+  JSON.stringify(adopted),
+);
+const l2 = (await luu("crm-link-1", "retail", "crm-partner-9", "Đối tác thử CRM", false)).rows[0]!;
+const revoked = await one<{ revoked_at: string | null }>(
+  `select revoked_at from public.signup_links where crm_ref = 'crm-link-1'`,
+);
+check(
+  "crm_luu_link again with the same crm_ref edits the link and keeps its token",
+  l2.tao_moi === false && l2.link_token === l1.link_token && l2.link_id === l1.link_id,
+  `${l1.link_token} → ${l2.link_token}`,
+);
+check("dang_mo false revokes the link", revoked?.revoked_at !== null);
+const kindSwitch = await raises(
+  `select * from public.crm_luu_link('crm-link-1', 'partner_hotel', 'crm-partner-9', 'Đối tác thử CRM', 30, null, 'every', 7, null, null, true, 'tok-x')`,
+);
+check(
+  "a link cannot switch between hotel and individual",
+  /XUNG_DOT/.test(kindSwitch ?? ""),
+  kindSwitch ?? "allowed!",
+);
+const luuAsUser = await asRole(
+  "authenticated",
+  `select * from public.crm_luu_link('crm-link-2', 'retail', 'p', 'Ai đó', 0, null, null, 7, null, null, true, 'tok-y')`,
+  owner,
+);
+check(
+  "even the platform owner's browser cannot call crm_luu_link",
+  /permission denied/.test(luuAsUser ?? ""),
+  luuAsUser ?? "allowed!",
+);
+
+// A hotel on a 30-day trial, then the CRM confirms a 12-month invoice.
+const capOrg = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit) values ('CRM Hotel', 50) returning id`,
+))!.id;
+await db.query(
+  `insert into public.subscriptions (org_id, plan_code, kind, starts_at, ends_at, price)
+   values ($1, 'p50', 'trial', now() - interval '1 day', now() + interval '30 days', 0)`,
+  [capOrg],
+);
+const cap1 = await one<{ ket_thuc: string; da_xu_ly_truoc: boolean }>(
+  `select * from public.crm_cap_goi('crm-pay-1', $1, 'p100', 'm12', 12000000)`,
+  [capOrg],
+);
+const afterCap = await one<{ n: number; seats: number; months: number }>(
+  `select (select count(*)::int from public.subscriptions where org_id = $1 and status = 'active') as n,
+          (select seat_limit from public.organizations where id = $1) as seats,
+          (select round(extract(epoch from (ends_at - now())) / 86400)::int from public.subscriptions
+            where org_id = $1 and status = 'active') as months`,
+  [capOrg],
+);
+check(
+  "crm_cap_goi opens the paid term after the trial days left, on the plan's seats",
+  cap1?.da_xu_ly_truoc === false &&
+    afterCap?.n === 1 &&
+    afterCap?.seats === 100 &&
+    afterCap.months >= 30 + 364 &&
+    afterCap.months <= 30 + 366,
+  JSON.stringify(afterCap),
+);
+const cap2 = await one<{ ket_thuc: string; da_xu_ly_truoc: boolean }>(
+  `select * from public.crm_cap_goi('crm-pay-1', $1, 'p100', 'm12', 12000000)`,
+  [capOrg],
+);
+const activeAfterRepeat = await one<{ n: number }>(
+  `select count(*)::int as n from public.subscriptions where org_id = $1`,
+  [capOrg],
+);
+check(
+  "the same crm_ref sent twice adds the term once",
+  cap2?.da_xu_ly_truoc === true &&
+    new Date(cap2.ket_thuc).getTime() === new Date(cap1!.ket_thuc).getTime() &&
+    activeAfterRepeat?.n === 2,
+  `${activeAfterRepeat?.n} rows (trial + paid)`,
+);
+const indiv = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit, kind) values ('Cá nhân · Thử', 1, 'individual') returning id`,
+))!.id;
+check(
+  "crm_cap_goi refuses a one-person retail account",
+  /DU_LIEU_SAI/.test(
+    (await raises(`select * from public.crm_cap_goi('crm-pay-2', $1, 'p50', 'm3', 1)`, [indiv])) ??
+      "",
+  ),
+);
+check(
+  "crm_cap_goi refuses the one-seat retail plan for a hotel",
+  /DU_LIEU_SAI/.test(
+    (await raises(`select * from public.crm_cap_goi('crm-pay-3', $1, 'p1', 'm3', 1)`, [capOrg])) ??
+      "",
+  ),
+);
+const capAsHr = await asRole(
+  "authenticated",
+  `select * from public.crm_cap_goi('crm-pay-4', '${capOrg}', 'p500', 'm12', 0)`,
+  hr,
+);
+check(
+  "a signed-in user cannot call crm_cap_goi",
+  /permission denied/.test(capAsHr ?? ""),
+  capAsHr ?? "allowed!",
+);
+
+await db.query(
+  `insert into public.crm_events (loai, du_lieu) values ('khach_san_dang_ky', '{"app_org_id":"x"}')`,
+);
+const eventsAsOwner = await asRole("authenticated", `select * from public.crm_events`, owner);
+check(
+  "nobody signed in can read the CRM event log, the platform owner included",
+  /permission denied/.test(eventsAsOwner ?? ""),
+  eventsAsOwner ?? "allowed!",
+);
+check(
+  "the event log refuses an unknown event type",
+  /check constraint/.test(
+    (await raises(`insert into public.crm_events (loai, du_lieu) values ('xoa_het', '{}')`)) ?? "",
+  ),
+);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

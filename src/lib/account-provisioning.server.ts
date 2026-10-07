@@ -53,6 +53,32 @@ export async function logAdminAction(entry: {
   });
 }
 
+/** Something the CRM should hear about, written to crm_events for it to
+ *  pull (contract: docs/TICH_HOP_HOSPITALITY.md in the CRM repo).
+ *
+ *  Called after the sign-up has already succeeded, so it never throws: a
+ *  learner who has an account must not be told the sign-up failed because
+ *  a log row did not land. A failure is recorded in admin_actions with the
+ *  whole event, so it can be replayed by hand. */
+export async function recordCrmEvent(
+  loai: "khach_san_dang_ky" | "ca_nhan_dang_ky" | "don_cap_nhat",
+  du_lieu: Record<string, unknown>,
+  orgId: string | null,
+) {
+  const { error } = await supabaseAdmin
+    .from("crm_events")
+    .insert({ loai, du_lieu: du_lieu as never });
+  if (error) {
+    console.error(`crm_events ${loai}: ${error.message}`);
+    await logAdminAction({
+      actorId: null,
+      orgId,
+      action: "crm.event_failed",
+      meta: { loai, du_lieu, error: error.message },
+    }).catch(() => undefined);
+  }
+}
+
 /** A lapsed hotel may still be read and reported on; it may not take on
  *  new learners. The same rule is a RESTRICTIVE policy on the progress
  *  tables, so an expired org cannot record learning either. */
@@ -190,6 +216,11 @@ export async function provisionOrganization(input: {
   actorId: string | null;
   action: string;
   meta?: Record<string, unknown>;
+  /** A partner link's trial: `term` must be "trial", and the trial lasts
+   *  this many days instead of the default month, free. */
+  trialDays?: number;
+  /** The link the hotel signed up through, and its partner. */
+  signupLink?: { id: string; partnerId: string | null; crmRef: string | null };
 }): Promise<{ orgId: string; hrUserId: string }> {
   const { data: plan, error: planErr } = await supabaseAdmin
     .from("plans")
@@ -202,7 +233,12 @@ export async function provisionOrganization(input: {
   // org_seat_limit() never disagrees with the subscription.
   const { data: org, error: orgErr } = await supabaseAdmin
     .from("organizations")
-    .insert({ name: input.name, seat_limit: plan.seats })
+    .insert({
+      name: input.name,
+      seat_limit: plan.seats,
+      signup_link_id: input.signupLink?.id ?? null,
+      partner_id: input.signupLink?.partnerId ?? null,
+    })
     .select("id")
     .single();
   if (orgErr || !org) throw new Error(orgErr?.message ?? "Không tạo được khách sạn.");
@@ -227,13 +263,19 @@ export async function provisionOrganization(input: {
   }
 
   const now = new Date();
-  const agreed = input.price ?? (await listPrice(input.planCode, input.term));
+  const trial = input.trialDays !== undefined;
+  const agreed = trial ? 0 : (input.price ?? (await listPrice(input.planCode, input.term)));
+  const ends = trial
+    ? new Date(now.getTime() + input.trialDays! * 24 * 60 * 60 * 1000).toISOString()
+    : endsAt(input.term, now);
   const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
     org_id: org.id,
     plan_code: input.planCode,
-    kind: input.term,
-    starts_at: now.toISOString(),
-    ends_at: endsAt(input.term, now),
+    kind: trial ? "trial" : input.term,
+    // A minute early, for the clock reason given in provisionIndividual:
+    // the HR account is created seconds from now and checks this row.
+    starts_at: new Date(now.getTime() - 60_000).toISOString(),
+    ends_at: ends,
     price: agreed,
     created_by: input.actorId,
   });
@@ -270,6 +312,25 @@ export async function provisionOrganization(input: {
     meta: { plan: input.planCode, term: input.term, price: agreed, ...input.meta },
   });
 
+  await recordCrmEvent(
+    "khach_san_dang_ky",
+    {
+      app_org_id: org.id,
+      link_crm_ref: input.signupLink?.crmRef ?? null,
+      ten_khach_san: input.name,
+      cong_ty: {
+        ten: input.company.legalName,
+        mst: input.company.taxCode,
+        dia_chi: input.company.address,
+      },
+      dai_dien: { ten: input.hrFullName, sdt: input.hrPhone, email: input.company.repEmail },
+      goi: input.planCode,
+      ky_han: trial ? "trial" : input.term,
+      het_han: ends,
+    },
+    org.id,
+  );
+
   return { orgId: org.id, hrUserId: created.user.id };
 }
 
@@ -289,13 +350,13 @@ function newOrderCode(): string {
 /** Price one retail term: list price of p1 less the discount, rounded up
  *  to 10,000 VND. Throws if the owner has no list price for that term —
  *  an order must never be written for an amount nobody set. */
-export async function retailQuote(term: string, discountPct: number) {
+export async function retailQuote(term: string, discount: { pct: number; amount: number }) {
   const { retailAmount } = await import("@/lib/retail-pricing");
   const list = await listPrice("p1", term);
   if (list === null || list <= 0) {
     throw new Error("Chưa có giá bán lẻ cho gói này. Vui lòng báo quản trị viên.");
   }
-  return { listPrice: list, amount: retailAmount(list, discountPct) };
+  return { listPrice: list, amount: retailAmount(list, discount.pct, discount.amount) };
 }
 
 /** A retail learner: a one-seat organisation of kind 'individual', on a
@@ -312,10 +373,12 @@ export async function provisionIndividual(input: {
   term: string;
   partnerId: string;
   linkId: string;
-  discountPct: number;
+  /** The CRM's id for the link, when the CRM made it. */
+  linkCrmRef: string | null;
+  discount: { pct: number; amount: number };
   trialDays: number;
 }): Promise<{ orderCode: string; amount: number }> {
-  const quote = await retailQuote(input.term, input.discountPct);
+  const quote = await retailQuote(input.term, input.discount);
 
   const { data: org, error: orgErr } = await supabaseAdmin
     .from("organizations")
@@ -376,10 +439,33 @@ export async function provisionIndividual(input: {
         plan_code: "p1",
         term: input.term,
         list_price: quote.listPrice,
-        discount_pct: input.discountPct,
+        discount_pct: input.discount.pct,
+        discount_amount: input.discount.amount,
         amount: quote.amount,
       });
-      if (!error) return { orderCode: code, amount: quote.amount };
+      if (!error) {
+        await recordCrmEvent(
+          "ca_nhan_dang_ky",
+          {
+            app_org_id: org.id,
+            app_user_id: userId,
+            link_crm_ref: input.linkCrmRef,
+            ho_ten: input.fullName,
+            sdt: input.phone,
+            bo_phan: input.department,
+            hoc_thu_den: trialEnd.toISOString(),
+            don: {
+              ma_don: code,
+              ky_han: input.term,
+              gia_niem_yet: quote.listPrice,
+              giam: { phan_tram: input.discount.pct, so_tien: input.discount.amount },
+              so_tien: quote.amount,
+            },
+          },
+          org.id,
+        );
+        return { orderCode: code, amount: quote.amount };
+      }
       if (!/duplicate key|unique/i.test(error.message)) throw new Error(error.message);
     }
     throw new Error("Không tạo được mã đơn hàng. Vui lòng thử lại.");
@@ -404,8 +490,12 @@ export async function provisionIndividual(input: {
  *  order is flipped first, conditionally, so two clicks cannot both run. */
 export async function activateOrder(input: {
   orderId: string;
-  actorId: string;
+  /** null when the CRM confirmed the money (the CRM records who). */
+  actorId: string | null;
   paymentRef?: string | null;
+  /** The CRM's id for the confirmation — the order keeps it, so the CRM
+   *  sending the same confirmation twice is recognised. */
+  crmRef?: string | null;
 }): Promise<{ endsAt: string }> {
   const nowIso = new Date().toISOString();
   const { data: order, error } = await supabaseAdmin
@@ -415,6 +505,7 @@ export async function activateOrder(input: {
       paid_at: nowIso,
       confirmed_by: input.actorId,
       payment_ref: input.paymentRef ?? null,
+      crm_ref: input.crmRef ?? null,
     })
     .eq("id", input.orderId)
     .eq("status", "pending")
@@ -452,7 +543,13 @@ export async function activateOrder(input: {
     // Put the order back so it can be confirmed again once fixed.
     await supabaseAdmin
       .from("orders")
-      .update({ status: "pending", paid_at: null, confirmed_by: null, payment_ref: null })
+      .update({
+        status: "pending",
+        paid_at: null,
+        confirmed_by: null,
+        payment_ref: null,
+        crm_ref: null,
+      })
       .eq("id", order.id);
     if (current) {
       await supabaseAdmin.from("subscriptions").update({ status: "active" }).eq("id", current.id);
