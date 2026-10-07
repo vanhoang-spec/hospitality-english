@@ -61,7 +61,7 @@ export async function logAdminAction(entry: {
  *  a log row did not land. A failure is recorded in admin_actions with the
  *  whole event, so it can be replayed by hand. */
 export async function recordCrmEvent(
-  loai: "khach_san_dang_ky" | "ca_nhan_dang_ky" | "don_cap_nhat",
+  loai: "khach_san_dang_ky" | "ca_nhan_dang_ky" | "don_cap_nhat" | "don_gia_han",
   du_lieu: Record<string, unknown>,
   orgId: string | null,
 ) {
@@ -339,6 +339,14 @@ export async function provisionOrganization(input: {
 /** What goes in the transfer note: "EH" and six characters without
  *  look-alikes (no 0/O, 1/I/L), so it survives being read off a phone and
  *  typed into a banking app. */
+/** The page a learner (or CS, over Zalo) opens to pay an order without
+ *  signing in: amount, order code, QR. APP_ORIGIN overrides the live
+ *  domain for previews. */
+export function payUrl(payToken: string): string {
+  const origin = process.env.APP_ORIGIN || "https://hospitality.embassy.edu.vn";
+  return `${origin}/tt/${payToken}`;
+}
+
 function newOrderCode(): string {
   const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
   const bytes = crypto.getRandomValues(new Uint8Array(6));
@@ -430,20 +438,24 @@ export async function provisionIndividual(input: {
     // The code is random; on the rare collision, draw again.
     for (let attempt = 0; attempt < 5; attempt++) {
       const code = newOrderCode();
-      const { error } = await supabaseAdmin.from("orders").insert({
-        code,
-        org_id: org.id,
-        user_id: userId,
-        partner_id: input.partnerId,
-        link_id: input.linkId,
-        plan_code: "p1",
-        term: input.term,
-        list_price: quote.listPrice,
-        discount_pct: input.discount.pct,
-        discount_amount: input.discount.amount,
-        amount: quote.amount,
-      });
-      if (!error) {
+      const { data: placed, error } = await supabaseAdmin
+        .from("orders")
+        .insert({
+          code,
+          org_id: org.id,
+          user_id: userId,
+          partner_id: input.partnerId,
+          link_id: input.linkId,
+          plan_code: "p1",
+          term: input.term,
+          list_price: quote.listPrice,
+          discount_pct: input.discount.pct,
+          discount_amount: input.discount.amount,
+          amount: quote.amount,
+        })
+        .select("pay_token")
+        .single();
+      if (!error && placed) {
         await recordCrmEvent(
           "ca_nhan_dang_ky",
           {
@@ -460,13 +472,14 @@ export async function provisionIndividual(input: {
               gia_niem_yet: quote.listPrice,
               giam: { phan_tram: input.discount.pct, so_tien: input.discount.amount },
               so_tien: quote.amount,
+              link_thanh_toan: payUrl(placed.pay_token),
             },
           },
           org.id,
         );
         return { orderCode: code, amount: quote.amount };
       }
-      if (!/duplicate key|unique/i.test(error.message)) throw new Error(error.message);
+      if (error && !/duplicate key|unique/i.test(error.message)) throw new Error(error.message);
     }
     throw new Error("Không tạo được mã đơn hàng. Vui lòng thử lại.");
   } catch (e) {
@@ -572,4 +585,130 @@ export async function activateOrder(input: {
   });
 
   return { endsAt: end };
+}
+
+/** Open the renewal orders that are due (owner, 07/10/2026).
+ *
+ *  A learner whose paid term ends within RENEW_BEFORE_DAYS gets one
+ *  renewal order: the term they bought last time, today's list price, and
+ *  their link's discount only while that offer still runs. While it waits
+ *  for payment they keep learning until RENEW_GRACE_DAYS after the term
+ *  ended (org_is_active reads grace_until). The CRM hears about it
+ *  (don_gia_han) with the payment link, for CS to send over Zalo.
+ *
+ *  Without `orgId` (the daily cron): every learner whose term ends within
+ *  the window or ended less than the grace ago. With `orgId` (the learner
+ *  opening the app): that learner, however long ago the term ended — a
+ *  learner who comes back after months still finds an order to pay.
+ *
+ *  Safe to run any number of times: one pending order per learner is a
+ *  unique index, and the loser of a race simply finds the order there. */
+export async function createDueRenewals(
+  opts: { orgId?: string; now?: Date } = {},
+): Promise<number> {
+  const { RENEW_BEFORE_DAYS, RENEW_GRACE_DAYS, renewalDiscount } =
+    await import("@/lib/retail-pricing");
+  const now = opts.now ?? new Date();
+  const day = 86_400_000;
+  let query = supabaseAdmin
+    .from("subscriptions")
+    .select("org_id, ends_at, organizations!inner(kind)")
+    .eq("status", "active")
+    .eq("organizations.kind", "individual")
+    .neq("kind", "trial")
+    .lte("ends_at", new Date(now.getTime() + RENEW_BEFORE_DAYS * day).toISOString());
+  query = opts.orgId
+    ? query.eq("org_id", opts.orgId)
+    : query.gt("ends_at", new Date(now.getTime() - RENEW_GRACE_DAYS * day).toISOString());
+  const { data: subs, error } = await query;
+  if (error) throw new Error(error.message);
+
+  let made = 0;
+  for (const sub of subs ?? []) {
+    const { data: orders } = await supabaseAdmin
+      .from("orders")
+      .select("status, term, user_id, partner_id, link_id")
+      .eq("org_id", sub.org_id)
+      .order("created_at", { ascending: false });
+    if ((orders ?? []).some((o) => o.status === "pending")) continue;
+    // Never paid at all: the first order is still the one to pay.
+    const last = (orders ?? []).find((o) => o.status === "paid");
+    if (!last) continue;
+
+    const { data: link } = last.link_id
+      ? await supabaseAdmin
+          .from("signup_links")
+          .select("discount_pct, discount_amount, discount_scope, expires_at, revoked_at, crm_ref")
+          .eq("id", last.link_id)
+          .maybeSingle()
+      : { data: null };
+    const discount = renewalDiscount(link, now);
+    let quote: { listPrice: number; amount: number };
+    try {
+      quote = await retailQuote(last.term, discount);
+    } catch {
+      continue; // no list price for that term today: nothing to sell yet
+    }
+    const graceUntil = new Date(new Date(sub.ends_at).getTime() + RENEW_GRACE_DAYS * day);
+
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const code = newOrderCode();
+      const { data: placed, error: insertErr } = await supabaseAdmin
+        .from("orders")
+        .insert({
+          code,
+          org_id: sub.org_id,
+          user_id: last.user_id,
+          partner_id: last.partner_id,
+          link_id: last.link_id,
+          plan_code: "p1",
+          term: last.term,
+          list_price: quote.listPrice,
+          discount_pct: discount.pct,
+          discount_amount: discount.amount,
+          amount: quote.amount,
+          kind: "renewal",
+          grace_until: graceUntil.toISOString(),
+        })
+        .select("pay_token")
+        .single();
+      if (insertErr || !placed) {
+        const message = insertErr?.message ?? "no row";
+        if (/orders_one_pending_per_org/.test(message)) break; // made meanwhile
+        if (/duplicate key|unique/i.test(message)) continue; // order code collision
+        throw new Error(message);
+      }
+      made++;
+      const { data: who } = last.user_id
+        ? await supabaseAdmin
+            .from("profiles")
+            .select("full_name, phone")
+            .eq("id", last.user_id)
+            .maybeSingle()
+        : { data: null };
+      await recordCrmEvent(
+        "don_gia_han",
+        {
+          app_org_id: sub.org_id,
+          app_user_id: last.user_id,
+          link_crm_ref: link?.crm_ref ?? null,
+          ho_ten: who?.full_name ?? null,
+          sdt: who?.phone ? `+${who.phone.replace(/^\+/, "")}` : null,
+          het_han_cu: sub.ends_at,
+          an_han_den: graceUntil.toISOString(),
+          don: {
+            ma_don: code,
+            ky_han: last.term,
+            gia_niem_yet: quote.listPrice,
+            giam: { phan_tram: discount.pct, so_tien: discount.amount },
+            so_tien: quote.amount,
+            link_thanh_toan: payUrl(placed.pay_token),
+          },
+        },
+        sub.org_id,
+      );
+      break;
+    }
+  }
+  return made;
 }

@@ -3,17 +3,19 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useSession, useProfile, signOut } from "@/lib/auth";
 import { useOrgSubscription, orgIsActive, TERM_LABEL } from "@/lib/subscription";
 import { useSingleSession, clearSessionId } from "@/lib/single-session";
+import { RenewalBanner } from "@/components/RenewalBanner";
 
 // Session lives in localStorage (supabase-js default), so SSR always
 // renders "logged out" — this gate only takes effect after hydration.
 // Server functions remain independently protected by requireSupabaseAuth.
 const PUBLIC_PATHS = new Set(["/login"]);
 
-/** Signup links. Public like /login, but a signed-in visitor is NOT sent
- *  home: HR opening their own link to test it would otherwise bounce off
- *  it. The page tells them to sign out instead. */
+/** Links people are sent: signup links (/join/) and payment links (/tt/).
+ *  Public like /login, but a signed-in visitor is NOT sent home: HR
+ *  opening their own link to test it, or a learner opening the payment
+ *  link CS sent them, would otherwise bounce off it. */
 function isSignupLinkPath(pathname: string) {
-  return pathname.startsWith("/join/");
+  return pathname.startsWith("/join/") || pathname.startsWith("/tt/");
 }
 
 export function AuthGate({ children }: { children: ReactNode }) {
@@ -83,6 +85,23 @@ export function AuthGate({ children }: { children: ReactNode }) {
       return <IndividualLapsed trial={subscription?.kind === "trial"} />;
     }
     return <SubscriptionLapsed endsAt={subscription?.endsAt} kind={subscription?.kind} />;
+  }
+
+  // A learner who bought for themself sees their renewal on every page —
+  // except the one where they pay it.
+  if (
+    session &&
+    profile?.role === "member" &&
+    profile.organizations?.kind === "individual" &&
+    !isPublicPath &&
+    pathname !== "/thanh-toan"
+  ) {
+    return (
+      <>
+        <RenewalBanner />
+        {children}
+      </>
+    );
   }
 
   return <>{children}</>;

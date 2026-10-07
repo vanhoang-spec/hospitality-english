@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatMoney } from "@/lib/subscription";
 import { getMyBilling, changeMyOrderTerm, type MyBilling } from "@/lib/retail-actions";
+import { PaymentInstructions } from "@/components/PaymentInstructions";
 
 // "Gói học của tôi" — for a learner who bought for themself: where their
 // trial or term stands, the open order, and how to pay it. Reachable even
@@ -60,6 +61,8 @@ function Billing({ billing }: { billing: Extract<MyBilling, { individual: true }
     ? Math.max(0, Math.ceil((new Date(sub.endsAt).getTime() - Date.now()) / 86_400_000))
     : 0;
   const onTrial = sub?.kind === "trial";
+  const renewal = order?.status === "pending" && order.kind === "renewal";
+  const inGrace = !!order?.graceUntil && new Date(order.graceUntil).getTime() > Date.now();
 
   return (
     <Shell>
@@ -83,12 +86,28 @@ function Billing({ billing }: { billing: Extract<MyBilling, { individual: true }
           <p>
             Gói học của bạn còn hiệu lực đến hết <strong>{fmtDate(sub.endsAt)}</strong> ({daysLeft}{" "}
             ngày).
+            {renewal ? (
+              <>
+                {" "}
+                Đơn gia hạn đã sẵn bên dưới — thanh toán trước ngày đó để học liền mạch, gói mới nối
+                tiếp ngay sau gói này.
+              </>
+            ) : null}
           </p>
         )}
-        {sub && !onTrial && !sub.active && (
+        {sub && !onTrial && !sub.active && renewal && inGrace && (
           <p>
             <strong className="text-primary">Gói học đã hết hạn</strong> ngày {fmtDate(sub.endsAt)}.
-            Để gia hạn, hãy liên hệ Embassy Hospitality.
+            Bạn vẫn được học tiếp đến hết <strong>{fmtDate(order!.graceUntil!)}</strong> để hoàn tất
+            thanh toán đơn gia hạn bên dưới. Gói mới tính từ ngày chúng tôi xác nhận đã nhận tiền.
+          </p>
+        )}
+        {sub && !onTrial && !sub.active && !(renewal && inGrace) && (
+          <p>
+            <strong className="text-primary">Gói học đã hết hạn</strong> ngày {fmtDate(sub.endsAt)}.
+            {renewal
+              ? " Thanh toán đơn gia hạn bên dưới để học tiếp — tiến độ của bạn vẫn được giữ nguyên."
+              : " Để gia hạn, hãy liên hệ Embassy Hospitality."}
           </p>
         )}
         {billing.partnerName && (
@@ -98,7 +117,9 @@ function Billing({ billing }: { billing: Extract<MyBilling, { individual: true }
 
       {order?.status === "pending" && (
         <section className="mt-6 border border-primary/30 bg-card p-5">
-          <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Thanh toán</h2>
+          <h2 className="text-sm uppercase tracking-[0.2em] text-primary">
+            {renewal ? "Thanh toán gia hạn" : "Thanh toán"}
+          </h2>
 
           <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {billing.options.map((o) => {
@@ -128,52 +149,7 @@ function Billing({ billing }: { billing: Extract<MyBilling, { individual: true }
           </div>
           {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
 
-          <dl className="mt-5 grid grid-cols-[auto,1fr] gap-x-4 gap-y-2 text-sm">
-            <dt className="text-foreground/60">Số tiền</dt>
-            <dd className="font-display text-xl text-primary">{formatMoney(order.amount)}</dd>
-            <dt className="text-foreground/60">Nội dung chuyển khoản</dt>
-            <dd>
-              <code className="border border-primary/40 px-2 py-0.5 text-base tracking-widest">
-                {order.code}
-              </code>
-            </dd>
-            {account && (
-              <>
-                <dt className="text-foreground/60">Ngân hàng</dt>
-                <dd>{account.bankName}</dd>
-                <dt className="text-foreground/60">Số tài khoản</dt>
-                <dd className="tracking-wider">{account.accountNo}</dd>
-                <dt className="text-foreground/60">Chủ tài khoản</dt>
-                <dd>{account.accountName}</dd>
-              </>
-            )}
-          </dl>
-
-          {account?.bankBin ? (
-            <div className="mt-5">
-              <img
-                src={`https://img.vietqr.io/image/${account.bankBin}-${account.accountNo}-compact2.png?amount=${order.amount}&addInfo=${encodeURIComponent(order.code)}&accountName=${encodeURIComponent(account.accountName)}`}
-                alt={`Mã QR chuyển ${formatMoney(order.amount)}, nội dung ${order.code}`}
-                className="w-64 max-w-full bg-white p-2"
-              />
-              <p className="mt-2 text-xs text-foreground/60">
-                Mở app ngân hàng, chọn quét mã QR — số tiền và nội dung đã điền sẵn.
-              </p>
-            </div>
-          ) : null}
-
-          {account ? (
-            <p className="mt-4 text-sm text-foreground/75">
-              Ghi đúng nội dung <strong>{order.code}</strong> để hệ thống nhận ra khoản thanh toán
-              của bạn. Gói học được kích hoạt khi chúng tôi xác nhận đã nhận tiền (trong giờ làm
-              việc).
-            </p>
-          ) : (
-            <p className="mt-4 text-sm text-foreground/75">
-              Thông tin chuyển khoản đang được cập nhật. Bạn vẫn học thử bình thường — hãy quay lại
-              trang này sau, hoặc chờ chúng tôi liên hệ qua số điện thoại đã đăng ký.
-            </p>
-          )}
+          <PaymentInstructions code={order.code} amount={order.amount} account={account} />
         </section>
       )}
 

@@ -48,8 +48,13 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   (bán lẻ qua đối tác)** — người dùng chọn "Merge ngay". Đã gộp `main` vào nhánh (không rebase), gỡ
   xung đột với #17, merge `8757788`, Vercel production đã có `/thanh-toan`. Xem §4 "Bán lẻ".
 - **07/10: nhánh `platform/crm-api`** (tách từ `main` @ `8757788`) — phía app của tích hợp với CRM
-  Embassy, xem §4 "Tích hợp CRM". Migration `20261007120000_crm_integration.sql` **chưa áp dụng lên
-  production** — phải áp dụng TRƯỚC khi merge.
+  Embassy, xem §4 "Tích hợp CRM". Người dùng chạy migration `20261007120000_crm_integration.sql` trong
+  SQL Editor (types sinh từ production khớp), rồi PR
+  [vanhoang-spec/hospitality-english#18](https://github.com/vanhoang-spec/hospitality-english/pull/18)
+  merge `77be557`.
+- **07/10: nhánh `platform/retail-renewal`** (tách từ `main` @ `77be557`) — gia hạn người dùng lẻ, xem §4
+  "Gia hạn". Migration `20261008090000_retail_renewal.sql` **chưa áp dụng lên production** — phải áp
+  dụng TRƯỚC khi merge (code đọc `orders.kind`, `grace_until`, `pay_token`).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -197,7 +202,27 @@ Phía app đã làm (chưa merge):
   ký, lệch giờ, chưa cài khoá, lệnh sai dạng). Chưa thử đầu-cuối với CRM thật.
 
 Còn: phía CRM (phiên Claude Code ở repo CRM, theo hợp đồng); ẩn nút "Đã nhận tiền" trong app khi CRM
-đã xác nhận đơn; gia hạn của người dùng lẻ (chưa chốt).
+đã xác nhận đơn.
+
+### Gia hạn người dùng lẻ (07/10, nhánh `platform/retail-renewal`)
+
+Người dùng chốt (hợp đồng CRM, quyết định #12–#16):
+
+- **7 ngày trước** khi gói trả phí hết hạn, app tự tạo đơn gia hạn (`orders.kind = 'renewal'`), cùng kỳ
+  hạn lần trước. Giá niêm yết hiện hành; giảm theo link chỉ khi ưu đãi của link còn hiệu lực và link không
+  đặt "chỉ hợp đồng đầu" (`renewalDiscount` trong `retail-pricing.ts`).
+- Ai tạo: bộ hẹn giờ Vercel mỗi ngày 01:00 UTC (`/api/cron/gia-han`, cần biến `CRON_SECRET` trên Vercel —
+  chưa đặt thì trả 503), và `getMyBilling` khi học viên mở app. `createDueRenewals` chạy lại bao nhiêu
+  lần cũng không tạo trùng (chỉ một đơn chờ mỗi học viên).
+- Gửi cho học viên: banner trên mọi trang (`RenewalBanner`) + link thanh toán không cần đăng nhập
+  `/tt/<pay_token>` (chỉ hiện số tiền, mã đơn, tài khoản, QR). CRM nhận tin `don_gia_han` kèm link để CS
+  gửi Zalo.
+- **Ân hạn 7 ngày:** `org_is_active()` coi tổ chức còn hoạt động khi có đơn gia hạn chờ trả và
+  `now() < grace_until` (= hạn cũ + 7 ngày). Giao diện hỏi chính hàm đó khi gói đã quá hạn.
+- Gói mới tính từ ngày kế toán xác nhận nếu xác nhận trong ân hạn; xác nhận trước hạn thì nối tiếp
+  (`activateOrder` vốn lấy `max(now, ends_at)`).
+- Kiểm thử: `test:db` 75 phép (9 mới: ân hạn, token, ràng buộc); `test:crm` 33 phép (giá gia hạn, khoá
+  cron).
 
 ### Production
 
@@ -222,10 +247,10 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Áp dụng migration `20261007120000_crm_integration.sql` lên production**, rồi merge
-   `platform/crm-api`; đặt cùng một khoá bí mật ở Vercel app (`CRM_HMAC_SECRET`) và Supabase CRM
-   (`HOSPITALITY_HMAC_SECRET`).
-3. **Gia hạn của người dùng lẻ** khi hết gói: app tự tạo đơn gia hạn, hay CS gia hạn tay?
+2. **Áp dụng migration `20261008090000_retail_renewal.sql` lên production**, rồi merge
+   `platform/retail-renewal`; đặt biến `CRON_SECRET` trên Vercel cho bộ hẹn giờ gia hạn.
+3. **Khi phía CRM xong:** đặt cùng một khoá bí mật ở Vercel app (`CRM_HMAC_SECRET`) và Supabase CRM
+   (`HOSPITALITY_HMAC_SECRET`), rồi thử đầu-cuối.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
