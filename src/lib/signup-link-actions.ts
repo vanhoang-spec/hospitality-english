@@ -14,6 +14,7 @@ import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 import { SHIPPING_DEPARTMENTS } from "@/lib/departments";
 import { requireOrgAdmin } from "@/lib/org-admin-actions";
 import { requireSuperAdmin } from "@/lib/platform-admin-actions";
+import { newOrgDetailsSchema } from "@/lib/org-details";
 import type { Database } from "@/integrations/supabase/types";
 
 type LinkRow = Database["public"]["Tables"]["signup_links"]["Row"];
@@ -400,7 +401,7 @@ export const redeemLearnerLink = createServerFn({ method: "POST" })
 
 export const redeemOrganizationLink = createServerFn({ method: "POST" })
   .inputValidator(
-    z.object({
+    newOrgDetailsSchema.extend({
       token: TOKEN,
       hotelName: z.string().trim().min(2, "Hãy nhập tên khách sạn.").max(120),
       fullName: z.string().trim().min(2, "Hãy nhập họ tên.").max(120),
@@ -423,6 +424,12 @@ export const redeemOrganizationLink = createServerFn({ method: "POST" })
         hrPhone: phone,
         hrFullName: data.fullName,
         hrPassword: data.password,
+        company: {
+          legalName: data.legalName,
+          address: data.address,
+          taxCode: data.taxCode,
+          repEmail: data.repEmail,
+        },
         mustChangePassword: false,
         actorId: null,
         action: "org.signup_link",

@@ -22,6 +22,110 @@ type Bubble = {
 
 type Stage = "rules" | "playing" | "done";
 
+/** The part of a round's explanation that is about the bubble the learner
+ *  popped.
+ *
+ *  An explanation covers the whole round, and authors open it with the
+ *  broken-English option. Shown over a correct-English bubble, the first
+ *  thing the learner read was a grammar error their sentence did not have —
+ *  «…The herbs ARE all natural…» — "sai hoà hợp: 'The herbs' số nhiều →
+ *  'are'" (round 3 of the Phase 4 reviews: 78 of 80 Spa explanations). So a
+ *  sentence whose quotes are all from the `form` option, and not from this
+ *  bubble, is left out; and position words ("câu thứ hai"), which point at
+ *  nothing once the bubbles are shuffled, are made neutral. */
+export function aboutThisBubble(
+  explanation: string | undefined,
+  options: { text: string; kind?: string; correct?: boolean }[],
+  bubble: string,
+): string | undefined {
+  if (!explanation) return explanation;
+  // Position words are written against the AUTHORED order, which the round
+  // keeps; the bubbles on screen are a shuffle of it.
+  const POSITION = /\b([Cc])âu (cuối|đầu|giữa|thứ nhất|thứ hai|thứ ba)\b/gu;
+  const indexOf = (p: string) =>
+    p === "đầu" || p === "thứ nhất" ? 0 : p === "giữa" || p === "thứ hai" ? 1 : options.length - 1;
+  const mine = options.findIndex((o) => o.text === bubble);
+  const kindAt = (i: number) => (options[i]?.correct ? "answer" : options[i]?.kind);
+  const sentences = explanation.match(/[^.!?]+(?:[.!?]+(?=\s|$)|$)/g) ?? [explanation];
+  const kept = sentences.filter((s) => {
+    const refs = [...s.matchAll(POSITION)].map((m) => indexOf(m[2]!));
+    // A sentence that opens on the broken-English option and never names
+    // this bubble is about the other one.
+    return !(refs.length && kindAt(refs[0]!) === "form" && !refs.includes(mine));
+  });
+  const text = (kept.length ? kept : sentences).join("").trim();
+  return text.replace(POSITION, (_, c: string, p: string) => {
+    const i = indexOf(p);
+    const name =
+      i === mine
+        ? "câu này"
+        : kindAt(i) === "form"
+          ? "câu sai ngữ pháp"
+          : kindAt(i) === "answer"
+            ? "câu đúng"
+            : "câu kia";
+    return c === "C" ? name[0]!.toUpperCase() + name.slice(1) : name;
+  });
+}
+
+/** Why a "form" bubble is wrong, said about THAT sentence.
+ *
+ *  Every broken-English bubble used to get one message — "it is missing words
+ *  and has no subject or verb" — and a review counted at most four of
+ *  Guest Relations' 64 form options that were missing anything: the rest
+ *  break agreement ("The dress code ask…"), a verb form ("I will calling…")
+ *  or an article. So the bubble is lined up against the other options in its
+ *  round, and where it is one or two words away from one of them, the note
+ *  names those words. Further than that, it says what kinds of error to look
+ *  for instead of claiming one it cannot see. */
+function formWhy(wrong: string, others: string[]): string {
+  const toks = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z' ]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+  const w = toks(wrong);
+  let best: { extra: string[]; missing: string[] } | null = null;
+  for (const o of others) {
+    const r = toks(o);
+    // Longest common subsequence, then what each side has outside it.
+    const dp = Array.from({ length: w.length + 1 }, () => new Array<number>(r.length + 1).fill(0));
+    for (let i = w.length - 1; i >= 0; i--)
+      for (let j = r.length - 1; j >= 0; j--)
+        dp[i]![j] =
+          w[i] === r[j] ? dp[i + 1]![j + 1]! + 1 : Math.max(dp[i + 1]![j]!, dp[i]![j + 1]!);
+    const extra: string[] = [];
+    const missing: string[] = [];
+    let i = 0;
+    let j = 0;
+    while (i < w.length && j < r.length) {
+      if (w[i] === r[j]) {
+        i++;
+        j++;
+      } else if (dp[i + 1]![j]! >= dp[i]![j + 1]!) extra.push(w[i++]!);
+      else missing.push(r[j++]!);
+    }
+    extra.push(...w.slice(i));
+    missing.push(...r.slice(j));
+    if (!best || extra.length + missing.length < best.extra.length + best.missing.length)
+      best = { extra, missing };
+  }
+  if (
+    best &&
+    best.extra.length + best.missing.length > 0 &&
+    best.extra.length <= 2 &&
+    best.missing.length <= 2
+  ) {
+    if (best.extra.length && best.missing.length)
+      return `Sai ngữ pháp ở «${best.extra.join(" ")}» — chữ này sai dạng ở đây. Tìm câu nói đúng dạng.`;
+    if (best.missing.length)
+      return `Câu đó thiếu chữ «${best.missing.join(" ")}» — tiếng Anh cần chữ này ở đây.`;
+    return `Câu đó thừa chữ «${best.extra.join(" ")}» — bỏ chữ này đi thì mới đúng.`;
+  }
+  return "Câu đó sai ngữ pháp — dạng động từ, số ít/số nhiều, mạo từ hoặc giới từ. Đọc lại từng chữ rồi chọn câu đúng.";
+}
+
 export function ArcadeSuite({ dep, week }: { dep?: string; week?: string }) {
   const content = dep && week ? getWeekContent(dep, week) : null;
   if (!content) return <SuiteComingSoon />;
@@ -162,12 +266,26 @@ function ArcadeSuiteInner({
       // The authored explanation is about the option that is correct English
       // and wrong for the job. Showing it over a broken-English bubble told
       // the learner their sentence was grammatical when it was not.
-      const authored = rounds[roundIdx % rounds.length]?.explanation;
+      const round = rounds[roundIdx % rounds.length];
+      // Authors wrote "Câu cuối…" / "Câu đầu…" against the source order, and
+      // the bubbles are shuffled (63 of 64 Housekeeping explanations in Phase
+      // 3 opened that way): aboutThisBubble() names each position for what it
+      // is to THIS bubble, and leaves out what is only about the form option.
       const why =
         b.kind === "form"
-          ? "Câu đó thiếu chữ và sai cấu trúc — không phải tiếng Anh nói được. Nghe lại đề rồi chọn câu có đủ chủ ngữ và động từ."
-          : authored;
-      setFeedback({ ok: false, text: why ?? "Chưa đúng — thử bong bóng khác nhé." });
+          ? formWhy(
+              b.text,
+              (round?.options ?? []).filter((o) => o.text !== b.text).map((o) => o.text),
+            )
+          : aboutThisBubble(round?.explanation, round?.options ?? [], b.text);
+      // Name the bubble by quoting it, never by its position. The three
+      // options are Fisher-Yates shuffled above and the bubbles carry no
+      // numbers, so an explanation opening "Câu thứ ba…" pointed at nothing
+      // the learner could see. Quoting also survives any future reordering.
+      setFeedback({
+        ok: false,
+        text: why ? `«${b.text}» — ${why}` : "Chưa đúng — thử bong bóng khác nhé.",
+      });
       setTimeout(() => setFeedback(null), why ? 3200 : 1000);
       setTimeout(() => setBubbles((bs) => bs.filter((x) => x.id !== b.id)), 400);
     }

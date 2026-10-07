@@ -188,7 +188,10 @@
       <table class="meta">
         <tr>
           <td>Phiên bản</td>
-          <td>1.1 — 01/10/2026 (thêm link đăng ký; migration và bảng giá đã lên production)</td>
+          <td>
+            1.2 — 07/10/2026 (thêm thông tin công ty: tên theo giấy phép kinh doanh, địa chỉ, mã số
+            thuế, người đại diện HR có số điện thoại và email)
+          </td>
         </tr>
         <tr>
           <td>Dành cho</td>
@@ -237,6 +240,14 @@
       <tr>
         <td>Migration mới nhất đã áp dụng</td>
         <td><code>20260929090000_signup_links</code></td>
+      </tr>
+      <tr>
+        <td>Migration chưa áp dụng</td>
+        <td>
+          <code>20261007090000_org_details</code> — bảng thông tin công ty. Phải áp dụng
+          <strong>trước</strong> khi code của bản 1.2 lên production; nếu không, tạo khách sạn sẽ
+          báo lỗi.
+        </td>
       </tr>
       <tr>
         <td>Năm migration nền tảng</td>
@@ -319,6 +330,14 @@
           <td>
             <code>signup_links</code> (link đăng ký cho học viên và khách sạn); vá trigger tạo
             profile để vai trò và khách sạn của tài khoản mới chỉ do server quyết
+          </td>
+        </tr>
+        <tr>
+          <td><code>20261007090000_org_details.sql</code></td>
+          <td>
+            <code>org_details</code>: tên công ty theo giấy phép kinh doanh, địa chỉ, mã số thuế,
+            người đại diện HR (họ tên, số điện thoại, email). Chỉ HR của khách sạn đó và Super Admin
+            đọc được; học viên không đọc được
           </td>
         </tr>
       </table>
@@ -518,7 +537,7 @@ update public.profiles
     </p>
 
     <div class="step">
-      <h3>Bước 1 · Điền sáu ô</h3>
+      <h3>Bước 1 · Điền đủ các ô — ô nào cũng bắt buộc, trừ giá</h3>
       <table>
         <tr>
           <th>Ô</th>
@@ -526,32 +545,59 @@ update public.profiles
         </tr>
         <tr>
           <td>Tên khách sạn</td>
-          <td>Tên hiển thị cho HR và học viên. 2–120 ký tự.</td>
+          <td>Tên ngắn hiển thị cho HR và học viên, ví dụ “Sea Pearl Resort”. 2–120 ký tự.</td>
         </tr>
         <tr>
-          <td>Gói</td>
-          <td>Chọn theo số nhân viên họ muốn cho học, không phải tổng nhân sự.</td>
+          <td>Tên công ty theo giấy phép kinh doanh</td>
+          <td>
+            Tên pháp lý đúng từng chữ như trên giấy phép, ví dụ “Công ty TNHH Du lịch Biển Ngọc”.
+            Dùng cho hợp đồng và hoá đơn.
+          </td>
         </tr>
         <tr>
-          <td>Kỳ hạn</td>
-          <td>Dùng thử 1 tháng, hoặc 3/6/9/12 tháng.</td>
+          <td>Mã số thuế</td>
+          <td>
+            10 chữ số; chi nhánh thêm dấu gạch và 3 chữ số (<code>0123456789-001</code>). Hai resort
+            cùng một công ty có thể trùng mã số thuế.
+          </td>
         </tr>
         <tr>
-          <td>Tên người phụ trách (HR)</td>
-          <td>Người sẽ quản lý danh sách học viên phía khách sạn.</td>
+          <td>Địa chỉ công ty</td>
+          <td>Địa chỉ trên giấy phép kinh doanh.</td>
         </tr>
         <tr>
-          <td>Số điện thoại HR</td>
+          <td>Người đại diện HR — họ và tên</td>
+          <td>
+            Người đại diện của khách sạn, cũng là người quản lý danh sách học viên (tài khoản HR).
+          </td>
+        </tr>
+        <tr>
+          <td>Người đại diện HR — số điện thoại</td>
           <td>
             Số Việt Nam. Hệ thống tự chuẩn hoá <code>0912…</code> thành <code>84912…</code>. Đây
-            chính là tên đăng nhập.
+            chính là tên đăng nhập của tài khoản HR.
           </td>
+        </tr>
+        <tr>
+          <td>Người đại diện HR — email</td>
+          <td>Để liên lạc và gửi hoá đơn. Không dùng để đăng nhập.</td>
         </tr>
         <tr>
           <td>Mật khẩu tạm</td>
           <td>Ít nhất 8 ký tự. HR buộc phải đổi ở lần đăng nhập đầu tiên.</td>
         </tr>
+        <tr>
+          <td>Gói và kỳ hạn</td>
+          <td>
+            Gói chọn theo số nhân viên họ muốn cho học, không phải tổng nhân sự. Kỳ hạn: dùng thử 1
+            tháng, hoặc 3/6/9/12 tháng.
+          </td>
+        </tr>
       </table>
+      <p>
+        Thông tin công ty và người đại diện chỉ hiện ở <code>/admin-console</code>. Học viên không
+        thấy, và chúng không hiện ở bất cứ đâu trong phần học.
+      </p>
       <p class="muted">
         Ô <em>Giá thực thu</em> để trống nếu bán đúng giá niêm yết. Dòng chữ bên dưới luôn hiển thị
         giá niêm yết của gói và kỳ hạn đang chọn.
@@ -560,12 +606,13 @@ update public.profiles
 
     <div class="step">
       <h3>Bước 2 · Bấm “Tạo khách sạn”</h3>
-      <p>Một thao tác, bốn việc xảy ra trong cùng một lần gọi:</p>
+      <p>Một thao tác, năm việc xảy ra trong cùng một lần gọi:</p>
       <ol>
         <li>
           Tạo tổ chức trong <code>organizations</code>, với <code>seat_limit</code> bằng đúng số ghế
           của gói.
         </li>
+        <li>Lưu thông tin công ty và người đại diện vào <code>org_details</code>.</li>
         <li>
           Tạo hợp đồng trong <code>subscriptions</code>: ngày bắt đầu là hôm nay, ngày kết thúc cộng
           đúng số tháng của kỳ hạn, kèm số tiền đã chốt.
@@ -614,10 +661,27 @@ update public.profiles
         </li>
       </ol>
       <p>
-        Người nhận mở link, tự điền tên khách sạn, họ tên, số điện thoại, tự đặt mật khẩu — và trở
-        thành tài khoản HR đầu tiên. Không phải đổi mật khẩu lần đầu, vì chính họ đặt. Mỗi link chỉ
-        dùng <strong>một lần</strong>; sau khi dùng, danh sách link hiện tên khách sạn vừa được tạo.
-        Link chưa dùng có thể <strong>Thu hồi</strong> bất cứ lúc nào.
+        Người nhận mở link và tự điền đủ thông tin như ở Bước 1: tên khách sạn, tên công ty theo
+        giấy phép kinh doanh, mã số thuế, địa chỉ, rồi họ tên, số điện thoại, email của người đại
+        diện HR, và tự đặt mật khẩu. Thiếu ô nào hoặc mã số thuế, email sai định dạng thì form báo
+        ngay và không tạo tài khoản. Người điền trở thành tài khoản HR đầu tiên, và không phải đổi
+        mật khẩu lần đầu vì chính họ đặt. Mỗi link chỉ dùng <strong>một lần</strong>; sau khi dùng,
+        danh sách link hiện tên khách sạn vừa được tạo. Link chưa dùng có thể
+        <strong>Thu hồi</strong> bất cứ lúc nào.
+      </p>
+    </div>
+
+    <div class="step">
+      <h3>Xem và sửa thông tin công ty</h3>
+      <p>
+        Bảng khách sạn ở <code>/admin-console</code> có cột <em>Công ty · MST · đại diện</em>. Bấm
+        <strong>Sửa thông tin</strong> dưới tên khách sạn để sửa, rồi
+        <strong>Lưu thông tin</strong>. Khách sạn mở trước bản 1.2 hiện chữ đỏ
+        <em>Thiếu thông tin công ty</em> cho tới khi được điền.
+      </p>
+      <p>
+        Đổi người đại diện ở đây không đổi tài khoản đăng nhập nào. Nếu người phụ trách HR nghỉ
+        việc, khách sạn vẫn phải tạo tài khoản HR mới ở trang <em>Team</em> như thường lệ.
       </p>
     </div>
 
@@ -885,8 +949,9 @@ update public.profiles
         làm việc dùng chung mật khẩu trở nên phiền toái, không làm nó bất khả thi.
       </li>
       <li>
-        <strong>Nội dung khoá học hiện đã nghiệm thu tới tuần 22.</strong> Tuần 23–40 vẫn còn nợ
-        chất lượng đã đo được. Khi bán một gói 12 tháng, hãy nói rõ lộ trình phát hành nội dung.
+        <strong>Nội dung 40 tuần đã qua kiểm định độc lập</strong> (Phase 3 ngày 03/10, Phase 4 ngày
+        06/10/2026), một số ô điểm được chủ dự án cho đạt dưới mốc 7,5. Nợ còn lại đã đo được ghi ở
+        <code>docs/HANDOFF.md</code>.
       </li>
     </ol>
 

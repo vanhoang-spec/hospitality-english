@@ -110,6 +110,10 @@ tiếp — **week-gating đã bật** (xem mục "Week-gating" bên dưới).
 | Speaking items / tuần          | 4 (chunk nhắc lại)    | 4              | 4–6              | 6                  | 6–8               |
 | Dạng speaking                  | nghe–nhắc lại chunk   | trả lời 1 lượt | hội thoại 2 lượt | hội thoại 3–4 lượt | role-play mở      |
 
+"Speaking items / tuần" là **sàn mỗi BÀI** (mỗi tuần 4 bài), không phải trần của cả tuần: P3 viết
+7–13 lượt/bài, P4 6–8 lượt/bài (24–32 lượt/tuần). Cả mười auditor vòng 2 của P4 phải tự đoán
+cách đọc dòng này.
+
 ### Thang chấm nói (từ 2026-08-01)
 
 `passThresholds()` trong `speaking-score.ts`: **60% (P0–P1) → 65/70/75/80% trải đều P2 →
@@ -301,6 +305,22 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 
 ## Phase 3 — A2+ (tuần 23–30): Dịch vụ chủ động
 
+### Nghiệm thu P3 — quyết định ngày 29/09/2026
+
+Phạm vi: FO, FB, HK, SW, GR; mỗi bộ phận 8 tuần × 4 bài = 32 bài, tổng 160 bài.
+P2 đã đóng và P4 chưa mở lại. Mỗi ô bộ phận × vai trong 10 ô (5 Academic Director,
+5 Hotel Manager) phải **> 7,5/10**, xét trung bình sáu tiêu chí trước khi làm tròn;
+không lấy trung bình các ô để bù. Rubric giữ nguyên Phụ lục A của brief chuẩn.
+Auditor chấm độc lập trên cùng bản nguồn đóng băng, không nhận báo cáo, điểm số hoặc
+lịch sử sửa của người triển khai và auditor khác. Lỗi chặn phát hành phải được xử lý.
+
+Giữ tải từ 14–16 thẻ/tuần và quota review 35%. Chuỗi hội thoại 3–4 lượt phải giữ cùng
+sự việc, vai người nghe và kết quả xử lý; biến thể phải đổi yêu cầu thật, không chỉ đổi
+tên hoặc danh xưng để làm lớn bể nói. Chuẩn câu nói là 16 từ theo từng câu; gate hiện
+cho 17 là dung sai kỹ thuật được ghi nhận, không phải mục tiêu viết câu mới.
+Phép đo học vẹt phải gọi `buildOral` và `oralHalfPassed`, tách mẫu xếp hạng câu khỏi
+mẫu kiểm tra và báo riêng tỷ lệ đề có ô dự trữ. Không thu bể hoặc nới bộ chấm để đạt điểm.
+
 | Tuần | Chức năng chung                                       | Ngữ pháp mới                                    |
 | ---- | ----------------------------------------------------- | ----------------------------------------------- |
 | 23   | Upsell/gợi ý nâng cấp nhẹ                             | Comparatives; I recommend…                      |
@@ -351,6 +371,23 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 > chấm là SAI, vì nó bảo người ta cảm thấy một điều thay vì cho họ một việc để làm. Thay vào đó
 > là một việc + một mốc giờ, cộng một câu chăm sóc người sau khi sự cố kết thúc.
 
+> **Tuần 37–38 theo bộ phận (chốt 06/10/2026, khi viết lại Phase 4).** Bảng trên giao tuần 37
+> cho "Thương lượng B2B" và tuần 38 cho "Trình bày đề xuất/báo giá". Chức năng ngôn ngữ giữ
+> nguyên — **điều khoản có điều kiện, tỷ lệ, thời hạn** ở tuần 37 và **pitch ngắn ba phần** ở
+> tuần 38 — nhưng người nghe là người mà bộ phận đó thật sự thương lượng hoặc trình bày:
+>
+> | Bộ phận | Tuần 37                                                                                                                     | Tuần 38                                                                                  |
+> | ------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+> | FO      | Điều khoản khách đoàn/doanh nghiệp: giá corporate, allotment, hạn chốt rooming list, cọc, huỷ                               | Báo giá phòng + phòng họp cho người đặt doanh nghiệp                                     |
+> | FB      | Điều khoản tiệc/sự kiện: cọc, số khách đảm bảo, hạn chốt, huỷ, minimum spend, corkage                                       | Đề xuất thực đơn/tiệc, giá plus-plus, hiệu lực báo giá                                   |
+> | HK      | Điều khoản dịch vụ có điều kiện: lịch dọn khách lưu trú dài, DND, đồ thất lạc, giặt là                                      | Kế hoạch/đề xuất (bố trí phòng dịp đặc biệt, lịch dọn) trình bày cho khách hoặc giám sát |
+> | SW      | Điều khoản gói và thẻ thành viên, huỷ/no-show, và điều kiện của một liệu trình (đồng thuận, che phủ, yêu cầu kỹ thuật viên) | Kế hoạch liệu trình/gói trình bày cho khách                                              |
+> | GR      | Cấp cứu y tế (ngoại lệ ở trên)                                                                                              | Bão và gián đoạn lịch trình (ngoại lệ ở trên)                                            |
+>
+> Buồng phòng và Spa không bán hợp đồng; quầy Guest Relations cũng không. Bắt họ học điều
+> khoản B2B là dạy một việc họ không bao giờ làm, nên bảng này là phần của spec, không phải
+> lệch spec.
+
 > **Chú thích tuần 39 (cả sáu bộ phận).** Bảng ghi "Tổng duyệt role-play liên tình huống —
 > Kết hợp mọi chức năng". Một tuần 39 đúng nghĩa còn phải dạy thêm **hai luật mới** mà không
 > tuần nào trước đó có: (1) thứ tự ưu tiên khi nhiều việc đến cùng lúc, (2) luật "mười lăm
@@ -361,11 +398,10 @@ viết lại 16 game round vốn sao chép nguyên văn câu speaking.
 > phải dạy chúng đủ một bài có từ vựng, ngữ pháp, luyện nói, game và câu hỏi đọc — không được
 > nhét vào một dòng văn xuôi.
 >
-> **Hiện trạng đo được (6 lượt kiểm định độc lập, 2026-09-01), không phải mô tả mong muốn:**
-> chỉ **GR-39 và HK-39** dạy đủ cả hai luật. **FO-39 và FB-39 không có luật "mười lăm phút
-> cuối"** ở bất kỳ đâu — cả sáu lượt đều đo lại và cùng kết luận như nhau. Bản trước của
-> chú thích này khẳng định cả bốn tuần đều đủ; đó là mô tả sai, đã sửa. Xem GR-AQ trong
-> `docs/academic-review-backlog.md`.
+> **Hiện trạng:** từ lần viết lại Phase 4 (10/2026), tuần 39 của cả năm bộ phận FO, FB, HK, SW,
+> GR dạy mỗi luật bằng một bài đủ cụm (thẻ, ngữ pháp, lượt nói, game, câu đọc). Trước đó (đo
+> 2026-09-01) chỉ GR-39 và HK-39 có đủ; FO-39 và FB-39 thiếu hẳn luật "mười lăm phút cuối", và
+> tuần 39 của Spa là khung máy ghép.
 >
 > Kèm theo, luật ưu tiên phải nói rõ **"nguy hiểm trước" nghĩa là LÀM GÌ**, không chỉ là một
 > chỗ trong hàng chờ: nó dẫn về tuần 37 (y tế) và tuần 33 (an toàn → bảo vệ trước, Duty

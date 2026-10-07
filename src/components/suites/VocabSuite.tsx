@@ -56,7 +56,16 @@ const MCQ_NEW_MAX = 10;
 // shown, and two academic reviews measured the consequence from opposite ends:
 // most of a department's vocabulary comes back only as recognition, and only a
 // fifth of that recognition actually happens.
-const MCQ_REVIEW = 6;
+// Six was still a 21-26% chance per recycled word, and a round of reviews
+// measured most of a phase's earlier vocabulary living on recognition that
+// mostly never happened. Ten keeps the new-word share near 60% while every
+// recycled word has better than a one-in-three chance of being asked.
+const MCQ_REVIEW = 10;
+// Phase 4 lists carry each of its own words back at +1, +3 and +6 weeks, so
+// a week's list holds 25-40 of them; ten draws asked any one of them about
+// one time in four, and round 2 of the Phase 4 reviews counted a taught word
+// re-asked 0.23 times on average before the final week. Fourteen there.
+const MCQ_REVIEW_P4 = 14;
 // Ten of the checkpoint week seventy-five recycled words is 13% — the week
 // that exists to consolidate a whole phase sampled an eighth of it.
 const MCQ_REVIEW_CHECKPOINT = 20;
@@ -65,14 +74,46 @@ const MAX_DICTATION = 3;
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
 // Distractors are drawn from the same term set so they stay plausible.
-function buildQuiz(terms: Term[], reviewWords: Term[] = [], atCheckpoint = false): QuizQuestion[] {
+function buildQuiz(
+  terms: Term[],
+  reviewWords: Term[] = [],
+  atCheckpoint = false,
+  week = 0,
+): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
   const mcqTerms = shuffle([
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
-    ...shuffle(reviewWords).slice(0, atCheckpoint ? MCQ_REVIEW_CHECKPOINT : MCQ_REVIEW),
+    ...shuffle(reviewWords).slice(
+      0,
+      atCheckpoint ? MCQ_REVIEW_CHECKPOINT : week >= 31 ? MCQ_REVIEW_P4 : MCQ_REVIEW,
+    ),
   ]);
+  // The checkpoint has refused nested glosses since a review found questions
+  // with no single right answer — "Biên lai" beside "Biên lai đã in", "Tầng
+  // cao" beside "Tầng cao hơn". The weekly practice, drawing from the same
+  // pool, did not, so it printed exactly those pairs: an audit counted 19 in
+  // one department. A learner who picks correctly is marked wrong, in the
+  // exercise rather than the exam, which is the worse of the two places.
+  const glossKey = (x: string) =>
+    " " +
+    x
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N} ]/gu, " ")
+      .replace(/  +/g, " ")
+      .trim() +
+    " ";
+  const nested = (x: string, y: string) => x.includes(y) || y.includes(x);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
-    const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
+    const key = glossKey(t.vi);
+    const distractors: typeof pool = [];
+    for (const o of shuffle(pool)) {
+      if (distractors.length >= 3) break;
+      if (o.en === t.en || o.vi === t.vi) continue;
+      const g = glossKey(o.vi);
+      if (nested(key, g)) continue;
+      if (distractors.some((d) => nested(glossKey(d.vi), g))) continue;
+      distractors.push(o);
+    }
     if (i % 2 === 0) {
       const options = shuffle([t.vi, ...distractors.map((d) => d.vi)]);
       return {
@@ -187,7 +228,14 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms, reviewTerms, phaseOfWeek(week)?.checkpointWeek === Number(week)));
+    setQuiz(
+      buildQuiz(
+        terms,
+        reviewTerms,
+        phaseOfWeek(week)?.checkpointWeek === Number(week),
+        Number(week),
+      ),
+    );
     setQIdx(0);
     setPicked(null);
     setTyped("");

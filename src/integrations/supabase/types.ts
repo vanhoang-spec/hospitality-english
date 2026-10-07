@@ -6,6 +6,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5";
   };
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       access_rules: {
@@ -330,32 +355,6 @@ export type Database = {
           },
         ];
       };
-      org_settings: {
-        Row: {
-          org_id: string;
-          sequential_mode: boolean;
-          updated_at: string;
-        };
-        Insert: {
-          org_id: string;
-          sequential_mode?: boolean;
-          updated_at?: string;
-        };
-        Update: {
-          org_id?: string;
-          sequential_mode?: boolean;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "org_settings_org_id_fkey";
-            columns: ["org_id"];
-            isOneToOne: true;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
       orders: {
         Row: {
           amount: number;
@@ -414,7 +413,144 @@ export type Database = {
           term?: string;
           user_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "orders_link_id_fkey";
+            columns: ["link_id"];
+            isOneToOne: false;
+            referencedRelation: "signup_links";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      org_details: {
+        Row: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string;
+          legal_name?: string;
+          org_id?: string;
+          rep_email?: string;
+          rep_name?: string;
+          rep_phone?: string;
+          tax_code?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_details_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      org_settings: {
+        Row: {
+          org_id: string;
+          sequential_mode: boolean;
+          updated_at: string;
+        };
+        Insert: {
+          org_id: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Update: {
+          org_id?: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_settings_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      organizations: {
+        Row: {
+          created_at: string;
+          id: string;
+          kind: string;
+          name: string;
+          partner_id: string | null;
+          seat_limit: number;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          kind?: string;
+          name: string;
+          partner_id?: string | null;
+          seat_limit?: number;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          kind?: string;
+          name?: string;
+          partner_id?: string | null;
+          seat_limit?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "organizations_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       partners: {
         Row: {
@@ -470,36 +606,6 @@ export type Database = {
           note?: string | null;
           updated_at?: string;
           updated_by?: string | null;
-        };
-        Relationships: [];
-      };
-      organizations: {
-        Row: {
-          created_at: string;
-          id: string;
-          name: string;
-          seat_limit: number;
-          updated_at: string;
-          kind: string;
-          partner_id: string | null;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          name: string;
-          seat_limit?: number;
-          updated_at?: string;
-          kind?: string;
-          partner_id?: string | null;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          name?: string;
-          seat_limit?: number;
-          updated_at?: string;
-          kind?: string;
-          partner_id?: string | null;
         };
         Relationships: [];
       };
@@ -738,63 +844,63 @@ export type Database = {
           created_at: string;
           created_by: string | null;
           department: string | null;
+          discount_pct: number | null;
           expires_at: string | null;
           group_id: string | null;
           id: string;
           kind: string;
           label: string | null;
-          discount_pct: number | null;
-          partner_id: string | null;
-          trial_days: number | null;
           max_uses: number | null;
           org_id: string | null;
+          partner_id: string | null;
           plan_code: string | null;
           price: number | null;
           revoked_at: string | null;
           term: string | null;
           token: string;
+          trial_days: number | null;
           use_count: number;
         };
         Insert: {
           created_at?: string;
           created_by?: string | null;
           department?: string | null;
+          discount_pct?: number | null;
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
           kind: string;
           label?: string | null;
-          discount_pct?: number | null;
-          partner_id?: string | null;
-          trial_days?: number | null;
           max_uses?: number | null;
           org_id?: string | null;
+          partner_id?: string | null;
           plan_code?: string | null;
           price?: number | null;
           revoked_at?: string | null;
           term?: string | null;
           token: string;
+          trial_days?: number | null;
           use_count?: number;
         };
         Update: {
           created_at?: string;
           created_by?: string | null;
           department?: string | null;
+          discount_pct?: number | null;
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
           kind?: string;
           label?: string | null;
-          discount_pct?: number | null;
-          partner_id?: string | null;
-          trial_days?: number | null;
           max_uses?: number | null;
           org_id?: string | null;
+          partner_id?: string | null;
           plan_code?: string | null;
           price?: number | null;
           revoked_at?: string | null;
           term?: string | null;
           token?: string;
+          trial_days?: number | null;
           use_count?: number;
         };
         Relationships: [
@@ -810,6 +916,13 @@ export type Database = {
             columns: ["org_id"];
             isOneToOne: false;
             referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
             referencedColumns: ["id"];
           },
           {
@@ -941,21 +1054,21 @@ export type Database = {
           created_at: string;
           created_by: string | null;
           department: string | null;
+          discount_pct: number | null;
           expires_at: string | null;
           group_id: string | null;
           id: string;
           kind: string;
           label: string | null;
-          discount_pct: number | null;
-          partner_id: string | null;
-          trial_days: number | null;
           max_uses: number | null;
           org_id: string | null;
+          partner_id: string | null;
           plan_code: string | null;
           price: number | null;
           revoked_at: string | null;
           term: string | null;
           token: string;
+          trial_days: number | null;
           use_count: number;
         }[];
         SetofOptions: {
@@ -1098,6 +1211,9 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },

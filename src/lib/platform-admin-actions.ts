@@ -7,6 +7,7 @@ import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
+import { newOrgDetailsSchema, orgDetailsSchema } from "@/lib/org-details";
 import type { Database } from "@/integrations/supabase/types";
 
 export async function requireSuperAdmin(supabase: SupabaseClient<Database>, userId: string) {
@@ -18,12 +19,12 @@ export async function requireSuperAdmin(supabase: SupabaseClient<Database>, user
 export const createOrganization = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    z.object({
+    newOrgDetailsSchema.extend({
       name: z.string().trim().min(2).max(120),
       planCode: z.enum(["p50", "p100", "p200", "p300", "p500"]),
       term: z.enum(["trial", "m3", "m6", "m9", "m12"]),
       hrPhone: z.string().min(1),
-      hrFullName: z.string().trim().min(1).max(120),
+      hrFullName: z.string().trim().min(2).max(120),
       hrPassword: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
       price: z.number().nonnegative().nullable().optional(),
     }),
@@ -50,10 +51,66 @@ export const createOrganization = createServerFn({ method: "POST" })
       hrPhone: phone,
       hrFullName: data.hrFullName,
       hrPassword: data.hrPassword,
+      company: {
+        legalName: data.legalName,
+        address: data.address,
+        taxCode: data.taxCode,
+        repEmail: data.repEmail,
+      },
       mustChangePassword: true,
       actorId: context.userId,
       action: "org.create",
     });
+  });
+
+/** Fill in or correct a hotel's company details, and its short name.
+ *  Hotels opened before the details existed get their first row here.
+ *  Changing the representative here does not touch any login: HR accounts
+ *  are managed on the hotel's own Team page. */
+export const setOrgDetails = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    orgDetailsSchema.extend({
+      orgId: z.string().uuid(),
+      name: z.string().trim().min(2, "Tên khách sạn cần ít nhất 2 ký tự.").max(120),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    await requireSuperAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { logAdminAction } = await import("@/lib/account-provisioning.server");
+
+    const { data: before } = await supabaseAdmin
+      .from("org_details")
+      .select("org_id")
+      .eq("org_id", data.orgId)
+      .maybeSingle();
+
+    const { error: nameErr } = await supabaseAdmin
+      .from("organizations")
+      .update({ name: data.name })
+      .eq("id", data.orgId);
+    if (nameErr) throw new Error(nameErr.message);
+
+    const { error } = await supabaseAdmin.from("org_details").upsert({
+      org_id: data.orgId,
+      legal_name: data.legalName,
+      address: data.address,
+      tax_code: data.taxCode,
+      rep_name: data.repName,
+      rep_phone: data.repPhone,
+      rep_email: data.repEmail,
+      updated_by: context.userId,
+    });
+    if (error) throw new Error(error.message);
+
+    await logAdminAction({
+      actorId: context.userId,
+      orgId: data.orgId,
+      action: before ? "org.details.update" : "org.details.create",
+    });
+
+    return { success: true as const };
   });
 
 /** Renew or change a hotel's plan. The old contract is closed first, so

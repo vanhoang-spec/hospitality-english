@@ -24,6 +24,9 @@ dist-ssr
 # Netlify
 .netlify/
 
+# Vercel (build output + `vercel link`)
+.vercel/
+
 # Supabase CLI local cache
 supabase/.temp/
 
@@ -42,3 +45,6 @@ supabase/.temp/
 *.njsproj
 *.sln
 *.sw?
+
+# File riêng của chủ dự án đặt ở gốc repo (repo PUBLIC) — không commit
+/*.pdf

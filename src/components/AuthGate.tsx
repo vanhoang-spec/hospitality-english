@@ -27,7 +27,9 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const isPublicPath = PUBLIC_PATHS.has(pathname) || isJoinPath;
 
   // One live session per account — see single-session.ts for why this is a
-  // speed bump rather than a lock.
+  // speed bump rather than a lock. Called ONCE: a second call is a second
+  // heartbeat, and where storage is blocked each call mints its own id, so
+  // the two sign each other out within one heartbeat.
   useSingleSession(session?.user.id, !!session && !isPublicPath);
 
   useEffect(() => {

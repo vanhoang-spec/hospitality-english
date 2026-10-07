@@ -467,5 +467,77 @@ check(
   `${acctRows} rows`,
 );
 
+// ── Company details (org_details): the licence name, tax code and the HR
+// representative's phone and email. A learner can read their own
+// organizations row, so these live apart and only HR and the owner read them.
+await db.query(
+  `insert into public.org_details (org_id, legal_name, address, tax_code, rep_name, rep_phone, rep_email)
+   values ($1, 'Công ty TNHH Test', '1 Trần Phú, Vũng Tàu', '0312345678', 'HR Lan', '+84900000002', 'hr@test.vn'),
+          ($2, 'Công ty CP Other', '2 Lê Lợi, Huế', '0312345678-001', 'HR Other', '+84900000099', 'hr@other.vn')`,
+  [org, other],
+);
+async function detailsAs(userId: string): Promise<string[]> {
+  await db.exec(`set request.jwt.claim.sub = '${userId}'; set role authenticated;`);
+  const r = await db.query<{ legal_name: string }>(
+    `select legal_name from public.org_details order by legal_name`,
+  );
+  await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  return r.rows.map((x) => x.legal_name);
+}
+const learnerDetails = await detailsAs(m1);
+check(
+  "a learner cannot read their own hotel's company details",
+  learnerDetails.length === 0,
+  `${learnerDetails.length} rows`,
+);
+const hrDetails = await detailsAs(hr);
+check(
+  "HR reads their own hotel's company details, and no other hotel's",
+  hrDetails.length === 1 && hrDetails[0] === "Công ty TNHH Test",
+  hrDetails.join(","),
+);
+const ownerDetails = await detailsAs(owner);
+check(
+  "platform owner reads every hotel's company details",
+  ownerDetails.length === 2,
+  ownerDetails.join(","),
+);
+const hrDetailsWrite = await asRole(
+  "authenticated",
+  `update public.org_details set tax_code = '0000000000'`,
+  hr,
+);
+check(
+  "HR cannot edit company details directly (writes only via server)",
+  /permission denied/.test(hrDetailsWrite ?? ""),
+  hrDetailsWrite ?? "allowed!",
+);
+
+const third = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit) values ('Third Hotel', 5) returning id`,
+))!.id;
+const detailsInsert = (taxCode: string, phone: string, email: string) =>
+  raises(
+    `insert into public.org_details (org_id, legal_name, address, tax_code, rep_name, rep_phone, rep_email)
+     values ($1, 'Công ty TNHH Third', '3 Hùng Vương, Đà Nẵng', $2, 'HR Third', $3, $4)`,
+    [third, taxCode, phone, email],
+  );
+check(
+  "a 9-digit tax code is refused",
+  /check constraint/.test((await detailsInsert("031234567", "+84900000077", "a@b.vn")) ?? ""),
+);
+check(
+  "a phone not in +84 form is refused",
+  /check constraint/.test((await detailsInsert("0312345678", "0900000077", "a@b.vn")) ?? ""),
+);
+check(
+  "an email without @ is refused",
+  /check constraint/.test((await detailsInsert("0312345678", "+84900000077", "a.b.vn")) ?? ""),
+);
+// Control: the same row with good values goes in, so the three above failed
+// on the value they changed and not on something else.
+const goodDetails = await detailsInsert("0312345678-002", "+84900000077", "a@b.vn");
+check("control: valid company details are accepted", goodDetails === null, goodDetails ?? "");
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
