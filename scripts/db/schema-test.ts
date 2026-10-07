@@ -306,5 +306,238 @@ const lg = await one<{ group_id: string | null }>(
 );
 check("deleting the group keeps the link, group cleared", lg !== undefined && lg.group_id === null);
 
+// ── 6. Retail: one learner, through a partner (20261001090000) ──
+const hotelKind = await one<{ kind: string }>(
+  `select kind from public.organizations where id = $1`,
+  [org],
+);
+check("existing organisations default to kind 'hotel'", hotelKind?.kind === "hotel");
+
+const p1 = await one<{ seats: number; m3: string; m12: string }>(
+  `select p.seats,
+          (select price from public.plan_prices where plan_code = 'p1' and term = 'm3') as m3,
+          (select price from public.plan_prices where plan_code = 'p1' and term = 'm12') as m12
+     from public.plans p where p.code = 'p1'`,
+);
+check(
+  "plan p1 is one seat, list price 267.300 (3 months) and 712.800 (12 months)",
+  p1?.seats === 1 && Number(p1?.m3) === 267300 && Number(p1?.m12) === 712800,
+  JSON.stringify(p1),
+);
+
+const partner = (await one<{ id: string }>(
+  `insert into public.partners (name) values ('Test Partner') returning id`,
+))!.id;
+check(
+  "a partner name is unique regardless of case",
+  (await raises(`insert into public.partners (name) values ('test partner')`)) !== null,
+);
+check(
+  "a retail link with partner, discount and trial is accepted",
+  (await raises(
+    `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days, expires_at)
+     values ('t-retail', 'retail', $1, 30, 7, now() + interval '90 days')`,
+    [partner],
+  )) === null,
+);
+check(
+  "a retail link without a partner is refused",
+  (await raises(
+    `insert into public.signup_links (token, kind, discount_pct, trial_days) values ('t-r2', 'retail', 30, 7)`,
+  )) !== null,
+);
+check(
+  "a retail link with a zero-day trial is refused (it would read as active forever)",
+  (await raises(
+    `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days)
+     values ('t-r3', 'retail', $1, 30, 0)`,
+    [partner],
+  )) !== null,
+);
+check(
+  "a learner link carrying a discount is refused",
+  (await raises(
+    `insert into public.signup_links (token, kind, org_id, discount_pct) values ('t-r4', 'learner', $1, 30)`,
+    [org],
+  )) !== null,
+);
+check(
+  "a retail link can still be claimed like any other",
+  (await db.query(`select * from public.claim_signup_link('t-retail')`)).rows.length === 1,
+);
+
+// A retail learner: a one-seat 'individual' organisation on a 7-day trial.
+const solo = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit, kind, partner_id)
+   values ('Cá nhân · Lan', 1, 'individual', $1) returning id`,
+  [partner],
+))!.id;
+await db.query(
+  `insert into public.subscriptions (org_id, plan_code, kind, starts_at, ends_at)
+   values ($1, 'p1', 'trial', now(), now() + interval '7 days')`,
+  [solo],
+);
+const lan = (await one<{ id: string }>(
+  `insert into auth.users (phone, raw_app_meta_data) values ('84900000010', $1) returning id`,
+  [JSON.stringify({ role: "member", org_id: solo })],
+))!.id;
+const solo2 = await raises(
+  `insert into auth.users (phone, raw_app_meta_data) values ('84900000011', $1)`,
+  [JSON.stringify({ role: "member", org_id: solo })],
+);
+check(
+  "an individual organisation holds exactly one learner",
+  /SEAT_QUOTA_EXCEEDED/.test(solo2 ?? ""),
+  solo2 ?? "second learner allowed!",
+);
+const trialActive = await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [solo]);
+check("a learner on trial is active", trialActive?.a === true);
+await db.query(
+  `update public.subscriptions set starts_at = now() - interval '8 days', ends_at = now() - interval '1 day'
+    where org_id = $1`,
+  [solo],
+);
+const trialOver = await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [solo]);
+check("a learner whose trial ran out is not active", trialOver?.a === false);
+
+// Orders
+await db.query(
+  `insert into public.orders (code, org_id, user_id, partner_id, plan_code, term, list_price, discount_pct, amount)
+   values ('EHTEST01', $1, $2, $3, 'p1', 'm3', 267300, 30, 190000)`,
+  [solo, lan, partner],
+);
+check(
+  "a second open order for the same learner is refused",
+  (await raises(
+    `insert into public.orders (code, org_id, plan_code, term, list_price, amount)
+     values ('EHTEST02', $1, 'p1', 'm6', 475200, 340000)`,
+    [solo],
+  )) !== null,
+);
+check(
+  "an order marked paid without a payment time is refused",
+  (await raises(`update public.orders set status = 'paid' where code = 'EHTEST01'`)) !== null,
+);
+check(
+  "an order term outside 3/6/9/12 months is refused",
+  (await raises(
+    `insert into public.orders (code, org_id, plan_code, term, list_price, amount)
+     values ('EHTEST03', $1, 'p1', 'trial', 0, 0)`,
+    [org],
+  )) !== null,
+);
+const lanSees = await asRole("authenticated", `select code from public.orders`, lan);
+const lanOrders = await (async () => {
+  await db.exec(`set request.jwt.claim.sub = '${lan}'; set role authenticated;`);
+  const r = await db.query<{ code: string }>(`select code from public.orders`);
+  await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  return r.rows.map((x) => x.code);
+})();
+check(
+  "a learner reads their own order",
+  lanSees === null && lanOrders.includes("EHTEST01"),
+  lanOrders.join(","),
+);
+const hrOrders = await (async () => {
+  await db.exec(`set request.jwt.claim.sub = '${hr}'; set role authenticated;`);
+  const r = await db.query<{ code: string }>(`select code from public.orders`);
+  await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  return r.rows.length;
+})();
+check("a hotel's HR sees no one's orders", hrOrders === 0, `${hrOrders} rows`);
+check(
+  "a learner cannot mark their own order paid",
+  (await asRole(
+    "authenticated",
+    `update public.orders set status = 'paid', paid_at = now() where code = 'EHTEST01'`,
+    lan,
+  )) !== null ||
+    (await one<{ status: string }>(`select status from public.orders where code = 'EHTEST01'`))
+      ?.status === "pending",
+);
+const acctRows = await (async () => {
+  await db.exec(`set request.jwt.claim.sub = '${lan}'; set role authenticated;`);
+  const r = await db.query(`select * from public.payment_accounts`);
+  await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  return r.rows.length;
+})();
+check(
+  "learners cannot read the payment account table directly",
+  acctRows === 0,
+  `${acctRows} rows`,
+);
+
+// ── Company details (org_details): the licence name, tax code and the HR
+// representative's phone and email. A learner can read their own
+// organizations row, so these live apart and only HR and the owner read them.
+await db.query(
+  `insert into public.org_details (org_id, legal_name, address, tax_code, rep_name, rep_phone, rep_email)
+   values ($1, 'Công ty TNHH Test', '1 Trần Phú, Vũng Tàu', '0312345678', 'HR Lan', '+84900000002', 'hr@test.vn'),
+          ($2, 'Công ty CP Other', '2 Lê Lợi, Huế', '0312345678-001', 'HR Other', '+84900000099', 'hr@other.vn')`,
+  [org, other],
+);
+async function detailsAs(userId: string): Promise<string[]> {
+  await db.exec(`set request.jwt.claim.sub = '${userId}'; set role authenticated;`);
+  const r = await db.query<{ legal_name: string }>(
+    `select legal_name from public.org_details order by legal_name`,
+  );
+  await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  return r.rows.map((x) => x.legal_name);
+}
+const learnerDetails = await detailsAs(m1);
+check(
+  "a learner cannot read their own hotel's company details",
+  learnerDetails.length === 0,
+  `${learnerDetails.length} rows`,
+);
+const hrDetails = await detailsAs(hr);
+check(
+  "HR reads their own hotel's company details, and no other hotel's",
+  hrDetails.length === 1 && hrDetails[0] === "Công ty TNHH Test",
+  hrDetails.join(","),
+);
+const ownerDetails = await detailsAs(owner);
+check(
+  "platform owner reads every hotel's company details",
+  ownerDetails.length === 2,
+  ownerDetails.join(","),
+);
+const hrDetailsWrite = await asRole(
+  "authenticated",
+  `update public.org_details set tax_code = '0000000000'`,
+  hr,
+);
+check(
+  "HR cannot edit company details directly (writes only via server)",
+  /permission denied/.test(hrDetailsWrite ?? ""),
+  hrDetailsWrite ?? "allowed!",
+);
+
+const third = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit) values ('Third Hotel', 5) returning id`,
+))!.id;
+const detailsInsert = (taxCode: string, phone: string, email: string) =>
+  raises(
+    `insert into public.org_details (org_id, legal_name, address, tax_code, rep_name, rep_phone, rep_email)
+     values ($1, 'Công ty TNHH Third', '3 Hùng Vương, Đà Nẵng', $2, 'HR Third', $3, $4)`,
+    [third, taxCode, phone, email],
+  );
+check(
+  "a 9-digit tax code is refused",
+  /check constraint/.test((await detailsInsert("031234567", "+84900000077", "a@b.vn")) ?? ""),
+);
+check(
+  "a phone not in +84 form is refused",
+  /check constraint/.test((await detailsInsert("0312345678", "0900000077", "a@b.vn")) ?? ""),
+);
+check(
+  "an email without @ is refused",
+  /check constraint/.test((await detailsInsert("0312345678", "+84900000077", "a.b.vn")) ?? ""),
+);
+// Control: the same row with good values goes in, so the three above failed
+// on the value they changed and not on something else.
+const goodDetails = await detailsInsert("0312345678-002", "+84900000077", "a@b.vn");
+check("control: valid company details are accepted", goodDetails === null, goodDetails ?? "");
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

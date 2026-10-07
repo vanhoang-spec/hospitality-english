@@ -200,7 +200,7 @@ export const setPlanPrice = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
     z.object({
-      planCode: z.enum(["p50", "p100", "p200", "p300", "p500"]),
+      planCode: z.enum(["p1", "p50", "p100", "p200", "p300", "p500"]),
       term: z.enum(["trial", "m3", "m6", "m9", "m12"]),
       price: z.number().nonnegative(),
       currency: z.string().trim().min(3).max(3).default("VND"),

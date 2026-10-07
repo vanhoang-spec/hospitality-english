@@ -18,6 +18,7 @@ export type OrgSubscription = {
 };
 
 export const PLAN_LABEL: Record<string, string> = {
+  p1: "Bán lẻ · 1 người",
   p50: "50 học viên",
   p100: "100 học viên",
   p200: "200 học viên",

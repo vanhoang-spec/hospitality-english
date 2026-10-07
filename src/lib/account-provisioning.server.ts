@@ -272,3 +272,207 @@ export async function provisionOrganization(input: {
 
   return { orgId: org.id, hrUserId: created.user.id };
 }
+
+// ── One learner, buying for themself ─────────────────────────
+
+/** What goes in the transfer note: "EH" and six characters without
+ *  look-alikes (no 0/O, 1/I/L), so it survives being read off a phone and
+ *  typed into a banking app. */
+function newOrderCode(): string {
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(6));
+  let out = "EH";
+  for (const b of bytes) out += chars[b % chars.length];
+  return out;
+}
+
+/** Price one retail term: list price of p1 less the discount, rounded up
+ *  to 10,000 VND. Throws if the owner has no list price for that term —
+ *  an order must never be written for an amount nobody set. */
+export async function retailQuote(term: string, discountPct: number) {
+  const { retailAmount } = await import("@/lib/retail-pricing");
+  const list = await listPrice("p1", term);
+  if (list === null || list <= 0) {
+    throw new Error("Chưa có giá bán lẻ cho gói này. Vui lòng báo quản trị viên.");
+  }
+  return { listPrice: list, amount: retailAmount(list, discountPct) };
+}
+
+/** A retail learner: a one-seat organisation of kind 'individual', on a
+ *  trial that starts now, with the account inside it and one open order.
+ *
+ *  Every step after the organisation is undone if a later one fails —
+ *  most often the phone is already registered — so a retry never leaves
+ *  an empty organisation with a live trial behind. */
+export async function provisionIndividual(input: {
+  fullName: string;
+  phone: string;
+  password: string;
+  department: string;
+  term: string;
+  partnerId: string;
+  linkId: string;
+  discountPct: number;
+  trialDays: number;
+}): Promise<{ orderCode: string; amount: number }> {
+  const quote = await retailQuote(input.term, input.discountPct);
+
+  const { data: org, error: orgErr } = await supabaseAdmin
+    .from("organizations")
+    .insert({
+      name: `Cá nhân · ${input.fullName}`,
+      seat_limit: 1,
+      kind: "individual",
+      partner_id: input.partnerId,
+    })
+    .select("id")
+    .single();
+  if (orgErr || !org) throw new Error(orgErr?.message ?? "Không tạo được tài khoản.");
+
+  const undo = async () => {
+    await supabaseAdmin.from("organizations").delete().eq("id", org.id);
+  };
+
+  try {
+    const now = new Date();
+    const trialEnd = new Date(now.getTime() + input.trialDays * 24 * 60 * 60 * 1000);
+    const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
+      org_id: org.id,
+      plan_code: "p1",
+      kind: "trial",
+      // A minute early: org_is_active() compares against the DATABASE
+      // clock, and provisionMember checks it seconds from now. If this
+      // server ran a few seconds ahead, the trial would not have "started"
+      // yet and the signup would be refused as an expired plan.
+      starts_at: new Date(now.getTime() - 60_000).toISOString(),
+      ends_at: trialEnd.toISOString(),
+      price: 0,
+    });
+    if (subErr) throw new Error(subErr.message);
+
+    // They chose this password themselves: no forced change at first login.
+    const userId = await provisionMember({
+      orgId: org.id,
+      phone: input.phone,
+      fullName: input.fullName,
+      password: input.password,
+      role: "member",
+      department: input.department,
+      mustChangePassword: false,
+      actorId: null,
+      action: "member.signup_retail",
+      meta: { link_id: input.linkId, partner_id: input.partnerId },
+    });
+
+    // The code is random; on the rare collision, draw again.
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const code = newOrderCode();
+      const { error } = await supabaseAdmin.from("orders").insert({
+        code,
+        org_id: org.id,
+        user_id: userId,
+        partner_id: input.partnerId,
+        link_id: input.linkId,
+        plan_code: "p1",
+        term: input.term,
+        list_price: quote.listPrice,
+        discount_pct: input.discountPct,
+        amount: quote.amount,
+      });
+      if (!error) return { orderCode: code, amount: quote.amount };
+      if (!/duplicate key|unique/i.test(error.message)) throw new Error(error.message);
+    }
+    throw new Error("Không tạo được mã đơn hàng. Vui lòng thử lại.");
+  } catch (e) {
+    // Removing the organisation cascades to its subscription and order;
+    // the auth account, if one was made, goes separately.
+    const { data: members } = await supabaseAdmin
+      .from("profiles")
+      .select("id")
+      .eq("org_id", org.id);
+    for (const m of members ?? []) await supabaseAdmin.auth.admin.deleteUser(m.id);
+    await undo();
+    throw e;
+  }
+}
+
+/** Mark an order paid and give the learner their term.
+ *
+ *  The paid term starts now and ends that many months after whichever is
+ *  later — now, or the end of the time they already have — so paying on
+ *  day two of a seven-day trial does not throw away the other five. The
+ *  order is flipped first, conditionally, so two clicks cannot both run. */
+export async function activateOrder(input: {
+  orderId: string;
+  actorId: string;
+  paymentRef?: string | null;
+}): Promise<{ endsAt: string }> {
+  const nowIso = new Date().toISOString();
+  const { data: order, error } = await supabaseAdmin
+    .from("orders")
+    .update({
+      status: "paid",
+      paid_at: nowIso,
+      confirmed_by: input.actorId,
+      payment_ref: input.paymentRef ?? null,
+    })
+    .eq("id", input.orderId)
+    .eq("status", "pending")
+    .select("id, org_id, plan_code, term, amount, code")
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!order) throw new Error("Đơn này không còn ở trạng thái chờ thanh toán.");
+
+  const { data: current } = await supabaseAdmin
+    .from("subscriptions")
+    .select("id, ends_at")
+    .eq("org_id", order.org_id)
+    .eq("status", "active")
+    .maybeSingle();
+
+  const now = new Date();
+  const base =
+    current?.ends_at && new Date(current.ends_at) > now ? new Date(current.ends_at) : now;
+  const end = endsAt(order.term, base);
+
+  if (current) {
+    await supabaseAdmin.from("subscriptions").update({ status: "cancelled" }).eq("id", current.id);
+  }
+  const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
+    org_id: order.org_id,
+    plan_code: order.plan_code,
+    kind: order.term,
+    // A minute early, for the same clock reason as the trial above.
+    starts_at: new Date(now.getTime() - 60_000).toISOString(),
+    ends_at: end,
+    price: Number(order.amount),
+    created_by: input.actorId,
+  });
+  if (subErr) {
+    // Put the order back so it can be confirmed again once fixed.
+    await supabaseAdmin
+      .from("orders")
+      .update({ status: "pending", paid_at: null, confirmed_by: null, payment_ref: null })
+      .eq("id", order.id);
+    if (current) {
+      await supabaseAdmin.from("subscriptions").update({ status: "active" }).eq("id", current.id);
+    }
+    throw new Error(subErr.message);
+  }
+
+  await logAdminAction({
+    actorId: input.actorId,
+    orgId: order.org_id,
+    action: "order.paid",
+    meta: {
+      order_id: order.id,
+      code: order.code,
+      term: order.term,
+      amount: Number(order.amount),
+      payment_ref: input.paymentRef ?? null,
+      ends_at: end,
+    },
+  });
+
+  return { endsAt: end };
+}

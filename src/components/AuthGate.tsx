@@ -27,11 +27,9 @@ export function AuthGate({ children }: { children: ReactNode }) {
   const isPublicPath = PUBLIC_PATHS.has(pathname) || isJoinPath;
 
   // One live session per account — see single-session.ts for why this is a
-  // speed bump rather than a lock.
-  useSingleSession(session?.user.id, !!session && !isPublicPath);
-
-  // One live session per account — see single-session.ts for why this is a
-  // speed bump rather than a lock.
+  // speed bump rather than a lock. Called ONCE: a second call is a second
+  // heartbeat, and where storage is blocked each call mints its own id, so
+  // the two sign each other out within one heartbeat.
   useSingleSession(session?.user.id, !!session && !isPublicPath);
 
   useEffect(() => {
@@ -78,23 +76,50 @@ export function AuthGate({ children }: { children: ReactNode }) {
     !orgIsActive(subscription, subFetched) &&
     !isPublicPath
   ) {
-    return <SubscriptionLapsed endsAt={subscription?.endsAt} kind={subscription?.kind} />;
-  }
-
-  // A lapsed contract stops the LEARNERS; HR keeps its dashboard so the
-  // hotel can still read and export what it paid for. The same rule is a
-  // RESTRICTIVE policy on the progress tables, so this screen is the
-  // courteous half of a limit the database enforces anyway.
-  if (
-    session &&
-    profile?.role === "member" &&
-    !orgIsActive(subscription, subFetched) &&
-    !isPublicPath
-  ) {
+    // Someone who bought for themself has no HR to ask: the one page they
+    // still need is the one that tells them how to pay.
+    if (profile.organizations?.kind === "individual") {
+      if (pathname === "/thanh-toan") return <>{children}</>;
+      return <IndividualLapsed trial={subscription?.kind === "trial"} />;
+    }
     return <SubscriptionLapsed endsAt={subscription?.endsAt} kind={subscription?.kind} />;
   }
 
   return <>{children}</>;
+}
+
+function IndividualLapsed({ trial }: { trial: boolean }) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="max-w-md border border-primary/40 bg-card p-8 text-center shadow-xl">
+        <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Tạm dừng truy cập</div>
+        <h1 className="font-display mt-3 text-2xl">
+          {trial ? "Đã hết thời gian học thử" : "Gói học của bạn đã hết hạn"}
+        </h1>
+        <p className="mt-4 text-sm text-foreground/75">
+          Tiến độ và kết quả của bạn vẫn được giữ nguyên. Thanh toán để học tiếp đúng chỗ đang dở.
+        </p>
+        <div className="mt-6 flex justify-center gap-3">
+          <a
+            href="/thanh-toan"
+            className="bg-primary px-6 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground"
+          >
+            Xem cách thanh toán
+          </a>
+          <button
+            onClick={async () => {
+              clearSessionId();
+              await signOut();
+              window.location.href = "/login";
+            }}
+            className="border border-primary/40 px-6 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
+          >
+            Đăng xuất
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function SubscriptionLapsed({ endsAt, kind }: { endsAt?: string; kind?: string }) {
