@@ -167,11 +167,16 @@ export async function provisionMember(input: {
   return created.user.id;
 }
 
-/** Create a hotel, its contract, and its first HR account.
+/** Create a hotel, its company details, its contract, and its first HR
+ *  account. The HR person is the hotel's representative, so the details row
+ *  takes their name and phone; `company` adds what the licence says and the
+ *  representative's email (validated by newOrgDetailsSchema in
+ *  org-details.ts before it gets here).
  *
  *  If the HR account cannot be created (the phone is already registered,
  *  most often) the hotel row is removed again — otherwise every retry
- *  would leave an empty hotel with a live contract behind it. */
+ *  would leave an empty hotel with a live contract behind it. The details
+ *  and the contract go with it (on delete cascade). */
 export async function provisionOrganization(input: {
   name: string;
   planCode: string;
@@ -180,6 +185,7 @@ export async function provisionOrganization(input: {
   hrPhone: string;
   hrFullName: string;
   hrPassword: string;
+  company: { legalName: string; address: string; taxCode: string; repEmail: string };
   mustChangePassword: boolean;
   actorId: string | null;
   action: string;
@@ -204,6 +210,21 @@ export async function provisionOrganization(input: {
   const undo = async () => {
     await supabaseAdmin.from("organizations").delete().eq("id", org.id);
   };
+
+  const { error: detailsErr } = await supabaseAdmin.from("org_details").insert({
+    org_id: org.id,
+    legal_name: input.company.legalName,
+    address: input.company.address,
+    tax_code: input.company.taxCode,
+    rep_name: input.hrFullName,
+    rep_phone: input.hrPhone,
+    rep_email: input.company.repEmail,
+    updated_by: input.actorId,
+  });
+  if (detailsErr) {
+    await undo();
+    throw new Error(detailsErr.message);
+  }
 
   const now = new Date();
   const agreed = input.price ?? (await listPrice(input.planCode, input.term));
