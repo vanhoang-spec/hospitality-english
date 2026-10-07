@@ -40,7 +40,9 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   (Phase 4) đã merge vào `main`** (`a2ade64`) theo chỉ đạo người dùng ("cho merge và deploy
   luôn"), sau khi CI GitHub xanh hết. Vercel tự build production từ commit này.
 - **07/10: nhánh `platform/org-profile`** (tách từ `main` @ `a2ade64`) — thông tin công ty của
-  khách sạn, xem §4. Có migration mới **chưa áp dụng lên production**; phải áp dụng TRƯỚC khi merge.
+  khách sạn, xem §4. PR
+  [vanhoang-spec/hospitality-english#17](https://github.com/vanhoang-spec/hospitality-english/pull/17).
+  Migration của nó **đã áp dụng lên production 07/10** (người dùng chạy trong SQL Editor).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -140,8 +142,23 @@ này _không_ hiện ở phần học. Đã làm:
   Người đại diện = người nhận tài khoản HR đầu tiên (họ tên, SĐT lấy từ đó, thêm email).
 - `/admin-console`: cột "Công ty · MST · đại diện", nút "Sửa thông tin"; khách sạn cũ hiện "Thiếu
   thông tin công ty" cho tới khi điền. Hướng dẫn quản trị lên bản 1.2.
-- **Thứ tự triển khai bắt buộc:** áp dụng migration lên production (cần người dùng đồng ý) → sinh lại
-  `types.ts` từ production (đã viết tay khớp schema) → merge. Merge trước thì tạo khách sạn báo lỗi.
+- **07/10: migration đã chạy trên production** (người dùng dán vào SQL Editor, nên bảng
+  `supabase_migrations.schema_migrations` không ghi nó; file viết kiểu chạy lại được, `db push` sau này
+  chạy lại vô hại). `supabase gen types --project-id` từ production cho khối `org_details` trùng
+  từng dòng với bản viết tay.
+
+**Production có schema mà `main` không có — đọc trước khi merge PR #13.** Sinh types từ production
+07/10 ra thêm bảng `orders`, `partners`, `payment_accounts`, cột `organizations.kind`
+(mặc định `'hotel'`), `organizations.partner_id`, `signup_links.partner_id/discount_pct/trial_days`.
+Chúng đến từ migration `20261001090000_retail_partner_orders.sql` của PR
+[vanhoang-spec/hospitality-english#13](https://github.com/vanhoang-spec/hospitality-english/pull/13)
+(`platform/retail-partner`, bán lẻ qua đối tác) — **đã chạy trên production, code chưa merge**.
+`types.ts` trên `main` cố ý chưa có các bảng này (thuộc PR #13). Khi gộp PR #13 phải: (1) gọi
+`provisionOrganization` với tham số `company` mới, hoặc tách đường tạo tổ chức `individual`; (2) chỉ
+đòi `org_details` cho `kind = 'hotel'` — tổ chức `individual` (một học viên mua lẻ) không có MST;
+(3) cột "Công ty · MST" ở `/admin-console` không báo "Thiếu" cho tổ chức `individual`. PR #13 và
+#17 cùng sửa `account-provisioning.server.ts`, `signup-link-actions.ts`, `join.$token.tsx`,
+`admin-console.tsx`, `types.ts` — sẽ xung đột.
 
 ### Production
 
@@ -163,9 +180,11 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
 
 Không tự làm những việc này.
 
-1. **Áp dụng migration `20261007090000_org_details.sql` lên production** rồi merge nhánh
-   `platform/org-profile` — xem §4. Ghi database production cần người dùng đồng ý từng lần.
-2. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+1. **Merge PR #17** (thông tin công ty) — migration đã chạy, CI xanh; merge là deploy production
+   nên cần người dùng xác nhận.
+2. **PR #13 (bán lẻ qua đối tác) đang mở từ 30/09**, migration đã chạy trên production nhưng code
+   chưa merge — có làm tiếp, gộp, hay bỏ? Xem §4.
+3. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 
