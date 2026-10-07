@@ -24,6 +24,7 @@ export type MyBilling =
         amount: number;
         listPrice: number;
         discountPct: number;
+        discountAmount: number;
         status: string;
         paidAt: string | null;
       } | null;
@@ -72,7 +73,9 @@ export const getMyBilling = createServerFn({ method: "POST" })
         .maybeSingle(),
       supabaseAdmin
         .from("orders")
-        .select("id, code, term, amount, list_price, discount_pct, status, paid_at, created_at")
+        .select(
+          "id, code, term, amount, list_price, discount_pct, discount_amount, status, paid_at, created_at",
+        )
         .eq("org_id", orgId)
         .neq("status", "cancelled")
         .order("created_at", { ascending: false }),
@@ -94,6 +97,7 @@ export const getMyBilling = createServerFn({ method: "POST" })
           amount: Number(row.amount),
           listPrice: Number(row.list_price),
           discountPct: Number(row.discount_pct),
+          discountAmount: Number(row.discount_amount),
           status: row.status,
           paidAt: row.paid_at,
         }
@@ -105,7 +109,10 @@ export const getMyBilling = createServerFn({ method: "POST" })
       const { RETAIL_TERMS, RETAIL_TERM_MONTHS } = await import("@/lib/retail-pricing");
       for (const term of RETAIL_TERMS) {
         try {
-          const q = await retailQuote(term, order.discountPct);
+          const q = await retailQuote(term, {
+            pct: order.discountPct,
+            amount: order.discountAmount,
+          });
           options.push({ term, months: RETAIL_TERM_MONTHS[term], ...q });
         } catch {
           /* no list price for this term */
@@ -142,23 +149,37 @@ export const changeMyOrderTerm = createServerFn({ method: "POST" })
     const orgId = await callerOrg(context.supabase, context.userId);
     if (!orgId) throw new Error("Không tìm thấy tài khoản.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { retailQuote } = await import("@/lib/account-provisioning.server");
+    const { retailQuote, recordCrmEvent } = await import("@/lib/account-provisioning.server");
 
     const { data: order } = await supabaseAdmin
       .from("orders")
-      .select("id, discount_pct")
+      .select("id, code, discount_pct, discount_amount")
       .eq("org_id", orgId)
       .eq("status", "pending")
       .maybeSingle();
     if (!order) throw new Error("Không có đơn nào đang chờ thanh toán.");
 
-    const q = await retailQuote(data.term, Number(order.discount_pct));
-    const { error } = await supabaseAdmin
+    const q = await retailQuote(data.term, {
+      pct: Number(order.discount_pct),
+      amount: Number(order.discount_amount),
+    });
+    const { data: changed, error } = await supabaseAdmin
       .from("orders")
       .update({ term: data.term, list_price: q.listPrice, amount: q.amount })
       .eq("id", order.id)
-      .eq("status", "pending");
+      .eq("status", "pending")
+      .select("id")
+      .maybeSingle();
     if (error) throw new Error(error.message);
+    // The CRM holds a copy of the order for its accountant: the amount it
+    // expects on the bank statement has just changed.
+    if (changed) {
+      await recordCrmEvent(
+        "don_cap_nhat",
+        { ma_don: order.code, ky_han: data.term, gia_niem_yet: q.listPrice, so_tien: q.amount },
+        orgId,
+      );
+    }
     return { amount: q.amount };
   });
 

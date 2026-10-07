@@ -45,8 +45,11 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   Migration của nó **đã áp dụng lên production 07/10** (người dùng chạy trong SQL Editor). **Đã
   merge** (`fd86b51`) theo xác nhận "merge luôn" của người dùng.
 - **07/10: PR [vanhoang-spec/hospitality-english#13](https://github.com/vanhoang-spec/hospitality-english/pull/13)
-  (bán lẻ qua đối tác)** — người dùng: "xem rồi merge luôn". Đã gộp `main` vào nhánh (không rebase),
-  gỡ xung đột với #17, xem §4 "Bán lẻ".
+  (bán lẻ qua đối tác)** — người dùng chọn "Merge ngay". Đã gộp `main` vào nhánh (không rebase), gỡ
+  xung đột với #17, merge `8757788`, Vercel production đã có `/thanh-toan`. Xem §4 "Bán lẻ".
+- **07/10: nhánh `platform/crm-api`** (tách từ `main` @ `8757788`) — phía app của tích hợp với CRM
+  Embassy, xem §4 "Tích hợp CRM". Migration `20261007120000_crm_integration.sql` **chưa áp dụng lên
+  production** — phải áp dụng TRƯỚC khi merge.
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -171,6 +174,31 @@ Khi gộp với #17:
 - `bun run test:db` (PGlite nhúng, không đụng production) nằm trong `ci`: 51 phép kiểm, gồm 8 cho
   `org_details`.
 
+### Tích hợp CRM Embassy (07/10, nhánh `platform/crm-api`)
+
+Người dùng làm CRM nội bộ Embassy Language (`D:\AI_app\CRM_Kids_Embassy`, repo
+`vanhoang-spec/embassy-crm`, crm.embassy.edu.vn) và muốn **tạo link đối tác trong CRM**: hoa hồng cho
+đối tác (số tiền hoặc % năm đầu/% năm sau, có ngày dừng) và giảm cho người mua cuối (% hoặc số tiền);
+kế toán xác nhận thanh toán của cả khách sạn lẫn người dùng lẻ trong CRM. **Hợp đồng chung duy nhất:**
+`docs/TICH_HOP_HOSPITALITY.md` trong repo CRM (repo này public nên không để ở đây). Đổi hợp đồng trước,
+code sau. App không biết gì về hoa hồng.
+
+Phía app đã làm (chưa merge):
+
+- `POST /api/crm` (`src/routes/api/crm.ts`, `src/lib/crm-api.server.ts`): năm lệnh `luu_link`,
+  `lay_bang_gia`, `lay_su_kien`, `cap_goi`, `xac_nhan_don`, ký HMAC (`src/lib/crm-signature.ts`). Khoá:
+  biến môi trường Vercel `CRM_HMAC_SECRET` — chưa đặt thì trả 503 để CRM giữ hàng đợi.
+- Loại link `partner_hotel`: khách sạn tự đăng ký qua link đối tác, chọn gói, học thử N ngày; gói trả
+  phí mở khi CRM gửi `cap_goi`.
+- Bảng `crm_events` cho CRM kéo về: khách sạn đăng ký (mọi khách sạn mới), người dùng lẻ đăng ký, đơn
+  đổi kỳ hạn.
+- `/admin-console`: danh sách link đối tác hiện cả hai loại; link do CRM tạo chỉ sửa/thu hồi trong CRM.
+- Kiểm thử: `test:db` 66 phép (gồm `crm_luu_link`, `crm_cap_goi`, quyền gọi), `test:crm` 24 phép (chữ
+  ký, lệch giờ, chưa cài khoá, lệnh sai dạng). Chưa thử đầu-cuối với CRM thật.
+
+Còn: phía CRM (phiên Claude Code ở repo CRM, theo hợp đồng); ẩn nút "Đã nhận tiền" trong app khi CRM
+đã xác nhận đơn; gia hạn của người dùng lẻ (chưa chốt).
+
 ### Production
 
 Theo commit `2de39b8` trên `main` (01/10): năm migration nền tảng **đã áp dụng lên production**,
@@ -194,7 +222,11 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+2. **Áp dụng migration `20261007120000_crm_integration.sql` lên production**, rồi merge
+   `platform/crm-api`; đặt cùng một khoá bí mật ở Vercel app (`CRM_HMAC_SECRET`) và Supabase CRM
+   (`HOSPITALITY_HMAC_SECRET`).
+3. **Gia hạn của người dùng lẻ** khi hết gói: app tự tạo đơn gia hạn, hay CS gia hạn tay?
+4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 

@@ -16,7 +16,8 @@
     "lint:content": "bun scripts/lint-content.ts",
     "qa:full": "bun scripts/qa-full.ts",
     "test:db": "bun scripts/db/schema-test.ts",
-    "ci": "bun run typecheck && bun run test:db && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
+    "test:crm": "bun scripts/crm-api-test.ts",
+    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {

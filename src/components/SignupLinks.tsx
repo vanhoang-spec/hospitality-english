@@ -20,6 +20,7 @@ import {
   revokeSignupLink,
 } from "@/lib/signup-link-actions";
 import type { Database } from "@/integrations/supabase/types";
+import { discountLabel } from "@/lib/retail-pricing";
 import { MoneyInput } from "./MoneyInput";
 
 type LinkRow = Database["public"]["Tables"]["signup_links"]["Row"];
@@ -369,15 +370,19 @@ export function RetailLinksSection() {
   const { data } = useQuery({
     queryKey,
     queryFn: async () => {
-      const [{ data: links, error: e1 }, { data: partners }, { data: orders }] = await Promise.all([
-        supabase
-          .from("signup_links")
-          .select("*")
-          .eq("kind", "retail")
-          .order("created_at", { ascending: false }),
-        supabase.from("partners").select("id, name"),
-        supabase.from("orders").select("link_id, status"),
-      ]);
+      const [{ data: links, error: e1 }, { data: partners }, { data: orders }, { data: hotels }] =
+        await Promise.all([
+          // Both kinds of partner link: one learner (retail) and hotels
+          // (partner_hotel — made only by the CRM).
+          supabase
+            .from("signup_links")
+            .select("*")
+            .in("kind", ["retail", "partner_hotel"])
+            .order("created_at", { ascending: false }),
+          supabase.from("partners").select("id, name"),
+          supabase.from("orders").select("link_id, status"),
+          supabase.from("organizations").select("signup_link_id").not("signup_link_id", "is", null),
+        ]);
       if (e1) throw e1;
       const stats = new Map<string, { signups: number; paid: number }>();
       for (const o of orders ?? []) {
@@ -386,6 +391,13 @@ export function RetailLinksSection() {
         s.signups++;
         if (o.status === "paid") s.paid++;
         stats.set(o.link_id, s);
+      }
+      // A hotel's payment is confirmed in the CRM, so here a hotel link
+      // only counts sign-ups.
+      for (const h of hotels ?? []) {
+        const s = stats.get(h.signup_link_id!) ?? { signups: 0, paid: 0 };
+        s.signups++;
+        stats.set(h.signup_link_id!, s);
       }
       return {
         links: (links ?? []) as LinkRow[],
@@ -490,18 +502,31 @@ export function RetailLinksSection() {
           <>
             <div>{data?.partnerNames.get(l.partner_id ?? "") ?? "—"}</div>
             <div className="text-xs text-foreground/60">
-              Giảm {Number(l.discount_pct ?? 0)}% · học thử {l.trial_days} ngày
+              {l.kind === "partner_hotel" ? "Khách sạn" : "Cá nhân"} · giảm{" "}
+              {discountLabel({
+                pct: Number(l.discount_pct ?? 0),
+                amount: Number(l.discount_amount ?? 0),
+              })}
+              {l.kind === "partner_hotel"
+                ? l.discount_scope === "every"
+                  ? " mọi lần mua"
+                  : " hợp đồng đầu"
+                : ""}{" "}
+              · học thử {l.trial_days} ngày
+              {l.crm_ref ? " · tạo từ CRM" : ""}
               {l.label ? ` · ${l.label}` : ""}
             </div>
           </>
         )}
         usage={(l) => {
           const s = data?.stats.get(l.id) ?? { signups: 0, paid: 0 };
-          return `${s.signups} đăng ký · ${s.paid} đã trả`;
+          return l.kind === "partner_hotel"
+            ? `${s.signups} khách sạn đăng ký`
+            : `${s.signups} đăng ký · ${s.paid} đã trả`;
         }}
         onRevoked={() => qc.invalidateQueries({ queryKey })}
         extra={(l) =>
-          l.revoked_at ? null : (
+          l.revoked_at || l.crm_ref ? null : (
             <ExtendRetail link={l} onDone={() => qc.invalidateQueries({ queryKey })} />
           )
         }
@@ -637,7 +662,15 @@ function LinkTable({
                   {status.label}
                 </td>
                 <td className="py-2 text-right">
-                  {status.live && (
+                  {status.live && l.crm_ref && (
+                    // The CRM owns this link: revoking it here would leave
+                    // the CRM showing a live link. Revoke it in the CRM.
+                    <span className="flex justify-end gap-3">
+                      <CopyButton text={linkUrl(l.token)} />
+                      <span className="text-xs text-foreground/50">Sửa/thu hồi trong CRM</span>
+                    </span>
+                  )}
+                  {status.live && !l.crm_ref && (
                     <span className="flex justify-end gap-3">
                       <CopyButton text={linkUrl(l.token)} />
                       <button

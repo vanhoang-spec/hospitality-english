@@ -53,14 +53,20 @@ function toPhone(raw: string): string {
 function linkProblem(link: LinkRow | null): string | null {
   if (!link) return "Link không tồn tại. Hãy kiểm tra lại, hoặc xin người gửi một link mới.";
   if (link.revoked_at) return "Link này đã bị thu hồi. Hãy xin người gửi một link mới.";
+  // Partner links (retail, partner_hotel) are offers: they end, and fill
+  // up, as a programme rather than as one hotel's invitation.
+  const partnerLink = link.kind === "retail" || link.kind === "partner_hotel";
   if (link.expires_at && new Date(link.expires_at) <= new Date()) {
-    return link.kind === "retail"
+    return partnerLink
       ? "Chương trình đăng ký qua link này đã kết thúc."
       : "Link này đã hết hạn. Hãy xin người gửi một link mới.";
   }
   if (link.max_uses !== null && link.use_count >= link.max_uses) {
-    return link.kind === "organization"
-      ? "Link này đã được dùng để mở tài khoản khách sạn. Nếu đó là bạn, hãy đăng nhập."
+    if (link.kind === "organization") {
+      return "Link này đã được dùng để mở tài khoản khách sạn. Nếu đó là bạn, hãy đăng nhập.";
+    }
+    return partnerLink
+      ? "Chương trình đăng ký qua link này đã đủ số chỗ. Hãy liên hệ người đã gửi link cho bạn."
       : "Link này đã đủ số người đăng ký. Hãy báo bộ phận nhân sự của khách sạn.";
   }
   return null;
@@ -261,11 +267,32 @@ export type SignupLinkInfo =
       kind: "retail";
       partnerName: string;
       discountPct: number;
+      discountAmount: number;
       trialDays: number;
       /** When the offer ends — the link's expiry. */
       until: string | null;
       options: { term: string; months: number; listPrice: number; amount: number }[];
+    }
+  | {
+      ok: true;
+      kind: "partner_hotel";
+      partnerName: string;
+      discountPct: number;
+      discountAmount: number;
+      /** 'first' = first contract only, 'every' = every purchase. */
+      discountScope: string;
+      trialDays: number;
+      until: string | null;
+      /** The hotel plans a hotel can start its trial on. */
+      plans: { code: string; seats: number }[];
     };
+
+/** A link's discount: a percent, or an amount of money (never both). */
+function linkDiscount(link: LinkRow) {
+  return { pct: Number(link.discount_pct ?? 0), amount: Number(link.discount_amount ?? 0) };
+}
+
+const HOTEL_PLAN = z.enum(["p50", "p100", "p200", "p300", "p500"]);
 
 export const getSignupLinkInfo = createServerFn({ method: "POST" })
   .inputValidator(z.object({ token: TOKEN }))
@@ -288,7 +315,7 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
     if (link.kind === "retail") {
       const { retailQuote } = await import("@/lib/account-provisioning.server");
       const { RETAIL_TERMS, RETAIL_TERM_MONTHS } = await import("@/lib/retail-pricing");
-      const discountPct = Number(link.discount_pct ?? 0);
+      const discount = linkDiscount(link);
       const { data: partner } = await supabaseAdmin
         .from("partners")
         .select("name")
@@ -298,7 +325,7 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
       for (const term of RETAIL_TERMS) {
         // A term without a list price is not offered rather than offered at 0.
         try {
-          const q = await retailQuote(term, discountPct);
+          const q = await retailQuote(term, discount);
           options.push({ term, months: RETAIL_TERM_MONTHS[term], ...q });
         } catch {
           /* no list price for this term */
@@ -311,10 +338,34 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
         ok: true,
         kind: "retail",
         partnerName: partner?.name ?? "",
-        discountPct,
+        discountPct: discount.pct,
+        discountAmount: discount.amount,
         trialDays: link.trial_days ?? 0,
         until: link.expires_at,
         options,
+      };
+    }
+
+    if (link.kind === "partner_hotel") {
+      const [{ data: partner }, { data: plans }] = await Promise.all([
+        supabaseAdmin
+          .from("partners")
+          .select("name")
+          .eq("id", link.partner_id ?? "")
+          .maybeSingle(),
+        supabaseAdmin.from("plans").select("code, seats").neq("code", "p1").order("seats"),
+      ]);
+      const discount = linkDiscount(link);
+      return {
+        ok: true,
+        kind: "partner_hotel",
+        partnerName: partner?.name ?? "",
+        discountPct: discount.pct,
+        discountAmount: discount.amount,
+        discountScope: link.discount_scope ?? "first",
+        trialDays: link.trial_days ?? 0,
+        until: link.expires_at,
+        plans: (plans ?? []).filter((p) => HOTEL_PLAN.safeParse(p.code).success),
       };
     }
 
@@ -444,6 +495,55 @@ export const redeemOrganizationLink = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     await supabaseAdmin.from("signup_links").update({ org_id: orgId }).eq("id", link.id);
 
+    return { success: true as const };
+  });
+
+/** A hotel signing up through a partner's link: the same company details
+ *  as the owner's single-use hotel link, plus the plan the hotel wants to
+ *  try. The trial is free and lasts the link's days; the paid plan opens
+ *  when the CRM's accountant confirms the hotel's invoice (cap_goi). */
+export const redeemPartnerHotelLink = createServerFn({ method: "POST" })
+  .inputValidator(
+    newOrgDetailsSchema.extend({
+      token: TOKEN,
+      hotelName: z.string().trim().min(2, "Hãy nhập tên khách sạn.").max(120),
+      fullName: z.string().trim().min(2, "Hãy nhập họ tên.").max(120),
+      phone: z.string().min(1),
+      password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
+      planCode: HOTEL_PLAN,
+    }),
+  )
+  .handler(async ({ data }) => {
+    const phone = toPhone(data.phone);
+    const link = await claimLink(data.token, "partner_hotel");
+
+    const { provisionOrganization } = await import("@/lib/account-provisioning.server");
+    try {
+      await provisionOrganization({
+        name: data.hotelName,
+        planCode: data.planCode,
+        term: "trial",
+        price: 0,
+        trialDays: link.trial_days ?? 30,
+        signupLink: { id: link.id, partnerId: link.partner_id, crmRef: link.crm_ref },
+        hrPhone: phone,
+        hrFullName: data.fullName,
+        hrPassword: data.password,
+        company: {
+          legalName: data.legalName,
+          address: data.address,
+          taxCode: data.taxCode,
+          repEmail: data.repEmail,
+        },
+        mustChangePassword: false,
+        actorId: null,
+        action: "org.signup_partner",
+        meta: { link_id: link.id, partner_id: link.partner_id },
+      });
+    } catch (e) {
+      await releaseLink(link.id);
+      throw e;
+    }
     return { success: true as const };
   });
 
@@ -589,7 +689,8 @@ export const redeemRetailLink = createServerFn({ method: "POST" })
         term: data.term,
         partnerId: link.partner_id as string,
         linkId: link.id,
-        discountPct: Number(link.discount_pct ?? 0),
+        linkCrmRef: link.crm_ref,
+        discount: linkDiscount(link),
         trialDays: link.trial_days ?? 7,
       });
     } catch (e) {
