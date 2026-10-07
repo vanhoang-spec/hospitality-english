@@ -2,5 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "bun install --frozen-lockfile",
-  "buildCommand": "bun run ci && bun run build"
+  "buildCommand": "bun run ci && bun run build",
+  "crons": [{ "path": "/api/cron/gia-han", "schedule": "0 1 * * *" }]
 }

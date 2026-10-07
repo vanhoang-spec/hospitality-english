@@ -63,6 +63,15 @@ export function useOrgSubscription(orgId: string | null | undefined) {
       };
       const ends = new Date(row.ends_at).getTime();
       const daysLeft = Math.ceil((ends - Date.now()) / 86_400_000);
+      // Past its end, a term can still be live: a renewal waiting for
+      // payment carries a grace period (orders.grace_until). That rule
+      // lives in org_is_active() — the same function the database's own
+      // policies use — so ask it rather than copying it here.
+      let active = ends > Date.now();
+      if (!active) {
+        const { data: live } = await supabase.rpc("org_is_active", { target: orgId });
+        active = live === true;
+      }
       return {
         planCode: row.plan_code,
         seats: row.plans?.seats ?? 0,
@@ -71,7 +80,7 @@ export function useOrgSubscription(orgId: string | null | undefined) {
         endsAt: row.ends_at,
         status: row.status,
         daysLeft,
-        active: ends > Date.now(),
+        active,
       };
     },
     enabled: !!orgId,

@@ -27,6 +27,12 @@ export type MyBilling =
         discountAmount: number;
         status: string;
         paidAt: string | null;
+        /** 'first' or 'renewal'. */
+        kind: string;
+        /** A renewal: the learner keeps learning until this while it waits. */
+        graceUntil: string | null;
+        /** The page that shows how to pay without signing in. */
+        payUrl: string;
       } | null;
       /** Terms the open order can be switched to, at its own discount. */
       options: RetailOption[];
@@ -61,6 +67,12 @@ export const getMyBilling = createServerFn({ method: "POST" })
       .single();
     if (!org || org.kind !== "individual") return { individual: false };
 
+    // A learner opening the app near or after the end of their term finds
+    // the renewal order already there (the daily cron makes it too). A
+    // failure here must not hide the page that tells them how to pay.
+    const { createDueRenewals, payUrl } = await import("@/lib/account-provisioning.server");
+    await createDueRenewals({ orgId }).catch((e) => console.error("renewal:", e));
+
     const [{ data: partner }, { data: sub }, { data: orders }, { data: acct }] = await Promise.all([
       org.partner_id
         ? supabaseAdmin.from("partners").select("name").eq("id", org.partner_id).maybeSingle()
@@ -74,7 +86,7 @@ export const getMyBilling = createServerFn({ method: "POST" })
       supabaseAdmin
         .from("orders")
         .select(
-          "id, code, term, amount, list_price, discount_pct, discount_amount, status, paid_at, created_at",
+          "id, code, term, amount, list_price, discount_pct, discount_amount, status, paid_at, created_at, kind, grace_until, pay_token",
         )
         .eq("org_id", orgId)
         .neq("status", "cancelled")
@@ -100,6 +112,9 @@ export const getMyBilling = createServerFn({ method: "POST" })
           discountAmount: Number(row.discount_amount),
           status: row.status,
           paidAt: row.paid_at,
+          kind: row.kind,
+          graceUntil: row.grace_until,
+          payUrl: payUrl(row.pay_token),
         }
       : null;
 
@@ -181,6 +196,68 @@ export const changeMyOrderTerm = createServerFn({ method: "POST" })
       );
     }
     return { amount: q.amount };
+  });
+
+// ── Paying without signing in ────────────────────────────────
+
+export type PublicOrder =
+  | { ok: false }
+  | {
+      ok: true;
+      code: string;
+      term: string;
+      amount: number;
+      listPrice: number;
+      status: string;
+      kind: string;
+      graceUntil: string | null;
+      account: {
+        bankName: string;
+        bankBin: string | null;
+        accountNo: string;
+        accountName: string;
+      } | null;
+    };
+
+/** The order behind a payment link (/tt/<token>) — what CS sends over
+ *  Zalo. Public: the 122-bit token is the permission, and the answer holds
+ *  only what a bank transfer needs. Never the learner's name or phone. */
+export const getPublicOrder = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ token: z.string().regex(/^[0-9a-f]{32}$/) }))
+  .handler(async ({ data }): Promise<PublicOrder> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: order }, { data: acct }] = await Promise.all([
+      supabaseAdmin
+        .from("orders")
+        .select("code, term, amount, list_price, status, kind, grace_until")
+        .eq("pay_token", data.token)
+        .maybeSingle(),
+      supabaseAdmin
+        .from("payment_accounts")
+        .select("bank_name, bank_bin, account_no, account_name")
+        .eq("id", 1)
+        .maybeSingle(),
+    ]);
+    if (!order || order.status === "cancelled") return { ok: false };
+    return {
+      ok: true,
+      code: order.code,
+      term: order.term,
+      amount: Number(order.amount),
+      listPrice: Number(order.list_price),
+      status: order.status,
+      kind: order.kind,
+      graceUntil: order.grace_until,
+      account:
+        acct?.account_no && acct.account_name
+          ? {
+              bankName: acct.bank_name ?? "",
+              bankBin: acct.bank_bin,
+              accountNo: acct.account_no,
+              accountName: acct.account_name,
+            }
+          : null,
+    };
   });
 
 // ── Platform owner ───────────────────────────────────────────

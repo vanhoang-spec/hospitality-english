@@ -171,5 +171,58 @@ check(
   String(bp.json.thong_diep),
 );
 
+// ── Renewal price (owner, 07/10/2026): the link's discount only while its
+// offer still runs, and never for a link set to "first contract only".
+const { renewalDiscount } = await import("../src/lib/retail-pricing.ts");
+const at = new Date("2027-01-10T00:00:00+07:00");
+const offer = {
+  discount_pct: 30,
+  discount_amount: null,
+  discount_scope: "every",
+  expires_at: "2026-12-31T23:59:59+07:00",
+  revoked_at: null,
+};
+const r = (link: typeof offer | null, now: Date) => JSON.stringify(renewalDiscount(link, now));
+check(
+  "a renewal inside the offer keeps its 30%",
+  r(offer, new Date("2026-11-20T00:00:00+07:00")) === '{"pct":30,"amount":0}',
+);
+check(
+  "a renewal after the offer's last day pays list price",
+  r(offer, at) === '{"pct":0,"amount":0}',
+);
+check(
+  "a link set to first contract only gives renewals nothing",
+  r({ ...offer, discount_scope: "first", expires_at: null }, at) === '{"pct":0,"amount":0}',
+);
+check(
+  "a revoked link gives renewals nothing",
+  r({ ...offer, expires_at: null, revoked_at: "2026-10-01T00:00:00Z" }, at) ===
+    '{"pct":0,"amount":0}',
+);
+check(
+  "an app-made link with no end date keeps its discount",
+  r({ ...offer, discount_scope: null as unknown as string, expires_at: null }, at) ===
+    '{"pct":30,"amount":0}',
+);
+check("no link: list price", r(null, at) === '{"pct":0,"amount":0}');
+
+// ── The daily renewal cron is not an open trigger.
+const { Route: Cron } = await import("../src/routes/api/cron.gia-han.ts");
+type GetHandler = (ctx: { request: Request }) => Promise<Response>;
+const cronGet = (Cron.options as unknown as { server: { handlers: { GET: GetHandler } } }).server
+  .handlers.GET;
+const cronCall = (auth?: string) =>
+  cronGet({
+    request: new Request("https://hospitality.embassy.edu.vn/api/cron/gia-han", {
+      headers: auth ? { authorization: auth } : {},
+    }),
+  });
+delete process.env.CRON_SECRET;
+check("cron without CRON_SECRET set: 503", (await cronCall("Bearer x")).status === 503);
+process.env.CRON_SECRET = "cron-thu";
+check("cron with no key: 401", (await cronCall()).status === 401);
+check("cron with the wrong key: 401", (await cronCall("Bearer khac")).status === 401);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

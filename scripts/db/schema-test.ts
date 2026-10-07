@@ -706,5 +706,84 @@ check(
   ),
 );
 
+// ── Renewal (20261008090000): a pending renewal keeps a learner learning
+// for seven days after the old term ended, and no longer.
+const renewOrg = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit, kind) values ('Cá nhân · Gia hạn', 1, 'individual') returning id`,
+))!.id;
+await db.query(
+  `insert into public.subscriptions (org_id, plan_code, kind, starts_at, ends_at, price)
+   values ($1, 'p1', 'm3', now() - interval '93 days', now() - interval '2 days', 190000)`,
+  [renewOrg],
+);
+const isActive = async (org: string) =>
+  (await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [org]))?.a;
+check(
+  "a term that ended two days ago, with nothing pending, is not active",
+  (await isActive(renewOrg)) === false,
+);
+
+await db.query(
+  `insert into public.orders (code, org_id, plan_code, term, list_price, amount, kind)
+   values ('EHFIRST1', $1, 'p1', 'm3', 267300, 190000, 'first')`,
+  [renewOrg],
+);
+check("an unpaid FIRST order gives no grace", (await isActive(renewOrg)) === false);
+await db.query(`delete from public.orders where code = 'EHFIRST1'`);
+
+await db.query(
+  `insert into public.orders (code, org_id, plan_code, term, list_price, amount, kind, grace_until)
+   values ('EHRENEW1', $1, 'p1', 'm3', 267300, 270000, 'renewal', now() + interval '5 days')`,
+  [renewOrg],
+);
+check(
+  "a pending renewal inside its grace keeps the learner active",
+  (await isActive(renewOrg)) === true,
+);
+await db.query(
+  `update public.orders set grace_until = now() - interval '1 minute' where code = 'EHRENEW1'`,
+);
+check("past grace_until the learner is stopped", (await isActive(renewOrg)) === false);
+await db.query(
+  `update public.orders set grace_until = now() + interval '5 days', status = 'paid', paid_at = now() where code = 'EHRENEW1'`,
+);
+check(
+  "a PAID renewal grants no grace by itself (its new term does that)",
+  (await isActive(renewOrg)) === false,
+);
+
+const tok = await one<{ pay_token: string }>(
+  `select pay_token from public.orders where code = 'EHRENEW1'`,
+);
+check(
+  "every order gets an unguessable payment-link token",
+  /^[0-9a-f]{32}$/.test(tok?.pay_token ?? ""),
+  tok?.pay_token ?? "",
+);
+check(
+  "a first order cannot carry a grace date",
+  /orders_grace_only_renewal/.test(
+    (await raises(
+      `insert into public.orders (code, org_id, plan_code, term, list_price, amount, kind, grace_until)
+       values ('EHBAD001', $1, 'p1', 'm3', 1, 1, 'first', now())`,
+      [renewOrg],
+    )) ?? "",
+  ),
+);
+const graceAsLearner = await asRole(
+  "authenticated",
+  `select public.org_is_active('${renewOrg}')`,
+  m1,
+);
+check(
+  "signed-in users can still call org_is_active (the app's lapse screen reads it)",
+  graceAsLearner === null,
+  graceAsLearner ?? "",
+);
+const renewEvent = await raises(
+  `insert into public.crm_events (loai, du_lieu) values ('don_gia_han', '{"ma_don":"EHRENEW1"}')`,
+);
+check("the event log accepts don_gia_han", renewEvent === null, renewEvent ?? "");
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

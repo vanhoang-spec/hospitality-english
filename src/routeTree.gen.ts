@@ -23,6 +23,8 @@ import { Route as ThanhToanRouteImport } from './routes/thanh-toan'
 import { Route as ApiCrmRouteImport } from './routes/api/crm'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
+import { Route as TtTokenRouteImport } from './routes/tt.$token'
+import { Route as ApiCronGiaHanRouteImport } from './routes/api/cron.gia-han'
 import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$week'
 import { Route as DepartmentDepWeekWeekRouteImport } from './routes/department_.$dep.week.$week'
 import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
@@ -97,6 +99,16 @@ const JoinTokenRoute = JoinTokenRouteImport.update({
   path: '/join/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TtTokenRoute = TtTokenRouteImport.update({
+  id: '/tt/$token',
+  path: '/tt/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronGiaHanRoute = ApiCronGiaHanRouteImport.update({
+  id: '/api/cron/gia-han',
+  path: '/api/cron/gia-han',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HandbookDepWeekRoute = HandbookDepWeekRouteImport.update({
   id: '/handbook/$dep/$week',
   path: '/handbook/$dep/$week',
@@ -128,6 +140,8 @@ export interface FileRoutesByFullPath {
   '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -147,6 +161,8 @@ export interface FileRoutesByTo {
   '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -167,6 +183,8 @@ export interface FileRoutesById {
   '/api/crm': typeof ApiCrmRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department_/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -188,6 +206,8 @@ export interface FileRouteTypes {
     | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -207,6 +227,8 @@ export interface FileRouteTypes {
     | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -226,6 +248,8 @@ export interface FileRouteTypes {
     | '/api/crm'
     | '/department/$dep'
     | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department_/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -246,6 +270,8 @@ export interface RootRouteChildren {
   ApiCrmRoute: typeof ApiCrmRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   JoinTokenRoute: typeof JoinTokenRoute
+  TtTokenRoute: typeof TtTokenRoute
+  ApiCronGiaHanRoute: typeof ApiCronGiaHanRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
   DepartmentDepWeekWeekRoute: typeof DepartmentDepWeekWeekRoute
   LearnDepWeekSuiteRoute: typeof LearnDepWeekSuiteRoute
@@ -351,6 +377,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tt/$token': {
+      id: '/tt/$token'
+      path: '/tt/$token'
+      fullPath: '/tt/$token'
+      preLoaderRoute: typeof TtTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/gia-han': {
+      id: '/api/cron/gia-han'
+      path: '/api/cron/gia-han'
+      fullPath: '/api/cron/gia-han'
+      preLoaderRoute: typeof ApiCronGiaHanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/handbook/$dep/$week': {
       id: '/handbook/$dep/$week'
       path: '/handbook/$dep/$week'
@@ -390,6 +430,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiCrmRoute: ApiCrmRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   JoinTokenRoute: JoinTokenRoute,
+  TtTokenRoute: TtTokenRoute,
+  ApiCronGiaHanRoute: ApiCronGiaHanRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,
   DepartmentDepWeekWeekRoute: DepartmentDepWeekWeekRoute,
   LearnDepWeekSuiteRoute: LearnDepWeekSuiteRoute,

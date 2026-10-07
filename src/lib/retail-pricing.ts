@@ -20,6 +20,32 @@ export function retailAmount(listPrice: number, discountPct: number, discountAmo
   return Math.max(0, Math.ceil(discounted / RETAIL_ROUND_TO - 1e-9)) * RETAIL_ROUND_TO;
 }
 
+/** Renewal timing (owner, 07/10/2026): the renewal order opens this many
+ *  days before the paid term ends, and while it waits for payment the
+ *  learner keeps learning this many days after it ended. */
+export const RENEW_BEFORE_DAYS = 7;
+export const RENEW_GRACE_DAYS = 7;
+
+/** The parts of a signup link a renewal price depends on. */
+export type OfferLink = {
+  discount_pct: number | null;
+  discount_amount: number | null;
+  discount_scope: string | null;
+  expires_at: string | null;
+  revoked_at: string | null;
+};
+
+/** What a renewal is discounted by (owner, 07/10/2026): the link the
+ *  learner came through, only while that offer is still running — not
+ *  revoked, not past its last day — and not when the link was set to
+ *  discount the first contract only. Otherwise today's list price. */
+export function renewalDiscount(link: OfferLink | null, now: Date = new Date()): Discount {
+  const none = { pct: 0, amount: 0 };
+  if (!link || link.revoked_at || link.discount_scope === "first") return none;
+  if (link.expires_at && new Date(link.expires_at) <= now) return none;
+  return { pct: Number(link.discount_pct ?? 0), amount: Number(link.discount_amount ?? 0) };
+}
+
 /** The discount as a learner reads it: "30%" or "50.000 ₫". */
 export function discountLabel(d: Discount): string {
   if (d.amount > 0) return `${Math.round(d.amount).toLocaleString("vi-VN")} ₫`;
