@@ -61,6 +61,11 @@ const MCQ_NEW_MAX = 10;
 // mostly never happened. Ten keeps the new-word share near 60% while every
 // recycled word has better than a one-in-three chance of being asked.
 const MCQ_REVIEW = 10;
+// Phase 4 lists carry each of its own words back at +1, +3 and +6 weeks, so
+// a week's list holds 25-40 of them; ten draws asked any one of them about
+// one time in four, and round 2 of the Phase 4 reviews counted a taught word
+// re-asked 0.23 times on average before the final week. Fourteen there.
+const MCQ_REVIEW_P4 = 14;
 // Ten of the checkpoint week seventy-five recycled words is 13% — the week
 // that exists to consolidate a whole phase sampled an eighth of it.
 const MCQ_REVIEW_CHECKPOINT = 20;
@@ -69,11 +74,19 @@ const MAX_DICTATION = 3;
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
 // Distractors are drawn from the same term set so they stay plausible.
-function buildQuiz(terms: Term[], reviewWords: Term[] = [], atCheckpoint = false): QuizQuestion[] {
+function buildQuiz(
+  terms: Term[],
+  reviewWords: Term[] = [],
+  atCheckpoint = false,
+  week = 0,
+): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
   const mcqTerms = shuffle([
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
-    ...shuffle(reviewWords).slice(0, atCheckpoint ? MCQ_REVIEW_CHECKPOINT : MCQ_REVIEW),
+    ...shuffle(reviewWords).slice(
+      0,
+      atCheckpoint ? MCQ_REVIEW_CHECKPOINT : week >= 31 ? MCQ_REVIEW_P4 : MCQ_REVIEW,
+    ),
   ]);
   // The checkpoint has refused nested glosses since a review found questions
   // with no single right answer — "Biên lai" beside "Biên lai đã in", "Tầng
@@ -215,7 +228,14 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms, reviewTerms, phaseOfWeek(week)?.checkpointWeek === Number(week)));
+    setQuiz(
+      buildQuiz(
+        terms,
+        reviewTerms,
+        phaseOfWeek(week)?.checkpointWeek === Number(week),
+        Number(week),
+      ),
+    );
     setQIdx(0);
     setPicked(null);
     setTyped("");

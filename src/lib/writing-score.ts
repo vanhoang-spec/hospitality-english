@@ -79,6 +79,10 @@ export function scoreFreeText({
     .map((s) => s.trim())
     .filter((s) => s.length > 0).length;
   const distinctRatio = wordCount === 0 ? 0 : new Set(tokens).size / wordCount;
+  // "Sorry sorry sorry. Kitchen kitchen kitchen chef. Contact contact call
+  // email…" cleared the ratio above and scored 100% on a Phase 4 task: a word
+  // said twice in a row is a keyword list, not prose, and twice is enough.
+  const stutters = tokens.filter((t, i) => i > 0 && t === tokens[i - 1]).length;
 
   const hits = ideas.map((idea) => idea.any.some((expr) => containsExpression(draft, expr)));
   const coveragePct =
@@ -89,7 +93,7 @@ export function scoreFreeText({
     blockedByVi = `Bài viết cần ít nhất ${minWords} từ (hiện có ${wordCount}).`;
   else if (sentenceCount < minSentences)
     blockedByVi = `Cần viết thành ít nhất ${minSentences} câu hoàn chỉnh.`;
-  else if (distinctRatio < MIN_DISTINCT_RATIO)
+  else if (distinctRatio < MIN_DISTINCT_RATIO || stutters >= 2)
     blockedByVi =
       "Bài viết lặp lại quá nhiều từ giống nhau — hãy viết thành câu tự nhiên, đừng liệt kê từ khoá.";
   else {

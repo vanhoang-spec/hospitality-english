@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **03/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **06/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -16,13 +16,25 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   đăng nhập không lỗi console.
 - `content/p3` = `main` sau merge. Người dùng nói không cần mở PR riêng cho P3 nữa.
 - **05/10: vá bộ chấm nói `5ab507d`** (lớp nghĩa cho đổi một từ nội dung lấy bất kỳ từ nào — lỗ
-  vòng P4-r1 tìm ra, ảnh hưởng P3 đang chạy). Nằm trong PR
+  vòng P4-r1 tìm ra, ảnh hưởng P3 đang chạy). Đã merge cùng phần Vercel qua PR
   [vanhoang-spec/hospitality-english#14](https://github.com/vanhoang-spec/hospitality-english/pull/14)
-  cùng phần Vercel; **chờ người dùng nói "merge"**. Mức chuẩn mới của `swapone` ở AGENTS §6.
+  (`6220200`). Mức chuẩn mới của `swapone` ở AGENTS §6.
+- **05/10: vá bảo mật TanStack Start 1.167.50 → 1.168.60** (XSS nghiêm trọng GHSA-qx66-fv34-fjm8;
+  Vercel chặn build vì nó). PR
+  [vanhoang-spec/hospitality-english#15](https://github.com/vanhoang-spec/hospitality-english/pull/15)
+  merge `34017ec`. Netlify production đã chạy bản này (bundle `index-kzk9d8M4.js`, trùng deploy
+  preview của PR). **Vercel production Ready** từ cùng commit. `.prettierignore` bỏ qua
+  `vercel.json` vì Vercel tự viết lại file này trước khi chạy CI.
 - **05/10: người dùng chuyển deploy sang Vercel**, tự làm trên giao diện theo
   [`docs/deploy-vercel.md`](deploy-vercel.md). Code đã sẵn trên `content/p3`: `vite.config.ts` ra
-  bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Netlify vẫn là
-  production cho tới khi người dùng đổi CNAME `hospitality.embassy.edu.vn` ở PA Việt Nam. Sau khi
+  bản Vercel khi `VERCEL=1`, ra bản Netlify ở mọi nơi khác; có thêm `vercel.json`. Project Vercel
+  `hospitality-english` (team Pro của người dùng, đã nối GitHub, đủ 7 biến môi trường) build
+  production thành công 05/10. **05/10 tối: đã đổi CNAME** `hospitality.embassy.edu.vn` →
+  `1a4ac82df7c5e2a2.vercel-dns-016.com` ở PA Việt Nam; đã kiểm: máy chủ PA và Google DNS trả đúng,
+  chứng chỉ Let's Encrypt do Vercel cấp, header `server: Vercel`, function `sin1`, trang đăng
+  nhập không lỗi console. **Production giờ là Vercel.** Còn bước 6–7 của tài liệu: sau 1–2 ngày
+  ổn định thì người dùng bấm Stop builds trên Netlify và gỡ tên miền khỏi Netlify; giữ site
+  Netlify làm đường lùi tới khoảng 19/10, rồi agent dọn `netlify.toml` và các ghi chú Netlify. Sau khi
   chuyển xong: dọn `netlify.toml` và các ghi chú Netlify (bước 6 của tài liệu).
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
@@ -38,19 +50,55 @@ Theo thứ tự yêu cầu gần nhất:
    Mỗi ô trong 10 ô Academic Director/Hotel Manager phải **trên 7,5** mới pass; auditor độc lập,
    không thấy kết quả của nhau. P2 vẫn đóng, P4 vẫn tạm dừng. Kế hoạch: `docs/p3-plan.md`.
 4. **(03/10) Người dùng cho P3 đạt ở vòng 4** (8/10 ô), rồi cho merge PR #9 và deploy — đã xong.
-   Việc kế tiếp chưa được giao: hỏi trước khi mở lại P4.
+5. **(06/10) Sửa Phase 4 tới khi cả 10 ô ≥ 7,5**, mốc như P3, chấm mù liên tục, làm qua đêm.
+   Nhánh `content/p4`. Chuẩn soạn: `docs/p4-plan.md`. Mỗi bộ phận viết lại trong
+   `src/lib/content/p4/<dep>/w31.ts`–`w40.ts`; tự kiểm bằng `scripts/probes/p4check.ts`.
+   **06/10 sáng: viết lại xong cả 10 tuần × 5 bộ phận** (`e22d5af`, CI xanh): mỗi bộ phận
+   242–278 lượt nói, 25–48 lượt `risk`, học thuộc 60 câu qua nửa nói 21–25% (vòng 1: 74–100%).
+   Vòng chấm mù 2 chạy trên `e22d5af` với `docs/audit/brief-p4-r2.md`; chưa merge vào `main`.
+   **06/10 vòng 2: 5/10 ô đạt** — HM cả năm ô ≥ 7,5 (FO 7,92 · FB 8,00 · HK 8,25 · SW 8,05 ·
+   GR 7,93), AC chưa ô nào (FO 7,43 · FB 7,08 · HK 7,08 · SW 7,38 · GR 7,48). Báo cáo:
+   `%TEMP%/hospitality-p4-r2-e22d5af/<ô>/report.md`. Lỗi chung và việc đã làm sau vòng 2:
+   (1) bài đọc — đáp án gần như không bao giờ là phương án dài nhất; game — `form` luôn là bản
+   sao đáp án nên câu `register` luôn lạc loài (80/80 vòng): đã cân lại cả 5 bộ phận, Gate 4d
+   giữ; (2) bộ chấm: "Of course/Sure + từ chối" qua 23/23 lượt risk, chèn câu 3 từ gây hại ("He
+   is here.", "We will pay.") qua tới 92%, câu đúng nói khác lời bị trượt nhiều — đã vá, đo bằng
+   bộ hồi quy dựng từ script của chính 10 auditor (`%TEMP%/p4bench-r2/run.sh`); (3) từ P4 chỉ
+   26–39% được nói lại ở tuần sau (P3: ~100%) — đo bằng `resaid.ts --phase 4`; (4) lịch ôn tuần
+   37–39 rơi vào từ A1 — đã sửa; (5) ghi chú ngữ pháp tự sinh gắn nhãn sai — đã sửa; (6) bài
+   viết tuần 33 chấm bằng từ khoá cho qua bản nháp nguy hiểm — đã chặn; (7) bài thi tuần 40
+   mở lần đầu mất 7,6 giây — còn 0,17 giây. Rồi mỗi bộ phận một agent sửa lượt nói: từ P4 được
+   nói lại FO 69% · FB 64% · HK 77% · SW 75% · GR 63%; alsoAccept ở lượt risk gấp đôi; blocker
+   GR (người không tỉnh hẳn thì gọi 115) và SW (115 khi ngất trong sauna, không hứa giờ y tá)
+   đã sửa. Bộ hồi quy từ script của 10 auditor: câu sai lọt 0 ở mọi ô; câu đúng được nhận tăng
+   (HM-SW bị trượt 17/25 → 1/25, HM-HK nhận 28/79 → 64/79, AC-SW 42/111 → 82/111). Vòng 3 chấm
+   trên bản đóng băng sau commit này, brief `docs/audit/brief-p4-r3.md` (y hệt r2).
+6. **(06/10) Vòng 3 trên `80bfde0`: 8/10 ô** — AC FO 7,58 · FB 7,42 · HK 7,55 · SW 7,37 · GR
+   7,67 · HM FO 7,93 · FB 8,17 · HK 8,22 · SW 8,17 · GR 7,93. Báo cáo:
+   `%TEMP%/hospitality-p4-r3-80bfde0/<ô>/report.md`. **Người dùng chốt: "Tôi đồng ý cho pass FB
+   7.42 và SW 7.37" → P4 ĐẠT.** Không chấm lại P4, không vá P4 để nâng điểm. Sau vòng 3 vẫn gộp
+   các lỗi thật auditor tìm ra (`25a38b8`, không chấm lại): bộ chấm trượt câu dời "not" sang vế
+   khác ("They do NOT contain shellfish, so I WOULD recommend them" từng qua ô dị ứng bắt buộc
+   đúng), câu đảo thứ tự gọi người khi câu mẫu đặt thứ tự, câu lật tiểu từ ("Switch the AED OFF"
+   từng qua 55/59 lần); không nối "Thank you / Of course…" với but/and/so (lời xin lỗi vẫn nối
+   "but"); câu giải thích dưới bong bóng `register` của game không còn nói "câu đầu/câu cuối" sai
+   chỗ; phương án sai phần nghe bỏ sir/madam khi đáp án không có (HK: phương án duy nhất không kính
+   ngữ là đáp án 0/53 lần); bài viết tuần 33 FO/FB/GR chặn thêm hứa hẹn thời hạn, miễn phí, đổ lỗi
+   đồng nghiệp — mọi bản nháp xấu của vòng 2–3 bị chặn, mọi bài mẫu vẫn qua. Bộ hồi quy từ script
+   của 10 auditor khớp hoàn toàn bản đóng băng (câu sai lọt 0, không mất câu đúng nào).
+   **Chưa merge `content/p4` vào `main`** — chờ người dùng cho phép.
 
 ---
 
 ## 3. Nội dung — trạng thái từng giai đoạn
 
-| Giai đoạn | Tuần  | Trạng thái                                                                                                                                                                                                               |
-| --------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                     |
-| P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                        |
-| P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.** |
-| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                |
-| P4        | 31–40 | **05/10 mở lại để chấm mù vòng 1** (`7ed3254`): **0/10 ô đạt 7,5** — AC TB 5,08, HM TB 6,17, thấp nhất HM-SW 3,33. Tóm tắt và lỗi chung: `docs/audit/p4-r1-summary.md`. Chưa giao việc sửa; hỏi người dùng               |
+| Giai đoạn | Tuần  | Trạng thái                                                                                                                                                                                                                  |
+| --------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P0        | 1–6   | **Đạt** 02/09. FO và SW được người dùng cho đạt ở 7,6–8,3 và 7,9–7,9                                                                                                                                                        |
+| P1        | 7–14  | **Đạt** 03/09, cả 10 ô ≥ 8,0, đóng băng `d50c8fe`                                                                                                                                                                           |
+| P2        | 15–22 | **ĐÓNG theo quyết định của người dùng** 24/09 ở vòng 9 (`4b25904`). Chỉ **3/10 ô** chạm mốc 7,5 (AC TB 7,23 · HM TB 7,46). Người dùng hạ mốc, không phải nội dung đạt mốc. **Không chấm lại, không vá P2 để nâng điểm.**    |
+| P3        | 23–30 | **ĐẠT 03/10 theo quyết định của người dùng** ở vòng 4 (`3062984`): 8/10 ô ≥ 7,5; HM-FO 7,42 và AC-GR 7,33 được cho qua. Không chấm lại. Đã lên `main` và production 03/10                                                   |
+| P4        | 31–40 | **ĐẠT 06/10 theo quyết định của người dùng** ở vòng 3 (`80bfde0`): 8/10 ô ≥ 7,5; AC-FB 7,42 và AC-SW 7,37 được cho qua. Vòng 1 0/10, viết lại toàn bộ, vòng 2 5/10. Không chấm lại. Nhánh `content/p4`, **chưa lên `main`** |
 
 Mốc nghiệm thu gốc là **8,0** mỗi ô (module × luồng); người dùng đã nhiều lần hạ mốc hoặc cho
 đạt ngoại lệ. **Không tự suy rộng một ngoại lệ sang phase khác — hỏi lại.**
@@ -91,7 +139,8 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
 
 Không tự làm những việc này.
 
-1. **Có mở lại P4 không, và làm phần nào trước** — xem §6.
+1. **Merge `content/p4` vào `main` và deploy P4 lên production** (Vercel tự build khi `main`
+   đổi). P4 đã đạt; việc merge cần người dùng cho phép riêng.
 2. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
@@ -133,13 +182,15 @@ nội dung. In danh sách đầy đủ: `LINT_CONTENT_FULL=1 bun run lint:conten
 | P0  | 51–68     | **97,6–100%**                |
 | P1  | 147–158   | 51–61%                       |
 | P2  | 263–288   | 21–26%                       |
-| P3  | **43–45** | **100%**                     |
-| P4  | 44–74     | **97,6–100%**                |
+| P3  | 238–311   | 23–30% (tuần 30, đo 06/10)   |
+| P4  | 255–289   | 19–24% (tuần 40, đo 06/10)   |
 
-Nửa nói của P3 và P4 hiện **không đo được gì**. Gốc là số câu nói mỗi phase quá ít, không phải
-lỗi engine. P0 đã qua cổng dù mang nợ này.
+P3 và P4 trước khi viết lại chỉ có 43–74 câu và học thuộc 60 câu là qua 97–100%; nay đã ngang
+P2 (`bun scripts/probes/oralmeasure.ts 2000 FO,FB,HK,SW,GR <tuần>`). Còn P0 mang nợ này, và P0
+đã qua cổng dù mang nợ.
 
-Cộng thêm: P3 GR/BO và P4 BO không có câu nào vào được ô dự trữ (0% lượt thi); ~90 cặp câu
+Cộng thêm: P3 BO và P4 BO không có câu nào vào được ô dự trữ (0% lượt thi; P3 GR nay có ô dự
+trữ ở 2000/2000 đề, đo 06/10); ~90 cặp câu
 mẫu trùng nhau trong khung tuần 20/21 của P2, mỗi cặp ăn mất một vé rút đề.
 
 ---

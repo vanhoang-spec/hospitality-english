@@ -58,8 +58,23 @@
 // ============================================================
 
 import type { LessonContent, WeekContent, WritingTask } from "./week-content";
-import { LEXICONS, game, g, read, sp, v, type P0Lexicon, lockWeekHeadwords } from "./phase0";
+import {
+  LEXICONS,
+  game,
+  g,
+  read,
+  sp,
+  v,
+  type P0Lexicon,
+  lockWeekHeadwords,
+  PHASE0_WORDS_BY_DEP,
+} from "./phase0";
 import { P4_BANKS, type P4Bank, type P4Word } from "./phase4-lexicon";
+import { FO_P4, FO_P4_CAN_DO, FO_P4_TITLES } from "./p4/fo";
+import { FB_P4, FB_P4_CAN_DO, FB_P4_TITLES } from "./p4/fb";
+import { HK_P4, HK_P4_CAN_DO, HK_P4_TITLES } from "./p4/hk";
+import { SW_P4, SW_P4_CAN_DO, SW_P4_TITLES } from "./p4/sw";
+import { GR_P4, GR_P4_CAN_DO, GR_P4_TITLES } from "./p4/gr";
 
 type Ctx = P0Lexicon & { bank: P4Bank };
 
@@ -2955,12 +2970,43 @@ const WEEK_META: Record<
   40: { en: "Final Assessment", vi: "Đánh giá cuối khoá", build: week40 },
 };
 
-/** Headwords a department ACTUALLY meets in a week. Five slots in this
- *  range are served by hand-authored payloads instead of the spine, so
- *  recycling must read those, or it schedules words never taught. */
+/** Departments whose Phase 4 is written week by week for them (p4/<dep>/),
+ *  the way Phase 3's is. The first blind round of the reopened phase
+ *  (7ed3254, 0 of 10 cells at 7.5) found the spine printing safety lines
+ *  that were false ("Nobody has been hurt by the severe allergic reaction")
+ *  and the older hand-written batches contradicting each other week to week.
+ *  A week only counts as authored once its file has lessons; until then it
+ *  falls back to the override or the spine that served it before. */
+const AUTHORED: Record<string, Record<number, LessonContent[]>> = {
+  FO: FO_P4,
+  FB: FB_P4,
+  HK: HK_P4,
+  SW: SW_P4,
+  GR: GR_P4,
+};
+
+const AUTHORED_CAN_DO: Record<string, Record<number, string>> = {
+  FO: FO_P4_CAN_DO,
+  FB: FB_P4_CAN_DO,
+  HK: HK_P4_CAN_DO,
+  SW: SW_P4_CAN_DO,
+  GR: GR_P4_CAN_DO,
+};
+
+/** Whether `${DEP}-${week}` is served by a p4/<dep>/ file — the registry
+ *  uses it to stop spreading the older hand-written payload over it. */
+export function isAuthoredP4(key: string): boolean {
+  const [dep, week] = key.split("-");
+  return Boolean(AUTHORED[dep ?? ""]?.[Number(week)]);
+}
+
+/** Headwords a department ACTUALLY meets in a week: the authored week, else
+ *  the hand-written override, else the spine. Recycling reads the same
+ *  source the learner sees, or it schedules words never taught. */
 function headwordsOf(lx: Ctx, week: number, overrides: Record<string, WeekContent>): string[] {
+  const authored = AUTHORED[lx.code]?.[week];
   const override = overrides[`${lx.code}-${week}`];
-  const lessons = override ? override.lessons : WEEK_META[week].build(lx, overrides);
+  const lessons = authored ?? (override ? override.lessons : WEEK_META[week].build(lx, overrides));
   return lessons.flatMap((l) => l.vocabulary.map((item) => item.word));
 }
 
@@ -2987,16 +3033,57 @@ function reviewWordsFor(
 
   const out: string[] = [];
 
-  const oneBack = week - 1;
-  if (oneBack >= 31) out.push(...headwordsOf(lx, oneBack, overrides).slice(0, 6));
+  // Phase 3's schedule, one phase on (phase3.ts reviewWordsFor has the
+  // measurements). This used to take `.slice(0, 6)` one week back and
+  // `.slice(0, 5)` three weeks back — the same front of every week twice —
+  // and the first blind round of the reopened phase measured it: 89 of 136
+  // Spa headwords, and 106 of 128 at the front desk, met again only in the
+  // week-40 sweep. Each lag now reaches a different third, overlapping, so
+  // every third of a week comes back twice before the final week.
+  const thirds = (ws: string[]) => {
+    const a = Math.ceil(ws.length / 3);
+    return [ws.slice(0, a), ws.slice(a, 2 * a), ws.slice(2 * a)];
+  };
+  // EXPANDING, NOT ADJACENT. Lags of one, two and three weeks put every
+  // headword back within three weeks and then never again until the week-40
+  // sweep — round 2 measured the last review of a Phase 4 word at 2.06 weeks
+  // after it was taught, on average. Lags of one, three and six spread the
+  // same two returns per third further apart, which is what spacing is for:
+  // part 0 comes back at +1 and +6, part 1 at +1 and +3, part 2 at +3 and +6.
+  const reach: [lag: number, part: number][] =
+    week === 39
+      ? [
+          [1, 0],
+          [1, 1],
+          [1, 2],
+          [3, 1],
+          [3, 2],
+          [6, 2],
+          [6, 0],
+        ]
+      : [
+          [1, 0],
+          [1, 1],
+          [3, 1],
+          [3, 2],
+          [6, 2],
+          [6, 0],
+        ];
+  for (const [lag, part] of reach) {
+    const back = week - lag;
+    if (back >= 31) out.push(...thirds(headwordsOf(lx, back, overrides))[part]!);
+  }
 
-  const threeBack = week - 3;
-  if (threeBack >= 31) out.push(...headwordsOf(lx, threeBack, overrides).slice(0, 5));
-
-  const slots = 9; // weeks 31..39
-  const size = Math.ceil(priorWords.length / slots);
-  const start = (week - 31) * size;
-  out.push(...priorWords.slice(start, start + size));
+  // The long-spacing slice: Phases 2-3 only (see PRIOR_WORDS_P2_P3_BY_DEP in
+  // week-content.ts), newest first, and a dozen a week taken in a stride
+  // across the list rather than a block of forty down it. A block of forty
+  // made the old phases most of every list — the review quiz draws ten at
+  // random, so a Phase 4 word due that week had about one chance in seven of
+  // being asked — and walked the slice back into Phase 1 by week 37.
+  const p0 = new Set(PHASE0_WORDS_BY_DEP[lx.code] ?? []);
+  const newest = [...priorWords].reverse().filter((w) => !p0.has(w));
+  // Week 31 has no Phase 4 week behind it, so its whole review is this slice.
+  out.push(...newest.filter((_, i) => i % 9 === week - 31).slice(0, week === 31 ? 24 : 12));
 
   return Array.from(new Set(out));
 }
@@ -3015,27 +3102,111 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewMeta: "★★☆☆☆ · Google Reviews · 2 ngày trước",
     reviewText:
       "I was charged twice for the same night and nobody has explained why. I've emailed three times with no reply. Disappointing for a hotel that calls itself five-star.",
+    // The first blind round of the reopened phase passed a reply that named
+    // the card's last four digits and the room, blamed the night auditor and
+    // guaranteed a refund in 24 hours — at 100%, because nothing here could
+    // forbid anything, and the model itself promised three business days
+    // against a week that teaches the SLOWEST case for a card reversal.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới.",
+      "Trong vai Quản lý Lễ tân, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ bốn ý bên dưới. Không được viết ra chỗ công khai: số thẻ hay số phòng của khách, tên hay chức danh đồng nghiệp bị đổ lỗi (hay đổ cho chính khách), và lời bảo đảm thời hạn hoàn tiền nhanh hơn thời hạn chậm nhất của ngân hàng (ba mươi ngày làm việc, tuỳ ngân hàng).",
     mustConvey: [
-      { labelVi: "Xin lỗi khách", any: ["sorry", "apologise", "apologize", "apologies", "regret"] },
       {
-        labelVi: "Thừa nhận khoản phí bị tính trùng",
-        any: ["double charge", "charged twice", "duplicate charge", "billing error", "the charge"],
+        labelVi: "Xin lỗi khách",
+        any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
-        labelVi: "Cam kết hoàn tiền kèm mốc thời gian",
-        any: ["refund", "reimburse", "return the amount", "credit back"],
+        labelVi: "Nhắc tới khoản phí bị tính trùng",
+        any: ["double charge", "charged twice", "duplicate charge", "billing error", "the charge"],
+      },
+      // "up to" or "working days" alone used to satisfy this, whatever the
+      // number: "…in three days, up to the end of the week" scored 100% in
+      // round 2. The slowest case the week teaches is thirty working days.
+      {
+        labelVi: "Hoàn tiền kèm mốc chậm nhất của ngân hàng",
+        any: [
+          "thirty working days",
+          "30 working days",
+          "thirty business days",
+          "30 business days",
+          "depending on your bank",
+          "depends on your bank",
+        ],
+        required: true,
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      "card ending",
+      "ending in",
+      "last four",
+      "room number",
+      "night auditor",
+      "night audit",
+      "receptionist",
+      "my colleague",
+      "our colleague",
+      "the cashier",
+      "guarantee",
+      "guaranteed",
+      "within 24 hours",
+      "within twenty-four hours",
+      "within 48 hours",
+      "within forty-eight hours",
+      // A faster date than the bank's slowest, in any wording, digits too
+      // ("within 3 business days" scored 100% in round 3). "today", "your
+      // room" and "tomorrow" used to be here and blocked correct replies: "I
+      // requested the refund today", "…on your room bill", "I will call you
+      // tomorrow to update you".
+      "two days",
+      "three days",
+      "five days",
+      "seven days",
+      "two working days",
+      "three working days",
+      "five working days",
+      "two business days",
+      "three business days",
+      "five business days",
+      "2 days",
+      "3 days",
+      "5 days",
+      "7 days",
+      "2 working days",
+      "3 working days",
+      "5 working days",
+      "2 business days",
+      "3 business days",
+      "5 business days",
+      "within two",
+      "within three",
+      "within five",
+      "within 2",
+      "within 3",
+      "within 5",
+      "within a week",
+      "within one week",
+      "in one week",
+      "in a week",
+      "end of the week",
+      "refund today",
+      "back today",
+      "refund tomorrow",
+      "back tomorrow",
+      // a colleague, or the guest, blamed
+      "night team",
+      "the agent",
+      "front desk agent",
+      "misread",
+      "your mistake",
+    ],
     modelReply:
-      "Dear guest, we are very sorry for the double charge on your bill and for the delay in replying to your emails. We have identified the error and will process a full refund within three business days. Please contact our Front Office Manager directly so we can resolve this personally and welcome you back with the experience you deserve.",
+      "Dear guest, I am very sorry for the double charge and that our replies to your emails were so slow. The refund has been requested, and a card refund can take up to thirty working days to appear, depending on your bank. Please contact me directly at the hotel and ask for the Front Office Manager, so I can follow it until it reaches you.",
     explanationVi:
-      "Phản hồi tốt luôn có đủ 4 phần: xin lỗi cụ thể (không chung chung), nêu hành động khắc phục kèm mốc thời gian, cho một kênh liên hệ trực tiếp, và khép lại bằng lời mời quay lại.",
+      "Thư công khai đứng tên Quản lý Lễ tân. Bốn ý: xin lỗi cụ thể, nhắc đúng khoản phí, nói mốc hoàn tiền CHẬM NHẤT (thẻ phát hành ở nước ngoài có thể mất tới ba mươi ngày làm việc, tuỳ ngân hàng — hứa nhanh hơn rồi trễ là khiếu nại thứ hai), và một kênh liên hệ trực tiếp. Không viết số thẻ, số phòng, không đổ lỗi một đồng nghiệp hay chính khách, không 'bảo đảm' một ngày cụ thể.",
   },
   FB: {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 4 ngày trước",
@@ -3047,12 +3218,17 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     // the file — and it apologises for the experience, states the review of
     // procedures, and moves the conversation to a direct channel. It never
     // promises a free dinner in public.
+    // Round 1 of the reopened phase passed "Our chicken was undercooked and
+    // it made you sick, which is our fault… we will refund your whole dinner"
+    // at 100%, and "your illness cannot be from our chicken" too: the label
+    // said "do not confirm the cause" and nothing enforced it.
     promptVi:
-      "Trong vai Quản lý nhà hàng — SAU khi Duty Manager đã xử lý hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý nhà hàng — SAU khi Duty Manager đã xử lý hồ sơ — hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nhận hay chối nguyên nhân khách bị ốm, hứa hoàn tiền hay bữa ăn miễn phí, và tên hay vị trí đồng nghiệp.",
     mustConvey: [
       {
         labelVi: "Xin lỗi về trải nghiệm, không xác nhận nguyên nhân",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
         labelVi: "Đã cùng bếp rà soát quy trình an toàn thực phẩm",
@@ -3063,6 +3239,65 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
         any: ["contact", "reach me", "get in touch", "call", "email"],
       },
     ],
+    mustAvoid: [
+      // admitting or denying the cause
+      "undercooked",
+      "raw",
+      "our fault",
+      "our mistake",
+      "made you sick",
+      "made you ill",
+      "food poisoning",
+      "cannot be",
+      "cannot have",
+      "not from our",
+      "came from our",
+      "come from our",
+      "nothing to do with",
+      "somewhere else",
+      "something else you ate",
+      "probably",
+      "not cooked",
+      "cooked properly",
+      "our responsibility",
+      "made a mistake",
+      // settling in public
+      "refund",
+      "money back",
+      "pay you back",
+      "free dinner",
+      "free meal",
+      "free lunch",
+      "free of charge",
+      "complimentary",
+      "on the house",
+      "voucher",
+      "compensation",
+      "compensate",
+      // a colleague
+      "the waiter",
+      "our waiter",
+      "the server",
+      "our server",
+      "the cook",
+      "our cook",
+      "our new",
+      // round 3, all at 100%: "…our chicken was not safe…", "…the chicken
+      // made you unwell…", "…our kitchen passed its inspection and our
+      // chicken is always safe…", "…we will gladly cover the cost of your
+      // dinner", "…our young staff member at the table…"
+      "made you",
+      "make you",
+      "not safe",
+      "is safe",
+      "always safe",
+      "was safe",
+      "inspection",
+      "cover the cost",
+      "cover your",
+      "pay for",
+      "staff member",
+    ],
     modelReply:
       "We are very sorry to read about your experience, and that you felt unwell after your visit — and I am sorry nobody followed up as they should have. Our kitchen team and I have reviewed our food safety procedures in full. Please contact me directly at the restaurant so I can hear the details from you personally.",
     explanationVi:
@@ -3072,58 +3307,110 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
     reviewMeta: "★★☆☆☆ · Booking.com · 3 ngày trước",
     reviewText:
       "The laundry service ruined my silk dress — it came back with a bleach mark and the hotel only offered a small credit. Very disappointing for the price we paid.",
+    // This task REQUIRED "make it right / put it right / compensation" while
+    // the department's own compensation week forbids promising a guest that
+    // anything will be made right — 32.5% of final papers then marked the
+    // withdrawn line correct (round 1 of the reopened phase). The idea it
+    // asks for now is the manager's personal look at the case, nothing paid.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý Buồng phòng, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nguyên nhân hư hại, lời hứa đền bù hay 'make it right', và nhận xét về mức đền bù đã đưa.",
     mustConvey: [
       {
-        labelVi: "Xin lỗi vì món đồ bị hư hại",
+        labelVi: "Xin lỗi vì trải nghiệm với món đồ",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
-        labelVi: "Sẽ xem lại mức đền bù cho thoả đáng",
-        any: [
-          "compensation",
-          "reimburse",
-          "cover the cost",
-          "make it right",
-          "put it right",
-          "review the offer",
-        ],
+        labelVi: "Quản lý Buồng phòng sẽ trực tiếp xem lại sự việc",
+        any: ["housekeeping manager", "look into", "looking into", "review", "personally"],
       },
       {
         labelVi: "Mời khách liên hệ trực tiếp",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      "make it right",
+      "put it right",
+      "compensation",
+      "compensate",
+      "reimburse",
+      "refund",
+      "replace your",
+      "full value",
+      "cover the cost",
+      "small credit",
+      "bleach",
+      "our fault",
+      "our mistake",
+      "the laundry team",
+      "our laundry team",
+    ],
     modelReply:
-      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. Our Housekeeping Manager would like to look at this with you personally. Please contact us directly so that we can put it right.",
+      "We are very sorry about your experience with your silk dress — this is not the standard we want for any guest. As Housekeeping Manager, I am looking into what happened myself. Please contact me directly at the hotel so we can talk it through in private.",
     explanationVi:
-      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Đừng viết ra nguyên nhân do mình, và đừng thừa nhận mức đền bù cũ là thấp — cả hai câu đó nằm lại trên internet và thành bằng chứng cho một yêu cầu lớn hơn.",
+      "Trả lời công khai thì xin lỗi về TRẢI NGHIỆM, rồi kéo cuộc nói chuyện về kênh riêng. Không viết nguyên nhân (vết tẩy, bộ phận giặt là), không hứa 'make it right' hay đền bù, và không nhận mức đền bù cũ là thấp — mọi câu đó nằm lại trên internet và thành cam kết. Việc định mức đền bù là của quản lý, nói riêng với khách.",
   },
   SW: {
     reviewMeta: "★★☆☆☆ · Google Reviews · 1 tuần trước",
     reviewText:
       "I had a skin reaction after my facial and the therapist didn't seem to know what products were used. Nobody has followed up since I left.",
+    // Round 1 of the reopened phase passed "We regret nothing. Our therapist
+    // was right and your skin was the problem…" at 100%: no mustAvoid at all.
     promptVi:
-      "Hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới.",
+      "Trong vai Quản lý Spa, hãy viết phản hồi công khai chuẩn 5 sao (ít nhất 2 câu), truyền đạt đủ ba ý bên dưới. Không được viết ra chỗ công khai: nhận hay chối nguyên nhân phản ứng da, đổ lỗi cho kỹ thuật viên hay cho làn da của khách, hứa hoàn tiền hay liệu trình miễn phí, và câu xem nhẹ vấn đề sức khoẻ.",
     mustConvey: [
       {
-        labelVi: "Xin lỗi vì phản ứng trên da",
+        labelVi: "Xin lỗi vì trải nghiệm sau liệu trình",
         any: ["sorry", "apologise", "apologize", "apologies", "regret"],
+        required: true,
       },
       {
-        labelVi: "Khẳng định an toàn của khách là ưu tiên",
-        any: ["safety", "well-being", "wellbeing", "health", "comfort and care"],
+        labelVi: "Khẳng định sức khoẻ, an toàn của khách là ưu tiên",
+        any: ["safety", "well-being", "wellbeing", "health"],
       },
       {
-        labelVi: "Mời khách liên hệ để được hỗ trợ",
-        any: ["contact", "get in touch", "reach out", "call us", "email us"],
+        labelVi: "Mời khách liên hệ Quản lý Spa",
+        any: ["contact", "get in touch", "reach out", "call us", "email us", "ask for me"],
       },
     ],
+    mustAvoid: [
+      // a cause, either way
+      "caused by",
+      "our product",
+      "the product caused",
+      "your skin was",
+      "sensitive skin",
+      "not our",
+      "nothing to do with",
+      // fault and blame
+      "our fault",
+      "our mistake",
+      "the therapist",
+      "our therapist",
+      "regret nothing",
+      // settling in public
+      "refund",
+      "free treatment",
+      "complimentary",
+      "voucher",
+      "compensation",
+      // making light of a health matter
+      "nothing serious",
+      "harmless",
+      "no danger",
+      "not our concern",
+      "is common",
+      "goes away",
+      "go away",
+      "perfectly safe",
+      "products are safe",
+      "we are sure",
+    ],
     modelReply:
-      "We are very sorry to hear about the skin reaction after your facial — your safety is always our top priority, and we should have followed up with you immediately. Please contact our Spa Manager directly so we can review exactly which products were used and support you with any follow-up you may need.",
+      "We are very sorry to hear about the skin reaction after your facial, and that nobody followed up with you after your visit. Your health and safety come first for us. Please contact me directly at the spa and ask for the Spa Manager, so we can go through your treatment record with you.",
     explanationVi:
-      "Phản ứng da là vấn đề sức khỏe, không chỉ trải nghiệm dịch vụ — phản hồi phải nêu rõ ưu tiên an toàn và mời khách liên hệ ngay.",
+      "Phản ứng da là chuyện sức khoẻ: xin lỗi về trải nghiệm, nói rõ sức khoẻ của khách là ưu tiên, và mời khách liên hệ Quản lý Spa để cùng xem hồ sơ liệu trình. Không viết nguyên nhân (sản phẩm, làn da của khách), không đổ lỗi kỹ thuật viên, không hứa hoàn tiền hay liệu trình miễn phí ở chỗ công khai.",
   },
   GR: {
     reviewMeta: "★★☆☆☆ · TripAdvisor · 5 ngày trước",
@@ -3180,7 +3467,12 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "our error",
       "our oversight",
       "at fault",
+      "misunderstanding",
+      "was wrong",
       // naming a cause, a department or a colleague
+      "reception",
+      "staff on duty",
+      "the staff",
       "front office",
       "front desk",
       "housekeeping",
@@ -3208,6 +3500,8 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "spa credit",
       "room upgrade",
       "upgrade you",
+      "complimentary upgrade",
+      "free upgrade",
       "voucher",
       "credit you",
       "restore your tier",
@@ -3222,12 +3516,28 @@ export const WEEK33_WRITING_TASKS: Record<string, WritingTask> = {
       "Diamond",
       "Platinum",
       "Gold member",
+      "Gold guest",
+      "as a Gold",
+      // Round 3: "As one of our loyalty members you should have had the
+      // lounge, and you will have it free on your next stay…" and "A guest
+      // at your loyalty level…" confirm the tier as plainly as naming it, and
+      // "two nights on us" is the compensation in other words.
+      "loyalty member",
+      "loyalty members",
+      "loyalty level",
+      "should have had",
+      "next stay",
+      "on us",
+      "for free",
+      "free on",
+      "receptionist",
+      "checked you in",
       "your tier",
       "your status",
       "entitled to",
     ],
     modelReply:
-      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. Executive Lounge access is part of what our loyalty members are told to expect, and I am looking into what happened on the night. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
+      "Thank you for taking the time to write, and I am very sorry that your arrival did not go as you expected. I am looking into what happened on the night myself. Please contact me at the hotel and ask for the Guest Relations Manager — I will come back to you within forty-eight hours.",
     explanationVi:
       "Thư công khai đứng tên quản lý, không đứng tên nhân viên quầy. Bốn điều KHÔNG viết ra chỗ công khai: đừng nêu nguyên nhân hay tên bộ phận ('the front office did not pass it on'); đừng nhận lỗi khi chưa ai kiểm ('that was our mistake'), đừng hứa phần bù (quầy ĐỀ XUẤT, quản lý mới quyết), và đừng xác nhận hạng thẻ của người vừa đánh giá — kể cả khi chính họ đã tự nêu. Thay vào đó là một MỐC: tuần 33 bắt mọi lời hứa phải có giờ.",
   },
@@ -3274,23 +3584,38 @@ function buildWeek(
   // builder that still destructures fourteen entries forces fourteen entries
   // to exist even when nothing a learner sees comes from them. Returning the
   // override here is what lets those banks be trimmed.
-  const override = overrides[`${lx.code}-${week}`];
-  if (override) return override;
-
   const meta = WEEK_META[week];
+  const authored = AUTHORED[lx.code]?.[week];
+  const override = overrides[`${lx.code}-${week}`];
+  if (override && !authored) return override;
+
   const review = reviewWordsFor(lx, week, priorWords, overrides);
+  const canDo = AUTHORED_CAN_DO[lx.code]?.[week];
   return {
     departmentId: lx.code,
     weekNumber: week,
-    weekTitleEn: meta.en,
-    weekTitleVi: meta.vi,
+    weekTitleEn: AUTHORED_TITLES[lx.code]?.[week]?.en ?? meta.en,
+    weekTitleVi: AUTHORED_TITLES[lx.code]?.[week]?.vi ?? meta.vi,
     // Same lock Phase 0 and Phase 1 use. Without it a target passes with its
     // own headword deleted — measured at 48.4% (P2), 13.7% (P3), 36.7% (P4).
-    lessons: lockWeekHeadwords(meta.build(lx, overrides), review),
+    lessons: lockWeekHeadwords(authored ?? meta.build(lx, overrides), review),
     reviewWords: review,
     writing: week === 33 ? WEEK33_WRITING_TASKS[lx.code] : undefined,
+    ...(canDo ? { canDoVi: canDo } : {}),
   };
 }
+
+/** Week titles a department gives its own Phase 4 weeks where the shared
+ *  one does not fit what it teaches (Guest Relations' 36-38 crisis block,
+ *  and the 37-38 contract and proposal weeks of departments that do not
+ *  sell contracts) — the matrix records each one. */
+const AUTHORED_TITLES: Record<string, Record<number, { en: string; vi: string }>> = {
+  FO: FO_P4_TITLES,
+  FB: FB_P4_TITLES,
+  HK: HK_P4_TITLES,
+  SW: SW_P4_TITLES,
+  GR: GR_P4_TITLES,
+};
 
 /**
  * Phase 4 weeks (6 departments × weeks 31-40). Five of these keys are

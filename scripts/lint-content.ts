@@ -55,6 +55,7 @@ import { P1_BANKS } from "../src/lib/content/phase1-lexicon";
 import { P2_BANKS } from "../src/lib/content/phase2-lexicon";
 import { P3_BANKS } from "../src/lib/content/phase3-lexicon";
 import { P4_BANKS } from "../src/lib/content/phase4-lexicon";
+import { isAuthoredP4 } from "../src/lib/content/phase4";
 
 type Pos = "VERB" | "ADJ" | "ADVERBIAL" | "NOUN";
 
@@ -981,6 +982,13 @@ function lintDeadBankEntries(banks: BankSet) {
 
     for (const [slot, words] of Object.entries(slots)) {
       if (P4_SLOT_WEEK[slot] === undefined) continue;
+      // A week written in p4/<dep>/ reads no slot: its department's bank is
+      // then the gloss dictionary p4/kit.ts looks cards up in, and an entry
+      // nobody chose is a gloss nobody needed, not a sentence that went
+      // missing. Teaching it to turn this gate green would put back exactly
+      // the frame-filled phrases the rewrite took out ("Volcanic stone
+      // source", "Bachelorette spa party").
+      if (isAuthoredP4(`${dep}-${P4_SLOT_WEEK[slot]}`)) continue;
       const dead = words.filter((w) => !taught.has(w.word.toLowerCase()));
       if (dead.length)
         errors.push(

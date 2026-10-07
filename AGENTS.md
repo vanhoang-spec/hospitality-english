@@ -45,8 +45,9 @@ quản trị: [`docs/huong-dan-quan-tri.html`](docs/huong-dan-quan-tri.html).
 
 ## 2. Stack và lệnh
 
-TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. Deploy qua Netlify, đang
-chuyển sang Vercel — cùng một build chạy được ở cả hai, xem
+TanStack Start + React 19 + Supabase + Tailwind v4, chạy bằng **Bun**. **Deploy qua Vercel** từ
+05/10/2026 (project `hospitality-english`, server SSR ở Singapore), mỗi push lên `main` tự build.
+Netlify giữ làm đường lùi vài tuần — cùng một build chạy được ở cả hai, xem
 [`docs/deploy-vercel.md`](docs/deploy-vercel.md).
 
 ```bash

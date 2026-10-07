@@ -67,6 +67,23 @@ export type Question =
       note: string;
     };
 
+/** How often the grammar block's third option is an edit of the ANSWER
+ *  (else of the near miss), and how often a pair that can make the answer the
+ *  longest option does. See the block itself for why each exists.
+ *
+ *  They were 1/3 and "always". Round 2 of the Phase 4 reviews measured what
+ *  that does: an edit of the near miss keeps the near miss's error, so two
+ *  options share it and the answer is the odd one out — "pick the option
+ *  least like the other two" answered 59-70% of grammar questions and cleared
+ *  the block's floor on 82-92% of papers; and "always longest when possible"
+ *  made "pick the longest" 52%. Tuned on real papers (FB, HK week 40): odd
+ *  one out 41-46%, "most like the other two" 43-46%, longest 37-42%, middle
+ *  37-42%, shortest ~21%. The three shapes of option cannot all be at chance
+ *  — the answer is always either the centre or the odd one — and this is the
+ *  flattest mix of the two. */
+const GRAMMAR_FROM_ANSWER = 0.55;
+const GRAMMAR_PREFER_LONGEST = 0.4;
+
 /** Fisher-Yates, non-mutating. */
 export function shuffle<T>(a: T[]): T[] {
   const c = [...a];
@@ -699,7 +716,7 @@ export function buildPaper(dep: string, week: string): Question[] {
     const usableOf = (list: string[]) =>
       list.filter((v) => !avoid.has(flat(v)) && !taught.has(flat(v)));
     if (g.nearMiss) {
-      const fromAnswer = Math.random() < 1 / 3;
+      const fromAnswer = Math.random() < GRAMMAR_FROM_ANSWER;
       const nm: string = g.nearMiss;
       // The near miss's error words: what it says that the answer does not.
       const politeTally = new Map<string, number>();
@@ -767,11 +784,12 @@ export function buildPaper(dep: string, week: string): Question[] {
       // have. That is the flattest this file can make the three without
       // rewriting the near misses.
       const reach = [...byAll.keys()];
-      const rank = reach.includes(2)
-        ? 2
-        : byAll.has(wantRank)
-          ? wantRank
-          : reach[Math.floor(Math.random() * reach.length)]!;
+      const rank =
+        Math.random() < GRAMMAR_PREFER_LONGEST && reach.includes(2)
+          ? 2
+          : byAll.has(wantRank)
+            ? wantRank
+            : reach[Math.floor(Math.random() * reach.length)]!;
       const pick = (byPreferred.get(rank) ?? byAll.get(rank) ?? [...preferred, ...other])[0];
       if (pick) chosen.add(pick);
     }
@@ -1131,7 +1149,38 @@ export function buildPaper(dep: string, week: string): Question[] {
       ...ranked(list.filter(discriminated)),
       ...ranked(list.filter((t) => !discriminated(t))),
     ];
-    const strict = byDiscrimination(banded.length >= 2 ? banded : usable);
+    // THE SAME SITUATION HANDLED WRONG, FROM PHASE 4.
+    //
+    // Every distractor above answers some OTHER guest, so none of them echoes
+    // the audio harder than the key (pullsAway forbids it), and "pick the
+    // reply that repeats most of what the guest said" answered 54-64% of
+    // Phase 4 listening questions in round 2 of the reviews: the block asked
+    // what the guest was talking about, not what to do about it. The lesson's
+    // own game already prints the reply that is good English and the wrong
+    // move — its `register` option — about the very same situation. It cannot
+    // be a second right answer (the course marks it wrong), so it skips the
+    // shape rules and goes to the front of its lane: the learner has to hear
+    // what is being asked for and know who may give it.
+    const lessonGame = phaseLessons.find((l) => l.lessonId === s.lessonId)?.game ?? [];
+    const courseWrong =
+      Number(week) < 31
+        ? []
+        : lessonGame
+            .flatMap((r) => r.options.filter((o) => o.kind === "register").map((o) => o.text))
+            .filter(
+              (t) =>
+                t !== s.targetResponse &&
+                !isThePrompt(t) &&
+                sameShape(t) &&
+                !nearlySameAnswer(t, s.targetResponse) &&
+                Math.abs(wordsOf(t) - keyLen) <= Math.max(4, shortSide, longSide),
+            );
+    const strict = [
+      ...courseWrong.map((t) => ({ t, score: Number.POSITIVE_INFINITY })),
+      ...byDiscrimination(banded.length >= 2 ? banded : usable).filter(
+        (c) => !courseWrong.includes(c.t),
+      ),
+    ];
     // And the two distractors must differ from EACH OTHER. The old rule
     // compared every candidate to the key and never to its neighbour, so a
     // paper could offer "This one is better, madam." against "This one is
@@ -1415,7 +1464,23 @@ export function buildPaper(dep: string, week: string): Question[] {
           Number(sameApologyPromise(b.t, s.targetResponse)),
       )
       .slice(0, 2 - clean.length);
-    const others = [...clean, ...filler].map((x) => x.t);
+    // A reply to a colleague carries no "sir" or "madam", and the distractors
+    // — replies written for guests — nearly all do: on 57% of a Phase 4
+    // department's colleague-and-manager listening items the key was the one
+    // option without an honorific (round 3). When the key has none, neither do
+    // the distractors.
+    const HONORIFIC_IN = /,?\s*\b(sir|madam)\b(?=[\s,.?!—-]|$)/gi;
+    const keyHasHonorific = /\b(sir|madam)\b/i.test(s.targetResponse);
+    const plain = (t: string) =>
+      keyHasHonorific
+        ? t
+        : t
+            .replace(HONORIFIC_IN, "")
+            .replace(/\s+([,.?!])/g, "$1")
+            .replace(/,\s*([.?!])/g, "$1")
+            .replace(/\s{2,}/g, " ")
+            .trim();
+    const others = [...clean, ...filler].map((x) => plain(x.t));
     const options = shuffle([s.targetResponse, ...others]);
     return {
       kind: "listening" as const,
