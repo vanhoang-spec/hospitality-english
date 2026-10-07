@@ -330,6 +330,50 @@ export type Database = {
           },
         ];
       };
+      org_details: {
+        Row: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string;
+          legal_name?: string;
+          org_id?: string;
+          rep_email?: string;
+          rep_name?: string;
+          rep_phone?: string;
+          tax_code?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_details_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       org_settings: {
         Row: {
           org_id: string;

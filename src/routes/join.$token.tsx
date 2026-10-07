@@ -8,6 +8,7 @@ import { clearSessionId } from "@/lib/single-session";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
 import { SHIPPING_DEPARTMENTS, getDepartment } from "@/lib/departments";
 import { TERM_LABEL } from "@/lib/subscription";
+import { firstProblem, newOrgDetailsSchema } from "@/lib/org-details";
 import {
   getSignupLinkInfo,
   redeemLearnerLink,
@@ -175,17 +176,25 @@ function LearnerForm({
 
 function HotelForm({ token, seats, term }: { token: string; seats: number; term: string }) {
   const [hotelName, setHotelName] = useState("");
+  const [legalName, setLegalName] = useState("");
+  const [taxCode, setTaxCode] = useState("");
+  const [address, setAddress] = useState("");
   const [fullName, setFullName] = useState("");
+  const [repEmail, setRepEmail] = useState("");
   const account = useAccountFields();
   const navigate = useNavigate();
 
   async function submit(e: FormEvent) {
     e.preventDefault();
-    const ok = await account.run(async (phone) => {
-      await redeemOrganizationLink({
-        data: { token, hotelName, fullName, phone, password: account.password },
-      });
-    });
+    const company = { legalName, address, taxCode, repEmail };
+    const ok = await account.run(
+      async (phone) => {
+        await redeemOrganizationLink({
+          data: { token, hotelName, fullName, phone, password: account.password, ...company },
+        });
+      },
+      () => firstProblem(newOrgDetailsSchema, company),
+    );
     if (ok) navigate({ to: "/org-admin" });
   }
 
@@ -194,10 +203,10 @@ function HotelForm({ token, seats, term }: { token: string; seats: number; term:
       <p className="mt-3 text-sm text-foreground/75">
         Gói <strong className="text-foreground">{seats} học viên</strong>, thời hạn{" "}
         <strong className="text-foreground">{TERM_LABEL[term] ?? term}</strong>. Người điền form này
-        sẽ là tài khoản quản trị nhân sự (HR) đầu tiên của khách sạn.
+        là người đại diện HR của khách sạn, và sẽ là tài khoản quản trị nhân sự (HR) đầu tiên.
       </p>
       <form onSubmit={submit} className="mt-6 space-y-4">
-        <Field label="Tên khách sạn / resort">
+        <Field label="Tên khách sạn / resort (học viên sẽ thấy tên này)">
           <input
             required
             value={hotelName}
@@ -205,12 +214,50 @@ function HotelForm({ token, seats, term }: { token: string; seats: number; term:
             className={INPUT}
           />
         </Field>
-        <Field label="Họ và tên người quản trị">
+        <Field label="Tên công ty (đúng như trên giấy phép kinh doanh)">
+          <input
+            required
+            autoComplete="organization"
+            value={legalName}
+            onChange={(e) => setLegalName(e.target.value)}
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Mã số thuế">
+          <input
+            required
+            inputMode="numeric"
+            value={taxCode}
+            onChange={(e) => setTaxCode(e.target.value)}
+            placeholder="0123456789"
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Địa chỉ công ty">
+          <input
+            required
+            autoComplete="street-address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Họ và tên người đại diện (HR)">
           <input
             required
             autoComplete="name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Email người đại diện">
+          <input
+            type="email"
+            required
+            autoComplete="email"
+            value={repEmail}
+            onChange={(e) => setRepEmail(e.target.value)}
             className={INPUT}
           />
         </Field>
@@ -232,9 +279,18 @@ function useAccountFields() {
   const [busy, setBusy] = useState(false);
 
   /** Resolves true once the account exists and is signed in. On any
-   *  failure the message is shown in the form and it resolves false. */
-  async function run(create: (normalizedPhone: string) => Promise<void>): Promise<boolean> {
+   *  failure the message is shown in the form and it resolves false.
+   *  `check` reports a problem with the form's other fields first. */
+  async function run(
+    create: (normalizedPhone: string) => Promise<void>,
+    check?: () => string | null,
+  ): Promise<boolean> {
     setError(null);
+    const problem = check?.();
+    if (problem) {
+      setError(problem);
+      return false;
+    }
     let normalized: string;
     try {
       normalized = normalizeVNPhone(phone);
