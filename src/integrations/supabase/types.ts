@@ -625,6 +625,44 @@ export type Database = {
         };
         Relationships: [];
       };
+      password_reset_tokens: {
+        Row: {
+          created_at: string;
+          email: string;
+          expires_at: string;
+          id: string;
+          token_hash: string;
+          used_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          expires_at: string;
+          id?: string;
+          token_hash: string;
+          used_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          expires_at?: string;
+          id?: string;
+          token_hash?: string;
+          used_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "password_reset_tokens_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       payment_accounts: {
         Row: {
           account_name: string | null;
@@ -757,6 +795,7 @@ export type Database = {
           created_at: string;
           daily_streak: number;
           department: string | null;
+          email: string | null;
           full_name: string | null;
           id: string;
           job_rank: string;
@@ -772,6 +811,7 @@ export type Database = {
           created_at?: string;
           daily_streak?: number;
           department?: string | null;
+          email?: string | null;
           full_name?: string | null;
           id: string;
           job_rank?: string;
@@ -787,6 +827,7 @@ export type Database = {
           created_at?: string;
           daily_streak?: number;
           department?: string | null;
+          email?: string | null;
           full_name?: string | null;
           id?: string;
           job_rank?: string;
@@ -1214,6 +1255,20 @@ export type Database = {
       org_is_active: { Args: { target: string }; Returns: boolean };
       org_of: { Args: { target_profile: string }; Returns: string };
       org_seat_limit: { Args: { target: string }; Returns: number };
+      password_reset_claim: {
+        Args: { p_token_hash: string };
+        Returns: {
+          token_id: string;
+          user_id: string;
+        }[];
+      };
+      password_reset_request: {
+        Args: { p_minutes?: number; p_phone: string; p_token_hash: string };
+        Returns: {
+          email: string;
+          full_name: string;
+        }[];
+      };
       release_signup_link: { Args: { link_id: string }; Returns: undefined };
     };
     Enums: {

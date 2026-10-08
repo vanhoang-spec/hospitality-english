@@ -18,9 +18,11 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as OrgAccessRouteImport } from './routes/org-access'
 import { Route as OrgAdminRouteImport } from './routes/org-admin'
 import { Route as OrgReportsRouteImport } from './routes/org-reports'
+import { Route as QuenMatKhauRouteImport } from './routes/quen-mat-khau'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ThanhToanRouteImport } from './routes/thanh-toan'
 import { Route as ApiCrmRouteImport } from './routes/api/crm'
+import { Route as DatLaiMatKhauTokenRouteImport } from './routes/dat-lai-mat-khau.$token'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as TtTokenRouteImport } from './routes/tt.$token'
@@ -74,6 +76,11 @@ const OrgReportsRoute = OrgReportsRouteImport.update({
   path: '/org-reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuenMatKhauRoute = QuenMatKhauRouteImport.update({
+  id: '/quen-mat-khau',
+  path: '/quen-mat-khau',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewRoute = ReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -87,6 +94,11 @@ const ThanhToanRoute = ThanhToanRouteImport.update({
 const ApiCrmRoute = ApiCrmRouteImport.update({
   id: '/api/crm',
   path: '/api/crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatLaiMatKhauTokenRoute = DatLaiMatKhauTokenRouteImport.update({
+  id: '/dat-lai-mat-khau/$token',
+  path: '/dat-lai-mat-khau/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartmentDepRoute = DepartmentDepRouteImport.update({
@@ -135,9 +147,11 @@ export interface FileRoutesByFullPath {
   '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
   '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/tt/$token': typeof TtTokenRoute
@@ -156,9 +170,11 @@ export interface FileRoutesByTo {
   '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
   '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/tt/$token': typeof TtTokenRoute
@@ -178,9 +194,11 @@ export interface FileRoutesById {
   '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
   '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
   '/thanh-toan': typeof ThanhToanRoute
   '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
   '/join/$token': typeof JoinTokenRoute
   '/tt/$token': typeof TtTokenRoute
@@ -201,9 +219,11 @@ export interface FileRouteTypes {
     | '/org-access'
     | '/org-admin'
     | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
     | '/thanh-toan'
     | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
     | '/join/$token'
     | '/tt/$token'
@@ -222,9 +242,11 @@ export interface FileRouteTypes {
     | '/org-access'
     | '/org-admin'
     | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
     | '/thanh-toan'
     | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
     | '/join/$token'
     | '/tt/$token'
@@ -243,9 +265,11 @@ export interface FileRouteTypes {
     | '/org-access'
     | '/org-admin'
     | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
     | '/thanh-toan'
     | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
     | '/join/$token'
     | '/tt/$token'
@@ -265,9 +289,11 @@ export interface RootRouteChildren {
   OrgAccessRoute: typeof OrgAccessRoute
   OrgAdminRoute: typeof OrgAdminRoute
   OrgReportsRoute: typeof OrgReportsRoute
+  QuenMatKhauRoute: typeof QuenMatKhauRoute
   ReviewRoute: typeof ReviewRoute
   ThanhToanRoute: typeof ThanhToanRoute
   ApiCrmRoute: typeof ApiCrmRoute
+  DatLaiMatKhauTokenRoute: typeof DatLaiMatKhauTokenRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
   JoinTokenRoute: typeof JoinTokenRoute
   TtTokenRoute: typeof TtTokenRoute
@@ -342,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrgReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quen-mat-khau': {
+      id: '/quen-mat-khau'
+      path: '/quen-mat-khau'
+      fullPath: '/quen-mat-khau'
+      preLoaderRoute: typeof QuenMatKhauRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review': {
       id: '/review'
       path: '/review'
@@ -361,6 +394,13 @@ declare module '@tanstack/react-router' {
       path: '/api/crm'
       fullPath: '/api/crm'
       preLoaderRoute: typeof ApiCrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dat-lai-mat-khau/$token': {
+      id: '/dat-lai-mat-khau/$token'
+      path: '/dat-lai-mat-khau/$token'
+      fullPath: '/dat-lai-mat-khau/$token'
+      preLoaderRoute: typeof DatLaiMatKhauTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/department/$dep': {
@@ -425,9 +465,11 @@ const rootRouteChildren: RootRouteChildren = {
   OrgAccessRoute: OrgAccessRoute,
   OrgAdminRoute: OrgAdminRoute,
   OrgReportsRoute: OrgReportsRoute,
+  QuenMatKhauRoute: QuenMatKhauRoute,
   ReviewRoute: ReviewRoute,
   ThanhToanRoute: ThanhToanRoute,
   ApiCrmRoute: ApiCrmRoute,
+  DatLaiMatKhauTokenRoute: DatLaiMatKhauTokenRoute,
   DepartmentDepRoute: DepartmentDepRoute,
   JoinTokenRoute: JoinTokenRoute,
   TtTokenRoute: TtTokenRoute,

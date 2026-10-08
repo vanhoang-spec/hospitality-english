@@ -246,6 +246,31 @@ quyết định #17–#19, lệnh `moi_khach_san`:
 - Sự kiện `khach_san_dang_ky` thêm `khach_crm_id` để CRM gắn đúng khách B2B, không dò MST.
 - Hết hạn tặng/thử: hoá đơn B2B → `cap_goi` như cũ (nối sau hạn còn lại).
 - Kiểm thử: `test:db` 84 phép (9 mới), `test:crm` 39 phép (6 mới).
+- **08/10: đã merge (PR #20, `8ad17a3`) và chạy trên Vercel production; phía CRM (migration 271, tab
+  "App Hospitality") cũng đã lên production.** Chưa có lời mời thật nào.
+
+### Tự lấy lại mật khẩu qua email (08/10, nhánh `platform/email-reset`)
+
+Đăng nhập vẫn bằng số điện thoại; Supabase Auth không có email nào của học viên. Nay `profiles.email`
+là email **liên hệ** (không bắt buộc, lưu chữ thường) để gửi link đặt lại:
+
+- Ai điền: học viên tự điền khi đăng ký qua link (học viên, bán lẻ) và ở menu **Mật khẩu & email**
+  (`/change-password`; lần đăng nhập đầu có ô email ngay trong form đổi mật khẩu); HR điền ở
+  **+ Thêm thành viên** hoặc cột `Email` của file CSV; HR của khách sạn tự có email = email người
+  đại diện.
+- Luồng: đăng nhập → **Quên mật khẩu?** (`/quen-mat-khau`) nhập SĐT → thư Resend tới email đó →
+  `/dat-lai-mat-khau/<token>` đặt mật khẩu mới, tự đăng nhập. Trang trả lời giống nhau dù SĐT có tài
+  khoản/email hay không. Token: chỉ lưu sha256, sống 30 phút, dùng một lần, dùng một cái là huỷ mọi
+  cái còn lại; tối đa 3 yêu cầu/giờ/tài khoản (`password_reset_request`, `password_reset_claim`, chỉ
+  service role). Mật khẩu mới bị Supabase từ chối thì link được trả lại. Ghi `admin_actions`
+  `member.reset_password_email`.
+- Chưa xác minh email lúc điền: gõ nhầm thì link đi tới địa chỉ nhầm (chỉ khi chính người đó bấm quên
+  mật khẩu).
+- Cần trên Vercel: `RESEND_API_KEY` (key Resend, domain `embassy.edu.vn` đã xác minh bên CRM);
+  tuỳ chọn `EMAIL_FROM` (mặc định `Embassy Hospitality <info@embassy.edu.vn>`). Thiếu key thì không
+  gửi gì, trang vẫn báo như thường, log Vercel có dòng `RESEND_API_KEY is not set`.
+- Kiểm thử: `test:db` 98 phép (14 mới), `test:reset` 18 phép (mới, gắn vào `ci` và GitHub CI — GitHub
+  CI nay chạy cả `test:crm`).
 
 ### Production
 
@@ -257,7 +282,8 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
 ### Giới hạn đã biết — đừng hứa với khách hàng
 
 - Khoá nội dung theo tuần là **khoá giao diện**; nội dung nằm trong JS bundle.
-- Không có khôi phục mật khẩu tự động.
+- Tự lấy lại mật khẩu chỉ qua **email đã gắn** với tài khoản; chưa gắn email thì vẫn nhờ HR. Không
+  có OTP qua SMS/Zalo.
 - Không có thanh toán trực tuyến.
 - Một phiên sống mỗi tài khoản là răn đe, không phải khoá cứng.
 
@@ -270,8 +296,9 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Áp dụng migration `20261008120000_crm_invite.sql` lên production**, rồi merge
-   `platform/crm-invite`; phía CRM làm nút "Tặng / mời dùng thử" theo hợp đồng.
+2. **Lấy lại mật khẩu qua email:** áp dụng migration `20261008150000_password_reset_email.sql`,
+   đặt `RESEND_API_KEY` trên Vercel, rồi merge `platform/email-reset`. Sau đó thử với một tài khoản
+   thật có email.
 3. **Thử đầu-cuối** với dữ liệu thử: link đối tác (khách sạn + cá nhân), lời mời tặng, đơn gia hạn.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong

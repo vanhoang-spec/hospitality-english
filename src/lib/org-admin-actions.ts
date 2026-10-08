@@ -7,6 +7,7 @@ import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
+import { optionalContactEmail } from "@/lib/contact-email";
 import type { Database } from "@/integrations/supabase/types";
 
 export async function requireOrgAdmin(
@@ -45,6 +46,7 @@ export const createMember = createServerFn({ method: "POST" })
       password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
       role: z.enum(["member", "org_admin"]).default("member"),
       department: z.string().trim().max(100).optional(),
+      email: optionalContactEmail,
     }),
   )
   .handler(async ({ data, context }) => {
@@ -69,6 +71,7 @@ export const createMember = createServerFn({ method: "POST" })
       password: data.password,
       role: data.role,
       department: data.department,
+      email: data.email,
       mustChangePassword: true,
       actorId: context.userId,
       action: "member.create",

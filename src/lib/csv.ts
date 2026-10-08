@@ -100,6 +100,7 @@ const HEADER_ALIASES = {
   phone: ["so dien thoai", "sdt", "dien thoai", "phone"],
   password: ["mat khau", "password", "pass"],
   department: ["phong ban", "department", "dept", "ban"],
+  email: ["email", "e-mail", "mail", "thu dien tu"],
 } as const;
 
 export type CsvColumn = keyof typeof HEADER_ALIASES;

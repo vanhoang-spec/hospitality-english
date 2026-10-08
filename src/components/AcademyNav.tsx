@@ -24,7 +24,13 @@ export function AcademyNav() {
     }
   }, [state.service_stars]);
 
-  if (location.pathname === "/login" || location.pathname.startsWith("/join/")) return null;
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/quen-mat-khau" ||
+    location.pathname.startsWith("/join/") ||
+    location.pathname.startsWith("/dat-lai-mat-khau/")
+  )
+    return null;
 
   const displayName = profile?.full_name || "Esteemed Apprentice";
   const orgName = profile?.organizations?.name;
@@ -162,7 +168,7 @@ export function AcademyNav() {
                   onClick={() => setMenuOpen(false)}
                   className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
                 >
-                  Đổi mật khẩu
+                  Mật khẩu &amp; email
                 </Link>
                 <button
                   onClick={async () => {

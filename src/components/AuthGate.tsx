@@ -8,14 +8,19 @@ import { RenewalBanner } from "@/components/RenewalBanner";
 // Session lives in localStorage (supabase-js default), so SSR always
 // renders "logged out" — this gate only takes effect after hydration.
 // Server functions remain independently protected by requireSupabaseAuth.
-const PUBLIC_PATHS = new Set(["/login"]);
+const PUBLIC_PATHS = new Set(["/login", "/quen-mat-khau"]);
 
-/** Links people are sent: signup links (/join/) and payment links (/tt/).
- *  Public like /login, but a signed-in visitor is NOT sent home: HR
- *  opening their own link to test it, or a learner opening the payment
- *  link CS sent them, would otherwise bounce off it. */
+/** Links people are sent: signup links (/join/), payment links (/tt/) and
+ *  password-reset links (/dat-lai-mat-khau/). Public like /login, but a
+ *  signed-in visitor is NOT sent home: HR opening their own link to test
+ *  it, or a learner opening the payment link CS sent them, would otherwise
+ *  bounce off it. */
 function isSignupLinkPath(pathname: string) {
-  return pathname.startsWith("/join/") || pathname.startsWith("/tt/");
+  return (
+    pathname.startsWith("/join/") ||
+    pathname.startsWith("/tt/") ||
+    pathname.startsWith("/dat-lai-mat-khau/")
+  );
 }
 
 export function AuthGate({ children }: { children: ReactNode }) {

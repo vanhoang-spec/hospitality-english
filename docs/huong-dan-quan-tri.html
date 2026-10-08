@@ -639,11 +639,14 @@ update public.profiles
     </div>
 
     <div class="warn">
-      <span class="label">Không có luồng khôi phục mật khẩu tự động</span>
+      <span class="label">Quên mật khẩu: tự lấy lại qua email, nếu đã gắn email</span>
       <p>
-        Học viên quên mật khẩu thì HR đặt lại hộ ở màn hình <em>Team</em>. HR quên mật khẩu thì
-        Super Admin phải đặt lại trong bảng điều khiển Supabase (Authentication → Users). Hãy tính
-        trước điều này khi bàn giao.
+        Ở trang đăng nhập có <em>Quên mật khẩu?</em>: nhập số điện thoại, link đặt lại (dùng một
+        lần, 30 phút) gửi tới email đã gắn với tài khoản. Email gắn được khi học viên tự đăng ký, ở
+        menu <em>Mật khẩu &amp; email</em>, hoặc do HR điền (ô Email khi thêm thành viên, cột Email
+        trong file CSV). HR của khách sạn dùng email người đại diện. Tài khoản chưa có email thì học
+        viên nhờ HR bấm <em>Reset MK</em> ở màn hình <em>Team</em>; HR chưa có email thì nhờ Super
+        Admin.
       </p>
     </div>
 
@@ -933,7 +936,8 @@ update public.profiles
         học viên “không thể” xem trước nội dung.
       </li>
       <li>
-        <strong>Không có khôi phục mật khẩu tự động.</strong> Học viên nhờ HR; HR nhờ Super Admin.
+        <strong>Tự lấy lại mật khẩu chỉ qua email đã gắn.</strong> Không có OTP qua SMS hay Zalo;
+        tài khoản chưa có email thì học viên nhờ HR, HR nhờ Super Admin.
       </li>
       <li>
         <strong>Link đăng ký không xác minh số điện thoại.</strong> Không có mã OTP gửi qua SMS: ai
