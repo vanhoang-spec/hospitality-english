@@ -73,6 +73,22 @@ function linkProblem(link: LinkRow | null): string | null {
   return null;
 }
 
+const PAUSED =
+  "Chương trình đăng ký qua link này đang tạm dừng. Hãy liên hệ người đã gửi link cho bạn.";
+
+/** A switched-off partner's links take nobody in — claim_signup_link
+ *  refuses them; this only finds the words for it. */
+async function partnerPaused(link: LinkRow | null): Promise<boolean> {
+  if (!link?.partner_id) return false;
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data } = await supabaseAdmin
+    .from("partners")
+    .select("active")
+    .eq("id", link.partner_id)
+    .maybeSingle();
+  return data ? !data.active : false;
+}
+
 async function findLink(token: string): Promise<LinkRow | null> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data, error } = await supabaseAdmin
@@ -96,7 +112,10 @@ async function claimLink(token: string, kind: LinkRow["kind"]): Promise<LinkRow>
   if (error) throw new Error(error.message);
   const claimed = (data as LinkRow[] | null)?.[0];
   if (!claimed) {
-    throw new Error(linkProblem(await findLink(token)) ?? "Link này không còn dùng được.");
+    const link = await findLink(token);
+    throw new Error(
+      linkProblem(link) ?? ((await partnerPaused(link)) ? PAUSED : "Link này không còn dùng được."),
+    );
   }
   if (claimed.kind !== kind) {
     await releaseLink(claimed.id);
@@ -340,6 +359,7 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
     const link = await findLink(data.token);
     const problem = linkProblem(link);
     if (problem || !link) return { ok: false, reason: problem ?? "Link không tồn tại." };
+    if (await partnerPaused(link)) return { ok: false, reason: PAUSED };
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
@@ -678,12 +698,17 @@ export const createRetailLink = createServerFn({ method: "POST" })
       trialDays: z.number().int().min(1).max(60),
       /** Last day of the offer, YYYY-MM-DD, Vietnam time. */
       until: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Ngày kết thúc không hợp lệ."),
+      /** The partner's own phone: makes their free demo account too. */
+      partnerPhone: z.string().trim().max(20).optional(),
+      partnerEmail: optionalContactEmail,
     }),
   )
   .handler(async ({ data, context }) => {
     await requireSuperAdmin(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { logAdminAction } = await import("@/lib/account-provisioning.server");
+    // Checked before anything is written, so a typo makes no half-made link.
+    const partnerPhone = data.partnerPhone ? toPhone(data.partnerPhone) : null;
 
     // The offer runs through the whole of its last day in Vietnam.
     const expiresAt = new Date(`${data.until}T23:59:59+07:00`);
@@ -743,7 +768,29 @@ export const createRetailLink = createServerFn({ method: "POST" })
       },
     });
 
-    return { id: link.id, token };
+    // The partner's own account, opened by this link. The link already
+    // exists if this fails; the owner can retry from the partner list.
+    let activation: { url: string; expiresAt: string } | null = null;
+    let accountError: string | null = null;
+    if (partnerPhone) {
+      const { ensurePartnerDemo, issueActivationLink } = await import("@/lib/partner-demo.server");
+      try {
+        const { userId, created } = await ensurePartnerDemo({
+          partnerId,
+          phone: partnerPhone,
+          email: data.partnerEmail,
+          actorId: context.userId,
+        });
+        if (created) {
+          const origin = process.env.APP_ORIGIN || "https://hospitality.embassy.edu.vn";
+          activation = await issueActivationLink(userId, origin);
+        }
+      } catch (e) {
+        accountError = e instanceof Error ? e.message : "Không tạo được tài khoản đối tác.";
+      }
+    }
+
+    return { id: link.id, token, activation, accountError };
   });
 
 /** Move the end date of a retail offer — how the owner extends it past

@@ -38,12 +38,13 @@ export const checkResetToken = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row } = await supabaseAdmin
       .from("password_reset_tokens")
-      .select("id")
+      .select("id, purpose")
       .eq("token_hash", await sha256Hex(data.token))
       .is("used_at", null)
       .gt("expires_at", new Date().toISOString())
       .maybeSingle();
-    return { valid: !!row };
+    // "activate": a new account (a partner's) setting its first password.
+    return { valid: !!row, activate: row?.purpose === "activate" };
   });
 
 export const resetPasswordWithToken = createServerFn({ method: "POST" })

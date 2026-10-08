@@ -1003,5 +1003,137 @@ check(
   readTokens ?? "allowed!",
 );
 
+// ── A partner's demo account follows the partner (20261008180000) ──
+const luuDoiTac = (ref: string, name: string, active: boolean) =>
+  db.query<{ partner_id: string; tao_moi: boolean; active: boolean }>(
+    `select * from public.crm_luu_doi_tac($1, $2, $3)`,
+    [ref, name, active],
+  );
+const dt = (await luuDoiTac("dt-1", "Đối tác Demo", true)).rows[0]!;
+check("crm_luu_doi_tac makes a new, active partner", dt.tao_moi && dt.active);
+const demoOrg = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit, kind, partner_id)
+   values ('Đối tác · Demo', 1, 'partner_demo', $1) returning id`,
+  [dt.partner_id],
+))!.id;
+const demoSub = await raises(
+  `insert into public.subscriptions (org_id, plan_code, kind, starts_at, ends_at, price)
+   values ($1, 'p1', 'demo', now() - interval '1 minute', '2100-01-01', 0)`,
+  [demoOrg],
+);
+check(
+  "a demo organisation and its open-ended demo plan are allowed",
+  demoSub === null,
+  demoSub ?? "",
+);
+const live = async () =>
+  (await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [demoOrg]))!.a;
+check("no link yet: the demo account is closed", (await live()) === false);
+await db.query(
+  `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days)
+   values ('t-demo-1', 'retail', $1, 20, 7)`,
+  [dt.partner_id],
+);
+check("one live link: the demo account opens", (await live()) === true);
+await db.query(`update public.signup_links set revoked_at = now() where token = 't-demo-1'`);
+check("the last link revoked: closed again", (await live()) === false);
+await db.query(
+  `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days, expires_at)
+   values ('t-demo-2', 'retail', $1, 20, 7, now() - interval '1 day')`,
+  [dt.partner_id],
+);
+check("a link past its end does not open it", (await live()) === false);
+await db.query(
+  `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days, expires_at)
+   values ('t-demo-3', 'retail', $1, 20, 7, now() + interval '30 days')`,
+  [dt.partner_id],
+);
+check("a new live link opens it again", (await live()) === true);
+const off = (await luuDoiTac("dt-1", "Đối tác Demo", false)).rows[0]!;
+const stamped = await one<{ s: string | null }>(
+  `select status_changed_at as s from public.partners where id = $1`,
+  [dt.partner_id],
+);
+check(
+  "switching the partner off closes the demo account and stamps the change",
+  !off.tao_moi && !off.active && (await live()) === false && stamped?.s !== null,
+);
+check(
+  "a switched-off partner's link takes nobody in",
+  (await db.query(`select * from public.claim_signup_link('t-demo-3')`)).rows.length === 0,
+);
+await luuDoiTac("dt-1", "Đối tác Demo", true);
+check(
+  "switched back on: the link works and the account opens",
+  (await db.query(`select * from public.claim_signup_link('t-demo-3')`)).rows.length === 1 &&
+    (await live()) === true,
+);
+const demoUser = (await one<{ id: string }>(
+  `insert into auth.users (phone, raw_app_meta_data) values ('84900000077', $1) returning id`,
+  [JSON.stringify({ role: "member", org_id: demoOrg })],
+))!.id;
+check(
+  "the demo organisation holds its one learner",
+  /SEAT_QUOTA_EXCEEDED/.test(
+    (await raises(`insert into auth.users (phone, raw_app_meta_data) values ('84900000078', $1)`, [
+      JSON.stringify({ role: "member", org_id: demoOrg }),
+    ])) ?? "",
+  ),
+);
+const otherOrgLive = await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [org]);
+check("a hotel's own rule is unchanged", otherOrgLive?.a === true);
+await db.query(`insert into public.partners (name) values ('Đối tác Làm Trong App')`);
+const adoptedDt = (await luuDoiTac("dt-2", "đối tác làm trong app", true)).rows[0]!;
+const adoptedCount = await one<{ n: number }>(
+  `select count(*)::int as n from public.partners where lower(name) = lower('Đối tác làm trong app')`,
+);
+check(
+  "crm_luu_doi_tac adopts the same-named partner made in the app",
+  !adoptedDt.tao_moi && adoptedCount?.n === 1,
+);
+check(
+  "renaming onto another partner's name is refused",
+  /partners_name_key/.test(
+    (await raises(`select * from public.crm_luu_doi_tac('dt-2', 'Đối tác Demo', true)`)) ?? "",
+  ),
+);
+const doiTacAsUser = await asRole(
+  "authenticated",
+  `select * from public.crm_luu_doi_tac('dt-3', 'Ai đó', true)`,
+  owner,
+);
+const liveAsUser = await asRole(
+  "authenticated",
+  `select public.partner_is_live('${dt.partner_id}')`,
+  owner,
+);
+check(
+  "nobody signed in can call crm_luu_doi_tac or partner_is_live",
+  /permission denied/.test(doiTacAsUser ?? "") && /permission denied/.test(liveAsUser ?? ""),
+  `${doiTacAsUser} | ${liveAsUser}`,
+);
+const activation = await raises(
+  `insert into public.password_reset_tokens (user_id, token_hash, email, expires_at, purpose)
+   values ($1, $2, null, now() + interval '7 days', 'activate')`,
+  [demoUser, "9".repeat(64)],
+);
+check("an activation token needs no email", activation === null, activation ?? "");
+check(
+  "a token's purpose is reset or activate, nothing else",
+  /password_reset_tokens_purpose_check/.test(
+    (await raises(
+      `insert into public.password_reset_tokens (user_id, token_hash, expires_at, purpose)
+       values ($1, $2, now() + interval '1 hour', 'other')`,
+      [demoUser, "8".repeat(64)],
+    )) ?? "",
+  ),
+);
+check(
+  "the CRM can be told a partner changed",
+  (await raises(
+    `insert into public.crm_events (loai, du_lieu) values ('doi_tac_cap_nhat', '{"doi_tac_crm_id":"dt-1"}')`,
+  )) === null,
+);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

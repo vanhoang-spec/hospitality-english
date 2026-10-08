@@ -9,7 +9,7 @@ import {
   setPlanPrice,
   setOrgDetails,
 } from "@/lib/platform-admin-actions";
-import { HotelLinksSection, RetailLinksSection } from "@/components/SignupLinks";
+import { HotelLinksSection, PartnersSection, RetailLinksSection } from "@/components/SignupLinks";
 import { RetailOrdersSection, PaymentAccountSection } from "@/components/RetailAdmin";
 import { MoneyInput } from "@/components/MoneyInput";
 import { firstProblem, newOrgDetailsSchema, orgDetailsSchema } from "@/lib/org-details";
@@ -400,6 +400,7 @@ function AdminConsolePage() {
       <HotelLinksSection orgNames={new Map((orgs ?? []).map((o) => [o.id, o.name]))} />
 
       <RetailOrdersSection onMessage={setMessage} />
+      <PartnersSection />
       <RetailLinksSection />
       <PaymentAccountSection onMessage={setMessage} />
 

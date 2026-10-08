@@ -1,4 +1,4 @@
-// The five commands the Embassy CRM sends this app (contract:
+// The commands the Embassy CRM sends this app (contract:
 // docs/TICH_HOP_HOSPITALITY.md in the CRM repo — change that file first,
 // then this one). The route in src/routes/api/crm.ts checks the signature
 // and hands the parsed body here.
@@ -10,6 +10,13 @@
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { activateOrder, logAdminAction } from "@/lib/account-provisioning.server";
+import {
+  PartnerAccountError,
+  ensurePartnerDemo,
+  issueActivationLink,
+  partnerIsLive,
+} from "@/lib/partner-demo.server";
+import { normalizeVNPhone } from "@/lib/phone";
 
 export type CrmErrorCode = "du_lieu_sai" | "khong_tim_thay" | "xung_dot";
 
@@ -126,6 +133,23 @@ const moiKhachSan = z.object({
   dang_mo: z.boolean(),
 });
 
+/** A partner, on or off, and (once) their own demo account. Keyed by
+ *  doi_tac.crm_id, so it is safe to repeat; an activation link is only
+ *  handed back when the account is made, or when asked for. */
+const luuDoiTac = z.object({
+  hanh_dong: z.literal("luu_doi_tac"),
+  doi_tac: z.object({ crm_id: CRM_REF, ten: z.string().trim().min(2).max(120) }),
+  dang_hoat_dong: z.boolean(),
+  tai_khoan: z
+    .object({
+      sdt: z.string().trim().min(9).max(20),
+      email: z.string().trim().toLowerCase().max(254).email().nullable().optional(),
+    })
+    .nullable()
+    .optional(),
+  cap_link_kich_hoat: z.boolean().optional(),
+});
+
 export const crmCommand = z.discriminatedUnion("hanh_dong", [
   luuLink,
   layBangGia,
@@ -133,6 +157,7 @@ export const crmCommand = z.discriminatedUnion("hanh_dong", [
   capGoi,
   xacNhanDon,
   moiKhachSan,
+  luuDoiTac,
 ]);
 export type CrmCommand = z.infer<typeof crmCommand>;
 
@@ -215,6 +240,80 @@ export async function runCrmCommand(
         url: `${origin}/join/${row.link_token}`,
         tao_moi: row.tao_moi,
         da_dung: row.da_dung,
+      };
+    }
+
+    case "luu_doi_tac": {
+      const { data, error } = await supabaseAdmin.rpc("crm_luu_doi_tac", {
+        p_partner_ref: cmd.doi_tac.crm_id,
+        p_name: cmd.doi_tac.ten,
+        p_active: cmd.dang_hoat_dong,
+      });
+      if (error) fromDb(error.message);
+      const row = (data ?? [])[0];
+      if (!row) throw new Error("crm_luu_doi_tac returned nothing");
+
+      let userId: string | null = row.demo_user_id ?? null;
+      let activation: { url: string; expiresAt: string } | null = null;
+      if (cmd.tai_khoan) {
+        let phone: string;
+        try {
+          phone = normalizeVNPhone(cmd.tai_khoan.sdt);
+        } catch {
+          throw new CrmError("du_lieu_sai", "Số điện thoại tài khoản đối tác không hợp lệ.");
+        }
+        try {
+          const made = await ensurePartnerDemo({
+            partnerId: row.partner_id,
+            phone,
+            email: cmd.tai_khoan.email ?? null,
+            actorId: null,
+          });
+          userId = made.userId;
+          if (made.created) activation = await issueActivationLink(userId, origin);
+        } catch (e) {
+          if (e instanceof PartnerAccountError) {
+            throw new CrmError(e.kind === "conflict" ? "xung_dot" : "khong_tim_thay", e.message);
+          }
+          throw e;
+        }
+      }
+      if (cmd.cap_link_kich_hoat && !activation) {
+        if (!userId) {
+          throw new CrmError("khong_tim_thay", "Đối tác này chưa có tài khoản dùng thử.");
+        }
+        activation = await issueActivationLink(userId, origin);
+      }
+
+      await logAdminAction({
+        actorId: null,
+        orgId: null,
+        action: "crm.partner.save",
+        meta: {
+          partner_id: row.partner_id,
+          crm_ref: cmd.doi_tac.crm_id,
+          dang_hoat_dong: row.active,
+          tai_khoan_moi: !!activation && !!cmd.tai_khoan,
+        },
+      });
+
+      const { data: partner } = await supabaseAdmin
+        .from("partners")
+        .select("phone")
+        .eq("id", row.partner_id)
+        .maybeSingle();
+      return {
+        doi_tac_id: row.partner_id,
+        tao_moi: row.tao_moi,
+        dang_hoat_dong: row.active,
+        tai_khoan: userId
+          ? {
+              sdt: partner?.phone ?? null,
+              dang_mo: await partnerIsLive(row.partner_id),
+              link_kich_hoat: activation?.url ?? null,
+              link_het_han: activation?.expiresAt ?? null,
+            }
+          : null,
       };
     }
 

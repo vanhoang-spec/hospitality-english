@@ -21,6 +21,14 @@ import {
 } from "@/lib/signup-link-actions";
 import type { Database } from "@/integrations/supabase/types";
 import { discountLabel } from "@/lib/retail-pricing";
+import { formatPhoneDisplay } from "@/lib/phone";
+import {
+  createPartnerAccount,
+  listPartners,
+  reissuePartnerActivation,
+  setPartnerStatus,
+  type PartnerRow,
+} from "@/lib/partner-actions";
 import { MoneyInput } from "./MoneyInput";
 
 type LinkRow = Database["public"]["Tables"]["signup_links"]["Row"];
@@ -363,7 +371,10 @@ export function RetailLinksSection() {
   const [discount, setDiscount] = useState("30");
   const [trialDays, setTrialDays] = useState("7");
   const [until, setUntil] = useState("2026-12-31");
+  const [partnerPhone, setPartnerPhone] = useState("");
+  const [partnerEmail, setPartnerEmail] = useState("");
   const [fresh, setFresh] = useState<string | null>(null);
+  const [activation, setActivation] = useState<{ url: string; expiresAt: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const queryKey = ["signup-links", "retail"] as const;
@@ -379,7 +390,7 @@ export function RetailLinksSection() {
             .select("*")
             .in("kind", ["retail", "partner_hotel"])
             .order("created_at", { ascending: false }),
-          supabase.from("partners").select("id, name"),
+          supabase.from("partners").select("id, name, active"),
           supabase.from("orders").select("link_id, status"),
           supabase.from("organizations").select("signup_link_id").not("signup_link_id", "is", null),
         ]);
@@ -402,6 +413,7 @@ export function RetailLinksSection() {
       return {
         links: (links ?? []) as LinkRow[],
         partnerNames: new Map((partners ?? []).map((p) => [p.id, p.name])),
+        pausedPartners: new Set((partners ?? []).filter((p) => !p.active).map((p) => p.id)),
         stats,
       };
     },
@@ -416,13 +428,21 @@ export function RetailLinksSection() {
           discountPct: Number(discount),
           trialDays: Number(trialDays),
           until,
+          partnerPhone: partnerPhone.trim() || undefined,
+          partnerEmail: partnerEmail.trim() || undefined,
         },
       }),
-    onSuccess: ({ token }) => {
+    onSuccess: ({ token, activation, accountError }) => {
       setFresh(token);
-      setError(null);
+      setActivation(activation);
+      setError(
+        accountError ? `Link đã tạo, nhưng chưa tạo được tài khoản đối tác: ${accountError}` : null,
+      );
       setLabel("");
+      setPartnerPhone("");
+      setPartnerEmail("");
       qc.invalidateQueries({ queryKey });
+      qc.invalidateQueries({ queryKey: PARTNERS_KEY });
     },
     onError: (e) => setError(e instanceof Error ? e.message : "Không tạo được link."),
   });
@@ -482,6 +502,24 @@ export function RetailLinksSection() {
             className={`${INPUT} w-full`}
           />
         </Labeled>
+        <Labeled label="SĐT đối tác (tạo tài khoản dùng thử)">
+          <input
+            type="tel"
+            value={partnerPhone}
+            onChange={(e) => setPartnerPhone(e.target.value)}
+            placeholder="Bỏ trống nếu đối tác đã có tài khoản"
+            className={`${INPUT} w-full`}
+          />
+        </Labeled>
+        <Labeled label="Email đối tác (tuỳ chọn)">
+          <input
+            type="email"
+            value={partnerEmail}
+            onChange={(e) => setPartnerEmail(e.target.value)}
+            placeholder="Để đối tác tự lấy lại mật khẩu"
+            className={`${INPUT} w-full`}
+          />
+        </Labeled>
         <div className="flex items-end">
           <button
             onClick={() => create.mutate()}
@@ -495,12 +533,18 @@ export function RetailLinksSection() {
 
       {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
       {fresh && <FreshLink token={fresh} />}
+      {activation && <ActivationLink {...activation} />}
 
       <LinkTable
         links={data?.links ?? []}
         describe={(l) => (
           <>
-            <div>{data?.partnerNames.get(l.partner_id ?? "") ?? "—"}</div>
+            <div>
+              {data?.partnerNames.get(l.partner_id ?? "") ?? "—"}
+              {data?.pausedPartners.has(l.partner_id ?? "") && (
+                <span className="ml-2 text-xs text-red-400">· đối tác tạm dừng</span>
+              )}
+            </div>
             <div className="text-xs text-foreground/60">
               {l.kind === "partner_hotel" ? "Khách sạn" : "Cá nhân"} · giảm{" "}
               {discountLabel({
@@ -577,6 +621,213 @@ function ExtendRetail({ link, onDone }: { link: LinkRow; onDone: () => void }) {
       </button>
       {error && <span className="text-xs text-red-400">{error}</span>}
     </span>
+  );
+}
+
+// ── Platform owner: partners and their own demo accounts ─────
+
+const PARTNERS_KEY = ["partners"] as const;
+
+/** Every partner: on or off, and the free account each one learns with.
+ *  Off stops their links taking sign-ups and locks that account; the same
+ *  switch exists in the CRM's B2B module and the two stay in step. */
+export function PartnersSection() {
+  const qc = useQueryClient();
+  const { data: partners, error } = useQuery({
+    queryKey: PARTNERS_KEY,
+    queryFn: () => listPartners(),
+  });
+  const refresh = () => qc.invalidateQueries({ queryKey: PARTNERS_KEY });
+
+  return (
+    <section className="mt-10 border border-primary/20 bg-card p-5">
+      <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Đối tác</h2>
+      <p className="mt-2 text-sm text-foreground/75">
+        Mỗi đối tác có một tài khoản học miễn phí để tự trải nghiệm app. Tài khoản mở khi đối tác
+        đang hoạt động và còn ít nhất một link đang mở; tạm dừng đối tác thì mọi link của họ ngừng
+        nhận đăng ký và tài khoản bị khoá. Đối tác tự đặt mật khẩu bằng link kích hoạt (dùng một
+        lần, 7 ngày).
+      </p>
+      {error && (
+        <p className="mt-3 text-sm text-red-400">
+          {error instanceof Error ? error.message : "Không tải được danh sách đối tác."}
+        </p>
+      )}
+      <div className="mt-4 overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead>
+            <tr className="border-b border-primary/20 text-left text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+              <th className="py-2 pr-3">Đối tác</th>
+              <th className="py-2 pr-3">Trạng thái</th>
+              <th className="py-2 pr-3">Tài khoản dùng thử</th>
+              <th className="py-2 pr-3">Link đang mở</th>
+              <th className="py-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(partners ?? []).map((p) => (
+              <PartnerRowView key={p.id} partner={p} onChanged={refresh} />
+            ))}
+            {partners?.length === 0 && (
+              <tr>
+                <td colSpan={5} className="py-3 text-foreground/60">
+                  Chưa có đối tác nào. Đối tác được tạo khi tạo link bán lẻ ở dưới, hoặc từ CRM.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function PartnerRowView({ partner: p, onChanged }: { partner: PartnerRow; onChanged: () => void }) {
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [activation, setActivation] = useState<{ url: string; expiresAt: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const fail = (e: unknown) => setError(e instanceof Error ? e.message : "Không thực hiện được.");
+
+  const toggle = useMutation({
+    mutationFn: () => setPartnerStatus({ data: { partnerId: p.id, active: !p.active } }),
+    onSuccess: () => {
+      setError(null);
+      onChanged();
+    },
+    onError: fail,
+  });
+  const create = useMutation({
+    mutationFn: () =>
+      createPartnerAccount({
+        data: { partnerId: p.id, phone: phone.trim(), email: email.trim() || undefined },
+      }),
+    onSuccess: (a) => {
+      setActivation(a);
+      setCreating(false);
+      setError(null);
+      onChanged();
+    },
+    onError: fail,
+  });
+  const reissue = useMutation({
+    mutationFn: () => reissuePartnerActivation({ data: { partnerId: p.id } }),
+    onSuccess: (a) => {
+      setActivation(a);
+      setError(null);
+    },
+    onError: fail,
+  });
+
+  return (
+    <tr className="border-b border-primary/10 align-top">
+      <td className="py-3 pr-3">
+        <div>{p.name}</div>
+        {p.fromCrm && <div className="text-xs text-foreground/60">tạo từ CRM</div>}
+      </td>
+      <td className="py-3 pr-3">
+        <span className={p.active ? "text-primary" : "text-red-400"}>
+          {p.active ? "Đang hoạt động" : "Tạm dừng"}
+        </span>
+      </td>
+      <td className="py-3 pr-3">
+        {p.hasAccount ? (
+          <>
+            <div>{formatPhoneDisplay(p.phone)}</div>
+            <div className={`text-xs ${p.live ? "text-primary" : "text-foreground/60"}`}>
+              {p.live ? "đang mở" : "đang khoá"}
+            </div>
+          </>
+        ) : creating ? (
+          <div className="flex flex-col gap-2">
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="SĐT đối tác"
+              className={INPUT}
+            />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email (tuỳ chọn)"
+              className={INPUT}
+            />
+            <button
+              onClick={() => create.mutate()}
+              disabled={create.isPending || phone.trim().length < 9}
+              className={BUTTON}
+            >
+              {create.isPending ? "Đang tạo…" : "Tạo tài khoản"}
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setCreating(true)}
+            className="text-xs uppercase tracking-[0.2em] text-primary hover:underline"
+          >
+            + Tạo tài khoản
+          </button>
+        )}
+      </td>
+      <td className="py-3 pr-3">{p.liveLinks}</td>
+      <td className="py-3 text-right">
+        <div className="flex flex-col items-end gap-1">
+          <button
+            onClick={() => {
+              if (
+                p.active &&
+                !window.confirm(
+                  `Tạm dừng ${p.name}? Mọi link của đối tác ngừng nhận đăng ký và tài khoản dùng thử bị khoá.`,
+                )
+              ) {
+                return;
+              }
+              toggle.mutate();
+            }}
+            disabled={toggle.isPending}
+            className={`text-xs uppercase tracking-[0.2em] hover:underline ${
+              p.active ? "text-red-400" : "text-primary"
+            }`}
+          >
+            {p.active ? "Tạm dừng" : "Kích hoạt lại"}
+          </button>
+          {p.hasAccount && (
+            <button
+              onClick={() => reissue.mutate()}
+              disabled={reissue.isPending}
+              className="text-xs uppercase tracking-[0.2em] text-primary hover:underline"
+            >
+              Link kích hoạt
+            </button>
+          )}
+        </div>
+        {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+        {activation && <ActivationLink {...activation} />}
+      </td>
+    </tr>
+  );
+}
+
+/** The link a partner opens to set their password. */
+function ActivationLink({ url, expiresAt }: { url: string; expiresAt: string }) {
+  return (
+    <div className="mt-4 border border-primary bg-primary/10 p-4 text-left">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-primary">
+        Link kích hoạt tài khoản đối tác · dùng đến{" "}
+        {new Date(expiresAt).toLocaleDateString("vi-VN")}
+      </div>
+      <p className="mt-1 text-xs text-foreground/70">
+        Gửi cho đối tác qua Zalo. Đối tác mở link, tự đặt mật khẩu, rồi đăng nhập bằng số điện thoại
+        của mình.
+      </p>
+      <div className="mt-2 flex flex-wrap items-center gap-3">
+        <code className="break-all text-sm">{url}</code>
+        <CopyButton text={url} />
+      </div>
+    </div>
   );
 }
 

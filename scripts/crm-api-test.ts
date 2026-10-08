@@ -202,6 +202,31 @@ check(
   !parse({ ...invite, khach_crm_id: "" }).success,
 );
 
+// ── luu_doi_tac: a partner on or off, and their demo account.
+const partnerCmd = {
+  hanh_dong: "luu_doi_tac",
+  doi_tac: { crm_id: "dt-0007", ten: "Anh Minh (môi giới)" },
+  dang_hoat_dong: true,
+  tai_khoan: { sdt: "0912345678", email: "minh@gmail.com" },
+};
+check("a partner with a demo account is accepted", parse(partnerCmd).success);
+check(
+  "a partner switched off, no account, is accepted",
+  parse({ ...partnerCmd, dang_hoat_dong: false, tai_khoan: null }).success,
+);
+check(
+  "asking only for a new activation link is accepted",
+  parse({ ...partnerCmd, tai_khoan: undefined, cap_link_kich_hoat: true }).success,
+);
+check(
+  "a partner without on/off is refused",
+  !parse({ ...partnerCmd, dang_hoat_dong: undefined }).success,
+);
+check(
+  "a demo account with a malformed email is refused",
+  !parse({ ...partnerCmd, tai_khoan: { sdt: "0912345678", email: "minh@" } }).success,
+);
+
 // ── Renewal price (owner, 07/10/2026): the link's discount only while its
 // offer still runs, and never for a link set to "first contract only".
 const { renewalDiscount } = await import("../src/lib/retail-pricing.ts");
