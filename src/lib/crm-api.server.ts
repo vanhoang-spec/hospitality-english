@@ -98,12 +98,41 @@ const xacNhanDon = z.object({
   ma_giao_dich: z.string().trim().max(120).nullable().optional(),
 });
 
+// Pre-fill text is HR's to check, so it is only trimmed and capped here;
+// the sign-up form validates what HR finally sends.
+const text = (max: number) => z.string().trim().max(max).nullable().optional();
+
+const moiKhachSan = z.object({
+  hanh_dong: z.literal("moi_khach_san"),
+  crm_ref: CRM_REF,
+  khach_crm_id: CRM_REF,
+  loai: z.enum(["tang", "dung_thu"]),
+  goi: z.enum(["p50", "p100", "p200", "p300", "p500"]),
+  so_ngay: z.number().int().min(1).max(365),
+  het_han_link: DATE.nullable(),
+  dien_san: z
+    .object({
+      ten_khach_san: text(120),
+      cong_ty: z
+        .object({ ten: text(200), mst: text(20), dia_chi: text(300) })
+        .partial()
+        .optional(),
+      dai_dien: z
+        .object({ ten: text(120), sdt: text(20), email: text(254) })
+        .partial()
+        .optional(),
+    })
+    .optional(),
+  dang_mo: z.boolean(),
+});
+
 export const crmCommand = z.discriminatedUnion("hanh_dong", [
   luuLink,
   layBangGia,
   laySuKien,
   capGoi,
   xacNhanDon,
+  moiKhachSan,
 ]);
 export type CrmCommand = z.infer<typeof crmCommand>;
 
@@ -155,6 +184,37 @@ export async function runCrmCommand(
         link_id: row.link_id,
         url: `${origin}/join/${row.link_token}`,
         tao_moi: row.tao_moi,
+      };
+    }
+
+    case "moi_khach_san": {
+      const { data, error } = await supabaseAdmin.rpc("crm_moi_khach_san", {
+        p_crm_ref: cmd.crm_ref,
+        p_customer_ref: cmd.khach_crm_id,
+        p_invite_kind: cmd.loai === "tang" ? "gift" : "trial",
+        p_plan: cmd.goi,
+        p_days: cmd.so_ngay,
+        p_expires_at: (cmd.het_han_link ? `${cmd.het_han_link}T23:59:59+07:00` : null) as string,
+        p_prefill: (cmd.dien_san ?? null) as never,
+        p_open: cmd.dang_mo,
+        p_new_token: newToken(),
+      });
+      if (error) fromDb(error.message);
+      const row = (data ?? [])[0];
+      if (!row) throw new Error("crm_moi_khach_san returned nothing");
+      if (!row.da_dung) {
+        await logAdminAction({
+          actorId: null,
+          orgId: null,
+          action: row.tao_moi ? "crm.invite.create" : "crm.invite.update",
+          meta: { link_id: row.link_id, crm_ref: cmd.crm_ref, loai: cmd.loai, goi: cmd.goi },
+        });
+      }
+      return {
+        link_id: row.link_id,
+        url: `${origin}/join/${row.link_token}`,
+        tao_moi: row.tao_moi,
+        da_dung: row.da_dung,
       };
     }
 

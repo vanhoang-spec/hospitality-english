@@ -1,6 +1,6 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **07/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **08/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
 ---
@@ -53,8 +53,16 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
   [vanhoang-spec/hospitality-english#18](https://github.com/vanhoang-spec/hospitality-english/pull/18)
   merge `77be557`.
 - **07/10: nhánh `platform/retail-renewal`** (tách từ `main` @ `77be557`) — gia hạn người dùng lẻ, xem §4
-  "Gia hạn". Migration `20261008090000_retail_renewal.sql` **chưa áp dụng lên production** — phải áp
-  dụng TRƯỚC khi merge (code đọc `orders.kind`, `grace_until`, `pay_token`).
+  "Gia hạn". Người dùng chạy migration `20261008090000_retail_renewal.sql` trong SQL Editor; PR
+  [vanhoang-spec/hospitality-english#19](https://github.com/vanhoang-spec/hospitality-english/pull/19)
+  merge `7cbbee9`.
+- **08/10: khoá đã đặt và chạy.** `CRON_SECRET` (Claude đặt bằng Vercel CLI — `vercel --scope hoang77`;
+  kết nối MCP Vercel không thấy team này) và `CRM_HMAC_SECRET` trên Vercel; `HOSPITALITY_HMAC_SECRET`
+  phía CRM. Phía CRM lên production (`71c3b55`, migration 269 + 270). Kiểm 08/10 13:49: 811 lệnh CRM →
+  `/api/crm` đều 200, cron gia hạn tự chạy 08:00 VN trả 200, không log lỗi.
+- **08/10: nhánh `platform/crm-invite`** — tặng / mời dùng thử trực tiếp từ khách B2B trong CRM, xem §4
+  "Tặng / mời". Migration `20261008120000_crm_invite.sql` **chưa áp dụng lên production** — phải áp dụng
+  TRƯỚC khi merge.
 - Repo **PUBLIC**. Mọi thứ trong `docs/` ai cũng đọc được.
 - Nhánh này đồng bộ sang Lovable. Không rewrite history đã push.
 
@@ -224,6 +232,21 @@ Người dùng chốt (hợp đồng CRM, quyết định #12–#16):
 - Kiểm thử: `test:db` 75 phép (9 mới: ân hạn, token, ràng buộc); `test:crm` 33 phép (giá gia hạn, khoá
   cron).
 
+### Tặng / mời dùng thử trực tiếp (08/10, nhánh `platform/crm-invite`)
+
+Người dùng muốn bấm ngay trên khách B2B trong CRM, không qua đối tác: **tặng** app cho khách đang học với
+Embassy (Lugano, Swandor) hoặc **mời dùng thử** khách sạn chưa là khách (tạo khách B2B trước). Hợp đồng CRM
+quyết định #17–#19, lệnh `moi_khach_san`:
+
+- Gói theo 50–500 học viên, số ngày tự do (1–365), miễn phí. Link mời **dùng một lần, điền sẵn** thông tin
+  công ty và người đại diện từ CRM; HR sửa được rồi đặt mật khẩu.
+- `signup_links.kind = 'invite'` (`invite_kind` gift|trial, `prefill`, `crm_customer_ref`); gói ghi
+  `subscriptions.kind = 'gift'` hoặc `trial`. Hàm `crm_moi_khach_san` (một giao dịch, chỉ service role):
+  chưa dùng thì sửa tại chỗ giữ token; đã dùng thì trả `da_dung`.
+- Sự kiện `khach_san_dang_ky` thêm `khach_crm_id` để CRM gắn đúng khách B2B, không dò MST.
+- Hết hạn tặng/thử: hoá đơn B2B → `cap_goi` như cũ (nối sau hạn còn lại).
+- Kiểm thử: `test:db` 84 phép (9 mới), `test:crm` 39 phép (6 mới).
+
 ### Production
 
 Theo commit `2de39b8` trên `main` (01/10): năm migration nền tảng **đã áp dụng lên production**,
@@ -247,10 +270,9 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Áp dụng migration `20261008090000_retail_renewal.sql` lên production**, rồi merge
-   `platform/retail-renewal`; đặt biến `CRON_SECRET` trên Vercel cho bộ hẹn giờ gia hạn.
-3. **Khi phía CRM xong:** đặt cùng một khoá bí mật ở Vercel app (`CRM_HMAC_SECRET`) và Supabase CRM
-   (`HOSPITALITY_HMAC_SECRET`), rồi thử đầu-cuối.
+2. **Áp dụng migration `20261008120000_crm_invite.sql` lên production**, rồi merge
+   `platform/crm-invite`; phía CRM làm nút "Tặng / mời dùng thử" theo hợp đồng.
+3. **Thử đầu-cuối** với dữ liệu thử: link đối tác (khách sạn + cá nhân), lời mời tặng, đơn gia hạn.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)

@@ -28,6 +28,7 @@ export const PLAN_LABEL: Record<string, string> = {
 
 export const TERM_LABEL: Record<string, string> = {
   trial: "Dùng thử 1 tháng",
+  gift: "Tặng",
   m3: "3 tháng",
   m6: "6 tháng",
   m9: "9 tháng",

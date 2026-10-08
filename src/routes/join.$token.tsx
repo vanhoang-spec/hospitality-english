@@ -15,6 +15,8 @@ import {
   redeemLearnerLink,
   redeemOrganizationLink,
   redeemPartnerHotelLink,
+  redeemInviteLink,
+  type InvitePrefill,
   redeemRetailLink,
 } from "@/lib/signup-link-actions";
 
@@ -340,19 +342,30 @@ type HotelLink =
       trialDays: number;
       until: string | null;
       plans: { code: string; seats: number }[];
+    }
+  | {
+      /** Made in the CRM for one hotel: a gift or a trial, pre-filled. */
+      kind: "invite";
+      inviteKind: string;
+      seats: number;
+      days: number;
+      prefill: InvitePrefill;
     };
 
 function HotelForm({ token, link }: { token: string; link: HotelLink }) {
-  const [hotelName, setHotelName] = useState("");
-  const [legalName, setLegalName] = useState("");
-  const [taxCode, setTaxCode] = useState("");
-  const [address, setAddress] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [repEmail, setRepEmail] = useState("");
+  // An invitation arrives with what the CRM already knows; HR checks and
+  // corrects it. Every other link starts empty.
+  const pre: InvitePrefill = link.kind === "invite" ? link.prefill : {};
+  const [hotelName, setHotelName] = useState(pre.hotelName ?? "");
+  const [legalName, setLegalName] = useState(pre.legalName ?? "");
+  const [taxCode, setTaxCode] = useState(pre.taxCode ?? "");
+  const [address, setAddress] = useState(pre.address ?? "");
+  const [fullName, setFullName] = useState(pre.repName ?? "");
+  const [repEmail, setRepEmail] = useState(pre.repEmail ?? "");
   const [planCode, setPlanCode] = useState(
     link.kind === "partner_hotel" ? (link.plans[1]?.code ?? link.plans[0]?.code ?? "p100") : "",
   );
-  const account = useAccountFields();
+  const account = useAccountFields(pre.repPhone ?? "");
   const navigate = useNavigate();
 
   async function submit(e: FormEvent) {
@@ -369,6 +382,8 @@ function HotelForm({ token, link }: { token: string; link: HotelLink }) {
               planCode: planCode as "p50" | "p100" | "p200" | "p300" | "p500",
             },
           });
+        } else if (link.kind === "invite") {
+          await redeemInviteLink({ data: { ...base, phone } });
         } else {
           await redeemOrganizationLink({ data: { ...base, phone } });
         }
@@ -405,6 +420,24 @@ function HotelForm({ token, link }: { token: string; link: HotelLink }) {
             </>
           ) : null}
           {untilText ? <> · đăng ký đến hết {untilText}</> : null}.
+        </div>
+      ) : null}
+      {link.kind === "invite" ? (
+        <div className="mt-4 border border-primary/40 bg-primary/10 p-3 text-sm">
+          {link.inviteKind === "gift" ? (
+            <>
+              Embassy Language tặng khách sạn gói{" "}
+              <strong className="text-foreground">{link.seats} học viên</strong>, học miễn phí{" "}
+              <strong className="text-foreground">{link.days} ngày</strong> kể từ hôm nay.
+            </>
+          ) : (
+            <>
+              Mời khách sạn dùng thử miễn phí{" "}
+              <strong className="text-foreground">{link.days} ngày</strong>, gói{" "}
+              <strong className="text-foreground">{link.seats} học viên</strong>.
+            </>
+          )}{" "}
+          Thông tin bên dưới đã điền sẵn — hãy kiểm tra và sửa nếu chưa đúng.
         </div>
       ) : null}
       <p className="mt-3 text-sm text-foreground/75">
@@ -498,8 +531,8 @@ function HotelForm({ token, link }: { token: string; link: HotelLink }) {
  *  both forms share. There is no self-service password reset in this
  *  product, so a typo here would lock the person out — hence the second
  *  password box. */
-function useAccountFields() {
-  const [phone, setPhone] = useState("");
+function useAccountFields(initialPhone = "") {
+  const [phone, setPhone] = useState(initialPhone);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);

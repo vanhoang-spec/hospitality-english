@@ -892,6 +892,7 @@ export type Database = {
         Row: {
           created_at: string;
           created_by: string | null;
+          crm_customer_ref: string | null;
           crm_ref: string | null;
           department: string | null;
           discount_amount: number | null;
@@ -900,12 +901,14 @@ export type Database = {
           expires_at: string | null;
           group_id: string | null;
           id: string;
+          invite_kind: string | null;
           kind: string;
           label: string | null;
           max_uses: number | null;
           org_id: string | null;
           partner_id: string | null;
           plan_code: string | null;
+          prefill: Json | null;
           price: number | null;
           revoked_at: string | null;
           term: string | null;
@@ -916,6 +919,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           created_by?: string | null;
+          crm_customer_ref?: string | null;
           crm_ref?: string | null;
           department?: string | null;
           discount_amount?: number | null;
@@ -924,12 +928,14 @@ export type Database = {
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
+          invite_kind?: string | null;
           kind: string;
           label?: string | null;
           max_uses?: number | null;
           org_id?: string | null;
           partner_id?: string | null;
           plan_code?: string | null;
+          prefill?: Json | null;
           price?: number | null;
           revoked_at?: string | null;
           term?: string | null;
@@ -940,6 +946,7 @@ export type Database = {
         Update: {
           created_at?: string;
           created_by?: string | null;
+          crm_customer_ref?: string | null;
           crm_ref?: string | null;
           department?: string | null;
           discount_amount?: number | null;
@@ -948,12 +955,14 @@ export type Database = {
           expires_at?: string | null;
           group_id?: string | null;
           id?: string;
+          invite_kind?: string | null;
           kind?: string;
           label?: string | null;
           max_uses?: number | null;
           org_id?: string | null;
           partner_id?: string | null;
           plan_code?: string | null;
+          prefill?: Json | null;
           price?: number | null;
           revoked_at?: string | null;
           term?: string | null;
@@ -1114,6 +1123,7 @@ export type Database = {
         Returns: {
           created_at: string;
           created_by: string | null;
+          crm_customer_ref: string | null;
           crm_ref: string | null;
           department: string | null;
           discount_amount: number | null;
@@ -1122,12 +1132,14 @@ export type Database = {
           expires_at: string | null;
           group_id: string | null;
           id: string;
+          invite_kind: string | null;
           kind: string;
           label: string | null;
           max_uses: number | null;
           org_id: string | null;
           partner_id: string | null;
           plan_code: string | null;
+          prefill: Json | null;
           price: number | null;
           revoked_at: string | null;
           term: string | null;
@@ -1172,6 +1184,25 @@ export type Database = {
           p_trial_days: number;
         };
         Returns: {
+          link_id: string;
+          link_token: string;
+          tao_moi: boolean;
+        }[];
+      };
+      crm_moi_khach_san: {
+        Args: {
+          p_crm_ref: string;
+          p_customer_ref: string;
+          p_days: number;
+          p_expires_at: string;
+          p_invite_kind: string;
+          p_new_token: string;
+          p_open: boolean;
+          p_plan: string;
+          p_prefill: Json;
+        };
+        Returns: {
+          da_dung: boolean;
           link_id: string;
           link_token: string;
           tao_moi: boolean;
