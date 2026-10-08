@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import {
@@ -144,7 +144,11 @@ function ArcadeSuiteInner({
   const { awardStars, patchMetrics, recordSuiteResult } = useAcademy();
   const earned = useRef(0);
   const poppedRef = useRef<Set<number>>(new Set());
-  const rounds: GameRound[] = content.lessons.flatMap((l) => l.game);
+  // Memoised: the spawn effect below depends on `rounds`. Rebuilt on every
+  // render, it re-ran that effect after each bubble it spawned — the first
+  // option of a fresh shuffle came out at 0 ms, re-rendered, and so on —
+  // piling up hundreds of bubbles within seconds and choking the phone.
+  const rounds: GameRound[] = useMemo(() => content.lessons.flatMap((l) => l.game), [content]);
 
   // 18s mỗi vòng: đọc một prompt cộng ba phương án ở A2+ mất khoảng chừng đó.
   // Sàn 75s giữ nguyên hành vi cũ cho các tuần 4 vòng.
