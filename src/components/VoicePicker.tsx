@@ -39,7 +39,8 @@ const SAMPLE_RATE = 0.85;
 const PILL =
   "border px-3 py-2 text-xs transition-colors aria-checked:border-primary aria-checked:bg-primary/15 aria-checked:text-primary";
 
-/** "🎚 Đổi giọng", beside a listen button. Opens the picker on `role`. */
+/** "⚙ Đổi giọng", beside a listen button. Opens the picker on `role`. (Not 🎚:
+ *  Chrome on Windows draws that one as an empty box.) */
 export function VoiceButton({ role }: { role: VoiceRole }) {
   return (
     <button
@@ -48,7 +49,7 @@ export function VoiceButton({ role }: { role: VoiceRole }) {
       className="border border-primary/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:border-primary hover:text-primary"
       aria-label="Đổi giọng đọc"
     >
-      🎚 Đổi giọng
+      ⚙ Đổi giọng
     </button>
   );
 }
