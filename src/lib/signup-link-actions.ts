@@ -15,6 +15,7 @@ import { SHIPPING_DEPARTMENTS } from "@/lib/departments";
 import { requireOrgAdmin } from "@/lib/org-admin-actions";
 import { requireSuperAdmin } from "@/lib/platform-admin-actions";
 import { newOrgDetailsSchema } from "@/lib/org-details";
+import { optionalContactEmail } from "@/lib/contact-email";
 import type { Database } from "@/integrations/supabase/types";
 
 type LinkRow = Database["public"]["Tables"]["signup_links"]["Row"];
@@ -463,6 +464,7 @@ export const redeemLearnerLink = createServerFn({ method: "POST" })
       phone: z.string().min(1),
       password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
       department: DEPARTMENT.nullable().optional(),
+      email: optionalContactEmail,
     }),
   )
   .handler(async ({ data }) => {
@@ -485,6 +487,7 @@ export const redeemLearnerLink = createServerFn({ method: "POST" })
         password: data.password,
         role: "member",
         department,
+        email: data.email,
         mustChangePassword: false,
         actorId: null,
         action: "member.signup_link",
@@ -787,6 +790,7 @@ export const redeemRetailLink = createServerFn({ method: "POST" })
       password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
       department: DEPARTMENT,
       term: RETAIL_TERM,
+      email: optionalContactEmail,
     }),
   )
   .handler(async ({ data }) => {
@@ -800,6 +804,7 @@ export const redeemRetailLink = createServerFn({ method: "POST" })
         phone,
         password: data.password,
         department: data.department,
+        email: data.email,
         term: data.term,
         partnerId: link.partner_id as string,
         linkId: link.id,

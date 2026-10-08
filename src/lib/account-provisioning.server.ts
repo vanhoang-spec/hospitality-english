@@ -131,6 +131,8 @@ export async function provisionMember(input: {
   password: string;
   role: "member" | "org_admin";
   department?: string | null;
+  /** Where a forgotten password is reset. Already trimmed, lower-case. */
+  email?: string | null;
   mustChangePassword: boolean;
   actorId: string | null;
   action: string;
@@ -180,6 +182,11 @@ export async function provisionMember(input: {
       .from("profiles")
       .update({ must_change_password: true })
       .eq("id", created.user.id);
+  }
+  // Apart from the line above, so an address the database refuses can
+  // only cost the address, never the forced first-login password change.
+  if (input.email) {
+    await supabaseAdmin.from("profiles").update({ email: input.email }).eq("id", created.user.id);
   }
 
   await logAdminAction({
@@ -312,6 +319,11 @@ export async function provisionOrganization(input: {
       .update({ must_change_password: true })
       .eq("id", created.user.id);
   }
+  // The representative's email is also where HR resets their own password.
+  await supabaseAdmin
+    .from("profiles")
+    .update({ email: input.company.repEmail.trim().toLowerCase() })
+    .eq("id", created.user.id);
 
   await logAdminAction({
     actorId: input.actorId ?? created.user.id,
@@ -388,6 +400,7 @@ export async function provisionIndividual(input: {
   phone: string;
   password: string;
   department: string;
+  email?: string | null;
   term: string;
   partnerId: string;
   linkId: string;
@@ -439,6 +452,7 @@ export async function provisionIndividual(input: {
       password: input.password,
       role: "member",
       department: input.department,
+      email: input.email,
       mustChangePassword: false,
       actorId: null,
       action: "member.signup_retail",

@@ -878,5 +878,130 @@ const giftSub = await raises(
 );
 check("a subscription can be a gift", giftSub === null, giftSub ?? "");
 
+// ── Password reset by email (20261008150000) ───────────────────
+// HR Lan (84900000002) adds an address; learner m1 has none at first.
+const badEmail = await raises(`update public.profiles set email = 'Lan@Hotel.vn' where id = $1`, [
+  hr,
+]);
+check(
+  "an email must be stored lower-case and look like an address",
+  /profiles_email_check/.test(badEmail ?? "") &&
+    /profiles_email_check/.test(
+      (await raises(`update public.profiles set email = 'not an email' where id = $1`, [hr])) ?? "",
+    ),
+  badEmail ?? "accepted",
+);
+const ownEmail = await asRole(
+  "authenticated",
+  `update public.profiles set email = 'lan@hotel.vn' where id = '${hr}'`,
+  hr,
+);
+const lanEmail = await one<{ email: string | null }>(
+  `select email from public.profiles where id = $1`,
+  [hr],
+);
+check(
+  "a person can add their own email",
+  ownEmail === null && lanEmail?.email === "lan@hotel.vn",
+  ownEmail ?? JSON.stringify(lanEmail),
+);
+async function rowsAs(sub: string, sql: string) {
+  await db.exec(`set request.jwt.claim.sub = '${sub}'; set role authenticated;`);
+  try {
+    return (await db.query(sql)).rows;
+  } finally {
+    await db.exec(`reset role; reset request.jwt.claim.sub;`);
+  }
+}
+check(
+  "a learner cannot read a colleague's email",
+  (await rowsAs(m1, `select email from public.profiles where id = '${hr}'`)).length === 0,
+);
+
+const hex = (c: string) => c.repeat(64);
+const ask = (phone: string, hash: string) =>
+  db.query<{ email: string; full_name: string }>(
+    `select * from public.password_reset_request($1, $2)`,
+    [phone, hash],
+  );
+const tokenCount = async (user: string) =>
+  Number(
+    (await one<{ n: number }>(
+      `select count(*)::int as n from public.password_reset_tokens where user_id = $1`,
+      [user],
+    ))!.n,
+  );
+check(
+  "a phone with no email gets nothing and stores no token",
+  (await ask("+84900000003", hex("0"))).rows.length === 0 && (await tokenCount(m1)) === 0,
+);
+check("an unknown phone gets nothing", (await ask("+84999999999", hex("1"))).rows.length === 0);
+const askA = (await ask("+84900000002", hex("a"))).rows;
+const tokA = await one<{ email: string; minutes: number }>(
+  `select email, round(extract(epoch from expires_at - created_at) / 60)::int as minutes
+     from public.password_reset_tokens where token_hash = $1`,
+  [hex("a")],
+);
+check(
+  "a phone with an email gets the address and a 30-minute token",
+  askA[0]?.email === "lan@hotel.vn" && tokA?.email === "lan@hotel.vn" && tokA.minutes === 30,
+  JSON.stringify({ askA, tokA }),
+);
+check(
+  "the phone matches without the leading +",
+  (await ask("84900000002", hex("b"))).rows.length === 1,
+);
+await ask("+84900000002", hex("c"));
+check(
+  "a fourth request in the same hour is ignored",
+  (await ask("+84900000002", hex("d"))).rows.length === 0 && (await tokenCount(hr)) === 3,
+  `tokens=${await tokenCount(hr)}`,
+);
+const claim = (hash: string) =>
+  db.query<{ user_id: string; token_id: string }>(`select * from public.password_reset_claim($1)`, [
+    hash,
+  ]);
+const claimA = (await claim(hex("a"))).rows;
+check(
+  "a fresh token is claimed for its account",
+  claimA[0]?.user_id === hr,
+  JSON.stringify(claimA),
+);
+check("a claimed token cannot be claimed again", (await claim(hex("a"))).rows.length === 0);
+check(
+  "claiming one token retires the account's other live tokens",
+  (await claim(hex("b"))).rows.length === 0 && (await claim(hex("c"))).rows.length === 0,
+);
+await db.query(
+  `insert into public.password_reset_tokens (user_id, token_hash, email, created_at, expires_at)
+   values ($1, $2, 'lan@hotel.vn', now() - interval '2 hours', now() - interval '90 minutes')`,
+  [hr, hex("e")],
+);
+check("an expired token cannot be claimed", (await claim(hex("e"))).rows.length === 0);
+const askAsUser = await asRole(
+  "authenticated",
+  `select * from public.password_reset_request('+84900000002', '${hex("f")}')`,
+  m1,
+);
+const claimAsAnon = await asRole(
+  "anon",
+  `select * from public.password_reset_claim('${hex("f")}')`,
+);
+check(
+  "nobody signed in, and nobody signed out, can ask for or claim a token",
+  /permission denied/.test(askAsUser ?? "") && /permission denied/.test(claimAsAnon ?? ""),
+  `${askAsUser} | ${claimAsAnon}`,
+);
+const readTokens = await asRole(
+  "authenticated",
+  `select token_hash from public.password_reset_tokens`,
+  hr,
+);
+check(
+  "nobody signed in can read the token table, not even its owner",
+  /permission denied/.test(readTokens ?? ""),
+  readTokens ?? "allowed!",
+);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

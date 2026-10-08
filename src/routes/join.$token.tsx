@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSession, signOut } from "@/lib/auth";
 import { clearSessionId } from "@/lib/single-session";
 import { normalizeVNPhone, InvalidPhoneError } from "@/lib/phone";
+import { contactEmailProblem } from "@/lib/contact-email";
 import { SHIPPING_DEPARTMENTS, getDepartment } from "@/lib/departments";
 import { TERM_LABEL, formatMoney } from "@/lib/subscription";
 import { firstProblem, newOrgDetailsSchema } from "@/lib/org-details";
@@ -145,6 +146,7 @@ function RetailForm({
           password: account.password,
           department,
           term: term as "m3" | "m6" | "m9" | "m12",
+          email: account.email,
         },
       });
     });
@@ -235,7 +237,11 @@ function RetailForm({
             ))}
           </select>
         </Field>
-        <AccountFields account={account} submitLabel={`Đăng ký và học thử ${trialDays} ngày`} />
+        <AccountFields
+          account={account}
+          askEmail
+          submitLabel={`Đăng ký và học thử ${trialDays} ngày`}
+        />
         <p className="text-xs text-foreground/60">
           Bạn vào học được ngay. Thanh toán trong {trialDays} ngày học thử để học tiếp — hướng dẫn
           thanh toán hiện ở bước sau, và luôn xem lại được trong mục “Gói học của tôi”.
@@ -273,6 +279,7 @@ function LearnerForm({
           phone,
           password: account.password,
           department: department ? null : departmentChoice,
+          email: account.email,
         },
       });
     });
@@ -322,7 +329,7 @@ function LearnerForm({
             </select>
           </Field>
         )}
-        <AccountFields account={account} submitLabel="Tạo tài khoản" />
+        <AccountFields account={account} askEmail submitLabel="Tạo tài khoản" />
       </form>
     </Card>
   );
@@ -527,14 +534,15 @@ function HotelForm({ token, link }: { token: string; link: HotelLink }) {
   );
 }
 
-/** Phone + password + confirmation, and the create-then-sign-in sequence
- *  both forms share. There is no self-service password reset in this
- *  product, so a typo here would lock the person out — hence the second
- *  password box. */
+/** Phone + password + confirmation (+ an optional email), and the
+ *  create-then-sign-in sequence every form shares. A password can only be
+ *  reset by email when the account has one, so a typo here may still
+ *  lock the person out — hence the second password box. */
 function useAccountFields(initialPhone = "") {
   const [phone, setPhone] = useState(initialPhone);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -566,6 +574,11 @@ function useAccountFields(initialPhone = "") {
       setError("Hai lần nhập mật khẩu không khớp.");
       return false;
     }
+    const emailProblem = contactEmailProblem(email);
+    if (emailProblem) {
+      setError(emailProblem);
+      return false;
+    }
     setBusy(true);
     try {
       await create(normalized);
@@ -586,15 +599,31 @@ function useAccountFields(initialPhone = "") {
     }
   }
 
-  return { phone, setPhone, password, setPassword, confirm, setConfirm, error, busy, run };
+  return {
+    phone,
+    setPhone,
+    password,
+    setPassword,
+    confirm,
+    setConfirm,
+    email,
+    setEmail,
+    error,
+    busy,
+    run,
+  };
 }
 
 function AccountFields({
   account,
   submitLabel,
+  askEmail = false,
 }: {
   account: ReturnType<typeof useAccountFields>;
   submitLabel: string;
+  /** A learner's own sign-up. A hotel's HR already gives the
+   *  representative's email above, and that one is used. */
+  askEmail?: boolean;
 }) {
   return (
     <>
@@ -629,6 +658,18 @@ function AccountFields({
           className={INPUT}
         />
       </Field>
+      {askEmail && (
+        <Field label="Email (không bắt buộc) — để tự lấy lại mật khẩu khi quên">
+          <input
+            type="email"
+            autoComplete="email"
+            value={account.email}
+            onChange={(e) => account.setEmail(e.target.value)}
+            placeholder="ten@gmail.com"
+            className={INPUT}
+          />
+        </Field>
+      )}
       {account.error && <p className="text-sm text-red-400">{account.error}</p>}
       <button
         type="submit"

@@ -344,7 +344,9 @@ dùng ảnh stock người cười trước laptop. Không so sánh trực tiế
    trước được. Được nói "kiểm soát lộ trình học", không được nói "học viên không thể xem trước".
 2. **Không hứa đạt chuẩn CEFR.** Chương trình ghi "A2+ có tiếp xúc B1.1" và chỉ được nói đúng
    như vậy. Không nói "đạt B1", không nói "tương đương IELTS".
-3. **Không hứa có khôi phục mật khẩu tự động.** Hiện chưa có; nhân viên nhờ phòng nhân sự.
+3. **Chỉ hứa lấy lại mật khẩu qua email.** Học viên đã gắn email (khi đăng ký, hoặc ở mục
+   "Mật khẩu & email") tự lấy lại bằng "Quên mật khẩu?" ở trang đăng nhập. Chưa gắn email thì
+   nhờ bộ phận nhân sự cấp lại. Không có mã OTP qua SMS hay Zalo.
 4. **Không hứa thanh toán trực tuyến.** Hệ thống ghi nhận gói và giá để xuất hoá đơn thủ công,
    không nhận tiền trực tuyến.
 5. **Không hứa "một trăm ghế là một trăm người dùng đồng thời".** Ghế tính theo **tài khoản**.
