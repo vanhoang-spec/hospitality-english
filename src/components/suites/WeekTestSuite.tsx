@@ -9,7 +9,8 @@ import {
   speakerLabel,
   type VocabItem,
 } from "@/lib/content/week-content";
-import { speakEN, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
+import { speak, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
 import { utterancePassedAny } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
@@ -34,29 +35,6 @@ import { buildPaper, type Question } from "@/lib/checkpoint-paper";
 import { answersOf, buildOral, oralHalfPassed, type OralItem } from "@/lib/checkpoint-oral";
 import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
-
-/** Returns whether an English voice was actually available for this
- *  utterance. The listening floor is only enforced when the device has
- *  proven at least once that it can deliver English audio: many of this
- *  app's learners are on cheap Android handsets or in-app WebViews carrying
- *  only a vi-VN voice, where the "🔊 Nghe" button reads English orthography
- *  in Vietnamese or stays silent. Making the floor blocking there would
- *  turn a missing voice pack into a permanent course-wide lockout. */
-function speakVaried(text: string, week: string | number): boolean {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis
-    .getVoices()
-    .filter((v) => v.lang.toLowerCase().startsWith("en"));
-  if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
-  u.lang = u.voice?.lang ?? "en-US";
-  // Same ladder as ListeningSuite: a flat 0.85 made the week-6 pre-A1 paper
-  // and the week-40 B1.1 paper equally hard to hear.
-  u.rate = listeningRateForWeek(week);
-  window.speechSynthesis.speak(u);
-  return voices.length > 0;
-}
 
 /** The oral half. Deliberately does NOT show the target sentence: an earlier
  *  version of the writing task printed its required keywords in the
@@ -221,11 +199,17 @@ function OralStage({
           <button
             // The item's OWN week, not the checkpoint's — it is graded at that
             // week's threshold, so it should be heard at that week's speed.
-            onClick={() => speakEN(item.guestPrompt, listeningRateForWeek(item.sourceWeek))}
+            onClick={() =>
+              speak(item.guestPrompt, {
+                role: "guest",
+                rate: listeningRateForWeek(item.sourceWeek),
+              })
+            }
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
           >
             ▶ Nghe {item.audioWho}
           </button>
+          <VoiceButton role="guest" />
           {!typedMode && (
             <button
               onClick={listen}
@@ -724,14 +708,15 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             <p className="font-display text-xl text-foreground">
               Nghe {q.audioWho} và chọn câu trả lời chuẩn 5 sao:
             </p>
-            <button
-              onClick={() => {
-                speakVaried(q.audio, week!);
-              }}
-              className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
-            >
-              🔊 Nghe
-            </button>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => speak(q.audio, { role: "guest", rate: listeningRateForWeek(week!) })}
+                className="border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+              >
+                🔊 Nghe
+              </button>
+              <VoiceButton role="guest" />
+            </div>
           </>
         ) : (
           <p className="font-display text-xl text-foreground">{q.prompt}</p>

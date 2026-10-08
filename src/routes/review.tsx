@@ -11,7 +11,7 @@ import {
   type ResolvedReviewItem,
 } from "@/lib/review";
 import { speakerLabel } from "@/lib/content/week-content";
-import { dedupeTranscript, speakEN } from "@/lib/speech";
+import { dedupeTranscript, speak } from "@/lib/speech";
 import { utterancePassedAny } from "@/lib/speaking-score";
 import { acceptedAnswers } from "@/lib/speaking-alternates";
 import { useScopedAttemptLogger } from "@/lib/telemetry";
@@ -261,7 +261,7 @@ function VocabReview({ item, answered, onResult }: ReviewCardProps<"vocab">) {
         <p className="font-display text-xl text-foreground">{question.prompt}</p>
         {question.speak && (
           <button
-            onClick={() => speakEN(question.speak!, 0.85)}
+            onClick={() => speak(question.speak!, { role: "model", rate: 0.85 })}
             className="shrink-0 border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
           >
             🔊
@@ -492,7 +492,7 @@ function SpeakingReview({ item, answered, onResult }: ReviewCardProps<"speaking"
       </div>
       <p className="mt-2 font-display text-xl text-foreground">"{speaking.guestPrompt}"</p>
       <button
-        onClick={() => speakEN(speaking.guestPrompt, 0.9)}
+        onClick={() => speak(speaking.guestPrompt, { role: "guest", rate: 0.9 })}
         className="mt-3 border border-primary/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
       >
         🔊 Nghe

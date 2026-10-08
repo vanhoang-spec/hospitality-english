@@ -40,7 +40,7 @@ const SUITE_DOORS = [
     slug: "listening",
     title: "Golden Ear Listening",
     tag: "Attention",
-    detail: "Luyện tai nghe yêu cầu của khách qua nhiều giọng đọc và tốc độ khác nhau.",
+    detail: "Luyện tai nghe yêu cầu của khách, với giọng đọc và tốc độ bạn chọn.",
   },
   {
     slug: "speaking",

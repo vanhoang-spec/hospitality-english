@@ -5,6 +5,7 @@ import logoSrc from "@/assets/Logo_EmbassyHospitality_filetrong.png";
 import { useAcademy } from "@/lib/academy-store";
 import { useSession, useProfile, signOut } from "@/lib/auth";
 import { useOrgSubscription } from "@/lib/subscription";
+import { openVoicePicker } from "@/lib/voice-store";
 
 export function AcademyNav() {
   const location = useLocation();
@@ -106,6 +107,15 @@ export function AcademyNav() {
             >
               Appraisal
             </Link>
+            <button
+              type="button"
+              onClick={() => openVoicePicker()}
+              className="rounded-sm border border-primary/30 px-2.5 py-1.5 text-sm text-foreground/80 transition-colors hover:border-primary hover:text-primary"
+              aria-label="Chọn giọng đọc"
+              title="Chọn giọng đọc"
+            >
+              🔊
+            </button>
             <Shield icon="⭐" value={state.service_stars} label="Stars" shimmer={shimmer} />
             <Shield icon="🔥" value={state.daily_streak} label="Streak" pulse />
             <button
@@ -170,6 +180,15 @@ export function AcademyNav() {
                 >
                   Mật khẩu &amp; email
                 </Link>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    openVoicePicker();
+                  }}
+                  className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
+                >
+                  Giọng đọc
+                </button>
                 <button
                   onClick={async () => {
                     setMenuOpen(false);

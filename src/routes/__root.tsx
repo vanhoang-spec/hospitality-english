@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
   HeadContent,
   Scripts,
@@ -12,8 +13,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { stopSpeaking } from "@/lib/speech";
 import { AcademyNav } from "@/components/AcademyNav";
 import { AuthGate } from "@/components/AuthGate";
+import { VoicePicker } from "@/components/VoicePicker";
 
 function NotFoundComponent() {
   return (
@@ -121,6 +124,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+
+  // A line still being read must not carry on over the next screen.
+  useEffect(() => stopSpeaking(), [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -128,6 +135,7 @@ function RootComponent() {
         <div className="min-h-screen bg-background text-foreground">
           <AcademyNav />
           <Outlet />
+          <VoicePicker />
         </div>
       </AuthGate>
     </QueryClientProvider>
