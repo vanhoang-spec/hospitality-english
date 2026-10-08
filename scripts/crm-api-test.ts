@@ -171,6 +171,37 @@ check(
   String(bp.json.thong_diep),
 );
 
+// ── moi_khach_san (decisions #17-#19): shape checks before the database.
+const { crmCommand } = await import("../src/lib/crm-api.server.ts");
+const invite = {
+  hanh_dong: "moi_khach_san",
+  crm_ref: "loi-moi-1",
+  khach_crm_id: "b2b-0002",
+  loai: "tang",
+  goi: "p100",
+  so_ngay: 90,
+  het_han_link: "2026-10-31",
+  dien_san: {
+    ten_khach_san: "Lugano Resort",
+    cong_ty: { ten: "Công ty TNHH Lugano", mst: "4201234567", dia_chi: "Mỹ Ca" },
+    dai_dien: { ten: "Chị Lan", sdt: "0912345678", email: "hr@lugano.vn" },
+  },
+  dang_mo: true,
+};
+const parse = (o: unknown) => crmCommand.safeParse(o);
+check("a full gift invitation is accepted", parse(invite).success);
+check(
+  "an invitation with nothing to pre-fill is accepted (HR types it all)",
+  parse({ ...invite, dien_san: undefined }).success,
+);
+check("a 366-day invitation is refused", !parse({ ...invite, so_ngay: 366 }).success);
+check("an invitation on the one-seat plan is refused", !parse({ ...invite, goi: "p1" }).success);
+check("an unknown invitation kind is refused", !parse({ ...invite, loai: "mua" }).success);
+check(
+  "an invitation without the CRM customer id is refused",
+  !parse({ ...invite, khach_crm_id: "" }).success,
+);
+
 // ── Renewal price (owner, 07/10/2026): the link's discount only while its
 // offer still runs, and never for a link set to "first contract only".
 const { renewalDiscount } = await import("../src/lib/retail-pricing.ts");

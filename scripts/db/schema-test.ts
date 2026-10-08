@@ -785,5 +785,98 @@ const renewEvent = await raises(
 );
 check("the event log accepts don_gia_han", renewEvent === null, renewEvent ?? "");
 
+// ── Invitations from the CRM (20261008120000): gift or trial, single use,
+// no partner.
+const moi = (ref: string, kind: string, plan: string, days: number, open = true) =>
+  db.query<{ link_id: string; link_token: string; tao_moi: boolean; da_dung: boolean }>(
+    `select * from public.crm_moi_khach_san($1, 'b2b-cust-1', $2, $3, $4, null, $5, $6, $7)`,
+    [ref, kind, plan, days, JSON.stringify({ ten_khach_san: "Lugano" }), open, `inv-${ref}`],
+  );
+const inv1 = (await moi("inv-1", "gift", "p100", 90)).rows[0]!;
+const invRow = await one<{
+  kind: string;
+  max_uses: number;
+  trial_days: number;
+  invite_kind: string;
+}>(
+  `select kind, max_uses, trial_days, invite_kind from public.signup_links where crm_ref = 'inv-1'`,
+);
+check(
+  "crm_moi_khach_san makes a single-use gift invitation",
+  inv1.tao_moi === true &&
+    invRow?.kind === "invite" &&
+    invRow.max_uses === 1 &&
+    invRow.trial_days === 90 &&
+    invRow.invite_kind === "gift",
+  JSON.stringify(invRow),
+);
+const inv2 = (await moi("inv-1", "trial", "p200", 200)).rows[0]!;
+const invRow2 = await one<{ plan_code: string; trial_days: number }>(
+  `select plan_code, trial_days from public.signup_links where crm_ref = 'inv-1'`,
+);
+check(
+  "an unused invitation is edited in place, same token, up to 365 days",
+  inv2.tao_moi === false &&
+    inv2.link_token === inv1.link_token &&
+    invRow2?.plan_code === "p200" &&
+    invRow2.trial_days === 200,
+  JSON.stringify(invRow2),
+);
+await db.query(`select * from public.claim_signup_link($1)`, [inv1.link_token]);
+const inv3 = (await moi("inv-1", "gift", "p50", 10)).rows[0]!;
+const invRow3 = await one<{ plan_code: string }>(
+  `select plan_code from public.signup_links where crm_ref = 'inv-1'`,
+);
+check(
+  "a used invitation is left alone and reported as used",
+  inv3.da_dung === true && invRow3?.plan_code === "p200",
+  JSON.stringify(inv3),
+);
+check(
+  "a second claim of a used invitation gets nothing",
+  (await db.query(`select * from public.claim_signup_link($1)`, [inv1.link_token])).rows.length ===
+    0,
+);
+check(
+  "an invitation on the one-seat retail plan is refused",
+  /DU_LIEU_SAI/.test(
+    (await raises(
+      `select * from public.crm_moi_khach_san('inv-2', 'c', 'gift', 'p1', 30, null, null, true, 't')`,
+    )) ?? "",
+  ),
+);
+check(
+  "an invitation of 366 days is refused",
+  /trial_days_check/.test(
+    (await raises(
+      `select * from public.crm_moi_khach_san('inv-3', 'c', 'gift', 'p50', 366, null, null, true, 't3')`,
+    )) ?? "",
+  ),
+);
+check(
+  "a partner link's crm_ref cannot be turned into an invitation",
+  /XUNG_DOT/.test(
+    (await raises(
+      `select * from public.crm_moi_khach_san('crm-link-1', 'c', 'gift', 'p50', 30, null, null, true, 't4')`,
+    )) ?? "",
+  ),
+);
+const moiAsUser = await asRole(
+  "authenticated",
+  `select * from public.crm_moi_khach_san('inv-4', 'c', 'gift', 'p50', 30, null, null, true, 't5')`,
+  owner,
+);
+check(
+  "nobody signed in can call crm_moi_khach_san",
+  /permission denied/.test(moiAsUser ?? ""),
+  moiAsUser ?? "allowed!",
+);
+const giftSub = await raises(
+  `insert into public.subscriptions (org_id, plan_code, kind, starts_at, ends_at, price)
+   values ($1, 'p100', 'gift', now(), now() + interval '90 days', 0)`,
+  [third],
+);
+check("a subscription can be a gift", giftSub === null, giftSub ?? "");
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

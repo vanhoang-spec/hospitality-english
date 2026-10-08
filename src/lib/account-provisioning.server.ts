@@ -216,11 +216,20 @@ export async function provisionOrganization(input: {
   actorId: string | null;
   action: string;
   meta?: Record<string, unknown>;
-  /** A partner link's trial: `term` must be "trial", and the trial lasts
-   *  this many days instead of the default month, free. */
+  /** A free period of this many days instead of the default month: a
+   *  partner link's trial, or a CRM invitation (trial or gift). */
   trialDays?: number;
-  /** The link the hotel signed up through, and its partner. */
-  signupLink?: { id: string; partnerId: string | null; crmRef: string | null };
+  /** What the free period is called: 'trial' (default) or 'gift' (a CRM
+   *  invitation for a hotel already learning with Embassy). */
+  freeKind?: "trial" | "gift";
+  /** The link the hotel signed up through, its partner, and — for a CRM
+   *  invitation — the CRM's customer id, handed back in the event. */
+  signupLink?: {
+    id: string;
+    partnerId: string | null;
+    crmRef: string | null;
+    crmCustomerRef?: string | null;
+  };
 }): Promise<{ orgId: string; hrUserId: string }> {
   const { data: plan, error: planErr } = await supabaseAdmin
     .from("plans")
@@ -271,7 +280,7 @@ export async function provisionOrganization(input: {
   const { error: subErr } = await supabaseAdmin.from("subscriptions").insert({
     org_id: org.id,
     plan_code: input.planCode,
-    kind: trial ? "trial" : input.term,
+    kind: trial ? (input.freeKind ?? "trial") : input.term,
     // A minute early, for the clock reason given in provisionIndividual:
     // the HR account is created seconds from now and checks this row.
     starts_at: new Date(now.getTime() - 60_000).toISOString(),
@@ -317,6 +326,7 @@ export async function provisionOrganization(input: {
     {
       app_org_id: org.id,
       link_crm_ref: input.signupLink?.crmRef ?? null,
+      khach_crm_id: input.signupLink?.crmCustomerRef ?? null,
       ten_khach_san: input.name,
       cong_ty: {
         ten: input.company.legalName,
@@ -325,7 +335,7 @@ export async function provisionOrganization(input: {
       },
       dai_dien: { ten: input.hrFullName, sdt: input.hrPhone, email: input.company.repEmail },
       goi: input.planCode,
-      ky_han: trial ? "trial" : input.term,
+      ky_han: trial ? (input.freeKind ?? "trial") : input.term,
       het_han: ends,
     },
     org.id,

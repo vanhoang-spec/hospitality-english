@@ -62,7 +62,7 @@ function linkProblem(link: LinkRow | null): string | null {
       : "Link này đã hết hạn. Hãy xin người gửi một link mới.";
   }
   if (link.max_uses !== null && link.use_count >= link.max_uses) {
-    if (link.kind === "organization") {
+    if (link.kind === "organization" || link.kind === "invite") {
       return "Link này đã được dùng để mở tài khoản khách sạn. Nếu đó là bạn, hãy đăng nhập.";
     }
     return partnerLink
@@ -285,7 +285,46 @@ export type SignupLinkInfo =
       until: string | null;
       /** The hotel plans a hotel can start its trial on. */
       plans: { code: string; seats: number }[];
+    }
+  | {
+      ok: true;
+      kind: "invite";
+      /** 'gift' (a hotel already learning with Embassy) or 'trial'. */
+      inviteKind: string;
+      seats: number;
+      days: number;
+      prefill: InvitePrefill;
     };
+
+/** What the CRM already knows about the hotel it invites. Every field may
+ *  be missing; HR checks and corrects them on the form. */
+export type InvitePrefill = {
+  hotelName?: string;
+  legalName?: string;
+  taxCode?: string;
+  address?: string;
+  repName?: string;
+  repPhone?: string;
+  repEmail?: string;
+};
+
+function readPrefill(raw: unknown): InvitePrefill {
+  const p = (raw ?? {}) as {
+    ten_khach_san?: unknown;
+    cong_ty?: { ten?: unknown; mst?: unknown; dia_chi?: unknown };
+    dai_dien?: { ten?: unknown; sdt?: unknown; email?: unknown };
+  };
+  const s = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : undefined);
+  return {
+    hotelName: s(p.ten_khach_san),
+    legalName: s(p.cong_ty?.ten),
+    taxCode: s(p.cong_ty?.mst),
+    address: s(p.cong_ty?.dia_chi),
+    repName: s(p.dai_dien?.ten),
+    repPhone: s(p.dai_dien?.sdt),
+    repEmail: s(p.dai_dien?.email),
+  };
+}
 
 /** A link's discount: a percent, or an amount of money (never both). */
 function linkDiscount(link: LinkRow) {
@@ -310,6 +349,22 @@ export const getSignupLinkInfo = createServerFn({ method: "POST" })
         .eq("code", link.plan_code ?? "")
         .maybeSingle();
       return { ok: true, kind: "organization", seats: plan?.seats ?? 0, term: link.term ?? "" };
+    }
+
+    if (link.kind === "invite") {
+      const { data: plan } = await supabaseAdmin
+        .from("plans")
+        .select("seats")
+        .eq("code", link.plan_code ?? "")
+        .maybeSingle();
+      return {
+        ok: true,
+        kind: "invite",
+        inviteKind: link.invite_kind ?? "trial",
+        seats: plan?.seats ?? 0,
+        days: link.trial_days ?? 0,
+        prefill: readPrefill(link.prefill),
+      };
     }
 
     if (link.kind === "retail") {
@@ -502,6 +557,65 @@ export const redeemOrganizationLink = createServerFn({ method: "POST" })
  *  as the owner's single-use hotel link, plus the plan the hotel wants to
  *  try. The trial is free and lasts the link's days; the paid plan opens
  *  when the CRM's accountant confirms the hotel's invoice (cap_goi). */
+/** A hotel signing up through an invitation the CRM made for it — a gift
+ *  for a hotel already learning with Embassy, or a trial. The plan and the
+ *  number of days are the CRM's; the company details are HR's, pre-filled
+ *  from the CRM and corrected here if need be. Free. */
+export const redeemInviteLink = createServerFn({ method: "POST" })
+  .inputValidator(
+    newOrgDetailsSchema.extend({
+      token: TOKEN,
+      hotelName: z.string().trim().min(2, "Hãy nhập tên khách sạn.").max(120),
+      fullName: z.string().trim().min(2, "Hãy nhập họ tên.").max(120),
+      phone: z.string().min(1),
+      password: z.string().min(8, "Mật khẩu cần ít nhất 8 ký tự"),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const phone = toPhone(data.phone);
+    const link = await claimLink(data.token, "invite");
+
+    const { provisionOrganization } = await import("@/lib/account-provisioning.server");
+    let orgId: string;
+    try {
+      ({ orgId } = await provisionOrganization({
+        name: data.hotelName,
+        planCode: link.plan_code as string,
+        term: "trial",
+        price: 0,
+        trialDays: link.trial_days ?? 30,
+        freeKind: link.invite_kind === "gift" ? "gift" : "trial",
+        signupLink: {
+          id: link.id,
+          partnerId: null,
+          crmRef: link.crm_ref,
+          crmCustomerRef: link.crm_customer_ref,
+        },
+        hrPhone: phone,
+        hrFullName: data.fullName,
+        hrPassword: data.password,
+        company: {
+          legalName: data.legalName,
+          address: data.address,
+          taxCode: data.taxCode,
+          repEmail: data.repEmail,
+        },
+        mustChangePassword: false,
+        actorId: null,
+        action: "org.signup_invite",
+        meta: { link_id: link.id, invite_kind: link.invite_kind },
+      }));
+    } catch (e) {
+      await releaseLink(link.id);
+      throw e;
+    }
+
+    // Which hotel this invitation became, as for the owner's own links.
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from("signup_links").update({ org_id: orgId }).eq("id", link.id);
+    return { success: true as const };
+  });
+
 export const redeemPartnerHotelLink = createServerFn({ method: "POST" })
   .inputValidator(
     newOrgDetailsSchema.extend({
