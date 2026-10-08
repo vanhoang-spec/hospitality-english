@@ -33,6 +33,7 @@ export const TERM_LABEL: Record<string, string> = {
   m6: "6 tháng",
   m9: "9 tháng",
   m12: "12 tháng",
+  demo: "Tài khoản đối tác",
 };
 
 export function subscriptionQueryKey(orgId: string | null | undefined) {
@@ -68,7 +69,9 @@ export function useOrgSubscription(orgId: string | null | undefined) {
       // payment carries a grace period (orders.grace_until). That rule
       // lives in org_is_active() — the same function the database's own
       // policies use — so ask it rather than copying it here.
-      let active = ends > Date.now();
+      // A partner's demo plan never ends by date: it is open while the
+      // partner is active and has a live link — again org_is_active()'s call.
+      let active = row.kind !== "demo" && ends > Date.now();
       if (!active) {
         const { data: live } = await supabase.rpc("org_is_active", { target: orgId });
         active = live === true;

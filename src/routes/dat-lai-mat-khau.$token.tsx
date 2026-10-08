@@ -62,7 +62,9 @@ function ResetPasswordPage() {
         className="w-full max-w-sm border border-primary/30 bg-card p-8 shadow-xl"
       >
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Embassy Hospitality</div>
-        <h1 className="font-display mt-2 text-3xl text-foreground">Đặt lại mật khẩu</h1>
+        <h1 className="font-display mt-2 text-3xl text-foreground">
+          {link.data?.activate ? "Kích hoạt tài khoản" : "Đặt lại mật khẩu"}
+        </h1>
 
         {link.isLoading ? (
           <p className="mt-4 text-sm text-foreground/60">Đang kiểm tra link…</p>

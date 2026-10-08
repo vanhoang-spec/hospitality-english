@@ -600,55 +600,91 @@ export type Database = {
       };
       partners: {
         Row: {
+          active: boolean;
           created_at: string;
           created_by: string | null;
           crm_ref: string | null;
+          demo_org_id: string | null;
+          demo_user_id: string | null;
+          email: string | null;
           id: string;
           name: string;
           note: string | null;
+          phone: string | null;
+          status_changed_at: string | null;
         };
         Insert: {
+          active?: boolean;
           created_at?: string;
           created_by?: string | null;
           crm_ref?: string | null;
+          demo_org_id?: string | null;
+          demo_user_id?: string | null;
+          email?: string | null;
           id?: string;
           name: string;
           note?: string | null;
+          phone?: string | null;
+          status_changed_at?: string | null;
         };
         Update: {
+          active?: boolean;
           created_at?: string;
           created_by?: string | null;
           crm_ref?: string | null;
+          demo_org_id?: string | null;
+          demo_user_id?: string | null;
+          email?: string | null;
           id?: string;
           name?: string;
           note?: string | null;
+          phone?: string | null;
+          status_changed_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "partners_demo_org_id_fkey";
+            columns: ["demo_org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "partners_demo_user_id_fkey";
+            columns: ["demo_user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       password_reset_tokens: {
         Row: {
           created_at: string;
-          email: string;
+          email: string | null;
           expires_at: string;
           id: string;
+          purpose: string;
           token_hash: string;
           used_at: string | null;
           user_id: string;
         };
         Insert: {
           created_at?: string;
-          email: string;
+          email?: string | null;
           expires_at: string;
           id?: string;
+          purpose?: string;
           token_hash: string;
           used_at?: string | null;
           user_id: string;
         };
         Update: {
           created_at?: string;
-          email?: string;
+          email?: string | null;
           expires_at?: string;
           id?: string;
+          purpose?: string;
           token_hash?: string;
           used_at?: string | null;
           user_id?: string;
@@ -1209,6 +1245,15 @@ export type Database = {
           ket_thuc: string;
         }[];
       };
+      crm_luu_doi_tac: {
+        Args: { p_active: boolean; p_name: string; p_partner_ref: string };
+        Returns: {
+          active: boolean;
+          demo_user_id: string;
+          partner_id: string;
+          tao_moi: boolean;
+        }[];
+      };
       crm_luu_link: {
         Args: {
           p_crm_ref: string;
@@ -1255,6 +1300,7 @@ export type Database = {
       org_is_active: { Args: { target: string }; Returns: boolean };
       org_of: { Args: { target_profile: string }; Returns: string };
       org_seat_limit: { Args: { target: string }; Returns: number };
+      partner_is_live: { Args: { p_partner: string }; Returns: boolean };
       password_reset_claim: {
         Args: { p_token_hash: string };
         Returns: {

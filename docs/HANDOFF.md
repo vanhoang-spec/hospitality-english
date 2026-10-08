@@ -298,6 +298,35 @@ Mọi câu vẫn đọc bằng giọng máy của thiết bị (`speechSynthesis
   tả từ vựng, sát hạch.
 - Kiểm thử: `test:voice` 24 phép (giọng giả lập Chrome/Windows, Edge, iPhone, Mac, Android). Chưa thử
   trên máy thật: Edge (giọng Natural, tắt mạng), iPhone, Android — checklist mục 10 tài liệu gốc.
+- **08/10: đã merge (PR #22, `970eab8`) và chạy trên production.**
+
+### Tài khoản dùng thử của đối tác (08/10, nhánh `platform/partner-demo`)
+
+Người dùng muốn mỗi đối tác có một tài khoản học miễn phí để tự trải nghiệm và giới thiệu cho khách
+sạn, cùng trạng thái active/inactive cho đối tác, có ở cả app lẫn module B2B của CRM. Ba quyết định
+(08/10): đối tác **tự đặt mật khẩu bằng link kích hoạt**; tài khoản mở khi **đối tác active và còn ít
+nhất một link đang mở**; bật/tắt **ở cả hai nơi, tự đồng bộ** (app giữ trạng thái thật).
+
+- `partners.active` (+ `status_changed_at`, `phone`, `email`, `demo_org_id`, `demo_user_id`). Tài khoản
+  dùng thử nằm trong một org `kind = 'partner_demo'` (1 ghế, gói `p1`, `subscriptions.kind = 'demo'`
+  hạn 2100). `org_is_active()` cho org này = `partner_is_live(partner)`: active **và** có link
+  `retail`/`partner_hotel` chưa thu hồi, chưa hết hạn (link đã đủ lượt vẫn tính). Client hỏi RPC này
+  cho gói `demo`; bị khoá thì thấy màn hình "Tài khoản đối tác đang tạm khoá".
+- Đối tác tạm dừng → `claim_signup_link` từ chối mọi link của họ (lời báo "đang tạm dừng") và tài khoản
+  khoá ngay; bật lại là mở lại.
+- Link kích hoạt = token `password_reset_tokens.purpose = 'activate'`, 7 ngày, một lần, trang
+  `/dat-lai-mat-khau/<token>` (tiêu đề "Kích hoạt tài khoản"). Mật khẩu tạo lúc đầu là ngẫu nhiên, không
+  ai biết.
+- App: khối **Đối tác** ở `/admin-console` (bật/tắt, tạo tài khoản, cấp lại link kích hoạt); form
+  **Link bán lẻ** có thêm SĐT/email đối tác để tạo tài khoản cùng lúc; danh sách link ghi "đối tác tạm
+  dừng".
+- CRM: lệnh mới `luu_doi_tac` {doi_tac{crm_id,ten}, dang_hoat_dong, tai_khoan?{sdt,email?},
+  cap_link_kich_hoat?} → {doi_tac_id, tao_moi, dang_hoat_dong, tai_khoan{sdt, dang_mo, link_kich_hoat,
+  link_het_han}|null}; hàm `crm_luu_doi_tac` (nhận đối tác cùng tên tạo trong app như `crm_luu_link`).
+  Sự kiện mới `doi_tac_cap_nhat` {doi_tac_crm_id, dang_hoat_dong, tai_khoan_sdt} khi app bật/tắt hoặc
+  app tạo tài khoản cho đối tác của CRM. Hợp đồng gửi phiên CRM_Embassy để ghi vào
+  `docs/TICH_HOP_HOSPITALITY.md` bên CRM.
+- Kiểm thử: `test:db` 116 phép (18 mới), `test:crm` 44 phép (5 mới).
 
 ### Production
 
@@ -323,9 +352,9 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Lấy lại mật khẩu qua email:** áp dụng migration `20261008150000_password_reset_email.sql`,
-   đặt `RESEND_API_KEY` trên Vercel, rồi merge `platform/email-reset`. Sau đó thử với một tài khoản
-   thật có email.
+2. **Tài khoản dùng thử đối tác:** áp dụng migration `20261008180000_partner_demo.sql`, rồi merge
+   `platform/partner-demo`; phía CRM làm lệnh `luu_doi_tac` + sự kiện `doi_tac_cap_nhat`. Sau đó thử
+   với một đối tác thật: tạo tài khoản, mở link kích hoạt, tạm dừng rồi bật lại.
 3. **Thử đầu-cuối** với dữ liệu thử: link đối tác (khách sạn + cá nhân), lời mời tặng, đơn gia hạn.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong

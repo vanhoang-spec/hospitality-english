@@ -61,7 +61,12 @@ export async function logAdminAction(entry: {
  *  a log row did not land. A failure is recorded in admin_actions with the
  *  whole event, so it can be replayed by hand. */
 export async function recordCrmEvent(
-  loai: "khach_san_dang_ky" | "ca_nhan_dang_ky" | "don_cap_nhat" | "don_gia_han",
+  loai:
+    | "khach_san_dang_ky"
+    | "ca_nhan_dang_ky"
+    | "don_cap_nhat"
+    | "don_gia_han"
+    | "doi_tac_cap_nhat",
   du_lieu: Record<string, unknown>,
   orgId: string | null,
 ) {
