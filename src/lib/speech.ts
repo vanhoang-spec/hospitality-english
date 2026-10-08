@@ -1,14 +1,48 @@
 // Shared browser speech helpers.
+import { deviceVoices, effectiveRate, pickVoice, type VoiceRole } from "@/lib/voice";
+import { getVoicePrefs } from "@/lib/voice-store";
 
-export function speakEN(text: string, rate = 0.85) {
+/** The one way a line is read aloud. `role` says whose voice: "guest" for
+ *  what someone says TO the learner (guest, colleague, manager), "model"
+ *  for what the learner copies (headwords, examples, model answers).
+ *  `rate` is what the line was written for — the week's ladder — and the
+ *  learner's speed setting multiplies it. Always called from a tap: iOS
+ *  reads nothing that a tap did not start. */
+export function speak(text: string, opts: { role: VoiceRole; rate: number }) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const prefs = getVoicePrefs();
+  const say = (localOnly: boolean) => {
+    const all = deviceVoices();
+    const voice = pickVoice(localOnly ? all.filter((v) => v.localService) : all, opts.role, prefs);
+    const u = new SpeechSynthesisUtterance(text);
+    if (voice) u.voice = voice;
+    u.lang = voice?.lang ?? "en-GB";
+    u.rate = effectiveRate(opts.rate, prefs.speed);
+    u.pitch = 1;
+    u.onerror = (e) => {
+      // A second tap cancels the first line: not a failure.
+      if (e.error === "interrupted" || e.error === "canceled") return;
+      // Edge's "Online (Natural)" and Google voices need the network; read
+      // the line again with a voice that lives on the device.
+      if (voice && !voice.localService && !localOnly) say(true);
+    };
+    window.speechSynthesis.speak(u);
+  };
   try {
     window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
-    u.rate = rate;
-    u.pitch = 1;
-    window.speechSynthesis.speak(u);
+    say(false);
+  } catch {
+    /* no-op */
+  }
+}
+
+/** Stops whatever is being read — on leaving a page, so a line does not
+ *  carry on over the next screen. */
+export function stopSpeaking() {
+  try {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
   } catch {
     /* no-op */
   }

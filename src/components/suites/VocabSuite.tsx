@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
-import { speakEN } from "@/lib/speech";
+import { speak } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
 import {
   dictationMatches,
   headwordRateForWeek,
@@ -317,7 +318,9 @@ function VocabSuiteInner({
                 <p className="font-display text-xl text-foreground">{q.prompt}</p>
                 {q.speak && (
                   <button
-                    onClick={() => speakEN(q.speak!, headwordRateForWeek(week!))}
+                    onClick={() =>
+                      speak(q.speak!, { role: "model", rate: headwordRateForWeek(week!) })
+                    }
                     className="shrink-0 border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                   >
                     🔊
@@ -355,11 +358,12 @@ function VocabSuiteInner({
               <p className="font-display text-xl text-foreground">Nghe và gõ lại từ vựng:</p>
               <div className="mt-4 flex items-center gap-3">
                 <button
-                  onClick={() => speakEN(q.word, headwordRateForWeek(week!))}
+                  onClick={() => speak(q.word, { role: "model", rate: headwordRateForWeek(week!) })}
                   className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
                 >
                   🔊 Nghe
                 </button>
+                <VoiceButton role="model" />
                 <input
                   value={typed}
                   disabled={answered !== null}
@@ -499,7 +503,7 @@ function VocabSuiteInner({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakEN(t.en, headwordRateForWeek(week!));
+                        speak(t.en, { role: "model", rate: headwordRateForWeek(week!) });
                       }}
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play audio for ${t.en}`}
@@ -528,7 +532,7 @@ function VocabSuiteInner({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakEN(t.usage, listeningRateForWeek(week!));
+                        speak(t.usage, { role: "model", rate: listeningRateForWeek(week!) });
                       }}
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play example for ${t.en}`}

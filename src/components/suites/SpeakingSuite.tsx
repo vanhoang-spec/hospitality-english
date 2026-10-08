@@ -8,7 +8,8 @@ import {
   speakerLabel,
   type WeekContent,
 } from "@/lib/content/week-content";
-import { speakEN, playApplause, dedupeTranscript } from "@/lib/speech";
+import { speak, playApplause, dedupeTranscript } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
 import { passThresholds, utterancePassed, utterancePassedAny } from "@/lib/speaking-score";
 import { acceptedAnswers } from "@/lib/speaking-alternates";
 import { listeningRateForWeek } from "@/lib/phases";
@@ -195,7 +196,7 @@ function SpeakingSuiteInner({
   }
 
   function speakComplaint() {
-    speakEN(scenario.complaint, listeningRateForWeek(week));
+    speak(scenario.complaint, { role: "guest", rate: listeningRateForWeek(week) });
   }
 
   return (
@@ -240,11 +241,14 @@ function SpeakingSuiteInner({
               ▶ Nghe {scenario.audioWho}
             </button>
             <button
-              onClick={() => speakEN(scenario.target, listeningRateForWeek(week))}
+              onClick={() =>
+                speak(scenario.target, { role: "model", rate: listeningRateForWeek(week) })
+              }
               className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
             >
               🔊 Nghe câu mẫu
             </button>
+            <VoiceButton role="guest" />
             <button
               onClick={() => {
                 setIdx((i) => (i + 1) % scenarios.length);

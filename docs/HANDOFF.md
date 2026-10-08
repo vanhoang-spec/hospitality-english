@@ -271,6 +271,33 @@ là email **liên hệ** (không bắt buộc, lưu chữ thường) để gửi
   gửi gì, trang vẫn báo như thường, log Vercel có dòng `RESEND_API_KEY is not set`.
 - Kiểm thử: `test:db` 98 phép (14 mới), `test:reset` 18 phép (mới, gắn vào `ci` và GitHub CI — GitHub
   CI nay chạy cả `test:crm`).
+- **08/10: đã merge (PR #21) và chạy trên production**; `RESEND_API_KEY` đã đặt trên Vercel.
+
+### Bộ chọn giọng đọc (08/10, nhánh `platform/voice-picker`)
+
+Mọi câu vẫn đọc bằng giọng máy của thiết bị (`speechSynthesis`), không có file ghi âm. Trước đây
+`speakEN` ép `en-US` mà không chọn giọng (Chrome/Windows ra giọng David), còn bài Nghe và sát hạch bốc
+**ngẫu nhiên** một giọng `en-*` (kể cả Zarvox/Bubbles trên Mac). Nay:
+
+- `src/lib/voice.ts` chấm điểm giọng theo tên: tự nhiên +30, Google +12, en-GB +10 (nội dung viết chuẩn
+  Anh), en-US +6, trong máy +2, nữ +1 (chỉ để phân thắng thua), trẻ em −30, giọng robot cũ −20; giọng
+  "đồ chơi" bị ẩn. Lưu lựa chọn ở `localStorage["hospitality.voice.v1"]` (không dùng tiền tố `academy.`
+  để đăng xuất không xoá).
+- **Hai giọng** (quyết định của người dùng 08/10): **giọng khách** đọc `guestPrompt` (khách, đồng
+  nghiệp, cấp trên); **giọng mẫu** đọc từ, câu ví dụ, câu mẫu, câu ngữ pháp. Gợi ý giọng khách = giọng
+  tốt nhất khác giọng mẫu, ưu tiên khác giới.
+- **Luôn dùng giọng học viên chọn** (quyết định 08/10): bỏ đổi giọng ngẫu nhiên ở bài Nghe và sát hạch.
+- **Tốc độ Chậm/Vừa/Nhanh** = ×0,85/1/1,15 nhân lên thang tốc độ của tuần, kẹp 0,5–1,3, **áp dụng cả
+  bài sát hạch** (quyết định 08/10). Hệ quả: phần nghe của sát hạch không còn chứng nhận tốc độ của giai
+  đoạn. Thang trong `phases.ts` không đổi.
+- Một đường đọc: `speak(text, { role, rate })` trong `speech.ts` thay `speakEN` và hai bản `speakVaried`.
+  Bỏ qua lỗi `interrupted/canceled`; giọng cần mạng lỗi thì đọc lại bằng giọng trong máy; đổi trang thì
+  dừng đọc (`stopSpeaking` trong `__root`).
+- Giao diện: hộp thoại `VoicePicker` (gắn một lần trong `__root`), mở từ 🔊 trên thanh menu, mục "Giọng
+  đọc" trong menu tài khoản điện thoại, và nút "🎚 Đổi giọng" cạnh nút nghe ở bài Nghe, Nói, chép chính
+  tả từ vựng, sát hạch.
+- Kiểm thử: `test:voice` 24 phép (giọng giả lập Chrome/Windows, Edge, iPhone, Mac, Android). Chưa thử
+  trên máy thật: Edge (giọng Natural, tắt mạng), iPhone, Android — checklist mục 10 tài liệu gốc.
 
 ### Production
 

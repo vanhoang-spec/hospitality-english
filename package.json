@@ -18,7 +18,8 @@
     "test:db": "bun scripts/db/schema-test.ts",
     "test:crm": "bun scripts/crm-api-test.ts",
     "test:reset": "bun scripts/password-reset-test.ts",
-    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run test:reset && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
+    "test:voice": "bun scripts/voice-test.ts",
+    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run test:reset && bun run test:voice && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
