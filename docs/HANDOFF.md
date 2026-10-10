@@ -354,11 +354,39 @@ CRM), cả hai active; 1 tài khoản dùng thử; 1 link kích hoạt đã cấ
 ### Sửa nhỏ 08–10/10
 
 - **PR #24 (đã merge, `c41d496`):** Trò chơi tình huống sinh bong bóng không dứt vì `rounds` dựng lại
-  mỗi lần render; đã `useMemo`. Nút giọng đổi 🎚 thành ⚙. **Chưa ai xem lại trò chơi trên trình duyệt
-  sau khi sửa** — nhờ người dùng thử phần 6 của một tuần.
+  mỗi lần render; đã `useMemo`. Nút giọng đổi 🎚 thành ⚙.
+- **PR #28 (đang mở, 10/10):** xem lại trò chơi trên trình duyệt thì lộ lỗi thứ hai do chính PR #24 để
+  lại: mỗi vòng chỉ ra 3 bong bóng **một lần**, bay hết (~20 giây) là màn hình trống tới khi hết giờ.
+  Sửa: hết bong bóng mà vòng chưa xong thì ba bong bóng đó bay lại, xáo thứ tự. Đo 36 giây: không lúc
+  nào quá 3, không giây nào trống. Cách xem trò chơi không cần đăng nhập: dựng tạm một route dưới
+  `/join/…` (đường công khai) gắn `<ArcadeSuite dep="FO" week="1" />`, xem xong xoá.
 - **Hướng dẫn học viên** (PDF A5 11 trang, ảnh chụp màn hình điện thoại): `docs/huong-dan-hoc-vien/`.
   PR #25 (merge 10/10, `63686c3`) thêm logo Embassy Language vào footer. Ảnh trang Nghe/Nói còn nút
   giọng biểu tượng cũ.
+
+### Giả lập đầu-cuối app ↔ CRM (10/10)
+
+Người dùng yêu cầu thử giả lập mọi luồng thông tin hai chiều. Production gần như chưa có dữ liệu thật
+(10/10: mới một lệnh `luu_doi_tac`, chưa sự kiện nào), và agent không được tạo tài khoản trên site
+thật, nên dựng một bản giả lập chạy trên máy: **code thật hai bên trên hai database tạm (PGlite)**.
+
+- Phía app: mọi migration + route `/api/crm` thật + các server function mà trang đăng ký, kích hoạt,
+  thanh toán gọi. Phía CRM: các migration Hospitality của CRM + hàm đồng bộ của CRM chạy nguyên văn,
+  đọc từ thư mục repo CRM lúc chạy. Mọi request ra ngoài máy bị chặn.
+- **Kết quả: 97/99 phép kiểm qua.** Đã đi qua dây: đủ 7 loại lệnh CRM → app và 5 loại sự kiện app →
+  CRM. Các luồng: tích "Tham gia" → tài khoản → email link kích hoạt → đặt mật khẩu → đăng nhập; link
+  giới thiệu hạn 1 năm; khách sạn đăng ký → khách B2B bên CRM → kế toán xác nhận thu → app mở gói → hoa
+  hồng (năm đầu, năm sau) → duyệt, chi; người học lẻ → đơn → đổi kỳ hạn → xác nhận → gói; gia hạn; lời
+  mời tặng; tạm dừng / bật lại từ hai phía; mất mạng, sai khoá, app chưa cài khoá, trùng SĐT.
+- **Hai phép hỏng là một lỗi hiển thị bên CRM** (không phải bên app): khi app báo `doi_tac_cap_nhat`
+  (chủ dự án bật lại đối tác trong app, hoặc tạo tài khoản cho đối tác của CRM ngay trong app), CRM
+  không cập nhật ô "tài khoản đang mở", nên màn hình CRM vẫn ghi **"Tài khoản đang khoá"** trong khi
+  tài khoản thật đang mở. Thử một dòng sửa trong hàm xử lý sự kiện của CRM (chỉ trong bộ nhớ): 99/99.
+  Việc sửa thuộc repo CRM.
+- Giả lập **không** chứng minh: khoá bí mật hai bên khớp nhau, lịch chạy mỗi phút, bản deploy, và
+  giao diện (nút bấm, form). Những thứ đó chỉ thử được trên hệ thống thật bằng người thật.
+- Bộ giả lập nằm ở `scripts/flow/` trong worktree `content-p3`, **chưa commit**: hai file trong đó nhắc
+  tên bảng, hàm, vai trò nội bộ của CRM, mà repo này public. Chờ người dùng quyết nơi lưu.
 
 ### Production
 
@@ -384,13 +412,15 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Tài khoản dùng thử đối tác — thử đầu-cuối còn dở:** migration và PR #26 đã xong (10/10). Một
-   nhân viên đã được tích "Tham gia" trong CRM, app đã tạo tài khoản và tài khoản đang mở dù chưa có
-   link nào. Còn lại, cần người thật làm: mở link kích hoạt, đặt mật khẩu, đăng nhập bằng số điện
-   thoại; rồi tạm dừng đối tác (thấy màn hình khoá) và bật lại. Hai câu chữ đã sửa ở khối Đối tác
-   trang `/admin-console` và màn hình "Tài khoản đối tác đang tạm khoá" chưa ai xem trên trình duyệt.
-3. **Thử đầu-cuối** với dữ liệu thử: link đối tác (khách sạn + cá nhân), lời mời tặng, đơn gia hạn.
-4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
+2. **Tài khoản dùng thử đối tác:** migration và PR #26 đã xong (10/10); luồng đã qua giả lập (mục "Giả
+   lập đầu-cuối"). Trên hệ thống thật mới có một nhân viên được tích "Tham gia", link kích hoạt của
+   người đó chưa ai mở. Hai câu chữ đã sửa ở khối Đối tác trang `/admin-console` và màn hình "Tài khoản
+   đối tác đang tạm khoá" chưa ai xem trên trình duyệt.
+3. **Thử trên hệ thống thật** (tuỳ người dùng, sau giả lập): một vòng với người thật để chứng minh phần
+   giả lập không với tới — khoá hai bên, lịch chạy mỗi phút, giao diện.
+4. **Lỗi hiển thị bên CRM** (mục "Giả lập đầu-cuối"): cần phiên làm repo CRM sửa.
+5. **Nơi lưu bộ giả lập** `scripts/flow/`: repo app (public), repo CRM (private), hay chỉ để trên máy.
+6. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
 
