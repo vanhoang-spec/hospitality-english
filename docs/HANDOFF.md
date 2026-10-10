@@ -3,8 +3,11 @@
 Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
-**10/10 tối: PR #31 (đợt 3 — tiến độ, học tiếp, lưu điểm dừng, cài như app) đang mở, CHƯA merge;**
-chủ dự án dặn chưa merge. Xem §4 "Đợt 3" và §5 mục 7. `main` = `047c35e` (PR #30, chỉ tài liệu).
+**10/10 tối: `main` = `219fdd6` (PR #31, đợt 3 — tiến độ, học tiếp, lưu điểm dừng, cài như app).**
+Chủ dự án ra lệnh "merge 31" sau khi 8 điểm rà soát đã sửa và CI GitHub xanh. Không có migration.
+**Production đã chạy bản này** (đọc lại 10/10 ~21:00): `/manifest.webmanifest` trả tên "Embassy
+Hospitality", `/sw.js` là bản chỉ giữ `/assets/`, `/offline.html` và icon mới đều 200, trang đăng nhập
+không lỗi console. Xem §4 "Đợt 3"; việc còn lại sau merge ở §5 mục 7.
 
 **10/10 chiều: `main` = `bd2e379` (PR #29).** Việc lớn nhất trong ngày: mọi tài khoản mới tạo đều
 không được gắn vào tổ chức của nó — đã sửa và đã áp dụng lên production, xem §4 "Tài khoản mới không
@@ -430,7 +433,7 @@ không tính ghế, hết hạn hay tạm dừng đều không khoá được ai
 - **Số đo:** `test:db` 120 phép (113 + 7 mới). Không có migration: HR ra `{role: member, org_id:
 null}`, khách sạn 2 ghế nhận người thứ ba.
 
-### Đợt 3: tiến độ, học tiếp, lưu điểm dừng, cài như app (PR #31, đang mở — CHƯA merge)
+### Đợt 3: tiến độ, học tiếp, lưu điểm dừng, cài như app (PR #31, merge 10/10 `219fdd6`)
 
 Nhánh `claude/github-repo-connection-rssgy2`. Năm commit gốc làm từ tháng 8 (backlog P2-3, P2-4, P2-5,
 P2-1a); 10/10 phiên mobile gộp `main` vào và sửa 3 lỗi tải-lại-trang (điểm bị cộng đôi, câu sai được
@@ -486,8 +489,11 @@ Tám điểm đã sửa 10/10, và **ba lựa chọn tôi tự chốt — chủ 
    CRM sửa.
 8. Mục này.
 
-- **Số đo:** `bun run ci` xanh — xem commit. Chưa ai thử trên điện thoại thật: cài app trên
-  Android/iPhone, học lúc mất mạng rồi có mạng lại, tải lại trang giữa bài.
+- **Số đo:** `bun run ci` xanh trên `07608fd`: 231/231 test (DB 120, CRM 44, đặt lại mật khẩu 18,
+  giọng đọc 24, kết quả khi mất mạng 25), cổng nội dung và `qa:full` không đổi, lint 0 lỗi. CI GitHub
+  xanh cả ba job. Luật 2 giờ đã thử trên trình duyệt: bài dở 119 phút được mời làm tiếp, 121 phút thì
+  không và điểm dừng tự xoá. Chưa ai thử trên điện thoại thật: cài app trên Android/iPhone, học lúc mất
+  mạng rồi có mạng lại, tải lại trang giữa bài.
 - **Chưa xem được trên trình duyệt** (cần đăng nhập): lời nhắc trước khi đăng xuất, lời mời cài, thẻ
   "Tiếp tục học", thanh tiến độ.
 
@@ -505,7 +511,7 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
   có OTP qua SMS/Zalo.
 - Không có thanh toán trực tuyến.
 - Một phiên sống mỗi tài khoản là răn đe, không phải khoá cứng.
-- (Khi PR #31 đã merge) "Học khi mất mạng" nghĩa là: trang **đã mở trước đó** xem lại được, và kết quả
+- "Học khi mất mạng" nghĩa là: trang **đã mở trước đó** xem lại được, và kết quả
   bài vừa làm **chờ trên máy** tới khi có mạng. Không đăng nhập được và không mở được trang chưa từng
   mở. Đăng xuất trước khi có mạng lại là mất kết quả đang chờ.
 
@@ -536,10 +542,13 @@ Không tự làm những việc này.
 6. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
-7. **PR #31 (đợt 3) — chủ dự án dặn CHƯA merge.** Trước khi merge nên có: (a) một lần thử trên điện
-   thoại thật (cài app, học lúc mất mạng, tải lại giữa bài); (b) chủ dự án xem ba lựa chọn tôi tự chốt
-   ở §4 "Đợt 3" — sát hạch nối lại trong 2 giờ, đăng xuất vẫn xoá điểm dừng, tên và icon app. Sau khi
-   merge: chụp lại ba ảnh của hướng dẫn học viên, và báo phiên CRM sửa bản tiếng Anh.
+7. **Đợt 3 đã lên `main` (PR #31) — còn bốn việc cần người:** (a) một lần thử trên điện thoại thật:
+   cài app trên Android và iPhone, làm một bài lúc mất mạng rồi xem kết quả có về sau khi có mạng, tải
+   lại trang giữa bài Từ vựng/Nghe/sát hạch; (b) chủ dự án xem ba lựa chọn tôi tự chốt ở §4 "Đợt 3" —
+   sát hạch nối lại trong 2 giờ, đăng xuất vẫn xoá điểm dừng, tên và icon app; (c) chụp lại ba ảnh của
+   hướng dẫn học viên (trang chủ, danh sách tuần, các cửa luyện) — cần người đăng nhập; (d) báo phiên
+   CRM sửa bản hướng dẫn tiếng Anh theo ba câu và ba ảnh đó. Nếu phần chạy nền gây lỗi trên máy thật:
+   tắt `OFFLINE_SHELL` trong `src/lib/pwa.ts` rồi deploy, không xoá `public/sw.js`.
 8. **`bun.lock` còn 13 gói trỏ về kho của Lovable** (`europe-west4-npm.pkg.dev/lovable-core-prod`).
    Phiên mobile báo: cùng phiên bản trên npm công khai có hash giống hệt; nếu kho Lovable đóng thì CI
    và Vercel không cài được dependency. Đề xuất một PR riêng trỏ sang npm, kèm gỡ khối cảnh báo Lovable
