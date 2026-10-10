@@ -14,12 +14,12 @@ hạng; không xác nhận khách có ở khách sạn, không đọc số phòn
 
 ### Tuần 41 · Kể lại sự việc, ghi sổ
 
-**Nói được:** kể lại cho chính vị khách, hoặc cho quản lý trực, một sự việc ở quầy theo đúng trình tự
-(lúc đó đang làm gì, chuyện gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi sổ ca.
+**Nói được:** kể lại cho chính vị khách một việc ở quầy theo đúng trình tự (lúc đó đang làm gì, chuyện
+gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy, không đoán nguyên nhân; rồi ghi sổ ca.
 
-1. **What Happened with Your Deposit** · khách — kể cho khách vì sao tiền cọc bị giữ hai lần đêm qua.
+1. **What Happened with Your Deposit** · khách — tiền cọc bị giữ hai lần: điều đã xảy ra trên thẻ, việc đang làm.
 2. **While I Was Checking You In** · khách — hai việc cùng lúc: đang làm thủ tục thì hệ thống ngắt.
-3. **What I Saw, Not What I Think** · quản lý trực nước ngoài — kể điều thấy ở sảnh, không đoán nguyên nhân.
+3. **What I Saw, Not What I Think** · khách — khách hỏi chuyện vừa xảy ra ở sảnh: điều mình thấy, không đoán.
 4. **Into the Logbook** · viết — giờ, phòng, việc, còn lại gì.
 
 **Nghe:** (a) một khách kể lại chuyện mất thẻ phòng, giọng không bản ngữ; (b) hai lễ tân trao đổi về
@@ -127,10 +127,11 @@ khách qua tin nhắn đúng giọng.
 
 ### Tuần 49 · Tổng duyệt + hai luật mới
 
-**Nói được:** khi chưa biết thì nói điều mình chưa biết, **ai sẽ trả lời và mấy giờ**; khi khách hỏi
-thẳng thì trả lời ngay câu đầu rồi mới giải thích; và giữ được một giờ cao điểm trộn mọi việc của giai đoạn.
+**Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
+khi khách hỏi thẳng thì trả lời ngay câu đầu rồi mới giải thích; và giữ được một giờ cao điểm trộn mọi
+việc của giai đoạn.
 
-1. **Who Will Know, and By When** · khách — giờ tàu, phí hải quan, quy định visa: người trả lời và mốc giờ.
+1. **I Will Find Out and Come Back by Four** · khách — giờ tàu, phí hải quan, visa: hỏi ai, mấy giờ mình quay lại.
 2. **Answer First** · khách — "Can I check out late?", "Is breakfast included?": câu trả lời đi trước lý do.
 3. **Rehearsal: The Morning Rush** · khách — trả phòng, hoá đơn, lời nhắn, một yêu cầu mơ hồ.
 4. **Rehearsal: The Evening Arrivals** · khách — khách đến muộn, đường truyền xấu, một lời khuyên.
@@ -158,12 +159,16 @@ quầy cần hộ chiếu, giữ tiền trên thẻ ("so that…", "in case…",
 
 ### Tuần 52 · Trình tự quá khứ, biên bản sự cố
 
-**Nói được:** kể và viết một sự cố theo đúng thứ tự thời gian ("By the time I arrived, the guest had
-already left"), chỉ ghi sự việc, giờ, người chứng kiến, việc đã làm.
+Với khách bị ảnh hưởng: hỏi và nhắc lại điều khách kể, không kể diễn biến hay nguyên nhân (khung
+chung, mục 3).
 
-1. **By the Time I Arrived** · quản lý trực nước ngoài — mất đồ ở sảnh.
-2. **You Had Already Checked Out** · khách — giải thích cho khách một khoản minibar tính sau khi rời đi.
-3. **The Key That Had Been Issued Twice** · khách — giao nhầm phòng: nói trình tự, không đổ cho ai.
+**Nói được:** viết một sự cố theo đúng thứ tự thời gian ("By the time I arrived, the guest had already
+left"), chỉ ghi sự việc, giờ, người chứng kiến, việc đã làm; với khách thì nhắc lại đúng điều khách kể
+("So you had already gone up when…?").
+
+1. **By the Time I Arrived** · viết — mất đồ ở sảnh: biên bản theo điều mình thấy.
+2. **You Had Already Checked Out** · khách — giải thích một khoản minibar tính sau khi khách rời đi.
+3. **So Someone Was Already in the Room?** · khách — giao nhầm phòng: nhắc lại điều khách thấy, việc làm ngay, ai đang tới.
 4. **Facts Only** · viết — biên bản không tính từ, không đoán, không nhận lỗi.
 
 **Nghe:** (a) một khách kể lại sự cố theo thứ tự lộn xộn; (b) nhân chứng người nước ngoài kể điều đã thấy.
@@ -230,15 +235,16 @@ Finally…"), một điều cần lưu ý ("Please note that…"), rồi hỏi a
 
 ### Tuần 57 · Tóm tắt và truyền đạt lại
 
-**Nói được:** tóm một câu chuyện dài của khách trong ba câu cho quản lý trực ("In short…", "She asked
-whether…"), đọc lại nội dung cuộc gọi cho khách, và phiên dịch hai chiều một trao đổi ngắn.
+**Nói được:** tóm một câu chuyện dài của khách trong ba câu ("In short…", "You asked whether…") — nói
+lại cho khách xác nhận, viết cho quản lý trực — đọc lại nội dung cuộc gọi, và phiên dịch hai chiều một
+trao đổi ngắn.
 
-1. **In Three Sentences** · quản lý trực nước ngoài — tóm tắt một khiếu nại dài.
+1. **In Three Sentences** · viết — ghi chú ba câu cho quản lý trực về một khiếu nại dài.
 2. **You Asked Whether** · khách — nhắc lại câu hỏi của khách trước khi trả lời.
 3. **Reading It Back** · khách — đọc lại một đặt phòng phức tạp.
 4. **So, to Sum Up** · khách — chốt lại điều hai bên đã thống nhất.
 
-**Nghe:** (a) một khiếu nại dài bốn phút, phải rút ba ý; (b) cuộc gọi đặt phòng có hai lần đổi ý.
+**Nghe:** (a) một khiếu nại gần hai phút, phải rút ba ý; (b) cuộc gọi đặt phòng có hai lần đổi ý.
 **Viết (70–90 từ):** tóm tắt một cuộc gọi khiếu nại.
 **Chuyển ngữ (hai chiều, trực tiếp):** khách và trưởng ca kỹ thuật.
 
@@ -246,12 +252,13 @@ whether…"), đọc lại nội dung cuộc gọi cho khách, và phiên dịch
 
 **Viết được:** email dịch vụ đúng giọng — mở, mục đích, chi tiết, bước kế, kết — bằng các cụm cố định
 ("Further to your email…", "Please find attached…", "Should you need anything further…"), và từ chối
-lịch sự bằng văn bản. Mọi thư gửi khách là **bản nháp, quản lý duyệt**.
+lịch sự bằng văn bản. Mọi thư gửi khách là **bản nháp, quản lý duyệt**. **Nói được:** nói lại nội dung
+một lá thư bằng lời, giọng trung tính thay cho giọng trang trọng của thư.
 
-1. **Before They Arrive** · viết — trả lời yêu cầu trước khi đến.
-2. **Confirming a Special Request** · viết — xác nhận, nói rõ điều chưa chắc.
-3. **Saying No in Writing** · viết — không còn phòng, không trả phòng trễ được.
-4. **A Short Apology** · viết — thư xin lỗi không hứa tiền, không kết luận lỗi; quản lý duyệt.
+1. **Before They Arrive** · viết — trả lời yêu cầu trước khi đến; xác nhận, nói rõ điều chưa chắc.
+2. **Calling About Your Email** · khách — gọi lại hỏi điều thư chưa rõ: cùng nội dung, giọng nói thường.
+3. **Saying No, Saying Sorry in Writing** · viết — hết phòng, không trả phòng trễ được; thư xin lỗi không hứa tiền.
+4. **"As I Wrote This Morning"** · khách — khách tới quầy hỏi về thư đã nhận: nói lại bằng lời, không đọc nguyên văn.
 
 **Nghe:** (a) khách đọc qua điện thoại nội dung email họ đã gửi; (b) quản lý dặn ba ý phải có trong thư.
 **Viết (80–100 từ):** email trả lời yêu cầu nhận phòng sớm.
@@ -263,7 +270,7 @@ lịch sự bằng văn bản. Mọi thư gửi khách là **bản nháp, quản
 lại đúng như vậy; chủ động báo một tin xấu theo bốn bước (đệm, sự việc, phương án, bước kế).
 
 1. **My Colleague Lan Will…** · khách — bàn giao có tên: nói cho khách ai nhận việc và khi nào.
-2. **I'm Afraid I Have Some Difficult News** · khách — phòng đã bán, khách phải chuyển sang khách sạn khác.
+2. **I'm Afraid I Have Some Difficult News** · khách — phòng đã bán: truyền phương án quản lý trực đã quyết, không hứa thêm.
 3. **Rehearsal: A Night with Five Open Items** · viết — sổ bàn giao để ca sau làm tiếp được.
 4. **Rehearsal: The Day It All Goes Wrong** · khách — sự cố, cập nhật, tin xấu, lời xin lỗi.
 
@@ -394,7 +401,7 @@ một ví dụ, một đề nghị. B — thay mặt lễ tân ở giao ban ti�
 full") và nói xu hướng ("up by…", "twice as many as…"). A — báo con số của ca bằng lời. B — viết báo
 cáo ca có so sánh.
 
-1. **About Twenty Minutes** · khách — ước lượng thời gian chờ, không hứa con số chính xác.
+1. **About Twenty Minutes** · khách — ước lượng việc của bên khác (xe, kỹ thuật); việc quầy giữ thì vẫn hẹn một mốc giờ.
 2. **Nearly Full Tonight** · khách — nói mức kín phòng, giờ đông, mà không lộ số liệu nội bộ.
 
 - 3A. **The Shift in Numbers** · quản lý nước ngoài — khách đến, đi, không đến: nói bằng lời.
@@ -416,7 +423,7 @@ khi khách còn ở. B — đọc nhận xét và kết quả kiểm tra, viết
 
 - 3A. **Fixing It Before They Leave** · khách — xử lý khi khách còn ở.
 - 4A. **A Private Message** · viết — nhắn riêng, không tranh luận; quản lý duyệt.
-- 3B. **What the Audit Found** · đọc — đọc kết quả kiểm tra quầy.
+- 3B. **What the Audit Found** · đoàn kiểm tra — nghe người kiểm tra đọc phát hiện về quầy, hỏi lại, nói việc sẽ sửa.
 - 4B. **The Corrective-Action Note** · viết — vấn đề, nguyên nhân, việc sửa, ai, hạn.
 
 **Nghe:** (a) khách góp ý lúc trả phòng; (b) người kiểm tra đọc ba phát hiện.
@@ -481,12 +488,12 @@ kiểm tra thương hiệu, khách khảo sát đi xem quầy và phòng.
 
 ### Tuần 73 · Khách VIP, tình huống nhạy cảm
 
-**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "May I suggest…", "Please allow me
-to…") và giữ kín ("I am unable to confirm that"). A — đón khách ngoại giao, khách cần kín đáo; từ chối
-người gọi và báo chí. B — chuẩn bị đón VIP liên bộ phận; khách quấy rối nhân viên thì dừng lại, báo an
-ninh và Duty Manager.
+**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "Please allow me to…"; "May I
+suggest…" đã dạy ở tuần 32) và giữ kín ("I am unable to confirm that"). A — đón khách ngoại giao, khách
+cần kín đáo; từ chối người gọi và báo chí. B — chuẩn bị đón VIP liên bộ phận; khách quấy rối nhân viên
+thì dừng lại, báo an ninh và Duty Manager.
 
-1. **May I Suggest…** · khách — cụm trang trọng cho khách VIP.
+1. **Please Allow Me To…** · khách — cụm trang trọng mới cho khách VIP.
 2. **I Am Unable to Confirm That** · người gọi — giữ kín, lịch sự, không giải thích.
 
 - 3A. **A Discreet Arrival** · khách — nhận phòng không qua sảnh.
@@ -500,16 +507,16 @@ ninh và Duty Manager.
 
 ### Tuần 74 · Thuyết phục và xử lý lời từ chối
 
-**Nói được:** hỏi nhu cầu trước, nói giá trị sau ("Would you rather…?", "The earlier you book,
-the…"), và nhận lời từ chối. A — bán nâng hạng, gói ăn sáng, gia hạn. B — giữ khách định huỷ, thuyết
-phục đoàn chấp nhận một phương án phòng.
+**Nói được:** hỏi nhu cầu trước, nói giá trị sau ("Would you rather we held the room until six?", "The
+earlier you book, the…"), và nhận lời từ chối. A — bán nâng hạng, gói ăn sáng, gia hạn. B — giữ khách
+định huỷ, thuyết phục đoàn chấp nhận một phương án phòng.
 
 1. **What Matters Most to You?** · khách — hỏi trước khi mời.
 2. **"It's Too Expensive"** · khách — đáp lời từ chối, không ép.
 
 - 3A. **The Upgrade Offer** · khách — một lý do của chính khách.
 - 4A. **Staying One More Night** · khách — gia hạn, nói thật về giá.
-- 3B. **Before You Cancel** · khách — tìm lý do, đưa phương án trong khung.
+- 3B. **Before You Cancel** · khách — tìm lý do, đưa phương án trong khung; phí huỷ, hoàn tiền chuyển quản lý.
 - 4B. **A Split Across Two Wings** · trưởng đoàn — đoàn không ở chung tầng.
 
 **Nghe:** (a) khách cân nhắc nâng hạng, nêu hai lo ngại; (b) trưởng đoàn phản đối một cách chia phòng.
@@ -562,9 +569,9 @@ huống theo bối cảnh, việc làm, kết quả. A — phỏng vấn lên b�
 1. **What I Have Achieved at the Desk** · quản lý nước ngoài — số lượt nhận phòng, điểm hài lòng, một cải tiến.
 2. **A Time When the System Went Down** · quản lý nước ngoài — bối cảnh, việc làm, kết quả.
 
-- 3A. **The Promotion Interview** · quản lý nước ngoài — vì sao là tôi.
-- 4A. **Questions for Them** · quản lý nước ngoài — hỏi lại người phỏng vấn.
-- 3B. **My Year-End Review** · quản lý nước ngoài — điều đạt, điều chưa, kế hoạch.
+- 3A. **The Senior Receptionist Interview** · quản lý nước ngoài — vì sao là tôi: một ca đêm khó, một con số.
+- 4A. **Questions for the Front Office Manager** · quản lý nước ngoài — hỏi lại về ca, đào tạo, kỳ vọng.
+- 3B. **My Year at the Desk** · quản lý nước ngoài — công suất, khiếu nại, ca đêm: điều đạt, điều chưa, kế hoạch.
 - 4B. **Writing My Self-Assessment** · viết — bản tự đánh giá theo mẫu tiếng Anh.
 
 **Nghe:** (a) ba câu hỏi phỏng vấn; (b) quản lý nhận xét cuối năm.
@@ -589,15 +596,15 @@ khiếu nại. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; từ chối dứt khoát mà tử tế (một câu không, một
-lý do, một phương án). B — biết điều giám sát được viết nhân danh khách sạn; báo lên bằng ba phần
-(việc, con số, điều đề nghị).
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
+(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Long Day at the Desk** · khách — VIP, đoàn, sự cố, một lời từ chối.
 2. **Rehearsal: The Call You Should Not Answer** · người gọi — báo chí, người hỏi dò.
 
 - 3A. **Not Mine to Say** · khách — khách hỏi về khách khác, về một sự cố đang điều tra.
-- 4A. **The Firm, Kind No** · khách — yêu cầu trái quy định: không, lý do, phương án.
+- 4A. **The Firm, Kind No** · khách — yêu cầu trái quy định, khách nài lần hai: nhắc lại một câu, không để ngỏ.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · quản lý nước ngoài — báo lên một việc trong ba câu.
 

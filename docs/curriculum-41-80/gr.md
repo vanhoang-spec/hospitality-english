@@ -7,9 +7,19 @@
 quản lý, tổng quản lý người nước ngoài (ở khách sạn có). Sau tên mỗi bài ghi người nghe. Việc nói với
 các bộ phận, hướng dẫn viên, công ty tour người Việt là bài **viết** hoặc **chuyển ngữ**.
 
-**Phạm vi.** File viết cho resort. Ở khách sạn thành phố, giữ tên bài và đổi tình huống: thay hoạt động
-ngoài trời bằng lounge, xe đưa đón, khách dài hạn. Đặt tour là việc của quầy concierge (luật tuần 38):
-Quan hệ khách hàng theo dõi việc đã đặt, báo khách, không chốt phí.
+**Phạm vi.** File viết cho resort. Đặt tour là việc của quầy concierge (luật tuần 38): Quan hệ khách
+hàng theo dõi việc đã đặt, báo khách, không chốt phí. Ở khách sạn thành phố, giữ tên bài và chức năng
+ngôn ngữ, đổi tình huống theo bảng này:
+
+| Tuần   | Resort                                     | Khách sạn thành phố                                       |
+| ------ | ------------------------------------------ | --------------------------------------------------------- |
+| 44     | làng nghề, bãi biển                        | khu phố cổ, bảo tàng, nhà hàng ngoài khách sạn            |
+| 47, 49 | biển, cờ và cứu hộ                         | đi bộ ban đêm, taxi, giao thông: cũng không nói "an toàn" |
+| 51     | ứng dụng resort, câu lạc bộ trẻ em         | lounge tầng cao, xe đưa đón sân bay, phòng họp            |
+| 56     | lời chào và chương trình trong ngày        | giới thiệu lounge và quyền lợi cho khách mới              |
+| 59     | hoạt động bị huỷ vì thời tiết              | xe sân bay trễ, phòng họp bị trùng                        |
+| 65, 75 | chuyến đi đổi lịch, trưởng đoàn nghỉ dưỡng | khách dài hạn, trưởng đoàn công tác                       |
+| 72     | dẫn khách khảo sát xem resort              | dẫn khách khảo sát xem phòng, lounge, phòng họp           |
 
 **Luật của Guest Relations** ở Phase 4 giữ nguyên: không xác nhận ai đang ở khách sạn, không đưa
 chuyện của khách khác vào câu chuyện, xin phép trước khi ghi hồ sơ, không hứa thay bộ phận khác, không
@@ -136,10 +146,10 @@ nhắn đúng giọng.
 
 ### Tuần 49 · Tổng duyệt + hai luật mới
 
-**Nói được:** khi chưa biết thì nói điều mình chưa biết, **ai sẽ trả lời và mấy giờ**; khi khách hỏi
-thẳng thì trả lời ngay câu đầu; và giữ được một buổi chiều nhiều khách đến.
+**Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
+khi khách hỏi thẳng thì trả lời ngay câu đầu; và giữ được một buổi chiều nhiều khách đến.
 
-1. **The Lifeguard Decides; I Will Find Out by Four** · khách — "Is it safe to swim?", giờ tàu, visa: không đoán; cờ, cứu hộ, ai trả lời, mấy giờ.
+1. **The Lifeguard Decides; I Will Find Out by Four** · khách — "Is it safe to swim?", giờ tàu, visa: không đoán; cờ, cứu hộ, mấy giờ mình quay lại.
 2. **Answer First** · khách — "Can we stay longer?", "Is the shuttle free?": câu trả lời đi trước lý do.
 3. **Rehearsal: An Afternoon of Arrivals** · khách — yêu cầu mơ hồ, một lời khuyên, một lời chuyển.
 4. **Rehearsal: The Lobby Round** · khách — trò chuyện, mô tả, một cuộc gọi.
@@ -172,7 +182,7 @@ changes").
 doctor had already been called"), chỉ ghi sự việc, giờ, người chứng kiến, không suy đoán, không ghi
 chuyện sức khoẻ vào hồ sơ khách.
 
-1. **By the Time the Boat Returned** · người nhà khách — tai nạn nhỏ trong một chuyến đi: điều đã xảy ra, điều đã làm.
+1. **By the Time the Boat Returned** · người nhà khách — tai nạn nhỏ trong một chuyến đi: việc khách sạn đã làm, theo thứ tự; không nói nguyên nhân.
 2. **It Had Been Left on the Sunbed** · khách — mất tài sản: hỏi và nhắc lại trình tự.
 3. **A Complaint About a Colleague** · khách — nghe, ghi đúng lời khách, không bình luận.
 4. **Facts Only** · viết — biên bản không đoán, không nhận, không chối.
@@ -250,7 +260,7 @@ it right"), và tóm hồ sơ một khách VIP bằng năm dòng viết.
 3. **In Short** · khách — nói gọn cho khách câu trả lời dài của ba bộ phận.
 4. **Five Lines on a VIP** · viết — ai, dịp gì, thích gì, tránh gì, ai phụ trách.
 
-**Nghe:** (a) khách kể một khiếu nại dài năm phút; (b) trợ lý của khách VIP đọc yêu cầu.
+**Nghe:** (a) khách kể một khiếu nại gần hai phút; (b) trợ lý của khách VIP đọc yêu cầu.
 **Viết (70–90 từ):** tóm tắt hồ sơ một khách VIP.
 **Chuyển ngữ (hai chiều, trực tiếp):** khách và bếp trưởng về một bữa tối riêng.
 
@@ -258,12 +268,13 @@ it right"), và tóm hồ sơ một khách VIP bằng năm dòng viết.
 
 **Viết được:** thư trước khi đến, trong kỳ nghỉ, sau lưu trú, thư xin lỗi — đúng giọng thương hiệu,
 bằng các cụm cố định ("Further to your reservation…", "Please find attached…", "Should you wish to
-arrange anything in advance…"). Mọi thư gửi khách là **bản nháp, quản lý duyệt**.
+arrange anything in advance…"). Mọi thư gửi khách là **bản nháp, quản lý duyệt**. **Nói được:** nói lại
+nội dung một lá thư bằng lời, giọng trung tính thay cho giọng trang trọng của thư.
 
-1. **Before You Arrive** · viết — thư trước khi đến.
-2. **During Your Stay** · viết — thư giữa kỳ nghỉ.
-3. **After Your Stay** · viết — thư cảm ơn, mời quay lại.
-4. **An Apology That Says Something** · viết — thư xin lỗi không hứa tiền, không kết luận lỗi.
+1. **Before You Arrive, After You Leave** · viết — thư trước khi đến; thư cảm ơn, mời quay lại.
+2. **The Call After the Letter** · khách — gọi sau thư trước khi đến: hỏi điều thư chưa hỏi được.
+3. **An Apology That Says Something** · viết — thư xin lỗi không hứa tiền, không kết luận lỗi.
+4. **"As We Wrote to You"** · khách — khách hỏi về thư đã nhận: nói lại bằng lời, không đọc nguyên văn.
 
 **Nghe:** (a) quản lý dặn ba ý phải có trong thư; (b) khách đọc yêu cầu trước chuyến đi qua điện thoại.
 **Viết (80–100 từ):** thư trước khi đến cho một cặp đôi kỷ niệm ngày cưới.
@@ -407,7 +418,7 @@ dụ, một đề nghị. B — báo cáo ở giao ban tiếng Anh: khách VIP, 
 nói xu hướng ("up by…", "twice as many as…"). A — đếm và báo việc theo trạng thái. B — viết báo cáo
 tuần có so sánh.
 
-1. **About Forty Minutes by Car** · khách — ước lượng quãng đường, thời gian chờ.
+1. **About Forty Minutes by Car** · khách — ước lượng việc của bên khác: quãng đường, xe đang tới; việc mình giữ vẫn hẹn mốc giờ.
 2. **Busier Than Last Week** · khách — mức đông của bãi biển, nhà hàng; giờ nên đi.
 
 - 3A. **The Daily Count** · viết — khiếu nại, yêu cầu, việc mở, việc quá hạn.
@@ -431,10 +442,11 @@ khắc phục.
 - 3A. **The Guest Who Has Just Posted** · khách — gặp khách, không nhắc tới bài đăng trước.
 - 4A. **Inviting a Review** · khách — mời, không xin điểm.
 - 3B. **Drafting the Public Reply** · viết — cảm ơn, sự việc, việc đã làm; chờ duyệt.
-- 4B. **The Corrective-Action Note** · viết — vấn đề, nguyên nhân, việc sửa, ai, hạn.
+- 4B. **Taking the Draft to the Manager** · quản lý nước ngoài — trình bản nháp: vì sao viết thế, việc sẽ sửa, nhận góp ý.
 
 **Nghe:** (a) khách nói điều họ đã viết trong bài đăng; (b) quản lý đọc ba nhận xét lặp lại.
-**Viết (100–120 từ):** A — tin nhắn riêng cho khách (quản lý duyệt). B — bản nháp thư trả lời nhận xét.
+**Viết (100–120 từ):** A — tin nhắn riêng cho khách (quản lý duyệt). B — bản nháp thư trả lời nhận xét,
+kèm phiếu khắc phục.
 **Chuyển ngữ (Anh → Việt):** một nhận xét của khách cho các bộ phận.
 
 ### Tuần 69 · Tổng duyệt + hai luật mới theo nhánh
@@ -497,11 +509,11 @@ dẫn khách khảo sát đi xem resort.
 
 Báo chí, pháp lý nằm ngoài khung của mọi nhánh: một câu, rồi chuyển đúng người.
 
-**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "May I suggest…", "Please allow me
-to…") và không xác nhận điều gì về khách. A — chăm sóc khách nổi tiếng, khách ngoại giao; từ chối
+**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "Please allow me to…"; "May I
+suggest…" đã dạy ở tuần 32) và không xác nhận điều gì về khách. A — chăm sóc khách nổi tiếng, khách ngoại giao; từ chối
 người gọi hỏi thông tin. B — phối hợp một lần đón VIP; chuyển nhà báo tới bộ phận truyền thông.
 
-1. **May I Suggest…** · khách — cụm trang trọng cho khách VIP.
+1. **Please Allow Me To…** · khách — cụm trang trọng mới cho khách VIP.
 2. **I Am Unable to Confirm That** · người gọi — một câu, không giải thích.
 
 - 3A. **A Guest Who Must Not Be Seen** · trợ lý của khách — lối đi, giờ, người biết.
@@ -515,8 +527,8 @@ người gọi hỏi thông tin. B — phối hợp một lần đón VIP; chuy�
 
 ### Tuần 74 · Thuyết phục và xử lý lời từ chối
 
-**Nói được:** hỏi trước, nói giá trị sau ("Would you rather…?", "The earlier you book, the…"), và
-nhận lời từ chối. A — gợi ý một bữa tối đặc biệt, gia hạn, lần lưu trú sau. B — giữ khách định rời sớm,
+**Nói được:** hỏi trước, nói giá trị sau ("Would you rather we arranged it for tomorrow?", "The earlier
+you book, the…"), và nhận lời từ chối. A — gợi ý một bữa tối đặc biệt, gia hạn, lần lưu trú sau. B — giữ khách định rời sớm,
 thuyết phục khách nhận phương án thay thế.
 
 1. **What Would Make This Trip Special?** · khách — hỏi trước khi mời.
@@ -556,15 +568,16 @@ ty hỗ trợ bảo hiểm.
 ### Tuần 76 · Sự cố lớn
 
 **Nói được:** A — thông báo 60 giây cho nhóm khách cần hỗ trợ, trả lời câu hỏi không lường trước, nói
-điều sẽ xảy ra tiếp ("Guests need not pack; rooms will be held until further notice"). B — làm đầu mối
-phiên dịch giữa khách, gia đình và cơ quan chức năng; viết thư sau sự cố.
+điều sẽ xảy ra tiếp ("Guests need not pack; rooms will be held until further notice"). B — phiên dịch
+giữa khách, gia đình và y tế; viết thư sau sự cố. Khi có công an thì báo quản lý để có phiên dịch chính
+thức.
 
 1. **The Next Update Is at Ten** · nhóm khách — thông tin đều khi chưa có gì mới.
 2. **What Happens Next** · khách — vài giờ tới: phòng, bữa ăn, chuyến bay, lần cập nhật kế.
 
 - 3A. **Staying with the Guests** · khách — nói gì, không nói gì.
 - 4A. **Sixty Seconds for Those Who Need Help** · nhóm khách — người lớn tuổi, gia đình có trẻ nhỏ, người đi một mình.
-- 3B. **Interpreting for the Authorities** · chuyển ngữ — dịch đủ, không trả lời thay.
+- 3B. **Interpreting for the Medics** · chuyển ngữ — dịch đủ, không trả lời thay.
 - 4B. **The Letter Afterwards** · viết — thư gửi khách sau sự cố; quản lý duyệt.
 
 **Nghe:** (a) thông báo khẩn của resort; (b) nhiều khách hỏi cùng lúc về chuyến bay.
@@ -580,10 +593,10 @@ giá cuối năm của chính mình.
 1. **What I Have Achieved for Our Guests** · quản lý nước ngoài — khiếu nại đã đóng, khách quay lại, một cải tiến.
 2. **A Time When a Guest Was in Trouble** · quản lý nước ngoài — bối cảnh, việc làm, kết quả.
 
-- 3A. **The Promotion Interview** · quản lý nước ngoài — vì sao là tôi.
-- 4A. **Questions for Them** · quản lý nước ngoài — hỏi lại người phỏng vấn.
-- 3B. **My Year-End Review** · tổng quản lý nước ngoài — điều đạt, điều chưa, kế hoạch.
-- 4B. **Writing My Self-Assessment** · viết — bản tự đánh giá theo mẫu tiếng Anh.
+- 3A. **The Senior Guest Relations Interview** · quản lý nước ngoài — vì sao là tôi: một khách khó, một con số.
+- 4A. **Questions for the Guest Relations Manager** · quản lý nước ngoài — hỏi lại về khách VIP, ca, quyền quyết.
+- 3B. **My Year with Our Guests** · tổng quản lý nước ngoài — điểm hài lòng, khiếu nại đã đóng: điều đạt, điều chưa.
+- 4B. **My Self-Assessment, with Guest Comments** · viết — bản tự đánh giá, dẫn lời khách đã được phép dùng.
 
 **Nghe:** (a) ba câu hỏi phỏng vấn; (b) quản lý nhận xét cuối năm.
 **Viết (120–150 từ):** A — thư xin thăng tiến. B — bản tự đánh giá.
@@ -607,15 +620,15 @@ một khiếu nại. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; từ chối dứt khoát mà tử tế (một câu không, một
-lý do, một phương án). B — biết điều giám sát được viết nhân danh khách sạn; báo lên bằng ba phần
-(việc, con số, điều đề nghị).
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
+(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Day with Two VIP Arrivals** · khách — khách VIP, một khiếu nại mở, một tin xấu.
 2. **Rehearsal: The Question You Should Not Answer** · người gọi — "Is Mr Lee staying with you?".
 
 - 3A. **Not Mine to Say** · khách — chuyện của khách khác, chuyện đang được xem xét.
-- 4A. **The Firm, Kind No** · khách — khách quen xin một ngoại lệ không thể: không, lý do, phương án.
+- 4A. **The Firm, Kind No** · khách — khách quen nài lần hai một ngoại lệ không thể: nhắc lại một câu, không để ngỏ.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · tổng quản lý nước ngoài — báo lên một việc trong ba câu.
 

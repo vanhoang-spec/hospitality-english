@@ -7,9 +7,11 @@ luyện của hãng sản phẩm; quản lý spa người nước ngoài (ở sp
 người nghe. Việc nói với đồng nghiệp, y tá, lễ tân người Việt là bài **viết** hoặc **chuyển ngữ**.
 
 **Bài của ai.** Sau người nghe ghi nơi diễn ra: _quầy_, _điện thoại_ là bài của lễ tân spa; _phòng trị
-liệu_ là bài của kỹ thuật viên; _khu ướt_, _phòng tập_ là bài của nhân viên khu. Học viên học cả ba. Ở
-Phase 5–6, tuần nào cũng có bài trong phòng trị liệu, phần lớn tuần có hai. Dạy lớp yoga và đo nước hồ
-không phải việc của học viên.
+liệu_ là bài của kỹ thuật viên; _khu ướt_, _phòng tập_ là bài của nhân viên khu. Ở Phase 5–6, tuần nào
+cũng có bài trong phòng trị liệu, phần lớn tuần có hai. Dạy lớp yoga và đo nước hồ không phải việc của
+học viên. Bốn mươi tuần đầu không tách bài theo vai, và outline này cũng chưa tách: học viên học cả ba
+nơi. Riêng **bài sát hạch rút tình huống nói theo vai học viên khai** (lễ tân spa hoặc kỹ thuật viên),
+để một kỹ thuật viên không trượt mốc vì một cuộc gọi đặt lịch.
 
 **Luật của Spa** ở Phase 4 giữ nguyên: không chẩn đoán, không hứa chữa bệnh; khách mang thai, huyết áp
 cao, vừa phẫu thuật thì hỏi quản lý hoặc đổi liệu trình; phiếu sức khoẻ của khách này không đọc cho
@@ -26,7 +28,7 @@ giới nghề — dừng, ra ngoài, báo.
 **Nói được:** kể lại cho chính vị khách và người đi cùng một sự việc trong spa theo đúng trình tự (lúc
 đó đang làm gì, chuyện gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi sổ ca.
 
-1. **While You Were in the Steam Room** · khách (khu ướt) — khách choáng sau xông hơi: điều mình thấy, điều đã làm.
+1. **While You Were in the Steam Room** · khách (khu ướt) — khách choáng sau xông hơi: điều đã làm cho khách, ai đang tới; không nói nguyên nhân.
 2. **Halfway Through the Treatment** · khách (phòng trị liệu) — khách dừng giữa buổi: đã làm tới đâu, điều chưa ổn.
 3. **Two Bookings, One Room** · khách (quầy) — đặt trùng giờ: chuyện gì xảy ra trước, sau; không đổ cho ai.
 4. **Into the Logbook** · viết — giờ, phòng, việc, còn lại gì.
@@ -139,10 +141,10 @@ therapist will be waiting at…", "We will be finishing at four"), và xác nh�
 
 ### Tuần 49 · Tổng duyệt + hai luật mới
 
-**Nói được:** khi chưa biết thì nói điều mình chưa biết, **ai sẽ trả lời và mấy giờ**; khi khách hỏi
-thẳng thì trả lời ngay câu đầu; và giữ được một chiều kín lịch.
+**Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
+khi khách hỏi thẳng thì trả lời ngay câu đầu; và giữ được một chiều kín lịch.
 
-1. **I Cannot Say; Our Nurse Can** · khách (quầy) — "Is it safe for me?", thành phần một sản phẩm: không đoán; ai trả lời, mấy giờ.
+1. **I Cannot Say; I Will Ask Our Nurse** · khách (quầy) — "Is it safe for me?", thành phần sản phẩm: không đoán; mình quay lại sau mười phút, không hứa giờ thay y tá.
 2. **Answer First** · khách (quầy) — "Can I come now?", "Is the sauna included?": câu trả lời đi trước lý do.
 3. **Rehearsal: A Fully Booked Afternoon** · khách (quầy) — yêu cầu mơ hồ, đổi lịch, một lời khuyên.
 4. **Rehearsal: In the Treatment Room** · khách (phòng trị liệu) — hỏi lại, mô tả, một lời chuyển.
@@ -170,13 +172,18 @@ thẳng thì trả lời ngay câu đầu; và giữ được một chiều kín
 
 ### Tuần 52 · Trình tự quá khứ, biên bản sự cố
 
-**Nói được:** kể và viết một sự cố theo đúng thứ tự thời gian ("By the time I came back, you had
-already sat up"), chỉ ghi sự việc, giờ, người chứng kiến, việc đã làm.
+Với khách bị ảnh hưởng: hỏi han, nhắc lại điều khách kể, nói việc đang làm và ai đang tới; không kể
+diễn biến, không nói nguyên nhân, không bàn lỗi (luật đầu file; khung chung, mục 3). Khách thấy không
+khoẻ thì không để một mình.
 
-1. **By the Time I Came Back** · khách (phòng trị liệu) — khách chóng mặt trên giường: dừng, gọi y tá, nói điều mình thấy.
-2. **You Had Just Left the Steam Room** · khách (khu ướt) — khách ngã: hỏi han, gọi người, không bàn lỗi.
-3. **The Locker That Had Been Left Open** · khách (quầy) — mất đồ trong tủ khoá: nghe, ghi, gọi quản lý.
-4. **Facts Only** · viết — biên bản không đoán, không nhận lỗi, không ghi chuyện sức khoẻ thừa.
+**Nói được:** viết một sự cố theo đúng thứ tự thời gian ("By the time the nurse arrived, the guest had
+already sat up"), chỉ ghi sự việc, giờ, người chứng kiến, việc đã làm; với khách thì nhắc lại đúng điều
+khách kể ("So you had felt dizzy before you turned over?").
+
+1. **So You Had Felt Dizzy Before You Turned Over?** · khách (phòng trị liệu) — dừng, ở lại với khách, gọi y tá; nhắc lại lời khách.
+2. **So You Had Locked It Before the Treatment?** · khách (quầy) — mất đồ trong tủ khoá: nhắc lại lời khách, gọi quản lý.
+3. **The Guest Had Just Left the Steam Room** · viết — khách ngã ở khu ướt: biên bản theo điều mình thấy.
+4. **Facts Only** · viết — phản ứng da: điều phiếu ghi, điều đã làm; không đoán, không ghi chuyện sức khoẻ thừa.
 
 **Nghe:** (a) khách kể triệu chứng và giờ bắt đầu; (b) người đi cùng hỏi dồn bốn câu.
 **Viết (70–90 từ):** biên bản một ca phản ứng da: điều phiếu ghi, điều đã làm.
@@ -251,7 +258,7 @@ whether…"), đọc lại lịch nhiều liệu trình, và phiên dịch hai c
 3. **Reading the Schedule Back** · khách (quầy) — lịch nhiều liệu trình, nhiều người.
 4. **Interpreting, Not Advising** · chuyển ngữ — giữa khách và một đồng nghiệp; không khuyên thay.
 
-**Nghe:** (a) khách nói ba phút về tình trạng và mong muốn; (b) trưởng nhóm đọc lịch cho sáu người.
+**Nghe:** (a) khách nói gần hai phút về tình trạng và mong muốn; (b) trưởng nhóm đọc lịch cho sáu người.
 **Viết (70–90 từ):** tóm tắt phiếu tư vấn cho kỹ thuật viên.
 **Chuyển ngữ (hai chiều, trực tiếp):** khách và kỹ thuật viên trước liệu trình.
 
@@ -259,12 +266,13 @@ whether…"), đọc lại lịch nhiều liệu trình, và phiên dịch hai c
 
 **Viết được:** email dịch vụ đúng giọng bằng các cụm cố định ("Further to your enquiry…", "Please
 find our treatment menu attached…", "Should you have any health concerns…"). Mọi thư gửi khách là
-**bản nháp, quản lý duyệt**; không viết lời khuyên sức khoẻ.
+**bản nháp, quản lý duyệt**; không viết lời khuyên sức khoẻ. **Nói được:** nói lại bằng lời điều một lá
+thư, một thẻ chăm sóc đã viết, giọng trung tính.
 
-1. **Replying to an Enquiry** · viết — hỏi gói, ngày spa.
-2. **The Menu and What to Expect** · viết — bảng liệu trình, điều cần biết trước khi đến.
+1. **Replying to an Enquiry** · viết — hỏi gói, ngày spa; bảng liệu trình, điều cần biết trước khi đến.
+2. **Calling About Your Enquiry** · khách (điện thoại) — gọi lại hỏi điều thư chưa rõ: số người, giờ, điều cần báo trước.
 3. **Confirming a Group** · viết — giờ, phòng, kỹ thuật viên.
-4. **After Your Visit** · viết — thẻ chăm sóc của kỹ thuật viên: không hứa kết quả, không quảng cáo quá.
+4. **"As Your Aftercare Card Says"** · khách (phòng trị liệu) — nói lại bằng lời điều thẻ chăm sóc viết; không hứa kết quả.
 
 **Nghe:** (a) quản lý dặn ba ý phải có trong thư; (b) khách đọc yêu cầu của nhóm qua điện thoại.
 **Viết (80–100 từ):** email trả lời một yêu cầu đặt ngày spa cho bốn người.
@@ -406,7 +414,7 @@ buổi huấn luyện của hãng. B — giao ban tiếng Anh, phối hợp gói
 xu hướng ("up by…", "twice as many as…"). A — đọc chỉ số cho khách, ghi chú liệu trình. B — viết báo
 cáo ca có so sánh.
 
-1. **About Ten Minutes** · khách — ước lượng thời gian chờ phòng, chờ người làm.
+1. **About Ten Minutes** · khách — ước lượng việc chưa chắc (phòng trước chưa xong); giờ hẹn của mình thì vẫn là một mốc giờ.
 2. **Nearly Full at Weekends** · khách — mức đông, giờ nên đến.
 
 - 3A. **The Water Is at Thirty-Eight Degrees** · khách (khu ướt) — đọc bảng chỉ số cho khách; vượt ngưỡng thì báo, không tự kết luận.
@@ -428,7 +436,7 @@ nhắn tin mời đặt lại hoặc xin lỗi. B — đọc nhận xét về sp
 
 - 3A. **The Feedback Conversation** · khách — nghe, ghi, không cãi.
 - 4A. **A Private Message** · viết — mời đặt lại hoặc xin lỗi; quản lý duyệt.
-- 3B. **What the Comments Show** · đọc — gom nhận xét thành nhóm.
+- 3B. **What the Comments Show** · quản lý spa nước ngoài — trình bày ba nhóm nhận xét, nói việc sẽ sửa.
 - 4B. **The Corrective-Action Note** · viết — vấn đề, nguyên nhân, việc sửa, ai, hạn.
 
 **Nghe:** (a) khách góp ý ngay sau buổi; (b) quản lý đọc ba nhận xét lặp lại.
@@ -494,12 +502,12 @@ thiệu spa cho khách khảo sát, trả lời đoàn kiểm tra.
 
 Dừng buổi khi khách vượt ranh giới đã dạy ở Phase 3; tuần này dạy phần trước và sau đó.
 
-**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "May I suggest…", "Please allow me
-to…") và không nói ai đã tới spa. A — phục vụ khách VIP kín đáo; từ chối lời mời làm riêng ngoài spa.
+**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "Please allow me to…"; "May I
+suggest…" đã dạy ở tuần 32) và không nói ai đã tới spa. A — phục vụ khách VIP kín đáo; từ chối lời mời làm riêng ngoài spa.
 B — đón một lịch VIP; khi kỹ thuật viên báo bị quấy rối thì dừng dịch vụ, tách người, báo Duty Manager,
 không tự bàn sự việc với khách.
 
-1. **May I Suggest…** · khách — cụm trang trọng cho khách VIP.
+1. **Please Allow Me To…** · khách — cụm trang trọng mới cho khách VIP.
 2. **I Am Unable to Say** · khách — không nói ai đã tới, ai đang trong phòng, đã làm liệu trình gì.
 
 - 3A. **A Private Booking** · khách — lối vào, phòng, không ai biết tên.
@@ -513,8 +521,8 @@ không tự bàn sự việc với khách.
 
 ### Tuần 74 · Thuyết phục và xử lý lời từ chối
 
-**Nói được:** hỏi trước, nói giá trị sau ("Would you rather…?", "The more regular the sessions,
-the…"), và nhận lời từ chối. A — tư vấn chuỗi liệu trình, sản phẩm mang về; **từ chối bán khi có chống
+**Nói được:** hỏi trước, nói giá trị sau ("Would you rather we started with a shorter session?", "The
+more regular the sessions, the…"), và nhận lời từ chối. A — tư vấn chuỗi liệu trình, sản phẩm mang về; **từ chối bán khi có chống
 chỉ định**. B — khuyên nhóm chọn gói phù hợp; giữ khách định huỷ thẻ thành viên.
 
 1. **What Would You Like to Feel?** · khách — hỏi trước khi mời.
@@ -578,9 +586,9 @@ giá cuối năm của chính mình.
 2. **A Time When a Guest Felt Unwell** · quản lý spa nước ngoài — bối cảnh, việc làm, kết quả.
 
 - 3A. **The Senior Therapist Interview** · quản lý spa nước ngoài — vì sao là tôi.
-- 4A. **Questions for Them** · quản lý spa nước ngoài — hỏi lại người phỏng vấn.
-- 3B. **My Year-End Review** · quản lý spa nước ngoài — điều đạt, điều chưa, kế hoạch.
-- 4B. **Writing My Self-Assessment** · viết — bản tự đánh giá theo mẫu tiếng Anh.
+- 4A. **Questions for the Spa Manager** · quản lý spa nước ngoài — hỏi lại về đào tạo, sản phẩm, lịch ca.
+- 3B. **My Year in the Spa** · quản lý spa nước ngoài — tỷ lệ dùng phòng, khách đặt lại, khiếu nại: điều đạt, điều chưa.
+- 4B. **My Self-Assessment Form** · viết — bản tự đánh giá theo mẫu tiếng Anh, có số khách đặt lại.
 
 **Nghe:** (a) ba câu hỏi phỏng vấn; (b) quản lý nhận xét cuối năm.
 **Viết (120–150 từ):** A — thư xin lên bậc. B — bản tự đánh giá.
@@ -604,15 +612,15 @@ giờ thấp điểm. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; từ chối dứt khoát mà tử tế (một câu không, một
-lý do, một phương án). B — biết điều giám sát được viết nhân danh khách sạn; báo lên bằng ba phần
-(việc, con số, điều đề nghị).
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
+(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Full Day with a VIP Booking** · khách — khách VIP, chống chỉ định, một sự cố nhỏ.
 2. **Rehearsal: The Question You Should Not Answer** · khách — "Is she a guest here?", "What treatment did he have?".
 
 - 3A. **Not Mine to Say** · khách — sức khoẻ của khách khác, chuyện đang được xem xét.
-- 4A. **The Firm, Kind No** · khách — khách vẫn đòi liệu trình có chống chỉ định: không, lý do, phương án.
+- 4A. **The Firm, Kind No** · khách — khách nài lần hai một liệu trình có chống chỉ định: nhắc lại một câu, đưa phương án khác.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc spa sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · quản lý spa nước ngoài — báo lên một việc trong ba câu.
 

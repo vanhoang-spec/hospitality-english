@@ -124,10 +124,10 @@ nhắn.
 
 ### Tuần 49 · Tổng duyệt + hai luật mới
 
-**Nói được:** khi chưa biết thì nói điều mình chưa biết, **ai sẽ trả lời và mấy giờ**; khi khách hỏi
-thẳng thì trả lời ngay câu đầu; và giữ được một tối đông trộn mọi việc của giai đoạn.
+**Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
+khi khách hỏi thẳng thì trả lời ngay câu đầu; và giữ được một tối đông trộn mọi việc của giai đoạn.
 
-1. **The Chef Will Tell Us in Two Minutes** · khách — thành phần, nguồn gốc, có gluten không: bếp trả lời, mình hẹn giờ.
+1. **I Will Ask the Chef and Come Back in Two Minutes** · khách — thành phần, nguồn gốc, gluten: bếp trả lời; giờ là giờ mình quay lại.
 2. **Answer First** · khách — "Is it spicy?", "Can we split the bill?": câu trả lời đi trước lý do.
 3. **Rehearsal: A Full Terrace** · khách — gọi món mơ hồ, đổi món, một lời khuyên.
 4. **Rehearsal: The Last Hour** · khách — hoá đơn, lời nhắn, một yêu cầu qua điện thoại.
@@ -155,12 +155,16 @@ QR, và nói lý do ("so that it stays crisp", "in case you have an allergy").
 
 ### Tuần 52 · Trình tự quá khứ, biên bản sự cố
 
-**Nói được:** kể và viết một sự cố theo đúng thứ tự thời gian ("By the time I reached the table, the
-guest had already stopped eating"), chỉ ghi sự việc, giữ lại đĩa và phiếu.
+Với khách bị ảnh hưởng: hỏi và nhắc lại điều khách kể, không xác nhận, không phủ nhận, không kể
+nguyên nhân (luật tuần 36; khung chung, mục 3).
 
-1. **By the Time I Reached the Table** · quản lý nước ngoài — khách báo khó chịu sau món ăn.
-2. **You Had Told Us About the Allergy** · khách — đối chiếu phiếu cùng khách: ai đã ghi gì.
-3. **The Wine That Was Spilt** · khách — rượu đổ lên đồ khách: nói trình tự, không hứa tiền.
+**Nói được:** viết một sự cố theo đúng thứ tự thời gian ("By the time I reached the table, the guest
+had already stopped eating"), chỉ ghi sự việc, giữ lại đĩa và phiếu; với khách thì nhắc lại đúng điều
+khách kể ("So you had finished the starter when you felt unwell?").
+
+1. **What Had You Eaten Before You Felt Unwell?** · khách — hỏi và nhắc lại lời khách; quản lý đang tới.
+2. **She Had Told Us About the Allergy** · viết — đối chiếu phiếu trong biên bản: ai đã ghi gì, lúc nào.
+3. **The Wine That Was Spilt** · khách — rượu đổ lên đồ khách: việc làm ngay, ai quyết phần còn lại; không hứa tiền.
 4. **Facts Only** · viết — biên bản không đoán, không nhận, không chối.
 
 **Nghe:** (a) khách kể triệu chứng và giờ ăn; (b) quản lý nước ngoài hỏi lại bốn dữ kiện.
@@ -235,7 +239,7 @@ asked whether we could…"), đọc lại một order dài cho khách, và phiê
 3. **Reading the Order Back** · khách — đọc lại order dài, có thay đổi.
 4. **So, to Sum Up** · khách — chốt lại điều hai bên đã thống nhất.
 
-**Nghe:** (a) chủ tiệc nói năm phút về mong muốn của mình; (b) một order mười hai người.
+**Nghe:** (a) chủ tiệc nói gần hai phút về mong muốn của mình; (b) một order mười hai người.
 **Viết (70–90 từ):** tóm tắt yêu cầu của một chủ tiệc.
 **Chuyển ngữ (hai chiều, trực tiếp):** chủ tiệc và bếp trưởng người Việt.
 
@@ -243,12 +247,13 @@ asked whether we could…"), đọc lại một order dài cho khách, và phiê
 
 **Viết được:** email dịch vụ đúng giọng bằng các cụm cố định ("Further to your enquiry…", "Please
 find our menus attached…", "Should you have any dietary requirements…"). Mọi thư gửi khách là **bản
-nháp, quản lý duyệt**; điều về dị ứng và chế độ ăn viết theo câu trả lời của bếp.
+nháp, quản lý duyệt**; điều về dị ứng và chế độ ăn viết theo câu trả lời của bếp. **Nói được:** nói lại
+nội dung một lá thư bằng lời, giọng trung tính thay cho giọng trang trọng của thư.
 
-1. **Replying to an Enquiry** · viết — hỏi đặt tiệc, bàn nhóm.
-2. **Menus and Conditions** · viết — gửi thực đơn, cọc, hạn chốt theo điều quản lý đã chốt.
+1. **Replying to an Enquiry** · viết — đặt tiệc, bàn nhóm; thực đơn, cọc, hạn chốt theo điều quản lý đã chốt.
+2. **Calling About Your Enquiry** · khách — gọi lại hỏi điều thư chưa rõ: số người, dịp, dị ứng.
 3. **What the Kitchen Has Confirmed** · viết — ghi lại câu trả lời của bếp về dị ứng; không hứa "an toàn".
-4. **After a Bad Evening** · viết — thư xin lỗi không hứa tiền; quản lý duyệt.
+4. **"As We Wrote to You"** · khách — chủ tiệc tới xem chỗ: nói lại nội dung thư bằng lời, không đọc nguyên văn.
 
 **Nghe:** (a) quản lý dặn ba ý phải có trong thư; (b) khách đọc lại yêu cầu của mình qua điện thoại.
 **Viết (80–100 từ):** email trả lời một yêu cầu đặt tiệc sinh nhật.
@@ -390,7 +395,7 @@ một ví dụ, một đề nghị. B — họp tiệc bằng tiếng Anh: đọ
 **Nói được:** nói con số gần đúng với khách ("about fifteen minutes", "just under an hour") và nói xu
 hướng ("up by…", "twice as many as…"). A — báo con số của ca bằng lời. B — viết báo cáo ca có so sánh.
 
-1. **About Fifteen Minutes** · khách — ước lượng thời gian chờ món, chờ bàn.
+1. **About Fifteen Minutes** · khách — ước lượng việc của bếp, mức đông; việc mình giữ thì vẫn hẹn một mốc giờ.
 2. **Nearly Full on Saturdays** · khách — nói mức đông, giờ nên đến.
 
 - 3A. **The Shift in Numbers** · quản lý nước ngoài — số khách, món huỷ, món hết: nói bằng lời.
@@ -412,7 +417,7 @@ khách chưa rời. B — đọc kết quả kiểm tra vệ sinh, viết phiế
 
 - 3A. **Fixing It Before the Bill** · khách — sửa khi khách còn ngồi.
 - 4A. **A Private Message** · viết — nhắn riêng, không tranh luận; quản lý duyệt.
-- 3B. **What the Hygiene Audit Found** · đọc — đọc kết quả kiểm tra an toàn thực phẩm.
+- 3B. **What the Hygiene Audit Found** · đoàn kiểm tra — nghe người kiểm tra đọc phát hiện, hỏi lại, nói việc sẽ sửa.
 - 4B. **The Corrective-Action Note** · viết — vấn đề, nguyên nhân, việc sửa, ai, hạn.
 
 **Nghe:** (a) khách góp ý khi thanh toán; (b) người kiểm tra vệ sinh đọc ba phát hiện.
@@ -477,12 +482,12 @@ thiệu thực đơn mới cho quản lý, dẫn khách khảo sát xem sảnh t
 
 ### Tuần 73 · Khách VIP, tình huống nhạy cảm
 
-**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "May I suggest…", "Please allow me
-to…") và không nói về bàn khác, khách khác. A — phục vụ bàn VIP, tiệc riêng tư; xử lý khi khách báo có
+**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "Please allow me to…"; "May I
+suggest…" đã dạy ở tuần 32) và không nói về bàn khác, khách khác. A — phục vụ bàn VIP, tiệc riêng tư; xử lý khi khách báo có
 dị vật trong món. B — tiếp chủ tiệc VIP; khách khiếm nhã với nhân viên thì dừng lại, báo an ninh và
 Duty Manager.
 
-1. **May I Suggest…** · khách — cụm trang trọng cho bàn VIP.
+1. **Please Allow Me To…** · khách — cụm trang trọng mới cho bàn VIP.
 2. **I Am Unable to Say** · khách — không nói về khách khác, bàn khác.
 
 - 3A. **A Private Dinner** · khách — kín đáo, đúng nhịp, không chen vào.
@@ -496,8 +501,8 @@ Duty Manager.
 
 ### Tuần 74 · Thuyết phục và xử lý lời từ chối
 
-**Nói được:** hỏi trước, nói giá trị sau ("Would you rather…?", "The earlier you come, the…"), và
-nhận lời từ chối. A — gợi ý vang theo chai, thực đơn nếm, tráng miệng. B — thuyết phục khách đổi giờ ăn
+**Nói được:** hỏi trước, nói giá trị sau ("Would you rather we kept your table for nine?", "The earlier
+you come, the…"), và nhận lời từ chối. A — gợi ý vang theo chai, thực đơn nếm, tráng miệng. B — thuyết phục khách đổi giờ ăn
 sáng khi kín chỗ; giữ một tiệc định huỷ.
 
 1. **What Are You in the Mood For?** · khách — hỏi trước khi mời.
@@ -557,10 +562,10 @@ huống theo bối cảnh, việc làm, kết quả. A — phỏng vấn lên t�
 1. **What I Have Achieved on the Floor** · quản lý nước ngoài — số bàn mỗi ca, doanh số gợi ý món, một cải tiến.
 2. **A Time When the Kitchen Stopped** · quản lý nước ngoài — bối cảnh, việc làm, kết quả.
 
-- 3A. **The Promotion Interview** · quản lý nước ngoài — vì sao là tôi.
-- 4A. **Questions for Them** · quản lý nước ngoài — hỏi lại người phỏng vấn.
-- 3B. **My Year-End Review** · quản lý nước ngoài — điều đạt, điều chưa, kế hoạch.
-- 4B. **Writing My Self-Assessment** · viết — bản tự đánh giá theo mẫu tiếng Anh.
+- 3A. **The Floor Captain Interview** · quản lý nước ngoài — vì sao là tôi: một tối kín bàn, một con số.
+- 4A. **Questions for the Restaurant Manager** · quản lý nước ngoài — hỏi lại về khu, ca, đào tạo rượu vang.
+- 3B. **My Year on the Floor** · quản lý nước ngoài — hoá đơn bình quân, món huỷ, khiếu nại: điều đạt, điều chưa.
+- 4B. **My Self-Assessment, in Numbers** · viết — số bàn, điểm kiểm tra vệ sinh, khiếu nại của khu mình.
 
 **Nghe:** (a) ba câu hỏi phỏng vấn; (b) quản lý nhận xét cuối năm.
 **Viết (120–150 từ):** A — thư xin thăng tiến. B — bản tự đánh giá.
@@ -584,15 +589,18 @@ hài lòng. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; từ chối dứt khoát mà tử tế (một câu không, một
-lý do, một phương án). B — biết điều giám sát được viết nhân danh khách sạn; báo lên bằng ba phần
-(việc, con số, điều đề nghị).
+Từ chối phục vụ rượu cho khách đã uống nhiều là quyết định của giám sát (luật tuần 36), không phải
+bài của tuần này.
+
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
+(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Long Saturday Night** · khách — bàn VIP, dị ứng, sự cố, một lời từ chối.
 2. **Rehearsal: The Question You Should Not Answer** · khách — hỏi về bàn khác, về một sự cố tối qua.
 
 - 3A. **Not Mine to Say** · khách — chuyện của khách khác, chuyện đang điều tra.
-- 4A. **The Firm, Kind No** · khách — khách đã uống nhiều gọi thêm; mang đồ ngoài vào: không, lý do, phương án.
+- 4A. **The Firm, Kind No** · khách — mang đồ ăn ngoài vào, đòi bàn đã đặt cho người khác; khách nài lần hai.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · quản lý nước ngoài — báo lên một việc trong ba câu.
 
