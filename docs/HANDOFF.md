@@ -3,6 +3,11 @@
 Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
+**10/10 đêm: outline tuần 41–80 (đề xuất, chưa phải spec).** Chủ dự án muốn kéo lộ trình tới 1,5 năm
+(tuần 60, B1 nghiệp vụ) và 2 năm (tuần 80, B1+ · tiếp xúc B2.1), tách hai nhánh từ tuần 61. Khung ở
+[`curriculum-41-80.md`](curriculum-41-80.md), chi tiết năm bộ phận ở `docs/curriculum-41-80/`. Chưa có
+code hay bài học nào viết theo nó; ma trận 40 tuần vẫn là spec chuẩn. Xem §2 mục cuối và §5 mục 9.
+
 **10/10 tối: `main` = `219fdd6` (PR #31, đợt 3 — tiến độ, học tiếp, lưu điểm dừng, cài như app).**
 Chủ dự án ra lệnh "merge 31" sau khi 8 điểm rà soát đã sửa và CI GitHub xanh. Không có migration.
 **Production đã chạy bản này** (đọc lại 10/10 ~21:00): `/manifest.webmanifest` trả tên "Embassy
@@ -132,6 +137,17 @@ Theo thứ tự yêu cầu gần nhất:
    của 10 auditor khớp hoàn toàn bản đóng băng (câu sai lọt 0, không mất câu đúng nào).
    **07/10: đã merge vào `main`** qua PR #16 (`a2ade64`).
 7. **(07/10) Thông tin công ty của khách sạn** khi mở tài khoản qua link — xem §4.
+8. **(10/10) Kéo lộ trình tới tuần 60 và tuần 80.** Chủ dự án: 40 tuần đủ cho khoảng một năm và mới ở
+   cuối A2; muốn thêm 20 tuần (mốc 1,5 năm) rồi 20 tuần nữa (mốc 2 năm), đích là cuối B1, hơi chạm
+   B2 theo tiếng Anh ngành. Hai điều đã chốt: **tuần 41–60 chung, từ tuần 61 tách hai nhánh** (chuyên
+   viên tuyến đầu / trưởng ca–giám sát); **nhãn tuần 60 = B1 nghiệp vụ, tuần 80 = B1+ · tiếp xúc
+   B2.1**, với điều kiện có phép đo nói/viết tự do. Outline đã duyệt khung:
+   [`curriculum-41-80.md`](curriculum-41-80.md) + năm file bộ phận (160 bài mỗi bộ phận). Đã qua một
+   lượt phản biện của agent, **chưa qua chấm mù**. Những điểm lượt phản biện buộc sửa, đừng làm lại:
+   phần lớn ngữ pháp tuần 41–46 học viên đã gặp ở P3–P4 dưới dạng công thức (Phase 5 hệ thống hoá,
+   không dạy như mới); trưởng ca người Việt nói với tổ bằng tiếng Việt, nên Nhánh B chỉ dạy tiếng Anh
+   với khách, với quản lý nước ngoài, trong văn bản và với thực tập sinh, đối tác nước ngoài; Buồng
+   phòng không bán hàng (tuần 74 là thuyết phục khách chấp nhận việc cần làm).
 
 ---
 
@@ -553,6 +569,15 @@ Không tự làm những việc này.
    Phiên mobile báo: cùng phiên bản trên npm công khai có hash giống hệt; nếu kho Lovable đóng thì CI
    và Vercel không cài được dependency. Đề xuất một PR riêng trỏ sang npm, kèm gỡ khối cảnh báo Lovable
    ở đầu `AGENTS.md` nếu dự án không còn dùng Lovable. Chưa làm, chờ chủ dự án xác nhận.
+9. **Outline tuần 41–80** ([`curriculum-41-80.md`](curriculum-41-80.md)) — chủ dự án đã trả lời ba câu
+   hỏi (10/10, chi tiết ở mục 9 của file đó): **nhánh do học viên hoặc HR chọn, cả hai đều được**;
+   **năm hai nằm trong gói tính phí hiện tại**, không bán riêng; **AI chấm thì hỏi dùng DeepSeek** —
+   dùng được với bốn điều kiện (dữ liệu sang Trung Quốc nên không gửi thông tin nhận diện; không có cam
+   kết sẵn sàng nên cần nhà cung cấp thứ hai; viết không gắn nhà cung cấp; chọn bằng phép so với 100
+   bài giáo viên đã chấm). **Khi HR và học viên chọn khác nhau thì theo HR** (chốt 10/10). Còn mở:
+   chốt nhà cung cấp AI sau phép so. Bước kế đề xuất: một Academic Director và một Hotel Manager chấm
+   mù outline, rồi mới xây phép đo và khung 80 tuần, rồi soạn thử Phase 5 cho Lễ tân. **Không soạn bài
+   tuần 41+ trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không giữ được.
 
 ---
 
