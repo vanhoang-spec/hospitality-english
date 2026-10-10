@@ -170,7 +170,8 @@ A2/B1. Cột "Ngôn ngữ" ghi riêng phần mới thật.
   ghi chép, báo cáo, email bằng tiếng Anh; làm việc với thực tập sinh và đối tác nước ngoài.
 - **Mỗi tuần 2 bài chung + 2 bài riêng nhánh.** Soạn gấp rưỡi chứ không gấp đôi, và hai nhánh có
   chung một nửa bể đề sát hạch.
-- Học viên đổi nhánh được ở đầu mỗi giai đoạn. Ai chọn nhánh (học viên hay HR) chưa quyết.
+- Học viên đổi nhánh được ở đầu mỗi giai đoạn. Nhánh do học viên hoặc HR chọn, cả hai đều được (mục
+  9.1).
 
 ## 5. Luật nhà
 
@@ -246,6 +247,7 @@ Không có những phần này thì 40 tuần mới chỉ là thêm bài, không
      "nói đủ ý" chứ không đo tiếng Anh; "Sorry room not ready twenty minutes" có thể qua.
    - _Ở bốn bài sát hạch, chấm bằng AI theo thang điểm_ (độ chính xác, vốn từ, mạch lạc, giọng điệu),
      đối chiếu với một mẫu do giáo viên chấm tay. Hiện repo chưa có phần nào gọi AI; đây là phần mới.
+     Nhà cung cấp đang cân nhắc và điều kiện: mục 9.3.
 2. **Viết và chuyển ngữ hằng tuần.** Hiện mỗi thứ chỉ có một tuần (viết tuần 33, chuyển ngữ tuần 26).
    Màn hình đã có (`WritingSuite`, `MediationSuite`); phải bỏ sàn cứng 25 từ / 2 câu, mở dạng đề ngoài
    "trả lời nhận xét", thêm chiều Anh → Việt và trả lời bằng giọng nói.
@@ -256,7 +258,8 @@ Không có những phần này thì 40 tuần mới chỉ là thêm bài, không
    cứng ở 40 tuần (`scripts/verify-content.ts`, `scripts/lint-content.ts`, `scripts/qa-full.ts`); sáu
    ràng buộc `BETWEEN 1 AND 40` trong ba migration; thang cấp bậc sao (`jobRankFor`); các chữ "40
    tuần" trên giao diện và tài liệu.
-6. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh.
+6. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh;
+   học viên chọn ở tuần 61, HR chọn hoặc đổi được ở trang quản lý nhân viên (mục 9.1).
 
 ## 8. Khối lượng soạn và thứ tự làm
 
@@ -270,11 +273,53 @@ Thứ tự đề xuất: thẩm định outline này (một Academic Director, m
 đo và khung 80 tuần → soạn thử Phase 5 cho Lễ tân → chấm mù theo đúng quy trình 10 auditor → nhân ra
 bốn bộ phận còn lại.
 
-## 9. Việc còn chờ quyết
+## 9. Ba việc chủ dự án đã trả lời (10/10/2026)
 
-- Có dùng AI chấm ở bài sát hạch không, và chi phí mỗi học viên.
-- Ai chọn nhánh: học viên hay HR.
-- Cách bán: gói năm hai tính riêng hay gia hạn.
+### 9.1 Chọn nhánh: học viên hoặc HR, cả hai đều được
+
+Tới tuần 61 học viên tự chọn nhánh; HR cũng chọn hoặc đổi được cho nhân viên của mình. **Còn mở:**
+khi hai bên chọn khác nhau thì theo ai. Đề xuất: theo HR, vì HR biết ai đang được đưa lên trưởng ca.
+
+### 9.2 Cách bán: nằm trong gói tính phí hiện tại
+
+Tuần 41–80 không bán riêng. Ghế nào đang còn hạn thì học được cả 80 tuần; bảng giá, gói và kỳ hạn
+không đổi. Hệ quả cho code: không thêm loại gói, không thêm điều kiện mở tuần theo gói — tuần 41 trở
+đi chỉ mở theo bài sát hạch như mọi giai đoạn khác.
+
+### 9.3 AI chấm: chủ dự án hỏi dùng DeepSeek
+
+Dùng được, với bốn điều kiện. Số liệu dưới đây đọc từ trang của DeepSeek ngày 10/10/2026.
+
+**Chi phí không phải là điều quyết định.** Giá niêm yết giờ cao điểm, tính theo một triệu token:
+`deepseek-flash` 0,30 USD đầu vào và 1,20 USD đầu ra; `deepseek-v4-pro` 1,32 USD và 3,96 USD; ngoài
+giờ cao điểm bằng một nửa. Bốn bài sát hạch của một học viên (khoảng 13 câu chấm mỗi bài, tính cả thi
+lại) dùng chừng 62 nghìn token vào và 16 nghìn token ra, tức **khoảng 0,04 USD cho cả năm hai** với
+bản flash và 0,15 USD với bản pro. Chấm bằng AI cả mọi bài nói, viết hằng tuần cũng chỉ khoảng 0,4
+USD một học viên một năm với bản flash. Một model đắt gấp mười vẫn dưới 2 USD. Đây là ước tính từ số
+câu, chưa phải số đo.
+
+Bốn điều kiện:
+
+1. **Dữ liệu đi sang Trung Quốc.** Chính sách riêng tư của DeepSeek ghi dữ liệu được thu thập, xử lý
+   và lưu ở Trung Quốc. Điều khoản dành cho bên dùng API không nói DeepSeek có dùng dữ liệu gửi lên để
+   huấn luyện hay không, cũng không nói lưu ở đâu, bao lâu; và buộc bên dùng API phải báo cho người
+   dùng cuối và có sự đồng ý của họ. Vì vậy: chỉ gửi nội dung bài làm, **không gửi tên, số điện
+   thoại, tên khách sạn**; ghi việc này vào thông báo cho học viên; và hỏi trước những khách sạn thuộc
+   tập đoàn quốc tế, nơi có thể cấm hẳn.
+2. **Không có cam kết về độ sẵn sàng.** Điều khoản ghi dịch vụ cung cấp "nguyên trạng". Bài sát hạch
+   không được treo vì nhà cung cấp chậm: phải có hàng chờ, thử lại, và một nhà cung cấp thứ hai để
+   chuyển sang.
+3. **Viết phần chấm không gắn với một nhà cung cấp.** API của DeepSeek theo chuẩn chung, nên đổi nhà
+   cung cấp là đổi cấu hình, không viết lại.
+4. **Chọn bằng số đo, không bằng tên.** Lấy khoảng 100 bài làm thật đã được giáo viên chấm tay, cho
+   DeepSeek và một model khác cùng chấm, giữ model nào khớp với giáo viên hơn. Chưa có phép so này thì
+   chưa biết model nào chấm đúng, kể cả model đắt hơn.
+
+Nguồn: [bảng giá API](https://api-docs.deepseek.com/quick_start/pricing) ·
+[chính sách riêng tư](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) (cập nhật
+10/02/2026) ·
+[điều khoản Open Platform](https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html)
+(hiệu lực 29/04/2026).
 
 ## Cách đọc file của từng bộ phận
 
