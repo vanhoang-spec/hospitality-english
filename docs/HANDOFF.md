@@ -610,8 +610,12 @@ Không tự làm những việc này.
    `mode: "spoken"`, `avoidAsserted`; đo bằng `bun run test:score` và `scripts/probes/prose.ts`). Cùng
    lần đó vá một lỗ đang chạy thật: xếp các cụm được chấp nhận cạnh nhau từng qua 100% bài chuyển ngữ
    tuần 26 của Spa và Lễ tân; giờ câu trả lời quá ba phần tư là cụm từ khoá bị từ chối ở cả bài viết lẫn
-   bài nói. Chưa làm, theo thứ tự: (1) kiểu dữ liệu lượt nói mở trong `week-content.ts` và
-   `SpeakingSuite` hiển thị, chấm nó; (2) khung 80 tuần trong code (`TOTAL_WEEKS`, `PHASES`, các cổng
+   bài nói. Xong tiếp: kiểu `OpenTurn` (`LessonContent.openTurns`, đặt cạnh `speaking` chứ không trong
+   nó), `scoreOpenTurn` và `openTurnProblems` (`src/lib/open-turn.ts`); `verify:content` chạy
+   `openTurnProblems` trên mọi lượt nói mở, nên người soạn tuần 41+ không ship được lượt mà câu mẫu
+   trượt chính bộ chấm, hay lượt qua được bằng cách nhại lời khách. Chưa làm, theo thứ tự: (1)
+   `SpeakingSuite` hiển thị và chấm lượt nói mở, kể cả lượt nói liền 30–90 giây và tình huống rẽ
+   nhánh; (2) khung 80 tuần trong code (`TOTAL_WEEKS`, `PHASES`, các cổng
    khoá cứng ở 40) sao cho tuần 41–80 chưa lộ ra khi chưa có bài; (3) migration nới sáu ràng buộc
    `BETWEEN 1 AND 40` — production, phải hỏi chủ dự án trước.
 

@@ -75,6 +75,7 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 | `src/lib/speaking-score.ts`                                                             | **Bộ chấm nói.** `utterancePassed`, `utterancePassedAny`                                               |
 | `src/lib/speaking-alternates.ts`                                                        | Các câu đáp khác mà khoá cũng chấp nhận cho cùng một lời khách                                         |
 | `src/lib/writing-score.ts`                                                              | **Bộ chấm bài tự do** (`scoreFreeText`): bài viết, chuyển ngữ, và lượt nói mở (`mode: "spoken"`)       |
+| `src/lib/open-turn.ts`                                                                  | Lượt nói mở (tuần 41+): `scoreOpenTurn` chấm, `openTurnProblems` là cổng cho người soạn                |
 | `src/lib/checkpoint-paper.ts`                                                           | `buildPaper` — dựng nửa viết của bài sát hạch                                                          |
 | `src/lib/checkpoint-oral.ts`                                                            | `buildOral`, `oralHalfPassed` — nửa nói, gồm ô dự trữ bắt buộc đúng                                    |
 | `src/lib/phases.ts`                                                                     | Ranh giới phase, ngưỡng đạt, cơ cấu đề                                                                 |

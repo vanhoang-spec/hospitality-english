@@ -160,6 +160,11 @@ export type LessonContent = {
    *  Kept optional so existing weeks still typecheck; do not author new ones. */
   arcade?: ArcadeItem[];
   game: GameRound[];
+  /** Spoken turns with no model sentence to match — weeks 41 on. They sit
+   *  beside `speaking`, not inside it: every gate and probe written for a
+   *  `SpeakingItem` assumes a sentence to be said back, and an open turn has
+   *  none. */
+  openTurns?: OpenTurn[];
 };
 
 /** One idea the learner's answer has to get across. Scoring accepts ANY of
@@ -213,6 +218,39 @@ export type MediationTask = {
   mustAvoid?: string[];
   modelAnswer: string;
   explanationVi: string;
+};
+
+/** A spoken turn the learner answers in their own words.
+ *
+ *  Weeks 1–40 grade speech against a sentence the learner has been shown
+ *  (`SpeakingItem.targetResponse`), which measures saying it back. From week
+ *  41 the claim is that the learner can produce a sentence nobody gave them,
+ *  so the turn carries no sentence to match — only the ideas the answer has to
+ *  get across, and what it must not say. Marked by `scoreOpenTurn`
+ *  (src/lib/open-turn.ts); checked at authoring time by `openTurnProblems`. */
+export type OpenTurn = {
+  /** What the other person says first. Absent when the LEARNER opens the
+   *  exchange — week 43 trains asking, and nobody asks in reply to a prompt. */
+  prompt?: string;
+  speakerRole?: "guest" | "colleague" | "manager";
+  /** The job to do, in Vietnamese, shown before the learner speaks. Like
+   *  `RequiredIdea.labelVi` it names the job and never hands over the English. */
+  taskVi: string;
+  mustConvey: RequiredIdea[];
+  /** Blocks the answer wherever the phrase stands. */
+  mustAvoid?: string[];
+  /** Blocks the answer only when the learner CLAIMS it: "it is safe" is
+   *  blocked, "I cannot say it is safe" is the right answer. */
+  mustAvoidAsserted?: string[];
+  minWords: number;
+  /** One good answer. Shown only after the learner has spoken. */
+  modelAnswer: string;
+  explanationVi: string;
+  /** Same contract as `SpeakingItem.follows`. */
+  follows?: string;
+  /** Same contract as `SpeakingItem.risk`: a decision the speaker does not
+   *  own, or the department's own risk. */
+  risk?: true;
 };
 
 export type WeekContent = {
