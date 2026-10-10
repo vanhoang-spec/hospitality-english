@@ -1,7 +1,10 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **08/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
+
+**10/10: Claude hết hạn mức, Codex làm tiếp.** Việc đang dở (PR #25, #26, phần CRM) ghi ở
+[`BAN-GIAO-CODEX-2026-10-10.md`](BAN-GIAO-CODEX-2026-10-10.md) — đọc file đó ngay sau file này.
 
 ---
 
