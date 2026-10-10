@@ -4,6 +4,11 @@ Người viết: Claude Code, phiên cuối trước khi hết hạn mức tuầ
 tiếp. File này chỉ ghi **việc đang dở lúc bàn giao**; khi các việc ở mục 2–4 xong, chép kết quả vào
 [`HANDOFF.md`](HANDOFF.md) rồi xoá file này.
 
+> **Cập nhật 10/10, 11:40 — phần lớn file này đã thành lịch sử.** Mục 2 (PR #26) và mục 3 (PR #25) **đã
+> xong**: SQL đã chạy trên production, hai PR đã merge, production chạy `63686c3`. Mục 1 vì thế đã cũ.
+> Còn dở: phép thử đầu-cuối ở mục 4.4 (mới qua bước 1 và 3) và các việc ở mục 5. Trạng thái hiện hành
+> ở [`HANDOFF.md`](HANDOFF.md) §5 mục 2. Mục 4 (phần CRM) và mục 6 (luật của chủ dự án) vẫn đúng.
+
 ## 0. Đọc theo thứ tự
 
 1. [`AGENTS.md`](../AGENTS.md) — luật cứng.
