@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
-import { speakEN } from "@/lib/speech";
+import { speak } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
 import {
   dictationMatches,
   headwordRateForWeek,
   listeningRateForWeek,
+  phaseOfWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
 import { useSuiteSession } from "@/lib/session-resume";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -52,20 +55,68 @@ type QuizQuestion =
  *  items, so the new-word share sits near 70% in every phase and the quiz
  *  lengthens slightly in the phases that teach more. */
 const MCQ_NEW_MAX = 10;
-const MCQ_REVIEW = 4;
+// Four of a week's ~20 recycled words is a 19% chance any one of them is even
+// shown, and two academic reviews measured the consequence from opposite ends:
+// most of a department's vocabulary comes back only as recognition, and only a
+// fifth of that recognition actually happens.
+// Six was still a 21-26% chance per recycled word, and a round of reviews
+// measured most of a phase's earlier vocabulary living on recognition that
+// mostly never happened. Ten keeps the new-word share near 60% while every
+// recycled word has better than a one-in-three chance of being asked.
+const MCQ_REVIEW = 10;
+// Phase 4 lists carry each of its own words back at +1, +3 and +6 weeks, so
+// a week's list holds 25-40 of them; ten draws asked any one of them about
+// one time in four, and round 2 of the Phase 4 reviews counted a taught word
+// re-asked 0.23 times on average before the final week. Fourteen there.
+const MCQ_REVIEW_P4 = 14;
+// Ten of the checkpoint week seventy-five recycled words is 13% — the week
+// that exists to consolidate a whole phase sampled an eighth of it.
+const MCQ_REVIEW_CHECKPOINT = 20;
 const MAX_DICTATION = 3;
 
 // Retrieval quiz built from the studied terms: alternating EN→VI and
 // VI→EN multiple choice, then a few listen-and-type dictation items.
 // Distractors are drawn from the same term set so they stay plausible.
-function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
+function buildQuiz(
+  terms: Term[],
+  reviewWords: Term[] = [],
+  atCheckpoint = false,
+  week = 0,
+): QuizQuestion[] {
   const pool = [...terms, ...reviewWords];
   const mcqTerms = shuffle([
     ...shuffle(terms).slice(0, MCQ_NEW_MAX),
-    ...shuffle(reviewWords).slice(0, MCQ_REVIEW),
+    ...shuffle(reviewWords).slice(
+      0,
+      atCheckpoint ? MCQ_REVIEW_CHECKPOINT : week >= 31 ? MCQ_REVIEW_P4 : MCQ_REVIEW,
+    ),
   ]);
+  // The checkpoint has refused nested glosses since a review found questions
+  // with no single right answer — "Biên lai" beside "Biên lai đã in", "Tầng
+  // cao" beside "Tầng cao hơn". The weekly practice, drawing from the same
+  // pool, did not, so it printed exactly those pairs: an audit counted 19 in
+  // one department. A learner who picks correctly is marked wrong, in the
+  // exercise rather than the exam, which is the worse of the two places.
+  const glossKey = (x: string) =>
+    " " +
+    x
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N} ]/gu, " ")
+      .replace(/  +/g, " ")
+      .trim() +
+    " ";
+  const nested = (x: string, y: string) => x.includes(y) || y.includes(x);
   const mcqs: QuizQuestion[] = mcqTerms.map((t, i) => {
-    const distractors = shuffle(pool.filter((o) => o.en !== t.en)).slice(0, 3);
+    const key = glossKey(t.vi);
+    const distractors: typeof pool = [];
+    for (const o of shuffle(pool)) {
+      if (distractors.length >= 3) break;
+      if (o.en === t.en || o.vi === t.vi) continue;
+      const g = glossKey(o.vi);
+      if (nested(key, g)) continue;
+      if (distractors.some((d) => nested(glossKey(d.vi), g))) continue;
+      distractors.push(o);
+    }
     if (i % 2 === 0) {
       const options = shuffle([t.vi, ...distractors.map((d) => d.vi)]);
       return {
@@ -90,7 +141,14 @@ function buildQuiz(terms: Term[], reviewWords: Term[] = []): QuizQuestion[] {
   // and only falls back to the review pool when the week has too few
   // spellable ones. It used to draw from the mixed pool, which at P4 meant
   // the three spelling items were almost always words learned weeks ago.
-  const spellable = (t: Term) => /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en);
+  // Cụm nhiều từ không phải bài chính tả. Bộ lọc này viết cho từ đơn nhưng
+  // không chặn cụm, nên ở Phase 4 — nơi headword đã thành cụm công thức 4–6
+  // từ — nó bắt học viên gõ khớp tuyệt đối cả một câu, trong khi dung sai gõ
+  // sai đã tắt từ A2.1. Đó là đo tốc độ gõ, không đo từ vựng. Giới hạn 2 từ;
+  // đã kiểm cả 240 dep-week, không tuần nào tụt xuống dưới 3 mục nhờ nguồn
+  // dự phòng reviewWords.
+  const spellable = (t: Term) =>
+    /^[A-Za-z][A-Za-z\- ]{3,}$/.test(t.en) && t.en.trim().split(/\s+/).length <= 2;
   const dictationTerms = [
     ...shuffle(terms.filter(spellable)),
     ...shuffle(reviewWords.filter(spellable)),
@@ -138,6 +196,11 @@ function VocabSuiteInner({
   content: WeekContent;
 }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  // Per-item events, so a report can say how long this took and how often
+  // the answer was right first time — neither is knowable from the single
+  // overwritten lesson_progress row.
+  const logAttempt = useAttemptLogger({ dep, week, suite: "vocab" });
+  useStudySession({ dep, week, suite: "vocab" });
   // Rises with the phase — a flat 80 was unreachable at pre-A1.
   const MASTERY_PCT = suiteMasteryPct(week);
   const terms: Term[] = content.lessons.flatMap((l) =>
@@ -231,7 +294,14 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
-    setQuiz(buildQuiz(terms, reviewTerms));
+    setQuiz(
+      buildQuiz(
+        terms,
+        reviewTerms,
+        phaseOfWeek(week)?.checkpointWeek === Number(week),
+        Number(week),
+      ),
+    );
     setQIdx(0);
     setPicked(null);
     setTyped("");
@@ -258,6 +328,7 @@ function VocabSuiteInner({
       ok = dictationMatches(typed, q.word, week);
     }
     setAnswered(ok);
+    logAttempt(q.key, ok);
     if (ok) {
       setCorrectCount((c) => c + 1);
       creditIfFirst(q.key, 1);
@@ -315,7 +386,9 @@ function VocabSuiteInner({
                 <p className="font-display text-xl text-foreground">{q.prompt}</p>
                 {q.speak && (
                   <button
-                    onClick={() => speakEN(q.speak!, headwordRateForWeek(week!))}
+                    onClick={() =>
+                      speak(q.speak!, { role: "model", rate: headwordRateForWeek(week!) })
+                    }
                     className="shrink-0 border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                   >
                     🔊
@@ -353,11 +426,12 @@ function VocabSuiteInner({
               <p className="font-display text-xl text-foreground">Nghe và gõ lại từ vựng:</p>
               <div className="mt-4 flex items-center gap-3">
                 <button
-                  onClick={() => speakEN(q.word, headwordRateForWeek(week!))}
+                  onClick={() => speak(q.word, { role: "model", rate: headwordRateForWeek(week!) })}
                   className="border border-primary px-4 py-2 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
                 >
                   🔊 Nghe
                 </button>
+                <VoiceButton role="model" />
                 <input
                   value={typed}
                   disabled={answered !== null}
@@ -508,7 +582,7 @@ function VocabSuiteInner({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakEN(t.en, headwordRateForWeek(week!));
+                        speak(t.en, { role: "model", rate: headwordRateForWeek(week!) });
                       }}
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play audio for ${t.en}`}
@@ -537,7 +611,7 @@ function VocabSuiteInner({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakEN(t.usage, listeningRateForWeek(week!));
+                        speak(t.usage, { role: "model", rate: listeningRateForWeek(week!) });
                       }}
                       className="border border-primary/40 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-primary hover:border-primary"
                       aria-label={`Play example for ${t.en}`}

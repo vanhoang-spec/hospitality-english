@@ -25,6 +25,9 @@ hold when you author a replacement word.
 
 ### Semantic class per slot
 
+> Cột này nay **được thi hành bằng máy**: Layer D trong `scripts/lint-content.ts`.
+> Nợ đã biết nằm ở `scripts/_semantic-debt.json`; bối cảnh ở `docs/semantic-class-debt.md`.
+
 | Slot          | Must denote                                    | Fails as                                                                                                                                                              |
 | ------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `story`       | something about the property worth telling     | an internal KPI — "The market position is what makes this place special."                                                                                             |

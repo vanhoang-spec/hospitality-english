@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -58,7 +58,8 @@ function LoginPage() {
         <div className="text-xs uppercase tracking-[0.3em] text-primary">Embassy Hospitality</div>
         <h1 className="font-display mt-2 text-3xl text-foreground">Đăng nhập</h1>
         <p className="mt-2 text-sm text-foreground/70">
-          Nhập số điện thoại và mật khẩu do quản trị viên nhóm của bạn cấp.
+          Nhập số điện thoại và mật khẩu của bạn — do bộ phận nhân sự cấp, hoặc do bạn tự đặt khi
+          đăng ký qua link.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -102,7 +103,10 @@ function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-xs text-foreground/50">
-          Quên mật khẩu? Liên hệ quản trị viên nhóm của bạn để được cấp lại.
+          <Link to="/quen-mat-khau" className="text-primary hover:underline">
+            Quên mật khẩu?
+          </Link>{" "}
+          Lấy lại qua email đã gắn với tài khoản, hoặc nhờ bộ phận Nhân sự cấp lại.
         </p>
       </motion.div>
     </main>

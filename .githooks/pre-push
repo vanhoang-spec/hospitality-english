@@ -1,0 +1,37 @@
+#!/bin/sh
+# Từ chối push thẳng lên main từ máy này.
+#
+# Repo private trên gói GitHub Free không bật được branch protection, nên
+# server không chặn được ai. Hook này chặn ở phía duy nhất còn lại: máy
+# đang push. Mọi thay đổi đi qua nhánh + PR, để CI (code · content · build)
+# chạy TRƯỚC khi main đổi, không phải sau.
+#
+# Cần bypass có chủ đích (ví dụ hotfix khi CI đang hỏng):
+#   ALLOW_MAIN_PUSH=1 git push origin main
+#
+# Kích hoạt: `bun install` tự chạy `prepare` → git config core.hooksPath .githooks
+# Khi nâng lên GitHub Pro và bật branch protection, hook này thành lớp thứ hai,
+# không cần gỡ.
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main)
+      if [ "$ALLOW_MAIN_PUSH" = "1" ]; then
+        echo "pre-push: ALLOW_MAIN_PUSH=1 — cho phép push thẳng lên main (có chủ đích)." >&2
+        continue
+      fi
+      echo "" >&2
+      echo "pre-push: TỪ CHỐI push thẳng lên main." >&2
+      echo "" >&2
+      echo "  Đẩy lên một nhánh rồi mở PR để CI chạy trước:" >&2
+      echo "    git checkout -b <tên-nhánh>" >&2
+      echo "    git push -u origin <tên-nhánh>" >&2
+      echo "    gh pr create --fill" >&2
+      echo "" >&2
+      echo "  Bypass có chủ đích:  ALLOW_MAIN_PUSH=1 git push origin main" >&2
+      echo "" >&2
+      exit 1
+      ;;
+  esac
+done
+exit 0

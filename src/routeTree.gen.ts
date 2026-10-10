@@ -9,41 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ReviewRouteImport } from './routes/review'
-import { Route as OrgAdminRouteImport } from './routes/org-admin'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as ChangePasswordRouteImport } from './routes/change-password'
-import { Route as AppraisalRouteImport } from './routes/appraisal'
-import { Route as AdminLoungeRouteImport } from './routes/admin-lounge'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminConsoleRouteImport } from './routes/admin-console'
+import { Route as AdminLoungeRouteImport } from './routes/admin-lounge'
+import { Route as AppraisalRouteImport } from './routes/appraisal'
+import { Route as ChangePasswordRouteImport } from './routes/change-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as OrgAccessRouteImport } from './routes/org-access'
+import { Route as OrgAdminRouteImport } from './routes/org-admin'
+import { Route as OrgReportsRouteImport } from './routes/org-reports'
+import { Route as QuenMatKhauRouteImport } from './routes/quen-mat-khau'
+import { Route as ReviewRouteImport } from './routes/review'
+import { Route as ThanhToanRouteImport } from './routes/thanh-toan'
+import { Route as ApiCrmRouteImport } from './routes/api/crm'
+import { Route as DatLaiMatKhauTokenRouteImport } from './routes/dat-lai-mat-khau.$token'
 import { Route as DepartmentDepRouteImport } from './routes/department.$dep'
+import { Route as JoinTokenRouteImport } from './routes/join.$token'
+import { Route as TtTokenRouteImport } from './routes/tt.$token'
+import { Route as ApiCronGiaHanRouteImport } from './routes/api/cron.gia-han'
 import { Route as HandbookDepWeekRouteImport } from './routes/handbook.$dep.$week'
-import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
 import { Route as DepartmentDepWeekWeekRouteImport } from './routes/department_.$dep.week.$week'
+import { Route as LearnDepWeekSuiteRouteImport } from './routes/learn.$dep.$week.$suite'
 
-const ReviewRoute = ReviewRouteImport.update({
-  id: '/review',
-  path: '/review',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OrgAdminRoute = OrgAdminRouteImport.update({
-  id: '/org-admin',
-  path: '/org-admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChangePasswordRoute = ChangePasswordRouteImport.update({
-  id: '/change-password',
-  path: '/change-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppraisalRoute = AppraisalRouteImport.update({
-  id: '/appraisal',
-  path: '/appraisal',
+const AdminConsoleRoute = AdminConsoleRouteImport.update({
+  id: '/admin-console',
+  path: '/admin-console',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoungeRoute = AdminLoungeRouteImport.update({
@@ -51,9 +46,59 @@ const AdminLoungeRoute = AdminLoungeRouteImport.update({
   path: '/admin-lounge',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AppraisalRoute = AppraisalRouteImport.update({
+  id: '/appraisal',
+  path: '/appraisal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangePasswordRoute = ChangePasswordRouteImport.update({
+  id: '/change-password',
+  path: '/change-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrgAccessRoute = OrgAccessRouteImport.update({
+  id: '/org-access',
+  path: '/org-access',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrgAdminRoute = OrgAdminRouteImport.update({
+  id: '/org-admin',
+  path: '/org-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrgReportsRoute = OrgReportsRouteImport.update({
+  id: '/org-reports',
+  path: '/org-reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuenMatKhauRoute = QuenMatKhauRouteImport.update({
+  id: '/quen-mat-khau',
+  path: '/quen-mat-khau',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThanhToanRoute = ThanhToanRouteImport.update({
+  id: '/thanh-toan',
+  path: '/thanh-toan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCrmRoute = ApiCrmRouteImport.update({
+  id: '/api/crm',
+  path: '/api/crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatLaiMatKhauTokenRoute = DatLaiMatKhauTokenRouteImport.update({
+  id: '/dat-lai-mat-khau/$token',
+  path: '/dat-lai-mat-khau/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartmentDepRoute = DepartmentDepRouteImport.update({
@@ -61,14 +106,24 @@ const DepartmentDepRoute = DepartmentDepRouteImport.update({
   path: '/department/$dep',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TtTokenRoute = TtTokenRouteImport.update({
+  id: '/tt/$token',
+  path: '/tt/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronGiaHanRoute = ApiCronGiaHanRouteImport.update({
+  id: '/api/cron/gia-han',
+  path: '/api/cron/gia-han',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HandbookDepWeekRoute = HandbookDepWeekRouteImport.update({
   id: '/handbook/$dep/$week',
   path: '/handbook/$dep/$week',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearnDepWeekSuiteRoute = LearnDepWeekSuiteRouteImport.update({
-  id: '/learn/$dep/$week/$suite',
-  path: '/learn/$dep/$week/$suite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartmentDepWeekWeekRoute = DepartmentDepWeekWeekRouteImport.update({
@@ -76,29 +131,54 @@ const DepartmentDepWeekWeekRoute = DepartmentDepWeekWeekRouteImport.update({
   path: '/department/$dep/week/$week',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnDepWeekSuiteRoute = LearnDepWeekSuiteRouteImport.update({
+  id: '/learn/$dep/$week/$suite',
+  path: '/learn/$dep/$week/$suite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -106,13 +186,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-console': typeof AdminConsoleRoute
   '/admin-lounge': typeof AdminLoungeRoute
   '/appraisal': typeof AppraisalRoute
   '/change-password': typeof ChangePasswordRoute
   '/login': typeof LoginRoute
+  '/org-access': typeof OrgAccessRoute
   '/org-admin': typeof OrgAdminRoute
+  '/org-reports': typeof OrgReportsRoute
+  '/quen-mat-khau': typeof QuenMatKhauRoute
   '/review': typeof ReviewRoute
+  '/thanh-toan': typeof ThanhToanRoute
+  '/api/crm': typeof ApiCrmRoute
+  '/dat-lai-mat-khau/$token': typeof DatLaiMatKhauTokenRoute
   '/department/$dep': typeof DepartmentDepRoute
+  '/join/$token': typeof JoinTokenRoute
+  '/tt/$token': typeof TtTokenRoute
+  '/api/cron/gia-han': typeof ApiCronGiaHanRoute
   '/handbook/$dep/$week': typeof HandbookDepWeekRoute
   '/department_/$dep/week/$week': typeof DepartmentDepWeekWeekRoute
   '/learn/$dep/$week/$suite': typeof LearnDepWeekSuiteRoute
@@ -121,39 +211,69 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
+    | '/thanh-toan'
+    | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
+    | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
+    | '/thanh-toan'
+    | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
+    | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
   id:
     | '__root__'
     | '/'
+    | '/admin-console'
     | '/admin-lounge'
     | '/appraisal'
     | '/change-password'
     | '/login'
+    | '/org-access'
     | '/org-admin'
+    | '/org-reports'
+    | '/quen-mat-khau'
     | '/review'
+    | '/thanh-toan'
+    | '/api/crm'
+    | '/dat-lai-mat-khau/$token'
     | '/department/$dep'
+    | '/join/$token'
+    | '/tt/$token'
+    | '/api/cron/gia-han'
     | '/handbook/$dep/$week'
     | '/department_/$dep/week/$week'
     | '/learn/$dep/$week/$suite'
@@ -161,13 +281,23 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminConsoleRoute: typeof AdminConsoleRoute
   AdminLoungeRoute: typeof AdminLoungeRoute
   AppraisalRoute: typeof AppraisalRoute
   ChangePasswordRoute: typeof ChangePasswordRoute
   LoginRoute: typeof LoginRoute
+  OrgAccessRoute: typeof OrgAccessRoute
   OrgAdminRoute: typeof OrgAdminRoute
+  OrgReportsRoute: typeof OrgReportsRoute
+  QuenMatKhauRoute: typeof QuenMatKhauRoute
   ReviewRoute: typeof ReviewRoute
+  ThanhToanRoute: typeof ThanhToanRoute
+  ApiCrmRoute: typeof ApiCrmRoute
+  DatLaiMatKhauTokenRoute: typeof DatLaiMatKhauTokenRoute
   DepartmentDepRoute: typeof DepartmentDepRoute
+  JoinTokenRoute: typeof JoinTokenRoute
+  TtTokenRoute: typeof TtTokenRoute
+  ApiCronGiaHanRoute: typeof ApiCronGiaHanRoute
   HandbookDepWeekRoute: typeof HandbookDepWeekRoute
   DepartmentDepWeekWeekRoute: typeof DepartmentDepWeekWeekRoute
   LearnDepWeekSuiteRoute: typeof LearnDepWeekSuiteRoute
@@ -175,39 +305,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/review': {
-      id: '/review'
-      path: '/review'
-      fullPath: '/review'
-      preLoaderRoute: typeof ReviewRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/org-admin': {
-      id: '/org-admin'
-      path: '/org-admin'
-      fullPath: '/org-admin'
-      preLoaderRoute: typeof OrgAdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/change-password': {
-      id: '/change-password'
-      path: '/change-password'
-      fullPath: '/change-password'
-      preLoaderRoute: typeof ChangePasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/appraisal': {
-      id: '/appraisal'
-      path: '/appraisal'
-      fullPath: '/appraisal'
-      preLoaderRoute: typeof AppraisalRouteImport
+    '/admin-console': {
+      id: '/admin-console'
+      path: '/admin-console'
+      fullPath: '/admin-console'
+      preLoaderRoute: typeof AdminConsoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin-lounge': {
@@ -217,11 +326,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoungeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/appraisal': {
+      id: '/appraisal'
+      path: '/appraisal'
+      fullPath: '/appraisal'
+      preLoaderRoute: typeof AppraisalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/change-password': {
+      id: '/change-password'
+      path: '/change-password'
+      fullPath: '/change-password'
+      preLoaderRoute: typeof ChangePasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/org-access': {
+      id: '/org-access'
+      path: '/org-access'
+      fullPath: '/org-access'
+      preLoaderRoute: typeof OrgAccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/org-admin': {
+      id: '/org-admin'
+      path: '/org-admin'
+      fullPath: '/org-admin'
+      preLoaderRoute: typeof OrgAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/org-reports': {
+      id: '/org-reports'
+      path: '/org-reports'
+      fullPath: '/org-reports'
+      preLoaderRoute: typeof OrgReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quen-mat-khau': {
+      id: '/quen-mat-khau'
+      path: '/quen-mat-khau'
+      fullPath: '/quen-mat-khau'
+      preLoaderRoute: typeof QuenMatKhauRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/thanh-toan': {
+      id: '/thanh-toan'
+      path: '/thanh-toan'
+      fullPath: '/thanh-toan'
+      preLoaderRoute: typeof ThanhToanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/crm': {
+      id: '/api/crm'
+      path: '/api/crm'
+      fullPath: '/api/crm'
+      preLoaderRoute: typeof ApiCrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dat-lai-mat-khau/$token': {
+      id: '/dat-lai-mat-khau/$token'
+      path: '/dat-lai-mat-khau/$token'
+      fullPath: '/dat-lai-mat-khau/$token'
+      preLoaderRoute: typeof DatLaiMatKhauTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/department/$dep': {
@@ -231,18 +410,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DepartmentDepRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/join/$token': {
+      id: '/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof JoinTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tt/$token': {
+      id: '/tt/$token'
+      path: '/tt/$token'
+      fullPath: '/tt/$token'
+      preLoaderRoute: typeof TtTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/gia-han': {
+      id: '/api/cron/gia-han'
+      path: '/api/cron/gia-han'
+      fullPath: '/api/cron/gia-han'
+      preLoaderRoute: typeof ApiCronGiaHanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/handbook/$dep/$week': {
       id: '/handbook/$dep/$week'
       path: '/handbook/$dep/$week'
       fullPath: '/handbook/$dep/$week'
       preLoaderRoute: typeof HandbookDepWeekRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learn/$dep/$week/$suite': {
-      id: '/learn/$dep/$week/$suite'
-      path: '/learn/$dep/$week/$suite'
-      fullPath: '/learn/$dep/$week/$suite'
-      preLoaderRoute: typeof LearnDepWeekSuiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/department_/$dep/week/$week': {
@@ -252,18 +445,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DepartmentDepWeekWeekRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn/$dep/$week/$suite': {
+      id: '/learn/$dep/$week/$suite'
+      path: '/learn/$dep/$week/$suite'
+      fullPath: '/learn/$dep/$week/$suite'
+      preLoaderRoute: typeof LearnDepWeekSuiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminConsoleRoute: AdminConsoleRoute,
   AdminLoungeRoute: AdminLoungeRoute,
   AppraisalRoute: AppraisalRoute,
   ChangePasswordRoute: ChangePasswordRoute,
   LoginRoute: LoginRoute,
+  OrgAccessRoute: OrgAccessRoute,
   OrgAdminRoute: OrgAdminRoute,
+  OrgReportsRoute: OrgReportsRoute,
+  QuenMatKhauRoute: QuenMatKhauRoute,
   ReviewRoute: ReviewRoute,
+  ThanhToanRoute: ThanhToanRoute,
+  ApiCrmRoute: ApiCrmRoute,
+  DatLaiMatKhauTokenRoute: DatLaiMatKhauTokenRoute,
   DepartmentDepRoute: DepartmentDepRoute,
+  JoinTokenRoute: JoinTokenRoute,
+  TtTokenRoute: TtTokenRoute,
+  ApiCronGiaHanRoute: ApiCronGiaHanRoute,
   HandbookDepWeekRoute: HandbookDepWeekRoute,
   DepartmentDepWeekWeekRoute: DepartmentDepWeekWeekRoute,
   LearnDepWeekSuiteRoute: LearnDepWeekSuiteRoute,

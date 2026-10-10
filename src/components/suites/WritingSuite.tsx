@@ -31,6 +31,7 @@ function WritingSuiteInner({ dep, week, task }: { dep: string; week: string; tas
       ideas: task.mustConvey,
       minWords: MIN_WORDS,
       minSentences: MIN_SENTENCES,
+      avoid: task.mustAvoid,
     });
 
     setHits(r.hits);

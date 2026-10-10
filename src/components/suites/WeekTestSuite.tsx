@@ -4,13 +4,21 @@ import { ResumeBanner } from "./ResumeBanner";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent, resolveReviewVocab, type VocabItem } from "@/lib/content/week-content";
-import { speakEN, dedupeTranscript } from "@/lib/speech";
-import { utterancePassed } from "@/lib/speaking-score";
+import {
+  getWeekContent,
+  resolveReviewVocab,
+  speakerAudioLabel,
+  speakerLabel,
+  type VocabItem,
+} from "@/lib/content/week-content";
+import { speak, dedupeTranscript, hasEnglishVoice } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
+import { utterancePassedAny } from "@/lib/speaking-score";
 import {
   CHECKPOINT_MIX as MIX,
   CHECKPOINT_ORAL_ITEMS,
-  CHECKPOINT_ORAL_PASS_MIN,
+  oralPassMin,
+  CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
@@ -25,205 +33,10 @@ import {
   type CheckpointConstruct,
   type ConstructTally,
 } from "@/lib/phases";
+import { buildPaper, type Question } from "@/lib/checkpoint-paper";
+import { answersOf, buildOral, oralHalfPassed, type OralItem } from "@/lib/checkpoint-oral";
 import { useLastFailedCheckpoint, useMarkCheckpointPassed } from "@/lib/week-access";
 import { SuiteComingSoon } from "./SuiteComingSoon";
-
-type Question =
-  | {
-      kind: "vocab";
-      key: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "grammar";
-      key: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "listening";
-      key: string;
-      audio: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    }
-  | {
-      kind: "reading";
-      key: string;
-      passage: string;
-      prompt: string;
-      options: string[];
-      correctIdx: number;
-      note: string;
-    };
-
-function shuffle<T>(a: T[]): T[] {
-  const c = [...a];
-  for (let i = c.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [c[i], c[j]] = [c[j], c[i]];
-  }
-  return c;
-}
-
-/** Returns whether an English voice was actually available for this
- *  utterance. The listening floor is only enforced when the device has
- *  proven at least once that it can deliver English audio: many of this
- *  app's learners are on cheap Android handsets or in-app WebViews carrying
- *  only a vi-VN voice, where the "🔊 Nghe" button reads English orthography
- *  in Vietnamese or stays silent. Making the floor blocking there would
- *  turn a missing voice pack into a permanent course-wide lockout. */
-function speakVaried(text: string, week: string | number): boolean {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis
-    .getVoices()
-    .filter((v) => v.lang.toLowerCase().startsWith("en"));
-  if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
-  u.lang = u.voice?.lang ?? "en-US";
-  // Same ladder as ListeningSuite: a flat 0.85 made the week-6 pre-A1 paper
-  // and the week-40 B1.1 paper equally hard to hear.
-  u.rate = listeningRateForWeek(week);
-  window.speechSynthesis.speak(u);
-  return voices.length > 0;
-}
-
-/**
- * Builds a 20-question mixed paper drawn from EVERY week in the
- * checkpoint's phase (see weeksInPhase), not just the checkpoint week
- * itself — the point of the test is to assess the phase as a whole.
- * Vocabulary additionally pulls the checkpoint week's `reviewWords`
- * recycling pool, same as before.
- *
- * Fixed mix (MIX): 8 vocabulary, 4 grammar, 4 listening, 4 reading.
- */
-function buildPaper(dep: string, week: string): Question[] {
-  const content = getWeekContent(dep, week);
-  if (!content) return [];
-
-  const phaseWeeks = weeksInPhase(week);
-  const phaseContent = phaseWeeks
-    .map((w) => getWeekContent(dep, String(w)))
-    .filter((c): c is NonNullable<typeof c> => c !== null);
-  const phaseLessons = phaseContent.flatMap((c) => c.lessons);
-
-  const weekVocab = phaseLessons.flatMap((l) => l.vocabulary);
-  const reviewVocab = resolveReviewVocab(dep, content.reviewWords ?? []);
-  // Prefer the recycled phase vocabulary — a checkpoint should look back,
-  // not merely re-test the week it sits in.
-  const pool: VocabItem[] = [...reviewVocab, ...weekVocab];
-  const byWord = new Map(pool.map((v) => [v.word, v]));
-  const unique = [...byWord.values()];
-  if (unique.length < MIX.vocab) return [];
-
-  const vocabQs: Question[] = shuffle(unique)
-    .slice(0, MIX.vocab)
-    .map((v, i) => {
-      const distractors = shuffle(unique.filter((o) => o.word !== v.word)).slice(0, 3);
-      if (i % 2 === 0) {
-        const options = shuffle([v.definition, ...distractors.map((d) => d.definition)]);
-        return {
-          kind: "vocab" as const,
-          key: `v:${v.word}`,
-          prompt: `Nghĩa của "${v.word}" là gì?`,
-          options,
-          correctIdx: options.indexOf(v.definition),
-          note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
-        };
-      }
-      const options = shuffle([v.word, ...distractors.map((d) => d.word)]);
-      return {
-        kind: "vocab" as const,
-        key: `v:${v.word}`,
-        prompt: `Từ tiếng Anh nào có nghĩa: "${v.definition}"?`,
-        options,
-        correctIdx: options.indexOf(v.word),
-        note: `${v.word} — ${v.definition}. Ví dụ: "${v.context}"`,
-      };
-    });
-
-  const grammarPool = shuffle(phaseLessons.flatMap((l) => l.grammar));
-  const grammarQs: Question[] = grammarPool.slice(0, MIX.grammar).map((g) => {
-    const others = shuffle(grammarPool.filter((o) => o.polite !== g.polite)).slice(0, 2);
-    const options = shuffle([g.polite, g.rude, ...others.map((o) => o.rude)].slice(0, 3));
-    return {
-      kind: "grammar" as const,
-      key: `g:${g.rude}`,
-      prompt: `Câu nào là cách nói lịch sự chuẩn 5 sao thay cho "${g.rude}"?`,
-      options,
-      correctIdx: options.indexOf(g.polite),
-      note: g.rule,
-    };
-  });
-
-  const gamePool = shuffle(phaseLessons.flatMap((l) => l.game));
-  const listeningQs: Question[] = gamePool.slice(0, MIX.listening).map((round) => {
-    const options = shuffle(round.options.map((o) => ({ ...o })));
-    return {
-      kind: "listening" as const,
-      key: `l:${round.prompt}`,
-      audio: round.prompt,
-      options: options.map((o) => o.text),
-      correctIdx: options.findIndex((o) => o.correct),
-      note: `Khách nói: "${round.prompt}"`,
-    };
-  });
-
-  const readingPool = shuffle(
-    phaseLessons.flatMap((l) => l.reading.questions.map((q) => ({ q, text: l.reading.text }))),
-  );
-  const readingQs: Question[] = readingPool.slice(0, MIX.reading).map(({ q, text }) => ({
-    kind: "reading" as const,
-    key: `r:${q.q}`,
-    passage: text,
-    prompt: q.q,
-    options: q.options,
-    correctIdx: q.correct,
-    note: q.explanation ?? "",
-  }));
-
-  return shuffle([...vocabQs, ...grammarQs, ...listeningQs, ...readingQs]).slice(
-    0,
-    TOTAL_QUESTIONS,
-  );
-}
-
-type OralItem = {
-  key: string;
-  guestPrompt: string;
-  target: string;
-  tip: string;
-  /** The week the sentence was authored for — graded at THAT week's
-   *  threshold, not the checkpoint's. */
-  sourceWeek: number;
-};
-
-/** Five spoken items drawn from across the phase, same pool the written
- *  paper samples. Tagged with their source week, which is why this walks
- *  the week records rather than the flattened lesson list. */
-function buildOral(dep: string, week: string): OralItem[] {
-  const items = weeksInPhase(week).flatMap((w) => {
-    const c = getWeekContent(dep, String(w));
-    if (!c) return [];
-    return c.lessons.flatMap((l) =>
-      l.speaking.map((s) => ({
-        key: `s:${w}:${s.guestPrompt}`,
-        guestPrompt: s.guestPrompt,
-        target: s.targetResponse,
-        tip: s.helpTip,
-        sourceWeek: c.weekNumber,
-      })),
-    );
-  });
-  return shuffle(items).slice(0, CHECKPOINT_ORAL_ITEMS);
-}
 
 /** The oral half. Deliberately does NOT show the target sentence: an earlier
  *  version of the writing task printed its required keywords in the
@@ -242,7 +55,10 @@ function OralStage({
   onFinish,
 }: {
   items: OralItem[];
-  onFinish: (results: { item: OralItem; passed: boolean; said: string }[]) => void;
+  onFinish: (
+    results: { item: OralItem; passed: boolean; said: string; typed: boolean }[],
+    deviceFailed: boolean,
+  ) => void;
 }) {
   const [idx, setIdx] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -253,19 +69,27 @@ function OralStage({
     typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
   );
   const [note, setNote] = useState<string | null>(null);
-  const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string }[]>([]);
+  // Whether the device actually failed, as opposed to the learner choosing
+  // not to speak. Only the first tells us a typed answer is the best this
+  // learner could give; the results are graded differently for the second.
+  const deviceFailedRef = useRef(
+    typeof window !== "undefined" && !window.SpeechRecognition && !window.webkitSpeechRecognition,
+  );
+  const resultsRef = useRef<{ item: OralItem; passed: boolean; said: string; typed: boolean }[]>(
+    [],
+  );
   const recogRef = useRef<SpeechRecognition | null>(null);
   const finalRef = useRef("");
   const item = items[idx];
 
-  function commit(spoken: string) {
-    const verdict = utterancePassed(spoken, item.target, item.sourceWeek);
+  function commit(spoken: string, wasTyped = false) {
+    const verdict = utterancePassedAny(spoken, answersOf(item), item.sourceWeek, item.guestPrompt);
     resultsRef.current = [
       ...resultsRef.current,
-      { item, passed: verdict.passed, said: spoken.trim() },
+      { item, passed: verdict.passed, said: spoken.trim(), typed: wasTyped },
     ];
     if (idx + 1 >= items.length) {
-      onFinish(resultsRef.current);
+      onFinish(resultsRef.current, deviceFailedRef.current);
       return;
     }
     setIdx((i) => i + 1);
@@ -296,10 +120,27 @@ function OralStage({
       }
       setSaid(dedupeTranscript((finalRef.current + " " + interim).trim()));
     };
-    // Any error at all, not a curated list of codes: `network` on a
-    // firewalled property looks nothing like `not-allowed` on a locked
-    // handset, and neither learner should be graded zero for it.
-    r.onerror = () => {
+    // Only a device that cannot hear opens the typed path. This handler used
+    // to accept any error at all, and two of those errors are the learner's
+    // own doing: `no-speech` is silence, and `not-allowed` is the learner
+    // tapping "Block" on the microphone prompt. Four reviews in one round read
+    // the same consequence off the code — stay silent once, or refuse the
+    // microphone, and the oral half is typed and counted as spoken. The
+    // practice suite already drew this line; the exam did not.
+    r.onerror = (e: SpeechRecognitionErrorEvent) => {
+      if (e.error === "no-speech" || e.error === "aborted") {
+        setNote("Chưa nghe được gì — bấm micro và nói lại.");
+        return;
+      }
+      // `service-not-allowed` is the browser refusing a speech service it
+      // does not offer — a device limit, handled with the others below.
+      if (e.error === "not-allowed") {
+        setNote(
+          "Phần nói cần quyền dùng micro. Hãy cho phép micro trong trình duyệt rồi bấm nói lại.",
+        );
+        return;
+      }
+      deviceFailedRef.current = true;
       setTypedMode(true);
       setNote("Micro hoặc mạng không dùng được — hãy gõ câu trả lời bằng tiếng Anh.");
     };
@@ -310,15 +151,16 @@ function OralStage({
       const next = attempts + 1;
       setAttempts(next);
       if (cleaned === "") {
-        setNote(
-          next >= 2
-            ? "Vẫn chưa nghe được. Hãy gõ câu trả lời để tính điểm phần nói."
-            : "Chưa nghe được gì — thử lại lần nữa.",
-        );
-        if (next >= 2) setTypedMode(true);
+        // Silence is not a broken device. Two silent attempts used to switch
+        // the item to typing for good, which is the same back door the error
+        // handler above closes: say nothing twice and type the answer.
+        setNote("Chưa nghe được gì — bấm micro, nói gần máy hơn rồi thử lại.");
         return;
       }
-      if (utterancePassed(cleaned, item.target, item.sourceWeek).passed || next >= 2) {
+      if (
+        utterancePassedAny(cleaned, answersOf(item), item.sourceWeek, item.guestPrompt).passed ||
+        next >= 2
+      ) {
         commit(cleaned);
         return;
       }
@@ -330,6 +172,7 @@ function OralStage({
       setRecording(true);
       setNote(null);
     } catch {
+      deviceFailedRef.current = true;
       setTypedMode(true);
       setNote("Không mở được micro — hãy gõ câu trả lời bằng tiếng Anh.");
     }
@@ -346,18 +189,29 @@ function OralStage({
           <span>
             Phần nói · câu {idx + 1}/{items.length}
           </span>
-          <span className="text-foreground/50">Cần đạt {CHECKPOINT_ORAL_PASS_MIN} câu</span>
+          <span className="text-foreground/50">Cần đạt {oralPassMin(items.length)} câu</span>
         </div>
+        {item.follows && (
+          <div className="mb-4 border-l-2 border-muted pl-3 text-sm italic text-muted-foreground">
+            Bạn vừa nói: "{item.follows}"
+          </div>
+        )}
         <p className="font-display mt-4 text-2xl leading-snug">"{item.guestPrompt}"</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <button
             // The item's OWN week, not the checkpoint's — it is graded at that
             // week's threshold, so it should be heard at that week's speed.
-            onClick={() => speakEN(item.guestPrompt, listeningRateForWeek(item.sourceWeek))}
+            onClick={() =>
+              speak(item.guestPrompt, {
+                role: "guest",
+                rate: listeningRateForWeek(item.sourceWeek),
+              })
+            }
             className="border border-primary/40 px-4 py-2 text-xs uppercase tracking-[0.2em] hover:border-primary"
           >
-            ▶ Nghe lời khách
+            ▶ Nghe {item.audioWho}
           </button>
+          <VoiceButton role="guest" />
           {!typedMode && (
             <button
               onClick={listen}
@@ -367,16 +221,15 @@ function OralStage({
               {recording ? "● Đang thu…" : attempts === 0 ? "🎤 Trả lời" : "🎤 Nói lại"}
             </button>
           )}
-          {!typedMode && (
-            <button
-              onClick={() => setTypedMode(true)}
-              className="text-xs uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
-            >
-              Gõ thay vì nói
-            </button>
-          )}
         </div>
-        {item.tip && (
+        {/* Gợi ý chỉ hiện SAU khi đã nói. Trong lúc chờ nói, nó là đáp án:
+            một tip in trọn con số bị khoá ("forty-five") biến ô nói thành ô
+            đọc-lại, đúng thứ mà việc giấu câu mẫu sinh ra để chặn. */}
+        {/* …và ở ô dự trữ thì không hiện giữa hai lần nói: tip của ô ấy nói
+            thẳng việc phải làm ("không hứa, chuyển quản lý trực"), nên lần
+            nói thứ hai thành đọc lại gợi ý — một auditor mù chụp được đúng
+            cảnh đó trên ô "đêm miễn phí". */}
+        {item.tip && said && !item.reserved && (
           <p className="mt-4 border-l-2 border-primary/60 pl-3 text-xs italic text-foreground/65">
             💡 {item.tip}
           </p>
@@ -393,7 +246,7 @@ function OralStage({
               className="w-full border border-primary/30 bg-background p-3 text-sm outline-none focus:border-primary"
             />
             <button
-              onClick={() => typed.trim() && commit(typed)}
+              onClick={() => typed.trim() && commit(typed, true)}
               className="mt-3 bg-primary px-5 py-2 text-xs uppercase tracking-[0.2em] text-primary-foreground"
             >
               Gửi câu trả lời →
@@ -445,7 +298,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const oral = useMemo(() => (week ? buildOral(dep, week) : []), [dep, week, attempt]);
   const [oralResults, setOralResults] = useState<
-    { item: OralItem; passed: boolean; said: string }[]
+    { item: OralItem; passed: boolean; said: string; typed: boolean }[]
   >([]);
   const [idx, setIdx] = useState(0);
   // Answers are held until the end — a test that reveals each answer as
@@ -460,7 +313,17 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // capability, not a render-time probe: Chrome returns an empty getVoices()
   // until `voiceschanged` fires, so checking at mount would drop the
   // listening floor for everyone on first paint.
-  const sawEnVoiceRef = useRef(false);
+  // Whether the DEVICE can speak English, asked of the device. This used to
+  // be a ref set inside the 🔊 buttons onClick, so skipping the button waived
+  // the listening floor entirely.
+  const [enVoice, setEnVoice] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const read = () => setEnVoice(hasEnglishVoice());
+    read();
+    window.speechSynthesis.addEventListener?.("voiceschanged", read);
+    return () => window.speechSynthesis.removeEventListener?.("voiceschanged", read);
+  }, []);
 
   // P2-5. The written half is a 12–19 minute uninterrupted block against a
   // learner whose study window is 10–15 minutes, so an interruption here
@@ -533,7 +396,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
             construct,
             correct: items.filter((r) => r.given === r.question.correctIdx).length,
             total: items.length,
-            deliverable: construct === "listening" ? sawEnVoiceRef.current : true,
+            deliverable: construct === "listening" ? enVoice : true,
           };
         },
       );
@@ -551,7 +414,7 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
       // local snapshot has nothing left to protect.
       store.clear();
       setStage(oral.length >= CHECKPOINT_ORAL_ITEMS ? "oral" : "done");
-      if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, []);
+      if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, [], false);
       return;
     }
     setIdx((i) => i + 1);
@@ -564,11 +427,25 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   function finish(
     pct: number,
     tallied: ConstructTally[],
-    results: { item: OralItem; passed: boolean; said: string }[],
+    results: { item: OralItem; passed: boolean; said: string; typed: boolean }[],
+    deviceFailed: boolean,
   ) {
     const oralPassed = results.filter((r) => r.passed).length;
     const writtenOk = checkpointPassed(pct, tallied);
-    const ok = writtenOk && (results.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN);
+    // A typed answer is graded by the same scorer, but it is not speech. It
+    // may stand in for speech when the device failed — a browser with no
+    // SpeechRecognition, a firewalled property, a locked-down handset — and
+    // not otherwise, or the certificate says "speaking" about a keyboard.
+    // "At least one spoken item" was too weak: speak once, fail it, then type
+    // the other four and the oral half still counts. The spoken items have to
+    // carry the pass on their own.
+    const spokenAtAll = results.filter((r) => !r.typed).length >= oralPassMin(results.length);
+    const oralCounts = deviceFailed || spokenAtAll;
+    // The count AND the reserved draw — oralHalfPassed() holds both, and the
+    // flag it reads is set by buildOral(), which owns the reservation. The
+    // alternative was a copy of CARRIES_AUTHORITY here, and a copied rule is a
+    // rule that stops being the one that ships.
+    const ok = writtenOk && (results.length === 0 || (oralCounts && oralHalfPassed(results)));
     setOralResults(results);
     if (ok && !awardedRef.current) {
       awardedRef.current = true;
@@ -646,10 +523,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               kỹ năng bị bỏ trống.
             </p>
             <p>
-              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} câu nói</strong> lấy từ khắp
-              giai đoạn — cần đạt <strong>{CHECKPOINT_ORAL_PASS_MIN} câu</strong>. Câu mẫu chỉ hiện
-              ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn được
-              tính.
+              Sau phần trắc nghiệm là <strong>{CHECKPOINT_ORAL_ITEMS} lượt nói</strong> lấy từ khắp
+              giai đoạn — một hội thoại nhiều lượt tính là một lượt — và cần đạt{" "}
+              <strong>{Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%</strong> số câu. Câu mẫu chỉ
+              hiện ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn
+              được tính.
             </p>
           </div>
           {cooldownMsLeft > 0 ? (
@@ -680,12 +558,21 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   }
 
   if (stage === "oral") {
-    return <OralStage items={oral} onFinish={(results) => finish(scorePct, tallies, results)} />;
+    return (
+      <OralStage
+        items={oral}
+        onFinish={(results, deviceFailed) => finish(scorePct, tallies, results, deviceFailed)}
+      />
+    );
   }
 
   if (stage === "done") {
     const oralPassed = oralResults.filter((r) => r.passed).length;
-    const oralOk = oralResults.length === 0 || oralPassed >= CHECKPOINT_ORAL_PASS_MIN;
+    const oralOk = oralHalfPassed(oralResults);
+    // Missed the reserved draw while clearing the count — the one case where
+    // the tally on screen looks like a pass and is not, so it gets its own
+    // sentence instead of "you need N of 5".
+    const missedReserved = oralResults.some((r) => r.item.reserved && !r.passed);
     const passed = checkpointPassed(scorePct, tallies) && oralOk;
     const shortfall = tallies.filter((t) => !blockCleared(t));
     const undeliverable = tallies.filter((t) => !t.deliverable);
@@ -710,7 +597,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
                 ? `✦ Chúc mừng! Bạn đã qua giai đoạn này. Giai đoạn ${nextPhase.nameVi} (tuần ${nextPhase.from}–${nextPhase.to}) đã được mở.`
                 : `✦ Chúc mừng! Bạn đã hoàn thành toàn bộ lộ trình 40 tuần.`
               : !oralOk && checkpointPassed(scorePct, tallies)
-                ? `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${CHECKPOINT_ORAL_PASS_MIN}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                ? missedReserved
+                  ? `Phần viết đã đạt, nhưng câu về an toàn / thẩm quyền ở phần nói chưa đạt. Câu đó bắt buộc phải đúng: nó là câu bạn sẽ phải nói khi không được tự quyết. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
+                  : `Phần viết đã đạt, nhưng phần nói mới ${oralPassed}/${oralResults.length} câu — cần ${oralPassMin(oralResults.length)}. Xem câu mẫu bên dưới, luyện ở mục Nói rồi thi lại.`
                 : shortfall.length > 0 && scorePct >= CHECKPOINT_PASS_PCT
                   ? `Bạn đạt ${scorePct}% tổng thể, nhưng chưa đủ sàn tối thiểu ở: ${shortfall
                       .map(
@@ -750,9 +639,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
           </div>
           {undeliverable.length > 0 && (
             <p className="mt-4 text-xs leading-relaxed text-foreground/60">
-              Thiết bị của bạn chưa có giọng đọc tiếng Anh — phần nghe hiểu vẫn được tính điểm nhưng
-              không tính vào sàn tối thiểu từng kỹ năng. Hãy dùng Chrome hoặc Edge để luyện nghe đầy
-              đủ.
+              Thiết bị của bạn chưa có giọng đọc tiếng Anh, nên phần nghe hiểu chưa đo được. Điểm
+              các phần khác vẫn được ghi và bạn không bị trừ vì chuyện này — nhưng giai đoạn tiếp
+              theo chỉ mở khi có đủ cả phần nghe. Hãy làm lại trên Chrome hoặc Edge.
             </p>
           )}
           {oralResults.length > 0 && (
@@ -760,21 +649,37 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em]">
                 <span className="text-foreground/60">Phần nói</span>
                 <span className={oralOk ? "text-foreground/60" : "text-primary"}>
-                  {oralPassed}/{oralResults.length} · cần {CHECKPOINT_ORAL_PASS_MIN}
+                  {oralPassed}/{oralResults.length} · cần {oralPassMin(oralResults.length)}
                 </span>
               </div>
+              {oralResults.every((r) => r.typed) && (
+                <p className="mt-2 text-[11px] leading-relaxed text-foreground/55">
+                  Phần này bạn đã GÕ, không phải nói. Bài sát hạch cuối phase chứng nhận kỹ năng
+                  NÓI, nên câu gõ chỉ thay được cho câu nói khi máy thật sự không thu được. Hãy
+                  luyện ở mục Nói rồi thi lại bằng giọng.
+                </p>
+              )}
               {/* Targets are revealed only here — during the oral stage they
                   are hidden so the item measures speech, not reading. */}
               <div className="mt-4 space-y-3">
                 {oralResults.map((r, i) => (
                   <div key={r.item.key + i} className="text-xs leading-relaxed">
                     <div className={r.passed ? "text-foreground/60" : "text-primary"}>
-                      {r.passed ? "✓" : "✗"} Khách: "{r.item.guestPrompt}"
+                      {r.passed ? "✓" : "✗"} {r.item.who}: "{r.item.guestPrompt}"
+                      {r.item.reserved && (
+                        <span className="ml-2 text-[10px] uppercase tracking-[0.2em] text-primary">
+                          · bắt buộc đúng
+                        </span>
+                      )}
                     </div>
                     <div className="mt-1 text-foreground/75">
                       Câu mẫu: <span className="text-foreground">{r.item.target}</span>
                     </div>
-                    {r.said && <div className="mt-0.5 text-foreground/50">Bạn nói: "{r.said}"</div>}
+                    {r.said && (
+                      <div className="mt-0.5 text-foreground/50">
+                        {r.typed ? "Bạn gõ" : "Bạn nói"}: "{r.said}"
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -865,16 +770,17 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
         {q.kind === "listening" ? (
           <>
             <p className="font-display text-xl text-foreground">
-              Nghe lời khách và chọn câu trả lời chuẩn 5 sao:
+              Nghe {q.audioWho} và chọn câu trả lời chuẩn 5 sao:
             </p>
-            <button
-              onClick={() => {
-                if (speakVaried(q.audio, week!)) sawEnVoiceRef.current = true;
-              }}
-              className="mt-4 border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
-            >
-              🔊 Nghe
-            </button>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => speak(q.audio, { role: "guest", rate: listeningRateForWeek(week!) })}
+                className="border border-primary px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+              >
+                🔊 Nghe
+              </button>
+              <VoiceButton role="guest" />
+            </div>
           </>
         ) : (
           <p className="font-display text-xl text-foreground">{q.prompt}</p>

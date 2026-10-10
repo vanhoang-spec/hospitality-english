@@ -3,17 +3,21 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { stopSpeaking } from "@/lib/speech";
 import { AcademyNav } from "@/components/AcademyNav";
 import { AuthGate } from "@/components/AuthGate";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { VoicePicker } from "@/components/VoicePicker";
 
 function NotFoundComponent() {
   return (
@@ -37,7 +41,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -131,6 +135,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+
+  // A line still being read must not carry on over the next screen.
+  useEffect(() => stopSpeaking(), [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -139,6 +147,7 @@ function RootComponent() {
           <AcademyNav />
           <Outlet />
           <InstallPrompt />
+          <VoicePicker />
         </div>
       </AuthGate>
     </QueryClientProvider>

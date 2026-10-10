@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,10 +10,11 @@ import {
   updateMemberRole,
 } from "@/lib/org-admin-actions";
 import { formatPhoneDisplay } from "@/lib/phone";
-import { DEPARTMENTS } from "@/lib/departments";
+import { DEPARTMENTS, SHIPPING_DEPARTMENTS } from "@/lib/departments";
 import { AVAILABLE_WEEKS, getWeekContent } from "@/lib/content/week-content";
 import { isCheckpointWeek } from "@/lib/phases";
 import { parseCsv, toCsv, mapCsvHeaders } from "@/lib/csv";
+import { contactEmailProblem } from "@/lib/contact-email";
 
 export const Route = createFileRoute("/org-admin")({
   head: () => ({ meta: [{ title: "Team — Embassy Hospitality" }] }),
@@ -39,10 +40,14 @@ const SUITES = ["vocab", "grammar", "speaking", "listening", "reading", "arcade"
  *  shows up here. Every department carries these on the same weeks, which
  *  is what lets the matrix keep a uniform column count per week. */
 const WRITING_WEEKS = new Set(
-  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.writing)),
+  AVAILABLE_WEEKS.filter((w) =>
+    SHIPPING_DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.writing),
+  ),
 );
 const MEDIATION_WEEKS = new Set(
-  AVAILABLE_WEEKS.filter((w) => DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.mediation)),
+  AVAILABLE_WEEKS.filter((w) =>
+    SHIPPING_DEPARTMENTS.some((d) => getWeekContent(d.code, w)?.mediation),
+  ),
 );
 
 /** Suites that exist on a given week. Most weeks carry the six core ones;
@@ -227,6 +232,13 @@ function Dashboard({ orgId, selfId }: { orgId: string; selfId: string }) {
           </p>
         </div>
         <div className="flex gap-3">
+          <Link
+            to="/org-access"
+            hash="signup-links"
+            className="border border-primary/40 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
+          >
+            Link đăng ký
+          </Link>
           <button
             onClick={() => setImportOpen(true)}
             className="border border-primary/40 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary hover:bg-primary/10"
@@ -424,8 +436,9 @@ function AddMemberDialog({
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(generateTempPassword());
   const [role, setRole] = useState<"member" | "org_admin">("member");
-  const [departmentChoice, setDepartmentChoice] = useState<string>(DEPARTMENTS[0].code);
+  const [departmentChoice, setDepartmentChoice] = useState<string>(SHIPPING_DEPARTMENTS[0].code);
   const [departmentCustom, setDepartmentCustom] = useState("");
+  const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const department = departmentChoice === "OTHER" ? departmentCustom.trim() : departmentChoice;
@@ -433,7 +446,7 @@ function AddMemberDialog({
   const createMut = useMutation({
     mutationFn: () =>
       createMember({
-        data: { fullName, phone, password, role, department: department || undefined },
+        data: { fullName, phone, password, role, department: department || undefined, email },
       }),
   });
 
@@ -509,7 +522,7 @@ function AddMemberDialog({
               onChange={(e) => setDepartmentChoice(e.target.value)}
               className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
             >
-              {DEPARTMENTS.map((d) => (
+              {SHIPPING_DEPARTMENTS.map((d) => (
                 <option key={d.code} value={d.code}>
                   {d.code} — {d.name_vi}
                 </option>
@@ -524,6 +537,15 @@ function AddMemberDialog({
                 className="mt-2 w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
               />
             )}
+          </Field>
+          <Field label="Email (không bắt buộc — để tự lấy lại mật khẩu)">
+            <input
+              type="email"
+              placeholder="ten@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-primary/30 bg-background/40 px-3 py-2 text-sm outline-none focus:border-primary"
+            />
           </Field>
         </div>
         <div className="mt-6 flex justify-end gap-3">
@@ -553,14 +575,15 @@ type CsvRow = {
   phone: string;
   password: string;
   department: string;
+  email: string;
   preError?: string;
 };
 
 type RowResult = CsvRow & { status: "pending" | "ok" | "error"; message?: string };
 
 const CSV_TEMPLATE = toCsv([
-  ["Tên", "Số điện thoại", "Mật khẩu", "Phòng ban"],
-  ["Nguyễn Văn A", "0912345678", "", "FO"],
+  ["Tên", "Số điện thoại", "Mật khẩu", "Phòng ban", "Email"],
+  ["Nguyễn Văn A", "0912345678", "", "FO", "nguyenvana@gmail.com"],
 ]);
 
 function downloadTextFile(filename: string, content: string, mime: string) {
@@ -613,8 +636,12 @@ function ImportCsvDialog({
         const phone = (r[map.phone] ?? "").trim();
         const password = map.password >= 0 ? (r[map.password] ?? "").trim() : "";
         const department = map.department >= 0 ? (r[map.department] ?? "").trim() : "";
-        const preError = !name || !phone ? "Thiếu tên hoặc số điện thoại" : undefined;
-        return { index: i + 1, name, phone, password, department, preError };
+        const email = map.email >= 0 ? (r[map.email] ?? "").trim() : "";
+        const preError =
+          !name || !phone
+            ? "Thiếu tên hoặc số điện thoại"
+            : (contactEmailProblem(email) ?? undefined);
+        return { index: i + 1, name, phone, password, department, email, preError };
       });
       setRows(parsed);
     };
@@ -647,6 +674,7 @@ function ImportCsvDialog({
             password,
             role: "member",
             department: row.department || undefined,
+            email: row.email,
           },
         });
         working[i] = { ...row, password, status: "ok" };
@@ -683,7 +711,8 @@ function ImportCsvDialog({
       <div className="max-h-[85vh] w-full max-w-2xl overflow-y-auto border border-primary/40 bg-card p-6 shadow-2xl">
         <h2 className="font-display text-2xl text-foreground">Nhập thành viên từ CSV</h2>
         <p className="mt-2 text-xs text-foreground/60">
-          Cột cần có: Tên, Số điện thoại. Tùy chọn: Mật khẩu (để trống sẽ tự sinh), Phòng ban.
+          Cột cần có: Tên, Số điện thoại. Tùy chọn: Mật khẩu (để trống sẽ tự sinh), Phòng ban, Email
+          (để học viên tự lấy lại mật khẩu khi quên).
         </p>
 
         <div className="mt-4 flex flex-wrap gap-3">
@@ -720,7 +749,7 @@ function ImportCsvDialog({
               {rows.length - validCount > 0 && (
                 <span className="text-destructive">
                   {" "}
-                  · {rows.length - validCount} thiếu tên/SĐT
+                  · {rows.length - validCount} thiếu tên/SĐT hoặc email sai
                 </span>
               )}
               .
@@ -1014,7 +1043,7 @@ function MemberDrawer({
                   </tr>
                 </thead>
                 <tbody>
-                  {DEPARTMENTS.map((d) => (
+                  {SHIPPING_DEPARTMENTS.map((d) => (
                     <tr key={d.code} className="border-t border-primary/10">
                       <td className="sticky left-0 bg-card px-2 py-1.5 font-display text-foreground">
                         {d.code}
@@ -1102,8 +1131,10 @@ type OrgProgressRow = { user_id: string; stars: number; mastered: boolean; suite
 
 // Only dep/week combos that actually have authored content count as
 // completable slots (weeks differ per department after the 40-week frame),
-// and checkpoint weeks carry one extra slot for the phase test.
-const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
+// and checkpoint weeks carry one extra slot for the phase test. Departments
+// still being authored are excluded: nobody is placed in one, so counting
+// their weeks would silently deflate every member's completion percentage.
+const TOTAL_SLOTS_PER_MEMBER = SHIPPING_DEPARTMENTS.reduce(
   (sum, d) =>
     sum +
     AVAILABLE_WEEKS.filter((w) => getWeekContent(d.code, w) !== null).reduce(
@@ -1115,7 +1146,7 @@ const TOTAL_SLOTS_PER_MEMBER = DEPARTMENTS.reduce(
 
 /** Every authored checkpoint slot across all departments — the
  *  denominator for the org's phase-test pass rate. */
-const TOTAL_CHECKPOINTS_PER_MEMBER = DEPARTMENTS.reduce(
+const TOTAL_CHECKPOINTS_PER_MEMBER = SHIPPING_DEPARTMENTS.reduce(
   (sum, d) =>
     sum +
     AVAILABLE_WEEKS.filter((w) => isCheckpointWeek(w) && getWeekContent(d.code, w) !== null).length,

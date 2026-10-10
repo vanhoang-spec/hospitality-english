@@ -15,8 +15,11 @@
 //     same course and keep vocabulary actually coming back.
 
 import { ALL_WEEKS } from "../src/lib/content/week-content";
+import { LEXICONS } from "../src/lib/content/phase0";
 import { DEPARTMENTS } from "../src/lib/departments";
-import { CHECKPOINT_ORAL_ITEMS } from "../src/lib/phases";
+import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
+import { reservableTurns } from "../src/lib/checkpoint-oral";
+import { isAuthoredP4 } from "../src/lib/content/phase4";
 
 type Phase = {
   name: string;
@@ -83,10 +86,11 @@ const PHASES: Phase[] = [
     reviewPct: 0.35,
     deptSpecificMin: 0.65,
   },
-  // B1.1 — the top of the ladder. Three clauses are allowed, so the cap
-  // rises to 22 words; recycling peaks at 40%.
+  // The top of the ladder. Three clauses are allowed, so the cap rises to
+  // 22 words; recycling peaks at 40%. The MATERIAL here reaches B1.1; the
+  // band the course can certify is A2+ — see the note in src/lib/phases.ts.
   {
-    name: "P4 B1.1",
+    name: "P4 A2+ (B1.1 material)",
     from: 31,
     to: 40,
     wordCap: 22,
@@ -104,6 +108,8 @@ function phaseOf(week: number): Phase | null {
 }
 
 const errors: string[] = [];
+/** `dep|phase|gloss` -> the first card that claimed that Vietnamese gloss. */
+const glossOwner = new Map<string, string>();
 const warnings: string[] = [];
 /** Known pre-matrix debt in the hand-authored A2-B1 weeks (see content audit). */
 const legacyGameDupes: string[] = [];
@@ -115,8 +121,63 @@ const words = (s: string) =>
     .filter(Boolean);
 
 /** The cap is per sentence — a checkpoint utterance may chain two short ones. */
+/** The `+1` this cap is granted everywhere was documented as "for a sir/madam
+ *  tag", but the check was `n > wordCap + 1` with no look at whether the
+ *  sentence actually carries one — so the allowance was silently spent on
+ *  content words instead. Four audit reports counted five or six such lines
+ *  per module. The tag now has to be there to buy the extra word.
+ *
+ *  And a multi-word name out of the lexicon counts as ONE word, because it is
+ *  one referent: "Food and Beverage", "lounge card", "five hundred thousand".
+ *  The cap exists to bound how much syntax a pre-A1 learner assembles, and a
+ *  department is not three decisions. Without this, the cap penalises a
+ *  department for the length of its own name — Housekeeping passes and Spa
+ *  and Wellness fails on the identical frame. */
+const HONORIFIC_TAG = /\b(sir|madam|mr|mrs|ms)\b[.,!?]*\s*$/i;
+const lexicalUnits = (): string[] => {
+  const out = new Set<string>();
+  for (const lx of Object.values(LEXICONS)) {
+    for (const s of [lx.deptEn, lx.service.en, lx.priced.en, lx.priced.vndWord, lx.booking.en])
+      if (s && s.includes(" ")) out.add(s.toLowerCase());
+    for (const it of lx.items) if (it.word.includes(" ")) out.add(it.word.toLowerCase());
+  }
+  // Longest first so "five hundred thousand" collapses before "five hundred".
+  return [...out].sort((a, b) => b.length - a.length);
+};
+const UNITS = lexicalUnits();
+const collapseUnits = (s: string) => {
+  let out = s.toLowerCase();
+  for (const u of UNITS) out = out.split(u).join(u.replace(/ /g, "⁠"));
+  return out;
+};
+
 const maxSentenceLen = (s: string) =>
-  Math.max(0, ...s.split(/[.!?]+/).map((part) => words(part).length));
+  Math.max(
+    0,
+    ...collapseUnits(s)
+      .split(/[.!?]+/)
+      .map((part) => words(part).length),
+  );
+
+/** Effective cap for one sentence: the base, plus one only if the sentence
+ *  ends in the honorific the allowance was written for.
+ *
+ *  STRICT only for the generated phases (weeks 1-14). The hand-authored A2-B1
+ *  weeks were written against the loose reading, where the spare word buys a
+ *  subordinate clause rather than a tag, and 12 of their sentences sit on it.
+ *  Rewriting those is a separate pass over separate content; pretending the
+ *  debt is gone by exempting it silently would be worse than naming it. */
+const capFor = (sentence: string, wordCap: number, strict: boolean) =>
+  !strict || HONORIFIC_TAG.test(sentence.trim()) ? wordCap + 1 : wordCap;
+
+const overCap = (s: string, phase: Phase): number | null => {
+  const strict = phase.to <= 14;
+  for (const part of collapseUnits(s).split(/[.!?]+/)) {
+    const n = words(part).length;
+    if (n > capFor(part, phase.wordCap, strict)) return n;
+  }
+  return null;
+};
 
 const longWords = (s: string) =>
   words(s)
@@ -230,25 +291,54 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
     for (const item of lesson.vocabulary) {
       if (!item.word || !item.phonetic || !item.definition || !item.context)
         errors.push(`${where}: vocab "${item.word}" has an empty field`);
+      // Two cards with one gloss make an unanswerable checkpoint question: the
+      // paper prints the same Vietnamese twice and keys one of them.
+      const glossKey = `${week.departmentId}|${phase?.name ?? week.weekNumber}|${item.definition.trim().toLowerCase()}`;
+      const owner = glossOwner.get(glossKey);
+      if (owner && owner !== item.word)
+        errors.push(
+          `${where}: vocab "${item.word}" repeats the gloss of "${owner}" — "${item.definition}"`,
+        );
+      else glossOwner.set(glossKey, item.word);
     }
 
     for (const gr of lesson.grammar) {
       if (!gr.rule) errors.push(`${where}: grammar "${gr.polite}" missing rule`);
+      // A nearMiss goes onto the checkpoint paper as a DISTRACTOR without
+      // passing through the same-answer filter the other two options do, so it
+      // is the one option nothing else can catch. If it equals either half of
+      // its own pair, the paper ships a duplicate option or a second right one.
+      if (gr.nearMiss && (gr.nearMiss === gr.polite || gr.nearMiss === gr.rude))
+        errors.push(`${where}: grammar nearMiss "${gr.nearMiss}" repeats its own rude/polite half`);
       if (phase) {
-        const n = maxSentenceLen(gr.polite);
-        if (n > phase.wordCap + 1)
+        const n = overCap(gr.polite, phase);
+        if (n !== null)
           errors.push(
-            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: grammar "${gr.polite}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
     }
 
     for (const s of lesson.speaking) {
       if (phase) {
-        const n = maxSentenceLen(s.targetResponse);
-        if (n > phase.wordCap + 1)
+        const n = overCap(s.targetResponse, phase);
+        if (n !== null)
           errors.push(
-            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}+1)`,
+            `${where}: target "${s.targetResponse}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
+          );
+      }
+      // The cap covered only grammar.polite and speaking.targetResponse. A
+      // game's correct option is just as much a sentence the learner is
+      // rewarded for producing, and a 24-word answer sat in FO-35 for a week
+      // because nothing looked at it. `arcade` is deliberately NOT checked: no
+      // suite reads that field, so capping it would gate text no learner sees.
+      for (const g of lesson.game) {
+        const right = g.options.find((o) => o.correct);
+        if (!right) continue;
+        const n = overCap(right.text, phase);
+        if (n !== null)
+          errors.push(
+            `${where}: game answer "${right.text}" has a ${n}-word sentence (${phase.name} cap ${phase.wordCap}, +1 only with a sir/madam tag)`,
           );
       }
       // ENGINE: fewer than two 4+ letter words and ListeningSuite drops the cloze.
@@ -277,8 +367,15 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
         errors.push(`${where}: game "${gm.prompt}" has duplicate options`);
     }
 
-    if (lesson.reading.questions.length !== 2)
-      errors.push(`${where}: reading has ${lesson.reading.questions.length} questions (want 2)`);
+    // Two is the floor, five the ceiling. Mastery is 80% and the bar is
+    // ceil(0.8 * n), so 2/2, 3/3 and 4/4 all demand a perfect run — only five
+    // questions let a learner get one wrong (4/5 = 80%) and still be credited.
+    const qWant = "2-5";
+    const qOk = lesson.reading.questions.length >= 2 && lesson.reading.questions.length <= 5;
+    if (!qOk)
+      errors.push(
+        `${where}: reading has ${lesson.reading.questions.length} questions (want ${qWant})`,
+      );
     for (const q of lesson.reading.questions) {
       if (q.correct < 0 || q.correct >= q.options.length)
         errors.push(`${where}: reading q "${q.q}" has an out-of-range correct index`);
@@ -309,6 +406,14 @@ for (const [key, week] of Object.entries(ALL_WEEKS)) {
   const haystack = texts.join("\n").toLowerCase();
   for (const bad of KNOWN_BAD_STRINGS) {
     if (haystack.includes(bad)) errors.push(`${key}: known-bad string regressed: "${bad}"`);
+  }
+  // A frame written in quotes instead of backticks ships its own source code:
+  // Phase 3 round 1 found a reading explanation that printed, to every
+  // department, `'${cap(lx.pron.subj)} makes the call ${lx.pron.refl}'`.
+  // No rendered string, in any phase, may still hold a placeholder.
+  for (const t of texts) {
+    const m = /\$\{[^}]*\}/.exec(t);
+    if (m) errors.push(`${key}: unrendered template placeholder ${m[0]} in "${t.slice(0, 80)}"`);
   }
 }
 
@@ -371,10 +476,19 @@ for (const phase of PHASES) {
 // professional sense — so it is reported rather than blocked.
 const HAND_AUTHORED = new Set(["FB-15", "HK-15", "FO-17", "SW-19"]);
 const spiralIntoLegacy: string[] = [];
+// Headwords minted twice inside weeks 23-40, inherited from the generated
+// Phase 3-4 spine. Ratcheted, not blocked: the count may fall, never rise.
+const latePhaseDuplicates: string[] = [];
+const DUP_BASELINE = new URL("./_late-dup-baseline.json", import.meta.url);
 
 for (const dep of DEPS) {
   const firstSeen = new Map<string, number>();
-  for (let w = 1; w <= 22; w++) {
+  // Spans the whole course, not weeks 1-22. It stopped at 22 while Phase 3
+  // and 4 were still generated; now that they are hand-authored, a headword
+  // minted twice there is exactly the collision this gate exists to catch —
+  // the review scheduler keys on the word, so the second card silently
+  // overwrites the first one's schedule.
+  for (let w = 1; w <= 40; w++) {
     for (const h of headwords(dep, w)) {
       const key = h.toLowerCase();
       const earlier = firstSeen.get(key);
@@ -382,8 +496,20 @@ for (const dep of DEPS) {
         firstSeen.set(key, w);
       } else if (earlier !== w) {
         const msg = `${dep}: "${h}" is taught at week ${earlier} and again at week ${w}`;
-        if (HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
+        // Weeks 39-40 are the course's own revision weeks: the matrix asks
+        // them to reuse material, so a repeat there is reported, not blocked.
+        // So is week 30 — "Checkpoint P3 · Ôn W23-29" in the matrix — and four
+        // blind reviews of Phase 3 marked down the sixteen NEW cards it used
+        // to teach two screens before the checkpoint. Its cards re-present
+        // weeks 23-29.
+        const revision = w >= 39 || earlier >= 39 || w === 30;
+        if (revision || HAND_AUTHORED.has(`${dep}-${w}`) || HAND_AUTHORED.has(`${dep}-${earlier}`))
           spiralIntoLegacy.push(msg);
+        else if (w > 22 || earlier > 22)
+          // Phase 3-4 debt inherited from the generated spine. Ratcheted below
+          // rather than blocked, so new hand-authored weeks cannot add to it
+          // while the existing count is worked down.
+          latePhaseDuplicates.push(msg);
         else errors.push(msg);
       }
     }
@@ -472,6 +598,44 @@ for (const n of [...freqBuckets.keys()].sort((a, b) => a - b))
 if (neverRecycled)
   console.log(`  never recycled: ${neverRecycled} (e.g. ${neverRecycledSample.join(", ")})`);
 
+{
+  const file = Bun.file(DUP_BASELINE);
+  const known = await file.exists();
+  const baseline: number = known
+    ? (JSON.parse(await file.text()).lateDuplicates as number)
+    : latePhaseDuplicates.length;
+  const write = (n: number) =>
+    Bun.write(
+      DUP_BASELINE,
+      JSON.stringify(
+        {
+          lateDuplicates: n,
+          note: "Ratchet only — a headword may not be minted twice in weeks 23-40. This number may fall, never rise.",
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+  if (!known) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: baseline recorded at ${latePhaseDuplicates.length}.`,
+    );
+  } else if (latePhaseDuplicates.length > baseline) {
+    errors.push(
+      `${latePhaseDuplicates.length} headwords are minted twice in weeks 23-40, up from ${baseline}. ` +
+        `Newest: ${latePhaseDuplicates.slice(-3).join(" · ")}`,
+    );
+  } else if (latePhaseDuplicates.length < baseline) {
+    await write(latePhaseDuplicates.length);
+    console.log(
+      `  Late-phase duplicate headwords: ${latePhaseDuplicates.length}, down from ${baseline} — baseline lowered.`,
+    );
+  } else {
+    console.log(`  Late-phase duplicate headwords: ${latePhaseDuplicates.length} (ratchet holds).`);
+  }
+}
+
 if (spiralIntoLegacy.length) {
   console.log(
     `\nSurvival words returning in the hand-authored weeks (${spiralIntoLegacy.length}) — spiral, allowed:`,
@@ -503,22 +667,509 @@ if (legacyGameDupes.length) {
 // for that department. This makes the pool a checked invariant instead.
 // ============================================================
 {
+  let checked = 0;
   for (const phase of PHASES) {
-    for (const dep of DEPARTMENTS.map((d) => d.code)) {
+    for (const d of DEPARTMENTS) {
+      const dep = d.code;
       let n = 0;
-      for (let w = phase.from; w <= phase.to; w++)
-        n += (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? []).reduce((s, l) => s + l.speaking.length, 0);
+      let authored = 0;
+      for (let w = phase.from; w <= phase.to; w++) {
+        const week = ALL_WEEKS[`${dep}-${w}`];
+        if (!week) continue;
+        authored++;
+        n += week.lessons.reduce((s, l) => s + l.speaking.length, 0);
+      }
+      // A department still being authored has half-built phases by definition,
+      // and a half-built phase has a short pool for an innocent reason. Exempt
+      // only the phases it has not finished; the moment its last week lands,
+      // the pool must hold — no department ships on a written-only checkpoint.
+      const phaseComplete = authored === phase.to - phase.from + 1;
+      if (d.hidden === "in-progress" && !phaseComplete) continue;
+      checked++;
       if (n < CHECKPOINT_ORAL_ITEMS)
         errors.push(
           `${dep} ${phase.name} (weeks ${phase.from}-${phase.to}) has only ${n} speaking items — the checkpoint needs ${CHECKPOINT_ORAL_ITEMS}`,
         );
     }
   }
+  const wip = DEPARTMENTS.filter((d) => d.hidden === "in-progress").map((d) => d.code);
   console.log(
-    `Checkpoint oral pools — 5 phases × ${DEPARTMENTS.length} departments each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items`,
+    `Checkpoint oral pools — ${checked} phase×department pools each hold ≥ ${CHECKPOINT_ORAL_ITEMS} speaking items` +
+      (wip.length ? ` (unfinished phases of ${wip.join(", ")} not yet due)` : ""),
   );
 }
 
+// ============================================================
+// GATE 4b — Phase 3's must-be-right turn is one an author marked
+//
+// buildOral used to find the reserved turn by searching model sentences for
+// substrings, which match filing as readily as risk: on Phase 3 it reserved
+// a rooming-list check for Front Office in every sitting, an allergy-NOTE
+// filing line for the Spa, and found nothing at all for Guest Relations.
+// Each audited department's Phase 3 now marks its hard cases
+// (`SpeakingItem.risk`), and buildOral reserves from those. This holds
+// every one of them to it: the phase draws by mark, the pool is wide enough
+// that memorising it is not the same as passing, and no week is without a
+// hard case. Read through reservableTurns — the function the draw uses.
+// ============================================================
+{
+  const P3_MARKED = ["FO", "FB", "HK", "SW", "GR"];
+  const POOL_MIN = 10;
+  const sizes: string[] = [];
+  for (const dep of P3_MARKED) {
+    const { byMark, turns } = reservableTurns(dep, "30");
+    if (!byMark) {
+      errors.push(
+        `${dep} Phase 3 marks no risk turn — its checkpoint falls back to the substring search`,
+      );
+      continue;
+    }
+    const distinct = new Set(turns.map((t) => t.target)).size;
+    sizes.push(`${dep} ${distinct}`);
+    if (distinct < POOL_MIN)
+      errors.push(
+        `${dep} Phase 3 reserved pool holds ${distinct} turns — the floor is ${POOL_MIN}`,
+      );
+    for (let w = 23; w <= 30; w++) {
+      const marked = (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        .flatMap((l) => l.speaking)
+        .filter((s) => s.risk).length;
+      if (marked === 0) errors.push(`${dep}-${w} has no risk-marked speaking turn`);
+    }
+  }
+  console.log(
+    `Phase 3 reserved pools (marked turns) — ${sizes.join(" · ")}  (floor ${POOL_MIN}, ≥ 1 a week)`,
+  );
+}
+
+// ============================================================
+// GATE 4c — the same for Phase 4, once a department has written all ten
+// weeks in p4/<dep>/. The first blind round of the reopened phase found the
+// week-40 must-be-right slot drawing from one turn at the front desk (in
+// every sitting, chosen because "You may not have to" contains "may not"),
+// three in Guest Relations and four, all faulty, in the Spa. A department
+// still mid-rewrite is not held to it yet; one that has finished is.
+// ============================================================
+{
+  const POOL_MIN = 20;
+  const sizes: string[] = [];
+  for (const dep of ["FO", "FB", "HK", "SW", "GR"]) {
+    let authored = true;
+    for (let w = 31; w <= 40; w++) if (!isAuthoredP4(`${dep}-${w}`)) authored = false;
+    if (!authored) continue;
+    const { byMark, turns } = reservableTurns(dep, "40");
+    if (!byMark) {
+      errors.push(
+        `${dep} Phase 4 marks no risk turn — its checkpoint falls back to the substring search`,
+      );
+      continue;
+    }
+    const distinct = new Set(turns.map((t) => t.target)).size;
+    sizes.push(`${dep} ${distinct}`);
+    if (distinct < POOL_MIN)
+      errors.push(
+        `${dep} Phase 4 reserved pool holds ${distinct} turns — the floor is ${POOL_MIN}`,
+      );
+    for (let w = 31; w <= 40; w++) {
+      const marked = (ALL_WEEKS[`${dep}-${w}`]?.lessons ?? [])
+        .flatMap((l) => l.speaking)
+        .filter((s) => s.risk).length;
+      if (marked === 0) errors.push(`${dep}-${w} has no risk-marked speaking turn`);
+    }
+  }
+  console.log(
+    `Phase 4 reserved pools (marked turns) — ${sizes.length ? sizes.join(" · ") : "no department fully rewritten yet"}  (floor ${POOL_MIN}, ≥ 1 a week)`,
+  );
+}
+
+// ============================================================
+// GATE 4d — Phase 4 reading and game cannot be answered by their shape.
+//
+// Round 2 of the Phase 4 reviews: the right reading option was the LONGEST
+// of its three in 0-6 of 105-120 questions a department (so "pick the
+// shortest" cleared the paper's reading floor on 80-92% of papers), and the
+// game's `form` option was always a near copy of the answer, so the
+// `register` option was the odd one out in 80 of 80 rounds and the move —
+// the thing Phase 4 teaches — never had to be judged. Rebuilt per
+// department; this holds it. Also: no game answer copies a speaking model of
+// its own lesson (matrix rule "Game ≠ Speaking").
+// ============================================================
+{
+  const toks = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}' ]+/gu, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+  const lev = (a: string[], b: string[]) => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [
+      i,
+      ...Array<number>(b.length).fill(0),
+    ]);
+    for (let j = 1; j <= b.length; j++) d[0]![j] = j;
+    for (let i = 1; i <= a.length; i++)
+      for (let j = 1; j <= b.length; j++)
+        d[i]![j] = Math.min(
+          d[i - 1]![j]! + 1,
+          d[i]![j - 1]! + 1,
+          d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1),
+        );
+    return d[a.length]![b.length]!;
+  };
+  const sim = (x: string, y: string) => {
+    const a = toks(x);
+    const b = toks(y);
+    return 1 - lev(a, b) / Math.max(a.length, b.length, 1);
+  };
+  const rows: string[] = [];
+  for (const dep of ["FO", "FB", "HK", "SW", "GR"]) {
+    let authored = true;
+    for (let w = 31; w <= 40; w++) if (!isAuthoredP4(`${dep}-${w}`)) authored = false;
+    if (!authored) continue;
+    let nq = 0;
+    let longest = 0;
+    let shortest = 0;
+    let ng = 0;
+    let odd = 0;
+    const copies: string[] = [];
+    for (let w = 31; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${dep}-${w}`]?.lessons ?? []) {
+        for (const q of l.reading?.questions ?? []) {
+          nq++;
+          const len = q.options.map((o) => o.length);
+          const v = len[q.correct]!;
+          if (len.every((x, i) => i === q.correct || x < v)) longest++;
+          if (len.every((x, i) => i === q.correct || x > v)) shortest++;
+        }
+        for (const [gi, g] of (l.game ?? []).entries()) {
+          if (g.options.length !== 3) continue;
+          ng++;
+          const t = g.options.map((o) => o.text);
+          const ans = g.options.findIndex((o) => o.correct);
+          const s01 = sim(t[0]!, t[1]!);
+          const s02 = sim(t[0]!, t[2]!);
+          const s12 = sim(t[1]!, t[2]!);
+          const tot = [s01 + s02, s01 + s12, s02 + s12];
+          if (tot.indexOf(Math.min(...tot)) === ans) odd++;
+          if (l.speaking.some((s) => sim(s.targetResponse, t[ans]!) >= 0.75))
+            copies.push(`${l.lessonId} G${gi}`);
+        }
+      }
+    const pct = (n: number, d: number) => Math.round((100 * n) / Math.max(1, d));
+    rows.push(
+      `${dep} reading longest ${pct(longest, nq)}% shortest ${pct(shortest, nq)}% · game odd-one-out ${pct(odd, ng)}%`,
+    );
+    if (pct(longest, nq) < 25)
+      errors.push(
+        `${dep} Phase 4 reading: the answer is the longest option in only ${pct(longest, nq)}% of questions (floor 25%)`,
+      );
+    if (pct(shortest, nq) > 45)
+      errors.push(
+        `${dep} Phase 4 reading: the answer is the shortest option in ${pct(shortest, nq)}% of questions (ceiling 45%)`,
+      );
+    if (pct(odd, ng) < 30)
+      errors.push(
+        `${dep} Phase 4 game: the answer is the odd one out in only ${pct(odd, ng)}% of rounds (floor 30%)`,
+      );
+    for (const c of copies)
+      errors.push(`${dep} ${c}: game answer copies a speaking model of its lesson`);
+  }
+  console.log(`Phase 4 surface shape — ${rows.join(" · ")}`);
+}
+
+// ============================================================
+// GATE 5 — active vocabulary total per department
+//
+// The matrix carried "~560-620 từ" for months with nothing checking it, and
+// the real figure was 502-508 everywhere. A target nobody measures is not a
+// target; it is decoration that drifts.
+//
+// The number moved to >=510 because 560 was never argued for, and the floor
+// below is what makes 510 mean something. The risk it guards is specific and
+// live: the Phase 4 hand-authoring batches replace a generated week with a
+// written one, and a written week that teaches fewer headwords than the week
+// it replaced takes the total DOWN. Thirty-eight of those are queued. Without
+// this gate the course could quietly shrink while every other check stayed
+// green.
+//
+// A department still being authored has no total to defend yet. A withdrawn
+// one does — its forty weeks are finished, so it is checked like any other.
+// ============================================================
+{
+  const FLOOR = 500;
+  const TARGET = 510;
+  const totals: string[] = [];
+  for (const d of DEPARTMENTS) {
+    if (d.hidden === "in-progress") continue;
+    const words = new Set<string>();
+    for (let w = 1; w <= 40; w++)
+      for (const l of ALL_WEEKS[`${d.code}-${w}`]?.lessons ?? [])
+        for (const v of l.vocabulary) words.add(v.word.toLowerCase());
+    const n = words.size;
+    totals.push(`${d.code} ${n}${n >= TARGET ? "" : ` (còn ${TARGET - n})`}`);
+    if (n < FLOOR)
+      errors.push(
+        `${d.code} teaches ${n} active headwords — below the floor of ${FLOOR}. The matrix target is ${TARGET}.`,
+      );
+  }
+  console.log(`Active vocabulary — ${totals.join(" · ")}  (sàn ${FLOOR}, mục tiêu ${TARGET})`);
+}
+
+// ============================================================
+// GATE 6 — a reading question must be unanswerable without reading
+//
+// Two strategies let a learner score without knowing any English, and both
+// were live until this gate was written:
+//
+//   POSITION. Every one of the 1,704 generated questions stored its answer
+//   first, and ReadingSuite rendered options in stored order, so tapping
+//   the first button scored 100%. Fixed in the suite rather than in 1,920
+//   questions: options are permuted by a seed taken from the question text,
+//   stable per question. This gate measures the permuted order, because
+//   that is what a learner actually sees.
+//
+//   LENGTH. An answer that carries its own reasoning is longer than the
+//   distractors, and the learner picks the long one. This is a CONTENT
+//   problem — no shuffle fixes it. The threshold below is a floor, not a
+//   target: the generated spine sits near 80% and is recorded as debt
+//   rather than blocking every build, while any week authored from here is
+//   held to something a real test could defend.
+//
+// The pass mark for a checkpoint is 70%. Any guessing strategy that beats
+// that means the reading half of the checkpoint certifies nothing.
+// ============================================================
+{
+  const seedOf = (s: string) => {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  };
+  /** Mirrors shuffleOptions() in src/components/suites/ReadingSuite.tsx. */
+  const permute = (q: { q: string; options: string[]; correct: number }) => {
+    const order = q.options.map((_, i) => i);
+    let seed = seedOf(q.q);
+    for (let i = order.length - 1; i > 0; i--) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const j = Math.floor((seed / 4294967296) * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return { options: order.map((i) => q.options[i]), correct: order.indexOf(q.correct) };
+  };
+
+  const POSITION_MAX = 0.5;
+  // 0.85 was a number with nothing behind it: a learner needs CHECKPOINT_PASS_PCT
+  // to pass, so any share above that means "tap the longest bubble" is a winning
+  // strategy for the whole course. The course sits at 0.77 today — inherited from
+  // generated content, worst in weeks 5, 9, 17 and 24 where it is 100%. Until that
+  // is fixed batch by batch, this is a ratchet: it may fall, never rise.
+  // Weeks 1–14 are done: P0 is at 0.43, P1 at 0.36, and weeks 5 and 9 are no
+  // longer 100%. Weeks 17 and 24 are still open.
+  const LENGTH_MAX = 0.661; // 1330/2014 today
+  const pos = [0, 0, 0, 0];
+  let longest = 0;
+  let total = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading.questions) {
+        const shown = permute(q);
+        total++;
+        pos[shown.correct] = (pos[shown.correct] ?? 0) + 1;
+        const lens = shown.options.map((o) => o.length);
+        if (lens[shown.correct] === Math.max(...lens)) longest++;
+      }
+
+  const worstPos = Math.max(...pos) / total;
+  const longShare = longest / total;
+  console.log(
+    `Reading answerability — always-same-position wins ${(worstPos * 100).toFixed(0)}%, ` +
+      `always-longest wins ${(longShare * 100).toFixed(0)}% of ${total} questions ` +
+      `(checkpoint pass mark is ${CHECKPOINT_PASS_PCT}%)`,
+  );
+  const READING_LONGEST_MAX = 0.56;
+  if (longShare > READING_LONGEST_MAX)
+    errors.push(
+      `the keyed reading answer is the longest option ${(longShare * 100).toFixed(0)}% of the time, up from ${(READING_LONGEST_MAX * 100).toFixed(0)}% — long enough to be a strategy`,
+    );
+  if (worstPos > POSITION_MAX)
+    errors.push(
+      `a learner who always picks the same option scores ${(worstPos * 100).toFixed(0)}% on reading — the answer key is not spread`,
+    );
+  if (longShare > LENGTH_MAX)
+    errors.push(
+      `a learner who always picks the longest option scores ${(longShare * 100).toFixed(0)}% on reading — balance the distractor lengths`,
+    );
+
+  // Games had the same hole and nothing measured it: every one of the 285 rounds
+  // in weeks 1–14 had the correct answer as the longest option, because the model
+  // answer was always a full polite sentence and both distractors were always
+  // clipped pidgin. Weeks 1–14 are fixed; weeks 15–40 still carry it, so this is
+  // a ratchet like the reading one. No position check — ArcadeSuite and
+  // BoardGameSuite reshuffle on every render, so only length can leak.
+  // Week 2 lessons 3 and 4 pluralise lx.items[0] and lx.items[2] — "Two {i1}s,
+  // please.", "How many {i3}s, sir?" — and lesson 4 IS the countable/uncountable
+  // lesson, keying its reading answer to "{i3} đếm được". Front Office shipped
+  // `Luggage` at index 2 and F&B shipped `Water`, so both drilled "Three
+  // luggages, sir." and "How many waters, sir?" as the model answer with a false
+  // rule attached, in a lesson whose own rule uses water as its uncountable
+  // example. Two auditors called it blocking. The slots are structural, so
+  // guard the slots rather than the strings.
+  for (const [code, lx] of Object.entries(LEXICONS))
+    for (const idx of [0, 2])
+      if (lx.items[idx]?.mass)
+        errors.push(
+          `${code}: lx.items[${idx}] is "${lx.items[idx].word}", a mass noun, but weeks 2-6 pluralise that slot — move it to index 1, 3, 4 or 5`,
+        );
+
+  // A headword the lesson never uses again is a flashcard, not a lesson. The
+  // audit found whole blocks of them: F&B teaches Booking, Reservation, Corner
+  // table, Hold the line and Confirm the table in week 12 and practises none of
+  // them; Spa's entire week 12-14 spa lexicon is decorative. Ratchet, because
+  // 797 of 3151 is too many to fix in one pass — it may fall, never rise.
+  const ORPHAN_MAX = 797;
+  const fold = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let orphans = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons) {
+      const used = fold(
+        [
+          ...lesson.grammar.map((x) => x.polite),
+          ...lesson.speaking.map((x) => x.targetResponse),
+          lesson.reading.text,
+          ...(lesson.game ?? []).flatMap((g) => g.options.map((o) => o.text)),
+        ].join(" || "),
+      );
+      for (const item of lesson.vocabulary) if (!used.includes(fold(item.word))) orphans++;
+    }
+  console.log(
+    `Headwords practised in their own lesson — ${(((3151 - orphans) / 3151) * 100).toFixed(0)}% of 3151 (${orphans} taught and never used again)`,
+  );
+  if (orphans > ORPHAN_MAX)
+    errors.push(
+      `${orphans} headwords never reappear in their own lesson's grammar, speaking, reading or game, up from ${ORPHAN_MAX} — a word the lesson does not use is a flashcard, not a lesson`,
+    );
+
+  // Measuring one position was the mistake. The first version of this gate
+  // counted only "the correct option is the longest", so the fix for it
+  // shortened distractors until the correct answer sat in the MIDDLE of the
+  // three by length — and "tap the middle-length bubble" then won 76% in
+  // Phase 0, worse than the 70% pass mark it was supposed to protect. The
+  // honest measure is the best of the three length positions, so no rewrite
+  // can improve one rank by quietly loading another.
+  const GAME_RANK_MAX = 0.47; // 46% today; was 0.64 while Phase 2 sat at 100% longest
+  const rank = [0, 0, 0];
+  let gTotal = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        if (round.options.length !== 3) continue;
+        gTotal++;
+        const at = [...round.options]
+          .sort((a, b) => a.text.length - b.text.length)
+          .findIndex((o) => o.correct);
+        if (at >= 0) rank[at]!++;
+      }
+  const gShare = gTotal ? Math.max(...rank) / gTotal : 0;
+  console.log(
+    `Game answerability — by length the answer is shortest/middle/longest ` +
+      `${rank.map((r) => ((r / gTotal) * 100).toFixed(0) + "%").join(" / ")} of ${gTotal} rounds ` +
+      `(best single strategy ${(gShare * 100).toFixed(0)}%)`,
+  );
+  if (gShare > GAME_RANK_MAX)
+    errors.push(
+      `a learner who always taps the same length rank wins ${(gShare * 100).toFixed(0)}% of game rounds — spread the correct answer across all three`,
+    );
+
+  // Length is not the only shape a bubble has. Two more strategies win without
+  // reading, and both were measured at Phase 2 before this: "tap the bubble
+  // with sir or madam in it" (65.8% of rounds carried the honorific ONLY in
+  // the correct answer) and, when the learner taps wrong, no way to learn why
+  // (95.9% of rounds had no `explanation`, so the arcade said "Chưa đúng —
+  // thử bong bóng khác nhé." and stopped). A distractor that is correct
+  // English and wrong for the job is the hardest thing in the course to work
+  // out alone, and it is exactly the one that was never explained.
+  const HONORIFIC_KEY_MAX = 220; // 92 today across 1439 rounds
+  const NO_EXPLANATION_MAX = 522; // 522 today; Phase 2 is at 0
+  let honKeyOnly = 0;
+  let noExplanation = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const round of lesson.game ?? []) {
+        const key = round.options.find((o) => o.correct);
+        if (
+          key &&
+          /\b(sir|madam)\b/i.test(key.text) &&
+          !round.options.some((o) => !o.correct && /\b(sir|madam)\b/i.test(o.text))
+        )
+          honKeyOnly++;
+        if (!round.explanation) noExplanation++;
+      }
+  console.log(
+    `Game surface tells — honorific only in the answer ${honKeyOnly}, rounds with no explanation ${noExplanation}`,
+  );
+  if (honKeyOnly > HONORIFIC_KEY_MAX)
+    errors.push(
+      `${honKeyOnly} game rounds put "sir"/"madam" only in the correct answer, up from ${HONORIFIC_KEY_MAX} — tapping the polite bubble must not be a strategy`,
+    );
+  // The reading block had the mirror-image problem the arcade had: the second
+  // question of nearly every generated lesson was a Vietnamese maxim — "Vì sao
+  // nên nói rõ về phí ngay từ đầu?" — whose distractors are absurd in
+  // Vietnamese, so it was answerable without touching the English passage at
+  // all. Three auditors classified their department by hand and found 36-39%
+  // of questions in that shape, and the checkpoint's reading block draws from
+  // exactly this pool, so its 50% floor could be cleared without reading.
+  //
+  // A machine cannot mark a question "answerable from common sense". What it
+  // CAN check is whether the explanation quotes the passage: an answer the
+  // learner is meant to find in the text has a sentence in the text to point
+  // at, and a maxim has none. Both numbers are ratchets — Phase 2 sits at 0
+  // unexplained and 67% anchored; the older phases have not been through this.
+  const READING_NO_EXPLANATION_MAX = 322;
+  const READING_ANCHORED_MIN = 553;
+  const rnorm = (t: string) =>
+    t
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  let rNoExp = 0;
+  let rAnchored = 0;
+  for (const wk of Object.values(ALL_WEEKS))
+    for (const lesson of wk.lessons)
+      for (const q of lesson.reading?.questions ?? []) {
+        const e = (q as { explanation?: string }).explanation;
+        if (!e) {
+          rNoExp++;
+          continue;
+        }
+        const quotes = [...e.matchAll(/"([^"]{6,})"/g)].map((m) => m[1]!);
+        if (quotes.length && quotes.every((x) => rnorm(lesson.reading.text).includes(rnorm(x))))
+          rAnchored++;
+      }
+  console.log(
+    `Reading questions — ${rAnchored} anchored in their own passage, ${rNoExp} with no explanation`,
+  );
+  if (rNoExp > READING_NO_EXPLANATION_MAX)
+    errors.push(
+      `${rNoExp} reading questions have no explanation, up from ${READING_NO_EXPLANATION_MAX} — a wrong answer teaches nothing without one`,
+    );
+  if (rAnchored < READING_ANCHORED_MIN)
+    errors.push(
+      `only ${rAnchored} reading questions quote their own passage, down from ${READING_ANCHORED_MIN} — a question whose answer is not in the text is not a reading question`,
+    );
+
+  if (noExplanation > NO_EXPLANATION_MAX)
+    errors.push(
+      `${noExplanation} game rounds have no explanation, up from ${NO_EXPLANATION_MAX} — a learner who taps the correct-English-wrong-job bubble is told nothing`,
+    );
+}
 if (warnings.length) {
   console.log("\nWARNINGS:");
   for (const w of warnings) console.log("  ! " + w);

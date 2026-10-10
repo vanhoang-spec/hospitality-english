@@ -8,11 +8,19 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "verify:content": "bun scripts/verify-content.ts && bun scripts/lint-content.ts",
     "lint:content": "bun scripts/lint-content.ts",
     "qa:full": "bun scripts/qa-full.ts",
-    "format": "prettier --write ."
+    "test:db": "bun scripts/db/schema-test.ts",
+    "test:crm": "bun scripts/crm-api-test.ts",
+    "test:reset": "bun scripts/password-reset-test.ts",
+    "test:voice": "bun scripts/voice-test.ts",
+    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run test:reset && bun run test:voice && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -45,9 +53,9 @@
     "@supabase/supabase-js": "^2.108.2",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query": "^5.83.0",
-    "@tanstack/react-router": "^1.168.25",
-    "@tanstack/react-start": "^1.167.50",
-    "@tanstack/router-plugin": "^1.167.28",
+    "@tanstack/react-router": "^1.170.41",
+    "@tanstack/react-start": "^1.168.60",
+    "@tanstack/router-plugin": "^1.168.42",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -71,6 +79,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "2.5.3",
     "@types/node": "^22.16.5",

@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
-import { getWeekContent } from "@/lib/content/week-content";
+import { getWeekContent, speakerAudioLabel } from "@/lib/content/week-content";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
 import { useSuiteSession } from "@/lib/session-resume";
+import { speak } from "@/lib/speech";
+import { VoiceButton } from "@/components/VoicePicker";
+import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
 import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
@@ -16,7 +19,15 @@ const MAX_LISTENS = 3;
 //  - "cloze": a target service sentence is spoken; the learner types
 //    the blanked-out key words.
 type ListeningTask =
-  | { kind: "choose"; key: string; audio: string; options: string[]; correctIdx: number }
+  | {
+      kind: "choose";
+      key: string;
+      audio: string;
+      options: string[];
+      correctIdx: number;
+      audioWho: string;
+      tip: string;
+    }
   | { kind: "cloze"; key: string; audio: string; tokens: { text: string; blank: boolean }[] };
 
 function shuffle<T>(a: T[]): T[] {
@@ -32,25 +43,6 @@ function stripWord(w: string): string {
   return w.replace(/[^A-Za-z']/g, "").toLowerCase();
 }
 
-// Random English voice + slightly varied rate per playback, so learners
-// hear more than one "accent" instead of a single fixed TTS voice.
-function speakVaried(text: string, week: string | number) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis
-    .getVoices()
-    .filter((v) => v.lang.toLowerCase().startsWith("en"));
-  if (voices.length > 0) u.voice = voices[Math.floor(Math.random() * voices.length)];
-  u.lang = u.voice?.lang ?? "en-US";
-  // The week decides the speed (see listeningRateForWeek). It used to be
-  // `0.8 + Math.random() * 0.2`, which handed a week-1 beginner up to 1.0 —
-  // faster than the rate the curriculum reserves for week 40 — and made the
-  // random draw, not the learner's level, the hardest thing about the task.
-  u.rate = listeningRateForWeek(week);
-  window.speechSynthesis.speak(u);
-}
-
 function buildTasks(dep: string, week: string): ListeningTask[] {
   const content = getWeekContent(dep, week);
   if (!content) return [];
@@ -58,15 +50,60 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
     content.lessons.flatMap((l) => l.vocabulary.flatMap((v) => v.word.toLowerCase().split(/\s+/))),
   );
 
+  // Built from the speaking pairs, not from l.game. The arcade rounds are the
+  // same prompts and the same three bubbles, word for word, so a learner who
+  // played the arcade first was answering from memory and the block measured
+  // recall rather than listening. The checkpoint moved off this source for
+  // exactly that reason; the weekly practice had not.
+  const allTargets = content.lessons.flatMap((l) =>
+    l.speaking.map((s) => ({ t: s.targetResponse, lessonId: l.lessonId, prompt: s.guestPrompt })),
+  );
+  // The words a sentence says, with honorifics and courtesy stripped: two
+  // options that say the same thing to the same guest are two right answers.
+  // "The price includes daily housekeeping, sir." sat beside "The price
+  // includes daily housekeeping." with one of them marked wrong; a review
+  // measured it on about 8% of one week's items. Distractors now come from
+  // OTHER lessons, never share their content with the answer, and never
+  // answer the same guest line.
+  const content_ = (t: string) =>
+    new Set(
+      t
+        .toLowerCase()
+        .replace(/[^a-z' ]/g, " ")
+        .split(" ")
+        .filter(
+          (w) => w.length > 2 && !/^(sir|madam|please|the|and|you|your|certainly|course)$/.test(w),
+        ),
+    );
+  const overlaps = (a: string, b: string) => {
+    const A = content_(a);
+    const B = content_(b);
+    const shared = [...A].filter((w) => B.has(w)).length;
+    return shared >= Math.min(A.size, B.size) - 1;
+  };
   const chooses: ListeningTask[] = content.lessons.flatMap((l) =>
-    l.game.map((round, gi) => {
-      const opts = shuffle(round.options.map((o) => ({ ...o })));
+    l.speaking.map((sp, si) => {
+      const pool = allTargets.filter(
+        (o) =>
+          o.lessonId !== l.lessonId &&
+          o.prompt !== sp.guestPrompt &&
+          !overlaps(o.t, sp.targetResponse),
+      );
+      const others: string[] = [];
+      for (const o of shuffle(pool)) {
+        if (others.length >= 2) break;
+        if (others.some((x) => overlaps(x, o.t))) continue;
+        others.push(o.t);
+      }
+      const opts = shuffle([sp.targetResponse, ...others]);
       return {
         kind: "choose" as const,
-        key: `choose:${l.lessonId}:${gi}`,
-        audio: round.prompt,
-        options: opts.map((o) => o.text),
-        correctIdx: opts.findIndex((o) => o.correct),
+        key: `choose:${l.lessonId}:${si}`,
+        audio: sp.guestPrompt,
+        options: opts,
+        correctIdx: opts.indexOf(sp.targetResponse),
+        audioWho: speakerAudioLabel(sp),
+        tip: sp.helpTip,
       };
     }),
   );
@@ -111,6 +148,8 @@ type ListeningSnapshot = {
 
 export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
+  const logAttempt = useAttemptLogger({ dep: dep ?? "", week: week ?? 1, suite: "listening" });
+  useStudySession({ dep: dep ?? "", week: week ?? 1, suite: "listening" });
   // Rises with the phase — a flat 80 was unreachable at pre-A1.
   const MASTERY_PCT = suiteMasteryPct(week ?? 1);
   const [seed, setSeed] = useState(0);
@@ -186,7 +225,13 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   function playAudio() {
     if (listens >= MAX_LISTENS || answered !== null) return;
     setListens((n) => n + 1);
-    speakVaried(task.audio, week!);
+    // The week decides the speed (listeningRateForWeek), times the learner's
+    // own setting. The guest line is in the guest's voice; the cloze plays a
+    // model sentence, in the model voice.
+    speak(task.audio, {
+      role: task.kind === "choose" ? "guest" : "model",
+      rate: listeningRateForWeek(week!),
+    });
   }
 
   function submit() {
@@ -208,6 +253,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       const frac = total > 0 ? got / total : 0;
       ok = frac === 1;
       setAnswered(ok);
+      logAttempt(`listening:cloze:${task.key}`, ok);
       setCorrectCount((c) => c + frac);
       if (ok && !awardedRef.current.has(task.key)) {
         awardedRef.current.add(task.key);
@@ -217,6 +263,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
       return;
     }
     setAnswered(ok);
+    logAttempt(`listening:choice:${task.key}`, ok);
     if (ok) {
       setCorrectCount((c) => c + 1);
       if (!awardedRef.current.has(task.key)) {
@@ -277,7 +324,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           <p className="mt-3 text-sm text-foreground/75">
             {passed
               ? "✦ Đạt chuẩn! Đôi tai của bạn đã sẵn sàng cho ca làm việc."
-              : `Cần ≥ ${MASTERY_PCT}% để đạt chuẩn. Nghe lại lần nữa nhé — mỗi lần giọng đọc sẽ khác một chút.`}
+              : `Cần ≥ ${MASTERY_PCT}% để đạt chuẩn. Nghe lại lần nữa nhé.`}
           </p>
           <div className="mt-6 flex justify-center">
             <button
@@ -323,12 +370,12 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="font-display text-xl text-foreground">
             {task.kind === "choose"
-              ? "Nghe lời khách nói và chọn câu trả lời chuẩn 5 sao:"
+              ? `Nghe ${task.audioWho} nói và chọn câu trả lời chuẩn 5 sao:`
               : "Nghe câu mẫu và điền các từ còn thiếu:"}
           </p>
         </div>
 
-        <div className="mt-4 flex items-center gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-3">
           <button
             onClick={playAudio}
             disabled={listens >= MAX_LISTENS || answered !== null}
@@ -336,9 +383,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           >
             🔊 Nghe {listens > 0 ? `(còn ${MAX_LISTENS - listens} lần)` : ""}
           </button>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-foreground/50">
-            Giọng đọc thay đổi mỗi lần nghe
-          </span>
+          <VoiceButton role={task.kind === "choose" ? "guest" : "model"} />
         </div>
 
         {task.kind === "choose" ? (
@@ -393,6 +438,17 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
 
         {answered !== null && task.kind === "cloze" && !answered && (
           <p className="mt-3 text-sm text-destructive">Câu đầy đủ: "{task.audio}"</p>
+        )}
+        {/* A wrong pick used to show only "Chưa đúng". Without the line that
+            was said, a learner working alone cannot tell whether they
+            misheard the guest or misread the answers. */}
+        {answered === false && task.kind === "choose" && (
+          <div className="mt-3 space-y-1 text-sm">
+            <p className="text-foreground/80">
+              Bạn vừa nghe: <span className="italic">"{task.audio}"</span>
+            </p>
+            {task.tip && <p className="text-xs italic text-foreground/60">💡 {task.tip}</p>}
+          </div>
         )}
         {answered !== null && (
           <p

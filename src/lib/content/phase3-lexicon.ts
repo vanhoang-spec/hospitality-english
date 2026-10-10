@@ -473,8 +473,8 @@ const FO_BANK: P3Bank = {
       icon: "🔑",
     },
     {
-      word: "Extend your stay one night",
-      phonetic: "/ɪkˈstend jɔː steɪ wʌn naɪt/",
+      word: "Extend your stay by one night",
+      phonetic: "/ɪkˈstend jɔː steɪ baɪ wʌn naɪt/",
       definition: "Cho khách ở thêm một đêm",
       icon: "🌙",
     },

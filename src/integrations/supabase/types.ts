@@ -6,8 +6,291 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5";
   };
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
+      access_rules: {
+        Row: {
+          created_at: string;
+          department_id: string;
+          group_id: string | null;
+          id: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Insert: {
+          created_at?: string;
+          department_id: string;
+          group_id?: string | null;
+          id?: string;
+          org_id: string;
+          week_from: number;
+          week_to: number;
+        };
+        Update: {
+          created_at?: string;
+          department_id?: string;
+          group_id?: string | null;
+          id?: string;
+          org_id?: string;
+          week_from?: number;
+          week_to?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "access_rules_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "access_rules_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      active_sessions: {
+        Row: {
+          last_seen: string;
+          session_id: string;
+          user_agent: string | null;
+          user_id: string;
+        };
+        Insert: {
+          last_seen?: string;
+          session_id: string;
+          user_agent?: string | null;
+          user_id: string;
+        };
+        Update: {
+          last_seen?: string;
+          session_id?: string;
+          user_agent?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "active_sessions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      admin_actions: {
+        Row: {
+          action: string;
+          actor_id: string | null;
+          created_at: string;
+          id: string;
+          meta: Json;
+          org_id: string | null;
+          target_user_id: string | null;
+        };
+        Insert: {
+          action: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          meta?: Json;
+          org_id?: string | null;
+          target_user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "admin_actions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      attempts: {
+        Row: {
+          attempt_no: number;
+          correct: boolean;
+          created_at: string;
+          department_id: string;
+          id: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent: number | null;
+          org_id: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Insert: {
+          attempt_no?: number;
+          correct: boolean;
+          created_at?: string;
+          department_id: string;
+          id?: string;
+          is_first_try: boolean;
+          item_key: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite: string;
+          user_id: string;
+          week_number: number;
+        };
+        Update: {
+          attempt_no?: number;
+          correct?: boolean;
+          created_at?: string;
+          department_id?: string;
+          id?: string;
+          is_first_try?: boolean;
+          item_key?: string;
+          ms_spent?: number | null;
+          org_id?: string | null;
+          suite?: string;
+          user_id?: string;
+          week_number?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "attempts_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "attempts_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      crm_events: {
+        Row: {
+          du_lieu: Json;
+          id: number;
+          loai: string;
+          luc: string;
+        };
+        Insert: {
+          du_lieu: Json;
+          id?: never;
+          loai: string;
+          luc?: string;
+        };
+        Update: {
+          du_lieu?: Json;
+          id?: never;
+          loai?: string;
+          luc?: string;
+        };
+        Relationships: [];
+      };
+      group_members: {
+        Row: {
+          added_at: string;
+          group_id: string;
+          user_id: string;
+        };
+        Insert: {
+          added_at?: string;
+          group_id: string;
+          user_id: string;
+        };
+        Update: {
+          added_at?: string;
+          group_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "group_members_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      groups: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          org_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          org_id: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          org_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "groups_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       lesson_progress: {
         Row: {
           completed_at: string | null;
@@ -93,27 +376,359 @@ export type Database = {
           },
         ];
       };
+      orders: {
+        Row: {
+          amount: number;
+          code: string;
+          confirmed_by: string | null;
+          created_at: string;
+          crm_ref: string | null;
+          currency: string;
+          discount_amount: number;
+          discount_pct: number;
+          grace_until: string | null;
+          id: string;
+          kind: string;
+          link_id: string | null;
+          list_price: number;
+          org_id: string;
+          paid_at: string | null;
+          partner_id: string | null;
+          pay_token: string;
+          payment_ref: string | null;
+          plan_code: string;
+          status: string;
+          term: string;
+          user_id: string | null;
+        };
+        Insert: {
+          amount: number;
+          code: string;
+          confirmed_by?: string | null;
+          created_at?: string;
+          crm_ref?: string | null;
+          currency?: string;
+          discount_amount?: number;
+          discount_pct?: number;
+          grace_until?: string | null;
+          id?: string;
+          kind?: string;
+          link_id?: string | null;
+          list_price: number;
+          org_id: string;
+          paid_at?: string | null;
+          partner_id?: string | null;
+          pay_token?: string;
+          payment_ref?: string | null;
+          plan_code: string;
+          status?: string;
+          term: string;
+          user_id?: string | null;
+        };
+        Update: {
+          amount?: number;
+          code?: string;
+          confirmed_by?: string | null;
+          created_at?: string;
+          crm_ref?: string | null;
+          currency?: string;
+          discount_amount?: number;
+          discount_pct?: number;
+          grace_until?: string | null;
+          id?: string;
+          kind?: string;
+          link_id?: string | null;
+          list_price?: number;
+          org_id?: string;
+          paid_at?: string | null;
+          partner_id?: string | null;
+          pay_token?: string;
+          payment_ref?: string | null;
+          plan_code?: string;
+          status?: string;
+          term?: string;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "orders_link_id_fkey";
+            columns: ["link_id"];
+            isOneToOne: false;
+            referencedRelation: "signup_links";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      org_details: {
+        Row: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address: string;
+          legal_name: string;
+          org_id: string;
+          rep_email: string;
+          rep_name: string;
+          rep_phone: string;
+          tax_code: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string;
+          legal_name?: string;
+          org_id?: string;
+          rep_email?: string;
+          rep_name?: string;
+          rep_phone?: string;
+          tax_code?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_details_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      org_settings: {
+        Row: {
+          org_id: string;
+          sequential_mode: boolean;
+          updated_at: string;
+        };
+        Insert: {
+          org_id: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Update: {
+          org_id?: string;
+          sequential_mode?: boolean;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "org_settings_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: true;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       organizations: {
         Row: {
           created_at: string;
           id: string;
+          kind: string;
           name: string;
+          partner_id: string | null;
           seat_limit: number;
+          signup_link_id: string | null;
           updated_at: string;
         };
         Insert: {
           created_at?: string;
           id?: string;
+          kind?: string;
           name: string;
+          partner_id?: string | null;
           seat_limit?: number;
+          signup_link_id?: string | null;
           updated_at?: string;
         };
         Update: {
           created_at?: string;
           id?: string;
+          kind?: string;
           name?: string;
+          partner_id?: string | null;
           seat_limit?: number;
+          signup_link_id?: string | null;
           updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "organizations_signup_link_id_fkey";
+            columns: ["signup_link_id"];
+            isOneToOne: false;
+            referencedRelation: "signup_links";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "organizations_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      partners: {
+        Row: {
+          active: boolean;
+          created_at: string;
+          created_by: string | null;
+          crm_ref: string | null;
+          demo_org_id: string | null;
+          demo_user_id: string | null;
+          email: string | null;
+          id: string;
+          name: string;
+          note: string | null;
+          phone: string | null;
+          status_changed_at: string | null;
+        };
+        Insert: {
+          active?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          crm_ref?: string | null;
+          demo_org_id?: string | null;
+          demo_user_id?: string | null;
+          email?: string | null;
+          id?: string;
+          name: string;
+          note?: string | null;
+          phone?: string | null;
+          status_changed_at?: string | null;
+        };
+        Update: {
+          active?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          crm_ref?: string | null;
+          demo_org_id?: string | null;
+          demo_user_id?: string | null;
+          email?: string | null;
+          id?: string;
+          name?: string;
+          note?: string | null;
+          phone?: string | null;
+          status_changed_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "partners_demo_org_id_fkey";
+            columns: ["demo_org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "partners_demo_user_id_fkey";
+            columns: ["demo_user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      password_reset_tokens: {
+        Row: {
+          created_at: string;
+          email: string | null;
+          expires_at: string;
+          id: string;
+          purpose: string;
+          token_hash: string;
+          used_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email?: string | null;
+          expires_at: string;
+          id?: string;
+          purpose?: string;
+          token_hash: string;
+          used_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string | null;
+          expires_at?: string;
+          id?: string;
+          purpose?: string;
+          token_hash?: string;
+          used_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "password_reset_tokens_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      payment_accounts: {
+        Row: {
+          account_name: string | null;
+          account_no: string | null;
+          bank_bin: string | null;
+          bank_name: string | null;
+          id: number;
+          note: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          account_name?: string | null;
+          account_no?: string | null;
+          bank_bin?: string | null;
+          bank_name?: string | null;
+          id?: number;
+          note?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          account_name?: string | null;
+          account_no?: string | null;
+          bank_bin?: string | null;
+          bank_name?: string | null;
+          id?: number;
+          note?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
         };
         Relationships: [];
       };
@@ -158,11 +773,65 @@ export type Database = {
           },
         ];
       };
+      plan_prices: {
+        Row: {
+          currency: string;
+          plan_code: string;
+          price: number;
+          term: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          currency?: string;
+          plan_code: string;
+          price?: number;
+          term: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          currency?: string;
+          plan_code?: string;
+          price?: number;
+          term?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "plan_prices_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      plans: {
+        Row: {
+          code: string;
+          seats: number;
+          sort_order: number;
+        };
+        Insert: {
+          code: string;
+          seats: number;
+          sort_order?: number;
+        };
+        Update: {
+          code?: string;
+          seats?: number;
+          sort_order?: number;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           created_at: string;
           daily_streak: number;
           department: string | null;
+          email: string | null;
           full_name: string | null;
           id: string;
           job_rank: string;
@@ -178,6 +847,7 @@ export type Database = {
           created_at?: string;
           daily_streak?: number;
           department?: string | null;
+          email?: string | null;
           full_name?: string | null;
           id: string;
           job_rank?: string;
@@ -193,6 +863,7 @@ export type Database = {
           created_at?: string;
           daily_streak?: number;
           department?: string | null;
+          email?: string | null;
           full_name?: string | null;
           id?: string;
           job_rank?: string;
@@ -294,15 +965,357 @@ export type Database = {
         };
         Relationships: [];
       };
+      signup_links: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          crm_customer_ref: string | null;
+          crm_ref: string | null;
+          department: string | null;
+          discount_amount: number | null;
+          discount_pct: number | null;
+          discount_scope: string | null;
+          expires_at: string | null;
+          group_id: string | null;
+          id: string;
+          invite_kind: string | null;
+          kind: string;
+          label: string | null;
+          max_uses: number | null;
+          org_id: string | null;
+          partner_id: string | null;
+          plan_code: string | null;
+          prefill: Json | null;
+          price: number | null;
+          revoked_at: string | null;
+          term: string | null;
+          token: string;
+          trial_days: number | null;
+          use_count: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          crm_customer_ref?: string | null;
+          crm_ref?: string | null;
+          department?: string | null;
+          discount_amount?: number | null;
+          discount_pct?: number | null;
+          discount_scope?: string | null;
+          expires_at?: string | null;
+          group_id?: string | null;
+          id?: string;
+          invite_kind?: string | null;
+          kind: string;
+          label?: string | null;
+          max_uses?: number | null;
+          org_id?: string | null;
+          partner_id?: string | null;
+          plan_code?: string | null;
+          prefill?: Json | null;
+          price?: number | null;
+          revoked_at?: string | null;
+          term?: string | null;
+          token: string;
+          trial_days?: number | null;
+          use_count?: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          crm_customer_ref?: string | null;
+          crm_ref?: string | null;
+          department?: string | null;
+          discount_amount?: number | null;
+          discount_pct?: number | null;
+          discount_scope?: string | null;
+          expires_at?: string | null;
+          group_id?: string | null;
+          id?: string;
+          invite_kind?: string | null;
+          kind?: string;
+          label?: string | null;
+          max_uses?: number | null;
+          org_id?: string | null;
+          partner_id?: string | null;
+          plan_code?: string | null;
+          prefill?: Json | null;
+          price?: number | null;
+          revoked_at?: string | null;
+          term?: string | null;
+          token?: string;
+          trial_days?: number | null;
+          use_count?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "signup_links_group_id_fkey";
+            columns: ["group_id"];
+            isOneToOne: false;
+            referencedRelation: "groups";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "signup_links_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
+      study_sessions: {
+        Row: {
+          department_id: string | null;
+          ended_at: string | null;
+          id: string;
+          org_id: string | null;
+          seconds_active: number;
+          started_at: string;
+          suite: string | null;
+          user_id: string;
+          week_number: number | null;
+        };
+        Insert: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id: string;
+          week_number?: number | null;
+        };
+        Update: {
+          department_id?: string | null;
+          ended_at?: string | null;
+          id?: string;
+          org_id?: string | null;
+          seconds_active?: number;
+          started_at?: string;
+          suite?: string | null;
+          user_id?: string;
+          week_number?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "study_sessions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "study_sessions_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      subscriptions: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          crm_ref: string | null;
+          currency: string;
+          ends_at: string;
+          id: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          price: number | null;
+          starts_at: string;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          crm_ref?: string | null;
+          currency?: string;
+          ends_at: string;
+          id?: string;
+          kind: string;
+          org_id: string;
+          plan_code: string;
+          price?: number | null;
+          starts_at?: string;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          crm_ref?: string | null;
+          currency?: string;
+          ends_at?: string;
+          id?: string;
+          kind?: string;
+          org_id?: string;
+          plan_code?: string;
+          price?: number | null;
+          starts_at?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_org_id_fkey";
+            columns: ["org_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "subscriptions_plan_code_fkey";
+            columns: ["plan_code"];
+            isOneToOne: false;
+            referencedRelation: "plans";
+            referencedColumns: ["code"];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      award_stars: {
-        Args: { delta: number };
-        Returns: number;
+      award_stars: { Args: { delta: number }; Returns: number };
+      claim_signup_link: {
+        Args: { link_token: string };
+        Returns: {
+          created_at: string;
+          created_by: string | null;
+          crm_customer_ref: string | null;
+          crm_ref: string | null;
+          department: string | null;
+          discount_amount: number | null;
+          discount_pct: number | null;
+          discount_scope: string | null;
+          expires_at: string | null;
+          group_id: string | null;
+          id: string;
+          invite_kind: string | null;
+          kind: string;
+          label: string | null;
+          max_uses: number | null;
+          org_id: string | null;
+          partner_id: string | null;
+          plan_code: string | null;
+          prefill: Json | null;
+          price: number | null;
+          revoked_at: string | null;
+          term: string | null;
+          token: string;
+          trial_days: number | null;
+          use_count: number;
+        }[];
+        SetofOptions: {
+          from: "*";
+          to: "signup_links";
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
       };
+      crm_cap_goi: {
+        Args: {
+          p_crm_ref: string;
+          p_org: string;
+          p_plan: string;
+          p_price: number;
+          p_term: string;
+        };
+        Returns: {
+          bat_dau: string;
+          da_xu_ly_truoc: boolean;
+          ket_thuc: string;
+        }[];
+      };
+      crm_luu_doi_tac: {
+        Args: { p_active: boolean; p_name: string; p_partner_ref: string };
+        Returns: {
+          active: boolean;
+          demo_user_id: string;
+          partner_id: string;
+          tao_moi: boolean;
+        }[];
+      };
+      crm_luu_link: {
+        Args: {
+          p_crm_ref: string;
+          p_discount_amount: number;
+          p_discount_pct: number;
+          p_discount_scope: string;
+          p_expires_at: string;
+          p_kind: string;
+          p_max_uses: number;
+          p_new_token: string;
+          p_open: boolean;
+          p_partner_name: string;
+          p_partner_ref: string;
+          p_trial_days: number;
+        };
+        Returns: {
+          link_id: string;
+          link_token: string;
+          tao_moi: boolean;
+        }[];
+      };
+      crm_moi_khach_san: {
+        Args: {
+          p_crm_ref: string;
+          p_customer_ref: string;
+          p_days: number;
+          p_expires_at: string;
+          p_invite_kind: string;
+          p_new_token: string;
+          p_open: boolean;
+          p_plan: string;
+          p_prefill: Json;
+        };
+        Returns: {
+          da_dung: boolean;
+          link_id: string;
+          link_token: string;
+          tao_moi: boolean;
+        }[];
+      };
+      current_org_id: { Args: never; Returns: string };
+      is_org_admin: { Args: { target_org: string }; Returns: boolean };
+      is_super_admin: { Args: never; Returns: boolean };
+      org_is_active: { Args: { target: string }; Returns: boolean };
+      org_of: { Args: { target_profile: string }; Returns: string };
+      org_seat_limit: { Args: { target: string }; Returns: number };
+      partner_is_live: { Args: { p_partner: string }; Returns: boolean };
+      password_reset_claim: {
+        Args: { p_token_hash: string };
+        Returns: {
+          token_id: string;
+          user_id: string;
+        }[];
+      };
+      password_reset_request: {
+        Args: { p_minutes?: number; p_phone: string; p_token_hash: string };
+        Returns: {
+          email: string;
+          full_name: string;
+        }[];
+      };
+      release_signup_link: { Args: { link_id: string }; Returns: undefined };
     };
     Enums: {
       [_ in never]: never;
@@ -429,6 +1442,9 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },

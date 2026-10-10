@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import logoSrc from "@/assets/Logo_EmbassyHospitality_filetrong.png";
 import { useAcademy } from "@/lib/academy-store";
 import { useSession, useProfile, signOut } from "@/lib/auth";
+import { useOrgSubscription } from "@/lib/subscription";
+import { openVoicePicker } from "@/lib/voice-store";
 
 export function AcademyNav() {
   const location = useLocation();
@@ -23,11 +25,19 @@ export function AcademyNav() {
     }
   }, [state.service_stars]);
 
-  if (location.pathname === "/login") return null;
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/quen-mat-khau" ||
+    location.pathname.startsWith("/join/") ||
+    location.pathname.startsWith("/dat-lai-mat-khau/")
+  )
+    return null;
 
   const displayName = profile?.full_name || "Esteemed Apprentice";
   const orgName = profile?.organizations?.name;
   const isOrgAdmin = profile?.role === "org_admin";
+  const isPlatformAdmin = profile?.role === "super_admin";
+  const isIndividual = profile?.organizations?.kind === "individual";
 
   return (
     <>
@@ -62,11 +72,33 @@ export function AcademyNav() {
 
           <div className="flex items-center gap-2">
             {isOrgAdmin && (
+              <>
+                <Link
+                  to="/org-admin"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
+                >
+                  Team
+                </Link>
+                <Link
+                  to="/org-reports"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary lg:inline-flex"
+                >
+                  Báo cáo
+                </Link>
+                <Link
+                  to="/org-access"
+                  className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary lg:inline-flex"
+                >
+                  Nhóm
+                </Link>
+              </>
+            )}
+            {isPlatformAdmin && (
               <Link
-                to="/org-admin"
+                to="/admin-console"
                 className="hidden rounded-sm border border-primary/30 px-3 py-2 text-xs uppercase tracking-[0.2em] text-foreground/80 transition-colors hover:border-primary hover:text-primary md:inline-flex"
               >
-                Team
+                Nền tảng
               </Link>
             )}
             <Link
@@ -75,6 +107,15 @@ export function AcademyNav() {
             >
               Appraisal
             </Link>
+            <button
+              type="button"
+              onClick={() => openVoicePicker()}
+              className="rounded-sm border border-primary/30 px-2.5 py-1.5 text-sm text-foreground/80 transition-colors hover:border-primary hover:text-primary"
+              aria-label="Chọn giọng đọc"
+              title="Chọn giọng đọc"
+            >
+              🔊
+            </button>
             <Shield icon="⭐" value={state.service_stars} label="Stars" shimmer={shimmer} />
             <Shield icon="🔥" value={state.daily_streak} label="Streak" pulse />
             <button
@@ -87,6 +128,8 @@ export function AcademyNav() {
           </div>
         </div>
       </header>
+
+      {isIndividual && <TrialBar orgId={profile?.org_id ?? null} />}
 
       <AnimatePresence>
         {menuOpen && (
@@ -121,13 +164,31 @@ export function AcademyNav() {
                     Team
                   </Link>
                 )}
+                {isIndividual && (
+                  <Link
+                    to="/thanh-toan"
+                    onClick={() => setMenuOpen(false)}
+                    className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
+                  >
+                    Gói học của tôi
+                  </Link>
+                )}
                 <Link
                   to="/change-password"
                   onClick={() => setMenuOpen(false)}
                   className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
                 >
-                  Đổi mật khẩu
+                  Mật khẩu &amp; email
                 </Link>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    openVoicePicker();
+                  }}
+                  className="border border-primary/30 px-4 py-2.5 text-center text-xs uppercase tracking-[0.2em] text-foreground/80 hover:border-primary hover:text-primary"
+                >
+                  Giọng đọc
+                </button>
                 <button
                   onClick={async () => {
                     setMenuOpen(false);
@@ -150,6 +211,29 @@ export function AcademyNav() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+/** For someone on a free trial they bought themself: how long is left, and
+ *  the way to pay — so the end of the trial is never a surprise. */
+function TrialBar({ orgId }: { orgId: string | null }) {
+  const { data: sub } = useOrgSubscription(orgId);
+  if (!sub || sub.kind !== "trial" || !sub.active) return null;
+  const days = Math.max(0, sub.daysLeft);
+  return (
+    <div className="border-b border-primary/30 bg-primary/10">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm md:px-8">
+        <span>
+          Bạn đang học thử — còn <strong className="text-primary">{days} ngày</strong>.
+        </span>
+        <Link
+          to="/thanh-toan"
+          className="text-xs uppercase tracking-[0.2em] text-primary hover:underline"
+        >
+          Thanh toán để học tiếp →
+        </Link>
+      </div>
+    </div>
   );
 }
 

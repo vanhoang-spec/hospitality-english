@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { getDepartment } from "@/lib/departments";
-import { getWeekContent } from "@/lib/content/week-content";
-import { speakEN } from "@/lib/speech";
+import { getWeekContent, speakerLabel } from "@/lib/content/week-content";
+import { speak } from "@/lib/speech";
+import type { VoiceRole } from "@/lib/voice";
 import { SuiteComingSoon } from "@/components/suites/SuiteComingSoon";
 import { useWeekAccess } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
@@ -12,11 +13,20 @@ export const Route = createFileRoute("/handbook/$dep/$week")({
   component: HandbookPage,
 });
 
-/** Read-aloud button. Hidden when printing — paper cannot speak. */
-function Speak({ text, rate = 0.75 }: { text: string; rate?: number }) {
+/** Read-aloud button. Hidden when printing — paper cannot speak. A guest's
+ *  line is read in the guest voice; everything else is a model to copy. */
+function Speak({
+  text,
+  rate = 0.75,
+  role = "model",
+}: {
+  text: string;
+  rate?: number;
+  role?: VoiceRole;
+}) {
   return (
     <button
-      onClick={() => speakEN(text, rate)}
+      onClick={() => speak(text, { role, rate })}
       className="print-hide shrink-0 border border-primary/40 px-2 py-0.5 text-[10px] text-primary transition-colors hover:border-primary hover:bg-primary/10"
       aria-label={`Nghe: ${text}`}
     >
@@ -100,6 +110,12 @@ function HandbookPage() {
         </h1>
         {content && (
           <p className="hb-muted mt-2 text-sm text-foreground/70">{content.weekTitleVi}</p>
+        )}
+        {content?.canDoVi && (
+          <p className="mt-2 text-sm text-foreground/85">
+            <span className="font-semibold">Nói được: </span>
+            {content.canDoVi}
+          </p>
         )}
       </motion.div>
 
@@ -191,11 +207,11 @@ function HandbookPage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="text-[10px] uppercase tracking-[0.25em] text-primary">
-                          Khách nói
+                          {speakerLabel(s)}
                         </div>
                         <p className="hb-ink mt-1 text-sm text-foreground">"{s.guestPrompt}"</p>
                       </div>
-                      <Speak text={s.guestPrompt} rate={0.8} />
+                      <Speak text={s.guestPrompt} rate={0.8} role="guest" />
                     </div>
                     <div className="mt-3 flex items-start justify-between gap-3 border-t border-primary/15 pt-3">
                       <div>

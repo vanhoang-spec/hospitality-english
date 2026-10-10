@@ -20,6 +20,8 @@ export type ScoreInput = {
   ideas: RequiredIdea[];
   minWords: number;
   minSentences: number;
+  /** Phrases that block the answer outright, however complete it is. */
+  avoid?: string[];
 };
 
 export type ScoreResult = {
@@ -63,7 +65,13 @@ function containsExpression(haystack: string, expression: string): boolean {
   );
 }
 
-export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInput): ScoreResult {
+export function scoreFreeText({
+  draft,
+  ideas,
+  minWords,
+  minSentences,
+  avoid,
+}: ScoreInput): ScoreResult {
   const tokens = words(draft);
   const wordCount = tokens.length;
   const sentenceCount = draft
@@ -71,6 +79,10 @@ export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInp
     .map((s) => s.trim())
     .filter((s) => s.length > 0).length;
   const distinctRatio = wordCount === 0 ? 0 : new Set(tokens).size / wordCount;
+  // "Sorry sorry sorry. Kitchen kitchen kitchen chef. Contact contact call
+  // email…" cleared the ratio above and scored 100% on a Phase 4 task: a word
+  // said twice in a row is a keyword list, not prose, and twice is enough.
+  const stutters = tokens.filter((t, i) => i > 0 && t === tokens[i - 1]).length;
 
   const hits = ideas.map((idea) => idea.any.some((expr) => containsExpression(draft, expr)));
   const coveragePct =
@@ -81,9 +93,22 @@ export function scoreFreeText({ draft, ideas, minWords, minSentences }: ScoreInp
     blockedByVi = `Bài viết cần ít nhất ${minWords} từ (hiện có ${wordCount}).`;
   else if (sentenceCount < minSentences)
     blockedByVi = `Cần viết thành ít nhất ${minSentences} câu hoàn chỉnh.`;
-  else if (distinctRatio < MIN_DISTINCT_RATIO)
+  else if (distinctRatio < MIN_DISTINCT_RATIO || stutters >= 2)
     blockedByVi =
       "Bài viết lặp lại quá nhiều từ giống nhau — hãy viết thành câu tự nhiên, đừng liệt kê từ khoá.";
+  else {
+    // A forbidden phrase blocks the answer outright. Coverage cannot buy its way
+    // past this: a public reply that admits fault is wrong however complete it is.
+    const banned = (avoid ?? []).find((expr) => containsExpression(draft, expr));
+    // Neutral wording: the Mediation suite (a spoken relay to a guest) blocks
+    // through this line too, and it is not a public reply.
+    if (banned) blockedByVi = `Câu trả lời không được có cụm: "${banned}".`;
+    else {
+      // An idea marked `required` cannot be traded for the others.
+      const missed = ideas.find((idea, i) => idea.required && !hits[i]);
+      if (missed) blockedByVi = `Câu trả lời bắt buộc phải có ý: "${missed.labelVi}".`;
+    }
+  }
 
   // A blocked answer still shows its coverage so the learner can see which
   // ideas landed, but it is capped below the pass mark.

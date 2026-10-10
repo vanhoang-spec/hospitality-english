@@ -6,3 +6,7 @@ pnpm-lock.yaml
 package-lock.json
 bun.lock
 routeTree.gen.ts
+# Vercel's build rewrites vercel.json in its checkout before `bun run ci` runs,
+# and format:check then failed the deploy on a file nobody edited.
+vercel.json
+.vercel

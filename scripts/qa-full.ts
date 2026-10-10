@@ -23,7 +23,10 @@ import { DEPARTMENTS } from "../src/lib/departments";
 import { findWeek, TOTAL_WEEKS } from "../src/lib/curriculum";
 import { passThresholds } from "../src/lib/speaking-score";
 import { MAX_CHIPS } from "../src/components/suites/GrammarSuite";
+import { buildPaper } from "../src/lib/checkpoint-paper";
 import {
+  CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
+  CHECKPOINT_WEEKS,
   LISTENING_RATE_CEILING,
   LISTENING_RATE_FLOOR,
   PHASES as PHASES_APP,
@@ -41,8 +44,16 @@ const warns: string[] = [];
 const fail = (t: string, m: string) => fails.push(`[${t}] ${m}`);
 const warn = (t: string, m: string) => warns.push(`[${t}] ${m}`);
 
+const NUMBER_WORD =
+  "zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million";
+const NUMBER_RUN = new RegExp(`\\b(?:${NUMBER_WORD})(?:[ -](?:${NUMBER_WORD}))*\\b`, "gi");
 const words = (s: string) =>
   s
+    // "five hundred thousand" is one lexicon unit, not three words — same
+    // convention verify-content's capFor applies. Two gates disagreeing on
+    // arithmetic left the priced sentences with no legal way to carry their
+    // currency unit.
+    .replace(NUMBER_RUN, "N")
     .replace(/[.,!?…—–]/g, " ")
     .split(/\s+/)
     .filter(Boolean);
@@ -62,12 +73,20 @@ const slugify = (t: string) =>
 {
   let n = 0;
   for (const dep of DEPS) {
+    // A department still being authored is exempt from COVERAGE only — the
+    // weeks it does have are checked exactly like everyone else's, here and
+    // in every other layer. Shipping it (removing `hidden`) turns this back
+    // on and the 40/40 requirement applies.
+    // Only an UNFINISHED department is exempt from coverage. A withdrawn one
+    // has all forty weeks and is checked exactly like a shipping one — its
+    // content is done and may come back, so it must not rot while it waits.
+    const inProgress = DEPARTMENTS.find((d) => d.code === dep)?.hidden === "in-progress";
     for (let w = 1; w <= AUTHORED_MAX; w++) {
       const viaRegistry = ALL_WEEKS[`${dep}-${w}`];
       const viaAccessor = getWeekContent(dep, w);
       const viaString = getWeekContent(dep.toLowerCase(), String(w));
       if (!viaRegistry) {
-        fail("T1", `${dep}-${w} missing from registry`);
+        if (!inProgress) fail("T1", `${dep}-${w} missing from registry`);
         continue;
       }
       if (!viaAccessor) fail("T1", `${dep}-${w} unreachable via getWeekContent(number)`);
@@ -95,7 +114,25 @@ const slugify = (t: string) =>
         fail("T1", `${dep}-${w} exists but has empty lessons`);
     }
   }
-  console.log(`T1 coverage — ${n}/${DEPS.length * AUTHORED_MAX} authored dep-weeks reachable`);
+  // Report the two populations apart. Folding an in-progress department into
+  // one ratio would let a shipping department lose weeks and still read as
+  // "240/280" — a number nobody would question.
+  const shipping = DEPARTMENTS.filter((d) => !d.hidden);
+  const wip = DEPARTMENTS.filter((d) => d.hidden === "in-progress");
+  const withdrawn = DEPARTMENTS.filter((d) => d.hidden === "withdrawn");
+  const weeksOf = (dep: string) =>
+    Array.from({ length: AUTHORED_MAX }, (_, i) => ALL_WEEKS[`${dep}-${i + 1}`]).filter(Boolean)
+      .length;
+  const shipped = shipping.reduce((s, d) => s + weeksOf(d.code), 0);
+  console.log(
+    `T1 coverage — ${shipped}/${shipping.length * AUTHORED_MAX} dep-weeks reachable across ${shipping.length} shipping departments` +
+      (wip.length
+        ? `; in progress: ${wip.map((d) => `${d.code} ${weeksOf(d.code)}/${AUTHORED_MAX}`).join(", ")}`
+        : "") +
+      (withdrawn.length
+        ? `; withdrawn but still fully checked: ${withdrawn.map((d) => `${d.code} ${weeksOf(d.code)}/${AUTHORED_MAX}`).join(", ")}`
+        : ""),
+  );
 }
 
 // ============================================================
@@ -103,7 +140,13 @@ const slugify = (t: string) =>
 // ============================================================
 {
   const placeholder = /\b(TODO|TBD|FIXME|XXX|lorem|placeholder|undefined|null|NaN)\b/i;
-  const mojibake = /Ã|â€|Ð|Ñ‚|�/;
+  // Mojibake is UTF-8 read as Latin-1, so its signature is a high-Latin
+  // letter FOLLOWED by another one: "Ã¡", "Ã©", "Ãª". A bare "Ã" is not
+  // damage — it is the uppercase of "ã", and Vietnamese emphasis uses it
+  // constantly ("bạn ĐÃ xem rồi"). The old pattern flagged every one of
+  // those, which meant the only safe way to pass the gate was to stop
+  // writing uppercase Vietnamese.
+  const mojibake = /[ÃÐÑ][-¿]|â€|�/;
   let checked = 0;
 
   for (const [key, wk] of Object.entries(ALL_WEEKS)) {
@@ -126,6 +169,7 @@ const slugify = (t: string) =>
           [`${l.lessonId}.rude`, g.rude],
           [`${l.lessonId}.polite`, g.polite],
           [`${l.lessonId}.rule`, g.rule],
+          ...(g.nearMiss ? ([[`${l.lessonId}.nearMiss`, g.nearMiss]] as [string, string][]) : []),
         );
       for (const s of l.speaking)
         texts.push(
@@ -133,6 +177,14 @@ const slugify = (t: string) =>
           [`${l.lessonId}.target`, s.targetResponse],
           [`${l.lessonId}.helpTip`, s.helpTip],
         );
+      // The game block was never inspected here: 28,706 fields checked and not
+      // one of them was a round the learner actually plays. An unexpanded
+      // template placeholder in a game option ships as literal source text.
+      for (const r of l.game ?? []) {
+        texts.push([`${l.lessonId}.game.prompt`, r.prompt]);
+        for (const o of r.options) texts.push([`${l.lessonId}.game.option`, o.text]);
+        if (r.explanation) texts.push([`${l.lessonId}.game.explanation`, r.explanation]);
+      }
       texts.push([`${l.lessonId}.reading`, l.reading.text]);
       for (const q of l.reading.questions) texts.push([`${l.lessonId}.q`, q.q]);
     }
@@ -432,6 +484,10 @@ const slugify = (t: string) =>
 
     // Every declared reviewWord must resolve to a real VocabItem.
     const declared = wk.reviewWords ?? [];
+    // A duplicate reviewWord renders the learner two identical review chips.
+    // One shipped in FO-31 for a day because nothing looked.
+    if (new Set(declared.map((w) => w.toLowerCase())).size !== declared.length)
+      fail("T4", `${key} has duplicate reviewWords: ${declared.join(", ")}`);
     if (declared.length) {
       const resolved = resolveReviewVocab(dep, declared);
       const got = new Set(resolved.map((v) => v.word.toLowerCase()));
@@ -558,8 +614,17 @@ const slugify = (t: string) =>
 
     // --- ReadingSuite
     for (const l of wk.lessons) {
-      if (l.reading.questions.length !== 2)
-        fail("T5", `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions`);
+      // Mastery is 80% and the bar is ceil(0.8 * n), so 2/2, 3/3 and 4/4 all demand a
+      // perfect run: two questions on a passage is pass-perfectly-or-fail. Only five
+      // gives a learner one wrong answer (4/5 = 80%), which is why the ceiling is five
+      // everywhere rather than only on long passages. Two remains the floor, so the
+      // generated spine is untouched.
+      const qMax = 5;
+      if (l.reading.questions.length < 2 || l.reading.questions.length > qMax)
+        fail(
+          "T5",
+          `${key} Reading: ${l.lessonId} has ${l.reading.questions.length} questions (want 2-5)`,
+        );
       if (words(l.reading.text).length < 12)
         warn("T5", `${key} Reading: ${l.lessonId} passage is very short`);
       for (const q of l.reading.questions) {
@@ -581,6 +646,61 @@ const slugify = (t: string) =>
       }
   }
   console.log(`T5 suites — 6 suites simulated across ${sims} dep-weeks`);
+
+  // ── T5b · the checkpoint paper, built by THE REAL BUILDER ────────────
+  //
+  // Everything above walks the content and re-derives what a suite would do
+  // with it. That is not the same as running the suite, and the difference
+  // shipped: buildPaper threw a ReferenceError on all six departments at
+  // every checkpoint week — weeks 6, 14, 22, 30, 40, each of them the gate
+  // into the next phase — while this file printed six green layers. The
+  // builder now lives in src/lib/checkpoint-paper.ts precisely so this can
+  // call it, and calling it is the point: a paper that does not build is not
+  // a content defect this script can reason about, it is a dead course.
+  let papers = 0;
+  for (const dep of DEPS) {
+    for (const w of CHECKPOINT_WEEKS) {
+      const key = `${dep}-${w}`;
+      // A department still being written has no weeks to draw a paper from.
+      if (!getWeekContent(dep, String(w))) continue;
+      // The builder shuffles, so one paper proves almost nothing: the pairs
+      // that made a bad option collide sit in the tail of the draw. Twenty-five
+      // sittings per department-week is what it took for the duplicate-option
+      // defect to show on every affected pair rather than four of six.
+      for (let attempt = 0; attempt < 25; attempt++) {
+        let paper: ReturnType<typeof buildPaper>;
+        try {
+          paper = buildPaper(dep, String(w));
+        } catch (e) {
+          fail("T5b", `${key} checkpoint paper THREW: ${(e as Error).message}`);
+          break;
+        }
+        papers++;
+        if (paper.length !== TOTAL_QUESTIONS) {
+          fail(
+            "T5b",
+            `${key} checkpoint paper has ${paper.length} questions, want ${TOTAL_QUESTIONS}`,
+          );
+          continue;
+        }
+        for (const q of paper) {
+          if (q.options.length < 2) fail("T5b", `${key} ${q.kind} question has <2 options`);
+          if (q.correctIdx < 0 || q.correctIdx >= q.options.length)
+            fail("T5b", `${key} ${q.kind} question has no correct option in its list`);
+          if (new Set(q.options).size !== q.options.length)
+            fail("T5b", `${key} ${q.kind} question repeats an option: "${q.options.join(" / ")}"`);
+          // A listening option that IS the sentence just played is not a
+          // distractor, it is the prompt handed back with a tick next to it.
+          if (q.kind === "listening" && q.options.some((o) => o === q.audio))
+            fail("T5b", `${key} listening option repeats the audio: "${q.audio}"`);
+        }
+        for (const kind of ["vocab", "grammar", "listening", "reading"] as const)
+          if (!paper.some((q) => q.kind === kind))
+            fail("T5b", `${key} checkpoint paper has no ${kind} question at all`);
+      }
+    }
+  }
+  console.log(`T5b checkpoint papers — ${papers} checkpoint built and shape-checked`);
 }
 
 // ============================================================
@@ -634,31 +754,43 @@ const slugify = (t: string) =>
   // direct instructions to the learner. Blunt in-character lines like
   // "You want upgrade?" or "You need to sign here" are legitimate
   // dialogue (often the rude distractor) and must not trip this.
-  const META = new RegExp(
+  // Instructions aimed at the learner. Wrong whoever is speaking.
+  const INSTRUCTION = new RegExp(
     [
       "what do you say\\b",
       "what is the best reply\\b",
       "which reply is best\\b",
       "what do you (?:do|offer|add|promise|tell)\\b",
-      "\\b(?:the|a) guest (?:says|asks|doubts|wants|demands|mentions|is |politely)",
-      "\\byour (?:colleague|manager|supervisor) (?:arrives|asks)\\b",
       "\\byou (?:cannot|have just|are going to|still have|want to offer|need details)\\b",
     ].join("|"),
     "i",
   );
+  // Third-person narration of the scene. Wrong in a GUEST turn — a guest does
+  // not describe themselves that way — but correct in a turn labelled
+  // colleague or manager, where reporting ABOUT a guest is the skill itself
+  // ("Room 812, a guest is unresponsive and he is breathing").
+  const NARRATION = new RegExp(
+    [
+      "\\b(?:the|a) guest (?:says|asks|doubts|wants|demands|mentions|is |politely)",
+      "\\byour (?:colleague|manager|supervisor) (?:arrives|asks)\\b",
+    ].join("|"),
+    "i",
+  );
+  const isMeta = (text: string, role?: string) =>
+    INSTRUCTION.test(text) || (role !== "colleague" && role !== "manager" && NARRATION.test(text));
   let checked = 0;
   for (const [key, wk] of Object.entries(ALL_WEEKS)) {
     if (wk.weekNumber > AUTHORED_MAX) continue;
     for (const l of wk.lessons) {
       for (const r of l.game) {
         checked++;
-        if (META.test(r.prompt))
+        if (isMeta(r.prompt, r.speakerRole))
           fail(
             "T6b",
             `${key} game prompt is a task description, not something a guest says: "${r.prompt}"`,
           );
         for (const o of r.options) {
-          if (META.test(o.text))
+          if (isMeta(o.text, r.speakerRole))
             fail(
               "T6b",
               `${key} game option is a task description, not a spoken reply: "${o.text}"`,
@@ -678,9 +810,13 @@ const slugify = (t: string) =>
 //   handbook             → week-content directly
 // ============================================================
 {
+  let checked = 0;
   for (const dep of DEPS) {
     for (let w = 1; w <= AUTHORED_MAX; w++) {
       const content = getWeekContent(dep, w)!;
+      // A week not authored yet cannot break a screen nobody can reach.
+      if (!content) continue;
+      checked++;
       const fw = findWeek(dep, w);
       if (!fw) {
         fail(
@@ -713,9 +849,7 @@ const slugify = (t: string) =>
         fail("T7", `${dep}-${w} handbook would show only ${patterns.size} patterns`);
     }
   }
-  console.log(
-    `T7 UI contracts — timeline/hub/handbook inputs cross-checked for ${DEPS.length * AUTHORED_MAX} weeks`,
-  );
+  console.log(`T7 UI contracts — timeline/hub/handbook inputs cross-checked for ${checked} weeks`);
 }
 
 // ============================================================

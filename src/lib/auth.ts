@@ -36,7 +36,8 @@ export type ProfileWithOrg = {
   service_stars: number;
   daily_streak: number;
   job_rank: string;
-  organizations: { name: string } | null;
+  /** kind: 'hotel', or 'individual' for someone who bought for themself. */
+  organizations: { name: string; kind?: string } | null;
 };
 
 export function profileQueryKey(userId: string | undefined) {
@@ -51,7 +52,11 @@ export function useProfile(userId: string | undefined) {
       const { data, error } = await supabase
         .from("profiles")
         .select(
-          "id, full_name, role, org_id, must_change_password, service_stars, daily_streak, job_rank, organizations(name)",
+          // organizations(*), not (name, kind): every learner's app loads
+          // this row, and naming a column the database does not have yet
+          // would fail it for all of them if code ever lands before the
+          // migration that adds `kind`.
+          "id, full_name, role, org_id, must_change_password, service_stars, daily_streak, job_rank, organizations(*)",
         )
         .eq("id", userId)
         .single();
@@ -83,5 +88,20 @@ export function usePatchProfileCache() {
 }
 
 export async function signOut() {
+  // Hotels run this on a shared back-office machine, so the previous
+  // learner's cached stars, streak and pending-star queue must not sit in
+  // localStorage waiting for the next person to open DevTools. The keys
+  // are per-user, so this is about hygiene on a shared device rather than
+  // about one learner seeing another's screen.
+  try {
+    const doomed: string[] = [];
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      if (key && key.startsWith("academy.")) doomed.push(key);
+    }
+    for (const key of doomed) window.localStorage.removeItem(key);
+  } catch {
+    /* storage blocked — nothing cached to clear */
+  }
   await supabase.auth.signOut();
 }

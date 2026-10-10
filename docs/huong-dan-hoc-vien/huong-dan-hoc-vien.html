@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hướng dẫn học viên — Embassy Hospitality English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap&subset=vietnamese"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: A5;
+        margin: 0;
+      }
+      :root {
+        --navy: #0d1b2e;
+        --navy-2: #16294a;
+        --gold: #b3852c;
+        --gold-soft: #f6eedd;
+        --ink: #1f2937;
+        --muted: #5b6474;
+        --line: #e4dccb;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+      body {
+        font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        font-size: 9.6pt;
+        line-height: 1.45;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        width: 148mm;
+        height: 210mm;
+        padding: 10mm 10mm 9mm;
+        position: relative;
+        overflow: hidden;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .brand {
+        font-size: 6.6pt;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-weight: 600;
+      }
+      h1,
+      h2 {
+        font-family: "Playfair Display", Georgia, serif;
+        color: var(--navy);
+        margin: 0;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: 16pt;
+        margin: 1.5mm 0 3mm;
+      }
+      h2 .num {
+        display: inline-block;
+        margin-right: 2.5mm;
+        color: var(--gold);
+      }
+      p {
+        margin: 0 0 2mm;
+      }
+      ul,
+      ol {
+        margin: 0 0 2mm;
+        padding-left: 4.6mm;
+      }
+      li {
+        margin: 0 0 1.4mm;
+      }
+      b,
+      strong {
+        color: var(--navy);
+        font-weight: 700;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0 1.6mm;
+        border: 0.25mm solid var(--gold);
+        border-radius: 1mm;
+        font-size: 8pt;
+        font-weight: 600;
+        color: var(--navy);
+        background: var(--gold-soft);
+        white-space: nowrap;
+      }
+      .tip {
+        border-left: 1mm solid var(--gold);
+        background: var(--gold-soft);
+        padding: 2mm 3mm;
+        border-radius: 0 1.5mm 1.5mm 0;
+        font-size: 9pt;
+        margin-top: 2mm;
+      }
+      .tip b {
+        color: var(--gold);
+      }
+      .foot {
+        position: absolute;
+        left: 10mm;
+        right: 10mm;
+        bottom: 4mm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 6.6pt;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+      }
+      .foot .pg {
+        display: flex;
+        align-items: center;
+        gap: 2.5mm;
+      }
+      .foot .logo {
+        display: block;
+        height: 5.6mm;
+        width: auto;
+      }
+      /* Phones */
+      .phone {
+        border: 1.6mm solid #111827;
+        border-radius: 5mm;
+        overflow: hidden;
+        background: #0b1424;
+        box-shadow: 0 1.5mm 4mm rgba(13, 27, 46, 0.25);
+      }
+      .phone img {
+        display: block;
+        width: 100%;
+      }
+      .cap {
+        text-align: center;
+        font-size: 7.6pt;
+        color: var(--muted);
+        margin-top: 1.6mm;
+      }
+      .two {
+        display: flex;
+        gap: 6mm;
+        justify-content: center;
+      }
+      .two figure {
+        margin: 0;
+        width: 50mm;
+      }
+      .split {
+        display: flex;
+        gap: 6mm;
+        align-items: flex-start;
+      }
+      .split .text {
+        flex: 1;
+      }
+      .split figure {
+        margin: 0;
+        width: 58mm;
+        flex: none;
+      }
+      /* Cover */
+      .cover {
+        background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 47%, #fff 47.1%);
+        color: #fff;
+      }
+      .cover .brand {
+        color: #e0b65a;
+      }
+      .cover h1 {
+        color: #fff;
+        font-size: 27pt;
+        margin: 4mm 0 3mm;
+      }
+      .cover h1 em {
+        color: #e0b65a;
+        font-style: italic;
+      }
+      .cover .lead {
+        color: #dbe3f0;
+        font-size: 10.5pt;
+        max-width: 112mm;
+      }
+      .facts {
+        margin-top: 6mm;
+        background: #fff;
+        color: var(--ink);
+        border-radius: 3mm;
+        padding: 4mm 5mm;
+        box-shadow: 0 2mm 6mm rgba(0, 0, 0, 0.25);
+      }
+      .facts table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9.4pt;
+      }
+      .facts td {
+        padding: 1.3mm 0;
+        vertical-align: top;
+        border-bottom: 0.2mm solid var(--line);
+      }
+      .facts tr:last-child td {
+        border-bottom: 0;
+      }
+      .facts td:first-child {
+        width: 30mm;
+        color: var(--muted);
+      }
+      .toc {
+        margin-top: 7mm;
+        color: var(--ink);
+      }
+      .toc h3 {
+        font-family: "Playfair Display", Georgia, serif;
+        color: var(--navy);
+        font-size: 12pt;
+        margin: 0 0 2mm;
+      }
+      .toc ol {
+        padding-left: 5mm;
+        columns: 2;
+        column-gap: 8mm;
+        font-size: 9.4pt;
+      }
+      /* Six parts table */
+      .parts {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 8.8pt;
+        margin: 1mm 0 2mm;
+      }
+      .parts td {
+        padding: 1.2mm 1.5mm;
+        border-bottom: 0.2mm solid var(--line);
+        vertical-align: top;
+      }
+      .parts td:first-child {
+        width: 6mm;
+        font-weight: 700;
+        color: #fff;
+        background: var(--navy);
+        text-align: center;
+        border-bottom-color: var(--navy-2);
+      }
+      .parts .en {
+        color: var(--muted);
+        font-size: 7.8pt;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ───────── Trang 1 · Bìa ───────── -->
+    <section class="page cover">
+      <div class="brand">Embassy Language · Hospitality English</div>
+      <h1>Hướng dẫn<br /><em>học viên</em></h1>
+      <p class="lead">
+        Học tiếng Anh khách sạn ngay trên điện thoại: cách đăng nhập, bắt đầu một tuần học và luyện
+        6 phần trong mỗi tuần sao cho hiệu quả.
+      </p>
+      <div class="facts">
+        <table>
+          <tr>
+            <td>Địa chỉ học</td>
+            <td><b>hospitality.embassy.edu.vn</b></td>
+          </tr>
+          <tr>
+            <td>Đăng nhập</td>
+            <td>Số điện thoại + mật khẩu</td>
+          </tr>
+          <tr>
+            <td>Trình duyệt</td>
+            <td>Chrome (Android) · Safari hoặc Chrome (iPhone) · <b>Edge</b> (máy tính Windows)</td>
+          </tr>
+          <tr>
+            <td>Khoá học</td>
+            <td>40 tuần · mỗi tuần một “ca” khoảng 4 giờ, gồm 6 phần luyện</td>
+          </tr>
+          <tr>
+            <td>Nhịp gợi ý</td>
+            <td>30–40 phút mỗi ngày, 6 ngày mỗi tuần — xong một tuần học mỗi tuần</td>
+          </tr>
+        </table>
+      </div>
+      <div class="toc">
+        <h3>Nội dung</h3>
+        <ol>
+          <li>Đăng nhập lần đầu</li>
+          <li>Chọn bộ phận và tuần học</li>
+          <li>Một tuần học gồm gì</li>
+          <li>Luyện từng phần</li>
+          <li>Ôn tập mỗi ngày, bài sát hạch</li>
+          <li>Giọng đọc, micro và mẹo</li>
+        </ol>
+      </div>
+      <div class="foot">
+        <span>Embassy Language</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >1</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 2 · Đăng nhập ───────── -->
+    <section class="page">
+      <div class="brand">Bước 1</div>
+      <h2><span class="num">1</span>Đăng nhập lần đầu</h2>
+      <div class="split">
+        <div class="text">
+          <p><b>Nếu Nhân sự gửi bạn link đăng ký:</b></p>
+          <ol>
+            <li>Mở link, điền họ tên, bộ phận, số điện thoại.</li>
+            <li>Tự đặt mật khẩu (ít nhất 8 ký tự) và điền email.</li>
+            <li>Bấm <span class="btn">Tạo tài khoản</span> — vào học ngay.</li>
+          </ol>
+          <p><b>Nếu Nhân sự cấp số điện thoại và mật khẩu tạm:</b></p>
+          <ol>
+            <li>Vào <b>hospitality.embassy.edu.vn</b>.</li>
+            <li>Nhập số điện thoại, mật khẩu, bấm <span class="btn">Đăng nhập</span>.</li>
+            <li>App yêu cầu đặt mật khẩu riêng — điền luôn email.</li>
+          </ol>
+          <div class="tip">
+            <b>Quên mật khẩu?</b> Bấm <i>Quên mật khẩu?</i> ở trang đăng nhập, nhập số điện thoại,
+            mở link trong email. Chưa gắn email thì nhờ Nhân sự cấp lại.
+          </div>
+          <div class="tip">
+            <b>Mở app bằng một chạm:</b> Chrome: ⋮ → <i>Thêm vào màn hình chính</i>. iPhone
+            (Safari): nút Chia sẻ → <i>Thêm vào MH chính</i>.
+          </div>
+        </div>
+        <figure>
+          <div class="phone"><img src="anh/01-dang-nhap.png" alt="Trang đăng nhập" /></div>
+          <div class="cap">Trang đăng nhập</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >2</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 3 · Chọn bộ phận và tuần ───────── -->
+    <section class="page">
+      <div class="brand">Bước 2</div>
+      <h2><span class="num">2</span>Chọn bộ phận và tuần học</h2>
+      <ol>
+        <li>
+          Trang chủ có 5 thẻ bộ phận: <b>Front Office</b> (Lễ tân), <b>Food &amp; Beverage</b> (Nhà
+          hàng &amp; Bar), <b>Housekeeping</b> (Buồng phòng), <b>Spa &amp; Wellness</b>,
+          <b>Guest Relations</b> (Quan hệ khách hàng). Chạm thẻ bộ phận <b>bạn đang làm</b>.
+        </li>
+        <li>
+          Danh sách 40 tuần hiện ra. Chạm <span class="btn">Open shift →</span> ở tuần bạn đang học,
+          bắt đầu từ tuần 1.
+        </li>
+        <li>Tuần có 🔒 sẽ mở sau khi bạn qua bài sát hạch của giai đoạn trước.</li>
+      </ol>
+      <div class="two">
+        <figure>
+          <div class="phone"><img src="anh/03-chon-bo-phan.jpg" alt="Chọn bộ phận" /></div>
+          <div class="cap">Chạm thẻ bộ phận của bạn</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/04-danh-sach-tuan.jpg" alt="Danh sách tuần" /></div>
+          <div class="cap">Chọn tuần → Open shift</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >3</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 4 · Một tuần học ───────── -->
+    <section class="page">
+      <div class="brand">Bước 3</div>
+      <h2><span class="num">3</span>Một tuần học gồm gì</h2>
+      <p>
+        Đầu trang tuần có <b>Sổ tay tuần</b> (mẫu câu và từ vựng, có nút nghe, in được) và
+        <b>4 bước trong ca</b> — 4 tình huống của tuần. Bên dưới là <b>6 phần luyện</b>, làm lần
+        lượt từ 1 đến 6, bấm <span class="btn">Vào học</span>:
+      </p>
+      <table class="parts">
+        <tr>
+          <td>1</td>
+          <td><b>Từ vựng</b> <span class="en">· Premium Vocabulary</span></td>
+          <td>Thẻ từ, rồi kiểm tra</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><b>Ngữ pháp lịch sự</b> <span class="en">· Courteous Grammar</span></td>
+          <td>Ghép câu lịch sự</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><b>Nghe</b> <span class="en">· Golden Ear Listening</span></td>
+          <td>Nghe khách, chọn câu đáp</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><b>Nói</b> <span class="en">· Elite AI Speaking</span></td>
+          <td>Nói câu trả lời, app chấm</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><b>Đọc</b> <span class="en">· Executive Reading</span></td>
+          <td>Đọc tình huống, trả lời</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><b>Trò chơi tình huống</b> <span class="en">· VIP Rush Arcade</span></td>
+          <td>Phản xạ nhanh</td>
+        </tr>
+      </table>
+      <div class="two">
+        <figure>
+          <div class="phone"><img src="anh/05-trang-tuan.jpg" alt="Trang tuần" /></div>
+          <div class="cap">Sổ tay tuần và 4 bước trong ca</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/06-cac-cua-luyen.jpg" alt="Các phần luyện" /></div>
+          <div class="cap">6 phần luyện, làm từ 1 đến 6</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >4</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 5 · Từ vựng ───────── -->
+    <section class="page">
+      <div class="brand">Bước 4 · Luyện từng phần</div>
+      <h2><span class="num">4.1</span>Từ vựng</h2>
+      <ol>
+        <li>
+          Chạm từng thẻ để lật: <b>phiên âm</b>, <b>câu ví dụ</b>, <b>nghĩa tiếng Việt</b>. Bấm
+          <span class="btn">🔊 Nghe</span> rồi đọc to theo 2–3 lần.
+        </li>
+        <li>
+          Lật đủ thẻ, bấm <span class="btn">Vào phần kiểm tra</span>: chọn nghĩa đúng, nghe rồi gõ
+          lại từ.
+        </li>
+      </ol>
+      <div class="tip">
+        <b>Hiệu quả:</b> nhìn mặt trước, tự nói nghĩa rồi mới lật. Từ nào sai trong phần kiểm tra
+        thì quay lại lật thẻ đó.
+      </div>
+      <div class="two" style="margin-top: 3mm">
+        <figure>
+          <div class="phone"><img src="anh/08-tu-vung-lat-the.jpg" alt="Thẻ từ vựng đã lật" /></div>
+          <div class="cap">Thẻ đã lật: phiên âm, ví dụ, nghĩa</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/09-tu-vung-kiem-tra.jpg" alt="Kiểm tra từ vựng" /></div>
+          <div class="cap">Phần kiểm tra ghi nhớ</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >5</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 6 · Ngữ pháp ───────── -->
+    <section class="page">
+      <div class="brand">Bước 4 · Luyện từng phần</div>
+      <h2><span class="num">4.2</span>Ngữ pháp lịch sự</h2>
+      <ol>
+        <li>Câu <b>gạch đỏ</b> là câu cộc lốc mà nhân viên khách sạn tránh nói.</li>
+        <li>
+          Chạm các chữ trong <b>Kho từ</b> theo đúng thứ tự để ghép câu lịch sự. Chạm hai chữ đã đặt
+          để đổi chỗ. Bấm <span class="btn">Kiểm tra câu</span>.
+        </li>
+        <li>Đúng rồi thì bấm <span class="btn">🔊 Đọc câu</span> và đọc to theo.</li>
+      </ol>
+      <div class="tip">
+        <b>Hiệu quả:</b> đọc quy tắc hiện dưới câu; câu sau thường dùng lại đúng quy tắc đó.
+      </div>
+      <div class="two" style="margin-top: 3mm">
+        <figure>
+          <div class="phone"><img src="anh/10-ngu-phap.jpg" alt="Ghép câu" /></div>
+          <div class="cap">Ghép câu từ Kho từ</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/11-ngu-phap-dung.jpg" alt="Câu đúng" /></div>
+          <div class="cap">Đúng: nghe và đọc theo</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >6</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 7 · Nghe ───────── -->
+    <section class="page">
+      <div class="brand">Bước 4 · Luyện từng phần</div>
+      <h2><span class="num">4.3</span>Nghe</h2>
+      <div class="split">
+        <div class="text">
+          <ol>
+            <li>
+              Bấm <span class="btn">🔊 Nghe</span> — mỗi câu nghe được tối đa 3 lần. Lời khách
+              <b>không hiện chữ</b>: bạn phải nghe.
+            </li>
+            <li>
+              Chọn câu trả lời chuẩn của nhân viên, hoặc gõ các từ còn thiếu, rồi bấm
+              <span class="btn">Trả lời</span>.
+            </li>
+            <li>Trả lời sai, app hiện câu vừa nghe để bạn đối chiếu.</li>
+          </ol>
+          <div class="tip">
+            <b>Hiệu quả:</b> lần nghe đầu bắt ý chính, lần hai bắt từ khoá (tên, số phòng, giờ).
+            Đừng bấm nghe liên tục khi chưa nghĩ.
+          </div>
+          <div class="tip">
+            <b>Nghe chưa rõ?</b> Bấm <span class="btn">Đổi giọng</span> để chọn giọng khác hoặc đọc
+            <b>Chậm</b> hơn (xem mục 6).
+          </div>
+        </div>
+        <figure>
+          <div class="phone"><img src="anh/12-nghe.jpg" alt="Phần nghe" /></div>
+          <div class="cap">Nghe rồi chọn câu đáp</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >7</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 8 · Nói ───────── -->
+    <section class="page">
+      <div class="brand">Bước 4 · Luyện từng phần</div>
+      <h2><span class="num">4.4</span>Nói</h2>
+      <ol>
+        <li>Đọc lời khách, bấm <span class="btn">▶ Nghe lời khách</span>.</li>
+        <li>
+          Bấm vòng tròn <b>micro</b>, nói <b>trọn câu</b> trả lời, bấm lần nữa để dừng. App ghi lại
+          lời bạn và chấm ngay.
+        </li>
+        <li>
+          <b>Câu trả lời chuẩn</b> đang ẩn: hãy nói thử trước rồi mới bấm xem. Bấm
+          <span class="btn">🔊 Nghe câu mẫu</span> để bắt chước.
+        </li>
+        <li>Lần đầu, trình duyệt hỏi dùng micro: chọn <b>Cho phép</b>. Nên ngồi chỗ yên tĩnh.</li>
+      </ol>
+      <div class="tip">
+        <b>Hiệu quả:</b> mở <b>Sổ tay tuần</b> trước phần Nói, đọc to từng mẫu câu 5 lần. Khi nói:
+        chậm, rõ, đủ câu, nhớ “sir / madam”.
+      </div>
+      <div class="two" style="margin-top: 3mm">
+        <figure>
+          <div class="phone"><img src="anh/13-noi.jpg" alt="Phần nói" /></div>
+          <div class="cap">Bấm micro và nói</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/18-so-tay.jpg" alt="Sổ tay tuần" /></div>
+          <div class="cap">Sổ tay tuần: luyện trước</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >8</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 9 · Đọc và trò chơi ───────── -->
+    <section class="page">
+      <div class="brand">Bước 4 · Luyện từng phần</div>
+      <h2><span class="num">4.5</span>Đọc · <span class="num">4.6</span>Trò chơi</h2>
+      <p>
+        <b>Đọc:</b> chọn <b>Bài 1–4</b>, đọc đoạn tình huống ngắn, trả lời từng câu hỏi bên dưới.
+        Đọc hết đoạn một lần trước khi xem câu hỏi.
+      </p>
+      <p>
+        <b>Trò chơi tình huống:</b> bấm <span class="btn">Bắt đầu</span>. Đọc lời khách ở trên cùng,
+        chạm nhanh vào <b>bong bóng</b> có câu trả lời lịch sự chuẩn trước khi hết giờ. Chọn sai,
+        app nhắc lý do.
+      </p>
+      <div class="two" style="margin-top: 3mm">
+        <figure>
+          <div class="phone"><img src="anh/14-doc.jpg" alt="Phần đọc" /></div>
+          <div class="cap">Đọc tình huống, trả lời</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/15-tro-choi.jpg" alt="Trò chơi tình huống" /></div>
+          <div class="cap">Luật chơi và nút bắt đầu</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >9</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 10 · Ôn tập & sát hạch ───────── -->
+    <section class="page">
+      <div class="brand">Bước 5</div>
+      <h2><span class="num">5</span>Ôn tập mỗi ngày, bài sát hạch</h2>
+      <ul>
+        <li>
+          <b>Mỗi ngày</b>, trên trang chủ bấm <span class="btn">Ôn tập hôm nay → Bắt đầu</span> và
+          làm hết các mục đến hạn — chỉ vài phút. App tự chọn những từ, câu bạn sắp quên.
+        </li>
+        <li>Học mỗi ngày giữ <b>chuỗi ngày 🔥</b>; trả lời đúng được <b>sao ⭐</b>.</li>
+        <li>
+          <b>Bài sát hạch</b> ở tuần 6, 14, 22, 30 và 40: câu trắc nghiệm (nghe, đọc, từ vựng, ngữ
+          pháp) và phần nói. Đạt mới mở giai đoạn tiếp theo. Làm sau cùng trong tuần đó.
+        </li>
+      </ul>
+      <div class="two" style="margin-top: 3mm">
+        <figure>
+          <div class="phone"><img src="anh/02-trang-chu.jpg" alt="Trang chủ" /></div>
+          <div class="cap">Ôn tập hôm nay trên trang chủ</div>
+        </figure>
+        <figure>
+          <div class="phone"><img src="anh/16-on-tap.jpg" alt="Ôn tập hằng ngày" /></div>
+          <div class="cap">Ôn tập hằng ngày</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >10</span
+          ></span
+        >
+      </div>
+    </section>
+
+    <!-- ───────── Trang 11 · Giọng đọc & mẹo ───────── -->
+    <section class="page">
+      <div class="brand">Bước 6</div>
+      <h2><span class="num">6</span>Giọng đọc, micro và mẹo</h2>
+      <div class="split">
+        <div class="text">
+          <ul>
+            <li>
+              Bấm <b>🔊</b> trên thanh trên cùng để chọn <b>Giọng khách</b> (lời khách nói) và
+              <b>Giọng mẫu</b> (câu bạn nói theo), tốc độ <b>Chậm / Vừa / Nhanh</b>; bấm ▶ để nghe
+              thử. Danh sách giọng khác nhau tuỳ điện thoại.
+            </li>
+            <li>Máy tính Windows: mở app bằng <b>Microsoft Edge</b> để có giọng đọc tự nhiên.</li>
+            <li>
+              Máy không nhận được giọng nói (hay gặp trên iPhone): phần Nói cho gõ câu trả lời để
+              vẫn luyện được.
+            </li>
+            <li>
+              Mỗi tài khoản dùng <b>một máy một lúc</b>: đăng nhập máy khác thì máy trước tự đăng
+              xuất. Không dùng chung tài khoản.
+            </li>
+            <li>Đổi mật khẩu, gắn email: bấm 👤 → <b>Mật khẩu &amp; email</b>.</li>
+          </ul>
+          <div class="tip">
+            <b>Cần giúp?</b> Liên hệ bộ phận Nhân sự của khách sạn. Gặp lỗi thì chụp màn hình gửi
+            kèm.
+          </div>
+        </div>
+        <figure>
+          <div class="phone"><img src="anh/17-chon-giong.jpg" alt="Chọn giọng đọc" /></div>
+          <div class="cap">Bảng chọn giọng (tên giọng tuỳ máy)</div>
+        </figure>
+      </div>
+      <div class="foot">
+        <span>Embassy Hospitality English · Hướng dẫn học viên</span
+        ><span class="pg"
+          ><img class="logo" src="anh/logo-embassy-language.webp" alt="Embassy Language" /><span
+            >11</span
+          ></span
+        >
+      </div>
+    </section>
+  </body>
+</html>

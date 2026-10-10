@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { DEPARTMENTS, getDepartment } from "@/lib/departments";
+import { SHIPPING_DEPARTMENTS, getDepartment } from "@/lib/departments";
 import { useSession } from "@/lib/auth";
 import { fetchDueCount } from "@/lib/review";
 import { getWeekContent } from "@/lib/content/week-content";
@@ -52,6 +52,14 @@ function ReviewBanner() {
     </motion.div>
   );
 }
+
+// The headline counts the cards below it. Spelling the number into the copy
+// meant the day a department ships, the page would say "Six" over seven cards
+// — and nobody re-reads marketing copy while adding a department.
+const SPELLED_EN = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"];
+const SPELLED_VI = ["", "Một", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám"];
+const COUNT_EN = SPELLED_EN[SHIPPING_DEPARTMENTS.length] ?? SHIPPING_DEPARTMENTS.length;
+const COUNT_VI = SPELLED_VI[SHIPPING_DEPARTMENTS.length] ?? SHIPPING_DEPARTMENTS.length;
 
 /**
  * The way back in (backlog P2-4).
@@ -134,12 +142,12 @@ function Lounge() {
             Choose your <span className="italic text-primary">atelier</span>.
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
-            Six departments. Forty weeks each. A quiet path to five-star fluency. Select a card to
-            enter the workplace shift timeline.
+            {COUNT_EN} departments. Forty weeks each. A quiet path to five-star fluency. Select a
+            card to enter the workplace shift timeline.
           </p>
           <p className="mt-2 max-w-2xl text-sm italic text-foreground/50">
-            Sáu bộ phận. Bốn mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu loát chuẩn
-            5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
+            {COUNT_VI} bộ phận. Bốn mươi tuần học chuyên sâu. Hành trình tinh tế chạm ngưỡng lưu
+            loát chuẩn 5 sao. Hãy chọn một thẻ để bước vào ca làm việc thực tế.
           </p>
         </motion.div>
 
@@ -147,7 +155,7 @@ function Lounge() {
         <ReviewBanner />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {DEPARTMENTS.map((d, i) => (
+          {SHIPPING_DEPARTMENTS.map((d, i) => (
             <FlipCard key={d.code} index={i} dep={d} />
           ))}
         </div>
@@ -156,7 +164,7 @@ function Lounge() {
   );
 }
 
-function FlipCard({ dep, index }: { dep: (typeof DEPARTMENTS)[number]; index: number }) {
+function FlipCard({ dep, index }: { dep: (typeof SHIPPING_DEPARTMENTS)[number]; index: number }) {
   const [flipped, setFlipped] = useState(false);
   return (
     <motion.div

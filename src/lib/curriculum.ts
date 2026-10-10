@@ -37,7 +37,7 @@ const SPINE_TITLES: Record<number, { en: string; vi: string }> = {
   14: { en: "Checkpoint — First Sentences", vi: "Kiểm tra tổng hợp — Giao tiếp câu đơn" },
   22: { en: "Checkpoint — Core SOP Service", vi: "Kiểm tra tổng hợp — Nghiệp vụ chuẩn" },
   30: { en: "Checkpoint — Proactive Service", vi: "Kiểm tra tổng hợp — Dịch vụ chủ động" },
-  40: { en: "Final Assessment — B1.1 Hospitality", vi: "Đánh giá cuối khóa — B1.1 nghiệp vụ" },
+  40: { en: "Final Assessment — A2+ Hospitality", vi: "Đánh giá cuối khóa — A2+ nghiệp vụ" },
 };
 
 const GENERIC_LESSONS_VI = [

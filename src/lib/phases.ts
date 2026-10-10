@@ -20,12 +20,35 @@ export type Phase = {
   nameVi: string;
 };
 
+// The band a phase CERTIFIES, not the band its material samples from.
+//
+// Phase 4 read "B1.1" until two blind audits reached the same verdict
+// independently: the course cannot measure B1. Every speaking exercise in
+// all forty weeks scores a learner against a fixed targetResponse shown on
+// screen, weeks 39-40 included — the "open role-play" the matrix promised
+// does not exist, and speaking-score.ts says so in its own comments. The
+// final paper is 20 multiple-choice items plus 5 imitated sentences. None
+// of that asks a learner to produce an unrehearsed turn, which is the line
+// between A2 and B1.
+//
+// The material genuinely reaches B1.1 — three-clause sentences, concession
+// clauses, the 22-word cap. So the label says exactly that and no more:
+// A2+ output, B1.1 exposure. Restoring "B1.1" means building the measure
+// first (see P1-4/5/6 in docs/academic-review-backlog.md), not editing this
+// line.
 export const PHASES: readonly Phase[] = [
   { index: 0, from: 1, to: 6, checkpointWeek: 6, band: "pre-A1", nameVi: "Nền tảng sống còn" },
   { index: 1, from: 7, to: 14, checkpointWeek: 14, band: "A1", nameVi: "Giao tiếp câu đơn" },
   { index: 2, from: 15, to: 22, checkpointWeek: 22, band: "A2.1", nameVi: "Nghiệp vụ chuẩn" },
   { index: 3, from: 23, to: 30, checkpointWeek: 30, band: "A2+", nameVi: "Dịch vụ chủ động" },
-  { index: 4, from: 31, to: 40, checkpointWeek: 40, band: "B1.1", nameVi: "Xử lý & thuyết phục" },
+  {
+    index: 4,
+    from: 31,
+    to: 40,
+    checkpointWeek: 40,
+    band: "A2+ · tiếp xúc B1.1",
+    nameVi: "Xử lý & thuyết phục",
+  },
 ];
 
 export const CHECKPOINT_WEEKS: readonly number[] = PHASES.map((p) => p.checkpointWeek);
@@ -39,7 +62,7 @@ export const CHECKPOINT_PASS_PCT = 70;
 /** The checkpoint paper's fixed composition. Lives here rather than in the
  *  suite because the pass RULE below is written against it, and a mix that
  *  drifts from its floors silently changes what passing means. */
-export const CHECKPOINT_MIX = { vocab: 8, grammar: 4, listening: 4, reading: 4 } as const;
+export const CHECKPOINT_MIX = { vocab: 6, grammar: 4, listening: 6, reading: 4 } as const;
 export type CheckpointConstruct = keyof typeof CHECKPOINT_MIX;
 export const CHECKPOINT_TOTAL_QUESTIONS = Object.values(CHECKPOINT_MIX).reduce((a, b) => a + b, 0);
 
@@ -80,7 +103,17 @@ export function blockCleared(t: ConstructTally): boolean {
 /** The whole pass rule in one place: the overall mark AND every deliverable
  *  block's floor. */
 export function checkpointPassed(scorePct: number, tallies: readonly ConstructTally[]): boolean {
-  return scorePct >= CHECKPOINT_PASS_PCT && tallies.every(blockCleared);
+  return (
+    scorePct >= CHECKPOINT_PASS_PCT &&
+    tallies.every(blockCleared) &&
+    // A block the device could not deliver is forgiven its floor — nobody is
+    // locked out by their own phone — but it cannot be signed off either. An
+    // academic review measured what the silent waiver was worth: a learner who
+    // understands no spoken English at all passed 100% of the time by simply
+    // having no English voice installed. Forgiving the floor and certifying
+    // the skill are two different things, and only the first one is kind.
+    tallies.every((t) => t.deliverable)
+  );
 }
 
 /** The oral half of a checkpoint.
@@ -93,7 +126,19 @@ export function checkpointPassed(scorePct: number, tallies: readonly ConstructTa
  *  and the oral half is there to make the claim "can speak" true at all,
  *  not to become the hardest gate in the course. */
 export const CHECKPOINT_ORAL_ITEMS = 5;
-export const CHECKPOINT_ORAL_PASS_MIN = 3;
+/** The share of drawn utterances that must pass. Was a flat 3, which was the
+ *  same 60% while every sitting drew exactly five — and stopped being 60% the
+ *  moment a three-turn exchange started arriving as one draw: 62.2% of
+ *  sittings then held seven utterances against an unchanged bar of three, so
+ *  a learner could fail four of seven and still clear the oral half. An
+ *  academic review measured the effective pass mark at 48.1%. */
+export const CHECKPOINT_ORAL_PASS_SHARE = 0.6;
+/** Rounded, not ceilinged: ceil(7 x 0.6) = 5 made a seven-utterance sitting
+ *  a 71.4% bar against 60.0% for a five-utterance one, so two learners faced
+ *  gates 11.4 points apart depending only on whether the three-turn exchange
+ *  happened to be drawn. */
+export const oralPassMin = (drawn: number) =>
+  Math.max(1, Math.round(drawn * CHECKPOINT_ORAL_PASS_SHARE));
 
 /** How long a learner waits after a FAILED checkpoint sitting.
  *
