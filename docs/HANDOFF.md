@@ -5,7 +5,8 @@ Agent mới vào: **đọc hết file này trước khi làm bất cứ việc g
 
 **10/10 chiều: `main` = `bd2e379` (PR #29).** Việc lớn nhất trong ngày: mọi tài khoản mới tạo đều
 không được gắn vào tổ chức của nó — đã sửa và đã áp dụng lên production, xem §4 "Tài khoản mới không
-gắn vào tổ chức". Production của app đang có **dữ liệu thử** do phiên CRM chèn, xem §5 mục 3.
+gắn vào tổ chức". Dữ liệu thử phiên CRM chèn vào production của app trong ngày đã được xoá (§5 mục
+3); `crm_events` id 1–9 còn lại là của đợt thử đó.
 
 **10/10 trưa: `main` = `63686c3`, production chạy đúng commit này.** Sáng 10/10 Claude hết hạn mức,
 Codex làm tiếp theo [`BAN-GIAO-CODEX-2026-10-10.md`](BAN-GIAO-CODEX-2026-10-10.md): chủ dự án dán SQL
@@ -454,14 +455,16 @@ Không tự làm những việc này.
    lập đầu-cuối"). Trên hệ thống thật mới có một nhân viên được tích "Tham gia", link kích hoạt của
    người đó chưa ai mở. Hai câu chữ đã sửa ở khối Đối tác trang `/admin-console` và màn hình "Tài khoản
    đối tác đang tạm khoá" chưa ai xem trên trình duyệt.
-3. **Dữ liệu THỬ đang nằm trong production của app** (phiên CRM chèn 10/10 theo yêu cầu chủ dự án,
-   để thử thật; **không phải khách thật**): đối tác "THỬ NGHIỆM đầu-cuối 10/10 (xoá sau)", ba tổ chức
-   tên có "THỬ NGHIỆM E2E", đơn `EHTHUE2E` và `EHTHUGH2`, sự kiện `crm_events` id 1–9, ba link. Không
-   có tài khoản đăng nhập nào. Phiên CRM nói sẽ xoá khi chủ dự án đồng ý phạm vi xoá. Còn sót từ 01/10:
-   đối tác "Đối tác thử nghiệm (xoá sau)" với một link cá nhân giảm 30%, hạn 31/12/2026, **đang mở**.
-4. **Thử trên hệ thống thật:** phiên CRM báo đã chạy thật đủ 7 loại lệnh và 6 loại tin (10/10). Chưa
-   ai thử bằng người thật: điền form `/join`, mở link kích hoạt và đăng nhập. Nên làm một lần sau bản
-   sửa PR #29, vì đó là hai chỗ đi qua Supabase Auth thật.
+3. **Dữ liệu thử của đợt thử thật 10/10 đã xoá** (phiên CRM chèn theo yêu cầu chủ dự án, rồi xoá khi
+   chủ dự án duyệt, ~15:10; đã đọc lại production). Giữ lại có chủ ý: `crm_events` id 1–9 — CRM cũng
+   giữ bản của nó để con trỏ `sau_id` không lùi; **chín sự kiện đó trỏ tới tổ chức và đơn không còn
+   tồn tại, không phải lỗi.** Production app lúc đó: 1 tổ chức (tài khoản dùng thử của đối tác thật),
+   0 đơn, 2 tài khoản đăng nhập. **Còn sót từ 01/10, chờ chủ dự án:** đối tác "Đối tác thử nghiệm (xoá
+   sau)" với một link cá nhân giảm 30%, hạn 31/12/2026, **đang mở** — ai có link đều đăng ký được.
+4. **Thử trên hệ thống thật:** phiên CRM báo đã chạy thật đủ 7 loại lệnh và 6 loại tin (10/10), kể cả
+   chủ dự án tự bấm xác nhận một đơn và một đơn gia hạn trên CRM. Còn ba chặng cần người thật, chưa ai
+   làm: cấp lại link kích hoạt và nhận email, đặt mật khẩu rồi đăng nhập, điền form `/join`. Nên làm
+   một lần sau bản sửa PR #29, vì đó là những chỗ đi qua Supabase Auth thật.
 5. **Nơi lưu bộ giả lập** `scripts/flow/`: repo app (public), repo CRM (private), hay chỉ để trên máy.
 6. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
