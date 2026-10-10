@@ -142,6 +142,14 @@ type ListeningSnapshot = {
   tasks: ListeningTask[];
   idx: number;
   correctCount: number;
+  /** The task in hand once answered; null while it is still open. Same
+   *  reason as VocabSnapshot: re-asking an answered task counted a right
+   *  answer twice and gave a wrong one a retry with the answer known. */
+  answered: { ok: boolean; picked: number | null; blankValues: Record<number, string> } | null;
+  /** Plays already spent on the task in hand. Resetting it on resume made a
+   *  reload worth three more listens — the one thing MAX_LISTENS exists to
+   *  stop, and a hole main never had, since a reload there restarts the run. */
+  listens: number;
   awarded: string[];
   earned: number;
 };
@@ -175,16 +183,23 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
 
   useEffect(() => {
     if (!store.ready || resumable || stage === "done") return;
-    // Nothing worth restoring until the learner is past the first task.
-    if (idx === 0 && correctCount === 0) return;
+    // Nothing worth restoring until the learner has done something — and a
+    // single play counts, because plays are capped.
+    if (idx === 0 && answered === null && listens === 0) return;
     store.save({
       tasks,
       idx,
       correctCount,
+      answered: answered === null ? null : { ok: answered, picked, blankValues },
+      listens,
       awarded: [...awardedRef.current],
       earned: earnedRef.current,
     });
-  }, [store, resumable, stage, tasks, idx, correctCount]);
+    // `picked` and `blankValues` are only read once `answered` is set, and
+    // their controls lock from that moment; listing them would re-serialise
+    // the run on every keystroke in a cloze blank.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store, resumable, stage, tasks, idx, correctCount, answered, listens]);
 
   function resume() {
     const s = store.saved;
@@ -195,10 +210,10 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
     setCorrectCount(s.correctCount);
     awardedRef.current = new Set(s.awarded);
     earnedRef.current = s.earned;
-    setPicked(null);
-    setBlankValues({});
-    setAnswered(null);
-    setListens(0);
+    setPicked(s.answered?.picked ?? null);
+    setBlankValues(s.answered?.blankValues ?? {});
+    setAnswered(s.answered ? s.answered.ok : null);
+    setListens(s.listens ?? 0);
     setStage("task");
   }
 
