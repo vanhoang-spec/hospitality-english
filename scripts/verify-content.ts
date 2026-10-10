@@ -20,6 +20,7 @@ import { DEPARTMENTS } from "../src/lib/departments";
 import { CHECKPOINT_ORAL_ITEMS, CHECKPOINT_PASS_PCT } from "../src/lib/phases";
 import { reservableTurns } from "../src/lib/checkpoint-oral";
 import { isAuthoredP4 } from "../src/lib/content/phase4";
+import { openTurnProblems } from "../src/lib/open-turn";
 
 type Phase = {
   name: string;
@@ -282,11 +283,24 @@ function collectStrings(obj: unknown, out: string[]): void {
 // ============================================================
 for (const [key, week] of Object.entries(ALL_WEEKS)) {
   const phase = phaseOf(week.weekNumber);
+  // Every cap and quota below is skipped for a week with no phase row, and
+  // used to be skipped in silence. The app now holds weeks 41-80; a lesson
+  // for one of them must not pass this gate by being invisible to it.
+  if (!phase)
+    errors.push(
+      `${key}: week ${week.weekNumber} has no row in this file's PHASES — add its caps and quotas before any lesson for it is registered`,
+    );
   let vocabCount = 0;
 
   for (const lesson of week.lessons) {
     const where = `${key}/${lesson.lessonId}`;
     vocabCount += lesson.vocabulary.length;
+
+    // An open spoken turn has no sentence to match, so nothing above looks at
+    // it. Its own checks run the real marker on the turn's own model answer.
+    for (const turn of lesson.openTurns ?? [])
+      for (const problem of openTurnProblems(turn, week.weekNumber))
+        errors.push(`${where}: open turn "${turn.taskVi.slice(0, 48)}" ${problem}`);
 
     for (const item of lesson.vocabulary) {
       if (!item.word || !item.phonetic || !item.definition || !item.context)

@@ -13,7 +13,7 @@ import { MediationSuite } from "@/components/suites/MediationSuite";
 import { getDepartment } from "@/lib/departments";
 import { useSession } from "@/lib/auth";
 import { rememberPlace } from "@/lib/progress";
-import { useWeekAccess } from "@/lib/week-access";
+import { useWeekAccess, weekIsClosed } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
 
 const TITLES: Record<string, { en: string; tag: string }> = {
@@ -59,7 +59,7 @@ function SuitePage() {
 
   // A suite URL is the other way into a week's content, so the gate has to
   // hold here too — not just on the timeline and the week hub.
-  if (access.ready && !access.isUnlocked(week)) {
+  if (weekIsClosed(access, week)) {
     return (
       <main className="relative min-h-[calc(100vh-72px)] px-6 py-16 md:px-10">
         <WeekLocked dep={department.code} week={week} next={access.next} />
