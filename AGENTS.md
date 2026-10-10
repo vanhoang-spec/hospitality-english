@@ -78,7 +78,7 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 | `src/lib/open-turn.ts`                                                                  | Lượt nói mở (tuần 41+): `scoreOpenTurn` chấm, `openTurnProblems` là cổng cho người soạn                |
 | `src/lib/checkpoint-paper.ts`                                                           | `buildPaper` — dựng nửa viết của bài sát hạch                                                          |
 | `src/lib/checkpoint-oral.ts`                                                            | `buildOral`, `oralHalfPassed` — nửa nói, gồm ô dự trữ bắt buộc đúng                                    |
-| `src/lib/phases.ts`                                                                     | Ranh giới phase, ngưỡng đạt, cơ cấu đề                                                                 |
+| `src/lib/phases.ts`                                                                     | Ranh giới phase, ngưỡng đạt, cơ cấu đề; **`RELEASED_THROUGH_WEEK` là công tắc phát hành tuần 41+**     |
 | `src/lib/review.ts`                                                                     | Ôn tập giãn cách (SM-2-lite)                                                                           |
 | `src/lib/progress.ts` · `session-resume.ts` · `pending-results.ts`                      | Tiến độ người học thấy · lưu điểm dừng giữa bài · kết quả chờ gửi khi mất mạng                         |
 | `src/lib/pwa.ts` · `public/sw.js`                                                       | Cài như app. **Gỡ phần chạy nền bằng công tắc `OFFLINE_SHELL`, không xoá tay `sw.js`**                 |

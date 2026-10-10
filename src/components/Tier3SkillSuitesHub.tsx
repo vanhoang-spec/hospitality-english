@@ -12,7 +12,7 @@ import {
   isCheckpointWeek,
 } from "@/lib/phases";
 import { useDepartmentProgress } from "@/lib/progress";
-import { useWeekAccess } from "@/lib/week-access";
+import { useWeekAccess, weekIsClosed } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
 
 type DepartmentMeta = {
@@ -156,7 +156,7 @@ export function Tier3SkillSuitesHub({
     };
   }, [department.code, week, authored]);
 
-  if (access.ready && !access.isUnlocked(week)) {
+  if (weekIsClosed(access, week)) {
     return (
       <main className="relative min-h-[calc(100vh-72px)] bg-background text-foreground">
         <div className="mx-auto max-w-6xl px-6 py-12 md:px-10">

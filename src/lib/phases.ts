@@ -1,4 +1,6 @@
-// The five-phase frame of docs/curriculum-level-matrix.md, in one place.
+// The phase frame, in one place: the five phases of
+// docs/curriculum-level-matrix.md (weeks 1-40, what learners have) and the
+// four of docs/curriculum-41-80.md (weeks 41-80, held but not released).
 //
 // scripts/verify-content.ts keeps its own phase table because it needs the
 // authoring caps (sentence length, vocabulary quotas) that only matter at
@@ -6,11 +8,13 @@
 // each phase begins and ends, which week carries its checkpoint test, and
 // the mark that counts as passing that test.
 //
-// Both copies describe the same five ranges; if the matrix doc ever moves a
-// boundary, both must move with it.
+// Both copies describe the same ranges for weeks 1-40; if the matrix doc ever
+// moves a boundary, both must move with it. The gate's copy has no rows for
+// weeks 41-80 yet, and refuses a lesson for a week it has no row for.
 
 export type Phase = {
-  /** 0-4, the phase numbers used throughout the curriculum doc. */
+  /** 0-8: 0-4 are the phases of the curriculum doc, 5-8 the four of
+   *  docs/curriculum-41-80.md. */
   index: number;
   from: number;
   to: number;
@@ -36,7 +40,14 @@ export type Phase = {
 // A2+ output, B1.1 exposure. Restoring "B1.1" means building the measure
 // first (see P1-4/5/6 in docs/academic-review-backlog.md), not editing this
 // line.
-export const PHASES: readonly Phase[] = [
+//
+// Phases 5-8 are the frame of docs/curriculum-41-80.md. Their bands are what
+// that outline AIMS at, not what anything here certifies: the same rule as
+// above applies to them, and the measure they wait for is the checkpoint of
+// the outline's section 6. They are held here so that lessons for week 41 on
+// can be written, graded and gated; no learner is shown them (see
+// RELEASED_THROUGH_WEEK).
+export const ALL_PHASES: readonly Phase[] = [
   { index: 0, from: 1, to: 6, checkpointWeek: 6, band: "pre-A1", nameVi: "Nền tảng sống còn" },
   { index: 1, from: 7, to: 14, checkpointWeek: 14, band: "A1", nameVi: "Giao tiếp câu đơn" },
   { index: 2, from: 15, to: 22, checkpointWeek: 22, band: "A2.1", nameVi: "Nghiệp vụ chuẩn" },
@@ -49,7 +60,63 @@ export const PHASES: readonly Phase[] = [
     band: "A2+ · tiếp xúc B1.1",
     nameVi: "Xử lý & thuyết phục",
   },
+  {
+    index: 5,
+    from: 41,
+    to: 50,
+    checkpointWeek: 50,
+    band: "B1.1",
+    nameVi: "Từ công thức tới tự nói",
+  },
+  {
+    index: 6,
+    from: 51,
+    to: 60,
+    checkpointWeek: 60,
+    band: "B1 nghiệp vụ",
+    nameVi: "Giải thích & viết",
+  },
+  {
+    index: 7,
+    from: 61,
+    to: 70,
+    checkpointWeek: 70,
+    band: "B1.2",
+    nameVi: "Chuyên viên / trưởng ca",
+  },
+  {
+    index: 8,
+    from: 71,
+    to: 80,
+    checkpointWeek: 80,
+    band: "B1+ · tiếp xúc B2.1",
+    nameVi: "Đại diện / giám sát",
+  },
 ];
+
+/** Every week the code can hold a lesson for. */
+export const COURSE_WEEKS = ALL_PHASES[ALL_PHASES.length - 1].to;
+
+/** The last week a learner is shown — the one switch that releases year two.
+ *
+ *  Writing a week and releasing it are different days. A week 41 has to be
+ *  registered before it can be graded, gated and read by a blind auditor, and
+ *  the week list a learner sees used to be "every week that is registered":
+ *  the first lesson merged would have appeared on every hotel's timeline and
+ *  in every HR matrix, half a phase short of its own checkpoint. Raise this
+ *  one phase at a time (50, 60, 70, 80), and only once that phase's
+ *  checkpoint exists and the database accepts its week numbers. */
+export const RELEASED_THROUGH_WEEK = 40;
+
+export function isReleasedWeek(week: string | number): boolean {
+  const n = weekNum(week);
+  return Number.isFinite(n) && n >= 1 && n <= RELEASED_THROUGH_WEEK;
+}
+
+/** The phases a learner has. Everything that draws a timeline, opens a
+ *  phase or names "the next checkpoint" reads this, so none of it can point
+ *  at a phase that is not out. */
+export const PHASES: readonly Phase[] = ALL_PHASES.filter((p) => p.to <= RELEASED_THROUGH_WEEK);
 
 export const CHECKPOINT_WEEKS: readonly number[] = PHASES.map((p) => p.checkpointWeek);
 
@@ -181,8 +248,13 @@ export const CHECKPOINT_RESUME_WINDOW_MIN = 120;
  *  P3's "0.85-0.9" in the matrix is exactly this shape, now applied
  *  throughout. Deterministic — the same week always sounds the same, so a
  *  learner can tell their own progress from the audio. */
-const LISTENING_RATE_ANCHOR = [0.7, 0.75, 0.8, 0.85, 0.9] as const;
+// Phases 5-8 (weeks 41-80): phase 5 opens where phase 4 stood, so weeks 31-40
+// still hold 0.9 exactly as they did; the voice then reaches natural speed
+// (1.0) across phase 6 and stays there. The recorded passages of those weeks
+// carry the accents and the pace; this is only the synthetic voice.
+const LISTENING_RATE_ANCHOR = [0.7, 0.75, 0.8, 0.85, 0.9, 0.9, 0.95, 1.0, 1.0] as const;
 export const LISTENING_RATE_FLOOR = LISTENING_RATE_ANCHOR[0];
+/** The fastest a RELEASED week plays. */
 export const LISTENING_RATE_CEILING = LISTENING_RATE_ANCHOR[4];
 
 export function listeningRateForWeek(week: string | number): number {
@@ -224,7 +296,7 @@ export function headwordRateForWeek(week: string | number): number {
 export function suiteMasteryPct(week: string | number): number {
   const phase = phaseOfWeek(week);
   if (!phase) return 80;
-  return [70, 70, 75, 80, 80][phase.index];
+  return [70, 70, 75, 80, 80, 80, 80, 80, 80][phase.index];
 }
 
 /** Whether a dictation answer may differ from the target by one character.
@@ -274,13 +346,16 @@ export function weekNum(week: string | number): number {
   return typeof week === "string" ? parseInt(week, 10) : week;
 }
 
+/** The phase a week belongs to, released or not: a week-41 lesson has a
+ *  listening speed, a mastery bar and a checkpoint pool like any other. */
 export function phaseOfWeek(week: string | number): Phase | null {
   const n = weekNum(week);
-  return PHASES.find((p) => n >= p.from && n <= p.to) ?? null;
+  return ALL_PHASES.find((p) => n >= p.from && n <= p.to) ?? null;
 }
 
 export function isCheckpointWeek(week: string | number): boolean {
-  return CHECKPOINT_WEEKS.includes(weekNum(week));
+  const n = weekNum(week);
+  return ALL_PHASES.some((p) => p.checkpointWeek === n);
 }
 
 /** Every week of the phase a checkpoint belongs to — the pool a checkpoint

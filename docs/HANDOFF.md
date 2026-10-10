@@ -613,11 +613,19 @@ Không tự làm những việc này.
    bài nói. Xong tiếp: kiểu `OpenTurn` (`LessonContent.openTurns`, đặt cạnh `speaking` chứ không trong
    nó), `scoreOpenTurn` và `openTurnProblems` (`src/lib/open-turn.ts`); `verify:content` chạy
    `openTurnProblems` trên mọi lượt nói mở, nên người soạn tuần 41+ không ship được lượt mà câu mẫu
-   trượt chính bộ chấm, hay lượt qua được bằng cách nhại lời khách. Chưa làm, theo thứ tự: (1)
+   trượt chính bộ chấm, hay lượt qua được bằng cách nhại lời khách. Xong tiếp: **khung 80 tuần, chưa
+   phát hành tuần nào** — `ALL_PHASES` (9 giai đoạn) và công tắc `RELEASED_THROUGH_WEEK = 40` trong
+   `src/lib/phases.ts`; `PHASES` và `AVAILABLE_WEEKS` chỉ gồm phần đã phát hành nên lộ trình, bảng HR
+   và "bài sát hạch kế tiếp" không đổi; tuần chưa phát hành đóng với học viên và chỉ mở cho quản trị
+   (`weekIsClosed` trong `week-access.ts`); `verify:content` từ chối bài của tuần chưa có dòng trong
+   bảng PHASES của chính nó. **Muốn phát hành một giai đoạn: nâng công tắc lên 50/60/70/80, sau khi
+   đã có bài sát hạch của giai đoạn đó và database nhận số tuần đó.** Chưa làm, theo thứ tự: (1)
    `SpeakingSuite` hiển thị và chấm lượt nói mở, kể cả lượt nói liền 30–90 giây và tình huống rẽ
-   nhánh; (2) khung 80 tuần trong code (`TOTAL_WEEKS`, `PHASES`, các cổng
-   khoá cứng ở 40) sao cho tuần 41–80 chưa lộ ra khi chưa có bài; (3) migration nới sáu ràng buộc
-   `BETWEEN 1 AND 40` — production, phải hỏi chủ dự án trước.
+   nhánh; (2) dòng P5–P8 trong bảng của `verify-content.ts`, `lint-content.ts`, `qa-full.ts` — thêm
+   cùng tuần 41 đầu tiên của Lễ tân, vì phải có bài thật mới thử được cổng; `TOTAL_WEEKS`, thang sao
+   `jobRankFor`, chữ "40 tuần" trên giao diện — đổi khi phát hành; (3) migration nới sáu ràng buộc
+   `BETWEEN 1 AND 40` (`lesson_progress`, `review_items`, `attempts`, `study_sessions`,
+   `access_rules.week_from`/`week_to`) — production, phải hỏi chủ dự án trước.
 
 ---
 

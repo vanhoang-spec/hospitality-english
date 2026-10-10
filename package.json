@@ -21,7 +21,8 @@
     "test:voice": "bun scripts/voice-test.ts",
     "test:results": "bun scripts/pending-results-test.ts",
     "test:score": "bun scripts/free-text-score-test.ts && bun scripts/open-turn-test.ts",
-    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run test:reset && bun run test:voice && bun run test:results && bun run test:score && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
+    "test:frame": "bun scripts/frame-test.ts",
+    "ci": "bun run typecheck && bun run test:db && bun run test:crm && bun run test:reset && bun run test:voice && bun run test:results && bun run test:score && bun run test:frame && bun run verify:content && bun run qa:full && bun run format:check && bun run lint",
     "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "dependencies": {

@@ -13,7 +13,14 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/auth";
-import { CHECKPOINT_PASS_PCT, PHASES, phaseOfWeek, weekNum, type Phase } from "@/lib/phases";
+import {
+  CHECKPOINT_PASS_PCT,
+  PHASES,
+  isReleasedWeek,
+  phaseOfWeek,
+  weekNum,
+  type Phase,
+} from "@/lib/phases";
 
 export function weekAccessQueryKey(userId: string | undefined, dep: string) {
   return ["week-access", userId, dep.toUpperCase()] as const;
@@ -38,9 +45,28 @@ export function unlockedThroughPhase(passed: readonly number[]): number {
 }
 
 export function isWeekUnlocked(week: string | number, passed: readonly number[]): boolean {
+  // A week that is written but not released is nobody's next week, whatever
+  // they have passed: passing week 40 does not open a week 41 that is not out.
+  if (!isReleasedWeek(week)) return false;
   const phase = phaseOfWeek(week);
   if (!phase) return false;
   return phase.index <= unlockedThroughPhase(passed);
+}
+
+/** The one test every door into a week applies — the timeline, the week hub,
+ *  a suite URL, the printed handbook.
+ *
+ *  For a released week the lock is pacing, and it fails OPEN: until the
+ *  learner's history has actually been read, nothing is locked (see
+ *  `useWeekAccess`). An unreleased week is the opposite case. It is not held
+ *  back to pace anyone; it is not out. So it stays shut until the app KNOWS
+ *  who is asking, and then opens only for the staff who review it. */
+export function weekIsClosed(
+  access: Pick<WeekAccess, "ready" | "isUnlocked">,
+  week: string | number,
+): boolean {
+  if (!isReleasedWeek(week)) return !(access.ready && access.isUnlocked(week));
+  return access.ready && !access.isUnlocked(week);
 }
 
 /** The one checkpoint standing between the learner and the next phase, or

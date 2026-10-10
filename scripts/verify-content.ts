@@ -283,6 +283,13 @@ function collectStrings(obj: unknown, out: string[]): void {
 // ============================================================
 for (const [key, week] of Object.entries(ALL_WEEKS)) {
   const phase = phaseOf(week.weekNumber);
+  // Every cap and quota below is skipped for a week with no phase row, and
+  // used to be skipped in silence. The app now holds weeks 41-80; a lesson
+  // for one of them must not pass this gate by being invisible to it.
+  if (!phase)
+    errors.push(
+      `${key}: week ${week.weekNumber} has no row in this file's PHASES — add its caps and quotas before any lesson for it is registered`,
+    );
   let vocabCount = 0;
 
   for (const lesson of week.lessons) {

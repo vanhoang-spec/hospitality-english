@@ -3,6 +3,7 @@
 // is composed in ./phase0.ts; the A2-B1 weeks below are hand-authored —
 // concrete, courteous, modal-verb-led phrases for 4-5★ hotels in Vietnam.
 
+import { isReleasedWeek } from "@/lib/phases";
 import { tipWithFormNote } from "./form-note";
 import { PHASE0_WEEKS, PHASE0_WORDS_BY_DEP, lockWeekHeadwords } from "./phase0";
 import { buildPhase1, phase1WordsByDep } from "./phase1";
@@ -25768,9 +25769,16 @@ for (const built of Object.values(REGISTRY))
   }
 }
 
+/** The weeks a learner's timeline and the HR matrix are built from: every
+ *  registered week that is RELEASED. A week written ahead of its release is
+ *  in `ALL_WEEKS`, where the gates and the checkpoint builders can reach it,
+ *  and not here — otherwise the first week-41 lesson merged would appear on
+ *  every hotel's timeline and in every completion figure the same day. */
 export const AVAILABLE_WEEKS = Array.from(
   new Set(Object.keys(REGISTRY).map((k) => parseInt(k.split("-")[1], 10))),
-).sort((a, b) => a - b);
+)
+  .filter(isReleasedWeek)
+  .sort((a, b) => a - b);
 
 /** Resolves review headwords (a week's `reviewWords`) back to their full
  *  VocabItems by searching all registered weeks of the same department.
