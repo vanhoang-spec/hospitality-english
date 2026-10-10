@@ -224,3 +224,22 @@ giữa đạt và không đạt. Rubric nói tổng là trung bình cộng; lấ
   phải hồi quy — restart server, mở tab mới.
 - Muốn chứng minh một thay đổi cơ học không đụng nội dung: `bun scripts/dump-week.ts $(seq 1 40)`
   rồi so sha256 trước/sau.
+
+## 19. Bản giả của một dịch vụ phải ghi theo đúng thứ tự dịch vụ thật ghi
+
+**Đã xảy ra (10/10/2026):** migration `20260929090000` chuyển `handle_new_user` sang đọc `org_id` và
+`role` từ `app_metadata` lúc INSERT — đúng về bảo mật. Nhưng Supabase Auth INSERT dòng `auth.users`
+chỉ với `{provider, providers}`, rồi mới UPDATE `app_metadata` của người gọi trong cùng giao dịch.
+Trigger không đọc được gì: **mọi tài khoản tạo ra đều không thuộc tổ chức nào, nhân sự khách sạn thành
+học viên thường.** `test:db` xanh, CI xanh, bộ giả lập hai hệ thống 99/99 — vì cả ba đều ghi dòng
+`auth.users` nguyên một lần, điều Auth không bao giờ làm. Lỗi chỉ lộ khi đọc lại dòng thật trên
+production: tài khoản đầu tiên tạo sau migration có `app_metadata.org_id` mà `profiles.org_id` NULL.
+
+**Làm gì:**
+
+- Giả một dịch vụ bên ngoài (Auth, cổng thanh toán, hàng đợi) thì chép **thứ tự ghi** của nó, không
+  chỉ kết quả cuối. Không biết thứ tự thì đọc mã nguồn của nó trước khi viết bản giả.
+  `createAsAuth()` trong `scripts/db/schema-test.ts` là mẫu cho Auth.
+- Trigger trên bảng do dịch vụ khác ghi: hỏi "lúc trigger chạy, cột này đã có giá trị chưa?".
+- Sau lần đầu một đường tạo dữ liệu chạy thật trên production, **đọc lại dòng nó vừa tạo** và so
+  với điều code tin là đúng. Lệnh trả 200 không nói gì về dòng đã ghi.
