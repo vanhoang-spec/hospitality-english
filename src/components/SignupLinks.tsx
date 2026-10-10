@@ -644,9 +644,9 @@ export function PartnersSection() {
       <h2 className="text-sm uppercase tracking-[0.2em] text-primary">Đối tác</h2>
       <p className="mt-2 text-sm text-foreground/75">
         Mỗi đối tác có một tài khoản học miễn phí để tự trải nghiệm app. Tài khoản mở khi đối tác
-        đang hoạt động và còn ít nhất một link đang mở; tạm dừng đối tác thì mọi link của họ ngừng
-        nhận đăng ký và tài khoản bị khoá. Đối tác tự đặt mật khẩu bằng link kích hoạt (dùng một
-        lần, 7 ngày).
+        đang hoạt động, kể cả khi chưa có link nào; tạm dừng đối tác thì mọi link của họ ngừng nhận
+        đăng ký và tài khoản bị khoá. Đối tác tự đặt mật khẩu bằng link kích hoạt (dùng một lần, 7
+        ngày).
       </p>
       {error && (
         <p className="mt-3 text-sm text-red-400">

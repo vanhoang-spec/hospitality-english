@@ -1,7 +1,10 @@
 # Bàn giao — dự án đang ở đâu
 
-Cập nhật: **08/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
+Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
+
+**10/10: Claude hết hạn mức, Codex làm tiếp.** Việc đang dở (PR #25, #26, phần CRM) ghi ở
+[`BAN-GIAO-CODEX-2026-10-10.md`](BAN-GIAO-CODEX-2026-10-10.md) — đọc file đó ngay sau file này.
 
 ---
 
@@ -300,18 +303,25 @@ Mọi câu vẫn đọc bằng giọng máy của thiết bị (`speechSynthesis
   trên máy thật: Edge (giọng Natural, tắt mạng), iPhone, Android — checklist mục 10 tài liệu gốc.
 - **08/10: đã merge (PR #22, `970eab8`) và chạy trên production.**
 
-### Tài khoản dùng thử của đối tác (08/10, nhánh `platform/partner-demo`)
+### Tài khoản dùng thử của đối tác (08/10, PR #23 đã merge; luật mở đổi 10/10)
 
 Người dùng muốn mỗi đối tác có một tài khoản học miễn phí để tự trải nghiệm và giới thiệu cho khách
 sạn, cùng trạng thái active/inactive cho đối tác, có ở cả app lẫn module B2B của CRM. Ba quyết định
 (08/10): đối tác **tự đặt mật khẩu bằng link kích hoạt**; tài khoản mở khi **đối tác active và còn ít
 nhất một link đang mở**; bật/tắt **ở cả hai nơi, tự đồng bộ** (app giữ trạng thái thật).
 
+**Đổi luật 10/10 (quyết định #23 trong hợp đồng CRM, phiên CRM_Embassy chuyển lời chủ dự án):** tài
+khoản mở khi **đối tác active**, không còn đòi link. Lý do: CRM nạp 27 nhân viên CS/Admission làm đối
+tác, tích "Tham gia" là Active; họ chưa có link nào nhưng phải học thử app trước. Hệ quả: thu hồi hay
+hết hạn link **không còn khoá** tài khoản; muốn khoá thì tạm dừng đối tác. Migration
+`20261010090000_partner_demo_active_only.sql` (chỉ thay `partner_is_live`), nhánh
+`platform/partner-demo-active-only`. Hợp đồng `luu_doi_tac` / `doi_tac_cap_nhat` không đổi.
+
 - `partners.active` (+ `status_changed_at`, `phone`, `email`, `demo_org_id`, `demo_user_id`). Tài khoản
   dùng thử nằm trong một org `kind = 'partner_demo'` (1 ghế, gói `p1`, `subscriptions.kind = 'demo'`
-  hạn 2100). `org_is_active()` cho org này = `partner_is_live(partner)`: active **và** có link
-  `retail`/`partner_hotel` chưa thu hồi, chưa hết hạn (link đã đủ lượt vẫn tính). Client hỏi RPC này
-  cho gói `demo`; bị khoá thì thấy màn hình "Tài khoản đối tác đang tạm khoá".
+  hạn 2100). `org_is_active()` cho org này = `partner_is_live(partner)`: từ 10/10 chỉ còn
+  `partners.active` (bản 08/10 đòi thêm một link `retail`/`partner_hotel` chưa thu hồi, chưa hết
+  hạn). Client hỏi RPC này cho gói `demo`; bị khoá thì thấy màn hình "Tài khoản đối tác đang tạm khoá".
 - Đối tác tạm dừng → `claim_signup_link` từ chối mọi link của họ (lời báo "đang tạm dừng") và tài khoản
   khoá ngay; bật lại là mở lại.
 - Link kích hoạt = token `password_reset_tokens.purpose = 'activate'`, 7 ngày, một lần, trang
@@ -326,7 +336,18 @@ nhất một link đang mở**; bật/tắt **ở cả hai nơi, tự đồng b�
   Sự kiện mới `doi_tac_cap_nhat` {doi_tac_crm_id, dang_hoat_dong, tai_khoan_sdt} khi app bật/tắt hoặc
   app tạo tài khoản cho đối tác của CRM. Hợp đồng gửi phiên CRM_Embassy để ghi vào
   `docs/TICH_HOP_HOSPITALITY.md` bên CRM.
-- Kiểm thử: `test:db` 116 phép (18 mới), `test:crm` 44 phép (5 mới).
+- Kiểm thử: `test:db` 113 phép (bản 08/10 là 116; luật 10/10 gộp 5 phép về link thành 2), `test:crm`
+  44 phép.
+- **CRM là nơi làm việc với đối tác (quyết định #24, #25 bên CRM):** tạo/sửa đối tác, link, hoa hồng,
+  thu tiền ở CRM; app giữ người học và trạng thái Active. Hoa hồng theo đối tác chỉ CRM biết.
+
+### Sửa nhỏ 08–10/10
+
+- **PR #24 (đã merge, `c41d496`):** Trò chơi tình huống sinh bong bóng không dứt vì `rounds` dựng lại
+  mỗi lần render; đã `useMemo`. Nút giọng đổi 🎚 thành ⚙. **Chưa ai xem lại trò chơi trên trình duyệt
+  sau khi sửa** — nhờ người dùng thử phần 6 của một tuần.
+- **Hướng dẫn học viên** (PDF A5 11 trang, ảnh chụp màn hình điện thoại): `docs/huong-dan-hoc-vien/`.
+  PR #25 (đang mở) thêm logo Embassy Language vào footer. Ảnh trang Nghe/Nói còn nút giọng biểu tượng cũ.
 
 ### Production
 
@@ -352,9 +373,10 @@ Không tự làm những việc này.
 1. **Bán lẻ cần dữ liệu thật trước khi bán:** Super Admin điền tài khoản ngân hàng nhận tiền (khối
    "Tài khoản nhận tiền" ở `/admin-console`) và tạo link đối tác. Trước đó trang thanh toán không có
    số tài khoản để chuyển.
-2. **Tài khoản dùng thử đối tác:** áp dụng migration `20261008180000_partner_demo.sql`, rồi merge
-   `platform/partner-demo`; phía CRM làm lệnh `luu_doi_tac` + sự kiện `doi_tac_cap_nhat`. Sau đó thử
-   với một đối tác thật: tạo tài khoản, mở link kích hoạt, tạm dừng rồi bật lại.
+2. **Tài khoản dùng thử đối tác — luật 10/10:** áp dụng migration
+   `20261010090000_partner_demo_active_only.sql`, rồi merge `platform/partner-demo-active-only`. (Bản
+   08/10 đã áp dụng và merge.) Sau đó thử với một đối tác thật từ CRM: tích "Tham gia", mở link kích
+   hoạt, đăng nhập khi chưa có link nào, tạm dừng rồi bật lại.
 3. **Thử đầu-cuối** với dữ liệu thử: link đối tác (khách sạn + cá nhân), lời mời tặng, đơn gia hạn.
 4. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
