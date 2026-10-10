@@ -74,6 +74,7 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 | `src/lib/content/week-content.ts`                                                       | Tuần soạn tay + registry + `getWeekContent(dep, week)`                                                 |
 | `src/lib/speaking-score.ts`                                                             | **Bộ chấm nói.** `utterancePassed`, `utterancePassedAny`                                               |
 | `src/lib/speaking-alternates.ts`                                                        | Các câu đáp khác mà khoá cũng chấp nhận cho cùng một lời khách                                         |
+| `src/lib/writing-score.ts`                                                              | **Bộ chấm bài tự do** (`scoreFreeText`): bài viết, chuyển ngữ, và lượt nói mở (`mode: "spoken"`)       |
 | `src/lib/checkpoint-paper.ts`                                                           | `buildPaper` — dựng nửa viết của bài sát hạch                                                          |
 | `src/lib/checkpoint-oral.ts`                                                            | `buildOral`, `oralHalfPassed` — nửa nói, gồm ô dự trữ bắt buộc đúng                                    |
 | `src/lib/phases.ts`                                                                     | Ranh giới phase, ngưỡng đạt, cơ cấu đề                                                                 |
@@ -127,20 +128,21 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 
 Chạy từ gốc repo. Tất cả gọi hàm production.
 
-| Lệnh                                                | Đo gì                                                                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `bun scripts/probes/six1.ts slot <nhóm> <i>`        | Một ô ngân hàng ở cả sáu bộ phận                                                    |
-| `bun scripts/probes/six1.ts lesson <LESSONID>`      | Một bài học, cả sáu bộ phận                                                         |
-| `bun scripts/probes/six1.ts grep <regex> [w1] [w2]` | Tìm một chuỗi trên mọi bản render                                                   |
-| `bun scripts/probes/leakall.ts`                     | Câu mẫu tự qua bộ chấm, và đáp án sai của chính khoá lọt qua bao nhiêu — cả 5 phase |
-| `bun scripts/probes/cheat.ts`                       | 9 hồ sơ gian lận: im lặng, nhại lời khách, câu tủ, bỏ hư từ…                        |
-| `bun scripts/probes/tricks.ts [N]`                  | Mẹo làm bài bề mặt (chọn dài nhất / ngắn nhất / giữa…) trên N đề thật               |
-| `bun scripts/probes/oralmeasure.ts [N]`             | Học thuộc 20/40/60/80 câu hay ra nhất thì qua nửa nói bao nhiêu                     |
-| `bun scripts/probes/orphans2.ts`                    | Cụm bắt nói mà không có thẻ ở tuần nào                                              |
-| `bun scripts/probes/resaid.ts [DEP] [--list]`       | Headword P3 tuần 23–29 không được nói lại ở tuần P3 nào sau                         |
-| `bun scripts/probes/swapone.ts [w1] [w2]`           | Thay một từ nội dung bằng "window": bao nhiêu lượt vẫn qua bộ chấm, chỉ nhờ nghĩa   |
-| `LINT_CONTENT_FULL=1 bun run lint:content`          | In trọn danh sách vi phạm của mọi cổng ratchet                                      |
-| `bun scripts/probes/sw-check.ts`, mở `/__run`       | Thử `public/sw.js` trong trình duyệt thật: mất mạng, có lại, gỡ bỏ (mốc: 16/16)     |
+| Lệnh                                                | Đo gì                                                                                |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `bun scripts/probes/six1.ts slot <nhóm> <i>`        | Một ô ngân hàng ở cả sáu bộ phận                                                     |
+| `bun scripts/probes/six1.ts lesson <LESSONID>`      | Một bài học, cả sáu bộ phận                                                          |
+| `bun scripts/probes/six1.ts grep <regex> [w1] [w2]` | Tìm một chuỗi trên mọi bản render                                                    |
+| `bun scripts/probes/leakall.ts`                     | Câu mẫu tự qua bộ chấm, và đáp án sai của chính khoá lọt qua bao nhiêu — cả 5 phase  |
+| `bun scripts/probes/cheat.ts`                       | 9 hồ sơ gian lận: im lặng, nhại lời khách, câu tủ, bỏ hư từ…                         |
+| `bun scripts/probes/tricks.ts [N]`                  | Mẹo làm bài bề mặt (chọn dài nhất / ngắn nhất / giữa…) trên N đề thật                |
+| `bun scripts/probes/oralmeasure.ts [N]`             | Học thuộc 20/40/60/80 câu hay ra nhất thì qua nửa nói bao nhiêu                      |
+| `bun scripts/probes/orphans2.ts`                    | Cụm bắt nói mà không có thẻ ở tuần nào                                               |
+| `bun scripts/probes/resaid.ts [DEP] [--list]`       | Headword P3 tuần 23–29 không được nói lại ở tuần P3 nào sau                          |
+| `bun scripts/probes/swapone.ts [w1] [w2]`           | Thay một từ nội dung bằng "window": bao nhiêu lượt vẫn qua bộ chấm, chỉ nhờ nghĩa    |
+| `bun scripts/probes/prose.ts [w1] [w2]`             | Tỷ lệ từ ngữ pháp trong câu mẫu thật so với một dãy từ khoá (ngưỡng của lượt nói mở) |
+| `LINT_CONTENT_FULL=1 bun run lint:content`          | In trọn danh sách vi phạm của mọi cổng ratchet                                       |
+| `bun scripts/probes/sw-check.ts`, mở `/__run`       | Thử `public/sw.js` trong trình duyệt thật: mất mạng, có lại, gỡ bỏ (mốc: 16/16)      |
 
 Mức chuẩn hiện tại để đối chiếu (đo 2026-09-27): `leakall` — câu mẫu tự qua **100%** ở cả 5
 phase; đáp án sai lọt P0 23/349 · P1 10/494 · P2–P4 **0**. `orphans2` — **0**.
