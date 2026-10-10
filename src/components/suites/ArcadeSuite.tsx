@@ -164,6 +164,8 @@ function ArcadeSuiteInner({
   const [spawnedKey, setSpawnedKey] = useState(0); // forces re-spawn per round
   const idRef = useRef(0);
   const startedRef = useRef<number>(0);
+  // True once every option of the current wave is on its way across.
+  const waveOutRef = useRef(false);
 
   function startGame() {
     setStage("playing");
@@ -221,8 +223,10 @@ function ArcadeSuiteInner({
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     const timers: number[] = [];
+    waveOutRef.current = false;
     shuffled.forEach((opt, i) => {
       const t = window.setTimeout(() => {
+        if (i === shuffled.length - 1) waveOutRef.current = true;
         setBubbles((prev) => [
           ...prev,
           {
@@ -240,11 +244,25 @@ function ArcadeSuiteInner({
     return () => timers.forEach((t) => clearTimeout(t));
   }, [stage, roundIdx, spawnedKey, rounds]);
 
+  // The round's options come out once. If the learner lets all three cross
+  // the screen — still reading, or having tapped only wrong ones — nothing
+  // was left to tap and the round sat empty until the clock ran out. Send
+  // the same three round again, reshuffled, for as long as the round is
+  // open. Kept after the spawn effect: a new round resets waveOutRef there
+  // first, so the empty moment between two rounds does not count.
+  useEffect(() => {
+    if (stage !== "playing" || bubbles.length > 0 || !waveOutRef.current) return;
+    waveOutRef.current = false;
+    setSpawnedKey((k) => k + 1);
+  }, [stage, bubbles]);
+
   function tapBubble(b: Bubble) {
     if (b.popped || poppedRef.current.has(b.id)) return;
     poppedRef.current.add(b.id);
     setBubbles((bs) => bs.map((x) => (x.id === b.id ? { ...x, popped: true } : x)));
     if (b.correct) {
+      // Solved: nothing more comes out for this round.
+      waveOutRef.current = false;
       const newScore = score + 2;
       setScore(newScore);
       awardStars(2);
