@@ -574,7 +574,7 @@ Không tự làm những việc này.
    **năm hai nằm trong gói tính phí hiện tại**, không bán riêng; **AI chấm thì hỏi dùng DeepSeek** —
    dùng được với bốn điều kiện (dữ liệu sang Trung Quốc nên không gửi thông tin nhận diện; không có cam
    kết sẵn sàng nên cần nhà cung cấp thứ hai; viết không gắn nhà cung cấp; chọn bằng phép so với 100
-   bài giáo viên đã chấm). Còn mở: khi HR và học viên chọn khác nhau thì theo ai (đề xuất theo HR);
+   bài giáo viên đã chấm). **Khi HR và học viên chọn khác nhau thì theo HR** (chốt 10/10). Còn mở:
    chốt nhà cung cấp AI sau phép so. Bước kế đề xuất: một Academic Director và một Hotel Manager chấm
    mù outline, rồi mới xây phép đo và khung 80 tuần, rồi soạn thử Phase 5 cho Lễ tân. **Không soạn bài
    tuần 41+ trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không giữ được.

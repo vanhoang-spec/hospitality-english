@@ -259,7 +259,8 @@ Không có những phần này thì 40 tuần mới chỉ là thêm bài, không
    ràng buộc `BETWEEN 1 AND 40` trong ba migration; thang cấp bậc sao (`jobRankFor`); các chữ "40
    tuần" trên giao diện và tài liệu.
 6. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh;
-   học viên chọn ở tuần 61, HR chọn hoặc đổi được ở trang quản lý nhân viên (mục 9.1).
+   học viên chọn ở tuần 61, HR chọn hoặc đổi được ở trang quản lý nhân viên, và lựa chọn của HR thắng
+   (mục 9.1).
 
 ## 8. Khối lượng soạn và thứ tự làm
 
@@ -277,8 +278,9 @@ bốn bộ phận còn lại.
 
 ### 9.1 Chọn nhánh: học viên hoặc HR, cả hai đều được
 
-Tới tuần 61 học viên tự chọn nhánh; HR cũng chọn hoặc đổi được cho nhân viên của mình. **Còn mở:**
-khi hai bên chọn khác nhau thì theo ai. Đề xuất: theo HR, vì HR biết ai đang được đưa lên trưởng ca.
+Tới tuần 61 học viên tự chọn nhánh; HR cũng chọn hoặc đổi được cho nhân viên của mình. **Khi hai bên
+chọn khác nhau thì theo HR** (chủ dự án chốt 10/10). Nghĩa là: HR đã chọn cho một nhân viên thì học
+viên đó không tự đổi được; HR chưa chọn thì lựa chọn của học viên có hiệu lực.
 
 ### 9.2 Cách bán: nằm trong gói tính phí hiện tại
 
