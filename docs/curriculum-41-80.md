@@ -249,14 +249,14 @@ Tuần 78 luyện đúng dạng bài của tuần 80 (đề xuất viết, trìn
   tra nói tiếng Anh.
 - **Nhánh B không trao quyền.** Quyền của trưởng ca do khách sạn giao, mỗi nơi một khác. Mọi bài "trong
   khung" của Nhánh B mở bằng điều kiện "nếu khách sạn giao cho bạn quyền này", và mỗi tuần có bài "trong
-  khung" đều có bài "ngoài khung" đi kèm. Màn hình chọn nhánh ghi rõ: Nhánh B dành cho người đang hoặc
-  sắp giữ vai trưởng ca, giám sát; hỏi trưởng bộ phận trước khi chọn.
+  khung" đều có bài "ngoài khung" đi kèm. Học viên không tự vào Nhánh B: mặc định là Nhánh A, Nhánh B
+  chỉ mở khi HR gán (mục 9.1).
 - **Mỗi tuần 2 bài chung + 2 bài riêng nhánh.** Soạn gấp rưỡi chứ không gấp đôi, và hai nhánh có
   chung một nửa bể đề sát hạch.
-- **Đổi nhánh** được ở đầu mỗi giai đoạn. Ai đổi sang Nhánh B ở tuần 71 học thêm hai bài nối trước khi
-  vào tuần 71: khung thẩm quyền (bài 3B–4B của tuần 63) và luật cầu nối (tuần 69 B). Đổi sang Nhánh A
-  không cần bài nối.
-- Nhánh do học viên hoặc HR chọn, cả hai đều được (mục 9.1).
+- **Mặc định Nhánh A; Nhánh B chỉ khi HR gán** (chủ dự án chốt 11/10/2026, mục 9.1).
+- **Đổi nhánh** có hiệu lực ở đầu một giai đoạn (tuần 61 hoặc 71). Ai được HR gán sang Nhánh B ở tuần
+  71 học thêm hai bài nối trước khi vào tuần 71: khung thẩm quyền (bài 3B–4B của tuần 63) và luật cầu
+  nối (tuần 69 B). Về lại Nhánh A không cần bài nối.
 
 ## 5. Luật nhà
 
@@ -429,9 +429,9 @@ Không có những phần này thì 40 tuần mới chỉ là thêm bài, không
    cứng ở 40 tuần (`scripts/verify-content.ts`, `scripts/lint-content.ts`, `scripts/qa-full.ts`); sáu
    ràng buộc `BETWEEN 1 AND 40` trong ba migration; thang cấp bậc sao (`jobRankFor`); các chữ "40
    tuần" trên giao diện và tài liệu.
-9. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh;
-   học viên chọn ở tuần 61, HR chọn hoặc đổi được ở trang quản lý nhân viên, và lựa chọn của HR thắng
-   (mục 9.1); hai bài nối khi đổi sang Nhánh B.
+9. **Gán nhánh:** lưu nhánh của từng học viên theo bộ phận, mặc định Nhánh A; tiến độ và bài sát hạch
+   tách theo nhánh; HR gán hoặc gỡ Nhánh B ở trang quản lý nhân viên, học viên không có nút tự chọn
+   (mục 9.1); hai bài nối khi được gán sang Nhánh B ở tuần 71.
 
 ## 8. Khối lượng soạn và thứ tự làm
 
@@ -448,20 +448,20 @@ Thứ tự đề xuất: outline qua chấm mù → xây phép đo và khung 80 
 luôn mẫu bài làm để so AI với giáo viên → chấm mù theo đúng quy trình 10 auditor → nhân ra bốn bộ phận
 còn lại.
 
-## 9. Ba việc chủ dự án đã trả lời (10/10/2026)
+## 9. Ba việc chủ dự án đã trả lời (10–11/10/2026)
 
-### 9.1 Chọn nhánh: học viên hoặc HR, cả hai đều được
+### 9.1 Chọn nhánh: mặc định Nhánh A, Nhánh B chỉ khi HR gán
 
-Tới tuần 61 học viên tự chọn nhánh; HR cũng chọn hoặc đổi được cho nhân viên của mình. **Khi hai bên
-chọn khác nhau thì theo HR** (chủ dự án chốt 10/10). Nghĩa là: HR đã chọn cho một nhân viên thì học
-viên đó không tự đổi được; HR chưa chọn thì lựa chọn của học viên có hiệu lực.
+Tới tuần 61 mọi học viên vào **Nhánh A**. **Nhánh B chỉ mở khi HR của khách sạn gán** cho nhân viên
+đó; học viên không tự chọn và không tự đổi được (chủ dự án chốt 11/10/2026).
 
-Vòng chấm mù thứ nhất nêu một rủi ro của cách này: nhân viên tuyến đầu tự chọn Nhánh B sẽ luyện 20
-tuần cách nói của người có quyền mà mình chưa có. Quyết định của chủ dự án giữ nguyên; outline giảm
-rủi ro bằng ba cách: bài "trong khung" luôn mở bằng "nếu khách sạn giao cho bạn quyền này" và đi kèm
-bài "ngoài khung" (mục 4, 5.2); màn hình chọn nhánh nói rõ Nhánh B dành cho ai; và HR nhìn thấy, đổi
-được lựa chọn của từng nhân viên. Nếu chủ dự án muốn chặt hơn, phương án là mặc định Nhánh A và chỉ mở
-Nhánh B khi HR gán — việc này chờ chủ dự án quyết.
+Quyết định này thay cho câu trả lời ngày 10/10 ("học viên hoặc HR chọn đều được; khác nhau thì theo
+HR"). Lý do đổi là phát hiện của vòng chấm mù thứ nhất: nhân viên tuyến đầu tự chọn Nhánh B sẽ luyện 20
+tuần cách nói của người có quyền mà mình chưa có. Hai lớp bảo vệ còn lại vẫn giữ: bài "trong khung"
+luôn mở bằng "nếu khách sạn giao cho bạn quyền này" và luôn đi kèm bài "ngoài khung" (mục 4, 5.2).
+
+Hệ quả: HR gán trước tuần 61 thì nhân viên vào Nhánh B từ tuần 61; gán sau đó thì có hiệu lực ở tuần
+71, kèm hai bài nối (mục 4). Khách sạn không gán ai thì cả khách sạn học Nhánh A, không thiếu gì.
 
 ### 9.2 Cách bán: nằm trong gói tính phí hiện tại
 
