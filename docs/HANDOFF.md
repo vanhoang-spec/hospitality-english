@@ -3,6 +3,9 @@
 Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
+**10/10 tối: PR #31 (đợt 3 — tiến độ, học tiếp, lưu điểm dừng, cài như app) đang mở, CHƯA merge;**
+chủ dự án dặn chưa merge. Xem §4 "Đợt 3" và §5 mục 7. `main` = `047c35e` (PR #30, chỉ tài liệu).
+
 **10/10 chiều: `main` = `bd2e379` (PR #29).** Việc lớn nhất trong ngày: mọi tài khoản mới tạo đều
 không được gắn vào tổ chức của nó — đã sửa và đã áp dụng lên production, xem §4 "Tài khoản mới không
 gắn vào tổ chức". Dữ liệu thử phiên CRM chèn vào production của app trong ngày đã được xoá (§5 mục
@@ -427,6 +430,67 @@ không tính ghế, hết hạn hay tạm dừng đều không khoá được ai
 - **Số đo:** `test:db` 120 phép (113 + 7 mới). Không có migration: HR ra `{role: member, org_id:
 null}`, khách sạn 2 ghế nhận người thứ ba.
 
+### Đợt 3: tiến độ, học tiếp, lưu điểm dừng, cài như app (PR #31, đang mở — CHƯA merge)
+
+Nhánh `claude/github-repo-connection-rssgy2`. Năm commit gốc làm từ tháng 8 (backlog P2-3, P2-4, P2-5,
+P2-1a); 10/10 phiên mobile gộp `main` vào và sửa 3 lỗi tải-lại-trang (điểm bị cộng đôi, câu sai được
+làm lại, lượt nghe được nạp lại); cùng ngày phiên desktop đẩy lên, rà và sửa tiếp 8 điểm dưới đây.
+**Không có migration, không sửa server function, không đụng `/api`.**
+
+Người học được gì:
+
+- **Tiến độ của chính mình** (`src/lib/progress.ts`): thanh "Tuần N/40" ở trang bộ phận, "n/6 suite"
+  trên tuần đã học, tick và điểm trên từng cửa. Sáu suite lõi làm mẫu số; sát hạch/viết/trung gian có
+  tick riêng, không tính vào.
+- **Thẻ "Tiếp tục học"** ở đầu trang chủ: máy này nhớ tuần vừa vào; máy khác thì lấy tuần có kết quả
+  gần nhất trong `lesson_progress`.
+- **Lưu điểm dừng** (`src/lib/session-resume.ts`, localStorage theo người + bộ phận + tuần + suite) cho
+  Từ vựng, Nghe và nửa viết của sát hạch. Luôn hỏi trước khi khôi phục. Câu đã trả lời khôi phục ở
+  trạng thái đã trả lời. **Chưa có:** Ngữ pháp, Nói, Đọc, Arcade.
+- **Cài như app** (`public/manifest.webmanifest`, `public/sw.js`, `src/components/InstallPrompt.tsx`):
+  icon trên màn hình điện thoại, trang báo mất mạng, lời mời cài sau bài đầu tiên.
+
+Tám điểm đã sửa 10/10, và **ba lựa chọn tôi tự chốt — chủ dự án đổi được, mỗi cái một chỗ:**
+
+1. **Sát hạch dở chỉ nối lại được trong 2 giờ** (`CHECKPOINT_RESUME_WINDOW_MIN` trong `phases.ts`),
+   không phải 7 ngày như suite luyện. Bài dở lưu **trước** lần trượt gần nhất không được mời nối lại
+   (trước đó là đường vòng qua thời gian chờ thi lại: trượt ở máy này, nối bài dở ở máy kia). Trang giới
+   thiệu bài thi và bản hướng dẫn học viên đều ghi rõ 2 giờ. _Lựa chọn 1._
+2. **Làm xong bài lúc mất mạng không còn mất kết quả** (`src/lib/pending-results.ts`): mọi kết quả ghi
+   vào hàng chờ trên máy trước, gửi từ hàng chờ; gửi lại khi mở app và khi có mạng trở lại. Mỗi suite
+   một dòng, dòng mới thắng, "đã đạt" không bị mất vì lần làm lại kém hơn. Lỗi này có sẵn trên `main`
+   (gửi một lần, không thử lại). `test:results` 25 phép, đã vào `bun run ci` và CI GitHub.
+3. **Rút phần chạy nền về được bằng một công tắc** (`OFFLINE_SHELL` trong `src/lib/pwa.ts`): tắt rồi
+   deploy thì từng máy tự gỡ service worker và xoá cache ở lần mở app kế tiếp. **Đừng xoá hay sửa tay
+   `public/sw.js` để gỡ.** Service worker giờ chỉ giữ lâu dài file dưới `/assets/` (tên có hash); trước
+   đó nó giữ mọi `.js/.css/.png` theo đuôi file, nên một icon đổi sẽ không bao giờ tới máy đã có bản
+   cũ. Đã thử trong trình duyệt thật: `bun scripts/probes/sw-check.ts` rồi mở `/__run` — **16/16** trên
+   Edge (trang đã mở vẫn xem được khi mất mạng, trang chưa mở ra trang báo mất mạng, `/api/` và server
+   function không bao giờ lấy từ cache, gỡ xong không còn gì). Trình duyệt trong app Claude không đăng
+   ký được service worker — dùng Edge/Chrome.
+4. **Đăng xuất vẫn xoá điểm dừng — giữ có chủ ý.** `signOut()` xoá mọi khoá `academy.*` để máy dùng
+   chung không còn gì của người vừa rời (luật có sẵn). Điểm dừng, thẻ "Tiếp tục học" và hàng chờ kết
+   quả đều nằm dưới tiền tố đó. Menu tài khoản giờ **báo trước**: còn bao nhiêu kết quả chưa gửi, bao
+   nhiêu bài đang dở. _Lựa chọn 2:_ muốn điểm dừng sống qua đăng xuất thì đổi tiền tố trong
+   `session-resume.ts` (như `voice.ts` đã làm với `hospitality.voice.v1`).
+5. **Lời mời cài chỉ hiện ở trang chủ, trang bộ phận, trang tuần** (`isLobbyPath`), không hiện trong
+   bài học — nó nằm cố định ở đáy màn hình, đúng chỗ bong bóng Arcade bay và nút "Câu tiếp".
+6. **Icon là dấu hiệu của logo Embassy Hospitality** (hai bong bóng thoại, nền trắng), cắt từ
+   `src/assets/Logo_EmbassyHospitality_filetrong.png` bằng `bun scripts/gen-icons.ts`. Tên app
+   "Embassy Hospitality", nhãn dưới icon "Hospitality". _Lựa chọn 3:_ đổi tên ở
+   `public/manifest.webmanifest` và thẻ `apple-mobile-web-app-title` trong `__root.tsx`.
+7. **Hướng dẫn học viên:** đã sửa ba câu (tuần học dở hiện "Học tiếp →", phần đã làm hiện "Học lại",
+   sát hạch nối lại trong 2 giờ) và in lại PDF, vẫn 11 trang. **Chưa làm được:** ba ảnh chụp (trang
+   chủ, danh sách tuần, các cửa luyện) vẫn là giao diện cũ — chụp lại cần người đăng nhập. Bản tiếng
+   Anh 11 trang ở repo CRM (dựng 10/10 từ bản Việt) cũng cần ba câu và ba ảnh đó; repo CRM do phiên
+   CRM sửa.
+8. Mục này.
+
+- **Số đo:** `bun run ci` xanh — xem commit. Chưa ai thử trên điện thoại thật: cài app trên
+  Android/iPhone, học lúc mất mạng rồi có mạng lại, tải lại trang giữa bài.
+- **Chưa xem được trên trình duyệt** (cần đăng nhập): lời nhắc trước khi đăng xuất, lời mời cài, thẻ
+  "Tiếp tục học", thanh tiến độ.
+
 ### Production
 
 Theo commit `2de39b8` trên `main` (01/10): năm migration nền tảng **đã áp dụng lên production**,
@@ -441,6 +505,9 @@ migration chưa áp dụng" của bản HANDOFF 24/09 đã cũ. Hướng dẫn q
   có OTP qua SMS/Zalo.
 - Không có thanh toán trực tuyến.
 - Một phiên sống mỗi tài khoản là răn đe, không phải khoá cứng.
+- (Khi PR #31 đã merge) "Học khi mất mạng" nghĩa là: trang **đã mở trước đó** xem lại được, và kết quả
+  bài vừa làm **chờ trên máy** tới khi có mạng. Không đăng nhập được và không mở được trang chưa từng
+  mở. Đăng xuất trước khi có mạng lại là mất kết quả đang chờ.
 
 ---
 
@@ -469,6 +536,14 @@ Không tự làm những việc này.
 6. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
    `README.md`.)
+7. **PR #31 (đợt 3) — chủ dự án dặn CHƯA merge.** Trước khi merge nên có: (a) một lần thử trên điện
+   thoại thật (cài app, học lúc mất mạng, tải lại giữa bài); (b) chủ dự án xem ba lựa chọn tôi tự chốt
+   ở §4 "Đợt 3" — sát hạch nối lại trong 2 giờ, đăng xuất vẫn xoá điểm dừng, tên và icon app. Sau khi
+   merge: chụp lại ba ảnh của hướng dẫn học viên, và báo phiên CRM sửa bản tiếng Anh.
+8. **`bun.lock` còn 13 gói trỏ về kho của Lovable** (`europe-west4-npm.pkg.dev/lovable-core-prod`).
+   Phiên mobile báo: cùng phiên bản trên npm công khai có hash giống hệt; nếu kho Lovable đóng thì CI
+   và Vercel không cài được dependency. Đề xuất một PR riêng trỏ sang npm, kèm gỡ khối cảnh báo Lovable
+   ở đầu `AGENTS.md` nếu dự án không còn dùng Lovable. Chưa làm, chờ chủ dự án xác nhận.
 
 ---
 

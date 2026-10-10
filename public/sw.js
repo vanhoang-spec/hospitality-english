@@ -9,6 +9,11 @@
 // Nothing here caches Supabase: it is a different origin and the same-origin
 // check drops it. Server functions are excluded by name as well, because a
 // cached mutation response would be a correctness bug, not a slow page.
+//
+// To take this worker back, do not edit it and do not delete it: flip
+// OFFLINE_SHELL in src/lib/pwa.ts. The app then unregisters the worker and
+// deletes these caches on each phone. Tried in a real browser with
+// scripts/probes/sw-check.ts.
 
 const VERSION = "v1";
 const PAGE_CACHE = `academy-pages-${VERSION}`;
@@ -44,13 +49,15 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/** Content-hashed build output: safe to serve from cache forever. */
+/** Content-hashed build output: safe to serve from cache forever.
+ *
+ *  Only /assets/ — every file the build emits there carries its hash in its
+ *  name. An earlier version matched any .js/.css/.png by extension, which
+ *  also froze the files that keep their name across releases (the icons, and
+ *  anything later put in public/): a new logo would never have reached a
+ *  phone that had seen the old one. */
 function isImmutableAsset(url) {
-  return (
-    url.pathname.startsWith("/_build/") ||
-    url.pathname.startsWith("/assets/") ||
-    /\.(?:js|css|woff2?|png|svg|webp|jpg|jpeg|ico)$/.test(url.pathname)
-  );
+  return url.pathname.startsWith("/assets/");
 }
 
 function isServerCall(url) {
@@ -100,6 +107,15 @@ self.addEventListener("fetch", (event) => {
             return res;
           }),
       ),
+    );
+    return;
+  }
+
+  // The offline page's own files: fresh from the network whenever there is
+  // one, from the install-time copy when there is not.
+  if (PRECACHE.includes(url.pathname)) {
+    event.respondWith(
+      fetch(req).catch(async () => (await caches.match(url.pathname)) ?? Response.error()),
     );
   }
 });

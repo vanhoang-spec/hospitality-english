@@ -53,9 +53,10 @@ jobs:
       - name: Database schema & rules
         run: bun run test:db
       # Logic tested with fakes: the CRM door's signatures and commands,
-      # password reset by email, and which voice reads which line.
-      - name: CRM door, password reset, voice picker
-        run: bun run test:crm && bun run test:reset && bun run test:voice
+      # password reset by email, which voice reads which line, and a lesson
+      # result waiting on the device until the network takes it.
+      - name: CRM door, password reset, voice picker, offline results
+        run: bun run test:crm && bun run test:reset && bun run test:voice && bun run test:results
       - name: Lint
         run: bun run lint
       - name: Format check

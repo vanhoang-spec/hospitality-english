@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { hasFinishedASuite } from "@/lib/academy-store";
 import { useSession } from "@/lib/auth";
+import { isLobbyPath, syncOfflineShell } from "@/lib/pwa";
 
 /**
  * PWA install prompt and service-worker registration (backlog P2-1a).
@@ -15,6 +17,9 @@ import { useSession } from "@/lib/auth";
  * The prompt waits for the first finished suite. Asking for a home-screen
  * icon before anyone has completed a lesson spends the one install prompt
  * the browser grants on someone with no reason yet to say yes.
+ *
+ * It then waits once more, for the learner to leave the lesson: the banner
+ * shows on the home, department and week pages only (isLobbyPath).
  */
 
 const DISMISS_PREFIX = "academy.installPrompt.v1.";
@@ -45,6 +50,7 @@ function isIosSafari(): boolean {
 export function InstallPrompt() {
   const { session } = useSession();
   const userId = session?.user.id;
+  const { pathname } = useLocation();
   const [deferred, setDeferred] = useState<InstallEvent | null>(null);
   const [iosHint, setIosHint] = useState(false);
   const [earned, setEarned] = useState(false);
@@ -52,15 +58,7 @@ export function InstallPrompt() {
 
   // Registration is separate from the prompt: the offline shell should be
   // built up from the first visit, whether or not the learner ever installs.
-  useEffect(() => {
-    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
-    // Dev serves modules unbundled and unhashed, where a caching worker
-    // turns every edit into a stale-asset hunt.
-    if (!import.meta.env.PROD) return;
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      // An unavailable worker costs the offline shell and nothing else.
-    });
-  }, []);
+  useEffect(() => syncOfflineShell(), []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -109,6 +107,7 @@ export function InstallPrompt() {
 
   if (dismissed || !earned || isStandalone()) return null;
   if (!deferred && !iosHint) return null;
+  if (!isLobbyPath(pathname)) return null;
 
   return (
     <motion.div
@@ -119,7 +118,7 @@ export function InstallPrompt() {
       aria-label="Thêm ứng dụng vào màn hình chính"
     >
       <div className="flex items-start gap-3">
-        <img src="/icon-192.png" alt="" className="h-10 w-10 flex-none" />
+        <img src="/icon-192.png" alt="" className="h-10 w-10 flex-none rounded-lg" />
         <div className="min-w-0">
           <p className="font-display text-lg leading-tight text-foreground">
             Thêm vào màn hình chính

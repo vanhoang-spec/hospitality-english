@@ -153,6 +153,16 @@ export const oralPassMin = (drawn: number) =>
  *  stay inside the same sitting. A pass is never subject to it. */
 export const CHECKPOINT_RETAKE_COOLDOWN_MIN = 20;
 
+/** How long an interrupted checkpoint sitting can still be picked up.
+ *
+ *  A practice suite keeps its place for a week. A checkpoint is an
+ *  assessment, and a paper put down on Monday and finished on Thursday is not
+ *  one sitting: every question seen so far has had three days to be looked
+ *  up or asked about. Two hours covers what resume is for — a call, a guest,
+ *  a dead battery, the rest of a shift's break — and no more. After that the
+ *  learner starts a fresh paper, as they always did before resume existed. */
+export const CHECKPOINT_RESUME_WINDOW_MIN = 120;
+
 /** TTS speed a learner hears, by week — the ladder promised in
  *  docs/curriculum-level-matrix.md (0.70 → 0.75 → 0.80 → 0.85 → 0.90).
  *

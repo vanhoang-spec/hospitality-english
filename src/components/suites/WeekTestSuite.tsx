@@ -20,6 +20,7 @@ import {
   oralPassMin,
   CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
+  CHECKPOINT_RESUME_WINDOW_MIN,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
   CONSTRUCT_LABEL_VI,
@@ -333,9 +334,24 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   // written score is already committed to lesson_progress (see
   // submitAnswer), so an interruption during the oral half costs a retake
   // of the oral, never the twenty answered questions.
-  const store = useSuiteSession<WeekTestSnapshot>(dep, week ?? "", "weektest");
+  //
+  // Two limits a practice suite does not have, because this is the paper the
+  // phase gate and the manager's matrix trust:
+  //  · it can be picked up for CHECKPOINT_RESUME_WINDOW_MIN after the last
+  //    answer, not for a week (see the constant);
+  //  · a sitting saved BEFORE the last failed attempt is not offered. Without
+  //    that, a paper left open on a second phone was a way round the retake
+  //    cooldown: fail on one device, resume the other.
+  const store = useSuiteSession<WeekTestSnapshot>(
+    dep,
+    week ?? "",
+    "weektest",
+    CHECKPOINT_RESUME_WINDOW_MIN * 60_000,
+  );
   const [resumeHandled, setResumeHandled] = useState(false);
-  const resumable = store.ready && !resumeHandled && store.saved !== null && stage === "intro";
+  const overtaken = store.savedAt !== null && lastFailure !== null && store.savedAt < lastFailure;
+  const resumable =
+    store.ready && !resumeHandled && store.saved !== null && !overtaken && stage === "intro";
 
   useEffect(() => {
     if (!store.ready || resumable) return;
@@ -483,12 +499,13 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   if (stage === "intro") {
     return (
       <div className="mx-auto max-w-2xl">
-        {/* Offered even during the retake cooldown: this is not a new
-            attempt, it is the one already under way. Blocking it would
-            make the cooldown punish the interruption itself. */}
+        {/* Offered even during the retake cooldown, as long as the sitting
+            began after the failure that started it (`overtaken` above): that
+            is not a new attempt, it is the one already under way, and
+            blocking it would make the cooldown punish the interruption. */}
         {resumable && store.saved && (
           <ResumeBanner
-            detail={`Bài thi đang dở — tiếp tục từ câu ${store.saved.idx + 1}/${store.saved.paper.length}. Các câu đã trả lời vẫn được giữ.`}
+            detail={`Bài thi đang dở — tiếp tục từ câu ${store.saved.idx + 1}/${store.saved.paper.length}. Các câu đã trả lời vẫn được giữ. Bài dở chỉ làm tiếp được trong ${CHECKPOINT_RESUME_WINDOW_MIN / 60} giờ.`}
             onResume={resumeSitting}
             onRestart={discardSitting}
           />
@@ -528,6 +545,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               <strong>{Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%</strong> số câu. Câu mẫu chỉ
               hiện ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn
               được tính.
+            </p>
+            <p>
+              Nên làm một mạch. Nếu bị ngắt giữa phần trắc nghiệm, bạn làm tiếp được bài đang dở
+              trong vòng <strong>{CHECKPOINT_RESUME_WINDOW_MIN / 60} giờ</strong>; quá thời gian đó
+              là một đề mới.
             </p>
           </div>
           {cooldownMsLeft > 0 ? (

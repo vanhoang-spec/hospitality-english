@@ -17,6 +17,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSession } from "@/lib/auth";
 
+// The key sits under "academy." and signOut (lib/auth) clears everything
+// there: a hotel's shared machine keeps nothing of the learner who just left
+// it. So a run survives a closed tab, a dead battery or a week away — and
+// does not survive signing out. The account menu says so before it happens
+// (`unfinishedRunCount`).
 const PREFIX = "academy.session.v1.";
 
 /** A snapshot older than this is likelier to confuse than to help: the
@@ -25,7 +30,9 @@ const PREFIX = "academy.session.v1.";
  *  longer remember starting. */
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
-type Envelope<T> = { v: 1; savedAt: number; state: T };
+/** `maxAgeMs` travels with the snapshot so that anything counting snapshots
+ *  (the account menu) applies the same limit as the suite that wrote it. */
+type Envelope<T> = { v: 1; savedAt: number; maxAgeMs?: number; state: T };
 
 export function suiteSessionKey(
   userId: string | undefined,
@@ -36,31 +43,61 @@ export function suiteSessionKey(
   return `${PREFIX}${userId ?? "anon"}.${dep.toUpperCase()}.${week}.${suite}`;
 }
 
-function readSnapshot<T>(key: string): T | null {
-  if (typeof window === "undefined") return null;
+function parseEnvelope<T>(raw: string | null): Envelope<T> | null {
+  if (!raw) return null;
   try {
-    const raw = window.localStorage.getItem(key);
-    if (!raw) return null;
     const parsed = JSON.parse(raw) as Envelope<T>;
     if (parsed?.v !== 1 || typeof parsed.savedAt !== "number") return null;
-    if (Date.now() - parsed.savedAt > MAX_AGE_MS) {
-      window.localStorage.removeItem(key);
-      return null;
-    }
-    return parsed.state;
+    return parsed;
   } catch {
     return null;
   }
 }
 
-function writeSnapshot<T>(key: string, state: T) {
+const expired = (e: Envelope<unknown>, maxAgeMs: number) =>
+  Date.now() - e.savedAt > Math.min(maxAgeMs, e.maxAgeMs ?? MAX_AGE_MS);
+
+function readSnapshot<T>(key: string, maxAgeMs: number): { state: T; savedAt: number } | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const parsed = parseEnvelope<T>(window.localStorage.getItem(key));
+    if (!parsed) return null;
+    if (expired(parsed, maxAgeMs)) {
+      window.localStorage.removeItem(key);
+      return null;
+    }
+    return { state: parsed.state, savedAt: parsed.savedAt };
+  } catch {
+    return null;
+  }
+}
+
+function writeSnapshot<T>(key: string, state: T, maxAgeMs: number) {
   if (typeof window === "undefined") return;
   try {
-    const envelope: Envelope<T> = { v: 1, savedAt: Date.now(), state };
+    const envelope: Envelope<T> = { v: 1, savedAt: Date.now(), maxAgeMs, state };
     window.localStorage.setItem(key, JSON.stringify(envelope));
   } catch {
     // Quota or private mode. A snapshot that cannot be written must never
     // interrupt the run it exists to protect.
+  }
+}
+
+/** Runs this learner could still pick up on this device. Signing out throws
+ *  them away, so the account menu counts them before it does. */
+export function unfinishedRunCount(userId: string | undefined): number {
+  if (typeof window === "undefined" || !userId) return 0;
+  try {
+    let n = 0;
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      if (!key?.startsWith(`${PREFIX}${userId}.`)) continue;
+      const parsed = parseEnvelope<unknown>(window.localStorage.getItem(key));
+      if (parsed && !expired(parsed, MAX_AGE_MS)) n++;
+    }
+    return n;
+  } catch {
+    return 0;
   }
 }
 
@@ -78,6 +115,8 @@ export type SuiteSession<T> = {
    *  it drives the resume prompt, and must not change under the learner
    *  as their own `save` calls land. */
   saved: T | null;
+  /** When `saved` was written (epoch ms), or null with it. */
+  savedAt: number | null;
   /** False until localStorage has been read (never true during SSR). */
   ready: boolean;
   save: (state: T) => void;
@@ -88,45 +127,57 @@ export type SuiteSession<T> = {
 /**
  * Per-(user, department, week, suite) run snapshot in localStorage.
  *
- * Scoped to the user because these devices are shared — a shift phone
- * passed between two housekeepers must not offer one of them the other's
- * half-finished paper.
+ * Scoped to the user so that one learner is never offered another's
+ * half-finished paper, whatever is left on a shared device.
+ *
+ * `maxAgeMs` shortens how long a run stays resumable (the checkpoint's is
+ * two hours, see CHECKPOINT_RESUME_WINDOW_MIN); the default is a week.
  */
 export function useSuiteSession<T>(
   dep: string,
   week: string | number,
   suite: string,
+  maxAgeMs: number = MAX_AGE_MS,
 ): SuiteSession<T> {
   const { session, loading } = useSession();
   const userId = session?.user.id;
   const key = suiteSessionKey(userId, dep, week, suite);
 
-  const [saved, setSaved] = useState<T | null>(null);
+  const [found, setFound] = useState<{ state: T; savedAt: number } | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     // Wait for the session: reading early would look under the "anon" key
     // and miss the learner's own snapshot every single time.
     if (loading) return;
-    setSaved(readSnapshot<T>(key));
+    setFound(readSnapshot<T>(key, maxAgeMs));
     setReady(true);
-  }, [key, loading]);
+  }, [key, loading, maxAgeMs]);
 
   const save = useCallback(
     (state: T) => {
       if (!ready) return; // never overwrite a snapshot we have not read yet
-      writeSnapshot(key, state);
+      writeSnapshot(key, state, maxAgeMs);
     },
-    [key, ready],
+    [key, ready, maxAgeMs],
   );
 
   const clear = useCallback(() => {
     removeSnapshot(key);
-    setSaved(null);
+    setFound(null);
   }, [key]);
 
   // Stable identity. Callers persist from an effect that depends on this
   // object; a fresh one per render would re-serialise the whole run on
   // every keystroke.
-  return useMemo(() => ({ saved, ready, save, clear }), [saved, ready, save, clear]);
+  return useMemo(
+    () => ({
+      saved: found?.state ?? null,
+      savedAt: found?.savedAt ?? null,
+      ready,
+      save,
+      clear,
+    }),
+    [found, ready, save, clear],
+  );
 }

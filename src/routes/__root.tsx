@@ -97,7 +97,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#0A192F" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "HE Academy" },
+      // The label under the home-screen icon. The icon is the Embassy mark, so
+      // the two together read as the logo in the app's header does.
+      { name: "apple-mobile-web-app-title", content: "Hospitality" },
     ],
     links: [
       { rel: "manifest", href: "/manifest.webmanifest" },

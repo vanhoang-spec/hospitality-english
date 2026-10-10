@@ -1,9 +1,11 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import logoSrc from "@/assets/Logo_EmbassyHospitality_filetrong.png";
 import { useAcademy } from "@/lib/academy-store";
 import { useSession, useProfile, signOut } from "@/lib/auth";
+import { pendingResultCount } from "@/lib/pending-results";
+import { unfinishedRunCount } from "@/lib/session-resume";
 import { useOrgSubscription } from "@/lib/subscription";
 import { openVoicePicker } from "@/lib/voice-store";
 
@@ -15,6 +17,16 @@ export function AcademyNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shimmer, setShimmer] = useState(false);
   const prevStars = useRef(state.service_stars);
+  // What signing out would throw away on this device (signOut clears every
+  // "academy." key). Counted when the menu opens, where the button is.
+  const userId = session?.user.id;
+  const atStake = useMemo(
+    () =>
+      menuOpen
+        ? { unsent: pendingResultCount(userId), unfinished: unfinishedRunCount(userId) }
+        : { unsent: 0, unfinished: 0 },
+    [menuOpen, userId],
+  );
 
   useEffect(() => {
     if (state.service_stars !== prevStars.current) {
@@ -189,6 +201,23 @@ export function AcademyNav() {
                 >
                   Giọng đọc
                 </button>
+                {(atStake.unsent > 0 || atStake.unfinished > 0) && (
+                  <p className="border border-primary/30 bg-primary/5 px-3 py-2 text-xs leading-5 text-foreground/75">
+                    {atStake.unsent > 0 && (
+                      <>
+                        Còn <strong>{atStake.unsent} kết quả bài học</strong> chưa gửi được lên máy
+                        chủ. Hãy nối mạng và mở lại app trước khi đăng xuất.{" "}
+                      </>
+                    )}
+                    {atStake.unfinished > 0 && (
+                      <>
+                        Bạn có <strong>{atStake.unfinished} bài đang làm dở</strong> trên máy
+                        này.{" "}
+                      </>
+                    )}
+                    Đăng xuất sẽ xoá những phần này khỏi máy.
+                  </p>
+                )}
                 <button
                   onClick={async () => {
                     setMenuOpen(false);

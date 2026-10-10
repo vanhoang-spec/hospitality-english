@@ -51,7 +51,8 @@ Hai ghi chú về nhóm P2 vừa đóng:
   không phải việc code.
 - **P2-5 chỉ phủ ba suite** mà backlog nêu đích danh theo tên file (Vocab, Listening,
   WeekTest). Grammar, Speaking, Reading và Arcade vẫn giữ toàn bộ phiên trong bộ nhớ React
-  và vẫn mất trắng khi bị ngắt.
+  và vẫn mất trắng khi bị ngắt. Bài sát hạch dở chỉ nối lại được trong 2 giờ, suite luyện
+  trong 7 ngày; đăng xuất xoá mọi điểm dừng trên máy (xem `docs/HANDOFF.md` §4 "Đợt 3").
 
 Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
 
