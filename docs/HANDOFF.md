@@ -581,22 +581,30 @@ Không tự làm những việc này.
    [`audit/brief-outline-41-80-r1.md`](audit/brief-outline-41-80-r1.md): một Academic Director cho cả
    outline, một Hotel Manager cho từng bộ phận, mốc 7,5 mỗi ô):
 
-   | Ô                  | Vòng 1 (`f25ec00`) | Vòng 2 (`e28aa05`) |
-   | ------------------ | ------------------ | ------------------ |
-   | AC — cả outline    | 6,25               | 7,58               |
-   | HM — Lễ tân        | 7,42               | 8,08               |
-   | HM — Nhà hàng      | 7,33               | 7,92               |
-   | HM — Buồng phòng   | 6,25               | 7,75               |
-   | HM — Spa           | 7,00               | 7,83               |
-   | HM — Quan hệ khách | 7,58               | 8,08               |
+   | Ô                  | Vòng 1 (`f25ec00`) | Vòng 2 (`e28aa05`) | Xác nhận (`f397034`) |
+   | ------------------ | ------------------ | ------------------ | -------------------- |
+   | AC — cả outline    | 6,25               | 7,58               | 8,17                 |
+   | HM — Lễ tân        | 7,42               | 8,08               | 8,08                 |
+   | HM — Nhà hàng      | 7,33               | 7,92               | 8,00                 |
+   | HM — Buồng phòng   | 6,25               | 7,75               | 8,00                 |
+   | HM — Spa           | 7,00               | 7,83               | 7,92                 |
+   | HM — Quan hệ khách | 7,58               | 8,08               | 8,17                 |
 
-   Các lỗi vòng 2 còn nêu đã sửa ở `f397034`; báo cáo từng vòng lưu ở
-   `%TEMP%/hospitality-outline-r<N>-<sha>/`. Ba bài học của hai vòng, đáng nhớ khi soạn bài thật: mỗi
-   bài phải ghi **người nghe** (người Việt nghe thì là bài viết hoặc chuyển ngữ); **với người bị ảnh
-   hưởng thì không kể diễn biến hay nguyên nhân** — chỉ nhắc lại lời khách; và **không hứa giờ thay bộ
-   phận khác**. Bước kế: xây phép đo và khung 80 tuần (mục 7 của outline), rồi soạn thử Phase 5 cho Lễ
-   tân. **Không soạn bài tuần 41+ trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không
-   giữ được.
+   Cột cuối là lượt xác nhận có mục tiêu (chỉ đọc lại các chỗ vừa sửa), không phải một vòng chấm đầy
+   đủ. Bốn lỗi lượt đó nêu đã sửa ở commit kế sau `f397034` và **chưa được ai chấm lại**. Báo cáo từng
+   vòng lưu ở `%TEMP%/hospitality-outline-r<N>-<sha>/`. Ba bài học đáng nhớ khi soạn bài thật: mỗi bài
+   phải ghi **người nghe** (người Việt nghe thì là bài viết hoặc chuyển ngữ); **việc có người bị thiệt
+   thì với chính người đó không nói nguyên nhân, không kể phần mình** — chỉ nhắc lại lời khách; và
+   **không hứa giờ thay bộ phận khác**. Mỗi lần viết lại outline đều tự sinh lỗi mà vòng sau mới bắt
+   được — soạn bài thật cũng sẽ vậy, đừng bỏ vòng chấm.
+
+   **Mốc chủ dự án đặt (11/10/2026): xong phần nội dung tuần 41–80 trước cuối tháng 12/2026**, đã tính
+   dự phòng. Lịch đề xuất: phần máy (khuôn lượt nói mở, bộ chấm lời nói, khung 80 tuần) tới 18/10; bài
+   sát hạch mới, AI chấm và bản thử Phase 5 Lễ tân tới 25/10; Phase 5 cả năm bộ phận tới 8/11; Phase 6
+   tới 22/11; Phase 7–8 trong tháng 12. Ba việc nằm ngoài mốc này vì không tuỳ vào người soạn: ghi âm
+   khoảng 400 đoạn nghe (chủ dự án chưa chọn giọng máy hay người thật), phép so AI với hai giáo viên
+   (cần học viên thật học thử), và migration lên production (duyệt từng lần). **Không soạn bài tuần 41+
+   trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không giữ được.
 
 ---
 

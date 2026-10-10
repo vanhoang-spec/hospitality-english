@@ -25,15 +25,16 @@ giới nghề — dừng, ra ngoài, báo.
 
 ### Tuần 41 · Kể lại sự việc, ghi sổ
 
-**Nói được:** kể lại cho chính vị khách và người đi cùng một sự việc trong spa theo đúng trình tự (lúc
-đó đang làm gì, chuyện gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi sổ ca.
+**Nói được:** kể cho khách một việc không ai bị thiệt trong spa — điều đã xảy ra và việc đã làm cho họ,
+đúng thứ tự, không nói nguyên nhân; rồi ghi sổ ca điều mình thấy. Ca có người thấy không khoẻ thì theo
+tuần 52: hỏi han, nhắc lại lời khách, nói ai đang tới (khung chung, mục 3).
 
-1. **While You Were in the Steam Room** · khách (khu ướt) — khách choáng sau xông hơi: điều đã làm cho khách, ai đang tới; không nói nguyên nhân.
+1. **While You Were in the Steam Room** · khách (khu ướt) — phòng xông tắt giữa chừng: điều đã xảy ra, việc đang làm, phòng khác dùng được.
 2. **Halfway Through the Treatment** · khách (phòng trị liệu) — khách dừng giữa buổi: đã làm tới đâu, điều chưa ổn.
 3. **Two Bookings, One Room** · khách (quầy) — đặt trùng giờ: chuyện gì xảy ra trước, sau; không đổ cho ai.
 4. **Into the Logbook** · viết — giờ, phòng, việc, còn lại gì.
 
-**Nghe:** (a) khách kể họ thấy thế nào trong phòng xông; (b) người đi cùng hỏi lại diễn biến.
+**Nghe:** (a) khách kể chuyện phòng xông tắt lúc họ đang ở trong; (b) khách hỏi lại hai điều về giờ dùng lại.
 **Viết (40–60 từ):** ghi sổ ca về một khách dừng liệu trình giữa chừng.
 **Chuyển ngữ (Việt → Anh):** nhân viên khu ướt kể lại chuyện vừa xảy ra; ghi vào sổ ca.
 
@@ -139,7 +140,7 @@ therapist will be waiting at…", "We will be finishing at four"), và xác nh�
 **Nghe:** (a) cuộc gọi đổi lịch có hai lần đổi ý; (b) lời nhắn thoại của khách báo sẽ trễ.
 **Viết (50–70 từ):** chuỗi ba tin nhắn xác nhận lịch và lời dặn trước liệu trình.
 
-### Tuần 49 · Tổng duyệt + hai luật mới
+### Tuần 49 · Tổng duyệt + hai luật
 
 **Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
 khi khách hỏi thẳng thì trả lời ngay câu đầu; và giữ được một chiều kín lịch.
@@ -612,15 +613,15 @@ giờ thấp điểm. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
-(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài (nhắc lại một câu,
+không thêm lý do mới, rồi mời cấp trên). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
 bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Full Day with a VIP Booking** · khách — khách VIP, chống chỉ định, một sự cố nhỏ.
 2. **Rehearsal: The Question You Should Not Answer** · khách — "Is she a guest here?", "What treatment did he have?".
 
 - 3A. **Not Mine to Say** · khách — sức khoẻ của khách khác, chuyện đang được xem xét.
-- 4A. **The Firm, Kind No** · khách — khách nài lần hai một liệu trình có chống chỉ định: nhắc lại một câu, đưa phương án khác.
+- 4A. **The Firm, Kind No** · khách — khách nài lần hai một liệu trình có chống chỉ định: nhắc lại một câu, rồi mời quản lý spa.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc spa sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · quản lý spa nước ngoài — báo lên một việc trong ba câu.
 
