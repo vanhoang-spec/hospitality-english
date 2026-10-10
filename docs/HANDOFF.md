@@ -3,6 +3,10 @@
 Cập nhật: **10/10/2026**. Người viết cập nhật file này mỗi khi kết thúc một phiên làm việc lớn.
 Agent mới vào: **đọc hết file này trước khi làm bất cứ việc gì.**
 
+**10/10 chiều: `main` = `bd2e379` (PR #29).** Việc lớn nhất trong ngày: mọi tài khoản mới tạo đều
+không được gắn vào tổ chức của nó — đã sửa và đã áp dụng lên production, xem §4 "Tài khoản mới không
+gắn vào tổ chức". Production của app đang có **dữ liệu thử** do phiên CRM chèn, xem §5 mục 3.
+
 **10/10 trưa: `main` = `63686c3`, production chạy đúng commit này.** Sáng 10/10 Claude hết hạn mức,
 Codex làm tiếp theo [`BAN-GIAO-CODEX-2026-10-10.md`](BAN-GIAO-CODEX-2026-10-10.md): chủ dự án dán SQL
 luật đối tác mới, Codex merge PR #26 (`efac33c`) rồi PR #25 (`63686c3`) và dừng ở đó, không commit gì
@@ -373,7 +377,8 @@ thật, nên dựng một bản giả lập chạy trên máy: **code thật hai
 - Phía app: mọi migration + route `/api/crm` thật + các server function mà trang đăng ký, kích hoạt,
   thanh toán gọi. Phía CRM: các migration Hospitality của CRM + hàm đồng bộ của CRM chạy nguyên văn,
   đọc từ thư mục repo CRM lúc chạy. Mọi request ra ngoài máy bị chặn.
-- **Kết quả: 97/99 phép kiểm qua.** Đã đi qua dây: đủ 7 loại lệnh CRM → app và 5 loại sự kiện app →
+- **Kết quả lần đầu: 97/99 phép kiểm qua** (cuối ngày 10/10: 103/103, xem hai mục dưới). Đã đi qua
+  dây: đủ 7 loại lệnh CRM → app và 5 loại sự kiện app →
   CRM. Các luồng: tích "Tham gia" → tài khoản → email link kích hoạt → đặt mật khẩu → đăng nhập; link
   giới thiệu hạn 1 năm; khách sạn đăng ký → khách B2B bên CRM → kế toán xác nhận thu → app mở gói → hoa
   hồng (năm đầu, năm sau) → duyệt, chi; người học lẻ → đơn → đổi kỳ hạn → xác nhận → gói; gia hạn; lời
@@ -382,11 +387,44 @@ thật, nên dựng một bản giả lập chạy trên máy: **code thật hai
   (chủ dự án bật lại đối tác trong app, hoặc tạo tài khoản cho đối tác của CRM ngay trong app), CRM
   không cập nhật ô "tài khoản đang mở", nên màn hình CRM vẫn ghi **"Tài khoản đang khoá"** trong khi
   tài khoản thật đang mở. Thử một dòng sửa trong hàm xử lý sự kiện của CRM (chỉ trong bộ nhớ): 99/99.
-  Việc sửa thuộc repo CRM.
+  **Đã sửa:** phiên CRM viết migration CRM 281 đúng dòng đó, chủ dự án chạy trên production CRM chiều
+  10/10; bộ giả lập chạy trên file thật: đúng cả ba tình huống.
+- **Bộ giả lập đã che mất một lỗi thật** (mục kế): Supabase giả của nó ghi `auth.users` nguyên dòng,
+  trong khi Supabase Auth thật ghi làm hai bước. Đã sửa cho ghi đúng hai bước và thêm 4 phép kiểm hồ sơ
+  (tổ chức, vai trò, bộ phận). Với CRM tới migration 283: **103/103**. Bỏ migration sửa lỗi ra
+  (`FLOW_APP_WITHOUT=identity_follows`): đối tác, nhân sự khách sạn, người học đều rơi ra ngoài tổ chức
+  và kịch bản dừng ở "Không tìm thấy tài khoản."
+- CRM sau lần đầu đã đổi thêm (không đổi hợp đồng gọi): 279–280 cách chi hoa hồng, 282 thêm người xác
+  nhận đơn lẻ, 283 tách VAT — `cap_goi.so_tien_truoc_vat` nay là số thật sự chưa VAT, hoa hồng đơn lẻ
+  tính trên số đã tách VAT. Bộ giả lập tự nhặt mọi file `<số>_hospitality_*.sql` của CRM từ 269.
 - Giả lập **không** chứng minh: khoá bí mật hai bên khớp nhau, lịch chạy mỗi phút, bản deploy, và
   giao diện (nút bấm, form). Những thứ đó chỉ thử được trên hệ thống thật bằng người thật.
 - Bộ giả lập nằm ở `scripts/flow/` trong worktree `content-p3`, **chưa commit**: hai file trong đó nhắc
   tên bảng, hàm, vai trò nội bộ của CRM, mà repo này public. Chờ người dùng quyết nơi lưu.
+
+### Tài khoản mới không gắn vào tổ chức (10/10, PR #29 đã merge `bd2e379`)
+
+**Lỗi production, tìm ra khi đọc lại dữ liệu thật:** tài khoản dùng thử của đối tác tạo sáng 10/10 —
+tài khoản đầu tiên tạo ra kể từ migration `20260929090000` — có `app_metadata.org_id` nhưng
+`profiles.org_id` NULL. Mọi đường tạo tài khoản đều dính: nhân sự khách sạn (lại còn thành `member`
+thay vì `org_admin`), học viên, người học lẻ, đối tác. Hệ quả nếu để nguyên: không có trang quản trị,
+không tính ghế, hết hạn hay tạm dừng đều không khoá được ai.
+
+- **Nguyên nhân:** `handle_new_user` đọc `org_id`/`role`/`department` từ `raw_app_meta_data` lúc
+  INSERT. Supabase Auth (`adminUserCreate`) INSERT dòng `auth.users` chỉ với `{provider, providers}`
+  rồi mới UPDATE `app_metadata` của người gọi, trong cùng giao dịch. Trigger không đọc được gì.
+- **Vì sao không ai thấy:** mọi kiểm thử đều ghi `auth.users` nguyên dòng. Đây đúng là điều dòng đầu
+  `scripts/db/schema-test.ts` đã cảnh báo ("không thấy được Supabase Auth"). Bài học: **thứ gì đi qua
+  Supabase Auth thì phải thử theo đúng thứ tự Auth ghi** — `createAsAuth()` trong `schema-test.ts`.
+- **Sửa — migration `20261010150000_identity_follows_app_metadata.sql`, đã áp dụng lên production
+  10/10** (chủ dự án dán; đã đọc lại: trigger có mặt, 0 tài khoản còn lệch, tài khoản đối tác đã vào
+  đúng tổ chức): trigger `on_auth_user_identity_changed` (AFTER UPDATE OF `raw_app_meta_data`) kéo hồ
+  sơ theo, chạy trong giao dịch của Auth nên `enforce_seat_quota` vẫn chặn khách sạn đầy và cả lần
+  đăng ký bị huỷ; `prevent_self_role_org_change` cho đúng trigger đó đi qua (cờ `app.identity_sync`
+  **và** `pg_trigger_depth() > 1` — tự đặt cờ thì không qua, có phép kiểm); khối sửa bù các tài khoản
+  đã tạo.
+- **Số đo:** `test:db` 120 phép (113 + 7 mới). Không có migration: HR ra `{role: member, org_id:
+null}`, khách sạn 2 ghế nhận người thứ ba.
 
 ### Production
 
@@ -416,9 +454,14 @@ Không tự làm những việc này.
    lập đầu-cuối"). Trên hệ thống thật mới có một nhân viên được tích "Tham gia", link kích hoạt của
    người đó chưa ai mở. Hai câu chữ đã sửa ở khối Đối tác trang `/admin-console` và màn hình "Tài khoản
    đối tác đang tạm khoá" chưa ai xem trên trình duyệt.
-3. **Thử trên hệ thống thật** (tuỳ người dùng, sau giả lập): một vòng với người thật để chứng minh phần
-   giả lập không với tới — khoá hai bên, lịch chạy mỗi phút, giao diện.
-4. **Lỗi hiển thị bên CRM** (mục "Giả lập đầu-cuối"): cần phiên làm repo CRM sửa.
+3. **Dữ liệu THỬ đang nằm trong production của app** (phiên CRM chèn 10/10 theo yêu cầu chủ dự án,
+   để thử thật; **không phải khách thật**): đối tác "THỬ NGHIỆM đầu-cuối 10/10 (xoá sau)", ba tổ chức
+   tên có "THỬ NGHIỆM E2E", đơn `EHTHUE2E` và `EHTHUGH2`, sự kiện `crm_events` id 1–9, ba link. Không
+   có tài khoản đăng nhập nào. Phiên CRM nói sẽ xoá khi chủ dự án đồng ý phạm vi xoá. Còn sót từ 01/10:
+   đối tác "Đối tác thử nghiệm (xoá sau)" với một link cá nhân giảm 30%, hạn 31/12/2026, **đang mở**.
+4. **Thử trên hệ thống thật:** phiên CRM báo đã chạy thật đủ 7 loại lệnh và 6 loại tin (10/10). Chưa
+   ai thử bằng người thật: điền form `/join`, mở link kích hoạt và đăng nhập. Nên làm một lần sau bản
+   sửa PR #29, vì đó là hai chỗ đi qua Supabase Auth thật.
 5. **Nơi lưu bộ giả lập** `scripts/flow/`: repo app (public), repo CRM (private), hay chỉ để trên máy.
 6. **Repo đang public.** Có muốn chuyển sang private không. (Lovable làm việc được với repo
    private; nhưng nếu chuyển thì đổi luôn câu "repo private trên GitHub Free" đang sai trong
