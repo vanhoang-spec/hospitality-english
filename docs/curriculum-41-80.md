@@ -23,37 +23,65 @@ Hai điều chủ dự án đã chốt (10/10/2026):
 - **Nhãn trình độ:** tuần 60 = **B1 nghiệp vụ**; tuần 80 = **B1+ · tiếp xúc B2.1**, kèm điều kiện phải
   xây bài nói/viết tự do để chứng nhận được.
 
-Outline đã qua một lượt phản biện độc lập, đối chiếu với nội dung tuần 23–40 đang có và với mô tả
-B1/B2. Chưa qua chấm mù của Academic Director và Hotel Manager.
+Bản này là bản sửa sau vòng chấm mù thứ nhất (11/10/2026; brief ở
+[`audit/brief-outline-41-80-r1.md`](audit/brief-outline-41-80-r1.md)): một Academic Director chấm cả
+outline, một Hotel Manager chấm từng bộ phận.
 
 ## 1. Thêm 20 tuần + 20 tuần có ổn không
 
-**Ổn về cấu trúc. Nhãn trình độ thì chỉ giữ được khi có đủ ba điều kiện bên dưới.**
+**Ổn về cấu trúc. Nhãn trình độ không dựa được vào số giờ; nó chỉ giữ được bằng bài sát hạch.**
 
-| Mốc     | Giờ tích luỹ (4h/tuần) | Nhãn đề xuất        |
-| ------- | ---------------------- | ------------------- |
-| Tuần 40 | 160h                   | A2+ · tiếp xúc B1.1 |
-| Tuần 50 | 200h                   | B1.1                |
-| Tuần 60 | 240h                   | B1 nghiệp vụ        |
-| Tuần 70 | 280h                   | B1.2                |
-| Tuần 80 | 320h                   | B1+ · tiếp xúc B2.1 |
+| Mốc     | Giờ theo ma trận (4h/tuần) | Giờ ước tính thật                 | Nhãn đề xuất        |
+| ------- | -------------------------- | --------------------------------- | ------------------- |
+| Tuần 40 | 160h                       | chưa đo; nhiều khả năng dưới 100h | A2+ · tiếp xúc B1.1 |
+| Tuần 50 | 200h                       | + 40h nếu tuần mới đủ 4h          | B1.1                |
+| Tuần 60 | 240h                       | + 80h                             | B1 nghiệp vụ        |
+| Tuần 70 | 280h                       | + 120h                            | B1.2                |
+| Tuần 80 | 320h                       | + 160h                            | B1+ · tiếp xúc B2.1 |
 
-Con số thường được dẫn cho tiếng Anh phổ thông: khoảng 180–200 giờ cho A2, 350–400 giờ cho B1,
-500–600 giờ cho B2. Đi từ A2+ lên B1 trong 80 giờ là khoảng một nửa mức thông thường. Lý do khoá này
-vẫn nói được điều đó giống hệt lý do ma trận đã dùng cho 40 tuần đầu: phạm vi hẹp và học viên dùng
-tiếng Anh hằng ngày trong ca. Lý do ấy đứng vững với Lễ tân, Quan hệ khách hàng, Nhà hàng; **yếu nhất
-với Buồng phòng**, nơi nói chuyện với khách rất ngắn — B1 của Buồng phòng phải dựa nhiều hơn vào báo
-cáo, chuyển lời và viết. Nhãn tuần 80 "tiếp xúc B2.1" thì an toàn, vì "tiếp xúc" không tuyên bố đạt.
+Về cột "ước tính thật": chưa có số đo thời gian học của học viên. Hai ước tính từ số câu đang có: bản
+rà tháng 8/2026 tính ra trung bình 46 phút mỗi tuần, tức khoảng 31 giờ cho cả 40 tuần
+(`docs/academic-review-2026-08.md` mục 6.1, trước khi Phase 2–4 được soạn lại dày hơn); một tuần Phase
+4 hiện nay ước khoảng 2–2,5 giờ. Con số 160 giờ của ma trận vì vậy **chưa được chứng minh**, và bảng
+này không dùng nó làm căn cứ.
 
-Ba điều kiện:
+Con số thường được dẫn cho tiếng Anh phổ thông là khoảng 180–200 giờ cho A2, 350–400 giờ cho B1,
+500–600 giờ cho B2. Khoá này đi nhanh hơn nhờ phạm vi hẹp và nhờ học viên dùng tiếng Anh hằng ngày
+trong ca. Điều đó đứng vững với Lễ tân, Quan hệ khách hàng, Nhà hàng; **yếu nhất với Buồng phòng**,
+nơi nói chuyện với khách rất ngắn — B1 của Buồng phòng phải dựa nhiều hơn vào nghe khách, ghi chép của
+tầng và chuyển lời. Với Buồng phòng, **tuần 60 là điểm dừng hợp lệ**: Phase 7–8 chỉ dành cho người
+được trưởng bộ phận cử (tầng VIP, giám sát tầng, khách sạn có trưởng bộ phận hoặc đoàn kiểm tra nói
+tiếng Anh), và bài sát hạch tuần 50, 60 của Buồng phòng có cơ cấu riêng (mục 6). Vì vậy:
 
-1. **Bài sát hạch tuần 60 phải đo nói, viết và chuyển ngữ tự do**: đề chưa thấy trước, không hiện câu
-   mẫu, không cho gõ thay nói, và người chấm (hay AI chấm) đã được đối chiếu với điểm của giáo viên.
-   Ma trận đã tự hạ nhãn B1.1 đúng vì thiếu phép đo này. Không có nó thì tuần 60 lại là "A2+ · tiếp
-   xúc B1".
-2. **Mỗi tuần phải thật sự khoảng 4 giờ.** Ước tính từ số câu của một tuần Phase 4 hiện nay ra khoảng
-   2–2,5 giờ (chưa phải số đo từ telemetry). Tuần 41 trở đi nặng hơn vì thêm viết, nói tự do, chuyển
-   ngữ và nghe dài; cần đo lại bằng thời gian học thật khi có học viên.
+- **Nhãn của tuần 60 và tuần 80 là nhãn của bài sát hạch**, không phải của số tuần đã học. Học viên
+  qua bài sát hạch mô tả ở mục 6 thì mang nhãn; chưa có bài đó thì không ai mang nhãn.
+- Tuần 41 trở đi được thiết kế cho **4 giờ thật mỗi tuần** (mục 2). Khi có học viên, đo bằng thời gian
+  học thật. Lệch dưới 3 giờ thì thêm lượt nói mở và một đoạn nghe; lệch trên 5 giờ thì bỏ vòng game
+  của bài 3–4 trước, rồi tới một bài đọc.
+
+### Mỗi nhãn nghĩa là làm được gì
+
+"B1 nghiệp vụ" không phải một bậc của CEFR. Ở đây nó nghĩa là: đạt mô tả B1 **trong các việc của bộ
+phận mình**, đo bằng bài sát hạch tuần 60. Bậc trong ngoặc là bậc CEFR gần nhất.
+
+| Kỹ năng    | Tuần 60 — B1 nghiệp vụ (B1.1 đã vững)                                            | Tuần 80 — B1+ · tiếp xúc B2.1                                                    |
+| ---------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Tương tác  | Xử lý một việc chưa luyện của bộ phận qua 4–6 lượt, tự hỏi lại khi chưa rõ       | Giữ một trao đổi có bất đồng hoặc nhiều bên, thương lượng có điều kiện           |
+| Nói liền   | 30–45 giây: kể lại sự việc, thông báo cho một nhóm                               | 60–90 giây: trình bày một đề xuất, trả lời câu hỏi                               |
+| Viết       | 80–100 từ: email, biên bản, ghi chép để ca sau làm tiếp được                     | 120–150 từ: báo cáo, đề xuất, tường trình, đúng giọng                            |
+| Chuyển ngữ | Chuyển đủ ý hai chiều một lời nhắn, một lời giải thích                           | Phiên dịch trực tiếp nhiều lượt, có tóm tắt, không thêm bớt                      |
+| Nghe       | Nắm ý chính và chi tiết việc cần làm trong đoạn 60–120 giây, giọng không bản ngữ | Theo được trao đổi 2–3 người ở tốc độ tự nhiên, nhiều giọng vùng, qua điện thoại |
+| Đọc        | Hiểu email, thông báo, phiếu ghi chép của bộ phận                                | Hiểu nhận xét của khách, kết quả kiểm tra, báo cáo có số liệu                    |
+
+Bài sát hạch **không** chứng nhận phát âm: máy chấm trên bản chữ của lời nói. Hai nhánh mang cùng một
+nhãn vì nhãn được chấm trên **nửa chung** của bài sát hạch; nửa riêng của nhánh quyết định dòng ghi thêm
+"chuyên viên" hay "trưởng ca".
+
+### Ba điều kiện
+
+1. **Bài sát hạch tuần 60 phải đo nói, viết và chuyển ngữ tự do** theo mục 6. Ma trận đã tự hạ nhãn
+   B1.1 đúng vì thiếu phép đo này. Không có nó thì tuần 60 lại là "A2+ · tiếp xúc B1".
+2. **Mỗi tuần phải thật sự khoảng 4 giờ**, đo được, có cách chỉnh (ở trên).
 3. **Phần nghe cần file ghi âm từ Phase 5.** Khách của khách sạn phần lớn không phải người bản ngữ;
    B1 đòi nghe được nhiều giọng, hai người nói với nhau, và tiếng qua điện thoại. Giọng máy trên thiết
    bị chỉ có một giọng.
@@ -72,93 +100,143 @@ tuần sát hạch**. Sát hạch ở tuần **50, 60, 70, 80**; qua mới mở 
 
 ### Thông số theo giai đoạn (nối bảng của ma trận)
 
-| Thông số           | P5 (41–50)                     | P6 (51–60)            | P7 (61–70)                    | P8 (71–80)                        |
-| ------------------ | ------------------------------ | --------------------- | ----------------------------- | --------------------------------- |
-| Từ mới / tuần      | 16–18                          | 16–18                 | 14–16 + cụm kết hợp từ        | 14–16 + cụm kết hợp từ            |
-| Một lượt nói       | 2–3 câu, ≤ 40 từ               | 2–3 câu, ≤ 45 từ      | 3–4 câu, ≤ 60 từ              | 4–5 câu, ≤ 70 từ; nói liền 60–90s |
-| Dạng nói           | role-play có gợi ý ý chính     | role-play mở 4–6 lượt | role-play mở có ràng buộc     | thuyết phục, đa bên, trình bày    |
-| Câu mẫu khi luyện  | ẩn, chỉ hiện sau khi nói       | ẩn                    | ẩn                            | ẩn                                |
-| Nghe (file ghi âm) | hai giọng, giọng không bản ngữ | + điện thoại          | tốc độ tự nhiên, họp          | nhiều người, nhiều giọng vùng     |
-| Viết               | mỗi tuần, 40–70 từ             | mỗi tuần, 70–100 từ   | mỗi tuần, 100–120 từ          | mỗi tuần, 120–150 từ              |
-| Chuyển ngữ         | hai chiều, 2 tuần một bài      | mỗi tuần              | mỗi tuần, có bài giữa hai bên | mỗi tuần trừ 77–78, có tóm tắt    |
-| Ôn xoáy vòng       | 40%                            | 40%                   | 45%                           | 45%                               |
-| Sát hạch           | trắc nghiệm + nói mở + viết    | + chuyển ngữ          | + phần riêng của nhánh        | + nghe nhiều giọng, bài viết dài  |
+| Thông số           | P5 (41–50)                                              | P6 (51–60)                              | P7 (61–70)                                     | P8 (71–80)                                            |
+| ------------------ | ------------------------------------------------------- | --------------------------------------- | ---------------------------------------------- | ----------------------------------------------------- |
+| Từ mới / tuần      | 16–18                                                   | 16–18                                   | 14–16 + cụm kết hợp từ                         | 14–16 + cụm kết hợp từ                                |
+| Một lượt nói       | 2–3 câu, ≤ 40 từ                                        | 2–3 câu, ≤ 45 từ                        | 3–4 câu, ≤ 60 từ                               | 4–5 câu, ≤ 70 từ                                      |
+| Nói liền           | —                                                       | 30–45 giây (từ tuần 56)                 | 45–60 giây                                     | 60–90 giây                                            |
+| Lượt nói mỗi bài   | 3 có câu mẫu ẩn + 2 mở                                  | 2 có câu mẫu ẩn + 3 mở                  | 1 có câu mẫu ẩn + 4 mở                         | 1 có câu mẫu ẩn + 4 mở                                |
+| Nghe (file ghi âm) | 2 đoạn/tuần, 60–90 giây, hai giọng, giọng không bản ngữ | 2 đoạn/tuần, 60–120 giây, có điện thoại | 2 đoạn/tuần, 90–150 giây, tốc độ tự nhiên, họp | 2 đoạn/tuần, 90–150 giây, 2–3 người, nhiều giọng vùng |
+| Đọc                | 1 bài mỗi bài học, 150–300 từ                           | 150–300 từ; email, biên bản             | 200–350 từ; báo cáo, nhận xét của khách        | 200–350 từ; đề xuất, kết quả kiểm tra                 |
+| Viết               | mỗi tuần, 40–70 từ                                      | mỗi tuần, 70–100 từ                     | mỗi tuần, 100–120 từ                           | mỗi tuần, 120–150 từ                                  |
+| Chuyển ngữ         | hai chiều, 2 tuần một bài                               | mỗi tuần                                | mỗi tuần, có bài giữa hai bên                  | mỗi tuần trừ 77–78, có tóm tắt                        |
+| Ôn xoáy vòng       | 40%                                                     | 40%                                     | 45%                                            | 45%                                                   |
 
 Tổng từ chủ động: khoảng 510 (tuần 40) → 830 (tuần 60) → 1.100 (tuần 80), tính riêng từng bộ phận.
 
-Định mức mỗi tuần giữ khuôn Phase 4 (`docs/p4-plan.md` mục 3): 4 bài, mỗi bài có thẻ từ, cặp ngữ
-pháp có lỗi hay mắc, lượt nói, bài đọc, vòng game. Khác ở ba chỗ: lượt nói không hiện câu mẫu; mỗi
-tuần thêm một bài viết; và thêm bài chuyển ngữ theo bảng trên.
+**Khuôn một tuần.** Giữ khuôn Phase 4: 4 bài, mỗi bài có thẻ từ, 2 cặp ngữ pháp có lỗi hay mắc, ít
+nhất 5 lượt nói, 1 bài đọc, 2 vòng game. Khác ở năm chỗ:
+
+1. **Lượt nói có câu mẫu ẩn**: chấm bằng bộ chấm nói hiện có; câu mẫu chỉ hiện sau khi nói.
+2. **Lượt nói mở**: không có câu mẫu. Mỗi lượt mở khai báo 3–4 ý bắt buộc (mỗi ý nhận nhiều cách nói),
+   danh sách câu cấm theo luật nhà, và sàn độ dài. Người đối thoại trong bài hằng tuần là **lời soạn
+   sẵn**, không đáp theo điều học viên vừa nói; đây là luyện sản sinh, chưa phải hội thoại thật. Hội
+   thoại có người đáp lại chỉ có ở bài sát hạch khi dùng AI (mục 6).
+3. **Hai đoạn nghe ghi âm mỗi tuần**, mỗi đoạn có 3–4 câu hỏi về việc cần làm; file bộ phận ghi đề ở
+   dòng **Nghe**.
+4. **Một bài viết mỗi tuần**; bài mẫu chỉ hiện sau khi đạt hoặc sau lần nộp thứ hai.
+5. **Bài chuyển ngữ** theo bảng trên.
+
+**Ôn xoáy vòng nghĩa là gì.** 40–45% là tỷ lệ mục ôn trong quiz từ vựng, câu điền và bài đọc của tuần,
+rút từ ba khoảng: tuần ngay trước; 3–4 tuần trước; và một lát quét — Phase 5–6 quét lần lượt tuần
+23–40, Phase 7–8 quét lần lượt tuần 41–60. Cấu trúc ngữ pháp quay lại theo bảng "Cấu trúc quay lại" ở
+cuối mục 3. Bài sát hạch tuần 60 và 80 lấy ít nhất 30% câu trắc nghiệm từ các giai đoạn trước.
+
+**Bài có cùng khung ở năm bộ phận.** Tuần 62, 66, 72 và 77 dạy một kỹ năng chung (góp ý, họp, trình
+bày, phỏng vấn). Khung bài giống nhau, nhưng tình huống, số liệu và từ vựng của mỗi bộ phận là của
+riêng bộ phận đó; luật "ít nhất 60% headword riêng mỗi tuần" của ma trận vẫn áp dụng.
 
 ## 3. Xương sống ngôn ngữ chung
 
 Giữ nguyên tắc của ma trận: **cùng một chức năng ngôn ngữ mỗi tuần cho cả 5 bộ phận** (và cho cả hai
 nhánh từ tuần 61); chỉ khác tình huống, người nghe và thẩm quyền.
 
-Phần lớn cấu trúc của tuần 41–46 học viên **đã gặp** ở tuần 23–40 dưới dạng câu công thức (quá khứ
-tiếp diễn, hiện tại hoàn thành, bị động, mệnh đề quan hệ, "should have"). Phase 5 không dạy lại như
-mới. Nó biến công thức thành hệ thống để học viên **tự đặt câu chưa luyện** — đó chính là ranh giới
-A2/B1. Cột "Ngôn ngữ" ghi riêng phần mới thật.
+Phần lớn cấu trúc của tuần 41–47 học viên **đã gặp** ở tuần 23–40 dưới dạng câu công thức. Phase 5
+không dạy lại như mới. Nó biến công thức thành hệ thống để học viên **tự đặt câu chưa luyện** — đó
+chính là ranh giới A2/B1. Cột "Ngôn ngữ" ghi phần đã gặp (kèm tuần) rồi tới phần mới thật.
 
 ### Phase 5 — B1.1 (tuần 41–50)
 
-| Tuần | Chức năng chung                                 | Ngôn ngữ (đã gặp → mới thật)                                                        | Bài sản sinh                    |
-| ---- | ----------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------- |
-| 41   | Kể lại một sự việc đúng trình tự, ghi sổ        | quá khứ tiếp diễn → while, as soon as, eventually; cách ghi sổ ca                   | ghi chú sổ ca 40–60 từ          |
-| 42   | Trò chuyện không chuẩn bị với khách             | hiện tại hoàn thành → ever/never, for/since; câu hỏi nối tiếp                       | —                               |
-| 43   | Hỏi lại, làm rõ, nói vòng khi thiếu từ          | câu hỏi gián tiếp; Do you mean…?; It's a kind of…                                   | học viên phải HỎI               |
-| 44   | Mô tả chính xác người, đồ vật, nơi chốn         | mệnh đề quan hệ → where, whose, mệnh đề bổ sung                                     | —                               |
-| 45   | Chuyển lời hai chiều                            | said/told (lùi một thì, will→would); asked/told… to                                 | chuyển ngữ Việt ↔ Anh           |
-| 46   | Giải thích quy trình, hoá đơn, chính sách       | bị động → bị động với must/can/will (must be paid…)                                 | —                               |
-| 47   | Khuyên và nêu ý kiến ngắn có lý do              | If I were you…; I'd suggest + V-ing; I think… because…                              | —                               |
-| 48   | Cuộc gọi khó, nhận lời nhắn, tin nhắn với khách | will be + V-ing; đánh vần, sửa số; cách viết tin nhắn                               | phiếu lời nhắn + chuỗi tin nhắn |
-| 49   | Tổng duyệt + hai luật mới                       | "chưa biết thì nói chưa biết: ai trả lời, mấy giờ"; "trả lời trước, giải thích sau" | —                               |
-| 50   | **Sát hạch P5**                                 | —                                                                                   | nói mở + viết ngắn              |
+| Tuần | Chức năng chung                                 | Ngôn ngữ (đã gặp → mới thật)                                                               | Bài sản sinh                    |
+| ---- | ----------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------- |
+| 41   | Kể lại một sự việc đúng trình tự, ghi sổ        | quá khứ tiếp diễn + when (tuần 29) → while, as soon as, eventually; cách ghi sổ ca         | ghi chú sổ ca 40–60 từ          |
+| 42   | Trò chuyện không chuẩn bị với khách             | hiện tại hoàn thành, yet (Phase 3) → ever/never, for/since; câu hỏi nối tiếp               | —                               |
+| 43   | Hỏi lại, làm rõ, nói vòng khi thiếu từ          | Could you tell me + wh- (tuần 33) → if/whether; Do you mean…?; It's a kind of…             | học viên phải HỎI               |
+| 44   | Mô tả chính xác người, đồ vật, nơi chốn         | mệnh đề quan hệ, kể cả ", where…" (tuần 38) → whose; the one that…; the … I told you about | —                               |
+| 45   | Chuyển lời hai chiều; luật phiên dịch           | told/asked… to, will→would, can→could (tuần 29, 33) → say hay tell; hiện tại→quá khứ       | chuyển ngữ Việt ↔ Anh           |
+| 46   | Giải thích quy trình, hoá đơn, chính sách       | bị động hiện tại, quá khứ, hoàn thành (Phase 3–4) → bị động với must/can/will              | —                               |
+| 47   | Khuyên và nêu ý kiến ngắn có lý do              | I would suggest + V-ing (tuần 32) → If I were you…; I think… because…; It depends on…      | —                               |
+| 48   | Cuộc gọi khó, nhận lời nhắn, tin nhắn với khách | will be + V-ing; đánh vần, sửa số; cách viết tin nhắn                                      | phiếu lời nhắn + chuỗi tin nhắn |
+| 49   | Tổng duyệt + hai luật mới                       | "chưa biết thì nói chưa biết: ai trả lời, mấy giờ"; "trả lời trước, giải thích sau"        | —                               |
+| 50   | **Sát hạch P5**                                 | —                                                                                          | theo mục 6                      |
+
+Tuần 45 chỉ lùi một bậc (hiện tại → quá khứ, will → would). Lùi từ quá khứ về quá khứ hoàn thành để
+tới tuần 52, khi quá khứ hoàn thành được dạy.
 
 ### Phase 6 — B1 nghiệp vụ (tuần 51–60)
 
-| Tuần | Chức năng chung                               | Ngôn ngữ mới                                                                       | Bài sản sinh              |
-| ---- | --------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------- |
-| 51   | Hướng dẫn từng bước và nói lý do              | so that, in order to, in case; the reason we… is…                                  | —                         |
-| 52   | Trình tự trong quá khứ, biên bản sự cố        | quá khứ hoàn thành; by the time, before, after                                     | biên bản 70–90 từ         |
-| 53   | Khách xúc động, phàn nàn nhiều lớp            | đồng cảm, hạ nhiệt; I wish we had…                                                 | —                         |
-| 54   | Khác biệt văn hoá, nhu cầu đặc biệt           | nói giảm (slightly, rather); Would you mind if…?                                   | —                         |
-| 55   | Việc đang theo dõi, nhờ bên thứ ba làm        | hiện tại hoàn thành tiếp diễn; have/get something done                             | —                         |
-| 56   | Thông báo và lời giới thiệu ngắn cho một nhóm | Please note that…; First… Then… Finally…; nói liền 30–45 giây                      | bài nói có chuẩn bị       |
-| 57   | Tóm tắt và truyền đạt lại                     | tường thuật câu hỏi (asked whether/what…); In short…                               | phiên dịch hai chiều      |
-| 58   | Email dịch vụ                                 | trang trọng vs trung tính; Further to…, Should you need… (cụm cố định)             | email 80–100 từ           |
-| 59   | Tổng duyệt + hai luật mới                     | "viết để ca sau làm tiếp được"; "báo tin xấu: đệm – sự việc – phương án – bước kế" | —                         |
-| 60   | **Sát hạch mốc 1,5 năm — B1 nghiệp vụ**       | —                                                                                  | nói mở, email, chuyển ngữ |
+| Tuần | Chức năng chung                               | Ngôn ngữ mới                                                                            | Bài sản sinh         |
+| ---- | --------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------- |
+| 51   | Hướng dẫn từng bước và nói lý do              | so that, in order to, in case; the reason we… is…                                       | —                    |
+| 52   | Trình tự trong quá khứ, biên bản sự cố        | quá khứ hoàn thành; by the time, before, after; tường thuật lùi về quá khứ hoàn thành   | biên bản 70–90 từ    |
+| 53   | Khách xúc động, phàn nàn nhiều lớp            | đồng cảm, hạ nhiệt; I wish we had…                                                      | —                    |
+| 54   | Khác biệt văn hoá, nhu cầu đặc biệt           | nói giảm (slightly, rather); Would you mind if…?                                        | —                    |
+| 55   | Việc đang theo dõi, nhờ bên thứ ba làm        | hiện tại hoàn thành tiếp diễn; have/get something done                                  | —                    |
+| 56   | Thông báo và lời giới thiệu ngắn cho một nhóm | Please note that…; First… Then… Finally…; nói liền 30–45 giây                           | bài nói có chuẩn bị  |
+| 57   | Tóm tắt và truyền đạt lại                     | tường thuật câu hỏi (asked whether/what…); In short…                                    | phiên dịch hai chiều |
+| 58   | Email dịch vụ                                 | trang trọng vs trung tính; Further to…, Should you need… (cụm cố định)                  | email 80–100 từ      |
+| 59   | Tổng duyệt + hai luật mới                     | "bàn giao có tên, có giờ, bằng chữ"; "báo tin xấu: đệm – sự việc – phương án – bước kế" | —                    |
+| 60   | **Sát hạch mốc 1,5 năm — B1 nghiệp vụ**       | —                                                                                       | theo mục 6           |
 
 ### Phase 7 — B1.2, hai nhánh (tuần 61–70)
 
-| Tuần | Chức năng chung                      | Ngôn ngữ mới                                                  | Nhánh A — chuyên viên                                                      | Nhánh B — trưởng ca                                                            |
-| ---- | ------------------------------------ | ------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| 61   | Đầu ca: nắm và truyền đạt thông tin  | các cách nói tương lai; I'd like you to…                      | đọc bảng đầu ca, hỏi lại, báo việc tồn                                     | báo tình hình lên; truyền chỉ đạo xuống (Anh → Việt)                           |
-| 62   | Góp ý và nhận góp ý                  | could have; It might be better to…                            | nhận góp ý, trả lời có lý                                                  | viết nhận xét đánh giá bằng tiếng Anh                                          |
-| 63   | Khiếu nại leo thang                  | even though, despite, whereas; What I can offer is…           | giữ khách, soạn hồ sơ, truyền quyết định                                   | gặp khách ở vai người quyết trong khung                                        |
-| 64   | Tìm nguyên nhân một sự cố            | must have, might have, can't have; It looks as if…            | lần lại, nói rõ điều biết và chưa biết                                     | trình bày nguyên nhân; viết phần nguyên nhân                                   |
-| 65   | Thương lượng có điều kiện            | even if, otherwise, on condition that (unless đã dạy tuần 37) | với khách                                                                  | với trưởng đoàn, đại lý nước ngoài                                             |
-| 66   | Họp có người nước ngoài              | nêu ý, không đồng ý lịch sự, ngắt lời, chốt việc              | nêu vấn đề của vị trí mình khi được hỏi                                    | thay mặt bộ phận ở giao ban; ghi việc cần làm                                  |
-| 67   | Con số trong ghi chép và báo cáo     | A: đọc, ghi số chính xác · B: increased by, compared with     | ghi sổ đúng con số                                                         | báo cáo ca 100–120 từ, có so sánh                                              |
-| 68   | Từ phản hồi của khách tới hành động  | đọc nhận xét, phiếu góp ý, kết quả kiểm tra                   | nói chuyện phục hồi khi khách còn ở; tin nhắn riêng                        | phiếu khắc phục viết cho quản lý                                               |
-| 69   | Tổng duyệt + hai luật mới theo nhánh | —                                                             | "một đầu mối: khách không kể lại lần hai"; "ba dấu hiệu phải mời cấp trên" | "quyết trong khung, báo ngoài khung"; "làm cầu nối: truyền đủ, không thêm bớt" |
-| 70   | **Sát hạch P7**                      | —                                                             | nửa chung + nửa nhánh A                                                    | nửa chung + nửa nhánh B                                                        |
+| Tuần | Chức năng chung                      | Ngôn ngữ mới                                                           | Nhánh A — chuyên viên                                                      | Nhánh B — trưởng ca                                                                               |
+| ---- | ------------------------------------ | ---------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 61   | Đầu ca: nắm và truyền đạt thông tin  | be due to, be expected to, be about to; I'd like you to…               | đọc bảng đầu ca, hỏi lại, báo việc tồn                                     | báo tình hình lên; truyền chỉ đạo xuống (Anh → Việt)                                              |
+| 62   | Góp ý và nhận góp ý                  | could have; It might be better to…                                     | nhận góp ý, trả lời có lý                                                  | viết nhận xét đánh giá bằng tiếng Anh                                                             |
+| 63   | Khiếu nại leo thang                  | even though, despite, whereas; What I can do for you now is…           | giữ khách, soạn hồ sơ, truyền quyết định                                   | nếu được giao quyền: gặp khách ở vai người quyết trong khung                                      |
+| 64   | Tìm nguyên nhân một sự cố            | must be, might be → must have, might have, can't have; It looks as if… | lần lại, nói rõ điều biết và chưa biết                                     | trình bày nguyên nhân; viết phần nguyên nhân                                                      |
+| 65   | Thương lượng có điều kiện            | even if, otherwise, on condition that (unless đã dạy tuần 37)          | với khách                                                                  | thay đổi sát giờ của trưởng đoàn, người tổ chức: nói điều làm được, chuyển tiền và điều khoản lên |
+| 66   | Họp có người nước ngoài              | nêu ý, không đồng ý lịch sự, ngắt lời, chốt việc                       | nêu vấn đề của vị trí mình khi được hỏi                                    | thay mặt bộ phận ở giao ban; ghi việc cần làm                                                     |
+| 67   | Ước lượng và xu hướng                | about, just under, nearly; up/down by, twice as many, compared with    | báo con số của ca mình bằng lời                                            | báo cáo ca 100–120 từ, có so sánh                                                                 |
+| 68   | Từ phản hồi của khách tới hành động  | đọc nhận xét, phiếu góp ý, kết quả kiểm tra                            | nói chuyện phục hồi khi khách còn ở; tin nhắn riêng                        | phiếu khắc phục viết cho quản lý                                                                  |
+| 69   | Tổng duyệt + hai luật mới theo nhánh | —                                                                      | "một đầu mối: khách không kể lại lần hai"; "ba dấu hiệu phải mời cấp trên" | "quyết trong khung, báo ngoài khung"; "làm cầu nối: truyền đủ, không thêm bớt"                    |
+| 70   | **Sát hạch P7**                      | —                                                                      | nửa chung + nửa nhánh A                                                    | nửa chung + nửa nhánh B                                                                           |
+
+Tuần 64 là phân tích **trong nội bộ**: người nghe là quản lý, trưởng bộ phận người nước ngoài; với
+giám sát người Việt thì là bài viết. Với khách, luật của tuần 39 giữ nguyên: không nêu tên người, không
+nêu tên bộ phận, không đoán nguyên nhân. Ca có thương tích, dị ứng, phản ứng da **không** đem ra phân
+tích nguyên nhân: chỉ ghi sự việc, nguyên nhân do quản lý và y tế kết luận.
+
+Tuần 65 không trao quyền mới. Giá, phí, số khách đảm bảo, hạn chót và điều khoản vẫn là việc của Sales
+và quản lý (luật tuần 37); bài của cả hai nhánh là nói điều mình làm được, đặt điều kiện, và chuyển
+phần còn lại lên kèm mốc giờ.
 
 ### Phase 8 — B1+ · tiếp xúc B2.1, hai nhánh (tuần 71–80)
 
-| Tuần | Chức năng chung                              | Ngôn ngữ mới                                                                   | Nhánh A — chuyên viên cao cấp                                                                | Nhánh B — giám sát                                                       |
-| ---- | -------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| 71   | Nêu quan điểm, đề xuất thay đổi              | vấn đề – bằng chứng – phương án – khuyến nghị; điều kiện loại 3 làm bằng chứng | cải tiến ở vị trí mình                                                                       | đổi quy trình, có số liệu                                                |
-| 72   | Trình bày, hướng dẫn trong 5 phút            | First of all, Moving on, To sum up; kiểm tra người nghe hiểu                   | kèm thực tập sinh nước ngoài                                                                 | dẫn đoàn kiểm tra, khách khảo sát                                        |
-| 73   | Khách VIP, tình huống nhạy cảm, kín đáo      | cụm rất trang trọng học như công thức (Should you need…)                       | phục vụ VIP, giữ kín                                                                         | phối hợp an ninh, bảo vệ nhân viên                                       |
-| 74   | Thuyết phục và xử lý lời từ chối             | hỏi nhu cầu, nói giá trị, nhượng bộ có điều kiện                               | bán tại chỗ (Buồng phòng: thuyết phục khách chấp nhận việc cần làm)                          | giữ khách định huỷ; phương án thay thế                                   |
-| 75   | Người ngoài nói tiếng Anh                    | nêu vấn đề mức dịch vụ; thư theo dõi                                           | trưởng đoàn, chuyên gia, người tổ chức tại chỗ                                               | thư theo dõi; chuyển điều khoản cho trưởng bộ phận                       |
-| 76   | Sự cố lớn                                    | lệnh rõ, thông tin đều; lời tường trình                                        | giữ đúng vai, thông tin cho khách                                                            | phiên dịch giữa khách và y tế, công an; tường trình                      |
-| 77   | Nghề nghiệp: thành tích, phỏng vấn, đánh giá | thành tích kèm con số                                                          | phỏng vấn thăng tiến                                                                         | buổi đánh giá cuối năm; nhận xét thực tập sinh                           |
-| 78   | Dự án cải tiến nhỏ                           | đề xuất viết 120–150 từ, trình bày 60–90s, trả lời câu hỏi                     | một điểm chạm của vị trí mình                                                                | một chỉ số của ca                                                        |
-| 79   | Tổng duyệt + hai luật mới theo nhánh         | —                                                                              | "nói nhân danh thương hiệu: điều không nói thay khách sạn"; "dẫn dắt khi không có chức danh" | "giám sát được viết gì nhân danh khách sạn"; "kèm người, không làm thay" |
-| 80   | **Đánh giá cuối lộ trình 2 năm**             | —                                                                              | role-play đa bên, bài viết, chuyển ngữ, nghe nhiều giọng                                     | như nhánh A, tình huống giám sát                                         |
+| Tuần | Chức năng chung                               | Ngôn ngữ mới                                                                    | Nhánh A — chuyên viên cao cấp                                                                 | Nhánh B — giám sát                                                                 |
+| ---- | --------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| 71   | Nêu quan điểm, đề xuất thay đổi               | If we + quá khứ, … would… (đề xuất) → điều kiện loại 3 để nói hậu quả đã xảy ra | cải tiến ở vị trí mình                                                                        | đổi quy trình, có số liệu                                                          |
+| 72   | Trình bày 60–90 giây trong một buổi hướng dẫn | First of all, Moving on, To sum up; What this means is…                         | giới thiệu cho một nhóm khách (Buồng phòng: nói với người kiểm tra)                           | dẫn đoàn kiểm tra, khách khảo sát                                                  |
+| 73   | Khách VIP, tình huống nhạy cảm, kín đáo       | I would be grateful if…; May I suggest…; Please allow me to…                    | phục vụ VIP, giữ kín                                                                          | phối hợp an ninh, bảo vệ nhân viên                                                 |
+| 74   | Thuyết phục và xử lý lời từ chối              | would rather, would prefer; the more…, the more…                                | bán tại chỗ (Buồng phòng: thuyết phục khách chấp nhận việc cần làm)                           | giữ khách định huỷ; phương án thay thế                                             |
+| 75   | Người ngoài nói tiếng Anh                     | It was agreed that…; as agreed; pending your confirmation                       | trưởng đoàn, chuyên gia, người tổ chức tại chỗ                                                | thư theo dõi; chuyển điều khoản cho trưởng bộ phận                                 |
+| 76   | Sự cố lớn                                     | must not, need not; until further notice; as a precaution                       | thông báo 45–60 giây cho một nhóm, trả lời câu hỏi không lường trước, nói điều sẽ xảy ra tiếp | phiên dịch giữa khách và y tế; tường trình nội bộ                                  |
+| 77   | Nghề nghiệp: thành tích, phỏng vấn, đánh giá  | hiện tại hoàn thành kèm kết quả đo được; was responsible for + V-ing            | phỏng vấn thăng tiến                                                                          | buổi đánh giá cuối năm; bản tự đánh giá                                            |
+| 78   | Dự án cải tiến nhỏ                            | I would recommend that we…; it might be worth + V-ing                           | một điểm chạm của vị trí mình                                                                 | một chỉ số của ca                                                                  |
+| 79   | Tổng duyệt + hai luật mới theo nhánh          | —                                                                               | "điều không nói thay khách sạn"; "từ chối dứt khoát mà tử tế"                                 | "giám sát được viết gì nhân danh khách sạn"; "báo lên: việc, con số, điều đề nghị" |
+| 80   | **Đánh giá cuối lộ trình 2 năm**              | —                                                                               | theo mục 6                                                                                    | theo mục 6                                                                         |
+
+Tuần 78 luyện đúng dạng bài của tuần 80 (đề xuất viết, trình bày, trả lời câu hỏi). Bài sát hạch dùng
+**bộ số liệu mới, phát tại chỗ**; không dùng lại đề của tuần 78.
+
+### Cấu trúc quay lại
+
+| Cấu trúc (tuần dạy)                        | Quay lại ở                                               |
+| ------------------------------------------ | -------------------------------------------------------- |
+| Kể sự việc, while/as soon as (41)          | 52 biên bản · 64 tìm nguyên nhân · 76 tường trình        |
+| Hiện tại hoàn thành, for/since (42)        | 55 tiến độ · 77 thành tích                               |
+| Câu hỏi gián tiếp, hỏi lại (43)            | 57 tường thuật câu hỏi · 66 họp · 72 kiểm tra người nghe |
+| Mệnh đề quan hệ (44)                       | 56 giới thiệu · 72 trình bày                             |
+| Tường thuật (45)                           | 52 · 57 · 61 truyền chỉ đạo · 76 phiên dịch              |
+| Bị động (46)                               | 51 hướng dẫn · 58 email · 75 thư theo dõi                |
+| If I were you, ý kiến có lý do (47)        | 62 góp ý · 71 đề xuất · 74 thuyết phục                   |
+| so that, in case (51)                      | 61 đầu ca · 72 hướng dẫn                                 |
+| Quá khứ hoàn thành (52)                    | 53 I wish we had · 64 · 71 điều kiện loại 3              |
+| Nói giảm (54)                              | 62 góp ý · 63 khiếu nại · 73 nhạy cảm                    |
+| have/get something done (55)               | 65 thương lượng · 75 người ngoài                         |
+| Nhượng bộ: even though, despite (63)       | 71 được và mất · 74 thuyết phục                          |
+| Điều kiện: even if, on condition that (65) | 74 · 75                                                  |
 
 ## 4. Hai nhánh từ tuần 61
 
@@ -167,112 +245,208 @@ A2/B1. Cột "Ngôn ngữ" ghi riêng phần mới thật.
 - **Tiếng Anh của trưởng ca dùng ở đâu.** Trong khách sạn Việt Nam, trưởng ca nói với tổ của mình
   bằng tiếng Việt. Nên Nhánh B **không** dạy "họp tổ bằng tiếng Anh". Nó dạy bốn việc có thật: gặp
   khách ở vai người có thẩm quyền; báo cáo và nhận chỉ đạo từ quản lý nước ngoài rồi truyền lại cho tổ;
-  ghi chép, báo cáo, email bằng tiếng Anh; làm việc với thực tập sinh và đối tác nước ngoài.
+  ghi chép, báo cáo, email bằng tiếng Anh; làm việc với trưởng đoàn, người tổ chức sự kiện, đoàn kiểm
+  tra nói tiếng Anh.
+- **Nhánh B không trao quyền.** Quyền của trưởng ca do khách sạn giao, mỗi nơi một khác. Mọi bài "trong
+  khung" của Nhánh B mở bằng điều kiện "nếu khách sạn giao cho bạn quyền này", và mỗi tuần có bài "trong
+  khung" đều có bài "ngoài khung" đi kèm. Màn hình chọn nhánh ghi rõ: Nhánh B dành cho người đang hoặc
+  sắp giữ vai trưởng ca, giám sát; hỏi trưởng bộ phận trước khi chọn.
 - **Mỗi tuần 2 bài chung + 2 bài riêng nhánh.** Soạn gấp rưỡi chứ không gấp đôi, và hai nhánh có
   chung một nửa bể đề sát hạch.
-- Học viên đổi nhánh được ở đầu mỗi giai đoạn. Nhánh do học viên hoặc HR chọn, cả hai đều được (mục
-  9.1).
+- **Đổi nhánh** được ở đầu mỗi giai đoạn. Ai đổi sang Nhánh B ở tuần 71 học thêm hai bài nối trước khi
+  vào tuần 71: khung thẩm quyền (bài 3B–4B của tuần 63) và luật cầu nối (tuần 69 B). Đổi sang Nhánh A
+  không cần bài nối.
+- Nhánh do học viên hoặc HR chọn, cả hai đều được (mục 9.1).
 
 ## 5. Luật nhà
 
 **Mọi luật nhà của Phase 4 (`docs/p4-plan.md` mục 4) giữ nguyên cho tuần 41–60 và cho Nhánh A**: y tế
 và thương tích, cháy và sơ tán, tiền, thẩm quyền, riêng tư, dị ứng, rượu, không hứa giờ thay bộ phận
-khác. Tuần 41–80 thêm bốn nhóm luật dưới đây.
+khác. Tuần 41–80 thêm ba nhóm luật dưới đây.
 
 ### 5.1 Luật mới của tuần tổng duyệt (cả bộ phận)
 
-| Tuần | Luật                                      | Nghĩa là làm gì                                                                                                        |
-| ---- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 49   | Chưa biết thì nói chưa biết               | Nói điều mình chưa biết, ai sẽ trả lời và mấy giờ khách có câu trả lời. Không đoán, không nói "chắc là được".          |
-| 49   | Trả lời trước, giải thích sau             | Câu đầu là câu trả lời (được, không được, chưa biết); lý do đi sau. Khách hỏi "Can I…?" không phải nghe ba câu dẫn.    |
-| 59   | Viết để ca sau làm tiếp được              | Mỗi ghi chép có: ai, việc gì, làm tới đâu, bước kế, mốc giờ, tên người nhận. Không viết "đã báo", viết "đã báo ai".    |
-| 59   | Báo tin xấu theo bốn bước                 | Một câu đệm, sự việc nói thẳng, phương án mình đưa được, bước kế có mốc giờ. Không vòng vo, không đổ cho bộ phận khác. |
-| 69 A | Một đầu mối                               | Đã nhận việc của khách thì giữ tới cùng; chuyển cho ai cũng chuyển cả câu chuyện, khách không phải kể lại.             |
-| 69 A | Ba dấu hiệu phải mời cấp trên             | Có tiền hoặc ngoại lệ; có an toàn, sức khoẻ, pháp lý; khách hỏi lần thứ hai cùng một điều. Mời ngay, không cố thêm.    |
-| 69 B | Quyết trong khung, báo ngoài khung        | Xem 5.2.                                                                                                               |
-| 69 B | Làm cầu nối: truyền đủ, không thêm bớt    | Chuyển lời giữa quản lý nước ngoài, tổ và khách: đủ ý, đúng giọng, điều chưa chắc nói là chưa chắc.                    |
-| 79 A | Nói nhân danh thương hiệu                 | Không bình luận về khách khác, đối thủ, sự cố đang điều tra; không hứa thay khách sạn điều mình không quyết.           |
-| 79 A | Dẫn dắt khi không có chức danh            | Giúp đồng nghiệp bằng cách chỉ và hỏi, không giành việc; chuyện của tổ thì báo trưởng ca.                              |
-| 79 B | Giám sát được viết gì nhân danh khách sạn | Xem 5.2, điểm 6.                                                                                                       |
-| 79 B | Kèm người, không làm thay                 | Với thực tập sinh: nói mục tiêu, cho làm, hỏi lại, sửa một điều mỗi lần. Chỉ đứng vào khi có khách bị ảnh hưởng.       |
+Như chú thích tuần 39 của ma trận: mỗi luật là **một bài đủ cụm** (thẻ, ngữ pháp, lượt nói, game, câu
+đọc), không phải một dòng văn xuôi. File bộ phận ghi đủ bốn bài cho mỗi tuần tổng duyệt.
+
+| Tuần | Luật                                      | Nghĩa là làm gì                                                                                                                                                                                                                      |
+| ---- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 45   | Phiên dịch: dịch đủ, không trả lời thay   | Khi chuyển lời giữa khách và người khác: đủ ý, không tóm lược thay người nói, không thêm ý mình, không khuyên thay bác sĩ, y tá. Việc có hệ quả pháp lý thì báo quản lý để có phiên dịch chính thức.                                 |
+| 49   | Chưa biết: ai trả lời, mấy giờ            | "Không đoán" đã dạy ở tuần 31. Phần mới: nói **tên người hoặc bộ phận sẽ trả lời và mốc giờ** khách có câu trả lời. Hỏi về an toàn, sức khoẻ thì không bao giờ trả lời "được".                                                       |
+| 49   | Trả lời trước, giải thích sau             | **Khi khách hỏi thẳng** một điều mình được quyền trả lời, câu đầu là câu trả lời (được, không được); lý do đi sau.                                                                                                                   |
+| 59   | Bàn giao có tên, có giờ, bằng chữ         | "Giao đích danh" đã dạy ở tuần 39. Phần mới: **viết** thành ghi chép có ai, việc gì, làm tới đâu, bước kế, mốc giờ, tên người nhận; và nói cho khách tên người làm tiếp. Thư gửi khách của tuyến đầu là **bản nháp, quản lý duyệt**. |
+| 59   | Báo tin xấu theo bốn bước                 | **Khi mình chủ động báo** một tin khách chưa hỏi: một câu đệm, sự việc nói thẳng, phương án, bước kế có mốc giờ.                                                                                                                     |
+| 69 A | Một đầu mối                               | Đã nhận việc của khách thì giữ tới cùng; chuyển cho ai cũng chuyển cả câu chuyện, khách không phải kể lại.                                                                                                                           |
+| 69 A | Ba dấu hiệu phải mời cấp trên             | Có tiền hoặc ngoại lệ; có an toàn, sức khoẻ, pháp lý; khách hỏi lần thứ hai cùng một điều. Mời ngay, không cố thêm.                                                                                                                  |
+| 69 B | Quyết trong khung, báo ngoài khung        | Xem 5.2.                                                                                                                                                                                                                             |
+| 69 B | Làm cầu nối: truyền đủ, không thêm bớt    | Chuyển lời giữa quản lý nước ngoài, tổ và khách: đủ ý, đúng giọng, điều chưa chắc nói là chưa chắc.                                                                                                                                  |
+| 79 A | Điều không nói thay khách sạn             | Không bình luận về khách khác, đối thủ, sự cố đang được xem xét; không hứa thay khách sạn điều mình không quyết.                                                                                                                     |
+| 79 A | Từ chối dứt khoát mà tử tế                | Một câu "không", một lý do, một phương án. Không xin lỗi vòng vo, không để ngỏ điều không thể, không đổ cho chính sách.                                                                                                              |
+| 79 B | Giám sát được viết gì nhân danh khách sạn | Xem 5.2, điểm 5.                                                                                                                                                                                                                     |
+| 79 B | Báo lên bằng ba phần                      | Việc đã xảy ra, con số, điều mình đề nghị. Ba câu; phần giải thích để sau khi được hỏi.                                                                                                                                              |
+
+Hai luật của tuần 49 và 59 không chồng nhau: khách hỏi "Can I check out late?" thì trả lời trước (kể cả
+khi câu trả lời là không); còn tin xấu khách chưa biết (phòng đã bán, tour bị huỷ) thì đệm một câu rồi
+mới nói. Câu hỏi về an toàn và sức khoẻ ("Is it safe to swim?", "Is it safe for me?") **không** thuộc
+luật "trả lời trước": nó thuộc luật "chưa biết" — cờ và cứu hộ, y tá, quản lý trả lời.
 
 ### 5.2 Khung thẩm quyền của Nhánh B
 
-Khung là của từng khách sạn. Bài học dạy **cách nói** trong khung và ngoài khung, không dạy con số.
+Khung là của từng khách sạn. Bài học dạy **cách nói** trong khung và ngoài khung, không dạy con số và
+không trao quyền: danh sách ở điểm 1 là những việc khách sạn **thường** giao cho trưởng ca, không phải
+quyền mặc định. Mỗi bài "trong khung" mở bằng "nếu khách sạn giao cho bạn quyền này"; nơi nào không
+giao thì bài đó học như bài "ngoài khung".
 
-1. **Trong khung, trưởng ca tự quyết:** làm lại hoặc đổi dịch vụ, phương án thay thế tương đương, đổi
-   phòng cùng hạng, thứ tự ưu tiên trong ca, và một cử chỉ thiện chí trong hạn mức khách sạn giao.
-   Câu chuẩn: "What I can do for you now is…".
-2. **Ngoài khung, trưởng ca báo lên:** hoàn tiền, miễn phí vượt hạn mức, nâng hạng có giá trị, bồi
-   thường tài sản hay thương tích, và mọi điều chạm tới pháp lý, bảo hiểm, báo chí. Câu chuẩn: "That
-   is beyond what I can approve. I am taking it to… now, and I will come back to you by…".
+1. **Trong khung, khi được giao:** làm lại hoặc đổi dịch vụ, phương án thay thế tương đương, thứ tự ưu
+   tiên trong ca, và một cử chỉ thiện chí trong hạn mức khách sạn giao. Đổi phòng do lễ tân xếp. Câu
+   chuẩn: "What I can do for you now is…".
+2. **Ngoài khung, trưởng ca báo lên:** hoàn tiền, miễn phí, giảm giá, nâng hạng có giá trị, chuyển
+   khách sang khách sạn khác, giá và điều khoản với đoàn hay đại lý (việc của Sales), bồi thường tài
+   sản hay thương tích, và mọi điều chạm tới pháp lý, bảo hiểm, báo chí, người bị tố quấy rối. Câu
+   chuẩn: "That is beyond what I can approve. I am taking it to… now, and I will come back to you
+   by…".
 3. **Không đọc hạn mức cho khách**, không đổ cho chính sách ("the policy says no"), không hứa thay cấp
    trên.
 4. **Y tế, thương tích, cháy:** luật Phase 4 áp dụng nguyên cho giám sát. Không bàn bồi thường tại
-   chỗ, không nhận lỗi, không trấn an suông.
-5. **Khi làm phiên dịch** giữa khách và y tế, công an: dịch đủ, không tóm lược thay người nói, không
-   khuyên thay bác sĩ. Việc có hệ quả pháp lý thì yêu cầu phiên dịch chính thức và ghi lại ai đã nói
-   gì.
-6. **Văn bản:** trưởng ca viết xác nhận điều đã thoả thuận, thư theo dõi, phiếu khắc phục, báo cáo ca.
-   Không viết cam kết về tiền, câu thừa nhận lỗi, hay phát ngôn với báo chí; thư trả lời nhận xét
-   công khai do quản lý duyệt.
+   chỗ, không nhận lỗi, không trấn an suông. Khi làm phiên dịch giữa khách và y tế thì theo luật phiên
+   dịch của tuần 45; có công an hoặc hệ quả pháp lý thì yêu cầu phiên dịch chính thức và ghi lại ai đã
+   nói gì.
+5. **Văn bản:** trưởng ca viết thư xác nhận, thư theo dõi, phiếu khắc phục, báo cáo ca, tường trình
+   nội bộ. Thư xác nhận chỉ ghi **việc sẽ làm** (ai, việc gì, khi nào), không ghi giá trị tiền. Không
+   viết cam kết về tiền, câu thừa nhận lỗi, hay phát ngôn với báo chí. Thư gửi ra ngoài khách sạn
+   (bảo hiểm, lãnh sự, đại lý) và thư trả lời nhận xét công khai do quản lý duyệt.
 
 ### 5.3 Luật về người nghe
 
 Không bài nào bắt học viên nói tiếng Anh với người mà thực tế nói tiếng Việt. Người nghe tiếng Anh
-trong tuần 41–80 chỉ gồm: khách; quản lý, bếp trưởng, trưởng bộ phận người nước ngoài; thực tập sinh
-và đồng nghiệp người nước ngoài; trưởng đoàn, đại lý, người tổ chức sự kiện, chuyên gia, đoàn kiểm
-tra nói tiếng Anh. Mọi cuộc nói với đồng nghiệp người Việt xuất hiện trong bài là bài **chuyển ngữ**.
+trong tuần 41–80 chỉ gồm: khách và người đi cùng khách; quản lý, bếp trưởng, trưởng bộ phận người nước
+ngoài (ở khách sạn có); trưởng đoàn, người tổ chức sự kiện, chuyên gia, đoàn kiểm tra nói tiếng Anh.
+Thực tập sinh nước ngoài hiếm ở khách sạn Việt Nam nên không bài nào dựa vào họ.
+
+**Mỗi bài trong file bộ phận ghi người nghe ngay sau tên bài.** Việc mà thực tế nói bằng tiếng Việt —
+báo giám sát, bàn giao ca, gọi an ninh, nói bộ đàm, báo Duty Manager người Việt — xuất hiện trong khoá
+dưới ba dạng, không dạng nào là bài nói tiếng Anh: bài **viết** (sổ ca, phiếu, ghi chú hệ thống bằng
+tiếng Anh), bài **chuyển ngữ**, hoặc bài **đọc**, **nghe**. Bài có người nghe là quản lý người nước
+ngoài tập trung ở Phase 7–8. Khách sạn không có người như vậy thì HR cho học viên dừng ở tuần 60, hoặc
+học Phase 7–8 với sản phẩm chính là bài viết, bài đọc và bài với khách của mỗi tuần.
 
 ## 6. Tuần sát hạch
 
-| Tuần | Trắc nghiệm                  | Nói tự do                                    | Viết                              | Chuyển ngữ                 | Riêng theo nhánh |
-| ---- | ---------------------------- | -------------------------------------------- | --------------------------------- | -------------------------- | ---------------- |
-| 50   | 20 câu, cơ cấu như hiện nay  | 3 tình huống, mỗi tình huống 3–4 lượt        | 1 ghi chú hoặc tin nhắn, 50–70 từ | —                          | —                |
-| 60   | 20 câu                       | 3 tình huống, có 1 tình huống báo tin xấu    | 1 email 80–100 từ                 | 1 bài hai chiều            | —                |
-| 70   | 20 câu (10 chung + 10 nhánh) | 3 tình huống (1 chung + 2 nhánh)             | 1 báo cáo hoặc tin nhắn dài       | 1 bài phiên dịch trực tiếp | nửa đề           |
-| 80   | 20 câu, nghe nhiều giọng     | 1 tình huống đa bên + 1 bài trình bày 60–90s | 1 đề xuất hoặc tường trình        | 1 bài có tóm tắt           | nửa đề           |
+### Cơ cấu đề
 
-Điều kiện qua là **phép AND của các phần**, như bài sát hạch hiện nay. Nói tự do không có đường "gõ
-thay nói"; máy không nhận được giọng thì hoãn phần nói, không miễn.
+| Tuần | Trắc nghiệm (20 câu)                  | Nói tự do                                    | Viết                                    | Chuyển ngữ                         |
+| ---- | ------------------------------------- | -------------------------------------------- | --------------------------------------- | ---------------------------------- |
+| 50   | từ 5 · ngữ pháp 4 · nghe 6 · đọc 5    | 3 tình huống, mỗi tình huống 3–4 lượt        | 2 bài ngắn, mỗi bài 50–70 từ            | —                                  |
+| 60   | như trên; ≥ 30% từ tuần 23–50         | 3 tình huống, 1 tình huống báo tin xấu       | 1 email 80–100 từ + 1 biên bản ngắn     | 2 bài, mỗi chiều một bài           |
+| 70   | 10 chung + 10 theo nhánh              | 1 tình huống chung + 2 theo nhánh            | 1 bài chung + 1 theo nhánh              | 2 bài, 1 bài phiên dịch nhiều lượt |
+| 80   | nghe nhiều giọng; ≥ 30% từ tuần 41–70 | 1 tình huống đa bên + 1 bài trình bày 60–90s | 1 đề xuất hoặc tường trình + 1 bài ngắn | 2 bài, 1 bài có tóm tắt            |
+
+Phần nghe của trắc nghiệm dùng file ghi âm. Mỗi phần sản sinh có ít nhất hai bài, để sai số của một
+bài đơn không quyết định cả mốc.
+
+**Ô bắt buộc đúng.** Bài sát hạch hiện nay có một ô dự trữ mà sai là trượt nửa nói
+(`src/lib/checkpoint-oral.ts`). Bốn mốc mới giữ nguyên tắc đó: **mỗi đề nói có một tình huống thẩm
+quyền hoặc an toàn của bộ phận** — dị ứng ở Nhà hàng, chống chỉ định ở Spa, khách báo mất đồ ở Buồng
+phòng, người gọi hỏi khách có ở đây không ở Quan hệ khách hàng, tiền và ngoại lệ ở Lễ tân (đầu mỗi file
+bộ phận ghi rõ). Học viên hứa điều ngoài quyền, đoán, hay nói "an toàn" ở tình huống đó thì **trượt
+phần nói**, dù các tiêu chí khác cao tới đâu.
+
+**Đề của Nhánh B** (tuần 70, 80) luôn có một ca trong khung và một ca ngoài khung; ca ngoài khung là ô
+bắt buộc đúng của nhánh.
+
+**Buồng phòng, tuần 50 và 60.** Nói: 2 tình huống với khách (một là ô bắt buộc đúng). Viết: 1 mục sổ
+tầng + 1 ghi chú để lại cho khách, mỗi bài 50–70 từ, thay cho email 80–100 từ. Chuyển ngữ: 2 bài như
+các bộ phận khác. Nhãn tuần 60 của Buồng phòng ghi "B1 nghiệp vụ — Buồng phòng", và phần viết của nhãn
+là ghi chép 50–70 từ, không phải email.
+
+### Chuẩn đạt
+
+- **Trắc nghiệm:** như hiện nay — 70% tổng thể và ít nhất một nửa mỗi khối.
+- **Nói, viết, chuyển ngữ:** mỗi bài chấm 0–5 trên năm tiêu chí. **Đạt một phần là không tiêu chí nào
+  dưới 3, tính trung bình các bài của phần đó** — và không trượt ô bắt buộc đúng.
+
+| Tiêu chí          | Mức 3 (đạt, neo B1)                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------- |
+| Hoàn thành việc   | Đủ các ý việc đó cần                                                                                      |
+| Đúng luật nhà     | Không hứa điều ngoài quyền, không đoán, không tiết lộ, không nói "an toàn"; chuyển đúng người kèm mốc giờ |
+| Độ chính xác      | Lỗi ngữ pháp có nhưng không làm sai nghĩa; đúng thì, đúng thể ở chỗ quan trọng                            |
+| Vốn từ            | Dùng đúng từ của bộ phận; thiếu từ thì nói vòng được                                                      |
+| Mạch lạc và giọng | Lượt nói, bài viết có trình tự; đúng mức lịch sự với người nghe                                           |
+
+- Điều kiện qua mốc là **phép AND của các phần**, như bài sát hạch hiện nay.
+
+### Đề và thi lại
+
+- **Đề chưa thấy trước:** mỗi bộ phận × nhánh × mốc có ít nhất **6 bộ đề** sản sinh, soạn riêng cho bài
+  sát hạch, không lấy từ bài đã học. Một học viên không gặp lại bộ đề đã làm.
+- **Thi lại:** trắc nghiệm giữ thời gian chờ 20 phút hiện nay. Phần sản sinh thi lại sau ít nhất **3
+  ngày**, bằng một bộ đề khác (đề xuất; chủ dự án chốt con số).
+
+### Ai chấm
+
+- AI chấm theo bảng tiêu chí trên, trên **bản chữ** của lời nói và bài viết. Chọn nhà cung cấp theo mục
+  9.3.
+- **Trước khi nhãn có hiệu lực:** khoảng 100 bài làm được hai giáo viên chấm tay; AI được dùng khi nó
+  lệch không quá 1 bậc so với giáo viên ở ít nhất 90% số bài. Mẫu lấy từ nhóm học thử Phase 5 của Lễ
+  tân, cộng bài giáo viên tự viết ở ba mức (chưa đạt, đạt, vượt).
+- **Cho tới khi có phép so đó, nhãn ghi "tạm thời"**, và mọi bài trượt hoặc sát ngưỡng (điểm trung bình
+  2,5–3,5) do giáo viên chấm lại.
+
+### Khi máy không nhận được giọng nói
+
+Ma trận có nguyên tắc "không học viên nào bị chặn vì thiết bị", và outline giữ nguyên tắc đó:
+
+1. Thử trên máy khác hoặc máy của HR.
+2. Ghi âm rồi gửi lên máy chủ để chuyển thành chữ (phải xây, mục 7).
+3. Nếu cả hai không được: học viên **gõ câu trả lời và vẫn được mở giai đoạn sau**. Nhưng mốc của họ
+   ghi "**chưa chứng nhận phần nói**" cho tới khi thi nói được. Thiết bị không chặn việc học; nó chỉ
+   hoãn tấm nhãn.
 
 ## 7. Việc phải xây ngoài nội dung
 
 Không có những phần này thì 40 tuần mới chỉ là thêm bài, không lên được nhãn B1.
 
-1. **Chấm hai tầng.**
-   - _Hằng tuần, chấm bằng luật:_ bộ chấm bài viết hiện có (`scoreFreeText` trong
-     `src/lib/writing-score.ts`) đã chấm theo "ý bắt buộc" — mỗi ý nhận nhiều cách diễn đạt, có danh
-     sách câu cấm, có sàn độ dài — nên dùng lại được cho lời nói đã chuyển thành chữ. Điểm yếu: nó đo
-     "nói đủ ý" chứ không đo tiếng Anh; "Sorry room not ready twenty minutes" có thể qua.
-   - _Ở bốn bài sát hạch, chấm bằng AI theo thang điểm_ (độ chính xác, vốn từ, mạch lạc, giọng điệu),
-     đối chiếu với một mẫu do giáo viên chấm tay. Hiện repo chưa có phần nào gọi AI; đây là phần mới.
-     Nhà cung cấp đang cân nhắc và điều kiện: mục 9.3.
-2. **Viết và chuyển ngữ hằng tuần.** Hiện mỗi thứ chỉ có một tuần (viết tuần 33, chuyển ngữ tuần 26).
-   Màn hình đã có (`WritingSuite`, `MediationSuite`); phải bỏ sàn cứng 25 từ / 2 câu, mở dạng đề ngoài
-   "trả lời nhận xét", thêm chiều Anh → Việt và trả lời bằng giọng nói.
-3. **Bài sát hạch mới** theo mục 6 (cơ cấu đề hiện chỉ có từ vựng, ngữ pháp, nghe, đọc).
-4. **File ghi âm** nhiều giọng cho phần nghe, từ Phase 5.
-5. **Khung 80 tuần trong code:** bảng giai đoạn và thang tốc độ nghe, thang đạt chuẩn
+1. **Khuôn lượt nói mở**: kiểu dữ liệu mới cho một lượt không có câu mẫu (ý bắt buộc, câu cấm, sàn độ
+   dài), lượt do học viên mở lời (tuần 43), và thu một lượt nói liền 30–90 giây.
+2. **Chấm lượt nói mở hằng tuần bằng luật.** Bộ chấm bài viết hiện có (`scoreFreeText` trong
+   `src/lib/writing-score.ts`) chấm theo "ý bắt buộc" và câu cấm, nhưng **chưa dùng được cho lời nói**:
+   nó đếm câu bằng dấu chấm (bản chữ của lời nói không có dấu) và chặn bài khi có từ lặp liền nhau
+   (đúng kiểu ngập ngừng của người đang nói). Phải thêm một chế độ nói: bỏ hai cổng đó, giữ ý bắt
+   buộc, câu cấm và sàn số từ. Điểm yếu còn lại: nó đo "nói đủ ý" chứ không đo tiếng Anh; "Sorry room
+   not ready twenty minutes" vẫn có thể qua. Vì vậy bài hằng tuần là luyện tập, không phải chứng nhận.
+3. **Chấm bài sát hạch bằng AI** theo mục 6. Hiện repo chưa có phần nào gọi AI; đây là phần mới, gồm cả
+   hàng chờ, thử lại, nhà cung cấp thứ hai (mục 9.3).
+4. **Viết hằng tuần:** màn hình đã có (`WritingSuite`) nhưng hiện cho xem bài mẫu rồi nộp lại không giới
+   hạn; phải ẩn bài mẫu tới khi đạt hoặc sau lần nộp thứ hai, bỏ sàn cứng 25 từ / 2 câu, mở dạng đề
+   ngoài "trả lời nhận xét".
+5. **Chuyển ngữ hằng tuần:** màn hình đã có (`MediationSuite`); phải thêm chiều Anh → Việt, trả lời
+   bằng giọng nói, và dạng phiên dịch nhiều lượt.
+6. **Nghe bằng file ghi âm**, từ Phase 5: hai đoạn mỗi tuần cho mỗi bộ phận, có câu hỏi.
+7. **Bài sát hạch mới** theo mục 6: cơ cấu đề (hiện chỉ có từ vựng, ngữ pháp, nghe, đọc), ngân hàng đề
+   sản sinh, đường "chưa chứng nhận phần nói", ghi âm gửi máy chủ.
+8. **Khung 80 tuần trong code:** bảng giai đoạn và thang tốc độ nghe, thang đạt chuẩn
    (`src/lib/phases.ts`); `TOTAL_WEEKS` (`src/lib/curriculum.ts`); các cổng kiểm nội dung đang khoá
    cứng ở 40 tuần (`scripts/verify-content.ts`, `scripts/lint-content.ts`, `scripts/qa-full.ts`); sáu
    ràng buộc `BETWEEN 1 AND 40` trong ba migration; thang cấp bậc sao (`jobRankFor`); các chữ "40
    tuần" trên giao diện và tài liệu.
-6. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh;
+9. **Chọn nhánh:** lưu nhánh của từng học viên theo bộ phận; tiến độ và bài sát hạch tách theo nhánh;
    học viên chọn ở tuần 61, HR chọn hoặc đổi được ở trang quản lý nhân viên, và lựa chọn của HR thắng
-   (mục 9.1).
+   (mục 9.1); hai bài nối khi đổi sang Nhánh B.
 
 ## 8. Khối lượng soạn và thứ tự làm
 
-| Phần                          | Khối lượng                              |
-| ----------------------------- | --------------------------------------- |
-| Tuần 41–60                    | 5 bộ phận × 20 tuần = 100 tuần-bộ-phận  |
-| Tuần 61–80, 2 chung + 2 riêng | tương đương 150 tuần-bộ-phận            |
-| **Tổng**                      | **250**, so với 200 của 40 tuần hiện có |
+| Phần                                  | Khối lượng                                                   |
+| ------------------------------------- | ------------------------------------------------------------ |
+| Bài học tuần 41–60                    | 5 bộ phận × 20 tuần = 100 tuần-bộ-phận                       |
+| Bài học tuần 61–80, 2 chung + 2 riêng | tương đương 150 tuần-bộ-phận                                 |
+| **Tổng bài học**                      | **250**, so với 200 của 40 tuần hiện có                      |
+| Ý bắt buộc và câu cấm cho lượt nói mở | khoảng 2–4 lượt mở mỗi bài, mọi bài                          |
+| Đoạn nghe ghi âm                      | 2 đoạn × 32 tuần dạy × 5 bộ phận, tuần 61–78 thêm phần nhánh |
+| Ngân hàng đề sát hạch                 | 6 bộ đề × 4 mốc × 5 bộ phận, mốc 70 và 80 nhân hai nhánh     |
 
-Thứ tự đề xuất: thẩm định outline này (một Academic Director, một Hotel Manager, chấm mù) → xây phép
-đo và khung 80 tuần → soạn thử Phase 5 cho Lễ tân → chấm mù theo đúng quy trình 10 auditor → nhân ra
-bốn bộ phận còn lại.
+Thứ tự đề xuất: outline qua chấm mù → xây phép đo và khung 80 tuần → soạn thử Phase 5 cho Lễ tân, lấy
+luôn mẫu bài làm để so AI với giáo viên → chấm mù theo đúng quy trình 10 auditor → nhân ra bốn bộ phận
+còn lại.
 
 ## 9. Ba việc chủ dự án đã trả lời (10/10/2026)
 
@@ -281,6 +455,13 @@ bốn bộ phận còn lại.
 Tới tuần 61 học viên tự chọn nhánh; HR cũng chọn hoặc đổi được cho nhân viên của mình. **Khi hai bên
 chọn khác nhau thì theo HR** (chủ dự án chốt 10/10). Nghĩa là: HR đã chọn cho một nhân viên thì học
 viên đó không tự đổi được; HR chưa chọn thì lựa chọn của học viên có hiệu lực.
+
+Vòng chấm mù thứ nhất nêu một rủi ro của cách này: nhân viên tuyến đầu tự chọn Nhánh B sẽ luyện 20
+tuần cách nói của người có quyền mà mình chưa có. Quyết định của chủ dự án giữ nguyên; outline giảm
+rủi ro bằng ba cách: bài "trong khung" luôn mở bằng "nếu khách sạn giao cho bạn quyền này" và đi kèm
+bài "ngoài khung" (mục 4, 5.2); màn hình chọn nhánh nói rõ Nhánh B dành cho ai; và HR nhìn thấy, đổi
+được lựa chọn của từng nhân viên. Nếu chủ dự án muốn chặt hơn, phương án là mặc định Nhánh A và chỉ mở
+Nhánh B khi HR gán — việc này chờ chủ dự án quyết.
 
 ### 9.2 Cách bán: nằm trong gói tính phí hiện tại
 
@@ -313,9 +494,8 @@ Bốn điều kiện:
    chuyển sang.
 3. **Viết phần chấm không gắn với một nhà cung cấp.** API của DeepSeek theo chuẩn chung, nên đổi nhà
    cung cấp là đổi cấu hình, không viết lại.
-4. **Chọn bằng số đo, không bằng tên.** Lấy khoảng 100 bài làm thật đã được giáo viên chấm tay, cho
-   DeepSeek và một model khác cùng chấm, giữ model nào khớp với giáo viên hơn. Chưa có phép so này thì
-   chưa biết model nào chấm đúng, kể cả model đắt hơn.
+4. **Chọn bằng số đo, không bằng tên.** Theo phép so ở mục 6 ("Ai chấm"): cho DeepSeek và một model
+   khác cùng chấm bộ bài giáo viên đã chấm tay, giữ model nào khớp với giáo viên hơn.
 
 Nguồn: [bảng giá API](https://api-docs.deepseek.com/quick_start/pricing) ·
 [chính sách riêng tư](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) (cập nhật
@@ -325,7 +505,9 @@ Nguồn: [bảng giá API](https://api-docs.deepseek.com/quick_start/pricing) ·
 
 ## Cách đọc file của từng bộ phận
 
-Mỗi tuần dạy có: tên tuần, một dòng **Nói được**, bốn bài, đề **Viết**, và đề **Chuyển ngữ** ở những
-tuần có. Từ tuần 61: bài 1–2 chung cho hai nhánh, bài 3–4 riêng (3A, 4A cho Nhánh A; 3B, 4B cho Nhánh
-B). Tuần tổng duyệt và tuần sát hạch theo mục 5.1 và mục 6 của file này; file bộ phận chỉ ghi tình
-huống riêng của tuần tổng duyệt.
+Đầu mỗi file ghi **người nghe tiếng Anh** của bộ phận và **ô bắt buộc đúng** trong bài sát hạch. Mỗi
+tuần dạy có: tên tuần, một dòng **Nói được**, bốn bài, đề **Nghe**, đề **Viết**, và đề **Chuyển ngữ** ở
+những tuần có. Sau tên mỗi bài là người nghe (`· khách`, `· trưởng đoàn`, `· quản lý nước ngoài`…) hoặc
+dạng bài khi không phải bài nói (`· viết`, `· đọc`, `· nghe`, `· chuyển ngữ`). Từ tuần 61: bài 1–2
+chung cho hai nhánh, bài 3–4 riêng (3A, 4A cho Nhánh A; 3B, 4B cho Nhánh B). Tuần tổng duyệt có đủ bốn
+bài, hai bài dạy hai luật mới của mục 5.1. Tuần sát hạch theo mục 6.

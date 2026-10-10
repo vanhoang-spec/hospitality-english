@@ -2,24 +2,36 @@
 
 > Đề xuất, chưa phải spec chuẩn. Khung chung, luật nhà và cách đọc: [`../curriculum-41-80.md`](../curriculum-41-80.md).
 
-Buồng phòng nói với khách ngắn hơn mọi bộ phận khác. Vì vậy B1 của Buồng phòng dựa nhiều hơn vào **báo
-cáo, chuyển lời và viết**: mỗi tuần dưới đây có ít nhất một bài mà người nghe là giám sát, lễ tân hay
-trưởng bộ phận nước ngoài, và bài viết là ghi chép thật của tầng.
+**Người nghe tiếng Anh của Buồng phòng:** khách; trưởng đoàn, trợ lý của khách; trưởng bộ phận và đoàn
+kiểm tra người nước ngoài ở khách sạn có. Sau tên mỗi bài ghi người nghe. Báo cáo cho giám sát, lễ
+tân, kỹ thuật, nói bộ đàm là tiếng Việt — trong khoá chúng là bài **viết** (sổ tầng, phiếu, ghi chú
+bằng tiếng Anh) hoặc **chuyển ngữ**, không phải bài nói.
+
+**Phạm vi.** Buồng phòng nói với khách ngắn hơn mọi bộ phận khác, nên B1 của Buồng phòng dựa nhiều hơn
+vào nghe khách, viết ghi chép của tầng và chuyển lời. **Tuần 60 là điểm dừng hợp lệ của nhân viên
+buồng**, và bài sát hạch tuần 60 của Buồng phòng có cơ cấu riêng (khung chung, mục 6). Phase 7–8 dành
+cho người được trưởng bộ phận cử: nhân viên tầng VIP, khách dài hạn (nhánh A) và giám sát tầng (nhánh
+B), ở khách sạn có trưởng bộ phận hoặc đoàn kiểm tra nói tiếng Anh.
+
+**Ô bắt buộc đúng trong bài sát hạch** (sai là trượt phần nói): khách báo mất đồ — giữ nguyên hiện
+trường, gọi giám sát, không nhận, không chối; không vào phòng đang treo biển, không mở cửa cho người
+không có tên đăng ký; không tự hứa tiền, phí, đổi phòng.
 
 ## Phase 5 — B1.1 (tuần 41–50)
 
 ### Tuần 41 · Kể lại sự việc, ghi sổ
 
-**Nói được:** báo giám sát một sự việc trên tầng theo đúng trình tự (lúc đó đang làm gì, chuyện gì xảy
-ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi vào sổ tầng.
+**Nói được:** kể cho chính vị khách chuyện đã xảy ra trong phòng của họ theo đúng trình tự (lúc đó
+đang làm gì, chuyện gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi sổ tầng.
 
-1. **While I Was Making the Bed** — phát hiện nước rò từ trần.
-2. **The Guest Came Back** — khách về giữa lúc đang dọn.
-3. **Something of the Guest's Was Broken** — làm hỏng đồ của khách: kể đúng, không giấu, không hứa tiền.
-4. **Into the Floor Log** — giờ, phòng, việc, còn lại gì.
+1. **While I Was Making the Bed** · khách — phát hiện nước rò từ trần: kể cho khách vừa về phòng.
+2. **You Came Back While I Was Cleaning** · khách — khách về giữa lúc dọn: đã làm tới đâu, còn gì.
+3. **Something of Yours Was Broken** · khách — làm hỏng đồ của khách: kể đúng, không giấu, không hứa tiền, gọi giám sát.
+4. **Into the Floor Log** · viết — giờ, phòng, việc, còn lại gì.
 
+**Nghe:** (a) khách kể họ thấy gì khi về phòng; (b) khách hỏi lại hai điều về vết nước trên trần.
 **Viết (40–60 từ):** ghi sổ tầng về một vết nước trên trần phòng có khách.
-**Chuyển ngữ (Việt → Anh):** đồng nghiệp kể lại chuyện vừa xảy ra; báo cho giám sát nước ngoài.
+**Chuyển ngữ (Việt → Anh):** đồng nghiệp kể lại chuyện vừa xảy ra; ghi lại vào sổ tầng.
 
 ### Tuần 42 · Trò chuyện không chuẩn bị
 
@@ -27,62 +39,70 @@ ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy; rồi ghi v
 ("Have you had a good day?", "How long have you been with us?"), đáp một câu, rồi quay lại việc; không
 tọc mạch về đồ đạc, người ở cùng.
 
-1. **In the Corridor** — chào và một câu hỏi han.
-2. **How Long Have You Been with Us?** — for/since; khách ở dài ngày.
-3. **When the Guest Starts Talking** — nghe, đáp ngắn, xin phép làm tiếp.
-4. **What You Never Mention** — đồ trong phòng, người ở cùng, giờ giấc của khách.
+1. **In the Corridor** · khách — chào và một câu hỏi han.
+2. **How Long Have You Been with Us?** · khách — for/since; khách ở dài ngày.
+3. **When the Guest Starts Talking** · khách — nghe, đáp ngắn, xin phép làm tiếp.
+4. **What You Never Mention** · khách — đồ trong phòng, người ở cùng, giờ giấc của khách.
 
+**Nghe:** (a) khách ở dài ngày kể về ngày của mình; (b) hai khách nói chuyện ở hành lang rồi quay sang nhờ.
 **Viết (40–60 từ):** ghi hồ sơ khách một sở thích khách tự nói ra (gối, giờ dọn).
 
 ### Tuần 43 · Hỏi lại, làm rõ, nói vòng
 
-**Nói được:** khi khách nói mơ hồ thì hỏi ra đúng điều cần bằng câu hỏi gián tiếp ("Could you tell me
-which pillow you'd prefer?"), nhắc lại để kiểm tra, xin khách nói lại, và tả một món đồ khi quên tên.
+**Nói được:** khi khách nói mơ hồ thì hỏi ra đúng điều cần ("Could you tell me whether you'd like the
+room cleaned today?"), nhắc lại để kiểm tra, xin khách nói lại, và tả một món đồ khi quên tên.
 
-1. **More Pillows** — loại nào, mấy cái, cứng hay mềm.
-2. **The Room Smells** — mùi gì, ở đâu, từ khi nào.
-3. **Don't Clean** — không dọn tới khi nào; còn khăn, nước, rác thì sao.
-4. **The Thing for the Curtains** — nói vòng khi quên từ (móc, dây rèm, miếng lót).
+1. **More Pillows** · khách — loại nào, mấy cái, cứng hay mềm.
+2. **The Room Smells** · khách — mùi gì, ở đâu, từ khi nào.
+3. **Don't Clean** · khách — không dọn tới khi nào; còn khăn, nước, rác thì sao.
+4. **The Thing for the Curtains** · khách — nói vòng khi quên từ (móc, dây rèm, miếng lót).
 
+**Nghe:** (a) khách nói nhanh ba yêu cầu ở cửa phòng; (b) khách giọng nặng tả một món đồ cần thêm.
 **Viết (40–60 từ):** ghi chú để lại trong phòng hỏi khách giờ muốn dọn.
 **Chuyển ngữ (Anh → Việt):** yêu cầu dài của khách cho tổ giặt là.
 
 ### Tuần 44 · Mô tả chính xác
 
-**Nói được:** mô tả đồ thất lạc và hư hỏng đủ để người khác nhận ra ("a silver watch which was found
-under the bed"), nói đúng vị trí trong phòng, và tả loại vải, đồ dùng.
+**Nói được:** mô tả đồ thất lạc và hư hỏng đủ để người khác nhận ra ("the one that was found under
+the bed", "a bag whose strap is broken"), nói đúng vị trí trong phòng, và tả loại vải, đồ dùng.
 
-1. **Found Under the Bed** — đồ thất lạc: gì, màu, chất liệu, ở đâu.
-2. **A Stain the Size of a Coin** — hư hỏng: vết gì, ở đâu, cỡ nào.
-3. **The Shelf Where the Towels Are Kept** — chỉ chỗ để đồ trong phòng.
-4. **Cotton, Linen, Down** — loại vải, ruột gối, đồ dùng.
+1. **The One That Was Found Under the Bed** · khách — khách hỏi đồ để quên: tả món đã tìm thấy để khách nhận.
+2. **A Stain the Size of a Coin** · khách — khách báo một vết bẩn: hỏi và nhắc lại vết gì, ở đâu, cỡ nào.
+3. **The Shelf Where the Towels Are Kept** · khách — chỉ chỗ để đồ trong phòng.
+4. **Cotton, Linen, Down** · khách — loại vải, ruột gối, đồ dùng.
 
+**Nghe:** (a) khách tả qua điện thoại một món đồ để quên; (b) khách tả một chỗ hỏng trong phòng tắm.
 **Viết (50–70 từ):** phiếu đồ thất lạc cho một chiếc đồng hồ.
 
 ### Tuần 45 · Chuyển lời hai chiều
 
-**Nói được:** chuyển lời chính xác giữa khách với giám sát, kỹ thuật, giặt là ("He said he would be
-out until four", "She asked us to change the sheets daily"), nói rõ lời của ai, không thêm ý mình.
+**Nói được:** chuyển lời chính xác giữa khách với kỹ thuật, giặt là, lễ tân ("The engineer said he
+would come at three", "You asked us to change the sheets daily"), nói rõ lời của ai, theo luật phiên
+dịch: dịch đủ, không thêm ý mình, không trả lời thay.
 
-1. **He Said He Would Be Out** — lời khách cho giám sát.
-2. **She Asked Us to Change…** — yêu cầu của khách cho ca sau.
-3. **Between the Engineer and the Guest** — hai chiều trong phòng: thợ hỏi, khách trả lời.
-4. **Whose Words Are These?** — "khách nói", "lễ tân nói" và "tôi nghĩ".
+1. **The Engineer Said He Would Come at Three** · khách — lời bộ phận khác cho khách: lùi thì, không hứa thay.
+2. **You Asked Us to Change the Sheets Daily** · khách — nhắc lại yêu cầu của khách trước khi ghi phiếu.
+3. **Whose Words Are These?** · khách — "lễ tân nói", "giám sát nói" và "tôi nghĩ".
+4. **Interpreting, Not Answering** · chuyển ngữ — thợ hỏi, khách trả lời trong phòng: dịch đủ, không đoán thay.
 
+**Nghe:** (a) khách dặn bốn điều về phòng trước khi ra ngoài; (b) khách hỏi lại thợ ba câu.
 **Viết (40–60 từ):** phiếu chuyển yêu cầu của khách cho kỹ thuật.
 **Chuyển ngữ (hai chiều):** thợ điện giải thích bằng tiếng Việt, khách hỏi lại bằng tiếng Anh.
 
-### Tuần 46 · Quy trình và phí
+### Tuần 46 · Quy trình của tầng
 
-**Nói được:** giải thích việc của tầng bằng câu bị động ("Rooms are serviced between nine and
-four", "Towels are changed on request", "Laundry must be handed in by ten", "Found items are kept
-for…").
+Giá giặt, giờ chót và đồ thất lạc đã dạy ở tuần 37; tuần này không dạy lại.
 
-1. **When Rooms Are Serviced** — giờ dọn, dọn buổi tối.
-2. **What Is Changed, and When** — khăn, ga, đồ dùng.
-3. **How Laundry Is Charged** — giá theo món, giờ chót, giặt nhanh.
-4. **Found Items Are Kept** — đồ thất lạc giữ bao lâu, trả thế nào.
+**Nói được:** giải thích việc của tầng bằng câu bị động ("Rooms are serviced between nine and four",
+"Towels are changed on request", "This floor is being cleaned", "The room must be aired for an
+hour").
 
+1. **When Rooms Are Serviced, What Is Changed** · khách — giờ dọn, dọn buổi tối, khăn, ga.
+2. **What Is Used in Your Room** · khách — hoá chất, mùi, phòng vừa khử trùng: khi nào vào lại được.
+3. **What Was Taken from the Minibar** · khách — đồ đã dùng được đếm và ghi thế nào; thắc mắc về tiền do lễ tân xem.
+4. **This Floor Is Being Cleaned** · khách — hành lang, sảnh thang máy, sàn ướt: lối đi khác, bao lâu nữa.
+
+**Nghe:** (a) khách hỏi vì sao phòng chưa vào được; (b) thông báo của khách sạn về lịch làm vệ sinh khu chung.
 **Viết (50–70 từ):** thẻ giải thích chương trình dùng lại khăn.
 
 ### Tuần 47 · Khuyên và nêu ý kiến
@@ -90,30 +110,40 @@ for…").
 **Nói được:** khuyên có lý do ("If I were you, I would send it for dry cleaning, because…"), nói ý
 kiến riêng khi khách hỏi, và can khách một việc không an toàn mà không ra lệnh.
 
-1. **If I Were You, I Would Dry-Clean It** — giặt khô hay giặt nước.
-2. **I'd Suggest Using the Safe** — đồ quý, hộ chiếu.
-3. **What Do You Think?** — khách hỏi ý: gối nào, chăn nào.
-4. **I Wouldn't Leave That There** — ban công, trẻ nhỏ, đồ phơi.
+1. **If I Were You, I Would Dry-Clean It** · khách — giặt khô hay giặt nước.
+2. **I'd Suggest Using the Safe** · khách — đồ quý, hộ chiếu.
+3. **What Do You Think?** · khách — khách hỏi ý: gối nào, chăn nào.
+4. **I Wouldn't Leave That There** · khách — ban công, trẻ nhỏ, đồ phơi.
 
+**Nghe:** (a) khách hỏi ý về một chiếc áo dễ hỏng; (b) hai vợ chồng bàn có nên để đồ trên ban công.
 **Viết (50–70 từ):** ghi chú gợi ý cách gửi giặt một món đồ dễ hỏng.
 **Chuyển ngữ (Việt → Anh):** tổ giặt khuyên không nên giặt một món; nói lại cho khách.
 
-### Tuần 48 · Cuộc gọi khó, lời nhắn, tin nhắn
+### Tuần 48 · Cuộc gọi khó, lời nhắn, ghi chú
 
-**Nói được:** nhận yêu cầu qua điện thoại (đọc lại số phòng, món, giờ), gọi lại khách báo giờ ("Someone
-will be coming up at three"), nói bộ đàm rõ, và để lại ghi chú, tin nhắn đúng giọng.
+**Nói được:** nhận yêu cầu qua điện thoại (đọc lại số phòng, món, giờ), xin nhắc lại khi nghe không rõ,
+gọi lại khách báo giờ ("Someone will be coming up at three"), và để lại ghi chú đúng giọng.
 
-1. **Room Number, Item, Time** — nhận yêu cầu, đọc lại.
-2. **Someone Will Be Coming Up** — báo việc sẽ diễn ra.
-3. **On the Radio** — ngắn, rõ, số phòng trước.
-4. **A Note in the Room** — ghi chú để lại và tin nhắn cho khách.
+1. **Room Number, Item, Time** · khách — nhận yêu cầu, đọc lại.
+2. **Someone Will Be Coming Up** · khách — báo việc sẽ diễn ra.
+3. **Thirteen or Thirty?** · khách — đường truyền xấu, giọng nặng: xin nhắc lại số phòng, số lượng.
+4. **A Note in the Room** · viết — ghi chú để lại và tin nhắn cho khách.
 
+**Nghe:** (a) cuộc gọi xin thêm đồ, khách đổi ý hai lần; (b) lời nhắn thoại của khách về giờ dọn.
 **Viết (50–70 từ):** ghi chú để lại khi không dọn được vì khách treo biển.
 
 ### Tuần 49 · Tổng duyệt + hai luật mới
 
-Một buổi sáng nhiều phòng trả. Luật "chưa biết thì nói chưa biết": khách hỏi giờ trả phòng trễ, giá
-giặt nhanh, hoá đơn. Luật "trả lời trước, giải thích sau": "Can you clean it now?", "Is this free?".
+**Nói được:** khi chưa biết thì nói điều mình chưa biết, **ai sẽ trả lời và mấy giờ**; khi khách hỏi
+thẳng thì trả lời ngay câu đầu; và giữ được một buổi sáng nhiều phòng trả.
+
+1. **The Front Desk Will Call You in Ten Minutes** · khách — trả phòng trễ, hoá đơn, giá giặt nhanh: không đoán; nói ai trả lời, mấy giờ.
+2. **Answer First** · khách — "Can you clean it now?", "Are these bottles free?": câu trả lời đi trước lý do.
+3. **Rehearsal: A Morning of Check-Outs** · khách — yêu cầu mơ hồ, một lời khuyên, một lời chuyển.
+4. **Rehearsal: The Long-Stay Floor** · khách — trò chuyện, mô tả, một cuộc gọi.
+
+**Nghe:** (a) ba khách hỏi nối nhau ở hành lang; (b) khách hỏi một điều chỉ lễ tân trả lời được.
+**Viết (50–70 từ):** ghi chú trả lời một câu hỏi mà lễ tân phải xác nhận.
 
 ### Tuần 50 · Sát hạch P5
 
@@ -122,27 +152,28 @@ giặt nhanh, hoá đơn. Luật "trả lời trước, giải thích sau": "Can
 ### Tuần 51 · Hướng dẫn từng bước và nói lý do
 
 **Nói được:** hướng dẫn khách từng bước dùng điều hoà, két, máy pha cà phê, rèm điện, gửi đồ giặt, và
-nói lý do ("so that it cools faster", "in case you need it washed today"); hướng dẫn thực tập sinh
-nước ngoài trình tự dọn phòng.
+nói lý do ("so that it cools faster", "in case you need it washed today").
 
-1. **So That It Cools Faster** — điều hoà, thẻ cắm điện.
-2. **How to Set the Safe** — từng bước, và việc cần làm khi quên mã.
-3. **In Case You Need It Today** — phiếu giặt, túi, giờ chót.
-4. **Showing the Intern** — trình tự dọn và lý do: trên xuống, sạch tới bẩn.
+1. **So That It Cools Faster** · khách — điều hoà, thẻ cắm điện.
+2. **How to Set the Safe** · khách — từng bước, và việc cần làm khi quên mã.
+3. **In Case You Need It Today** · khách — phiếu giặt, túi, giờ chót.
+4. **The Curtain Panel and the Coffee Machine** · khách — từng bước; khi không được thì ai lên xem.
 
+**Nghe:** (a) khách làm theo và hỏi lại từng bước; (b) hướng dẫn ghi âm của một thiết bị mới.
 **Viết (70–90 từ):** thẻ hướng dẫn máy pha cà phê trong phòng.
-**Chuyển ngữ (Anh → Việt):** trưởng bộ phận nước ngoài giải thích một chuẩn mới cho tổ.
+**Chuyển ngữ (Anh → Việt):** hướng dẫn tiếng Anh in trên một thiết bị, một chai hoá chất cho tổ.
 
 ### Tuần 52 · Trình tự quá khứ, biên bản sự cố
 
-**Nói được:** kể và viết một sự cố theo đúng thứ tự thời gian ("When I entered, the guest had already
-left the room"), chỉ ghi sự việc, giờ, người chứng kiến, ảnh đã chụp.
+**Nói được:** kể và viết một sự cố theo đúng thứ tự thời gian ("When I entered, you had already left
+the room"), chỉ ghi sự việc, giờ, người chứng kiến, ảnh đã chụp.
 
-1. **When I Entered** — đồ khách hỏng trước khi mình vào hay sau.
-2. **Someone Had Been Smoking** — phòng bị hút thuốc.
-3. **An Accident at Work** — tai nạn lao động.
-4. **Facts Only** — biên bản không đoán, không buộc tội.
+1. **When I Entered, You Had Already Left** · khách — đồ khách hỏng: nói trình tự, không đoán, gọi giám sát.
+2. **After the Floor Had Been Mopped** · khách — khách trượt ở hành lang: hỏi han, gọi người, chỉ nói điều mình thấy.
+3. **Someone Had Been Smoking** · viết — phòng bị hút thuốc: sự việc, ảnh, giờ; phí do lễ tân và quản lý trực.
+4. **Facts Only** · viết — biên bản không đoán, không buộc tội.
 
+**Nghe:** (a) khách kể đã để đồ ở đâu trước khi ra ngoài; (b) khách hỏi dồn ba câu về chuyện đã xảy ra.
 **Viết (70–90 từ):** biên bản một món đồ của khách bị hỏng.
 **Chuyển ngữ (Việt → Anh):** lời kể của đồng nghiệp vào biên bản.
 
@@ -151,24 +182,26 @@ left the room"), chỉ ghi sự việc, giờ, người chứng kiến, ảnh đ
 **Nói được:** ở lại với một vị khách đang giận trên tầng — gọi tên cảm xúc mà không nhận lỗi, nói điều
 mình ước đã khác ("I wish we had serviced your room earlier"), gọi giám sát ngay khi có chuyện mất đồ.
 
-1. **Four O'Clock and Not Cleaned** — phòng chưa dọn.
-2. **"Someone Moved My Things"** — đồ bị dời.
-3. **"My Watch Is Gone"** — nghi mất đồ: giữ nguyên hiện trường, gọi giám sát.
-4. **Disturbed with the Sign On** — bị làm phiền dù treo biển.
+1. **Four O'Clock and Not Cleaned** · khách — phòng chưa dọn.
+2. **"Someone Moved My Things"** · khách — đồ bị dời.
+3. **"My Watch Is Gone"** · khách — nghi mất đồ: giữ nguyên hiện trường, gọi giám sát.
+4. **Disturbed with the Sign On** · khách — bị làm phiền dù treo biển.
 
+**Nghe:** (a) khách giận nói liền một phút; (b) khách nói điều họ thật sự muốn.
 **Viết (70–90 từ):** ghi chú bàn giao cho giám sát về một khách đang rất giận.
-**Chuyển ngữ (hai chiều):** khách và giám sát tầng không nói tiếng Anh.
+**Chuyển ngữ (hai chiều):** khách và giám sát tầng.
 
 ### Tuần 54 · Văn hoá, nhu cầu đặc biệt
 
 **Nói được:** hỏi tế nhị điều cần biết ("Would you mind if I came back later?"), nói giảm, và phục vụ
 đúng cho khách không muốn người khác giới vào phòng, khách có đồ thờ, có trẻ sơ sinh, dị ứng.
 
-1. **Would You Mind If…?** — xin phép vào, quay lại, dời đồ.
-2. **Not to Be Touched** — đồ thờ, thảm cầu nguyện, sách.
-3. **A Baby in the Room** — cũi, giờ ngủ, hoá chất.
-4. **Feather-Free, Dust-Free** — dị ứng: làm điều mình làm được, không hứa an toàn tuyệt đối.
+1. **Would You Mind If…?** · khách — xin phép vào, quay lại, dời đồ.
+2. **Not to Be Touched** · khách — đồ thờ, thảm cầu nguyện, sách.
+3. **A Baby in the Room** · khách — cũi, giờ ngủ, không dùng hoá chất có mùi.
+4. **Feather-Free, Dust-Free** · khách — dị ứng: làm điều mình làm được, không hứa an toàn tuyệt đối.
 
+**Nghe:** (a) khách dặn những thứ không được chạm; (b) bố mẹ có con nhỏ nói giờ nào vào phòng được.
 **Viết (80–100 từ):** ghi hồ sơ khách các yêu cầu riêng cho ca sau.
 **Chuyển ngữ (Anh → Việt):** yêu cầu riêng của khách cho cả tổ.
 
@@ -177,197 +210,246 @@ mình ước đã khác ("I wish we had serviced your room earlier"), gọi giá
 **Nói được:** cập nhật việc đang chờ ("Engineering has been working on it since two"), nói việc đang
 nhờ người khác làm ("We are having the carpet cleaned"), mỗi lần cập nhật có điều mới và mốc kế.
 
-1. **Engineering Has Been Working on It** — phòng chờ kỹ thuật.
-2. **Having the Carpet Cleaned** — giặt thảm, khử mùi.
-3. **The Laundry Is Still Out** — đồ giặt thuê ngoài chưa về.
-4. **The Update with Nothing New** — vẫn báo lễ tân và khách.
+1. **Engineering Has Been Working on It** · khách — phòng chờ kỹ thuật.
+2. **Having the Carpet Cleaned** · khách — giặt thảm, khử mùi.
+3. **Your Laundry Is Still Out** · khách — đồ giặt thuê ngoài chưa về.
+4. **The Update with Nothing New** · khách — vẫn báo khách khi chưa có gì mới.
 
-**Viết (70–90 từ):** tin nhắn cập nhật cho lễ tân về một phòng chưa bán được.
+**Nghe:** (a) khách gọi hỏi tiến độ lần thứ hai; (b) khách nói giờ họ phải ra sân bay.
+**Viết (70–90 từ):** ghi chú hệ thống cho lễ tân về một phòng chưa bán được.
 **Chuyển ngữ (Việt → Anh):** nhà giặt báo trễ; báo lại cho khách.
 
-### Tuần 56 · Thông báo và giới thiệu ngắn
+### Tuần 56 · Giới thiệu và thông báo ngắn
 
-**Nói được:** nói liền 30–45 giây — giới thiệu phòng khi đưa khách lên theo thứ tự ("First… Then…
-Finally…"), và báo một lịch bảo trì, phun côn trùng ("Please note that…").
+Đưa khách lên phòng là việc của lễ tân và tổ hành lý; bài của Buồng phòng là lúc khách hỏi khi mình
+đang ở trong phòng hoặc trên tầng.
 
-1. **Showing the Room** — điện, điều hoà, két, nước, số gọi.
-2. **Three Things in Order** — chọn ba điều khách cần nhất.
-3. **Please Note That** — lịch bảo trì, phun côn trùng, cắt nước.
-4. **Questions at the Door** — ba câu hỏi liên tiếp.
+**Nói được:** nói liền 30–45 giây theo thứ tự ("First… Then… Finally…") khi khách nhờ chỉ cách dùng
+phòng, và báo từng phòng một lịch bảo trì, phun côn trùng ("Please note that…").
 
+1. **"Could You Show Me How Things Work?"** · khách — điện, điều hoà, két, số gọi: ba điều, đúng thứ tự.
+2. **Three Things in Order** · khách — chọn ba điều khách này cần nhất.
+3. **Please Note That** · khách — lịch bảo trì, phun côn trùng, cắt nước.
+4. **Questions at the Door** · khách — ba câu hỏi liên tiếp.
+
+**Nghe:** (a) thông báo ghi âm về một lần cắt nước; (b) khách hỏi lại giờ và việc phải làm.
 **Viết (70–90 từ):** thông báo để trong phòng về một lần bảo trì.
 **Chuyển ngữ (Việt → Anh):** giám sát đọc thông báo; nói lại cho khách.
 
 ### Tuần 57 · Tóm tắt và truyền đạt lại
 
-**Nói được:** tóm tắt tình trạng tầng và lời khách cho giám sát ("In short…", "She asked whether we
-could…"), đọc lại một yêu cầu nhiều phần, và phiên dịch hai chiều một trao đổi ngắn.
+**Nói được:** nhắc lại và tóm tắt cho khách ("You asked whether we could…", "In short…"), đọc lại một
+yêu cầu nhiều phần, và tóm tắt tầng của mình bằng văn bản.
 
-1. **The Floor in Three Sentences** — bao nhiêu phòng, vấn đề gì.
-2. **She Asked Whether** — tường thuật câu hỏi của khách.
-3. **Reading It Back** — yêu cầu nhiều phần của khách ở dài ngày.
-4. **Interpreting, Not Answering** — giữa khách và thợ.
+1. **You Asked Whether We Could…** · khách — nhắc lại câu hỏi của khách trước khi trả lời hoặc chuyển.
+2. **Reading It Back** · khách — yêu cầu nhiều phần của khách ở dài ngày.
+3. **In Short** · khách — nói gọn cho khách câu trả lời dài của kỹ thuật, lễ tân.
+4. **The Floor in Three Sentences** · viết — tóm tắt cuối ca: bao nhiêu phòng, vấn đề gì.
 
+**Nghe:** (a) khách dài hạn đọc sáu yêu cầu cho tuần tới; (b) khách hỏi một câu dài có hai ý.
 **Viết (70–90 từ):** tóm tắt cuối ca gửi giám sát.
 **Chuyển ngữ (hai chiều, trực tiếp):** khách và trưởng tổ giặt là.
 
 ### Tuần 58 · Văn bản của tầng
 
 **Viết được:** ghi chú trả lời khách, email về đồ thất lạc, thư kèm đồ giặt, đúng giọng và bằng các cụm
-cố định ("Further to your message…", "Please find enclosed…", "Should you need anything…").
+cố định ("Further to your message…", "Please find enclosed…", "Should you need anything…"). Mọi thư
+gửi khách là **bản nháp, giám sát duyệt**.
 
-1. **A Reply Left in the Room** — trả lời ghi chú của khách.
-2. **About Your Lost Item** — email: có, không, cần gì để trả.
-3. **With the Laundry** — thư kèm khi đồ có vấn đề.
-4. **The Guest Profile** — ghi sở thích đúng sự việc.
+1. **A Reply Left in the Room** · viết — trả lời ghi chú của khách.
+2. **About Your Lost Item** · viết — email: có, không, cần gì để trả.
+3. **With the Laundry** · viết — thư kèm khi đồ có vấn đề; không hứa tiền.
+4. **The Guest Profile** · viết — ghi sở thích đúng sự việc.
 
+**Nghe:** (a) khách gọi tả món đồ để quên và địa chỉ gửi; (b) giám sát nước ngoài dặn ba ý phải có trong thư.
 **Viết (80–100 từ):** email trả lời khách hỏi về một món đồ để quên.
 **Chuyển ngữ (Việt → Anh):** ý của giám sát → một đoạn email.
 
 ### Tuần 59 · Tổng duyệt + hai luật mới
 
-Luật "viết để ca sau làm tiếp được": bàn giao tầng có phòng hỏng và đồ thất lạc. Luật "báo tin xấu":
-đồ giặt hỏng, phòng không dọn kịp trước giờ khách về.
+**Nói được:** bàn giao một việc sao cho khách biết ai làm tiếp, tới đâu, bước kế và mấy giờ; chủ động
+báo một tin xấu theo bốn bước (đệm, sự việc, phương án, bước kế).
+
+1. **My Colleague Lan Will…** · khách — bàn giao có tên, có giờ khi hết ca.
+2. **I'm Afraid I Have Some Difficult News** · khách — đồ giặt hỏng, phòng không dọn kịp trước giờ khách về.
+3. **Rehearsal: Handing Over the Floor** · viết — ghi chú để ca sau làm tiếp phòng hỏng, đồ thất lạc.
+4. **Rehearsal: The Afternoon It All Goes Wrong** · khách — phòng chưa dọn, tin xấu, lời xin lỗi.
+
+**Nghe:** (a) khách phản ứng với một tin xấu; (b) khách hỏi "vậy ai sẽ lo việc này".
+**Viết (80–100 từ):** ghi chú bàn giao ba việc còn mở.
+**Chuyển ngữ (Việt → Anh):** tổ giặt báo một món đồ bị hỏng; nói cho khách.
 
 ### Tuần 60 · Sát hạch mốc 1,5 năm
 
+Cơ cấu riêng của Buồng phòng: hai tình huống với khách, một mục sổ tầng và một ghi chú để lại cho
+khách, hai bài chuyển ngữ (khung chung, mục 6).
+
 ## Phase 7 — B1.2, hai nhánh (tuần 61–70)
 
-Nhánh A: nhân viên buồng bậc cao (tầng VIP, khách dài hạn). Nhánh B: giám sát tầng.
+Dành cho người được trưởng bộ phận cử. Nhánh A: nhân viên buồng bậc cao (tầng VIP, khách dài hạn).
+Nhánh B: giám sát tầng. Sản phẩm của nhánh A phần lớn là văn bản ngắn.
 
 ### Tuần 61 · Đầu ca
 
-**Nói được:** A — đọc bảng phân phòng và ghi chú VIP bằng tiếng Anh, hỏi lại, báo việc tồn. B — báo
-tình hình tầng cho trưởng bộ phận nước ngoài và truyền chỉ đạo cho tổ.
+**Nói được:** nói với khách việc sắp diễn ra ("Your room is due to be serviced at two", "The engineer
+is expected at three"). A — đọc bảng phân phòng và ghi chú VIP bằng tiếng Anh, hỏi lại điều chưa rõ.
+B — báo tình hình tầng cho trưởng bộ phận nước ngoài và truyền chỉ đạo cho tổ.
 
-1. **The Room Assignment Sheet** — phòng trả, phòng ở, phòng gấp, VIP.
-2. **What Is Still Open** — việc tồn của ca trước.
+1. **Your Room Is Due at Two** · khách — be due to, be expected to: giờ dọn, giờ thợ tới.
+2. **We Are About to Start on This Floor** · khách — báo việc sắp diễn ra: bảo trì, dọn buổi tối.
 
-- 3A. **Reading the VIP Notes** — yêu cầu riêng, điều không được làm.
-- 4A. **Asking Back** — hỏi lại điều chưa rõ trước khi vào phòng.
-- 3B. **Briefing Upwards** — số phòng, phòng hỏng, rủi ro của ca.
-- 4B. **Passing It Down** — chỉ đạo tiếng Anh → cho tổ.
+- 3A. **Reading the Assignment Sheet and the VIP Notes** · đọc — phòng trả, phòng gấp, yêu cầu riêng, điều không được làm.
+- 4A. **Asking the Guest's Assistant** · trợ lý của khách — hỏi lại điều chưa rõ trước khi vào phòng.
+- 3B. **Briefing Upwards** · trưởng bộ phận nước ngoài — ba ý, ≤ 60 từ: số phòng, phòng hỏng, rủi ro của ca.
+- 4B. **Passing It Down** · chuyển ngữ — chỉ đạo tiếng Anh → cho tổ.
 
+**Nghe:** (a) trợ lý của khách VIP dặn bốn điều; (b) trưởng bộ phận nước ngoài nói việc ưu tiên trong ngày.
 **Viết (100–120 từ):** A — ghi chú việc tồn. B — bản tin đầu ca gửi trưởng bộ phận.
 **Chuyển ngữ (Anh → Việt):** chỉ đạo của trưởng bộ phận cho tổ.
 
 ### Tuần 62 · Góp ý và nhận góp ý
 
-**Nói được:** A — nhận kết quả kiểm phòng từ quản lý, nói điều mình sẽ làm khác ("I could have…"). B —
-viết phiếu kiểm phòng và nhận xét bằng tiếng Anh.
+**Nói được:** đề nghị nhẹ ("It might be better to…") và nhìn lại việc mình đã làm ("I could have…").
+A — nhận kết quả kiểm phòng. B — viết phiếu kiểm phòng và nhận xét bằng tiếng Anh.
 
-1. **It Might Be Better To…** — góp ý mềm cho thực tập sinh nước ngoài.
-2. **What I Could Have Done** — nhìn lại một phòng bị trả về.
+1. **It Might Be Better to Keep the Balcony Door Closed** · khách — gợi ý nhẹ với khách ở dài ngày.
+2. **I Could Have Asked You First** · khách — nhìn lại việc mình đã làm với đồ của khách.
 
-- 3A. **Taking an Inspection Result** — nghe, hỏi ví dụ, nói bước kế.
-- 4A. **A Reason, Not an Excuse** — giải thích mà không đổ lỗi.
-- 3B. **Writing the Inspection Note** — đạt, chưa đạt, làm lại gì.
-- 4B. **Discussing a Result** — trao đổi với trưởng bộ phận.
+- 3A. **Taking an Inspection Result** · trưởng bộ phận nước ngoài — nghe, hỏi ví dụ, nói bước kế.
+- 4A. **Reading the Inspection Sheet** · đọc — phiếu kiểm phòng tiếng Anh: rút ba việc phải sửa.
+- 3B. **Writing the Inspection Note** · viết — đạt, chưa đạt, làm lại gì.
+- 4B. **Discussing a Result** · trưởng bộ phận nước ngoài — trao đổi về kết quả kiểm tầng.
 
-**Viết (100–120 từ):** A — tự nhận xét. B — phiếu kiểm phòng có nhận xét.
+**Nghe:** (a) trưởng bộ phận nhận xét một phòng vừa kiểm; (b) người kiểm tra đọc năm điểm chấm.
+**Viết (100–120 từ):** A — tự nhận xét sau một phòng bị trả về. B — phiếu kiểm phòng có nhận xét.
 **Chuyển ngữ (Anh → Việt):** nhận xét kiểm phòng cho một đồng nghiệp.
 
 ### Tuần 63 · Khiếu nại leo thang
 
-**Nói được:** A — khi khách báo mất đồ hoặc đòi gặp quản lý: giữ nguyên hiện trường, báo đúng người,
-tóm tắt để khách không kể lại. B — gặp khách ở vai người quyết trong khung: dọn lại, đổi phòng cùng
-lễ tân; phần ngoài khung thì báo lên.
+**Nói được:** nói thẳng điều đã sai ("Even though the room was serviced…"). A — khi khách báo mất đồ
+hoặc đòi gặp quản lý: giữ nguyên hiện trường, báo đúng người, tóm tắt để khách không kể lại. B — nếu
+khách sạn giao quyền, gặp khách ở vai người quyết phần của tầng; phần ngoài khung thì báo lên.
 
-1. **Even Though the Room Was Serviced** — nói thẳng điều đã sai.
-2. **Despite What Happened** — giữ giọng với khách đang giận.
+1. **Even Though the Room Was Serviced** · khách — mệnh đề nhượng bộ, không đổ cho ca khác.
+2. **Despite What Happened** · khách — giữ giọng với khách đang giận.
 
-- 3A. **Nothing Is Touched** — giữ hiện trường, gọi giám sát.
-- 4A. **Relaying a Decision** — truyền quyết định, không hứa thêm.
-- 3B. **What I Can Offer Is…** — dọn lại, đổi phòng, phần trong khung.
-- 4B. **Beyond What I Can Approve** — đền bù, an ninh: báo lên, mốc giờ.
+- 3A. **Nothing Is Touched** · khách — giữ hiện trường; nói khách biết ai đang tới.
+- 4A. **Relaying a Decision** · khách — truyền quyết định, không hứa thêm.
+- 3B. **What I Can Do for You Now** · khách — dọn lại, thay đồ vải, đồ dùng: phần trong khung.
+- 4B. **Beyond What I Can Approve** · khách — đổi phòng, đền bù, an ninh: báo lên, mốc giờ.
 
+**Nghe:** (a) khách kể lại chuyện mất đồ lần thứ hai; (b) quản lý trực nói quyết định cần truyền lại.
 **Viết (100–120 từ):** A — tóm tắt cho giám sát. B — ghi sổ quyết định và lý do.
 **Chuyển ngữ (hai chiều):** khách và nhân viên an ninh.
 
 ### Tuần 64 · Tìm nguyên nhân một sự cố
 
-**Nói được:** A — lần lại vì sao phòng trả trễ hay đồ thất lạc ghi sai, tách điều biết chắc và điều
-suy ra ("It must have been left on the trolley"). B — trình bày nguyên nhân cho trưởng bộ phận.
+Phân tích trong nội bộ. Với khách: không nêu tên người hay ca, không đoán nguyên nhân.
 
-1. **It Must Have Been Left on the Trolley** — suy ra từ dấu vết.
-2. **It Can't Have Been the Night Shift** — loại trừ, không buộc tội.
+**Nói được:** suy ra điều đã xảy ra từ dấu vết ("It must have been left on the trolley"), tách điều
+biết chắc và điều suy ra. A — viết tường trình, trả lời khách "sao lại thế" mà không đoán. B — trình
+bày nguyên nhân cho trưởng bộ phận.
 
-- 3A. **Why the Room Was Late** — lần lại từng bước.
-- 4A. **What I Know, What I Don't** — trả lời mà không đoán.
-- 3B. **Presenting the Cause** — một vụ đồ giặt hỏng.
-- 4B. **The Cause Section** — sự việc, nguyên nhân, việc đã sửa.
+1. **It Must Be the Drain** · trưởng bộ phận nước ngoài — must be, might be: điều đang thấy.
+2. **It Must Have Been Left on the Trolley** · trưởng bộ phận nước ngoài — must have, can't have: điều đã xảy ra.
 
+- 3A. **Why the Room Was Late** · viết — lần lại từng bước.
+- 4A. **"How Did This Happen?"** · khách — trả lời mà không đoán, không nêu tên ai.
+- 3B. **Presenting the Cause** · trưởng bộ phận nước ngoài — một vụ đồ giặt hỏng.
+- 4B. **The Cause Section** · viết — sự việc, nguyên nhân, việc đã sửa.
+
+**Nghe:** (a) trưởng bộ phận hỏi lại từng mốc giờ; (b) khách hỏi "ai đã vào phòng tôi".
 **Viết (100–120 từ):** A — tường trình. B — phần nguyên nhân của báo cáo.
 **Chuyển ngữ (Việt → Anh):** giải thích của nhà giặt cho trưởng bộ phận.
 
 ### Tuần 65 · Thương lượng có điều kiện
 
-**Nói được:** A — thương lượng giờ dọn với khách ở dài ngày ("Even if…", "Otherwise…"). B — thương
-lượng với trưởng đoàn về phòng sớm, hành lý, và điều kiện với khách dài hạn.
+Buồng phòng không hứa giờ có phòng, không đổi phòng, không chốt phí: đó là việc của lễ tân.
 
-1. **Even If You Are in the Room** — dọn khi khách có mặt.
-2. **Otherwise, the Room May Not Be Ready** — hệ quả nói lịch sự.
+**Nói được:** đặt điều kiện và nói hệ quả lịch sự ("Even if…", "Otherwise, the room may not be
+ready"). A — sắp xếp với khách việc tầng cần làm. B — nói với trưởng đoàn thứ tự phòng xong; sắp xếp
+với khách dài hạn.
 
-- 3A. **A Time That Works for Both** — đổi giờ, không đổi tiêu chuẩn.
-- 4A. **Saying No to a Request** — từ chối kèm phương án.
-- 3B. **Early Rooms for a Group** — đổi lại lấy danh sách đúng hạn.
-- 4B. **On Condition That** — điều kiện với khách dài hạn.
+1. **Even If You Are in the Room** · khách — dọn khi khách có mặt.
+2. **Otherwise, the Room May Not Be Ready** · khách — hệ quả nói lịch sự.
 
-**Viết (100–120 từ):** A — ghi chú xác nhận lịch dọn. B — tin nhắn điều kiện gửi trưởng đoàn.
-**Chuyển ngữ (hai chiều):** trưởng đoàn và tổ buồng về giờ có phòng.
+- 3A. **"There Are Insects in My Room"** · khách — việc làm được ngay và điều kiện (cho vào kiểm tra, dời đồ); đổi phòng do lễ tân.
+- 4A. **Saying No to a Request** · khách — từ chối kèm phương án.
+- 3B. **Which Rooms Come First** · trưởng đoàn — thứ tự phòng xong cho đoàn; giờ nhận phòng do lễ tân.
+- 4B. **On Condition That** · khách — khách dài hạn: lịch dọn, điều kiện để vào phòng.
 
-### Tuần 66 · Họp có người nước ngoài
+**Nghe:** (a) khách báo côn trùng, nói điều họ muốn; (b) trưởng đoàn hỏi phòng nào xong trước.
+**Viết (100–120 từ):** A — ghi chú xác nhận lịch xử lý phòng. B — ghi chú cho lễ tân về thứ tự phòng.
+**Chuyển ngữ (hai chiều):** trưởng đoàn và tổ buồng về phòng nào xong trước.
 
-**Nói được:** A — nêu vấn đề của tầng khi được hỏi: một vấn đề, một ví dụ, một đề nghị. B — báo cáo ở
-giao ban tiếng Anh: phòng hỏng, phòng tạm ngưng, đoàn đến.
+### Tuần 66 · Khi trưởng bộ phận đi kiểm tầng
 
-1. **May I Add Something?** — xin nói, ngắt lời lịch sự.
-2. **I See It Differently** — không đồng ý mà không đối đầu.
+Nhân viên buồng không dự họp tiếng Anh; lúc được hỏi là khi trưởng bộ phận nước ngoài đi kiểm tầng.
 
-- 3A. **When You Are Asked** — vấn đề của tầng mình.
-- 4A. **Following the Meeting** — nghe họp, ghi phần việc của mình.
-- 3B. **Housekeeping Update** — phòng hỏng, phòng tạm ngưng, đoàn.
-- 4B. **Action Points** — ai, việc gì, khi nào.
+**Nói được:** xin nói, nêu ý, không đồng ý lịch sự. A — khi được hỏi: một vấn đề, một ví dụ, một đề
+nghị; rồi ghi lại. B — báo cáo ở giao ban tiếng Anh: phòng hỏng, phòng tạm ngưng, đoàn đến.
 
-**Viết (100–120 từ):** A — ghi chú sau họp. B — biên bản việc cần làm.
+1. **May I Add Something?** · trưởng bộ phận nước ngoài — xin nói một điều về tầng mình.
+2. **I See It Differently** · trưởng bộ phận nước ngoài — không đồng ý về thứ tự dọn mà không đối đầu.
+
+- 3A. **When You Are Asked on the Floor** · trưởng bộ phận nước ngoài — vấn đề, ví dụ, đề nghị.
+- 4A. **A Note After the Floor Walk** · viết — ghi phần việc của mình.
+- 3B. **Housekeeping Update** · quản lý nước ngoài — phòng hỏng, phòng tạm ngưng, đoàn đến.
+- 4B. **Action Points** · viết — ai, việc gì, khi nào.
+
+**Nghe:** (a) trưởng bộ phận nói ba điều thấy trên tầng; (b) một đoạn giao ban có phần của Buồng phòng.
+**Viết (100–120 từ):** A — ghi chú sau buổi kiểm tầng. B — biên bản việc cần làm.
 **Chuyển ngữ (Anh → Việt):** kết luận giao ban cho tổ.
 
-### Tuần 67 · Con số trong ghi chép và báo cáo
+### Tuần 67 · Ước lượng và xu hướng
 
-**Nói được:** A — ghi đúng con số: lệch trạng thái phòng, minibar, sổ đồ thất lạc. B — viết báo cáo ca
-có so sánh ("increased by…", "compared with…").
+**Nói được:** nói con số gần đúng với khách ("about twenty minutes", "just under an hour") và nói xu
+hướng ("up by…", "twice as many as…"). A — ghi đúng con số của tầng. B — viết báo cáo ca có so sánh.
 
-1. **Saying Numbers Right** — số phòng, số lượng, giờ.
-2. **Vacant or Occupied?** — đối chiếu trạng thái phòng.
+1. **About Twenty Minutes** · khách — bao lâu nữa phòng xong, thợ tới.
+2. **At Most an Hour** · khách — ước lượng mà không hứa quá.
 
-- 3A. **The Discrepancy Report** — phòng báo trống mà có người.
-- 4A. **Minibar and Lost Property** — đếm, ghi, ký.
-- 3B. **Compared with Last Week** — năng suất, thất thoát đồ vải.
-- 4B. **The Shift Report** — số, phòng hỏng, việc tồn.
+- 3A. **The Discrepancy Sheet** · viết — phòng báo trống mà có người.
+- 4A. **Minibar and Lost Property** · viết — đếm, ghi, ký.
+- 3B. **Compared with Last Week** · trưởng bộ phận nước ngoài — năng suất, thất thoát đồ vải.
+- 4B. **The Shift Report** · viết — số, phòng hỏng, việc tồn.
 
+**Nghe:** (a) khách hỏi "bao lâu nữa" ba lần; (b) trưởng bộ phận đọc số liệu đồ vải của tuần.
 **Viết (100–120 từ):** A — phiếu lệch trạng thái phòng. B — báo cáo ca.
 **Chuyển ngữ (Việt → Anh):** số liệu của kho đồ vải cho trưởng bộ phận.
 
 ### Tuần 68 · Từ phản hồi của khách tới hành động
 
-**Nói được:** A — nghe phản hồi về độ sạch khi gặp khách, quay lại phòng sửa ngay. B — đọc nhận xét,
-phiếu góp ý, kết quả kiểm tra và viết phiếu khắc phục.
+**Nói được:** đọc một phiếu góp ý và tách sự việc khỏi cảm xúc. A — nghe phản hồi về độ sạch khi gặp
+khách, quay lại phòng sửa ngay. B — đọc kết quả kiểm tra, viết phiếu khắc phục.
 
-1. **Reading a Comment Card** — tách sự việc khỏi cảm xúc.
-2. **Is Everything as You Like It?** — hỏi để nghe thật.
+1. **Reading a Comment Card** · đọc — sự việc, cảm xúc, điều khách muốn.
+2. **Is Everything as You Like It?** · khách — hỏi để nghe thật.
 
-- 3A. **Going Back to the Room** — sửa ngay, báo lại khách.
-- 4A. **A Note of Apology** — ghi chú xin lỗi để trong phòng.
-- 3B. **What the Audit Found** — đọc kết quả kiểm tra.
-- 4B. **The Corrective-Action Note** — vấn đề, nguyên nhân, việc sửa, ai, hạn.
+- 3A. **Going Back to the Room** · khách — sửa ngay, báo lại khách.
+- 4A. **A Note of Apology** · viết — ghi chú để trong phòng; giám sát duyệt.
+- 3B. **What the Audit Found** · đọc — đọc kết quả kiểm tra.
+- 4B. **The Corrective-Action Note** · viết — vấn đề, nguyên nhân, việc sửa, ai, hạn.
 
+**Nghe:** (a) khách góp ý về phòng tắm; (b) người kiểm tra đọc ba phát hiện.
 **Viết (100–120 từ):** A — ghi chú xin lỗi. B — phiếu khắc phục.
 **Chuyển ngữ (Anh → Việt):** một nhận xét của khách cho cả tổ.
 
 ### Tuần 69 · Tổng duyệt + hai luật mới theo nhánh
 
-A — một ngày ở tầng VIP: giữ một đầu mối cho mỗi phòng; ba dấu hiệu phải mời cấp trên. B — làm cầu nối
-giữa trưởng bộ phận nước ngoài, tổ và khách: quyết trong khung, báo ngoài khung.
+**Nói được:** A — giữ một đầu mối cho mỗi phòng; nhận ra ba dấu hiệu phải mời cấp trên. B — quyết
+trong khung, báo ngoài khung; làm cầu nối truyền đủ, không thêm bớt.
+
+1. **Rehearsal: The Guest Who Has Told It Twice** · khách — khiếu nại đã qua hai người.
+2. **Rehearsal: A Full Floor** · khách — trộn mọi việc của giai đoạn.
+
+- 3A. **One Point of Contact** · khách — "You won't need to explain again."
+- 4A. **Three Signs** · khách — tiền hoặc ngoại lệ; mất đồ, an toàn; khách hỏi lần hai.
+- 3B. **Inside the Limit, Outside the Limit** · khách — hai ca liền nhau, một trong, một ngoài.
+- 4B. **The Bridge** · chuyển ngữ — giữa trưởng bộ phận nước ngoài, tổ và khách.
+
+**Nghe:** (a) khách kể lại lần thứ ba; (b) chỉ đạo của trưởng bộ phận có một ý dễ truyền sai.
+**Viết (100–120 từ):** A — ghi chú chuyển việc kèm cả câu chuyện. B — báo lên một việc ngoài khung.
 
 ### Tuần 70 · Sát hạch P7
 
@@ -375,135 +457,169 @@ giữa trưởng bộ phận nước ngoài, tổ và khách: quyết trong khun
 
 ### Tuần 71 · Nêu quan điểm, đề xuất thay đổi
 
-**Nói được:** A — đề xuất một cải tiến cho xe đẩy, đồ dùng, trình tự theo bốn bước. B — đề xuất đổi
-định mức, hoá chất, quy trình với trưởng bộ phận, có số liệu.
+**Nói được:** đề xuất theo bốn bước: "If we checked the minibar first, we would…"; "If we had checked
+it first on Monday, …". A — viết một cải tiến cho xe đẩy, đồ dùng, trình tự. B — đề xuất đổi định mức,
+hoá chất, quy trình, có số liệu.
 
-1. **The Problem, with Evidence** — nói vấn đề bằng sự việc.
-2. **If We Had Checked the Minibar First** — điều kiện loại 3 làm bằng chứng.
+1. **If We Checked the Minibar First** · trưởng bộ phận nước ngoài — đề xuất bằng điều kiện loại 2.
+2. **If We Had Checked It on Monday** · trưởng bộ phận nước ngoài — điều kiện loại 3 để nói hậu quả đã xảy ra.
 
-- 3A. **A Better Trolley Layout** — đề xuất nhỏ với giám sát.
-- 4A. **Answering "Why Change?"** — trả lời phản đối.
-- 3B. **A New Room Quota** — được, mất, chi phí.
-- 4B. **On Balance** — khuyến nghị và giới hạn.
+- 3A. **A Better Trolley Layout** · viết — đề xuất nửa trang.
+- 4A. **Answering "Why Change?"** · trưởng bộ phận nước ngoài — trả lời hai câu hỏi ngắn.
+- 3B. **A New Room Quota** · trưởng bộ phận nước ngoài — được, mất, chi phí.
+- 4B. **On Balance** · trưởng bộ phận nước ngoài — khuyến nghị và giới hạn.
 
-**Viết (120–150 từ):** A — đề xuất một trang. B — đề xuất có số liệu.
+**Nghe:** (a) trưởng bộ phận phản biện một đề xuất; (b) hai phương án định mức được so với nhau.
+**Viết (120–150 từ):** A — đề xuất nửa trang. B — đề xuất có số liệu.
 **Chuyển ngữ (Việt → Anh):** ý kiến của tổ về đề xuất.
 
-### Tuần 72 · Trình bày, hướng dẫn trong 5 phút
+### Tuần 72 · Trình bày 60–90 giây trong một buổi kiểm tra
 
-**Nói được:** A — dạy thực tập sinh nước ngoài trải giường, dọn buổi tối trong năm phút. B — dẫn đoàn
-kiểm tra thương hiệu đi xem một phòng, nói điều thấy được.
+**Nói được:** trình bày 60–90 giây có mở, thân, kết ("First of all…", "What this means is…", "To sum
+up…"). A — nói với người kiểm tra cách mình làm một phòng. B — dẫn đoàn kiểm tra thương hiệu đi xem
+một phòng, nói điều thấy được.
 
-1. **First of All, Moving On, To Sum Up** — khung bài nói.
-2. **Is That Clear So Far?** — kiểm tra người nghe.
+1. **First of All, Moving On, To Sum Up** · đoàn kiểm tra — khung bài nói về trình tự làm một phòng.
+2. **What This Means Is…** · khách — nói lại một việc của tầng (phòng tạm ngưng, khử mùi) bằng lời dễ hiểu.
 
-- 3A. **Teaching a Turn-Down** — từng bước, lý do.
-- 4A. **Questions from the Intern** — trả lời, và nói "tôi sẽ hỏi lại".
-- 3B. **Walking the Auditor Through a Room** — chuẩn, cách kiểm, bằng chứng.
-- 4B. **When the Auditor Finds Something** — nhận, không cãi, nói việc sửa.
+- 3A. **How I Do a Turn-Down** · đoàn kiểm tra — từng bước, lý do.
+- 4A. **Questions from the Auditor** · đoàn kiểm tra — trả lời, và nói "tôi sẽ hỏi giám sát".
+- 3B. **Walking the Auditor Through a Room** · đoàn kiểm tra — chuẩn, cách kiểm, bằng chứng.
+- 4B. **When the Auditor Finds Something** · đoàn kiểm tra — nhận, không cãi, nói việc sửa.
 
-**Viết (120–150 từ):** A — tờ hướng dẫn một kỹ thuật. B — thư trả lời đoàn kiểm tra.
+**Nghe:** (a) người kiểm tra hỏi bốn câu trong phòng; (b) lời kết của đoàn sau buổi kiểm.
+**Viết (120–150 từ):** A — thẻ chuẩn cho một kỹ thuật. B — thư trả lời đoàn kiểm tra (trưởng bộ phận duyệt).
 **Chuyển ngữ (hai chiều):** đoàn kiểm tra hỏi một nhân viên không nói tiếng Anh.
 
 ### Tuần 73 · Khách VIP, tình huống nhạy cảm
 
-**Nói được:** A — phục vụ phòng VIP, khách dài hạn; bước ra và báo ngay khi khách có hành vi không phù
-hợp. B — chuẩn bị tầng VIP, nhận báo cáo quấy rối, làm việc với an ninh.
+**Nói được:** dùng cụm rất trang trọng ("I would be grateful if…", "May I suggest…", "Please allow me
+to…") và không nói về phòng khác, khách khác. A — phục vụ phòng VIP, khách dài hạn; giữ kín điều thấy
+trong phòng. B — chuẩn bị tầng VIP; khi nhân viên báo bị quấy rối thì rút người, báo an ninh và Duty
+Manager, không tự nói chuyện với khách.
 
-1. **Should You Prefer a Later Time** — cụm rất trang trọng, học như công thức.
-2. **I Am Unable to Say** — không nói về phòng khác, khách khác.
+1. **May I Suggest a Later Time?** · khách — cụm trang trọng cho tầng VIP.
+2. **I Am Unable to Say** · khách — không nói về phòng khác, khách khác.
 
-- 3A. **The VIP Room** — vào, làm, ra: đúng giờ, không dấu vết.
-- 4A. **Stepping Out** — khách vượt ranh giới: ra ngoài, báo ngay.
-- 3B. **The VIP Floor Plan** — phối hợp bằng một bảng giờ.
-- 4B. **Protecting a Colleague** — nhận báo cáo, an ninh, ghi nhận.
+- 3A. **The VIP Room** · khách — vào, làm, ra: đúng giờ, không dấu vết.
+- 4A. **Something Private in the Room** · khách — đồ riêng tư: không bàn, không kể; vật nguy hiểm thì báo giám sát.
+- 3B. **Preparing with the Guest's Assistant** · trợ lý của khách — hỏi và xác nhận yêu cầu của tầng.
+- 4B. **Handing It to the Duty Manager** · viết — báo cáo quấy rối: rút người, an ninh, ghi nhận.
 
+**Nghe:** (a) trợ lý của khách dặn năm yêu cầu; (b) khách hỏi dò về phòng bên.
 **Viết (120–150 từ):** A — ghi chú kín cho ca sau. B — biên bản một báo cáo quấy rối.
 **Chuyển ngữ (Anh → Việt):** yêu cầu của quản gia riêng của khách cho tổ.
 
 ### Tuần 74 · Thuyết phục và xử lý lời từ chối
 
-Buồng phòng không bán hàng. Tuần này dạy thuyết phục khách chấp nhận việc tầng cần làm.
+Buồng phòng không bán hàng. Tuần này dạy thuyết phục khách chấp nhận việc tầng cần làm. Nhân viên buồng
+không gõ, không vào phòng đang treo biển; kiểm tra an toàn là việc của giám sát cùng an ninh (luật
+tuần 37). Phí hút thuốc, phí hư hỏng do lễ tân và quản lý trực tính.
 
-**Nói được:** A — thuyết phục khách cho vào kiểm tra khi treo biển quá lâu, cho thợ vào sửa. B —
-thuyết phục khách chuyển phòng để sửa, chấp nhận phí hút thuốc, phí hư hỏng.
+**Nói được:** hỏi điều khách lo trước, đề nghị sau ("Would you rather we came after lunch?"), và nhận
+lời từ chối. A — xin cho thợ vào sửa; xử lý đúng khi biển treo quá lâu. B — cùng an ninh kiểm tra an
+toàn; thuyết phục khách chuyển phòng để sửa.
 
-1. **What Matters Most to You?** — hỏi điều khách lo trước khi đề nghị.
-2. **"I'd Rather Not"** — nhận lời từ chối, đưa phương án.
+1. **What Matters Most to You?** · khách — hỏi trước khi đề nghị.
+2. **"I'd Rather Not"** · khách — nhận lời từ chối, đưa phương án.
 
-- 3A. **A Welfare Check** — biển treo quá lâu: lý do, cách vào.
-- 4A. **Letting the Engineer In** — giờ, thời gian, người đi cùng.
-- 3B. **Moving Rooms for a Repair** — lý do, lợi ích, ai chuyển đồ.
-- 4B. **The Smoking Charge** — bằng chứng, chính sách, người quyết.
+- 3A. **The Sign Has Been On Since Yesterday** · viết — thẻ để dưới cửa và báo giám sát đúng giờ; không gõ, không vào.
+- 4A. **Letting the Engineer In** · khách — giờ, thời gian, người đi cùng.
+- 3B. **A Welfare Check** · khách — cùng an ninh: gọi phòng, gõ cửa, nói lý do.
+- 4B. **Moving Rooms for a Repair** · khách — lý do, lợi ích, ai chuyển đồ; phòng mới do lễ tân xếp.
 
-**Viết (120–150 từ):** A — ghi chú xin vào kiểm tra. B — thư giải thích một khoản phí.
+**Nghe:** (a) khách nêu hai lý do không muốn thợ vào; (b) khách trả lời qua cửa khi được hỏi thăm.
+**Viết (120–150 từ):** A — thẻ để dưới cửa và ghi chú báo giám sát. B — biên bản bằng chứng gửi lễ tân
+(ảnh, giờ, sự việc; không ghi phí).
 **Chuyển ngữ (Việt → Anh):** phương án của kỹ thuật cho khách.
 
 ### Tuần 75 · Người ngoài nói tiếng Anh
 
-**Nói được:** A — trả lời trưởng đoàn về hành lý, phòng sớm; đi cùng chuyên gia tới kiểm tra. B — viết
-thư theo dõi cho trưởng đoàn, trả lời đoàn kiểm tra chất lượng.
+Hành lý và giờ nhận phòng của đoàn thuộc lễ tân; Buồng phòng trả lời phần phòng.
 
-1. **The Tour Leader's Questions** — phòng nào xong, hành lý ở đâu.
-2. **The Visiting Inspector** — đi cùng, trả lời điều mình biết.
+**Nói được:** nêu vấn đề và nhắc lại điều đã thống nhất ("As agreed…", "It was agreed that…"). A — trả
+lời trưởng đoàn phòng nào đã xong; đi cùng chuyên gia tới kiểm tra. B — viết thư theo dõi, chuyển yêu
+cầu lên trưởng bộ phận.
 
-- 3A. **Forty Bags, Twenty Rooms** — hành lý đoàn.
-- 4A. **With the Specialist** — chuyên gia côn trùng, thiết bị nói tiếng Anh.
-- 3B. **The Follow-Up Letter** — điều đã thống nhất, điều còn mở.
-- 4B. **Not Mine to Agree** — chuyển điều khoản lên trưởng bộ phận.
+1. **As Agreed** · trưởng đoàn — nhắc lại điều đã thống nhất về giờ dọn cho đoàn.
+2. **The Visiting Inspector** · đoàn kiểm tra — đi cùng, trả lời điều mình biết.
 
-**Viết (120–150 từ):** A — tin nhắn cho trưởng đoàn. B — thư theo dõi.
+- 3A. **Which Rooms Are Ready?** · trưởng đoàn — phòng xong, phòng chưa; hành lý và giờ nhận phòng chỉ sang lễ tân.
+- 4A. **With the Specialist** · chuyên gia nước ngoài — chuyên gia côn trùng, thiết bị: chỉ phòng, trả lời câu hỏi.
+- 3B. **The Follow-Up Letter** · viết — điều đã thống nhất, điều còn mở; trưởng bộ phận duyệt.
+- 4B. **Not Mine to Agree** · trưởng đoàn — chuyển yêu cầu lên, nói mốc trả lời.
+
+**Nghe:** (a) trưởng đoàn đọc danh sách phòng cần trước; (b) chuyên gia giải thích việc sẽ làm trong phòng.
+**Viết (120–150 từ):** A — tin nhắn cho trưởng đoàn về phòng đã xong. B — thư theo dõi.
 **Chuyển ngữ (hai chiều):** chuyên gia và tổ trưởng.
 
 ### Tuần 76 · Sự cố lớn
 
-**Nói được:** A — cháy, bão, dịch bệnh trên tầng: kiểm phòng, báo cáo theo luật "một việc + một mốc
-giờ". B — khách bất tỉnh trong phòng: phiên dịch giữa người nhà và y tế, viết tường trình.
+**Nói được:** A — hướng dẫn 45–60 giây cho khách trên tầng, trả lời câu hỏi không lường trước, nói điều
+sẽ xảy ra tiếp ("Guests must not use the lifts until further notice"). B — phiên dịch giữa người nhà
+khách và y tế; viết tường trình nội bộ.
 
-1. **Room by Room** — kiểm phòng, đánh dấu, báo số.
-2. **Who Has Not Answered** — phòng chưa có người trả lời.
+1. **Until Further Notice** · nhóm khách — khách trên tầng: việc phải làm, việc không được làm.
+2. **What Happens Next** · khách — vài giờ tới: phòng, đồ đạc, lần cập nhật kế.
 
-- 3A. **My Floor** — hướng dẫn khách trên tầng ra lối thoát.
-- 4A. **Reporting Up** — báo giám sát: số, nguồn, giờ.
-- 3B. **Interpreting for the Medics** — dịch đủ, không trả lời thay.
-- 4B. **The Statement** — sự việc, giờ, người, việc đã làm.
+- 3A. **Questions in the Corridor** · khách — đồ để lại trong phòng, khi nào quay lại: chuyển đúng người.
+- 4A. **The Floor Check Report** · viết — phòng đã kiểm, phòng chưa trả lời: số, giờ.
+- 3B. **Interpreting for the Medics** · chuyển ngữ — dịch đủ, không trả lời thay.
+- 4B. **The Internal Statement** · viết — sự việc, giờ, người, việc đã làm; bản gửi ra ngoài do quản lý duyệt.
 
-**Viết (120–150 từ):** A — báo cáo kiểm tầng. B — tường trình sự cố.
+**Nghe:** (a) thông báo khẩn của toà nhà; (b) nhiều khách hỏi cùng lúc ở hành lang.
+**Viết (120–150 từ):** A — báo cáo kiểm tầng. B — tường trình nội bộ.
 **Chuyển ngữ (hai chiều, trực tiếp):** người nhà khách và nhân viên y tế.
 
 ### Tuần 77 · Nghề nghiệp
 
-**Nói được:** A — trình bày thành tích có con số trong buổi phỏng vấn lên giám sát. B — tự đánh giá
-cuối năm với trưởng bộ phận nước ngoài và viết nhận xét cho thực tập sinh.
+**Nói được:** nói thành tích có con số ("I have serviced…", "I was responsible for…") và kể một tình
+huống theo bối cảnh, việc làm, kết quả. A — bản thành tích một trang để xin lên giám sát, hai câu trả
+lời ngắn. B — buổi đánh giá cuối năm của chính mình.
 
-1. **What I Have Achieved** — thành tích kèm con số.
-2. **A Time When…** — bối cảnh, việc làm, kết quả.
+1. **What I Have Achieved on My Floor** · trưởng bộ phận nước ngoài — số phòng mỗi ca, điểm kiểm phòng, một cải tiến.
+2. **A Time When a Guest Lost Something** · trưởng bộ phận nước ngoài — bối cảnh, việc làm, kết quả.
 
-- 3A. **The Promotion Interview** — vì sao là tôi.
-- 4A. **Questions for Them** — hỏi lại người phỏng vấn.
-- 3B. **My Year-End Review** — điều đạt, điều chưa, kế hoạch.
-- 4B. **A Reference for the Intern** — nhận xét trung thực.
+- 3A. **My One-Page Record** · viết — bản thành tích để xin lên giám sát.
+- 4A. **Two Questions I Will Be Asked** · trưởng bộ phận nước ngoài — vì sao là tôi; điều tôi còn phải học.
+- 3B. **My Year-End Review** · trưởng bộ phận nước ngoài — điều đạt, điều chưa, kế hoạch.
+- 4B. **Writing My Self-Assessment** · viết — bản tự đánh giá theo mẫu tiếng Anh.
 
-**Viết (120–150 từ):** A — thư xin thăng tiến. B — bản tự đánh giá.
+**Nghe:** (a) hai câu hỏi phỏng vấn; (b) trưởng bộ phận nhận xét cuối năm.
+**Viết (120–150 từ):** A — bản thành tích một trang. B — bản tự đánh giá.
 
 ### Tuần 78 · Dự án cải tiến nhỏ
 
-**Nói được:** từ số liệu tới một đề xuất viết, trình bày 60–90 giây, trả lời ba câu hỏi. A — thất
-thoát đồ vải nhỏ. B — thời gian trả phòng.
+**Nói được:** đi từ số liệu tới một đề xuất viết ("I would recommend that we…", "It might be worth
+trying…"). A — thất thoát đồ vải nhỏ: bản đề xuất và hai câu trả lời ngắn. B — thời gian trả phòng:
+trình bày 60–90 giây, trả lời ba câu hỏi. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
-1. **What the Numbers Say** — đọc sổ, gom thành nhóm.
-2. **From Finding to Proposal** — từ điều tìm thấy tới việc đề nghị.
+1. **What the Numbers Say** · đọc — đọc sổ đồ vải, gom thành nhóm.
+2. **From Finding to Proposal** · trưởng bộ phận nước ngoài — từ điều tìm thấy tới việc đề nghị.
 
-- 3A. **Fewer Lost Face Towels** — một đề xuất nhỏ.
-- 4A. **Presenting in Ninety Seconds** — trình bày và trả lời.
-- 3B. **Rooms Back Faster** — một quy trình mới.
-- 4B. **Defending the Proposal** — trả lời trưởng bộ phận.
+- 3A. **Fewer Lost Face Towels** · viết — một đề xuất nhỏ.
+- 4A. **Two Questions About My Idea** · trưởng bộ phận nước ngoài — trả lời ngắn, có số.
+- 3B. **Rooms Back Faster** · viết — một quy trình mới.
+- 4B. **Defending the Proposal** · trưởng bộ phận nước ngoài — trình bày và trả lời phản biện.
 
+**Nghe:** (a) trưởng bộ phận đọc số liệu thất thoát của tháng; (b) phần hỏi đáp sau một bài trình bày.
 **Viết (120–150 từ):** bản đề xuất của dự án.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-A — một ngày ở tầng VIP có đoàn kiểm tra và một thực tập sinh cần giúp. B — một ngày ở vai giám sát:
-một thư gửi khách, một thực tập sinh cần kèm.
+**Nói được:** A — biết điều không nói thay khách sạn; từ chối dứt khoát mà tử tế (một câu không, một
+lý do, một phương án). B — biết điều giám sát được viết nhân danh khách sạn; báo lên bằng ba phần
+(việc, con số, điều đề nghị).
+
+1. **Rehearsal: The VIP Floor on an Audit Day** · khách — phòng VIP, một yêu cầu khó, một sự cố nhỏ.
+2. **Rehearsal: The Question You Should Not Answer** · khách — hỏi về phòng bên, về người vừa rời phòng.
+
+- 3A. **Not Mine to Say** · khách — chuyện của khách khác, chuyện đang được xem xét.
+- 4A. **The Firm, Kind No** · khách — mở cửa cho người không có tên đăng ký; lấy đồ ở phòng khác: không, lý do, phương án.
+- 3B. **What I May Put in Writing** · viết — ghi chú xác nhận việc tầng sẽ làm; phần phải chờ duyệt.
+- 4B. **Fact, Number, Ask** · trưởng bộ phận nước ngoài — báo lên một việc trong ba câu.
+
+**Nghe:** (a) một người xin mở cửa phòng "của bạn tôi"; (b) trưởng bộ phận hỏi "tóm lại là gì".
+**Viết (120–150 từ):** A — ghi chú một lời từ chối đã nói với khách. B — báo cáo một việc ngoài khung.
 
 ### Tuần 80 · Đánh giá cuối lộ trình
