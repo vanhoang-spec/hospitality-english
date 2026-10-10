@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSuiteSession } from "@/lib/session-resume";
+import { ResumeBanner } from "./ResumeBanner";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
@@ -18,6 +20,7 @@ import {
   oralPassMin,
   CHECKPOINT_ORAL_PASS_SHARE,
   CHECKPOINT_PASS_PCT,
+  CHECKPOINT_RESUME_WINDOW_MIN,
   CHECKPOINT_RETAKE_COOLDOWN_MIN,
   CHECKPOINT_TOTAL_QUESTIONS as TOTAL_QUESTIONS,
   CONSTRUCT_LABEL_VI,
@@ -260,6 +263,9 @@ function OralStage({
   );
 }
 
+/** An in-flight sitting: the drawn paper and everything answered so far. */
+type WeekTestSnapshot = { paper: Question[]; answers: (number | null)[]; idx: number };
+
 export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   const { recordSuiteResult, awardStars } = useAcademy();
   const markCheckpointPassed = useMarkCheckpointPassed();
@@ -282,7 +288,12 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   }, [cooldownMsLeft]);
   const [attempt, setAttempt] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const paper = useMemo(() => (week ? buildPaper(dep, week) : []), [dep, week, attempt]);
+  const builtPaper = useMemo(() => (week ? buildPaper(dep, week) : []), [dep, week, attempt]);
+  const [restoredPaper, setRestoredPaper] = useState<Question[] | null>(null);
+  // The paper is drawn and shuffled per sitting, so resuming needs the
+  // exact one that was in front of the learner — `answers[7]` means
+  // nothing against a freshly drawn set of questions.
+  const paper = restoredPaper ?? builtPaper;
 
   const [stage, setStage] = useState<"intro" | "sitting" | "oral" | "done">("intro");
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -315,15 +326,66 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
     return () => window.speechSynthesis.removeEventListener?.("voiceschanged", read);
   }, []);
 
+  // P2-5. The written half is a 12–19 minute uninterrupted block against a
+  // learner whose study window is 10–15 minutes, so an interruption here
+  // was the normal case, not the edge one.
+  //
+  // Only the SITTING is snapshotted. Once the paper is submitted the
+  // written score is already committed to lesson_progress (see
+  // submitAnswer), so an interruption during the oral half costs a retake
+  // of the oral, never the twenty answered questions.
+  //
+  // Two limits a practice suite does not have, because this is the paper the
+  // phase gate and the manager's matrix trust:
+  //  · it can be picked up for CHECKPOINT_RESUME_WINDOW_MIN after the last
+  //    answer, not for a week (see the constant);
+  //  · a sitting saved BEFORE the last failed attempt is not offered. Without
+  //    that, a paper left open on a second phone was a way round the retake
+  //    cooldown: fail on one device, resume the other.
+  const store = useSuiteSession<WeekTestSnapshot>(
+    dep,
+    week ?? "",
+    "weektest",
+    CHECKPOINT_RESUME_WINDOW_MIN * 60_000,
+  );
+  const [resumeHandled, setResumeHandled] = useState(false);
+  const overtaken = store.savedAt !== null && lastFailure !== null && store.savedAt < lastFailure;
+  const resumable =
+    store.ready && !resumeHandled && store.saved !== null && !overtaken && stage === "intro";
+
+  useEffect(() => {
+    if (!store.ready || resumable) return;
+    if (stage !== "sitting") return;
+    store.save({ paper, answers, idx });
+  }, [store, resumable, stage, paper, answers, idx]);
+
   if (!week || paper.length < TOTAL_QUESTIONS) return <SuiteComingSoon />;
 
   const q = paper[idx];
 
   function start() {
+    setRestoredPaper(null);
+    store.clear();
     setAnswers(new Array(paper.length).fill(null));
     setIdx(0);
     setPicked(null);
     setStage("sitting");
+  }
+
+  function resumeSitting() {
+    const s = store.saved;
+    setResumeHandled(true);
+    if (!s || s.paper.length < TOTAL_QUESTIONS) return;
+    setRestoredPaper(s.paper);
+    setAnswers(s.answers);
+    setIdx(s.idx);
+    setPicked(null);
+    setStage("sitting");
+  }
+
+  function discardSitting() {
+    setResumeHandled(true);
+    store.clear();
   }
 
   function submitAnswer() {
@@ -364,6 +426,9 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
       recordSuiteResult(dep, week!, "weektest", 0, {
         scorePct: Math.min(pct, CHECKPOINT_PASS_PCT - 1),
       });
+      // The sitting is over and its score is banked on the server; the
+      // local snapshot has nothing left to protect.
+      store.clear();
       setStage(oral.length >= CHECKPOINT_ORAL_ITEMS ? "oral" : "done");
       if (oral.length < CHECKPOINT_ORAL_ITEMS) finish(pct, tallied, [], false);
       return;
@@ -422,6 +487,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   function retake() {
     awardedRef.current = false;
     setOralResults([]);
+    // A retake draws a new paper on purpose (see the cooldown copy), so the
+    // previous sitting must not be offered back on the intro screen.
+    setRestoredPaper(null);
+    setResumeHandled(true);
+    store.clear();
     setAttempt((a) => a + 1);
     setStage("intro");
   }
@@ -429,6 +499,17 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
   if (stage === "intro") {
     return (
       <div className="mx-auto max-w-2xl">
+        {/* Offered even during the retake cooldown, as long as the sitting
+            began after the failure that started it (`overtaken` above): that
+            is not a new attempt, it is the one already under way, and
+            blocking it would make the cooldown punish the interruption. */}
+        {resumable && store.saved && (
+          <ResumeBanner
+            detail={`Bài thi đang dở — tiếp tục từ câu ${store.saved.idx + 1}/${store.saved.paper.length}. Các câu đã trả lời vẫn được giữ. Bài dở chỉ làm tiếp được trong ${CHECKPOINT_RESUME_WINDOW_MIN / 60} giờ.`}
+            onResume={resumeSitting}
+            onRestart={discardSitting}
+          />
+        )}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -464,6 +545,11 @@ export function WeekTestSuite({ dep, week }: { dep: string; week?: string }) {
               <strong>{Math.round(CHECKPOINT_ORAL_PASS_SHARE * 100)}%</strong> số câu. Câu mẫu chỉ
               hiện ở phần kết quả. Nếu micro hoặc mạng không dùng được, bạn gõ câu trả lời và vẫn
               được tính.
+            </p>
+            <p>
+              Nên làm một mạch. Nếu bị ngắt giữa phần trắc nghiệm, bạn làm tiếp được bài đang dở
+              trong vòng <strong>{CHECKPOINT_RESUME_WINDOW_MIN / 60} giờ</strong>; quá thời gian đó
+              là một đề mới.
             </p>
           </div>
           {cooldownMsLeft > 0 ? (

@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { SpeakingSuite } from "@/components/suites/SpeakingSuite";
 import { ArcadeSuite } from "@/components/suites/ArcadeSuite";
 import { VocabSuite } from "@/components/suites/VocabSuite";
@@ -10,6 +11,8 @@ import { WeekTestSuite } from "@/components/suites/WeekTestSuite";
 import { WritingSuite } from "@/components/suites/WritingSuite";
 import { MediationSuite } from "@/components/suites/MediationSuite";
 import { getDepartment } from "@/lib/departments";
+import { useSession } from "@/lib/auth";
+import { rememberPlace } from "@/lib/progress";
 import { useWeekAccess } from "@/lib/week-access";
 import { WeekLocked } from "@/components/WeekLocked";
 
@@ -37,8 +40,21 @@ function SuitePage() {
   // Called before the notFound() throw so the hook order never depends on
   // whether the route params resolve.
   const access = useWeekAccess(dep);
+  const { session, loading: sessionLoading } = useSession();
   const department = getDepartment(dep);
   const meta = TITLES[suite];
+
+  // The "Tiếp tục học" card points here (P2-4). Recorded on opening a
+  // suite rather than on finishing one, so an interrupted session still
+  // leaves a trail back — that is the session the learner most needs to
+  // find again. Locked weeks are excluded: sending someone back to a wall
+  // is worse than showing no card.
+  const unlocked = !access.ready || access.isUnlocked(week);
+  useEffect(() => {
+    if (sessionLoading || !department || !unlocked) return;
+    rememberPlace(session?.user.id, department.code, week);
+  }, [sessionLoading, session?.user.id, department, week, unlocked]);
+
   if (!department || !meta) throw notFound();
 
   // A suite URL is the other way into a week's content, so the gate has to

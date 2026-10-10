@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, resolveReviewVocab, type WeekContent } from "@/lib/content/week-content";
@@ -11,7 +11,9 @@ import {
   phaseOfWeek,
   suiteMasteryPct,
 } from "@/lib/phases";
+import { useSuiteSession } from "@/lib/session-resume";
 import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
+import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 type Term = { en: string; ipa: string; vi: string; usage: string; icon?: string };
@@ -159,6 +161,30 @@ function buildQuiz(
   return [...mcqs, ...dictations];
 }
 
+/** What survives an interruption (P2-5).
+ *
+ *  `flipped` matters as much as the quiz position: the flip gate is
+ *  component state, so every remount re-locked the quiz behind flipping
+ *  all 10–17 cards again.
+ *
+ *  An UNANSWERED question resumes at its start — restoring a half-typed
+ *  answer to a prompt the learner no longer has in mind is not honest. An
+ *  ANSWERED one resumes answered. The first version re-asked it, and a
+ *  reload between "Trả lời" and "Câu tiếp" then did one of two things: a
+ *  right answer was counted twice, or a wrong one got a free retry on a
+ *  question whose answer had just been shown. Main never had either hole —
+ *  a reload there throws the whole run away — so resume must not open them. */
+type VocabSnapshot = {
+  flipped: number[];
+  quiz: QuizQuestion[];
+  qIdx: number;
+  correctCount: number;
+  /** The question in hand once answered; null while it is still open. */
+  answered: { ok: boolean; picked: number | null; typed: string } | null;
+  awarded: string[];
+  earned: number;
+};
+
 export function VocabSuite({ dep, week }: { dep: string; week?: string }) {
   const content = week ? getWeekContent(dep, week) : null;
   // Guard component keeps all hooks in the inner component so the
@@ -219,6 +245,63 @@ function VocabSuiteInner({
   const earnedRef = useRef(0);
   const [lastScorePct, setLastScorePct] = useState(0);
 
+  const store = useSuiteSession<VocabSnapshot>(dep, week, "vocab");
+  const [resumeHandled, setResumeHandled] = useState(false);
+  const resumable = store.ready && !resumeHandled && store.saved !== null;
+  // Set once a run is scored, cleared when the next one starts. Without it,
+  // "Xem lại thẻ từ" after the result put the finished quiz back into a
+  // snapshot, and the next visit offered to resume a paper already marked.
+  const finishedRef = useRef(false);
+
+  // Snapshot on change rather than at each call site: the state that
+  // matters lands across several setState calls, and anything written
+  // straight after one of them captures the value it is replacing.
+  useEffect(() => {
+    // Never write over the snapshot the learner has not answered the
+    // resume prompt for yet — flipping one card would otherwise destroy
+    // the run they came back to finish.
+    if (!store.ready || resumable || stage === "done" || finishedRef.current) return;
+    if (flipped.size === 0 && quiz.length === 0) return;
+    store.save({
+      flipped: [...flipped],
+      quiz,
+      qIdx,
+      correctCount,
+      answered: answered === null ? null : { ok: answered, picked, typed },
+      awarded: [...awardedRef.current],
+      earned: earnedRef.current,
+    });
+    // `picked` and `typed` are only read once `answered` is set, and the
+    // controls that change them are disabled from that moment. Listing them
+    // would re-serialise the whole run on every keystroke of a dictation.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store, resumable, stage, flipped, quiz, qIdx, correctCount, answered]);
+
+  function resume() {
+    const s = store.saved;
+    setResumeHandled(true);
+    if (!s) return;
+    setFlipped(new Set(s.flipped));
+    awardedRef.current = new Set(s.awarded);
+    earnedRef.current = s.earned;
+    if (s.quiz.length > 0) {
+      setQuiz(s.quiz);
+      setQIdx(s.qIdx);
+      setCorrectCount(s.correctCount);
+      // An answered question comes back answered: its controls stay locked
+      // and the only way on is "Câu tiếp", exactly as before the reload.
+      setPicked(s.answered?.picked ?? null);
+      setTyped(s.answered?.typed ?? "");
+      setAnswered(s.answered ? s.answered.ok : null);
+      setStage("quiz");
+    }
+  }
+
+  function restart() {
+    setResumeHandled(true);
+    store.clear();
+  }
+
   function flip(i: number) {
     setFlipped((s) => {
       const n = new Set(s);
@@ -229,6 +312,7 @@ function VocabSuiteInner({
   }
 
   function startQuiz() {
+    finishedRef.current = false;
     setQuiz(
       buildQuiz(
         terms,
@@ -280,6 +364,10 @@ function VocabSuiteInner({
           scorePct: pct,
           mastered: pct >= MASTERY_PCT,
         });
+      // The run is banked; a snapshot of it would only offer to replay a
+      // paper that has already been scored.
+      finishedRef.current = true;
+      store.clear();
       setStage("done");
       return;
     }
@@ -447,6 +535,17 @@ function VocabSuiteInner({
 
   return (
     <div>
+      {resumable && store.saved && (
+        <ResumeBanner
+          detail={
+            store.saved.quiz.length > 0
+              ? `Tiếp tục từ câu ${store.saved.qIdx + 1}/${store.saved.quiz.length} của phần kiểm tra.`
+              : `Bạn đã lật ${store.saved.flipped.length}/${terms.length} thẻ từ.`
+          }
+          onResume={resume}
+          onRestart={restart}
+        />
+      )}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-2xl text-sm text-foreground/75">
           Chạm từng thẻ để học phát âm, ngữ cảnh sử dụng và nghĩa tiếng Việt. Lật đủ {terms.length}{" "}

@@ -78,6 +78,8 @@ phẩm hỏng trên editor của người dùng. `bun run lint` chạy vài phú
 | `src/lib/checkpoint-oral.ts`                                                            | `buildOral`, `oralHalfPassed` — nửa nói, gồm ô dự trữ bắt buộc đúng                                    |
 | `src/lib/phases.ts`                                                                     | Ranh giới phase, ngưỡng đạt, cơ cấu đề                                                                 |
 | `src/lib/review.ts`                                                                     | Ôn tập giãn cách (SM-2-lite)                                                                           |
+| `src/lib/progress.ts` · `session-resume.ts` · `pending-results.ts`                      | Tiến độ người học thấy · lưu điểm dừng giữa bài · kết quả chờ gửi khi mất mạng                         |
+| `src/lib/pwa.ts` · `public/sw.js`                                                       | Cài như app. **Gỡ phần chạy nền bằng công tắc `OFFLINE_SHELL`, không xoá tay `sw.js`**                 |
 | `src/components/suites/`                                                                | Các màn hình luyện: Vocab, Listening, Grammar, Reading, Speaking, Arcade, WeekTest, Writing, Mediation |
 | `src/lib/org-admin-actions.ts`                                                          | Server function cho HR khách sạn                                                                       |
 | `src/lib/platform-admin-actions.ts`                                                     | Server function cho Super Admin: tạo khách sạn, gói, bảng giá                                          |
@@ -138,6 +140,7 @@ Chạy từ gốc repo. Tất cả gọi hàm production.
 | `bun scripts/probes/resaid.ts [DEP] [--list]`       | Headword P3 tuần 23–29 không được nói lại ở tuần P3 nào sau                         |
 | `bun scripts/probes/swapone.ts [w1] [w2]`           | Thay một từ nội dung bằng "window": bao nhiêu lượt vẫn qua bộ chấm, chỉ nhờ nghĩa   |
 | `LINT_CONTENT_FULL=1 bun run lint:content`          | In trọn danh sách vi phạm của mọi cổng ratchet                                      |
+| `bun scripts/probes/sw-check.ts`, mở `/__run`       | Thử `public/sw.js` trong trình duyệt thật: mất mạng, có lại, gỡ bỏ (mốc: 16/16)     |
 
 Mức chuẩn hiện tại để đối chiếu (đo 2026-09-27): `leakall` — câu mẫu tự qua **100%** ở cả 5
 phase; đáp án sai lọt P0 23/349 · P1 10/494 · P2–P4 **0**. `orphans2` — **0**.

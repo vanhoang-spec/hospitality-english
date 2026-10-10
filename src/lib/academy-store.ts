@@ -3,10 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
 import { seedReviewItems } from "@/lib/review";
 import { localDateStr, yesterdayStr } from "@/lib/date";
+import { flushResults, queueResult, type ResultRow } from "@/lib/pending-results";
 
 const LEGACY_KEY = "academy.state.v1";
 const PENDING_STARS_PREFIX = "academy.pendingStars.v1.";
 const LAST_LEARNED_PREFIX = "academy.lastLearned.v1.";
+const FIRST_SUITE_PREFIX = "academy.firstSuiteDone.v1.";
 const METRICS_DEBOUNCE_MS = 600;
 
 export type Metrics = {
@@ -119,6 +121,26 @@ function writeLastLearned(userId: string, date: string) {
   window.localStorage.setItem(LAST_LEARNED_PREFIX + userId, date);
 }
 
+/** Has this learner ever finished a suite on this device?
+ *
+ *  The install prompt waits on it (backlog P2-1a): asking someone to put an
+ *  icon on their home screen before they have finished a single lesson is
+ *  asking them to commit to something they have not tried. */
+export function hasFinishedASuite(userId: string | undefined): boolean {
+  if (typeof window === "undefined" || !userId) return false;
+  return window.localStorage.getItem(FIRST_SUITE_PREFIX + userId) === "1";
+}
+
+function markFinishedASuite(userId: string) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(FIRST_SUITE_PREFIX + userId, "1");
+    window.dispatchEvent(new CustomEvent("academy:suite-finished"));
+  } catch {
+    // Storage is a nicety here; a full quota must not break recording.
+  }
+}
+
 function readPendingStars(userId: string): number {
   if (typeof window === "undefined") return 0;
   const raw = window.localStorage.getItem(PENDING_STARS_PREFIX + userId);
@@ -138,6 +160,19 @@ async function flushPendingStars(userId: string) {
   if (pending === 0) return;
   const { error } = await supabase.rpc("award_stars", { delta: pending });
   if (!error) writePendingStars(userId, 0);
+}
+
+/** One suite result to the server. False on any failure — no network, a
+ *  lapsed contract, anything — so the row stays queued (lib/pending-results). */
+async function sendResult(row: ResultRow): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from("lesson_progress")
+      .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" });
+    return !error;
+  } catch {
+    return false;
+  }
 }
 
 export function useAcademy() {
@@ -184,6 +219,8 @@ export function useAcademy() {
     (async () => {
       dropLegacyLocalState();
       await flushPendingStars(userId);
+      // Results recorded while the network was gone (lib/pending-results).
+      void flushResults(userId, sendResult);
 
       const { data: profile } = await supabase
         .from("profiles")
@@ -236,6 +273,15 @@ export function useAcademy() {
     return () => {
       cancelled = true;
     };
+  }, [userId]);
+
+  // The moment the connection is back is the moment a result recorded in a
+  // service lift can finally be sent — without waiting for the next app start.
+  useEffect(() => {
+    if (!userId) return;
+    const resend = () => void flushResults(userId, sendResult);
+    window.addEventListener("online", resend);
+    return () => window.removeEventListener("online", resend);
   }, [userId]);
 
   const update = useCallback(
@@ -314,7 +360,7 @@ export function useAcademy() {
       if (!userId) return;
       const weekNumber = typeof week === "string" ? parseInt(week, 10) : week;
       if (!Number.isFinite(weekNumber)) return;
-      const row: Record<string, unknown> = {
+      const row: ResultRow = {
         user_id: userId,
         department_id: departmentId.toUpperCase(),
         week_number: weekNumber,
@@ -328,11 +374,13 @@ export function useAcademy() {
       // conflict leaves an earlier pass intact, so a weaker retake can
       // never demote a learner back to un-mastered.
       if (opts?.mastered) row.mastered = true;
-      supabase
-        .from("lesson_progress")
-        .upsert(row as never, { onConflict: "user_id,department_id,week_number,suite" })
-        .then(() => {});
+      // Queued first, sent from the queue: a result finished with no network
+      // waits on the device instead of vanishing (lib/pending-results). A
+      // device that will not store the queue still gets the one send it had.
+      if (queueResult(row)) void flushResults(userId, sendResult);
+      else void sendResult(row);
 
+      markFinishedASuite(userId);
       // Streak = the learner showed up and finished a suite today, not
       // that they cleared the 80% mastery bar. Punishing an effortful
       // sub-mastery day with a streak reset churns exactly the weak,

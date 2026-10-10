@@ -1,11 +1,13 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAcademy } from "@/lib/academy-store";
 import { getWeekContent, speakerAudioLabel } from "@/lib/content/week-content";
 import { listeningRateForWeek, suiteMasteryPct } from "@/lib/phases";
+import { useSuiteSession } from "@/lib/session-resume";
 import { speak } from "@/lib/speech";
 import { VoiceButton } from "@/components/VoicePicker";
 import { useAttemptLogger, useStudySession } from "@/lib/telemetry";
+import { ResumeBanner } from "./ResumeBanner";
 import { SuiteComingSoon } from "./SuiteComingSoon";
 
 const MAX_LISTENS = 3;
@@ -133,6 +135,25 @@ function buildTasks(dep: string, week: string): ListeningTask[] {
   return [...shuffle(chooses), ...shuffle(clozes)];
 }
 
+/** The task list itself has to travel with the position (P2-5): the order
+ *  is shuffled per sitting, so "câu 5" of a fresh build is a different
+ *  question from "câu 5" of the run being resumed. */
+type ListeningSnapshot = {
+  tasks: ListeningTask[];
+  idx: number;
+  correctCount: number;
+  /** The task in hand once answered; null while it is still open. Same
+   *  reason as VocabSnapshot: re-asking an answered task counted a right
+   *  answer twice and gave a wrong one a retry with the answer known. */
+  answered: { ok: boolean; picked: number | null; blankValues: Record<number, string> } | null;
+  /** Plays already spent on the task in hand. Resetting it on resume made a
+   *  reload worth three more listens — the one thing MAX_LISTENS exists to
+   *  stop, and a hole main never had, since a reload there restarts the run. */
+  listens: number;
+  awarded: string[];
+  earned: number;
+};
+
 export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const { awardStars, recordSuiteResult } = useAcademy();
   const logAttempt = useAttemptLogger({ dep: dep ?? "", week: week ?? 1, suite: "listening" });
@@ -141,7 +162,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const MASTERY_PCT = suiteMasteryPct(week ?? 1);
   const [seed, setSeed] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const tasks = useMemo(() => (week ? buildTasks(dep, week) : []), [dep, week, seed]);
+  const built = useMemo(() => (week ? buildTasks(dep, week) : []), [dep, week, seed]);
+  const [restored, setRestored] = useState<ListeningTask[] | null>(null);
+  const tasks = restored ?? built;
 
   const [idx, setIdx] = useState(0);
   const [stage, setStage] = useState<"task" | "done">("task");
@@ -153,6 +176,51 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   const [lastScorePct, setLastScorePct] = useState(0);
   const awardedRef = useRef<Set<string>>(new Set());
   const earnedRef = useRef(0);
+
+  const store = useSuiteSession<ListeningSnapshot>(dep, week ?? "", "listening");
+  const [resumeHandled, setResumeHandled] = useState(false);
+  const resumable = store.ready && !resumeHandled && store.saved !== null;
+
+  useEffect(() => {
+    if (!store.ready || resumable || stage === "done") return;
+    // Nothing worth restoring until the learner has done something — and a
+    // single play counts, because plays are capped.
+    if (idx === 0 && answered === null && listens === 0) return;
+    store.save({
+      tasks,
+      idx,
+      correctCount,
+      answered: answered === null ? null : { ok: answered, picked, blankValues },
+      listens,
+      awarded: [...awardedRef.current],
+      earned: earnedRef.current,
+    });
+    // `picked` and `blankValues` are only read once `answered` is set, and
+    // their controls lock from that moment; listing them would re-serialise
+    // the run on every keystroke in a cloze blank.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store, resumable, stage, tasks, idx, correctCount, answered, listens]);
+
+  function resume() {
+    const s = store.saved;
+    setResumeHandled(true);
+    if (!s || s.tasks.length === 0) return;
+    setRestored(s.tasks);
+    setIdx(s.idx);
+    setCorrectCount(s.correctCount);
+    awardedRef.current = new Set(s.awarded);
+    earnedRef.current = s.earned;
+    setPicked(s.answered?.picked ?? null);
+    setBlankValues(s.answered?.blankValues ?? {});
+    setAnswered(s.answered ? s.answered.ok : null);
+    setListens(s.listens ?? 0);
+    setStage("task");
+  }
+
+  function restartFresh() {
+    setResumeHandled(true);
+    store.clear();
+  }
 
   const ttsAvailable = typeof window !== "undefined" && "speechSynthesis" in window;
 
@@ -230,6 +298,7 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
           scorePct: pct,
           mastered: pct >= MASTERY_PCT,
         });
+      store.clear();
       setStage("done");
       return;
     }
@@ -241,6 +310,9 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
   }
 
   function retry() {
+    // Back to a freshly shuffled build — the restored list belonged to the
+    // run that just ended.
+    setRestored(null);
     setSeed((s) => s + 1);
     setIdx(0);
     setPicked(null);
@@ -284,6 +356,13 @@ export function ListeningSuite({ dep, week }: { dep: string; week?: string }) {
 
   return (
     <div className="mx-auto max-w-2xl">
+      {resumable && store.saved && (
+        <ResumeBanner
+          detail={`Tiếp tục từ câu ${store.saved.idx + 1}/${store.saved.tasks.length} của phần luyện nghe.`}
+          onResume={resume}
+          onRestart={restartFresh}
+        />
+      )}
       <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-foreground/60">
         <span>
           Luyện nghe · Câu {idx + 1}/{tasks.length}

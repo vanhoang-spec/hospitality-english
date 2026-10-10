@@ -40,7 +40,19 @@ Hai mục vừa đóng ngày 23/08, theo cách khác với đề xuất ban đ�
 - **P1-11** đóng bằng cách hạ mục tiêu `560–620` → `≥510` **kèm GATE 5 canh** (sàn 500),
   thay vì soạn thêm ~55 từ mỗi bộ phận. Con số 560 chưa từng có căn cứ và chưa từng có gate.
 
-P2 (12 mục) và P3 (6 mục) vẫn còn nguyên. Chi tiết ở hai phần "Đã sửa" cuối tài liệu.
+P2: **4/12 xong** — P2-1(a), P2-3, P2-4, P2-5. P3 (6 mục) vẫn còn nguyên. Chi tiết ở hai
+phần "Đã sửa" cuối tài liệu.
+
+Hai ghi chú về nhóm P2 vừa đóng:
+
+- **P2-1 mới xong một nửa.** Phần (a) — PWA, manifest, icon, service worker, gợi ý thêm vào
+  màn hình chính — đã làm. Phần (b), edge function gửi nhắc học qua Zalo ZNS hoặc SMS, cần
+  một Zalo OA, một mẫu tin được duyệt và một mức ngân sách mỗi tin: ba quyết định vận hành,
+  không phải việc code.
+- **P2-5 chỉ phủ ba suite** mà backlog nêu đích danh theo tên file (Vocab, Listening,
+  WeekTest). Grammar, Speaking, Reading và Arcade vẫn giữ toàn bộ phiên trong bộ nhớ React
+  và vẫn mất trắng khi bị ngắt. Bài sát hạch dở chỉ nối lại được trong 2 giờ, suite luyện
+  trong 7 ngày; đăng xuất xoá mọi điểm dừng trên máy (xem `docs/HANDOFF.md` §4 "Đợt 3").
 
 Hai con số trong báo cáo cần đính chính sau khi rà lại từng trường hợp:
 
