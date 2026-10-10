@@ -174,8 +174,8 @@ function SubscriptionLapsed({ endsAt, kind }: { endsAt?: string; kind?: string }
   );
 }
 
-/** A partner's own account is open while the partnership is: the partner
- *  active, with a link still open. Nothing to pay, nobody but Embassy to ask. */
+/** A partner's own account is open while the partner is active. Nothing to
+ *  pay, nobody but Embassy to ask. */
 function PartnerDemoClosed() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6">
@@ -184,8 +184,7 @@ function PartnerDemoClosed() {
         <h1 className="font-display mt-3 text-2xl">Tài khoản đối tác đang tạm khoá</h1>
         <p className="mt-4 text-sm text-foreground/75">
           Tài khoản dùng thử dành cho đối tác mở khi bạn là đối tác đang hoạt động của Embassy
-          Language và có link giới thiệu đang mở. Tiến độ học vẫn được giữ nguyên. Hãy liên hệ
-          Embassy Language để mở lại.
+          Language. Tiến độ học vẫn được giữ nguyên. Hãy liên hệ Embassy Language để mở lại.
         </p>
         <button
           onClick={async () => {

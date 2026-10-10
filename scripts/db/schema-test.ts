@@ -1028,27 +1028,26 @@ check(
 );
 const live = async () =>
   (await one<{ a: boolean }>(`select public.org_is_active($1) as a`, [demoOrg]))!.a;
-check("no link yet: the demo account is closed", (await live()) === false);
+// Open on the partner being active alone (20261010090000): links no longer
+// decide it, in either direction.
+check("an active partner with no link yet: the demo account is open", (await live()) === true);
 await db.query(
   `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days)
    values ('t-demo-1', 'retail', $1, 20, 7)`,
   [dt.partner_id],
 );
-check("one live link: the demo account opens", (await live()) === true);
 await db.query(`update public.signup_links set revoked_at = now() where token = 't-demo-1'`);
-check("the last link revoked: closed again", (await live()) === false);
 await db.query(
   `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days, expires_at)
    values ('t-demo-2', 'retail', $1, 20, 7, now() - interval '1 day')`,
   [dt.partner_id],
 );
-check("a link past its end does not open it", (await live()) === false);
+check("every link revoked or past its end: the account stays open", (await live()) === true);
 await db.query(
   `insert into public.signup_links (token, kind, partner_id, discount_pct, trial_days, expires_at)
    values ('t-demo-3', 'retail', $1, 20, 7, now() + interval '30 days')`,
   [dt.partner_id],
 );
-check("a new live link opens it again", (await live()) === true);
 const off = (await luuDoiTac("dt-1", "Đối tác Demo", false)).rows[0]!;
 const stamped = await one<{ s: string | null }>(
   `select status_changed_at as s from public.partners where id = $1`,

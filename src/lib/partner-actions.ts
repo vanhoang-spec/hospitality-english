@@ -60,8 +60,8 @@ export const listPartners = createServerFn({ method: "POST" })
         active: p.active,
         phone: p.phone,
         hasAccount: !!p.demo_user_id,
-        // The same rule as partner_is_live(), from rows already loaded.
-        live: p.active && liveLinks > 0,
+        // The same rule as partner_is_live(): the partner being active.
+        live: p.active,
         liveLinks,
       };
     });
