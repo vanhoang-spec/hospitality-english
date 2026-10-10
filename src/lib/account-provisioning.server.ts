@@ -125,10 +125,12 @@ export async function listPrice(planCode: string, term: string): Promise<number 
 /** Create one account inside a hotel. `phone` must already be normalised.
  *
  *  Identity (org, role, department) goes into app_metadata, which only
- *  the service role can write — that is what handle_new_user reads. It is
- *  ALSO written to user_metadata, because production still runs the old
- *  trigger until migration 20260929090000 is applied, and an account
- *  created in between must not land with no hotel. */
+ *  the service role can write. Supabase Auth inserts the account without
+ *  it and writes it a moment later, in the same transaction; the profile
+ *  follows that second write (on_auth_user_identity_changed, migration
+ *  20261010150000) — handle_new_user alone sees none of it. The copy in
+ *  user_metadata is read by nothing: the name is the only part of
+ *  user_metadata the database takes. */
 export async function provisionMember(input: {
   orgId: string;
   phone: string;

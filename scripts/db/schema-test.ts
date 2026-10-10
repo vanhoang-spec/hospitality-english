@@ -1134,5 +1134,135 @@ check(
   )) === null,
 );
 
+// ── An account as Supabase Auth really writes it (20261010150000) ──
+// admin.createUser INSERTs the row with {provider, providers} only, then
+// UPDATEs raw_app_meta_data with the caller's map, in one transaction.
+// Every check above writes the row whole, which Auth never does — that is
+// how a profile with no hotel reached production unseen.
+async function createAsAuth(
+  phone: string,
+  userMeta: Record<string, unknown>,
+  appMeta: Record<string, unknown>,
+): Promise<{ id: string | null; error: string | null }> {
+  await db.exec("begin");
+  try {
+    const u = (await one<{ id: string }>(
+      `insert into auth.users (phone, raw_user_meta_data, raw_app_meta_data)
+       values ($1, $2, '{"provider":"phone","providers":["phone"]}') returning id`,
+      [phone, JSON.stringify(userMeta)],
+    ))!;
+    await db.query(
+      `update auth.users set raw_app_meta_data = raw_app_meta_data || $2::jsonb where id = $1`,
+      [u.id, JSON.stringify(appMeta)],
+    );
+    await db.exec("commit");
+    return { id: u.id, error: null };
+  } catch (e) {
+    await db.exec("rollback");
+    return { id: null, error: (e as Error).message };
+  }
+}
+const profileOf = (id: string | null) =>
+  one<{ role: string; org_id: string | null; department: string | null }>(
+    `select role, org_id, department from public.profiles where id = $1`,
+    [id],
+  );
+const authHotel = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit) values ('Auth Order Hotel', 2) returning id`,
+))!.id;
+
+const authHr = await createAsAuth(
+  "84900000101",
+  { full_name: "HR Hoa", role: "super_admin", org_id: other },
+  { org_id: authHotel, role: "org_admin" },
+);
+const authHrProfile = await profileOf(authHr.id);
+check(
+  "made the way Auth makes it, a hotel's HR is that hotel's HR",
+  authHrProfile?.role === "org_admin" && authHrProfile.org_id === authHotel,
+  authHr.error ?? JSON.stringify(authHrProfile),
+);
+const authL1 = await createAsAuth(
+  "84900000102",
+  { full_name: "Learner Một" },
+  { org_id: authHotel, role: "member", department: "HK" },
+);
+const authL1Profile = await profileOf(authL1.id);
+check(
+  "made the way Auth makes it, a learner lands in the hotel, with their department",
+  authL1Profile?.role === "member" &&
+    authL1Profile.org_id === authHotel &&
+    authL1Profile.department === "HK",
+  authL1.error ?? JSON.stringify(authL1Profile),
+);
+await createAsAuth("84900000103", {}, { org_id: authHotel, role: "member" });
+const authFull = await createAsAuth("84900000104", {}, { org_id: authHotel, role: "member" });
+check(
+  "the seat quota still refuses the learner past the last seat, and no account is left behind",
+  /SEAT_QUOTA_EXCEEDED/.test(authFull.error ?? "") &&
+    (await one<{ n: number }>(
+      `select count(*)::int as n from auth.users where phone = '84900000104'`,
+    ))!.n === 0,
+  authFull.error ?? "no error",
+);
+await db.query(
+  `update auth.users set raw_user_meta_data = $2,
+          raw_app_meta_data = raw_app_meta_data || '{"providers":["phone","email"]}'
+    where id = $1`,
+  [authL1.id, JSON.stringify({ role: "super_admin", org_id: other })],
+);
+const authL1After = await profileOf(authL1.id);
+check(
+  "what a person writes about themself, and Auth's own bookkeeping, move no one",
+  authL1After?.role === "member" && authL1After.org_id === authHotel,
+  JSON.stringify(authL1After),
+);
+await db.query(
+  `update auth.users set raw_app_meta_data = raw_app_meta_data - 'role' where id = $1`,
+  [authHr.id],
+);
+check(
+  "a role taken out of app_metadata does not demote the HR",
+  (await profileOf(authHr.id))?.role === "org_admin",
+);
+
+// The door opened for that trigger is not one a signed-in person can use:
+// the flag alone, set by hand, changes nothing.
+await db.exec(
+  `set request.jwt.claim.sub = '${authL1.id}'; set role authenticated;
+   select set_config('app.identity_sync', 'on', false);`,
+);
+const selfPromote = await raises(
+  `update public.profiles set role = 'super_admin' where id = '${authL1.id}'`,
+);
+await db.exec(
+  `reset role; reset request.jwt.claim.sub; select set_config('app.identity_sync', 'off', false);`,
+);
+check(
+  "a learner who sets the trigger's flag by hand still cannot change their own role",
+  /ROLE_OR_ORG_CHANGE_NOT_ALLOWED/.test(selfPromote ?? "") &&
+    (await profileOf(authL1.id))?.role === "member",
+  selfPromote ?? "allowed!",
+);
+
+// Accounts made before the fix: the migration, run again, puts them right.
+const authLateHotel = (await one<{ id: string }>(
+  `insert into public.organizations (name, seat_limit) values ('Made Before The Fix', 1) returning id`,
+))!.id;
+await db.exec(`alter table auth.users disable trigger on_auth_user_identity_changed`);
+const broken = await createAsAuth(
+  "84900000105",
+  { full_name: "Đối tác trước bản sửa" },
+  { org_id: authLateHotel, role: "member" },
+);
+const brokenBefore = await profileOf(broken.id);
+await db.exec(readFileSync(join(dir, "20261010150000_identity_follows_app_metadata.sql"), "utf8"));
+const brokenAfter = await profileOf(broken.id);
+check(
+  "an account made before the fix (no organisation) is put right when the migration runs",
+  brokenBefore?.org_id === null && brokenAfter?.org_id === authLateHotel,
+  JSON.stringify({ before: brokenBefore, after: brokenAfter }),
+);
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
