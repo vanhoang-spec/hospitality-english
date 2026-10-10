@@ -606,6 +606,15 @@ Không tự làm những việc này.
    (cần học viên thật học thử), và migration lên production (duyệt từng lần). **Không soạn bài tuần 41+
    trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không giữ được.
 
+   **Phần máy, tiến độ.** Xong: chế độ nói của `scoreFreeText` (`src/lib/writing-score.ts`,
+   `mode: "spoken"`, `avoidAsserted`; đo bằng `bun run test:score` và `scripts/probes/prose.ts`). Cùng
+   lần đó vá một lỗ đang chạy thật: xếp các cụm được chấp nhận cạnh nhau từng qua 100% bài chuyển ngữ
+   tuần 26 của Spa và Lễ tân; giờ câu trả lời quá ba phần tư là cụm từ khoá bị từ chối ở cả bài viết lẫn
+   bài nói. Chưa làm, theo thứ tự: (1) kiểu dữ liệu lượt nói mở trong `week-content.ts` và
+   `SpeakingSuite` hiển thị, chấm nó; (2) khung 80 tuần trong code (`TOTAL_WEEKS`, `PHASES`, các cổng
+   khoá cứng ở 40) sao cho tuần 41–80 chưa lộ ra khi chưa có bài; (3) migration nới sáu ràng buộc
+   `BETWEEN 1 AND 40` — production, phải hỏi chủ dự án trước.
+
 ---
 
 ## 6. Hàng đợi đã đo, chưa làm
