@@ -14,18 +14,18 @@ hạng; không xác nhận khách có ở khách sạn, không đọc số phòn
 
 ### Tuần 41 · Kể lại sự việc, ghi sổ
 
-**Nói được:** kể lại cho chính vị khách một việc ở quầy theo đúng trình tự (lúc đó đang làm gì, chuyện
-gì xảy ra, đã làm gì, còn lại gì), chỉ nói điều mình thấy, không đoán nguyên nhân; rồi ghi sổ ca.
+**Nói được:** kể cho khách một việc không ai bị thiệt ở quầy — điều đã xảy ra và việc khách sạn đã làm
+cho họ, đúng thứ tự, không nói nguyên nhân; rồi ghi sổ ca điều mình thấy (khung chung, mục 3).
 
 1. **What Happened with Your Deposit** · khách — tiền cọc bị giữ hai lần: điều đã xảy ra trên thẻ, việc đang làm.
 2. **While I Was Checking You In** · khách — hai việc cùng lúc: đang làm thủ tục thì hệ thống ngắt.
-3. **What I Saw, Not What I Think** · khách — khách hỏi chuyện vừa xảy ra ở sảnh: điều mình thấy, không đoán.
+3. **What I Saw, Not What I Think** · viết — ghi cho an ninh điều mình thấy ở sảnh; không đoán, không kể cho khách khác.
 4. **Into the Logbook** · viết — giờ, phòng, việc, còn lại gì.
 
 **Nghe:** (a) một khách kể lại chuyện mất thẻ phòng, giọng không bản ngữ; (b) hai lễ tân trao đổi về
 một phòng bị bán trùng.
 **Viết (40–60 từ):** ghi sổ ca về một khách đến lúc 1 giờ sáng mà phòng đã có người.
-**Chuyển ngữ (Việt → Anh):** bảo vệ kể chuyện xe của khách bị quẹt ở bãi; nói lại cho khách.
+**Chuyển ngữ (Việt → Anh):** bảo vệ kể chuyện xe của khách bị quẹt ở bãi; ghi lại cho quản lý trực.
 
 ### Tuần 42 · Trò chuyện không chuẩn bị
 
@@ -125,7 +125,7 @@ khách qua tin nhắn đúng giọng.
 **Nghe:** (a) cuộc gọi đổi ngày đặt phòng, tiếng rè; (b) tin nhắn thoại có tên và số phải ghi lại.
 **Viết (50–70 từ):** phiếu lời nhắn và chuỗi ba tin nhắn xác nhận đổi ngày đặt phòng.
 
-### Tuần 49 · Tổng duyệt + hai luật mới
+### Tuần 49 · Tổng duyệt + hai luật
 
 **Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
 khi khách hỏi thẳng thì trả lời ngay câu đầu rồi mới giải thích; và giữ được một giờ cao điểm trộn mọi
@@ -596,15 +596,15 @@ khiếu nại. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
-(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài (nhắc lại một câu,
+không thêm lý do mới, rồi mời cấp trên). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
 bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Long Day at the Desk** · khách — VIP, đoàn, sự cố, một lời từ chối.
 2. **Rehearsal: The Call You Should Not Answer** · người gọi — báo chí, người hỏi dò.
 
 - 3A. **Not Mine to Say** · khách — khách hỏi về khách khác, về một sự cố đang điều tra.
-- 4A. **The Firm, Kind No** · khách — yêu cầu trái quy định, khách nài lần hai: nhắc lại một câu, không để ngỏ.
+- 4A. **The Firm, Kind No** · khách — yêu cầu trái quy định, khách nài lần hai: nhắc lại một câu, rồi mời quản lý trực.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · quản lý nước ngoài — báo lên một việc trong ba câu.
 

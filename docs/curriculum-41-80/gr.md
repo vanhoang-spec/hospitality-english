@@ -32,11 +32,12 @@ không — không xác nhận, không phủ nhận; không tự hứa tiền hay
 
 ### Tuần 41 · Kể lại sự việc, ghi sổ
 
-**Nói được:** kể lại cho chính vị khách và người nhà một sự việc theo đúng trình tự (lúc đó đang làm
-gì, chuyện gì xảy ra, khách sạn đã làm gì, còn lại gì), chỉ nói điều mình biết; rồi ghi nhật ký khách.
+**Nói được:** kể cho khách và người nhà một việc không ai bị thiệt — điều đã xảy ra và việc khách sạn
+đã làm cho họ, đúng thứ tự, không nói nguyên nhân, chỉ nói điều mình biết; rồi ghi nhật ký khách (khung
+chung, mục 3).
 
 1. **What Happened After You Called** · khách — sự cố đêm qua: khách sạn đã làm gì, theo thứ tự.
-2. **While We Were Waiting for the Car** · khách — một lời hứa bị lỡ: diễn biến từng bước.
+2. **While We Were Waiting for the Car** · khách — một lời hứa bị lỡ: việc đã xảy ra với xe, việc khách sạn đã làm; không đổ cho ai.
 3. **What I Know, Not What I Heard** · khách — tách điều mình thấy và điều người khác kể.
 4. **Into the Guest Log** · viết — giờ, khách, việc, còn lại gì.
 
@@ -144,7 +145,7 @@ nhắn đúng giọng.
 **Nghe:** (a) cuộc gọi trước khi đến, đường truyền xấu; (b) lời nhắn thoại của khách đổi giờ bay.
 **Viết (50–70 từ):** thư chào mừng ngắn và hai tin nhắn xác nhận xe đón.
 
-### Tuần 49 · Tổng duyệt + hai luật mới
+### Tuần 49 · Tổng duyệt + hai luật
 
 **Nói được:** khi chưa biết thì nói điều mình chưa biết, **mình sẽ hỏi ai và mấy giờ mình quay lại**;
 khi khách hỏi thẳng thì trả lời ngay câu đầu; và giữ được một buổi chiều nhiều khách đến.
@@ -620,15 +621,15 @@ một khiếu nại. Bài sát hạch tuần 80 dùng bộ số liệu khác.
 
 ### Tuần 79 · Tổng duyệt + hai luật mới theo nhánh
 
-**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài lần hai, lần ba
-(nhắc lại một câu, không thêm lý do mới). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
+**Nói được:** A — biết điều không nói thay khách sạn; giữ lời từ chối khi khách nài (nhắc lại một câu,
+không thêm lý do mới, rồi mời cấp trên). B — biết điều giám sát được viết nhân danh khách sạn; báo lên
 bằng ba phần (việc, con số, điều đề nghị).
 
 1. **Rehearsal: A Day with Two VIP Arrivals** · khách — khách VIP, một khiếu nại mở, một tin xấu.
 2. **Rehearsal: The Question You Should Not Answer** · người gọi — "Is Mr Lee staying with you?".
 
 - 3A. **Not Mine to Say** · khách — chuyện của khách khác, chuyện đang được xem xét.
-- 4A. **The Firm, Kind No** · khách — khách quen nài lần hai một ngoại lệ không thể: nhắc lại một câu, không để ngỏ.
+- 4A. **The Firm, Kind No** · khách — khách quen nài lần hai một ngoại lệ không thể: nhắc lại một câu, rồi mời quản lý.
 - 3B. **What I May Put in Writing** · viết — thư xác nhận việc sẽ làm; phần phải chờ duyệt.
 - 4B. **Fact, Number, Ask** · tổng quản lý nước ngoài — báo lên một việc trong ba câu.
 
