@@ -570,14 +570,33 @@ Không tự làm những việc này.
    và Vercel không cài được dependency. Đề xuất một PR riêng trỏ sang npm, kèm gỡ khối cảnh báo Lovable
    ở đầu `AGENTS.md` nếu dự án không còn dùng Lovable. Chưa làm, chờ chủ dự án xác nhận.
 9. **Outline tuần 41–80** ([`curriculum-41-80.md`](curriculum-41-80.md)) — chủ dự án đã trả lời ba câu
-   hỏi (10/10, chi tiết ở mục 9 của file đó): **nhánh do học viên hoặc HR chọn, cả hai đều được**;
-   **năm hai nằm trong gói tính phí hiện tại**, không bán riêng; **AI chấm thì hỏi dùng DeepSeek** —
-   dùng được với bốn điều kiện (dữ liệu sang Trung Quốc nên không gửi thông tin nhận diện; không có cam
-   kết sẵn sàng nên cần nhà cung cấp thứ hai; viết không gắn nhà cung cấp; chọn bằng phép so với 100
-   bài giáo viên đã chấm). **Khi HR và học viên chọn khác nhau thì theo HR** (chốt 10/10). Còn mở:
-   chốt nhà cung cấp AI sau phép so. Bước kế đề xuất: một Academic Director và một Hotel Manager chấm
-   mù outline, rồi mới xây phép đo và khung 80 tuần, rồi soạn thử Phase 5 cho Lễ tân. **Không soạn bài
-   tuần 41+ trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không giữ được.
+   hỏi (chi tiết ở mục 9 của file đó): **mặc định Nhánh A, Nhánh B chỉ khi HR gán, học viên không tự
+   chọn** (chốt 11/10; thay cho câu trả lời 10/10 "học viên hoặc HR chọn đều được, khác nhau thì theo
+   HR"); **năm hai nằm trong gói tính phí hiện tại**, không bán riêng; **AI chấm thì hỏi dùng
+   DeepSeek** — dùng được với bốn điều kiện (dữ liệu sang Trung Quốc nên không gửi thông tin nhận
+   diện; không có cam kết sẵn sàng nên cần nhà cung cấp thứ hai; viết không gắn nhà cung cấp; chọn
+   bằng phép so với 100 bài giáo viên đã chấm). Còn mở: chốt nhà cung cấp AI sau phép so; số ngày chờ
+   thi lại phần sản sinh (đề xuất 3 ngày); HR gán Nhánh B sau tuần 61 thì có hiệu lực ở tuần 71 (đề
+   xuất). **Outline đã qua chấm mù ở vòng 2, 6/6 ô** (brief
+   [`audit/brief-outline-41-80-r1.md`](audit/brief-outline-41-80-r1.md): một Academic Director cho cả
+   outline, một Hotel Manager cho từng bộ phận, mốc 7,5 mỗi ô):
+
+   | Ô                  | Vòng 1 (`f25ec00`) | Vòng 2 (`e28aa05`) |
+   | ------------------ | ------------------ | ------------------ |
+   | AC — cả outline    | 6,25               | 7,58               |
+   | HM — Lễ tân        | 7,42               | 8,08               |
+   | HM — Nhà hàng      | 7,33               | 7,92               |
+   | HM — Buồng phòng   | 6,25               | 7,75               |
+   | HM — Spa           | 7,00               | 7,83               |
+   | HM — Quan hệ khách | 7,58               | 8,08               |
+
+   Các lỗi vòng 2 còn nêu đã sửa ở `f397034`; báo cáo từng vòng lưu ở
+   `%TEMP%/hospitality-outline-r<N>-<sha>/`. Ba bài học của hai vòng, đáng nhớ khi soạn bài thật: mỗi
+   bài phải ghi **người nghe** (người Việt nghe thì là bài viết hoặc chuyển ngữ); **với người bị ảnh
+   hưởng thì không kể diễn biến hay nguyên nhân** — chỉ nhắc lại lời khách; và **không hứa giờ thay bộ
+   phận khác**. Bước kế: xây phép đo và khung 80 tuần (mục 7 của outline), rồi soạn thử Phase 5 cho Lễ
+   tân. **Không soạn bài tuần 41+ trước khi có phép đo nói/viết tự do** — không có nó thì nhãn B1 không
+   giữ được.
 
 ---
 
